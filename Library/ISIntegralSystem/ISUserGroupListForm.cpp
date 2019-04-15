@@ -1,0 +1,47 @@
+#include "StdAfx.h"
+#include "ISUserGroupListForm.h"
+#include "EXDefines.h"
+#include "ISLocalization.h"
+#include "ISSystem.h"
+//-----------------------------------------------------------------------------
+ISUserGroupListForm::ISUserGroupListForm(QWidget *parent) : ISListBaseForm("_UserGroup", parent)
+{
+	Label = new QLabel(this);
+	Label->setWordWrap(true);
+	Label->setText(LOCALIZATION("SelectedUserGroupLeftFromAccessSetting"));
+	Label->setFont(FONT_TAHOMA_12);
+	Label->setSizePolicy(QSizePolicy::Minimum, Label->sizePolicy().verticalPolicy());
+	GetLayoutTableView()->addWidget(Label, 0, Qt::AlignCenter);
+
+	UserGroupWidget = nullptr;
+	connect(this, &ISUserGroupListForm::SelectedRowSignal, this, &ISUserGroupListForm::SelectedGroup);
+}
+//-----------------------------------------------------------------------------
+ISUserGroupListForm::~ISUserGroupListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISUserGroupListForm::SelectedGroup()
+{
+	if (UserGroupWidget)
+	{
+		delete UserGroupWidget;
+		UserGroupWidget = nullptr;
+	}
+
+	if (GetCountSelected())
+	{
+		Label->setVisible(false);
+
+		ISSystem::SetWaitGlobalCursor(true);
+		UserGroupWidget = new ISUserGroupWidget(GetObjectID(), GetCurrentRecordValue("Name").toString(), this);
+		GetLayoutTableView()->addWidget(UserGroupWidget);
+		ISSystem::SetWaitGlobalCursor(false);
+	}
+	else
+	{
+		Label->setVisible(true);
+	}
+}
+//-----------------------------------------------------------------------------

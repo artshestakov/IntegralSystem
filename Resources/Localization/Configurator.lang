@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Localization Name="Configurator">
+
+  <Local Name="Configurator.Hello" Russian="Добро пожаловать в интерпретатор базы данных IntegralSystem. База данных &quot;%1&quot; на сервере %2"/>
+  <Local Name="Configurator.Hello.Help" Russian="Введите команду help чтобы получить помощь. Об ошибках сообщайте по адресу &lt;artemshestakov@outlook.com&gt;."/>
+  <Local Name="Configurator.Hello.Exit" Russian="Нажмите кнопку &quot;Enter&quot; или &quot;Return&quot; чтобы выйти."/>
+  
+  <Local Name="Configurator.Function.NotFound" Russian="Функция &quot;%1&quot; не найдена"/>
+  <Local Name="Configurator.Class.NotFound" Russian="Класс &quot;%1&quot; не найден"/>
+  <Local Name="Configurator.Command.Executed" Russian="Команда &quot;%1&quot; выполнена за %2 msec"/>
+  <Local Name="Configurator.Commands.Executed" Russian="Команда &quot;%1 %2&quot; выполнена за %3 msec"/>
+
+  <Local Name="Configurator.InputCommand" Russian="Введите команду"/>
+  <Local Name="Configurator.CompletionWork" Russian="Завершение работы"/>
+  <Local Name="Configurator.Restart" Russian="Перезапуск конфигуратора"/>
+  <Local Name="Configurator.NotLoginOrPassword" Russian="В конфигурационном файле не указан логин или пароль"/>
+  <Local Name="Configurator.DatabaseNotExist" Russian="ВНИМАНИЕ! База данных &quot;%1&quot; отсутствует. Выполните команду &quot;create database&quot;"/>
+
+  <Local Name="Configurator.DatabaseAlreadyExist" Russian="База данных &quot;%1&quot; уже существует"/>
+  <Local Name="Configurator.CreatingDatabase" Russian="Создание базы данных: %1"/>
+  <Local Name="Configurator.CreatingDatabaseDone" Russian="База данных &quot;%1&quot; создана успешно. Рекомендуется выполнить команду &quot;update database&quot;"/>
+  <Local Name="Configurator.CreatingDatabaseError" Russian="Не удалось создать базу данных &quot;%1&quot; %2"/>
+
+  <Local Name="Configurator.Message.InvokedFunctionDone" Russian="Функция &quot;%1&quot; выполнена успешно. Время выполнения: %2"/>
+  <Local Name="Configurator.Message.InvokedFunctionError" Russian="Не удалось выполнить функцию &quot;%1&quot;."/>
+
+  <Local Name="Configurator.Help.Description" Russian="Configurator - это утилита для конфигурирования базы данных IntegralSystem."/>
+  <Local Name="Configurator.Help.Using.Standart" Russian="Использование: Configurator [ПАРАМЕТР] [ФУНКЦИЯ]"/>
+  <Local Name="Configurator.Help.Using.Personal" Russian="Использование: Configurator [ФУНКЦИЯ]"/>
+
+  <Local Name="Configurator.FIAS.EnterPathUnloading" Russian="Введите путь к папке с выгрузкой ФИАС"/>
+  <Local Name="Configurator.FIAS.EnterPathResult" Russian="Введите путь к папке с результатом обработки ФИАС"/>
+  <Local Name="Configurator.FIAS.EnterPathEmpty" Russian="Путь к папке пустой!"/>
+  <Local Name="Configurator.FIAS.FileNotOpen" Russian="Не удалось открыть файл: %1. Причина: %2"/>
+  <Local Name="Configurator.FIAS.ResultPathNotEmpty" Russian="Папка &quot;%1&quot; уже содержит данные. Выберите другую папку!"/>
+  <Local Name="Configurator.FIAS.PathNotExist" Russian="Папка &quot;%1&quot; не существует!"/>
+  <Local Name="Configurator.FIAS.FileHandling.Start" Russian="Обработка файла начата: %1"/>
+  <Local Name="Configurator.FIAS.FileHandling.End" Russian="Обработка файла завершена: %1"/>
+  <Local Name="Configurator.FIAS.ParseFileBlock" Russian="Парсинг нового блока данных: %1"/>
+  <Local Name="Configurator.FIAS.WriteToFile" Russian="Запись в файл %1: %2MB из %3MB"/>
+
+  <Local Name="Configurator.FIAS.EnterPathPrepareFiles" Russian="Введите путь к папке с подготовленными файлами ФИАС"/>
+  <Local Name="Configurator.FIAS.TableNotExist" Russian="Таблица &quot;%1&quot; не существует в базе данных!"/>
+  <Local Name="Configurator.FIAS.GetCountLine" Russian="Подсчёт строк..."/>
+  <Local Name="Configurator.FIAS.Processed" Russian="Обработка записей в %1: %2 из %3. Прогресс: %4%"/>
+
+</Localization>

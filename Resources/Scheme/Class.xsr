@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XSR Name="Class.xsr">
+
+  <_Paragraphs IsSystem="true" UID="{9A36AD64-5A2F-4B62-9DA7-4FC545B6AB5F}" Name="Desktop" OrderID="1" LocalName="Рабочий стол" ToolTip="Рабочий стол" Icon="MainPanel.Desktop" ClassName="ISDesktopForm"/>
+  <_Paragraphs IsSystem="true" UID="{18A90F8B-1D99-420E-BA60-C3EBF60D595E}" Name="Workspace" OrderID="2" LocalName="Рабочая область" ToolTip="Рабочая область" Icon="MainPanel.Workspace" ClassName="ISWorkspaceForm" Default="true"/>
+  <_Paragraphs IsSystem="true" UID="{1BA7F467-32AA-4719-B8F0-BCD8BC678CAB}" Name="Calendar" OrderID="3" LocalName="Календарь" ToolTip="Календарь" Icon="MainPanel.Calendar" ClassName="ISCalendarForm"/>
+  <_Paragraphs IsSystem="true" UID="{C8C7F423-39F5-42FE-B902-501A160AC2DC}" Name="Chat" OrderID="4" LocalName="Общий чат" ToolTip="Общий чат" Icon="MainPanel.Chat" ClassName="ISChatForm"/>
+  <_Paragraphs IsSystem="true" UID="{588A7DBA-CC77-4EA2-9691-7F800C629D7F}" Name="Tasks" OrderID="5" LocalName="Трекер задач" ToolTip="Трекер задач" Icon="MainPanel.Tasks" ClassName="ISTaskForm"/>
+  <_Paragraphs IsSystem="true" UID="{47EFC431-D5AB-481D-BB8C-6BB5E80DCD9B}" Name="Telephony" OrderID="6" LocalName="IP-Телефония" ToolTip="IP-Телефония" Icon="MainPanel.Telephony" ClassName="ISTelephonyForm"/>
+  
+  <_Systems IsSystem="true" UID="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="1" LocalName="Администрирование" Icon="System.Administration" Hint="Позволяет редактировать системные настройки программы и базы данных. Дает возможность управлять пользователями и их правами, просматривать протокол работы пользователей и статистику программы, а так же, дополнительные системные функции."/>
+  <_SubSystems IsDeleted="true" UID="{C88711F4-17BF-4F81-AA16-5E91C5D57C2E}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="0" LocalName="Тест" Icon="Lists" TableName="_TestFields"/>
+  <_SubSystems UID="{A5A596AA-1BE9-4B72-8007-C29B5D42D4B0}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="1" LocalName="Пользователи" Icon="SubSystem.Users" ClassName="ISUserListForm" Hint="Ведение списка пользователей, работающих в программе."/>
+  <_SubSystems UID="{DB069CFA-F336-4CDE-994D-9F34D8E2ECC9}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="2" LocalName="Группы пользователей" Icon="SubSystem.UserGroup" ClassName="ISUserGroupListForm" Hint="Распределение существующих пользователей по группам и настройка их прав доступа к разлчным частям программы и её функционалу."/>
+  <_SubSystems UID="{6DBB902F-D993-4403-967D-A96D81ADF860}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="3" LocalName="Протокол работы" Icon="SubSystem.Protocol" ClassName="ISProtocolListForm" Hint="Протоколирование работы пользователей ведется для анализа и сбора сведений о работе над различными объектами программы. Протокол дает возможность узнать, кто, когда и какое действие совершил в системе. Таким образом легко выяснять спорные ситуации."/>
+  <_SubSystems UID="{A437C2ED-7885-4FAD-860B-8F04B6D2F1C4}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="4" LocalName="Монитор активности" Icon="SubSystem.MonitorActivity" ClassName="ISMonitorActivityForm" Hint="Мониторинг активности пользователей в системе"/>
+  <_SubSystems UID="{BA974167-47ED-4123-9A2A-308F0BE79CD6}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="5" LocalName="Управление базой данных" Icon="SubSystem.DatabaseStatistics" ClassName="ISControlDatabaseForm" Hint="Служебная информация о базе данных и СУБД."/>
+  <_SubSystems UID="{E665C500-D4EE-40D9-B5E7-7299A6AB2FDE}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="6" LocalName="Управление сервером" Icon="SubSystem.Carat" ClassName="ISCaratForm" Hint="Управление серверным процессом."/>
+
+  <_Systems IsSystem="true" UID="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="Внутреннее" Icon="System.Internal" Hint="Управление системными справочниками и внутренними функциями программы."/>
+  <_SubSystems UID="{D55AE0AD-D609-48FF-BDAF-02279CBE146E}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="1" LocalName="Файловое хранилище" Icon="SubSystem.StorageFiles" ClassName="ISStorageFilesListForm" Hint="Предметно-ориентированная информационная база данных файлов. Данные, поступающие в хранилище, доступны только для чтения."/>
+  <_SubSystems UID="{C4A0FF77-AED6-411F-962C-942655960F07}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="Электронная почта" Icon="SubSystem.EMail" TableName="_EMailQueue"/>
+  <_SubSystems UID="{BBC746E2-C9CD-451E-BF1A-0FC5A3D1FFF3}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="3" LocalName="База знаний" Icon="SubSystem.QuestionAnswer" ClassName="ISKnowledgeBaseSubSystem" Hint="База знаний."/>
+  <_SubSystems UID="{1B59B2AF-A27A-415C-A844-AEF1F24226CF}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Типы задач" Icon="Lists" TableName="_TaskType"/>
+  <_SubSystems UID="{044F9718-23AA-45E6-98BA-D0292AF74325}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="5" LocalName="Банки данных" Icon="SubSystem.Database" TableName="_Database"/>
+  <_SubSystems UID="{22669BBC-FA2B-456D-81C9-DEE48F997BAE}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="6" LocalName="Подразделения" Icon="SubSystem.Subdivision" TableName="_Subdivision"/>
+  <_SubSystems UID="{B8E43757-67D5-4B8B-A840-7BCA3245F845}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="7" LocalName="Полнотекстовый поиск" Icon="SubSystem.SearchFullText" ClassName="ISFullTextSearchForm"/>
+  <_SubSystems UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="8" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
+
+  <_InternalDirectories UID="{F09346EB-8B35-4673-BEA1-8357661482E7}" TableName="_Countries" Order="1"/>
+  <_InternalDirectories UID="{484906E2-8F17-4388-9E88-0B26511F1212}" TableName="_Currency" Order="2"/>
+  <_InternalDirectories UID="{8B09C989-EF47-40C3-8EA6-21ADB3D17019}" TableName="_Units" Order="3"/>
+  
+  <_FeedbackType UID="{A44D08BF-46E5-4724-9C25-85E31A6488DD}" Name="Идея" Order="1" Icon="Feedback.Idea"/>
+  <_FeedbackType UID="{3808FC23-6E00-450D-B3AC-D6477CEB0873}" Name="Проблема" Order="2" Icon="Feedback.Problem"/>
+  <_FeedbackType UID="{830C3A9C-A55C-48A7-9AAC-35B63C37B9BF}" Name="Вопрос" Order="3" Icon="Feedback.Question"/>
+  <_FeedbackType UID="{50A18BC1-67AF-4A35-9FCF-EE9D22232D54}" Name="Спасибо" Order="4" Icon="Feedback.ThankYou"/>
+
+  <_Months ID="1" IsSystem="true" UID="{C0C3D83C-B381-465E-B544-967AE9396E04}" Name="Январь" Number="1"/>
+  <_Months ID="2" IsSystem="true" UID="{8965BE84-9BD4-4111-9520-9777FDF7835F}" Name="Февраль" Number="2"/>
+  <_Months ID="3" IsSystem="true" UID="{80F6C7CB-B198-4619-AF66-063F2AEFA712}" Name="Март" Number="3"/>
+  <_Months ID="4" IsSystem="true" UID="{4C609ADA-2483-43CF-9FA8-E4C5DE517D63}" Name="Апрель" Number="4"/>
+  <_Months ID="5" IsSystem="true" UID="{EBED417A-09ED-4EDD-A47B-AEAB6265B237}" Name="Май" Number="5"/>
+  <_Months ID="6" IsSystem="true" UID="{14B875F0-9F1B-4E0E-9614-768BAB4225FC}" Name="Июнь" Number="6"/>
+  <_Months ID="7" IsSystem="true" UID="{665AD3FC-3CF2-464B-8C80-4FD76C896DA8}" Name="Июль" Number="7"/>
+  <_Months ID="8" IsSystem="true" UID="{F836E63A-2941-43DF-8CF7-ED748DBE1BB9}" Name="Август" Number="8"/>
+  <_Months ID="9" IsSystem="true" UID="{90FFD6BF-C00A-4A96-B62D-83B7DA795E9D}" Name="Сентябрь" Number="9"/>
+  <_Months ID="10" IsSystem="true" UID="{C964257E-6865-4853-AD4B-F65E70628516}" Name="Октябрь" Number="10"/>
+  <_Months ID="11" IsSystem="true" UID="{D8F8CA24-C4ED-4885-928C-97C8A3EE739E}" Name="Ноябрь" Number="11"/>
+  <_Months ID="12" IsSystem="true" UID="{2414143C-BF3E-41D0-AA88-310D824C80A4}" Name="Декабрь" Number="12"/>
+
+  <_DaysWeek IsSystem="true" UID="{8B5F3AF8-5EF6-43E1-B45D-9EF6426C379D}" Name="Понедельник" Number="1"/>
+  <_DaysWeek IsSystem="true" UID="{1971C44C-0821-4507-BECF-D68A8EAA8AF5}" Name="Вторник" Number="2"/>
+  <_DaysWeek IsSystem="true" UID="{D34F6AAD-4648-4F0F-A3A2-A260679043A9}" Name="Среда" Number="3"/>
+  <_DaysWeek IsSystem="true" UID="{154CBCEC-6233-4148-8139-64ADF68A154B}" Name="Четверг" Number="4"/>
+  <_DaysWeek IsSystem="true" UID="{D03139F6-7DC1-4748-BD53-8F03251D5BED}" Name="Пятница" Number="5"/>
+  <_DaysWeek IsSystem="true" UID="{AFFE23A7-8990-47C8-BAF2-2600F2F44B01}" Name="Суббота" Number="6"/>
+  <_DaysWeek IsSystem="true" UID="{6DBF2B0A-818E-47E9-B049-A75F8288CBCE}" Name="Воскресенье" Number="7"/>
+  
+  <_Notification IsSystem="true" UID="{6D29E4DA-7BC0-44AD-BF03-6897C3C403F9}" Name="Task.CreateOrUpdate" Message="Добавлена/изменена Ваша задача" SoundFileName="Tasks.CreateUpdate" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{C47A81C4-C61A-45A3-8D43-A55846C61E8C}" Name="Task.AddComment" Message="К Вашей задаче добавлен комменарий" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{8DB698E7-B1FE-4A7D-813E-3FA555FE4FB7}" Name="Task.AddFile" Message="К Вашей задаче прикреплен файл" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{77A232D0-6A44-4A9B-833E-2C55E73E0FA2}" Name="ChatMessage" Message="Новое сообщение в общем чате" SoundFileName="Chat.NewMessage" SignalName="ChatMessage" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{C1141CF5-8E95-4793-841A-2E1E8270A2F3}" Name="UserChanged" Message="Данные Вашей учётной записи были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{50CD9037-7809-4059-B20C-B18900E8BE34}" Name="TerminateUser" Message="ВНИМАНИЕ! Вашу учётную запись принудительно отключили от системы." SoundFileName="Critical" SignalName="TermianteUser" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{168CA167-EA0B-48DA-918D-C617FFE2BA35}" Name="UpdateAviable" Message="ВНИМАНИЕ! Доступно обновление! Программа будет обновлена при следующем перезапуске." SoundFileName="Information" SignalName="UpdateAviable" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{721777DC-65D9-43DE-97F0-D50DAED2F4C2}" Name="SettingsDatabaseChanged" Message="Настройки базы данных были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{BAD25391-7009-472C-A7E4-A89106CB7904}" Name="IncomingCall" Message="Входящий звонок" SignalName="IncomingCall" ShowPopup="false"/>
+  <_Notification IsSystem="true" UID="{3FF15EBE-43BD-4B2A-9E45-CA53E1CE1F54}" Name="CalendarEvent" Message="Напоминание" SignalName="CalendarEvent" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{410AE8B0-A9EC-42DB-9E32-F9FFA9BF068B}" Name="UserStatus" Message="Пользователь сменил статус" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{E5D25227-E5E1-49AB-9034-2EEC5784DA14}" Name="UserOnline" Message="Пользователь в сети" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{366E23D9-800C-4C52-9302-F4E1AB68B372}" Name="UserOffline" Message="Пользователь не в сети" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{51154CA5-1D62-4F34-91FB-7DDCC5344227}" Name="Screenshot.Create" Message="Запрос скриншота" SignalName="GetScreenshot" ShowPopup="false"/>
+  <_Notification IsSystem="true" UID="{4AC0FD55-DA99-43FD-B215-2E9CBB0129E4}" Name="Screenshot.Created" Message="Скриншот создан" SignalName="ScreenshotCreated" ShowPopup="false"/>
+  <_Notification IsSystem="true" UID="{3C0EAFD8-1FC0-48F7-9BF2-D8E8E5875390}" Name="UserMessage" Message="Уведомление" SoundFileName="Information" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{D11C249C-9B4E-482D-9DF6-CD4B59BAA3D8}" Name="AlreadyConnected" Message="Обнаружен несанкционированный вход Вашей учётной записи" SignalName="AlreadyConnected" SoundFileName="Critical" ShowPopup="true"/>
+
+  <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
+  <_ProtocolType IsSystem="true" UID="{E9461667-E1CA-4C22-907B-FDC350A931C4}" Name="Выход из программы"/>
+  <_ProtocolType IsSystem="true" UID="{D1348312-298F-4A7C-B584-9BA8C4952CD3}" Name="Добавление новой записи"/>
+  <_ProtocolType IsSystem="true" UID="{EFA8FE45-1174-4D2E-BBE6-4940380961D4}" Name="Добавление копии существующей записи"/>
+  <_ProtocolType IsSystem="true" UID="{0361643D-0A62-4F51-84BD-313F53115EFD}" Name="Изменение записи"/>
+  <_ProtocolType IsSystem="true" UID="{117E8972-97DC-4E72-93AC-DC3BB50D11CF}" Name="Просмотр записи"/>
+  <_ProtocolType IsSystem="true" UID="{2937C918-2E34-431A-86EF-52AEE9BF83AA}" Name="Просмотр системной информации записи"/>
+  <_ProtocolType IsSystem="true" UID="{C9C18C76-AC52-4B3E-B89D-5040F06AE3CE}" Name="Открытие параграфа"/>
+  <_ProtocolType IsSystem="true" UID="{66E93262-02C6-49E3-B47E-FF20ED8DDDC5}" Name="Открытие системы"/>
+  <_ProtocolType IsSystem="true" UID="{5F3EBAED-0970-4E0E-883C-535E6F084133}" Name="Открытие подсистемы"/>
+  <_ProtocolType IsSystem="true" UID="{275EDA32-F757-4EAA-BBD4-6C48AFD5DA9B}" Name="Установка пометки удаления записи"/>
+  <_ProtocolType IsSystem="true" UID="{B6EEFB63-8197-4F3A-8373-5C3B2FC409F3}" Name="Каскадное удаление записи"/>
+  <_ProtocolType IsSystem="true" UID="{C0000A7D-EDA1-4C06-9D7C-1DC942EE438E}" Name="Восстановление записи"/>
+  <_ProtocolType IsSystem="true" UID="{1C50A667-B1C4-4F2C-8F39-90106ABB6774}" Name="Выгрузка таблицы"/>
+  <_ProtocolType IsSystem="true" UID="{916A2119-5D8D-41C9-8358-AE587F365898}" Name="Печать"/>
+  <_ProtocolType IsSystem="true" UID="{637D02CB-F249-49C7-A374-D51E8846D1AF}" Name="Блокировка программы"/>
+  <_ProtocolType IsSystem="true" UID="{9DF0B966-40CE-4D44-B049-29D9DA8732B2}" Name="Разблокировка программы"/>
+  <_ProtocolType IsSystem="true" UID="{EA1AEC58-FE91-4287-A968-25CA0129B55C}" Name="Неудачная разблокировка программы"/>
+  <_ProtocolType IsSystem="true" UID="{179F73BF-8983-4B52-B505-AF0EF4BF8093}" Name="Расширенный поиск"/>
+  <_ProtocolType IsSystem="true" UID="{F8ACA207-50D6-4BE4-9658-08F869D0E54F}" Name="Прослушивание записи разговора"/>
+  <_ProtocolType IsSystem="true" UID="{EA2EF795-5243-4D9B-97C9-283605D290B6}" Name="Сохранение записи разговора на диск"/>
+  <_ProtocolType IsSystem="true" UID="{B88FD6FA-CC88-4B6A-8641-C2B2686D67C8}" Name="Отправка ссылки на запись в общий чат"/>
+  <_ProtocolType IsSystem="true" UID="{662105B6-6671-46BE-8E1A-E57061C5C268}" Name="Добавление примечания к записи"/>
+  <_ProtocolType IsSystem="true" UID="{C20634AF-EF58-4D96-9215-8085C2B8C416}" Name="Изменение примечания к записи"/>
+  <_ProtocolType IsSystem="true" UID="{4BC93101-8A4A-4469-A7B1-9F43BE080BB5}" Name="Изменение статуса"/>
+  <_ProtocolType IsSystem="true" UID="{A0115A19-05CC-4AFD-8568-F9AE970E7157}" Name="Просмотр информации о программе"/>
+  <_ProtocolType IsSystem="true" UID="{CDCB7490-C975-4ECA-AC3A-4532A32ECC4D}" Name="Изменение пароля от своей учётной записи"/>
+  <_ProtocolType IsSystem="true" UID="{898A6F59-4BAB-4D9A-BF4B-B0CAFDF2072B}" Name="Прикрепление записи к задаче"/>
+  <_ProtocolType IsSystem="true" UID="{EA765447-6811-43AD-8CFC-9B2E758A5B4E}" Name="Добавление права на подсистему"/>
+  <_ProtocolType IsSystem="true" UID="{5E5EC969-0D11-41FB-9652-7E2ADD466782}" Name="Удаление права на подсистему"/>
+  <_ProtocolType IsSystem="true" UID="{44FDDA11-9F7B-4006-8178-944DA65FB7AA}" Name="Добавление права на таблицу"/>
+  <_ProtocolType IsSystem="true" UID="{9D4E8104-33F9-4F9E-A6AA-272DDA7C1A52}" Name="Удаление права на таблицу"/>
+  <_ProtocolType IsSystem="true" UID="{FB494E8E-BDF3-4804-AF42-43487AF8A871}" Name="Добавление специального права"/>
+  <_ProtocolType IsSystem="true" UID="{4E7C34E5-C7FE-4C0D-BB4D-7B4A1D4CF9D2}" Name="Удаление специального права"/>
+  <_ProtocolType IsSystem="true" UID="{154AA62F-A422-47E7-ADD6-862E5F0CBC17}" Name="Просмотр активности пользователя"/>
+  <_ProtocolType IsSystem="true" UID="{55EDD956-11D6-4AAC-8998-D4221E71A58D}" Name="Завершение сеанса пользователя"/>
+  <_ProtocolType IsSystem="true" UID="{301046C1-2E68-4B1B-9FD9-04478186A03C}" Name="Завершение сеанса всех пользователей"/>
+
+  <_SystemParameters IsDeleted="true" IsSystem="true" UID="{4A3DFE73-B66E-4560-848F-64408F3B9846}" LocalName="Текущая версия базы данных"/>
+
+  <_KeyboardShortcuts IsSystem="true" UID="{F1A235BC-B6A3-4705-8594-65183A8CA64C}" Shortcut="F11" Description="Развернуть окно на весь экран"/>
+  <_KeyboardShortcuts IsSystem="true" UID="{112A7CCC-6605-479D-9DFA-D9DE6A403EF3}" Shortcut="Alt + F12" Description="Скриншот активного окна"/>
+
+  <_EMailConnectionType IsSystem="true" UID="{8B16B1CF-4B56-4690-9C83-A13D4188A112}" Name="Tcp" FullName="Transmission Control Protocol" LocalName="Протокол управления передачей"/>
+  <_EMailConnectionType IsSystem="true" UID="{FFC462B0-B076-4009-938F-D9E1AFB81484}" Name="Ssl" FullName="Secure sockets layer" LocalName="Уровень защищённых cокетов"/>
+  <_EMailConnectionType IsSystem="true" UID="{E1741E99-C75B-4045-ACC1-D1AF889325C2}" Name="Tls" FullName="Transport layer security" LocalName="Протокол защиты транспортного уровня"/>
+
+  <_EMailQueueStatus IsSystem="true" UID="{15A7D4A6-65F6-411E-BAD6-A057764F84FD}" Name="Отправлено"/>
+  <_EMailQueueStatus IsSystem="true" UID="{2DACEE6A-FDC2-4244-B05D-742C99FB7834}" Name="Ошибка"/>
+  <_EMailQueueStatus IsSystem="true" UID="{4FE64146-606E-4946-9405-3BE6638C53BA}" Name="Отправка"/>
+
+  <_SMSStatus IsSystem="true" UID="{25C79A48-7096-4379-A525-635D0E8FEA12}" Name="Отправлено"/>
+  <_SMSStatus IsSystem="true" UID="{58DE4E9F-D2AE-4145-AD16-5398E1E68565}" Name="Ошибка"/>
+  <_SMSStatus IsSystem="true" UID="{0508798D-205C-4A66-80D6-3257B99936AF}" Name="Отправка"/>
+  <_SMSStatus IsSystem="true" UID="{CC19A95A-FE22-42F3-BCA3-84099318596F}" Name="Ожидает отправки"/>
+
+  <_SMSErrorType IsSystem="true" UID="{CCBAD275-F3D8-40B0-AFFC-F2215F4EA189}" ErrorCode="1" Name="Ошибка в параметрах"/>
+  <_SMSErrorType IsSystem="true" UID="{D8CBC2D1-F1BF-499C-99CA-9AF24DB2022A}" ErrorCode="2" Name="Неверный логин или пароль"/>
+  <_SMSErrorType IsSystem="true" UID="{E0BC8174-DEA8-4EF7-B890-121EE81014E7}" ErrorCode="3" Name="Недостаточно средств на счете Клиента"/>
+  <_SMSErrorType IsSystem="true" UID="{C833BE84-57A2-4052-ACF5-E30356F03FD6}" ErrorCode="4" Name="IP-адрес временно заблокирован из-за частых ошибок в запросах на отправку смс-сообщения"/>
+  <_SMSErrorType IsSystem="true" UID="{EF84CBC3-D5C5-47AE-B037-2F53DC0AF386}" ErrorCode="5" Name="Неверный формат даты"/>
+  <_SMSErrorType IsSystem="true" UID="{F2D55398-E3CD-46CB-AF95-1E6DA7BA70E2}" ErrorCode="6" Name="Сообщение запрещено (по тексту или по имени отправителя)"/>
+  <_SMSErrorType IsSystem="true" UID="{C4C88CD7-C25A-4063-8467-2F754DB67714}" ErrorCode="7" Name="Неверный формат номера телефона"/>
+  <_SMSErrorType IsSystem="true" UID="{5066CB43-2771-4F3E-9182-033063DFE9B3}" ErrorCode="8" Name="Сообщение на указанный номер не может быть доставлено"/>
+  <_SMSErrorType IsSystem="true" UID="{CB812E54-5D28-46F1-B228-EFB41DD89F81}" ErrorCode="9" Name="Отправка более одного одинакового запроса на передачу SMS-сообщения либо более пяти одинаковых запросов на получение стоимости сообщения в течение минуты. Данная ошибка возникает также при попытке отправки более 15 любых запросов одновременно"/>
+  
+</XSR>

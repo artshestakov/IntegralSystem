@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="MedTech.xsn">
+
+  <Table Name="Rating" UID="{39C8FBD7-3AF4-4499-989D-F2C36C974F23}" Alias="rtng" ShowOnly="true" LocalName="Оценка" LocalListName="Оценки" TitleName="DateTimeCall">
+    <Fields>
+      <Field UID="{3D8B93EC-292E-40E1-8E2C-F9CF9A17CF29}" Name="UniqueID" Type="String" LabelName="Идентификатор" LocalListName="Идентификатор" NotNull="true" HideFromList="true"/>
+      <Field UID="{D5BAC03A-1907-4B72-B205-33B2995F6859}" Name="DateTimeCall" Type="DateTime" LabelName="Дата и время звонка" LocalListName="Дата и время звонка" NotNull="true"/>
+      <Field UID="{0C489DC5-D28D-4A68-BFAF-637FFFF2C7AB}" Name="Branch" Type="Int" LabelName="Филиал" LocalListName="Филиал" NotNull="true"/>
+      <Field UID="{DB3A768B-EA4B-43A2-ABA7-E7229B761DF8}" Name="Rating" Type="Int" LabelName="Оценка" LocalListName="Оценка" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="UniqueID"/>
+      <Index Field="DateTimeCall"/>
+      <Index Field="Branch"/>
+      <Index Field="Rating"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Branch" ForeignClass="Branches" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Branches" UID="{FF6953DD-662F-46B2-920E-78A637B461F5}" Alias="brch" LocalName="Филиал" LocalListName="Филиалы" TitleName="Name">
+    <Fields>
+      <Field UID="{8F074AA9-670F-42E2-B249-10001596A3C6}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{FF63071A-6A20-433B-97F4-88DABE87F134}" Name="Address" Type="Address" LabelName="Адрес" LocalListName="Адрес"/>
+      <Field UID="{00005453-2D21-4E7B-BAD5-3C03B9220299}" Name="CountNumbers" Type="Int" LabelName="Внутренних номеров" LocalListName="Внутренних номеров" QueryText="SELECT COUNT(*) FROM branchesnumber WHERE brnm_branch = brch_id"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Address" Unique="true"/>
+    </Indexes>
+    <Escorts>
+      <Escort LocalName="Номера филиала" TableName="BranchesNumber" ClassFilter="brnm_branch = :ParentObjectID"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="BranchesNumber" UID="{6B859020-24A7-4851-B45D-BCF4A66D4CB6}" Alias="brnm" LocalName="Номер филиала" LocalListName="Номера филиала" ClassFilterField="Branch" TitleName="Number">
+    <Fields>
+      <Field UID="{A6D24EF1-0C7F-4B24-98E4-9B1EA66F7253}" Name="Branch" Type="Int" LabelName="Филиал" LocalListName="Филиал" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{603428AF-D47C-4340-8C95-8700511AAEBD}" Name="Number" Type="Int" LabelName="Номер" LocalListName="Номер" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Branch"/>
+      <Index Field="Number"/>
+      <Index Field="Branch;Number" Unique="true"/>
+    </Indexes>
+  </Table>
+
+</XSN>

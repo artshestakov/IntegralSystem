@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSF Name="CenterSeven.xsf">
+
+  <Function Name="currentbranchid" Text="
+CREATE OR REPLACE FUNCTION public.currentbranchid ()
+RETURNS integer AS
+$body$
+BEGIN
+RETURN brus_branch FROM branchusers WHERE brus_user = currentuserid();
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+RETURNS NULL ON NULL INPUT
+SECURITY INVOKER
+COST 100;            
+"/>
+
+</XSF>

@@ -1,0 +1,17 @@
+﻿QToolButton
+{
+	background-color: transparent;
+	color: white;
+    border-width: 0px;
+    border-style: solid;
+}
+
+QToolButton:hover
+{
+    color: rgb(210, 210, 210);
+}
+
+QToolButton::menu-indicator
+{
+    image: none;
+}

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Localization Name="Objects">
+	
+	<!--Alpha-->
+	<Local Name="Alpha.DeviceType" Russian="Тип устройства"/>
+	<Local Name="Alpha.SerialNumber" Russian="Серийный номер"/>
+	<Local Name="Alpha.Reason" Russian="Причина обращения"/>
+	<Local Name="Alpha.Set" Russian="Комплектность"/>
+	<Local Name="Alpha.Brand" Russian="Бренд"/>
+	<Local Name="Alpha.Model" Russian="Модель"/>
+	<Local Name="Alpha.Color" Russian="Цвет"/>
+	<Local Name="Alpha.Leave" Russian="Выезд"/>
+	<Local Name="Alpha.Services" Russian="Услуги"/>
+	<Local Name="Alpha.Cost" Russian="Цена"/>
+	<Local Name="Alpha.Guarantee" Russian="Гарантия"/>
+	<Local Name="Alpha.Issue" Russian="Выдать"/>
+	<Local Name="Alpha.UsedParts" Russian="Компоненты и запасные части"/>
+	<Local Name="Alpha.Defect" Russian="Дефект"/>
+	<Local Name="Alpha.EnterDefect" Russian="Укажите дефект"/>
+	<Local Name="Alpha.NoticeToSMS" Russian="Уведомить о готовности по СМС"/>
+	<Local Name="Alpha.SMSSentReport" Russian="Идентификатор отправленного сообщения: %1. Количество отправленных СМС: %2. Стоимость отправленного сообщения: %3. Баланс счёта: %4."/>
+	<Local Name="Alpha.CurrencyRuble" Russian="руб"/>
+	<Local Name="Alpha.SMSSentCompleted" Russian="Отправка сообщения прошла успешно."/>
+	<Local Name="Alpha.Message.Question.Issue" Russian="Вы действительно хотите выдать выделенное устройство?"/>
+	<Local Name="Alpha.Message.Information.Issued" Russian="Устройство помечено как &quot;Выдано&quot;!"/>
+	<Local Name="Alpha.Message.Warning.AlreadyIssued" Russian="Устройство уже выдано!"/>
+	
+	<!--CenterSeven-->
+	<Local Name="CenterSeven.CallingPatient" Russian="Вызывает пациент"/>
+  <Local Name="CenterSeven.CallingPatient.Unknown" Russian="неизвестен (%1)"/>
+	<Local Name="CenterSeven.IncomingCallAbonentFromBranch" Russian="Входящий звонок от абонента &quot;%1&quot; в филиал &quot;%2&quot;"/>
+	<Local Name="CenterSeven.Message.Warning.AdmissionTimeInvalid" Russian="Выберите правильное время. С 9:00 до 20:00"/>
+  <Local Name="CenterSeven.Message.Warning.AlreadyCloseWait" Russian="Выбранное ожидание уже закрыто."/>
+  <Local Name="CenterSeven.Message.Question.SendMessagePatients" Russian="Начать процесс рассылки?"/>
+  <Local Name="CenterSeven.Message.Question.CloseWait" Russian="Закрыть ожидание?"/>
+  <Local Name="CenterSeven.Sending" Russian="Отправка сообщения: %1 из %2"/>
+  <Local Name="CenterSeven.SelectBranch" Russian="Выбор филиала"/>
+  <Local Name="CenterSeven.SelectYouCurrentBranch" Russian="Выбери филиал, в котором Вы находитесь сейчас территориально"/>
+  <Local Name="CenterSeven.Branch" Russian="Филиал"/>
+  <Local Name="CenterSeven.CurrentBranch" Russian="Текущий филиал"/>
+  <Local Name="CenterSeven.AllDoctors" Russian="Все врачи"/>
+  <Local Name="CenterSeven.AddWaitAdmission" Russian="Добавить ожидание приёма"/>
+  <Local Name="CenterSeven.CloseWait" Russian="Закрыть ожидание"/>
+  <Local Name="CenterSeven.ChangeStatusAdmission" Russian="Смена статуса приёма"/>
+  <Local Name="CenterSeven.ChangeStatus" Russian="Сменить статус"/>
+  <Local Name="CenterSeven.ChangeStatusComment" Russian="Введите комментарий"/>
+	
+	<!--Demo-->
+	
+	<!--Frame-->
+	
+	<!--Highway-->
+	<Local Name="Highway.Core.Search" Russian="Входящий звонок с номера %1, поиск организации..."/>
+  <Local Name="Highway.Core.SearchComplete" Russian="Найдена организация %1 по номеру %2. Осуществляется перевод звонка абоненту %3"/>
+  <Local Name="Highway.Core.SearchInvalid" Russian="Организация с номером %1 в базе отсутствует"/>
+	<Local Name="Highway.Core.NewRaiting" Russian="Новая оценка качества &quot;%1&quot; для пользователя &quot;%2&quot;"/>
+  
+	<Local Name="Highway.Branches" Russian="Филиалы"/>
+  <Local Name="Highway.Branche" Russian="Филиал"/>
+  <Local Name="Highway.SelectBranche" Russian="Выберите филиал"/>
+  <Local Name="Highway.Branches.Bind" Russian="Привязать"/>
+  <Local Name="Highway.Branches.Rebind" Russian="Отвязать от &quot;%1&quot;"/>
+  <Local Name="Rating.Filter.All1" Russian="Все оценки"/>
+  <Local Name="Highway.Message.Question.Rebind" Russian="Отвязать филиал &quot;%1&quot;?"/>
+	
+	<!--InformResource-->
+	<Local Name="Message.Information.TrasferOrganizationUserDone" Russian="Организаци (%1 шт.) успешно переданы в работу пользователю &quot;%2&quot;."/>
+	<Local Name="Message.Information.OrganizationTakeToWorkDone" Russian="Организации (%1 шт.) успешно взяты Вами в работу."/>
+	<Local Name="Message.Information.ReturnOrganizationDone" Russian="Организации (%1 шт.) успешно возвращены."/>
+	<Local Name="Message.Information.ResetOrganizationExecutor" Russian="Исполнитель успешно сброшен. Затронутых организаций: %1"/>
+	<Local Name="Message.Information.CalculatePercantageOrganizations" Russian="Расчёт процентов заполнения карточек выполнен."/>
+	<Local Name="Message.Question.FoundOrganizationCard" Russian="Найдена организация с ИНН &quot;%2&quot;. Открыть карточку организации?"/>
+	<Local Name="Message.Question.OrganizationTakeToWork" Russian="Вы действительно хотите взять выбранные организации (%1 шт.) в работу?"/>
+	<Local Name="Message.Question.ReturnOrganization" Russian="Вы действительно хотите вернуть организации (%1 шт.) из работы?"/>
+	<Local Name="Message.Question.ResetOrganizationExecutor" Russian="Вы действительно хотите сбросить исполнителя у %1 организаций?"/>
+	<Local Name="Message.Warning.OrganizationAlreadyInWork" Russian="Организация &quot;%1&quot; уже находится в работе у другого пользователя."/>
+	<Local Name="Message.Warning.InvalidINN" Russian="Введен некорректный ИНН!"/>
+	<Local Name="Message.Warning.SaveOrganizationCard" Russian="Прежде чем совершить звонок, сохраните карточку организации!"/>
+	<Local Name="Message.Warning.ErrorConnectionHostDispath" Russian="Не удалось соединиться с сервером отправки."/>
+	<Local Name="Message.Warning.ErrorLoginAndPasswordDispatch" Russian="Ошибка электронной почты или пароля отправителя."/>
+	<Local Name="Message.Warning.ErrorSendingMessageDispatch" Russian="Не удалось отправить сообщение."/>
+	<Local Name="Message.Warning.OrganizationPhoneMainNull" Russian="У организации %1 не заполнено поле &quot;Основной номер&quot;."/>
+	<Local Name="Message.Warning.NotSelectedUserWithTransfer" Russian="Вы не выбрали пользователя для передачи организации в работу!"/>
+	<Local Name="Message.Warning.OkvedNotFound" Russian="Код ОКВЕД по ИНН &quot;%1&quot; не найден!"/>
+	<Local Name="TransferInWork" Russian="Передать в работу"/>
+	<Local Name="TakeOrganization" Russian="Взять в работу"/>
+	<Local Name="ReturnOrganization" Russian="Вернуть организацию"/>
+	<Local Name="ResetExecutor" Russian="Сбросить исполнителя"/>
+	<Local Name="OrganizationNotify" Russian="Напомнить"/>
+	<Local Name="CalculatePercentageFill" Russian="Расчёт процента заполнения"/>
+	<Local Name="Dispatch" Russian="Рассылка"/>
+	<Local Name="OrganizationsInWork" Russian="Организации в работе"/>
+	<Local Name="Organizations" Russian="Организации"/>
+	<Local Name="Organization" Russian="Организация"/>
+	<Local Name="CallHistory" Russian="История звонков"/>
+  <Local Name="InformResource.InputCountDays" Russian="Введите количество дней"/>
+  <Local Name="InformResource.SelectDays" Russian="Отбор по дням"/>
+	<Local Name="DemoAccess" Russian="Демо доступ"/>
+	<Local Name="DemoAccessesInWord" Russian="Демо доступы в работе"/>
+	<Local Name="Score" Russian="Счёт"/>
+	<Local Name="AgreementDateTimeFilter" Russian="Фильтр по дате договоренности"/>
+	<Local Name="CalculatePercentage" Russian="Расчёт процента заполнения организации %1 из %2"/>
+	<Local Name="Dispatching" Russian="Отправка письма в организацию: %1. Осталось отправить: %2"/>
+	<Local Name="InputNote" Russian="Введите примечание"/>
+  <Local Name="InputNoteFromDay" Russian="Введите заметку о дне"/>
+	<Local Name="CallToOrganization" Russian="Позвонить в организацию %1"/>
+	<Local Name="SelectUserFromOrganizationWork" Russian="Выберите пользователя для передачи выбранных (%1) организаций в работу"/>
+	<Local Name="OrganizationInWorkFromUser" Russian="Организация находится в работе у &quot;%1&quot;"/>
+	<Local Name="Protocol.Transfer" Russian="Организация &quot;%1&quot; передана в работу пользователю &quot;%2&quot;"/>
+	
+	<!--MedTech-->
+	<Local Name="Rating.Filter.All" Russian="Все оценки"/>
+	
+	<!--Patriot-->
+  <Local Name="Patriot.Message.Information.CancelVisit" Russian="Посещение успешно отменено!"/>
+	<Local Name="Patriot.Message.Warning.CardDeactivate" Russian="Карта &quot;%1&quot; зарегистрирована как не активная!"/>
+  <Local Name="Patriot.Message.Warning.ClientNotFound" Russian="Клиент по карточке &quot;%1&quot; не найден. Добавить нового клиента?"/>
+	<Local Name="Patriot.Message.Warning.OneVisitLeft" Russian="ВНИМАНИЕ! У клиента &quot;%1&quot; по абонементу &quot;%2&quot; осталось одно посещение, предупредите клиента."/>
+	<Local Name="Patriot.Message.Question.CreateSubscription" Russian="У клиента &quot;%1&quot; абонементы отсутствуют. Добавить новый абонемент?"/>
+	<Local Name="Patriot.Message.Question.CreateCard" Russian="Карта &quot;%1&quot; отсутствует в системе. Привязать её к клиенту?"/>
+  <Local Name="Patriot.Message.Question.CancelVisit" Russian="Отменить выбранное посещение?"/>
+  <Local Name="Patriot.Message.Question.DeactivateCard" Russian="Деактивировать карту %1?"/>
+	<Local Name="Patriot.BirthdayCurrentDate" Russian="Сегодня празднуют день рождения"/>
+	<Local Name="Patriot.Birthdays" Russian="Дни рождения"/>
+	<Local Name="Patriot.WasFulfilled" Russian="Исполнилось %1 лет"/>
+	<Local Name="Patriot.SubscriptionSelect" Russian="Выбор абонемента"/>
+	<Local Name="Patriot.OpenVisit" Russian="Открыть посещение"/>
+	<Local Name="Patriot.CloseVisit" Russian="Закрыть посещение"/>
+	<Local Name="Patriot.Register" Russian="Регистрация посещения"/>
+	<Local Name="Patriot.Trainer" Russian="Тренер"/>
+	<Local Name="Patriot.LabelReport" Russian="Абонементы: %1р. Расходы: %2р."/>
+	<Local Name="Patriot.SubscriptionForVisits" Russian="на %1 посещений. Осталось: %2"/>
+	<Local Name="Patriot.SelectSebscriptionClientForVisit" Russian="Выберите абонемент клиента для посещения"/>
+	<Local Name="Patriot.InputBarcode" Russian="Введите штрих-код"/>
+	<Local Name="Patriot.Notify.OpenVisit" Russian="Открыто посещение. Осталось %1"/>
+	<Local Name="Patriot.Notify.CloseVisit" Russian="Закрыто посещение"/>
+  <Local Name="Patriot.CancelVisit" Russian="Отменить посещение"/>
+  <Local Name="Patriot.Deactivating" Russian="Деактивация"/>
+  <Local Name="Patriot.DeactivatingReason" Russian="Укажите причину деактивации"/>
+  <Local Name="Patriot.DeactivateCard" Russian="Деактивация карты"/>
+	
+	<!--Sirona-->
+	<Local Name="Sirona.Message.Information.AdmissionAlreadyFinished" Russian="Приёи пациента &quot;%1&quot; уже завершен."/>
+  <Local Name="Sirona.Message.Question.OutputListDone" Russian="Вывод списка завершен! Открыть его?"/>
+  <Local Name="Sirona.Message.Question.AdmissionFinished" Russian="Завершить приём пациента &quot;%1&quot; на %2?"/>
+  <Local Name="Sirona.AdmissionFinished" Russian="Завершить приём"/>
+  <Local Name="Sirona.Admission.Filter.All" Russian="Все приёмы"/>
+  <Local Name="Sirona.Admission.Filter.Actial" Russian="Актуальные"/>
+  <Local Name="Sirona.Admission.Filter.Finished" Russian="Завершенные"/>
+  <Local Name="Sirona.SelectFromPeriod" Russian="Выборка по периоду"/>
+  <Local Name="Sirona.TotalMoney.Research" Russian="Наличные: %1р. Безналичные: %2р. Всего: %3р."/>
+  <Local Name="Sirona.TotalMoney.Cost" Russian="Итоговая сумма: %1р."/>
+  <Local Name="Sirona.DoctorBonus" Russian="%1р."/>
+  <Local Name="Sirona.DoctorNotWorkBonus" Russian="По бонусу не работает"/>
+  <Local Name="Sirona.Doctor" Russian="Доктор"/>
+  <Local Name="Sirona.Bonus" Russian="Бонус"/>
+  <Local Name="Sirona.OutputList" Russian="Вывести список"/>
+  <Local Name="Sirona.ReportDoctors" Russian="Отчёт по врачам"/>
+	
+</Localization>

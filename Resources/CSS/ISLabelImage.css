@@ -1,0 +1,14 @@
+QLabel
+{
+    border: 1px solid gray;
+}
+
+QLabel:hover
+{
+    border: 1px solid rgb(42, 141, 212);
+}
+
+QLabel:focus
+{
+    border: 2px solid rgb(42, 141, 212);
+}

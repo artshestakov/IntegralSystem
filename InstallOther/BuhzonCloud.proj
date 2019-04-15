@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Project DefaultTargets="Installer" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+	<PropertyGroup>
+		<SolutionDir>$(MSBuildProjectDirectory)\..\</SolutionDir>
+		<IssScript>$(SolutionDir)Install\BuhzonCloud.iss</IssScript>
+		<BuhzonCloudProject>$(SolutionDir)Projects\BuhzonCloud\BuhzonCloud.vcxproj</BuhzonCloudProject>
+		<DeployFolder>$(SolutionDir)Deploy\Release-Win32\</DeployFolder>
+	</PropertyGroup>
+
+	<Target Name="Installer">
+		<Exec Command="MSBuild $(BuhzonCloudProject) /p:Configuration=Release /p:Platform=Win32 /p:OutDir=$(DeployFolder) /p:PlatformToolset=v120_xp /t:rebuild"/>
+		<Exec Command="$(SolutionDir)Install\WinDeploy_Release-Win32.cmd"/>
+		
+		<Copy SourceFiles="$(SolutionDir)Components\Release-Win32\msvcp120.dll" DestinationFolder="$(DeployFolder)"/>
+		<Copy SourceFiles="$(SolutionDir)Components\Release-Win32\msvcr120.dll" DestinationFolder="$(DeployFolder)"/>
+		
+		<Exec Command="ISCC.exe $(IssScript)"/>
+	</Target>
+</Project>

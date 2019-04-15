@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Buttons">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{1ca8be1f-4b23-4c9a-824d-ff9671ebf6f5}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{81cb5cdc-042a-4c6c-9049-f17141d6e91f}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Labels">
+      <UniqueIdentifier>{841b1f78-9a13-497e-a30e-5d75f8374ab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Edits">
+      <UniqueIdentifier>{80648fd4-e0a4-40f7-aaf1-84a097cee68b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{53458d1a-be4c-43ec-a01c-7bd08844b890}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContextMenu">
+      <UniqueIdentifier>{bedc5fe2-d60c-415b-b89c-6b0d85c00a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialogs">
+      <UniqueIdentifier>{95b4cc18-0480-4dfd-b3ac-dfc5bbde126b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Delegates">
+      <UniqueIdentifier>{ada0f4ee-bf89-479a-ada6-704da6e2cd9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Forms">
+      <UniqueIdentifier>{24b8277c-76b8-443d-881b-0c82ef1ebd24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common Forms">
+      <UniqueIdentifier>{dd312204-152e-4754-b705-c8d8e219be22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Printing">
+      <UniqueIdentifier>{b31b57e7-6933-40a3-89f4-116311223736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widgets">
+      <UniqueIdentifier>{094b0165-7256-4160-924c-8ad9ac30e874}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Calendar">
+      <UniqueIdentifier>{2f6ccacb-c459-4cb7-a218-4f8640bb867d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layout">
+      <UniqueIdentifier>{381f0ff7-f6a7-4d84-9b2b-458d1a385db5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="iscontrols_global.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISControls.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISPageMetrics.h">
+      <Filter>Printing</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ISServiceButton.cpp">
+      <Filter>Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISServiceButton.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISServiceButton.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISButtonClear.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISButtonClear.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISButtonClear.cpp">
+      <Filter>Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="ISControls.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLabelLink.cpp">
+      <Filter>Labels</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISLabelLink.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISLabelLink.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQLineEdit.cpp">
+      <Filter>Edits</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISQLineEdit.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISQLineEdit.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQDoubleSpinBox.cpp">
+      <Filter>Edits</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISQDoubleSpinBox.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISQDoubleSpinBox.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQSpinBox.cpp">
+      <Filter>Edits</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISQSpinBox.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISQSpinBox.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQTextEdit.cpp">
+      <Filter>Edits</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISQTextEdit.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISQTextEdit.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQLabel.cpp">
+      <Filter>Labels</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISQLabel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISQLabel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISContextMenuBase.cpp">
+      <Filter>ContextMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISContextMenuBase.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISContextMenuBase.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISContextMenuText.cpp">
+      <Filter>ContextMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISContextMenuText.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISContextMenuText.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISContextMenuInteger.cpp">
+      <Filter>ContextMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISContextMenuInteger.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISContextMenuInteger.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISContextMenuDouble.cpp">
+      <Filter>ContextMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISContextMenuDouble.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISContextMenuDouble.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISContextMenuDateTime.cpp">
+      <Filter>ContextMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISContextMenuDateTime.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQDateTimeEdit.cpp">
+      <Filter>Edits</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISQDateTimeEdit.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISQDateTimeEdit.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISContextMenuDateTime.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISMessageBox.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISMessageBox.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISContextMenuImage.cpp">
+      <Filter>ContextMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISContextMenuImage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISContextMenuImage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFileDialog.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISFileDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISFileDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPopupDelegate.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPopupDelegate.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPopupDelegate.cpp">
+      <Filter>Delegates</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQComboBox.cpp">
+      <Filter>Edits</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISQComboBox.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISQComboBox.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISInterfaceForm.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISInterfaceForm.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISInterfaceForm.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISInterfaceDialogForm.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISInterfaceDialogForm.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISInterfaceDialogForm.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISImageWidget.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISImageWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISImageWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISBaseTableView.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISBaseTableView.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISButtonDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISButtonDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPopupMessage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPopupMessage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPageMetrics.cpp">
+      <Filter>Printing</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPagesTextEdit.cpp">
+      <Filter>Printing</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPagesTextEdit.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPagesTextEdit.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISScrollArea.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISScrollArea.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISScrollArea.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ISButtonDialog.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPopupMessage.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ISBaseTableView.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMessageBox.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPushButton.cpp">
+      <Filter>Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPushButton.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPushButton.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarPopup.cpp">
+      <Filter>Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISCalendarPopup.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISCalendarPopup.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarWidget.cpp">
+      <Filter>Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISCalendarWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISCalendarWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISListWidget.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISListWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISListWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISToolButton.cpp">
+      <Filter>Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISToolButton.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISToolButton.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFlowLayout.cpp">
+      <Filter>Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISFlowLayout.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISFlowLayout.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPasswordWidthWidget.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPasswordWidthWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPasswordWidthWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISWaitWidget.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISWaitWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISWaitWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISButtonFile.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISButtonFile.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISButtonFile.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISButtonClose.cpp">
+      <Filter>Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISButtonClose.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISButtonClose.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISImageViewerForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISImageViewerForm.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISImageViewerForm.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProcessForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISProcessForm.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISProcessForm.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="ISServiceButton.h">
+      <Filter>Buttons</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISButtonClear.h">
+      <Filter>Buttons</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISLabelLink.h">
+      <Filter>Labels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISQLineEdit.h">
+      <Filter>Edits</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISQDoubleSpinBox.h">
+      <Filter>Edits</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISQSpinBox.h">
+      <Filter>Edits</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISQTextEdit.h">
+      <Filter>Edits</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISQLabel.h">
+      <Filter>Labels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISContextMenuBase.h">
+      <Filter>ContextMenu</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISContextMenuText.h">
+      <Filter>ContextMenu</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISContextMenuInteger.h">
+      <Filter>ContextMenu</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISContextMenuDouble.h">
+      <Filter>ContextMenu</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISContextMenuDateTime.h">
+      <Filter>ContextMenu</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISQDateTimeEdit.h">
+      <Filter>Edits</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISContextMenuImage.h">
+      <Filter>ContextMenu</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISFileDialog.h">
+      <Filter>Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISPopupDelegate.h">
+      <Filter>Delegates</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISQComboBox.h">
+      <Filter>Edits</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISInterfaceForm.h">
+      <Filter>Common Forms</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISInterfaceDialogForm.h">
+      <Filter>Common Forms</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISImageWidget.h">
+      <Filter>Other</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISPagesTextEdit.h">
+      <Filter>Printing</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISScrollArea.h">
+      <Filter>Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISButtonDialog.h">
+      <Filter>Other</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISPopupMessage.h">
+      <Filter>Other</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISBaseTableView.h">
+      <Filter>Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISMessageBox.h">
+      <Filter>Other</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISPushButton.h">
+      <Filter>Buttons</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISCalendarPopup.h">
+      <Filter>Calendar</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISCalendarWidget.h">
+      <Filter>Calendar</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISListWidget.h">
+      <Filter>Other</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISToolButton.h">
+      <Filter>Buttons</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISFlowLayout.h">
+      <Filter>Layout</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISPasswordWidthWidget.h">
+      <Filter>Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISWaitWidget.h">
+      <Filter>Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISButtonFile.h">
+      <Filter>Other</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISButtonClose.h">
+      <Filter>Buttons</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISImageViewerForm.h">
+      <Filter>Forms</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISProcessForm.h">
+      <Filter>Forms</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="SettingsDatabase.xsn">
+
+  <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="SettingName" ObjectForm="ISSettingsDatabaseObjectForm" IsSystem="true">
+    <Fields>
+      <!--Главное-->
+      <Field UID="{4C9623ED-981E-44A5-B3E0-3083F90748EF}" Name="SettingName" Type="String" LabelName="Наименование настройки" LocalListName="Наименование настройки" HideFromObject="true"/>
+      <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" DefaultValue="true" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
+      <Field UID="{F7DA2452-624B-47DA-9A06-01FF1958E537}" Name="Administrator" Type="Int" LabelName="Администратор системы" LocalListName="Администратор системы" Hint="Главный администратор системы"/>
+
+      <!--Организация-->
+      <Field UID="{B2861EC2-B533-4C07-8961-DB714878BDF1}" Name="OrganizationNameFull" Type="String" LabelName="Полное наименование организации" LocalListName="Полное наименование организации" SeparatorName="Организация"/>
+      <Field UID="{BB5C9F2A-89AB-4512-AE34-FD35E7A2FDC5}" Name="OrganizationNameSmall" Type="String" LabelName="Сокращенное наименование организации" LocalListName="Сокращенное полное наименование организации"/>
+      <Field UID="{FDA37094-6A15-4787-8CEB-D53551E92EBD}" Name="GeneralPrincipal" Type="String" LabelName="Генеральный директор" LocalListName="Генеральный директор"/>
+      <Field UID="{5C7F96FE-24A0-4B8A-8869-7ADE94163C5D}" Name="ChiefAccountant" Type="String" LabelName="Главный бухгалтер" LocalListName="Главный бухгалтер"/>
+      <Field UID="{847ECC0A-CA22-4104-B7A2-FC639EB31183}" Name="Storekeeper" Type="String" LabelName="Кладовщик" LocalListName="Кладовщик"/>
+      <Field UID="{FB71E7D4-4C9E-40A8-9C59-5D4A4CEBF3D0}" Name="LegalAddress" Type="String" LabelName="Юридический адрес" LocalListName="Юридический адрес"/>
+      <Field UID="{A56E7B65-13C3-456C-8275-DBBA4F4FD100}" Name="ActualAddress" Type="String" LabelName="Фактический адрес" LocalListName="Фактический адрес"/>
+      <Field UID="{A42151C3-ADD5-491C-844E-7E1CC5931CA1}" Name="INN" Type="Inn" LabelName="ИНН" LocalListName="ИНН" Hint="Идентификационный номер налогоплательщика (ИНН) — цифровой код, упорядочивающий учёт налогоплательщиков в Российской Федерации. Присваивается налоговой записи как юридических, так и физических лиц в Федеральной Налоговой Службе (сокращённо — ФНС). Организациям присваивается с 1993 года, индивидуальным предпринимателям — с 1997 года, прочим физическим лицам — с 1999 года (с начала действия первой части Налогового кодекса Российской Федерации)."/>
+      <Field UID="{886EC035-4DB2-49EB-842A-26FB9963CB55}" Name="KPP" Type="Kpp" LabelName="КПП" LocalListName="КПП" Hint="Для организаций в дополнение к ИНН в связи с постановкой на учет в налоговых органах по основаниям, предусмотренным Налоговым кодексом Российской Федерации, присваивается код причины постановки на учет (КПП)."/>
+      <Field UID="{DAA4B357-7213-4A55-9C8E-98AFF3BB2F3B}" Name="OGRN" Type="String" LabelName="ОГРН" LocalListName="ОГРН" Hint="ОГРН (основной государственный регистрационный номер) — государственный регистрационный номер записи о создании юридического лица либо записи о первом представлении в соответствии с Федеральным законом Российской Федерации «О государственной регистрации юридических лиц» сведений о юридическом лице, зарегистрированном до введения в действие указанного Закона (пункт 8 Правил ведения Единого государственного реестра юридических лиц)."/>
+      <Field UID="{0006BBB1-DD72-448B-8E2A-677EAC810253}" Name="DateRegistration" Type="Date" LabelName="Дата регистрации" LocalListName="Дата регистрации"/>
+      <Field UID="{752702F5-09AF-4E19-9440-A19B46BB78FE}" Name="OKVED" Type="String" LabelName="ОКВЭД" LocalListName="ОКВЭД"/>
+      <Field UID="{679C155D-E1C6-4071-B974-10F353D6CCC2}" Name="OKPO" Type="Okpo" LabelName="ОКПО" LocalListName="ОКПО" Hint="Расшифровка ОКПО - Общероссийский Классификатор Предприятий и Организаций. Код ОКПО - это основной код организаций и индивидуальных предпринимателей в базах Росстата."/>
+      <Field UID="{C4645CB0-CF14-4670-8E05-9139F9DEEDC3}" Name="CheckingAccount" Type="String" LabelName="Расчётный счёт" LocalListName="Расчётный счёт"/>
+      <Field UID="{231C9438-CF37-402D-A973-CF4CCEBBBAFD}" Name="FullNameBank" Type="String" LabelName="Полное наименование банка" LocalListName="Полное наименование банка"/>
+      <Field UID="{66FF7E39-5FF6-4DD7-A2B7-95131536E870}" Name="BIK" Type="Bik" LabelName="Банковский идентификационный номер" LocalListName="Банковский идентификационный номер"/>
+      <Field UID="{AFAF2958-FEA7-4312-8F4D-3EB779C48F82}" Name="AccountCurrency" Type="Int" LabelName="Валюта счёта" LocalListName="Валюта счёта"/>
+
+      <!--Контакты-->
+      <Field UID="{E4774821-BEEE-4B29-88B9-0CB53E4767CB}" Name="PhoneMain" Type="Phone" LabelName="Телефон (основной)" LocalListName="Телефон (основной)" SeparatorName="Контакты"/>
+      <Field UID="{948CE33C-DAD9-4D9F-B0DC-131803EA5733}" Name="PhoneOther" Type="Phone" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
+      <Field UID="{EC74932F-3549-4BE3-9577-4837F5C928A4}" Name="PhoneFax" Type="Phone" LabelName="Телефон (факс)" LocalListName="Телефон (факс)"/>
+      <Field UID="{B375FEE9-5836-4936-B16C-1E834C9DFFF6}" Name="WebSite" Type="String" LabelName="Web-сайт" LocalListName="Web-сайт"/>
+      <Field UID="{36D0CA19-D39C-4B54-8CCA-A59507296E8C}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
+      <Field UID="{333EC997-E589-402B-A9D1-B8C570639EAC}" Name="ICQ" Type="Icq" LabelName="ICQ" LocalListName="ICQ"/>
+      <Field UID="{49EA422F-605C-4BC0-A2EA-4237861E8341}" Name="ContactPerson" Type="String" LabelName="Контактное лицо" LocalListName="Контактное лицо"/>
+      <Field UID="{44128138-313F-43AE-B49B-2066F39D3381}" Name="PhoneContactPerson" Type="Phone" LabelName="Телефон контактного лица" LocalListName="Телефон контактного лица"/>
+
+      <!--Телефония - Asterisk-->
+      <Field UID="{57866504-A45D-4C1E-8A1B-EFEB03A0921E}" Name="AsteriskServer" Type="IPAddress" LabelName="Сервер Asterisk" LocalListName="Сервер Asterisk" SeparatorName="IP-Телефония (Asterisk)" Hint="Адрес сервера на котором установлен программный комплекс Asterisk."/>
+      <Field UID="{96CAD547-D7C7-4108-AA02-88BFE3D395E9}" Name="AsteriskPort" Type="Int" LabelName="Порт" LocalListName="Порт" Hint="Порт по которому разрешено подключение к программному комплексу Asterisk."/>
+      <Field UID="{D825A46E-50A4-43B7-A171-791A46C72139}" Name="AsteriskLogin" Type="String" LabelName="Логин AMI" LocalListName="Логин AMI" Hint="Логин от учётной записи Asterisk Manager API."/>
+      <Field UID="{4C4CF432-5AE8-4FFE-BB31-111EBD99D92A}" Name="AsteriskPassword" Type="Password" LabelName="Пароль AMI" LocalListName="Пароль AMI" Hint="Пароль от учётной записи Asterisk Manager API."/>
+      <Field UID="{0B1A942F-2409-4E36-B460-1A69868968AB}" Name="AsteriskDigitNumbers" Type="Int" LabelName="Максимальная длина внутреннего номера" LocalListName="Максимальная длина внутреннего номера" Hint="Укажите максимальную длину внутренних номеров абонентов, это параметр обязателен для заполнения."/>
+      <Field UID="{737F4AA6-B06D-4357-A479-FC8D1557BF4E}" Name="AsteriskRepositoryRecords" Type="String" LabelName="Хранилище записей разговоров" LocalListName="Хранилище записей разговоров" Hint="Укажите путь к хранилищу с записями разговоров на сервере Asterisk."/>
+      <Field UID="{0350F566-7FD3-4BE4-B650-EA162109AE92}" Name="AsteriskRecordsPort" Type="Int" LabelName="Порт службы записей разговоров" LocalListName="Порт службы записей разговоров" Hint="Порт по которому будут происходить трансляция записей разговров."/>
+      <Field UID="{EC5BFFE4-75D1-4E90-B7F7-C078CC7C5956}" Name="AsteriskRecordsExtension" Type="UID" LabelName="Расширение записей разговоров" LocalListName="Расширение записей разговоров" Hint="Выберите расширение записей разговоров."/>
+
+      <!--Рассылка электронной почты-->
+      <Field UID="{2F55F059-9D14-4106-8013-E717DD66C5B1}" Name="EMailServer" Type="String" LabelName="Почтовый сервер исходящей почты" LocalListName="Почтовый сервер исходящей почты" SeparatorName="Рассылка электронной почты"/>
+      <Field UID="{A1A9D5D7-23B0-4149-924C-DA89B333E46B}" Name="EMailPort" Type="Int" LabelName="Порт" LocalListName="Порт"/>
+      <Field UID="{BB4EC33B-628D-4334-9D54-ABCB6C73B343}" Name="EMailLogin" Type="String" LabelName="Логин" LocalListName="Логин" Hint="Формат логина - ivanov@example.ru"/>
+      <Field UID="{8B033986-082A-490A-97BF-08D5480AF027}" Name="EMailPassword" Type="Password" LabelName="Пароль" LocalListName="Пароль"/>
+      <Field UID="{226CCBD2-8B15-4F40-8D5B-2421A39C5DCD}" Name="EMailName" Type="String" LabelName="Имя отправителя" LocalListName="Имя отправителя" Hint="Имя отправителя будет отображаться у получателя электронного письма."/>
+      
+      <!--СМС-сервис-->
+      <Field UID="{791AEF32-1B1E-447F-8888-D4CF4FF938D2}" Name="SMSLogin" Type="String" LabelName="Логин" LocalListName="Логин" SeparatorName="СМС-сервис"/>
+      <Field UID="{ACF6E0A3-64D3-45F0-8F48-B2EC47D9F494}" Name="SMSPassword" Type="String" LabelName="Пароль" LocalListName="Пароль"/>
+      <Field UID="{B844C2C3-42E7-4AAC-B7DF-DC64EA6E10E2}" Name="SMSEncoding" Type="UID" LabelName="Кодировка" LocalListName="Кодировка"/>
+
+      <!--Логотип-->
+      <Field UID="{9684C2D8-B880-4C38-A3AD-33663F1CA706}" Name="Logo" Type="Image" LabelName="Логотип организации" LocalListName="Логотип организации" ControlWidget="ISImageEdit" SeparatorName="Логотип"/>
+      <Field UID="{B9F6C7D2-3D4F-477D-B4D2-E7F287337FF4}" Name="LogoSmall" Type="Image" LabelName="Логотип организации (уменьшенный)" LocalListName="Логотип организации (уменьшенный)" ControlWidget="ISImageEdit"/>
+
+      <!--Прочее-->
+      <Field UID="{2B485045-EF0E-4DAA-8E31-3CEFC440528C}" Name="InformationMessage" Type="String" LabelName="Информационное сообщение" LocalListName="Информационное сообщение" Hint="Будет отображаться для всех пользователей в главной форме программы." SeparatorName="Прочее"/>
+      <Field UID="{A1BB9779-82E4-49EE-B5B2-4E6AD493644E}" Name="InformationMessageColor" Type="Color" DefaultValueWidget="#000000" LabelName="Цвет информационного сообщения" LocalListName="Цвет информационного сообщения"/>
+
+      <!--Карат-->
+      <Field UID="{E766832B-B1A7-43F3-8125-36788C2D62C5}" Name="CaratSendCrashReport" Type="Bool" DefaultValue="true" LabelName="Отправка отчётов о падении ядер" LocalListName="Отправка отчётов о падении ядер" Hint="В случае падения одного из ядер сервера, будет отправляться электронное письмо разработчику с очётом о падении." SeparatorName="Сервер"/>
+    </Fields>
+    <Indexes>
+      <Index Field="SettingName"/>
+      <Index Field="UserAccessDatabase"/>
+      <Index Field="Administrator"/>
+      <Index Field="OrganizationNameFull"/>
+      <Index Field="OrganizationNameSmall"/>
+      <Index Field="GeneralPrincipal"/>
+      <Index Field="ChiefAccountant"/>
+      <Index Field="Storekeeper"/>
+      <Index Field="LegalAddress"/>
+      <Index Field="ActualAddress"/>
+      <Index Field="INN"/>
+      <Index Field="KPP"/>
+      <Index Field="OGRN"/>
+      <Index Field="DateRegistration"/>
+      <Index Field="OKVED"/>
+      <Index Field="OKPO"/>
+      <Index Field="CheckingAccount"/>
+      <Index Field="FullNameBank"/>
+      <Index Field="BIK"/>
+      <Index Field="AccountCurrency"/>
+      <Index Field="PhoneMain"/>
+      <Index Field="PhoneOther"/>
+      <Index Field="PhoneFax"/>
+      <Index Field="WebSite"/>
+      <Index Field="EMail"/>
+      <Index Field="ICQ"/>
+      <Index Field="ContactPerson"/>
+      <Index Field="PhoneContactPerson"/>
+      <Index Field="AsteriskServer"/>
+      <Index Field="AsteriskPort"/>
+      <Index Field="AsteriskLogin"/>
+      <Index Field="AsteriskPassword"/>
+      <Index Field="AsteriskDigitNumbers"/>
+      <Index Field="AsteriskRepositoryRecords"/>
+      <Index Field="EMailServer"/>
+      <Index Field="EMailPort"/>
+      <Index Field="EMailLogin"/>
+      <Index Field="EMailPassword"/>
+      <Index Field="SMSLogin"/>
+      <Index Field="SMSPassword"/>
+      <Index Field="SMSEncoding"/>
+      <Index Field="Logo"/>
+      <Index Field="LogoSmall"/>
+      <Index Field="InformationMessage"/>
+      <Index Field="InformationMessageColor"/>
+      <Index Field="CaratSendCrashReport"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="AccountCurrency" ForeignClass="_Currency" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="AsteriskRecordsExtension" ForeignClass="_AsteriskRecordsExtension" ForeignField="UID" ForeignViewNameField="Name"/>
+      <Foreign Field="SMSEncoding" ForeignClass="_SMSEncodingType" ForeignField="UID" ForeignViewNameField="Name"/>
+      <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="_AsteriskRecordsExtension" UID="{47F5E49F-8D89-4B05-879C-3180C12FA5F1}" Alias="arex" LocalName="Расширение" LocalListName="Расширения" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{6C9F485A-3FB5-4067-97C0-A10A6AC93C85}" Name="Name" Type="String" LabelName="Расширение" LocalListName="Расширение" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_SMSEncodingType" UID="{68FE312A-77F5-4FAC-A993-F4752C2AB844}" Alias="smse" LocalName="Кодировка сообщения" LocalListName="Кодировки сообщений" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{1E4084F2-3615-4256-A03A-4E8787AE9B21}" Name="Name" Type="String" LabelName="Кодировка" LocalListName="Кодировка" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name"/>
+    </Indexes>
+  </Table>
+    
+</XSN>

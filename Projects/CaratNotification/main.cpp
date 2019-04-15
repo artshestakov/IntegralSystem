@@ -1,0 +1,12 @@
+#include "StdAfx.h"
+#include "ISCoreNotification.h"
+//-----------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+	ISCoreNotification CoreNotification(argc, argv);
+	if (CoreNotification.Invoke())
+	{
+		return CoreNotification.Exec();
+	}
+}
+//-----------------------------------------------------------------------------

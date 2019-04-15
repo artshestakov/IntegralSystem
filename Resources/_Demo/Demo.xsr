@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSR Name="Demo.xsr">
+  <_Systems UID="{4A5BD982-9541-4962-A548-B80022DF216E}" OrderID="3" LocalName="Справочники" Icon="Lists"/>
+  <_SubSystems UID="{81395ADD-CB84-443B-BBC6-063387C92470}" System="{4A5BD982-9541-4962-A548-B80022DF216E}" OrderID="1" LocalName="Типы клиентов" Icon="Table" TableName="ClientType"/>
+
+  <_Systems UID="{3A819D49-274B-478E-94C8-1D5CAA86BC12}" OrderID="4" LocalName="Автосервис" Icon="AutoserviceSystem"/>
+  <_SubSystems UID="{2A9F979F-8099-4C3A-8560-8E9D0C32A9EB}" System="{3A819D49-274B-478E-94C8-1D5CAA86BC12}" OrderID="1" LocalName="Клиенты автосервиса" Icon="Table" TableName="Autoservice_Clients"/>
+
+  <_Systems UID="{D592563A-9906-47A6-B153-6F59B5990DA6}" OrderID="5" LocalName="Сервисный центр" Icon="ServiceCenterSystem"/>
+  <_SubSystems UID="{4C7F77AD-7CB9-46E0-8CA5-DD38309ADE2E}" System="{D592563A-9906-47A6-B153-6F59B5990DA6}" OrderID="1" LocalName="Клиенты центра" Icon="Table" TableName="ServiceCenter_Clients"/>
+
+  <_Systems UID="{EBF85752-E7C8-43C8-B8E5-06B9F938B050}" OrderID="6" LocalName="Зубная клиника" Icon="DentaSystem"/>
+  <_SubSystems UID="{0ADE0E65-833B-447C-A9D9-90AA9983B170}" System="{EBF85752-E7C8-43C8-B8E5-06B9F938B050}" OrderID="1" LocalName="Пациенты" Icon="Table" TableName="Denta_Patients"/>
+
+  <ClientType IsSystem="true" UID="{4D7714AC-FB85-4130-A30F-EBCE777CEA8E}" Name="Физическое лицо"/>
+  <ClientType IsSystem="true" UID="{CB939052-8C90-4EC7-86FC-DC9523B7237C}" Name="Юридическое лицо"/>
+</XSR>

@@ -1,0 +1,15 @@
+﻿QLineEdit
+{
+    border: 1px solid gray;
+}
+
+QLineEdit:hover
+{
+    border: 1px solid rgb(42, 141, 212);
+}
+
+QLineEdit:focus
+{
+    border: 2px groove rgb(42, 141, 212);
+    background-color: rgb(240, 255, 255);
+}

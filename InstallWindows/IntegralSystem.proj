@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Project DefaultTargets="Installer" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+	<PropertyGroup>
+		<Configuration></Configuration>
+		<Platform></Platform>
+		<PlatformToolset></PlatformToolset>
+		<Version></Version>
+		<SolutionDir>$(MSBuildProjectDirectory)\..\</SolutionDir>
+		<IssScript>$(SolutionDir)InstallWindows\IntegralSystem.iss</IssScript>
+		<IssScriptTmp>$(SolutionDir)InstallWindows\IntegralSystem.iss.tmp</IssScriptTmp>
+		<DeployFolder>$(SolutionDir)Deploy\$(Configuration)-$(Platform)\</DeployFolder>
+		<YandexDisk>D:\YandexDisk\IntegralSystem\</YandexDisk> <!--Путь к папке с дистрибутивами программы -->
+		<CurrentDate>$([System.DateTime]::Now.ToString(dd.MM.yyyy))</CurrentDate>
+		
+		<IntegralSystemProject>$(SolutionDir)Projects\IntegralSystem\IntegralSystem.vcxproj</IntegralSystemProject>
+		<CaratProject>$(SolutionDir)Projects\Carat\Carat.vcxproj</CaratProject>
+		<ConfiguratorProject>$(SolutionDir)Projects\Configurator\Configurator.vcxproj</ConfiguratorProject>
+		<DatabaseServiceProject>$(SolutionDir)Projects\DatabaseService\DatabaseService.vcxproj</DatabaseServiceProject>
+		<EMailSenderProject>$(SolutionDir)Projects\EMailSender\EMailSender.vcxproj</EMailSenderProject>
+		
+		<CaratAsteriskQueue>$(SolutionDir)Projects\CaratAsteriskQueue\CaratAsteriskQueue.vcxproj</CaratAsteriskQueue>
+		<CaratAsteriskRecord>$(SolutionDir)Projects\CaratAsteriskRecord\CaratAsteriskRecord.vcxproj</CaratAsteriskRecord>
+		<CaratCalendar>$(SolutionDir)Projects\CaratCalendar\CaratCalendar.vcxproj</CaratCalendar>
+		<CaratMail>$(SolutionDir)Projects\CaratMail\CaratMail.vcxproj</CaratMail>
+		<CaratNotification>$(SolutionDir)Projects\CaratNotification\CaratNotification.vcxproj</CaratNotification>
+		<CaratScheduler>$(SolutionDir)Projects\CaratScheduler\CaratScheduler.vcxproj</CaratScheduler>
+		<CaratSMS>$(SolutionDir)Projects\CaratSMS\CaratSMS.vcxproj</CaratSMS>
+		<CaratTelephony>$(SolutionDir)Projects\CaratTelephony\CaratTelephony.vcxproj</CaratTelephony>
+		
+		<CaratCenterSeven>$(SolutionDir)Projects\CaratCenterSeven\CaratCenterSeven.vcxproj</CaratCenterSeven>
+		<CaratHighway>$(SolutionDir)Projects\CaratHighway\CaratHighway.vcxproj</CaratHighway>
+		<CaratInformResource>$(SolutionDir)Projects\CaratInformResource\CaratInformResource.vcxproj</CaratInformResource>
+		<CaratMedTech>$(SolutionDir)Projects\CaratMedTech\CaratMedTech.vcxproj</CaratMedTech>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(PlatformToolset)'=='v141'">
+		<PlatformName>$(Platform)</PlatformName>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(PlatformToolset)'=='v141_xp'">
+		<PlatformName>XP</PlatformName>
+	</PropertyGroup>
+	
+	<!-- Сборка проектов решения -->
+	<Target Name="Build">
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISSystem $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildResources.cmd $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISNetwork $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISCore $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISControls $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISPrinting $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISFields $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISGui $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISObjects $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISIntegralSystem $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISConfigurator $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISCarat $(Configuration) $(Platform) $(PlatformToolset)"/>
+
+		<Exec Command="MSBuild $(CaratAsteriskQueue) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratAsteriskRecord) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratCalendar) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratMail) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratNotification) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratScheduler) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratSMS) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratTelephony) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		
+		<Exec Command="MSBuild $(CaratCenterSeven) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratHighway) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratInformResource) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratMedTech) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		
+		<Exec Command="MSBuild $(EMailSenderProject) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(DatabaseServiceProject) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(CaratProject) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(ConfiguratorProject) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="MSBuild $(IntegralSystemProject) /p:Configuration=$(Configuration) /p:Platform=$(Platform) /p:OutDir=$(DeployFolder) /p:PlatformToolset=$(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy_$(Configuration)-$(Platform).cmd"/>
+	</Target>
+	
+	<!-- Подготовка скрипта -->
+	<Target Name="InstallScript">
+		<Copy SourceFiles="$(IssScript)" DestinationFiles="$(IssScriptTmp)"/>
+		<FileUpdate Files="$(IssScriptTmp)" Regex="%Configuration%" ReplacementText="$(Configuration)" Encoding="windows-1251"/>
+		<FileUpdate Files="$(IssScriptTmp)" Regex="%Platform%" ReplacementText="$(Platform)" Encoding="windows-1251"/>
+		<FileUpdate Files="$(IssScriptTmp)" Regex="%PlatformName%" ReplacementText="$(PlatformName)" Encoding="windows-1251"/>
+		<FileUpdate Files="$(IssScriptTmp)" Regex="%Version%" ReplacementText="$(Version)" Encoding="windows-1251"/>
+	</Target>
+	
+	<!-- Запуск сборки дистрибутива -->
+	<Target Name="Installer" DependsOnTargets="Build;InstallScript">
+		<Exec Command="ISCC.exe $(IssScriptTmp)"/>
+		<Exec Command="IF NOT EXIST $(YandexDisk)$(CurrentDate) (MKDIR $(YandexDisk)$(CurrentDate))"/>
+		<Message Text="COPYING BUILDED VERSION TO CLOUD..."/>
+		<Exec Command="COPY ..\Output\IntegralSystem_$(Configuration)_$(PlatformName)_$(Version).exe $(YandexDisk)$(CurrentDate)"/>
+		<Message Text="INSTALLING NEW VERSION..."/>
+		<Exec Command="START /wait $(YandexDisk)$(CurrentDate)\IntegralSystem_$(Configuration)_$(PlatformName)_$(Version).exe /SILENT /COMPONENTS=Server"/>
+	</Target>
+</Project>

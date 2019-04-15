@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSR Name="InformResource.xsr">
+  
+  <_Systems IsSystem="false" UID="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="3" LocalName="Справочники" Icon="Lists"/>
+  <_SubSystems UID="{FEF18B5C-5298-4B69-8D26-21D71845A4F2}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="1" LocalName="Системы НО" Icon="Lists" TableName="SystemNO"/>
+  <_SubSystems UID="{1620706F-9C22-4EED-AFDA-F0225899DA55}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="2" LocalName="Статусы организаций" Icon="Lists" TableName="OrganizationStatus"/>
+  <_SubSystems UID="{BB52550E-B11E-452F-9A1A-6108EECC4589}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="3" LocalName="Категории организаций" Icon="Lists" TableName="OrganizationCategory"/>
+  <_SubSystems UID="{4D3E78E1-2430-4B16-B4E6-28BF5E751F92}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="4" LocalName="Результаты звонков" Icon="Lists" TableName="CallResult"/>
+  <_SubSystems UID="{C15223CC-8BCD-4E3F-8B03-639960CC4F87}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="5" LocalName="Статусы журнала" Icon="Lists" TableName="Journals"/>
+  <_SubSystems UID="{F4233E4E-6872-4F37-8DDA-B7C65D05589E}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="6" LocalName="Должности физ. лиц" Icon="Lists" TableName="PersonPosition"/>
+  <_SubSystems UID="{A0137CCF-33FC-49E6-9F89-1B7926358618}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="7" LocalName="Статусы физ. лиц" Icon="Lists" TableName="PersonStatus"/>
+  <_SubSystems UID="{77E0B453-5BBD-4B1E-B96D-8F155B861E04}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="8" LocalName="Журналы физ. лиц" Icon="Lists" TableName="PersonJournal"/>
+  <_SubSystems UID="{DB23EE18-D3F1-4F08-A733-1B9FD8C6CBC7}" System="{6D3B3EB2-989E-4D98-9FD9-2062B4DE345E}" OrderID="9" LocalName="Типы позиций" Icon="Lists" TableName="PriceListType"/>
+
+  <_Systems IsSystem="false" UID="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
+  <_SubSystems UID="{05D848AD-0F5A-45F1-989A-1A8AC1E19DD7}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="1" LocalName="Организации" Icon="Lists" ClassName="ISOrganizationListForm"/>
+  <_SubSystems UID="{D89FA8D3-76A2-46FD-9C99-AB04B80B5766}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="2" LocalName="Рабочие организации" Icon="Lists" ClassName="ISOrganizationWorkListForm"/>
+  <_SubSystems UID="{01C658A1-0FAB-4910-9117-07F61486BBF3}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="3" LocalName="Мои организации" Icon="Lists" ClassName="ISOrganizationMyListForm"/>
+  <_SubSystems UID="{3156FF63-13D2-494A-8287-1B15D2CE8053}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="4" LocalName="Статистика звонков" Icon="Lists" ClassName="ISCallUserStatisticsForm"/>
+  <_SubSystems UID="{D835D68D-47C7-4C56-B7AD-511864B0EDD7}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="5" LocalName="Физ. лица" Icon="Lists" TableName="Person"/>
+  <_SubSystems UID="{E866F7C7-CB5E-4247-ADD4-E0BE8B9F3D7E}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="6" LocalName="Рассылки" Icon="Lists" ClassName="ISDispatchListForm"/>
+  <_SubSystems UID="{4B51167A-DAD9-44F9-A310-6145F55801E3}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="7" LocalName="Прайс-лист" Icon="Lists" TableName="PriceList"/>
+  <_SubSystems UID="{FBB16AD3-B2DA-4EB0-863F-FBE18A05E64D}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="8" LocalName="Счета" Icon="Lists" TableName="Score"/>
+  <_SubSystems UID="{E6E68B07-8A1F-42CA-89FA-A3FD555744DF}" System="{563484CB-FC0F-4831-A012-7B273AE3BEBD}" OrderID="9" LocalName="Счета на организации" Icon="Lists" TableName="OrganizationScore"/>
+
+  <_Systems IsSystem="false" UID="{0313CE13-5AB6-4BF0-8639-3DA00874E920}" OrderID="5" LocalName="Демо доступ" Icon="Lists"/>
+  <_SubSystems UID="{34E9D189-510C-4530-89C8-9AF78160073A}" System="{0313CE13-5AB6-4BF0-8639-3DA00874E920}" OrderID="1" LocalName="Демо доступы" Icon="Lists" ClassName="ISDemoAccessesListForm"/>
+  <_SubSystems UID="{F4DA4DA3-3B8B-4ED0-9987-0A4C1C452E8B}" System="{0313CE13-5AB6-4BF0-8639-3DA00874E920}" OrderID="2" LocalName="Созданные мной" Icon="Lists" ClassName="ISDemoAccessesMyCreatedListForm"/>
+  <_SubSystems UID="{6E96479F-9BB6-4A24-A8B0-888131444AC2}" System="{0313CE13-5AB6-4BF0-8639-3DA00874E920}" OrderID="3" LocalName="Мои в работе" Icon="Lists" ClassName="ISDemoAccessesMyListForm"/>
+
+  <_ProtocolType IsSystem="true" UID="{075934CA-4E4F-47E6-966F-C3D4991F2B03}" Name="Организация взята в работу"/>
+  <_ProtocolType IsSystem="true" UID="{34276F25-252F-4AF0-859F-D18AB94BF5FF}" Name="Организация возвращена"/>
+  <_ProtocolType IsSystem="true" UID="{BB6C46A0-C8E4-48F7-AC19-3A31D8FE7888}" Name="Организация передана в работу"/>
+
+  <TermScore IsSystem="true" UID="{776AA0C4-B373-44D7-88F1-72BACE94EB0F}" Name="6 месяцев"/>
+  <TermScore IsSystem="true" UID="{29514776-C570-4A92-B265-1413B6683037}" Name="12 месяцев"/>
+  <TermScore IsSystem="true" UID="{99BBD9DE-7647-45A9-BABA-7ECAA8E903EC}" Name="18 месяцев"/>
+
+  <_UserGroupAccessSpecialType IsDeleted="true" IsSystem="true" UID="{37491D3A-0261-42EC-9CB2-FB3DAC320D0A}" Name="Рабочий стол: фильтрация по сотруднику" Description="Возможность просматривать работу любого сотрудника"/>
+
+  <CallResult IsSystem="true" UID="{5A92BB6B-9D51-4189-8BCE-787792964C99}" Name="Вызов абонента"/>
+
+  <_GroupAccessSpecialType IsSystem="true" UID="{4A4360B5-22BA-4945-94C4-A5373EBDAE58}" Name="Информ ресурс МИР" Order="0"/>
+  <_GroupAccessSpecialType IsSystem="true" UID="{D67DE9D1-0092-406D-910C-0E11ED820561}" Parent="{4A4360B5-22BA-4945-94C4-A5373EBDAE58}" Name="Список пользователей на рабочем столе" Hint="Пользователь сможет просматривать рабочий процесс другого пользователя." Order="1"/>
+
+  <_Notification IsSystem="true" UID="{F436CA43-860B-4728-83E1-0F38A05A6282}" Name="AnOrganization" Message="За Вами закреплена организация!" SoundFileName="Information" ShowPopup="true"/>
+  <_Notification IsSystem="true" UID="{B40F9074-D3CB-4006-AA51-D48BD45825DE}" Name="NewOrganizationScore" Message="Новый счёт на организацию." SoundFileName="Information" ShowPopup="true"/>
+
+  <_CaratCore UID="{97599AF2-4E7E-4FBE-BECE-176416BCE025}" Name="InformResource" FileName="CaratInformResource" LocalName="ООО Информ Ресурс МИР"/>
+  
+</XSR>

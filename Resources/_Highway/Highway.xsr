@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSR Name="Highway.xsr">
+
+  <_Systems IsSystem="false" UID="{0DB73EDC-29F3-4016-9D8C-BB989D1932E5}" OrderID="3" LocalName="Справочники" Icon="Lists"/>
+  <_SubSystems UID="{877378A2-00E6-47CC-9091-713FA8A514F8}" System="{0DB73EDC-29F3-4016-9D8C-BB989D1932E5}" OrderID="1" LocalName="Типы организаций" Icon="Lists" TableName="OrganizationType"/>
+  <_SubSystems UID="{E02689D2-C16D-44DA-A574-7AD9BDF3F320}" System="{0DB73EDC-29F3-4016-9D8C-BB989D1932E5}" OrderID="2" LocalName="Услуги подрядчиков" Icon="Lists" TableName="ContractorService"/>
+  <_SubSystems UID="{3E1A7349-867B-4EE2-94DE-97C982C6E50B}" System="{0DB73EDC-29F3-4016-9D8C-BB989D1932E5}" OrderID="3" LocalName="Типы подрядчиков" Icon="Lists" TableName="ContractorType"/>
+  
+  <_Systems IsSystem="false" UID="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
+  <_SubSystems UID="{6A8EF9FD-A251-461D-801B-0C40B5617381}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="1" LocalName="Организации" Icon="Lists" ClassName="ISHighwayOrganizationListForm"/>
+  <_SubSystems UID="{44859DC4-D878-483B-99B1-5A47A74A9368}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="2" LocalName="Мои организации" Icon="Lists" ClassName="ISHighwayOrganizationMyListForm"/>
+  <_SubSystems UID="{D45CC32C-14BF-45AA-B809-2D2E5F526C4F}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="3" LocalName="Оценка качества" Icon="Lists" TableName="Raiting"/>
+  <_SubSystems UID="{863E52D9-50FA-46D8-B45C-D72E35FFD347}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="4" LocalName="Подрядчики" Icon="Lists" TableName="Contractor"/>
+  <_SubSystems IsDeleted="true" UID="{223039AA-FA0B-407E-AF96-F367A38F2D2C}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="5" LocalName="Счета" Icon="Lists" ClassName="ISHighwayBillsListForm"/>
+  
+  <_CaratCore UID="{C8BD41EF-04F6-4A2B-A231-805FD0665AF1}" Name="Highway" FileName="CaratHighway" LocalName="ООО Магистраль"/>
+  
+</XSR>

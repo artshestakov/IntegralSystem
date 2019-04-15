@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="CenterSeven.xsn">
+
+  <Table Name="Patients" UID="{727AE890-F90A-4373-A2F7-68D1FF24B20A}" Alias="ptnt" LocalName="Пациент" LocalListName="Пациенты" ObjectForm="ISCenterSevenPatientsObjectForm" TitleName="FIO">
+    <Fields>
+      <Field UID="{00AEA138-0534-4D52-B995-B72FE35B4167}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true" LayoutName="FIO"/>
+      <Field UID="{6776A575-3149-4D30-99E2-27D08B3D8DD4}" Name="Doctor" Type="Int" LabelName="Ответственный врач" LocalListName="Ответственный врач" NotNull="true"/>
+      <Field UID="{263AD0AD-206C-49E8-BB75-D7C258F94108}" Name="DateOfBirth" Type="Date" LabelName="Дата рождения" LocalListName="Дата рождения" LayoutName="FIO"/>
+      <Field UID="{3C5FF94B-4C84-4E45-A3D8-CA8D2ADEFC73}" Name="Age" Type="Int" LabelName="Возраст" LocalListName="Возраст" LayoutName="FIO"/>
+      <Field UID="{0C35180D-610C-4CCF-BCDA-41D2F18EA2E4}" Name="Sex" Type="Int" LabelName="Пол" LocalListName="Пол" LayoutName="PersonInfo" NotNull="true"/>
+      <Field UID="{8D440708-F07E-4CA4-8D4D-41DF893E30D5}" Name="Passport" Type="Passport" LabelName="Паспорт" LocalListName="Паспорт" LayoutName="PersonInfo"/>
+      <Field UID="{915AD0F9-C613-4EF3-912D-B1334DABE4FA}" Name="Address" Type="Address" LabelName="Адрес" LocalListName="Адрес"/>
+      <Field UID="{E1E436B5-74C9-49EF-911F-965452EBD057}" Name="PhoneMain" Type="PhoneBase" LabelName="Телефон (сотовый)" LocalListName="Телефон (сотовый)" Hint="На этот номер будет происходить отправка СМС-сообщений." LayoutName="Contacts"/>
+      <Field UID="{05531DE8-73D8-4372-949D-3743106144AC}" Name="PhoneOther" Type="PhoneBase" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)" LayoutName="Contacts"/>
+      <Field UID="{7FB8FD98-4ED6-4843-A29D-EE54D8059ADD}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта" HideFromList="true"/>
+      <Field UID="{E5B5D538-5067-47A3-9772-9323F86D83FC}" Name="RefuseMailings" Type="Bool" DefaultValue="false" LabelName="Отказ от рассылок" LocalListName="Отказ от рассылок" HideFromList="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="FIO"/>
+      <Index Field="Doctor"/>
+      <Index Field="DateOfBirth"/>
+      <Index Field="Age"/>
+      <Index Field="Sex"/>
+      <Index Field="Passport" Unique="true"/>
+      <Index Field="Address"/>
+      <Index Field="PhoneMain" Unique="true"/>
+      <Index Field="PhoneOther" Unique="true"/>
+      <Index Field="EMail"/>
+      <Index Field="RefuseMailings"/>
+      <Index Field="FIO;DateOfBirth" Unique="true"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Doctor" ForeignClass="Doctor" ForeignField="ID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Sex" ForeignClass="_Sex" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+    <Escorts>
+      <Escort LocalName="Записи на приём" TableName="Admission" ClassFilter="adms_patient = :ParentObjectID"/>
+      <Escort LocalName="Дневник лечения" TableName="PatientTreatment" ClassFilter="ptrt_patient = :ParentObjectID"/>
+      <Escort LocalName="Изображения" TableName="PatientImage" ClassFilter="pimg_patient = :ParentObjectID"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="Doctor" UID="{D8FE73C1-37C3-428A-93BF-59687EEF049F}" Alias="dctr" LocalName="Врач" LocalListName="Врачи" TitleName="FIO">
+    <Fields>
+      <Field UID="{1D08548C-D3E2-4ECB-BB91-FA8E71219111}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
+      <Field UID="{3B1AB9FF-F5ED-4C2C-A92D-5BCA5D885B89}" Name="PhoneMain" Type="PhoneBase" LabelName="Телефон (основной)" LocalListName="Телефон (основной)" LayoutName="Phone"/>
+      <Field UID="{A77B1CEF-BDAF-4C71-855D-E0F80B66B5A5}" Name="PhoneOther" Type="PhoneBase" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)" LayoutName="Phone"/>
+    </Fields>
+    <Indexes>
+      <Index Field="FIO" Unique="true"/>
+      <Index Field="PhoneMain"/>
+      <Index Field="PhoneOther"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Admission" UID="{5AF3BE85-DF58-4C14-BC16-B6B81DDE6BE6}" Alias="adms" LocalName="Запись на приём" LocalListName="Записи на приём" TitleName="Time" ObjectForm="ISCenterSevenAdmissionObjectForm">
+    <Fields>
+      <Field UID="{1FC3F645-C986-410F-8430-2DEA8699E010}" Name="Branch" Type="Int" LabelName="Филиал" LocalListName="Филиал" HideFromObject="true" NotNull="true"/>
+      <Field UID="{17E026B0-736D-433D-9557-A4BFF5ED949E}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус" HideFromObject="true" NotNull="true"/>
+      <Field UID="{E0E05CE7-37E6-416B-952A-E445AA3D53FE}" Name="StatusComment" Type="String" LabelName="Комментарий к статусу" LocalListName="Комментарий к статусу" HideFromObject="true"/>
+      <Field UID="{34C92F7B-6E10-4C49-B67D-D04CC8649846}" Name="Place" Type="Int" LabelName="Кресло" LocalListName="Кресло"/>
+      <Field UID="{5BAB42CC-7619-4FA8-B6CE-48A8D98C19C6}" Name="Doctor" Type="Int" ReadOnly="true" LabelName="Врач" LocalListName="Врач" NotNull="true"/>
+      <Field UID="{1CED9218-36B8-48D3-8BCE-FB3400836F6B}" Name="Patient" Type="Int" LabelName="Пациент" LocalListName="Пациент" NotNull="true"/>
+      <Field UID="{06EA1427-5D12-48C2-BABE-BD0400549516}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" HideFromObject="true" NotNull="true"/>
+      <Field UID="{57D9A352-2BE1-4C17-B0C8-55B2F08BA7C9}" Name="Time" Type="Time" LabelName="Время" LocalListName="Время" NotNull="true" LayoutName="Time"/>
+      <Field UID="{83BF6CA2-8186-42C5-AA30-AC652CAD37B3}" Name="NotifyDateTime" Type="DateTime" LabelName="Напомнить" LocalListName="Напомнить" LayoutName="Time"/>
+      <Field UID="{4D69725D-6575-4312-90F8-6F1A19E2BEA0}" Name="PhoneMain" Type="String" LabelName="Телефон (основной)" LocalListName="Телефон (основной)" QueryText="SELECT ptnt_phonemain FROM patients WHERE ptnt_id = adms_patient"/>
+      <Field UID="{C040B61B-7C18-40F8-8561-B4F993427FD2}" Name="PhoneOther" Type="String" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)" QueryText="SELECT ptnt_phoneother FROM patients WHERE ptnt_id = adms_patient"/>
+      <Field UID="{776F729E-6032-45E0-BC8D-3CF863683CCE}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Branch"/>
+      <Index Field="Status"/>
+      <Index Field="Place"/>
+      <Index Field="Doctor"/>
+      <Index Field="Patient"/>
+      <Index Field="Date"/>
+      <Index Field="Time"/>
+      <Index Field="NotifyDateTime"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Branch" ForeignClass="Branches" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Status" ForeignClass="AdmissionStatus" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Place" ForeignClass="Places" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Doctor" ForeignClass="Doctor" ForeignField="ID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Patient" ForeignClass="Patients" ForeignField="ID" ForeignViewNameField="FIO"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="AdmissionStatus" UID="{4D1575D8-FE05-424E-9C36-5AB363991AD0}" Alias="adst" LocalName="Статус записи на приём" LocalListName="Статусы записи на приём" TitleName="Name">
+    <Fields>
+      <Field UID="{B60AC301-B526-47DA-A9D5-8316B7428BA7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{87C3F415-57AD-41DD-AC69-18232ABD2D18}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name"/>
+      <Index Field="Order"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="PatientImage" UID="{3BC8EC09-03D7-46B3-B289-172D91533E66}" Alias="pimg" LocalName="Изображения" LocalListName="Изображения" TitleName="Patient" ClassFilterField="Patient">
+    <Fields>
+      <Field UID="{7363A808-5446-4961-AD4B-DB917F8E18BF}" Name="Patient" Type="Int" LabelName="Пациент" LocalListName="Пациент" HideFromList="true" HideFromObject="true" NotNull="true"/>
+      <Field UID="{339EB7A4-FB24-475B-9746-2CDB7E9C9BD5}" Name="Image" Type="Image" LabelName="Изображение" LocalListName="Изображение" NotNull="true"/>
+      <Field UID="{DD068326-7E12-4C5E-A18C-D8532DCE70C0}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Patient"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Patient" ForeignClass="Patients" ForeignField="ID" ForeignViewNameField="FIO"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="PatientTreatment" UID="{02BFB643-3B6D-4173-9A3E-27B913B7658A}" Alias="ptrt" LocalName="Лечение" LocalListName="Лечения" TitleName="Patient" ClassFilterField="Patient">
+    <Fields>
+      <Field UID="{AFD9DBED-38AD-4EB6-A49E-705A0C566E66}" Name="Patient" Type="Int" LabelName="Пациент" LocalListName="Пациент" HideFromList="true" HideFromObject="true" NotNull="true"/>
+      <Field UID="{95F56BA6-8E97-4E09-8242-657EE3BC8BF5}" Name="Doctor" Type="Int" LabelName="Врач" LocalListName="Врач" NotNull="true"/>
+      <Field UID="{ECF89D26-7C0B-4074-8977-E8013ED5003B}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+      <Field UID="{3B33D44A-FC61-4B76-87D0-00F62C3C6AF8}" Name="Teeth" Type="Int" LabelName="Зуб" LocalListName="Зуб" NotNull="true"/>
+      <Field UID="{D74D9A83-F5A7-4BE5-8513-D5C8319AA312}" Name="Complaints" Type="String" LabelName="Жалобы" LocalListName="Жалобы"/>
+      <Field UID="{DEB6444C-7E14-445B-895F-3D6F5AB9986D}" Name="Anamnesis" Type="String" LabelName="Анамнез" LocalListName="Анамнез"/>
+      <Field UID="{3A3DDF72-F1FA-4E2C-9BB6-A8FFC0BF022F}" Name="Objectively" Type="String" LabelName="Объективно" LocalListName="Объективно"/>
+      <Field UID="{78A9F99F-69A9-4D78-87FB-EE2F330C43AB}" Name="Diagnosis" Type="Int" LabelName="Диагноз" LocalListName="Диагноз"/>
+      <Field UID="{9C42E5F3-C59B-4141-BE50-69AC094170D1}" Name="TreatmentType" Type="Int" LabelName="Тип лечения" LocalListName="Тип лечения"/>
+      <Field UID="{BE496CBA-076E-4C99-A6A8-66A662D7EDE3}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
+      <Field UID="{F7141933-5149-4568-AC0A-8552BAA44C6E}" Name="Image" Type="Image" LabelName="Изображение" LocalListName="Изображение"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Patient"/>
+      <Index Field="Doctor"/>
+      <Index Field="Date"/>
+      <Index Field="Teeth"/>
+      <Index Field="Complaints"/>
+      <Index Field="Anamnesis"/>
+      <Index Field="Objectively"/>
+      <Index Field="Diagnosis"/>
+      <Index Field="TreatmentType"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Patient" ForeignClass="Patients" ForeignField="ID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Doctor" ForeignClass="Doctor" ForeignField="ID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Teeth" ForeignClass="Teeth" ForeignField="ID" ForeignViewNameField="Order"/>
+      <Foreign Field="Diagnosis" ForeignClass="Diagnosis" ForeignField="ID" ForeignViewNameField="Description"/>
+      <Foreign Field="TreatmentType" ForeignClass="TreatmentType" ForeignField="ID" ForeignViewNameField="Description"/>
+    </Foreigns>
+  </Table>
+  
+  <Table Name="TreatmentType" UID="{0A0E6292-50D2-48A6-BB18-4C72B1ED28EF}" Alias="trtp" LocalName="Тип лечения" LocalListName="Типы лечения" TitleName="Description">
+    <Fields>
+      <Field UID="{9728D2DE-5000-4B57-9198-011E35FB67DE}" Name="Description" Type="Text" LabelName="Описание лечения" LocalListName="Описание лечения" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Description" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Diagnosis" UID="{71996A27-A44B-4C49-AD8C-DD01A4F4BB94}" Alias="dgns" LocalName="Диагноз" LocalListName="Диагнозы" TitleName="Description">
+    <Fields>
+      <Field UID="{0919542B-8931-41CD-9234-A6A828FE04DB}" Name="Description" Type="Text" LabelName="Описание диагноза" LocalListName="Описание диагноза" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Description" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="WaitAdmission" UID="{0F81497E-537F-4486-9156-24A71A48743C}" Alias="wadm" ShowOnly="true" LocalName="Ожидание приёма" LocalListName="Ожидание приёмов" TitleName="DateTimeCallBack">
+    <Fields>
+      <Field UID="{A32ED68B-4DC1-4FE9-8754-CC421E0B1520}" Name="Branch" Type="Int" LabelName="Филиал" LocalListName="Филиал"/>
+      <Field UID="{39E404CC-0893-493B-AD17-4E437E96A812}" Name="Patient" Type="Int" LabelName="Пациент" LocalListName="Пациент" NotNull="true"/>
+      <Field UID="{E72295D1-15D1-4991-9A83-BB7A06D85AF7}" Name="DateTimePhoned" Type="DateTime" LabelName="Звонил" LocalListName="Звонил" NotNull="true"/>
+      <Field UID="{024D69E5-5A66-46CD-805F-4BD66B93964F}" Name="DateTimeCallBack" Type="DateTime" LabelName="Перезвонить" LocalListName="Перезвонить" NotNull="true"/>
+      <Field UID="{7ADAE5BD-AF4F-4AFB-AAA4-446216F91B60}" Name="Closed" Type="Bool" DefaultValue="false" LabelName="Закрыто" LocalListName="Закрыто" HideFromObject="true" NotNull="true"/>
+      <Field UID="{939A2780-2DA7-4988-BA64-BE6CED5A99FE}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Branch"/>
+      <Index Field="Patient"/>
+      <Index Field="DateTimePhoned"/>
+      <Index Field="DateTimeCallBack"/>
+      <Index Field="Closed"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Branch" ForeignClass="Branches" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Patient" ForeignClass="Patients" ForeignField="ID" ForeignViewNameField="FIO"/>
+    </Foreigns>
+  </Table>
+  
+  <Table Name="Branches" UID="{1B53122D-9DF3-4265-9835-FA84C584A6D9}" Alias="brch" LocalName="Филиал" LocalListName="Филиалы" TitleName="Name">
+    <Fields>
+      <Field UID="{B9ABE950-9A7C-47E1-A23A-61601C253EB4}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{2265E84A-E8EB-4938-9F35-A28C6972A91F}" Name="Address" Type="Address" LabelName="Адрес" LocalListName="Адрес"/>
+      <Field UID="{D3F34D89-0471-486A-8B8D-F7B2567D5212}" Name="Administrator" Type="Int" LabelName="Администратор" LocalListName="Администратор" NotNull="true"/>
+      <Field UID="{20D37DE4-52A8-4FEF-BE6E-2351ACF34A23}" Name="AliasBranch" Type="String" LabelName="Псевдоним филиала" LocalListName="Псевдоним филиала" NotNull="true" HideFromList="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Address" Unique="true"/>
+      <Index Field="Administrator" Unique="true"/>
+      <Index Field="AliasBranch" Unique="true"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+    </Foreigns>
+    <Escorts>
+      <Escort LocalName="Номера филиала" TableName="BranchNumbers" ClassFilter="brnm_branch = :ParentObjectID"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="BranchNumbers" UID="{D978C7C4-C84C-4B40-9EC4-FC6B2DCADE6E}" Alias="brnm" LocalName="Номер филиала" LocalListName="Номера филиала" ClassFilterField="Branch" TitleName="Number">
+    <Fields>
+      <Field UID="{07FCC3EB-D6C0-474C-A2B1-19554C8C70A8}" Name="Branch" Type="Int" LabelName="Филиал" LocalListName="Филиал" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{131F2132-C2AD-485C-8376-1DE01798F935}" Name="Number" Type="Int" LabelName="Внутренний номер" LocalListName="Внутренний номер" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Branch"/>
+      <Index Field="Number"/>
+      <Index Field="Branch;Number" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Places" UID="{DE72922F-079E-4674-BF26-3D76F9C260FF}" Alias="arch" LocalName="Кресло" LocalListName="Кресла" TitleName="Name">
+    <Fields>
+      <Field UID="{310D35A4-4F0C-45F5-A776-18BC737F058A}" Name="Branch" Type="Int" LabelName="Филиал" LocalListName="Филиал" NotNull="true"/>
+      <Field UID="{F3B08D8A-1762-4AF0-AC71-4FE955498D5B}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{BF55C24F-C785-4589-AD4C-CF6E5560EEFD}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Branch"/>
+      <Index Field="Name"/>
+      <Index Field="Order"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Branch" ForeignClass="Branches" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Change" UID="{29D1E444-4E85-4917-9ABB-64AD420A60D8}" Alias="chng" ShowOnly="true" LocalName="Смена" LocalListName="Смены" TitleName="Name">
+    <Fields>
+      <Field UID="{1DE2C792-C99F-4523-B3A5-8F07F155BD56}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{C7C81C92-3C73-437F-9DEE-40892CCDD383}" Name="Number" Type="String" LabelName="Номер" LocalListName="Номер" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Number" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Teeth" UID="{37CBB2D3-5CA8-4A9C-AB79-38A18CAADE51}" Alias="teth" ShowOnly="true" LocalName="Зуб" LocalListName="Зубы" TitleName="Name">
+    <Fields>
+      <Field UID="{3BC8F052-148C-4082-AEC8-A8CC4A357866}" Name="Order" Type="String" LabelName="Номер зуба" LocalListName="Номер зуба" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Order" Unique="true"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="SMSTemplate" UID="{BAB5F7BF-7C9A-4751-A027-79EB95373392}" Alias="stmp" LocalName="Шаблон СМС-сообщения" LocalListName="Шаблоны СМС-сообщений" TitleName="Name">
+    <Fields>
+      <Field UID="{45802C96-1BE5-4265-97E4-865A9584FD3C}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{224CEF1F-BB86-4360-BED7-8C3729122500}" Name="Text" Type="Text" LabelName="Текст сообщения" LocalListName="Текст сообщения" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Text" Unique="true"/>
+    </Indexes>
+  </Table>
+  
+</XSN>

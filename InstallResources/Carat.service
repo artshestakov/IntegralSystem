@@ -1,0 +1,11 @@
+[Unit]
+Description=Carat
+After=network.target postgresql-9.2.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/bin/sh -c 'LD_LIBRARY_PATH=/opt/IntegralSystem /opt/IntegralSystem/Carat -e'
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,71 @@
+﻿QPushButton, QToolButton
+{
+	background-color: rgb(235, 235, 235);
+    border-width: 1px;
+    border-color: rgb(187, 187, 187);
+    border-style: solid;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+QPushButton:flat
+{
+	border: none;
+	background-color: transparent;
+}
+
+QPushButton:hover, QToolButton:hover
+{
+	background-color: rgb(187, 187, 187);
+    border-color: rgb(100, 100, 100);
+}
+
+QPushButton:pressed, QToolButton:pressed
+{
+	background-color: rgb(153, 153, 153);
+    border-color: rgb(136, 136, 136);
+}
+
+QPushButton:focus, QToolButton:focus
+{
+	border-color: rgb(70, 70, 70);
+    outline: none;
+}
+
+QPushButton:checked, QToolButton:checked
+{
+    background-color: rgb(153, 153, 153);
+    border-color: rgb(100, 100, 100);
+}
+
+QPushButton::menu-indicator
+{
+    image: none;
+    width: 0px;
+}
+
+QToolButton::menu-arrow
+{
+    top: 1px;
+    left: 1px;
+}
+
+QToolButton[popupMode="1"]
+{
+    padding-right: 20px;
+}
+
+QToolButton::menu-button
+{
+	background-color: rgb(235, 235, 235);
+    border-width: 1px;
+    border-color: rgb(187, 187, 187);
+    border-style: solid;
+	width: 15px;
+}
+
+QToolButton::menu-button:hover
+{
+	background-color: rgb(187, 187, 187);
+    border-color: rgb(100, 100, 100);
+}

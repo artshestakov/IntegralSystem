@@ -1,0 +1,59 @@
+#include "StdAfx.h"
+#include "ISTransferOrganizationForm.h"
+#include "EXDefines.h"
+#include "ISLocalization.h"
+#include "ISButtonDialog.h"
+//-----------------------------------------------------------------------------
+ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount, QWidget *parent) : ISInterfaceDialogForm(parent)
+{
+	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	ForbidResize();
+
+	QLabel *Label = new QLabel(LOCALIZATION("SelectUserFromOrganizationWork").arg(OrganizationCount), this);
+	Label->setWordWrap(true);
+	GetMainLayout()->addWidget(Label);
+
+	QFormLayout *FormLayout = new QFormLayout();
+	GetMainLayout()->addLayout(FormLayout);
+
+	UserEdit = new ISUserEdit(this);
+	FormLayout->addRow(LOCALIZATION("User") + ":", UserEdit);
+
+	DateEdit = new ISDateEdit(this);
+	DateEdit->SetMinimumDate(DATE_TODAY);
+	DateEdit->SetCheckEnable(Qt::Checked);
+	DateEdit->SetVisibleCheck(false);
+	FormLayout->addRow(LOCALIZATION("Date") + ":", DateEdit);
+
+	ISButtonDialog *ButtonDialog = new ISButtonDialog(this);
+	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISTransferOrganizationForm::Select);
+	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISTransferOrganizationForm::close);
+	GetMainLayout()->addWidget(ButtonDialog);
+}
+//-----------------------------------------------------------------------------
+ISTransferOrganizationForm::~ISTransferOrganizationForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+int ISTransferOrganizationForm::GetSelectedUserID() const
+{
+	return UserEdit->GetValue().toInt();
+}
+//-----------------------------------------------------------------------------
+QString ISTransferOrganizationForm::GetSelectedUserName() const
+{
+	return UserEdit->GetCurrentText();
+}
+//-----------------------------------------------------------------------------
+QDate ISTransferOrganizationForm::GetSelectedDate() const
+{
+	return DateEdit->GetValue().toDate();
+}
+//-----------------------------------------------------------------------------
+void ISTransferOrganizationForm::Select()
+{
+	SetResult(true);
+	close();
+}
+//-----------------------------------------------------------------------------

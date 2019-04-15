@@ -1,0 +1,77 @@
+﻿QSpinBox
+{
+    border: 1px solid gray;
+}
+
+QSpinBox:hover
+{
+    border: 1px solid rgb(42, 141, 212);
+}
+
+QSpinBox:focus
+{
+    border: 2px groove rgb(42, 141, 212);
+    background-color: rgb(240, 255, 255);
+}
+
+QSpinBox::up-button
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fdfbf7, stop: 1 #cfccc7);
+    border-width: 1px;
+    border-color: #8f8f91;
+    border-style: solid;
+    image: url(:/ImageSpecial/AbstractSpinBox.Up.png);
+}
+
+QSpinBox::up-button:disabled
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fdfbf7, stop: 1 #cfccc7);
+    border-width: 1px;
+    border-color: #8f8f91;
+    border-style: solid;
+    image: url(:/ImageSpecial/AbstractSpinBox.Up.Disabled.png);
+}
+
+QSpinBox::up-button:hover
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e4e0e1, stop: 1 #cfcbcd);
+    border-color: rgb(42, 141, 212);
+}
+
+QSpinBox::up-button:pressed
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #cfcbcd, stop: 1 #e4e0e1);
+    border-width: 2px;
+    border-color: #8f8f91;
+}
+
+QSpinBox::down-button
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fdfbf7, stop: 1 #cfccc7);
+    border-width: 1px;
+    border-color: #8f8f91;
+    border-style: solid;
+    image: url(:/ImageSpecial/AbstractSpinBox.Down.png);
+}
+
+QSpinBox::down-button:disabled
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fdfbf7, stop: 1 #cfccc7);
+    border-width: 1px;
+    border-color: #8f8f91;
+    border-style: solid;
+    image: url(:/ImageSpecial/AbstractSpinBox.Down.Disabled.png);
+}
+
+QSpinBox::down-button:hover
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e4e0e1, stop: 1 #cfcbcd);
+    border-color: rgb(42, 141, 212);
+}
+
+QSpinBox::down-button:pressed
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #cfcbcd, stop: 1 #e4e0e1);
+    border-width: 2px;
+    border-color: #8f8f91;
+}

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSR Name="CenterSeven.xsr">
+
+  <_Systems IsSystem="false" UID="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="3" LocalName="Справочники" Icon="Lists"/>
+  <_SubSystems UID="{BF07FF0B-1EB7-458B-B226-9352DD83B054}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="1" LocalName="Кресла" Icon="Lists" TableName="Places"/>
+  <_SubSystems UID="{F088E12E-3629-4419-8D4E-3E17096B9ACB}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="2" LocalName="Зубы" Icon="Lists" TableName="Teeth"/>
+  <_SubSystems UID="{8124E7A9-9808-4211-B9E3-3452EC6BF374}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="3" LocalName="Типы лечения" Icon="Lists" TableName="TreatmentType"/>
+  <_SubSystems UID="{EED12134-495A-443E-8345-7092ECA8EB82}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="4" LocalName="Диагнозы" Icon="Lists" TableName="Diagnosis"/>
+  <_SubSystems UID="{90B8A267-4350-4338-A349-AE408CC3E330}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="5" LocalName="Шаблоны СМС-сообщений" Icon="Lists" TableName="SMSTemplate"/>
+  
+  <_Systems IsSystem="false" UID="{7D53BE83-E532-4EDD-81B5-E8DC996F9A64}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
+  <_SubSystems UID="{EEA73BD4-8523-4BB2-BD56-59975802005F}" System="{7D53BE83-E532-4EDD-81B5-E8DC996F9A64}" OrderID="1" LocalName="Пациенты" Icon="Lists" ClassName="ISCenterSevenPatientsListForm"/>
+  <_SubSystems UID="{A62E2FDE-E17D-433F-94A0-FCCD5819F705}" System="{7D53BE83-E532-4EDD-81B5-E8DC996F9A64}" OrderID="2" LocalName="Ожидают приём" Icon="Lists" ClassName="ISCenterSevenWaitAdmissionListForm"/>
+  <_SubSystems UID="{E0F487E9-7C87-4A91-999B-99DF5FC93E2F}" System="{7D53BE83-E532-4EDD-81B5-E8DC996F9A64}" OrderID="3" LocalName="Врачи" Icon="Lists" TableName="Doctor"/>
+  <_SubSystems UID="{54027899-16AA-4A3F-A731-1BB36274FD9F}" System="{7D53BE83-E532-4EDD-81B5-E8DC996F9A64}" OrderID="4" LocalName="Филиалы" Icon="Lists" TableName="Branches"/>
+  <_SubSystems UID="{8CE5E334-CFD7-440F-9F8A-C45B90A63DEC}" System="{7D53BE83-E532-4EDD-81B5-E8DC996F9A64}" OrderID="5" LocalName="История приёмов" Icon="Lists" TableName="Admission"/>
+
+  <_CaratCore UID="{B0163277-8955-4669-AF36-B86BF49BBB6F}" Name="CenterSeven" FileName="CaratCenterSeven" LocalName="ООО Центр 7"/>
+
+  <AdmissionStatus IsSystem="true" UID="{92BF6D81-5A6C-4333-8783-5436BCD41A64}" Name="Ожидает приёма" Order="1"/>
+  <AdmissionStatus IsSystem="true" UID="{3AF6143D-2CC6-4B0E-ACDC-9DBF87278C36}" Name="Не явился" Order="2"/>
+  <AdmissionStatus IsSystem="true" UID="{C02AB2FB-57BE-4F28-94CA-2D68A1D08884}" Name="Принят" Order="3"/>
+
+  <Change IsSystem="true" UID="{5E466CA8-0CD1-4002-8535-E7F64A5ED06C}" Name="1-я" Number="1"/>
+  <Change IsSystem="true" UID="{3E28F14D-CAE7-4BDD-B962-CD678DED0C64}" Name="2-я" Number="2"/>
+  <Change IsSystem="true" UID="{40F50DAE-BC4D-430A-944E-A3329F1B23D0}" Name="Обе смены" Number="1/2"/>
+
+  <Teeth IsSystem="true" UID="{2CF41C7D-2A2A-4A96-80CF-B170464A2AF3}" Order="11"/>
+  <Teeth IsSystem="true" UID="{B5A8CC6B-83B4-4138-AF62-C908DD095B07}" Order="12"/>
+  <Teeth IsSystem="true" UID="{70F23A6C-C129-4977-9385-E5F4146EFD08}" Order="13"/>
+  <Teeth IsSystem="true" UID="{5F5640A3-F978-4594-AF70-86BFA9D4C605}" Order="14"/>
+  <Teeth IsSystem="true" UID="{879B24A0-A24D-4F05-951C-365283E1C3DB}" Order="15"/>
+  <Teeth IsSystem="true" UID="{A3E3EF05-0813-499E-9A86-1E2C1B20E009}" Order="16"/>
+  <Teeth IsSystem="true" UID="{037EB451-66D3-448D-AF65-4793FCB1614F}" Order="17"/>
+  <Teeth IsSystem="true" UID="{FB843195-E810-4338-A33F-241BCDE0C72A}" Order="18"/>
+  <Teeth IsSystem="true" UID="{CECB52D1-0A07-4DDD-83C1-5C46AFEBF5A0}" Order="21"/>
+  <Teeth IsSystem="true" UID="{B461C265-631C-4DE4-9EC8-08B5C2224CFF}" Order="22"/>
+  <Teeth IsSystem="true" UID="{FD030E74-8E0E-4483-A3D6-D65C0B8D7378}" Order="23"/>
+  <Teeth IsSystem="true" UID="{A68F518F-EBE4-4474-A4CE-BC034C4AEC5C}" Order="24"/>
+  <Teeth IsSystem="true" UID="{1DF6147D-5BA7-4B68-B274-327A5370E080}" Order="25"/>
+  <Teeth IsSystem="true" UID="{8C38FD62-7BDF-4A81-ABFB-9F46CF942570}" Order="26"/>
+  <Teeth IsSystem="true" UID="{07FB24BE-0B53-482D-B72F-FA905E72A6D7}" Order="27"/>
+  <Teeth IsSystem="true" UID="{F3BE24AB-848F-4A37-A263-312918E38202}" Order="28"/>
+  <Teeth IsSystem="true" UID="{52A81F51-23E4-4DD0-96EC-2696BA25F23D}" Order="31"/>
+  <Teeth IsSystem="true" UID="{EDF45A24-EEFB-45A8-94DF-1F10C75B2A04}" Order="32"/>
+  <Teeth IsSystem="true" UID="{7FAA47A8-0A65-4F0C-BE8F-972B668B2319}" Order="33"/>
+  <Teeth IsSystem="true" UID="{3B2E2462-95BD-4591-885F-DC21BFDFA10D}" Order="34"/>
+  <Teeth IsSystem="true" UID="{F23E99DA-006F-4F80-BF22-C07BDA397166}" Order="35"/>
+  <Teeth IsSystem="true" UID="{7B3FA908-8EE6-43AE-A0F5-859DF6F60441}" Order="36"/>
+  <Teeth IsSystem="true" UID="{078C5A5B-D16F-4C9A-81ED-70EC1C801B2B}" Order="37"/>
+  <Teeth IsSystem="true" UID="{D8C2E0C3-34B3-499B-A622-B702DE1741FA}" Order="38"/>
+  <Teeth IsSystem="true" UID="{1DB86B4D-4C9F-4C39-AC79-30D5F5FDB942}" Order="41"/>
+  <Teeth IsSystem="true" UID="{CEF12769-306B-4E8B-B4F9-02A155BED5EE}" Order="42"/>
+  <Teeth IsSystem="true" UID="{EFD7B2E0-987F-4C9C-A693-06F96327BB73}" Order="43"/>
+  <Teeth IsSystem="true" UID="{F29AFADC-4056-4767-8A20-42511BB2AA3B}" Order="44"/>
+  <Teeth IsSystem="true" UID="{23CB8A88-2192-4864-A3D3-236FC50AA2C2}" Order="45"/>
+  <Teeth IsSystem="true" UID="{01E52911-3442-4FCD-A70B-4861FDF251F4}" Order="46"/>
+  <Teeth IsSystem="true" UID="{67BC2B23-76EA-41D1-8836-6AE21A02B2B4}" Order="47"/>
+  <Teeth IsSystem="true" UID="{20641EF8-166E-435C-8516-459BF77D826E}" Order="48"/>
+
+</XSR>

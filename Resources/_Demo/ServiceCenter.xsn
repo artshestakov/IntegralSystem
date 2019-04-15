@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="ServiceCenter.xsn">
+  <Table Name="ServiceCenter_Clients" UID="{0CD992E3-E613-42FB-BA2A-B4DE9A966AC4}" Alias="sccl" LocalName="Клиент" LocalListName="Клиенты" TitleName="Surname;Name;Patronymic">
+    <Fields>
+      <Field UID="{9FBD338F-0CE6-4732-AEEF-009B71D9BA43}" Name="Type" Type="Int" LabelName="Тип" LocalListName="Тип"/>
+      <Field UID="{D56711D1-9221-4A46-951C-D2D2C2BF4B13}" Name="Surname" Type="String" LabelName="Фамилия" LocalListName="Фамилия" NotNull="true"/>
+      <Field UID="{88439E78-C67F-4F7F-94DA-C92A7E68FCE5}" Name="Name" Type="String" LabelName="Имя" LocalListName="Имя" NotNull="true"/>
+      <Field UID="{9B1AE24B-D5DC-4366-84C4-5EFC489D19EB}" Name="Patronymic" Type="String" LabelName="Отчество" LocalListName="Отчество"/>
+      <Field UID="{93048DEF-8D47-4C74-B017-41C87976595E}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения"/>
+      <Field UID="{0D521541-44F9-49A3-B2AA-0CFBBE62AFC4}" Name="PhoneMain" Type="String" LabelName="Телефон (основной)" LocalListName="Телефон (основной)"/>
+      <Field UID="{A887B647-78D4-44EA-9BB9-A5695207589C}" Name="PhoneOther" Type="String" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
+      <Field UID="{77A1D235-2059-4403-8CB3-7593D0F6B4B9}" Name="Email" Type="EMail" LabelName="E-Mail" LocalListName="E-Mail"/>
+      <Field UID="{97F03CE9-F815-43FA-BB37-A7451F51BD38}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Type"/>
+      <Index Field="Surname"/>
+      <Index Field="Name"/>
+      <Index Field="Patronymic"/>
+      <Index Field="Birthday"/>
+      <Index Field="PhoneMain"/>
+      <Index Field="PhoneOther"/>
+      <Index Field="Email"/>
+      <Index Field="Address"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Type" ForeignClass="ClientType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+    <Escorts>
+      <Escort LocalName="Ремонты" TableName="ServiceCenter_Device" ClassFilter="scdv_client = :ParentObjectID"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="ServiceCenter_Device" UID="{2375BA53-DCF0-4BFD-9C9F-534B156E397D}" Alias="scdv" LocalName="Ремонт" LocalListName="Ремонты" ClassFilterField="Client">
+    <Fields>
+      <Field UID="{120E897D-9588-4F4F-9F65-629519D13B24}" Name="Client" Type="Int" LabelName="Клиент" LocalListName="Клиент" HideFromList="true" HideFromObject="true" NotNull="true"/>
+      <Field UID="{C1534D8A-2894-49D3-BD3A-54C999AE48D8}" Name="Guarantee" Type="Bool" DefaultValue="false" LabelName="Гарантийный ремонт" LocalListName="Гарантийный ремонт"/>
+      <Field UID="{83D37567-588A-44A2-A964-C76E222FDC47}" Name="Type" Type="Int" LabelName="Тип устройства" LocalListName="Тип устройства"/>
+      <Field UID="{09B0CDD6-978F-4B43-AA8A-67E60817FDD3}" Name="Brand" Type="Int" LabelName="Бренд" LocalListName="Бренд"/>
+      <Field UID="{3399F3A2-4299-4748-92F5-5D04DA9F7B99}" Name="Model" Type="Int" LabelName="Модель" LocalListName="Модель"/>
+      <Field UID="{ADEF40A1-F7C7-4F18-81FF-431829FFC34A}" Name="SerialNumber" Type="String" LabelName="Серийный номер" LocalListName="Серийный номер"/>
+      <Field UID="{7B246737-9E7F-404D-BC18-ADB706A8934F}" Name="Color" Type="Int" LabelName="Цвет" LocalListName="Цвет"/>
+      <Field UID="{52D68EC1-2806-456A-8BC3-FC9676893076}" Name="Reason" Type="Text" LabelName="Причина обращения" LocalListName="Причина обращения"/>
+      <Field UID="{CE2FEA1A-A969-4D85-A7EF-40BB6A20A05A}" Name="Set" Type="Text" LabelName="Комплектность" LocalListName="Комплектность"/>
+      <Field UID="{6B641813-C9D9-470A-BE3F-04547C22416B}" Name="ExternalView" Type="String" LabelName="Внешний вид" LocalListName="Внешний вид"/>
+      <Field UID="{F05E88BC-D205-45FB-97A3-8020E6B3CD77}" Name="Responsible" Type="Int" LabelName="Ответственный" LocalListName="Ответственный"/>
+      <Field UID="{63C6380F-4739-4124-8BAD-E691D0DC406D}" Name="Comment" Type="String" LabelName="Комментарий" LocalListName="Комментарий"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Client"/>
+      <Index Field="Guarantee"/>
+      <Index Field="Type"/>
+      <Index Field="Brand"/>
+      <Index Field="Model"/>
+      <Index Field="SerialNumber"/>
+      <Index Field="Color"/>
+      <Index Field="Reason"/>
+      <Index Field="Set"/>
+      <Index Field="ExternalView"/>
+      <Index Field="Responsible"/>
+      <Index Field="Comment"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Client" ForeignClass="ServiceCenter_Clients" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Responsible" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+    </Foreigns>
+  </Table>
+</XSN>

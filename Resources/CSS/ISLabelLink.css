@@ -1,0 +1,9 @@
+﻿QLabel
+{
+	color: rgb(57, 129, 229);
+}
+
+QLabel:disabled
+{
+    color: rgb(161, 161, 161);
+}

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="Settings.xsn">
+  
+  <Table Name="_UserSettings" UID="{40628A04-2B01-49F2-87EC-2935221C5B3E}" Alias="usst" LocalName="Настройка пользователя" LocalListName="Настройки пользователя" TitleName="Setting" IsSystem="true">
+    <Fields>
+      <Field UID="{F30FDB7D-C562-4DD3-9617-09307F8E0EF0}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{37DCAF64-6AD3-45F9-8081-FB49410CF30A}" Name="Setting" Type="UID" LabelName="Настройка" LocalListName="Настройка" NotNull="true"/>
+      <Field UID="{BB690831-A151-4BA0-9E4F-66699DB132F9}" Name="Value" Type="String" LabelName="Значение" LocalListName="Значение"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User"/>
+      <Index Field="Setting"/>
+      <Index Field="Value"/>
+      <Index Field="User;Setting"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Setting" ForeignClass="_Settings" ForeignField="UID" ForeignViewNameField="LocalName"/>
+    </Foreigns>
+  </Table>
+    
+  <Table Name="_SettingsGroup" UID="{5556080A-D1BE-476E-86D2-795C63F39119}" Alias="stgp" LocalName="Группа настроек" LocalListName="Группы настроек" TitleName="LocalName" IsSystem="true">
+    <Fields>
+      <Field UID="{07BF1EDA-9589-42F2-B7B0-B541338D492E}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{A4BE61FE-5A8D-4878-B874-817DEC3C2590}" Name="LocalName" Type="String" LabelName="Локализованное наименование" LocalListName="Локализованное наименование" NotNull="true"/>
+      <Field UID="{72D12D83-60A6-40D2-8CB6-DC614E3BA4BC}" Name="IconName" Type="String" LabelName="Наименование иконки" LocalListName="Наименование иконки" NotNull="true"/>
+      <Field UID="{11397C59-3533-4E77-A25E-4FB614610AD5}" Name="Hint" Type="String" LabelName="Подсказка" LocalListName="Подсказка"/>
+      <Field UID="{1132F5DE-0760-4991-97FA-E4C83E43DCA1}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
+      <Field UID="{33D880C2-1C57-4C70-A1A0-36069B107C5A}" Name="System" Type="Bool" DefaultValue="true" LabelName="Системная настройка" LocalListName="Системная настройка" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="LocalName" Unique="true"/>
+      <Index Field="IconName"/>
+      <Index Field="Hint"/>
+      <Index Field="Order"/>
+      <Index Field="System"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_Settings" UID="{E72FBF96-3DC5-4929-8A70-89D2171038B3}" Alias="stgs" LocalName="Настройка" LocalListName="Настройки" TitleName="LocalName" IsSystem="true">
+    <Fields>
+      <Field UID="{D68C1380-AF1B-4F4C-BE2C-F6CF443454B2}" Name="Group" Type="UID" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
+      <Field UID="{ACB6967B-CA20-4ADB-AA18-008856FB3F55}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
+      <Field UID="{1FADE9CC-B1BB-43B0-99C5-7B1AC2EEA419}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{6FA92305-9C85-46F5-864A-9CB8A987D50B}" Name="Type" Type="String" LabelName="Тип" LocalListName="Тип" NotNull="true"/>
+      <Field UID="{B51D3526-8928-4559-AE2E-FAA675D75D0D}" Name="WidgetEditName" Type="String" LabelName="Наименование виджета редактирования" LocalListName="Наименование виджета редактирования"/>
+      <Field UID="{6C4CBB17-C113-4E0B-A19F-C8D79588912E}" Name="LocalName" Type="String" LabelName="Локализованное наименование" LocalListName="Локализованное наименование" NotNull="true"/>
+      <Field UID="{AED0720D-95E5-4ECC-8A6C-9BE2FBDA819A}" Name="Hint" Type="String" LabelName="Подсказка" LocalListName="Подсказка"/>
+      <Field UID="{F3EA136B-DA73-400C-9BC4-E09F1A4FE032}" Name="DefaultValue" Type="String" LabelName="Значение по умолчанию" LocalListName="Значение по умолчанию"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Group"/>
+      <Index Field="Name"/>
+      <Index Field="Type"/>
+      <Index Field="WidgetEditName"/>
+      <Index Field="LocalName"/>
+      <Index Field="Hint"/>
+      <Index Field="DefaultValue"/>
+      <Index Field="IsDeleted;Order"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Group" ForeignClass="_SettingsGroup" ForeignField="UID" ForeignViewNameField="LocalName"/>
+    </Foreigns>
+  </Table>
+  
+</XSN>

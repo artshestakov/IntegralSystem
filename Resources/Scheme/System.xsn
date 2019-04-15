@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="System.xsn">
+
+  <Table Name="_Class" UID="{B847C4AF-CF1A-4EE4-AD38-E946DA6CECEE}" Alias="clss" LocalName="Класс" LocalListName="Классы" TitleName="LocalListName" IsSystem="true">
+    <Fields>
+      <Field UID="{03D7C79C-2D93-4565-9E93-422A381C1395}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование"/>
+      <Field UID="{EC828C5A-2512-40FA-BAE1-E7D8D4E2832B}" Name="Alias" Type="String" LabelName="Псевдоним" LocalListName="Псевдоним"/>
+      <Field UID="{80104B55-93E4-44E2-8F46-55A91BF071F4}" Name="LocalName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование"/>
+      <Field UID="{087D0206-E1F3-4DFF-9B5B-015FE3674942}" Name="LocalListName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name"/>
+      <Index Field="Alias"/>
+      <Index Field="LocalName"/>
+      <Index Field="LocalListName"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_ClassField" UID="{C1956158-771E-4924-ADE0-E9CA20AB63CF}" Alias="clsf" LocalName="Поле" LocalListName="Поля" TitleName="LabelName" IsSystem="true">
+    <Fields>
+      <Field UID="{B0C7C430-E72F-46A3-8841-1EEFEFE63719}" Name="Class" Type="Int" LabelName="Класс" LocalListName="Класс" NotNull="true"/>
+      <Field UID="{8DAA71C6-FE0F-4614-B4D7-ABE6B8380F89}" Name="Name" Type="String" LabelName="Наименовние" LocalListName="Наименовние" NotNull="true"/>
+      <Field UID="{61FB4CD6-EB63-414E-B1FD-6DE09F167E32}" Name="Type" Type="String" LabelName="Тип данных" LocalListName="Тип данных" NotNull="true"/>
+      <Field UID="{B147B920-F11A-4692-B853-1627C14FD874}" Name="Size" Type="Int" LabelName="Размерность поля" LocalListName="Размерность поля"/>
+      <Field UID="{D5D9705B-E6A6-4D95-A3ED-D6A4D8486EBB}" Name="LabelName" Type="String" LabelName="Локальное наименование в форме объекта" LocalListName="Локальное наименование в форме объекта"/>
+      <Field UID="{D5D8935D-4EC5-43A5-98E6-D2BDD72F5298}" Name="LocalListName" Type="String" LabelName="Локальное наименование в форме списка" LocalListName="Локальное наименование в форме списка"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Class"/>
+      <Index Field="Name"/>
+      <Index Field="Type"/>
+      <Index Field="Size"/>
+      <Index Field="LabelName"/>
+      <Index Field="LocalListName"/>
+      <Index Field="Class;Name"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_SortingTables" UID="{FDE07704-8804-4950-A4A8-8220F0C54B5F}" Alias="sgts" LocalName="Сортировка таблицы" LocalListName="Сортировки таблиц" TitleName="TableName" IsSystem="true">
+    <Fields>
+      <Field UID="{207AC648-13DF-46A1-9DDA-84C0AAB794EF}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{8539EDD9-22D1-472E-B253-B6CFBF4BF74D}" Name="TableName" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
+      <Field UID="{AB2DE55D-AA1B-4831-ACDD-9A091B69AB08}" Name="FieldName" Type="String" LabelName="Поле" LocalListName="Поле" NotNull="true"/>
+      <Field UID="{D59D39AD-C4BE-451C-9BB7-6A3EE3A3DCC9}" Name="Sorting" Type="Int" LabelName="Сортировка" LocalListName="Сортировка" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User"/>
+      <Index Field="TableName"/>
+      <Index Field="FieldName"/>
+      <Index Field="Sorting"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="_ColumnSize" UID="{F2BB53FB-7B16-45F4-97FC-C32D4D05B685}" Alias="clsz" LocalName="Размер колонки" LocalListName="Размеры колонок" TitleName="TableName" IsSystem="true">
+    <Fields>
+      <Field UID="{24D39570-1CC3-4244-B82E-6E49661EBB83}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{D55AF498-33C3-4129-9AF5-85A7612BB110}" Name="TableName" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
+      <Field UID="{C3340F5D-D0AA-423C-A602-E142FEFB324C}" Name="FieldName" Type="String" LabelName="Поле" LocalListName="Поле" NotNull="true"/>
+      <Field UID="{DF0A0E7A-A8E5-4B44-8F11-C6B58A936486}" Name="Size" Type="Int" LabelName="Размер колонки" LocalListName="Размер колонки" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User"/>
+      <Index Field="TableName"/>
+      <Index Field="FieldName"/>
+      <Index Field="Size"/>
+      <Index Field="User;TableName;FieldName"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="_Protocol" UID="{F7194787-0AB7-4D59-AEA4-9632FF560374}" Alias="prtc" ShowOnly="true" LocalName="Протокол работы" LocalListName="Протокол работы" TitleName="TableName" IsSystem="true">
+    <Fields>
+      <Field UID="{C247978E-C0B7-4D60-910C-782882E81F38}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{A0C19CBE-8426-456D-A37A-76ACA9D97231}" Name="TableName" Type="String" LabelName="Таблица" LocalListName="Таблица" HideFromList="true" NotSearch="true"/>
+      <Field UID="{C2143C81-9045-43B5-BCFC-F2EB4E0C00EE}" Name="TableLocalName" Type="String" LabelName="Таблица" LocalListName="Таблица"/>
+      <Field UID="{F8881FC1-E7E8-468E-9DEF-358C12F6F625}" Name="Type" Type="Int" LabelName="Действие" LocalListName="Действие"/>
+      <Field UID="{53D25190-AB48-455D-B87D-2BBACD32A966}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта"/>
+      <Field UID="{47A1B622-4EA9-4681-A987-47FD03F6915F}" Name="Information" Type="String" LabelName="Дополнительная информация" LocalListName="Дополнительная информация"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User"/>
+      <Index Field="TableName"/>
+      <Index Field="Type"/>
+      <Index Field="ObjectID"/>
+      <Index Field="TableName;ObjectID"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Type" ForeignClass="_ProtocolType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+    <IncludeSystemFields>
+      <Field Name="CreationDate" LocalName="Дата и время события"/>
+    </IncludeSystemFields>
+  </Table>
+
+  <Table Name="_ProtocolType" UID="{CB2C9248-710B-49D6-ABA7-EE1A008DD8AE}" Alias="prtp" ShowOnly="true" LocalName="Тип действия" LocalListName="Типы действий" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{085649A9-6E72-45BC-9F94-4993C65C804E}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_Notification" UID="{DFE4E7BD-F34F-4E0D-A93A-0E72AC61E219}" Alias="ntfn" LocalName="Уведомление" LocalListName="Уведомления" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{C4B33BDB-009B-43D7-87E2-3155EC75C25F}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{FA703B19-CE98-4D06-90A0-4C560BDBB1FF}" Name="Message" Type="String" LabelName="Описание" LocalListName="Описание" NotNull="true"/>
+      <Field UID="{12AC8926-0B5E-487B-B83E-7DCC73AB194D}" Name="SoundFileName" Type="String" LabelName="Путь к звуковому файлу" LocalListName="Путь к звуковому файлу"/>
+      <Field UID="{1019C296-E825-4E3A-BF99-ECD75E79EDD0}" Name="SignalName" Type="String" LabelName="Наименование сигнала" LocalListName="Наименование сигнала"/>
+      <Field UID="{CC27C96C-1B08-4CF8-836E-8DF927AADDAB}" Name="ShowPopup" Type="Bool" DefaultValue="false" LabelName="Показывать уведомление" LocalListName="Показывать уведомление"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Message"/>
+      <Index Field="SoundFileName"/>
+      <Index Field="SignalName"/>
+      <Index Field="ShowPopup"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_NotificationUser" UID="{790D1FBE-DEB6-41F8-8533-78BE92066BF2}" Alias="ntfu" LocalName="Уведомление пользователя" LocalListName="Уведомления пользователей" TitleName="Notification" IsSystem="true">
+    <Fields>
+      <Field UID="{D9558125-E14B-4664-A8F5-6CB9C7D8962F}" Name="NotificationID" Type="Int" LabelName="Уведомление" LocalListName="Уведомление" NotNull="true"/>
+      <Field UID="{3436147C-EFCB-4C5D-A1E5-CE7C3BDB5234}" Name="UserTo" Type="Int" LabelName="Для пользователя" LocalListName="Для пользователя"/>
+      <Field UID="{28C4AE92-5CFF-4F9A-9FAE-9B3A7C713C32}" Name="Payload" Type="String" LabelName="Данные уведомления" LocalListName="Данные уведомления"/>
+      <Field UID="{1C144A57-6C88-4980-8DAE-B5F75BE77E2D}" Name="String" Type="ByteArray" LabelName="Данные" LocalListName="Данные" Hint="Строка, которая будет отображаться в всплывающем виджете"/>
+      <Field UID="{EF2722AD-BEE8-4045-A2C9-6C6D1D0D1165}" Name="Sended" Type="Bool" DefaultValue="false" LabelName="Уведомление отправлено" LocalListName="Уведомление отправлено"/>
+      <Field UID="{0A7B0337-2FAC-47D0-881E-FF353565ACF3}" Name="Save" Type="Bool" DefaultValue="false" LabelName="Сохранять уведмоление в базе" LocalListName="Сохранять уведмоление в базе" Hint="Если значение этого поля true - пользователь получит уведомление даже если был офлайн, иначе - уведомление будет удалено после того как было отправлено"/>
+    </Fields>
+    <Indexes>
+      <Index Field="NotificationID"/>
+      <Index Field="UserTo"/>
+      <Index Field="Payload"/>
+      <Index Field="String"/>
+      <Index Field="Sended"/>
+      <Index Field="Save"/>
+      <Index Field="ID;Sended"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="NotificationID" ForeignClass="_Notification" ForeignField="ID" ForeignViewNameField="ID"/>
+      <Foreign Field="UserTo" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="_SystemParameters" UID="{B6ED0630-5005-4B2C-ACE7-FEACF413A1E8}" Alias="spdb" LocalName="Системный параметр базы данных" LocalListName="Системные параметры базы данных" TitleName="LocalName" IsSystem="true">
+    <Fields>
+      <Field UID="{E547F1B0-8D90-4224-917A-76694AB21BF4}" Name="LocalName" Type="String" LabelName="Локальное наименование параметра" LocalListName="Локальное наименование параметра" NotNull="true"/>
+      <Field UID="{03D300FA-D30A-4A4F-8D33-E3A65C2E4A17}" Name="Value" Type="String" LabelName="Значение параметра" LocalListName="Значение параметра"/>
+    </Fields>
+    <Indexes>
+      <Index Field="LocalName" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_Screenshots" UID="{08571D5F-3BED-4BC9-965A-8C6E94F936DA}" Alias="scrn" ShowOnly="true" LocalName="Запрос на скриншот" LocalListName="Запросы на скриншоты" TitleName="DateTime" IsSystem="true">
+    <Fields>
+      <Field UID="{377267DE-7A85-425A-B156-2B64ACCF1CE9}" Name="Screenshot" Type="Image" LabelName="Скриншот" LocalListName="Скриншот" NotNull="true"/>
+    </Fields>
+  </Table>
+  
+</XSN>

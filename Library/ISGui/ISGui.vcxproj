@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{01326F7D-0672-4199-88E0-D4D932F3F3BA}</ProjectGuid>
+    <Keyword>Qt4VSv1.0</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">
+    <QtMsBuild>$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <StringPooling>true</StringPooling>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
+      <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
+      <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
+      <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmaind.lib;Qt5AxContainerd.lib;Qt5AxBased.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5SerialPortd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;ISControls.lib;ISCore.lib;ISFields.lib;ISPrinting.lib;ISResources.lib;ISSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <QtMoc>
+      <Define>UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</IncludePath>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <StringPooling>true</StringPooling>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
+      <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
+      <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
+      <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmaind.lib;Qt5AxContainerd.lib;Qt5AxBased.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5SerialPortd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;ISControls.lib;ISCore.lib;ISFields.lib;ISPrinting.lib;ISResources.lib;ISSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions> /SUBSYSTEM:WINDOWS</AdditionalOptions>
+    </Link>
+    <QtMoc>
+      <Define>UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</IncludePath>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
+      <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
+      <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
+      <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+      <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <StringPooling>true</StringPooling>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmain.lib;Qt5AxContainer.lib;Qt5AxBase.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5SerialPort.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;ISControls.lib;ISCore.lib;ISFields.lib;ISPrinting.lib;ISResources.lib;ISSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <QtMoc>
+      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</IncludePath>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
+      <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
+      <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
+      <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+      <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <StringPooling>true</StringPooling>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmain.lib;Qt5AxContainer.lib;Qt5AxBase.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5SerialPort.lib;Qt5Sql.lib;Qt5Widgets.lib;ISControls.lib;ISCore.lib;ISFields.lib;ISPrinting.lib;ISResources.lib;ISSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions> /SUBSYSTEM:WINDOWS</AdditionalOptions>
+    </Link>
+    <QtMoc>
+      <Define>QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;%(PreprocessorDefinitions)</Define>
+      <IncludePath>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</IncludePath>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ISAddressBox.cpp" />
+    <ClCompile Include="ISAddressEdit.cpp" />
+    <ClCompile Include="ISAddressForm.cpp" />
+    <ClCompile Include="ISAsteriskCallsListForm.cpp" />
+    <ClCompile Include="ISAsteriskRecordPlayForm.cpp" />
+    <ClCompile Include="ISAsteriskRecordWaitForm.cpp" />
+    <ClCompile Include="ISAsteriskTotalForm.cpp" />
+    <ClCompile Include="ISAttachFileBaseForm.cpp" />
+    <ClCompile Include="ISAttachFileForm.cpp" />
+    <ClCompile Include="ISAttachFileItem.cpp" />
+    <ClCompile Include="ISAttachFilesForm.cpp" />
+    <ClCompile Include="ISBannerProgressBar.cpp" />
+    <ClCompile Include="ISColumnSizer.cpp" />
+    <ClCompile Include="ISComboSearchBase.cpp" />
+    <ClCompile Include="ISComboSearchNumber.cpp" />
+    <ClCompile Include="ISComboSearchString.cpp" />
+    <ClCompile Include="ISCreatedObjectsEntity.cpp" />
+    <ClCompile Include="ISDelegateSearchField.cpp" />
+    <ClCompile Include="ISDelegateBoolean.cpp" />
+    <ClCompile Include="ISDelegateCallDetails.cpp" />
+    <ClCompile Include="ISDelegateColor.cpp" />
+    <ClCompile Include="ISDelegateFile.cpp" />
+    <ClCompile Include="ISDelegateImage.cpp" />
+    <ClCompile Include="ISDeviceComObject.cpp" />
+    <ClCompile Include="ISDeviceEntity.cpp" />
+    <ClCompile Include="ISDeviceObjectBase.cpp" />
+    <ClCompile Include="ISDevice_Atol1101.cpp" />
+    <ClCompile Include="ISDevice_Atol1101Plus.cpp" />
+    <ClCompile Include="ISDevice_Atol30F.cpp" />
+    <ClCompile Include="ISDivisionCodeEdit.cpp" />
+    <ClCompile Include="ISExportCSV.cpp" />
+    <ClCompile Include="ISExportDBF.cpp" />
+    <ClCompile Include="ISExportForm.cpp" />
+    <ClCompile Include="ISExportHTML.cpp" />
+    <ClCompile Include="ISExportWorker.cpp" />
+    <ClCompile Include="ISExportXML.cpp" />
+    <ClCompile Include="ISFastAccessEntity.cpp" />
+    <ClCompile Include="ISFavorites.cpp" />
+    <ClCompile Include="ISFavoritesForm.cpp" />
+    <ClCompile Include="ISFileEdit.cpp" />
+    <ClCompile Include="ISGui.cpp" />
+    <ClCompile Include="ISIncomingCallBaseForm.cpp" />
+    <ClCompile Include="ISInputDialog.cpp" />
+    <ClCompile Include="ISInterfaceMetaForm.cpp" />
+    <ClCompile Include="ISListBaseForm.cpp" />
+    <ClCompile Include="ISListEdit.cpp" />
+    <ClCompile Include="ISListEditPopup.cpp" />
+    <ClCompile Include="ISListIndicatorWidget.cpp" />
+    <ClCompile Include="ISListObjectForm.cpp" />
+    <ClCompile Include="ISListViewWidget.cpp" />
+    <ClCompile Include="ISMediaPlayer.cpp" />
+    <ClCompile Include="ISColumnSizeItem.cpp" />
+    <ClCompile Include="ISMetaExternalTool.cpp" />
+    <ClCompile Include="ISMetaParagraph.cpp" />
+    <ClCompile Include="ISMetaSubSystem.cpp" />
+    <ClCompile Include="ISMetaSystem.cpp" />
+    <ClCompile Include="ISMetaSystemsEntity.cpp" />
+    <ClCompile Include="ISNoteObjectForm.cpp" />
+    <ClCompile Include="ISNotificationService.cpp" />
+    <ClCompile Include="ISNotifyRecipient.cpp" />
+    <ClCompile Include="ISObjectEscortForm.cpp" />
+    <ClCompile Include="ISObjectFormBase.cpp" />
+    <ClCompile Include="ISObjectModel.cpp" />
+    <ClCompile Include="ISObjectModelItem.cpp" />
+    <ClCompile Include="ISPageNavigation.cpp" />
+    <ClCompile Include="ISParagraphEntity.cpp" />
+    <ClCompile Include="ISPassportEdit.cpp" />
+    <ClCompile Include="ISPassportForm.cpp" />
+    <ClCompile Include="ISPatternActivityForm.cpp" />
+    <ClCompile Include="ISPatternWidget.cpp" />
+    <ClCompile Include="ISPeriodForm.cpp" />
+    <ClCompile Include="ISPhoneEdit.cpp" />
+    <ClCompile Include="ISPlayerWidget.cpp" />
+    <ClCompile Include="ISPrintForm.cpp" />
+    <ClCompile Include="ISProgressForm.cpp" />
+    <ClCompile Include="ISProtocolListForm.cpp" />
+    <ClCompile Include="ISRecordInfoForm.cpp" />
+    <ClCompile Include="ISScreenshot.cpp" />
+    <ClCompile Include="ISSearchEdit.cpp" />
+    <ClCompile Include="ISSearchForm.cpp" />
+    <ClCompile Include="ISSelectDialogForm.cpp" />
+    <ClCompile Include="ISSelectListForm.cpp" />
+    <ClCompile Include="ISSettingsForm.cpp" />
+    <ClCompile Include="ISSliderDuration.cpp" />
+    <ClCompile Include="ISSortingBuffer.cpp" />
+    <ClCompile Include="ISSortingMetaTable.cpp" />
+    <ClCompile Include="ISSplashWidget.cpp" />
+    <ClCompile Include="ISTabBarMain.cpp" />
+    <ClCompile Include="ISTabWidgetMain.cpp" />
+    <ClCompile Include="ISTabWidgetObject.cpp" />
+    <ClCompile Include="ISTelephony.cpp" />
+    <ClCompile Include="ISTelephonySummary.cpp" />
+    <ClCompile Include="ISToolBarObject.cpp" />
+    <ClCompile Include="ISUserEdit.cpp" />
+    <ClCompile Include="ISUserPasswordForm.cpp" />
+    <ClCompile Include="ISUserRoleEntity.cpp" />
+    <ClCompile Include="ISVolumeEdit.cpp" />
+    <ClCompile Include="PMetaUserPermission.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISScreenshot.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISSelectDialogForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISSelectListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISPassportEdit.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISPassportForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISVolumeEdit.h">
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISObjectModel.h" />
+    <QtMoc Include="ISObjectModelItem.h" />
+    <QtMoc Include="ISUserRoleEntity.h" />
+    <QtMoc Include="PMetaUserPermission.h" />
+    <QtMoc Include="ISTelephony.h" />
+    <QtMoc Include="ISTelephonySummary.h" />
+    <QtMoc Include="ISSortingBuffer.h" />
+    <QtMoc Include="ISSortingMetaTable.h" />
+    <QtMoc Include="ISParagraphEntity.h" />
+    <QtMoc Include="ISMetaParagraph.h" />
+    <QtMoc Include="ISMetaSystem.h" />
+    <QtMoc Include="ISMetaSubSystem.h" />
+    <QtMoc Include="ISMetaSystemsEntity.h" />
+    <QtMoc Include="ISMetaExternalTool.h" />
+    <QtMoc Include="ISColumnSizeItem.h" />
+    <QtMoc Include="ISUserPasswordForm.h" />
+    <QtMoc Include="ISTabWidgetMain.h" />
+    <QtMoc Include="ISTabBarMain.h" />
+    <QtMoc Include="ISSliderDuration.h" />
+    <QtMoc Include="ISPlayerWidget.h" />
+    <QtMoc Include="ISToolBarObject.h" />
+    <QtMoc Include="ISTabWidgetObject.h" />
+    <QtMoc Include="ISSearchEdit.h" />
+    <QtMoc Include="ISListIndicatorWidget.h" />
+    <QtMoc Include="ISUserEdit.h" />
+    <QtMoc Include="ISPhoneEdit.h" />
+    <QtMoc Include="ISListEditPopup.h" />
+    <QtMoc Include="ISListEdit.h" />
+    <QtMoc Include="ISSplashWidget.h" />
+    <QtMoc Include="ISPatternWidget.h" />
+    <QtMoc Include="ISPageNavigation.h" />
+    <QtMoc Include="ISSettingsForm.h" />
+    <QtMoc Include="ISSearchForm.h" />
+    <QtMoc Include="ISRecordInfoForm.h" />
+    <QtMoc Include="ISPrintForm.h" />
+    <QtMoc Include="ISPatternActivityForm.h" />
+    <QtMoc Include="ISNoteObjectForm.h" />
+    <QtMoc Include="ISProgressForm.h" />
+    <QtMoc Include="ISPeriodForm.h" />
+    <QtMoc Include="ISInputDialog.h" />
+    <QtMoc Include="ISProtocolListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISObjectFormBase.h" />
+    <QtMoc Include="ISObjectEscortForm.h" />
+    <QtMoc Include="ISListViewWidget.h" />
+    <QtMoc Include="ISListObjectForm.h" />
+    <QtMoc Include="ISListBaseForm.h" />
+    <QtMoc Include="ISInterfaceMetaForm.h" />
+    <QtMoc Include="ISIncomingCallBaseForm.h" />
+    <QtMoc Include="ISNotifyRecipient.h" />
+    <QtMoc Include="ISNotificationService.h" />
+    <QtMoc Include="ISMediaPlayer.h" />
+    <QtMoc Include="ISCreatedObjectsEntity.h" />
+    <QtMoc Include="ISExportCSV.h" />
+    <QtMoc Include="ISExportDBF.h" />
+    <QtMoc Include="ISExportHTML.h" />
+    <QtMoc Include="ISExportWorker.h" />
+    <QtMoc Include="ISExportForm.h" />
+    <QtMoc Include="ISAsteriskCallsListForm.h" />
+    <QtMoc Include="ISAsteriskRecordPlayForm.h" />
+    <QtMoc Include="ISAsteriskRecordWaitForm.h" />
+    <QtMoc Include="ISAsteriskTotalForm.h" />
+    <QtMoc Include="ISAttachFileBaseForm.h" />
+    <QtMoc Include="ISAttachFileForm.h" />
+    <QtMoc Include="ISAttachFilesForm.h" />
+    <QtMoc Include="ISFavoritesForm.h" />
+    <QtMoc Include="ISAttachFileItem.h" />
+    <QtMoc Include="ISBannerProgressBar.h" />
+    <QtMoc Include="ISDelegateBoolean.h" />
+    <QtMoc Include="ISDelegateCallDetails.h" />
+    <QtMoc Include="ISDelegateColor.h" />
+    <QtMoc Include="ISDelegateImage.h" />
+    <QtMoc Include="ISComboSearchBase.h" />
+    <QtMoc Include="ISComboSearchNumber.h" />
+    <QtMoc Include="ISComboSearchString.h" />
+    <QtMoc Include="ISGui.h" />
+    <QtMoc Include="ISColumnSizer.h" />
+    <QtMoc Include="ISFastAccessEntity.h" />
+    <QtMoc Include="ISFavorites.h" />
+    <QtMoc Include="ISDevice_Atol30F.h" />
+    <QtMoc Include="ISDevice_Atol1101.h" />
+    <QtMoc Include="ISDevice_Atol1101Plus.h" />
+    <QtMoc Include="ISDeviceComObject.h" />
+    <QtMoc Include="ISDeviceEntity.h" />
+    <QtMoc Include="ISDeviceObjectBase.h" />
+    <QtMoc Include="ISAddressEdit.h">
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISAddressForm.h">
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISAddressBox.h">
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISFileEdit.h">
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISDelegateFile.h">
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISDivisionCodeEdit.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISDelegateSearchField.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <QtMoc Include="ISExportXML.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;_WINDLL</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\ActiveQt;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;ISGUI_LIB;UNICODE;WIN32;WIN64;_WINDLL</Define>
+    </QtMoc>
+    <ClInclude Include="isgui_global.h" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="58_msvc2015" Qt5Version_x0020_x64="msvc2015_64" MocOptions="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

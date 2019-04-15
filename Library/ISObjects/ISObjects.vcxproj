@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{96F420DF-C39A-418E-8BD4-7AC4FA9D9D88}</ProjectGuid>
+    <Keyword>Qt4VSv1.0</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">
+    <QtMsBuild>$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_CORE_LIB;ISOBJECTS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <StringPooling>true</StringPooling>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
+      <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
+      <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
+      <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;ISControls.lib;ISCore.lib;ISFields.lib;ISGui.lib;ISNetwork.lib;ISResources.lib;ISSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <QtMoc>
+      <Define>UNICODE;WIN32;WIN64;QT_CORE_LIB;ISOBJECTS_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</IncludePath>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;ISOBJECTS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
+      <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
+      <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
+      <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Sql.lib;Qt5Widgets.lib;ISControls.lib;ISCore.lib;ISFields.lib;ISGui.lib;ISNetwork.lib;ISResources.lib;ISSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <QtMoc>
+      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;ISOBJECTS_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</IncludePath>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="!Alpha\ISAlpha.cpp" />
+    <ClCompile Include="!Alpha\ISClientsSqlModel.cpp" />
+    <ClCompile Include="!Alpha\ISDeviceListForm.cpp" />
+    <ClCompile Include="!Alpha\ISDeviceObjectForm.cpp" />
+    <ClCompile Include="!Alpha\ISDeviceSubSystem.cpp" />
+    <ClCompile Include="!CenterSeven\ISCenterSevenAdmissionListForm.cpp" />
+    <ClCompile Include="!CenterSeven\ISCenterSevenAdmissionObjectForm.cpp" />
+    <ClCompile Include="!CenterSeven\ISCenterSeven.cpp" />
+    <ClCompile Include="!CenterSeven\ISCenterSevenDesktop.cpp" />
+    <ClCompile Include="!CenterSeven\ISCenterSevenIncomingCallForm.cpp" />
+    <ClCompile Include="!CenterSeven\ISCenterSevenPatientsListForm.cpp" />
+    <ClCompile Include="!CenterSeven\ISCenterSevenPatientsObjectForm.cpp" />
+    <ClCompile Include="!CenterSeven\ISCenterSevenSelectBranchForm.cpp" />
+    <ClCompile Include="!Demo\ISDemo.cpp" />
+    <ClCompile Include="!Frame\ISFrameClientsListForm.cpp" />
+    <ClCompile Include="!Frame\ISCurrentAffairsForm.cpp" />
+    <ClCompile Include="!Frame\ISFrame.cpp" />
+    <ClCompile Include="!Highway\ISHighway.cpp" />
+    <ClCompile Include="!Highway\ISHighwayBillsListForm.cpp" />
+    <ClCompile Include="!Highway\ISHighwayIncomingCallForm.cpp" />
+    <ClCompile Include="!Highway\ISHighwayOrganizationListForm.cpp" />
+    <ClCompile Include="!Highway\ISHighwayOrganizationMyListForm.cpp" />
+    <ClCompile Include="!Highway\ISHighwayOrganizationObjectForm.cpp" />
+    <ClCompile Include="!InformResource\ISCallHistoryObjectForm.cpp" />
+    <ClCompile Include="!InformResource\ISCallUserStatisticsForm.cpp" />
+    <ClCompile Include="!InformResource\ISDemoAccessesListForm.cpp" />
+    <ClCompile Include="!InformResource\ISDemoAccessesMyCreatedListForm.cpp" />
+    <ClCompile Include="!InformResource\ISDemoAccessesMyListForm.cpp" />
+    <ClCompile Include="!InformResource\ISDemoAccessesObjectForm.cpp" />
+    <ClCompile Include="!InformResource\ISDesktopInformResource.cpp" />
+    <ClCompile Include="!InformResource\ISDispatchListForm.cpp" />
+    <ClCompile Include="!InformResource\ISDispatchOrganizationListForm.cpp" />
+    <ClCompile Include="!InformResource\ISEMailSelectEdit.cpp" />
+    <ClCompile Include="!InformResource\ISIncomingCallInformResourceForm.cpp" />
+    <ClCompile Include="!InformResource\ISInformResource.cpp" />
+    <ClCompile Include="!InformResource\ISOrganizationListForm.cpp" />
+    <ClCompile Include="!InformResource\ISOrganizationMyListForm.cpp" />
+    <ClCompile Include="!InformResource\ISOrganizationObjectForm.cpp" />
+    <ClCompile Include="!InformResource\ISOrganizationScoreObjectForm.cpp" />
+    <ClCompile Include="!InformResource\ISOrganizationWorkListForm.cpp" />
+    <ClCompile Include="!InformResource\ISPriceListObjectForm.cpp" />
+    <ClCompile Include="!InformResource\ISScoreObjectForm.cpp" />
+    <ClCompile Include="!InformResource\ISTransferOrganizationForm.cpp" />
+    <ClCompile Include="!MedTech\ISMedTech.cpp" />
+    <ClCompile Include="!MedTech\ISMedTechRatingListForm.cpp" />
+    <ClCompile Include="!MedTech\ISMedTechRatingSubSystem.cpp" />
+    <ClCompile Include="!Patriot\ISPatriotCardListForm.cpp" />
+    <ClCompile Include="!Patriot\ISPatriotClientsBirthdayForm.cpp" />
+    <ClCompile Include="!Patriot\ISPatriot.cpp" />
+    <ClCompile Include="!Patriot\ISPatriotHelper.cpp" />
+    <ClCompile Include="!Patriot\ISPatriotSubscriptionListForm.cpp" />
+    <ClCompile Include="!Patriot\ISPatriotSubscriptionObjectForm.cpp" />
+    <ClCompile Include="!Patriot\ISPatriotSubscriptionSelectForm.cpp" />
+    <ClCompile Include="!Patriot\ISPatriotTrainerReportForm.cpp" />
+    <ClCompile Include="!Patriot\ISPatriotVisitListForm.cpp" />
+    <ClCompile Include="!Sirona\ISSironaAppointmentListForm.cpp" />
+    <ClCompile Include="!Sirona\ISSironaCostListForm.cpp" />
+    <ClCompile Include="!Sirona\ISSironaCostObjectForm.cpp" />
+    <ClCompile Include="!Sirona\ISSironaReportForm.cpp" />
+    <ClCompile Include="!Sirona\ISSironaResearchListForm.cpp" />
+    <ClCompile Include="!Sirona\ISSironaResearchObjectForm.cpp" />
+    <ClCompile Include="!Sirona\ISSironaResearchTypeObjectForm.cpp" />
+    <ClCompile Include="!Sirona\ISSirona.cpp" />
+    <ClCompile Include="ISCenterSevenStatusAdmissionForm.cpp" />
+    <ClCompile Include="ISCenterSevenWaitAdmissionListForm.cpp" />
+    <ClCompile Include="ISObjects.cpp" />
+    <ClCompile Include="ISObjectInterface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISObjects.h" />
+    <QtMoc Include="ISObjectInterface.h" />
+    <QtMoc Include="!InformResource\ISEMailSelectEdit.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISCallHistoryObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISCallUserStatisticsForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISDemoAccessesListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISDemoAccessesMyCreatedListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISDemoAccessesMyListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISDemoAccessesObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISDesktopInformResource.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISDispatchListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISDispatchOrganizationListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISIncomingCallInformResourceForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISOrganizationListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISOrganizationMyListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISOrganizationObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISOrganizationScoreObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISOrganizationWorkListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISPriceListObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISScoreObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISTransferOrganizationForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!InformResource\ISInformResource.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Demo\ISDemo.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Sirona\ISSirona.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Sirona\ISSironaCostObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Sirona\ISSironaReportForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Sirona\ISSironaResearchObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Sirona\ISSironaResearchTypeObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!MedTech\ISMedTech.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!MedTech\ISMedTechRatingListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!MedTech\ISMedTechRatingSubSystem.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Frame\ISFrame.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Frame\ISFrameClientsListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Frame\ISCurrentAffairsForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriot.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriotHelper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriotClientsBirthdayForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriotSubscriptionListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriotSubscriptionObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriotSubscriptionSelectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriotTrainerReportForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Alpha\ISAlpha.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Alpha\ISClientsSqlModel.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Alpha\ISDeviceListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Alpha\ISDeviceObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Alpha\ISDeviceSubSystem.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!CenterSeven\ISCenterSeven.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!CenterSeven\ISCenterSevenAdmissionObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!CenterSeven\ISCenterSevenDesktop.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!CenterSeven\ISCenterSevenIncomingCallForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISMetaData;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISPostgres;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Highway\ISHighway.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Highway\ISHighwayOrganizationMyListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Highway\ISHighwayIncomingCallForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Sirona\ISSironaResearchListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Sirona\ISSironaCostListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Highway\ISHighwayBillsListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Highway\ISHighwayOrganizationObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Highway\ISHighwayOrganizationListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriotVisitListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Sirona\ISSironaAppointmentListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!Patriot\ISPatriotCardListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!CenterSeven\ISCenterSevenSelectBranchForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!CenterSeven\ISCenterSevenAdmissionListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!CenterSeven\ISCenterSevenPatientsListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="!CenterSeven\ISCenterSevenPatientsObjectForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="ISCenterSevenWaitAdmissionListForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <QtMoc Include="ISCenterSevenStatusAdmissionForm.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)!CenterSeven;$(ProjectDir)!Demo;$(ProjectDir)!Frame;$(ProjectDir)!Highway;$(ProjectDir)!InformResource;$(ProjectDir)!MedTech;$(ProjectDir)!Patriot;$(ProjectDir)!Sirona;$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.</IncludePath>
+    </QtMoc>
+    <ClInclude Include="isobjects_global.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Resources\_Alpha\Alpha.xsn" />
+    <None Include="..\..\Resources\_Alpha\Alpha.xsr" />
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsf" />
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsn">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsr" />
+    <None Include="..\..\Resources\_Demo\Autoservice.xsn" />
+    <None Include="..\..\Resources\_Demo\Demo.xsn" />
+    <None Include="..\..\Resources\_Demo\Demo.xsr" />
+    <None Include="..\..\Resources\_Demo\Denta.xsn" />
+    <None Include="..\..\Resources\_Demo\ServiceCenter.xsn" />
+    <None Include="..\..\Resources\_Frame\Frame.xsn" />
+    <None Include="..\..\Resources\_Frame\Frame.xsr" />
+    <None Include="..\..\Resources\_Highway\Highway.xsn" />
+    <None Include="..\..\Resources\_Highway\Highway.xsr" />
+    <None Include="..\..\Resources\_InformResource\InformResource.xsn" />
+    <None Include="..\..\Resources\_InformResource\InformResource.xsr" />
+    <None Include="..\..\Resources\_MedTech\MedTech.xsn" />
+    <None Include="..\..\Resources\_MedTech\MedTech.xsr" />
+    <None Include="..\..\Resources\_Patriot\Patriot.xsn" />
+    <None Include="..\..\Resources\_Patriot\Patriot.xsr" />
+    <None Include="..\..\Resources\_Sirona\Sirona.xsn">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\..\Resources\_Sirona\Sirona.xsr" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="58_msvc2015" MocOptions="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="FIAS.xsn">
+
+  <Table Name="_FIAS_Key" UID="{43EAFC4D-AFBC-466E-BFDB-950C3B9DCD3A}" Alias="fkey" LocalName="Ключ" LocalListName="Ключи" TitleName="TableName" IsSystem="true">
+    <Fields>
+      <Field UID="{3190135F-ADE7-4821-B614-B5C94EF0266F}" Name="TableName" Type="String" LabelName="Наименование таблицы" LocalListName="Наименование таблицы" NotNull="true"/>
+      <Field UID="{EC581326-E7E6-42E1-BDA6-7E2EF956637A}" Name="FieldName" Type="String" LabelName="Наименование поля" LocalListName="Наименование поля" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="TableName" Unique="true"/>
+      <Index Field="FieldName" Unique="true"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_FIAS_ActualStatus" UID="{4DA4A6F9-CFBD-4176-BA4B-261C0BC13A7F}" Alias="fast" LocalName="Статус актуальности ФИАС" LocalListName="Статусы актуальности ФИАС" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{848963D0-B0A8-46BC-98C0-97073EA74C2F}" Name="ACTSTATID" Type="Int" LabelName="Идентификатор статуса (ключ)" LocalListName="Идентификатор статуса (ключ)"/>
+      <Field UID="{201CACC3-8351-458B-B6D2-2AEC53988C68}" Name="NAME" Type="String" Size="100" LabelName="Наименование" LocalListName="Наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="ACTSTATID" Unique="true"/>
+      <Index Field="NAME"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_FIAS_Object" UID="{0B87EB51-E37B-4695-B10C-33AE7D5C4DBB}" Alias="fobj" LocalName="Адресной объект" LocalListName="Адресные объекты" TitleName="AOGUID" IsSystem="true">
+    <Fields>
+      <Field UID="{C831C2F7-EA14-46C4-A177-AB4A3685AAFC}" Name="AOGUID" Type="UID" LabelName="Глобальный уникальный идентификатор адресного объекта" LocalListName="Глобальный уникальный идентификатор адресного объекта"/>
+      <Field UID="{0ADC985D-6FED-499F-91D6-AFDF76DFD751}" Name="FORMALNAME" Type="String" Size="120" LabelName="Формализованное наименование" LocalListName="Формализованное наименование"/>
+      <Field UID="{1D0C22B3-E2E6-4DE3-BE66-8488B998B74F}" Name="REGIONCODE" Type="String" Size="2" LabelName="Код региона" LocalListName="Код региона"/>
+      <Field UID="{B706AD0C-8F8C-45F8-A752-E990976B190E}" Name="AUTOCODE" Type="String" Size="1" LabelName="Код автономии" LocalListName="Код автономии"/>
+      <Field UID="{AB76FD25-B671-4497-8A94-A97F161AFCBF}" Name="AREACODE" Type="String" Size="3" LabelName="Код района" LocalListName="Код района"/>
+      <Field UID="{60458929-A42B-40C9-B43F-A68D90F0868D}" Name="CITYCODE" Type="String" Size="3" LabelName="Код города" LocalListName="Код города"/>
+      <Field UID="{0AF7C049-20E1-4EC5-9B23-AC23C7CD9667}" Name="CTARCODE" Type="String" Size="3" LabelName="Код внутригородского района" LocalListName="Код внутригородского района"/>
+      <Field UID="{7D763AF8-4441-4BBC-B06B-A6E2F6628C04}" Name="PLACECODE" Type="String" Size="3" LabelName="Код населенного пункта" LocalListName="Код населенного пункта"/>
+      <Field UID="{04604DE0-435A-4764-A736-70B4830A6D73}" Name="PLANCODE" Type="String" Size="4" LabelName="Код элемента планировочной структуры" LocalListName="Код элемента планировочной структуры"/>
+      <Field UID="{F77D7222-306C-4037-8D60-4F936219D4D8}" Name="STREETCODE" Type="String" Size="4" LabelName="Код улицы" LocalListName="Код улицы"/>
+      <Field UID="{539509BA-1F83-41D5-BEEC-D49212E316F1}" Name="EXTRCODE" Type="String" Size="4" LabelName="Код дополнительного адресообразующего элемента" LocalListName="Код дополнительного адресообразующего элемента"/>
+      <Field UID="{63E4FF25-CDBC-4CE8-A1C9-47C3BD19B3EC}" Name="SEXTCODE" Type="String" Size="3" LabelName="Код подчиненного дополнительного адресообразующего элемента" LocalListName="Код подчиненного дополнительного адресообразующего элемента"/>
+      <Field UID="{0B14F7A2-FDBE-4E8E-943D-3D02BCE0DFD9}" Name="OFFNAME" Type="String" Size="120" LabelName="Официальное наименование" LocalListName="Официальное наименование"/>
+      <Field UID="{15FB42FE-C72E-43E1-B09F-9FA9DC24211D}" Name="POSTALCODE" Type="String" Size="6" LabelName="Почтовый индекс" LocalListName="Почтовый индекс"/>
+      <Field UID="{CFB181E9-B547-46D3-B774-C0AAE3382CFE}" Name="IFNSFL" Type="String" Size="4" LabelName="Код ИФНС ФЛ" LocalListName="Код ИФНС ФЛ"/>
+      <Field UID="{7D0A01CD-3E8C-43F3-B39D-1A1E44190C83}" Name="TERRIFNSFL" Type="String" Size="4" LabelName="Код территориального участка ИФНС ФЛ" LocalListName="Код территориального участка ИФНС ФЛ"/>
+      <Field UID="{0E5E5A5B-3E02-4FFD-8E6E-91F7A0F13E47}" Name="IFNSUL" Type="String" Size="4" LabelName="Код ИФНС ЮЛ" LocalListName="Код ИФНС ЮЛ"/>
+      <Field UID="{B7DC1D61-097F-4EC3-8C62-06373FC2D960}" Name="TERRIFNSUL" Type="String" Size="4" LabelName="Код территориального участка ИФНС ЮЛ" LocalListName="Код территориального участка ИФНС ЮЛ"/>
+      <Field UID="{12A1E605-4678-4533-91DA-D65D1F82B510}" Name="OKATO" Type="String" Size="11" LabelName="ОКАТО" LocalListName="ОКАТО"/>
+      <Field UID="{83DE15A3-86E7-4600-84C4-683DA7B0A258}" Name="OKTMO" Type="String" Size="11" LabelName="ОКТМО" LocalListName="ОКТМО"/>
+      <Field UID="{C20181B5-DEED-4025-A077-D349B438F02B}" Name="UPDATEDATE" Type="Date" LabelName="Дата внесения записи" LocalListName="Дата внесения записи"/>
+      <Field UID="{BEE2BCB2-3515-480A-9D4B-77145EB7A8AB}" Name="SHORTNAME" Type="String" Size="10" LabelName="Краткое наименование типа объекта" LocalListName="Краткое наименование типа объекта"/>
+      <Field UID="{4F16B130-E71F-4446-B249-7A8624D02FF1}" Name="AOLEVEL" Type="Int" LabelName="Уровень адресного объекта" LocalListName="Уровень адресного объекта"/>
+      <Field UID="{0C2A23C1-7A92-45BC-97CB-7EE0CCB47991}" Name="PARENTGUID" Type="UID" LabelName="Идентификатор объекта родительского объекта" LocalListName="Идентификатор объекта родительского объекта"/>
+      <Field UID="{7D46D389-A00B-452D-8B26-54A2E253F497}" Name="AOID" Type="UID" LabelName="Уникальный идентификатор записи. Ключевое поле." LocalListName="Уникальный идентификатор записи. Ключевое поле."/>
+      <Field UID="{8BD361A4-4500-4113-860B-81BC485AC6FF}" Name="PREVID" Type="UID" LabelName="Идентификатор записи связывания с предыдушей исторической записью" LocalListName="Идентификатор записи связывания с предыдушей исторической записью"/>
+      <Field UID="{C53A576B-A252-449A-8BA9-DBD21A05C504}" Name="NEXTID" Type="UID" LabelName="Идентификатор записи связывания с последующей исторической записью" LocalListName="Идентификатор записи связывания с последующей исторической записью"/>
+      <Field UID="{4D71C580-7CBC-4B27-9ED3-578ABA12C2F0}" Name="CODE" Type="String" Size="17" LabelName="Код адресного объекта одной строкой с признаком актуальности из КЛАДР 4.0." LocalListName="Код адресного объекта одной строкой с признаком актуальности из КЛАДР 4.0."/>
+      <Field UID="{89C4A504-2CAB-487D-B5D9-EDD6FA63824C}" Name="PLAINCODE" Type="String" Size="15" LabelName="Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр)" LocalListName="Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр)"/>
+      <Field UID="{92295CD3-EF6F-4700-93DB-0F4AE30304F6}" Name="ACTSTATUS" Type="Int" LabelName="Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте." LocalListName="Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте."/>
+      <Field UID="{EC63759E-546A-4A10-B22B-F4A8C8787D66}" Name="CENTSTATUS" Type="Int" LabelName="Статус центра" LocalListName="Статус центра"/>
+      <Field UID="{E7B9067D-4C1B-4B34-B435-9BBE2E0774FA}" Name="OPERSTATUS" Type="Int" LabelName="Статус действия над записью – причина появления записи" LocalListName="Статус действия над записью – причина появления записи"/>
+      <Field UID="{CB2D3C40-C608-4ECB-A2D6-6B0721F68CE7}" Name="CURRSTATUS" Type="Int" LabelName="Статус актуальности КЛАДР 4 (последние две цифры в коде)" LocalListName="Статус актуальности КЛАДР 4 (последние две цифры в коде)"/>
+      <Field UID="{F3E4B29A-AA68-4A5F-A929-6FA3FF8E057E}" Name="STARTDATE" Type="Date" LabelName="Начало действия записи" LocalListName="Начало действия записи"/>
+      <Field UID="{55C5602C-AA66-4042-A76E-F0AD87AE23E7}" Name="ENDDATE" Type="Date" LabelName="Окончание действия записи" LocalListName="Окончание действия записи"/>
+      <Field UID="{FAA6C90F-2252-4946-BB7B-339990D0F02A}" Name="NORMDOC" Type="UID" LabelName="Внешний ключ на нормативный документ" LocalListName="Внешний ключ на нормативный документ"/>
+      <Field UID="{56C54C77-E21A-40DE-B1B8-1E6A5E34210B}" Name="LIVESTATUS" Type="Int" LabelName="Признак действующего адресного объекта" LocalListName="Признак действующего адресного объекта"/>
+      <Field UID="{4CBBFAA6-630C-4C28-A82A-BD267CDA04B7}" Name="DIVTYPE" Type="String" LabelName="Тип адресации" LocalListName="Тип адресации"/>
+    </Fields>
+    <Indexes>
+      <Index Field="AOGUID"/>
+      <Index Field="FORMALNAME"/>
+      <Index Field="OFFNAME"/>
+      <Index Field="SHORTNAME"/>
+      <Index Field="AOLEVEL"/>
+      <Index Field="PARENTGUID"/>
+      <Index Field="AOID"/>
+      <Index Field="CURRSTATUS"/>
+      <Index Field="SHORTNAME;AOLEVEL"/>
+      <Index Field="ACTSTATUS;LIVESTATUS;AOLEVEL"/>
+      <Index Field="ACTSTATUS;LIVESTATUS;AOLEVEL;REGIONCODE"/>
+      <Index Field="ACTSTATUS;LIVESTATUS;AOLEVEL;PARENTGUID"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_FIAS_CenterStatus" UID="{67AD2531-6825-4E36-8E3B-EFC7EC507296}" Alias="fcst" LocalName="Статус центра" LocalListName="Статусы центра" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{A2E42F4B-3BEE-4FCD-A374-38EF13E15E81}" Name="CENTERSTID" Type="Int" LabelName="Идентификатор статуса" LocalListName="Идентификатор статуса"/>
+      <Field UID="{872D44FA-AB75-4F03-BC5D-B63E5CBBF7B8}" Name="NAME" Type="String" Size="100" LabelName="Наименование" LocalListName="Наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="CENTERSTID" Unique="true"/>
+      <Index Field="NAME"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_FIAS_CurrentStatus" UID="{BCFEAE01-99C2-40DC-8737-C91FA98C04BA}" Alias="fcrs" LocalName="Статус актуальности КЛАДР 4.0" LocalListName="Статусы актуальности КЛАДР 4.0" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{BCD65314-AE04-4E57-A605-9D60C3BCB9EC}" Name="CURENTSTID" Type="Int" LabelName="Идентификатор статуса (ключ)" LocalListName="Идентификатор статуса (ключ)"/>
+      <Field UID="{7187F876-190C-46CF-BF00-4C7FCBC13212}" Name="NAME" Type="String" Size="100" LabelName="Наименование" LocalListName="Наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="CURENTSTID" Unique="true"/>
+      <Index Field="NAME"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_FIAS_EstateStatus" UID="{3A071E10-C391-4108-B43F-ED8E5610E7B9}" Alias="fess" LocalName="Признак владения" LocalListName="Признаки владения" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{4B222FCF-683A-4412-8AB9-191003B48D28}" Name="ESTSTATID" Type="Int" LabelName="Признак владения" LocalListName="Признак владения"/>
+      <Field UID="{0386005E-6AC7-4F83-A6E2-71CF15A50E84}" Name="NAME" Type="String" Size="20" LabelName="Наименование" LocalListName="Наименование"/>
+      <Field UID="{195695B6-7ACF-495C-84C0-76FCB4BD5968}" Name="SHORTNAME" Type="String" Size="20" LabelName="Краткое наименование" LocalListName="Краткое наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="ESTSTATID" Unique="true"/>
+      <Index Field="NAME"/>
+      <Index Field="SHORTNAME"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_FIAS_FlatType" UID="{F223543D-2749-4A8C-AAE0-D5A98F645D45}" Alias="fftp" LocalName="Тип помещения" LocalListName="Типы помещений" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{C4F6D786-78D7-4BD2-9DF7-95A720D73C15}" Name="FLTYPEID" Type="Int" LabelName="Тип помещения" LocalListName="Тип помещения"/>
+      <Field UID="{D6AE46AC-7E89-418C-BFDB-94B1160597A2}" Name="NAME" Type="String" Size="20" LabelName="Наименование" LocalListName="Наименование"/>
+      <Field UID="{D416A66A-4F6F-4107-B4DF-F489B8ADACD9}" Name="SHORTNAME" Type="String" Size="20" LabelName="Краткое наименование" LocalListName="Краткое наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="FLTYPEID" Unique="true"/>
+      <Index Field="NAME"/>
+      <Index Field="SHORTNAME"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_FIAS_House" UID="{4BAC9547-9739-46FB-B508-E40C1E2EDB68}" Alias="fhos" LocalName="Сведения по номерам домов улиц городов и населенных пунктов" LocalListName="Сведения по номерам домов улиц городов и населенных пунктов" TitleName="POSTALCODE" IsSystem="true">
+    <Fields>
+      <Field UID="{AA0617E7-C6A6-419A-AD1B-BB1D43F00B16}" Name="POSTALCODE" Type="String" Size="6" LabelName="Почтовый индекс" LocalListName="Почтовый индекс"/>
+      <Field UID="{EC080169-7440-467D-B3BF-FA030CD2B5C8}" Name="REGIONCODE" Type="String" Size="2" LabelName="Код региона" LocalListName="Код региона"/>
+      <Field UID="{630ECF0F-8066-4778-A755-F36993B7E3D8}" Name="IFNSFL" Type="String" Size="4" LabelName="Код ИФНС ФЛ" LocalListName="Код ИФНС ФЛ"/>
+      <Field UID="{3B6D4A69-8804-4582-A194-A8555C24D405}" Name="TERRIFNSFL" Type="String" Size="4" LabelName="Код территориального участка ИФНС ФЛ" LocalListName="Код территориального участка ИФНС ФЛ"/>
+      <Field UID="{43D4AB44-9066-43D2-8A74-26E3131EA422}" Name="IFNSUL" Type="String" Size="4" LabelName="Код ИФНС ЮЛ" LocalListName="Код ИФНС ЮЛ"/>
+      <Field UID="{CC98243B-89E3-4D28-8BF9-26B4453EDBFC}" Name="TERRIFNSUL" Type="String" Size="4" LabelName="Код территориального участка ИФНС ЮЛ" LocalListName="Код территориального участка ИФНС ЮЛ"/>
+      <Field UID="{D500E67D-5245-412A-9219-23B5AE0A53C0}" Name="OKATO" Type="String" Size="11" LabelName="ОКАТО" LocalListName="ОКАТО"/>
+      <Field UID="{41600FC6-315C-483A-B4E6-33AA67451274}" Name="OKTMO" Type="String" Size="11" LabelName="ОКТМО" LocalListName="ОКТМО"/>
+      <Field UID="{1F08ABFC-2884-4C8A-90BC-A155CBD85C18}" Name="UPDATEDATE" Type="Date" LabelName="Дата внесения записи" LocalListName="Дата внесения записи"/>
+      <Field UID="{88340E92-8A67-45B0-85FD-91F55143A8CE}" Name="HOUSENUM" Type="String" Size="20" LabelName="Номер дома" LocalListName="Номер дома"/>
+      <Field UID="{4F1F1DFB-6655-4DC1-9B8B-ADBE28E07C6C}" Name="ESTSTATUS" Type="Int" LabelName="Признак владения" LocalListName="Признак владения"/>
+      <Field UID="{F70AC06F-3651-4514-9C63-7FB11A2CDF53}" Name="BUILDNUM" Type="String" Size="10" LabelName="Номер корпуса" LocalListName="Номер корпуса"/>
+      <Field UID="{390BA3B9-3D17-40A8-86C0-9406A3A84E39}" Name="STRUCNUM" Type="String" Size="10" LabelName="Номер строения" LocalListName="Номер строения"/>
+      <Field UID="{16DD474C-1F11-4E7C-A036-4BBDD5AAB2C3}" Name="STRSTATUS" Type="Int" LabelName="Признак строения" LocalListName="Признак строения"/>
+      <Field UID="{5C598AAB-2242-43A2-AA75-BF645544C018}" Name="HOUSEID" Type="UID" LabelName="Уникальный идентификатор записи дома" LocalListName="Уникальный идентификатор записи дома"/>
+      <Field UID="{A02D698D-F133-4B5F-A88E-F93D1508B264}" Name="HOUSEGUID" Type="UID" LabelName="Глобальный уникальный идентификатор дома" LocalListName="Глобальный уникальный идентификатор дома"/>
+      <Field UID="{8FF9EFC6-9BE5-4740-A892-0C54EAB45EA4}" Name="AOGUID" Type="UID" LabelName="Guid записи родительского объекта (улицы, города, населенного пункта и т.п.)" LocalListName="Guid записи родительского объекта (улицы, города, населенного пункта и т.п.)"/>
+      <Field UID="{E4DC77FD-2455-4423-89D9-D712CDF60ABF}" Name="STARTDATE" Type="Date" LabelName="Начало действия записи" LocalListName="Начало действия записи"/>
+      <Field UID="{EFB225E9-FAC9-4AAC-B36D-CF6BB8D5270D}" Name="ENDDATE" Type="Date" LabelName="Окончание действия записи" LocalListName="Окончание действия записи"/>
+      <Field UID="{7AD6930F-29C7-4400-8556-657C235E319B}" Name="STATSTATUS" Type="Int" LabelName="Состояние дома" LocalListName="Состояние дома"/>
+      <Field UID="{067EADBC-CC16-425C-BFF2-9ED7626BD662}" Name="NORMDOC" Type="UID" LabelName="Внешний ключ на нормативный документ" LocalListName="Внешний ключ на нормативный документ"/>
+      <Field UID="{1485CAB5-B6A0-4E2D-BB3A-61DD6DFFDEB8}" Name="COUNTER" Type="Int" LabelName="Счетчик записей домов для КЛАДР 4" LocalListName="Счетчик записей домов для КЛАДР 4"/>
+      <Field UID="{8B449642-853B-4D89-9236-9B241B777336}" Name="CADNUM" Type="String" Size="100" LabelName="Кадастровый номер" LocalListName="Кадастровый номер"/>
+      <Field UID="{92683405-74D7-4CDD-A520-CBFF532C190B}" Name="DIVTYPE" Type="String" LabelName="Тип адресации" LocalListName="Тип адресации"/>
+    </Fields>
+    <Indexes>
+      <Index Field="HOUSEID"/>
+      <Index Field="HOUSEGUID"/>
+      <Index Field="AOGUID"/>
+      <Index Field="AOGUID;HOUSENUM"/>
+    </Indexes>
+  </Table>
+    
+  <Table Name="_FIAS_HouseStateStatus" UID="{125C2745-D829-402A-897F-D30071C569CE}" Alias="fhss" LocalName="Статус состояния домов" LocalListName="Статусы состояния домов" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{B47E50DE-A124-4F86-8EA8-1314944D4CD6}" Name="HOUSESTID" Type="Int" LabelName="Идентификатор статуса" LocalListName="Идентификатор статуса"/>
+      <Field UID="{056DF38C-0E5C-414F-A869-184789AA6146}" Name="NAME" Type="String" Size="60" LabelName="Наименование" LocalListName="Наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="HOUSESTID" Unique="true"/>
+      <Index Field="NAME"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_FIAS_IntervalStatus" UID="{083CAFF4-7330-413D-996E-95A0CA2432BA}" Alias="fivs" LocalName="Статус интервала домов" LocalListName="Статусы интервалов домов" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{8A90EC59-4342-4F52-BF57-3F658C3C2FB6}" Name="INTVSTATID" Type="Int" LabelName="Идентификатор статуса" LocalListName="Идентификатор статуса"/>
+      <Field UID="{9D116CD7-8C0D-42C0-B62A-1A0D623C22F7}" Name="NAME" Type="String" Size="60" LabelName="Наименование" LocalListName="Наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="INTVSTATID" Unique="true"/>
+      <Index Field="NAME"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_FIAS_NormativeDocumentType" UID="{44B192A1-899B-4E31-9A1E-C3CAC92016F3}" Alias="fndt" LocalName="Тип нормативного документа" LocalListName="Типы нормативного документа" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{293A5618-3968-4BF2-A02F-B775227D7BB7}" Name="NDTYPEID" Type="Int" LabelName="Идентификатор записи (ключ)" LocalListName="Идентификатор записи (ключ)"/>
+      <Field UID="{A741FC53-116B-4E4C-8861-4D08EEC9C1F0}" Name="NAME" Type="String" Size="250" LabelName="Наименование" LocalListName="Наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="NDTYPEID" Unique="true"/>
+      <Index Field="NAME"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_FIAS_NormativeDocument" UID="{6F0532CA-1576-42E1-ACB1-7D7146B1AE91}" Alias="fndc" LocalName="Сведения по нормативному документу, являющемуся основанием присвоения адресному элементу наименования" LocalListName="Сведения по нормативному документу, являющемуся основанием присвоения адресному элементу наименования" TitleName="NORMDOCID" IsSystem="true">
+    <Fields>
+      <Field UID="{E84B6BBB-4986-406B-8EB0-C0D4B78FBF47}" Name="NORMDOCID" Type="UID" LabelName="Идентификатор нормативного документа" LocalListName="Идентификатор нормативного документа"/>
+      <Field UID="{F9B8BD5B-0C28-4353-B5A2-7DB2F10F5989}" Name="DOCNAME" Type="String" LabelName="Наименование документа" LocalListName="Наименование документа"/>
+      <Field UID="{335AB7C3-E28C-4380-9D2F-A7850D21A21C}" Name="DOCDATE" Type="Date" LabelName="Дата документа" LocalListName="Дата документа"/>
+      <Field UID="{5DE5AE98-4383-4159-A9B1-6056EAF04DCE}" Name="DOCNUM" Type="String" Size="20" LabelName="Номер документа" LocalListName="Номер документа"/>
+      <Field UID="{DD6E5C29-0B83-4A72-B1DE-2C51F6328B2A}" Name="DOCTYPE" Type="Int" LabelName="Тип документа" LocalListName="Тип документа"/>
+      <Field UID="{3F75FD0F-AD0E-474F-9715-19509C59909F}" Name="DOCIMGID" Type="UID" LabelName="Идентификатор образа (внешний ключ)" LocalListName="Идентификатор образа (внешний ключ)"/>
+    </Fields>
+    <Indexes>
+      <Index Field="NORMDOCID"/>
+      <Index Field="DOCIMGID"/>
+    </Indexes>
+  </Table>
+    
+  <Table Name="_FIAS_OperationStatus" UID="{ED2CB0BF-121A-4CB8-B41C-9C648EC94469}" Alias="fost" LocalName="Статус действия" LocalListName="Статусы действий" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{965C1E66-4751-4EBA-8242-34409D7ACF92}" Name="OPERSTATID" Type="Int" LabelName="Идентификатор статуса (ключ)" LocalListName="Идентификатор статуса (ключ)"/>
+      <Field UID="{47ED4DD4-6983-405D-B619-C604D212723C}" Name="NAME" Type="String" Size="100" LabelName="Наименование" LocalListName="Наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="OPERSTATID" Unique="true"/>
+      <Index Field="NAME"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_FIAS_Room" UID="{E30FF024-570E-4C4A-B92A-627C03BAF3EF}" Alias="from" LocalName="Классификатор помещения" LocalListName="Классификатор помещений" TitleName="ROOMGUID" IsSystem="true">
+    <Fields>
+      <Field UID="{8F5E35C1-20F8-430D-A096-AAB373EFB665}" Name="ROOMGUID" Type="UID" LabelName="Глобальный уникальный идентификатор адресного объекта (помещения)" LocalListName="Глобальный уникальный идентификатор адресного объекта (помещения)"/>
+      <Field UID="{BEBD8704-A678-415E-B649-EF78B8832DEC}" Name="FLATNUMBER" Type="String" Size="50" LabelName="Номер помещения или офиса" LocalListName="Номер помещения или офиса"/>
+      <Field UID="{EED81DF4-C7DE-4B85-A851-CAAC4BEA79E8}" Name="FLATTYPE" Type="Int" LabelName="Тип помещения" LocalListName="Тип помещения"/>
+      <Field UID="{4ED4A355-EF0B-45B0-A038-B938D05693FB}" Name="ROOMNUMBER" Type="String" Size="50" LabelName="Номер комнаты" LocalListName="Номер комнаты"/>
+      <Field UID="{1CD52F0A-4DDE-438F-8AE5-EFDAC14A0D91}" Name="ROOMTYPE" Type="Int" LabelName="Тип комнаты" LocalListName="Тип комнаты"/>
+      <Field UID="{4AB4827A-A329-4915-A3D5-2BF634ADD502}" Name="REGIONCODE" Type="String" Size="2" LabelName="Код региона" LocalListName="Код региона"/>
+      <Field UID="{A905703F-8B04-4EE8-9D71-26BEDFA74727}" Name="POSTALCODE" Type="String" Size="6" LabelName="Почтовый индекс" LocalListName="Почтовый индекс"/>
+      <Field UID="{0AA399E3-6FAD-4012-AD8B-99E0EA0A2376}" Name="UPDATEDATE" Type="Date" LabelName="Дата внесения записи" LocalListName="Дата внесения записи"/>
+      <Field UID="{1DB209D8-4D49-4C19-8E62-C81FD5C3FC78}" Name="HOUSEGUID" Type="UID" LabelName="Идентификатор родительского объекта (дома)" LocalListName="Идентификатор родительского объекта (дома)"/>
+      <Field UID="{9A65FEB3-F047-4817-9958-88362CDAB16F}" Name="ROOMID" Type="UID" LabelName="Уникальный идентификатор записи. Ключевое поле." LocalListName="Уникальный идентификатор записи. Ключевое поле."/>
+      <Field UID="{6CACD555-6D5B-4CB4-8021-AD990C07387B}" Name="PREVID" Type="UID" LabelName="Идентификатор записи связывания с предыдушей исторической записью" LocalListName="Идентификатор записи связывания с предыдушей исторической записью"/>
+      <Field UID="{2A94E57C-5C75-4AAD-B90B-1E643DD23A7D}" Name="NEXTID" Type="UID" LabelName="Идентификатор записи связывания с последующей исторической записью" LocalListName="Идентификатор записи связывания с последующей исторической записью"/>
+      <Field UID="{9954BB29-5209-4882-8A93-225DF0E5A19E}" Name="STARTDATE" Type="Date" LabelName="Начало действия записи" LocalListName="Начало действия записи"/>
+      <Field UID="{FFC34A17-8313-4344-9A7D-D5E98C217A8C}" Name="ENDDATE" Type="Date" LabelName="Окончание действия записи" LocalListName="Окончание действия записи"/>
+      <Field UID="{BDFABD39-ADF3-4787-83A9-6CF508927B38}" Name="LIVESTATUS" Type="Int" LabelName="Признак действующего адресного объекта" LocalListName="Признак действующего адресного объекта"/>
+      <Field UID="{70F1B721-AB50-46AF-9D95-5C1534D47E3A}" Name="NORMDOC" Type="UID" LabelName="Внешний ключ на нормативный документ" LocalListName="Внешний ключ на нормативный документ"/>
+      <Field UID="{F95F324A-C9B5-46D1-86EC-D7897BC37EBD}" Name="OPERSTATUS" Type="Int" LabelName="Статус действия над записью – причина появления записи" LocalListName="Статус действия над записью – причина появления записи"/>
+      <Field UID="{D17A58FD-047E-42FE-A5B4-FFEDDB7C420A}" Name="CADNUM" Type="String" Size="100" LabelName="Кадастровый номер помещения" LocalListName="Кадастровый номер помещения"/>
+      <Field UID="{06FB2B81-1568-461E-83BA-7CEFE156001E}" Name="ROOMCADNUM" Type="String" Size="100" LabelName="Кадастровый номер комнаты в помещении" LocalListName="Кадастровый номер комнаты в помещении"/>
+    </Fields>
+    <Indexes>
+      <Index Field="ROOMGUID"/>
+      <Index Field="HOUSEGUID"/>
+      <Index Field="ROOMID"/>
+    </Indexes>
+  </Table>
+    
+  <Table Name="_FIAS_RoomType" UID="{C95434DE-DE25-4F82-B810-D67BFE3355BA}" Alias="frtp" LocalName="Тип комнаты" LocalListName="Типы комнат" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{11CC106B-9C06-4AAD-95CC-51D9195EFD02}" Name="RMTYPEID" Type="Int" LabelName="Тип комнаты" LocalListName="Тип комнаты"/>
+      <Field UID="{74F34028-0485-4134-85CB-9581639FE491}" Name="NAME" Type="String" Size="20" LabelName="Наименование" LocalListName="Наименование"/>
+      <Field UID="{1B3B9F11-EC31-411B-AD51-5507FDCF795B}" Name="SHORTNAME" Type="String" Size="20" LabelName="Краткое наименование" LocalListName="Краткое наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="RMTYPEID" Unique="true"/>
+      <Index Field="NAME"/>
+      <Index Field="SHORTNAME"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_FIAS_AddressObjectType" UID="{AC5FA337-05D3-4796-9770-862500A9DD80}" Alias="fscb" LocalName="Тип адресного объекта" LocalListName="Типы адресных объектов" TitleName="SOCRNAME" IsSystem="true">
+    <Fields>
+      <Field UID="{9C024114-5A88-4DC3-9B1E-1D6F912D4750}" Name="LEVEL" Type="Int" LabelName="Уровень адресного объекта" LocalListName="Уровень адресного объекта"/>
+      <Field UID="{5DCD117B-9080-4D61-BE90-78F9CCC9D301}" Name="SCNAME" Type="String" Size="10" LabelName="Краткое наименование типа объекта" LocalListName="Краткое наименование типа объекта"/>
+      <Field UID="{3A33CF7B-E307-41DC-9DE5-89D54DA722E9}" Name="SOCRNAME" Type="String" Size="50" LabelName="Полное наименование типа объекта" LocalListName="Полное наименование типа объекта"/>
+      <Field UID="{9B0659BA-78E0-4385-BA02-62910AE05E24}" Name="KOD_T_ST" Type="String" Size="4" LabelName="Ключевое поле" LocalListName="Ключевое поле"/>
+    </Fields>
+    <Indexes>
+      <Index Field="LEVEL"/>
+      <Index Field="SCNAME"/>
+      <Index Field="SOCRNAME"/>
+      <Index Field="KOD_T_ST" Unique="true"/>
+      <Index Field="SCNAME;LEVEL"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_FIAS_Stead" UID="{37155096-F70A-4F63-9C93-DE6A8EB95E93}" Alias="fstd" LocalName="Классификатор земельных участков" LocalListName="Классификаторы земельных участков" TitleName="STEADGUID" IsSystem="true">
+    <Fields>
+      <Field UID="{0FCC9576-A216-4FBF-8F88-F66691581C80}" Name="STEADGUID" Type="UID" LabelName="Глобальный уникальный идентификатор адресного объекта (земельного участка)" LocalListName="Глобальный уникальный идентификатор адресного объекта (земельного участка)"/>
+      <Field UID="{49768F93-71B6-45DC-BB78-B8D1FD5EA5FF}" Name="NUMBER" Type="String" Size="120" LabelName="Номер земельного участка" LocalListName="Номер земельного участка"/>
+      <Field UID="{A8C2AD4F-3937-4523-88F7-7B21DDFE8952}" Name="REGIONCODE" Type="String" Size="2" LabelName="Код региона" LocalListName="Код региона"/>
+      <Field UID="{FC1B81B1-24B3-449A-B5A3-51ECBABE79CB}" Name="POSTALCODE" Type="String" Size="6" LabelName="Почтовый индекс" LocalListName="Почтовый индекс"/>
+      <Field UID="{1BAB0E6E-8620-4CE7-A851-468A8466C612}" Name="IFNSFL" Type="String" Size="4" LabelName="Код ИФНС ФЛ" LocalListName="Код ИФНС ФЛ"/>
+      <Field UID="{935DAC29-9C3D-4DC6-BFAA-B7EBE07A1C08}" Name="TERRIFNSFL" Type="String" Size="4" LabelName="Код территориального участка ИФНС ФЛ" LocalListName="Код территориального участка ИФНС ФЛ"/>
+      <Field UID="{402EEEEC-E62C-4DDC-9742-C9953DB41A70}" Name="IFNSUL" Type="String" Size="4" LabelName="Код ИФНС ЮЛ" LocalListName="Код ИФНС ЮЛ"/>
+      <Field UID="{B84125E6-92FC-44AD-AF26-9DCE9D5131DE}" Name="TERRIFNSUL" Type="String" Size="4" LabelName="Код территориального участка ИФНС ЮЛ" LocalListName="Код территориального участка ИФНС ЮЛ"/>
+      <Field UID="{EBFF8C3A-7D66-4FDF-AD03-4BC5E14FC6C4}" Name="OKATO" Type="String" Size="11" LabelName="ОКАТО" LocalListName="ОКАТО"/>
+      <Field UID="{0D338AB7-135F-4E46-9AEF-C3306CB6E5D6}" Name="OKTMO" Type="String" Size="11" LabelName="ОКТМО" LocalListName="ОКТМО"/>
+      <Field UID="{1C6C4053-912D-4AF1-BB42-DB3FF460897A}" Name="UPDATEDATE" Type="Date" LabelName="Дата внесения записи" LocalListName="Дата внесения записи"/>
+      <Field UID="{1AFBCB72-CDD9-4F24-91CC-AAA7318AC94D}" Name="PARENTGUID" Type="UID" LabelName="Идентификатор объекта родительского объекта" LocalListName="Идентификатор объекта родительского объекта"/>
+      <Field UID="{8D78A4BC-094D-45AA-A000-0BFB8323C9FC}" Name="STEADID" Type="UID" LabelName="Уникальный идентификатор записи. Ключевое поле." LocalListName="Уникальный идентификатор записи. Ключевое поле."/>
+      <Field UID="{56399A40-CE24-4BDE-8245-4CF795CC181C}" Name="PREVID" Type="UID" LabelName="Идентификатор записи связывания с предыдушей исторической записью" LocalListName="Идентификатор записи связывания с предыдушей исторической записью"/>
+      <Field UID="{C080BB3F-CCBC-44ED-A8D3-B01F081C8F42}" Name="NEXTID" Type="UID" LabelName="Идентификатор записи связывания с последующей исторической записью" LocalListName="Идентификатор записи связывания с последующей исторической записью"/>
+      <Field UID="{5F41E708-3248-485E-974B-3F144285BD94}" Name="OPERSTATUS" Type="Int" LabelName="Статус действия над записью – причина появления записи" LocalListName="Статус действия над записью – причина появления записи"/>
+      <Field UID="{AE8D0653-085D-4BAF-A1F7-24262CF5B142}" Name="STARTDATE" Type="Date" LabelName="Начало действия записи" LocalListName="Начало действия записи"/>
+      <Field UID="{85EE98CC-0FAA-4128-91B5-06E10A35B04F}" Name="ENDDATE" Type="Date" LabelName="Окончание действия записи" LocalListName="Окончание действия записи"/>
+      <Field UID="{578F0C0D-823E-4660-93C2-B992E32D475D}" Name="NORMDOC" Type="UID" LabelName="Внешний ключ на нормативный документ" LocalListName="Внешний ключ на нормативный документ"/>
+      <Field UID="{0E84C75E-5DD0-4945-95B2-A39F7C7317A1}" Name="LIVESTATUS" Type="Int" LabelName="Признак действующего адресного объекта" LocalListName="Признак действующего адресного объекта"/>
+      <Field UID="{9C1A14BA-9548-40B3-85B4-4B6F4993CA60}" Name="CADNUM" Type="String" Size="100" LabelName="Кадастровый номер" LocalListName="Кадастровый номер"/>
+      <Field UID="{961D766E-5B68-4DAA-8335-376DB86B6BA9}" Name="DIVTYPE" Type="String" LabelName="Тип адресации" LocalListName="Тип адресации"/>
+    </Fields>
+    <Indexes>
+      <Index Field="STEADGUID"/>
+      <Index Field="PARENTGUID"/>
+      <Index Field="STEADID"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_FIAS_StructureStatus" UID="{C436FBF1-1BC5-406E-B504-C560C46D8159}" Alias="fsts" LocalName="Признак строения" LocalListName="Признаки строения" TitleName="NAME" IsSystem="true">
+    <Fields>
+      <Field UID="{B66E7425-865E-4DE9-8333-2C10BB6DDD63}" Name="STRSTATID" Type="Int" LabelName="Признак строения" LocalListName="Признак строения"/>
+      <Field UID="{6B89DBFF-3DE0-4FCB-B44C-50186FD2D630}" Name="NAME" Type="String" Size="20" LabelName="Наименование" LocalListName="Наименование"/>
+      <Field UID="{B1653189-E6C0-4FDB-83BC-DB57E71DF2F2}" Name="SHORTNAME" Type="String" Size="20" LabelName="Краткое наименование" LocalListName="Краткое наименование"/>
+    </Fields>
+    <Indexes>
+      <Index Field="STRSTATID" Unique="true"/>
+      <Index Field="NAME"/>
+      <Index Field="SHORTNAME"/>
+    </Indexes>
+  </Table>
+  
+</XSN>

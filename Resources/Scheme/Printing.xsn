@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="Printing.xsn">
+  
+  <Table Name="_Report" UID="{C2C3BFC0-FCAF-4886-A0F6-18BD0DFF985A}" Alias="rprt" LocalName="Отчёт" LocalListName="Отчёты" TitleName="LocalName" IsSystem="true">
+    <Fields>
+      <Field UID="{1FEAACF4-9E77-4531-B394-2306E24CB2B0}" Name="System" Type="Bool" DefaultValue="false" LabelName="Системый отчёт" LocalListName="Системый отчёт"/>
+      <Field UID="{2CD56932-A794-4E16-AEAB-0B08953F18F6}" Name="Type" Type="String" LabelName="Тип отчёта" LocalListName="Тип отчёта"/>
+      <Field UID="{9628EBA9-8DB1-4D90-893E-256BA30D0068}" Name="TableName" Type="String" LabelName="Наименование таблицы" LocalListName="Наименование таблицы" NotNull="true"/>
+      <Field UID="{7F42EBD5-D877-4034-AF6A-37DCD2A4D7D5}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{3545B546-5B2F-4DFC-A146-D6A390E35F14}" Name="LocalName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование" NotNull="true"/>
+      <Field UID="{400BDDB2-D797-4539-8518-BF36E3B9FAB8}" Name="FileTemplate" Type="String" LabelName="Файл-шаблон" LocalListName="Файл-шаблон" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="System"/>
+      <Index Field="Type"/>
+      <Index Field="TableName"/>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="LocalName" Unique="true"/>
+      <Index Field="FileTemplate" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_ReportFields" UID="{C4A4A36B-B384-4482-BD86-04254BB13C55}" Alias="rpfl" LocalName="Поле отчёта" LocalListName="Поля отчёта" TitleName="ParameterName" IsSystem="true">
+    <Fields>
+      <Field UID="{DC92535E-98FC-4767-828F-5C71ABC28212}" Name="Report" Type="UID" LabelName="Отчёт" LocalListName="Отчёт" NotNull="true"/>
+      <Field UID="{886061D1-6EDF-4A90-9B2E-76CB64BE8FF1}" Name="ReplaceValue" Type="String" LabelName="Значение которое нужно заменить" LocalListName="Значение которое нужно заменить" NotNull="true"/>
+      <Field UID="{4BC4049E-AF89-4939-AF9D-438003CB1A7C}" Name="FieldQuery" Type="String" LabelName="Запрос на значение поля" LocalListName="Запрос на значение поля"/>
+      <Field UID="{E90F2220-B9A0-4888-99F6-7B6E52BC6485}" Name="QueryName" Type="String" LabelName="Запрос к модели данных" LocalListName="Запрос к модели данных"/>
+      <Field UID="{B039B3E4-1629-45A9-95DC-5EB7EEC0EF75}" Name="ParameterName" Type="String" LabelName="Наименование параметра" LocalListName="Наименование параметра"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Report"/>
+      <Index Field="ReplaceValue"/>
+      <Index Field="FieldQuery"/>
+      <Index Field="QueryName"/>
+      <Index Field="ParameterName"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Report" ForeignClass="_Report" ForeignField="UID" ForeignViewNameField="LocalName"/>
+    </Foreigns>
+  </Table>
+  
+</XSN>

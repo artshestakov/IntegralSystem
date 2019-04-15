@@ -1,0 +1,17 @@
+﻿QTextEdit
+{
+    border: 1px solid gray;
+    padding: 2px;
+    background: white;
+}
+
+QTextEdit:hover
+{
+    border: 1px solid rgb(42, 141, 212);
+}
+
+QTextEdit:focus
+{
+    border: 2px groove rgb(42, 141, 212);
+    background-color: rgb(240, 255, 255);
+}

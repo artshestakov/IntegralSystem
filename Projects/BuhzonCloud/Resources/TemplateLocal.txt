@@ -1,0 +1,33 @@
+﻿server port:i:3389
+devicestoredirect:s:
+drivestoredirect:s:C:\,D:\;
+gatewayusagemethod:i:2
+use multimon:i:1
+span monitors:i:1
+redirectdrives:i:1
+prompt for credentials on client:i:1
+remoteapplicationmode:i:1
+enablecredsspsupport:i:1
+alternate shell:s:||1cestart
+remoteapplicationprogram:s:||1cestart
+remoteapplicationname:s:1C Предприятие 8.3
+remoteapplicationcmdline:s:
+negotiate security layer:i:1
+session bpp:i:32
+allow font smoothing:i:1
+full address:s:ts11.buhzon.ru
+redirectprinters:i:1
+redirectcomports:i:0
+redirectsmartcards:i:1
+redirectclipboard:i:1
+redirectposdevices:i:0
+autoreconnection enabled:i:1
+authentication level:i:3
+prompt for credentials:i:0
+gatewayhostname:s:1c.buhzon.ru
+gatewaycredentialssource:i:0
+gatewayprofileusagemethod:i:1
+promptcredentialonce:i:1
+alternate full address:s:ts11.buhzon.ru
+username:s:%Login%
+password 51:b:%Password%

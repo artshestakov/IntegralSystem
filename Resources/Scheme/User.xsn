@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="User.xsn">
+  
+  <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="Surname;Name;Patronymic" ObjectForm="ISUserObjectForm">
+    <Fields>
+      <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="Int" LabelName="Группа" LocalListName="Группа"/>
+      <Field UID="{4ED0AB79-0ECC-4CDA-9FEF-970813028FCB}" Name="Subdivision" Type="Int" LabelName="Подразделение" LocalListName="Подразделение"/>
+      <Field UID="{861223FE-18B5-4557-99D1-AEA74D42483E}" Name="Surname" Type="String" Size="20" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Фамилия" LocalListName="Фамилия" NotNull="true"/>
+      <Field UID="{7FC68D04-457E-405A-AB43-75E960148742}" Name="Name" Type="String" Size="20" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Имя" LocalListName="Имя" NotNull="true"/>
+      <Field UID="{FDDA65F7-0C37-4B42-BC43-E8D889DBADA2}" Name="Patronymic" Type="String" Size="20" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Отчество" LocalListName="Отчество"/>
+      <Field UID="{194CC7C5-E4FB-46AA-B6BE-EE8420A5BB9D}" Name="Sex" Type="Int" LabelName="Пол" LocalListName="Пол" NotNull="true"/>
+      <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true"/>
+      <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="Login" Size="16" Lower="true" RegExp="^([a-z]+)$" LabelName="Логин" LocalListName="Логин" Hint="Логин должен быть в нижнем регистре и на английском языке." NotNull="true"/>
+      <Field UID="{FEB51D6E-1395-4799-9049-3C9A9CE68370}" Name="AccessAllowed" Type="Bool" DefaultValue="false" LabelName="Доступ разрешен" LocalListName="Доступ разрешен" Hint="Если эта опция отключена, пользователь не сможет войти в программу."/>
+      <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия." SeparatorName="Учётная запись"/>
+      <Field UID="{07CB8028-4695-4F7C-A676-8D89E38932F8}" Name="AccountLifeTimeStart" Type="Date" LabelName="Дата начала действия" LocalListName="Дата начала действия" HideFromList="true"/>
+      <Field UID="{196BD860-208E-4DF7-8E4D-A65F7A9E8F35}" Name="AccountLifeTimeEnd" Type="Date" LabelName="Дата окончания действия" LocalListName="Дата окончания действия" HideFromList="true"/>
+      <Field UID="{41EA0A03-4022-492D-B311-C79E982EAECD}" Name="FixedInactive" Type="Bool" LabelName="Фиксировать бездействие" LocalListName="Фиксировать бездействие" HideFromList="true" Hint="Фиксирование бездействия пользователя"/>
+      <Field UID="{12AA7823-6617-472D-A7C3-9C104DC61ED3}" Name="InactiveTimeout" Type="Int" LabelName="Таймаут бездействия (мин.)" LocalListName="Таймаут бездействия (мин.)" HideFromList="true" Hint="Укажите, сколько должно пройти минут чтобы система заиксировала бездействие"/>
+      <Field UID="{18F6BFE0-0770-4F2F-A8DE-973416F41CEA}" Name="LastEnter" Type="DateTime" LabelName="Последний вход" LocalListName="Последний вход" HideFromObject="true"/>
+      <Field UID="{852CB655-75AF-4515-BBDC-149F08BB82AE}" Name="LastAddress" Type="String" LabelName="Последний адрес" LocalListName="Последний адрес" HideFromObject="true"/>
+      <Field UID="{EA084041-0D7E-4167-8705-4BC6680E9922}" Name="CurrentStatus" Type="Int" LabelName="Статус" LocalListName="Статус" HideFromObject="true"/>
+      <Field UID="{402CD7B9-B765-4177-9C2B-9495F7B3D405}" Name="Online" Type="Bool" LabelName="Онлайн" LocalListName="Онлайн" QueryText="useronline(usrs.usrs_login)"/>
+      <Field UID="{C19191C0-9398-4FEB-9BED-BA1C3F8C0979}" Name="Photo" Type="Image" LabelName="Фотография" LocalListName="Фотография" HideFromList="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Group"/>
+      <Index Field="Subdivision"/>
+      <Index Field="Surname"/>
+      <Index Field="Name"/>
+      <Index Field="Patronymic"/>
+      <Index Field="Sex"/>
+      <Index Field="Login" Unique="true"/>
+      <Index Field="AccessAllowed"/>
+      <Index Field="AccountLifetime"/>
+      <Index Field="AccountLifetimeStart"/>
+      <Index Field="AccountLifetimeEnd"/>
+      <Index Field="FixedInactive"/>
+      <Index Field="InactiveTimeout"/>
+      <Index Field="LastEnter"/>
+      <Index Field="LastAddress"/>
+      <Index Field="CurrentStatus"/>
+      <Index Field="Photo"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Subdivision" ForeignClass="_Subdivision" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Sex" ForeignClass="_Sex" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="CurrentStatus" ForeignClass="_UserStatus" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+    <Escorts>
+      <Escort LocalName="Изменения пароля" TableName="_UserPasswordChanged" ClassFilter="upcg_user = :ParentObjectID"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="_UserGroup" UID="{5E25B938-7938-402D-A60B-6D8AAB1DF513}" Alias="usgp" LocalName="Группа пользователей" LocalListName="Группы пользователей" TitleName="Name">
+    <Fields>
+      <Field UID="{E4F2FE6C-DFA4-4B8A-AD38-1D39410DC14D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{0E544427-A9C1-4CC6-9741-DEA81321E9B5}" Name="FullAccess" Type="Bool" DefaultValue="true" LabelName="Полный доступ" LocalListName="Полный доступ"/>
+      <Field UID="{B864EA45-906B-498F-8489-034E80668FDC}" Name="Count" Type="Int" LabelName="Пользователей в группе" LocalListName="Пользователей в группе" QueryText="SELECT COUNT(*) FROM _users WHERE usrs_group = usgp_id"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="FullAccess"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_GroupAccessSubSystem" UID="{3A73D82E-FE96-462D-B618-D21AB087B3A2}" Alias="gass" LocalName="Право доступа на подсистему" LocalListName="Права доступа на подсистемы" TitleName="Group" IsSystem="true">
+    <Fields>
+      <Field UID="{F8625938-EB8A-4C63-995E-69EE128AFDEB}" Name="Group" Type="Int" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
+      <Field UID="{9246E78B-FF72-4517-A963-71E6014CD972}" Name="SubSystem" Type="UID" LabelName="Подсистема" LocalListName="Подсистема" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Group"/>
+      <Index Field="SubSystem"/>
+      <Index Field="Group;SubSystem" Unique="true"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="_GroupAccessTable" UID="{00F8E495-F7CB-4FF3-B2F9-C9AE120E0A5B}" Alias="gatb" LocalName="Право доступа на таблицу" LocalListName="Права доступа на таблицы" TitleName="Group" IsSystem="true">
+    <Fields>
+      <Field UID="{58C99020-7327-4A27-95D8-E64AEE79EABB}" Name="Group" Type="Int" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
+      <Field UID="{03C407DD-8E68-46FB-81A4-45D9DA2EC642}" Name="Table" Type="UID" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
+      <Field UID="{9C8B015B-6A70-4CF8-9F66-70FBCA2DC1E7}" Name="AccessType" Type="UID" LabelName="Право" LocalListName="Право" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Group"/>
+      <Index Field="Table"/>
+      <Index Field="AccessType"/>
+      <Index Field="Group;Table;AccessType" Unique="true"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="AccessType" ForeignClass="_GroupAccessTableType" ForeignField="UID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="_GroupAccessTableType" UID="{F569718D-0C2D-40A5-8415-577D55BF646D}" Alias="gatt" LocalName="Тип права доступа на таблицу" LocalListName="Типы прав доступа на таблицу" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{A39FB3AD-80DC-412A-B657-C794163C495D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{61BB211B-5BAC-4232-8BB7-5078910DC27E}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка"/>
+      <Field UID="{D6C1A9D5-C60E-4577-90DB-B9FA6F341CEA}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Icon"/>
+      <Index Field="Order"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_GroupAccessSpecial" UID="{BE0E381C-7265-494E-81F6-02257399ECDD}" Alias="gasp" LocalName="Специальное право" LocalListName="Специальные права" TitleName="Group" IsSystem="true">
+    <Fields>
+      <Field UID="{8C86FCA2-DA0B-49E0-B855-648C2687650E}" Name="Group" Type="Int" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
+      <Field UID="{5504048E-C6D9-4F16-ABF4-9D8341BECAC9}" Name="SpecialAccess" Type="UID" LabelName="Право" LocalListName="Право" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Group"/>
+      <Index Field="SpecialAccess"/>
+      <Index Field="Group;SpecialAccess" Unique="true"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="SpecialAccess" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+  
+  <Table Name="_GroupAccessSpecialType" UID="{20312AF0-F3FD-4ECB-8A60-828550C314A2}" Alias="gast" LocalName="Тип специального права" LocalListName="Типы специальных прав" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{3236BE03-D920-4970-A785-0C3DAD189EC2}" Name="Parent" Type="UID" LabelName="Родитель" LocalListName="Родитель"/>
+      <Field UID="{330F6C83-0485-4252-BE34-C85E9F13D158}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование"/>
+      <Field UID="{F615B7AB-2FE8-4259-9C07-25F65FDD8AD1}" Name="Hint" Type="String" LabelName="Описание" LocalListName="Описание"/>
+      <Field UID="{49D10DA1-3042-4DD6-AF6F-17F2CB836A25}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Parent"/>
+      <Index Field="Name"/>
+      <Index Field="Hint"/>
+      <Index Field="Order"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Parent" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="_Subdivision" UID="{C6DBB699-CF12-43AA-8ADF-A42F9CF4640B}" Alias="sdvs" LocalName="Подразделение пользователя" LocalListName="Подразделения пользователей" TitleName="Name">
+    <Fields>
+      <Field UID="{FF1BD721-F9AE-4841-99BC-6ED5F5C53738}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="_Sex" UID="{E95FFC22-30A7-4316-AE6D-D88898D1C5AC}" Alias="sexs" ShowOnly="true" LocalName="Пол" LocalListName="Пол" TitleName="Name">
+    <Fields>
+      <Field UID="{AC29AAB1-B799-4C81-A93D-461C10DBC161}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_UserStatus" UID="{660AF115-AE22-44E1-A4F6-CDA1EA8E32A4}" Alias="usts" ShowOnly="true" LocalName="Статус пользователя" LocalListName="Статусы пользователя" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{3AF35250-7564-4331-BC32-E09ADE0A8B2A}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{0F1B7FDC-8806-48DF-8DD1-9FEE149FB63E}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка" NotNull="true"/>
+      <Field UID="{87847CCF-611B-442D-B691-E76D9C7A923B}" Name="Order" Type="String" LabelName="Порядок" LocalListName="Порядок"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Icon" Unique="true"/>
+      <Index Field="Order" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_UserGroupAccessSpecialType" UID="{33A83969-DB2A-49B2-B3EF-0F5091CEFA49}" Alias="uast" LocalName="Тип специального права" LocalListName="Типы специального права" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{40C79417-D911-437C-A56C-577C13A8C46A}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{6B5DC111-D908-44DB-B9AB-32B404D562A2}" Name="Description" Type="String" LabelName="Описание" LocalListName="Описание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Description"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_UserPasswordChanged" UID="{621BC43F-01FF-43D3-9046-ADB0B229CDD2}" Alias="upcg" ShowOnly="true" LocalName="Изменение пароля" LocalListName="Изменения паролей" TitleName="User" ClassFilterField="User">
+    <Fields>
+      <Field UID="{B33AA18E-3C37-4D9F-8F98-C8DF6999F0E0}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{9B8B9EFC-EFEB-47E3-85B8-070D7F9DE2C8}" Name="WhoUser" Type="Int" LabelName="Кто изменил" LocalListName="Кто изменил" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User"/>
+      <Index Field="WhoUser"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="WhoUser" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+    </Foreigns>
+    <IncludeSystemFields>
+      <Field Name="CreationDate" LocalName="Дата и время изменения"/>
+    </IncludeSystemFields>
+  </Table>
+
+  <Table Name="_UserOnline" UID="{839C2992-ED46-4D59-808F-B3577214E23B}" Alias="uonl" ShowOnly="true" LocalName="Онлайн" LocalListName="Онлайн" TitleName="User" IsSystem="true">
+    <Fields>
+      <Field UID="{707DDBBE-02C4-4011-BAB7-C888B06BBC4E}" Name="Date" Type="Date" DefaultValue="CURRENT_DATE" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+      <Field UID="{649B675F-80FB-4C4C-9450-7802C89B0C27}" Name="Time" Type="Time" DefaultValue="CURRENT_TIME" LabelName="Время" LocalListName="Время" NotNull="true"/>
+      <Field UID="{AAFCB60E-72FB-42CA-B50A-BDE2503D4A11}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{27EE58E1-8A9F-43EA-9688-C98840FBAAF0}" Name="Type" Type="Int" LabelName="Тип отметки" LocalListName="Тип отметки" NotNull="true"/>
+      <Field UID="{2BCBE69E-493C-413F-A80D-FDEF3AF9CDEB}" Name="Online" Type="Bool" LabelName="Сейчас онлайн" LocalListName="Сейчас онлайн" QueryText="useronline((SELECT usrs_login FROM _users WHERE usrs_id = uonl.uonl_user))"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Date"/>
+      <Index Field="Time"/>
+      <Index Field="User"/>
+      <Index Field="Type"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Type" ForeignClass="_UserOnlineType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="_UserOnlineType" UID="{CB2CA103-97C0-4DC2-BAD3-E9568C0AB870}" Alias="uotp" LocalName="Тип отметки" LocalListName="Типы отметок" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{E0442B86-F8B0-4DD2-9B09-0BA73DAD863D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+         
+</XSN>

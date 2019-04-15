@@ -1,0 +1,20 @@
+<RCC>
+  <qresource>
+
+    <file>_Alpha/</file>
+    <file>_CenterSeven/</file>
+    <file>_Highway/</file>
+    <file>_Demo/</file>
+    <file>_Frame/</file>
+    <file>_InformResource/</file>
+    <file>_MedTech/</file>
+    <file>_Patriot/</file>
+    <file>_Sirona/</file>
+
+    <file>Localization/</file>
+    <file>Other/</file>
+    <file>Scheme/</file>
+	<file>Version/</file>
+
+  </qresource>
+</RCC>

@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Configurator">
+      <UniqueIdentifier>{7c028cf3-833e-4685-aca2-af08785af636}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CGConfiguratorBase.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorCreate.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorDelete.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorService.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorShow.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorUpdate.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGClass.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGClassField.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGForeign.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGFunction.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGHelper.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGIndex.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGResource.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGSequence.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGTable.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGTemplateField.cpp">
+      <Filter>Configurator</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfigurator.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CGSection.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CGSectionItem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorLicense.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorFIAS.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="isconfigurator_global.h">
+      <Filter>System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="CGConfiguratorBase.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfiguratorCreate.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfiguratorDelete.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfiguratorService.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfiguratorShow.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfiguratorUpdate.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+    <QtMoc Include="CGClass.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGClassField.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGForeign.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGFunction.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGHelper.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGIndex.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGResource.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGSequence.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGTable.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGTemplateField.h">
+      <Filter>Configurator</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfigurator.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="CGSection.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="CGSectionItem.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfiguratorLicense.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfiguratorFIAS.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+  </ItemGroup>
+</Project>

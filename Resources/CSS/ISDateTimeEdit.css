@@ -1,0 +1,15 @@
+﻿QDateTimeEdit
+{
+    border: 1px solid gray;
+}
+
+QDateTimeEdit:hover
+{
+    border: 1px solid rgb(42, 141, 212);
+}
+
+QDateTimeEdit:focus
+{
+    border: 2px groove rgb(42, 141, 212);
+    background-color: rgb(240, 255, 255);
+}

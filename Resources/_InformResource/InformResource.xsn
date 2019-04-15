@@ -1,0 +1,572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSN Name="InformResource.xsn">
+  
+  <Table Name="Organizations" UID="{1A5BB264-F545-49C6-8485-9D7B85B5B32D}" Alias="orgz" LocalName="Организация" LocalListName="Организации" TitleName="Name" ObjectForm="ISOrganizationObjectForm">
+    <Fields>
+      <Field UID="{4388C871-29B9-44E8-9D7B-A3CDCAF4F0C4}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" HideFromObject="true"/>
+      <Field UID="{7E3ED773-A6C7-4070-9F72-840F7C48C097}" Name="DemoCount" Type="Int" LabelName="Демо" LocalListName="Демо" QueryText="SELECT COUNT(*)::INTEGER FROM demoaccesses WHERE NOT dacc_isdeleted AND dacc_organization = orgz.orgz_id AND NOT dacc_closed"/>
+      <Field UID="{B0436D7B-D49A-42DE-9116-70F389ED6979}" Name="Perspective" Type="Bool" DefaultValue="false" LabelName="Перспективность" LocalListName="Перспективность" LayoutName="Perspective"/>
+      <Field UID="{2222AB2B-6EDD-493C-878D-4A03B8AC47EE}" Name="Category" Type="Int" LabelName="Категория" LocalListName="Категория" LayoutName="Perspective"/>
+      <Field UID="{E04B1D8A-2D6B-40F2-9847-5C6A7C12859C}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус" LayoutName="Perspective"/>
+      <Field UID="{5F9E7A05-16D8-41A5-9903-010480A3267F}" Name="Journal" Type="Int" LabelName="Журнал" LocalListName="Журнал"  LayoutName="Perspective"/>
+      <Field UID="{01D558C4-2AD1-46D7-83C0-AF0A4C074961}" Name="StatusComment" Type="String" LabelName="Комментарий" LocalListName="Комментарий" LayoutName="Perspective"/>
+      <Field UID="{005DB0B6-8A38-475E-BFCD-F751E3413091}" Name="Name" Type="String" Upper="true" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{FFA29FF6-8027-4E9B-A749-E9A283E895EA}" Name="INN" Type="Inn" LabelName="ИНН" LocalListName="ИНН" NotNull="true" LayoutName="Inn_Kpp_SystemNo"/>
+      <Field UID="{74DA497E-AB8E-48C3-89AD-FF6049150E25}" Name="KPP" Type="Kpp" LabelName="КПП" LocalListName="КПП" LayoutName="Inn_Kpp_SystemNo" HideFromList="true"/>
+      <Field UID="{21DCCD22-DBDE-4A02-8C81-B71732920DD3}" Name="SystemNO" Type="Int" LabelName="Система НО" LocalListName="Система НО" LayoutName="Inn_Kpp_SystemNo"/>
+      <Field UID="{9BE28F70-6F09-4308-808F-38743675314B}" Name="EMail" Type="EMail" LabelName="Почта компании" LocalListName="Почта компании" HideFromList="true" LayoutName="Inn_Kpp_SystemNo"/>
+      <Field UID="{A3B74B27-D7BE-48E6-91F9-6576FE9F1EFD}" Name="Okved" Type="Int" LabelName="ОКВЭД" LocalListName="ОКВЭД" LayoutName="Okved"/>
+      <Field UID="{4D69858F-143E-44C2-B26C-FB566D208A09}" Name="DegreeRevenue" Type="Int" LabelName="Степень выручки" LocalListName="Степень выручки" LayoutName="Okved"/>
+      <Field UID="{A7A48CC4-9BAE-4F8B-814B-6806CB676037}" Name="CategoryFill" Type="Int" LabelName="Категория заполненности" LocalListName="Категория заполненности" LayoutName="Okved"/>
+      <Field UID="{B74EBFEB-98AB-4E76-B02B-F39A803E1D6A}" Name="AddressPhysical" Type="String" LabelName="Физический адрес" LocalListName="Физический адрес" LayoutName="Address" HideFromList="true"/>
+      <Field UID="{FDC5F8FF-BD75-48A1-A7C2-340751E2DF36}" Name="AddressLegal" Type="String" LabelName="Юридический адрес" LocalListName="Юридический адрес" LayoutName="Address"/>
+      <Field UID="{11C30B79-891D-4CCD-AF32-D4032F3AD409}" Name="Principal" Type="String" LabelName="Директор" LocalListName="Директор" LayoutName="Principal"/>
+      <Field UID="{7D5A5F1F-6BC9-4071-9595-A47D77D5754F}" Name="PrincipalPhone" Type="Phone" LabelName="Телефон (сотовый)" LocalListName="Телефон (сотовый)" LayoutName="Principal"/>
+      <Field UID="{DCBEA725-2A48-4682-9335-272A6C52D3C2}" Name="PrincipalPhoneWork" Type="Phone" LabelName="Телефон (рабочий)" LocalListName="Телефон (рабочий)" LayoutName="Principal"/>
+      <Field UID="{8E9F9FBD-C0CC-43C4-AC06-2F049603789D}" Name="PrincipalMail" Type="EMail" LabelName="Почта" LocalListName="Почта" LayoutName="Principal" HideFromList="true"/>
+      <Field UID="{BE901ECD-60AB-4494-8057-321772FC18CB}" Name="ChiefAccountant" Type="String" LabelName="Главный бухгалтер" LocalListName="Главный бухгалтер" LayoutName="ChiefAccountant"/>
+      <Field UID="{FC08DAE6-A73F-4184-85EF-CB5F8726E98B}" Name="ChiefAccountantPhone" Type="Phone" LabelName="Телефон (сотовый)" LocalListName="Телефон (сотовый)" LayoutName="ChiefAccountant"/>
+      <Field UID="{AF6D385A-E90A-4690-B6BE-3E388782BA88}" Name="ChiefAccountantPhoneWork" Type="Phone" LabelName="Телефон (рабочий)" LocalListName="Телефон (рабочий)" LayoutName="ChiefAccountant"/>
+      <Field UID="{3539B88E-9543-4A25-9EDA-69F6A20E0573}" Name="ChiefAccountantMail" Type="EMail" LabelName="Почта" LocalListName="Почта" LayoutName="ChiefAccountant" HideFromList="true"/>
+      <Field UID="{5C1735BD-C714-4493-9D9A-388E3ACCA88C}" Name="DepartmentLegal" Type="String" LabelName="Юридический отдел" LocalListName="Юридический отдел" LayoutName="DepartmentLegal"/>
+      <Field UID="{300DFE0B-4D2B-4F48-AC47-17BA19369789}" Name="DepartmentLegalPhone" Type="Phone" LabelName="Телефон (сотовый)" LocalListName="Телефон (сотовый)" LayoutName="DepartmentLegal"/>
+      <Field UID="{D1CD1E01-F583-4D47-B0B4-DDCF2BEE64A6}" Name="DepartmentLegalPhoneWork" Type="Phone" LabelName="Телефон (рабочий)" LocalListName="Телефон (рабочий)" LayoutName="DepartmentLegal"/>
+      <Field UID="{6B797AB9-87DB-4B67-8C0A-EEECB720E85B}" Name="DepartmentLegalMail" Type="EMail" LabelName="Почта" LocalListName="Почта" LayoutName="DepartmentLegal" HideFromList="true"/>
+      <Field UID="{31ED1400-8FD5-48D2-BABA-E7488CAC3E44}" Name="DepartmentFrames" Type="String" LabelName="Отдел кадров" LocalListName="Отдел кадров" LayoutName="DepartmentFrames"/>
+      <Field UID="{EC91EF37-E0F3-40DB-9B13-C2DB1E9D3603}" Name="DepartmentFramesPhone" Type="Phone" LabelName="Телефон (сотовый)" LocalListName="Телефон (сотовый)" LayoutName="DepartmentFrames"/>
+      <Field UID="{19E75D6D-B72A-403B-A141-329F8ED58234}" Name="DepartmentFramesPhoneWork" Type="Phone" LabelName="Телефон (рабочий)" LocalListName="Телефон (рабочий)" LayoutName="DepartmentFrames"/>
+      <Field UID="{DDBE4DF8-C201-4149-80FD-E3AAE4860C12}" Name="DepartmentFramesMail" Type="EMail" LabelName="Почта" LocalListName="Почта" LayoutName="DepartmentFrames" HideFromList="true"/>
+      <Field UID="{740F75F2-EB1C-4214-93CD-F83928E87191}" Name="DepartmentSales" Type="String" LabelName="Отдел сбыта" LocalListName="Отдел сбыта" LayoutName="DepartmentSales" HideFromList="true"/>
+      <Field UID="{2FD865D7-1820-4754-8D4F-E041BE63C9B8}" Name="DepartmentSalesPhone" Type="Phone" LabelName="Телефон (сотовый)" LocalListName="Телефон (сотовый)" LayoutName="DepartmentSales" HideFromList="true"/>
+      <Field UID="{B7D042C3-A3A2-4533-BDDC-862CC2589E3F}" Name="DepartmentSalesPhoneWork" Type="Phone" LabelName="Телефон (рабочий)" LocalListName="Телефон (рабочий)" LayoutName="DepartmentSales" HideFromList="true"/>
+      <Field UID="{3E119EC6-5C10-45BE-BBBE-20C07F8E0BAC}" Name="DepartmentSalesMail" Type="EMail" LabelName="Почта" LocalListName="Почта" LayoutName="DepartmentSales" HideFromList="true"/>
+      <Field UID="{6602BD6A-A00E-4F77-83FA-008D55AF7E83}" Name="Percentage" Type="Double" LabelName="Процент заполнения" LocalListName="Процент заполнения" HideFromObject="true"/>
+      <Field UID="{E7D813D3-F7A9-4E0E-99C6-C3F653BC14CF}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание" HideFromList="true" HideFromObject="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User"/>
+      <Index Field="Perspective"/>
+      <Index Field="Category"/>
+      <Index Field="Status"/>
+      <Index Field="StatusComment"/>
+      <Index Field="Name"/>
+      <Index Field="INN" Unique="true"/>
+      <Index Field="KPP"/>
+      <Index Field="Journal"/>
+      <Index Field="Okved"/>
+      <Index Field="DegreeRevenue"/>
+      <Index Field="CategoryFill"/>
+      <Index Field="AddressLegal"/>
+      <Index Field="AddressPhysical"/>
+      <Index Field="SystemNO"/>
+      <Index Field="EMail"/>
+      <Index Field="Principal"/>
+      <Index Field="PrincipalPhone"/>
+      <Index Field="PrincipalPhoneWork"/>
+      <Index Field="PrincipalMail"/>
+      <Index Field="ChiefAccountant"/>
+      <Index Field="ChiefAccountantPhone"/>
+      <Index Field="ChiefAccountantPhoneWork"/>
+      <Index Field="ChiefAccountantMail"/>
+      <Index Field="DepartmentLegal"/>
+      <Index Field="DepartmentLegalPhone"/>
+      <Index Field="DepartmentLegalPhoneWork"/>
+      <Index Field="DepartmentLegalMail"/>
+      <Index Field="DepartmentFrames"/>
+      <Index Field="DepartmentFramesPhone"/>
+      <Index Field="DepartmentFramesPhoneWork"/>
+      <Index Field="DepartmentFramesMail"/>
+      <Index Field="DepartmentSales"/>
+      <Index Field="DepartmentSalesPhone"/>
+      <Index Field="DepartmentSalesPhoneWork"/>
+      <Index Field="DepartmentSalesMail"/>
+      <Index Field="Percentage"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Category" ForeignClass="OrganizationCategory" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Status" ForeignClass="OrganizationStatus" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="SystemNO" ForeignClass="SystemNO" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Journal" ForeignClass="Journals" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Okved" ForeignClass="Okved" ForeignField="ID" ForeignViewNameField="Code;Name"/>
+    </Foreigns>
+    <Escorts>
+      <Escort LocalName="История звонков" TableName="CallHistory" ClassFilter="clhs_organization = :ParentObjectID"/>
+      <Escort LocalName="Связанные организации" TableName="OrganizationLink" ClassFilter="orgl_organization = :ParentObjectID"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="OrganizationCategory" UID="{C2B1460F-6D41-463C-8EF1-C9CD6FA1813F}" Alias="orcg" LocalName="Категория" LocalListName="Категории" TitleName="Name">
+    <Fields>
+      <Field UID="{1F6D4F16-B12F-4F7D-8B18-567E7D72C444}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="OrganizationWork" UID="{040CE5B6-6892-464C-835D-C060BDEB9C4A}" Alias="orgw" LocalName="Организация в работе" LocalListName="Организации в работе" TitleName="Organization" IsSystem="true">
+    <Fields>
+      <Field UID="{5477068A-EAC4-4CFA-B2C3-60B3B019E62A}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{57E5BB27-358E-4CFB-8EAE-62CA7E8EDDAA}" Name="Organization" Type="Int" LabelName="Организация" LocalListName="Организация" NotNull="true"/>
+      <Field UID="{3687C926-831A-4851-A94A-7E45D569F276}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User"/>
+      <Index Field="Organization"/>
+      <Index Field="Date"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Organization" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+  
+  <Table Name="SystemNO" UID="{3E911940-5547-4D9B-B26D-792228DE46FD}" Alias="sysn" LocalName="Система налогообложения" LocalListName="Системы налогообложения" TitleName="Name">
+    <Fields>
+      <Field UID="{C97FC236-58C0-4E89-BAA1-3952073047BF}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="OrganizationStatus" UID="{B281753B-B5DA-4D20-8541-480BD5AE2568}" Alias="stat" LocalName="Статус организации" LocalListName="Статусы организации" TitleName="Name">
+    <Fields>
+      <Field UID="{0E6ED2F6-712F-404C-B84E-D89C4CB28B3F}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{9C79FD7A-8E80-401F-BEEA-3A5E94FFA602}" Name="Color" Type="Color" LabelName="Цвет" LocalListName="Цвет"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Color"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Journals" UID="{136586A4-DF1B-4C79-BADD-6EE26C448E63}" Alias="jnls" LocalName="Статус журнала" LocalListName="Статусы журнала" TitleName="Name">
+    <Fields>
+      <Field UID="{E622DFA7-F2FB-4BC1-A6D1-BFA195E70264}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="CallHistory" UID="{9177057E-7C00-453D-A426-5F19B8F139E5}" Alias="clhs" LocalName="История звонка" LocalListName="История звонков" ObjectForm="ISCallHistoryObjectForm" TitleName="Phone" ClassFilterField="Organization">
+    <Fields>
+      <Field UID="{E71259EB-46A0-4055-A236-E6CDB2E7AD28}" Name="Organization" Type="Int" LabelName="Организация" LocalListName="Организация" HideFromObject="true" NotNull="true"/>
+      <Field UID="{3193EFA0-1618-48AF-81FF-C3100B29507D}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromObject="true"/>
+      <Field UID="{64B28655-EEFA-4493-B15B-1799635409D5}" Name="Phone" Type="Phone" LabelName="Номер" LocalListName="Номер" NotNull="true" HideFromObject="true"/>
+      <Field UID="{D9DAAD7F-288D-4355-A0F0-8DB14A0AF634}" Name="Result" Type="Int" LabelName="Результат" LocalListName="Результат" NotNull="true"/>
+      <Field UID="{46BC03BF-409D-400C-939C-9E7B69871E4F}" Name="Note" Type="Text" LabelName="Заметка" LocalListName="Заметка"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Organization"/>
+      <Index Field="User"/>
+      <Index Field="Phone"/>
+      <Index Field="Result"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Organization" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Result" ForeignClass="CallResult" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+    <IncludeSystemFields>
+      <Field Name="CreationDate" LocalName="Дата и время звонка"/>
+    </IncludeSystemFields>
+  </Table>
+
+  <Table Name="CallResult" UID="{98C5E4C2-4F1C-48DD-89E9-3FD4FE15C636}" Alias="clrs" LocalName="Результат звонка" LocalListName="Результаты звонков" TitleName="Name">
+    <Fields>
+      <Field UID="{902306E5-8011-4573-A06D-E548A27ED887}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="OrganizationLink" UID="{5E682B2A-FE7B-462B-80D5-9DFBB27125DD}" Alias="orgl" LocalName="Связанная организация" LocalListName="Связанные организации" TitleName="Organization" ClassFilterField="Organization">
+    <Fields>
+      <Field UID="{612EEE67-BC8A-4249-9201-9E1E1C0167E3}" Name="Organization" Type="Int" LabelName="Организация родитель" LocalListName="Организация родитель" HideFromObject="true" NotNull="true"/>
+      <Field UID="{2479DE31-DDDD-439C-85B5-0E06A50B6E6A}" Name="Link" Type="Int" LabelName="Организация" LocalListName="Организация" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Organization"/>
+      <Index Field="Link"/>
+      <Index Field="Organization;Link"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Organization" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Link" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Dispatch" UID="{B8BFEC98-29E4-4F4E-9ECB-0D7E5A7BFB9C}" Alias="dspc" LocalName="Рассылка" LocalListName="Рассылки" TitleName="Name">
+    <Fields>
+      <Field UID="{94381260-8731-4A79-A049-CBAF3E4AF22C}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименоввние" NotNull="true"/>
+      <Field UID="{26534373-18EC-46AC-B236-38824C3D61F0}" Name="Subject" Type="String" LabelName="Тема сообщения" LocalListName="Тема сообщения"/>
+      <Field UID="{B9D7F360-8433-4037-925F-E5E6FB1EB00C}" Name="Text" Type="Text" LabelName="Текст" LocalListName="Текст"/>
+      <Field UID="{4F683945-FFEC-47BC-9EAE-0773E7186980}" Name="Sender" Type="String" LabelName="Отправитель" LocalListName="Отправитель"/>
+      <Field UID="{620F215F-FA91-4AD3-B5CE-4D2EB3FD7BCA}" Name="Password" Type="Password" LabelName="Пароль" LocalListName="Пароль"/>
+      <Field UID="{BA474911-155E-4D55-A5D8-54E6072CD149}" Name="EMainServer" Type="String" LabelName="Адрес почтового сервера" LocalListName="Адрес почтового сервера"/>
+      <Field UID="{2D0B2969-7EBC-4386-8886-758B4CF61D85}" Name="SSL" Type="Bool" DefaultValue="false" LabelName="SSL" LocalListName="SSL"/>
+      <Field UID="{4FBCBFC9-2A63-4664-ACF6-BE73C3FECFD6}" Name="Port" Type="Int" LabelName="Порт" LocalListName="Порт"/>
+      <Field UID="{C0DF7EA9-1486-4570-AA2E-A0CAE731D58F}" Name="EMail" Type="String" ControlWidget="ISEMailSelectEdit" LabelName="Почта" LocalListName="Почта" NotNull="true"/>
+      <Field UID="{93A67C17-1535-40CF-AB71-46BBCDE37232}" Name="OrganizationCount" Type="Int" LocalListName="Организаций" QueryText="SELECT COUNT(*) FROM dispatchorganizations WHERE NOT dorg_isdeleted AND dorg_dispatch = dspc_id"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name"/>
+      <Index Field="Subject"/>
+      <Index Field="Text"/>
+      <Index Field="Sender"/>
+      <Index Field="Password"/>
+      <Index Field="EMainServer"/>
+      <Index Field="SSL"/>
+      <Index Field="Port"/>
+      <Index Field="EMail"/>
+    </Indexes>
+    <Escorts>
+      <Escort LocalName="Организации" ClassName="ISDispatchOrganizationListForm"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="DispatchOrganizations" UID="{B62BFCC2-C664-4FBD-A76B-8C6CDB9C7128}" Alias="dorg" LocalName="Организация" LocalListName="Организации" TitleName="Organization" ClassFilterField="Dispatch">
+    <Fields>
+      <Field UID="{08691E7F-7B9E-489A-8A1D-51ED19FC8F77}" Name="Dispatch" Type="Int" LabelName="Рассылка" LocalListName="Рассылка" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{3B580241-F90E-420A-9664-A3323FC1E413}" Name="Organization" Type="Int" LabelName="Организация" LocalListName="Организация" NotNull="true"/>
+      <Field UID="{D689D2E7-C5DE-4D37-B6F8-528252882928}" Name="Sended" Type="Bool" DefaultValue="false" LabelName="Отправлено" LocalListName="Отправлено" HideFromObject="true"/>
+      <Field UID="{6C2F6AD8-74F7-4924-AEC1-A0AB7EC3F984}" Name="ErrorText" Type="String" LabelName="Ошибка" LocalListName="Ошибка" HideFromObject="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Dispatch"/>
+      <Index Field="Organization"/>
+      <Index Field="Sended"/>
+      <Index Field="ErrorText"/>
+      <Index Field="Dispatch;Organization" Unique="true"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Organization" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="DesktopDayNote" UID="{36BB848A-2E88-4E03-B1EC-C7CDFB10FA9F}" Alias="ddnt" LocalName="Примечание дня" LocalListName="Примечания дней" TitleName="Note">
+    <Fields>
+      <Field UID="{4F7C3CFA-361A-4FF8-A7BA-E4B3EDBB3ABE}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{A30BC585-4B83-4278-BBEE-3F064228A26C}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+      <Field UID="{5E8CBC5B-7957-4910-B010-6AB9B0D1A371}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User"/>
+      <Index Field="Date"/>
+      <Index Field="Note"/>
+      <Index Field="User;Date;Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Person" UID="{BEF63394-805C-4762-92B4-96E00C1F627C}" Alias="prsn" LocalName="Физ. лицо" LocalListName="Физ. лица" TitleName="FullName">
+    <Fields>
+      <Field UID="{C066ABBF-B3C3-4E1B-AB24-FF41DAAAAA2E}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус" LayoutName="StatusJournal"/>
+      <Field UID="{8A481B51-5A10-4FA4-8F47-D0922D5A5DDA}" Name="Journal" Type="Int" LabelName="Журнал" LocalListName="Журнал" LayoutName="StatusJournal"/>
+      <Field UID="{4F750903-FB05-4D5E-AE78-525EC0A62526}" Name="FullName" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true" LayoutName="PersonData"/>
+      <Field UID="{011E76B4-82C3-4E8D-BB0B-653DCD01A8B2}" Name="PhoneMobile" Type="Phone" LabelName="Телефон (мобильный)" LocalListName="Телефон (мобильный)" NotNull="true" LayoutName="PersonData"/>
+      <Field UID="{EF9C0618-E949-4887-B2C8-A3D2FF98FD59}" Name="PhoneWork" Type="Phone" LabelName="Телефон (рабочий)" LocalListName="Телефон (рабочий)" LayoutName="PersonData"/>
+      <Field UID="{F178E1F7-DDCC-4549-8341-9F604CF65658}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта" LayoutName="PersonData"/>
+      <Field UID="{F7CC4C9F-189A-4320-B832-0F9ECD7CCAB9}" Name="INN" Type="Inn" LabelName="ИНН" LocalListName="ИНН" LayoutName="InnOrgPos"/>
+      <Field UID="{999B48C5-A774-4092-B995-8A7CE106AD44}" Name="Organization" Type="Int" LabelName="Организация" LocalListName="Организация" LayoutName="InnOrgPos"/>
+      <Field UID="{28C7651C-2663-4B4D-A69D-1C77C1538F8F}" Name="Position" Type="Int" LabelName="Должность" LocalListName="Должность" LayoutName="InnOrgPos"/>
+      <Field UID="{2A121E52-800D-41B9-B011-44CC9EED2159}" Name="Passport" Type="Passport" LabelName="Паспорт" LocalListName="Паспорт"/>
+      <Field UID="{72E6F7C5-1CC1-4BF4-9961-9A0D153DCC8E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Status"/>
+      <Index Field="Journal"/>
+      <Index Field="FullName"/>
+      <Index Field="PhoneMobile"/>
+      <Index Field="PhoneWork"/>
+      <Index Field="EMail"/>
+      <Index Field="INN"/>
+      <Index Field="Organization"/>
+      <Index Field="Position"/>
+      <Index Field="Passport"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Status" ForeignClass="PersonStatus" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Journal" ForeignClass="PersonJournal" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Organization" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Position" ForeignClass="PersonPosition" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="PersonPosition" UID="{95DC98DF-A04D-46E9-A9E5-095CCB11DF18}" Alias="psps" LocalName="Должность физ. лица" LocalListName="Должности физ. лиц" TitleName="Name">
+    <Fields>
+      <Field UID="{1F7D6179-4EE4-494D-B48D-50FB93B2FDF0}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="PersonStatus" UID="{98A35642-5B5E-4197-8E28-31CF70015464}" Alias="psst" LocalName="Статус физ. лица" LocalListName="Статусы физ. лиц" TitleName="Name">
+    <Fields>
+      <Field UID="{40285FA1-33A7-4A72-8398-14C589A3A8E8}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="PersonJournal" UID="{040186D0-4391-4DF1-85F6-0FF8B83958B0}" Alias="psjr" LocalName="Журнал" LocalListName="Журналы" TitleName="Name">
+    <Fields>
+      <Field UID="{8C5D377D-1CFE-4666-A807-C15E25A77FFA}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="PriceList" UID="{33FA6006-FF72-4887-8B94-EABAD42D8BFC}" Alias="plst" LocalName="Позиция" LocalListName="Прайс-лист" TitleName="Name" ObjectForm="ISPriceListObjectForm">
+    <Fields>
+      <Field UID="{E1AFBDB4-8A71-48B5-A7D7-AEDCE6648C96}" Name="Type" Type="Int" LabelName="Тип" LocalListName="Тип" NotNull="true"/>
+      <Field UID="{4A5889CC-060D-48DA-97F6-09C10EBA8978}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{071DEDC3-8472-4976-BCDE-164C6B7FBA1A}" Name="Mount12Price" Type="Int" LabelName="Цена (12 месяцев)" LocalListName="Цена (12 месяцев)" LayoutName="Mount12"/>
+      <Field UID="{EEF74EAD-072D-4741-BC1A-AAE21A9CBDEB}" Name="Mount12Discount" Type="Int" LabelName="Скидка (%)" LocalListName="Скидка" LayoutName="Mount12"/>
+      <Field UID="{0F450F4A-FD5A-4A43-BFFE-0920BDA41051}" Name="Mount12DiscountPrice" Type="Double" ReadOnly="true" LabelName="Цена с учётом скидки" LocalListName="Цена с учётом скидки" LayoutName="Mount12"/>
+      <Field UID="{F4878B8D-4D95-4405-A19B-0CC846583628}" Name="Mount12DiscountPriceMount" Type="Double" ReadOnly="true" LabelName="Цена с учётом скидки на месяц" LocalListName="Цена в месяц" LayoutName="Mount12"/>
+      <Field UID="{139BC9D2-4FDA-4891-86B2-8B4CF112D0D0}" Name="Mount6Price" Type="Int" LabelName="Цена (6 месяцев)" LocalListName="Цена (6 месяцев)" LayoutName="Mount6"/>
+      <Field UID="{47EA54DB-6324-4E68-9A57-169613CDF554}" Name="Mount6Discount" Type="Int" LabelName="Скидка (%)" LocalListName="Скидка" LayoutName="Mount6"/>
+      <Field UID="{6389D77B-3EC2-4D6A-AC96-42CA5BE20E3D}" Name="Mount6DiscountPrice" Type="Double" ReadOnly="true" LabelName="Цена с учётом скидки" LocalListName="Цена с учётом скидки" LayoutName="Mount6"/>
+      <Field UID="{9375BFF4-7C72-4015-B9F7-46A54855F1F2}" Name="Mount6DiscountPriceMount" Type="Double" ReadOnly="true" LabelName="Цена с учётом скидки на месяц" LocalListName="Цена в месяц" LayoutName="Mount6"/>
+      <Field UID="{448EC39F-C146-416C-B427-A22270020088}" Name="Mount18Price" Type="Int" LabelName="Цена (18 месяцев)" LocalListName="Цена (18 месяцев)" LayoutName="Mount18"/>
+      <Field UID="{525F17D1-9A9D-4099-BF58-ECC49CC6B78C}" Name="Mount18Discount" Type="Int" LabelName="Скидка (%)" LocalListName="Скидка" LayoutName="Mount18"/>
+      <Field UID="{DAB645D9-32CC-403E-81FE-EA1DCE9A2074}" Name="Mount18DiscountPrice" Type="Double" ReadOnly="true" LabelName="Цена с учётом скидки" LocalListName="Цена с учётом скидки" LayoutName="Mount18"/>
+      <Field UID="{F6F054B7-2DFB-4002-90C9-A9DB6A1101E2}" Name="Mount18DiscountPriceMount" Type="Double" ReadOnly="true" LabelName="Цена с учётом скидки на месяц" LocalListName="Цена в месяц" LayoutName="Mount18"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Type"/>
+      <Index Field="Name"/>
+      <Index Field="Mount12Price"/>
+      <Index Field="Mount12Discount"/>
+      <Index Field="Mount12DiscountPrice"/>
+      <Index Field="Mount12DiscountPriceMount"/>
+      <Index Field="Mount6Price"/>
+      <Index Field="Mount6Discount"/>
+      <Index Field="Mount6DiscountPrice"/>
+      <Index Field="Mount6DiscountPriceMount"/>
+      <Index Field="Mount18Price"/>
+      <Index Field="Mount18Discount"/>
+      <Index Field="Mount18DiscountPrice"/>
+      <Index Field="Mount18DiscountPriceMount"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Type" ForeignClass="PriceListType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="PriceListType" UID="{223B0B27-3242-49BA-A385-8A557EA44696}" Alias="pclt" LocalName="Тип" LocalListName="Типы" TitleName="Name">
+    <Fields>
+      <Field UID="{98BE8BAA-DF09-4129-9CFC-667D83C4BB86}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="DemoAccesses" UID="{7FF85677-D07E-4914-B938-959478619E24}" Alias="dacc" LocalName="Демо доступ" LocalListName="Демо доступы" TitleName="Organization" ObjectForm="ISDemoAccessesObjectForm">
+    <Fields>
+      <Field UID="{93A48F7B-45FF-48EC-B2F6-9AB7D32C77EE}" Name="INN" Type="String" LabelName="ИНН" LocalListName="ИНН" QueryText="SELECT orgz_inn FROM organizations WHERE orgz_id = dacc_organization"/>
+      <Field UID="{36216077-8F48-45A4-9327-2BC487AE4980}" Name="RegistrationDateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время регистрации" LocalListName="Дата и время регистрации" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{FE41CB8F-66B1-40ED-B9A3-EE874E03CFA5}" Name="RegistrationUser" Type="Int" DefaultValue="currentuserid()" LabelName="Зарегистрировал" LocalListName="Зарегистрировал" NotNull="true" HideFromObject="true"/>
+      <Field UID="{79B80E8C-1C3A-438C-B810-C1471C8798ED}" Name="EditUser" Type="Int" LabelName="Изменил" LocalListName="Изменил" HideFromObject="true"/>
+      <Field UID="{F707A808-8FAB-42BE-9CCB-3CEDCF02825E}" Name="Closed" Type="Bool" DefaultValue="false" LabelName="Отправлен Д-Д" LocalListName="Отправлен Д-Д"/>
+      <Field UID="{584C40C1-0904-4E7F-B144-5AF34FBA7C7E}" Name="Executor" Type="Int" LabelName="Исполнитель" LocalListName="Исполнитель"/>
+      <Field UID="{C24FE1AF-AE9C-43B7-B899-14526BC75588}" Name="Organization" Type="Int" LabelName="Организация" LocalListName="Организация" NotNull="true"/>
+      <Field UID="{D23C1F4A-7A91-418E-B648-5222CE9A3B66}" Name="Result" Type="Int" LabelName="Результат" LocalListName="Результат"/>
+      <Field UID="{C995F6A5-0AA9-44F4-97A1-D850C41E09AD}" Name="ResultDateTime" Type="DateTime" LabelName="Дата изменения результата" LocalListName="Дата изменения результата" HideFromObject="true"/>
+      <Field UID="{D0D3E760-8464-406E-AA31-5994DD03E74A}" Name="AgreementDateTime" Type="DateTime" LabelName="Дата и время договоренности" LocalListName="Дата и время договоренности"/>
+      <Field UID="{10963A8A-4768-449A-8448-631060BA5652}" Name="NoteCreated" Type="String" LabelName="Примечание автора" LocalListName="Примечание автора"/>
+      <Field UID="{4E337E9E-B841-4CAD-9376-E622F839DDDB}" Name="NoteExecutor" Type="String" LabelName="Примечание исполнителя" LocalListName="Примечание исполнителя"/>
+    </Fields>
+    <Indexes>
+      <Index Field="RegistrationDateTime"/>
+      <Index Field="RegistrationUser"/>
+      <Index Field="EditUser"/>
+      <Index Field="Closed"/>
+      <Index Field="Executor"/>
+      <Index Field="Organization"/>
+      <Index Field="Result"/>
+      <Index Field="ResultDateTime"/>
+      <Index Field="AgreementDateTime"/>
+      <Index Field="NoteCreated"/>
+      <Index Field="NoteExecutor"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="RegistrationUser" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="EditUser" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Executor" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Organization" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Result" ForeignClass="DemoAccessResultType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Score" UID="{107FC4F2-701B-4E04-AFD7-FA60BDD90933}" Alias="scor" LocalName="Счёт" LocalListName="Счёта" TitleName="Organization" ObjectForm="ISScoreObjectForm">
+    <Fields>
+      <Field UID="{21A5DE88-DB40-4A71-9685-022CB8B2F043}" Name="Organization" Type="Int" LabelName="Организация" LocalListName="Организация"/>
+      <Field UID="{63A79C86-AA5F-4120-B7AE-DEAA9B1CFFA4}" Name="ContactPerson" Type="String" LabelName="Контактное лицо" LocalListName="Контактное лицо"/>
+      <Field UID="{9DF1B51B-3020-409A-9847-54F04E0F07CB}" Name="FirstContract" Type="Date" LabelName="Дата первого контракта" LocalListName="Дата первого контракта"/>
+      <Field UID="{85CB0C80-CFB6-4E42-834C-BC0888A6048E}" Name="SecondContract" Type="Date" LabelName="Дата следующего контракта" LocalListName="Дата следующего контракта"/>
+      <Field UID="{8A3B0553-178C-4AFC-AF47-9ABA1600BFA8}" Name="Competitor" Type="Bool" LabelName="Конкуррент" LocalListName="Конкуррент"/>
+      <Field UID="{86302687-6D64-4521-95EB-BD0126CE1032}" Name="Auditors" Type="String" LabelName="Аудиторы" LocalListName="Аудиторы"/>
+      <Field UID="{8FD2E205-E402-4DB9-A409-74B47E77B167}" Name="Journals" Type="String" LabelName="Журналы" LocalListName="Журналы"/>
+      <Field UID="{34893532-531D-4A7E-86F2-CEA1EBA56235}" Name="Seminars" Type="String" LabelName="Семинары" LocalListName="Семинары"/>
+      <Field UID="{E85E8F57-4FC0-495D-8B2A-A1F3AB57ACF5}" Name="ElectronicReporting" Type="String" LabelName="Электронная отчётность" LocalListName="Электронная отчётность"/>
+      <Field UID="{2F30772D-65A4-4DE2-9BCF-F4EBEAFE0945}" Name="ProbabilitySale" Type="Int" LabelName="Вероятность продажи" LocalListName="Вероятность продажи"/>
+      <Field UID="{227F6CF6-2C2D-4F83-BDDD-987B90DB60C1}" Name="WaitingPayment" Type="String" LabelName="Ожидание оплаты" LocalListName="Ожидание оплаты"/>
+      <Field UID="{38579DF6-5EF3-45BA-ACBB-423A7C51F281}" Name="DateWaitingPayment" Type="Date" LabelName="Дата" LocalListName="Дата"/>
+      <Field UID="{CEC23EC3-C207-4B13-A5FE-5815B39883EA}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Organization"/>
+      <Index Field="ContactPerson"/>
+      <Index Field="FirstContract"/>
+      <Index Field="SecondContract"/>
+      <Index Field="Competitor"/>
+      <Index Field="Auditors"/>
+      <Index Field="Journals"/>
+      <Index Field="Seminars"/>
+      <Index Field="ElectronicReporting"/>
+      <Index Field="ProbabilitySale"/>
+      <Index Field="WaitingPayment"/>
+      <Index Field="DateWaitingPayment"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Organization" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="DemoAccessResultType" UID="{7903FF82-EDCA-4C5A-B8E6-CCEE7B312712}" Alias="dart" LocalName="Результат демо доступа" LocalListName="Результаты демо доступов" TitleName="Name">
+    <Fields>
+      <Field UID="{6CEC14F7-F811-4A47-86DE-158E7C0F23A6}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="OrganizationScore" UID="{F91367B0-5C6D-4177-9AB5-92BE55126231}" Alias="orsc" LocalName="Счёт на организацию" LocalListName="Счета на организации" ObjectForm="ISOrganizationScoreObjectForm" TitleName="Name">
+    <Fields>
+      <Field UID="{9AA19046-73CF-4A3F-BC55-E6D866A28D14}" Name="Executor" Type="Int" LabelName="Ответственный" LocalListName="Ответственный" NotNull="true"/>
+      <Field UID="{A5113D37-B6DC-4B6E-A42D-2DE14DD6B5B7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{B748427F-5980-4802-94C2-04208AFDFEED}" Name="Organization" Type="Int" ReadOnly="true" LabelName="Организация" LocalListName="Организация" NotNull="true"/>
+      <Field UID="{9145CB28-C995-438F-8BF6-1216A6B052CA}" Name="Price" Type="Int" LabelName="Прайс" LocalListName="Прайс" NotNull="true"/>
+      <Field UID="{11D1D663-552E-46E1-ABE0-7069D3D9DED6}" Name="Term" Type="Int" LabelName="Срок" LocalListName="Срок" NotNull="true"/>
+      <Field UID="{4288B852-5D91-4360-BDC3-DACBAE700FB9}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Executor"/>
+      <Index Field="Name"/>
+      <Index Field="Organization"/>
+      <Index Field="Price"/>
+      <Index Field="Term"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Executor" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Organization" ForeignClass="Organizations" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Price" ForeignClass="PriceList" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Term" ForeignClass="TermScore" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="TermScore" UID="{4A92C904-FEF7-4ABA-A123-E285461214C7}" Alias="trsc" ShowOnly="true" LocalName="Срок счёта" LocalListName="Сроки счётов" TitleName="Name">
+    <Fields>
+      <Field UID="{0E3D83A9-18A6-4743-90AC-C3BB8073EEBE}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Okved" UID="{3B7A390C-94EA-443A-82ED-65379C5D8768}" Alias="okvd" LocalName="ОКВЭД" LocalListName="ОКВЭД" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{9DF16891-B6CC-4243-94C9-B0652B701C5B}" Name="Code" Type="String" LabelName="Код ОКВЭД" LocalListName="Код ОКВЭД" NotNull="true"/>
+      <Field UID="{53D19D75-5E7F-4814-9118-3904B6A12027}" Name="Name" Type="String" LabelName="Расшифровка" LocalListName="Расшифровка" NotNull="true"/>
+      <Field UID="{999D460D-20DA-4632-A1FA-5CD4CA369D42}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Code" Unique="true"/>
+      <Index Field="Name"/>
+      <Index Field="Note"/>
+    </Indexes>
+  </Table>
+
+
+  <Table Name="CallUserStatistics" Parent="CallHistory" UID="{8D20995A-AC99-48FF-911B-7E0F7207D8CC}" OrderField="orgz_name">
+    <Fields>
+      <Field UID="{FC2C0AC5-08E2-4A03-A514-B46D935EEA70}" Name="CreationDate" Type="DateTime" LocalListName="Дата и время вызова" QueryText="clhs_creationdate"/>
+      <Field UID="{1C607C42-A4BB-4404-8B93-FAF4D92A3F4F}" Name="User" Type="String" LocalListName="Пользователь" QueryText="concat(usrs_surname, ' ', usrs_name, ' ', usrs_patronymic)"/>
+      <Field UID="{C38D77B2-7FD0-4AA4-83D0-C3ACCA645995}" Name="OrganizationName" Type="String" LocalListName="Наименование организации" QueryText="orgz_name"/>
+      <Field UID="{F9B2BFA7-FEEC-4998-BCF8-9C75E3580803}" Name="Inn" Type="Inn" LocalListName="ИНН" QueryText="orgz_inn"/>
+      <Field UID="{186AFE35-4785-40EA-B0D4-E8F571660D25}" Name="Kpp" Type="Kpp" LocalListName="КПП" QueryText="orgz_kpp"/>
+      <Field UID="{0D6DBD6E-0D50-41C7-B948-5D3297879B0C}" Name="Phone" Type="Phone" LocalListName="Телефон" QueryText="clhs_phone"/>
+      <Field UID="{8836F3A9-2D95-47A5-8EE2-92B25E0770B0}" Name="Result" Type="String" LocalListName="Результат" QueryText="clrs_name"/>
+      <Field UID="{08183D3A-1CCF-4CB3-9B07-CDBFD268F0DC}" Name="Note" Type="String" LocalListName="Заметка" QueryText="clhs_note"/>
+    </Fields>
+    <Joins>
+      <Join Text="LEFT JOIN _users ON usrs_id = clhs_user"/>
+      <Join Text="LEFT JOIN organizations ON clhs_organization = orgz_id"/>
+      <Join Text="LEFT JOIN callresult ON clhs_result = clrs_id"/>
+    </Joins>
+  </Table>
+
+  <Table Name="UserDemoAccesses" Parent="DemoAccesses" UID="{DB3A2D40-94BC-4ECA-AF00-6429E7D19FF1}" Where="NOT dacc_isdeleted AND dacc_executor = :UserID AND NOT dacc_closed AND dacc_agreementdatetime::DATE = :AgreementDateTime" OrderField="dacc_id">
+    <Fields>
+      <Field UID="{6A43D990-E5AB-400C-BCDD-1169FEC1BCB7}" Name="DemoID" Type="Int" LocalListName="Код" QueryText="dacc_id"/>
+      <Field UID="{1F1FD0EE-44E7-42D1-8C11-A0A091816ABC}" Name="Closed" Type="Bool" LocalListName="Отработано" QueryText="dacc_closed"/>
+      <Field UID="{4B3C60AC-2156-42AE-9013-650A055C58A8}" Name="Organization" Type="String" LocalListName="Организация" QueryText="orgz_name"/>
+    </Fields>
+    <Joins>
+      <Join Text="LEFT JOIN organizations ON orgz_id = dacc_organization"/>
+    </Joins>
+  </Table>
+  
+  <Table Name="UserOrganizations" Parent="OrganizationWork" UID="{7D2C14B9-CDB8-4480-9DD9-F9B88B40065F}" Where="orgw_user = :UserID AND orgw_date = :Date" OrderField="orgz_id">
+    <Fields>
+      <Field UID="{7CD2A836-041D-49ED-B7BA-674B27CB5EDF}" Name="ID" Type="Int" LocalListName="Код" QueryText="orgz_id"/>
+      <Field UID="{42A824E7-4E9D-45F3-9CAA-581FB9F65695}" Name="Name" Type="String" LocalListName="Организация" QueryText="orgz_name"/>
+      <Field UID="{ADAC7A3E-5930-4067-BE70-AF8E3CDB371B}" Name="Worked" Type="Bool" LocalListName="Отработка" QueryText="(SELECT COUNT(*)::INTEGER::BOOLEAN FROM callhistory WHERE clhs_user = :UserID AND clhs_organization = orgz_id AND clhs_creationdate::DATE = :Date)"/>
+      <Field UID="{8F49A7EE-81ED-4537-9301-B50741ED8949}" Name="Comment" Type="String" LocalListName="Комментарий" QueryText="orgz_statuscomment"/>
+    </Fields>
+    <Joins>
+      <Join Text="LEFT JOIN organizations ON orgz_id = orgw_organization"/>
+    </Joins>
+  </Table>
+  
+  <Table Name="CallHistoryAll" Parent="CallHistory" UID="{3568CAD8-C532-4E2F-9C88-DFC4AEE8CCF2}" Where="clhs_creationdate::DATE = :Date AND clhs_organization IN(SELECT orgz_id FROM organizationwork LEFT JOIN organizations ON orgz_id = orgw_organization WHERE orgw_user = :UserID AND orgw_date = :Date ORDER BY orgw_id)" OrderField="clhs_organization">
+    <Fields>
+      <Field UID="{E2D3A621-B300-4C40-996E-3ACE2496F3EC}" Name="ID" Type="Int" LocalListName="Код" QueryText="DISTINCT clhs_organization"/>
+      <Field UID="{9B6875DF-A3FE-47FB-A0BA-F040C14E4CE2}" Name="Organization" Type="String" LocalListName="Организация" QueryText="orgz_name"/>
+    </Fields>
+    <Joins>
+      <Join Text="LEFT JOIN organizations ON orgz_id = clhs_organization"/>
+    </Joins>
+  </Table>
+
+  <Table Name="CallHistoryOrganization" Parent="CallHistory" UID="{04B94E4C-9F59-4F5E-8D67-A095D8E1175E}" Where="NOT clhs_isdeleted AND clhs_organization = :OrganizationID AND clhs_creationdate::DATE = :Date" OrderField="clhs_id">
+    <Fields>
+      <Field UID="{1A17CEDF-93A0-4B41-9B14-47F399FCC6DC}" Name="CreationDate" Type="Time" LocalListName="Время вызова" QueryText="clhs_creationdate::TIME"/>
+      <Field UID="{9C6CD502-233B-430D-8440-E51A10D05C03}" Name="Phone" Type="String" LocalListName="Телефон" QueryText="clhs_phone"/>
+      <Field UID="{8F08BD80-C60D-4750-BE02-0CFC91746BC7}" Name="Result" Type="String" LocalListName="Результат" QueryText="clrs_name"/>
+      <Field UID="{4598762D-083B-46CD-A6C6-BCAC4FB01B8B}" Name="Note" Type="String" LocalListName="Заметка" QueryText="clhs_note"/>
+    </Fields>
+    <Joins>
+      <Join Text="LEFT JOIN callresult ON clhs_result = clrs_id"/>
+    </Joins>
+  </Table>
+  
+</XSN>

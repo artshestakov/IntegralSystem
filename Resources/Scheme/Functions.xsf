@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSF Name="Functions.xsf">
+
+  <Function Name="uuid_generate_v4" Text="
+CREATE OR REPLACE FUNCTION public.uuid_generate_v4 ()
+RETURNS uuid AS
+'$libdir/uuid-ossp', 'uuid_generate_v4'
+LANGUAGE 'c'
+VOLATILE
+RETURNS NULL ON NULL INPUT
+SECURITY INVOKER
+COST 1;
+"/>
+
+  <Function Name="currentuserid" Text="
+CREATE OR REPLACE FUNCTION public.currentuserid ()
+RETURNS integer AS
+$body$
+BEGIN
+  RETURN usrs_id FROM _users WHERE usrs_login = CURRENT_USER;
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+RETURNS NULL ON NULL INPUT
+SECURITY INVOKER
+COST 100;            
+"/>
+
+  <Function Name="userfullname" Text="CREATE OR REPLACE FUNCTION public.userfullname (
+  id integer
+)
+RETURNS varchar AS
+$body$
+BEGIN
+	RETURN concat(usrs_surname, ' ', usrs_name, ' ' || usrs_patronymic) FROM _users WHERE usrs_id = id;
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100;"/>
+
+  <Function Name="databasesize" Text="CREATE OR REPLACE FUNCTION public.databasesize (
+)
+RETURNS varchar AS
+$body$
+BEGIN
+  RETURN pg_size_pretty(pg_database_size(current_database())) AS databasesize;
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+RETURNS NULL ON NULL INPUT
+SECURITY INVOKER
+COST 100;"/>
+
+  <Function Name="today_birthday" Text="CREATE OR REPLACE FUNCTION public.today_birthday (
+  dateofbirth date
+)
+RETURNS boolean AS
+$body$
+BEGIN
+	RETURN 
+    (
+	date_part('day', CURRENT_DATE)::VARCHAR || date_part('month', CURRENT_DATE)::VARCHAR =
+	date_part('day', dateofbirth)::VARCHAR || date_part('month', dateofbirth)::VARCHAR
+    )::BOOLEAN;
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100;"/>
+
+  <Function Name="useronline" Text="CREATE OR REPLACE FUNCTION public.useronline (
+  login varchar
+)
+RETURNS boolean AS
+$body$
+BEGIN
+	RETURN COUNT(*)::INTEGER::BOOLEAN FROM pg_stat_activity WHERE usename = login;
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100;"/>
+
+  <Function Name="userlogin" Text="CREATE OR REPLACE FUNCTION public.userlogin (
+  id integer
+)
+RETURNS varchar AS
+$body$
+BEGIN
+	RETURN usrs_login FROM _users WHERE usrs_id = id;
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100;"/>
+
+</XSF>

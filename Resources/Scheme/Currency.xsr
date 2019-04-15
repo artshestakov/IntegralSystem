@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSR Name="Currency.xsr">
+
+	<_Currency UID="{CA31CBA3-A8F5-4FF5-B012-319B27F059F8}" Name="Австралийский доллар" CodeSymbol="AUD" CodeNumber="36" SmallName="Австралия; Кирибати; Кокосовые (Килинг) острова; Науру; Остров Норфолк; Остров Рождества; Остров Херд и острова Макдональд; Тувалу"/>
+	<_Currency UID="{AA17D979-22FF-42F3-8FDD-8C281619B665}" Name="Алжирский динар" CodeSymbol="DZD" CodeNumber="12" SmallName="Алжир"/>
+	<_Currency UID="{3538DBCE-9836-4FD0-B393-6B557BA9A822}" Name="Аргентинское песо" CodeSymbol="ARS" CodeNumber="32" SmallName="Аргентина"/>
+	<_Currency UID="{5B09A59A-65B1-48A2-B4ED-03F76D376E05}" Name="Армянский драм" CodeSymbol="AMD" CodeNumber="51" SmallName="Армения"/>
+	<_Currency UID="{AA834DFD-6AC1-4AF0-8CF3-5E6DF4C3850B}" Name="Малагасийский ариари" CodeSymbol="MGA" CodeNumber="969" SmallName="Мадагаскар"/>
+	<_Currency UID="{66D1524B-B1D7-4506-BE0C-CCD5C6F33746}" Name="Арубанский флорин" CodeSymbol="AWG" CodeNumber="533" SmallName="Аруба"/>
+	<_Currency UID="{FBB03C7D-F900-47C5-B8E9-7D2BB6A1CC42}" Name="Афгани" CodeSymbol="AFN" CodeNumber="971" SmallName="Афганистан"/>
+	<_Currency UID="{0FEA1743-58DB-4DA4-853D-E80DF77F8DA8}" Name="Багамский доллар" CodeSymbol="BSD" CodeNumber="44" SmallName="Багамы"/>
+	<_Currency UID="{273AAEFF-A6BB-44CF-98F8-7562514CD86A}" Name="Бальбоа" CodeSymbol="PAB" CodeNumber="590" SmallName="Панама"/>
+	<_Currency UID="{26AD8973-D3F3-4F08-8A6C-531F0C7C06B5}" Name="Барбадосский доллар" CodeSymbol="BBD" CodeNumber="52" SmallName="Барбадос"/>
+	<_Currency UID="{DC1FFE55-D1AB-4F09-B935-EAE8FC85A3A3}" Name="Бат" CodeSymbol="THB" CodeNumber="764" SmallName="Таиланд"/>
+	<_Currency UID="{9303A45D-7FF0-42AD-8091-7E668CDD6375}" Name="Бахрейнский динар" CodeSymbol="BHD" CodeNumber="48" SmallName="Бахрейн"/>
+	<_Currency UID="{055F0827-C8E7-439B-B8AA-C88C6F48D2CE}" Name="Белизский доллар" CodeSymbol="BZD" CodeNumber="84" SmallName="Белиз"/>
+	<_Currency UID="{DD13E8C4-EA41-4095-B591-5AB59AE4AF33}" Name="Белорусский рубль" CodeSymbol="BYR" CodeNumber="974" SmallName="Беларусь"/>
+	<_Currency UID="{0202C772-326F-4260-96CB-C48B28B82139}" Name="Белорусский рубль" CodeSymbol="BYN" CodeNumber="933" SmallName="Беларусь"/>
+	<_Currency UID="{6749543E-F544-4509-9B06-450EB28A51C2}" Name="Бермудский доллар" CodeSymbol="BMD" CodeNumber="60" SmallName="Бермуды"/>
+	<_Currency UID="{8852E474-F9FE-4A61-AD0D-35004C51D9A1}" Name="Болгарский лев" CodeSymbol="BGN" CodeNumber="975" SmallName="Болгария"/>
+	<_Currency UID="{59937BEC-087E-4105-BEB2-60F4CC728ED5}" Name="Боливар" CodeSymbol="VEF" CodeNumber="937" SmallName="Венесуэла (Боливарианская республика)"/>
+	<_Currency UID="{51068880-5C92-43FB-A055-4691DE7911C7}" Name="Боливиано" CodeSymbol="BOB" CodeNumber="68" SmallName="Боливия, многонациональное государство"/>
+	<_Currency UID="{BB74E006-4E51-423B-95B0-FC83A999FBAC}" Name="Бразильский реал" CodeSymbol="BRL" CodeNumber="986" SmallName="Бразилия"/>
+	<_Currency UID="{71785A09-90FD-45AB-A86A-541E6E4AD2BD}" Name="Брунейский доллар" CodeSymbol="BND" CodeNumber="96" SmallName="Бруней-Даруссалам"/>
+	<_Currency UID="{4FABF67D-9485-4E33-AD9E-76D7014D9D13}" Name="Бурундийский франк" CodeSymbol="BIF" CodeNumber="108" SmallName="Бурунди"/>
+	<_Currency UID="{B733EC46-574B-4C5A-9685-157A255B83B2}" Name="Вату" CodeSymbol="VUV" CodeNumber="548" SmallName="Вануату"/>
+	<_Currency UID="{1E46D93A-A748-409C-8F76-9E7E546CC35E}" Name="Вона" CodeSymbol="KRW" CodeNumber="410" SmallName="Корея, республика"/>
+	<_Currency UID="{C7EF2F76-B501-4B5C-90F8-73CB27BB29C6}" Name="Восточно-карибский доллар" CodeSymbol="XCD" CodeNumber="951" SmallName="Ангилья; Антигуа и Барбуда; Гренада; Доминика; Монтсеррат; Сент-Винсент и Гренадины; Сент-Китс и Невис; Сент-Люсия"/>
+	<_Currency UID="{4AA68D57-EB67-431F-95B3-1AF8498DA048}" Name="Гайанский доллар" CodeSymbol="GYD" CodeNumber="328" SmallName="Гайана"/>
+	<_Currency UID="{255654CD-1F0F-4BD1-BC42-B9C2E70962C2}" Name="Гвинейский франк" CodeSymbol="GNF" CodeNumber="324" SmallName="Гвинея"/>
+	<_Currency UID="{8E62C8DE-FD8A-445A-AEAF-F36D6ADDBE21}" Name="Гибралтарский фунт" CodeSymbol="GIP" CodeNumber="292" SmallName="Гибралтар"/>
+	<_Currency UID="{A9270CB3-9ECC-44B4-9242-E993FD15B211}" Name="Гонконгский доллар" CodeSymbol="HKD" CodeNumber="344" SmallName="Гонконг"/>
+	<_Currency UID="{62E0AAA3-C54C-44A0-88A3-1228D256AEC3}" Name="Гривна" CodeSymbol="UAH" CodeNumber="980" SmallName="Украина"/>
+	<_Currency UID="{8F4F12EB-B9EF-405D-91F0-2211F0A581F4}" Name="Гуарани" CodeSymbol="PYG" CodeNumber="600" SmallName="Парагвай"/>
+	<_Currency UID="{DC9F88C4-8666-47EE-A102-BF35FCB64CC5}" Name="Гурд" CodeSymbol="HTG" CodeNumber="332" SmallName="Гаити"/>
+	<_Currency UID="{2614C5B2-23A3-4CDA-BDC6-C7659B925F78}" Name="Даласи" CodeSymbol="GMD" CodeNumber="270" SmallName="Гамбия"/>
+	<_Currency UID="{C0D38D2C-104C-4975-BCD7-608E5F9D0B88}" Name="Датская крона" CodeSymbol="DKK" CodeNumber="208" SmallName="Гренландия; Дания; Фарерские острова"/>
+	<_Currency UID="{217FF4CA-8EC0-4E79-9190-76BACBC89FA7}" Name="Денар" CodeSymbol="MKD" CodeNumber="807" SmallName="Македония, бывшая Югославская Республика"/>
+	<_Currency UID="{D2F1B9C5-765C-4D9C-906A-F377B49A61D0}" Name="Дирхам (ОАЭ)" CodeSymbol="AED" CodeNumber="784" SmallName="Объединенные Арабские Эмираты (ОАЭ)"/>
+	<_Currency UID="{4EC9A598-1A86-430E-AA98-274F17826D1B}" Name="Добра" CodeSymbol="STD" CodeNumber="678" SmallName="Сан-Томе и Принсипи"/>
+	<_Currency UID="{6CFA04D8-66AA-4AFE-B1A6-61AFEAE8DFAA}" Name="Доллар Зимбабве" CodeSymbol="ZWL" CodeNumber="932" SmallName="Зимбабве"/>
+	<_Currency UID="{E4C9206A-05DC-4EBD-8CCF-6F76DC0AC9B5}" Name="Доллар Островов Кайман" CodeSymbol="KYD" CodeNumber="136" SmallName="Острова Кайман"/>
+	<_Currency UID="{D6441616-E6D0-41B4-9A1C-C4E616225D16}" Name="Доллар Намибии" CodeSymbol="NAD" CodeNumber="516" SmallName="Намибия"/>
+	<_Currency UID="{1214D3E7-FC41-4CBA-88E1-A126C849ADB6}" Name="Доллар Соломоновых Островов" CodeSymbol="SBD" CodeNumber="90" SmallName="Соломоновы Острова"/>
+	<_Currency UID="{5563FD2B-E200-4E95-BDAE-19B73909DDEE}" Name="Доллар США" CodeSymbol="USD" CodeNumber="840" SmallName="Американское Самоа; Британская территория в Индийском океане; Бонэйр, Синт-Эстатиус и Саба; Виргинские острова (Британские); Виргинские острова (США); Гаити; Гуам; Малые Тихоокеанские Отдаленные острова Соединенных Штатов; Маршалловы Острова; Микронезия, федеративные штаты; Острова Теркс и Кайкос; Палау; Панама; Пуэрто-Рико; Северные Марианские острова; Соединенные Штаты; Тимор-Лесте; Эквадор; Эль-Сальвадор"/>
+	<_Currency UID="{27C05CA8-8285-4632-AA6E-C028338227E5}" Name="Доллар Тринидада и Тобаго" CodeSymbol="TTD" CodeNumber="780" SmallName="Тринидад и Тобаго"/>
+	<_Currency UID="{4B8E7728-7EFF-49D1-90A2-FB9A208AB1F3}" Name="Доллар Фиджи" CodeSymbol="FJD" CodeNumber="242" SmallName="Фиджи"/>
+	<_Currency UID="{613962D1-A75A-4017-91DB-606766074366}" Name="Доминиканское песо" CodeSymbol="DOP" CodeNumber="214" SmallName="Доминиканская Республика"/>
+	<_Currency UID="{B924E1FC-6C37-4DD8-80A4-A99329BF8B8A}" Name="Донг" CodeSymbol="VND" CodeNumber="704" SmallName="Вьетнам"/>
+	<_Currency UID="{20847568-E6BB-4855-96D7-96566A07F078}" Name="Евро" CodeSymbol="EUR" CodeNumber="978" SmallName="Австрия; Андорра; Бельгия; Гваделупа; Германия; Греция; Ирландия; Испания; Италия; Кипр; Латвия; Литва; Люксембург; Майотта; Мальта; Мартиника; Монако; Нидерланды; Папский Престол (Государство-город Ватикан); Португалия; Реюньон; Сан-Марино; Сен-Бартелеми; Сен-Мартен (французская часть); Сент-Пьер и Микелон; Словакия; Словения; Финляндия; Франция; Французская Гвиана; Французские Южные территории; Черногория; Эландские острова; Эстония"/>
+	<_Currency UID="{BB27C6CA-D274-46D2-83CE-407766870AB5}" Name="Египетский фунт" CodeSymbol="EGP" CodeNumber="818" SmallName="Египет"/>
+	<_Currency UID="{6F9C6281-AD68-4561-A8F5-BE96A65C128F}" Name="Единица реальной стоимости" CodeSymbol="COU" CodeNumber="970" SmallName="Колумбия"/>
+	<_Currency UID="{4C1C3E8D-2657-4FD9-8C1C-C6ED4BF97606}" Name="Злотый" CodeSymbol="PLN" CodeNumber="985" SmallName="Польша"/>
+	<_Currency UID="{CCD6A33B-4790-4FF6-8C28-2C5408073900}" Name="Золотая кордоба" CodeSymbol="NIO" CodeNumber="558" SmallName="Никарагуа"/>
+	<_Currency UID="{6913FB46-1D9E-4D79-AE9F-2634FF6B98C0}" Name="Иена" CodeSymbol="JPY" CodeNumber="392" SmallName="Япония"/>
+	<_Currency UID="{C2C0F5D0-7B80-4A22-94EB-3B6532BFF807}" Name="Индийская рупия" CodeSymbol="INR" CodeNumber="356" SmallName="Бутан; Индия"/>
+	<_Currency UID="{FA9FA0BF-A4B4-402D-8D78-94CBE07E4923}" Name="Иорданский динар" CodeSymbol="JOD" CodeNumber="400" SmallName="Иордания"/>
+	<_Currency UID="{E246274E-0D8A-4D9E-B94C-1EDC52DA8A80}" Name="Иракский динар" CodeSymbol="IQD" CodeNumber="368" SmallName="Ирак"/>
+	<_Currency UID="{0C5AC86C-6A74-43E0-A43C-A7DB45A614EF}" Name="Иранский риал" CodeSymbol="IRR" CodeNumber="364" SmallName="Иран (Исламская Республика)"/>
+	<_Currency UID="{DFC24AD4-48A2-4C14-9183-CEA6078B9A23}" Name="Исландская крона" CodeSymbol="ISK" CodeNumber="352" SmallName="Исландия"/>
+	<_Currency UID="{B66554B4-3BA2-4083-8518-E3D380A0DFD9}" Name="Йеменский риал" CodeSymbol="YER" CodeNumber="886" SmallName="Йемен"/>
+	<_Currency UID="{CA1FF571-AB7C-41F0-B709-4D458B8DD88E}" Name="Канадский доллар" CodeSymbol="CAD" CodeNumber="124" SmallName="Канада"/>
+	<_Currency UID="{D08CE48B-8C46-451A-8379-7D798342F73C}" Name="Катарский риал" CodeSymbol="QAR" CodeNumber="634" SmallName="Катар"/>
+	<_Currency UID="{269B598C-EFF5-4B99-83DC-D4FFF88FE66C}" Name="Кванза" CodeSymbol="AOA" CodeNumber="973" SmallName="Ангола"/>
+	<_Currency UID="{8612CD9D-788D-4950-B1FC-03420F473383}" Name="Малавийская квача" CodeSymbol="MWK" CodeNumber="454" SmallName="Малави"/>
+	<_Currency UID="{32F856DE-16F8-4F46-9FBD-BE36D6220C44}" Name="Замбийская квача" CodeSymbol="ZMW" CodeNumber="967" SmallName="Замбия"/>
+	<_Currency UID="{8011BEE8-2DCD-4756-A30A-0096459C0B6D}" Name="Кенийский шиллинг" CodeSymbol="KES" CodeNumber="404" SmallName="Кения"/>
+	<_Currency UID="{8C32E2DD-A85A-4D49-AF01-FB16A564ED6E}" Name="Кетсаль" CodeSymbol="GTQ" CodeNumber="320" SmallName="Гватемала"/>
+	<_Currency UID="{E3F4B481-ABEB-4C9B-9BC7-99E6F13EE044}" Name="Кина" CodeSymbol="PGK" CodeNumber="598" SmallName="Папуа Новая Гвинея"/>
+	<_Currency UID="{5A423AB9-F7A3-4889-8CA7-0BCB8A2F8CFE}" Name="Кип" CodeSymbol="LAK" CodeNumber="418" SmallName="Лаосская Народно-Демократическая Республика"/>
+	<_Currency UID="{B44DCCB2-8611-40EB-A11E-996EC1B1AC3C}" Name="Колумбийское песо" CodeSymbol="COP" CodeNumber="170" SmallName="Колумбия"/>
+	<_Currency UID="{5D4FCAA8-CED4-4D14-9ED2-CCAE5915E7BC}" Name="Конвертируемая марка" CodeSymbol="ВАМ" CodeNumber="977" SmallName="Босния и Герцеговина"/>
+	<_Currency UID="{E2CDED0B-3BBB-4733-BA20-0EECC1F6C35D}" Name="Конвертируемое песо" CodeSymbol="CUC" CodeNumber="931" SmallName="Куба"/>
+	<_Currency UID="{87AAFDC5-8DA6-49EB-9A53-F76BF0DCB216}" Name="Конголезский франк" CodeSymbol="CDF" CodeNumber="976" SmallName="Конго, демократическая республика"/>
+	<_Currency UID="{9372D270-87D6-4C60-9A51-D86914E2642A}" Name="Костариканский колон" CodeSymbol="CRC" CodeNumber="188" SmallName="Коста-Рика"/>
+	<_Currency UID="{481CAF2D-888E-49CC-83BC-82497757B226}" Name="Кубинское песо" CodeSymbol="CUP" CodeNumber="192" SmallName="Куба"/>
+	<_Currency UID="{42DFA88D-DCDA-41B4-BE7C-1B29564B272E}" Name="Кувейтский динар" CodeSymbol="KWD" CodeNumber="414" SmallName="Кувейт"/>
+	<_Currency UID="{18222298-ED26-4739-B6CF-206C952CE82A}" Name="Кьят" CodeSymbol="MMK" CodeNumber="104" SmallName="Мьянма"/>
+	<_Currency UID="{121FDA3A-8DE5-42D0-A537-05967404174E}" Name="Лари" CodeSymbol="GEL" CodeNumber="981" SmallName="Грузия"/>
+	<_Currency UID="{1AA72692-B36E-40A6-8C65-D77762BCF744}" Name="Лек" CodeSymbol="ALL" CodeNumber="8" SmallName="Албания"/>
+	<_Currency UID="{CE26A903-A62F-40CB-B7F3-6CF9F9019049}" Name="Леоне" CodeSymbol="SLL" CodeNumber="694" SmallName="Сьерра-Леоне"/>
+	<_Currency UID="{CEF4D3FF-07C6-48B7-8406-DFFEB7C09BD5}" Name="Либерийский доллар" CodeSymbol="LRD" CodeNumber="430" SmallName="Либерия"/>
+	<_Currency UID="{5BBF0401-6B3B-4BD6-B386-2C4A29D66DFC}" Name="Ливанский фунт" CodeSymbol="LBP" CodeNumber="422" SmallName="Ливан"/>
+	<_Currency UID="{6438378D-7EC6-4F44-A116-823EB7B18F85}" Name="Ливийский динар" CodeSymbol="LYD" CodeNumber="434" SmallName="Ливия"/>
+	<_Currency UID="{DACB233F-6E14-4456-8638-C155234CAD12}" Name="Лилангени" CodeSymbol="SZL" CodeNumber="748" SmallName="Свазиленд"/>
+	<_Currency UID="{10E9BB66-1BB2-48CF-A74E-B4868C6131FE}" Name="Лоти" CodeSymbol="LSL" CodeNumber="426" SmallName="Лесото"/>
+	<_Currency UID="{DB9E6608-65B9-4233-8797-F2D04F9EDFE5}" Name="Маврикийская рупия" CodeSymbol="MUR" CodeNumber="480" SmallName="Маврикий"/>
+	<_Currency UID="{88ACB8C8-1784-4162-A05C-6D5BE405E837}" Name="Малайзийский ринггит" CodeSymbol="MYR" CodeNumber="458" SmallName="Малайзия"/>
+	<_Currency UID="{4FBF39A9-8832-4C62-A753-21E9EA5A7049}" Name="Марокканский дирхам" CodeSymbol="MAD" CodeNumber="504" SmallName="Западная Сахара; Марокко"/>
+	<_Currency UID="{4C30C9BB-11DB-4D27-A94B-FDA7537568AD}" Name="Мексиканское песо" CodeSymbol="MXN" CodeNumber="484" SmallName="Мексика"/>
+	<_Currency UID="{0E5CCB47-5CFE-4BF7-8217-A0180165CD8B}" Name="Мозамбикский метикал" CodeSymbol="MZN" CodeNumber="943" SmallName="Мозамбик"/>
+	<_Currency UID="{0C2B043D-EA9A-4530-AF27-A8EDDE01E820}" Name="Молдавский лей" CodeSymbol="MDL" CodeNumber="498" SmallName="Молдова, республика"/>
+	<_Currency UID="{B87FD44E-6567-4AEC-82F0-86F63A27280E}" Name="Найра" CodeSymbol="NGN" CodeNumber="566" SmallName="Нигерия"/>
+	<_Currency UID="{915B5256-D98D-4C30-9A0F-99858031BB18}" Name="Накфа" CodeSymbol="ERN" CodeNumber="232" SmallName="Эритрея"/>
+	<_Currency UID="{E92B6429-73B0-4FEF-9A01-5A16B0B7E48E}" Name="Нгултрум" CodeSymbol="BTN" CodeNumber="64" SmallName="Бутан"/>
+	<_Currency UID="{46B82F06-B6D4-45E4-AA51-435F416E3E10}" Name="Непальская рупия" CodeSymbol="NPR" CodeNumber="524" SmallName="Непал"/>
+	<_Currency UID="{6B02DB14-63EE-4A5D-BC9D-13328C75FF1A}" Name="Нидерландский антильский гульден" CodeSymbol="ANG" CodeNumber="532" SmallName="Кюрасао; Сен-Мартен (нидерландская часть)"/>
+	<_Currency UID="{121C5B76-C8A2-44F7-B0D0-D4D6A165CD63}" Name="Новозеландский доллар" CodeSymbol="NZD" CodeNumber="554" SmallName="Ниуэ; Новая Зеландия; Острова Кука; Питкерн; Токелау"/>
+	<_Currency UID="{546F5A35-BFC6-4B60-9FAB-5327FF32EB80}" Name="Новый израильский шекель" CodeSymbol="ILS" CodeNumber="376" SmallName="Израиль"/>
+	<_Currency UID="{030B4F49-8ADD-4333-BCE6-036DB5631A56}" Name="Румынский лей" CodeSymbol="RON" CodeNumber="946" SmallName="Румыния"/>
+	<_Currency UID="{42A815BF-A6E6-42CD-B804-75C5A4B19917}" Name="Соль" CodeSymbol="PEN" CodeNumber="604" SmallName="Перу"/>
+	<_Currency UID="{35E2EFA8-B3AB-47B0-8454-64350789BD1E}" Name="Новый тайваньский доллар" CodeSymbol="TWD" CodeNumber="901" SmallName="Тайвань (Китай)"/>
+	<_Currency UID="{C418ED13-E766-4662-9F0C-E51C0F389792}" Name="Новый туркменский манат" CodeSymbol="TMT" CodeNumber="934" SmallName="Туркменистан"/>
+	<_Currency UID="{31B294C0-58D7-4E3E-A4EB-DA84AD1E7E0F}" Name="Норвежская крона" CodeSymbol="NOK" CodeNumber="578" SmallName="Норвегия; Остров Буве; Шпицберген и Ян Майен"/>
+	<_Currency UID="{A90AB854-DFCA-4695-8F11-E8C8104D803A}" Name="Оманский риал" CodeSymbol="OMR" CodeNumber="512" SmallName="Оман"/>
+	<_Currency UID="{19549632-E1DC-4A7D-8C31-7558443C0537}" Name="Паанга" CodeSymbol="ТОР" CodeNumber="776" SmallName="Тонга"/>
+	<_Currency UID="{069F7610-89F8-4D70-9E18-D852672FE7B1}" Name="Пакистанская рупия" CodeSymbol="PKR" CodeNumber="586" SmallName="Пакистан"/>
+	<_Currency UID="{6F12C34C-D43E-4CA7-A133-2B12DAFD47DF}" Name="Патака" CodeSymbol="МОР" CodeNumber="446" SmallName="Макао"/>
+	<_Currency UID="{CC7AE51D-B567-41B5-A833-55953975315C}" Name="Пула" CodeSymbol="BWP" CodeNumber="72" SmallName="Ботсвана"/>
+	<_Currency UID="{1FC71598-06D9-4492-8F54-B024A738F17C}" Name="Риель" CodeSymbol="KHR" CodeNumber="116" SmallName="Камбоджа"/>
+	<_Currency UID="{2A953C37-FC9B-4B32-B543-4DB15E22EB6A}" Name="Российский рубль" CodeSymbol="RUB" CodeNumber="643" SmallName="Россия"/>
+	<_Currency UID="{63F4211B-A446-473B-8950-61D816448FAF}" Name="Рупия" CodeSymbol="IDR" CodeNumber="360" SmallName="Индонезия"/>
+	<_Currency UID="{60BCD849-E7DE-4C09-A2D8-E7DA301CC726}" Name="Руфия" CodeSymbol="MVR" CodeNumber="462" SmallName="Мальдивы"/>
+	<_Currency UID="{886F74FB-1A3C-4C98-8A6F-2B7272EA7177}" Name="Рэнд" CodeSymbol="ZAR" CodeNumber="710" SmallName="Лесото; Намибия; Южная Африка"/>
+	<_Currency UID="{BBA3E594-618E-4C2F-BD88-AC31C6F0B3CB}" Name="Сальвадорский колон" CodeSymbol="SVC" CodeNumber="222" SmallName="Эль-Сальвадор"/>
+	<_Currency UID="{B9A3F2F5-8B9E-4C1D-AF7E-8DDEF33C8CCF}" Name="Саудовский риял" CodeSymbol="SAR" CodeNumber="682" SmallName="Саудовская Аравия"/>
+	<_Currency UID="{C05FE5EA-C25F-4308-918A-E82EA42FAF0C}" Name="СДР (специальные права заимствования)" CodeSymbol="XDR" CodeNumber="960" SmallName="Международный валютный фонд (МВФ)"/>
+	<_Currency UID="{548FDC89-F242-41D4-AF51-F966FB4744ED}" Name="Северокорейская вона" CodeSymbol="KPW" CodeNumber="408" SmallName="Корея, народно-демократическая республика"/>
+	<_Currency UID="{EB4A7CB3-7753-4E79-BA26-12F84D3B26FA}" Name="Ганский седи" CodeSymbol="GHS" CodeNumber="936" SmallName="Гана"/>
+	<_Currency UID="{3F36F373-D641-4367-99C9-5FF9CF6AB756}" Name="Сейшельская рупия" CodeSymbol="SCR" CodeNumber="690" SmallName="Сейшелы"/>
+	<_Currency UID="{3254746C-43A7-4116-A26A-DCF91C153234}" Name="Сербский динар" CodeSymbol="RSD" CodeNumber="941" SmallName="Сербия"/>
+	<_Currency UID="{10850281-D108-4349-8A82-F68D0FDB05DB}" Name="Сингапурский доллар" CodeSymbol="SGD" CodeNumber="702" SmallName="Сингапур"/>
+	<_Currency UID="{2BC4ACFA-E6F6-465B-BAEA-7D162E741BDC}" Name="Сирийский фунт" CodeSymbol="SYP" CodeNumber="760" SmallName="Сирийская Арабская Республика"/>
+	<_Currency UID="{1E651FBA-DD58-482B-A8DF-DE29C12F5EEB}" Name="Сом" CodeSymbol="KGS" CodeNumber="417" SmallName="Киргизия"/>
+	<_Currency UID="{D200E438-96E3-48E2-912E-F34CDA857BE5}" Name="Сомалийский шиллинг" CodeSymbol="SOS" CodeNumber="706" SmallName="Сомали"/>
+	<_Currency UID="{FA154891-1520-4041-8230-59CF50493878}" Name="Сомони" CodeSymbol="TJS" CodeNumber="972" SmallName="Таджикистан"/>
+	<_Currency UID="{9C7E0267-AA3C-42FB-A523-EC023D1060FF}" Name="Суданский фунт" CodeSymbol="SDG" CodeNumber="938" SmallName="Судан"/>
+	<_Currency UID="{F7B0BA0C-DFCD-4DE9-B02F-E64F906C7C80}" Name="Суринамский доллар" CodeSymbol="SRD" CodeNumber="968" SmallName="Суринам"/>
+	<_Currency UID="{29B170CA-C2A4-4706-946B-836959433D3B}" Name="Така" CodeSymbol="BDT" CodeNumber="50" SmallName="Бангладеш"/>
+	<_Currency UID="{C0E4BEE6-BC5C-4D7D-A0CE-6212DAACD6E7}" Name="Тала" CodeSymbol="WST" CodeNumber="882" SmallName="Самоа"/>
+	<_Currency UID="{6D421614-586A-4620-AAC3-748A04D2A10E}" Name="Танзанийский шиллинг" CodeSymbol="TZS" CodeNumber="834" SmallName="Танзания, объединенная республика"/>
+	<_Currency UID="{388F9695-3E0E-4A04-B08B-A54CCA1B0539}" Name="Тенге" CodeSymbol="KZT" CodeNumber="398" SmallName="Казахстан"/>
+	<_Currency UID="{ADC0D49F-FBFA-4658-AAA1-B203D60E6DC8}" Name="Тугрик" CodeSymbol="MNT" CodeNumber="496" SmallName="Монголия"/>
+	<_Currency UID="{36A891AE-08D2-4E25-AEF1-C67A69C1AB18}" Name="Тунисский динар" CodeSymbol="TND" CodeNumber="788" SmallName="Тунис"/>
+	<_Currency UID="{B801130F-D360-4F3A-B842-9501897A09F8}" Name="Турецкая лира" CodeSymbol="TRY" CodeNumber="949" SmallName="Турция"/>
+	<_Currency UID="{3C377271-4385-4FBE-88AC-7F3C5E0E6C8E}" Name="Угандийский шиллинг" CodeSymbol="UGX" CodeNumber="800" SmallName="Уганда"/>
+	<_Currency UID="{005DE000-44C3-48E6-8F1E-AA7851FA8149}" Name="Угия" CodeSymbol="MRO" CodeNumber="478" SmallName="Мавритания"/>
+	<_Currency UID="{84DDE788-10A0-406B-AAD4-487E2E6F5F3C}" Name="Узбекский сум" CodeSymbol="UZS" CodeNumber="860" SmallName="Узбекистан"/>
+	<_Currency UID="{E13616F4-42E7-4637-9A1E-53FF774488DC}" Name="Уругвайское песо" CodeSymbol="UYU" CodeNumber="858" SmallName="Уругвай"/>
+	<_Currency UID="{1597D1B4-635F-4912-A74D-88F4F695F57B}" Name="Уругвайское песо в индексированных единицах" CodeSymbol="UYI" CodeNumber="940" SmallName="Уругвай"/>
+	<_Currency UID="{13AC1885-727A-408E-9F4E-0F5614188DCE}" Name="Филиппинское песо" CodeSymbol="PHP" CodeNumber="608" SmallName="Филиппины"/>
+	<_Currency UID="{31DFFEEE-322C-4844-BD05-3B131F095AAB}" Name="Форинт" CodeSymbol="HUF" CodeNumber="348" SmallName="Венгрия"/>
+	<_Currency UID="{2FE6CDE3-0000-41D5-8F29-7E479A9FDB2F}" Name="Франк Джибути" CodeSymbol="DJF" CodeNumber="262" SmallName="Джибути"/>
+	<_Currency UID="{02F271B1-3E37-4F71-8410-D750514A23BF}" Name="Франк Комор" CodeSymbol="KMF" CodeNumber="174" SmallName="Коморы"/>
+	<_Currency UID="{D0EC5AD5-7868-4D4D-876E-E629C7070F4D}" Name="Франк КФА ВЕАС" CodeSymbol="XAF" CodeNumber="950" SmallName="Габон; Камерун; Конго; Центрально-Африканская Республика; Чад; Экваториальная Гвинея"/>
+	<_Currency UID="{2BC8148F-8B9E-4887-90A9-2DE011C4FB9D}" Name="Франк КФА ВСЕАО" CodeSymbol="XOF" CodeNumber="952" SmallName="Бенин; Буркина-Фасо; Гвинея-Бисау; Кот д'Ивуар; Мали; Нигер; Сенегал; Того"/>
+	<_Currency UID="{B2D1D514-1211-4594-9B80-68BD63408A81}" Name="Франк КФП" CodeSymbol="XPF" CodeNumber="953" SmallName="Новая Каледония; Французская Полинезия; Уоллис и Футуна"/>
+	<_Currency UID="{76D877B9-4D7B-4863-A1D9-0A299F5CBF0E}" Name="Франк Руанды" CodeSymbol="RWF" CodeNumber="646" SmallName="Руанда"/>
+	<_Currency UID="{15B745F0-B6C1-4FA7-BAD0-C7738CDB2F5C}" Name="Фунт Святой Елены" CodeSymbol="SHP" CodeNumber="654" SmallName="Святая Елена, остров Вознесения, Тристан-да-Кунья"/>
+	<_Currency UID="{4677F5DB-2914-42BD-BE4D-5CF5BF99BA70}" Name="Фунт стерлингов" CodeSymbol="GBP" CodeNumber="826" SmallName="Соединенное королевство"/>
+	<_Currency UID="{2650DADE-B64D-4F0E-8B93-84808DF4931D}" Name="Фунт Фолклендских островов" CodeSymbol="FKP" CodeNumber="238" SmallName="Фолклендские острова (Мальвинские)"/>
+	<_Currency UID="{4B386689-22FD-4935-BC32-5E5F50392A4F}" Name="Куна" CodeSymbol="HRK" CodeNumber="191" SmallName="Хорватия"/>
+	<_Currency UID="{1AC85C26-CC71-48D7-9470-9B6E274E27F6}" Name="Чешская крона" CodeSymbol="CZK" CodeNumber="203" SmallName="Чешская Республика"/>
+	<_Currency UID="{571713C8-3A77-4F99-91A1-1E78F7B992E8}" Name="Чилийское песо" CodeSymbol="CLP" CodeNumber="152" SmallName="Чили"/>
+	<_Currency UID="{14857667-077A-48FF-84E8-7C82288405C0}" Name="Шведская крона" CodeSymbol="SEK" CodeNumber="752" SmallName="Швеция"/>
+	<_Currency UID="{78AAA276-371D-4EA2-B584-F7C805616AD6}" Name="Швейцарский франк" CodeSymbol="CHF" CodeNumber="756" SmallName="Лихтенштейн; Швейцария"/>
+	<_Currency UID="{C091C8E5-9157-4E75-B3CF-9900130223EE}" Name="Шри-Ланкийская рупия" CodeSymbol="LKR" CodeNumber="144" SmallName="Шри-Ланка"/>
+	<_Currency UID="{C951CBB0-CCFF-4D70-86AE-AC631A1ACF4D}" Name="Эскудо Кабо-Верде" CodeSymbol="CVE" CodeNumber="132" SmallName="Кабо-Верде"/>
+	<_Currency UID="{BCB54D73-85C9-4851-8A60-2C80A1BE9CF7}" Name="Эфиопский быр" CodeSymbol="ETB" CodeNumber="230" SmallName="Эфиопия"/>
+	<_Currency UID="{D7E3FD81-BDE2-485B-9B8F-A20219E4B252}" Name="Юань" CodeSymbol="CNY" CodeNumber="156" SmallName="Китай"/>
+	<_Currency UID="{8E1B2835-7BA1-490E-A847-4DB5D111D53A}" Name="Южносуданский фунт" CodeSymbol="SSP" CodeNumber="728" SmallName="Южный Судан"/>
+	<_Currency UID="{C52D20DC-3A52-4E7A-BB97-A52158CBDC22}" Name="Ямайский доллар" CodeSymbol="JMD" CodeNumber="388" SmallName="Ямайка"/>
+
+</XSR>

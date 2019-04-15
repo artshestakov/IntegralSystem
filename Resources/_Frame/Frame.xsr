@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSR Name="Frame.xsr">
+  
+  <_Systems IsDeleted="true" IsSystem="false" UID="{FF796C09-6880-451E-9635-148D4DBAC2D6}" OrderID="3" LocalName="Справочники" Icon="Lists"/>
+  
+  <_Systems IsSystem="false" UID="{9E931194-9D1F-477B-B5ED-35502C69CCF7}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
+  <_SubSystems UID="{6AB3CF15-3E96-417A-9197-3851CB562A79}" System="{9E931194-9D1F-477B-B5ED-35502C69CCF7}" OrderID="1" LocalName="Клиенты" Icon="Lists" ClassName="ISFrameClientsListForm"/>
+  <_SubSystems UID="{9587A3E9-DA1B-44CF-9B9F-A4D53B1417FA}" System="{9E931194-9D1F-477B-B5ED-35502C69CCF7}" OrderID="2" LocalName="Текущие дела" Icon="Lists" ClassName="ISCurrentAffairsForm"/>
+  <_SubSystems UID="{30609D5D-69A2-4CDA-96FD-600AD3B70236}" System="{9E931194-9D1F-477B-B5ED-35502C69CCF7}" OrderID="3" LocalName="Документы" Icon="Lists" TableName="Document"/>
+
+  <_Systems IsSystem="false" UID="{13183D66-12EF-4516-8A76-331FC4FDF274}" OrderID="5" LocalName="Подбор клиентов" Icon="Lists"/>
+  <_SubSystems UID="{B78D2821-A411-4D30-A483-50A6EE950BFE}" System="{13183D66-12EF-4516-8A76-331FC4FDF274}" OrderID="1" LocalName="Обзвон" Icon="Lists" TableName="Ringing"/>
+  <_SubSystems UID="{1F457AF6-D32E-4934-9755-0F2031AC6A20}" System="{13183D66-12EF-4516-8A76-331FC4FDF274}" OrderID="2" LocalName="Типы организаций" Icon="Lists" TableName="OrganizationType"/>
+  <_SubSystems UID="{FF52645C-D13C-4DCF-BDB5-7D1FC7B11FEC}" System="{13183D66-12EF-4516-8A76-331FC4FDF274}" OrderID="3" LocalName="Результаты звонков" Icon="Lists" TableName="RingingResult"/>
+
+  <DocumentType IsSystem="true" UID="{7BFC36E9-1806-47BA-88E4-7A05E21E630E}" Name="Приход"/>
+  <DocumentType IsSystem="true" UID="{EEA26B92-39C3-4CF6-825F-83F0E57C8BE1}" Name="Расход"/>
+  <DocumentType IsSystem="true" UID="{F2B92D28-0A86-4D88-93FC-DB24BDAFA7B4}" Name="Аутсорсинг"/>
+
+  <FormType IsSystem="true" UID="{FEADB0AC-CBEF-47E6-81CA-AA2FD6584064}" Name="Счёт"/>
+  <FormType IsSystem="true" UID="{324ABE59-8B3C-451D-AF58-FB90C28429BB}" Name="Акт"/>
+  <FormType IsSystem="true" UID="{D467DF03-54CC-4852-BC9C-DF700B9B1863}" Name="Договор"/>
+  <FormType IsSystem="true" UID="{45D4A8FB-F981-42FA-8F70-5CC55CF033BD}" Name="Накладная"/>
+  <FormType IsSystem="true" UID="{863A4A69-84FB-47C8-92EA-5D715B40B81D}" Name="УПД"/>
+  
+</XSR>

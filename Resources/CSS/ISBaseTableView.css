@@ -1,0 +1,10 @@
+﻿QTableView
+{
+	selection-background-color: rgb(81, 145, 189);
+    selection-color: white;
+}
+
+QTableView::item:focus
+{
+    selection-background-color: rgb(75, 135, 170);
+}
