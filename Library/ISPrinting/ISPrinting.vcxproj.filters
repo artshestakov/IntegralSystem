@@ -40,33 +40,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ISPrintingEntity.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintingEntity.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISPrintingEntity.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintMetaReport.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintMetaReport.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISPrintMetaReport.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintMetaReportField.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintMetaReportField.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISPrintMetaReportField.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintPreviewDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -94,10 +67,13 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ISPrintingHtml.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISHtmlQuery.cpp">
+    <ClCompile Include="ISPrintingWord.cpp">
+      <Filter>Word</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintingWord.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISHtmlQuery.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPrintingWord.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="ISHTML.cpp">
@@ -121,26 +97,41 @@
     <ClCompile Include="ISHtmlQuery.cpp">
       <Filter>Html</Filter>
     </ClCompile>
-    <ClCompile Include="ISPrintingWord.cpp">
-      <Filter>Word</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintingWord.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISHtmlQuery.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISPrintingWord.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_ISHtmlQuery.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintMetaReport.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintMetaReport.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPrintMetaReport.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintMetaReportField.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintMetaReportField.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPrintMetaReportField.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintingEntity.cpp">
+      <Filter>Printing</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISPrintingEntity.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISPrintingEntity.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="ISPrintingEntity.h">
-      <Filter>Printing</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ISPrintMetaReport.h">
-      <Filter>MetaData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ISPrintMetaReportField.h">
-      <Filter>MetaData</Filter>
-    </CustomBuild>
     <CustomBuild Include="ISPrintPreviewDialog.h">
       <Filter>Printing</Filter>
     </CustomBuild>
@@ -150,8 +141,8 @@
     <CustomBuild Include="ISPrintingHtml.h">
       <Filter>Printing</Filter>
     </CustomBuild>
-    <CustomBuild Include="ISHtmlQuery.h">
-      <Filter>Html</Filter>
+    <CustomBuild Include="ISPrintingWord.h">
+      <Filter>Word</Filter>
     </CustomBuild>
     <CustomBuild Include="ISHTML.h">
       <Filter>Html</Filter>
@@ -159,8 +150,17 @@
     <CustomBuild Include="ISHTMLHelper.h">
       <Filter>Html</Filter>
     </CustomBuild>
-    <CustomBuild Include="ISPrintingWord.h">
-      <Filter>Word</Filter>
+    <CustomBuild Include="ISHtmlQuery.h">
+      <Filter>Html</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISPrintMetaReport.h">
+      <Filter>MetaData</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISPrintMetaReportField.h">
+      <Filter>MetaData</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ISPrintingEntity.h">
+      <Filter>Printing</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

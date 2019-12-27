@@ -43,80 +43,26 @@
     <ClCompile Include="ISProperty.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISProperty.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISProperty.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="ISCountingTime.cpp">
       <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISCountingTime.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISCountingTime.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="ISPassword.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISPassword.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISPassword.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="ISAssert.cpp">
       <Filter>Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISAssert.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISAssert.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="ISDebug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISDebug.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISDebug.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="ISLogger.cpp">
       <Filter>Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISLogger.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISLogger.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="ISTrace.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISTrace.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISTrace.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISCommandLine.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISCommandLine.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="ISConfig.cpp">
       <Filter>Config</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISConfig.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISConfig.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="ISCommandLine.cpp">
       <Filter>Console</Filter>
@@ -126,12 +72,6 @@
     </ClCompile>
     <ClCompile Include="ISPhoneNumberParser.cpp">
       <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISPhoneNumberParser.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISPhoneNumberParser.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="ISExceptionBase.cpp">
       <Filter>Exception</Filter>
@@ -169,19 +109,19 @@
     <ClCompile Include="ISRandom.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISRandom.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISRandom.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="ISVersion.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISVersion.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISLogger.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISVersion.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_ISLogger.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ISDebug.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ISDebug.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>

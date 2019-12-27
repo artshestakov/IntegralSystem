@@ -27,19 +27,19 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -91,16 +91,16 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_NETWORK_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_NETWORK_LIB;QT_MULTIMEDIA_LIB;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISIntegralSystem;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISObjects;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <MultiProcessorCompilation>
-      </MultiProcessorCompilation>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
       <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
       <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
       <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -108,7 +108,8 @@
       <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
       <WarningLevel>Level2</WarningLevel>
       <MinimalRebuild>false</MinimalRebuild>
-      <PrecompiledHeaderOutputFile>$(ProjectDir)..\..\PrecompiledHeaders\$(ProjectName)_$(Configuration)_$(Platform).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -145,20 +146,22 @@ ECHO New build number: %BUILD_NUMBER%</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>GUI;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;UNICODE;WIN32;WIN64;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GUI;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;UNICODE;WIN32;WIN64;QT_MULTIMEDIA_LIB;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
       <AssemblerListingLocation>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
       <ObjectFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
       <ProgramDataBaseFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <XMLDocumentationFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
       <BrowseInformationFile>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Projects\IntegralSystem\!CommonControls;$(SolutionDir)Projects\IntegralSystem\!CommonForms;$(SolutionDir)Projects\IntegralSystem\!Controls;$(SolutionDir)Projects\IntegralSystem\!Controls\DatabaseStatistics;$(SolutionDir)Projects\IntegralSystem\!Controls\MainSystemsBar;$(SolutionDir)Projects\IntegralSystem\!Controls\Settings;$(SolutionDir)Projects\IntegralSystem\!Controls\TabNavigationMain;$(SolutionDir)Projects\IntegralSystem\!Controls\UserRole;$(SolutionDir)Projects\IntegralSystem\!Forms;$(SolutionDir)Projects\IntegralSystem\!Forms\Settings;$(SolutionDir)Projects\IntegralSystem\!Objects\Autoservice;$(SolutionDir)Projects\IntegralSystem\!Objects\Berta;$(SolutionDir)Projects\IntegralSystem\!Objects\Expert;$(SolutionDir)Projects\IntegralSystem\!Objects\Milex;$(SolutionDir)Projects\IntegralSystem\!Objects\Starters;$(SolutionDir)Projects\IntegralSystem\!System;$(SolutionDir)Projects\IntegralSystem\!Version;$(SolutionDir)Library\ISAutoInput;$(SolutionDir)Library\ISBuffer;$(SolutionDir)Library\ISCommunicationModules;$(SolutionDir)Library\ISConfig;$(SolutionDir)Library\ISConverter;$(SolutionDir)Library\ISDateTime;$(SolutionDir)Library\ISDebug;$(SolutionDir)Library\ISExchangeRates;$(SolutionDir)Library\ISExport;$(SolutionDir)Library\ISFavorites;$(SolutionDir)Library\ISInterface;$(SolutionDir)Library\ISHTML;$(SolutionDir)Library\ISInterfaceGUI;$(SolutionDir)Library\ISLicense;$(SolutionDir)Library\ISLocalization;$(SolutionDir)Library\ISMath;$(SolutionDir)Library\ISMetaData;$(SolutionDir)Library\ISMetaSystems;$(SolutionDir)Library\ISMetaUser;$(SolutionDir)Library\ISMultimedia;$(SolutionDir)Library\ISNamespace;$(SolutionDir)Library\ISNetwork;$(SolutionDir)Library\ISPassword;$(SolutionDir)Library\ISPostgres;$(SolutionDir)Library\ISPrinting;$(SolutionDir)Library\ISProtocol;$(SolutionDir)Library\ISResources;$(SolutionDir)Library\ISSearch;$(SolutionDir)Library\ISSMS;$(SolutionDir)Library\ISSmtpClient;$(SolutionDir)Library\ISSettings;$(SolutionDir)Library\ISSettingsDatabase;$(SolutionDir)Library\ISSystem;$(SolutionDir)Library\ISSortingBuffer;$(SolutionDir)Library\ISStyleSheet;$(SolutionDir)Library\ISThread;$(SolutionDir)Library\ISTypes;$(SolutionDir)Library\ISUpdate;$(SolutionDir)Library\ISUserRole;$(SolutionDir)PublicSource\System;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWebSockets;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);.;$(QTDIR)\include\QtMultimedia;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -190,12 +193,11 @@ ECHO New build number: %BUILD_NUMBER%</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;INSYSTEM_RELEASE;QT_NETWORK_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;INSYSTEM_RELEASE;QT_NETWORK_LIB;QT_MULTIMEDIA_LIB;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <MultiProcessorCompilation>
-      </MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISIntegralSystem;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISObjects;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level2</WarningLevel>
       <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
@@ -203,9 +205,11 @@ ECHO New build number: %BUILD_NUMBER%</Command>
       <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
       <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(ProjectDir)..\..\PrecompiledHeaders\$(ProjectName)_$(Configuration)_$(Platform).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -226,20 +230,22 @@ ECHO New build number: %BUILD_NUMBER%</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_NO_DEBUG;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;UNICODE;WIN32;WIN64;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_NO_DEBUG;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;UNICODE;WIN32;WIN64;QT_MULTIMEDIA_LIB;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AssemblerListingLocation>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
       <ObjectFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
       <ProgramDataBaseFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <XMLDocumentationFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
       <BrowseInformationFile>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(SolutionDir)PrecompiledHeaders\$(ProjectName)_$(Configuration)_$(Platform).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Projects\IntegralSystem\!CommonControls;$(SolutionDir)Projects\IntegralSystem\!CommonForms;$(SolutionDir)Projects\IntegralSystem\!Controls;$(SolutionDir)Projects\IntegralSystem\!Controls\DatabaseStatistics;$(SolutionDir)Projects\IntegralSystem\!Controls\MainSystemsBar;$(SolutionDir)Projects\IntegralSystem\!Controls\Settings;$(SolutionDir)Projects\IntegralSystem\!Controls\TabNavigationMain;$(SolutionDir)Projects\IntegralSystem\!Controls\UserRole;$(SolutionDir)Projects\IntegralSystem\!Forms;$(SolutionDir)Projects\IntegralSystem\!Forms\Settings;$(SolutionDir)Projects\IntegralSystem\!Objects\Autoservice;$(SolutionDir)Projects\IntegralSystem\!Objects\Berta;$(SolutionDir)Projects\IntegralSystem\!Objects\Expert;$(SolutionDir)Projects\IntegralSystem\!Objects\Milex;$(SolutionDir)Projects\IntegralSystem\!Objects\Starters;$(SolutionDir)Projects\IntegralSystem\!System;$(SolutionDir)Projects\IntegralSystem\!Version;$(SolutionDir)Library\ISAutoInput;$(SolutionDir)Library\ISBuffer;$(SolutionDir)Library\ISCommunicationModules;$(SolutionDir)Library\ISConfig;$(SolutionDir)Library\ISConverter;$(SolutionDir)Library\ISDateTime;$(SolutionDir)Library\ISDebug;$(SolutionDir)Library\ISExchangeRates;$(SolutionDir)Library\ISExport;$(SolutionDir)Library\ISFavorites;$(SolutionDir)Library\ISInterface;$(SolutionDir)Library\ISInterfaceGUI;$(SolutionDir)Library\ISLicense;$(SolutionDir)Library\ISLocalization;$(SolutionDir)Library\ISMath;$(SolutionDir)Library\ISMetaData;$(SolutionDir)Library\ISMetaSystems;$(SolutionDir)Library\ISMetaUser;$(SolutionDir)Library\ISMultimedia;$(SolutionDir)Library\ISNamespace;$(SolutionDir)Library\ISNetwork;$(SolutionDir)Library\ISPassword;$(SolutionDir)Library\ISPostgres;$(SolutionDir)Library\ISPrinting;$(SolutionDir)Library\ISProtocol;$(SolutionDir)Library\ISResources;$(SolutionDir)Library\ISSearch;$(SolutionDir)Library\ISSMS;$(SolutionDir)Library\ISSmtpClient;$(SolutionDir)Library\ISSettings;$(SolutionDir)Library\ISSettingsDatabase;$(SolutionDir)Library\ISSystem;$(SolutionDir)Library\ISSortingBuffer;$(SolutionDir)Library\ISStyleSheet;$(SolutionDir)Library\ISThread;$(SolutionDir)Library\ISTypes;$(SolutionDir)Library\ISUpdate;$(SolutionDir)Library\ISUserRole;$(SolutionDir)PublicSource\System;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWebSockets;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);.;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtMultimedia;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -272,7 +278,7 @@ ECHO New build number: %BUILD_NUMBER%</Command>
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="58_msvc2015" Qt5Version_x0020_x64="5.6msvc2013_64" MocOptions="" />
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="msvc2015" Qt5Version_x0020_x64="msvc2015_64" MocOptions="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
