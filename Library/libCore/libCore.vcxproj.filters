@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISApplicationRunning.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISAssert.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCommandLine.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConfig.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCountingTime.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISExceptionAssert.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISExceptionBase.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISNamespace.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISPassword.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISPhoneNumberParser.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISProperty.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryException.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryExceptionConnection.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryExceptionSyntax.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryExceptionTransaction.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISRandom.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTrace.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTypes.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISUuid.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISVersion.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConstants.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDefines.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLicense.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="libcore_global.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ISApplicationRunning.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAssert.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCommandLine.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISConfig.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCountingTime.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDebug.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISExceptionAssert.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISExceptionBase.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLogger.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPassword.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPhoneNumberParser.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProcess.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProperty.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryException.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryExceptionConnection.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryExceptionSyntax.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryExceptionTransaction.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRandom.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTrace.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTypes.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUuid.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISVersion.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLicense.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISDebug.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISLogger.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISProcess.h">
+      <Filter>System</Filter>
+    </QtMoc>
+  </ItemGroup>
+</Project>
