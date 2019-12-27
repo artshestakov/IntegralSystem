@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "isresources_global.h"
+#include "libcore_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISRESOURCES_EXPORT ISLocalization
+class LIBCORE_EXPORT ISLocalization
 {
 public:
 	ISLocalization(const ISLocalization &) = delete;

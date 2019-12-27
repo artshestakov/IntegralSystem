@@ -77,6 +77,9 @@
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <QtRcc>
+      <QtRccFileName>..\Debug\qrc_%(Filename).cpp</QtRccFileName>
+    </QtRcc>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -93,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ISBuffer.h" />
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="ISDefines.h" />
     <ClInclude Include="ISLicense.h" />
@@ -101,6 +105,8 @@
     <ClInclude Include="ISCommandLine.h" />
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISCountingTime.h" />
+    <ClInclude Include="ISLocalization.h" />
+    <ClInclude Include="ISStyleSheet.h" />
     <ClInclude Include="StdAfx.h" />
     <QtMoc Include="ISDebug.h" />
     <ClInclude Include="ISExceptionAssert.h" />
@@ -124,6 +130,7 @@
     <ClInclude Include="libcore_global.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISLicense.cpp" />
     <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
@@ -133,6 +140,7 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />
     <ClCompile Include="ISExceptionBase.cpp" />
+    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPhoneNumberParser.cpp" />
@@ -143,6 +151,7 @@
     <ClCompile Include="ISQueryExceptionSyntax.cpp" />
     <ClCompile Include="ISQueryExceptionTransaction.cpp" />
     <ClCompile Include="ISRandom.cpp" />
+    <ClCompile Include="ISStyleSheet.cpp" />
     <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="ISTypes.cpp" />
@@ -152,6 +161,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\Resources.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "isresources_global.h"
+#include "libcore_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISRESOURCES_EXPORT ISBuffer
+class LIBCORE_EXPORT ISBuffer
 {
 public:
 	ISBuffer(const ISBuffer &) = delete;

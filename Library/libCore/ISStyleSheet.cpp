@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISStyleSheet.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISCountingTime.h"

@@ -10,6 +10,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{c2fb5a80-5b77-4908-8047-c0f12909a144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{6fe865a6-b4fb-44bd-bb0c-62466bef6537}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISApplicationRunning.h">
@@ -88,6 +94,15 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="libcore_global.h" />
+    <ClInclude Include="ISBuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLocalization.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStyleSheet.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -165,6 +180,15 @@
     <ClCompile Include="ISLicense.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISBuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLocalization.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStyleSheet.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISDebug.h">
@@ -176,5 +200,10 @@
     <QtMoc Include="ISProcess.h">
       <Filter>System</Filter>
     </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\Resources.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
   </ItemGroup>
 </Project>
