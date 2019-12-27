@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "issystem_global.h"
 //-----------------------------------------------------------------------------
-class ISSYSTEM_EXPORT ISCommandLine : public QObject
+class ISSYSTEM_EXPORT ISCommandLine
 {
-	Q_OBJECT
-
 public:
 	ISCommandLine();
 	virtual ~ISCommandLine();

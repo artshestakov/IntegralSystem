@@ -5,14 +5,18 @@
 #include "ISDebug.h"
 #include "EXConstants.h"
 //-----------------------------------------------------------------------------
-ISConfig::ISConfig() : QObject()
+ISConfig::ISConfig()
+	: Settings(nullptr)
 {
 	Settings = nullptr;
 }
 //-----------------------------------------------------------------------------
 ISConfig::~ISConfig()
 {
-
+	if (Settings)
+	{
+		delete Settings;
+	}
 }
 //-----------------------------------------------------------------------------
 ISConfig& ISConfig::GetInstance()
@@ -24,7 +28,7 @@ ISConfig& ISConfig::GetInstance()
 void ISConfig::Initialize(const QString &ConfigFilePath)
 {
 	IS_ASSERT(QFile::exists(ConfigFilePath), QString("Not found file config: %1").arg(ConfigFilePath));
-	Settings = new QSettings(ConfigFilePath, QSettings::IniFormat, this);
+	Settings = new QSettings(ConfigFilePath, QSettings::IniFormat);
 	IS_ASSERT(Settings->allKeys().count(), QString("Config file \"%1\" is empty.").arg(ConfigFilePath));
 
 	ISDebug::ShowInfoString(QString("Config initialized. Server: %1, Port: %2, Database: %3").arg(GetValue(CONST_CONFIG_CONNECTION_SERVER).toString()).arg(GetValue(CONST_CONFIG_CONNECTION_PORT).toInt()).arg(GetValue(CONST_CONFIG_CONNECTION_DATABASE).toString()));

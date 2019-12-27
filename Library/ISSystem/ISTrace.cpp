@@ -14,11 +14,12 @@ ISTrace::ISTrace(const QString &q_func_info, const QString &message_text)
 	}
 
 	ISDebug::ShowDebugString(MessageText);
-	Time = new ISCountingTime(this);
+	Time = new ISCountingTime();
 }
 //-----------------------------------------------------------------------------
 ISTrace::~ISTrace()
 {
 	ISDebug::ShowDebugString("END TRACE (" + QString::number(Time->GetElapsed()) + " msec): " + Q_FUNC_INFO_STRING);
+	delete Time;
 }
 //-----------------------------------------------------------------------------

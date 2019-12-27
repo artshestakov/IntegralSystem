@@ -3,7 +3,7 @@
 #include "EXDefines.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISVersion::ISVersion() : QObject()
+ISVersion::ISVersion()
 {
 	Major = GetFileData("Major").toInt();
 	Minor = GetFileData("Minor").toInt();

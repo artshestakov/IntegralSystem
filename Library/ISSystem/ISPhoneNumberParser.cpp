@@ -1,16 +1,6 @@
 #include "StdAfx.h"
 #include "ISPhoneNumberParser.h"
 //-----------------------------------------------------------------------------
-ISPhoneNumberParser::ISPhoneNumberParser(QObject *parent) : QObject(parent)
-{
-
-}
-//-----------------------------------------------------------------------------
-ISPhoneNumberParser::~ISPhoneNumberParser()
-{
-
-}
-//-----------------------------------------------------------------------------
 QString ISPhoneNumberParser::RemoveNotDigits(const QString &String)
 {
 	QString ResultString;

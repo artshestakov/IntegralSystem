@@ -2,9 +2,6 @@
 //-----------------------------------------------------------------------------
 #include "issystem_global.h"
 //-----------------------------------------------------------------------------
-#define IS_LOGGER(Message) ISLogger::GetInstance().AddMessage(Message) //Добавить сообщение в лог-файл
-#define IS_LOGGER_FUNC(Message) ISLogger::GetInstance().AddMessageFunc(Q_FUNC_INFO, Message) //Добавить сообщение в лог-файл из функции
-//-----------------------------------------------------------------------------
 class ISSYSTEM_EXPORT ISLogger : public QObject
 {
 	Q_OBJECT
@@ -35,4 +32,7 @@ private:
 	QQueue<QString> Queue;
 	QString LogPath;
 };
+//-----------------------------------------------------------------------------
+#define IS_LOGGER(Message) ISLogger::GetInstance().AddMessage(Message) //Добавить сообщение в лог-файл
+#define IS_LOGGER_FUNC(Message) ISLogger::GetInstance().AddMessageFunc(Q_FUNC_INFO, Message) //Добавить сообщение в лог-файл из функции
 //-----------------------------------------------------------------------------

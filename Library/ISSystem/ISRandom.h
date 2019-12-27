@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "issystem_global.h"
 //-----------------------------------------------------------------------------
-class ISSYSTEM_EXPORT ISRandom : public QObject
+class ISSYSTEM_EXPORT ISRandom
 {
-	Q_OBJECT
-
 public:
 	ISRandom(QObject *parent = 0);
 	virtual ~ISRandom();

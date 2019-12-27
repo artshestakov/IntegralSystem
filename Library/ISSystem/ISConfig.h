@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "issystem_global.h"
 //-----------------------------------------------------------------------------
-class ISSYSTEM_EXPORT ISConfig : public QObject
+class ISSYSTEM_EXPORT ISConfig
 {
-	Q_OBJECT
-
 public:
 	ISConfig(const ISConfig &) = delete;
 	ISConfig(ISConfig &&) = delete;

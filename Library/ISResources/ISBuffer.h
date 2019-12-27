@@ -3,10 +3,8 @@
 #include "isresources_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISRESOURCES_EXPORT ISBuffer : public QObject
+class ISRESOURCES_EXPORT ISBuffer
 {
-	Q_OBJECT
-
 public:
 	ISBuffer(const ISBuffer &) = delete;
 	ISBuffer(ISBuffer &&) = delete;

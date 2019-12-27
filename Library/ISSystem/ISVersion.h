@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "issystem_global.h"
 //-----------------------------------------------------------------------------
-class ISSYSTEM_EXPORT ISVersion : public QObject
+class ISSYSTEM_EXPORT ISVersion
 {
-	Q_OBJECT
-
 public:
 	ISVersion(const ISVersion &) = delete;
 	ISVersion(ISVersion &&) = delete;

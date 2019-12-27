@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 #define IS_ASSERT(CONDITION, FALSE_MESSAGE) ISASSERT::Assert(CONDITION, FALSE_MESSAGE, Q_FUNC_INFO, SOURCE_LINE, SOURCE_FILE);
 //-----------------------------------------------------------------------------
-class ISSYSTEM_EXPORT ISASSERT : QObject
+class ISSYSTEM_EXPORT ISASSERT
 {
-	Q_OBJECT
-
 public:
 	ISASSERT();
 	virtual ~ISASSERT();

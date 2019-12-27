@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "issystem_global.h"
 //-----------------------------------------------------------------------------
-class ISSYSTEM_EXPORT ISCountingTime : public QObject
+class ISSYSTEM_EXPORT ISCountingTime
 {
-	Q_OBJECT
-
 public:
 	ISCountingTime(QObject *parent = 0);
 	virtual ~ISCountingTime();

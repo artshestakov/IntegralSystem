@@ -3,10 +3,8 @@
 #include "isresources_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISRESOURCES_EXPORT ISStyleSheet : public QObject
+class ISRESOURCES_EXPORT ISStyleSheet
 {
-	Q_OBJECT
-
 public:
 	ISStyleSheet(const ISStyleSheet &) = delete;
 	ISStyleSheet(ISStyleSheet &&) = delete;

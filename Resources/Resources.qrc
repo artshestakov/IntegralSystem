@@ -22,7 +22,7 @@
     <file>Other/</file>
     <file>PrintingTemplates/</file>
     <file>Scheme/</file>
-	<file>Version/</file>
+	  <file>Version/</file>
 
   </qresource>
 </RCC>

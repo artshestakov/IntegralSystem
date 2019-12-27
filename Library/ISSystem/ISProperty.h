@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "issystem_global.h"
 //-----------------------------------------------------------------------------
-class ISSYSTEM_EXPORT ISProperty : public QObject
+class ISSYSTEM_EXPORT ISProperty
 {
-	Q_OBJECT
-
 public:
 	ISProperty(const ISProperty &) = delete;
 	ISProperty(ISProperty &&) = delete;

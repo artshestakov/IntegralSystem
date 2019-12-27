@@ -22,10 +22,10 @@ bool ISTelephony::CheckSetUp()
     ISQuery qSelect(QS_TELEPHONY);
     if (qSelect.ExecuteFirst())
     {
-	if (qSelect.ReadColumn("count").toInt())
-	{
-	        return true;
-	}
+		if (qSelect.ReadColumn("count").toInt())
+		{
+				return true;
+		}
     }
 
     return false;

@@ -3,10 +3,8 @@
 #include "isresources_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISRESOURCES_EXPORT ISLocalization : public QObject
+class ISRESOURCES_EXPORT ISLocalization
 {
-	Q_OBJECT
-
 public:
 	ISLocalization(const ISLocalization &) = delete;
 	ISLocalization(ISLocalization &&) = delete;

@@ -2,7 +2,7 @@
 #include "ISRandom.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISRandom::ISRandom(QObject *parent) : QObject(parent)
+ISRandom::ISRandom(QObject *parent)
 {
 
 }

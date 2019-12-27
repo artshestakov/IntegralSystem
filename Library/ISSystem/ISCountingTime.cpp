@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
-ISCountingTime::ISCountingTime(QObject *parent) : QObject(parent)
+ISCountingTime::ISCountingTime(QObject *parent)
 {
 	Elapsed = 0;
 	Time.start();

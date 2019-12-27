@@ -5,7 +5,7 @@
 #include "ISSystem.h"
 #include "ISExceptionAssert.h"
 //-----------------------------------------------------------------------------
-ISASSERT::ISASSERT() : QObject()
+ISASSERT::ISASSERT()
 {
 
 }

@@ -2,7 +2,7 @@
 #include "ISProperty.h"
 #include "EXDefines.h"
 //-----------------------------------------------------------------------------
-ISProperty::ISProperty() : QObject()
+ISProperty::ISProperty()
 {
 
 }

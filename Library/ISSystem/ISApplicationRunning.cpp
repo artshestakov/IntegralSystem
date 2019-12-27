@@ -1,22 +1,19 @@
 #include "StdAfx.h"
 #include "ISApplicationRunning.h"
 //-----------------------------------------------------------------------------
-namespace
+QString GenerateKeyHash(const QString &key, const QString &salt)
 {
-	QString generateKeyHash(const QString &key, const QString &salt)
-	{
-		QByteArray ByteArray;
-		ByteArray.append(key.toUtf8());
-		ByteArray.append(salt.toUtf8());
-		ByteArray = QCryptographicHash::hash(ByteArray, QCryptographicHash::Sha1).toHex();
-		return ByteArray;
-	}
+	QByteArray ByteArray;
+	ByteArray.append(key.toUtf8());
+	ByteArray.append(salt.toUtf8());
+	ByteArray = QCryptographicHash::hash(ByteArray, QCryptographicHash::Sha1).toHex();
+	return ByteArray;
 }
 //-----------------------------------------------------------------------------
 ISApplicationRunning::ISApplicationRunning(const QString &key)
 	: Key(key),
-	MemoryLockKey(generateKeyHash(key, "_memLockKey")),
-	SharedMemoryKey(generateKeyHash(key, "_sharedmemKey")),
+	MemoryLockKey(GenerateKeyHash(key, "_memLockKey")),
+	SharedMemoryKey(GenerateKeyHash(key, "_sharedmemKey")),
 	SharedMemory(SharedMemoryKey),
 	SystemSemaphore(MemoryLockKey, 1)
 {

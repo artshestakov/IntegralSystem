@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "issystem_global.h"
 //-----------------------------------------------------------------------------
-class ISSYSTEM_EXPORT ISPassword : public QObject
+class ISSYSTEM_EXPORT ISPassword
 {
-	Q_OBJECT
-
 public:
 	ISPassword();
 	virtual ~ISPassword();
