@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISOpenWeatherMap.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISTrace.h"
 //-----------------------------------------------------------------------------
 ISOpenWeatherMap::ISOpenWeatherMap(QObject *parent) : QObject(parent)

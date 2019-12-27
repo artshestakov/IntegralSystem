@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "EXLicense.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])

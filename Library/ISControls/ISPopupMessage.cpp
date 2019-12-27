@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISPopupMessage.h"
 #include "ISStyleSheet.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISPopupMessage::ISPopupMessage(QWidget *parent) : QWidget(parent)
 {

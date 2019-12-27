@@ -2,14 +2,14 @@
 #include "ISHistoryForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISButtonDialog.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
 #include "ISSettings.h"
 #include "ISMetaData.h"
 #include "PMetaClassTable.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid FROM _history WHERE htry_user = :CurrentUserID ORDER BY htry_id DESC LIMIT :Limit OFFSET 0");
 //-----------------------------------------------------------------------------

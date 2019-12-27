@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISChatMessageWidget.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISQLabel.h"
 #include "ISQuery.h"

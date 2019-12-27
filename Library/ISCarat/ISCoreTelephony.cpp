@@ -1,6 +1,6 @@
 ﻿#include "StdAfx.h"
 #include "ISCoreTelephony.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISSettingsDatabase.h"
 #include "ISQuery.h"
 #include "ISPhoneNumberParser.h"

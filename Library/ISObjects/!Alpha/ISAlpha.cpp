@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISAlpha.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 #include "ISDeviceObjectForm.h"

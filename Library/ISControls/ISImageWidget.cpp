@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISImageWidget.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISContextMenuImage.h"
 #include "ISStyleSheet.h"
 #include "ISFileDialog.h"

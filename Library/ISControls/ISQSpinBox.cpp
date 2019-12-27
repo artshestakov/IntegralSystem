@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISQSpinBox.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISContextMenuInteger.h"
 #include "ISQLineEdit.h"
 #include "ISSystem.h"

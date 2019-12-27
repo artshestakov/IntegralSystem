@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISLicenseForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISLicense.h"

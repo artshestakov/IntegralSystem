@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTaskFilesTab.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISTaskFileWidget.h"
 #include "ISSystem.h"

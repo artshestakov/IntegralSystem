@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISObjectFormBase.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISTrace.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -23,7 +23,7 @@
 #include "ISDatabaseHelper.h"
 #include "ISStyleSheet.h"
 #include "ISFavorites.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
 //-----------------------------------------------------------------------------

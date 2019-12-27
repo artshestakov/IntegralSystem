@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "CGConfiguratorUpdate.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 #include "ISDebug.h"
 #include "ISSystem.h"

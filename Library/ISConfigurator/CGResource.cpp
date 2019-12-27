@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "CGResource.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"

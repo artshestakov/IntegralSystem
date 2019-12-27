@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISAttachFileForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISStorageFileLoader.h"
 //-----------------------------------------------------------------------------

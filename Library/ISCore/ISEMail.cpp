@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISEMail.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------

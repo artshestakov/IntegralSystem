@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISMetaSetting.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISMetaSetting::ISMetaSetting(QObject *parent) : QObject(parent)
 {

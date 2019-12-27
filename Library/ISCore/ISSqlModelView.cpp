@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISSqlModelView.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 #include "ISTrace.h"
 #include "ISBuffer.h"

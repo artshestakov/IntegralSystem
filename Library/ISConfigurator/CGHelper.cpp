@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "CGHelper.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------

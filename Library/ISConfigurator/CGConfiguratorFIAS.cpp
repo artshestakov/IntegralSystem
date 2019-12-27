@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "CGConfiguratorFIAS.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"
 #include "ISCommandLine.h"

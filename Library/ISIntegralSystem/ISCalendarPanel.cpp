@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCalendarPanel.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"

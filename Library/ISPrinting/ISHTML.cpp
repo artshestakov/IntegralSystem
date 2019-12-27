@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISHTML.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISHTML::ISHTML(QFile &FileTemplate)
 {

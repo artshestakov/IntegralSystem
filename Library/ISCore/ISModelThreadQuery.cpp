@@ -2,7 +2,7 @@
 #include "ISModelThreadQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISTrace.h"
 //-----------------------------------------------------------------------------
 ISModelThreadQuery::ISModelThreadQuery(QObject *parent) : QThread(parent)

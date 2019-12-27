@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISModelThreadWorker.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDatabase.h"
 #include "ISCountingTime.h"
 #include "ISDebug.h"

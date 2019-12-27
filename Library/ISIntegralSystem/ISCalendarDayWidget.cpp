@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCalendarDayWidget.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISCalendarDayWidget::ISCalendarDayWidget(QWidget *parent) : QWidget(parent)

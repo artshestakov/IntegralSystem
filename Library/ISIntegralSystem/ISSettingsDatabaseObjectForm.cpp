@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISSettingsDatabaseObjectForm.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISNotifySender.h"
 #include "ISMessageBox.h"

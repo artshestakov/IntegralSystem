@@ -4,7 +4,7 @@
 #include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISControls.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------

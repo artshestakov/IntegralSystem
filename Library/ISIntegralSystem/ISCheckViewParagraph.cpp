@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCheckViewParagraph.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------

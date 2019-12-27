@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISNetwork.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISNetwork::ISNetwork(QObject *parent) : QObject(parent)

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISSearchEdit.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSystem.h"

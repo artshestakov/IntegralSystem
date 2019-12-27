@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISScrollArea.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISStyleSheet.h"
 //-----------------------------------------------------------------------------
 ISScrollArea::ISScrollArea(QWidget *parent) : QScrollArea(parent)

@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISPrintingEntity.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISPrintForm::ISPrintForm(const QString &TableName, QWidget *parent) : ISInterfaceDialogForm(parent)
 {

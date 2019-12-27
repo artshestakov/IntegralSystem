@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISUserEdit.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

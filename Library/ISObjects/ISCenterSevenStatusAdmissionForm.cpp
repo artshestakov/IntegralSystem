@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCenterSevenStatusAdmissionForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISControls.h"

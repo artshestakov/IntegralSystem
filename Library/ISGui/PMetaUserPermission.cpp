@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "PMetaUserPermission.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 PMetaUserPermission::PMetaUserPermission(QObject *parent) : QObject(parent)
 {

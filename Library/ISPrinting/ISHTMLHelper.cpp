@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISHTMLHelper.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISHTMLHelper::ISHTMLHelper()
 {

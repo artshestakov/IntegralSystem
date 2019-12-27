@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISMediaPlayer.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISSettings.h"
 //-----------------------------------------------------------------------------
 ISMediaPlayer::ISMediaPlayer() : QMediaPlayer()

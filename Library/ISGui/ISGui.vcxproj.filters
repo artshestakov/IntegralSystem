@@ -71,6 +71,39 @@
     <Filter Include="ObjectModel">
       <UniqueIdentifier>{5bf8395d-92cb-4521-8225-b362b08f46f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fields">
+      <UniqueIdentifier>{c80aa6d4-0d54-4a6c-a8ea-eeee628bb2fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Other">
+      <UniqueIdentifier>{71057aa2-5020-4162-a55b-e656f52a6d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Boolean">
+      <UniqueIdentifier>{3c687836-7f46-425b-9a1b-63192e0534c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\DateTime">
+      <UniqueIdentifier>{253ee7cc-9590-4e2d-9edd-10b63dfb0178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Double">
+      <UniqueIdentifier>{18643e19-4e68-49a5-81a1-4b5db3da5a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Image">
+      <UniqueIdentifier>{5138514c-90ee-4883-9e1a-007bb064acbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Integer">
+      <UniqueIdentifier>{500901c1-32d3-495b-a0ed-6ccd7902587c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Phone">
+      <UniqueIdentifier>{a48fc279-b5b6-4a59-803d-6cc6cd36e6c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Range">
+      <UniqueIdentifier>{7f9ad588-b412-48d5-8868-c5acdf508677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Text">
+      <UniqueIdentifier>{013cd989-ff83-40e1-b310-b73ee9218d4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields\Other Fields">
+      <UniqueIdentifier>{22e5be36-a5df-4ceb-8f82-7deac4ae8e86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISCreatedObjectsEntity.cpp">
@@ -366,6 +399,120 @@
     </ClCompile>
     <ClCompile Include="ISScreenshot.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFieldEditBase.cpp">
+      <Filter>Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISBIKEdit.cpp">
+      <Filter>Fields\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCheckEdit.cpp">
+      <Filter>Fields\Boolean</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDateEdit.cpp">
+      <Filter>Fields\DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDateTimeEdit.cpp">
+      <Filter>Fields\DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTimeEdit.cpp">
+      <Filter>Fields\DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="ISYearEdit.cpp">
+      <Filter>Fields\DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMonthEdit.cpp">
+      <Filter>Fields\DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDoubleEdit.cpp">
+      <Filter>Fields\Double</Filter>
+    </ClCompile>
+    <ClCompile Include="ISImageEdit.cpp">
+      <Filter>Fields\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ISImageEdit64.cpp">
+      <Filter>Fields\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ISIntegerEdit.cpp">
+      <Filter>Fields\Integer</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPhoneBaseEdit.cpp">
+      <Filter>Fields\Phone</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPhoneLineEdit.cpp">
+      <Filter>Fields\Phone</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRangeDateEdit.cpp">
+      <Filter>Fields\Range</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRangeDateTimeEdit.cpp">
+      <Filter>Fields\Range</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRangeEditBase.cpp">
+      <Filter>Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLineEdit.cpp">
+      <Filter>Fields\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTextEdit.cpp">
+      <Filter>Fields\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="ISBirthdayEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISColorEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISComboEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISEMailEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISICQEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISINNEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISIPAddressEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISKPPEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLanguageEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISOGRNEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISOKPOEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPasswordEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPathEditDir.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPathEditFile.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPercentEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRadioEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISWeekDayEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUuidEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUrlEdit.cpp">
+      <Filter>Fields\Other Fields</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -667,6 +814,120 @@
     </QtMoc>
     <QtMoc Include="ISScreenshot.h">
       <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISFieldEditBase.h">
+      <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISBIKEdit.h">
+      <Filter>Fields\Other</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCheckEdit.h">
+      <Filter>Fields\Boolean</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDateEdit.h">
+      <Filter>Fields\DateTime</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDateTimeEdit.h">
+      <Filter>Fields\DateTime</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTimeEdit.h">
+      <Filter>Fields\DateTime</Filter>
+    </QtMoc>
+    <QtMoc Include="ISYearEdit.h">
+      <Filter>Fields\DateTime</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMonthEdit.h">
+      <Filter>Fields\DateTime</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDoubleEdit.h">
+      <Filter>Fields\Double</Filter>
+    </QtMoc>
+    <QtMoc Include="ISImageEdit.h">
+      <Filter>Fields\Image</Filter>
+    </QtMoc>
+    <QtMoc Include="ISImageEdit64.h">
+      <Filter>Fields\Image</Filter>
+    </QtMoc>
+    <QtMoc Include="ISIntegerEdit.h">
+      <Filter>Fields\Integer</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPhoneBaseEdit.h">
+      <Filter>Fields\Phone</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPhoneLineEdit.h">
+      <Filter>Fields\Phone</Filter>
+    </QtMoc>
+    <QtMoc Include="ISRangeDateEdit.h">
+      <Filter>Fields\Range</Filter>
+    </QtMoc>
+    <QtMoc Include="ISRangeDateTimeEdit.h">
+      <Filter>Fields\Range</Filter>
+    </QtMoc>
+    <QtMoc Include="ISRangeEditBase.h">
+      <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISLineEdit.h">
+      <Filter>Fields\Text</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTextEdit.h">
+      <Filter>Fields\Text</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEMailEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISBirthdayEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISColorEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISComboEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISICQEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISINNEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISIPAddressEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISKPPEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISLanguageEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISOGRNEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISOKPOEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPasswordEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPathEditDir.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPathEditFile.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPercentEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISRadioEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISWeekDayEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUuidEdit.h">
+      <Filter>Fields\Other Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUrlEdit.h">
+      <Filter>Fields\Other Fields</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

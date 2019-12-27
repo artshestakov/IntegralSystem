@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISFileEdit.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISFileDialog.h"
 #include "ISMessageBox.h"

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTelephonySummary.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
 static QString QS_COUNT_RANGE = PREPARE_QUERY("SELECT COUNT(*) "

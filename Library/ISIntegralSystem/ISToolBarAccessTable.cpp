@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISToolBarAccessTable.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISUserRoleEntity.h"

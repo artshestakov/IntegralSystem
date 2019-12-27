@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCoreSMS.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISSMS.h"

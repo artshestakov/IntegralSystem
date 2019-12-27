@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISObjects.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLicense.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------

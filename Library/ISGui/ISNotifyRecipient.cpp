@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISNotifyRecipient.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDatabase.h"
 #include "ISSystem.h"
 #include "ISBuffer.h"

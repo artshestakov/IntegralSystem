@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISDelegateFile.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISDelegateFile::ISDelegateFile(QWidget *parent) : QStyledItemDelegate(parent)

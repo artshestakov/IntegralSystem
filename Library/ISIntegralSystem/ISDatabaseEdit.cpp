@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISDatabaseEdit.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISDatabaseEdit::ISDatabaseEdit(QWidget *parent) : ISComboEdit(parent)
 {

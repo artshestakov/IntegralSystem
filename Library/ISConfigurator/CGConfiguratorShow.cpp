@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "CGConfiguratorShow.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISConfig.h"
 #include "ISDebug.h"
 #include "ISQuery.h"

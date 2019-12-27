@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISMetaSystem.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISMetaSystem::ISMetaSystem(QObject *parent) : QObject(parent)
 {

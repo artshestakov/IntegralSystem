@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTaskDuplicatesTab.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISBuffer.h"
 #include "ISIntegralSystem.h"

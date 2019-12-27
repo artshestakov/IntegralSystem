@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISControls.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"

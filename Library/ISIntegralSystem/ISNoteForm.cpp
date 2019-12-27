@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISCore.h"
 #include "ISQuery.h"
 #include "ISInputDialog.h"

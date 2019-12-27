@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISFieldEditBase.h"
 #include "ISQuery.h"
 #include "ISSystem.h"

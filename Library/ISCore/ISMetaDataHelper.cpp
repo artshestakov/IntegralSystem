@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISMetaDataHelper.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 #include "ISMetaData.h"
 #include "ISSystem.h"

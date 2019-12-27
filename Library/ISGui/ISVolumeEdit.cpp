@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISVolumeEdit.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"

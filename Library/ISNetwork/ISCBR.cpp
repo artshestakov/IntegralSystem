@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCBR.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISCBR::ISCBR(QObject *parent) : QObject(parent)

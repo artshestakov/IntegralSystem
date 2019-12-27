@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTaskNameEdit.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISTaskNameEdit::ISTaskNameEdit(QWidget *parent) : ISLineEdit(parent)
 {

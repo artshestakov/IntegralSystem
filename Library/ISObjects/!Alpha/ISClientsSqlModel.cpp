@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISClientsSqlModel.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISClientsSqlModel::ISClientsSqlModel(PMetaClassTable *meta_table, QObject *parent) : ISSqlModelCore(meta_table, parent)
 {

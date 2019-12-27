@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISUserGroupListForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------

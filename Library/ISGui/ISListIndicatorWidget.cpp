@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISListIndicatorWidget.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISStyleSheet.h"
 //-----------------------------------------------------------------------------
 ISListIndicatorWidget::ISListIndicatorWidget(QWidget *parent) : QWidget(parent)

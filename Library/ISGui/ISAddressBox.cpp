@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISAddressBox.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQLineEdit.h"
 #include "ISPopupDelegate.h"
 #include "ISLocalization.h"

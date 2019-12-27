@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISSortingMetaTable.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISSortingMetaTable::ISSortingMetaTable() : QObject()
 {

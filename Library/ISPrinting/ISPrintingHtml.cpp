@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISPrintingHtml.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISQueryModelHelper.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISQueryModelHelper::ISQueryModelHelper()

@@ -4,8 +4,8 @@
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
-#include "EXDefines.h"
-#include "EXConstants.h"
+#include "ISDefines.h"
+#include "ISConstants.h"
 #include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "

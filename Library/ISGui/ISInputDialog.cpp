@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISInputDialog.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
 #include "ISIntegerEdit.h"

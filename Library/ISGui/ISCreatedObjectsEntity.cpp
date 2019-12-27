@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCreatedObjectsEntity.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"

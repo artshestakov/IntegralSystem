@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISIntegralSystem.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQueryExceptionSyntax.h"
 #include "ISQueryExceptionConnection.h"
 #include "ISMessageBox.h"

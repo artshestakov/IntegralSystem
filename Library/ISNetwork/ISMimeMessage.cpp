@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISMimeMessage.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuotedPrintable.h"
 //-----------------------------------------------------------------------------
 ISMimeMessage::ISMimeMessage(bool createAutoMimeContent) : hEncoding(ISMimePart::_8Bit)

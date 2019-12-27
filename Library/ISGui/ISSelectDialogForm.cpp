@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISSelectDialogForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"

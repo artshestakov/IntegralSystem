@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISDatabaseHelper.h"
 #include "ISLocalization.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------

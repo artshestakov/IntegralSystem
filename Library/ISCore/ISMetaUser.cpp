@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISMetaUser.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISDatabase.h"

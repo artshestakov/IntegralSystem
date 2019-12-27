@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISSettingsForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISAssert.h"
 #include "ISSystem.h"

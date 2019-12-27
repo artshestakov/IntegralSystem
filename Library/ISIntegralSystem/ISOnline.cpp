@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISOnline.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISQueryPool.h"
 //-----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCoreMedTech.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"

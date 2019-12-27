@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "PMetaClassQuery.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 PMetaClassQuery::PMetaClassQuery(QObject *parent) : PMetaClassTable(parent)
 {

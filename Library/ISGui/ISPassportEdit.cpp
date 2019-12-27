@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISPassportEdit.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISServiceButton.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISAuthConnector.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISAuthConnector::ISAuthConnector(QObject *parent) : QTcpSocket(parent)

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISWorkspaceForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISMemoryObjects.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISUserRoleEntity.h"

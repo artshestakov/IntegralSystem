@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "PMetaClassForeign.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 PMetaClassForeign::PMetaClassForeign(QObject *parent) : PMetaClass(parent)
 {

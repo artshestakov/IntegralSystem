@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISOrganizationListForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISUserEdit.h"

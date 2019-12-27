@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISStackedWidget.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISStackedWidget::ISStackedWidget(QWidget *parent) : QStackedWidget(parent)
 {

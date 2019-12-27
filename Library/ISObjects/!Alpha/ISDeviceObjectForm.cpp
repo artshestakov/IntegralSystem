@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISDeviceObjectForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISDeviceObjectForm::ISDeviceObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {

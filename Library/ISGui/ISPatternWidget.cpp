@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISPatternWidget.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
 #include "ISSystem.h"

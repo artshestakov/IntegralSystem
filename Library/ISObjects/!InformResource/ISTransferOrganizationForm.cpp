@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTransferOrganizationForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISButtonDialog.h"
 //-----------------------------------------------------------------------------

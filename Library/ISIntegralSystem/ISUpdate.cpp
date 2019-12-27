@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISUpdate.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"

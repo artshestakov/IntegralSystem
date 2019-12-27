@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISNotifySender.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 #include "ISQuery.h"
 #include "ISDatabase.h"

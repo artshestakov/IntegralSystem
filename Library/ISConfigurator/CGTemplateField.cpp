@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "CGTemplateField.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 #include "ISAssert.h"
 #include "CGSequence.h"

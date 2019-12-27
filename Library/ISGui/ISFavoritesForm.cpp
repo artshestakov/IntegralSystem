@@ -2,7 +2,7 @@
 #include "ISFavoritesForm.h"
 #include "ISLocalization.h"
 #include "ISFavorites.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISQueryModel.h"

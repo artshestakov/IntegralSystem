@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISObjectInterface.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLicense.h"
 //-----------------------------------------------------------------------------
 ISObjectInterface::ISObjectInterface(QObject *parent) : QObject(parent)

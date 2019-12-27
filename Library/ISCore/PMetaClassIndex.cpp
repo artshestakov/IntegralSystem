@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "PMetaClassIndex.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 PMetaClassIndex::PMetaClassIndex(QObject *parent) : QObject(parent)
 {

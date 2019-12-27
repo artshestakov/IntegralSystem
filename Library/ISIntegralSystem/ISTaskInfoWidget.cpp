@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTaskInfoWidget.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISQuery.h"

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "PMetaClassResource.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 PMetaClassResource::PMetaClassResource(QObject *parent) : QObject(parent)

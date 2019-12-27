@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISProgressForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"

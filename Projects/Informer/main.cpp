@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSmtpClient.h"
 #include "ISEmailAddress.h"
 #include "ISMimeMessage.h"

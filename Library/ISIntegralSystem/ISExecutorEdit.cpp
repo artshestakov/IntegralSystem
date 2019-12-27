@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISExecutorEdit.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMetaUser.h"

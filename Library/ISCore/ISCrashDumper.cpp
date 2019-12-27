@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCrashDumper.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDebug.h"
 #include "ISCore.h"
 #include "ISSystem.h"

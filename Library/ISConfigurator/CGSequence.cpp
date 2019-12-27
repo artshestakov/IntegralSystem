@@ -1,9 +1,9 @@
 #include "StdAfx.h"
 #include "CGSequence.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISConfig.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_SEQUENCES = PREPARE_QUERY("SELECT COUNT(*) "
 											"FROM information_schema.sequences t "

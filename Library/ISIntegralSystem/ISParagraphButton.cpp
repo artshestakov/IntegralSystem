@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISParagraphButton.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"
 #include "ISControls.h"

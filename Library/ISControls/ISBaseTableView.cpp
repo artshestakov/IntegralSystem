@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISBaseTableView.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISStyleSheet.h"
 //-----------------------------------------------------------------------------
 ISBaseTableView::ISBaseTableView(QWidget *parent) : QTableView(parent)

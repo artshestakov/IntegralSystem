@@ -1,6 +1,6 @@
 #include "StdAfx.h"
-#include "EXDefines.h"
-#include "EXConstants.h"
+#include "ISDefines.h"
+#include "ISConstants.h"
 #include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISSmtpClient.h"

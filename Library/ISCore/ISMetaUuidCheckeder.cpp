@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISMetaUuidCheckeder.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------

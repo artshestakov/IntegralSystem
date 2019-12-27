@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCoreMail.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISEMail.h"

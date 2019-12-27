@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTaskTabBase.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISTaskTabBase::ISTaskTabBase(int task_id, QTabWidget *parent) : QWidget(parent)
 {

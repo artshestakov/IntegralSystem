@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISExternalToolsForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"

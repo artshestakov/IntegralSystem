@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISNotifyWidgetItem.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISServiceButton.h"

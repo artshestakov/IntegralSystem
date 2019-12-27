@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISPrintMetaReport.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISPrintMetaReport::ISPrintMetaReport(QObject *parent) : QObject(parent)

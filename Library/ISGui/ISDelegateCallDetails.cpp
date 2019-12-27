@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISDelegateCallDetails.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISDelegateCallDetails::ISDelegateCallDetails(QObject *parent) : QStyledItemDelegate(parent)

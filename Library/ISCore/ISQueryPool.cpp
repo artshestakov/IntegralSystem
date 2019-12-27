@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISQueryPool.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------

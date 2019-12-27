@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISLibraryLoader.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 #include "ISDebug.h"
 #include "ISCountingTime.h"

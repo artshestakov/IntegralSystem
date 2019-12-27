@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISMenuFastAccess.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISMetaData.h"

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTaskFileInsertForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
 #include "ISQuery.h"

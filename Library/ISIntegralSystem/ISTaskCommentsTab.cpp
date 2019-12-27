@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISTaskCommentsTab.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISTaskCommentWidget.h"
 #include "ISControls.h"

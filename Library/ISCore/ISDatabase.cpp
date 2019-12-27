@@ -1,11 +1,11 @@
 #include "StdAfx.h"
 #include "ISDatabase.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISConfig.h"
 #include "ISDebug.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
-#include "EXConstants.h"
+#include "ISConstants.h"
 #include "ISCountingTime.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------

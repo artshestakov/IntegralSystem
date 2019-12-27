@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISDiscussionListForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDiscussionObjectForm.h"
 //-----------------------------------------------------------------------------
 ISDiscussionListForm::ISDiscussionListForm(QWidget *parent) : ISListBaseForm("_Discussion", parent)

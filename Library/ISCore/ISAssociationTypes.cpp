@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISAssociationTypes.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISAssociationTypes::ISAssociationTypes()

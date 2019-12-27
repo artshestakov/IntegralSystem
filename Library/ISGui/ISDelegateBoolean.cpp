@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISDelegateBoolean.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISDelegateBoolean::ISDelegateBoolean(QObject *parent) : QStyledItemDelegate(parent)

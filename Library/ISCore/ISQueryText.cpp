@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISQueryText.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISCountingTime.h"

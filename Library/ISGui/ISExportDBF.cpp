@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISExportDBF.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"

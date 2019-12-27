@@ -2,8 +2,8 @@
 #include "ISButtonWeather.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
-#include "EXConstants.h"
+#include "ISDefines.h"
+#include "ISConstants.h"
 #include "ISSettings.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------

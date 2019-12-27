@@ -1,6 +1,6 @@
 #include "StdAfx.h"
-#include "EXDefines.h"
-#include "EXConstants.h"
+#include "ISDefines.h"
+#include "ISConstants.h"
 #include "ISConfig.h"
 #include "ISLocalization.h"
 #include "ISDebug.h"

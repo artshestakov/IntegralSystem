@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISSqlModelCore.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISTrace.h"
 #include "ISQueryModel.h"
 #include "ISQuery.h"

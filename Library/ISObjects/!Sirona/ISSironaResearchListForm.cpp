@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISSironaResearchListForm.h"
-#include "EXDefines.h"
+#include "ISDefines.h"
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
