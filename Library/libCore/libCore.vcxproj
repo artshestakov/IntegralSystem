@@ -68,17 +68,20 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>LIBCORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR)\include\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtRcc>
-      <QtRccFileName>..\Debug\qrc_%(Filename).cpp</QtRccFileName>
+      <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
+      <Compression>level9</Compression>
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -96,17 +99,83 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\PublicSource\System\EXLicense.h" />
+    <ClInclude Include="call_stack.hpp" />
+    <ClInclude Include="ISAssociationTypes.h" />
+    <QtMoc Include="ISAuthConnector.h" />
     <ClInclude Include="ISBuffer.h" />
+    <QtMoc Include="ISCBR.h" />
     <ClInclude Include="ISConstants.h" />
+    <ClInclude Include="ISCore.h" />
+    <ClInclude Include="ISCrashDumper.h" />
+    <QtMoc Include="ISDatabase.h" />
+    <QtMoc Include="ISDatabaseHelper.h" />
+    <ClInclude Include="ISDaDataService.h" />
     <ClInclude Include="ISDefines.h" />
-    <ClInclude Include="ISLicense.h" />
+    <QtMoc Include="ISEMail.h" />
+    <QtMoc Include="ISLicense.h" />
     <ClInclude Include="ISApplicationRunning.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISCommandLine.h" />
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISCountingTime.h" />
+    <QtMoc Include="ISEmailAddress.h" />
+    <ClInclude Include="ISLicenseItem.h" />
     <ClInclude Include="ISLocalization.h" />
+    <QtMoc Include="ISMemoryObjects.h" />
+    <QtMoc Include="ISMetaData.h" />
+    <QtMoc Include="ISMetaDataHelper.h" />
+    <QtMoc Include="ISMetaUuidCheckeder.h" />
+    <QtMoc Include="ISMetaViewQuery.h" />
+    <QtMoc Include="ISSMS.h" />
+    <QtMoc Include="ISMetaUser.h" />
+    <QtMoc Include="ISMetaUserData.h" />
+    <QtMoc Include="ISModelThreadWorker.h" />
+    <QtMoc Include="ISModelThreadQuery.h" />
+    <QtMoc Include="ISMetaNotify.h" />
+    <QtMoc Include="ISNotifySender.h" />
+    <QtMoc Include="ISSettingsDatabase.h" />
+    <QtMoc Include="ISMetaSetting.h" />
+    <QtMoc Include="ISMetaSettingsGroup.h" />
+    <QtMoc Include="ISSettings.h" />
+    <QtMoc Include="ISProtocol.h" />
+    <QtMoc Include="ISOpenWeatherMap.h" />
+    <QtMoc Include="ISNetwork.h" />
+    <QtMoc Include="ISMimeAttachment.h" />
+    <QtMoc Include="ISMimeContentFormatter.h" />
+    <QtMoc Include="ISMimeFile.h" />
+    <QtMoc Include="ISMimeHtml.h" />
+    <ClInclude Include="ISMimeInlineFile.h" />
+    <QtMoc Include="ISMimeMessage.h" />
+    <QtMoc Include="ISMimeMultipart.h" />
+    <QtMoc Include="ISMimePart.h" />
+    <QtMoc Include="ISMimeText.h" />
+    <ClInclude Include="ISQuery.h" />
+    <QtMoc Include="ISQueryModel.h" />
+    <QtMoc Include="ISQueryModelHelper.h" />
+    <QtMoc Include="ISQueryPool.h" />
+    <ClInclude Include="ISQueryPoolObject.h" />
+    <QtMoc Include="ISQueryText.h" />
+    <QtMoc Include="ISSearchModel.h" />
+    <QtMoc Include="ISSqlModelCore.h" />
+    <QtMoc Include="ISSqlModelHelper.h" />
+    <QtMoc Include="ISSqlModelView.h" />
+    <QtMoc Include="ISRestWorker.h" />
+    <QtMoc Include="ISQuotedPrintable.h" />
+    <QtMoc Include="ISSmtpClient.h" />
+    <ClInclude Include="ISStackWalker.h" />
+    <QtMoc Include="ISStorageFileLoader.h" />
     <ClInclude Include="ISStyleSheet.h" />
+    <QtMoc Include="PMetaClass.h" />
+    <QtMoc Include="PMetaClassEscort.h" />
+    <QtMoc Include="PMetaClassField.h" />
+    <QtMoc Include="PMetaClassForeign.h" />
+    <QtMoc Include="PMetaClassFunction.h" />
+    <QtMoc Include="PMetaClassIndex.h" />
+    <QtMoc Include="PMetaClassQuery.h" />
+    <QtMoc Include="PMetaClassResource.h" />
+    <QtMoc Include="PMetaClassTable.h" />
+    <ClInclude Include="StackWalker.h" />
     <ClInclude Include="StdAfx.h" />
     <QtMoc Include="ISDebug.h" />
     <ClInclude Include="ISExceptionAssert.h" />
@@ -130,7 +199,19 @@
     <ClInclude Include="libcore_global.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\PublicSource\System\EXLicense.cpp" />
+    <ClCompile Include="call_stack_gcc.cpp" />
+    <ClCompile Include="ISAssociationTypes.cpp" />
+    <ClCompile Include="ISAuthConnector.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
+    <ClCompile Include="ISCBR.cpp" />
+    <ClCompile Include="ISCore.cpp" />
+    <ClCompile Include="ISCrashDumper.cpp" />
+    <ClCompile Include="ISDaDataService.cpp" />
+    <ClCompile Include="ISDatabase.cpp" />
+    <ClCompile Include="ISDatabaseHelper.cpp" />
+    <ClCompile Include="ISEMail.cpp" />
+    <ClCompile Include="ISEmailAddress.cpp" />
     <ClCompile Include="ISLicense.cpp" />
     <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
@@ -140,23 +221,77 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />
     <ClCompile Include="ISExceptionBase.cpp" />
+    <ClCompile Include="ISLicenseItem.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
+    <ClCompile Include="ISMemoryObjects.cpp" />
+    <ClCompile Include="ISMetaData.cpp" />
+    <ClCompile Include="ISMetaDataHelper.cpp" />
+    <ClCompile Include="ISMetaNotify.cpp" />
+    <ClCompile Include="ISMetaSetting.cpp" />
+    <ClCompile Include="ISMetaSettingsGroup.cpp" />
+    <ClCompile Include="ISMetaUser.cpp" />
+    <ClCompile Include="ISMetaUserData.cpp" />
+    <ClCompile Include="ISMetaUuidCheckeder.cpp" />
+    <ClCompile Include="ISMetaViewQuery.cpp" />
+    <ClCompile Include="ISMimeAttachment.cpp" />
+    <ClCompile Include="ISMimeContentFormatter.cpp" />
+    <ClCompile Include="ISMimeFile.cpp" />
+    <ClCompile Include="ISMimeHtml.cpp" />
+    <ClCompile Include="ISMimeInlineFile.cpp" />
+    <ClCompile Include="ISMimeMessage.cpp" />
+    <ClCompile Include="ISMimeMultipart.cpp" />
+    <ClCompile Include="ISMimePart.cpp" />
+    <ClCompile Include="ISMimeText.cpp" />
+    <ClCompile Include="ISModelThreadQuery.cpp" />
+    <ClCompile Include="ISModelThreadWorker.cpp" />
+    <ClCompile Include="ISNetwork.cpp" />
+    <ClCompile Include="ISNotifySender.cpp" />
+    <ClCompile Include="ISOpenWeatherMap.cpp" />
     <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPhoneNumberParser.cpp" />
     <ClCompile Include="ISProcess.cpp" />
     <ClCompile Include="ISProperty.cpp" />
+    <ClCompile Include="ISProtocol.cpp" />
+    <ClCompile Include="ISQuery.cpp" />
     <ClCompile Include="ISQueryException.cpp" />
     <ClCompile Include="ISQueryExceptionConnection.cpp" />
     <ClCompile Include="ISQueryExceptionSyntax.cpp" />
     <ClCompile Include="ISQueryExceptionTransaction.cpp" />
+    <ClCompile Include="ISQueryModel.cpp" />
+    <ClCompile Include="ISQueryModelHelper.cpp" />
+    <ClCompile Include="ISQueryPool.cpp" />
+    <ClCompile Include="ISQueryPoolObject.cpp" />
+    <ClCompile Include="ISQueryText.cpp" />
+    <ClCompile Include="ISQuotedPrintable.cpp" />
     <ClCompile Include="ISRandom.cpp" />
+    <ClCompile Include="ISRestWorker.cpp" />
+    <ClCompile Include="ISSearchModel.cpp" />
+    <ClCompile Include="ISSettings.cpp" />
+    <ClCompile Include="ISSettingsDatabase.cpp" />
+    <ClCompile Include="ISSMS.cpp" />
+    <ClCompile Include="ISSmtpClient.cpp" />
+    <ClCompile Include="ISSqlModelCore.cpp" />
+    <ClCompile Include="ISSqlModelHelper.cpp" />
+    <ClCompile Include="ISSqlModelView.cpp" />
+    <ClCompile Include="ISStackWalker.cpp" />
+    <ClCompile Include="ISStorageFileLoader.cpp" />
     <ClCompile Include="ISStyleSheet.cpp" />
     <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="ISTypes.cpp" />
     <ClCompile Include="ISUuid.cpp" />
     <ClCompile Include="ISVersion.cpp" />
+    <ClCompile Include="PMetaClass.cpp" />
+    <ClCompile Include="PMetaClassEscort.cpp" />
+    <ClCompile Include="PMetaClassField.cpp" />
+    <ClCompile Include="PMetaClassForeign.cpp" />
+    <ClCompile Include="PMetaClassFunction.cpp" />
+    <ClCompile Include="PMetaClassIndex.cpp" />
+    <ClCompile Include="PMetaClassQuery.cpp" />
+    <ClCompile Include="PMetaClassResource.cpp" />
+    <ClCompile Include="PMetaClassTable.cpp" />
+    <ClCompile Include="StackWalker.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

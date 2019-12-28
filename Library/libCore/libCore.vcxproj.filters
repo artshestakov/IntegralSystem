@@ -16,6 +16,51 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{6fe865a6-b4fb-44bd-bb0c-62466bef6537}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MetaData">
+      <UniqueIdentifier>{78ba43fb-8b8d-455d-bc6d-8dae21c67c09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StackTrace">
+      <UniqueIdentifier>{dab5bffd-7827-4e26-90f3-9b72cb81d731}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MetaUser">
+      <UniqueIdentifier>{1e53ab4d-3b6d-4fff-9d97-772c608efd54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelThread">
+      <UniqueIdentifier>{5f551f3a-8ea2-4057-a6e6-f697c2f7aee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Notify">
+      <UniqueIdentifier>{26655469-7ee1-4f37-a840-d43a09db2971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{7914a2bf-97d9-42fa-9c89-6589db4cc6ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{30cb1390-b9d7-4b91-88a3-6fd0b431f42f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{11485b97-b62a-4434-80d0-911d9619a00b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="License">
+      <UniqueIdentifier>{d6ddf5cf-e9c2-4736-9b99-ccbf7829dd11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{935eefa7-228f-4b7a-9750-9469480ea5c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{6f751243-38a1-499c-aacd-d094d88ce358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\CBR">
+      <UniqueIdentifier>{e4972d1f-4f76-4247-9d45-611492e6d6e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\DaData">
+      <UniqueIdentifier>{41a1e551-654b-4cc3-afd9-36d243506f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\OpenWeatherMap">
+      <UniqueIdentifier>{dae7ccdc-7a8d-4366-9424-6006f1a0339e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\SMTP">
+      <UniqueIdentifier>{75e363fa-0d60-4bfa-bef9-be5089080fc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISApplicationRunning.h">
@@ -90,9 +135,6 @@
     <ClInclude Include="ISDefines.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISLicense.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="libcore_global.h" />
     <ClInclude Include="ISBuffer.h">
       <Filter>Resources</Filter>
@@ -102,6 +144,42 @@
     </ClInclude>
     <ClInclude Include="ISStyleSheet.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCrashDumper.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCore.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISAssociationTypes.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="call_stack.hpp">
+      <Filter>StackTrace</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStackWalker.h">
+      <Filter>StackTrace</Filter>
+    </ClInclude>
+    <ClInclude Include="StackWalker.h">
+      <Filter>StackTrace</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQuery.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryPoolObject.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLicenseItem.h">
+      <Filter>License</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PublicSource\System\EXLicense.h">
+      <Filter>License</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDaDataService.h">
+      <Filter>Network\DaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeInlineFile.h">
+      <Filter>Network\SMTP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +255,6 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISLicense.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISBuffer.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
@@ -188,6 +263,207 @@
     </ClCompile>
     <ClCompile Include="ISStyleSheet.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCrashDumper.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCore.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMemoryObjects.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAssociationTypes.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaData.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaDataHelper.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaUuidCheckeder.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaViewQuery.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClass.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClassEscort.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClassField.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClassForeign.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClassFunction.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClassIndex.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClassQuery.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClassResource.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="PMetaClassTable.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISEMail.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSMS.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="call_stack_gcc.cpp">
+      <Filter>StackTrace</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStackWalker.cpp">
+      <Filter>StackTrace</Filter>
+    </ClCompile>
+    <ClCompile Include="StackWalker.cpp">
+      <Filter>StackTrace</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaUser.cpp">
+      <Filter>MetaUser</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaUserData.cpp">
+      <Filter>MetaUser</Filter>
+    </ClCompile>
+    <ClCompile Include="ISModelThreadQuery.cpp">
+      <Filter>ModelThread</Filter>
+    </ClCompile>
+    <ClCompile Include="ISModelThreadWorker.cpp">
+      <Filter>ModelThread</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaNotify.cpp">
+      <Filter>Notify</Filter>
+    </ClCompile>
+    <ClCompile Include="ISNotifySender.cpp">
+      <Filter>Notify</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaSetting.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaSettingsGroup.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettings.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingsDatabase.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProtocol.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStorageFileLoader.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDatabase.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDatabaseHelper.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQuery.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryModel.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryModelHelper.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryPool.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryPoolObject.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryText.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSearchModel.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLicenseItem.cpp">
+      <Filter>License</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLicense.cpp">
+      <Filter>License</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PublicSource\System\EXLicense.cpp">
+      <Filter>License</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSqlModelCore.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSqlModelHelper.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSqlModelView.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCBR.cpp">
+      <Filter>Network\CBR</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDaDataService.cpp">
+      <Filter>Network\DaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISOpenWeatherMap.cpp">
+      <Filter>Network\OpenWeatherMap</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAuthConnector.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ISNetwork.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRestWorker.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQuotedPrintable.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISEmailAddress.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeAttachment.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeContentFormatter.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeFile.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeHtml.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeInlineFile.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeMessage.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeMultipart.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimePart.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeText.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSmtpClient.cpp">
+      <Filter>Network\SMTP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +475,171 @@
     </QtMoc>
     <QtMoc Include="ISProcess.h">
       <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMemoryObjects.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaData.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaDataHelper.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaUuidCheckeder.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaViewQuery.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClass.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClassEscort.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClassField.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClassForeign.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClassFunction.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClassIndex.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClassQuery.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClassResource.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="PMetaClassTable.h">
+      <Filter>MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEMail.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSMS.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaUser.h">
+      <Filter>MetaUser</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaUserData.h">
+      <Filter>MetaUser</Filter>
+    </QtMoc>
+    <QtMoc Include="ISModelThreadWorker.h">
+      <Filter>ModelThread</Filter>
+    </QtMoc>
+    <QtMoc Include="ISModelThreadQuery.h">
+      <Filter>ModelThread</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaNotify.h">
+      <Filter>Notify</Filter>
+    </QtMoc>
+    <QtMoc Include="ISNotifySender.h">
+      <Filter>Notify</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingsDatabase.h">
+      <Filter>Settings</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaSetting.h">
+      <Filter>Settings</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMetaSettingsGroup.h">
+      <Filter>Settings</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettings.h">
+      <Filter>Settings</Filter>
+    </QtMoc>
+    <QtMoc Include="ISProtocol.h">
+      <Filter>Other</Filter>
+    </QtMoc>
+    <QtMoc Include="ISStorageFileLoader.h">
+      <Filter>Other</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDatabase.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDatabaseHelper.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQueryModel.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQueryModelHelper.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQueryPool.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQueryText.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSearchModel.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSqlModelCore.h">
+      <Filter>Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSqlModelHelper.h">
+      <Filter>Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSqlModelView.h">
+      <Filter>Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ISLicense.h">
+      <Filter>License</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCBR.h">
+      <Filter>Network\CBR</Filter>
+    </QtMoc>
+    <QtMoc Include="ISOpenWeatherMap.h">
+      <Filter>Network\OpenWeatherMap</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAuthConnector.h">
+      <Filter>Network</Filter>
+    </QtMoc>
+    <QtMoc Include="ISNetwork.h">
+      <Filter>Network</Filter>
+    </QtMoc>
+    <QtMoc Include="ISRestWorker.h">
+      <Filter>Network</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQuotedPrintable.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEmailAddress.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMimeAttachment.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMimeContentFormatter.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMimeFile.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMimeHtml.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMimeMessage.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMimeMultipart.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMimePart.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMimeText.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSmtpClient.h">
+      <Filter>Network\SMTP</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
