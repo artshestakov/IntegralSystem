@@ -67,15 +67,15 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>LIBCORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;LIBCORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\QtPrintSupport;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;Qt5PrintSupportd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtRcc>
       <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
@@ -110,7 +110,6 @@
     <ClInclude Include="ISCrashDumper.h" />
     <QtMoc Include="ISDatabase.h" />
     <QtMoc Include="ISDatabaseHelper.h" />
-    <ClInclude Include="ISDaDataService.h" />
     <ClInclude Include="ISDefines.h" />
     <QtMoc Include="ISEMail.h" />
     <QtMoc Include="ISLicense.h" />
@@ -120,6 +119,9 @@
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISCountingTime.h" />
     <QtMoc Include="ISEmailAddress.h" />
+    <ClInclude Include="ISHTML.h" />
+    <ClInclude Include="ISHTMLHelper.h" />
+    <ClInclude Include="ISHtmlQuery.h" />
     <ClInclude Include="ISLicenseItem.h" />
     <ClInclude Include="ISLocalization.h" />
     <QtMoc Include="ISMemoryObjects.h" />
@@ -150,6 +152,13 @@
     <QtMoc Include="ISMimeMultipart.h" />
     <QtMoc Include="ISMimePart.h" />
     <QtMoc Include="ISMimeText.h" />
+    <ClInclude Include="ISPrintingBase.h" />
+    <ClInclude Include="ISPrintingEntity.h" />
+    <ClInclude Include="ISPrintingHtml.h" />
+    <ClInclude Include="ISPrintingWord.h" />
+    <ClInclude Include="ISPrintMetaReport.h" />
+    <ClInclude Include="ISPrintMetaReportField.h" />
+    <ClInclude Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISQuery.h" />
     <QtMoc Include="ISQueryModel.h" />
     <QtMoc Include="ISQueryModelHelper.h" />
@@ -160,7 +169,6 @@
     <QtMoc Include="ISSqlModelCore.h" />
     <QtMoc Include="ISSqlModelHelper.h" />
     <QtMoc Include="ISSqlModelView.h" />
-    <QtMoc Include="ISRestWorker.h" />
     <QtMoc Include="ISQuotedPrintable.h" />
     <QtMoc Include="ISSmtpClient.h" />
     <ClInclude Include="ISStackWalker.h" />
@@ -207,11 +215,13 @@
     <ClCompile Include="ISCBR.cpp" />
     <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
-    <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISEMail.cpp" />
     <ClCompile Include="ISEmailAddress.cpp" />
+    <ClCompile Include="ISHTML.cpp" />
+    <ClCompile Include="ISHTMLHelper.cpp" />
+    <ClCompile Include="ISHtmlQuery.cpp" />
     <ClCompile Include="ISLicense.cpp" />
     <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
@@ -250,6 +260,13 @@
     <ClCompile Include="ISOpenWeatherMap.cpp" />
     <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPhoneNumberParser.cpp" />
+    <ClCompile Include="ISPrintingBase.cpp" />
+    <ClCompile Include="ISPrintingEntity.cpp" />
+    <ClCompile Include="ISPrintingHtml.cpp" />
+    <ClCompile Include="ISPrintingWord.cpp" />
+    <ClCompile Include="ISPrintMetaReport.cpp" />
+    <ClCompile Include="ISPrintMetaReportField.cpp" />
+    <ClCompile Include="ISPrintPreviewDialog.cpp" />
     <ClCompile Include="ISProcess.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocol.cpp" />
@@ -265,7 +282,6 @@
     <ClCompile Include="ISQueryText.cpp" />
     <ClCompile Include="ISQuotedPrintable.cpp" />
     <ClCompile Include="ISRandom.cpp" />
-    <ClCompile Include="ISRestWorker.cpp" />
     <ClCompile Include="ISSearchModel.cpp" />
     <ClCompile Include="ISSettings.cpp" />
     <ClCompile Include="ISSettingsDatabase.cpp" />

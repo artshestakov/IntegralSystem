@@ -228,7 +228,7 @@ public:
 				// ".local" file does not exist, so we can try to load the dbghelp.dll from the "Debugging Tools for Windows"
 				wchar_t wszTemp[4096];
 				mbstowcs(wszTemp, szTemp, strlen(szTemp + 1));
-				if (GetEnvironmentVariable("ProgramFiles", szTemp, 4096) > 0)
+				if (GetEnvironmentVariableW(L"ProgramFiles", wszTemp, 4096) > 0)
 				{
 					strcat(szTemp, "\\Debugging Tools for Windows\\dbghelp.dll");
 					// now check if the file exists:
@@ -238,7 +238,7 @@ public:
 					}
 				}
 				// Still not found? Then try to load the 64-Bit version:
-				if ((m_hDbhHelp == NULL) && (GetEnvironmentVariable("ProgramFiles", szTemp, 4096) > 0))
+				if ((m_hDbhHelp == NULL) && (GetEnvironmentVariableW(L"ProgramFiles", wszTemp, 4096) > 0))
 				{
 					strcat(szTemp, "\\Debugging Tools for Windows 64-Bit\\dbghelp.dll");
 					if (GetFileAttributesA(szTemp) != INVALID_FILE_ATTRIBUTES)
@@ -249,7 +249,7 @@ public:
 			}
 		}
 		if (m_hDbhHelp == NULL)  // if not already loaded, try to load a default-one
-			m_hDbhHelp = LoadLibrary("dbghelp.dll");
+			m_hDbhHelp = LoadLibraryW(L"dbghelp.dll");
 		if (m_hDbhHelp == NULL)
 			return FALSE;
 		pSI = (tSI)GetProcAddress(m_hDbhHelp, "SymInitialize");
@@ -537,7 +537,7 @@ private:
 		const SIZE_T TTBUFLEN = 8096;
 		int cnt = 0;
 
-		hPsapi = LoadLibrary("psapi.dll");
+		hPsapi = LoadLibraryW(L"psapi.dll");
 		if (hPsapi == NULL)
 			return FALSE;
 

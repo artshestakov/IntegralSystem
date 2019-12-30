@@ -30,7 +30,7 @@ void ISRestWorker::sendRequest(const QString &apiStr, ISRestWorker::QueryType ty
 {
 	QNetworkRequest request = createRequest(apiStr);
 
-	QNetworkReply *reply;
+	QNetworkReply *reply = nullptr;
 	switch (type)
 	{
 	case QueryType::POST:
@@ -66,16 +66,16 @@ void ISRestWorker::sendRequest(const QString &apiStr, ISRestWorker::QueryType ty
 
 	connect(reply, &QNetworkReply::finished, [=]
 	{
-		QJsonObject obj = parseReply(reply);
+		QJsonObject JsonObject = parseReply(reply);
 
 		if (onFinishRequest(reply))
 		{
-			emit Success(obj);
+			emit Success(JsonObject);
 		}
 		else
 		{
-			emit Error(obj);
-			handleQtNetworkErrors(reply, obj);
+			emit Error(JsonObject);
+			handleQtNetworkErrors(reply, JsonObject);
 		}
 
 		reply->close();

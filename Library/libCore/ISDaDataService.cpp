@@ -26,12 +26,10 @@ const QVariantMap& ISDaDataService::GetData() const
 void ISDaDataService::SearchFromINN(const QString &INN)
 {
 	QVariantMap VariantMap;
-
 	VariantMap.insert("Content-Type", "appliaction/json");
 	VariantMap.insert("Accept", "appliaction/json");
 	VariantMap.insert("Authorization", QString("Token %1").arg(RestWorker->GetToken()));
 	VariantMap.insert("query", INN);
-
 	RestWorker->sendRequest("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party", ISRestWorker::QueryType::POST, VariantMap);
 }
 //-----------------------------------------------------------------------------
