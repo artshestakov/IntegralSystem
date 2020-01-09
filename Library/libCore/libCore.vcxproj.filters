@@ -190,36 +190,6 @@
     <ClInclude Include="ISMimeInlineFile.h">
       <Filter>Network\SMTP</Filter>
     </ClInclude>
-    <ClInclude Include="ISHTML.h">
-      <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISHTMLHelper.h">
-      <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISHtmlQuery.h">
-      <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintMetaReport.h">
-      <Filter>Printing\MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintMetaReportField.h">
-      <Filter>Printing\MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintingBase.h">
-      <Filter>Printing</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintingEntity.h">
-      <Filter>Printing</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintingHtml.h">
-      <Filter>Printing</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintPreviewDialog.h">
-      <Filter>Printing</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintingWord.h">
-      <Filter>Printing\Word</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -513,6 +483,9 @@
     <ClCompile Include="ISPrintMetaReportField.cpp">
       <Filter>Printing\MetaData</Filter>
     </ClCompile>
+    <ClCompile Include="ISPrintingWord.cpp">
+      <Filter>Printing\Word</Filter>
+    </ClCompile>
     <ClCompile Include="ISPrintingBase.cpp">
       <Filter>Printing</Filter>
     </ClCompile>
@@ -524,9 +497,6 @@
     </ClCompile>
     <ClCompile Include="ISPrintPreviewDialog.cpp">
       <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintingWord.cpp">
-      <Filter>Printing\Word</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -700,6 +670,36 @@
     </QtMoc>
     <QtMoc Include="ISSmtpClient.h">
       <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISHTML.h">
+      <Filter>Printing\HTML</Filter>
+    </QtMoc>
+    <QtMoc Include="ISHTMLHelper.h">
+      <Filter>Printing\HTML</Filter>
+    </QtMoc>
+    <QtMoc Include="ISHtmlQuery.h">
+      <Filter>Printing\HTML</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintMetaReport.h">
+      <Filter>Printing\MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintMetaReportField.h">
+      <Filter>Printing\MetaData</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintingWord.h">
+      <Filter>Printing\Word</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintingBase.h">
+      <Filter>Printing</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintingEntity.h">
+      <Filter>Printing</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintingHtml.h">
+      <Filter>Printing</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintPreviewDialog.h">
+      <Filter>Printing</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

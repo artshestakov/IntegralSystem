@@ -68,14 +68,14 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;LIBCORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\QtPrintSupport;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\;$(QTDIR)\include\ActiveQt\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\QtPrintSupport;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;Qt5PrintSupportd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5AxBased.lib;Qt5AxContainerd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;Qt5PrintSupportd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtRcc>
       <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
@@ -119,9 +119,9 @@
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISCountingTime.h" />
     <QtMoc Include="ISEmailAddress.h" />
-    <ClInclude Include="ISHTML.h" />
-    <ClInclude Include="ISHTMLHelper.h" />
-    <ClInclude Include="ISHtmlQuery.h" />
+    <QtMoc Include="ISHTML.h" />
+    <QtMoc Include="ISHTMLHelper.h" />
+    <QtMoc Include="ISHtmlQuery.h" />
     <ClInclude Include="ISLicenseItem.h" />
     <ClInclude Include="ISLocalization.h" />
     <QtMoc Include="ISMemoryObjects.h" />
@@ -152,13 +152,13 @@
     <QtMoc Include="ISMimeMultipart.h" />
     <QtMoc Include="ISMimePart.h" />
     <QtMoc Include="ISMimeText.h" />
-    <ClInclude Include="ISPrintingBase.h" />
-    <ClInclude Include="ISPrintingEntity.h" />
-    <ClInclude Include="ISPrintingHtml.h" />
-    <ClInclude Include="ISPrintingWord.h" />
-    <ClInclude Include="ISPrintMetaReport.h" />
-    <ClInclude Include="ISPrintMetaReportField.h" />
-    <ClInclude Include="ISPrintPreviewDialog.h" />
+    <QtMoc Include="ISPrintMetaReport.h" />
+    <QtMoc Include="ISPrintMetaReportField.h" />
+    <QtMoc Include="ISPrintingWord.h" />
+    <QtMoc Include="ISPrintingBase.h" />
+    <QtMoc Include="ISPrintingEntity.h" />
+    <QtMoc Include="ISPrintingHtml.h" />
+    <QtMoc Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISQuery.h" />
     <QtMoc Include="ISQueryModel.h" />
     <QtMoc Include="ISQueryModelHelper.h" />
