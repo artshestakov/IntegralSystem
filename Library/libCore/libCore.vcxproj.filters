@@ -498,6 +498,12 @@
     <ClCompile Include="ISPrintPreviewDialog.cpp">
       <Filter>Printing</Filter>
     </ClCompile>
+    <ClCompile Include="ISDaDataService.cpp">
+      <Filter>Network\DaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRestWorker.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISDebug.h">
@@ -700,6 +706,12 @@
     </QtMoc>
     <QtMoc Include="ISPrintPreviewDialog.h">
       <Filter>Printing</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDaDataService.h">
+      <Filter>Network\DaData</Filter>
+    </QtMoc>
+    <QtMoc Include="ISRestWorker.h">
+      <Filter>Network</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

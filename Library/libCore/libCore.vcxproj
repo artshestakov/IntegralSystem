@@ -30,6 +30,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
@@ -110,6 +111,7 @@
     <ClInclude Include="ISCrashDumper.h" />
     <QtMoc Include="ISDatabase.h" />
     <QtMoc Include="ISDatabaseHelper.h" />
+    <QtMoc Include="ISDaDataService.h" />
     <ClInclude Include="ISDefines.h" />
     <QtMoc Include="ISEMail.h" />
     <QtMoc Include="ISLicense.h" />
@@ -171,6 +173,7 @@
     <QtMoc Include="ISSqlModelView.h" />
     <QtMoc Include="ISQuotedPrintable.h" />
     <QtMoc Include="ISSmtpClient.h" />
+    <QtMoc Include="ISRestWorker.h" />
     <ClInclude Include="ISStackWalker.h" />
     <QtMoc Include="ISStorageFileLoader.h" />
     <ClInclude Include="ISStyleSheet.h" />
@@ -215,6 +218,7 @@
     <ClCompile Include="ISCBR.cpp" />
     <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
+    <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISEMail.cpp" />
@@ -282,6 +286,7 @@
     <ClCompile Include="ISQueryText.cpp" />
     <ClCompile Include="ISQuotedPrintable.cpp" />
     <ClCompile Include="ISRandom.cpp" />
+    <ClCompile Include="ISRestWorker.cpp" />
     <ClCompile Include="ISSearchModel.cpp" />
     <ClCompile Include="ISSettings.cpp" />
     <ClCompile Include="ISSettingsDatabase.cpp" />
