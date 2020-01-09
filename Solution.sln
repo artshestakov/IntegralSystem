@@ -37,6 +37,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{EE400866
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegralSystem", "Projects\IntegralSystem\IntegralSystem.vcxproj", "{E756AC44-1984-42F7-9A0B-BC1FA34A6304}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1419D79F-D3DB-43C6-9685-A8CBABF21C12} = {1419D79F-D3DB-43C6-9685-A8CBABF21C12}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{33F902D5-EB73-4A94-85ED-91278C95C687}"
 	ProjectSection(SolutionItems) = preProject

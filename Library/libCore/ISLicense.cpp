@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "ISLicense.h"
 #include "ISDefines.h"
-#include "EXLicense.h"
 #include "ISSystem.h"
 #include "ISAssert.h"
 #include "ISQuery.h"

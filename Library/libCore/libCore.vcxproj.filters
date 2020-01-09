@@ -184,11 +184,17 @@
     <ClInclude Include="ISLicenseItem.h">
       <Filter>License</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\PublicSource\System\EXLicense.h">
-      <Filter>License</Filter>
-    </ClInclude>
     <ClInclude Include="ISMimeInlineFile.h">
       <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="EXConstants.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="EXDefines.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="EXLicense.h">
+      <Filter>License</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -408,9 +414,6 @@
     <ClCompile Include="ISLicense.cpp">
       <Filter>License</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\PublicSource\System\EXLicense.cpp">
-      <Filter>License</Filter>
-    </ClCompile>
     <ClCompile Include="ISSqlModelCore.cpp">
       <Filter>Model</Filter>
     </ClCompile>
@@ -503,6 +506,9 @@
     </ClCompile>
     <ClCompile Include="ISRestWorker.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="EXLicense.cpp">
+      <Filter>License</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
