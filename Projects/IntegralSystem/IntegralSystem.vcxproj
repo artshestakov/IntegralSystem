@@ -92,7 +92,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_NETWORK_LIB;QT_MULTIMEDIA_LIB;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISIntegralSystem;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISObjects;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\libCore;$(ProjectDir)..\..\Library\libGui;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -101,11 +101,11 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
-      <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
-      <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
-      <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
       <WarningLevel>Level2</WarningLevel>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeaderOutputFile>
@@ -117,7 +117,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;ISControls.lib;ISCore.lib;ISFields.lib;ISGui.lib;ISIntegralSystem.lib;ISNetwork.lib;ISObjects.lib;ISPrinting.lib;ISResources.lib;ISSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;libCore.lib;libGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>
       </Version>
       <ShowProgress>
@@ -155,11 +155,11 @@ ECHO New build number: %BUILD_NUMBER%</Command>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AssemblerListingLocation>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
-      <ObjectFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
-      <ProgramDataBaseFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
-      <BrowseInformationFile>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Library\ISObjects;$(SolutionDir)Library\ISFields;$(SolutionDir)Library\ISControls;$(SolutionDir)Library\ISIntegralSystem;$(SolutionDir)Projects\IntegralSystem\!CommonControls;$(SolutionDir)Projects\IntegralSystem\!CommonForms;$(SolutionDir)Projects\IntegralSystem\!Controls;$(SolutionDir)Projects\IntegralSystem\!Controls\DatabaseStatistics;$(SolutionDir)Projects\IntegralSystem\!Controls\MainSystemsBar;$(SolutionDir)Projects\IntegralSystem\!Controls\Settings;$(SolutionDir)Projects\IntegralSystem\!Controls\TabNavigationMain;$(SolutionDir)Projects\IntegralSystem\!Controls\UserRole;$(SolutionDir)Projects\IntegralSystem\!Forms;$(SolutionDir)Projects\IntegralSystem\!Forms\Settings;$(SolutionDir)Projects\IntegralSystem\!Objects\Autoservice;$(SolutionDir)Projects\IntegralSystem\!Objects\Berta;$(SolutionDir)Projects\IntegralSystem\!Objects\Expert;$(SolutionDir)Projects\IntegralSystem\!Objects\Milex;$(SolutionDir)Projects\IntegralSystem\!Objects\Starters;$(SolutionDir)Projects\IntegralSystem\!System;$(SolutionDir)Projects\IntegralSystem\!Version;$(SolutionDir)Library\ISAutoInput;$(SolutionDir)Library\ISBuffer;$(SolutionDir)Library\ISCommunicationModules;$(SolutionDir)Library\ISConfig;$(SolutionDir)Library\ISConverter;$(SolutionDir)Library\ISDateTime;$(SolutionDir)Library\ISDebug;$(SolutionDir)Library\ISExchangeRates;$(SolutionDir)Library\ISExport;$(SolutionDir)Library\ISFavorites;$(SolutionDir)Library\ISInterface;$(SolutionDir)Library\ISHTML;$(SolutionDir)Library\ISInterfaceGUI;$(SolutionDir)Library\ISLicense;$(SolutionDir)Library\ISLocalization;$(SolutionDir)Library\ISMath;$(SolutionDir)Library\ISMetaData;$(SolutionDir)Library\ISMetaSystems;$(SolutionDir)Library\ISMetaUser;$(SolutionDir)Library\ISMultimedia;$(SolutionDir)Library\ISNamespace;$(SolutionDir)Library\ISNetwork;$(SolutionDir)Library\ISPassword;$(SolutionDir)Library\ISPostgres;$(SolutionDir)Library\ISPrinting;$(SolutionDir)Library\ISProtocol;$(SolutionDir)Library\ISResources;$(SolutionDir)Library\ISSearch;$(SolutionDir)Library\ISSMS;$(SolutionDir)Library\ISSmtpClient;$(SolutionDir)Library\ISSettings;$(SolutionDir)Library\ISSettingsDatabase;$(SolutionDir)Library\ISSystem;$(SolutionDir)Library\ISSortingBuffer;$(SolutionDir)Library\ISStyleSheet;$(SolutionDir)Library\ISThread;$(SolutionDir)Library\ISTypes;$(SolutionDir)Library\ISCore;$(SolutionDir)Library\ISUpdate;$(SolutionDir)Library\ISUserRole;$(SolutionDir)PublicSource\System;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWebSockets;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);.;$(QTDIR)\include\QtMultimedia;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
@@ -198,13 +198,13 @@ ECHO New build number: %BUILD_NUMBER%</Command>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISControls;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISFields;$(ProjectDir)..\..\Library\ISGui;$(ProjectDir)..\..\Library\ISIntegralSystem;$(ProjectDir)..\..\Library\ISNetwork;$(ProjectDir)..\..\Library\ISObjects;$(ProjectDir)..\..\Library\ISPrinting;$(ProjectDir)..\..\Library\ISResources;$(ProjectDir)..\..\Library\ISSystem;$(ProjectDir)..\..\PublicSource\System;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\libCore;$(ProjectDir)..\..\Library\libGui;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level2</WarningLevel>
-      <AssemblerListingLocation>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
-      <ObjectFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
-      <ProgramDataBaseFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
-      <BrowseInformationFile>$(ProjectDir)..\..\Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -217,7 +217,7 @@ ECHO New build number: %BUILD_NUMBER%</Command>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;ISControls.lib;ISCore.lib;ISFields.lib;ISGui.lib;ISIntegralSystem.lib;ISNetwork.lib;ISObjects.lib;ISPrinting.lib;ISResources.lib;ISSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;libCore.lib;libGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreLinkEvent>
       <Command>
@@ -236,11 +236,11 @@ ECHO New build number: %BUILD_NUMBER%</Command>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AssemblerListingLocation>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</AssemblerListingLocation>
-      <ObjectFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</ObjectFileName>
-      <ProgramDataBaseFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</XMLDocumentationFileName>
-      <BrowseInformationFile>$(SolutionDir)Build\$(ProjectName)\$(Configuration)_$(Platform)\</BrowseInformationFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
