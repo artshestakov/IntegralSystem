@@ -14,3 +14,4 @@
 *.pch
 *.tlog
 *.props
+*moc_*.cpp
