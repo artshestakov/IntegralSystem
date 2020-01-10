@@ -3,8 +3,8 @@
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
 #ifdef LIBGUI_LIB
-#define LIBGUI_EXPORT Q_DECL_EXPORT
+#define LIBGUI_EXPORT// Q_DECL_EXPORT
 #else
-#define LIBGUI_EXPORT Q_DECL_IMPORT
+#define LIBGUI_EXPORT// Q_DECL_IMPORT
 #endif
 //-----------------------------------------------------------------------------

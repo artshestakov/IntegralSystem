@@ -3,8 +3,8 @@
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
 #ifdef LIBCORE_LIB
-#define LIBCORE_EXPORT Q_DECL_EXPORT
+#define LIBCORE_EXPORT// Q_DECL_EXPORT
 #else
-#define LIBCORE_EXPORT Q_DECL_IMPORT
+#define LIBCORE_EXPORT// Q_DECL_IMPORT
 #endif
 //-----------------------------------------------------------------------------
