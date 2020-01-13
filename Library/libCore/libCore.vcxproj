@@ -87,6 +87,10 @@
       <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
       <Compression>level9</Compression>
     </QtRcc>
+    <Lib>
+      <AdditionalDependencies>qtmaind.lib;Qt5AxBased.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
