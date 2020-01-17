@@ -10,10 +10,10 @@ public:
 	ISASSERT();
 	virtual ~ISASSERT();
 
-	static void Assert(QObject *Object, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &File);
-	static void Assert(bool Boolean, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &File);
-	static void Assert(int Integer, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &File);
-	static void Assert(QString String, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &File);
+	static void Assert(QObject *Object, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);
+	static void Assert(bool Boolean, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);
+	static void Assert(int Integer, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);
+	static void Assert(QString String, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);
 
 protected:
 	static void ShowAssert(const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &File);

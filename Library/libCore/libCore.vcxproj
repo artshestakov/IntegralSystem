@@ -88,8 +88,10 @@
       <Compression>level9</Compression>
     </QtRcc>
     <Lib>
-      <AdditionalDependencies>qtmaind.lib;Qt5AxBased.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -228,7 +230,6 @@
     <ClInclude Include="libcore_global.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="call_stack_gcc.cpp" />
     <ClCompile Include="EXLicense.cpp" />
     <ClCompile Include="ISAssociationTypes.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />

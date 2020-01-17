@@ -336,9 +336,6 @@
     <ClCompile Include="ISSMS.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="call_stack_gcc.cpp">
-      <Filter>StackTrace</Filter>
-    </ClCompile>
     <ClCompile Include="ISStackWalker.cpp">
       <Filter>StackTrace</Filter>
     </ClCompile>

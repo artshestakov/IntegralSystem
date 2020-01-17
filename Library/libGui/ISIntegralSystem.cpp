@@ -22,10 +22,12 @@
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
+	Q_INIT_RESOURCE(Resources);
+
 	ISDebug::ShowString("Starting system... Version: " + ISVersion::GetInstance().GetVersion());
 
-	ISLibraryLoader LibraryLoader;
-	LibraryLoader.Load();
+	//ISLibraryLoader LibraryLoader;
+	//LibraryLoader.Load();
 
 	ISCrashDumper::Startup();
 

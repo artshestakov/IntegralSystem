@@ -19,16 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localization", "Localizatio
 		Resources\Localization\Objects.lang = Resources\Localization\Objects.lang
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublicSources", "PublicSources", "{F49857C4-04A0-470B-B2F8-BB951894D08A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "System", "System", "{BB2EA95D-3392-46A8-B395-110BB34F32EC}"
-	ProjectSection(SolutionItems) = preProject
-		PublicSource\System\EXConstants.h = PublicSource\System\EXConstants.h
-		PublicSource\System\EXDefines.h = PublicSource\System\EXDefines.h
-		PublicSource\System\StdAfx.cpp = PublicSource\System\StdAfx.cpp
-		PublicSource\System\StdAfx.h = PublicSource\System\StdAfx.h
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{EE400866-0550-461D-BF40-8BF3ABEF7E41}"
 	ProjectSection(SolutionItems) = preProject
 		Resources\Other\ClassTemplateFields.xml = Resources\Other\ClassTemplateFields.xml
@@ -37,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{EE400866
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegralSystem", "Projects\IntegralSystem\IntegralSystem.vcxproj", "{E756AC44-1984-42F7-9A0B-BC1FA34A6304}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1419D79F-D3DB-43C6-9685-A8CBABF21C12} = {1419D79F-D3DB-43C6-9685-A8CBABF21C12}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{33F902D5-EB73-4A94-85ED-91278C95C687}"
 	ProjectSection(SolutionItems) = preProject
@@ -89,15 +83,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{3C2C
 		Support\Инструкция по добавлению класса рабочего стола.txt = Support\Инструкция по добавлению класса рабочего стола.txt
 		Support\Инструкция по файлу конфигурации Configuration.inf.txt = Support\Инструкция по файлу конфигурации Configuration.inf.txt
 		Support\Описание свойств полей.txt = Support\Описание свойств полей.txt
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Version", "Version", "{76522DF2-EADF-49BD-9B42-D21FF19A6E11}"
-	ProjectSection(SolutionItems) = preProject
-		Build.txt = Build.txt
-		FromDate.txt = FromDate.txt
-		Major.txt = Major.txt
-		Minor.txt = Minor.txt
-		Revision.txt = Revision.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheme", "Scheme", "{EDC6FC6C-ABB5-41F9-AC2E-CD3A3788902C}"
@@ -215,6 +200,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCore", "Library\libCore\libCore.vcxproj", "{213782BA-68EA-4749-A28D-2A9AB81F114A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libGui", "Library\libGui\libGui.vcxproj", "{1419D79F-D3DB-43C6-9685-A8CBABF21C12}"
+	ProjectSection(ProjectDependencies) = postProject
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configurator", "Projects\Configurator\Configurator.vcxproj", "{641EC90D-70E1-42F5-9F2F-22C5238F1D02}"
 EndProject
@@ -357,7 +345,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EAFD2DAF-1A32-4503-8314-9A1E942ABBCA} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
-		{BB2EA95D-3392-46A8-B395-110BB34F32EC} = {F49857C4-04A0-470B-B2F8-BB951894D08A}
 		{EE400866-0550-461D-BF40-8BF3ABEF7E41} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 		{E756AC44-1984-42F7-9A0B-BC1FA34A6304} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 		{33F902D5-EB73-4A94-85ED-91278C95C687} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
@@ -383,7 +370,7 @@ Global
 		{641EC90D-70E1-42F5-9F2F-22C5238F1D02} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

@@ -121,7 +121,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Widgetsd.lib;Qt5PrintSupportd.lib;Qt5SerialPortd.lib;Qt5Sqld.lib;Qt5Xmld.lib;libCore.lib;libGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5AxBased.lib;Qt5AxContainerd.lib;Qt5AxServerd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Widgetsd.lib;Qt5PrintSupportd.lib;Qt5SerialPortd.lib;Qt5Sqld.lib;Qt5Xmld.lib;libCore.lib;libGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>
       </Version>
       <ShowProgress>
