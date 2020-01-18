@@ -148,12 +148,12 @@
     <ClInclude Include="ISLocalization.h" />
     <QtMoc Include="ISMemoryObjects.h" />
     <QtMoc Include="ISMetaData.h" />
-    <QtMoc Include="ISMetaDataHelper.h" />
-    <QtMoc Include="ISMetaUuidCheckeder.h" />
+    <ClInclude Include="ISMetaDataHelper.h" />
+    <ClInclude Include="ISMetaUuidCheckeder.h" />
     <QtMoc Include="ISMetaViewQuery.h" />
     <QtMoc Include="ISSMS.h" />
-    <QtMoc Include="ISMetaUser.h" />
-    <QtMoc Include="ISMetaUserData.h" />
+    <ClInclude Include="ISMetaUser.h" />
+    <ClInclude Include="ISMetaUserData.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISModelThreadQuery.h" />
     <QtMoc Include="ISMetaNotify.h" />

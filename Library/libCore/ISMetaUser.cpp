@@ -32,14 +32,15 @@ static QString QS_USER_STATUS = PREPARE_QUERY("SELECT usts_name "
 											  "LEFT JOIN _userstatus ON usts_id = usrs_currentstatus "
 											  "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-ISMetaUser::ISMetaUser() : QObject()
+ISMetaUser::ISMetaUser()
+	: UserData(new ISMetaUserData())
 {
-	UserData = new ISMetaUserData(this);
+	
 }
 //-----------------------------------------------------------------------------
 ISMetaUser::~ISMetaUser()
 {
-
+	delete UserData;
 }
 //-----------------------------------------------------------------------------
 ISMetaUser& ISMetaUser::GetInstance()

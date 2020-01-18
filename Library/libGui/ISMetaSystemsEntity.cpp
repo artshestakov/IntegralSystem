@@ -59,7 +59,7 @@ void ISMetaSystemsEntity::Initialize()
 			QString SubSystemTableName = qSelect.ReadColumn("sbsm_tablename").toString();
 			QString SubSystemHint = qSelect.ReadColumn("sbsm_hint").toString();
 
-			if (!CURRENT_USER_SYSTEM) //≈сли текущий пользователь не системный
+			if (!ISMetaUser::GetInstance().GetData()->System) //≈сли текущий пользователь не системный
 			{
 				if (!ISMetaUser::GetInstance().GetData()->GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
 				{

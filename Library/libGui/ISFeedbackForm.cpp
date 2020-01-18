@@ -226,8 +226,8 @@ QString ISFeedbackForm::CreateMessage() const
 	Message += QString(LOCALIZATION("Feedback.Version") + ": " + ISVersion::GetInstance().GetVersion() + "\n");
 	Message += QString(LOCALIZATION("Feedback.VersionDate") + ": " + ISVersion::GetInstance().GetDate().toString(DATE_FORMAT_V2) + "\n");
 	Message += QString(LOCALIZATION("Feedback.ApplicationDirPath") + ": " + APPLICATION_DIR_PATH + "\n");
-	Message += QString(LOCALIZATION("Feedback.User") + ": " + CURRENT_USER_FULL_NAME + "\n");
-	Message += QString(LOCALIZATION("Feedback.Login") + ": " + CURRENT_USER_LOGIN + "\n");
+	Message += QString(LOCALIZATION("Feedback.User") + ": " + ISMetaUser::GetInstance().GetData()->FullName + "\n");
+	Message += QString(LOCALIZATION("Feedback.Login") + ": " + ISMetaUser::GetInstance().GetData()->Login + "\n");
 
 	ISSystem::RemoveLastSymbolFromString(Message);
 	return Message;

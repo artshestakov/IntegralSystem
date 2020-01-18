@@ -119,7 +119,7 @@ void ISReconnectForm::StartReconnect(bool &Connect)
 //-----------------------------------------------------------------------------
 bool ISReconnectForm::Connect()
 {
-	return ISDatabase::GetInstance().ConnectToDefaultDB(CURRENT_USER_LOGIN, CURRENT_USER_PASSWORD, QString());
+	return ISDatabase::GetInstance().ConnectToDefaultDB(ISMetaUser::GetInstance().GetData()->Login, ISMetaUser::GetInstance().GetData()->Password, QString());
 }
 //-----------------------------------------------------------------------------
 void ISReconnectForm::Restart()

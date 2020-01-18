@@ -67,7 +67,7 @@ void ISFavorites::Initialize()
 void ISFavorites::AddFavorite(const QString &TableName, const QString &TableLocalName, const QString &ObjectName, int ObjectID)
 {
 	ISQuery qInsertFavorite(QI_FAVORITE);
-	qInsertFavorite.BindValue(":User", CURRENT_USER_ID);
+	qInsertFavorite.BindValue(":User", ISMetaUser::GetInstance().GetData()->ID);
 	qInsertFavorite.BindValue(":TableName", TableName);
 	qInsertFavorite.BindValue(":TableLocalName", TableLocalName);
 	qInsertFavorite.BindValue(":ObjectName", ObjectName);

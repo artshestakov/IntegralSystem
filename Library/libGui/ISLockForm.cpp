@@ -44,7 +44,7 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 
 	QLabel *LabelUser = new QLabel(this);
 	LabelUser->setFont(FONT_APPLICATION_BOLD);
-	LabelUser->setText(CURRENT_USER_FULL_NAME);
+	LabelUser->setText(ISMetaUser::GetInstance().GetData()->FullName);
 	FormLayout->addRow(LOCALIZATION("User") + ":", LabelUser);
 
 	EditPassword = new ISPasswordEdit(this);

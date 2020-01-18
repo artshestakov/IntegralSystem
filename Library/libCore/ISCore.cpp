@@ -82,16 +82,6 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 												"AND task_executor = currentuserid() "
 												"AND task_deadline < CURRENT_DATE");
 //-----------------------------------------------------------------------------
-ISCore::ISCore()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISCore::~ISCore()
-{
-
-}
-//-----------------------------------------------------------------------------
 bool ISCore::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName)
 {
 	bool Result = false;
@@ -326,7 +316,7 @@ void ISCore::ExecuteExitComamnd()
 void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, const QString &ObjectName, int ObjectID)
 {
 	QVariantMap Parameters;
-	Parameters.insert(":CurrentUserID", CURRENT_USER_ID);
+	Parameters.insert(":CurrentUserID", ISMetaUser::GetInstance().GetData()->ID);
 	Parameters.insert(":TableName", TableName);
 	Parameters.insert(":TableLocalName", LocalListName);
 	Parameters.insert(":ObjectName", ObjectName);
@@ -338,7 +328,7 @@ void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, 
 void ISCore::ClearHistory()
 {
 	QVariantMap Parameters;
-	Parameters.insert(":CurrentUserID", CURRENT_USER_ID);
+	Parameters.insert(":CurrentUserID", ISMetaUser::GetInstance().GetData()->ID);
 
 	ISQueryPool::GetInstance().AddQuery(QD_HISTORY, Parameters);
 }
@@ -511,7 +501,7 @@ void ISCore::TaskInsertHistory(int TaskID, int UserID, const ISUuid &HistoryUID,
 //-----------------------------------------------------------------------------
 void ISCore::TaskInsertHistory(int TaskID, const ISUuid &HistoryUID, const QString &Information)
 {
-	TaskInsertHistory(TaskID, CURRENT_USER_ID, HistoryUID, Information);
+	TaskInsertHistory(TaskID, ISMetaUser::GetInstance().GetData()->ID, HistoryUID, Information);
 }
 //-----------------------------------------------------------------------------
 bool ISCore::TaskIsAttachedObject(int TaskID, const QString &TableName, int ObjectID)

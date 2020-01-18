@@ -1,14 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISUuid.h"
 #include "PMetaClassTable.h"
 //-----------------------------------------------------------------------------
 class ISCore
 {
 public:
-	ISCore();
-	~ISCore();
-
 	static bool DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName); //Удалить/Восстановить запись
 	static bool DeleteCascadeObject(const QString &TableName, const QString &TableAlias, int ObjectID); //Удалить объект каскадом
 

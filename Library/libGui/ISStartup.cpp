@@ -132,7 +132,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.Initialize.Printing"));
 	ISPrintingEntity::GetInstance();
 
-	if (!CURRENT_USER_SYSTEM) //Если пользователь НЕ СИСТЕМНЫЙ
+	if (!ISMetaUser::GetInstance().GetData()->System) //Если пользователь НЕ СИСТЕМНЫЙ
 	{
 		if (!ISMetaUser::GetInstance().GetData()->GroupID) //Если пользователь привязан к группе
 		{
@@ -194,12 +194,12 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.Initialize.InitializeDevice"));
 	ISDeviceEntity::GetInstance().Initialize();
 
-	if (!CURRENT_USER_SYSTEM)
+	if (!ISMetaUser::GetInstance().GetData()->System)
 	{
 		if (CheckAlreadyConnected())
 		{
-			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_ALREADY_CONNECTED, CURRENT_USER_ID, ISMetaUser::GetInstance().GetData()->IPAddress, QString(), false);
-			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.AlreadyConnected").arg(CURRENT_USER_LOGIN));
+			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_ALREADY_CONNECTED, ISMetaUser::GetInstance().GetData()->ID, ISMetaUser::GetInstance().GetData()->IPAddress, QString(), false);
+			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.AlreadyConnected").arg(ISMetaUser::GetInstance().GetData()->Login));
 			ISSystem::ExecLoop(1500);
 			return EXIT_CODE_ERROR;
 		}
@@ -210,7 +210,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 			{
 				ISSplashScreen::GetInstance().hide();
 				ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO("HappyBirthday"));
-				ISMessageBox::ShowInformation(nullptr, LOCALIZATION("HappyBirthday").arg(CURRENT_USER_FULL_NAME));
+				ISMessageBox::ShowInformation(nullptr, LOCALIZATION("HappyBirthday").arg(ISMetaUser::GetInstance().GetData()->FullName));
 			}
 		}
 	}
@@ -293,7 +293,7 @@ bool ISStartup::CheckAlreadyConnected()
 {
 	bool Result = false;
 	ISQuery qSelectConnected(QS_ALREADY_ONLINE);
-	qSelectConnected.BindValue(":Login", CURRENT_USER_LOGIN);
+	qSelectConnected.BindValue(":Login", ISMetaUser::GetInstance().GetData()->Login);
 	if (qSelectConnected.ExecuteFirst())
 	{
 		int Count = qSelectConnected.ReadColumn("count").toInt();
@@ -308,7 +308,7 @@ bool ISStartup::CheckAlreadyConnected()
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(const QString &Login)
 {
-	if (CURRENT_USER_SYSTEM)
+	if (ISMetaUser::GetInstance().GetData()->System)
 	{
 		return true;
 	}
@@ -340,7 +340,7 @@ bool ISStartup::CheckAccessAllowed()
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckExistUserGroup()
 {
-	if (CURRENT_USER_SYSTEM)
+	if (ISMetaUser::GetInstance().GetData()->System)
 	{
 		return true;
 	}

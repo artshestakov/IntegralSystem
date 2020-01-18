@@ -26,7 +26,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	GetMainLayout()->addWidget(ListWidget);
 
 	ISQuery qSelectHistory(QS_HISTORY);
-	qSelectHistory.BindValue(":CurrentUserID", CURRENT_USER_ID);
+	qSelectHistory.BindValue(":CurrentUserID", ISMetaUser::GetInstance().GetData()->ID);
 	qSelectHistory.BindValue(":Limit", SETTING_STRING(CONST_UID_SETTING_OTHER_MAXIMUMVIEWHISTORY));
 	if (qSelectHistory.Execute())
 	{

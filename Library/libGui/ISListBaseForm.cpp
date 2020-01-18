@@ -728,7 +728,7 @@ void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 void ISListBaseForm::SearchFast(const QString &SearchValue)
 {
 	QVariantMap VariantMap;
-	VariantMap.insert(":UserID", CURRENT_USER_ID);
+	VariantMap.insert(":UserID", ISMetaUser::GetInstance().GetData()->ID);
 	VariantMap.insert(":Value", SearchValue);
 	ISQueryPool::GetInstance().AddQuery(QI_SEARCH_FAST, VariantMap);
 

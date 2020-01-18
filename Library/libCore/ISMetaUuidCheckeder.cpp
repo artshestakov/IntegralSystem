@@ -3,7 +3,7 @@
 #include "ISSystem.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-ISMetaUuidCheckeder::ISMetaUuidCheckeder(QObject *parent) : QObject(parent)
+ISMetaUuidCheckeder::ISMetaUuidCheckeder()
 {
 
 }

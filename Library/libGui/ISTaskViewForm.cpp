@@ -386,7 +386,7 @@ void ISTaskViewForm::AddComment()
 			ISCore::TaskInsertHistory(TaskID, CONST_UID_TASK_HISTORY_COMMENT, Comment.toString());
 			TaskCommentsTab->Update();
 
-			if (CURRENT_USER_ID != TaskExecutorID)
+			if (ISMetaUser::GetInstance().GetData()->ID != TaskExecutorID)
 			{
 				ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TASK_ADD_COMMENT, TaskExecutorID, QVariant(), TaskName, false);
 			}
@@ -402,7 +402,7 @@ void ISTaskViewForm::AddFile()
 		ISCore::TaskInsertHistory(TaskID, CONST_UID_TASK_HISTORY_FILE, TaskFileInsertForm.GetFileName());
 		TaskFilesTab->Update();
 		
-		if (CURRENT_USER_ID != TaskExecutorID)
+		if (ISMetaUser::GetInstance().GetData()->ID != TaskExecutorID)
 		{
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TASK_ADD_FILE, TaskExecutorID, QVariant(), TaskName, false);
 		}

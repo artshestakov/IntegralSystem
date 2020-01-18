@@ -2,12 +2,10 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISMetaUuidCheckeder : public QObject
+class ISMetaUuidCheckeder
 {
-	Q_OBJECT
-
 public:
-	ISMetaUuidCheckeder(QObject *parent = 0);
+	ISMetaUuidCheckeder();
 	virtual ~ISMetaUuidCheckeder();
 
     void Search(const QFileInfo &FileInfo);

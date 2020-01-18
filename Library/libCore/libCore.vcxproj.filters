@@ -213,6 +213,18 @@
     <ClInclude Include="ISLicense.h">
       <Filter>License</Filter>
     </ClInclude>
+    <ClInclude Include="ISMetaUuidCheckeder.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaDataHelper.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaUser.h">
+      <Filter>MetaUser</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaUserData.h">
+      <Filter>MetaUser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -360,9 +372,6 @@
       <Filter>StackTrace</Filter>
     </ClCompile>
     <ClCompile Include="ISMetaUser.cpp">
-      <Filter>MetaUser</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMetaUserData.cpp">
       <Filter>MetaUser</Filter>
     </ClCompile>
     <ClCompile Include="ISModelThreadQuery.cpp">
@@ -521,6 +530,9 @@
     <ClCompile Include="EXLicense.cpp">
       <Filter>License</Filter>
     </ClCompile>
+    <ClCompile Include="ISMetaUserData.cpp">
+      <Filter>MetaUser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISDebug.h">
@@ -536,12 +548,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISMetaData.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaDataHelper.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaUuidCheckeder.h">
       <Filter>MetaData</Filter>
     </QtMoc>
     <QtMoc Include="ISMetaViewQuery.h">
@@ -579,12 +585,6 @@
     </QtMoc>
     <QtMoc Include="ISSMS.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaUser.h">
-      <Filter>MetaUser</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaUserData.h">
-      <Filter>MetaUser</Filter>
     </QtMoc>
     <QtMoc Include="ISModelThreadWorker.h">
       <Filter>ModelThread</Filter>

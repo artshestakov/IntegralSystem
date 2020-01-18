@@ -116,14 +116,14 @@ void ISUserPasswordForm::ChangePassword()
 			ISQuery qAlterPassword;
 			if (qAlterPassword.Execute(QA_PASSWORD.arg(Login).arg(EditPasswordCheck->GetValue().toString())))
 			{
-				if (UserID == CURRENT_USER_ID)
+				if (UserID == ISMetaUser::GetInstance().GetData()->ID)
 				{
 					ISProtocol::Insert(true, CONST_UID_PROTOCOL_CHANGE_PASSWORD, QString(), QString(), QVariant());
 				}
 
 				ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
 				qInsertPasswordChange.BindValue(":User", UserID);
-				qInsertPasswordChange.BindValue(":WhoUser", CURRENT_USER_ID);
+				qInsertPasswordChange.BindValue(":WhoUser", ISMetaUser::GetInstance().GetData()->ID);
 				if (qInsertPasswordChange.Execute())
 				{
 					SetResult(true);

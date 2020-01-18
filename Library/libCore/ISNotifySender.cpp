@@ -74,7 +74,7 @@ void ISNotifySender::Initialize()
 		NewNotify = qSelectNewNotify.ReadColumn("count").toInt();
 	}
 
-	IS_ASSERT(SqlDriver->subscribeToNotification(CURRENT_USER_LOGIN), SqlDriver->lastError().text()); //Подключение к нотификации
+	IS_ASSERT(SqlDriver->subscribeToNotification(ISMetaUser::GetInstance().GetData()->Login), SqlDriver->lastError().text()); //Подключение к нотификации
 }
 //-----------------------------------------------------------------------------
 int ISNotifySender::GetNewNotify() const

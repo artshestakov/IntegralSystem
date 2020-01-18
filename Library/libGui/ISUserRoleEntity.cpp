@@ -171,7 +171,7 @@ void ISUserRoleEntity::DeleteSpecialAccess(int GroupID, const ISUuid &SpecialAcc
 //-----------------------------------------------------------------------------
 void ISUserRoleEntity::Initialize()
 {
-	if (CURRENT_USER_SYSTEM) //≈сли текущий пользователь €вл€етс€ системным
+	if (ISMetaUser::GetInstance().GetData()->System) //≈сли текущий пользователь €вл€етс€ системным
 	{
 		return;
 	}
@@ -186,7 +186,7 @@ void ISUserRoleEntity::Initialize()
 bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 {
 	bool Result = false;
-	if (CURRENT_USER_SYSTEM || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
+	if (ISMetaUser::GetInstance().GetData()->System || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
 	{
 		Result = true;
 	}
@@ -201,7 +201,7 @@ bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 bool ISUserRoleEntity::CheckAccessTable(const ISUuid &TableUID, const ISUuid &AccessUID)
 {
 	bool Result = false;
-	if (CURRENT_USER_SYSTEM || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
+	if (ISMetaUser::GetInstance().GetData()->System || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
 	{
 		Result = true;
 	}
@@ -216,7 +216,7 @@ bool ISUserRoleEntity::CheckAccessTable(const ISUuid &TableUID, const ISUuid &Ac
 bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
 {
 	bool Result = false;
-	if (CURRENT_USER_SYSTEM || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
+	if (ISMetaUser::GetInstance().GetData()->System || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
 	{
 		Result = true;
 	}
@@ -231,7 +231,7 @@ bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
 bool ISUserRoleEntity::CheckExistAccesses() const
 {
 	bool Result = false;
-	if (CURRENT_USER_SYSTEM || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
+	if (ISMetaUser::GetInstance().GetData()->System || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
 	{
 		Result = true;
 	}

@@ -4,10 +4,8 @@
 #include "ISNamespace.h"
 #include "PMetaClassForeign.h"
 //-----------------------------------------------------------------------------
-class ISMetaDataHelper : public QObject
+class ISMetaDataHelper
 {
-	Q_OBJECT
-
 public:
 	ISMetaDataHelper();
 	virtual ~ISMetaDataHelper();

@@ -266,7 +266,7 @@ void ISMonitorActivityForm::GetScreenshot()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		if (MonitorUserWidget->GetUserID() == CURRENT_USER_ID)
+		if (MonitorUserWidget->GetUserID() == ISMetaUser::GetInstance().GetData()->ID)
 		{
 			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotGetScreenshotCurrentUser"));
 			return;
@@ -274,7 +274,7 @@ void ISMonitorActivityForm::GetScreenshot()
 
 		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.GetScreenshot")))
 		{
-			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_SCREENSHOT_CREATE, MonitorUserWidget->GetUserID(), CURRENT_USER_ID, QString(), false);
+			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_SCREENSHOT_CREATE, MonitorUserWidget->GetUserID(), ISMetaUser::GetInstance().GetData()->ID, QString(), false);
 			ISSystem::SetWaitGlobalCursor(true);
 		}
 	}
@@ -288,7 +288,7 @@ void ISMonitorActivityForm::SendNotify()
 		QVariant NotifyText = ISInputDialog::GetText(this, LOCALIZATION("Notify"), LOCALIZATION("NotifyText") + ":");
 		if (NotifyText.isValid())
 		{
-			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_MESSAGE, MonitorUserWidget->GetUserID(), QVariant(), LOCALIZATION("NotifyUserMessage").arg(CURRENT_USER_FULL_NAME).arg(NotifyText.toString()), true);
+			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_MESSAGE, MonitorUserWidget->GetUserID(), QVariant(), LOCALIZATION("NotifyUserMessage").arg(ISMetaUser::GetInstance().GetData()->FullName).arg(NotifyText.toString()), true);
 		}
 	}
 }
@@ -306,7 +306,7 @@ void ISMonitorActivityForm::TerminateAll()
 		int TerminatedCount = 0;
 		for (ISMonitorUserWidget *MonitorUserWidget : VectorUsers)
 		{
-			if (MonitorUserWidget->GetUserID() == CURRENT_USER_ID)
+			if (MonitorUserWidget->GetUserID() == ISMetaUser::GetInstance().GetData()->ID)
 			{
 				continue;
 			}

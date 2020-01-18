@@ -253,7 +253,7 @@ void ISMainWindow::AfterShowEvent()
 		ISOnline::GetInstance().Initialize(ISMetaUser::GetInstance().GetData()->InactiveTimeout);
 	}
 
-	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_ONLINE, QVariant(), CURRENT_USER_FULL_NAME, false);
+	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_ONLINE, QVariant(), ISMetaUser::GetInstance().GetData()->FullName, false);
 
 	int CountOverdue = ISCore::TaskCountOverdue();
 	if (CountOverdue)
@@ -439,7 +439,7 @@ void ISMainWindow::BeforeClose()
 {
 	hide();
 
-	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_OFFLINE, QVariant(), CURRENT_USER_FULL_NAME, false);
+	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_OFFLINE, QVariant(), ISMetaUser::GetInstance().GetData()->FullName, false);
 
 	ISSplashScreen::GetInstance().DefaultPixmap();
 	ISSplashScreen::GetInstance().show();
@@ -549,7 +549,7 @@ void ISMainWindow::ShowDeviceSettings()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()
 {
-	if (CURRENT_USER_SYSTEM)
+	if (ISMetaUser::GetInstance().GetData()->System)
 	{
 		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotChangeSystemUserPassword"));
 		return;
@@ -561,7 +561,7 @@ void ISMainWindow::ShowChangePasswordForm()
 		return;
 	}
 
-	if (ISGui::ShowUserPasswordForm(CURRENT_USER_ID))
+	if (ISGui::ShowUserPasswordForm(ISMetaUser::GetInstance().GetData()->ID))
 	{
 		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.YouPasswordDoneChanged"));
 	}
@@ -629,8 +629,8 @@ void ISMainWindow::UserStatusChange()
 	ISSystem::SetWaitGlobalCursor(false);
 	if (UserStatusForm.Exec())
 	{
-		QString StatusName = ISMetaUser::GetInstance().GetCurrentStatus(CURRENT_USER_ID);
-		ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_STATUS, QVariant(), CURRENT_USER_FULL_NAME + ": " + StatusName, false);
+		QString StatusName = ISMetaUser::GetInstance().GetCurrentStatus(ISMetaUser::GetInstance().GetData()->ID);
+		ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_STATUS, QVariant(), ISMetaUser::GetInstance().GetData()->FullName + ": " + StatusName, false);
 	}
 
 	SetVisibleShadow(false);

@@ -1,15 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISMetaUserData : public QObject
+struct ISMetaUserData
 {
-	Q_OBJECT
-
-public:
-	ISMetaUserData(QObject *parent = 0);
-	virtual ~ISMetaUserData();
+	ISMetaUserData();
 
 	bool System; //Системный
 	int ID; //Идентификатор пользователя

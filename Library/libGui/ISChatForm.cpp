@@ -222,7 +222,7 @@ void ISChatForm::SendMessage()
 		{
 			int MessageID = qInsertMessage.ReadColumn("chat_id").toInt();
 			CreateItemWidget(MessageID);
-			ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_NEW_CHAT_MESSAGE, MessageID, CURRENT_USER_FULL_NAME + ": " + Message, false);
+			ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_NEW_CHAT_MESSAGE, MessageID, ISMetaUser::GetInstance().GetData()->FullName + ": " + Message, false);
 
 			TextEdit->Clear();
 			ClearAttach();

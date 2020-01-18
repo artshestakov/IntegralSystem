@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISMetaUserData.h"
 //-----------------------------------------------------------------------------
-class ISMetaUser : public QObject
+class ISMetaUser
 {
-	Q_OBJECT
-
 public:
 	ISMetaUser(const ISMetaUser &) = delete;
 	ISMetaUser(ISMetaUser &&) = delete;
@@ -25,12 +23,7 @@ public:
 private:
 	ISMetaUser();
 
+private:
 	ISMetaUserData *UserData;
 };
-//-----------------------------------------------------------------------------
-#define CURRENT_USER_ID ISMetaUser::GetInstance().GetData()->ID
-#define CURRENT_USER_LOGIN ISMetaUser::GetInstance().GetData()->Login
-#define CURRENT_USER_PASSWORD ISMetaUser::GetInstance().GetData()->Password
-#define CURRENT_USER_FULL_NAME ISMetaUser::GetInstance().GetData()->FullName
-#define CURRENT_USER_SYSTEM ISMetaUser::GetInstance().GetData()->System
 //-----------------------------------------------------------------------------

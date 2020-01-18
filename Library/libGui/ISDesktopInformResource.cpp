@@ -86,7 +86,7 @@ void ISDesktopInformResource::CreateCentralPanel()
 	LayoutCentral->addLayout(LayoutCenter);
 
 	UserEdit = new ISUserEdit(this);
-	UserEdit->SetValue(CURRENT_USER_ID);
+	UserEdit->SetValue(ISMetaUser::GetInstance().GetData()->ID);
 	UserEdit->HideFirstItem();
 	UserEdit->setVisible(ISUserRoleEntity::GetInstance().CheckAccessSpecial("{D67DE9D1-0092-406D-910C-0E11ED820561}"));
 	connect(UserEdit, &ISUserEdit::DataChanged, this, &ISDesktopInformResource::Reload);

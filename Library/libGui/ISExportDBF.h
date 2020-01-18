@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "libgui_global.h"
 #include "ISExportWorker.h"
+#include "ISUuid.h"
 //-----------------------------------------------------------------------------
 class LIBGUI_EXPORT ISExportDBF : public ISExportWorker
 {
