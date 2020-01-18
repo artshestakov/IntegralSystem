@@ -7,8 +7,6 @@
 //-----------------------------------------------------------------------------
 class ISMimeMessage : public QObject
 {
-	Q_OBJECT
-
 public:
 
     enum RecipientType 

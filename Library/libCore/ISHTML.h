@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISHTML : public QObject
+class ISHTML
 {
-	Q_OBJECT
-
 public:
 	ISHTML(QFile &FileTemplate);
 	virtual ~ISHTML();

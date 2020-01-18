@@ -2,7 +2,7 @@
 #include "ISAssert.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-ISHtmlQuery::ISHtmlQuery(const QString &sql_query_text, const QString &table_html_name) : QObject()
+ISHtmlQuery::ISHtmlQuery(const QString &sql_query_text, const QString &table_html_name)
 {
 	TableHtmlName = table_html_name;
 	SqlQueryText = sql_query_text;

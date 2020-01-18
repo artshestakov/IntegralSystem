@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISSettingsDatabase : public QObject
+class ISSettingsDatabase
 {
-	Q_OBJECT
-
 public:
 	ISSettingsDatabase(const ISSettingsDatabase &) = delete;
 	ISSettingsDatabase(ISSettingsDatabase &&) = delete;

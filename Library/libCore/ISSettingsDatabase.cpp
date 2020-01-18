@@ -19,7 +19,7 @@ static QString QS_SYSTEM_PARAMETERS = PREPARE_QUERY("SELECT spdb_uid, spdb_value
 													"WHERE NOT spdb_isdeleted "
 													"ORDER BY spdb_id");
 //-----------------------------------------------------------------------------
-ISSettingsDatabase::ISSettingsDatabase() : QObject()
+ISSettingsDatabase::ISSettingsDatabase()
 {
 	
 }

@@ -6,8 +6,6 @@
 //-----------------------------------------------------------------------------
 class ISMimeAttachment : public ISMimeFile
 {
-    Q_OBJECT
-
 public:
     ISMimeAttachment(QFile* file);
     ISMimeAttachment(const QByteArray& stream, const QString& fileName);

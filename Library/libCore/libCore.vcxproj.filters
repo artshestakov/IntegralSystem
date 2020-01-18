@@ -225,6 +225,57 @@
     <ClInclude Include="ISMetaUserData.h">
       <Filter>MetaUser</Filter>
     </ClInclude>
+    <ClInclude Include="ISEmailAddress.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeContentFormatter.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeAttachment.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeFile.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeMessage.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeHtml.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeMultipart.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimePart.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeText.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQuotedPrintable.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaNotify.h">
+      <Filter>Notify</Filter>
+    </ClInclude>
+    <ClInclude Include="ISProtocol.h">
+      <Filter>Other</Filter>
+    </ClInclude>
+    <ClInclude Include="ISHTML.h">
+      <Filter>Printing\HTML</Filter>
+    </ClInclude>
+    <ClInclude Include="ISHTMLHelper.h">
+      <Filter>Printing\HTML</Filter>
+    </ClInclude>
+    <ClInclude Include="ISHtmlQuery.h">
+      <Filter>Printing\HTML</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSqlModelHelper.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSettingsDatabase.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -592,14 +643,8 @@
     <QtMoc Include="ISModelThreadQuery.h">
       <Filter>ModelThread</Filter>
     </QtMoc>
-    <QtMoc Include="ISMetaNotify.h">
-      <Filter>Notify</Filter>
-    </QtMoc>
     <QtMoc Include="ISNotifySender.h">
       <Filter>Notify</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSettingsDatabase.h">
-      <Filter>Settings</Filter>
     </QtMoc>
     <QtMoc Include="ISMetaSetting.h">
       <Filter>Settings</Filter>
@@ -610,16 +655,10 @@
     <QtMoc Include="ISSettings.h">
       <Filter>Settings</Filter>
     </QtMoc>
-    <QtMoc Include="ISProtocol.h">
-      <Filter>Other</Filter>
-    </QtMoc>
     <QtMoc Include="ISStorageFileLoader.h">
       <Filter>Other</Filter>
     </QtMoc>
     <QtMoc Include="ISSqlModelCore.h">
-      <Filter>Model</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSqlModelHelper.h">
       <Filter>Model</Filter>
     </QtMoc>
     <QtMoc Include="ISSqlModelView.h">
@@ -637,47 +676,8 @@
     <QtMoc Include="ISNetwork.h">
       <Filter>Network</Filter>
     </QtMoc>
-    <QtMoc Include="ISQuotedPrintable.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISEmailAddress.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMimeAttachment.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMimeContentFormatter.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMimeFile.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMimeHtml.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMimeMessage.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMimeMultipart.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMimePart.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMimeText.h">
-      <Filter>Network\SMTP</Filter>
-    </QtMoc>
     <QtMoc Include="ISSmtpClient.h">
       <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHTML.h">
-      <Filter>Printing\HTML</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHTMLHelper.h">
-      <Filter>Printing\HTML</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHtmlQuery.h">
-      <Filter>Printing\HTML</Filter>
     </QtMoc>
     <QtMoc Include="ISPrintMetaReport.h">
       <Filter>Printing\MetaData</Filter>

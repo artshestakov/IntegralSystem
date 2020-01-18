@@ -16,16 +16,6 @@ static QString QU_USER_LAST_ENTER = PREPARE_QUERY("UPDATE _users SET "
 												  "usrs_lastaddress = split_part(inet_client_addr()::VARCHAR, '/', 1) "
 												  "WHERE usrs_id = currentuserid()");
 //-----------------------------------------------------------------------------
-ISProtocol::ISProtocol()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISProtocol::~ISProtocol()
-{
-
-}
-//-----------------------------------------------------------------------------
 void ISProtocol::EnterApplication()
 {
 	int ProtocolID = Insert(false, CONST_UID_PROTOCOL_ENTER_APPLICATION, QString(), QString(), QVariant());

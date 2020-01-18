@@ -1,8 +1,9 @@
 #include "ISMetaNotify.h"
 //-----------------------------------------------------------------------------
-ISMetaNotify::ISMetaNotify(QObject *parent) : QObject(parent)
+ISMetaNotify::ISMetaNotify()
+	: ShowPopup(true)
 {
-	ShowPopup = true;
+	
 }
 //-----------------------------------------------------------------------------
 ISMetaNotify::~ISMetaNotify()

@@ -3,64 +3,62 @@
 #include "StdAfx.h"
 #include "ISMimeContentFormatter.h"
 //-----------------------------------------------------------------------------
-class ISMimePart : public QObject
+class ISMimePart
 {
-    Q_OBJECT
-
 public:
 
-    enum Encoding 
+	enum Encoding
 	{
-        _7Bit,
-        _8Bit,
-        Base64,
-        QuotedPrintable
-    };
+		_7Bit,
+		_8Bit,
+		Base64,
+		QuotedPrintable
+	};
 
-    ISMimePart();
-    ~ISMimePart();
+	ISMimePart();
+	~ISMimePart();
 
-    const QString& getHeader() const;
-    const QByteArray& getContent() const;
+	const QString& getHeader() const;
+	const QByteArray& getContent() const;
 
-    void setContent(const QByteArray & content);
-    void setHeader(const QString & header);
+	void setContent(const QByteArray & content);
+	void setHeader(const QString & header);
 
-    void addHeaderLine(const QString & line);
+	void addHeaderLine(const QString & line);
 
-    void setContentId(const QString & cId);
-    const QString & getContentId() const;
+	void setContentId(const QString & cId);
+	const QString & getContentId() const;
 
-    void setContentName(const QString & cName);
-    const QString & getContentName() const;
+	void setContentName(const QString & cName);
+	const QString & getContentName() const;
 
-    void setContentType(const QString & cType);
-    const QString & getContentType() const;
+	void setContentType(const QString & cType);
+	const QString & getContentType() const;
 
-    void setCharset(const QString & charset);
-    const QString & getCharset() const;
+	void setCharset(const QString & charset);
+	const QString & getCharset() const;
 
-    void setEncoding(Encoding enc);
-    Encoding getEncoding() const;
+	void setEncoding(Encoding enc);
+	Encoding getEncoding() const;
 
-    ISMimeContentFormatter& getContentFormatter();
-    virtual QString toString();
-    virtual void prepare();
+	ISMimeContentFormatter& getContentFormatter();
+	virtual QString toString();
+	virtual void prepare();
 
 protected:
-    QString header;
-    QByteArray content;
+	QString header;
+	QByteArray content;
 
-    QString cId;
-    QString cName;
-    QString cType;
-    QString cCharset;
-    QString cBoundary;
-    Encoding cEncoding;
+	QString cId;
+	QString cName;
+	QString cType;
+	QString cCharset;
+	QString cBoundary;
+	Encoding cEncoding;
 
-    QString mimeString;
-    bool prepared;
+	QString mimeString;
+	bool prepared;
 
-    ISMimeContentFormatter formatter;
+	ISMimeContentFormatter formatter;
 };
 //-----------------------------------------------------------------------------

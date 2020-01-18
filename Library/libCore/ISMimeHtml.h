@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 class ISMimeHtml : public ISMimeText
 {
-    Q_OBJECT
-
 public:
     ISMimeHtml(const QString &html = "");
     ~ISMimeHtml();

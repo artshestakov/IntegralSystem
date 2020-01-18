@@ -819,7 +819,7 @@
     <QtMoc Include="ISPatriot.h" />
     <QtMoc Include="ISPatriotCardListForm.h" />
     <QtMoc Include="ISPatriotClientsBirthdayForm.h" />
-    <QtMoc Include="ISPatriotHelper.h" />
+    <ClInclude Include="ISPatriotHelper.h" />
     <QtMoc Include="ISPatriotSubscriptionListForm.h" />
     <QtMoc Include="ISPatriotSubscriptionObjectForm.h" />
     <QtMoc Include="ISPatriotSubscriptionSelectForm.h" />

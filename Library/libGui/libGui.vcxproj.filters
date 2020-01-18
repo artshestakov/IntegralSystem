@@ -214,6 +214,9 @@
     <ClInclude Include="ISPageMetrics.h">
       <Filter>Printing</Filter>
     </ClInclude>
+    <ClInclude Include="ISPatriotHelper.h">
+      <Filter>Objects\Patriot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISIncomingCallBaseForm.cpp">
@@ -2316,9 +2319,6 @@
       <Filter>Objects\MedTech\Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISPatriot.h">
-      <Filter>Objects\Patriot</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPatriotHelper.h">
       <Filter>Objects\Patriot</Filter>
     </QtMoc>
     <QtMoc Include="ISPatriotCardListForm.h">

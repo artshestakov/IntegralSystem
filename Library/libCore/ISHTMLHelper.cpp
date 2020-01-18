@@ -1,22 +1,10 @@
 #include "ISHTMLHelper.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-ISHTMLHelper::ISHTMLHelper() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISHTMLHelper::~ISHTMLHelper()
-{
-
-}
-//-----------------------------------------------------------------------------
 QString ISHTMLHelper::GenerateTableFromQuerySelect(const QString &QueryText)
 {
 	QString Table = QString();
-
 	ISQuery qSelect(QueryText);
-
 	return Table;
 }
 //-----------------------------------------------------------------------------

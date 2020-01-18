@@ -3,12 +3,10 @@
 #include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISMetaNotify : public QObject
+class ISMetaNotify
 {
-	Q_OBJECT
-
 public:
-	ISMetaNotify(QObject *parent);
+	ISMetaNotify();
 	virtual ~ISMetaNotify();
 
 	void SetUID(const ISUuid &uid);

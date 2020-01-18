@@ -5,16 +5,6 @@
 #include "ISSettings.h"
 #include "ISCore.h"
 //-----------------------------------------------------------------------------
-ISSqlModelHelper::ISSqlModelHelper() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISSqlModelHelper::~ISSqlModelHelper()
-{
-
-}
-//-----------------------------------------------------------------------------
 QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::FieldType Type)
 {
 	QVariant Result = Value;

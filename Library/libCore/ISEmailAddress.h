@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISEmailAddress : public QObject
+class ISEmailAddress
 {
-    Q_OBJECT
-
 public:
     ISEmailAddress();
     ISEmailAddress(const QString &address, const QString &name = QString());

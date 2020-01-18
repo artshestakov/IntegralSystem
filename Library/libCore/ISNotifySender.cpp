@@ -26,15 +26,20 @@ static QString QI_NOTIFICATION_USERS = PREPARE_QUERY("INSERT INTO _notificationu
 													 "WHERE NOT usrs_isdeleted "
 													 "AND usrs_id != currentuserid()");
 //-----------------------------------------------------------------------------
-ISNotifySender::ISNotifySender() : QObject()
+ISNotifySender::ISNotifySender()
+	: QObject(),
+	SqlDriver(ISDatabase::GetInstance().GetDefaultDB().driver()),
+	NewNotify(0)
 {
-	SqlDriver = ISDatabase::GetInstance().GetDefaultDB().driver();
-	NewNotify = 0;
+	
 }
 //-----------------------------------------------------------------------------
 ISNotifySender::~ISNotifySender()
 {
-
+	while (!Notifications.isEmpty())
+	{
+		delete Notifications.take(Notifications.begin().key());
+	}
 }
 //-----------------------------------------------------------------------------
 ISNotifySender& ISNotifySender::GetInstance()
@@ -57,7 +62,7 @@ void ISNotifySender::Initialize()
 			QString SignalName = qSelect.ReadColumn("ntfn_signalname").toString();
 			bool ShowPopup = qSelect.ReadColumn("ntfn_showpopup").toBool();
 
-			ISMetaNotify *MetaNotify = new ISMetaNotify(this);
+			ISMetaNotify *MetaNotify = new ISMetaNotify();
 			MetaNotify->SetUID(UID);
 			MetaNotify->SetName(Name);
 			MetaNotify->SetMessage(Message);

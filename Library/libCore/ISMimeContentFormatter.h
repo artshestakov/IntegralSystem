@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISMimeContentFormatter : public QObject
+class ISMimeContentFormatter
 {
-    Q_OBJECT
-
 public:
     ISMimeContentFormatter (int max_length = 76);
 

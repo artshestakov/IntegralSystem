@@ -4,16 +4,6 @@
 #include "ISMetaData.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISMetaDataHelper::ISMetaDataHelper()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISMetaDataHelper::~ISMetaDataHelper()
-{
-
-}
-//-----------------------------------------------------------------------------
 QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaForeign, const QString &SqlFilter, const QVariant &ObjectID)
 {
 	PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass()); //Таблица на которую ссылается внешний ключ

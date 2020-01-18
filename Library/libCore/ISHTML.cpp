@@ -2,7 +2,7 @@
 #include "ISAssert.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-ISHTML::ISHTML(QFile &FileTemplate) : QObject()
+ISHTML::ISHTML(QFile &FileTemplate)
 {
 	IS_ASSERT(FileTemplate.isOpen(), "File '" + FileTemplate.fileName() + "' not opened");
 	HTML = QString::fromLocal8Bit(FileTemplate.readAll());

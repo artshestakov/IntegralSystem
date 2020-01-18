@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 class ISMimeText : public ISMimePart
 {
-	Q_OBJECT
-
 public:
     ISMimeText(const QString &text = "");
     ~ISMimeText();

@@ -39,16 +39,6 @@ static QString QU_NOWEXIST = PREPARE_QUERY("UPDATE subscriptions SET "
 										   "sbsr_nowexist = :NowExist "
 										   "WHERE sbsr_id = :SubscriptionID");
 //-----------------------------------------------------------------------------
-ISPatriotHelper::ISPatriotHelper() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISPatriotHelper::~ISPatriotHelper()
-{
-
-}
-//-----------------------------------------------------------------------------
 bool ISPatriotHelper::IsVisit(int SubscriptionID)
 {
 	bool NowExist = false;

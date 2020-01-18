@@ -3,14 +3,9 @@
 #include "StdAfx.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class ISProtocol : public QObject
+class ISProtocol
 {
-	Q_OBJECT
-
 public:
-	ISProtocol();
-	virtual ~ISProtocol();
-
 	static void EnterApplication(); //Вход в программу
 	static void ExitApplication(); //Выход из программы
 

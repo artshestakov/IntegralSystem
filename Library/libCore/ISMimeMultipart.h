@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 class ISMimeMultiPart : public ISMimePart
 {
-    Q_OBJECT
-
 public:
     enum MultiPartType 
 	{

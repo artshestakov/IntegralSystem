@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
-class ISHtmlQuery : public QObject
+class ISHtmlQuery
 {
-	Q_OBJECT
-
 public:
 	ISHtmlQuery(const QString &sql_query_text, const QString &table_html_name);
 	ISHtmlQuery(const ISQuery &Query, const QString &table_html_name);
