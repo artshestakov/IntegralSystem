@@ -13,10 +13,10 @@
 #include "ISPatriot.h"
 #include "ISSirona.h"
 //-----------------------------------------------------------------------------
-ISObjects::ISObjects() : QObject()
+ISObjects::ISObjects()
+	: QObject(),
+	ObjectInterface(nullptr)
 {
-	ObjectInterface = nullptr;
-
 	qRegisterMetaType<ISCenterSeven*>("ISCenterSeven");
 	qRegisterMetaType<ISDemo*>("ISDemo");
 	qRegisterMetaType<ISFrame*>("ISFrame");

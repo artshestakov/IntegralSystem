@@ -14,5 +14,8 @@ public:
 	virtual void BeforeShowMainWindow() const = 0; //Событие перед открытие главного окна приложения
 	virtual void InitializePlugin() const = 0; //Инициализация конфигурации
 	QIcon GetIcon(const QString &IconName) const; //Получить икноку из ресурсов конфигурации
+
+private:
+	QString LicenseName;
 };
 //-----------------------------------------------------------------------------

@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
     <Filter Include="ColumnSizer">
       <UniqueIdentifier>{c17d3407-16bc-406d-b3b4-ca5c2cce6fcd}</UniqueIdentifier>
     </Filter>
@@ -2177,9 +2172,6 @@
     <QtMoc Include="ISObjectInterface.h">
       <Filter>Objects</Filter>
     </QtMoc>
-    <QtMoc Include="ISObjects.h">
-      <Filter>Objects</Filter>
-    </QtMoc>
     <QtMoc Include="ISAlpha.h">
       <Filter>Objects\Alpha</Filter>
     </QtMoc>
@@ -2371,6 +2363,9 @@
     </QtMoc>
     <QtMoc Include="ISCenterSevenStatusAdmissionForm.h">
       <Filter>Objects\CenterSeven\Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISObjects.h">
+      <Filter>Objects</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

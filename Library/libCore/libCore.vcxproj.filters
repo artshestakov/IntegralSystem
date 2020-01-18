@@ -180,17 +180,8 @@
     <ClInclude Include="ISQueryPoolObject.h">
       <Filter>Database</Filter>
     </ClInclude>
-    <ClInclude Include="ISLicenseItem.h">
-      <Filter>License</Filter>
-    </ClInclude>
     <ClInclude Include="ISMimeInlineFile.h">
       <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="EXConstants.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="EXDefines.h">
-      <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="EXLicense.h">
       <Filter>License</Filter>
@@ -220,9 +211,6 @@
       <Filter>MetaData</Filter>
     </ClInclude>
     <ClInclude Include="ISMetaUser.h">
-      <Filter>MetaUser</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaUserData.h">
       <Filter>MetaUser</Filter>
     </ClInclude>
     <ClInclude Include="ISEmailAddress.h">
@@ -275,6 +263,9 @@
     </ClInclude>
     <ClInclude Include="ISSettingsDatabase.h">
       <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMemoryObjects.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -336,9 +327,6 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISTrace.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTypes.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISUuid.cpp">
@@ -581,9 +569,6 @@
     <ClCompile Include="EXLicense.cpp">
       <Filter>License</Filter>
     </ClCompile>
-    <ClCompile Include="ISMetaUserData.cpp">
-      <Filter>MetaUser</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISDebug.h">
@@ -593,9 +578,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISProcess.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMemoryObjects.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISMetaData.h">

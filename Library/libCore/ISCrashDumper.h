@@ -5,9 +5,6 @@
 class ISCrashDumper
 {
 public:
-	ISCrashDumper();
-	~ISCrashDumper();
-
 	static void Startup();
 
 protected:

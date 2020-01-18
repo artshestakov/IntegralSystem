@@ -1,16 +1,6 @@
 #include "ISCommandLine.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
-ISCommandLine::ISCommandLine()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISCommandLine::~ISCommandLine()
-{
-
-}
-//-----------------------------------------------------------------------------
 bool ISCommandLine::Question(const QString &QuestionText)
 {
 	bool Result = true;

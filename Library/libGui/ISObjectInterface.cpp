@@ -3,7 +3,9 @@
 #include "ISDefines.h"
 #include "ISLicense.h"
 //-----------------------------------------------------------------------------
-ISObjectInterface::ISObjectInterface(QObject *parent) : QObject(parent)
+ISObjectInterface::ISObjectInterface(QObject *parent)
+	: QObject(parent),
+	LicenseName(ISLicense::GetInstance().GetName())
 {
 
 }
@@ -15,6 +17,6 @@ ISObjectInterface::~ISObjectInterface()
 //-----------------------------------------------------------------------------
 QIcon ISObjectInterface::GetIcon(const QString &IconName) const
 {
-	return QIcon(":_" + ISLicense::GetInstance().GetName() + "/" + IconName + ".png");
+	return QIcon(":_" + LicenseName + "/" + IconName + ".png");
 }
 //-----------------------------------------------------------------------------

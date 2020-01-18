@@ -3,16 +3,6 @@
 #include "ISSystem.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-ISPassword::ISPassword()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISPassword::~ISPassword()
-{
-
-}
-//-----------------------------------------------------------------------------
 QString ISPassword::GeneratePassword()
 {
 	ISUuid UID = ISSystem::GenerateUuid();

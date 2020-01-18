@@ -4,16 +4,6 @@
 #include "ISSystem.h"
 #include "ISExceptionAssert.h"
 //-----------------------------------------------------------------------------
-ISASSERT::ISASSERT()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISASSERT::~ISASSERT()
-{
-
-}
-//-----------------------------------------------------------------------------
 void ISASSERT::Assert(QObject *Object, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName)
 {
 	if (!Object)

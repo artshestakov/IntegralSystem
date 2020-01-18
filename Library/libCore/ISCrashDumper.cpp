@@ -4,16 +4,6 @@
 #include "ISCore.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISCrashDumper::ISCrashDumper()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISCrashDumper::~ISCrashDumper()
-{
-
-}
-//-----------------------------------------------------------------------------
 void ISCrashDumper::Startup()
 {
 	if (!ISSystem::IsConfigurationDebug())

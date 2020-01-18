@@ -7,7 +7,7 @@
 ISConfig::ISConfig()
 	: Settings(nullptr)
 {
-	Settings = nullptr;
+	
 }
 //-----------------------------------------------------------------------------
 ISConfig::~ISConfig()

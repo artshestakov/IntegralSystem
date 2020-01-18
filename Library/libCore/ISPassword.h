@@ -5,9 +5,6 @@
 class ISPassword
 {
 public:
-	ISPassword();
-	virtual ~ISPassword();
-
 	static QString GeneratePassword(); //Сгенерировать пароль
 	static int GetWidthPassword(const QString &Password); //Получить "вес" пароля
 

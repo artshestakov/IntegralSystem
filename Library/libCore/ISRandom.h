@@ -5,9 +5,6 @@
 class ISRandom
 {
 public:
-	ISRandom(QObject *parent = 0);
-	virtual ~ISRandom();
-
 	static int Integer(); //Целое рандомное число
 	static int Integer(int Minimum, int Maximum); //Целое рандомное число
 	static double Double(); //Число с плавающей запятой

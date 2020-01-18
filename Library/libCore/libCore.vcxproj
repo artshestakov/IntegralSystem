@@ -119,8 +119,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="call_stack.hpp" />
-    <ClInclude Include="EXConstants.h" />
-    <ClInclude Include="EXDefines.h" />
     <ClInclude Include="EXLicense.h" />
     <ClInclude Include="ISAssociationTypes.h" />
     <QtMoc Include="ISAuthConnector.h" />
@@ -144,16 +142,14 @@
     <ClInclude Include="ISHTML.h" />
     <ClInclude Include="ISHTMLHelper.h" />
     <ClInclude Include="ISHtmlQuery.h" />
-    <ClInclude Include="ISLicenseItem.h" />
     <ClInclude Include="ISLocalization.h" />
-    <QtMoc Include="ISMemoryObjects.h" />
+    <ClInclude Include="ISMemoryObjects.h" />
     <QtMoc Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />
     <ClInclude Include="ISMetaUuidCheckeder.h" />
     <QtMoc Include="ISMetaViewQuery.h" />
     <QtMoc Include="ISSMS.h" />
     <ClInclude Include="ISMetaUser.h" />
-    <ClInclude Include="ISMetaUserData.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISModelThreadQuery.h" />
     <ClInclude Include="ISMetaNotify.h" />
@@ -262,7 +258,6 @@
     <ClCompile Include="ISMetaSetting.cpp" />
     <ClCompile Include="ISMetaSettingsGroup.cpp" />
     <ClCompile Include="ISMetaUser.cpp" />
-    <ClCompile Include="ISMetaUserData.cpp" />
     <ClCompile Include="ISMetaUuidCheckeder.cpp" />
     <ClCompile Include="ISMetaViewQuery.cpp" />
     <ClCompile Include="ISMimeAttachment.cpp" />
@@ -317,7 +312,6 @@
     <ClCompile Include="ISStyleSheet.cpp" />
     <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISTrace.cpp" />
-    <ClCompile Include="ISTypes.cpp" />
     <ClCompile Include="ISUuid.cpp" />
     <ClCompile Include="ISVersion.cpp" />
     <ClCompile Include="PMetaClass.cpp" />

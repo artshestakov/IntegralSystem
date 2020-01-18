@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISMemoryObjects : public QObject
+class ISMemoryObjects
 {
-	Q_OBJECT
-
 public:
 	ISMemoryObjects(const ISMemoryObjects &) = delete;
 	ISMemoryObjects(ISMemoryObjects &&) = delete;

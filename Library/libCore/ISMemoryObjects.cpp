@@ -1,13 +1,14 @@
 #include "ISMemoryObjects.h"
 //-----------------------------------------------------------------------------
-ISMemoryObjects::ISMemoryObjects() : QObject()
+ISMemoryObjects::ISMemoryObjects()
+	: MainWindow(nullptr),
+	TabNavigation(nullptr),
+	Desktop(nullptr),
+	WorkspaceForm(nullptr),
+	Logger(nullptr),
+	QueryThreader(nullptr)
 {
-	MainWindow = nullptr;
-	TabNavigation = nullptr;
-	Desktop = nullptr;
-	WorkspaceForm = nullptr;
-	Logger = nullptr;
-	QueryThreader = nullptr;
+	
 }
 //-----------------------------------------------------------------------------
 ISMemoryObjects::~ISMemoryObjects()
