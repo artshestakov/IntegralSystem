@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISQueryException.h"
 #include "ISQueryExceptionConnection.h"
 #include "ISQueryExceptionSyntax.h"
@@ -8,7 +8,7 @@
 #include "ISQueryText.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISQuery
+class ISQuery
 {
 public:
     ISQuery(const QString& text = QString(), bool prepare = true);

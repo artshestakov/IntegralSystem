@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISMetaDataType
+struct ISMetaDataType
 {
 	QString TypeName;
 	ISNamespace::FieldType TypeField;
@@ -13,7 +13,7 @@ struct LIBCORE_EXPORT ISMetaDataType
 	bool Search;
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT StructModelItem
+struct StructModelItem
 {
 	QString FieldName;
 	QVector<QVariant> Values;
@@ -21,7 +21,7 @@ struct LIBCORE_EXPORT StructModelItem
 	ISNamespace::FieldType FieldType;
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISRangeStruct
+struct ISRangeStruct
 {
 public:
 	ISRangeStruct();

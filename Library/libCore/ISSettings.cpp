@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSettings.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"

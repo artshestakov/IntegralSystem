@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMimeText.h"
 //-----------------------------------------------------------------------------
 ISMimeText::ISMimeText(const QString &txt)

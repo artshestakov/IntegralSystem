@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISDatabase
+class ISDatabase
 {
 public:
 	ISDatabase(const ISDatabase &) = delete;

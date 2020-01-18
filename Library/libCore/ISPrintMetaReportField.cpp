@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPrintMetaReportField.h"
 //-----------------------------------------------------------------------------
 ISPrintMetaReportField::ISPrintMetaReportField(QObject *parent) : QObject(parent)

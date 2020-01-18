@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISProtocol : public QObject
+class ISProtocol : public QObject
 {
 	Q_OBJECT
 

@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "PMetaClassTable.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISMetaViewQuery : public QObject
+class ISMetaViewQuery : public QObject
 {
 	Q_OBJECT
 

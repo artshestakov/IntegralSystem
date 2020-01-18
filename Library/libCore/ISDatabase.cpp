@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDatabase.h"
 #include "ISDefines.h"
 #include "ISConfig.h"

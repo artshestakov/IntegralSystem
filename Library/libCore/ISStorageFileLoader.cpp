@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISStorageFileLoader.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"

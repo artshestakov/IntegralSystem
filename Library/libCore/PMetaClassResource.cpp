@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PMetaClassResource.h"
 #include "ISDefines.h"
 #include "ISAssert.h"

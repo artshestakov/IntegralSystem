@@ -147,7 +147,6 @@
     <ClInclude Include="ISDefines.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="libcore_global.h" />
     <ClInclude Include="ISBuffer.h">
       <Filter>Resources</Filter>
     </ClInclude>
@@ -210,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="ISSearchModel.h">
       <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLicense.h">
+      <Filter>License</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -420,9 +422,6 @@
     <ClCompile Include="ISSearchModel.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="ISLicenseItem.cpp">
-      <Filter>License</Filter>
-    </ClCompile>
     <ClCompile Include="ISLicense.cpp">
       <Filter>License</Filter>
     </ClCompile>
@@ -625,9 +624,6 @@
     </QtMoc>
     <QtMoc Include="ISSqlModelView.h">
       <Filter>Model</Filter>
-    </QtMoc>
-    <QtMoc Include="ISLicense.h">
-      <Filter>License</Filter>
     </QtMoc>
     <QtMoc Include="ISCBR.h">
       <Filter>Network\CBR</Filter>

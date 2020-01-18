@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQueryModelHelper.h"
 #include "ISDefines.h"
 #include "ISSystem.h"

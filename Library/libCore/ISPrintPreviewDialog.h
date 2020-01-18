@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 //#include "ISPagesTextEdit.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISPrintPreviewDialog : public QWidget
+class ISPrintPreviewDialog : public QWidget
 {
 	Q_OBJECT
 

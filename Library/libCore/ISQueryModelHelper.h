@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "PMetaClassForeign.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISQueryModelHelper
+class ISQueryModelHelper
 {
 public:
 	static QString GetForeignViewNameField(const QString &MetaTableForeignAlias, PMetaClassForeign *MetaForeign, int Iterator); //Получить текст запроса для отображаемого поля эскортной таблицы (Атрибут в схеме ForeignViewNameField)

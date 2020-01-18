@@ -1,8 +1,6 @@
-#include "StdAfx.h"
 #include "ISPrintingWord.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"
-//#include "ISFileDialog.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
 #include "ISDatabaseHelper.h"

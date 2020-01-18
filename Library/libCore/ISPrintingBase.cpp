@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPrintingBase.h"
 //-----------------------------------------------------------------------------
 ISPrintingBase::ISPrintingBase(ISPrintMetaReport *meta_report, int object_id, QObject *parent) : QObject(parent)

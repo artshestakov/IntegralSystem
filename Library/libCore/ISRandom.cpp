@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISRandom.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------

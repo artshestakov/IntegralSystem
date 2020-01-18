@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISExceptionBase : public exception
+struct ISExceptionBase : public std::exception
 {
 public:
 	ISExceptionBase(const QString& ExceptionString);

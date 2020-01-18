@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMetaDataHelper.h"
 #include "ISDefines.h"
 #include "ISAssert.h"

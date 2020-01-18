@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISLicense.h"
 #include "ISDefines.h"
 #include "ISSystem.h"
@@ -22,7 +21,7 @@ static QString QS_LICENSE = PREPARE_QUERY("SELECT clcn_uid, clcn_license "
 //-----------------------------------------------------------------------------
 static QString QD_LICENSE = PREPARE_QUERY("DELETE FROM _configurationlicense");
 //-----------------------------------------------------------------------------
-ISLicense::ISLicense() : QObject()
+ISLicense::ISLicense()
 {
 	Initialized = false;
 

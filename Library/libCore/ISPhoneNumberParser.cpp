@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPhoneNumberParser.h"
 //-----------------------------------------------------------------------------
 QString ISPhoneNumberParser::RemoveNotDigits(const QString &String)

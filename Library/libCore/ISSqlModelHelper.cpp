@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSqlModelHelper.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

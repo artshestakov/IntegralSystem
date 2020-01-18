@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
 ISCountingTime::ISCountingTime(QObject *parent)

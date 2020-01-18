@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISQueryException.h"
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISQueryExceptionTransaction : ISQueryException
+struct ISQueryExceptionTransaction : ISQueryException
 {
 public:
 	ISQueryExceptionTransaction(const QString& ExceptionString);

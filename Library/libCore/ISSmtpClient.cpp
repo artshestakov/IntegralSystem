@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSmtpClient.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISAssert.h"
 #include "ISDefines.h"
 #include "ISDebug.h"
@@ -58,6 +57,6 @@ void ISASSERT::ShowAssert(const QString &FalseMessage, const QString &QFuncInfo,
 	ISDebug::ShowAssertString(AssertMessage);
 
 	ISDebug::GetInstance().SetAssertMessage(AssertMessage);
-    throw runtime_error(AssertMessage.toStdString().c_str());
+    throw std::runtime_error(AssertMessage.toStdString().c_str());
 }
 //-----------------------------------------------------------------------------

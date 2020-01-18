@@ -1,15 +1,4 @@
-#include "StdAfx.h"
 #include "EXLicense.h"
-//-----------------------------------------------------------------------------
-EXLicense::EXLicense()
-{
-	
-}
-//-----------------------------------------------------------------------------
-EXLicense::~EXLicense()
-{
-
-}
 //-----------------------------------------------------------------------------
 QByteArray EXLicense::GetKey(const QString &ConfUID, const QString &SerialUID)
 {

@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISMetaUserData : public QObject
+class ISMetaUserData : public QObject
 {
 	Q_OBJECT
 

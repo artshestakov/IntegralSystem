@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISRestWorker.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISDaDataService : public QObject
+class ISDaDataService : public QObject
 {
 	Q_OBJECT
 

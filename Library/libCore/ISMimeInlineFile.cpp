@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMimeInlineFile.h"
 //-----------------------------------------------------------------------------
 ISMimeInlineFile::ISMimeInlineFile(QFile *f) : ISMimeFile(f)

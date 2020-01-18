@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMimeMultipart.h"
 //-----------------------------------------------------------------------------
 const QString MULTI_PART_NAMES[] = 

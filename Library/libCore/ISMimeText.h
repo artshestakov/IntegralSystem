@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISMimePart.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISMimeText : public ISMimePart
+class ISMimeText : public ISMimePart
 {
 	Q_OBJECT
 

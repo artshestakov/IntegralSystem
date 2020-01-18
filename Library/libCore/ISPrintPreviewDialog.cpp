@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPrintPreviewDialog.h"
 #include "ISDefines.h"
 #include "ISBuffer.h"

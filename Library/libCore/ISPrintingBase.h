@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISPrintMetaReport.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISPrintingBase : public QObject
+class ISPrintingBase : public QObject
 {
 	Q_OBJECT
 

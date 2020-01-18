@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISVersion.h"
 #include "ISDefines.h"
 #include "ISSystem.h"

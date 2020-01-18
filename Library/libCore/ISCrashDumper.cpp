@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCrashDumper.h"
 #include "ISDefines.h"
 #include "ISDebug.h"

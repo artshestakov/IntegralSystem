@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMimePart.h"
 #include "ISQuotedPrintable.h"
 //-----------------------------------------------------------------------------

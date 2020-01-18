@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISQueryModel.h"
 #include "ISModelThreadWorker.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISModelThreadQuery : public QThread
+class ISModelThreadQuery : public QThread
 {
 	Q_OBJECT
 

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMimeContentFormatter.h"
 //-----------------------------------------------------------------------------
 ISMimeContentFormatter::ISMimeContentFormatter(int max_length) : max_length(max_length)

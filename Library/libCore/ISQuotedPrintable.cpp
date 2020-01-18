@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQuotedPrintable.h"
 //-----------------------------------------------------------------------------
 QString ISQuotedPrintable::encode(const QByteArray &input)

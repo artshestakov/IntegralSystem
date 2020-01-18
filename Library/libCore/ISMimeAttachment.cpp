@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMimeAttachment.h"
 //-----------------------------------------------------------------------------
 ISMimeAttachment::ISMimeAttachment(QFile *file) : ISMimeFile(file)

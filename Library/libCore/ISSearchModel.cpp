@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSearchModel.h"
 #include "ISSystem.h"
 #include "ISRandom.h"

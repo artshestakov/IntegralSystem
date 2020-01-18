@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISOpenWeatherMap.h"
 #include "ISDefines.h"
 #include "ISTrace.h"

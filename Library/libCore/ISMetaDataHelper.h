@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 #include "PMetaClassForeign.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISMetaDataHelper : public QObject
+class ISMetaDataHelper : public QObject
 {
 	Q_OBJECT
 

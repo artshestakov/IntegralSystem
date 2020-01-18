@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMetaUserData.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------

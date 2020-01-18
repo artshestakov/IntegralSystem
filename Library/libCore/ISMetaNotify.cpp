@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMetaNotify.h"
 //-----------------------------------------------------------------------------
 ISMetaNotify::ISMetaNotify(QObject *parent) : QObject(parent)

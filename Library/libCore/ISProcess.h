@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISProcess : public QObject
+class ISProcess : public QObject
 {
 	Q_OBJECT
 

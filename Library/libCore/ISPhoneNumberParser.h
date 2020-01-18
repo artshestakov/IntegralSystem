@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISPhoneNumberParser
+class ISPhoneNumberParser
 {
 public:
 	static QString RemoveNotDigits(const QString &String); //Удаление НЕ цифр из строки

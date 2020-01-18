@@ -134,7 +134,7 @@
     <QtMoc Include="ISDaDataService.h" />
     <ClInclude Include="ISDefines.h" />
     <QtMoc Include="ISEMail.h" />
-    <QtMoc Include="ISLicense.h" />
+    <ClInclude Include="ISLicense.h" />
     <ClInclude Include="ISApplicationRunning.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISCommandLine.h" />
@@ -227,7 +227,6 @@
     <ClInclude Include="ISTypes.h" />
     <ClInclude Include="ISUuid.h" />
     <ClInclude Include="ISVersion.h" />
-    <ClInclude Include="libcore_global.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EXLicense.cpp" />
@@ -254,7 +253,6 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />
     <ClCompile Include="ISExceptionBase.cpp" />
-    <ClCompile Include="ISLicenseItem.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMemoryObjects.cpp" />

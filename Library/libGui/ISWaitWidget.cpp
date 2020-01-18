@@ -180,7 +180,7 @@ bool ISWaitWidget::isSpinning() const
 //-----------------------------------------------------------------------------
 void ISWaitWidget::SetRoundness(qreal roundness)
 {
-	_roundness = max(0.0, min(100.0, roundness));
+	_roundness = std::max(0.0, std::min(100.0, roundness));
 }
 //-----------------------------------------------------------------------------
 void ISWaitWidget::SetColor(QColor color)
@@ -260,7 +260,7 @@ QColor ISWaitWidget::currentLineColor(int countDistance, int totalNrOfLines, qre
 		qreal alphaDiff = color.alphaF() - minAlphaF;
 		qreal gradient = alphaDiff / static_cast<qreal>(distanceThreshold + 1);
 		qreal resultAlpha = color.alphaF() - gradient * countDistance;
-		resultAlpha = min(1.0, max(0.0, resultAlpha));
+		resultAlpha = std::min(1.0, std::max(0.0, resultAlpha));
 		color.setAlphaF(resultAlpha);
 	}
 	return color;

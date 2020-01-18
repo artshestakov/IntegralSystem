@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISModelThreadQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"

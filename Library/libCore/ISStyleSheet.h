@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISStyleSheet
+class ISStyleSheet
 {
 public:
 	ISStyleSheet(const ISStyleSheet &) = delete;

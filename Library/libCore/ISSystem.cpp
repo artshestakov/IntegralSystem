@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSystem.h"
 #include "ISDefines.h"
 #include "ISAssert.h"

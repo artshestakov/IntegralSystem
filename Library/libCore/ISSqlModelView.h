@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "PMetaClassTable.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISSqlModelView : public QAbstractItemModel
+class ISSqlModelView : public QAbstractItemModel
 {
 	Q_OBJECT
 

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISProperty.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

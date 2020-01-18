@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQueryPoolObject.h"
 //-----------------------------------------------------------------------------
 ISQueryPoolObject::ISQueryPoolObject(const QString &sql_text)

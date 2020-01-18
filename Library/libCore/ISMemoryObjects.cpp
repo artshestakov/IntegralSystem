@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMemoryObjects.h"
 //-----------------------------------------------------------------------------
 ISMemoryObjects::ISMemoryObjects() : QObject()

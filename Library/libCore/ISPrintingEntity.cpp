@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPrintingEntity.h"
 #include "ISQuery.h"
 #include "ISPrintMetaReportField.h"

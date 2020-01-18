@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISEmailAddress.h"
 //-----------------------------------------------------------------------------
 ISEmailAddress::ISEmailAddress(const QString &address, const QString &name)

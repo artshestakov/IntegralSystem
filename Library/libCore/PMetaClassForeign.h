@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT PMetaClassForeign : public PMetaClass
+class PMetaClassForeign : public PMetaClass
 {
 	Q_OBJECT
 

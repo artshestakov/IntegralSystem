@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISLogger.h"
 #include "ISDefines.h"
 #include "ISAssert.h"

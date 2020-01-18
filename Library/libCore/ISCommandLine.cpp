@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCommandLine.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
@@ -18,9 +17,9 @@ bool ISCommandLine::Question(const QString &QuestionText)
 	ISDebug::ShowEmptyString(true);
 	ISDebug::ShowString(QuestionText);
 
-	string Answer;
-	getline(cin, Answer);
-	transform(Answer.begin(), Answer.end(), Answer.begin(), ::tolower); //ѕроведение ответа-строки к нижнему регистру
+	std::string Answer;
+	std::getline(std::cin, Answer);
+	std::transform(Answer.begin(), Answer.end(), Answer.begin(), tolower); //ѕроведение ответа-строки к нижнему регистру
 
 	if (Answer == "y" || Answer == "yes" || Answer == "true" || Answer == "t" || Answer == "ok")
 	{
@@ -47,10 +46,8 @@ void ISCommandLine::Pause()
 //-----------------------------------------------------------------------------
 QString ISCommandLine::GetText()
 {
-	string String;
-	getline(cin, String);
-	QString Result(String.c_str());
-
-	return Result;
+	std::string String;
+	std::getline(std::cin, String);
+	return String.c_str();
 }
 //-----------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMetaSetting.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

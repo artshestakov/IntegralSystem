@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPrintingHtml.h"
 #include "ISDefines.h"
 #include "ISSystem.h"

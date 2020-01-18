@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISExceptionBase.h"
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISExceptionAssert : ISExceptionBase
+struct ISExceptionAssert : ISExceptionBase
 {
 public:
 	ISExceptionAssert(const QString& ExceptionString);

@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISMimeFile.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISMimeInlineFile : public ISMimeFile
+class ISMimeInlineFile : public ISMimeFile
 {
 public:
     ISMimeInlineFile(QFile *f);

@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "PMetaClassTable.h"
 #include "PMetaClassField.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISDatabaseHelper
+class ISDatabaseHelper
 {
 public:
 	static QVariant CheckValue(QVariant &Value); //Проверка значения

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISHTMLHelper.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

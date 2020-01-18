@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISRestWorker.h"
 //-----------------------------------------------------------------------------
 const QString ISRestWorker::HttpTemplate = "http://%1:%2/api/%3";

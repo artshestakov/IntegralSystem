@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
 ISUuid::ISUuid(const QString &UID) : QString()

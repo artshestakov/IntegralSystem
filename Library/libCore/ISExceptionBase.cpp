@@ -1,11 +1,10 @@
-#include "StdAfx.h"
 #include "ISExceptionBase.h"
 //-----------------------------------------------------------------------------
 ISExceptionBase::ISExceptionBase(const QString& ExceptionString)
 #ifdef WIN32
-	: exception(ExceptionString.toLocal8Bit())
+	: std::exception(ExceptionString.toLocal8Bit())
 #else
-	: exception()
+	: std::exception()
 #endif
 {
 	Description = ExceptionString;

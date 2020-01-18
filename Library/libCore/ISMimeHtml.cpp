@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMimeHtml.h"
 //-----------------------------------------------------------------------------
 ISMimeHtml::ISMimeHtml(const QString &html) : ISMimeText(html)

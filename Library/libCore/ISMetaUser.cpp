@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMetaUser.h"
 #include "ISAssert.h"
 #include "ISDefines.h"

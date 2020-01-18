@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PMetaClassEscort.h"
 //-----------------------------------------------------------------------------
 PMetaClassEscort::PMetaClassEscort(QObject *parent) : PMetaClass(parent)

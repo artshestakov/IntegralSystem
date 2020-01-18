@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQueryPool.h"
 #include "ISDefines.h"
 #include "ISDatabase.h"

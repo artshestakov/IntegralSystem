@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 #include "PMetaClass.h"
 #include "PMetaClassIndex.h"
 #include "PMetaClassForeign.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT PMetaClassField : public PMetaClass
+class PMetaClassField : public PMetaClass
 {
 	Q_OBJECT
 

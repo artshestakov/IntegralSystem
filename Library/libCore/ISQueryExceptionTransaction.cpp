@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQueryExceptionTransaction.h"
 //-----------------------------------------------------------------------------
 ISQueryExceptionTransaction::ISQueryExceptionTransaction(const QString& ExceptionString) : ISQueryException(ExceptionString)

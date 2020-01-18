@@ -1,13 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISUuid.h"
 #include "ISLicenseItem.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISLicense : public QObject
+class ISLicense
 {
-	Q_OBJECT
-
 public:
 	ISLicense(const ISLicense &) = delete;
 	ISLicense(ISLicense &&) = delete;

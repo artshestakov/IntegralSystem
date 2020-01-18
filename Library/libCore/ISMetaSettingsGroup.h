@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISMetaSetting.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISMetaSettingsGroup : public QObject
+class ISMetaSettingsGroup : public QObject
 {
 	Q_OBJECT
 

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISStackWalker.h"
 //-----------------------------------------------------------------------------
 ISStackWalker::ISStackWalker() : StackWalker(RetrieveLine)
@@ -8,8 +7,7 @@ ISStackWalker::ISStackWalker() : StackWalker(RetrieveLine)
 //-----------------------------------------------------------------------------
 void ISStackWalker::OnOutput(LPCSTR szText)
 {
-	QString s(szText);
-	StackString += QString(s);
+	StackString += QString(szText);
 }
 //-----------------------------------------------------------------------------
 QString ISStackWalker::GetCallStack() const

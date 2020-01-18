@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISOpenWeatherMap : public QObject
+class ISOpenWeatherMap : public QObject
 {
 	Q_OBJECT
 

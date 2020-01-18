@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISQuotedPrintable : public QObject
+class ISQuotedPrintable : public QObject
 {
     Q_OBJECT
 

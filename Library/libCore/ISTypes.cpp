@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
 ISRangeStruct::ISRangeStruct() : BeginValue(QVariant()), EndValue(QVariant())

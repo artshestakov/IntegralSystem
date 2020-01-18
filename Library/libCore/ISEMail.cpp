@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISEMail.h"
 #include "ISDefines.h"
 #include "ISSystem.h"

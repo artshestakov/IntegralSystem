@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
 #define IS_ASSERT(CONDITION, FALSE_MESSAGE) ISASSERT::Assert(CONDITION, FALSE_MESSAGE, Q_FUNC_INFO, SOURCE_LINE, SOURCE_FILE);
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISASSERT
+class ISASSERT
 {
 public:
 	ISASSERT();

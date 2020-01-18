@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMetaViewQuery.h"
 #include "ISMetaData.h"
 #include "PMetaClassTable.h"

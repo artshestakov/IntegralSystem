@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PMetaClassFunction.h"
 //-----------------------------------------------------------------------------
 PMetaClassFunction::PMetaClassFunction(QObject *parent) : PMetaClass(parent)

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PMetaClassIndex.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

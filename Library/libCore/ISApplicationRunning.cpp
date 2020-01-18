@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISApplicationRunning.h"
 //-----------------------------------------------------------------------------
 QString GenerateKeyHash(const QString &key, const QString &salt)

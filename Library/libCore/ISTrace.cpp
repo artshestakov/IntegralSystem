@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTrace.h"
 #include "ISDebug.h"
 #include "ISSystem.h"

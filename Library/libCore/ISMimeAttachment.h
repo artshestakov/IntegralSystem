@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libcore_global.h"
+#include "StdAfx.h"
 #include "ISMimePart.h"
 #include "ISMimeFile.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISMimeAttachment : public ISMimeFile
+class ISMimeAttachment : public ISMimeFile
 {
     Q_OBJECT
 
