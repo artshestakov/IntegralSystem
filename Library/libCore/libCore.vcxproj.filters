@@ -202,9 +202,6 @@
     <ClInclude Include="ISDatabaseHelper.h">
       <Filter>Database</Filter>
     </ClInclude>
-    <ClInclude Include="ISQueryModel.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="ISQueryModelHelper.h">
       <Filter>Database</Filter>
     </ClInclude>
@@ -714,6 +711,9 @@
       <Filter>Network</Filter>
     </QtMoc>
     <QtMoc Include="ISQueryPool.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQueryModel.h">
       <Filter>Database</Filter>
     </QtMoc>
   </ItemGroup>

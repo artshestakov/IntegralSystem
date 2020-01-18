@@ -7,10 +7,12 @@
 #include "PMetaClassTable.h"
 #include "PMetaClassField.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISQueryModel
+class LIBCORE_EXPORT ISQueryModel : public QObject
 {
+	Q_OBJECT
+
 public:
-	ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type);
+	ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent = 0);
 	virtual ~ISQueryModel();
 
 	void SetCondition(const QVariantMap &VariantMap);

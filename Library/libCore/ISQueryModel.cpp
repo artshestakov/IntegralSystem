@@ -6,28 +6,27 @@
 #include "ISDebug.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type)
+ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent)
+	: QObject(parent),
+	MetaTable(meta_table),
+	ModelType(model_type),
+	ClassAlias(meta_table->GetAlias()),
+	ClassFilter(meta_table->GetClassFilter()),
+	Limit(0),
+	Offset(0),
+	VisibleIsDeleted(false),
+	PeriodType(ISNamespace::PT_UnknownDate),
+	QuerySelectText("SELECT \n" + ClassAlias + "." + ClassAlias + "_" + MetaTable->GetSystemFields().at(0)->GetName().toLower() + " AS \"" + MetaTable->GetSystemFields().at(0)->GetName() + "\", \n"),
+	QuerySelectFrom("FROM " + MetaTable->GetName().toLower() + SYMBOL_SPACE + ClassAlias + " \n"),
+	QueryWhereText("WHERE \n"),
+	OrderFieldDefault(ClassAlias + "." + ClassAlias + "_id"),
+	OrderSort(Qt::AscendingOrder)
 {
-	MetaTable = meta_table;
-	ModelType = model_type;
-	ClassAlias = MetaTable->GetAlias();
-	ClassFilter = MetaTable->GetClassFilter();
-	Limit = 0;
-	Offset = 0;
-	VisibleIsDeleted = false;
-	PeriodType = ISNamespace::PT_UnknownDate;
-
 	CreateQuerySelectSystemFields();
 	CreateQuerySelectFields();
 	CreateQuerySelectIsDeleted();
 
-	//Инициализация переменных
-	QuerySelectText = "SELECT \n" + ClassAlias + "." + ClassAlias + "_" + MetaTable->GetSystemFields().at(0)->GetName().toLower() + " AS \"" + MetaTable->GetSystemFields().at(0)->GetName() + "\", \n";
-	QuerySelectFrom = "FROM " + MetaTable->GetName().toLower() + SYMBOL_SPACE + ClassAlias + " \n";
-	QueryWhereText = "WHERE \n";
-	QueryWhereText += QuerySelectIsDeleted;
-	OrderFieldDefault = ClassAlias + "." + ClassAlias + "_id";
-	OrderSort = Qt::AscendingOrder;
+	QueryWhereText += QuerySelectIsDeleted; //???
 }
 //-----------------------------------------------------------------------------
 ISQueryModel::~ISQueryModel()

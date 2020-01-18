@@ -115,7 +115,6 @@ ISListBaseForm::~ISListBaseForm()
 	if (SearchForm)
 	{
 		delete SearchForm;
-		SearchForm = nullptr;
 	}
 
 	ISSystem::SetWaitGlobalCursor(false);

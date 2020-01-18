@@ -182,7 +182,7 @@
     <QtMoc Include="ISPrintingHtml.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISQuery.h" />
-    <ClInclude Include="ISQueryModel.h" />
+    <QtMoc Include="ISQueryModel.h" />
     <ClInclude Include="ISQueryModelHelper.h" />
     <QtMoc Include="ISQueryPool.h" />
     <ClInclude Include="ISQueryPoolObject.h" />
