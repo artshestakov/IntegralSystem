@@ -196,6 +196,24 @@
     <ClInclude Include="EXLicense.h">
       <Filter>License</Filter>
     </ClInclude>
+    <ClInclude Include="ISDatabase.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDatabaseHelper.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryModel.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryModelHelper.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryText.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSearchModel.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -602,27 +620,6 @@
     <QtMoc Include="ISStorageFileLoader.h">
       <Filter>Other</Filter>
     </QtMoc>
-    <QtMoc Include="ISDatabase.h">
-      <Filter>Database</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDatabaseHelper.h">
-      <Filter>Database</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQueryModel.h">
-      <Filter>Database</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQueryModelHelper.h">
-      <Filter>Database</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQueryPool.h">
-      <Filter>Database</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQueryText.h">
-      <Filter>Database</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSearchModel.h">
-      <Filter>Database</Filter>
-    </QtMoc>
     <QtMoc Include="ISSqlModelCore.h">
       <Filter>Model</Filter>
     </QtMoc>
@@ -715,6 +712,9 @@
     </QtMoc>
     <QtMoc Include="ISRestWorker.h">
       <Filter>Network</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQueryPool.h">
+      <Filter>Database</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

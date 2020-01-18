@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "libcore_global.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISDatabase : public QObject
+class LIBCORE_EXPORT ISDatabase
 {
-	Q_OBJECT
-
 public:
 	ISDatabase(const ISDatabase &) = delete;
 	ISDatabase(ISDatabase &&) = delete;

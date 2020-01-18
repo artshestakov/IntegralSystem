@@ -6,7 +6,7 @@
 #include "ISDebug.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent) : QObject(parent)
+ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type)
 {
 	MetaTable = meta_table;
 	ModelType = model_type;

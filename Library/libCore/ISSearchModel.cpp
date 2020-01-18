@@ -3,7 +3,7 @@
 #include "ISSystem.h"
 #include "ISRandom.h"
 //-----------------------------------------------------------------------------
-ISSearchModel::ISSearchModel(QObject *parent) : QObject(parent)
+ISSearchModel::ISSearchModel()
 {
 
 }

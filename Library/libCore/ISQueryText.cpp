@@ -10,7 +10,7 @@
 #include "ISDatabase.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
-ISQueryText::ISQueryText() : QObject()
+ISQueryText::ISQueryText()
 {
 
 }

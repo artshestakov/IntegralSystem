@@ -5,16 +5,6 @@
 #include "ISQuery.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-ISDatabaseHelper::ISDatabaseHelper()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISDatabaseHelper::~ISDatabaseHelper()
-{
-
-}
-//-----------------------------------------------------------------------------
 QVariant ISDatabaseHelper::CheckValue(QVariant &Value)
 {
 	QVariant::Type ValueType = Value.type();

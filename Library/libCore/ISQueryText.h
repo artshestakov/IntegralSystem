@@ -3,10 +3,8 @@
 #include "libcore_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISQueryText : public QObject
+class LIBCORE_EXPORT ISQueryText
 {
-	Q_OBJECT
-
 public:
 	ISQueryText(const ISQueryText &) = delete;
 	ISQueryText(ISQueryText &&) = delete;

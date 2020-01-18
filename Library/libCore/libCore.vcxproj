@@ -129,8 +129,8 @@
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="ISCore.h" />
     <ClInclude Include="ISCrashDumper.h" />
-    <QtMoc Include="ISDatabase.h" />
-    <QtMoc Include="ISDatabaseHelper.h" />
+    <ClInclude Include="ISDatabase.h" />
+    <ClInclude Include="ISDatabaseHelper.h" />
     <QtMoc Include="ISDaDataService.h" />
     <ClInclude Include="ISDefines.h" />
     <QtMoc Include="ISEMail.h" />
@@ -182,12 +182,12 @@
     <QtMoc Include="ISPrintingHtml.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISQuery.h" />
-    <QtMoc Include="ISQueryModel.h" />
-    <QtMoc Include="ISQueryModelHelper.h" />
+    <ClInclude Include="ISQueryModel.h" />
+    <ClInclude Include="ISQueryModelHelper.h" />
     <QtMoc Include="ISQueryPool.h" />
     <ClInclude Include="ISQueryPoolObject.h" />
-    <QtMoc Include="ISQueryText.h" />
-    <QtMoc Include="ISSearchModel.h" />
+    <ClInclude Include="ISQueryText.h" />
+    <ClInclude Include="ISSearchModel.h" />
     <QtMoc Include="ISSqlModelCore.h" />
     <QtMoc Include="ISSqlModelHelper.h" />
     <QtMoc Include="ISSqlModelView.h" />

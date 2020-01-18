@@ -39,7 +39,7 @@ static QString QS_USER_ONLINE_FROM_ID = PREPARE_QUERY("SELECT useronline(userlog
 //-----------------------------------------------------------------------------
 static QString QS_USER_ONLINE_FROM_LOGIN = PREPARE_QUERY("SELECT useronline(:UserLogin)");
 //-----------------------------------------------------------------------------
-ISDatabase::ISDatabase() : QObject()
+ISDatabase::ISDatabase()
 {
 	DefaultDB = QSqlDatabase::addDatabase(SQL_DRIVER_QPSQL, "DefaultDB");
 	SystemDB = QSqlDatabase::addDatabase(SQL_DRIVER_QPSQL, "SystemDB");

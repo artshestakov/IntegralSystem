@@ -4,12 +4,10 @@
 #include "ISNamespace.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISSearchModel : public QObject
+class LIBCORE_EXPORT ISSearchModel
 {
-	Q_OBJECT
-
 public:
-	ISSearchModel(QObject *parent = 0);
+	ISSearchModel();
 	virtual ~ISSearchModel();
 
 	void CreateSearchString(QString &SearchString, QVariantMap &Conditions) const;
