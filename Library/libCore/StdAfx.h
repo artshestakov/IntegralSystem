@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <csignal>
 #include <limits>
@@ -8,9 +8,6 @@
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include "windows.h"
-#include <tchar.h>
-//#include <ActiveQt/QAxBase>
-//#include <ActiveQt/QAxObject>
 #else
 #include <float.h>
 #endif
