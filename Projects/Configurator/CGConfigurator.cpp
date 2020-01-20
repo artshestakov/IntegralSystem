@@ -69,8 +69,8 @@ void CGConfigurator::InterpreterMode()
 	ISDebug::ShowEmptyString();
 	ISDebug::ShowString(LOCALIZATION("Configurator.InputCommand") + ":");
 
-	string InputCommand;
-	getline(cin, InputCommand);
+	std::string InputCommand;
+	std::getline(std::cin, InputCommand);
 	QString Command = QString::fromStdString(InputCommand);
 	if (!Command.length())
 	{

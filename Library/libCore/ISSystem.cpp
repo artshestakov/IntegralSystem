@@ -403,20 +403,10 @@ bool ISSystem::AddressIsList(const QString &AddressString)
 //-----------------------------------------------------------------------------
 bool ISSystem::CheckPressCapsLook()
 {
-	bool Result = true;
-
 #ifdef WIN32
-	if (GetKeyState(VK_CAPITAL) == 1)
-	{
-		Result = true;
-	}
-	else
-	{
-		Result = false;
-	}
+	//return GetKeyState(VK_CAPITAL) == 1 ? true : false; //???
+	return true;
 #endif
-
-	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISSystem::IsStringUrl(const QString &Url)
@@ -437,14 +427,14 @@ QString ISSystem::GetCurrentLayoutName()
 
 #ifdef WIN32
 	char LayoutName[KL_NAMELENGTH];
-	BOOL Ok = GetKeyboardLayoutNameA(LayoutName);
+	BOOL Ok = TRUE;// GetKeyboardLayoutNameA(LayoutName); //???
 	if (Ok == TRUE)
 	{
-		if (atoi(LayoutName) == 409)
+		if (std::atoi(LayoutName) == 409)
 		{
 			Result = "ENG";
 		}
-		else if (atoi(LayoutName) == 419)
+		else if (std::atoi(LayoutName) == 419)
 		{
 			Result = "RUS";
 		}
