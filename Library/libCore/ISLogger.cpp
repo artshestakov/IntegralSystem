@@ -3,16 +3,21 @@
 #include "ISAssert.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISLogger::ISLogger() : QObject()
+ISLogger::ISLogger()
+	: QObject(),
+	FutureWatcher(new QFutureWatcher<void>(this))
 {
 	UpdateLogFileName();
 
-	QFile LogFile(LogPath);
-	bool Opened = LogFile.open(QIODevice::Append);
-	IS_ASSERT(Opened, QString("Not opened log file \"%1\". Error: %2").arg(LogPath).arg(LogFile.errorString()));
-	LogFile.close();
+	QDir DirLogs(APPLICATION_LOGS_PATH);
+	if (!DirLogs.exists())
+	{
+		DirLogs.mkdir(APPLICATION_LOGS_PATH);
+	}
 
-	FutureWatcher = new QFutureWatcher<void>(this);
+	QFile LogFile(LogPath);
+	IS_ASSERT(LogFile.open(QIODevice::Append), QString("Not opened log file \"%1\". Error: %2").arg(LogPath).arg(LogFile.errorString()));
+	LogFile.close();
 
 	QTimer *Timer = new QTimer(this);
 	Timer->setInterval(500);
