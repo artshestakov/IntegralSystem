@@ -282,7 +282,6 @@
     <ClCompile Include="ISKPPEdit.cpp" />
     <ClCompile Include="ISLabelLink.cpp" />
     <ClCompile Include="ISLanguageEdit.cpp" />
-    <ClCompile Include="ISLibraryLoader.cpp" />
     <ClCompile Include="ISLicenseForm.cpp" />
     <ClCompile Include="ISLineEdit.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
@@ -692,7 +691,6 @@
     <QtMoc Include="ISCenterSevenStatusAdmissionForm.h" />
     <ClInclude Include="ISControls.h" />
     <QtMoc Include="ISIntegralSystem.h" />
-    <QtMoc Include="ISLibraryLoader.h" />
     <QtMoc Include="ISOnline.h" />
     <QtMoc Include="ISMainMenu.h" />
     <QtMoc Include="ISMenuBar.h" />

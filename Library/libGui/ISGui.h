@@ -33,6 +33,10 @@ public:
 	static ISImageViewerForm* ShowImageForm(const QString &FilePath); //Показать изображение
 	static ISImageViewerForm* ShowImageForm(const QByteArray &ByteArray); //Показать изображение
 
+	static void ShowTaskViewForm(int TaskID); //Показать карточку просмотра задачи
+	static void ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID = 0); //Показать форму объекта задачи
+	static void ShowTaskObjectForm(QWidget *TaskObjectForm); //Показать форму объекта задачи
+
 protected:
 	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaClassField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());
 };

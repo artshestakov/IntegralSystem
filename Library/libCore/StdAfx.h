@@ -5,6 +5,7 @@
 #include <csignal>
 #include <limits>
 #include <string>
+#include <map>
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include "windows.h"

@@ -163,7 +163,7 @@ void ISTaskForm::FilterClicked()
 //-----------------------------------------------------------------------------
 void ISTaskForm::CreateTask()
 {
-	ISIntegralSystem::ShowTaskObjectForm(ISNamespace::OFT_New);
+	ISGui::ShowTaskObjectForm(ISNamespace::OFT_New);
 }
 //-----------------------------------------------------------------------------
 void ISTaskForm::SearchByNumber()
@@ -176,11 +176,11 @@ void ISTaskForm::SearchByNumber()
 			ISUuid StatusUID = ISCore::TaskGetStatusUID(TaskID);
 			if (StatusUID == CONST_UID_TASK_STATUS_NEW)
 			{
-				ISIntegralSystem::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID);
+				ISGui::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID);
 			}
 			else
 			{
-				ISIntegralSystem::ShowTaskViewForm(TaskID);
+				ISGui::ShowTaskViewForm(TaskID);
 			}
 		}
 		else
@@ -192,6 +192,6 @@ void ISTaskForm::SearchByNumber()
 //-----------------------------------------------------------------------------
 void ISTaskForm::CreateObjectForm(QWidget *TaskObjectForm)
 {
-	ISIntegralSystem::ShowTaskObjectForm(TaskObjectForm);
+	ISGui::ShowTaskObjectForm(TaskObjectForm);
 }
 //-----------------------------------------------------------------------------

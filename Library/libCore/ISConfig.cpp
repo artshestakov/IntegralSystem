@@ -7,7 +7,44 @@
 ISConfig::ISConfig()
 	: Settings(nullptr)
 {
-	
+	Structure =
+	{
+		{
+			"Connection",
+			{
+				{ "Server" , "" },
+				{ "Port", "" },
+				{ "Database", "" },
+				{ "Login", "" },
+				{ "Password", "" }
+			}
+		},
+		{
+			"AutoInput",
+			{
+				{ "Included" , "false" },
+				{ "Login", "" },
+				{ "Password", "" }
+			}
+		},
+		{
+			"Other",
+			{
+				{ "Autoboot" , "false" },
+				{ "Language", "ru" }
+			}
+		},
+		{
+			"DatabaseService",
+			{
+				{ "Login" , "" },
+				{ "Password" , "" },
+				{ "FolderBackup" , "" },
+				{ "FolderPostgresBin" , "" },
+				{ "KeepOverDays", "" }
+			}
+		}
+	};
 }
 //-----------------------------------------------------------------------------
 ISConfig::~ISConfig()
@@ -24,13 +61,15 @@ ISConfig& ISConfig::GetInstance()
 	return Config;
 }
 //-----------------------------------------------------------------------------
-void ISConfig::Initialize(const QString &ConfigFilePath)
+void ISConfig::Initialize(const QString &config_file_path)
 {
-	IS_ASSERT(QFile::exists(ConfigFilePath), QString("Not found file config: %1").arg(ConfigFilePath));
-	Settings = new QSettings(ConfigFilePath, QSettings::IniFormat);
-	IS_ASSERT(Settings->allKeys().count(), QString("Config file \"%1\" is empty.").arg(ConfigFilePath));
+	ConfigFilePath = config_file_path;
+	if (!QFile::exists(ConfigFilePath))
+	{
+		Generate();
+	}
 
-	ISDebug::ShowInfoString(QString("Config initialized. Server: %1, Port: %2, Database: %3").arg(GetValue(CONST_CONFIG_CONNECTION_SERVER).toString()).arg(GetValue(CONST_CONFIG_CONNECTION_PORT).toInt()).arg(GetValue(CONST_CONFIG_CONNECTION_DATABASE).toString()));
+	Settings = new QSettings(ConfigFilePath, QSettings::IniFormat);
 }
 //-----------------------------------------------------------------------------
 QVariant ISConfig::GetValue(const QString &ParameterName)
@@ -65,5 +104,21 @@ void ISConfig::ClearValue(const QString &ParameterName)
 {
 	IS_ASSERT(Settings->contains(ParameterName), QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
 	Settings->setValue(ParameterName, QVariant());
+}
+//-----------------------------------------------------------------------------
+void ISConfig::Generate()
+{
+	//??? Вероятно, это временное решениие и тут будет использоваться класс CLSettings из монорепозитория
+	Settings = new QSettings(ConfigFilePath, QSettings::IniFormat);
+	for (const auto &SectionItem : Structure)
+	{
+		for (const auto &ParameterItem : SectionItem.second)
+		{
+			Settings->setValue(SectionItem.first + "/" + ParameterItem.first, ParameterItem.second);
+		}
+	}
+
+	delete Settings;
+	Settings = nullptr;
 }
 //-----------------------------------------------------------------------------

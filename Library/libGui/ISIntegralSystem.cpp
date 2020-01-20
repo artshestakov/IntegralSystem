@@ -10,25 +10,19 @@
 #include "ISBuffer.h"
 #include "ISAutoLocking.h"
 #include "ISSystem.h"
-#include "ISTaskViewForm.h"
-#include "ISObjectFormBase.h"
-#include "ISGui.h"
 #include "ISSplashWidget.h"
-#include "ISLibraryLoader.h"
 #include "ISConfig.h"
 #include "ISCrashDumper.h"
 #include "ISDebug.h"
 #include "ISVersion.h"
+#include "ISCore.h"
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
 	Q_INIT_RESOURCE(Resources);
+	ISCore::Startup();
 
 	ISDebug::ShowString("Starting system... Version: " + ISVersion::GetInstance().GetVersion());
-
-	//ISLibraryLoader LibraryLoader;
-	//LibraryLoader.Load();
-
 	ISCrashDumper::Startup();
 
 	ISSplashWidget SplashWidget;
@@ -154,27 +148,5 @@ bool ISIntegralSystem::notify(QObject *Object, QEvent *e)
 	}
 
 	return Result;
-}
-//-----------------------------------------------------------------------------
-void ISIntegralSystem::ShowTaskViewForm(int TaskID)
-{
-	ISSystem::SetWaitGlobalCursor(true);
-	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(TaskID);
-	TaskViewForm->showMaximized();
-	ISSystem::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISIntegralSystem::ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID)
-{
-	ISObjectFormBase *TaskObjectForm = ISGui::CreateObjectForm(FormType, "_Task", TaskID);
-	ShowTaskObjectForm(TaskObjectForm);
-}
-//-----------------------------------------------------------------------------
-void ISIntegralSystem::ShowTaskObjectForm(QWidget *TaskObjectForm)
-{
-	TaskObjectForm->setParent(nullptr);
-	TaskObjectForm->resize(SIZE_TASK_OBJECT_FORM);
-	ISSystem::MoveWidgetToDesktop(TaskObjectForm, ISNamespace::MWD_Center);
-	TaskObjectForm->show();
 }
 //-----------------------------------------------------------------------------

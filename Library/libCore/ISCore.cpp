@@ -82,6 +82,13 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 												"AND task_executor = currentuserid() "
 												"AND task_deadline < CURRENT_DATE");
 //-----------------------------------------------------------------------------
+bool ISCore::Startup()
+{
+	ISSystem::CreateDir(APPLICATION_LOGS_PATH);
+	ISSystem::CreateDir(APPLICATION_TEMP_PATH);
+	return true;
+}
+//-----------------------------------------------------------------------------
 bool ISCore::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName)
 {
 	bool Result = false;

@@ -7,7 +7,7 @@
 #include "ISMessageBox.h"
 #include "ISCore.h"
 #include "ISMetaUser.h"
-#include "ISIntegralSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISTaskBaseListForm::ISTaskBaseListForm(QWidget *parent) : ISListBaseForm("_Task", parent)
 {
@@ -34,7 +34,7 @@ void ISTaskBaseListForm::Edit()
 	}
 	else
 	{
-		ISIntegralSystem::ShowTaskViewForm(GetObjectID());
+		ISGui::ShowTaskViewForm(GetObjectID());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void ISTaskBaseListForm::TakeToWork()
 					ISCore::TaskSetStatus(GetObjectID(), CONST_UID_TASK_STATUS_IN_WORK);
 					SetSelectObjectAfterUpdate(GetObjectID());
 					Update();
-					ISIntegralSystem::ShowTaskViewForm(GetObjectID());
+					ISGui::ShowTaskViewForm(GetObjectID());
 				}
 			}
 			else //Исполнителем задачи является не текущий пользователь

@@ -3,7 +3,7 @@
 #include "ISDefines.h"
 #include "ISQuery.h"
 #include "ISBuffer.h"
-#include "ISIntegralSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_DUPLICATES = PREPARE_QUERY("SELECT tsdp_duplicate, task_name "
 											 "FROM _taskduplicate "
@@ -51,6 +51,6 @@ void ISTaskDuplicatesTab::Update()
 //-----------------------------------------------------------------------------
 void ISTaskDuplicatesTab::ItemDoubleClicked(QListWidgetItem *ListWidgetItem)
 {
-	ISIntegralSystem::ShowTaskViewForm(ListWidgetItem->data(Qt::UserRole).toInt());
+	ISGui::ShowTaskViewForm(ListWidgetItem->data(Qt::UserRole).toInt());
 }
 //-----------------------------------------------------------------------------

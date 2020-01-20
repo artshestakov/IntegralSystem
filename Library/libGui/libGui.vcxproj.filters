@@ -747,9 +747,6 @@
     <ClCompile Include="ISIntegralSystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISLibraryLoader.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISOnline.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -1821,9 +1818,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISIntegralSystem.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISLibraryLoader.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISOnline.h">

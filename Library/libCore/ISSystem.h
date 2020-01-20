@@ -43,6 +43,7 @@ public:
 	static bool CheckPressCapsLook(); //Проверить активность кнопки CapsLook
 	static bool IsStringUrl(const QString &Url); //Проверить является ли строка ссылкой
 	static QString GetCurrentLayoutName(); //Получить наименование текущей раскладки клавиатуры
+	static bool CreateDir(const QString &DirPath);
 
 //ДАТА И ВРЕМЯ
 	static int TimeFromMinutes(const QTime &Time); //Перевести время в минуты

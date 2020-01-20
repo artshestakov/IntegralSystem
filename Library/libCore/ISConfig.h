@@ -13,7 +13,7 @@ public:
 
 	static ISConfig& GetInstance();
 
-	void Initialize(const QString &ConfigFilePath);
+	void Initialize(const QString &config_file_path);
 	
 	QVariant GetValue(const QString &ParameterName); //Получить значение параметра
 	bool GetValueBool(const QString &ParameterName);
@@ -24,9 +24,14 @@ public:
 	void ClearValue(const QString &ParameterName); //Очистить значение параметра
 
 private:
+	void Generate();
+
+private:
 	ISConfig();
 
 	QSettings *Settings;
+	std::map<QString, std::map<QString, QString>> Structure;
+	QString ConfigFilePath;
 };
 //-----------------------------------------------------------------------------
 #define CONFIG_VALUE(PARAMETER_NAME) ISConfig::GetInstance().GetValue(PARAMETER_NAME)

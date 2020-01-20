@@ -327,7 +327,7 @@ void ISTaskViewForm::Rename()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CreateTask()
 {
-	ISIntegralSystem::ShowTaskObjectForm(ISNamespace::OFT_New);
+	ISGui::ShowTaskObjectForm(ISNamespace::OFT_New);
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::UpdateActions()
@@ -413,7 +413,7 @@ void ISTaskViewForm::CloneTask()
 {
 	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CloneThisTask")))
 	{
-		ISIntegralSystem::ShowTaskObjectForm(ISNamespace::OFT_Copy, TaskID);
+		ISGui::ShowTaskObjectForm(ISNamespace::OFT_Copy, TaskID);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -486,12 +486,12 @@ void ISTaskViewForm::Link()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::ReRead()
 {
-	ISIntegralSystem::ShowTaskViewForm(TaskID);
+	ISGui::ShowTaskViewForm(TaskID);
 	close();
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::OpenLinkTask()
 {
-	ISIntegralSystem::ShowTaskViewForm(sender()->property("LinkTaskID").toInt());
+	ISGui::ShowTaskViewForm(sender()->property("LinkTaskID").toInt());
 }
 //-----------------------------------------------------------------------------

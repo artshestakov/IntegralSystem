@@ -10,7 +10,7 @@
 #include "ISQuery.h"
 #include "ISMessageBox.h"
 #include "ISCore.h"
-#include "ISIntegralSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_id "
                                               "FROM _taskstatus "
@@ -134,7 +134,7 @@ void ISTaskObjectForm::TakeToWork()
 			{
 				ISCore::TaskSetStatus(GetObjectID(), CONST_UID_TASK_STATUS_IN_WORK);
 				close();
-				ISIntegralSystem::ShowTaskViewForm(GetObjectID());
+				ISGui::ShowTaskViewForm(GetObjectID());
 			}
 		}
 		else //Исполнителем задачи является не текущий пользователь

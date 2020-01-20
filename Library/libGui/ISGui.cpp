@@ -14,6 +14,7 @@
 #include "ISRecordInfoForm.h"
 #include "ISProtocol.h"
 #include "ISSelectDialogForm.h"
+#include "ISTaskViewForm.h"
 //-----------------------------------------------------------------------------
 ISGui::ISGui() : QObject()
 {
@@ -170,6 +171,28 @@ ISImageViewerForm* ISGui::ShowImageForm(const QString &FilePath)
 ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 {
 	return ShowImageForm(ISSystem::ByteArrayToPixmap(ByteArray));
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowTaskViewForm(int TaskID)
+{
+	ISSystem::SetWaitGlobalCursor(true);
+	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(TaskID);
+	TaskViewForm->showMaximized();
+	ISSystem::SetWaitGlobalCursor(false);
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID)
+{
+	ISObjectFormBase *TaskObjectForm = CreateObjectForm(FormType, "_Task", TaskID);
+	ShowTaskObjectForm(TaskObjectForm);
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowTaskObjectForm(QWidget *TaskObjectForm)
+{
+	TaskObjectForm->setParent(nullptr);
+	TaskObjectForm->resize(SIZE_TASK_OBJECT_FORM);
+	ISSystem::MoveWidgetToDesktop(TaskObjectForm, ISNamespace::MWD_Center);
+	TaskObjectForm->show();
 }
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaClassField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)

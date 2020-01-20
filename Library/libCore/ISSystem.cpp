@@ -437,17 +437,31 @@ QString ISSystem::GetCurrentLayoutName()
 
 #ifdef WIN32
 	char LayoutName[KL_NAMELENGTH];
-	GetKeyboardLayoutNameA(LayoutName);
-	if (atoi(LayoutName) == 409)
+	BOOL Ok = GetKeyboardLayoutNameA(LayoutName);
+	if (Ok == TRUE)
 	{
-		Result = "ENG";
-	}
-	else if (atoi(LayoutName) == 419)
-	{
-		Result = "RUS";
+		if (atoi(LayoutName) == 409)
+		{
+			Result = "ENG";
+		}
+		else if (atoi(LayoutName) == 419)
+		{
+			Result = "RUS";
+		}
 	}
 #endif
 
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISSystem::CreateDir(const QString &DirPath)
+{
+	QDir Dir(DirPath);
+	bool Result = Dir.exists();
+	if (!Result)
+	{
+		Result = Dir.mkdir(DirPath);
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
