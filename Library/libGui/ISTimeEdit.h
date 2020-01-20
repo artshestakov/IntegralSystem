@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISDateTimeEdit.h"
 #include "ISServiceButton.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTimeEdit : public ISDateTimeEdit
+class ISTimeEdit : public ISDateTimeEdit
 {
 	Q_OBJECT
 

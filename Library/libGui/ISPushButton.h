@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPushButton : public QPushButton
+class ISPushButton : public QPushButton
 {
 	Q_OBJECT
 

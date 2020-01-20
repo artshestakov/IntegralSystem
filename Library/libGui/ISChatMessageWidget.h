@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISChatMessageWidget : public QWidget
+class ISChatMessageWidget : public QWidget
 {
 	Q_OBJECT
 

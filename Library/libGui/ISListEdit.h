@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "PMetaClassTable.h"
 #include "ISPushButton.h"
 #include "ISListEditPopup.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISListEdit : public ISFieldEditBase
+class ISListEdit : public ISFieldEditBase
 {
 	Q_OBJECT
 

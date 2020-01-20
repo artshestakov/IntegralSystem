@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISQLabel.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPatternWidget : public QFrame
+class ISPatternWidget : public QFrame
 {
 	Q_OBJECT
 

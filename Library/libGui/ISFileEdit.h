@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISButtonFile.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISFileEdit : public ISFieldEditBase
+class ISFileEdit : public ISFieldEditBase
 {
 	Q_OBJECT
 

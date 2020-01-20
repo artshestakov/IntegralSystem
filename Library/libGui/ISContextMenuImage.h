@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISContextMenuImage : public QMenu
+class ISContextMenuImage : public QMenu
 {
 	Q_OBJECT
 

@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISListWidget.h"
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISInternalDirectoriesForm : public ISInterfaceMetaForm
+class ISInternalDirectoriesForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

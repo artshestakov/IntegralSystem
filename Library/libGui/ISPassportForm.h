@@ -1,13 +1,13 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISLineEdit.h"
 #include "ISDateEdit.h"
 #include "ISTextEdit.h"
 #include "ISDivisionCodeEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPassportForm : public ISInterfaceDialogForm
+class ISPassportForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

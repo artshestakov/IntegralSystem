@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISFlowLayout : public QLayout
+class ISFlowLayout : public QLayout
 {
 	Q_OBJECT
 

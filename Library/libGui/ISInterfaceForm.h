@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы интерфейса
-class LIBGUI_EXPORT ISInterfaceForm : public QWidget
+class ISInterfaceForm : public QWidget
 {
 	Q_OBJECT
 

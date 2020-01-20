@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDeviceObjectBase : public QObject
+class ISDeviceObjectBase : public QObject
 {
 	Q_OBJECT
 

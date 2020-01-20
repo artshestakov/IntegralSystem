@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDelegateImage : public QStyledItemDelegate
+class ISDelegateImage : public QStyledItemDelegate
 {
 	Q_OBJECT
 

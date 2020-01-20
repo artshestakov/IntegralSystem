@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISObjectInterface.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISHighway : public ISObjectInterface
+class ISHighway : public ISObjectInterface
 {
 	Q_OBJECT
 

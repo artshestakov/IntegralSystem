@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISNamespace.h"
 #include "ISPushButton.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISExitForm : public ISInterfaceDialogForm
+class ISExitForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

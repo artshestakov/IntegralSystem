@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISObjectFormBase.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISSironaResearchTypeObjectForm : public ISObjectFormBase
+class ISSironaResearchTypeObjectForm : public ISObjectFormBase
 {
 	Q_OBJECT
 

@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISIPAddressEdit.h"
 #include "ISIntegerEdit.h"
@@ -10,7 +10,7 @@
 #include "ISPushButton.h"
 #include "ISLanguageEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISConnectionForm : public ISInterfaceDialogForm
+class ISConnectionForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

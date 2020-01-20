@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISTaskTabBase.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTaskCommentsTab : public ISTaskTabBase
+class ISTaskCommentsTab : public ISTaskTabBase
 {
 	Q_OBJECT
 

@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISImageWidget : public QLabel
+class ISImageWidget : public QLabel
 {
 	Q_OBJECT
 

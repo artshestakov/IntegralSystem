@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClassTable.h"
 #include "ISQueryModel.h"
@@ -14,7 +14,7 @@
 #include "ISSearchEdit.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы списка
-class LIBGUI_EXPORT ISListBaseForm : public ISInterfaceMetaForm
+class ISListBaseForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

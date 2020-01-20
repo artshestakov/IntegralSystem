@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISScrollArea.h"
 #include "ISMonitorUserWidget.h"
 #include "ISCheckEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMonitorActivityForm : public ISInterfaceMetaForm
+class ISMonitorActivityForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

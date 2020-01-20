@@ -1,13 +1,13 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISPatriot.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISRangeDateEdit.h"
 #include "ISComboEdit.h"
 #include "ISListViewWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPatriotTrainerReportForm : public ISInterfaceMetaForm
+class ISPatriotTrainerReportForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISCalendarWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISCalendarPopup : public ISCalendarWidget
+class ISCalendarPopup : public ISCalendarWidget
 {
 	Q_OBJECT
 

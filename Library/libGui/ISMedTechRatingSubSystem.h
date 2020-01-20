@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISMedTechRatingListForm.h"
 #include "ISAsteriskCallsListForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMedTechRatingSubSystem : public ISInterfaceMetaForm
+class ISMedTechRatingSubSystem : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

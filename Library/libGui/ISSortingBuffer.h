@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISSortingMetaTable.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISSortingBuffer : public QObject
+class ISSortingBuffer : public QObject
 {
 	Q_OBJECT
 

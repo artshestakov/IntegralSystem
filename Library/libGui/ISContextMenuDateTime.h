@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISContextMenuBase.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISContextMenuDateTime : public ISContextMenuBase
+class ISContextMenuDateTime : public ISContextMenuBase
 {
 	Q_OBJECT
 

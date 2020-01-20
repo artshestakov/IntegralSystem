@@ -70,11 +70,6 @@ QVariant ISDatabaseHelper::GetObjectIDToList(PMetaClassTable *MetaTable, PMetaCl
 int ISDatabaseHelper::GetCountRows(const QString &TableName, const QString &Alias)
 {
 	ISQuery qSelectCount(QString("SELECT COUNT(*) FROM %1 WHERE NOT %2_isdeleted").arg(TableName).arg(Alias));
-	if (qSelectCount.ExecuteFirst())
-	{
-		return qSelectCount.ReadColumn("count").toInt();
-	}
-
-	return -1;
+	return qSelectCount.ExecuteFirst() ? qSelectCount.ReadColumn("count").toInt() : -1;
 }
 //-----------------------------------------------------------------------------

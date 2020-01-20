@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISQComboBox.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISComboEdit : public ISFieldEditBase
+class ISComboEdit : public ISFieldEditBase
 {
 	Q_OBJECT
 

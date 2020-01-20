@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISSelectListForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISSelectDialogForm : public ISInterfaceDialogForm
+class ISSelectDialogForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

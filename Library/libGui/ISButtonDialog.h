@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISPushButton.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISButtonDialog : public QDialogButtonBox
+class ISButtonDialog : public QDialogButtonBox
 {
 	Q_OBJECT
 

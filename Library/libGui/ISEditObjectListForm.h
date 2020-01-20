@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISListObjectForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISEditObjectListForm : public ISListObjectForm
+class ISEditObjectListForm : public ISListObjectForm
 {
 	Q_OBJECT
 

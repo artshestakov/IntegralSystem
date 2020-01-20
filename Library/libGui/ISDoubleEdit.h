@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISQDoubleSpinBox.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDoubleEdit : public ISFieldEditBase
+class ISDoubleEdit : public ISFieldEditBase
 {
 	Q_OBJECT
 

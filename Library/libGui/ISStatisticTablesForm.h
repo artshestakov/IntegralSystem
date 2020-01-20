@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISStatisticTablesForm : public ISInterfaceForm
+class ISStatisticTablesForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

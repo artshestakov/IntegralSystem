@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISDesktopForm.h"
 #include "ISMenuBar.h"
@@ -11,7 +11,7 @@
 #include "ISWorkspaceForm.h"
 #include "ISPhoneForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMainWindow : public ISInterfaceForm
+class ISMainWindow : public ISInterfaceForm
 {
 	Q_OBJECT
 

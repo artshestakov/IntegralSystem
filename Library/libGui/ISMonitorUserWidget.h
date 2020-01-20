@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMonitorUserWidget : public QFrame
+class ISMonitorUserWidget : public QFrame
 {
 	Q_OBJECT
 

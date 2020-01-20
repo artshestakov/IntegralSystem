@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISCheckEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTaskImportantEdit : public ISCheckEdit
+class ISTaskImportantEdit : public ISCheckEdit
 {
 	Q_OBJECT
 

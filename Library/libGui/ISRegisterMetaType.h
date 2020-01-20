@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISRegisterMetaType : public QObject
+class ISRegisterMetaType : public QObject
 {
 	Q_OBJECT
 

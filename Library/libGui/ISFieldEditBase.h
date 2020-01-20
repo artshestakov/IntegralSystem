@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISButtonClear.h"
 //-----------------------------------------------------------------------------
 //Базовый класс для всех полей редактирования информации
-class LIBGUI_EXPORT ISFieldEditBase : public QWidget
+class ISFieldEditBase : public QWidget
 {
 	Q_OBJECT
 

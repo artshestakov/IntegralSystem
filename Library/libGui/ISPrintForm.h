@@ -1,13 +1,13 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISButtonDialog.h"
 #include "ISCheckEdit.h"
 #include "ISPrintMetaReport.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPrintForm : public ISInterfaceDialogForm
+class ISPrintForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

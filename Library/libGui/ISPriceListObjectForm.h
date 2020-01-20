@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISObjectFormBase.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPriceListObjectForm : public ISObjectFormBase
+class ISPriceListObjectForm : public ISObjectFormBase
 {
 	Q_OBJECT
 

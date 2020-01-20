@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "PMetaClassTable.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISFavoritesForm : public ISInterfaceForm
+class ISFavoritesForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

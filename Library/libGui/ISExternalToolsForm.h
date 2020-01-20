@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISPushButton.h"
 #include "ISLineEdit.h"
@@ -8,7 +8,7 @@
 #include "ISButtonDialog.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISExternalToolsForm : public ISInterfaceDialogForm
+class ISExternalToolsForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

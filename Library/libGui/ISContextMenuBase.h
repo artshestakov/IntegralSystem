@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
 //Базовый класс контекстного меню для виджетов редактирования информации (преимущественно для полей редактирования информации IS*Edit)
-class LIBGUI_EXPORT ISContextMenuBase : public QMenu
+class ISContextMenuBase : public QMenu
 {
 	Q_OBJECT
 

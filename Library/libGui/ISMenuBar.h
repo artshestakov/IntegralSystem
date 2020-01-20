@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 #include "ISMainMenu.h"
 #include "ISButtonNotify.h"
@@ -8,7 +8,7 @@
 #include "ISUuid.h"
 #include "ISButtonMainMenu.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMenuBar : public QWidget
+class ISMenuBar : public QWidget
 {
 	Q_OBJECT
 

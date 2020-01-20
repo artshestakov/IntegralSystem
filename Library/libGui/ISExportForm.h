@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "PMetaClassTable.h"
 #include "ISComboEdit.h"
@@ -9,7 +9,7 @@
 #include "ISCheckEdit.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISExportForm : public ISInterfaceDialogForm
+class ISExportForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

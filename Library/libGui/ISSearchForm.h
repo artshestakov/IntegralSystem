@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "PMetaClassTable.h"
 #include "ISPushButton.h"
@@ -9,7 +9,7 @@
 #include "ISServiceButton.h"
 #include "ISSearchModel.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISSearchForm : public ISInterfaceForm
+class ISSearchForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

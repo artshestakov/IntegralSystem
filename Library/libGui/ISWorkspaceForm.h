@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISParagraphBaseForm.h"
 #include "ISTabWidgetMain.h"
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClassTable.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISWorkspaceForm : public ISParagraphBaseForm
+class ISWorkspaceForm : public ISParagraphBaseForm
 {
 	Q_OBJECT
 

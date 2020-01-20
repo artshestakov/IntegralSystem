@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISScrollArea : public QScrollArea
+class ISScrollArea : public QScrollArea
 {
 	Q_OBJECT
 

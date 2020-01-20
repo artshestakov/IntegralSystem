@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "PMetaClassTable.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISRecordInfoForm : public ISInterfaceDialogForm
+class ISRecordInfoForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISRangeEditBase : public QWidget
+class ISRangeEditBase : public QWidget
 {
 	Q_OBJECT
 

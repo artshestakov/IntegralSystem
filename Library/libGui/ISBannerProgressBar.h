@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISBannerProgressBar : public QProgressBar
+class ISBannerProgressBar : public QProgressBar
 {
 	Q_OBJECT
 

@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISParagraphBaseForm.h"
 #include "ISCalendarPanel.h"
 #include "ISCalendarDayWidget.h"
@@ -8,7 +8,7 @@
 #include "ISLineEdit.h"
 #include "ISCalendarEventsWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISCalendarForm : public ISParagraphBaseForm
+class ISCalendarForm : public ISParagraphBaseForm
 {
 	Q_OBJECT
 

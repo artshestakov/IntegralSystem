@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISLineEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISKPPEdit : public ISLineEdit
+class ISKPPEdit : public ISLineEdit
 {
 	Q_OBJECT
 

@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISExportWorker.h"
 //-----------------------------------------------------------------------------
 class ISExportXML : public ISExportWorker

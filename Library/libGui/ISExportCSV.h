@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISExportWorker.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISExportCSV : public ISExportWorker
+class ISExportCSV : public ISExportWorker
 {
 	Q_OBJECT
 

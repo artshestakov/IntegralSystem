@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISRangeDateTimeEdit.h"
 #include "ISPushButton.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISAsteriskTotalForm : public ISInterfaceForm
+class ISAsteriskTotalForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISStackedWidget : public QStackedWidget
+class ISStackedWidget : public QStackedWidget
 {
 	Q_OBJECT
 

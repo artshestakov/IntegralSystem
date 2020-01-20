@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISObjectFormBase.h"
 #include "ISListEdit.h"
 #include "ISLineEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDeviceUserObjectForm : public ISObjectFormBase
+class ISDeviceUserObjectForm : public ISObjectFormBase
 {
 	Q_OBJECT
 

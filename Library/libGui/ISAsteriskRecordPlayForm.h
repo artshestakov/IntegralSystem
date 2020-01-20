@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISPlayerWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISAsteriskRecordPlayForm : public ISInterfaceDialogForm
+class ISAsteriskRecordPlayForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISIncomingCallBaseForm : public ISInterfaceDialogForm
+class ISIncomingCallBaseForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

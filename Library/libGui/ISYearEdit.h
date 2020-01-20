@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISIntegerEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISYearEdit : public ISIntegerEdit
+class ISYearEdit : public ISIntegerEdit
 {
 	Q_OBJECT
 

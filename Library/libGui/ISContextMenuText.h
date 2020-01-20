@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISContextMenuBase.h"
 //-----------------------------------------------------------------------------
 //Контекстное меню для полей редактирования текста (Преимущественно ISLineEdit и ISTextEdit)
-class LIBGUI_EXPORT ISContextMenuText : public ISContextMenuBase
+class ISContextMenuText : public ISContextMenuBase
 {
 	Q_OBJECT
 

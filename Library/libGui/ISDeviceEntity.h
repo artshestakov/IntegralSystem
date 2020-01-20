@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISDeviceObjectBase.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDeviceEntity : public QObject
+class ISDeviceEntity : public QObject
 {
 	Q_OBJECT
 

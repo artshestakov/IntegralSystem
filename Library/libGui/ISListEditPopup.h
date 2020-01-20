@@ -1,13 +1,13 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISLineEdit.h"
 #include "ISListWidget.h"
 #include "PMetaClassForeign.h"
 #include "PMetaClassTable.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISListEditPopup : public ISInterfaceForm
+class ISListEditPopup : public ISInterfaceForm
 {
 	Q_OBJECT
 

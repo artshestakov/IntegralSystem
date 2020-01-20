@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISMetaSystem.h"
 #include "ISMetaSubSystem.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMetaSystemsEntity : public QObject
+class ISMetaSystemsEntity : public QObject
 {
 	Q_OBJECT
 

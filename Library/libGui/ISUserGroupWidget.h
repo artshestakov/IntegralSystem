@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISUserGroupWidget : public QWidget
+class ISUserGroupWidget : public QWidget
 {
 	Q_OBJECT
 

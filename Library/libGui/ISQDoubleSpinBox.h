@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISQDoubleSpinBox : public QDoubleSpinBox
+class ISQDoubleSpinBox : public QDoubleSpinBox
 {
 	Q_OBJECT
 

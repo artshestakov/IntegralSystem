@@ -18,9 +18,9 @@ public:
 	bool Print() override;
 
 private:
-	QAxObject *WordApplication;
-	QAxObject *Documents;
-	QAxObject *Document;
-	QAxObject *Bookmarks;
+	//QAxObject *WordApplication;
+	//QAxObject *Documents;
+	//QAxObject *Document;
+	//QAxObject *Bookmarks;
 };
 //-----------------------------------------------------------------------------

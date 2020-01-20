@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISPushButton.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISCalculatorButton : public ISPushButton
+class ISCalculatorButton : public ISPushButton
 {
     Q_OBJECT
 

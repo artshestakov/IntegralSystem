@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISParagraphBaseForm.h"
 #include "ISListWidget.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTelephonyForm : public ISParagraphBaseForm
+class ISTelephonyForm : public ISParagraphBaseForm
 {
 	Q_OBJECT
 

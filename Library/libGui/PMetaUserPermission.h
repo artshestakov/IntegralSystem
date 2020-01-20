@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT PMetaUserPermission : public QObject
+class PMetaUserPermission : public QObject
 {
 	Q_OBJECT
 

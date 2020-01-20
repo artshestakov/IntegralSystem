@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISImageViewerForm : public ISInterfaceForm
+class ISImageViewerForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

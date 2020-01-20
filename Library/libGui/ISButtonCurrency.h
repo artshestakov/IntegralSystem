@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISPushButton.h"
 #include "ISCBR.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISButtonCurrency : public ISPushButton
+class ISButtonCurrency : public ISPushButton
 {
 	Q_OBJECT
 

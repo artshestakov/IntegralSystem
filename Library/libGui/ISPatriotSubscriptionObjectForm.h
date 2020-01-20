@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISObjectFormBase.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPatriotSubscriptionObjectForm : public ISObjectFormBase
+class ISPatriotSubscriptionObjectForm : public ISObjectFormBase
 {
 	Q_OBJECT
 

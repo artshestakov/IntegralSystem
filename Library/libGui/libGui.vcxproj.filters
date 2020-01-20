@@ -202,7 +202,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libgui_global.h" />
     <ClInclude Include="ISControls.h">
       <Filter>System</Filter>
     </ClInclude>

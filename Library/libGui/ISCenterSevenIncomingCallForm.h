@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISIncomingCallBaseForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISCenterSevenIncomingCallForm : public ISIncomingCallBaseForm
+class ISCenterSevenIncomingCallForm : public ISIncomingCallBaseForm
 {
 	Q_OBJECT
 

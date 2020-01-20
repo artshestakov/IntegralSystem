@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMetaSubSystem : public QObject
+class ISMetaSubSystem : public QObject
 {
 	Q_OBJECT
 

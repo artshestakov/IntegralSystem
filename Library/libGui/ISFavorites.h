@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISFavorites : public QObject
+class ISFavorites : public QObject
 {
 	Q_OBJECT
 

@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISPasswordEdit.h"
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISLockForm : public ISInterfaceDialogForm
+class ISLockForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

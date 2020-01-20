@@ -7,15 +7,15 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISFieldEditBase::ISFieldEditBase(QWidget *parent) : QWidget(parent)
+ISFieldEditBase::ISFieldEditBase(QWidget *parent)
+	: QWidget(parent),
+	ButtonHint(nullptr),
+	EditWidget(nullptr),
+	FieldEditPointer(nullptr),
+	ModificationFlag(false),
+	BorderRed(false),
+	ButtonClear(nullptr)
 {
-	ButtonHint = nullptr;
-	EditWidget = nullptr;
-	FieldEditPointer = nullptr;
-	ModificationFlag = false;
-	BorderRed = false;
-	ButtonClear = nullptr;
-
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
 	//Главный компоновщик
@@ -114,16 +114,12 @@ void ISFieldEditBase::SetFixedWidth(int Width)
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal)
 {
-	QSizePolicy SizePolicy = sizePolicy();
-	SizePolicy.setHorizontalPolicy(PolicyHorizontal);
-	setSizePolicy(SizePolicy);
+	setSizePolicy(QSizePolicy(PolicyHorizontal, sizePolicy().verticalPolicy()));
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical)
 {
-	QSizePolicy SizePolicy = sizePolicy();
-	SizePolicy.setVerticalPolicy(PolicyVertical);
-	setSizePolicy(SizePolicy);
+	setSizePolicy(QSizePolicy(sizePolicy().horizontalPolicy(), PolicyVertical));
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::BlinkRed()
@@ -171,11 +167,7 @@ void ISFieldEditBase::CreateHint(const QString &Hint)
 {
 	if (Hint.length())
 	{
-		if (ButtonHint)
-		{
-			ButtonHint->setAccessibleDescription(Hint);
-		}
-		else
+		if (!ButtonHint)
 		{
 			ButtonHint = new QToolButton(this);
 			ButtonHint->setFocusPolicy(Qt::NoFocus);
@@ -184,10 +176,10 @@ void ISFieldEditBase::CreateHint(const QString &Hint)
 			ButtonHint->setFixedSize(SIZE_22_22);
 			ButtonHint->setCursor(CURSOR_POINTING_HAND);
 			ButtonHint->setToolTip(LOCALIZATION("ClickToViewHelp"));
-			ButtonHint->setAccessibleDescription(Hint);
 			connect(ButtonHint, &QToolButton::clicked, this, &ISFieldEditBase::ShowHint);
 			LayoutLeft->addWidget(ButtonHint);
 		}
+		ButtonHint->setAccessibleDescription(Hint);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -200,7 +192,6 @@ void ISFieldEditBase::SetFocus()
 void ISFieldEditBase::paintEvent(QPaintEvent *PaintEvent)
 {
 	QWidget::paintEvent(PaintEvent);
-
 	if (EditWidget)
 	{
 		if (BorderRed)
@@ -235,10 +226,8 @@ void ISFieldEditBase::ValueChanged()
 void ISFieldEditBase::AddWidgetEdit(QWidget *edit_widget, QWidget *field_edit_pointer)
 {
 	IS_ASSERT(!EditWidget, "EditWidget already exist");
-
 	EditWidget = edit_widget;
 	FieldEditPointer = field_edit_pointer;
-
 	LayoutEdit->addWidget(edit_widget);
 }
 //-----------------------------------------------------------------------------

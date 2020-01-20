@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFieldEditBase.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISRadioEdit : public ISFieldEditBase
+class ISRadioEdit : public ISFieldEditBase
 {
 	Q_OBJECT
 

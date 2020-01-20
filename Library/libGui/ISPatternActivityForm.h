@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISUuid.h"
 #include "ISPatternWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPatternActivityForm : public ISInterfaceForm
+class ISPatternActivityForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

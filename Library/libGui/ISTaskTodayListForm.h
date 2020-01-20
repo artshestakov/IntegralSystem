@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISTaskBaseListForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTaskTodayListForm : public ISTaskBaseListForm
+class ISTaskTodayListForm : public ISTaskBaseListForm
 {
 	Q_OBJECT
 		

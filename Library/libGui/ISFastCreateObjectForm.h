@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISComboEdit.h"
 #include "ISPushButton.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISFastCreateRecordsForm : public ISInterfaceDialogForm
+class ISFastCreateRecordsForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

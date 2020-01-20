@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISMetaSystem.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISSystemsPanel : public QWidget
+class ISSystemsPanel : public QWidget
 {
 	Q_OBJECT
 

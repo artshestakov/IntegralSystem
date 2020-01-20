@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISNamespace.h"
 #include "ISRangeDateEdit.h"
 #include "ISButtonDialog.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPeriodForm : public ISInterfaceDialogForm
+class ISPeriodForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

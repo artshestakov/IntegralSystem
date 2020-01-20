@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISPushButton.h"
 #include "ISButtonWeather.h"
 #include "ISButtonCurrency.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISStatusBar : public QStatusBar
+class ISStatusBar : public QStatusBar
 {
 	Q_OBJECT
 

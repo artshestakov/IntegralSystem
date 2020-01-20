@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISComboSettingEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISComboTableDoubleClickEvent : public ISComboSettingEdit
+class ISComboTableDoubleClickEvent : public ISComboSettingEdit
 {
 	Q_OBJECT
 

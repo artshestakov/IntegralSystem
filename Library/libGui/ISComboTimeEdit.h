@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISComboEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISComboTimeEdit : public ISComboEdit
+class ISComboTimeEdit : public ISComboEdit
 {
 	Q_OBJECT
 

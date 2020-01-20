@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFastAccessEntity.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMenuFastAccess : public QMenu
+class ISMenuFastAccess : public QMenu
 {
 	Q_OBJECT
 

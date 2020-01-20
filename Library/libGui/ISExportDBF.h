@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISExportWorker.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISExportDBF : public ISExportWorker
+class ISExportDBF : public ISExportWorker
 {
 	Q_OBJECT
 

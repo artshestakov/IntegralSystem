@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISMetaParagraph.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISParagraphEntity : public QObject
+class ISParagraphEntity : public QObject
 {
 	Q_OBJECT
 

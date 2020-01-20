@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISCalendarPopup.h"
 #include "ISQDateTimeEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDateTimeEdit : public ISFieldEditBase
+class ISDateTimeEdit : public ISFieldEditBase
 {
 	Q_OBJECT
 

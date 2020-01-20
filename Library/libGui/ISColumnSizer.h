@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISColumnSizeItem.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISColumnSizer : public QObject
+class ISColumnSizer : public QObject
 {
 	Q_OBJECT
 

@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISRadioEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTaskPriorityEdit : public ISRadioEdit
+class ISTaskPriorityEdit : public ISRadioEdit
 {
 	Q_OBJECT
 

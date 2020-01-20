@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISDateEdit.h"
 #include "ISCenterSevenAdmissionListForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISCenterSevenDesktop : public QWidget
+class ISCenterSevenDesktop : public QWidget
 {
 	Q_OBJECT
 

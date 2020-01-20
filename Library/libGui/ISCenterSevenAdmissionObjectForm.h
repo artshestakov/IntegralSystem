@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISObjectFormBase.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISCenterSevenAdmissionObjectForm : public ISObjectFormBase
+class ISCenterSevenAdmissionObjectForm : public ISObjectFormBase
 {
 	Q_OBJECT
 

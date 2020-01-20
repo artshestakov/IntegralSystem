@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISPageMetrics.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPagesTextEdit : public QTextEdit
+class ISPagesTextEdit : public QTextEdit
 {
 	Q_OBJECT
 

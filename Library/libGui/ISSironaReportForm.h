@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISRangeDateEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISSironaReportForm : public ISInterfaceMetaForm
+class ISSironaReportForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

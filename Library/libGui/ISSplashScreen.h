@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISSplashScreen : public QSplashScreen
+class ISSplashScreen : public QSplashScreen
 {
 	Q_OBJECT
 

@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISAttachFileBaseForm.h"
 #include "ISPushButton.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISAttachFilesForm : public ISAttachFileBaseForm
+class ISAttachFilesForm : public ISAttachFileBaseForm
 {
 	Q_OBJECT
 

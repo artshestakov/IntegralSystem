@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISComboTimeEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISCalendarEventForm : public ISInterfaceForm
+class ISCalendarEventForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

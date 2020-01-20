@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISServiceButton.h"
 #include "ISSliderDuration.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPlayerWidget : public QWidget
+class ISPlayerWidget : public QWidget
 {
 	Q_OBJECT
 

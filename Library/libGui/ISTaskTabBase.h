@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTaskTabBase : public QWidget
+class ISTaskTabBase : public QWidget
 {
 	Q_OBJECT
 

@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISFileDialog : public QFileDialog
+class ISFileDialog : public QFileDialog
 {
 	Q_OBJECT
 

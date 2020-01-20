@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISButtonNotify : public QToolButton
+class ISButtonNotify : public QToolButton
 {
 	Q_OBJECT
 

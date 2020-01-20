@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISKnowledgeBaseSubSystem : public ISInterfaceMetaForm
+class ISKnowledgeBaseSubSystem : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

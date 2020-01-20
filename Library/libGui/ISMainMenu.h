@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISMainMenu : public QMenu
+class ISMainMenu : public QMenu
 {
 	Q_OBJECT
 
@@ -10,7 +10,7 @@ public:
 	ISMainMenu(QWidget *parent = 0);
 	virtual ~ISMainMenu();
 
-	void Show(const QPoint &pos);
+	void Show(const QPoint &Point);
 
 private:
 	QPropertyAnimation *PropertyAnimation;

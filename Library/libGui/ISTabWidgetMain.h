@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISTabBarMain.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTabWidgetMain : public QTabWidget
+class ISTabWidgetMain : public QTabWidget
 {
 	Q_OBJECT
 

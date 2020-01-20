@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISQTextEdit : public QTextEdit
+class ISQTextEdit : public QTextEdit
 {
 	Q_OBJECT
 

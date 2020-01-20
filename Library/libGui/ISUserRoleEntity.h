@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "PMetaUserPermission.h"
 #include "ISNamespace.h"
 #include "ISTypes.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISUserRoleEntity : public QObject
+class ISUserRoleEntity : public QObject
 {
 	Q_OBJECT
 

@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISPushButton.h"
 #include "ISOpenWeatherMap.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISButtonWeather : public ISPushButton
+class ISButtonWeather : public ISPushButton
 {
 	Q_OBJECT
 

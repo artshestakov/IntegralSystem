@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISObjectFormBase.h"
 #include "ISComboSearchBase.h"
 #include "ISImageViewerForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISGui : public QObject
+class ISGui : public QObject
 {
 	Q_OBJECT
 

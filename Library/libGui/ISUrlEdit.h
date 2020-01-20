@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISLineEdit.h"
 #include "ISServiceButton.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISUrlEdit : public ISLineEdit
+class ISUrlEdit : public ISLineEdit
 {
 	Q_OBJECT
 

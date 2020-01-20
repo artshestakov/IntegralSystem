@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISRangeEditBase.h"
 #include "ISDateEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISRangeDateEdit : public ISRangeEditBase
+class ISRangeDateEdit : public ISRangeEditBase
 {
 	Q_OBJECT
 

@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISPathEditFile.h"
 #include "ISLineEdit.h"
 #include "ISButtonDialog.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTaskFileInsertForm : public ISInterfaceDialogForm
+class ISTaskFileInsertForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISComboEdit.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISComboSearchBase : public ISComboEdit
+class ISComboSearchBase : public ISComboEdit
 {
 	Q_OBJECT
 

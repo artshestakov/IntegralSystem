@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPatriotClientsBirthdayForm : public ISInterfaceForm
+class ISPatriotClientsBirthdayForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

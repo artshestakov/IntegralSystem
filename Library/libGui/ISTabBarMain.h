@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTabBarMain : public QTabBar
+class ISTabBarMain : public QTabBar
 {
 	Q_OBJECT
 

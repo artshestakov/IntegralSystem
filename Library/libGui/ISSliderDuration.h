@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISSliderDuration : public QSlider
+class ISSliderDuration : public QSlider
 {
 	Q_OBJECT
 

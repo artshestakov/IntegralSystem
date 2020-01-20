@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISListBaseForm.h"
 #include "ISDateEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDemoAccessesListForm : public ISListBaseForm
+class ISDemoAccessesListForm : public ISListBaseForm
 {
 	Q_OBJECT
 

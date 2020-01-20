@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 #include "ISPopupMessage.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISNotificationService : public QObject
+class ISNotificationService : public QObject
 {
 	Q_OBJECT
 

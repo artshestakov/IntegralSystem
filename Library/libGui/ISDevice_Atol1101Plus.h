@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISDeviceComObject.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDevice_Atol1101Plus : public ISDeviceComObject
+class ISDevice_Atol1101Plus : public ISDeviceComObject
 {
 	Q_OBJECT
 

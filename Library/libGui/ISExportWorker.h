@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISSqlModelCore.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISExportWorker : public QObject
+class ISExportWorker : public QObject
 {
 	Q_OBJECT
 

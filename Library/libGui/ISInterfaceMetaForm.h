@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISInterfaceMetaForm : public ISInterfaceForm
+class ISInterfaceMetaForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

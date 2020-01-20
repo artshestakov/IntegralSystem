@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISContextMenuBase.h"
 //-----------------------------------------------------------------------------
 //Контекстное меню для полей редактирования целых чисел (Преимущественно ISQSpinBox)
-class LIBGUI_EXPORT ISContextMenuInteger : public ISContextMenuBase
+class ISContextMenuInteger : public ISContextMenuBase
 {
 	Q_OBJECT
 

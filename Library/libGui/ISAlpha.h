@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISObjectInterface.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISAlpha : public ISObjectInterface
+class ISAlpha : public ISObjectInterface
 {
 	Q_OBJECT
 

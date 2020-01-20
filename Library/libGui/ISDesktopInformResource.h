@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISCalendarWidget.h"
 #include "ISListViewWidget.h"
 #include "ISUserEdit.h"
 #include "ISTextEdit.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDesktopInformResource : public QWidget
+class ISDesktopInformResource : public QWidget
 {
 	Q_OBJECT
 

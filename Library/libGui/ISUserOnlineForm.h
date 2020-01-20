@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISDateEdit.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISUserOnlineForm : public ISInterfaceForm
+class ISUserOnlineForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

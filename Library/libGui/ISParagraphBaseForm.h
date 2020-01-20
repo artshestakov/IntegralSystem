@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISMenuBar.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISParagraphBaseForm : public QWidget
+class ISParagraphBaseForm : public QWidget
 {
 	Q_OBJECT
 

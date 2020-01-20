@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTelephonySummary : public QObject
+class ISTelephonySummary : public QObject
 {
 	Q_OBJECT
 

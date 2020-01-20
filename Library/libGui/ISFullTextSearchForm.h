@@ -1,12 +1,12 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISLineEdit.h"
 #include "PMetaClassTable.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISFullTextSearchForm : public ISInterfaceMetaForm
+class ISFullTextSearchForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

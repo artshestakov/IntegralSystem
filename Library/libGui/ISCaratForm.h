@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISCaratForm : public ISInterfaceMetaForm
+class ISCaratForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

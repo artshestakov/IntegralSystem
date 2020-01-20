@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPasswordWidthWidget : public QWidget
+class ISPasswordWidthWidget : public QWidget
 {
 	Q_OBJECT
 

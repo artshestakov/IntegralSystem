@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISTaskCommentsTab.h"
 #include "ISTaskFilesTab.h"
@@ -8,7 +8,7 @@
 #include "ISTaskHistoryTab.h"
 #include "ISTaskInfoWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTaskViewForm : public ISInterfaceForm
+class ISTaskViewForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

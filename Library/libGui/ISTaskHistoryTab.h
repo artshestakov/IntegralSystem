@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISTaskTabBase.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISTaskHistoryTab : public ISTaskTabBase
+class ISTaskHistoryTab : public ISTaskTabBase
 {
 	Q_OBJECT
 

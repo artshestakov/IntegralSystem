@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISParagraphBaseForm.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISDesktopForm : public ISParagraphBaseForm
+class ISDesktopForm : public ISParagraphBaseForm
 {
 	Q_OBJECT
 

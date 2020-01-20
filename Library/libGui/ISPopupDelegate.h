@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISPopupDelegate : public QStyledItemDelegate
+class ISPopupDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 

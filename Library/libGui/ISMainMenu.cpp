@@ -16,12 +16,9 @@ ISMainMenu::~ISMainMenu()
 
 }
 //-----------------------------------------------------------------------------
-void ISMainMenu::Show(const QPoint &pos)
+void ISMainMenu::Show(const QPoint &Point)
 {
-	QPoint NewPos = pos;
-	NewPos.setY(NewPos.y() + dynamic_cast<QWidget*>(parent())->height());
-
-	move(NewPos);
+	move(QPoint(Point.x(), Point.y() + dynamic_cast<QWidget*>(parent())->height()));
 	show();
 	PropertyAnimation->start();
 }

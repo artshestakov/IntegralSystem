@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClassTable.h"
 #include "ISBaseTableView.h"
@@ -8,7 +8,7 @@
 #include "ISSqlModelView.h"
 #include "ISMetaViewQuery.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISListViewWidget : public ISInterfaceMetaForm
+class ISListViewWidget : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 

@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISNamespace.h"
 #include "PMetaClassTable.h"
@@ -12,7 +12,7 @@
 #include "ISTabWidgetObject.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы объекта
-class LIBGUI_EXPORT ISObjectFormBase : public ISInterfaceForm
+class ISObjectFormBase : public ISInterfaceForm
 {
 	Q_OBJECT
 

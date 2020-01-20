@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libgui_global.h"
+#include "StdAfx.h"
 #include "ISMetaExternalTool.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISFastAccessEntity : public QObject
+class ISFastAccessEntity : public QObject
 {
 	Q_OBJECT
 

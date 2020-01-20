@@ -82,7 +82,7 @@
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
       <AdditionalDependencies>
@@ -833,7 +833,6 @@
     <QtMoc Include="ISSironaResearchListForm.h" />
     <QtMoc Include="ISSironaResearchObjectForm.h" />
     <QtMoc Include="ISSironaResearchTypeObjectForm.h" />
-    <ClInclude Include="libgui_global.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
