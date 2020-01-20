@@ -1,26 +1,22 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscarat_global.h"
 #include "ISCaratCoreApplication.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISCARAT_EXPORT ISCoreSMS : public ISCaratCoreApplication
+class ISCoreMail : public ISCaratCoreApplication
 {
 	Q_OBJECT
 
 public:
-	ISCoreSMS(int &argc, char **argv);
-	virtual ~ISCoreSMS();
+	ISCoreMail(int &argc, char **argv);
+	virtual ~ISCoreMail();
 
 	bool Invoke() override;
 
 protected:
 	void Timeout();
-	void UpdateStatus(int ID, const ISUuid &StatusUID);
-	void SendDone(int ID, int MessageID);
-	void SendFailed(int ID, int MessageID, const QString &ErrorString);
-
-	QString GetCharset(const ISUuid &CharsetUID) const;
+	void SendDone(int MailID);
+	void SendFailed(int MailID, const QString &ErrorString);
 
 private:
 	QTimer *Timer;

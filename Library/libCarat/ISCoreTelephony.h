@@ -1,10 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscarat_global.h"
 #include "ISCaratCoreApplication.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISCARAT_EXPORT ISCoreTelephony : public ISCaratCoreApplication
+class ISCoreTelephony : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

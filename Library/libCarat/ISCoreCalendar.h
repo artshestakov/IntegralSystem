@@ -1,18 +1,21 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscarat_global.h"
+#include "ISCaratCoreApplication.h"
 //-----------------------------------------------------------------------------
-class ISCARAT_EXPORT ISCaratCoreApplication : public QCoreApplication
+class ISCoreCalendar : public ISCaratCoreApplication
 {
 	Q_OBJECT
 
 public:
-	ISCaratCoreApplication(int &argc, char **argv);
-	virtual ~ISCaratCoreApplication();
+	ISCoreCalendar(int &argc, char **argv);
+	virtual ~ISCoreCalendar();
 
-	virtual bool Invoke() = 0;
+	bool Invoke() override;
 
-	int Exec() const;
-	void Started(); //Уведомление о запуске
+protected:
+	void Timeout();
+
+private:
+	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------

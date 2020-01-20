@@ -10,35 +10,19 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ISCaratApplication.cpp" />
-    <ClCompile Include="ISCaratService.cpp" />
-    <ClCompile Include="ISProcessCore.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="QtService.cpp" />
-    <ClCompile Include="QtService_Win.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ISCaratApplication.h" />
-    <ClInclude Include="QtService_p.h" />
-    <QtMoc Include="qtservice_win.h" />
-    <QtMoc Include="QtService.h" />
-    <QtMoc Include="ISProcessCore.h" />
-    <QtMoc Include="ISCaratService.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0E5C4046-F164-4AEA-91E1-E0B899A28F3D}</ProjectGuid>
+    <ProjectGuid>{66BE6C4D-80E3-42FF-9619-AE79FE6C9519}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -55,6 +39,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(Configuration)-$(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -79,14 +67,13 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\libCarat;$(ProjectDir)..\..\Library\libCore;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LIBCARAT_LIB;BUILD_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\libCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libCarat.lib;libCore.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -95,13 +82,73 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PreprocessorDefinitions>LIBCARAT_LIB;BUILD_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\libCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ISAsteriskSocket.cpp" />
+    <ClCompile Include="ISCaratCoreApplication.cpp" />
+    <ClCompile Include="ISCoreAsteriskQueue.cpp" />
+    <ClCompile Include="ISCoreAsteriskRecord.cpp" />
+    <ClCompile Include="ISCoreCalendar.cpp" />
+    <ClCompile Include="ISCoreCenterSeven.cpp" />
+    <ClCompile Include="ISCoreHighway.cpp" />
+    <ClCompile Include="ISCoreInformResource.cpp" />
+    <ClCompile Include="ISCoreMail.cpp" />
+    <ClCompile Include="ISCoreMedTech.cpp" />
+    <ClCompile Include="ISCoreNotification.cpp" />
+    <ClCompile Include="ISCoreScheduler.cpp" />
+    <ClCompile Include="ISCoreSMS.cpp" />
+    <ClCompile Include="ISCoreTelephony.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreAsteriskQueue.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreCalendar.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreAsteriskRecord.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreCenterSeven.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreHighway.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreInformResource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreMail.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreMedTech.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISAsteriskSocket.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreTelephony.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCaratCoreApplication.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreSMS.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreScheduler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCoreNotification.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

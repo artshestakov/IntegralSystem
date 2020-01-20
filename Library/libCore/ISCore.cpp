@@ -159,10 +159,8 @@ void ISCore::ExitApplication()
 		{
 			ISMemoryObjects::GetInstance().GetMainWindow()->setProperty("CloseEvent", false);
 		}
-
 		qApp->closeAllWindows();
 	}
-
 	qApp->quit();
 }
 //-----------------------------------------------------------------------------
@@ -170,23 +168,19 @@ void ISCore::TerminateCurrentProcess()
 {
 	QStringList StringList;
 	QString Program;
-	
 	if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
 	{
 		Program = "TASKKILL";
-		
 		StringList.append("/PID");
 		StringList.append(QString::number(CURRENT_PID));
 		StringList.append("/F");
 	}
-
 	QProcess::execute(Program, StringList);
 }
 //-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 {
 	QString ObjectName;
-
 	if (MetaTable->GetTitleName().length())
 	{
 		QString TitleName = MetaTable->GetTitleName();
@@ -223,7 +217,6 @@ QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 	{
 		ObjectName = QString::number(ObjectID);
 	}
-
 	return ObjectName;
 }
 //-----------------------------------------------------------------------------
@@ -321,7 +314,6 @@ void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, 
 	Parameters.insert(":TableLocalName", LocalListName);
 	Parameters.insert(":ObjectName", ObjectName);
 	Parameters.insert(":ObjectID", ObjectID);
-
 	ISQueryPool::GetInstance().AddQuery(QI_HISTORY, Parameters);
 }
 //-----------------------------------------------------------------------------
@@ -329,7 +321,6 @@ void ISCore::ClearHistory()
 {
 	QVariantMap Parameters;
 	Parameters.insert(":CurrentUserID", ISMetaUser::GetInstance().GetData()->ID);
-
 	ISQueryPool::GetInstance().AddQuery(QD_HISTORY, Parameters);
 }
 //-----------------------------------------------------------------------------
@@ -411,10 +402,11 @@ void ISCore::SMSSend(const QString &Login, const QString &Password, const QStrin
 //-----------------------------------------------------------------------------
 void ISCore::SMSSend(const QString &Phone, const QString &Message)
 {
-	QString Login = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_LOGIN);
-	QString Password = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_PASSWORD);
-	QString Charset = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_ENCODING);
-	SMSSend(Login, Password, Phone, Message, Charset);
+	SMSSend(SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_LOGIN),
+		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_PASSWORD),
+		Phone,
+		Message,
+		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_ENCODING));
 }
 //-----------------------------------------------------------------------------
 ISUuid ISCore::TaskGetStatusUID(int TaskID)
@@ -442,18 +434,13 @@ void ISCore::TaskSetStatus(int TaskID, const ISUuid &StatusUID, const QVariant &
 //-----------------------------------------------------------------------------
 bool ISCore::TaskCheckExist(int TaskID)
 {
-	bool Result = false;
-
 	ISQuery qSelect(QS_TASK_COUNT);
 	qSelect.BindValue(":TaskID", TaskID);
-	if (qSelect.ExecuteFirst())
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
 	{
-		if (qSelect.ReadColumn("count").toInt())
-		{
-			return true;
-		}
+		Result = qSelect.ReadColumn("count").toInt() > 0;
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -462,15 +449,12 @@ bool ISCore::TaskIsDuplicate(int TaskOriginalID, int TaskDuplicateID)
 	ISQuery qSelectDuplicate(QS_TASK_DUPLICATE);
 	qSelectDuplicate.BindValue(":OriginalID", TaskOriginalID);
 	qSelectDuplicate.BindValue(":DuplicateID", TaskDuplicateID);
-	if (qSelectDuplicate.ExecuteFirst())
+	bool Result = qSelectDuplicate.ExecuteFirst();
+	if (Result)
 	{
-		if (qSelectDuplicate.ReadColumn("count").toInt())
-		{
-			return true;
-		}
+		Result = qSelectDuplicate.ReadColumn("count").toInt();
 	}
-
-	return false;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISCore::TaskInsertDuplicate(int TaskOriginalID, int TaskDuplicateID)
@@ -495,7 +479,6 @@ void ISCore::TaskInsertHistory(int TaskID, int UserID, const ISUuid &HistoryUID,
 	{
 		VariantMap.insert(":Information", QVariant());
 	}
-
 	ISQueryPool::GetInstance().AddQuery(QI_TASK_HISTORY, VariantMap);
 }
 //-----------------------------------------------------------------------------
@@ -506,20 +489,15 @@ void ISCore::TaskInsertHistory(int TaskID, const ISUuid &HistoryUID, const QStri
 //-----------------------------------------------------------------------------
 bool ISCore::TaskIsAttachedObject(int TaskID, const QString &TableName, int ObjectID)
 {
-	bool Result = false;
 	ISQuery qSelect(QS_TASK_ATTACH);
 	qSelect.BindValue(":TaskID", TaskID);
 	qSelect.BindValue(":TableName", TableName);
 	qSelect.BindValue(":ObjectID", ObjectID);
-	if (qSelect.ExecuteFirst())
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
 	{
-		int Count = qSelect.ReadColumn("count").toInt();
-		if (Count)
-		{
-			Result = true;
-		}
+		Result = qSelect.ReadColumn("count").toInt() > 0;
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

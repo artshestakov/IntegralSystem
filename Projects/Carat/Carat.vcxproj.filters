@@ -6,106 +6,56 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
-      <Extensions>moc;h;cpp</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{f47a0d4f-6cfa-4dfd-9797-9ac04db9796d}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{8ca7b4f2-6bbe-4673-a031-70eaf28e72aa}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
     <Filter Include="Service">
-      <UniqueIdentifier>{43a91606-4448-4dfa-a107-af28d7494de0}</UniqueIdentifier>
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h">
-      <Filter>Generated Files</Filter>
+    <ClCompile Include="ISCaratApplication.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCaratService.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProcessCore.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="QtService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="QtService_Win.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISCaratApplication.h">
+      <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="!Service\qtservice_p.h">
+    <ClInclude Include="QtService_p.h">
       <Filter>Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Carat.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="!System\main.cpp">
+    <QtMoc Include="ISCaratService.h">
       <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="!Service\qtservice.cpp">
+    </QtMoc>
+    <QtMoc Include="ISProcessCore.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="QtService.h">
       <Filter>Service</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_qtservice.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_qtservice.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="!Service\qtservice_win.cpp">
+    </QtMoc>
+    <QtMoc Include="qtservice_win.h">
       <Filter>Service</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_qtservice_win.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_qtservice_win.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="!System\ISCaratApplication.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="!System\ISCaratService.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISCaratService.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISCaratService.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ISProcessCore.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ISProcessCore.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="!System\ISProcessCore.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="!Service\qtservice.h">
-      <Filter>Service</Filter>
-    </CustomBuild>
-    <CustomBuild Include="!Service\qtservice_win.h">
-      <Filter>Service</Filter>
-    </CustomBuild>
-    <CustomBuild Include="!System\ISCaratApplication.h">
-      <Filter>System</Filter>
-    </CustomBuild>
-    <CustomBuild Include="!System\ISCaratService.h">
-      <Filter>System</Filter>
-    </CustomBuild>
-    <CustomBuild Include="!System\ISProcessCore.h">
-      <Filter>System</Filter>
-    </CustomBuild>
+    </QtMoc>
   </ItemGroup>
 </Project>

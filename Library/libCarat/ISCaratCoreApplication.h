@@ -2,9 +2,17 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-#ifdef ISCARAT_LIB
-# define ISCARAT_EXPORT Q_DECL_EXPORT
-#else
-# define ISCARAT_EXPORT Q_DECL_IMPORT
-#endif
+class ISCaratCoreApplication : public QCoreApplication
+{
+	Q_OBJECT
+
+public:
+	ISCaratCoreApplication(int &argc, char **argv);
+	virtual ~ISCaratCoreApplication();
+
+	virtual bool Invoke() = 0;
+
+	int Exec() const;
+	void Started(); //Уведомление о запуске
+};
 //-----------------------------------------------------------------------------

@@ -1,10 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscarat_global.h"
 #include "ISCaratCoreApplication.h"
 #include "ISAsteriskSocket.h"
 //-----------------------------------------------------------------------------
-class ISCARAT_EXPORT ISCoreInformResource : public ISCaratCoreApplication
+class ISCoreInformResource : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

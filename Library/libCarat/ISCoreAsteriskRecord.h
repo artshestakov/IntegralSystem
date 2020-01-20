@@ -1,24 +1,25 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscarat_global.h"
 #include "ISCaratCoreApplication.h"
-#include "ISAsteriskSocket.h"
+#include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISCARAT_EXPORT ISCoreMedTech : public ISCaratCoreApplication
+class ISCoreAsteriskRecord : public ISCaratCoreApplication
 {
 	Q_OBJECT
 
 public:
-	ISCoreMedTech(int &argc, char **argv);
-	virtual ~ISCoreMedTech();
+	ISCoreAsteriskRecord(int &argc, char **argv);
+	virtual ~ISCoreAsteriskRecord();
 
 	bool Invoke() override;
 
 protected:
-	void SuccessfulAuth(const QStringMap &StringMap);
-	void UserEvent(const QStringMap &StringMap); //Обработка качества обслуживания
+	void NewConnection(); //Новое подключение
+	void Disconnected(); //Отключение
+	void ReadyRead();
 
 private:
-	ISAsteriskSocket *AsteriskSocket;	
+	QString RepositoryPath;
+	QTcpServer *TcpServer;
 };
 //-----------------------------------------------------------------------------

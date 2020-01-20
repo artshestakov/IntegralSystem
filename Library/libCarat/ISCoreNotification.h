@@ -1,10 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscarat_global.h"
 #include "ISCaratCoreApplication.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISCARAT_EXPORT ISCoreNotification : public ISCaratCoreApplication
+class ISCoreNotification : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

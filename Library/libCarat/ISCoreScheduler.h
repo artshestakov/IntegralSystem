@@ -1,9 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscarat_global.h"
 #include "ISCaratCoreApplication.h"
 //-----------------------------------------------------------------------------
-class ISCARAT_EXPORT ISCoreScheduler : public ISCaratCoreApplication
+class ISCoreScheduler : public ISCaratCoreApplication
 {
 	Q_OBJECT
 
