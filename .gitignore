@@ -1,14 +1,8 @@
 /Bin
-/Library/libCore/Debug-Win32
-/Library/libCore/Release-Win32
-/Library/libGui/Debug-Win32
-/Library/libGui/Release-Win32
-/Projects/Configurator/Debug-Win32
-/Projects/Configurator/Release-Win32
-/Projects/IntegralSystem/Debug-Win32
-/Projects/IntegralSystem/Release-Win32
+/Library/**/Debug-Win32
+/Projects/**/Debug-Win32
 
-*GeneratedFiles*
+
 
 *.obj
 *.pdb
