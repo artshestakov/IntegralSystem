@@ -76,7 +76,7 @@ ISKnowledgeBaseSubSystem::~ISKnowledgeBaseSubSystem()
 //-----------------------------------------------------------------------------
 void ISKnowledgeBaseSubSystem::LoadData()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	while (TreeWidget->topLevelItemCount())
 	{
 		ClearSubGroups(TreeWidget->topLevelItem(0));
@@ -98,7 +98,7 @@ void ISKnowledgeBaseSubSystem::LoadData()
 		}
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISKnowledgeBaseSubSystem::CreateGroup()

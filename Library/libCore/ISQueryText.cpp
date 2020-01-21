@@ -74,7 +74,8 @@ void ISQueryText::CheckAllQueries()
 //-----------------------------------------------------------------------------
 void ISQueryText::ErrorQuery(const QString &About, const QString &SqlText, const QString &ErrorText)
 {
-	if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
+	//???
+	/*if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
 	{
 		QMessageBox MessageBox;
 		MessageBox.setWindowTitle(LOCALIZATION("Error"));
@@ -83,6 +84,6 @@ void ISQueryText::ErrorQuery(const QString &About, const QString &SqlText, const
 		MessageBox.setInformativeText(About + "\r\n\r\n" + ErrorText);
 		MessageBox.setDetailedText(SqlText);
 		MessageBox.exec();
-	}
+	}*/
 }
 //-----------------------------------------------------------------------------

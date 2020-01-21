@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISDelegateColor.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISDelegateColor::ISDelegateColor(QObject *parent) : QStyledItemDelegate(parent)
 {
@@ -28,7 +28,7 @@ void ISDelegateColor::paint(QPainter *Painter, const QStyleOptionViewItem &Optio
 		return;
 	}
 
-	QColor Color = ISSystem::StringToColor(ColorString);
+	QColor Color = ISGui::StringToColor(ColorString);
 	
 	Painter->setPen(QPen(Color, 1, Qt::SolidLine, Qt::FlatCap));
 	Painter->setBrush(QBrush(Color, Qt::SolidPattern));

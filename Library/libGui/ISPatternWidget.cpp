@@ -3,7 +3,7 @@
 #include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISPatternWidget::ISPatternWidget(QWidget *parent) : QFrame(parent)
 {
@@ -46,7 +46,7 @@ void ISPatternWidget::SetPattern(const QString &Pattern)
 //-----------------------------------------------------------------------------
 void ISPatternWidget::SetBackgroundColor(const QString &BackgroundColor)
 {
-	QColor Color = ISSystem::StringToColor(BackgroundColor);
+	QColor Color = ISGui::StringToColor(BackgroundColor);
 	QPalette Palette(palette());
 	Palette.setColor(QPalette::Background, Color);
 	setPalette(Palette);

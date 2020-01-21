@@ -76,9 +76,10 @@ void ISCrashDumper::CreateReport(const QString &FileName, char *Text, _EXCEPTION
 
 	if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
 	{
-		QErrorMessage *ErrorMessage = new QErrorMessage(nullptr);
-		ErrorMessage->showMessage(CrashMessage);
-		ErrorMessage->exec();
+		//???
+		//QErrorMessage *ErrorMessage = new QErrorMessage(nullptr);
+		//ErrorMessage->showMessage(CrashMessage);
+		//ErrorMessage->exec();
 	}
 
 	ISCore::ExitApplication();

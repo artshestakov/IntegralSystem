@@ -86,7 +86,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libCarat.lib;libCore.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;libCarat.lib;libCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

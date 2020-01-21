@@ -4,7 +4,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISFileDialog.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void ISSironaReportForm::OutputList()
 			FileReport.close();
 			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Sirona.Message.Question.OutputListDone")))
 			{
-				ISSystem::OpenFile(FilePath);
+				ISGui::OpenFile(FilePath);
 			}
 		}
 	}

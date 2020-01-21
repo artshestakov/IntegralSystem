@@ -9,6 +9,7 @@
 #include "ISMetaNotify.h"
 #include "ISAssert.h"
 #include "ISNotifySender.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISNotifyRecipient::ISNotifyRecipient() : QObject()
 {
@@ -60,7 +61,7 @@ void ISNotifyRecipient::Notification(const ISUuid &NotificationName, QSqlDriver:
 
 	if (MetaNotify->GetShowPopup())
 	{
-		ISNotificationService::ShowNotification(ISSystem::PrepareLongToolTip(NotificationText, 350));
+		ISNotificationService::ShowNotification(ISGui::PrepareLongToolTip(NotificationText, 350));
 	}
 }
 //-----------------------------------------------------------------------------

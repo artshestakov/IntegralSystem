@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISSystem.h"
-#include <qdialog.h>
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISInterfaceDialogForm::ISInterfaceDialogForm(QWidget *parent, Qt::WindowFlags Flags)
 	: ISInterfaceForm(parent, Flags | ((Flags & Qt::WindowType_Mask) == 0 ? Qt::Dialog : Qt::WindowType(0)))
@@ -55,7 +54,7 @@ void ISInterfaceDialogForm::AfterShowEvent()
 	ISInterfaceForm::AfterShowEvent();
 	activateWindow();
 	raise();
-	ISSystem::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	setFocus(Qt::ActiveWindowFocusReason);
 }
 //-----------------------------------------------------------------------------

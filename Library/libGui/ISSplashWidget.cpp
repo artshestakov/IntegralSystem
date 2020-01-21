@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISSplashWidget.h"
 #include "ISDefines.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISSplashWidget::ISSplashWidget(QWidget *parent) : QFrame(parent)
@@ -29,15 +29,15 @@ void ISSplashWidget::showEvent(QShowEvent *e)
 	QWidget::show();
 	update();
 	adjustSize();
-	ISSystem::RepaintWidget(this);
-	ISSystem::ProcessEvents();
+	ISGui::RepaintWidget(this);
+	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
 void ISSplashWidget::SetText(const QString &Text)
 {
 	LabelText->setText(Text);
-	ISSystem::RepaintWidget(LabelText);
+	ISGui::RepaintWidget(LabelText);
 	adjustSize();
-	ISSystem::ProcessEvents();
+	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------

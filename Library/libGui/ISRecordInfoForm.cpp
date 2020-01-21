@@ -23,7 +23,7 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 	LabelTitle->setText(LOCALIZATION("SystemInformation") + ":");
 	LabelTitle->setFont(FONT_TAHOMA_12_BOLD);
 	LabelTitle->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	ISSystem::SetFontWidgetUnderline(LabelTitle, true);
+	ISGui::SetFontWidgetUnderline(LabelTitle, true);
 	FormLayout->addRow(LabelTitle, new QWidget(this));
 
 	for (int i = 0; i < MetaTable->GetSystemFields().count(); i++)

@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISCenterSevenStatusAdmissionForm.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
@@ -73,11 +73,11 @@ void ISCenterSevenAdmissionListForm::Update()
 //-----------------------------------------------------------------------------
 void ISCenterSevenAdmissionListForm::StatusChange()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	int CurrentStatusID = ISDatabase::GetInstance().GetValue("Admission", "Status", GetObjectID()).toInt();
 	ISUuid CurrentStatusUID = ISDatabase::GetInstance().GetValue("AdmissionStatus", "UID", CurrentStatusID);
 	ISCenterSevenStatusAdmissionForm StatusAdmissionForm(CurrentStatusUID, GetCurrentRecordValue("StatusComment").toString());
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	if (StatusAdmissionForm.Exec())
 	{
 		ISUuid SelectedStatusUID = StatusAdmissionForm.GetStatusUID();

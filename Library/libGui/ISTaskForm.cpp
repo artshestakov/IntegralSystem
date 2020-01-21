@@ -38,7 +38,7 @@ ISTaskForm::ISTaskForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	ActionCreate->setIcon(BUFFER_ICONS("Add"));
 	connect(ActionCreate, &QAction::triggered, this, &ISTaskForm::CreateTask);
 	ToolBar->addAction(ActionCreate);
-	ISSystem::SetFontWidgetUnderline(ToolBar->widgetForAction(ActionCreate), true);
+	ISGui::SetFontWidgetUnderline(ToolBar->widgetForAction(ActionCreate), true);
 
 	QAction *ActionSearchByNumber = new QAction(ToolBar);
 	ActionSearchByNumber->setText(LOCALIZATION("Task.SearchByNumber"));

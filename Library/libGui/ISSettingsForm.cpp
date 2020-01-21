@@ -3,7 +3,6 @@
 #include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISAssert.h"
-#include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
 #include "ISCore.h"
@@ -147,9 +146,9 @@ void ISSettingsForm::CreateSettings()
 
 			if (MetaSetting->GetHint().length())
 			{
-				LabelRow->setToolTip(ISSystem::PrepareLongToolTip(MetaSetting->GetHint()));
+				LabelRow->setToolTip(ISGui::PrepareLongToolTip(MetaSetting->GetHint()));
 				LabelRow->setCursor(CURSOR_WHATS_THIS);
-				ISSystem::SetFontWidgetUnderline(LabelRow, true);
+				ISGui::SetFontWidgetUnderline(LabelRow, true);
 				connect(LabelRow, &ISQLabel::Clicked, this, &ISSettingsForm::LabelRowClicked);
 			}
 

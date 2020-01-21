@@ -8,6 +8,7 @@
 #include "ISQuery.h"
 #include "ISTelephony.h"
 #include "ISNotificationService.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QI_ASTERISK_QUEUE = PREPARE_QUERY("INSERT INTO _asteriskqueue(astq_type, astq_initiated, astq_parameters) "
 												 "VALUES((SELECT asqt_id FROM _asteriskqueuetype WHERE asqt_uid = :TypeUID), currentuserid(), :Parameters)");
@@ -32,7 +33,7 @@ void ISPhoneEdit::Call()
 {
 	if (ISTelephony::CheckSetUp())
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 		
 		QString Phone = GetValue().toString();
 
@@ -48,7 +49,7 @@ void ISPhoneEdit::Call()
 			emit Called();
 		}
 
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 	else
 	{

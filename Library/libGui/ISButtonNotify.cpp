@@ -6,7 +6,7 @@
 #include "ISStyleSheet.h"
 #include "ISNotifySender.h"
 #include "ISNotifyRecipient.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISNotificationsForm.h"
 //-----------------------------------------------------------------------------
 ISButtonNotify::ISButtonNotify(QWidget *parent) : QToolButton(parent)
@@ -87,7 +87,7 @@ void ISButtonNotify::leaveEvent(QEvent *e)
 //-----------------------------------------------------------------------------
 void ISButtonNotify::Clicked()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISNotificationsForm *NotificationsForm = new ISNotificationsForm(this);
 	NotificationsForm->adjustSize();
@@ -95,7 +95,7 @@ void ISButtonNotify::Clicked()
 	connect(NotificationsForm, &ISNotificationsForm::CountChanged, this, &ISButtonNotify::SetCountNotify);
 	NotificationsForm->ShowAnimated(false, 400);
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISButtonNotify::NotifyEvent(const QVariantMap &VariantMap)

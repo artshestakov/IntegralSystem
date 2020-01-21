@@ -5,7 +5,7 @@
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_INTERNAL_DIRECTORIES = PREPARE_QUERY("SELECT intd_tablename "
 													   "FROM _internaldirectories "
@@ -61,7 +61,7 @@ void ISInternalDirectoriesForm::LoadData()
 //-----------------------------------------------------------------------------
 void ISInternalDirectoriesForm::ItemSelectionChanged()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	if (Label)
 	{
@@ -87,6 +87,6 @@ void ISInternalDirectoriesForm::ItemSelectionChanged()
 	ListBaseForm->LoadData();
 	Layout->addWidget(ListBaseForm);
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

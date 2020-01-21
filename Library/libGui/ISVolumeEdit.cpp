@@ -3,7 +3,7 @@
 #include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
@@ -78,7 +78,7 @@ void ISVolumeEdit::ValueChanged()
 //-----------------------------------------------------------------------------
 void ISVolumeEdit::VolumeCheck()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ButtonCheck->setEnabled(false);
 	Slider->setEnabled(false);
 
@@ -90,7 +90,7 @@ void ISVolumeEdit::MediaStateChanged(QMediaPlayer::State NewState)
 {
 	if (NewState == QMediaPlayer::StoppedState)
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ButtonCheck->setEnabled(true);
 		Slider->setEnabled(true);
 	}

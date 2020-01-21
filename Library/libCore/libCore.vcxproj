@@ -176,7 +176,6 @@
     <QtMoc Include="ISPrintingBase.h" />
     <QtMoc Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
-    <QtMoc Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISQuery.h" />
     <QtMoc Include="ISQueryModel.h" />
     <ClInclude Include="ISQueryModelHelper.h" />
@@ -282,7 +281,6 @@
     <ClCompile Include="ISPrintingWord.cpp" />
     <ClCompile Include="ISPrintMetaReport.cpp" />
     <ClCompile Include="ISPrintMetaReportField.cpp" />
-    <ClCompile Include="ISPrintPreviewDialog.cpp" />
     <ClCompile Include="ISProcess.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocol.cpp" />

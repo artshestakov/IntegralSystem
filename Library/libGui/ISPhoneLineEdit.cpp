@@ -6,7 +6,7 @@
 #include "ISControls.h"
 #include "ISPhoneNumberParser.h"
 #include "ISLocalization.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISPhoneLineEdit::ISPhoneLineEdit(QWidget *parent) : QLineEdit(parent)
 {
@@ -141,12 +141,12 @@ void ISPhoneLineEdit::contextMenuEvent(QContextMenuEvent *e)
 		ActionCopy->setEnabled(false);
 	}
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	QMenu ContextMenu;
 	ContextMenu.addAction(ActionCut);
 	ContextMenu.addAction(ActionCopy);
 	ContextMenu.addAction(ActionPaste);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	ContextMenu.exec(e->globalPos());
 }
 //-----------------------------------------------------------------------------

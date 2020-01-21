@@ -82,12 +82,12 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 //-----------------------------------------------------------------------------
 ISMonitorActivityForm::~ISMonitorActivityForm()
 {
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMonitorActivityForm::LoadData()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	while (VectorUsers.count())
 	{
@@ -148,7 +148,7 @@ void ISMonitorActivityForm::LoadData()
 		MonitorUserWidget->setMinimumSize(SizeWidget);
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMonitorActivityForm::CheckEditChanged(const QVariant &value)
@@ -199,10 +199,10 @@ void ISMonitorActivityForm::ShowActivity()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 		ISUserOnlineForm *UserOnlineForm = new ISUserOnlineForm(MonitorUserWidget->GetUserID(), MonitorUserWidget->GetUserName());
 		UserOnlineForm->showMaximized();
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 
 		ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_ACTIVITY_USER, QString(), QString(), QVariant(), MonitorUserWidget->GetUserName());
 	}
@@ -228,9 +228,9 @@ void ISMonitorActivityForm::ShowDetails()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 		ISUserOnlineDetailsForm UserOnlineDetailsForm(MonitorUserWidget->GetUserID());
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		UserOnlineDetailsForm.Exec();
 	}
 }
@@ -275,7 +275,7 @@ void ISMonitorActivityForm::GetScreenshot()
 		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.GetScreenshot")))
 		{
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_SCREENSHOT_CREATE, MonitorUserWidget->GetUserID(), ISMetaUser::GetInstance().GetData()->ID, QString(), false);
-			ISSystem::SetWaitGlobalCursor(true);
+			ISGui::SetWaitGlobalCursor(true);
 		}
 	}
 }
@@ -331,7 +331,7 @@ void ISMonitorActivityForm::ScreenshotCreated(const QVariantMap &VariantMap)
 {
 	int ScreenshotID = VariantMap.value("Payload").toInt();
 	QVariant ValueDB = ISDatabase::GetInstance().GetValue("_Screenshots", "Screenshot", ScreenshotID);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	if (ValueDB.isValid())
 	{
 		ISImageViewerForm *ImageViewerForm = ISGui::ShowImageForm(ValueDB.toByteArray());

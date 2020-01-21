@@ -7,6 +7,7 @@
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISButtonClose.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_REGION = PREPARE_QUERY("SELECT fobj_offname, fobj_aoguid, "
 										 "(SELECT fscb_socrname FROM _fias_addressobjecttype WHERE fscb_level = fobj_aolevel AND fscb_scname = fobj_shortname) "
@@ -257,7 +258,7 @@ void ISAddressForm::LoadRegion()
 //-----------------------------------------------------------------------------
 void ISAddressForm::RegionChanged(const QVariant &RegionUID)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	if (RegionUID.isValid())
 	{
@@ -279,7 +280,7 @@ void ISAddressForm::RegionChanged(const QVariant &RegionUID)
 		FieldEnabled(ComboCity, false);
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISAddressForm::LoadCity(const QVariant &RegionCode)
@@ -302,7 +303,7 @@ void ISAddressForm::LoadCity(const QVariant &RegionCode)
 //-----------------------------------------------------------------------------
 void ISAddressForm::CityChanged(const QVariant &CityGUID)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	if (CityGUID.isValid())
 	{
@@ -315,7 +316,7 @@ void ISAddressForm::CityChanged(const QVariant &CityGUID)
 	}
 
 	UpdatePerfomance();
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISAddressForm::LoadStreet(const QVariant &CityGUID)
@@ -339,7 +340,7 @@ void ISAddressForm::LoadStreet(const QVariant &CityGUID)
 //-----------------------------------------------------------------------------
 void ISAddressForm::StreetChanged(const QVariant &StreetGUID)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	if (StreetGUID.isValid())
 	{
@@ -352,7 +353,7 @@ void ISAddressForm::StreetChanged(const QVariant &StreetGUID)
 	}
 
 	UpdatePerfomance();
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISAddressForm::LoadHouse(const QVariant &StreetGUID)

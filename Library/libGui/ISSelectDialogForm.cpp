@@ -2,7 +2,7 @@
 #include "ISSelectDialogForm.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
@@ -13,7 +13,7 @@ ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, c
 
 	QLabel *LabelInfo = new QLabel(this);
 	LabelInfo->setFont(FONT_APPLICATION_BOLD);
-	ISSystem::SetFontWidgetUnderline(LabelInfo, true);
+	ISGui::SetFontWidgetUnderline(LabelInfo, true);
 	GetMainLayout()->addWidget(LabelInfo);
 
 	SelectListForm = new ISSelectListForm(SelectMode, TableName, this);

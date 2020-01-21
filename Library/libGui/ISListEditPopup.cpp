@@ -88,23 +88,23 @@ ISListEditPopup::~ISListEditPopup()
 //-----------------------------------------------------------------------------
 void ISListEditPopup::showEvent(QShowEvent *e)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	
 	LoadDataFromQuery();
 	LineEdit->SetFocus();
 	ISInterfaceForm::showEvent(e);
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::hideEvent(QHideEvent *e)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ListWidget->Clear();
 	LineEdit->Clear();
 	CurrentValue.clear();
 	ISInterfaceForm::hideEvent(e);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	emit Hided();
 }
 //-----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void ISListEditPopup::ClearSqlFilter()
 //-----------------------------------------------------------------------------
 void ISListEditPopup::Search(const QVariant &value)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	QString SearchValue = value.toString().toLower();
 	if (SearchValue.length())
@@ -186,7 +186,7 @@ void ISListEditPopup::Search(const QVariant &value)
 		LabelSearch->clear();
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::ItemClicked(QListWidgetItem *ListWidgetItem)

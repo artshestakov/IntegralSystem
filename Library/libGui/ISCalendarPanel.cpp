@@ -5,7 +5,7 @@
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT COUNT(*) "
 										   "FROM _calendar "
@@ -92,7 +92,7 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 //-----------------------------------------------------------------------------
 void ISCalendarPanel::CurrentPageChanged(int Year, int Month)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	DaysEvent.clear();
 
 	QDate Date(Year, Month, 1);
@@ -112,6 +112,6 @@ void ISCalendarPanel::CurrentPageChanged(int Year, int Month)
 		}
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

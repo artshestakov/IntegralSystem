@@ -81,7 +81,7 @@ void ISFullTextSearchForm::LoadData()
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::BeforeSearch()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	while (WidgetList.count())
 	{
@@ -111,7 +111,7 @@ void ISFullTextSearchForm::Search()
 	{
 		if (Stopped)
 		{
-			ISSystem::SetWaitGlobalCursor(false);
+			ISGui::SetWaitGlobalCursor(false);
 			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.StopFullTextSearch")))
 			{
 				ProgressBar->setValue(0);
@@ -122,7 +122,7 @@ void ISFullTextSearchForm::Search()
 			}
 			else
 			{
-				ISSystem::SetWaitGlobalCursor(true);
+				ISGui::SetWaitGlobalCursor(true);
 			}
 			Stopped = false;
 		}
@@ -139,7 +139,7 @@ void ISFullTextSearchForm::Search()
 	}
 
 	LabelSearch->setText(LOCALIZATION("BuildingListResult"));
-	ISSystem::RepaintWidget(LabelSearch);
+	ISGui::RepaintWidget(LabelSearch);
 	int ResultCount = 0;
 
 	for (const auto &MapItem : Map.toStdMap()) //Обход таблиц
@@ -174,7 +174,7 @@ void ISFullTextSearchForm::AfterSearch()
 	ButtonStop->setEnabled(false);
 	LabelSearch->setVisible(false);
 	Frame->setVisible(true);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::Execute(const QString &QueryText, const QVariant &QueryValue)

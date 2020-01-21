@@ -365,6 +365,7 @@
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPriceListObjectForm.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
+    <ClCompile Include="ISPrintPreviewDialog.cpp" />
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
     <ClCompile Include="ISProtocolListForm.cpp" />
@@ -472,6 +473,7 @@
     <ClCompile Include="PMetaUserPermission.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="ISPrintPreviewDialog.h" />
     <QtMoc Include="PMetaUserPermission.h" />
     <QtMoc Include="ISIncomingCallBaseForm.h" />
     <QtMoc Include="ISInterfaceMetaForm.h" />
@@ -533,7 +535,7 @@
     <QtMoc Include="ISTelephonySummary.h" />
     <QtMoc Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISCreatedObjectsEntity.h" />
-    <QtMoc Include="ISGui.h" />
+    <ClInclude Include="ISGui.h" />
     <QtMoc Include="ISMediaPlayer.h" />
     <QtMoc Include="ISNotificationService.h" />
     <QtMoc Include="ISNotifyRecipient.h" />

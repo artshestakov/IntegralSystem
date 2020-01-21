@@ -105,7 +105,7 @@ void ISHighwayOrganizationObjectForm::BranchClicked()
 //-----------------------------------------------------------------------------
 void ISHighwayOrganizationObjectForm::BindBranch()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	QVariantMap VariantMap;
 	ISQuery qSelect(QS_ORGANIZATION);
@@ -118,7 +118,7 @@ void ISHighwayOrganizationObjectForm::BindBranch()
 		}
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	QVariant Value = ISInputDialog::GetList(this, LOCALIZATION("Highway.Branche"), LOCALIZATION("Highway.SelectBranche") + ":", VariantMap);
 	if (Value.isValid())
 	{

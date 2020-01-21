@@ -15,6 +15,7 @@
 #include "ISAttachFileForm.h"
 #include "ISInputDialog.h"
 #include "ISBuffer.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size) "
 											"SELECT sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size "
@@ -134,7 +135,7 @@ void ISStorageFilesListForm::OpenFile()
 
 		File.close();
 
-		ISSystem::OpenFile(File.fileName());
+		ISGui::OpenFile(File.fileName());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -172,7 +173,7 @@ void ISStorageFilesListForm::SaveFile()
 
 			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.File.SavedToPath").arg(FilePath)))
 			{
-				ISSystem::OpenFile(FilePath);
+				ISGui::OpenFile(FilePath);
 			}
 		}
 	}

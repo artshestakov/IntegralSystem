@@ -180,7 +180,7 @@ void ISCalendarForm::ShowOverdueEvents()
 //-----------------------------------------------------------------------------
 void ISCalendarForm::SelectedDateChanged()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	QDate Date = CalendarPanel->selectedDate();
 	SelectedDayWidget->SetSelectedDate(Date);
@@ -205,7 +205,7 @@ void ISCalendarForm::SelectedDateChanged()
 	}
 
 	GroupBox->setTitle(LOCALIZATION("CalendarForm.Events").arg(CalendarPanel->selectedDate().toString(DATE_FORMAT_V1)));
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISCalendarForm::Create()
@@ -213,7 +213,7 @@ void ISCalendarForm::Create()
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Calendar"));
 	CalendarObjectForm->SetDate(CalendarPanel->selectedDate());
 	CalendarObjectForm->adjustSize();
-	ISSystem::MoveWidgetToDesktop(CalendarObjectForm, ISNamespace::MWD_Center);
+	ISGui::MoveWidgetToDesktop(CalendarObjectForm, ISNamespace::MWD_Center);
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, CalendarPanel, &ISCalendarPanel::UpdateCells);
 	CalendarObjectForm->show();

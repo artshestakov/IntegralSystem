@@ -6,7 +6,7 @@
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISPushButton.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISTelephonySummary.h"
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_PATTER = PREPARE_QUERY("SELECT userfullname(aspt_user), aspt_pattern "
@@ -133,11 +133,11 @@ void ISAsteriskTotalForm::CreateUsers()
 //-----------------------------------------------------------------------------
 void ISAsteriskTotalForm::Update()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ButtonRange->setText(LOCALIZATION("TelephonyForm.Summary.Requery"));
 	ButtonRange->setIcon(BUFFER_ICONS("LoadData"));
-	ISSystem::RepaintWidget(ButtonRange);
+	ISGui::RepaintWidget(ButtonRange);
 
 	ReloadTotal();
 	ReloadUsers();
@@ -145,7 +145,7 @@ void ISAsteriskTotalForm::Update()
 	ButtonRange->setText(LOCALIZATION("Apply"));
 	ButtonRange->setIcon(BUFFER_ICONS("Apply.Blue"));
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskTotalForm::ReloadTotal()

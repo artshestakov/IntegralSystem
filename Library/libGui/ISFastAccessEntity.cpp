@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISFastAccessEntity.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISFastAccessEntity.h"
 //-----------------------------------------------------------------------------
 static QString QS_EXTERNAL_TOOLS = PREPARE_QUERY("SELECT extl_uid, extl_uid, extl_localname, extl_command, extl_icon FROM _externaltools WHERE extl_user = currentuserid() ORDER BY extl_order");
@@ -34,7 +34,7 @@ void ISFastAccessEntity::LoadExternalTools()
 			ISUuid UID = qSelect.ReadColumn("extl_uid").toString();
 			QString LocalName = qSelect.ReadColumn("extl_localname").toString();
 			QString Command = qSelect.ReadColumn("extl_command").toString();
-			QIcon Icon = QIcon(ISSystem::ByteArrayToPixmap(qSelect.ReadColumn("extl_icon").toByteArray()));
+			QIcon Icon = QIcon(ISGui::ByteArrayToPixmap(qSelect.ReadColumn("extl_icon").toByteArray()));
 
 			ISMetaExternalTool *MetaExternalTool = new ISMetaExternalTool(this);
 			MetaExternalTool->SetUID(UID);

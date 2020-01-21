@@ -2,7 +2,7 @@
 #include "ISLoginEdit.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_LOGIN_EXIST = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _users "
@@ -26,7 +26,7 @@ bool ISLoginEdit::IsValid() const
 //-----------------------------------------------------------------------------
 void ISLoginEdit::LoginChanged()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	disconnect(this, &ISLoginEdit::DataChanged, this, &ISLoginEdit::LoginChanged);
 
 	ISQuery qSelectLogin(QS_LOGIN_EXIST);
@@ -57,6 +57,6 @@ void ISLoginEdit::LoginChanged()
 	}
 
 	connect(this, &ISLoginEdit::DataChanged, this, &ISLoginEdit::LoginChanged);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

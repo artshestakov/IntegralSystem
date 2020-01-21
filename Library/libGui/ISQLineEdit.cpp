@@ -7,7 +7,7 @@
 #include "ISContextMenuText.h"
 #include "ISControls.h"
 #include "ISProperty.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISQLineEdit::ISQLineEdit(QWidget *parent) : QLineEdit(parent)
 {
@@ -104,7 +104,7 @@ void ISQLineEdit::focusOutEvent(QFocusEvent *e)
 //-----------------------------------------------------------------------------
 void ISQLineEdit::contextMenuEvent(QContextMenuEvent *e)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISContextMenuText ContextMenu(this, isReadOnly(), isUndoAvailable(), isRedoAvailable(), hasSelectedText(), echoMode(), text().isEmpty(), selectedText().count());
 	connect(&ContextMenu, &ISContextMenuText::Delete, this, &ISQLineEdit::del);
 	connect(&ContextMenu, &ISContextMenuText::UppercaseText, [=]
@@ -127,29 +127,29 @@ void ISQLineEdit::contextMenuEvent(QContextMenuEvent *e)
 	});
 	connect(&ContextMenu, &ISContextMenuText::SearchGoogle, [=]
 	{
-		ISSystem::OpenUrl("https://www.google.ru/search?q=" + text());
+		ISGui::OpenUrl("https://www.google.ru/search?q=" + text());
 	});
 	connect(&ContextMenu, &ISContextMenuText::SearchYandex, [=]
 	{
-		ISSystem::OpenUrl("https://www.yandex.ru/search/?text=" + text());
+		ISGui::OpenUrl("https://www.yandex.ru/search/?text=" + text());
 	});
 	connect(&ContextMenu, &ISContextMenuText::SearchWikipedia, [=]
 	{
-		ISSystem::OpenUrl("https://ru.wikipedia.org/wiki/Special:Search?search=" + text());
+		ISGui::OpenUrl("https://ru.wikipedia.org/wiki/Special:Search?search=" + text());
 	});
 	connect(&ContextMenu, &ISContextMenuText::SearchMail, [=]
 	{
-		ISSystem::OpenUrl("https://go.mail.ru/search?q=" + text());
+		ISGui::OpenUrl("https://go.mail.ru/search?q=" + text());
 	});
 	connect(&ContextMenu, &ISContextMenuText::SearchBing, [=]
 	{
-		ISSystem::OpenUrl("https://www.bing.com/search?q=" + text());
+		ISGui::OpenUrl("https://www.bing.com/search?q=" + text());
 	});
 	connect(&ContextMenu, &ISContextMenuText::SearchYahoo, [=]
 	{
-		ISSystem::OpenUrl("https://search.yahoo.com/search?p=" + text());
+		ISGui::OpenUrl("https://search.yahoo.com/search?p=" + text());
 	});
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	ContextMenu.exec(e->globalPos());
 }
 //-----------------------------------------------------------------------------

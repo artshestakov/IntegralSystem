@@ -3,7 +3,7 @@
 #include "ISDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISMessageBox.h"
 #include "ISPopupMessage.h"
 //-----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ void ISUrlEdit::OpenUrl()
 	QString UrlString = GetValue().toString();
 	if (UrlString.length())
 	{
-		if (ISSystem::OpenUrl(UrlString))
+		if (ISGui::OpenUrl(UrlString))
 		{
 			ISPopupMessage *PopupMessage = new ISPopupMessage(nullptr);
 			PopupMessage->SetTitle(LOCALIZATION("OpeningUrl") + "...");

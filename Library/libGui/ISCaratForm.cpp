@@ -5,7 +5,7 @@
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISCheckEdit.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_uid, core_localname, crca_active "
 											 "FROM _caratcore "
@@ -69,7 +69,7 @@ void ISCaratForm::LoadData()
 //-----------------------------------------------------------------------------
 void ISCaratForm::CoreChecked(const QVariant &value	)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISUuid CoreUID = sender()->objectName();
 
@@ -94,6 +94,6 @@ void ISCaratForm::CoreChecked(const QVariant &value	)
 		}
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

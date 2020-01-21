@@ -4,7 +4,7 @@
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, c
 		if (NoteViewType == "ToolTip")
 		{
 			setCursor(CURSOR_WHATS_THIS);
-			setToolTip(ISSystem::PrepareLongToolTip(Text, 450));
+			setToolTip(ISGui::PrepareLongToolTip(Text, 450));
 		}
 		else if (NoteViewType == "List")
 		{

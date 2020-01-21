@@ -11,6 +11,7 @@
 #include "ISNetwork.h"
 #include "ISMessageBox.h"
 #include "ISProcessForm.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISImageWidget::ISImageWidget(QWidget *parent) : QLabel(parent)
 {
@@ -29,7 +30,7 @@ ISImageWidget::~ISImageWidget()
 //-----------------------------------------------------------------------------
 void ISImageWidget::contextMenuEvent(QContextMenuEvent *e)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISContextMenuImage ContextMenu(this, CurrentPixmap.isNull());
 	connect(&ContextMenu, &ISContextMenuImage::Select, this, &ISImageWidget::Select);
 	connect(&ContextMenu, &ISContextMenuImage::Cut, this, &ISImageWidget::Cut);
@@ -38,7 +39,7 @@ void ISImageWidget::contextMenuEvent(QContextMenuEvent *e)
 	connect(&ContextMenu, &ISContextMenuImage::PasteFromLink, this, &ISImageWidget::PasteFromLink);
 	connect(&ContextMenu, &ISContextMenuImage::Save, this, &ISImageWidget::Save);
 	connect(&ContextMenu, &ISContextMenuImage::OpenView, this, &ISImageWidget::OpenView);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	ContextMenu.exec(e->globalPos());
 }
 //-----------------------------------------------------------------------------
@@ -109,7 +110,7 @@ QPixmap ISImageWidget::GetPixmap() const
 //-----------------------------------------------------------------------------
 void ISImageWidget::SetPixmap(const QPixmap &Pixmap)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	Clear();
 	CurrentPixmap = Pixmap;
@@ -122,7 +123,7 @@ void ISImageWidget::SetPixmap(const QPixmap &Pixmap)
 		setFocus();
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::SetPixmap(const QString &Path)
@@ -136,12 +137,12 @@ void ISImageWidget::SetPixmap(const QString &Path)
 //-----------------------------------------------------------------------------
 void ISImageWidget::Clear()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	CurrentPixmap = QPixmap();
 	setPixmap(QPixmap());
 	emit ImageChanged();
 	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(SIZE_64_64));
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::Select()
@@ -166,9 +167,9 @@ void ISImageWidget::Copy()
 //-----------------------------------------------------------------------------
 void ISImageWidget::Paste()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	SetPixmap(QApplication::clipboard()->pixmap());
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::PasteFromLink()
@@ -176,7 +177,7 @@ void ISImageWidget::PasteFromLink()
 	QString Url = QApplication::clipboard()->text();
 	if (Url.length())
 	{
-		if (ISSystem::IsStringUrl(Url))
+		if (ISGui::IsStringUrl(Url))
 		{
 			ISProcessForm ProcessForm;
 			ProcessForm.show();
@@ -225,9 +226,9 @@ void ISImageWidget::Save()
 //-----------------------------------------------------------------------------
 void ISImageWidget::OpenView()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISImageViewerForm *ImageViewForm = new ISImageViewerForm(CurrentPixmap);
 	ImageViewForm->show();
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

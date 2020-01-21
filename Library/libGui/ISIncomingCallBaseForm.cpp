@@ -8,7 +8,7 @@
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISSettings.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -74,23 +74,23 @@ void ISIncomingCallBaseForm::AfterShowEvent()
 	QString PositionForm = SETTING_STRING(CONST_UID_SETTING_VIEW_INCOMINGFORMPOSITION);
 	if (PositionForm == "LeftUp")
 	{
-		ISSystem::MoveWidgetToDesktop(this, ISNamespace::MWD_LeftUp);
+		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_LeftUp);
 	}
 	else if (PositionForm == "LeftBottom")
 	{
-		ISSystem::MoveWidgetToDesktop(this, ISNamespace::MWD_LeftBottom);
+		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_LeftBottom);
 	}
 	else if (PositionForm == "RightUp")
 	{
-		ISSystem::MoveWidgetToDesktop(this, ISNamespace::MWD_RightUp);
+		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_RightUp);
 	}
 	else if (PositionForm == "RightBottom")
 	{
-		ISSystem::MoveWidgetToDesktop(this, ISNamespace::MWD_RightBottom);
+		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_RightBottom);
 	}
 	else if (PositionForm == "Center")
 	{
-		ISSystem::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	}
 
 	FlashingStart(700, COLOR_FLASH_INCOMING_FORM);

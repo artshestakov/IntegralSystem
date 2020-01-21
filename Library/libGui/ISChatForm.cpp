@@ -17,6 +17,7 @@
 #include "ISMemoryObjects.h"
 #include "ISMainWindow.h"
 #include "ISUserRoleEntity.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHAT_MESSAGES = PREPARE_QUERY("SELECT chat_id "
 												"FROM _chatmessages "
@@ -162,8 +163,8 @@ void ISChatForm::LoadMessages(int Limit)
 {
 	ListWidget->Clear();
 	LabelLoading->setVisible(true);
-	ISSystem::RepaintWidget(LabelLoading);
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::RepaintWidget(LabelLoading);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISQuery qSelectMessages(QS_CHAT_MESSAGES);
 
@@ -188,8 +189,8 @@ void ISChatForm::LoadMessages(int Limit)
 	}
 
 	LabelLoading->setVisible(false);
-	ISSystem::RepaintWidget(LabelLoading);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::RepaintWidget(LabelLoading);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISChatForm::SendMessage()
@@ -206,8 +207,8 @@ void ISChatForm::SendMessage()
 	if (Message.length() || CurrentAttach == ISNamespace::ACT_Image || CurrentAttach == ISNamespace::ACT_File)
 	{
 		ButtonSend->setText(LOCALIZATION("ChatForm.Sending") + "...");
-		ISSystem::RepaintWidget(ButtonSend);
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::RepaintWidget(ButtonSend);
+		ISGui::SetWaitGlobalCursor(true);
 
 		QVariant VariantImage = GetImage();
 		QVariant VariantFile = GetFile();
@@ -231,7 +232,7 @@ void ISChatForm::SendMessage()
 		}
 
 		ButtonSend->setText(LOCALIZATION("ChatForm.Send"));
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 	else
 	{
@@ -289,7 +290,7 @@ void ISChatForm::ClearAttach()
 //-----------------------------------------------------------------------------
 void ISChatForm::CiteMessage(int MessageID)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISQuery qSelect(QS_CHAT_MESSAGE_CITE);
 	qSelect.BindValue(":MessageID", MessageID);
@@ -299,7 +300,7 @@ void ISChatForm::CiteMessage(int MessageID)
 		TextEdit->SetFocus();
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISChatForm::CreateItemWidget(int MessageID)

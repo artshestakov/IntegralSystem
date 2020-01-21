@@ -557,9 +557,6 @@
     <ClCompile Include="ISPrintingHtml.cpp">
       <Filter>Printing</Filter>
     </ClCompile>
-    <ClCompile Include="ISPrintPreviewDialog.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
     <ClCompile Include="ISDaDataService.cpp">
       <Filter>Network\DaData</Filter>
     </ClCompile>
@@ -677,9 +674,6 @@
       <Filter>Printing</Filter>
     </QtMoc>
     <QtMoc Include="ISPrintingHtml.h">
-      <Filter>Printing</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintPreviewDialog.h">
       <Filter>Printing</Filter>
     </QtMoc>
     <QtMoc Include="ISDaDataService.h">

@@ -101,7 +101,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	if (Message.length()) //Если есть текст сообщения
 	{
 		int Pos = 0;
-		if (ISSystem::IsStringUrl(Message))
+		if (ISGui::IsStringUrl(Message))
 		{
 			LabelMessage = new ISLabelLink(this);
 			LabelMessage->setCursor(CURSOR_POINTING_HAND);
@@ -175,7 +175,7 @@ QString ISChatMessageWidget::GetMessage() const
 //-----------------------------------------------------------------------------
 void ISChatMessageWidget::OpenImage()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISQuery qSelectImage(QS_MESSAGE_IMAGE);
 	qSelectImage.BindValue(":MessageID", MessageID);
@@ -188,7 +188,7 @@ void ISChatMessageWidget::OpenImage()
 		}
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISChatMessageWidget::SaveImage()
@@ -196,7 +196,7 @@ void ISChatMessageWidget::SaveImage()
 	QString ImagePath = ISFileDialog::GetSaveFileNameImage(this);
 	if (ImagePath.length())
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 
 		ISQuery qSelectImage(QS_MESSAGE_IMAGE);
 		qSelectImage.BindValue(":MessageID", MessageID);
@@ -207,13 +207,13 @@ void ISChatMessageWidget::SaveImage()
 			{
 				if (Pixmap.save(ImagePath))
 				{
-					ISSystem::SetWaitGlobalCursor(false);
+					ISGui::SetWaitGlobalCursor(false);
 					ISMessageBox::ShowInformation(nullptr, LOCALIZATION("Message.Information.FileSaved"), ImagePath);
 				}
 			}
 		}
 
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -221,8 +221,8 @@ void ISChatMessageWidget::OpenFile()
 {
 	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.OpenFileInChat"), LOCALIZATION("OpeningLargeFilesMayTakeSomeTime")))
 	{
-		ISSystem::ProcessEvents();
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::ProcessEvents();
+		ISGui::SetWaitGlobalCursor(true);
 
 		ISQuery qSelectFile(QS_MESSAGE_FILE);
 		qSelectFile.BindValue(":MessageID", MessageID);
@@ -237,11 +237,11 @@ void ISChatMessageWidget::OpenFile()
 				File.write(ByteArray);
 				File.close();
 
-				ISSystem::OpenFile(File.fileName());
+				ISGui::OpenFile(File.fileName());
 			}
 		}
 
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -253,7 +253,7 @@ void ISChatMessageWidget::SaveFile()
 		QString FilePath = ISFileDialog::GetSaveFileName(this, QString(), Action->data().toString());
 		if (FilePath.length())
 		{
-			ISSystem::SetWaitGlobalCursor(true);
+			ISGui::SetWaitGlobalCursor(true);
 
 			ISQuery qSelectFile(QS_MESSAGE_FILE);
 			qSelectFile.BindValue(":MessageID", MessageID);
@@ -267,15 +267,15 @@ void ISChatMessageWidget::SaveFile()
 					File.write(ByteFile);
 					File.close();
 
-					ISSystem::SetWaitGlobalCursor(false);
+					ISGui::SetWaitGlobalCursor(false);
 					if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Message.Question.FileSaved")))
 					{
-						ISSystem::OpenFile(FilePath);
+						ISGui::OpenFile(FilePath);
 					}
 				}
 			}
 
-			ISSystem::SetWaitGlobalCursor(false);
+			ISGui::SetWaitGlobalCursor(false);
 		}
 	}
 }
@@ -287,7 +287,7 @@ void ISChatMessageWidget::OpenLink()
 //-----------------------------------------------------------------------------
 void ISChatMessageWidget::OpenUrlLink()
 {
-	ISSystem::OpenUrl(dynamic_cast<QLabel*>(sender())->text());
+	ISGui::OpenUrl(dynamic_cast<QLabel*>(sender())->text());
 }
 //-----------------------------------------------------------------------------
 void ISChatMessageWidget::Cite()

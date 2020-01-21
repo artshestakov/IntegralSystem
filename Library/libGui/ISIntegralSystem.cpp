@@ -9,7 +9,7 @@
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"
 #include "ISAutoLocking.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
 #include "ISCrashDumper.h"
@@ -28,7 +28,7 @@ ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	
 	ISSplashWidget SplashWidget;
 	SplashWidget.SetText("Starting system...");
 	SplashWidget.show();
-	ISSystem::ProcessEvents();
+	ISGui::ProcessEvents();
 
 	//Загрузка конфигурационного файла
 	ISConfig::GetInstance().Initialize(CONFIG_FILE_PATH);
@@ -129,12 +129,12 @@ bool ISIntegralSystem::notify(QObject *Object, QEvent *e)
 	}
 	catch (ISQueryExceptionSyntax &QueryExceptionSyntax)
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.QueryExceptionSyntax"), QueryExceptionSyntax.GetWhat());
 	}
 	catch (ISQueryExceptionConnection &QueryExceptionConnection)
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 
 		if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Message.Question.Reconnect")))
 		{

@@ -174,10 +174,10 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 				raise();
 				activateWindow();
 
-				ISSystem::SetWaitGlobalCursor(true);
+				ISGui::SetWaitGlobalCursor(true);
 				ISExitForm ExitForm;
 				ExitForm.raise();
-				connect(&ExitForm, &ISExitForm::Showed, [=] { ISSystem::SetWaitGlobalCursor(false); });
+				connect(&ExitForm, &ISExitForm::Showed, [=] { ISGui::SetWaitGlobalCursor(false); });
 
 				if (ExitForm.Exec())
 				{
@@ -303,10 +303,8 @@ void ISMainWindow::CreateInformationMessage()
 
 		GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 
-		QColor ColorMessage = SETTING_DATABASE_VALUE_COLOR(CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGE);
-
 		QPalette Palette = Label->palette();
-		Palette.setColor(QPalette::WindowText, ColorMessage);
+		Palette.setColor(QPalette::WindowText, ISGui::StringToColor(SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGE)));
 		Label->setPalette(Palette);
 	}
 }
@@ -383,7 +381,7 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 		return;
 	}
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	int ParagraphIndex = Paragraphs.value(ParagraphUID);
 	ISParagraphBaseForm *ParagraphWidget = dynamic_cast<ISParagraphBaseForm*>(StackedWidget->widget(ParagraphIndex));
@@ -395,14 +393,14 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_PARAGRAPH, QString(), QString(), QVariant(), ISParagraphEntity::GetInstance().GetParagraph(ParagraphUID)->GetLocalName());
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::TerminateMe(const QVariantMap &VariantMap)
 {
 	activateWindow();
 	raise();
-	ISSystem::ProcessEvents();
+	ISGui::ProcessEvents();
 	ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.TerminateMe"));
 	BeforeClose();
 	ISCore::ExitApplication();
@@ -421,12 +419,12 @@ void ISMainWindow::UpdateAviable(const QVariantMap &VariantMap)
 //-----------------------------------------------------------------------------
 void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	QString ClassName = ISLicense::GetInstance().GetIncomingCallForm();
 	int ObjectType = QMetaType::type((ClassName + "*").toLocal8Bit().constData());
 	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 	ISIncomingCallBaseForm *IncomingCallForm = dynamic_cast<ISIncomingCallBaseForm*>(MetaObject->newInstance(Q_ARG(const QVariantMap &, VariantMap)));
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	IncomingCallForm->ExecAnimated();
 }
 //-----------------------------------------------------------------------------
@@ -443,7 +441,7 @@ void ISMainWindow::BeforeClose()
 
 	ISSplashScreen::GetInstance().DefaultPixmap();
 	ISSplashScreen::GetInstance().show();
-	ISSystem::ProcessEvents();
+	ISGui::ProcessEvents();
 
 	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.CloseApplication.FixingExitToProtocol"));
 	ISProtocol::ExitApplication();
@@ -521,24 +519,24 @@ void ISMainWindow::ActivateWorkspace()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowFavoritesForm()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISFavoritesForm *FavoritesForm = new ISFavoritesForm();
 	connect(FavoritesForm, &ISFavoritesForm::OpenObject, this, &ISMainWindow::OpenFavoritesObject);
 	FavoritesForm->show();
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowHistoryForm()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISHistoryForm *HistoryForm = new ISHistoryForm();
 	connect(HistoryForm, &ISHistoryForm::OpenObject, this, &ISMainWindow::OpenHistoryObject);
 	HistoryForm->show();
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowDeviceSettings()
@@ -584,12 +582,12 @@ void ISMainWindow::CreateLogToday()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowNoteForm()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISNoteForm *NoteListForm = new ISNoteForm();
 	NoteListForm->show();
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowCalculator()
@@ -607,9 +605,9 @@ void ISMainWindow::ShowAddressBook()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowDebugApplication()
 {
-	ISSystem::SetWaitGlobalCursor(true);
-	ISSystem::OpenFile(DEBUG_VIEW_PATH);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(true);
+	ISGui::OpenFile(DEBUG_VIEW_PATH);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::UserStatusChange()
@@ -624,9 +622,9 @@ void ISMainWindow::UserStatusChange()
 	raise();
 	activateWindow();
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISUserStatusForm UserStatusForm;
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	if (UserStatusForm.Exec())
 	{
 		QString StatusName = ISMetaUser::GetInstance().GetCurrentStatus(ISMetaUser::GetInstance().GetData()->ID);
@@ -668,12 +666,12 @@ void ISMainWindow::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowFeedbackForm()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISFeedbackForm *FeedbackForm = new ISFeedbackForm();
 	FeedbackForm->show();
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAboutQt()
@@ -691,7 +689,7 @@ void ISMainWindow::MakeCall()
 {
 	if (ISTelephony::CheckSetUp())
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 
 		PhoneForm->adjustSize();
 
@@ -702,7 +700,7 @@ void ISMainWindow::MakeCall()
 		PhoneForm->move(Point);
 		PhoneForm->ShowAnimated(false, 400);
 
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 	else
 	{

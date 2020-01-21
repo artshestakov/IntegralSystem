@@ -2,7 +2,7 @@
 #include "ISLabelLink.h"
 #include "ISDefines.h"
 #include "ISStyleSheet.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISLabelLink::ISLabelLink(const QString &Text, QWidget *parent) : ISQLabel(Text, parent)
 {
@@ -35,7 +35,7 @@ void ISLabelLink::enterEvent(QEvent *e)
 	ISQLabel::enterEvent(e);
 	if (isEnabled())
 	{
-		ISSystem::SetFontWidgetUnderline(this, true);
+		ISGui::SetFontWidgetUnderline(this, true);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ void ISLabelLink::leaveEvent(QEvent *e)
 	ISQLabel::leaveEvent(e);
 	if (isEnabled())
 	{
-		ISSystem::SetFontWidgetUnderline(this, false);
+		ISGui::SetFontWidgetUnderline(this, false);
 	}
 }
 //-----------------------------------------------------------------------------

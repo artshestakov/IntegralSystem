@@ -163,7 +163,7 @@ void ISTabWidgetMain::SeparateWindow(int Index)
 	removeTab(Index);
 
 	Widget->setParent(nullptr);
-	ISSystem::MoveWidgetToDesktop(Widget, ISNamespace::MWD_Center);
+	ISGui::MoveWidgetToDesktop(Widget, ISNamespace::MWD_Center);
 	Widget->show();
 }
 //-----------------------------------------------------------------------------

@@ -165,7 +165,7 @@ void ISDesktopInformResource::Reload()
 //-----------------------------------------------------------------------------
 void ISDesktopInformResource::UpdateDayNote()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISQuery qSelectNote(QS_DESKTOP_DAY_NOTE);
 	qSelectNote.BindValue(":UserID", CurrentUserID);
@@ -186,7 +186,7 @@ void ISDesktopInformResource::UpdateDayNote()
 		qInsertNote.Execute();
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISDesktopInformResource::DoubleClickedDemo(const QSqlRecord &SqlRecord)

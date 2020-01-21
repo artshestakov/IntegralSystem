@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISServiceButton.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
 ISEMailEdit::ISEMailEdit(QWidget *parent) : ISLineEdit(parent)
@@ -30,9 +30,9 @@ void ISEMailEdit::Send()
 	QString EMail = GetValue().toString();
 	if (EMail.length())
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 		QDesktopServices::openUrl(QUrl("mailto:" + EMail));
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 	else
 	{

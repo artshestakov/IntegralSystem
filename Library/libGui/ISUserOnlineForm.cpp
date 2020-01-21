@@ -5,7 +5,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_ONLINE = PREPARE_QUERY("SELECT uotp_uid, uotp_name, uonl_time "
@@ -42,13 +42,13 @@ ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidge
 
 	LabelCountTime = new QLabel(this);
 	LabelCountTime->setVisible(false);
-	ISSystem::SetFontWidgetBold(LabelCountTime, true);
+	ISGui::SetFontWidgetBold(LabelCountTime, true);
 	LayoutTitle->addWidget(LabelCountTime);
 
 	LabelNotRegistered = new QLabel(this);
 	LabelNotRegistered->setVisible(false);
 	LabelNotRegistered->setText(LOCALIZATION("ActivityUserNotRegisteredFromDate").arg(DateEdit->GetValue().toDate().toString(DATE_FORMAT_V2)));
-	ISSystem::SetFontWidgetBold(LabelNotRegistered, true);
+	ISGui::SetFontWidgetBold(LabelNotRegistered, true);
 	LayoutTitle->addWidget(LabelNotRegistered);
 
 	LayoutTitle->addStretch();
@@ -67,7 +67,7 @@ ISUserOnlineForm::~ISUserOnlineForm()
 //-----------------------------------------------------------------------------
 void ISUserOnlineForm::Update()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	while (ListWidget->count())
 	{
@@ -124,7 +124,7 @@ void ISUserOnlineForm::Update()
 		}
 	}
 	
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISUserOnlineForm::EscapeClicked()

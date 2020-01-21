@@ -6,7 +6,7 @@
 #include "ISControls.h"
 #include "ISButtonClose.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_PG_STAT_ACTIVITY = PREPARE_QUERY("SELECT "
@@ -64,7 +64,7 @@ void ISUserOnlineDetailsForm::AddLabel(const QString &LabelName, const QString &
 {
 	QLabel *Label = new QLabel(this);
 	Label->setText(LabelValue);
-	ISSystem::SetFontWidgetBold(Label, true);
+	ISGui::SetFontWidgetBold(Label, true);
 	FormLayout->addRow(LabelName + ":", Label);
 }
 //-----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 #include "ISPGSettingsForm.h"
 #include "ISQuery.h"
 #include "ISScrollArea.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_CATEGORY = PREPARE_QUERY("SELECT DISTINCT category "
 										   "FROM pg_settings "
@@ -43,7 +43,7 @@ ISPGSettingsForm::ISPGSettingsForm(QWidget *parent) : ISInterfaceForm(parent)
 
 					QLabel *LabelValue = new QLabel(GroupBox);
 					LabelValue->setText(SettingValue);
-					ISSystem::SetFontWidgetBold(LabelValue, true);
+					ISGui::SetFontWidgetBold(LabelValue, true);
 					FormLayout->addRow(SettingName + ":", LabelValue);
 				}
 			}

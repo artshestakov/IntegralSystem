@@ -122,11 +122,6 @@ int ISSettingsDatabase::GetValueInt(const QString &SettingName)
 	return GetValue(SettingName).toInt();
 }
 //-----------------------------------------------------------------------------
-QColor ISSettingsDatabase::GetValueColor(const QString &SettingName)
-{
-	return ISSystem::StringToColor(GetValueString(SettingName));
-}
-//-----------------------------------------------------------------------------
 QVariant ISSettingsDatabase::GetValueDB(const QString &SettingName)
 {
 	QVariant Value;

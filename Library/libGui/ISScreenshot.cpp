@@ -2,7 +2,7 @@
 #include "ISScreenshot.h"
 #include "ISDefines.h"
 #include "ISConstants.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"
 #include "ISNotifySender.h"
@@ -44,7 +44,7 @@ void ISScreenshot::Creating(int Owner)
 		{
 			WId WinID = QApplication::desktop()->winId();
 			QPixmap Pixmap = QApplication::primaryScreen()->grabWindow(WinID);
-			QByteArray ByteArray = ISSystem::PixmapToByteArray(Pixmap);
+			QByteArray ByteArray = ISGui::PixmapToByteArray(Pixmap);
 
 			ISQuery qInsertScreenshot(Database, QI_SCREENSHOT);
 			qInsertScreenshot.BindValue(":Screenshot", ByteArray);

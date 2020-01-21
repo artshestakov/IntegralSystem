@@ -35,12 +35,12 @@ ISControlDatabaseForm::~ISControlDatabaseForm()
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::LoadData()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	CreateGeneralTab();
 	CreatePGSettings();
 	CreateStatisticTablesForm();
 	CreateDistFilesForm();
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::CreateGeneralTab()
@@ -106,12 +106,12 @@ void ISControlDatabaseForm::CreateDistFilesForm()
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::ShowDatabaseSettings()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISQuery qSelectID(QS_SETTING_DATABASE_ID);
 	qSelectID.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
 	if (qSelectID.ExecuteFirst())
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_SettingsDatabase", qSelectID.ReadColumn("sgdb_id").toInt())->showMaximized();
 	}
 }

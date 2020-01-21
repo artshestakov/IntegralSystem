@@ -7,7 +7,7 @@
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISControls.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISButtonClose.h"
 #include "ISProtocol.h"
 //-----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ ISUserStatusForm::~ISUserStatusForm()
 //-----------------------------------------------------------------------------
 void ISUserStatusForm::StatusChange()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	QCommandLinkButton *SenderButton = dynamic_cast<QCommandLinkButton*>(sender());
 
@@ -109,7 +109,7 @@ void ISUserStatusForm::StatusChange()
 		close();
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISUserStatusForm::StatusClear()

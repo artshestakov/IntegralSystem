@@ -16,7 +16,7 @@ ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 	connect(ActionGroupTools, &QActionGroup::triggered, this, &ISMenuFastAccess::StartExternalTool);
 
 	QLabel *LabelCreateRecords = new QLabel(LOCALIZATION("CreateRecords") + ":", this);
-	ISSystem::SetFontWidgetUnderline(LabelCreateRecords, true);
+	ISGui::SetFontWidgetUnderline(LabelCreateRecords, true);
 	LabelCreateRecords->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 
 	QWidgetAction *WidgetActionCreateRecords = new QWidgetAction(this);
@@ -26,7 +26,7 @@ ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 	ActionCreateRecords = addAction(LOCALIZATION("Setting"), this, &ISMenuFastAccess::CreateRecords);
 
 	QLabel *LabelExternalTools = new QLabel(LOCALIZATION("ExternalTools") + ":", this);
-	ISSystem::SetFontWidgetUnderline(LabelExternalTools, true);
+	ISGui::SetFontWidgetUnderline(LabelExternalTools, true);
 	LabelExternalTools->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 
 	QWidgetAction *WidgetActionExternalTools = new QWidgetAction(this);
@@ -107,7 +107,7 @@ void ISMenuFastAccess::StartExternalTool(QAction *ActionTriggered)
 		return;
 	}
 
-	if (!ISSystem::OpenFile(Command))
+	if (!ISGui::OpenFile(Command))
 	{
 		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.NotStartedExternalTool").arg(ActionTriggered->text()));
 	}

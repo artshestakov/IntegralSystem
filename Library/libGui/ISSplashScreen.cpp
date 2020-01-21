@@ -3,7 +3,7 @@
 #include "ISAssert.h"
 #include "ISDefines.h"
 #include "ISDebug.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"
@@ -65,9 +65,9 @@ void ISSplashScreen::SetMessage(const QString &Message)
 	showMessage(Message, Qt::AlignHCenter | Qt::AlignBottom, COLOR_SPLASH_SCREEN_TEXT);
 	activateWindow();
 
-	ISSystem::RepaintWidget(ProgressBar, false);
-	ISSystem::RepaintWidget(this, false);
-	ISSystem::ProcessEvents();
+	ISGui::RepaintWidget(ProgressBar, false);
+	ISGui::RepaintWidget(this, false);
+	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
 void ISSplashScreen::ResetPixmap()

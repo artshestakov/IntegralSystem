@@ -3,7 +3,7 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
 #include "ISSettings.h"
@@ -62,7 +62,7 @@ void ISSearchEdit::SearchChanged()
 //-----------------------------------------------------------------------------
 void ISSearchEdit::AboutToShow()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	while (ButtonLastSearch->menu()->actions().count())
 	{
@@ -84,7 +84,7 @@ void ISSearchEdit::AboutToShow()
 		}
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISSearchEdit::AboutToHide()
@@ -101,7 +101,7 @@ void ISSearchEdit::LastSearchClicked()
 void ISSearchEdit::Timeout()
 {
 	Timer->stop();
-	ISSystem::RepaintWidget(this);
+	ISGui::RepaintWidget(this);
 
 	emit Search(GetValue().toString());
 }

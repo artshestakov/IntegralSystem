@@ -16,6 +16,7 @@
 #include "ISMessageBox.h"
 #include "ISControls.h"
 #include "ISStyleSheet.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -64,8 +65,8 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	LabelLang = new QLabel(this);
 	LabelLang->setToolTip(LOCALIZATION("CurrentLayout"));
 	LabelLang->setCursor(CURSOR_WHATS_THIS);
-	ISSystem::SetFontWidgetBold(LabelLang, true);
-	ISSystem::SetFontWidgetUnderline(LabelLang, true);
+	ISGui::SetFontWidgetBold(LabelLang, true);
+	ISGui::SetFontWidgetUnderline(LabelLang, true);
 	LayoutLabels->addWidget(LabelLang);
 
 	Layout->addSpacerItem(new QSpacerItem(0, 55));
@@ -171,7 +172,7 @@ void ISAuthorizationForm::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISAuthorizationForm::TimeoutCapsLook()
 {
-	if (ISSystem::CheckPressCapsLook())
+	if (ISGui::CheckPressCapsLook())
 	{
 		if (!LabelCapsLook->text().length())
 		{
@@ -186,7 +187,7 @@ void ISAuthorizationForm::TimeoutCapsLook()
 //-----------------------------------------------------------------------------
 void ISAuthorizationForm::TimeoutLang()
 {
-	QString LayoutName = ISSystem::GetCurrentLayoutName();
+	QString LayoutName = ISGui::GetCurrentLayoutName();
 	if (LayoutName == "ENG")
 	{
 		LabelLang->setText("EN");
@@ -249,7 +250,7 @@ void ISAuthorizationForm::ConnectedDone()
 		MessageBox.setButtonText(ISMessageBox::Close, LOCALIZATION("Exit"));
 		MessageBox.setDefaultButton(ISMessageBox::No);
 		MessageBox.adjustSize();
-		ISSystem::MoveWidgetToDesktop(&MessageBox, ISNamespace::MWD_Center);
+		ISGui::MoveWidgetToDesktop(&MessageBox, ISNamespace::MWD_Center);
 		ISMessageBox::StandardButtons ClickedButton = static_cast<ISMessageBox::StandardButtons>(MessageBox.Exec());
 
 		if (ClickedButton == ISMessageBox::Yes) //Предложить повтор попытки соединения
@@ -288,7 +289,7 @@ void ISAuthorizationForm::SetConnecting(bool Connecting)
 		LabelConnectToDatabase->setText(QString());
 	}
 
-	ISSystem::SetWaitGlobalCursor(Connecting);
+	ISGui::SetWaitGlobalCursor(Connecting);
 	EditLogin->setEnabled(!Connecting);
 	EditPassword->setEnabled(!Connecting);
 	ButtonMenu->setEnabled(!Connecting);
@@ -300,28 +301,28 @@ bool ISAuthorizationForm::Check()
 {
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ConnectionSetting.Input.ServerEmpty"));
 		return false;
 	}
 
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT).isEmpty())
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ConnectionSetting.Input.PortEmpty"));
 		return false;
 	}
 
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ConnectionSetting.Input.DatabaseNameEmpty"));
 		return false;
 	}
 
 	if (!EditLogin->GetValue().toString().length())
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Input.LoginEmpty"));
 		EditLogin->BlinkRed();
 		return false;
@@ -329,7 +330,7 @@ bool ISAuthorizationForm::Check()
 
 	if (!EditPassword->GetValue().toString().length())
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Input.PasswordEmpty"));
 		EditPassword->BlinkRed();
 		return false;

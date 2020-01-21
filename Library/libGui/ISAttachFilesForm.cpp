@@ -6,7 +6,7 @@
 #include "ISControls.h"
 #include "ISFileDialog.h"
 #include "ISAttachFileItem.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISStorageFileLoader.h"
 //-----------------------------------------------------------------------------
 ISAttachFilesForm::ISAttachFilesForm(QWidget *parent) : ISAttachFileBaseForm(parent)
@@ -103,7 +103,7 @@ void ISAttachFilesForm::SelectFiles()
 {
 	QStringList StringList = ISFileDialog::GetOpenFilesName(this);
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	for (int i = 0; i < StringList.count(); i++)
 	{
@@ -117,20 +117,20 @@ void ISAttachFilesForm::SelectFiles()
 
 		FileItem->SetItemIndex(ListWidget->row(ListWidgetItem));
 
-		ISSystem::ProcessEvents();
+		ISGui::ProcessEvents();
 	}
 
 	UpdateButtons();
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISAttachFilesForm::Clean()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ListWidget->Clear();
 	UpdateButtons();
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISAttachFilesForm::Delete()
@@ -162,7 +162,7 @@ void ISAttachFilesForm::StartDownload()
 		QString FilePath = FileItem->GetFilePath();
 		FileItem->SetFilePath(FileItem->GetFilePath() + SYMBOL_SPACE + LOCALIZATION("Loaded") + "...");
 		FileItem->SetFont(FONT_APPLICATION_BOLD);
-		ISSystem::ProcessEvents();
+		ISGui::ProcessEvents();
 
 		ISStorageFileLoader StorageFileLoader(FilePath, QString(), this);
 		connect(&StorageFileLoader, &ISStorageFileLoader::ChangeProgressFileMaximum, ProgressFile, &QProgressBar::setMaximum);
@@ -172,7 +172,7 @@ void ISAttachFilesForm::StartDownload()
 		emit RemoveBeginItem();
 
 		ProgressFiles->setValue(ProgressFiles->value() + 1);
-		ISSystem::ProcessEvents();
+		ISGui::ProcessEvents();
 	}
 
 	ButtonStop->setEnabled(false);

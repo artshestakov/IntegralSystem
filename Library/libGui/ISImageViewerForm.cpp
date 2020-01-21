@@ -2,7 +2,7 @@
 #include "ISImageViewerForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISImageViewerForm::ISImageViewerForm(const QPixmap &Pixmap, QWidget *parent) : ISInterfaceForm(parent)
 {
@@ -139,31 +139,31 @@ void ISImageViewerForm::Print()
 //-----------------------------------------------------------------------------
 void ISImageViewerForm::Copy()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	QGuiApplication::clipboard()->setImage(LabelImage->pixmap()->toImage());
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISImageViewerForm::ZoomIn()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ScaleImage(1.25);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISImageViewerForm::ZoomOut()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ScaleImage(0.8);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISImageViewerForm::NormalSize()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	LabelImage->adjustSize();
 	ScaleFactor = 1.0;
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISImageViewerForm::FitToWindow()

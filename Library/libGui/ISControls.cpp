@@ -2,7 +2,7 @@
 #include "ISControls.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISControls::ISControls()
 {
@@ -19,7 +19,7 @@ void ISControls::SetBackgroundColorWidget(QWidget *Widget, const QColor &Color)
 	QPalette Palette = Widget->palette();
 	Palette.setColor(QPalette::Window, Color);
 	Widget->setPalette(Palette);
-	ISSystem::RepaintWidget(Widget);
+	ISGui::RepaintWidget(Widget);
 }
 //-----------------------------------------------------------------------------
 QFrame* ISControls::CreateHorizontalLine(QWidget *ParentWidget)

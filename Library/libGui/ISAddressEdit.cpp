@@ -4,7 +4,7 @@
 #include "ISPushButton.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISAddressForm.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
@@ -25,9 +25,9 @@ ISAddressEdit::~ISAddressEdit()
 //-----------------------------------------------------------------------------
 void ISAddressEdit::ListFIAS()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISAddressForm AddressForm(GetLineEdit()->text());
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	if (AddressForm.Exec())
 	{
 		SetValue(AddressForm.GetString());

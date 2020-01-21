@@ -3,7 +3,7 @@
 #include "ISDefines.h"
 #include "ISContextMenuDouble.h"
 #include "ISQLineEdit.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISQDoubleSpinBox::ISQDoubleSpinBox(QWidget *parent) : QDoubleSpinBox(parent)
 {
@@ -36,12 +36,12 @@ QValidator::State ISQDoubleSpinBox::validate(QString &Input, int &Pos) const
 //-----------------------------------------------------------------------------
 void ISQDoubleSpinBox::contextMenuEvent(QContextMenuEvent *e)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISContextMenuDouble ContextMenu(lineEdit(), lineEdit()->isReadOnly(), lineEdit()->isUndoAvailable(), lineEdit()->isRedoAvailable(), lineEdit()->hasSelectedText(), lineEdit()->echoMode(), lineEdit()->text().isEmpty(), value(), minimum(), maximum());
 	connect(&ContextMenu, &ISContextMenuDouble::Delete, lineEdit(), &QLineEdit::del);
 	connect(&ContextMenu, &ISContextMenuDouble::StepUp, this, &ISQDoubleSpinBox::stepUp);
 	connect(&ContextMenu, &ISContextMenuDouble::StepDown, this, &ISQDoubleSpinBox::stepDown);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	ContextMenu.exec(e->globalPos());
 }
 //-----------------------------------------------------------------------------

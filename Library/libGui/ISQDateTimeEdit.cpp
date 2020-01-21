@@ -3,7 +3,7 @@
 #include "ISStyleSheet.h"
 #include "ISContextMenuDateTime.h"
 #include "ISQLineEdit.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISQDateTimeEdit::ISQDateTimeEdit(QWidget *parent) : QDateTimeEdit(parent)
 {
@@ -22,12 +22,12 @@ ISQDateTimeEdit::~ISQDateTimeEdit()
 //-----------------------------------------------------------------------------
 void ISQDateTimeEdit::contextMenuEvent(QContextMenuEvent *e)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISContextMenuDateTime ContextMenu(lineEdit(), lineEdit()->isReadOnly(), lineEdit()->isUndoAvailable(), lineEdit()->isRedoAvailable(), lineEdit()->hasSelectedText(), lineEdit()->echoMode(), lineEdit()->text().isEmpty());
 	connect(&ContextMenu, &ISContextMenuDateTime::Delete, lineEdit(), &QLineEdit::del);
 	connect(&ContextMenu, &ISContextMenuDateTime::StepUp, this, &ISQDateTimeEdit::stepUp);
 	connect(&ContextMenu, &ISContextMenuDateTime::StepDown, this, &ISQDateTimeEdit::stepDown);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	ContextMenu.exec(e->globalPos());
 }
 //-----------------------------------------------------------------------------

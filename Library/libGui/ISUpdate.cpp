@@ -5,7 +5,7 @@
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISVersion.h"
 //-----------------------------------------------------------------------------
 static QString QS_ACTUAL_INSTALL = PREPARE_QUERY("SELECT dsfs_id, dsfs_filename, dsfs_version, dsfs_version_4 FROM _distfiles WHERE NOT dsfs_isdeleted AND dsfs_actual");
@@ -116,7 +116,7 @@ bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 
 			Value++;
 			emit ProgressValue(Value);
-			ISSystem::ProcessEvents();
+			ISGui::ProcessEvents();
 		}
 
 		FileUpdate.close();

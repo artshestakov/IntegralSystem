@@ -43,7 +43,7 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	LabelDayWeek = new QLabel(WidgetTitle);
 	LabelDayWeek->setText(LOCALIZATION("Today") + ": " + ISSystem::GetCurrentDayOfWeekName());
 	LabelDayWeek->setFont(FONT_TAHOMA_12_BOLD);
-	ISSystem::SetFontWidgetUnderline(LabelDayWeek, true);
+	ISGui::SetFontWidgetUnderline(LabelDayWeek, true);
 	LayoutTitle->addWidget(LabelDayWeek);
 
 	ISPushButton *ButtonPreviousDay = new ISPushButton(WidgetTitle);

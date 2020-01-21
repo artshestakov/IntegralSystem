@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISButtonClose.h"
 //-----------------------------------------------------------------------------
 ISProgressForm::ISProgressForm(int Minimum, int Maximum, QWidget *parent) : QProgressDialog(parent)
@@ -37,8 +37,8 @@ ISProgressForm::~ISProgressForm()
 void ISProgressForm::SetText(const QString &Text)
 {
 	setLabelText(Text);
-	ISSystem::RepaintWidget(LabelStatus);
-	qApp->processEvents();
+	ISGui::RepaintWidget(LabelStatus);
+	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
 void ISProgressForm::AddOneValue()
@@ -50,7 +50,7 @@ void ISProgressForm::AddOneValue()
 void ISProgressForm::showEvent(QShowEvent *e)
 {
 	QProgressDialog::showEvent(e);
-	ISSystem::RepaintWidget(this);
-	qApp->processEvents();
+	ISGui::RepaintWidget(this);
+	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------

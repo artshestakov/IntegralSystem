@@ -109,7 +109,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 		CurrentSubSystemUID = SubSystemUID;
 	}
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISMetaSubSystem *MetaSubSystem = ISMetaSystemsEntity::GetInstance().GetSubSystem(SubSystemUID);
 
@@ -151,8 +151,8 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 	connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceForm::AddObjectForm);
 	TabWidget->GetMainTab()->layout()->addWidget(CentralForm);
 
-	ISSystem::SetWaitGlobalCursor(false);
-	ISSystem::RepaintWidget(CentralForm);
+	ISGui::SetWaitGlobalCursor(false);
+	ISGui::RepaintWidget(CentralForm);
 
 	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, CentralForm, &ISInterfaceMetaForm::LoadData);
 }

@@ -4,7 +4,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 #include "ISAsteriskCallsListForm.h"
 #include "ISAsteriskTotalForm.h"
@@ -80,7 +80,7 @@ void ISTelephonyForm::ItemSelectionChanged()
 		{
 			ObjectFormBase->setParent(nullptr);
 			ObjectFormBase->adjustSize();
-			ISSystem::MoveWidgetToDesktop(ObjectFormBase, ISNamespace::MWD_Center);
+			ISGui::MoveWidgetToDesktop(ObjectFormBase, ISNamespace::MWD_Center);
 			ObjectFormBase->show();
 		});
 

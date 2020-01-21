@@ -16,6 +16,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISControls.h"
 #include "ISProtocol.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL_GROUP = PREPARE_QUERY("SELECT gast_uid, gast_name "
 															 "FROM _groupaccessspecialtype "
@@ -43,7 +44,7 @@ ISUserGroupWidget::ISUserGroupWidget(int group_id, const QString &group_name, QW
 
 	QLabel *LabelGroup = new QLabel(this);
 	LabelGroup->setText(group_name);
-	ISSystem::SetFontWidgetBold(LabelGroup, true);
+	ISGui::SetFontWidgetBold(LabelGroup, true);
 	LayoutTitle->addWidget(LabelGroup);
 
 	LayoutTitle->addStretch();
@@ -167,7 +168,7 @@ void ISUserGroupWidget::CreateSpecial()
 //-----------------------------------------------------------------------------
 void ISUserGroupWidget::SubSystemClicked(const QVariant &value)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISCheckEdit *CheckEdit = dynamic_cast<ISCheckEdit*>(sender());
 	ISUuid SubSystemUID = CheckEdit->property("SubSystemUID"); //Идентификатор подсистемы
@@ -184,12 +185,12 @@ void ISUserGroupWidget::SubSystemClicked(const QVariant &value)
 		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->GetLocalListName(), GroupID, SubSystemName);
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISUserGroupWidget::TableClicked(QAction *Action)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISUuid TableUID = Action->property("TableUID"); //Идентификатор таблицы
 	ISUuid AccessUID = Action->property("AccessUID"); //Идентификатор права
 	QString TableName = Action->property("TableName").toString(); //Локальное наименование таблицы
@@ -205,12 +206,12 @@ void ISUserGroupWidget::TableClicked(QAction *Action)
 		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->GetLocalListName(), GroupID, TableName + " (" + Action->toolTip() + ")");
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISUserGroupWidget::SpecialClicked(const QVariant &value)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISCheckEdit *CheckEdit = dynamic_cast<ISCheckEdit*>(sender());
 	ISUuid SpecialAccessUID = CheckEdit->property("SpecialAccessUID");
@@ -226,6 +227,6 @@ void ISUserGroupWidget::SpecialClicked(const QVariant &value)
 		ISUserRoleEntity::DeleteSpecialAccess(GroupID, SpecialAccessUID);
 		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->GetLocalListName(), GroupID, SpecialAccessName);
 	}
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

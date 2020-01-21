@@ -211,6 +211,9 @@
     <ClInclude Include="ISPatriotHelper.h">
       <Filter>Objects\Patriot</Filter>
     </ClInclude>
+    <ClInclude Include="ISGui.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISIncomingCallBaseForm.cpp">
@@ -1290,6 +1293,9 @@
     <ClCompile Include="ISCenterSevenStatusAdmissionForm.cpp">
       <Filter>Objects\CenterSeven\Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISPrintPreviewDialog.cpp">
+      <Filter>Printing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1473,9 +1479,6 @@
       <Filter>User Role</Filter>
     </QtMoc>
     <QtMoc Include="ISCreatedObjectsEntity.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISGui.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISMediaPlayer.h">
@@ -2359,6 +2362,9 @@
     </QtMoc>
     <QtMoc Include="ISObjects.h">
       <Filter>Objects</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintPreviewDialog.h">
+      <Filter>Printing</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

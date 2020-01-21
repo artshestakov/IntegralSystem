@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISImageEdit.h"
 #include "ISDefines.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ void ISImageEdit::SetValue(const QVariant &value)
 {
 	if (value.isValid())
 	{
-		QPixmap Pixmap = ISSystem::ByteArrayToPixmap(value.toByteArray());
+		QPixmap Pixmap = ISGui::ByteArrayToPixmap(value.toByteArray());
 		ImageWidget->SetPixmap(Pixmap);
 	}
 	else
@@ -39,7 +39,7 @@ void ISImageEdit::SetValue(const QVariant &value)
 //-----------------------------------------------------------------------------
 QVariant ISImageEdit::GetValue() const
 {
-	QByteArray ByteArray = ISSystem::PixmapToByteArray(ImageWidget->GetPixmap());
+	QByteArray ByteArray = ISGui::PixmapToByteArray(ImageWidget->GetPixmap());
 	if (!ByteArray.isNull())
 	{
 		return ByteArray;

@@ -2,7 +2,7 @@
 #include "ISTaskFileWidget.h"
 #include "ISDefines.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISLabelLink.h"
 //-----------------------------------------------------------------------------
 ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &UserName, const QString &FileName, const QString &Size, const QByteArray &Icon, const QString &Note, QWidget *parent) : QWidget(parent)
@@ -41,7 +41,7 @@ ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &Use
 	ISLabelLink *LabelFile = new ISLabelLink(this);
 	LabelFile->setText(FileName);
 	Layout->addWidget(LabelFile);
-	ISSystem::SetFontWidgetUnderline(LabelFile, true);
+	ISGui::SetFontWidgetUnderline(LabelFile, true);
 
 	Layout->addWidget(new QLabel("(" + Size + ")", this));
 	Layout->addStretch();

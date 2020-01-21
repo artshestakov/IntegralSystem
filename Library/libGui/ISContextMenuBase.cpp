@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISContextMenuBase.h"
 #include "ISAssert.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDefines.h"
@@ -130,7 +130,7 @@ void ISContextMenuBase::BeforeToShow()
 //-----------------------------------------------------------------------------
 void ISContextMenuBase::CallVirtualKeyboard()
 {
-	if (!ISSystem::OpenFile("C:/Windows/System32/osk.exe"))
+	if (!ISGui::OpenFile("C:/Windows/System32/osk.exe"))
 	{
 		ISMessageBox::ShowCritical(nullptr, LOCALIZATION("Message.Error.CallVirtualKeyboard"));
 	}

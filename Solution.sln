@@ -116,6 +116,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libGui", "Library\libGui\li
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configurator", "Projects\Configurator\Configurator.vcxproj", "{641EC90D-70E1-42F5-9F2F-22C5238F1D02}"
+	ProjectSection(ProjectDependencies) = postProject
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegralSystem", "Projects\IntegralSystem\IntegralSystem.vcxproj", "{C053A5FD-33FA-4841-B964-3C8CC6AF3F23}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -132,30 +135,78 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Carat", "Projects\Carat\Car
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratAsteriskQueue", "Projects\CaratAsteriskQueue\CaratAsteriskQueue.vcxproj", "{EA56A435-BF39-4001-8097-61F889CB7AD5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratAsteriskRecord", "Projects\CaratAsteriskRecord\CaratAsteriskRecord.vcxproj", "{C93DB678-7C18-4736-8B5A-05543E692C3C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratCalendar", "Projects\CaratCalendar\CaratCalendar.vcxproj", "{44B6A674-B7EC-4A1D-A127-07DCB1AD29EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratCenterSeven", "Projects\CaratCenterSeven\CaratCenterSeven.vcxproj", "{2276ADEA-1286-4499-AF3E-8DDB6D31BB6E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratHighway", "Projects\CaratHighway\CaratHighway.vcxproj", "{93D0048D-AD56-4289-AB16-C2814F5D2CBE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratInformResource", "Projects\CaratInformResource\CaratInformResource.vcxproj", "{21BD88DE-6358-41BC-86D5-81F0485F5592}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratMail", "Projects\CaratMail\CaratMail.vcxproj", "{BB40C769-CF55-4650-BA59-859D7EF3EB69}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratMedTech", "Projects\CaratMedTech\CaratMedTech.vcxproj", "{749734F9-8E0D-4EA4-A18A-8599F891DD3A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CaratCores", "CaratCores", "{08698096-FA74-4437-85DA-7CDC9B1C17B6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratNotification", "Projects\CaratNotification\CaratNotification.vcxproj", "{2C35F5E7-CA98-4852-800A-BA083D866B70}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratScheduler", "Projects\CaratScheduler\CaratScheduler.vcxproj", "{7591334D-499C-4ACC-934F-3416EBC179DE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratSMS", "Projects\CaratSMS\CaratSMS.vcxproj", "{D326150C-504A-46B5-B138-A6C093820B2F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratTelephony", "Projects\CaratTelephony\CaratTelephony.vcxproj", "{ADF90776-C5D8-44F7-B840-EA8008316E18}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66BE6C4D-80E3-42FF-9619-AE79FE6C9519} = {66BE6C4D-80E3-42FF-9619-AE79FE6C9519}
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -302,7 +353,7 @@ Global
 		{ADF90776-C5D8-44F7-B840-EA8008316E18} = {08698096-FA74-4437-85DA-7CDC9B1C17B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

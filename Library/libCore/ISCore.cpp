@@ -160,7 +160,8 @@ void ISCore::RestartApplication()
 //-----------------------------------------------------------------------------
 void ISCore::ExitApplication()
 {
-	if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
+	//???
+	/*if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
 	{
 		if (ISMemoryObjects::GetInstance().GetMainWindow())
 		{
@@ -168,7 +169,7 @@ void ISCore::ExitApplication()
 		}
 		qApp->closeAllWindows();
 	}
-	qApp->quit();
+	qApp->quit();*/
 }
 //-----------------------------------------------------------------------------
 void ISCore::TerminateCurrentProcess()

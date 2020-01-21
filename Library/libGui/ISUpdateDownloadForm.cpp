@@ -4,7 +4,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISMessageBox.h"
 #include "ISDebug.h"
 #include "ISCountingTime.h"
@@ -75,7 +75,7 @@ void ISUpdateDownloadForm::EnterClicked()
 void ISUpdateDownloadForm::SetStatusText(const QString &Text)
 {
 	LabelStatus->setText(Text);
-	ISSystem::RepaintWidget(LabelStatus);
+	ISGui::RepaintWidget(LabelStatus);
 }
 //-----------------------------------------------------------------------------
 void ISUpdateDownloadForm::Start()

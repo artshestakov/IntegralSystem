@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDefines.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISProcessForm::ISProcessForm(const QString &Text, QWidget *parent) : ISInterfaceForm(parent)
 {
@@ -34,19 +34,19 @@ ISProcessForm::~ISProcessForm()
 void ISProcessForm::SetText(const QString &Text)
 {
 	LabelText->setText(SYMBOL_CIRCLE + SYMBOL_SPACE + Text + "...");
-	ISSystem::RepaintWidget(LabelText);
+	ISGui::RepaintWidget(LabelText);
 	adjustSize();
-	ISSystem::ProcessEvents();
+	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
 void ISProcessForm::showEvent(QShowEvent *e)
 {
 	Q_UNUSED(e);
-	ISSystem::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	ISInterfaceForm::show();
 	update();
-	ISSystem::ProcessEvents();
+	ISGui::ProcessEvents();
 	adjustSize();
-	ISSystem::RepaintWidget(this);
+	ISGui::RepaintWidget(this);
 }
 //-----------------------------------------------------------------------------

@@ -6,9 +6,9 @@
 #include "ISControls.h"
 #include "ISUserRoleEntity.h"
 #include "ISMetaSystemsEntity.h"
-#include "ISSystem.h"
 #include "ISProtocol.h"
 #include "ISObjects.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 {
@@ -77,7 +77,7 @@ void ISSystemsPanel::SystemClicked()
 		CurrentSystemUID = ClickedSystemUID;
 	}
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ClearSubSystemsBar();
 
 	SubSystemBar->setVisible(true);
@@ -85,7 +85,7 @@ void ISSystemsPanel::SystemClicked()
 
 	LoadSubSystemsBar(Systems.value(ActionClicked));
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_SYSTEM, QString(), QString(), QVariant(), Systems.value(ActionClicked)->GetLocalName());
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISSystemsPanel::SubSystemClicked()
@@ -145,8 +145,7 @@ QString ISSystemsPanel::GetSystemToolTip(ISMetaSystem *MetaSystem) const
 		ToolTip = MetaSystem->GetLocalName();
 	}
 
-	ToolTip = ISSystem::PrepareLongToolTip(ToolTip);
-
+	ToolTip = ISGui::PrepareLongToolTip(ToolTip);
 	return ToolTip;
 }
 //-----------------------------------------------------------------------------
@@ -163,8 +162,7 @@ QString ISSystemsPanel::GetSubSystemToolTip(ISMetaSubSystem *MetaSubSystem) cons
 		ToolTip = MetaSubSystem->GetLocalName();
 	}
 
-	ToolTip = ISSystem::PrepareLongToolTip(ToolTip);
-
+	ToolTip = ISGui::PrepareLongToolTip(ToolTip);
 	return ToolTip;
 }
 //-----------------------------------------------------------------------------

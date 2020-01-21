@@ -4,7 +4,7 @@
 #include "ISServiceButton.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISPassportForm.h"
 //-----------------------------------------------------------------------------
 ISPassportEdit::ISPassportEdit(QWidget *parent) : ISLineEdit(parent)
@@ -55,9 +55,9 @@ void ISPassportEdit::Clear()
 //-----------------------------------------------------------------------------
 void ISPassportEdit::Edit()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISPassportForm PassportForm(PassportString, this);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 
 	if (PassportForm.Exec())
 	{

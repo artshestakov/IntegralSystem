@@ -184,7 +184,7 @@ void ISCalendarEventForm::closeEvent(QCloseEvent *e)
 //-----------------------------------------------------------------------------
 void ISCalendarEventForm::Defer()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	int Minute = ComboEdit->GetValue().toInt();
 	QDateTime DateTime = QDateTime::currentDateTime().addSecs(Minute * 60);
@@ -200,7 +200,7 @@ void ISCalendarEventForm::Defer()
 		close();
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISCalendarEventForm::OpenCard()
@@ -210,7 +210,7 @@ void ISCalendarEventForm::OpenCard()
 //-----------------------------------------------------------------------------
 void ISCalendarEventForm::EventClose()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	if (ISCore::CalendarCloseEvent(CalendarID))
 	{
@@ -219,6 +219,6 @@ void ISCalendarEventForm::EventClose()
 		close();
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

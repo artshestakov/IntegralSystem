@@ -5,7 +5,7 @@
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISPushButton.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK_HISTORY = PREPARE_QUERY("SELECT thst_creationdate, userfullname(thst_user), thac_name, thst_information "
 											   "FROM _taskhistory "
@@ -68,7 +68,7 @@ void ISTaskHistoryTab::Update()
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
 			ListWidget->setItemWidget(ListWidgetItem, Widget);
 			
-			ISSystem::RepaintWidget(Widget);
+			ISGui::RepaintWidget(Widget);
 			ListWidgetItem->setSizeHint(Widget->sizeHint());
 		}
 	}

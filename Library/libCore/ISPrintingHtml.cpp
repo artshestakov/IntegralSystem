@@ -3,7 +3,7 @@
 #include "ISSystem.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-#include "ISPrintPreviewDialog.h"
+//#include "ISPrintPreviewDialog.h"
 #include "ISQuery.h"
 #include "ISHtmlQuery.h"
 #include "ISAssert.h"
@@ -101,7 +101,8 @@ bool ISPrintingHtml::FillTemplate()
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::PreviewDocument()
 {
-	ISSystem::SetWaitGlobalCursor(false);
+	//???
+	/*ISGui::SetWaitGlobalCursor(false);
 	emit SetVisibleDialog(false);
 
 	ISPrintPreviewDialog PrintPreviewDialog(nullptr, GetReportLocalName());
@@ -110,10 +111,11 @@ bool ISPrintingHtml::PreviewDocument()
 	PrintPreviewDialog.Exec();
 	bool Result = PrintPreviewDialog.GetPrint();
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	emit SetVisibleDialog(true);
 
-	return Result;
+	return Result;*/
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::Print()
@@ -143,14 +145,15 @@ bool ISPrintingHtml::Print()
 	}
 	else
 	{
-		QPrintDialog PrintDialog(&Printer);
-		ISSystem::MoveWidgetToDesktop(&PrintDialog, ISNamespace::MWD_Center);
+		//???
+		/*QPrintDialog PrintDialog(&Printer);
+		ISGui::MoveWidgetToDesktop(&PrintDialog, ISNamespace::MWD_Center);
 		PrintDialog.setWindowTitle(LOCALIZATION("SelectPrinter"));
 		PrintDialog.setWindowIcon(BUFFER_ICONS("Print"));
 		if (PrintDialog.exec() == QPrintDialog::Accepted)
 		{
 			TextDocument.print(&Printer);
-		}
+		}*/
 	}
 
 	return true;

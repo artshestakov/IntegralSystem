@@ -2,7 +2,7 @@
 #include "ISUserGroupListForm.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISUserGroupListForm::ISUserGroupListForm(QWidget *parent) : ISListBaseForm("_UserGroup", parent)
 {
@@ -34,10 +34,10 @@ void ISUserGroupListForm::SelectedGroup()
 	{
 		Label->setVisible(false);
 
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 		UserGroupWidget = new ISUserGroupWidget(GetObjectID(), GetCurrentRecordValue("Name").toString(), this);
 		GetLayoutTableView()->addWidget(UserGroupWidget);
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 	else
 	{

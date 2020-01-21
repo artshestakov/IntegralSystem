@@ -6,7 +6,7 @@
 #include "ISBuffer.h"
 #include "ISMetaUser.h"
 #include "ISMessageBox.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISProtocol.h"
 #include "ISNotifyRecipient.h"
 //-----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	FormLayout->addRow(LOCALIZATION("Password") + ":", EditPassword);
 
 	LabelNotify = new QLabel(this);
-	ISSystem::SetFontWidgetBold(LabelNotify, true);
+	ISGui::SetFontWidgetBold(LabelNotify, true);
 	Layout->addWidget(LabelNotify, 0, Qt::AlignLeft);
 
 	ISPushButton *ButtonUnlock = new ISPushButton(this);
@@ -88,7 +88,7 @@ void ISLockForm::AfterShowEvent()
 //-----------------------------------------------------------------------------
 void ISLockForm::Unlock()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	QString EnterPassword = EditPassword->GetValue().toString();
 	if (EnterPassword.length())
@@ -103,7 +103,7 @@ void ISLockForm::Unlock()
 		}
 		else
 		{
-			ISSystem::SetWaitGlobalCursor(false);
+			ISGui::SetWaitGlobalCursor(false);
 			ISProtocol::Insert(true, CONST_UID_PROTOCOL_INVALID_UNLOCK_APPLICATION, QString(), QString(), QVariant(), LOCALIZATION("IncorrectPassword"));
 			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Password.Error"));
 			EditPassword->BlinkRed();
@@ -111,12 +111,12 @@ void ISLockForm::Unlock()
 	}
 	else
 	{
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Password.IsEmpty"));
 		EditPassword->BlinkRed();
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISLockForm::EnterClicked()

@@ -323,7 +323,7 @@ void ISObjectFormBase::CreateToolBar()
 	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
 	LabelIsDeleted->setText(LOCALIZATION("RecordMarkerIsDeleted"));
 	LabelIsDeleted->setFont(FONT_TAHOMA_12_BOLD);
-	ISSystem::SetFontWidgetUnderline(LabelIsDeleted, true);
+	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
 	WidgetObjectLayout->addWidget(LabelIsDeleted, 0, Qt::AlignHCenter);
 
 	//Сохранить и создать новую запись
@@ -1001,7 +1001,7 @@ void ISObjectFormBase::ResizeRemove()
 		Height *= 2;
 
 		resize(Width, Height);
-		ISSystem::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -1105,7 +1105,7 @@ void ISObjectFormBase::CancelChanged()
 {
 	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CancelChanged")))
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 
 		if (FormType == ISNamespace::OFT_New)
 		{
@@ -1135,7 +1135,7 @@ void ISObjectFormBase::CancelChanged()
 			}
 		}
 
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 		SetModificationFlag(false);
 		BeginFieldEdit->SetFocus();
 	}
@@ -1145,7 +1145,7 @@ void ISObjectFormBase::ReRead()
 {
 	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ReReadCard")))
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 		for (const auto &FieldItem : FieldsMap.toStdMap())
 		{
 			QString FieldName = FieldItem.first;
@@ -1165,7 +1165,7 @@ void ISObjectFormBase::ReRead()
 
 		RenameReiconForm();
 		BeginFieldEdit->SetFocus();
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------

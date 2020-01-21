@@ -138,7 +138,6 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
 		{
 			ClearDirRecursive(DirPath + "/" + *DirIterator);
 		}
-
 		++DirIterator;
 	}
 
@@ -165,100 +164,10 @@ void ISSystem::RemoveLastSymbolFromString(QString &String, int CountSymbols)
 	String.chop(CountSymbols);
 }
 //-----------------------------------------------------------------------------
-bool ISSystem::OpenFolder(const QString &FolderPath)
-{
-	return QDesktopServices::openUrl(QUrl(FolderPath));
-}
-//-----------------------------------------------------------------------------
-void ISSystem::RepaintWidget(QWidget *Widget, bool adjust_size)
-{
-	if (Widget)
-	{
-		if (adjust_size)
-		{
-			Widget->adjustSize();
-		}
-
-		Widget->repaint();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISSystem::ProcessEvents()
-{
-	qApp->processEvents();
-}
-//-----------------------------------------------------------------------------
-void ISSystem::MoveWidgetToDesktop(QWidget *Widget, ISNamespace::MoveWidgetDesktop MovePosition)
-{
-	int X = 0;
-	int Y = 0;
-
-	if (MovePosition == ISNamespace::MWD_LeftUp)
-	{
-		X = 30;
-		Y = 30;
-	}
-	else if (MovePosition == ISNamespace::MWD_LeftBottom)
-	{
-		X = 30;
-
-		Y = QApplication::desktop()->availableGeometry().height();
-        Y = Y - Widget->height();
-		Y = Y - 30;
-	}
-	else if (MovePosition == ISNamespace::MWD_RightUp)
-	{
-		X = QApplication::desktop()->availableGeometry().width();
-		X = X - Widget->width();
-		X = X - 30;
-
-		Y = 30;
-	}
-	else if (MovePosition == ISNamespace::MWD_RightBottom)
-	{
-		X = QApplication::desktop()->availableGeometry().width();
-		X = X - Widget->width();
-		X = X - 30;
-
-		Y = QApplication::desktop()->availableGeometry().height();
-		Y = Y - Widget->height();
-		Y = Y - 30;
-	}
-	else if (MovePosition == ISNamespace::MWD_Center)
-	{
-		QRect Rect = Widget->frameGeometry();
-		Rect.moveCenter(QDesktopWidget().availableGeometry().center());
-
-		X = Rect.topLeft().x();
-		Y = Rect.topLeft().y();
-	}
-
-	Widget->move(X, Y);
-}
-//-----------------------------------------------------------------------------
-void ISSystem::SetWaitGlobalCursor(bool Wait)
-{
-	if (Wait)
-	{
-		QApplication::setOverrideCursor(CURSOR_WAIT);
-	}
-	else
-	{
-		QApplication::restoreOverrideCursor();
-
-		if (QApplication::overrideCursor())
-		{
-			if (QApplication::overrideCursor()->shape() == CURSOR_WAIT)
-			{
-				QApplication::restoreOverrideCursor();
-			}
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 ISNamespace::ApplicationType ISSystem::GetApplicationType()
 {
-	QObject *ApplicationObject = qobject_cast<QApplication*>(QCoreApplication::instance());
+	//???
+	/*QObject *ApplicationObject = qobject_cast<QApplication*>(QCoreApplication::instance());
 	if (ApplicationObject)
 	{
 		return ISNamespace::AT_GUI;
@@ -266,7 +175,7 @@ ISNamespace::ApplicationType ISSystem::GetApplicationType()
 	else
 	{
 		return ISNamespace::AT_CONSOLE;
-	}
+	}*/
 
 	return ISNamespace::AT_UNKNOWN;
 }
@@ -274,40 +183,6 @@ ISNamespace::ApplicationType ISSystem::GetApplicationType()
 ISUuid ISSystem::GenerateUuid()
 {
 	return QUuid::createUuid();
-}
-//-----------------------------------------------------------------------------
-QString ISSystem::PrepareLongToolTip(QString ToolTipText, int MaxWidth)
-{
-	QFontMetrics FontMetrics(QToolTip::font());
-	QString Result;
-
-	for (;;)
-	{
-		int i = 0;
-		while (i < ToolTipText.length())
-		{
-			if (FontMetrics.width(ToolTipText.left(++i + 1)) > MaxWidth)
-			{
-				int j = ToolTipText.lastIndexOf(' ', i);
-				if (j > 0)
-				{
-					i = j;
-				}
-
-				Result += ToolTipText.left(i);
-				Result += '\n';
-				ToolTipText = ToolTipText.mid(i + 1);
-				break;
-			}
-		}
-
-		if (i >= ToolTipText.length())
-		{
-			break;
-		}
-	}
-
-	return Result + ToolTipText;
 }
 //-----------------------------------------------------------------------------
 void ISSystem::BeginSymbolToUpper(QString &String)
@@ -359,15 +234,16 @@ QString ISSystem::GetLibraryExtension()
 //-----------------------------------------------------------------------------
 bool ISSystem::CheckExistSlot(QObject *Object, const QString &SlotName)
 {
+	bool Result = false;
 	for (int i = 0; i < Object->metaObject()->methodCount(); i++)
 	{
-		if (Object->metaObject()->method(i).name() == SlotName)
+		Result = Object->metaObject()->method(i).name() == SlotName;
+		if (Result)
 		{
-			return true;
+			break;
 		}
 	}
-
-	return false;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISSystem::LoadResource()
@@ -401,49 +277,6 @@ bool ISSystem::AddressIsList(const QString &AddressString)
 	return AddressString.contains(SYMBOL_FIAS_SPLIT);
 }
 //-----------------------------------------------------------------------------
-bool ISSystem::CheckPressCapsLook()
-{
-#ifdef WIN32
-	//return GetKeyState(VK_CAPITAL) == 1 ? true : false; //???
-	return true;
-#endif
-}
-//-----------------------------------------------------------------------------
-bool ISSystem::IsStringUrl(const QString &Url)
-{
-	bool Result = false;
-	int Pos = 0;
-	QString Temp = Url;
-	if (QRegExpValidator(QRegExp(REG_EXP_URL)).validate(Temp, Pos) == QValidator::Acceptable)
-	{
-		Result = true;
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-QString ISSystem::GetCurrentLayoutName()
-{
-	QString Result;
-
-#ifdef WIN32
-	char LayoutName[KL_NAMELENGTH];
-	BOOL Ok = TRUE;// GetKeyboardLayoutNameA(LayoutName); //???
-	if (Ok == TRUE)
-	{
-		if (std::atoi(LayoutName) == 409)
-		{
-			Result = "ENG";
-		}
-		else if (std::atoi(LayoutName) == 419)
-		{
-			Result = "RUS";
-		}
-	}
-#endif
-
-	return Result;
-}
-//-----------------------------------------------------------------------------
 bool ISSystem::CreateDir(const QString &DirPath)
 {
 	QDir Dir(DirPath);
@@ -472,34 +305,11 @@ int ISSystem::TimeFromMinutes(const QTime &Time)
 //-----------------------------------------------------------------------------
 QString ISSystem::MillisecondsToString(int Milliseconds)
 {
-	QString FormattedTime;
 	int hours = Milliseconds / (1000 * 60 * 60);
 	int minutes = (Milliseconds - (hours * 1000 * 60 * 60)) / (1000 * 60);
 	int seconds = (Milliseconds - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60)) / 1000;
 	int milliseconds = Milliseconds - (seconds * 1000) - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60);
-	FormattedTime.append(QString("%1").arg(hours, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(minutes, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(seconds, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(milliseconds, 3, 10, QLatin1Char('0')));
-	return FormattedTime;
-}
-//-----------------------------------------------------------------------------
-void ISSystem::SetFontWidgetUnderline(QWidget *Widget, bool Underline)
-{
-	QFont Font = Widget->font();
-	Font.setUnderline(Underline);
-	Widget->setFont(Font);
-}
-//-----------------------------------------------------------------------------
-void ISSystem::SetFontWidgetItalic(QWidget *Widget, bool Italic)
-{
-	QFont Font = Widget->font();
-	Font.setItalic(Italic);
-	Widget->setFont(Font);
-}
-//-----------------------------------------------------------------------------
-void ISSystem::SetFontWidgetBold(QWidget *Widget, bool Bold)
-{
-	QFont Font = Widget->font();
-	Font.setBold(Bold);
-	Widget->setFont(Font);
+	return QString().append(QString("%1").arg(hours, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(minutes, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(seconds, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(milliseconds, 3, 10, QLatin1Char('0')));
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::StringToBase64(const QString &String)
@@ -515,85 +325,14 @@ QString ISSystem::Base64ToString(const QString &Base64)
 	return String;
 }
 //-----------------------------------------------------------------------------
-QFont ISSystem::StringToFont(const QString &FontText)
-{
-	QFont FontReturned;
-	if (FontText.length())
-	{
-		FontReturned = qvariant_cast<QFont>(FontText);
-	}
-	else
-	{
-		FontReturned = FONT_APPLICATION_STRING;
-	}
-
-	return FontReturned;
-}
-//-----------------------------------------------------------------------------
-QByteArray ISSystem::IconToByteArray(const QIcon &Icon)
-{
-	QPixmap PixmapIcon = Icon.pixmap(SIZE_16_16);
-	QByteArray ByteArray;
-	QBuffer Buffer(&ByteArray);
-	if (Buffer.open(QIODevice::WriteOnly))
-	{
-		PixmapIcon.save(&Buffer, "PNG");
-	}
-	return ByteArray;
-}
-//-----------------------------------------------------------------------------
-QIcon ISSystem::ByteArrayToIcon(const QByteArray &ByteArray)
-{
-	QIcon Icon;
-	QPixmap Pixmap;
-	if (Pixmap.loadFromData(ByteArray, "PNG"))
-	{
-		Icon = QIcon(Pixmap);
-	}
-	return Icon;
-}
-//-----------------------------------------------------------------------------
-QByteArray ISSystem::PixmapToByteArray(const QPixmap &Pixmap)
-{
-	QPixmap ConvertingPixmap = Pixmap;
-	QByteArray ByteArray;
-	QBuffer Buffer(&ByteArray);
-    if (Buffer.open(QIODevice::WriteOnly));
-	{
-		ConvertingPixmap.save(&Buffer, "PNG");
-	}
-	return ByteArray;
-}
-//-----------------------------------------------------------------------------
-QPixmap ISSystem::ByteArrayToPixmap(const QByteArray &ByteArray)
-{
-	QPixmap Pixmap;
-    Pixmap.loadFromData(ByteArray);
-	return Pixmap;
-}
-//-----------------------------------------------------------------------------
 QString ISSystem::SizeToString(const QSize &Size)
 {
-	int Height = Size.height();
-	int Width = Size.width();
-
-	QString HeightString = QString::number(Height);
-	QString WidthString = QString::number(Width);
-
-	QString SizeString = HeightString + " x " + WidthString;
-	return SizeString;
-}
-//-----------------------------------------------------------------------------
-QColor ISSystem::StringToColor(const QString &String)
-{
-	QColor Color(String);
-	return Color;
+	return QString(QString::number(Size.height()) + " x " + QString::number(Size.width()));
 }
 //-----------------------------------------------------------------------------
 double ISSystem::MillisecondToSecond(int Milliseconds)
 {
-	double Seconds = Milliseconds / 1000;
-	return Seconds;
+	return Milliseconds / 1000;
 }
 //-----------------------------------------------------------------------------
 QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString)
@@ -609,7 +348,6 @@ QStringMap ISSystem::JsonStringToStringMap(const QString &JsonString)
 	{
 		StringMap.insert(MapItem.first, MapItem.second.toString());
 	}
-
 	return StringMap;
 }
 //-----------------------------------------------------------------------------
@@ -628,9 +366,7 @@ QString ISSystem::StringFromMD5(const QString &String)
 //-----------------------------------------------------------------------------
 qint64 ISSystem::GetFileSize(const QString &FilePath)
 {
-	QFileInfo FileInfo(FilePath);
-	qint64 Size = FileInfo.size();
-	return Size;
+	return QFileInfo(FilePath).size();
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::FileSizeFromString(qint64 FileSize)
@@ -674,29 +410,6 @@ QString ISSystem::GetFileName(const QString &FilePath)
 	return QFileInfo(FilePath).fileName();
 }
 //-----------------------------------------------------------------------------
-bool ISSystem::OpenUrl(const QString &Url)
-{
-	SetWaitGlobalCursor(true);
-	bool Result = QDesktopServices::openUrl(QUrl(Url));
-	SetWaitGlobalCursor(false);
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISSystem::OpenFile(const QString &FilePath)
-{
-	SetWaitGlobalCursor(true);
-	bool Result = QDesktopServices::openUrl(QUrl(QUrl::fromLocalFile(FilePath)));
-	SetWaitGlobalCursor(false);
-	return Result;
-}
-//-----------------------------------------------------------------------------
-QIcon ISSystem::GetIconFile(const QString &FilePath)
-{
-	QFileInfo FileInfo(FilePath);
-	QFileIconProvider FileIconProvider;
-	return FileIconProvider.icon(FileInfo);
-}
-//-----------------------------------------------------------------------------
 QByteArray ISSystem::GetFileMD5(const QString &FilePath)
 {
 	QFile File(FilePath);
@@ -707,7 +420,6 @@ QByteArray ISSystem::GetFileMD5(const QString &FilePath)
 		File.close();
 		return MD5.result();
 	}
-
 	return QByteArray();
 }
 //-----------------------------------------------------------------------------

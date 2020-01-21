@@ -3,7 +3,7 @@
 #include "ISDefines.h"
 #include "ISContextMenuInteger.h"
 #include "ISQLineEdit.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISQSpinBox::ISQSpinBox(QWidget *parent) : QSpinBox(parent)
 {
@@ -31,12 +31,12 @@ void ISQSpinBox::SetVisibleClear(bool Visible)
 //-----------------------------------------------------------------------------
 void ISQSpinBox::contextMenuEvent(QContextMenuEvent *e)
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISContextMenuInteger ContextMenu(lineEdit(), lineEdit()->isReadOnly(), lineEdit()->isUndoAvailable(), lineEdit()->isRedoAvailable(), lineEdit()->hasSelectedText(), lineEdit()->echoMode(), lineEdit()->text().isEmpty(), value(), minimum(), maximum());
 	connect(&ContextMenu, &ISContextMenuInteger::Delete, lineEdit(), &QLineEdit::del);
 	connect(&ContextMenu, &ISContextMenuInteger::StepUp, this, &ISQSpinBox::stepUp);
 	connect(&ContextMenu, &ISContextMenuInteger::StepDown, this, &ISQSpinBox::stepDown);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	ContextMenu.exec(e->globalPos());
 }
 //-----------------------------------------------------------------------------

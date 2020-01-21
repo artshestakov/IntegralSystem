@@ -9,6 +9,7 @@
 #include "ISMetaUser.h"
 #include "ISSystem.h"
 #include "ISProtocol.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER = PREPARE_QUERY("SELECT usrs_login, userfullname(:UserID) FROM _users WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
@@ -102,7 +103,7 @@ void ISUserPasswordForm::ChangePassword()
 		return;
 	}
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISQuery qSelectAuth(QS_AUTHID);
 	qSelectAuth.BindValue(":Login", Login);
@@ -133,13 +134,13 @@ void ISUserPasswordForm::ChangePassword()
 		}
 		else
 		{
-			ISSystem::SetWaitGlobalCursor(false);
+			ISGui::SetWaitGlobalCursor(false);
 			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotValidInputPasswordForChange"));
 			EditCurrentPassword->BlinkRed();
 		}
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISUserPasswordForm::PasswordChecked()

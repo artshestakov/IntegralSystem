@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISPushButton.h"
 //-----------------------------------------------------------------------------
 ISPathEditDir::ISPathEditDir(QWidget *parent) : ISLineEdit(parent)
@@ -64,7 +64,7 @@ void ISPathEditDir::SelectDir()
 //-----------------------------------------------------------------------------
 void ISPathEditDir::OpenDir()
 {
-	if (!ISSystem::OpenFolder(GetValue().toString()))
+	if (!ISGui::OpenFolder(GetValue().toString()))
 	{
 		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.ErrorOpenedFolderPath").arg(GetValue().toString()));
 	}

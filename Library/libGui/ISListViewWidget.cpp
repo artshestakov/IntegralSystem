@@ -5,7 +5,7 @@
 #include "ISLocalization.h"
 #include "ISControls.h"
 #include "ISMetaViewQuery.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISListViewWidget::ISListViewWidget(PMetaClassTable *meta_query, QWidget *parent) : ISInterfaceMetaForm(parent)
@@ -132,7 +132,7 @@ void ISListViewWidget::SelectedRowEvent(const QItemSelection &ItemSelected, cons
 //-----------------------------------------------------------------------------
 void ISListViewWidget::ModelThreadStarted()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ActionUpdate->setEnabled(false);
 
 	QMovie *Movie = BUFFER_ANIMATION("Load", LabelAnimation);
@@ -144,7 +144,7 @@ void ISListViewWidget::ModelThreadStarted()
 //-----------------------------------------------------------------------------
 void ISListViewWidget::ModelThreadFinished()
 {
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	ActionUpdate->setEnabled(true);
 	LabelRows->setText(QString("%1: %2").arg(LOCALIZATION("RecordsCount")).arg(SqlModel->rowCount())); //Изменение значения в надписе "Записей"
 
@@ -155,7 +155,7 @@ void ISListViewWidget::ModelThreadFinished()
 	Movie = nullptr;
 
 	LabelLoading->setText(QString());
-	ISSystem::RepaintWidget(ToolBar);
+	ISGui::RepaintWidget(ToolBar);
 
 	LoadDataAfterEvent();
 }

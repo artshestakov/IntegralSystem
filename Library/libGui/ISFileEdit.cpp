@@ -7,6 +7,7 @@
 #include "ISSystem.h"
 #include "ISInputDialog.h"
 #include "ISQuery.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT file_name, file_extension, file_icon "
 									   "FROM _file "
@@ -74,7 +75,7 @@ void ISFileEdit::SetValue(const QVariant &value)
 		{
 			QString FileName = qSelectFile.ReadColumn("file_name").toString();
 			QString FileExtension = qSelectFile.ReadColumn("file_extension").toString();
-			QIcon FileIcon = ISSystem::ByteArrayToIcon(qSelectFile.ReadColumn("file_icon").toByteArray());
+			QIcon FileIcon = ISGui::ByteArrayToIcon(qSelectFile.ReadColumn("file_icon").toByteArray());
 
 			ButtonFile->setMenu(MenuFile);
 			ButtonFile->setText(FileName + "." + FileExtension);
@@ -91,7 +92,7 @@ QVariant ISFileEdit::GetValue() const
 //-----------------------------------------------------------------------------
 void ISFileEdit::Clear()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	if (FileID.isValid())
 	{
 		FileID.clear();
@@ -101,7 +102,7 @@ void ISFileEdit::Clear()
 		ButtonFile->setIcon(QIcon());
 		ValueChanged();
 	}
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::SetVisibleClear(bool Visible)
@@ -136,7 +137,7 @@ void ISFileEdit::HandlingFile(const QString &FilePath)
 
 	QString FileName = FileInfo.baseName();
 	QString FileExtension = FileInfo.suffix();
-	QIcon FileIcon = ISSystem::GetIconFile(FilePath);
+	QIcon FileIcon = ISGui::GetIconFile(FilePath);
 	QByteArray FileData = File.readAll();
 	File.close();
 
@@ -146,9 +147,9 @@ void ISFileEdit::HandlingFile(const QString &FilePath)
 		return;
 	}
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ButtonFile->setText(LOCALIZATION("Adding") + "...");
-	ISSystem::RepaintWidget(ButtonFile);
+	ISGui::RepaintWidget(ButtonFile);
 
 	if (FileID.isValid())
 	{
@@ -172,12 +173,12 @@ void ISFileEdit::HandlingFile(const QString &FilePath)
 			ValueChanged();
 		}
 	}
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::Open()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISQuery qSelect(QS_FILE_OPEN);
 	qSelect.BindValue(":FileID", FileID);
@@ -192,11 +193,11 @@ void ISFileEdit::Open()
 			FileTemp.write(Data);
 			FileTemp.close();
 
-			ISSystem::OpenFile(FilePathTemp);
+			ISGui::OpenFile(FilePathTemp);
 		}
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::Rename()
@@ -205,7 +206,7 @@ void ISFileEdit::Rename()
 	QVariant NewName = ISInputDialog::GetString(this, LOCALIZATION("Renaming"), LOCALIZATION("NewFileName"), FileInfo.baseName());
 	if (NewName.isValid())
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 
 		ISQuery qUpdateName(QU_FILE_NAME);
 		qUpdateName.BindValue(":Name", NewName);
@@ -216,7 +217,7 @@ void ISFileEdit::Rename()
 			ValueChanged();
 		}
 
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -259,7 +260,7 @@ bool ISFileEdit::UpdateFile(const QString &FileName, const QString &FileExtensio
 	ISQuery qUpdateFile(QU_FILE);
 	qUpdateFile.BindValue(":Name", FileName);
 	qUpdateFile.BindValue(":Extension", FileExtension);
-	qUpdateFile.BindValue(":Icon", ISSystem::IconToByteArray(FileIcon));
+	qUpdateFile.BindValue(":Icon", ISGui::IconToByteArray(FileIcon));
 	qUpdateFile.BindValue(":Data", FileData);
 	qUpdateFile.BindValue(":FileID", FileID);
 	return qUpdateFile.Execute();
@@ -270,7 +271,7 @@ bool ISFileEdit::InsertFile(const QString &FileName, const QString &FileExtensio
 	ISQuery qInsertFile(QI_FILE);
 	qInsertFile.BindValue(":Name", FileName);
 	qInsertFile.BindValue(":Extension", FileExtension);
-	qInsertFile.BindValue(":Icon", ISSystem::IconToByteArray(FileIcon));
+	qInsertFile.BindValue(":Icon", ISGui::IconToByteArray(FileIcon));
 	qInsertFile.BindValue(":Data", FileData);
 	bool Result = qInsertFile.ExecuteFirst();
 	if (Result)

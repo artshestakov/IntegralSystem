@@ -117,7 +117,7 @@ ISListBaseForm::~ISListBaseForm()
 		delete SearchForm;
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 int ISListBaseForm::GetCurrentRowIndex()
@@ -424,10 +424,10 @@ void ISListBaseForm::CornerButtonClicked()
 {
 	if (SqlModel->rowCount())
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 		TableView->selectAll();
 		TableView->setFocus();
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -721,7 +721,7 @@ void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 	if (PageNavigation)
 	{
 		PageNavigation->setEnabled(Enabled);
-		ISSystem::RepaintWidget(PageNavigation);
+		ISGui::RepaintWidget(PageNavigation);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -836,7 +836,7 @@ void ISListBaseForm::ActionSetToolTip(ISNamespace::ActionType action_type, const
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadStarted()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
 	ListIndicatorWidget->SetPixmap(QPixmap());
 	ListIndicatorWidget->SetVisibleAnimation(true);
@@ -857,7 +857,7 @@ void ISListBaseForm::ModelThreadLoadingData()
 void ISListBaseForm::ModelThreadFinished()
 {
 	IsLoadingData = false;
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 
 	ListIndicatorWidget->hide();
 	ToolBar->setEnabled(true);
@@ -870,7 +870,7 @@ void ISListBaseForm::ModelThreadFinished()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
 {
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 
 	ListIndicatorWidget->hide();
 	ToolBar->setEnabled(true);
@@ -888,7 +888,7 @@ void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QString &QueryText)
 {
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 
 	ListIndicatorWidget->hide();
 	ToolBar->setEnabled(true);
@@ -1267,9 +1267,9 @@ void ISListBaseForm::Print()
 		return;
 	}
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISPrintForm PrintListForm(MetaTable->GetName(), this);
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	PrintListForm.Exec();
 
 	ISPrintMetaReport *MetaReport = PrintListForm.GetMetaReport();
@@ -1280,7 +1280,7 @@ void ISListBaseForm::Print()
 
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_PRINT, MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID(), MetaReport->GetLocalName());
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 
     ISProcessForm ProcessForm;
 	ProcessForm.show();
@@ -1348,7 +1348,7 @@ void ISListBaseForm::Print()
 
 	}
 
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 
 	if (PrintingBase)
 	{
@@ -1395,26 +1395,26 @@ void ISListBaseForm::AttachTask()
 		int TaskID = ISGui::SelectObject("_Task");
 		if (TaskID)
 		{
-			ISSystem::SetWaitGlobalCursor(true);
+			ISGui::SetWaitGlobalCursor(true);
 			if (ISCore::TaskIsAttachedObject(TaskID, MetaTable->GetName(), GetObjectID())) //≈сли запись уже прикреплена к выбранной задаче
 			{
-				ISSystem::SetWaitGlobalCursor(false);
+				ISGui::SetWaitGlobalCursor(false);
 				if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DetachObjectTask")))
 				{
-					ISSystem::SetWaitGlobalCursor(true);
+					ISGui::SetWaitGlobalCursor(true);
 					if (ISCore::TaskDetachObject(TaskID, MetaTable->GetName(), GetObjectID()))
 					{
-						ISSystem::SetWaitGlobalCursor(false);
+						ISGui::SetWaitGlobalCursor(false);
 						ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.DetachedObjectTask"));
 					}
 				}
 			}
 			else //«апись не прикреплена к выбранной задаче
 			{
-				ISSystem::SetWaitGlobalCursor(true);
+				ISGui::SetWaitGlobalCursor(true);
 				if (ISCore::TaskAttachObject(TaskID, MetaTable->GetName(), GetObjectID()))
 				{
-					ISSystem::SetWaitGlobalCursor(false);
+					ISGui::SetWaitGlobalCursor(false);
 					ISProtocol::Insert(true, CONST_UID_PROTOCOL_ATTACH_OBJECT_TASK, MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID());
 					ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.AttachedObjectTask"));
 				}
@@ -1425,7 +1425,7 @@ void ISListBaseForm::AttachTask()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowFavorites()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISFavoritesForm *FavoritesForm = new ISFavoritesForm(nullptr, MetaTable);
 	FavoritesForm->show();
 	connect(FavoritesForm, &ISFavoritesForm::OpenObject, [=](const QString &TableName, int ObjectID)
@@ -1433,7 +1433,7 @@ void ISListBaseForm::ShowFavorites()
 		Q_UNUSED(TableName);
 		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName, ObjectID)->show();
 	});
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowReference()
@@ -1491,31 +1491,31 @@ void ISListBaseForm::NoteObject()
 		return;
 	}
 
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	ISNoteObjectForm NoteObjectForm(MetaTable->GetName(), GetObjectID());
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	NoteObjectForm.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AutoFitColumnWidth()
 {
-	ISSystem::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(true);
 	TableView->resizeColumnsToContents();
-	ISSystem::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ResetWidthColumn()
 {
 	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ResetWidthColumn")))
 	{
-		ISSystem::SetWaitGlobalCursor(true);
+		ISGui::SetWaitGlobalCursor(true);
 
 		for (int i = 0; i < SqlModel->columnCount(); i++)
 		{
 			TableView->setColumnWidth(i, 100);
 		}
 
-		ISSystem::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------

@@ -6,7 +6,7 @@
 #include "ISMessageBox.h"
 #include "ISMetaUser.h"
 #include "ISFastAccessEntity.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_EXTERNAL_TOOLS = PREPARE_QUERY("SELECT extl_uid, extl_localname, extl_command "
 												 "FROM _externaltools "
@@ -113,7 +113,7 @@ void ISExternalToolsForm::Save()
 		ISUuid UID = ListWidgetItem->data(Qt::UserRole * 2).toString();
 		QString LocalName = ListWidgetItem->text();
 		QString Command = ListWidgetItem->data(Qt::UserRole).toString();
-		QIcon Icon = ISSystem::GetIconFile(Command);
+		QIcon Icon = ISGui::GetIconFile(Command);
 		int Order = i + 1;
 
 		if (!LocalName.length())
@@ -142,7 +142,7 @@ void ISExternalToolsForm::Save()
 				ISQuery qUpdate(QU_EXTERNAL_TOOLS);
 				qUpdate.BindValue(":LocalName", LocalName);
 				qUpdate.BindValue(":Command", Command);
-				qUpdate.BindValue(":Icon", ISSystem::PixmapToByteArray(Icon.pixmap(SIZE_32_32)));
+				qUpdate.BindValue(":Icon", ISGui::PixmapToByteArray(Icon.pixmap(SIZE_32_32)));
 				qUpdate.BindValue(":Order", Order);
 				qUpdate.BindValue(":UID", UID);
 				qUpdate.Execute();
@@ -152,7 +152,7 @@ void ISExternalToolsForm::Save()
 				ISQuery qInsert(QI_EXTERNAL_TOOLS);
 				qInsert.BindValue(":LocalName", LocalName);
 				qInsert.BindValue(":Command", Command);
-				qInsert.BindValue(":Icon", ISSystem::PixmapToByteArray(Icon.pixmap(SIZE_32_32)));
+				qInsert.BindValue(":Icon", ISGui::PixmapToByteArray(Icon.pixmap(SIZE_32_32)));
 				qInsert.BindValue(":Order", Order);
 				qInsert.Execute();
 			}
