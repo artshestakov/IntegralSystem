@@ -3,13 +3,8 @@
 #include "StdAfx.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class ISDebug : public QObject
+class ISDebug
 {
-	Q_OBJECT
-
-signals:
-	void Output(const QString &String);
-
 public:
 	ISDebug(const ISDebug &) = delete;
 	ISDebug(ISDebug &&) = delete;
@@ -53,6 +48,5 @@ private:
 
 	QStringList Messages;
 	QString AssertMessage;
-	QMutex Mutex;
 };
 //-----------------------------------------------------------------------------

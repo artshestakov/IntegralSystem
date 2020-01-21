@@ -5,7 +5,7 @@
 #include "ISSystem.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-ISDebug::ISDebug() : QObject()
+ISDebug::ISDebug()
 {
 	
 }
@@ -69,7 +69,7 @@ void ISDebug::ShowExceptionString(const QString &String)
 void ISDebug::OutputString(const QString &String, bool AddInLog)
 {
 	QString NewString = String.simplified();
-
+	std::cout << NewString.toStdString() << std::endl;
 	if (ISSystem::GetApplicationType() == ISNamespace::AT_CONSOLE)
 	{
 		QTextStream TextStream(stdout);
@@ -90,16 +90,6 @@ void ISDebug::OutputString(const QString &String, bool AddInLog)
 	{
 		IS_LOGGER(NewString);
 	}
-
-	Mutex.lock();
-	if (Messages.count() > 5000)
-	{
-		Messages.clear();
-	}
-	Messages.append(NewString);
-	Mutex.unlock();
-
-	emit Output(NewString);
 }
 //-----------------------------------------------------------------------------
 void ISDebug::EmptyString(bool AddInLog)

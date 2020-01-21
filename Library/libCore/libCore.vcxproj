@@ -203,7 +203,7 @@
     <QtMoc Include="PMetaClassTable.h" />
     <ClInclude Include="StackWalker.h" />
     <ClInclude Include="StdAfx.h" />
-    <QtMoc Include="ISDebug.h" />
+    <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISExceptionAssert.h" />
     <ClInclude Include="ISExceptionBase.h" />
     <QtMoc Include="ISLogger.h" />
