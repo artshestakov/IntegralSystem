@@ -22,7 +22,6 @@ ISNamespace::UpdateResult CheckUpdate(); //Проверка обновлений
 int main(int argc, char *argv[])
 {
 	ISIntegralSystem IntegralApplication(argc, argv);
-
 	if (!IntegralApplication.CheckAdminRole()) //Проверка наличия прав администратора
 	{
 		ISMessageBox::ShowCritical(nullptr, LOCALIZATION("Message.Error.NoAdministratorRights"));

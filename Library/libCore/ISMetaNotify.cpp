@@ -41,14 +41,14 @@ QString ISMetaNotify::GetSoundFileName() const
 	return SoundFileName;
 }
 //-----------------------------------------------------------------------------
-void ISMetaNotify::SetMessage(const QString &message)
+void ISMetaNotify::SetMessageNotify(const QString &message_notify)
 {
-	Message = message;
+	MessageNotify = message_notify;
 }
 //-----------------------------------------------------------------------------
-QString ISMetaNotify::GetMessage() const
+QString ISMetaNotify::GetMessageNotify() const
 {
-	return Message;
+	return MessageNotify;
 }
 //-----------------------------------------------------------------------------
 void ISMetaNotify::SetSignalName(const QString &signal_name)

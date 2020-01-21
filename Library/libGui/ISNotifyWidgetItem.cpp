@@ -24,7 +24,7 @@ ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id
 	LayoutLeft->addWidget(LabelDateTime, 0, Qt::AlignLeft);
 	
 	QLabel *LabelMessage = new QLabel(this);
-	LabelMessage->setText(ISNotifySender::GetInstance().GetMetaNotify(NotificationUID)->GetMessage());
+	LabelMessage->setText(ISNotifySender::GetInstance().GetMetaNotify(NotificationUID)->GetMessageNotify());
 	LabelMessage->setWordWrap(true);
 	LayoutLeft->addWidget(LabelMessage);
 

@@ -28,18 +28,15 @@ QString ISGui::GetCurrentLayoutName()
 	QString Result;
 
 #ifdef WIN32
-	wchar_t LayoutName[KL_NAMELENGTH];
+	char LayoutName[KL_NAMELENGTH];
 	BOOL Ok = GetKeyboardLayoutName(LayoutName);
 	if (Ok == TRUE)
 	{
-		long Layout = std::stol(std::wstring(LayoutName));
-		if (Layout == 409)
+		switch (std::atoi(LayoutName))
 		{
-			Result = "ENG";
-		}
-		else if (Layout == 419)
-		{
-			Result = "RUS";
+		case 409: Result = "ENG"; break;
+		case 419: Result = "RUS"; break;
+		default: Result = "UNKNOWN"; break;
 		}
 	}
 #endif

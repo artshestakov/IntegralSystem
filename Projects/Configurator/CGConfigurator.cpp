@@ -14,8 +14,7 @@
 //-----------------------------------------------------------------------------
 CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
-	ISSystem::LoadResource();
-
+	Q_INIT_RESOURCE(Resources);
 	ISConfig::GetInstance().Initialize(CONFIG_FILE_PATH);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
     ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
@@ -112,19 +111,16 @@ bool CGConfigurator::CheckExistDatabase(bool &Connected)
 {
 	QString ErrorString;
 	bool Exist = false;
-
-	if (ISDatabase::GetInstance().ConnectToSystemDB(ErrorString))
+	Connected = ISDatabase::GetInstance().ConnectToSystemDB(ErrorString);
+	if (Connected)
 	{
-        Connected = true;
 		Exist = ISDatabase::GetInstance().CheckExistDatabase(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 		ISDatabase::GetInstance().DisconnectFromSystemDB();
 	}
 	else
 	{
-        Connected = false;
 		ISDebug::ShowString(ErrorString);
 	}
-
 	return Exist;
 }
 //-----------------------------------------------------------------------------

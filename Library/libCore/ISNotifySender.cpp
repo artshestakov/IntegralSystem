@@ -65,7 +65,7 @@ void ISNotifySender::Initialize()
 			ISMetaNotify *MetaNotify = new ISMetaNotify();
 			MetaNotify->SetUID(UID);
 			MetaNotify->SetName(Name);
-			MetaNotify->SetMessage(Message);
+			MetaNotify->SetMessageNotify(Message);
 			MetaNotify->SetSoundFileName(SoundFileName);
 			MetaNotify->SetSignalName(SignalName);
 			MetaNotify->SetShowPopup(ShowPopup);

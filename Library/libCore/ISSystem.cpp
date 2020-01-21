@@ -144,21 +144,6 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
 	Dir.rmdir(DirPath);
 }
 //-----------------------------------------------------------------------------
-bool ISSystem::LoadModule(const QString &ModulePath, QString &ErrorString)
-{
-	bool Result = false;
-
-	QLibrary Library(ModulePath);
-	Result = Library.load();
-
-	if (!Result)
-	{
-		ErrorString = Library.errorString();
-	}
-
-	return Result;
-}
-//-----------------------------------------------------------------------------
 void ISSystem::RemoveLastSymbolFromString(QString &String, int CountSymbols)
 {
 	String.chop(CountSymbols);
@@ -166,18 +151,13 @@ void ISSystem::RemoveLastSymbolFromString(QString &String, int CountSymbols)
 //-----------------------------------------------------------------------------
 ISNamespace::ApplicationType ISSystem::GetApplicationType()
 {
-	//???
-	/*QObject *ApplicationObject = qobject_cast<QApplication*>(QCoreApplication::instance());
-	if (ApplicationObject)
-	{
-		return ISNamespace::AT_GUI;
-	}
-	else
-	{
-		return ISNamespace::AT_CONSOLE;
-	}*/
-
+#if defined(IS_GUI)
+	return ISNamespace::AT_GUI;
+#elif defined(IS_CONSOLE)
+	return ISNamespace::AT_CONSOLE;
+#else
 	return ISNamespace::AT_UNKNOWN;
+#endif
 }
 //-----------------------------------------------------------------------------
 ISUuid ISSystem::GenerateUuid()
@@ -243,25 +223,6 @@ bool ISSystem::CheckExistSlot(QObject *Object, const QString &SlotName)
 			break;
 		}
 	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISSystem::LoadResource()
-{
-	QString Path;
-	switch (GetCurrentOSType())
-	{
-	case ISNamespace::OST_Windows: Path = APPLICATION_DIR_PATH + "/ISResources.dll"; break;
-	case ISNamespace::OST_Linux: Path = APPLICATION_DIR_PATH + "/libISResources.so"; break;
-	}
-
-	QString ErrorString;
-	bool Result = ISSystem::LoadModule(Path, ErrorString);
-	if (!Result)
-	{
-		ISDebug::ShowWarningString(ErrorString);
-	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

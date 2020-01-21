@@ -22,7 +22,6 @@ public:
 	static QString GetConfigurationName(); //Получить текущую конфигурацию
 	static bool IsConfigurationDebug(); //Является ли текущая конфигурация отладочной
 	static void ClearDirRecursive(const QString &DirPath); //Очистить папку рекурсиво (с подпапками)
-    static bool LoadModule(const QString &ModulePath, QString &ErrorString); //Загрузить модуль в память
 	static void RemoveLastSymbolFromString(QString &String, int CountSymbols = 1); //Удалить последние символы из строки
 	static ISNamespace::ApplicationType GetApplicationType(); //Получить тип запущенного приложения
 	static ISUuid GenerateUuid(); //Сгенерировать новый UID
@@ -31,7 +30,6 @@ public:
 	static ISNamespace::OSType GetCurrentOSType(); //Получить тип текущей операционной системы
 	static QString GetLibraryExtension(); //Получить расширение динамической библиотеки для текущей операционной системы
 	static bool CheckExistSlot(QObject *Object, const QString &SlotName);
-	static bool LoadResource(); //Загрузка библиотеки ресурсов в память
 	static void ExecLoop(unsigned long Milliseconds); //Остановка потока событий
 	static bool AddressIsList(const QString &AddressString); //Проверка строки адреса на ввод по справочнику
 	static bool CreateDir(const QString &DirPath);

@@ -18,8 +18,8 @@ public:
 	void SetSoundFileName(const QString &sourd_file_name);
 	QString GetSoundFileName() const;
 
-	void SetMessage(const QString &message);
-	QString GetMessage() const;
+	void SetMessageNotify(const QString &message_notify);
+	QString GetMessageNotify() const;
 
 	void SetSignalName(const QString &signal_name);
 	QString GetSignalName() const;
@@ -31,7 +31,7 @@ private:
 	ISUuid UID;
 	QString Name;
 	QString SoundFileName;
-	QString Message;
+	QString MessageNotify;
 	QString SignalName;
 	bool ShowPopup;
 };

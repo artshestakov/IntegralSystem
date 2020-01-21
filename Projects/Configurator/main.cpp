@@ -1,3 +1,5 @@
+#define IS_CONSOLE
+//-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "CGConfigurator.h"
 #include "ISDefines.h"

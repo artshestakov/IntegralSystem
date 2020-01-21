@@ -41,7 +41,7 @@ void ISNotifyRecipient::Notification(const ISUuid &NotificationName, QSqlDriver:
 		ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO(MetaNotify->GetSoundFileName()));
 	}
 
-	QString NotificationText = MetaNotify->GetMessage();
+	QString NotificationText = MetaNotify->GetMessageNotify();
 	if (String.length())
 	{
 		NotificationText += ":\n\n" + String;
