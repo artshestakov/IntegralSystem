@@ -30,20 +30,20 @@
 #define OS_NAME_UNKNOWN "Unknown"
 
 //Thread Milliseconds Values
-#define ONE_SECOND_TO_MILLISECOND 1000
-#define FIVE_SECOND_TO_MILLISECOND 5000
+const int ONE_SECOND_TO_MILLISECOND = 1000;
+const int FIVE_SECOND_TO_MILLISECOND = 5000;
 
 //INTERFACE
-#define SIZE_MINIMUM_HEIGHT_EDIT_FIELD 24 //Минимальная высота поля ввода ввода информации
-#define EDIT_FIELD_SPACING 4
+const int SIZE_MINIMUM_HEIGHT_EDIT_FIELD = 24; //Минимальная высота поля ввода ввода информации
+const int EDIT_FIELD_SPACING = 4;
 #define LAYOUT_MARGINS_NULL QMargins(0, 0, 0, 0)
 #define LAYOUT_MARGINS_1_PX QMargins(1, 1, 1, 1)
 #define LAYOUT_MARGINS_2_PX QMargins(2, 2, 2, 2)
 #define LAYOUT_MARGINS_4_PX QMargins(4, 4, 4, 4)
 #define LAYOUT_MARGINS_5_PX QMargins(5, 5, 5, 5)
 #define LAYOUT_MARGINS_10_PX QMargins(10, 10, 10, 10)
-#define ISPUSHBUTTON_MINIMUM_WIDTH 75
-#define ISPUSHBUTTON_MINIMUM_HEIGHT 24
+const int ISPUSHBUTTON_MINIMUM_WIDTH = 75;
+const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 
 //SIZES
 #define SIZE_MAIN_WINDOW QSize(800, 559) //Размер главного окна
@@ -178,30 +178,30 @@
 #define EXIT_CODE_NORMAL EXIT_SUCCESS
 #define EXIT_CODE_ERROR EXIT_FAILURE
 #define SQL_DRIVER_QPSQL "QPSQL"
-#define MAX_QUERY_TIME 50 //Передельное время выполнения SQL-запроса (в миллисекундах)
+const int MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)
 #define INTEGER_MAXIMUM INT_MAX //Максимальное целое число
 #define DOUBLE_MAXIMUM DBL_MAX //Максимальное число с плавающей запятой
 #define CURRENT_PID QApplication::applicationPid()
 #define AVIABLE_IMAGE_EXTENSION QStringList() << EXTENSION_PNG << EXTENSION_JPEG  << EXTENSION_JPG << EXTENSION_DDS << EXTENSION_GIF << EXTENSION_ICNS << EXTENSION_ICO << EXTENSION_SVG << EXTENSION_TGA << EXTENSION_TIFF << EXTENSION_WBMP << EXTENSION_BMP << EXTENSION_WEBP
-#define CALENDAR_AUDIO_TIMEOUT 20000
-#define DURATION_SHOW_HIDE_ANIMATION 700
-#define DURATION_SHOW_HIDE_SEARCH_FORM 300
+const int CALENDAR_AUDIO_TIMEOUT = 20000;
+const int DURATION_SHOW_HIDE_ANIMATION = 700;
+const int DURATION_SHOW_HIDE_SEARCH_FORM = 300;
 #define CLASS_IS_LIST_EDIT "ISListEdit"
 #define CLIPBOARD_TEXT QApplication::clipboard()->text()
 #define CLIPBOARD_PIXMAP QApplication::clipboard()->pixmap()
-#define MINIMUM_PASSWORD_LENGHT 8
-#define CARAT_PORT 23071
-#define WAIT_LOAD_DATA_LIST_FORM 400
-#define ASTERISK_RECONNECT_TIMEOUT 10000
+const int MINIMUM_PASSWORD_LENGHT = 8;
+const int CARAT_PORT = 23071;
+const int WAIT_LOAD_DATA_LIST_FORM = 400;
+const int ASTERISK_RECONNECT_TIMEOUT = 10000;
 #define LOG_FILE_ASSERT "ASSERT"
 #define LOG_FILE_CRASH "CRASH"
 #define DATABASE_CONNECTON_THREAD_QUERY "ThreadQuery"
 #define DATABASE_CONNECTON_PATTERN_ACITIVITY "PatternActivity"
-#define YEAR_MINIMUM 1752
-#define YEAR_MAXIMUM 8000
+const int YEAR_MINIMUM = 1752;
+const int YEAR_MAXIMUM = 8000;
 #define CARAT_UID "{88DD90C4-2DFF-4515-8C32-7371C39C598A}"
-#define MAX_FILE_SIZE_FIELD ((1000 * 1024) * 10) //Максимальный размер файла в поле редактирования файла (10 мегабайт)
-#define PLAYER_WINDING 10000
+const int MAX_FILE_SIZE_FIELD = ((1000 * 1024) * 10); //Максимальный размер файла в поле редактирования файла (10 мегабайт)
+const int PLAYER_WINDING = 10000;
 
 //FEEDBACK
 #define FEEDBACK_SERVER "smtp.yandex.ru"
@@ -213,7 +213,7 @@
 //CARAT INFORMER
 #define CARAT_INFORMER_NAME "Carat-Informer"
 #define CARAT_INFORMER_SERVER "smtp.yandex.ru"
-#define CARAT_INFORMER_PORT 465
+const int CARAT_INFORMER_PORT = 465;
 #define CARAT_INFORMER_LOGIN "carat-informer@yandex.ru"
 #define CARAT_INFORMER_PASSWORD "QWPLH34JA961"
 #define CARAT_INFORMER_RECIPIENT "artemshestakov@outlook.com"
