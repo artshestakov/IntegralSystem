@@ -76,7 +76,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libCore.lib;libGui.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5PrintSupportd.lib;Qt5SerialPortd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

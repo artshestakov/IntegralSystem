@@ -40,7 +40,7 @@ ISObjects& ISObjects::GetInstance()
 //-----------------------------------------------------------------------------
 void ISObjects::Initialize()
 {
-	/*QString ClassName = ISLicense::GetInstance().GetClassName();
+	QString ClassName = ISLicense::GetInstance().GetClassName();
 
 	int ObjectType = QMetaType::type((ClassName + "*").toLocal8Bit().constData());
 	IS_ASSERT(ObjectType, QString("Class for configuration is null. ClassName: %1.").arg(ClassName));
@@ -49,7 +49,7 @@ void ISObjects::Initialize()
 	IS_ASSERT(MetaObject, "Error opening subsystem widget.");
 
 	ObjectInterface = dynamic_cast<ISObjectInterface*>(MetaObject->newInstance(Q_ARG(QObject *, this)));
-	IS_ASSERT(ObjectInterface, QString("Error instance configuration. ClassName: %1.").arg(ClassName));*/
+	IS_ASSERT(ObjectInterface, QString("Error instance configuration. ClassName: %1.").arg(ClassName));
 }
 //-----------------------------------------------------------------------------
 ISObjectInterface* ISObjects::GetInterface()

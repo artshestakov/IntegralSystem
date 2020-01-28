@@ -15,17 +15,17 @@ ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelT
 	Offset(0),
 	VisibleIsDeleted(false),
 	PeriodType(ISNamespace::PT_UnknownDate),
-	QuerySelectText("SELECT \n" + ClassAlias + "." + ClassAlias + "_" + MetaTable->GetSystemFields().at(0)->GetName().toLower() + " AS \"" + MetaTable->GetSystemFields().at(0)->GetName() + "\", \n"),
-	QuerySelectFrom("FROM " + MetaTable->GetName().toLower() + SYMBOL_SPACE + ClassAlias + " \n"),
-	QueryWhereText("WHERE \n"),
-	OrderFieldDefault(ClassAlias + "." + ClassAlias + "_id"),
 	OrderSort(Qt::AscendingOrder)
 {
 	CreateQuerySelectSystemFields();
 	CreateQuerySelectFields();
 	CreateQuerySelectIsDeleted();
 
-	QueryWhereText += QuerySelectIsDeleted; //???
+	QuerySelectText = "SELECT \n" + ClassAlias + "." + ClassAlias + "_" + MetaTable->GetSystemFields().at(0)->GetName().toLower() + " AS \"" + MetaTable->GetSystemFields().front()->GetName() + "\", \n";
+	QuerySelectFrom = "FROM " + MetaTable->GetName().toLower() + SYMBOL_SPACE + ClassAlias + " \n";
+	QueryWhereText = "WHERE \n";
+	QueryWhereText += QuerySelectIsDeleted;
+	OrderFieldDefault = ClassAlias + "." + ClassAlias + "_id";
 }
 //-----------------------------------------------------------------------------
 ISQueryModel::~ISQueryModel()
