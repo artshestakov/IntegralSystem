@@ -31,6 +31,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
+    <CodeAnalysisRuleSet>..\..\RuleSet1.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
@@ -119,6 +120,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="call_stack.hpp" />
+    <ClInclude Include="ISSingleton.h" />
     <ClInclude Include="EXLicense.h" />
     <ClInclude Include="ISAssociationTypes.h" />
     <QtMoc Include="ISAuthConnector.h" />
@@ -210,7 +212,6 @@
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISPassword.h" />
     <ClInclude Include="ISPhoneNumberParser.h" />
-    <QtMoc Include="ISProcess.h" />
     <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISQueryException.h" />
     <ClInclude Include="ISQueryExceptionConnection.h" />
@@ -281,7 +282,6 @@
     <ClCompile Include="ISPrintingWord.cpp" />
     <ClCompile Include="ISPrintMetaReport.cpp" />
     <ClCompile Include="ISPrintMetaReportField.cpp" />
-    <ClCompile Include="ISProcess.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocol.cpp" />
     <ClCompile Include="ISQuery.cpp" />

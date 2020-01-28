@@ -270,6 +270,9 @@
     <ClInclude Include="ISDebug.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISSingleton.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -303,9 +306,6 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISPhoneNumberParser.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISProcess.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISProperty.cpp">
@@ -572,9 +572,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISLogger.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISProcess.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISMetaData.h">

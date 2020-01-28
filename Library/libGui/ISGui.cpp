@@ -149,7 +149,7 @@ void ISGui::SetFontWidgetBold(QWidget *Widget, bool Bold)
 //-----------------------------------------------------------------------------
 QFont ISGui::StringToFont(const QString &FontText)
 {
-	return !FontText.isEmpty() ? qvariant_cast<QFont>(FontText) : FONT_APPLICATION_STRING;
+	return !FontText.isEmpty() ? qvariant_cast<QFont>(FontText) : QApplication::font().toString();
 }
 //-----------------------------------------------------------------------------
 QByteArray ISGui::IconToByteArray(const QIcon &Icon)

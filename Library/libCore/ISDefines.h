@@ -52,26 +52,14 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define SIZE_AUTHORIZATION_FORM QSize(350, 450) //Размер формы авторизации
 #define SIZE_PROGRESS_FORM QSize(550, 100) //Размер формы прогресса
 #define SIZE_SYSTEM_ICON SIZE_32_32 //Размер иконки системы на панели
-#define SIZE_750_400 QSize(750, 400)
-#define SIZE_700_500 QSize(700, 500)
 #define SIZE_640_480 QSize(640, 480)
 #define SIZE_500_90 QSize(500, 90)
-#define SIZE_500_65 QSize(500, 65)
 #define SIZE_450_450 QSize(450, 450)
 #define SIZE_550_300 QSize(550, 300)
-#define SIZE_390_230 QSize(390, 230)
-#define SIZE_350_215 QSize(350, 215)
-#define SIZE_320_60 QSize(320, 60)
-#define SIZE_300_300 QSize(300, 300)
-#define SIZE_256_256 QSize(256, 256)
 #define SIZE_200_200 QSize(200, 200)
-#define SIZE_120_120 QSize(120, 120)
 #define SIZE_100_100 QSize(100, 100)
 #define SIZE_64_64 QSize(64, 64)
-#define SIZE_50_35 QSize(50, 35)
 #define SIZE_45_45 QSize(45, 45)
-#define SIZE_40_40 QSize(40, 40)
-#define SIZE_35_35 QSize(35, 35)
 #define SIZE_32_32 QSize(32, 32)
 #define SIZE_25_25 QSize(25, 25)
 #define SIZE_24_24 QSize(24, 24)
@@ -80,14 +68,11 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define SIZE_18_18 QSize(18, 18)
 #define SIZE_16_16 QSize(16, 16)
 #define SIZE_10_10 QSize(10, 10)
-#define SIZE_NULL QSize(0, 0)
 
 //FONTS
-#define FONT_APPLICATION_STRING QApplication::font().toString()
 #define FONT_APPLICATION FONT_TAHOMA_9
 #define FONT_APPLICATION_BOLD FONT_TAHOMA_9_BOLD
 
-#define FONT_ARIAL_12_BOLD QFont("Arial", 12, QFont::Bold)
 #define FONT_COURIER_12 QFont("Courier", 12)
 #define FONT_TAHOMA_35 QFont("Tahoma", 35)
 #define FONT_TAHOMA_18 QFont("Tahoma", 18)
@@ -95,7 +80,6 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define FONT_TAHOMA_15_BOLD QFont("Tahoma", 15, QFont::Bold)
 #define FONT_TAHOMA_14 QFont("Tahoma", 14)
 #define FONT_TAHOMA_14_BOLD QFont("Tahoma", 14, QFont::Bold)
-#define FONT_TAHOMA_13_BOLD QFont("Tahoma", 13, QFont::Bold)
 #define FONT_TAHOMA_12 QFont("Tahoma", 12)
 #define FONT_TAHOMA_12_BOLD QFont("Tahoma", 12, QFont::Bold)
 #define FONT_TAHOMA_11 QFont("Tahoma", 11)
