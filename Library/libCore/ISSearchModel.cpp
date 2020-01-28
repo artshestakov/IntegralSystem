@@ -14,7 +14,7 @@ ISSearchModel::~ISSearchModel()
 //-----------------------------------------------------------------------------
 void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Conditions) const
 {
-	for (int i = 0; i < Vector.count(); i++)
+	for (int i = 0; i < Vector.count(); ++i)
 	{
 		StructModelItem ModelItem = Vector.at(i);
 		if (ModelItem.Values.count() > 1) //ѕоиск нескольких значений по одному полю
@@ -61,7 +61,7 @@ void ISSearchModel::AddField(const QString &FieldName, const QVariant &Value, IS
 {
 	if (Vector.count())
 	{
-		for (int i = 0; i < Vector.count(); i++)
+		for (int i = 0; i < Vector.count(); ++i)
 		{
 			StructModelItem ModelItem = Vector.at(i);
 

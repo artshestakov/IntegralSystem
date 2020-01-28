@@ -21,7 +21,7 @@ ISPrintForm::ISPrintForm(const QString &TableName, QWidget *parent) : ISInterfac
 	GetMainLayout()->addWidget(ListWidget);
 
 	QVector<ISPrintMetaReport*> Vector = ISPrintingEntity::GetInstance().GetReports(TableName);
-	for (int i = 0; i < Vector.count(); i++)
+	for (int i = 0; i < Vector.count(); ++i)
 	{
 		ISPrintMetaReport *MetaReport = Vector.at(i);
 

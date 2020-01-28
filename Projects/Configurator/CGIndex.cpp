@@ -42,7 +42,7 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 
 	if (Index->GetFields().count())
 	{
-		for (int i = 0; i < Index->GetFields().count(); i++)
+		for (int i = 0; i < Index->GetFields().count(); ++i)
 		{
 			Fields += Index->GetAlias() + "_" + Index->GetFields().at(i) + ", ";
 		}
@@ -100,7 +100,7 @@ bool CGIndex::CheckIndexForeign(PMetaClassIndex *Index)
 {
 	QVector<PMetaClassForeign*> Foreigns = ISMetaData::GetInstanse().GetForeigns();
 
-	for (int i = 0; i < Foreigns.count(); i++)
+	for (int i = 0; i < Foreigns.count(); ++i)
 	{
 		PMetaClassForeign *MetaForeign = Foreigns.at(i);
 		if (Index->GetTableName().toLower() == MetaForeign->GetForeignClass().toLower())
@@ -137,7 +137,7 @@ QString CGIndex::GetIndexName(PMetaClassIndex *Index)
 	if (Index->GetFields().count())
 	{
 		IndexName += Index->GetTableName() + "_";
-		for (int i = 0; i < Index->GetFields().count(); i++)
+		for (int i = 0; i < Index->GetFields().count(); ++i)
 		{
 			IndexName += Index->GetFields().at(i) + "_";
 		}

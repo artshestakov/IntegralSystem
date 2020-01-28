@@ -54,7 +54,7 @@ void ISQueryText::CheckAllQueries()
 		}
 	}
 
-	for (int i = 0; i < ISMetaData::GetInstanse().GetMetaQueries().count(); i++)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetMetaQueries().count(); ++i)
 	{
 		QString QueryName = ISMetaData::GetInstanse().GetMetaQueries().at(i);
 		ISMetaViewQuery MetaViewQuery(QueryName);

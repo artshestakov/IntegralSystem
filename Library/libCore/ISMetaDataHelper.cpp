@@ -12,7 +12,7 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaFor
 
 	QString SqlQuery = "SELECT " + ForeignAlias + "_" + MetaForeign->GetForeginField().toLower() + " AS ID, concat(";
 
-	for (int i = 0; i < FieldList.count(); i++) //Обход полей (которые должны быть отображены)
+	for (int i = 0; i < FieldList.count(); ++i) //Обход полей (которые должны быть отображены)
 	{
 		SqlQuery += ForeignAlias + "_" + FieldList.at(i).toLower() + ", ' ', ";
 	}

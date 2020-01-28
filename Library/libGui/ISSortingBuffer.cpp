@@ -80,7 +80,7 @@ void ISSortingBuffer::SaveSortings()
 //-----------------------------------------------------------------------------
 ISSortingMetaTable* ISSortingBuffer::GetSorting(const QString &TableName)
 {
-	for (int i = 0; i < Sortings.count(); i++)
+	for (int i = 0; i < Sortings.count(); ++i)
 	{
 		ISSortingMetaTable *MetaSorting = Sortings.at(i);
 		if (MetaSorting->GetTableName() == TableName)

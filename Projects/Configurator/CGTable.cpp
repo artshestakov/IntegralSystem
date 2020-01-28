@@ -50,7 +50,7 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 
 	//Формирование запроса на создание таблицы
 	int CountFields = MetaTable->GetFields().count();
-	for (int i = 0; i < CountFields; i++) //Обход полей таблицы
+	for (int i = 0; i < CountFields; ++i) //Обход полей таблицы
 	{
 		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
 		ISNamespace::FieldType FieldType = MetaField->GetType(); //Тип поля
@@ -108,7 +108,7 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 
 	if (Created)
 	{
-		for (int i = 0; i < MetaTable->GetAllFields().count(); i++)
+		for (int i = 0; i < MetaTable->GetAllFields().count(); ++i)
 		{
 			PMetaClassField *MetaField = MetaTable->GetAllFields().at(i);
 			if (MetaField->GetQueryText().length())
@@ -265,7 +265,7 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 //-----------------------------------------------------------------------------
 void CGTable::CreateNewFields(PMetaClassTable *MetaTable)
 {
-	for (int i = 0; i < MetaTable->GetFields().count(); i++) //Обход полей
+	for (int i = 0; i < MetaTable->GetFields().count(); ++i) //Обход полей
 	{
 		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
 		if (MetaField->GetQueryText().length())

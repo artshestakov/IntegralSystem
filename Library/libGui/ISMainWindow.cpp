@@ -314,7 +314,7 @@ void ISMainWindow::CreateStackWidget()
 	StackedWidget = new QStackedWidget(this);
 	GetMainLayout()->addWidget(StackedWidget);
 
-	for (int i = 0; i < ISParagraphEntity::GetInstance().GetParagraphs().count(); i++)
+	for (int i = 0; i < ISParagraphEntity::GetInstance().GetParagraphs().count(); ++i)
 	{
 		ISMetaParagraph *MetaParagraph = ISParagraphEntity::GetInstance().GetParagraphs().at(i);
 		ISUuid ParagraphUID = MetaParagraph->GetUID();

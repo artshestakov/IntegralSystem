@@ -106,7 +106,7 @@ void ISSironaReportForm::OutputList()
 		QFile FileReport(FilePath);
 		if (FileReport.open(QIODevice::WriteOnly))
 		{
-			for (int i = 0; i < TreeWidget->topLevelItemCount(); i++)
+			for (int i = 0; i < TreeWidget->topLevelItemCount(); ++i)
 			{
 				QTreeWidgetItem *TreeWidgetItem = TreeWidget->topLevelItem(i);
 				QString Data = TreeWidgetItem->text(0) + ";" + TreeWidgetItem->text(1) + "\r\n";

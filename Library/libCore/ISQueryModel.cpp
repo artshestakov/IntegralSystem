@@ -244,7 +244,7 @@ void ISQueryModel::SetOffset(int offset)
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectSystemFields()
 {
-	for (int i = 1; i < MetaTable->GetSystemFields().count(); i++) //Обход системных полей и включение их в запрос
+	for (int i = 1; i < MetaTable->GetSystemFields().count(); ++i) //Обход системных полей и включение их в запрос
 	{
 		PMetaClassField *SystemField = MetaTable->GetSystemFields().at(i);
 
@@ -262,7 +262,7 @@ void ISQueryModel::CreateQuerySelectSystemFields()
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectFields()
 {
-	for (int i = 0; i < MetaTable->GetFields().count(); i++)
+	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
 	{
 		PMetaClassField *Field = MetaTable->GetFields().at(i);
 

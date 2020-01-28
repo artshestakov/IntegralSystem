@@ -30,7 +30,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 	QString ValuesText = "VALUES(:UID, ";
 
 	int CountParameters = MetaResource->GetParameters().count(); //Количество параметров
-	for (int i = 0; i < CountParameters; i++) //Обход параметров ресурса
+	for (int i = 0; i < CountParameters; ++i) //Обход параметров ресурса
 	{
 		QString FieldName = TableAlias + "_" + MetaResource->GetParameters().keys().at(i).toLower();
 
@@ -53,7 +53,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 	bool BindValueUID = qInsertResource.BindValue(":UID", MetaResource->GetUID());
 	IS_ASSERT(BindValueUID, QString("Not BindValue Field UID. UID: %1").arg(MetaResource->GetUID()));
 
-	for (int i = 0; i < CountParameters; i++)
+	for (int i = 0; i < CountParameters; ++i)
 	{
 		QString FieldName = TableAlias + "_" + MetaResource->GetParameters().keys().at(i).toLower();
 		QString FieldValue = MetaResource->GetParameters().values().at(i);
@@ -101,7 +101,7 @@ void CGResource::UpdateResource(PMetaClassResource *MetaResource)
 	}
 
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
-	for (int i = 0; i < MetaTable->GetFields().count(); i++) //Обход пользовательских полей таблицы и их очистка
+	for (int i = 0; i < MetaTable->GetFields().count(); ++i) //Обход пользовательских полей таблицы и их очистка
 	{
 		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
 

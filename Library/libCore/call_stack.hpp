@@ -38,7 +38,7 @@ public:
     /** Serializes the entire call-stack into a text string. */
     std::string to_string () const {
         std::ostringstream os;
-        for (size_t i = 0; i < stack.size(); i++)
+        for (size_t i = 0; i < stack.size(); ++i)
             os << stack[i].to_string() << std::endl;
         return os.str();
     }

@@ -44,7 +44,7 @@ void ISListWidget::RemoveItem(QListWidgetItem *ListWidgetItem)
 //-----------------------------------------------------------------------------
 void ISListWidget::SetFontItems(const QFont &Font)
 {
-	for (int i = 0; i < count(); i++)
+	for (int i = 0; i < count(); ++i)
 	{
 		item(i)->setFont(Font);
 	}

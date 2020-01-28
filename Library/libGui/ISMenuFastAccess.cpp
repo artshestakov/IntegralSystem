@@ -57,7 +57,7 @@ void ISMenuFastAccess::AboutToShow()
 
 	//«аполнение быстрого создани€ записей
 	QVectorString VectorRecords = ISFastAccessEntity::GetInstance().GetCreateRecords();
-	for (int i = 0; i < VectorRecords.count(); i++)
+	for (int i = 0; i < VectorRecords.count(); ++i)
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(VectorRecords.at(i));
 
@@ -80,7 +80,7 @@ void ISMenuFastAccess::AboutToShow()
 
 	//«аполнение внешних инструментов
 	QVector<ISMetaExternalTool*> VectorTools = ISFastAccessEntity::GetInstance().GetExternalTools();
-	for (int i = 0; i < VectorTools.count(); i++)
+	for (int i = 0; i < VectorTools.count(); ++i)
 	{
 		ISMetaExternalTool *MetaExternalTool = VectorTools.at(i);
 

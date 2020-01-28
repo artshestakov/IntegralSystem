@@ -106,7 +106,7 @@ void ISExternalToolsForm::Load()
 //-----------------------------------------------------------------------------
 void ISExternalToolsForm::Save()
 {
-	for (int i = 0; i < ListWidget->count(); i++)
+	for (int i = 0; i < ListWidget->count(); ++i)
 	{
 		QListWidgetItem *ListWidgetItem = ListWidget->item(i);
 		

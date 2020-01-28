@@ -44,7 +44,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	else if (Type == ISNamespace::FT_Password)
 	{
 		QString ValueString = Result.toString();
-		for (int i = 0; i < ValueString.count(); i++)
+		for (int i = 0; i < ValueString.count(); ++i)
 		{
 			ValueString.replace(i, 1, SYMBOL_CIRCLE);
 		}

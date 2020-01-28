@@ -27,7 +27,7 @@ ISComboEdit::~ISComboEdit()
 //-----------------------------------------------------------------------------
 void ISComboEdit::SetValue(const QVariant &value)
 {
-	for (int i = 0; i < ComboBox->count(); i++)
+	for (int i = 0; i < ComboBox->count(); ++i)
 	{
 		if (value == ComboBox->itemData(i))
 		{

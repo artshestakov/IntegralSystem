@@ -65,7 +65,7 @@ bool ISExportHTML::Export()
 	{
 		FileHTML->write("   <tr>\r\n");
 
-		for (int i = 0; i < Fields.count(); i++) //Обход выбранных для экспорта полей
+		for (int i = 0; i < Fields.count(); ++i) //Обход выбранных для экспорта полей
 		{
 			QString FieldName = Fields.at(i);
 			if (Fields.contains(FieldName))

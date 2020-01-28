@@ -315,7 +315,7 @@ void CGConfiguratorDelete::ShowResourceConsole(PMetaClassTable *MetaTable, const
 	if (qSelect.ExecuteFirst())
 	{
 		QSqlRecord SqlRecord = qSelect.GetRecord();
-		for (int i = 0; i < SqlRecord.count(); i++)
+		for (int i = 0; i < SqlRecord.count(); ++i)
 		{
 			ISDebug::ShowString(QString("%1: %2").arg(SqlRecord.field(i).name()).arg(SqlRecord.value(i).toString()));
 		}

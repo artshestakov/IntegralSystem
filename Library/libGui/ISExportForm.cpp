@@ -96,7 +96,7 @@ void ISExportForm::CreateTabFields()
 	ToolBar->addAction(ActionSelectAll);
 	connect(ActionSelectAll, &QAction::triggered, [=]
 	{
-		for (int i = 0; i < ListFields->count(); i++)
+		for (int i = 0; i < ListFields->count(); ++i)
 		{
 			ListFields->item(i)->setCheckState(Qt::Checked);
 		}
@@ -109,7 +109,7 @@ void ISExportForm::CreateTabFields()
 	ToolBar->addAction(ActionDeselectAll);
 	connect(ActionDeselectAll, &QAction::triggered, [=]
 	{
-		for (int i = 0; i < ListFields->count(); i++)
+		for (int i = 0; i < ListFields->count(); ++i)
 		{
 			ListFields->item(i)->setCheckState(Qt::Unchecked);
 		}
@@ -125,7 +125,7 @@ void ISExportForm::CreateTabFields()
 
 	CreateFieldItem(MetaTable->GetFieldID());
 
-	for (int i = 0; i < MetaTable->GetFields().count(); i++)
+	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
 		if (!MetaField->GetHideFromList())
@@ -173,7 +173,7 @@ void ISExportForm::FieldsPositionChanged()
 {
 	SelectedFields.clear();
 
-	for (int i = 0; i < ListFields->count(); i++)
+	for (int i = 0; i < ListFields->count(); ++i)
 	{
 		QListWidgetItem *Item = ListFields->item(i);
 		if (Item->text().length())

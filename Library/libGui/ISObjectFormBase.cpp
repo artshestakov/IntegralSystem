@@ -280,7 +280,7 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Protocol"), LOCALIZATION("ProtocolCard"), ISNamespace::OAT_Service, QString(), "ISProtocolObjectListForm"));
 	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Discussion"), LOCALIZATION("Discussion"), ISNamespace::OAT_Service, QString(), "ISDiscussionListForm"));
 
-	for (int i = 0; i < MetaTable->GetEscorts().count(); i++) //Обход эскортных мета-таблиц
+	for (int i = 0; i < MetaTable->GetEscorts().count(); ++i) //Обход эскортных мета-таблиц
 	{
 		PMetaClassEscort *MetaEscort = MetaTable->GetEscorts().at(i);
 		
@@ -490,7 +490,7 @@ void ISObjectFormBase::FillDataFields()
 			SetValueFieldID(ObjectID);
 		}
 
-		for (int i = 0; i < SqlRecord.count(); i++) //Обход полей записи
+		for (int i = 0; i < SqlRecord.count(); ++i) //Обход полей записи
 		{
 			QString FieldName = SqlRecord.fieldName(i);
 			QVariant Value = SqlRecord.value(FieldName);
@@ -835,7 +835,7 @@ bool ISObjectFormBase::Save()
 		QString InsertFields = "INSERT INTO " + MetaTable->GetName() + " (";
 		QString InsertValues = "VALUES (";
 
-		for (int i = 0; i < FieldsVector.count(); i++)
+		for (int i = 0; i < FieldsVector.count(); ++i)
 		{
 			InsertFields += MetaTable->GetAlias() + "_" + FieldsVector.at(i) + ", ";
 			InsertValues += ":" + FieldsVector.at(i) + ", ";
@@ -856,7 +856,7 @@ bool ISObjectFormBase::Save()
 		QueryText += MetaTable->GetAlias() + "_updationdate = now(), \n";
 		QueryText += MetaTable->GetAlias() + "_updationuser = CURRENT_USER, \n";
 
-		for (int i = 0; i < FieldsVector.count(); i++)
+		for (int i = 0; i < FieldsVector.count(); ++i)
 		{
 			QueryText += MetaTable->GetAlias() + "_" + FieldsVector.at(i) + " = :" + FieldsVector.at(i) + ", \n";
 		}
@@ -1196,7 +1196,7 @@ void ISObjectFormBase::AddActionMenu(QAction *Action, bool AddingToActionGroup)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetEnabledActions(bool Enabled)
 {
-	for (int i = 0; i < ActionGroup->actions().count(); i++)
+	for (int i = 0; i < ActionGroup->actions().count(); ++i)
 	{
 		ActionGroup->actions().at(i)->setEnabled(Enabled);
 	}

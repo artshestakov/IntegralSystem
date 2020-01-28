@@ -198,7 +198,7 @@ QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 		if (StringList.count() > 1) //Если имя объекта строится из нескольких полей
 		{
 			QueryText += "concat(";
-			for (int i = 0; i < StringList.count(); i++)
+			for (int i = 0; i < StringList.count(); ++i)
 			{
 				QueryText += MetaTable->GetAlias() + "_" + StringList.at(i) + ", ' ', ";
 			}
@@ -235,7 +235,7 @@ QString ISCore::GetVersionInFileName(const QString &FileName)
 	QStringList StringListVersion = Version.split(".");
 
 	QString VersionComplete;
-	for (int i = 0; i < StringListVersion.count(); i++)
+	for (int i = 0; i < StringListVersion.count(); ++i)
 	{
 		QString String = StringListVersion.at(i);
 		VersionComplete += String + ".";

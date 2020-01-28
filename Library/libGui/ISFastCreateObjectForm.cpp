@@ -37,7 +37,7 @@ ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceD
 	connect(ComboEdit, &ISComboEdit::ValueChange, this, &ISFastCreateRecordsForm::TableChanged);
 	Layout->addWidget(ComboEdit);
 
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); i++)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		if (!MetaTable->GetIsSystem())
@@ -96,7 +96,7 @@ void ISFastCreateRecordsForm::Add()
 	QString TableName = ComboEdit->GetValue().toString();
 	QString LocalListName = ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName();
 
-	for (int i = 0; i < ListWidget->count(); i++)
+	for (int i = 0; i < ListWidget->count(); ++i)
 	{
 		if (ListWidget->item(i)->text() == LocalListName)
 		{
@@ -124,7 +124,7 @@ void ISFastCreateRecordsForm::Delete()
 	qDelete.BindValue(":Table", ListWidget->currentItem()->data(Qt::UserRole));
 	if (qDelete.Execute())
 	{
-		for (int i = 0; i < ListWidget->count(); i++)
+		for (int i = 0; i < ListWidget->count(); ++i)
 		{
 			if (ListWidget->item(i)->data(Qt::UserRole).toString() == ListWidget->currentItem()->data(Qt::UserRole).toString())
 			{

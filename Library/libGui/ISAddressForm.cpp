@@ -443,7 +443,7 @@ void ISAddressForm::UpdatePerfomance()
 //-----------------------------------------------------------------------------
 void ISAddressForm::SetRegion(const QString &Region)
 {
-	for (int i = 0; i < ComboRegion->count(); i++)
+	for (int i = 0; i < ComboRegion->count(); ++i)
 	{
 		if (ComboRegion->itemText(i) == Region)
 		{
@@ -456,7 +456,7 @@ void ISAddressForm::SetRegion(const QString &Region)
 //-----------------------------------------------------------------------------
 void ISAddressForm::SetCity(const QString &City)
 {
-	for (int i = 0; i < ComboCity->count(); i++)
+	for (int i = 0; i < ComboCity->count(); ++i)
 	{
 		if (ComboCity->itemText(i) == City)
 		{
@@ -469,7 +469,7 @@ void ISAddressForm::SetCity(const QString &City)
 //-----------------------------------------------------------------------------
 void ISAddressForm::SetStreet(const QString &Street)
 {
-	for (int i = 0; i < ComboStreet->count(); i++)
+	for (int i = 0; i < ComboStreet->count(); ++i)
 	{
 		if (ComboStreet->itemText(i) == Street)
 		{
@@ -482,7 +482,7 @@ void ISAddressForm::SetStreet(const QString &Street)
 //-----------------------------------------------------------------------------
 void ISAddressForm::SetHouse(const QString &House)
 {
-	for (int i = 0; i < ComboHouse->count(); i++)
+	for (int i = 0; i < ComboHouse->count(); ++i)
 	{
 		if (ComboHouse->itemText(i) == House)
 		{

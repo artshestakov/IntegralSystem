@@ -105,7 +105,7 @@ void ISAttachFilesForm::SelectFiles()
 
 	ISGui::SetWaitGlobalCursor(true);
 
-	for (int i = 0; i < StringList.count(); i++)
+	for (int i = 0; i < StringList.count(); ++i)
 	{
 		ISAttachFileItem *FileItem = new ISAttachFileItem(this);
 		FileItem->SetFilePath(StringList.at(i));

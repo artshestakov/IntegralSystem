@@ -176,7 +176,7 @@ void CGConfiguratorCreate::databasesettings()
 void CGConfiguratorCreate::resources()
 {
 	int CountResources = ISMetaData::GetInstanse().GetResources().count();
-	for (int i = 0; i < CountResources; i++)
+	for (int i = 0; i < CountResources; ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
 		Progress("Resources for " + MetaResource->GetTableName(), i, CountResources);

@@ -33,7 +33,7 @@ void ISOrganizationMyListForm::Return()
 	{
 		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ReturnOrganization").arg(Objects.count())))
 		{
-			for (int i = 0; i < Objects.count(); i++)
+			for (int i = 0; i < Objects.count(); ++i)
 			{
 				int ObjectID = Objects.at(i);
 				QString OrganizationName = GetRecordValue("Name", GetRowIndex(ObjectID)).toString();

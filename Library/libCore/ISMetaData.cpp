@@ -362,7 +362,7 @@ void ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 	MetaTable->setObjectName(TableName);
 	MetaTable->SetTypeObject("Table");
 
-	for (int i = 0; i < DomNode.attributes().length(); i++) //Обход свойств таблицы
+	for (int i = 0; i < DomNode.attributes().length(); ++i) //Обход свойств таблицы
 	{
 		QDomNode Parameter = DomNode.attributes().item(i);
 		SetPropertyObject(MetaTable, Parameter.nodeName(), Parameter.nodeValue());
@@ -500,7 +500,7 @@ void ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 		MetaField->setObjectName(FieldName);
 		MetaField->SetTypeObject("Field");
 
-		for (int i = 0; i < Temp.attributes().length(); i++) //Обход свойств поля
+		for (int i = 0; i < Temp.attributes().length(); ++i) //Обход свойств поля
 		{
 			QDomNode Parameter = Temp.attributes().item(i);
 			SetPropertyObject(MetaField, Parameter.nodeName(), Parameter.nodeValue());
@@ -587,7 +587,7 @@ void ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 		IS_ASSERT(FieldName.length(), QString("Empty foreign field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
 		MetaForeign->SetTypeObject("Foreign");
 
-		for (int i = 0; i < Temp.attributes().length(); i++)
+		for (int i = 0; i < Temp.attributes().length(); ++i)
 		{
 			QDomNode Parameter = Temp.attributes().item(i);
 			SetPropertyObject(MetaForeign, Parameter.nodeName(), Parameter.nodeValue());
@@ -614,7 +614,7 @@ void ISMetaData::InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDo
 		PMetaClassEscort *MetaEscort = new PMetaClassEscort(MetaTable);
 		MetaEscort->SetTypeObject("Escort");
 
-		for (int i = 0; i < Temp.attributes().length(); i++)
+		for (int i = 0; i < Temp.attributes().length(); ++i)
 		{
 			QDomNode Parameter = Temp.attributes().item(i);
 			SetPropertyObject(MetaEscort, Parameter.nodeName(), Parameter.nodeValue());
@@ -695,7 +695,7 @@ void ISMetaData::InitializeXSR(const QString &Content)
 		PMetaClassResource *MetaResource = new PMetaClassResource(this);
 		MetaResource->SetTableName(TableName);
 
-		for (int i = 0; i < DomNodeMap.length(); i++) //Обход полей ресурса
+		for (int i = 0; i < DomNodeMap.length(); ++i) //Обход полей ресурса
 		{
 			QDomNode DomItem = DomNodeMap.item(i); // Поле-значение
 
@@ -774,7 +774,7 @@ void ISMetaData::InitializeXSF(const QString &Content)
 			QString FunctionName = DomNode.attributes().namedItem("Name").nodeValue();
 			MetaFunction->SetTypeObject(ElementName);
 
-			for (int i = 0; i < DomNode.attributes().length(); i++)
+			for (int i = 0; i < DomNode.attributes().length(); ++i)
 			{
 				QDomNode Parameter = DomNode.attributes().item(i);
 				SetPropertyObject(MetaFunction, Parameter.nodeName(), Parameter.nodeValue());
@@ -793,7 +793,7 @@ void ISMetaData::InitializeXSF(const QString &Content)
 void ISMetaData::SetPropertyObject(PMetaClass *MetaClass, const QString &PropertyName, const QVariant &PropertyValue)
 {
 	const QMetaObject *MetaObject = MetaClass->metaObject();
-	for (int i = 0; i < MetaObject->propertyCount(); i++)
+	for (int i = 0; i < MetaObject->propertyCount(); ++i)
 	{
 		QMetaProperty MetaProperty = MetaObject->property(i);
 		const char *Name = MetaProperty.name();

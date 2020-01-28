@@ -96,7 +96,7 @@ void ISCalendarPanel::CurrentPageChanged(int Year, int Month)
 	DaysEvent.clear();
 
 	QDate Date(Year, Month, 1);
-	for (int i = 0; i < Date.daysInMonth(); i++)
+	for (int i = 0; i < Date.daysInMonth(); ++i)
 	{
 		QDate DateEvent(Year, Month, i + 1);
 

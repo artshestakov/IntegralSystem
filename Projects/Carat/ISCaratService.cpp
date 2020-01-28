@@ -202,7 +202,7 @@ void ISCaratService::DisconnectedClient()
 	QTcpSocket *TcpSocket = dynamic_cast<QTcpSocket*>(sender());
 	int SocketDescriptor = TcpSocket->socketDescriptor();
 
-	for (int i = 0; i < VectorClients.count(); i++)
+	for (int i = 0; i < VectorClients.count(); ++i)
 	{
 		if (VectorClients.at(i) == TcpSocket)
 		{

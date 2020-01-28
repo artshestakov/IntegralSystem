@@ -27,7 +27,7 @@ QSqlRecord ISSqlModelView::GetRecord(int RowIndex) const
 //-----------------------------------------------------------------------------
 int ISSqlModelView::GetFieldIndex(const QString &FieldName) const
 {
-	for (int i = 0; i < MetaTable->GetFields().count(); i++)
+	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
 	{
 		if (MetaTable->GetFields().at(i)->GetName() == FieldName)
 		{

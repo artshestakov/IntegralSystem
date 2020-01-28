@@ -33,7 +33,7 @@ void ISOrganizationWorkListForm::TakeToWork()
 	{
 		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.OrganizationTakeToWork").arg(Objects.count())))
 		{
-			for (int i = 0; i < Objects.count(); i++)
+			for (int i = 0; i < Objects.count(); ++i)
 			{
 				int ObjectID = Objects.at(i);
 				QString OrganizationName = GetRecordValue("Name", GetRowIndex(ObjectID)).toString();

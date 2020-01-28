@@ -61,7 +61,7 @@ ISUuid ISParagraphEntity::GetDefaultParagraph() const
 //-----------------------------------------------------------------------------
 ISMetaParagraph* ISParagraphEntity::GetParagraph(const QString &ParagraphUID)
 {
-	for (int i = 0; i < Paragraphs.count(); i++)
+	for (int i = 0; i < Paragraphs.count(); ++i)
 	{
 		if (Paragraphs.at(i)->GetUID() == ParagraphUID)
 		{

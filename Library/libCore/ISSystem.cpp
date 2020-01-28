@@ -42,7 +42,7 @@ QString ISSystem::GetSizeDir(const QString &DirPath)
 	QDir Dir(DirPath);
 	QFileInfoList FileInfoList = Dir.entryInfoList(QDir::Files);
 	qint64 Size = 0;
-	for (int i = 0; i < FileInfoList.count(); i++)
+	for (int i = 0; i < FileInfoList.count(); ++i)
 	{
 		QFileInfo FileInfo = FileInfoList.at(i);
 		QString FilePath = FileInfo.absoluteFilePath();
@@ -215,7 +215,7 @@ QString ISSystem::GetLibraryExtension()
 bool ISSystem::CheckExistSlot(QObject *Object, const QString &SlotName)
 {
 	bool Result = false;
-	for (int i = 0; i < Object->metaObject()->methodCount(); i++)
+	for (int i = 0; i < Object->metaObject()->methodCount(); ++i)
 	{
 		Result = Object->metaObject()->method(i).name() == SlotName;
 		if (Result)

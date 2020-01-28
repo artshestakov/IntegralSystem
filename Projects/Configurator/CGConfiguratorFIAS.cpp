@@ -253,7 +253,7 @@ QStringMap CGConfiguratorFIAS::ParseLine(const QString &Content) const
 	{
 		QDomElement DomElement = DomDocument.documentElement();
 		QDomNamedNodeMap DomNamedNodeMap = DomElement.attributes();
-		for (int i = 0; i < DomNamedNodeMap.count(); i++)
+		for (int i = 0; i < DomNamedNodeMap.count(); ++i)
 		{
 			QDomNode NodeItem = DomNamedNodeMap.item(i);
 			StringMap.insert(NodeItem.nodeName(), NodeItem.nodeValue());

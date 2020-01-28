@@ -40,7 +40,7 @@ ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType f
 	DaDataService = new ISDaDataService(this);
 	connect(DaDataService, &ISDaDataService::Finished, this, &ISOrganizationObjectForm::SearchFinished);
 
-	for (int i = 0; i < meta_table->GetFields().count(); i++)
+	for (int i = 0; i < meta_table->GetFields().count(); ++i)
 	{
 		PMetaClassField *MetaField = meta_table->GetFields().at(i);
 		if (MetaField->GetType() == ISNamespace::FT_Phone)

@@ -467,7 +467,7 @@ private:
 		BOOL keepGoing;
 		size_t i;
 
-		for (i = 0; i < (sizeof(dllname) / sizeof(dllname[0])); i++)
+		for (i = 0; i < (sizeof(dllname) / sizeof(dllname[0])); ++i)
 		{
 			hToolhelp = LoadLibraryA(dllname[i]);
 			if (hToolhelp == NULL)
@@ -570,7 +570,7 @@ private:
 			goto cleanup;
 		}
 
-		for (i = 0; i < cbNeeded / sizeof hMods[0]; i++)
+		for (i = 0; i < cbNeeded / sizeof hMods[0]; ++i)
 		{
 			// base address, size
 			pGMI(hProcess, hMods[i], &mi, sizeof mi);

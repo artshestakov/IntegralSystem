@@ -41,7 +41,7 @@ void CGConfiguratorUpdate::functions()
 	ISDebug::ShowDebugString("Updating functions...");
 
 	int CountFunctions = ISMetaData::GetInstanse().GetFunctions().count();
-	for (int i = 0; i < CountFunctions; i++)
+	for (int i = 0; i < CountFunctions; ++i)
 	{
 		Progress("Functions", i, CountFunctions);
 
@@ -56,7 +56,7 @@ void CGConfiguratorUpdate::tables()
 	ISDebug::ShowDebugString("Updating tables...");
 
 	int CountTables = ISMetaData::GetInstanse().GetTables().count();
-	for (int i = 0; i < CountTables; i++) //Обход таблиц
+	for (int i = 0; i < CountTables; ++i) //Обход таблиц
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		Progress(QString("Table: %1").arg(MetaTable->GetName()), i, CountTables);
@@ -78,7 +78,7 @@ void CGConfiguratorUpdate::systemindexes()
 	ISDebug::ShowDebugString("Updating system indexes...");
 
 	int CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().count();
-	for (int i = 0; i < CountIndexes; i++) //Обход индексов
+	for (int i = 0; i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes().at(i);
 		Progress(QString("System indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
@@ -111,7 +111,7 @@ void CGConfiguratorUpdate::indexes()
 	ISDebug::ShowDebugString("Updating indexes...");
 
 	int CountIndexes = ISMetaData::GetInstanse().GetIndexes().count();
-	for (int i = 0; i < CountIndexes; i++) //Обход индексов
+	for (int i = 0; i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes().at(i);
 		Progress(QString("Indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
@@ -133,7 +133,7 @@ void CGConfiguratorUpdate::compoundindexes()
 	ISDebug::ShowDebugString("Updating compound indexes...");
 
 	int CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().count();
-	for (int i = 0; i < CountIndexes; i++)
+	for (int i = 0; i < CountIndexes; ++i)
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes().at(i);
 		Progress(QString("Compound indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
@@ -155,7 +155,7 @@ void CGConfiguratorUpdate::foreigns()
 	ISDebug::ShowDebugString("Updating foreigns...");
 
 	int CountForeigns = ISMetaData::GetInstanse().GetForeigns().count();
-	for (int i = 0; i < CountForeigns; i++)
+	for (int i = 0; i < CountForeigns; ++i)
 	{
 		Progress("Foreigns", i, CountForeigns);
 
@@ -178,7 +178,7 @@ void CGConfiguratorUpdate::resources()
 	ISDebug::ShowDebugString("Updating resources...");
 
 	int CountResources = ISMetaData::GetInstanse().GetResources().count();
-	for (int i = 0; i < CountResources; i++)
+	for (int i = 0; i < CountResources; ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
 		Progress(QString("Resources for: %1").arg(MetaResource->GetTableName()), i, CountResources);
@@ -200,7 +200,7 @@ void CGConfiguratorUpdate::classes()
 	ISDebug::ShowDebugString("Updating class...");
 
 	int CountTables = ISMetaData::GetInstanse().GetTables().count();
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); i++)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
 	{
 		Progress("Classes", i, CountTables);
 
@@ -221,13 +221,13 @@ void CGConfiguratorUpdate::classfields()
 	ISDebug::ShowDebugString("Updation class fields...");
 
 	int CountTables = ISMetaData::GetInstanse().GetTables().count();
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); i++)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
 	{
 		Progress("Class fields", i, CountTables);
 		
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 
-		for (int i = 0; i < MetaTable->GetFields().count(); i++)
+		for (int i = 0; i < MetaTable->GetFields().count(); ++i)
 		{
 			PMetaClassField *MetaField = MetaTable->GetFields().at(i);
 			if (CGClassField::CheckExistClassField(MetaField))

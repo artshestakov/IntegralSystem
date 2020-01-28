@@ -10,7 +10,7 @@ QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableFore
 	if (StringList.count() > 1)
 	{
 		QString SqlText = "concat(";
-		for (int i = 0; i < StringList.count(); i++)
+		for (int i = 0; i < StringList.count(); ++i)
 		{
 			SqlText += ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeignAlias, Iterator) + "." + MetaTableForeignAlias + "_" + StringList.at(i).toLower() + ", ' ', ";
 			if (i == StringList.count() - 1)

@@ -32,7 +32,7 @@ void CGConfiguratorService::reindex()
 	ISDebug::ShowString("Reindex...");
 
 	int CountTables = ISMetaData::GetInstanse().GetTables().count();
-	for (int i = 0; i < CountTables; i++)
+	for (int i = 0; i < CountTables; ++i)
 	{
 		Progress("Reindex", i, CountTables);
 

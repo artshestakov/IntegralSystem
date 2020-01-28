@@ -46,7 +46,7 @@ QString ISRandom::String(int Symbols)
 			return Result;
 		}
 
-		for (int i = 0; i < Symbols; i++)
+		for (int i = 0; i < Symbols; ++i)
 		{
 			Result += Code.at(i);
 		}

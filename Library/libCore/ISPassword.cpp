@@ -83,7 +83,7 @@ int ISPassword::GetCountFigures(const QString &Password)
 {
 	int CountFigures = 0;
 
-	for (int i = 0; i < Password.length(); i++)
+	for (int i = 0; i < Password.length(); ++i)
 	{
 		QString Symbol = Password.at(i);
 		if (QString(FIGURES_STRING).contains(Symbol))
@@ -102,7 +102,7 @@ int ISPassword::GetCountAltSymbols(const QString &Password)
 	QRegExp RegExp(REG_EXP_PASSWORD_ALT_SYMBOL);
 	QValidator *Validator = new QRegExpValidator(RegExp);
 
-	for (int i = 0; i < Password.length(); i++)
+	for (int i = 0; i < Password.length(); ++i)
 	{
 		int x = 0;
 

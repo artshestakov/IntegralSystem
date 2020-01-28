@@ -46,7 +46,7 @@ bool ISPrintingHtml::PrepareTempate()
 bool ISPrintingHtml::FillTemplate()
 {
 	QVector<ISPrintMetaReportField*> Fields = GetMetaReport()->GetFields();
-	for (int i = 0; i < Fields.count(); i++)
+	for (int i = 0; i < Fields.count(); ++i)
 	{
 		ISPrintMetaReportField *MetaReportField = Fields.at(i);
 

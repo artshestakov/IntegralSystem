@@ -111,12 +111,12 @@ void ISSearchForm::Hide()
 bool ISSearchForm::CheckExistField(const QString &FieldName) const
 {
 	bool Result = false;
-	for (int i = 0; i < TreeWidget->topLevelItemCount(); i++)
+	for (int i = 0; i < TreeWidget->topLevelItemCount(); ++i)
 	{
 		QTreeWidgetItem *TreeWidgetItem = TreeWidget->topLevelItem(i);
 		if (TreeWidgetItem->childCount())
 		{
-			for (int j = 0; j < TreeWidgetItem->childCount(); j++)
+			for (int j = 0; j < TreeWidgetItem->childCount(); ++j)
 			{
 				if (TreeWidgetItem->child(j)->data(0, Qt::UserRole).toString() == FieldName)
 				{
@@ -147,7 +147,7 @@ void ISSearchForm::LoadFields()
 {
 	AddFieldFromList(MetaTable->GetFieldID()->GetLabelName(), MetaTable->GetFieldID()->GetName());
 
-	for (int i = 0; i < MetaTable->GetFields().count(); i++)
+	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
 		if (MetaField->GetHideFromList() || MetaField->GetNotSearch() || MetaField->GetQueryText().length())
@@ -181,7 +181,7 @@ void ISSearchForm::AddFilter()
 	if (CheckExistField(FieldName)) //Если такое поле уже есть побавить child
 	{
 		QTreeWidgetItem *TopLevelItem = nullptr;
-		for (int i = 0; i < TreeWidget->topLevelItemCount(); i++)
+		for (int i = 0; i < TreeWidget->topLevelItemCount(); ++i)
 		{
 			if (TreeWidget->topLevelItem(i)->data(0, Qt::UserRole).toString() == FieldName)
 			{
@@ -243,13 +243,13 @@ void ISSearchForm::AddFilter()
 void ISSearchForm::Search()
 {
 	ISSearchModel SearchModel;
-	for (int i = 0; i < TreeWidget->topLevelItemCount(); i++)
+	for (int i = 0; i < TreeWidget->topLevelItemCount(); ++i)
 	{
 		QTreeWidgetItem *TreeWidgetItem = TreeWidget->topLevelItem(i);
 		if (TreeWidgetItem->childCount())
 		{
 			SearchFromField(SearchModel, TreeWidgetItem);
-			for (int j = 0; j < TreeWidgetItem->childCount(); j++)
+			for (int j = 0; j < TreeWidgetItem->childCount(); ++j)
 			{
 				SearchFromField(SearchModel, TreeWidgetItem->child(j));
 			}
@@ -320,7 +320,7 @@ void ISSearchForm::DeleteField(QTreeWidgetItem *TreeWidgetItem)
 	}
 	else
 	{
-		for (int i = 0; i < TreeWidget->columnCount(); i++) //Обход всех виджетом итема
+		for (int i = 0; i < TreeWidget->columnCount(); ++i) //Обход всех виджетом итема
 		{
 			QWidget *ItemWidget = TreeWidget->itemWidget(TreeWidgetItem, i);
 			if (ItemWidget) //Если виджет у итема имеется - удалить его

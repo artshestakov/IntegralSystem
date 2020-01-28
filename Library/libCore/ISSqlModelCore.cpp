@@ -36,7 +36,7 @@ void ISSqlModelCore::FillColumns()
 	{
 		QSqlRecord RecordColumn = qSelectColumns.GetRecord();
 
-		for (int i = 0; i < RecordColumn.count(); i++)
+		for (int i = 0; i < RecordColumn.count(); ++i)
 		{
 			AppendField(MetaTable->GetField(RecordColumn.fieldName(i)));
 		}
@@ -95,7 +95,7 @@ void ISSqlModelCore::RemoveColumn(PMetaClassField *MetaField)
 	int Index = Fields.indexOf(MetaField);
 	Fields.remove(Index);
 
-	for (int i = 0; i < Records.count(); i++)
+	for (int i = 0; i < Records.count(); ++i)
 	{
 		QSqlRecord SqlRecord = Records.at(i);
 		SqlRecord.remove(Index);
@@ -107,7 +107,7 @@ void ISSqlModelCore::RemoveColumn(PMetaClassField *MetaField)
 //-----------------------------------------------------------------------------
 int ISSqlModelCore::GetFieldIndex(const QString &FieldName) const
 {
-	for (int i = 0; i < Fields.count(); i++)
+	for (int i = 0; i < Fields.count(); ++i)
 	{
 		if (Fields.at(i)->GetName() == FieldName)
 		{
@@ -122,7 +122,7 @@ int ISSqlModelCore::GetFieldIndex(const QString &FieldName) const
 QString ISSqlModelCore::GetFieldLocalName(const QString &FieldName) const
 {
 	QString LocalName;
-	for (int i = 0; i < columnCount(); i++)
+	for (int i = 0; i < columnCount(); ++i)
 	{
 		QString CurrentField = headerData(i, Qt::Horizontal, Qt::UserRole).toString();
 		if (CurrentField == FieldName)

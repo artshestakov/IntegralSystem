@@ -158,7 +158,7 @@ QVector<QStringMap> ISAsteriskSocket::ParseReadyRead(const QString &String)
 	QVector<QStringMap> VectorEvent;
 
 	QStringList MessageList = String.split("\r\n\r\n");
-	for (int i = 0; i < MessageList.count(); i++) //Обход всех сообщений
+	for (int i = 0; i < MessageList.count(); ++i) //Обход всех сообщений
 	{
 		QString Message = MessageList.at(i);
 		if (!Message.length())

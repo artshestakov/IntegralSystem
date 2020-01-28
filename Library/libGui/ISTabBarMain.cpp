@@ -218,7 +218,7 @@ void ISTabBarMain::CreateContextMenu()
 //-----------------------------------------------------------------------------
 void ISTabBarMain::SetVisibleContextActions(bool Visible)
 {
-	for (int i = 0; i < ContextMenu->actions().count(); i++)
+	for (int i = 0; i < ContextMenu->actions().count(); ++i)
 	{
 		ContextMenu->actions().at(i)->setVisible(Visible);
 	}

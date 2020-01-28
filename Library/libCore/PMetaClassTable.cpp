@@ -248,7 +248,7 @@ PMetaClassField* PMetaClassTable::GetFieldID()
 //-----------------------------------------------------------------------------
 int PMetaClassTable::GetFieldIndex(const QString &FieldName) const
 {
-	for (int i = 0; i < AllFields.count(); i++)
+	for (int i = 0; i < AllFields.count(); ++i)
 	{
 		PMetaClassField *MetaField = AllFields.at(i);
 		if (MetaField->GetName() == FieldName)

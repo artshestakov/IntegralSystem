@@ -596,7 +596,7 @@ void WINAPI QtServiceSysPrivate::serviceMain(DWORD dwArgc, wchar_t** lpszArgv)
 	// startup, so here we just signal to the QApplication event loop
 	// in the main thread to go ahead with start()'ing the service.
 
-	for (DWORD i = 0; i < dwArgc; i++)
+	for (DWORD i = 0; i < dwArgc; ++i)
 	{
 		instance->serviceArgs.append(QString::fromUtf16((unsigned short*)lpszArgv[i]));
 	}

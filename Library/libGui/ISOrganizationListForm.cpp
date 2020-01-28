@@ -89,7 +89,7 @@ void ISOrganizationListForm::Transfer()
 		ISTransferOrganizationForm TransferOrganizationForm(Objects.count());
 		if (TransferOrganizationForm.Exec())
 		{
-			for (int i = 0; i < Objects.count(); i++)
+			for (int i = 0; i < Objects.count(); ++i)
 			{
 				int ObjectID = Objects.at(i);
 				QString OrganizationName = GetRecordValue("Name", GetRowIndex(ObjectID)).toString();
@@ -132,7 +132,7 @@ void ISOrganizationListForm::ResetExecutor()
 	{
 		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ResetOrganizationExecutor").arg(Objects.count())))
 		{
-			for (int i = 0; i < Objects.count(); i++)
+			for (int i = 0; i < Objects.count(); ++i)
 			{
 				ISQuery qUpdate(QU_RESET_EXECUTOR);
 				qUpdate.BindValue(":OrganizationID", Objects.at(i));
@@ -153,7 +153,7 @@ void ISOrganizationListForm::Percentage()
 		ISProgressForm ProgressForm(0, Objects.count(), this);
 		ProgressForm.show();
 
-		for (int i = 0; i < Objects.count(); i++) //Обход всех организаций
+		for (int i = 0; i < Objects.count(); ++i) //Обход всех организаций
 		{
 			ProgressForm.SetText(LOCALIZATION("CalculatePercentage").arg(i).arg(Objects.count()));
 			ProgressForm.setValue(i);
@@ -161,7 +161,7 @@ void ISOrganizationListForm::Percentage()
 			int CountFill = 0; //Количество заполненных полей
 			int CountFields = GetMetaTable()->GetFields().count(); //Количество полей
 
-			for (int j = 0; j < CountFields; j++) //Обход полей
+			for (int j = 0; j < CountFields; ++j) //Обход полей
 			{
 				PMetaClassField *MetaField = GetMetaTable()->GetFields().at(j);
 				QString FieldName = "orgz_" + MetaField->GetName();

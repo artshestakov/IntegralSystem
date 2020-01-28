@@ -169,7 +169,7 @@ void ISTabWidgetMain::SeparateWindow(int Index)
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::CloseCliciked()
 {
-	for (int i = 0; i < count(); i++) //Обход вкладок
+	for (int i = 0; i < count(); ++i) //Обход вкладок
 	{
 		if (TabBar->tabData(i).toString() == sender()->property("ID").toString())
 		{
@@ -189,12 +189,12 @@ void ISTabWidgetMain::CloseTabFromIndex(int Index)
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::TabsMenuTriggered(QAction *ActionClicked)
 {
-	for (int i = 0; i < ButtonMenu->menu()->actions().count(); i++)
+	for (int i = 0; i < ButtonMenu->menu()->actions().count(); ++i)
 	{
 		QAction *Action = ButtonMenu->menu()->actions().at(i);
 		if (Action->property("ID").toString() == ActionClicked->property("ID").toString())
 		{
-			i++; //Прибавление единицы требуется т.к. обход начинается с НУЛЕВОЙ (главной) вкладки таб-бара
+			++i; //Прибавление единицы требуется т.к. обход начинается с НУЛЕВОЙ (главной) вкладки таб-бара
 			setCurrentIndex(i);
 			break;
 		}

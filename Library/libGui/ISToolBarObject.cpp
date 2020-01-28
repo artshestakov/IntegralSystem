@@ -40,7 +40,7 @@ QAction* ISToolBarObject::CreateAction(const QIcon &Icon, const QString &Text, I
 //-----------------------------------------------------------------------------
 void ISToolBarObject::UpdateEnabledActionsList(bool Enabled)
 {
-	for (int i = 0; i < actions().count(); i++)
+	for (int i = 0; i < actions().count(); ++i)
 	{
 		QAction *Action = actions().at(i);
 		if (!Action->property("Object").toBool())
@@ -52,7 +52,7 @@ void ISToolBarObject::UpdateEnabledActionsList(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISToolBarObject::ActionTriggered(QAction *ActionTriggered)
 {
-	for (int i = 0; i < actions().count(); i++)
+	for (int i = 0; i < actions().count(); ++i)
 	{
 		actions().at(i)->setFont(FONT_APPLICATION);
 	}

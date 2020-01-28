@@ -109,7 +109,7 @@ void CGConfiguratorShow::obsoleteresources()
 	QMap<QString, QVectorString*> Map;
 	QMap <QString, QVectorString*> MapOutput;
 
-	for (int i = 0; i < ISMetaData::GetInstanse().GetResources().count(); i++)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetResources().count(); ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
 
@@ -134,7 +134,7 @@ void CGConfiguratorShow::obsoleteresources()
 		SqlText = SqlText.arg(TableName);
 
 		QString NotIN;
-		for (int i = 0; i < Vector->count(); i++)
+		for (int i = 0; i < Vector->count(); ++i)
 		{
 			NotIN += "'" + Vector->at(i) + "', ";
 		}
@@ -169,7 +169,7 @@ void CGConfiguratorShow::obsoleteresources()
 
 		ISDebug::ShowString(TableName + ":");
 
-		for (int i = 0; i < Vector->count(); i++)
+		for (int i = 0; i < Vector->count(); ++i)
 		{
 			ISDebug::ShowString(Vector->at(i));
 		}
@@ -185,7 +185,7 @@ void CGConfiguratorShow::obsoletesequence()
 	ISDebug::ShowString("Searching not needed sequences...");
 
 	QString Where;
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); i++)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
 	{
 		QString TableName = ISMetaData::GetInstanse().GetTables().at(i)->GetName().toLower();
 		QString SequnceName = TableName + "_sequence";
@@ -234,7 +234,7 @@ void CGConfiguratorShow::config()
 //-----------------------------------------------------------------------------
 PMetaClassTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 {
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); i++)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		if (MetaTable->GetName().toLower() == TableName)
@@ -248,7 +248,7 @@ PMetaClassTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 //-----------------------------------------------------------------------------
 PMetaClassField* CGConfiguratorShow::FoundField(PMetaClassTable *MetaTable, const QString &ColumnName)
 {
-	for (int i = 0; i < MetaTable->GetAllFields().count(); i++)
+	for (int i = 0; i < MetaTable->GetAllFields().count(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->GetAllFields().at(i);
 		if (QString(MetaTable->GetAlias() + "_" + MetaField->GetName()).toLower() == ColumnName)

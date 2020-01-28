@@ -40,7 +40,7 @@ void ISStyleSheet::Initialize()
 	ISCountingTime Time;
 
 	QFileInfoList FileInfoList = QDir(":CSS").entryInfoList(QDir::NoFilter);
-	for (int i = 0; i < FileInfoList.count(); i++)
+	for (int i = 0; i < FileInfoList.count(); ++i)
 	{
 		QFileInfo FileInfo = FileInfoList.at(i);
 

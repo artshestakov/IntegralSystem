@@ -75,7 +75,7 @@ void ISInternalDirectoriesForm::ItemSelectionChanged()
 		ListBaseForm = nullptr;
 	}
 
-	for (int i = 0; i < ListWidget->count(); i++)
+	for (int i = 0; i < ListWidget->count(); ++i)
 	{
 		ListWidget->item(i)->setFont(FONT_APPLICATION);
 	}

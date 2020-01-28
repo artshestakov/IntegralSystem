@@ -257,7 +257,7 @@ void ISMenuBar::CreateParagraphs()
 	LayoutParagraphs = new QHBoxLayout();
 	MainLayout->addLayout(LayoutParagraphs);
 
-	for (int i = 0; i < ISParagraphEntity::GetInstance().GetParagraphs().count(); i++)
+	for (int i = 0; i < ISParagraphEntity::GetInstance().GetParagraphs().count(); ++i)
 	{
 		ISMetaParagraph *MetaParagraph = ISParagraphEntity::GetInstance().GetParagraphs().at(i);
 

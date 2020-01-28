@@ -149,7 +149,7 @@ int ISListBaseForm::GetObjectID(int RowIndex)
 //-----------------------------------------------------------------------------
 int ISListBaseForm::GetRowIndex(int object_id)
 {
-	for (int i = 0; i < SqlModel->rowCount(); i++)
+	for (int i = 0; i < SqlModel->rowCount(); ++i)
 	{
 		int RowIndex = SqlModel->data(SqlModel->index(i, 0)).toInt();
 		if (RowIndex == object_id)
@@ -199,7 +199,7 @@ QVectorInt ISListBaseForm::GetSelectedIDs()
 	QModelIndexList ModelIndexList = GetTableView()->selectionModel()->selectedRows();
 	if (ModelIndexList.count())
 	{
-		for (int i = 0; i < ModelIndexList.count(); i++)
+		for (int i = 0; i < ModelIndexList.count(); ++i)
 		{
 			QModelIndex ModelIndex = ModelIndexList.at(i);
 			int RowIndex = ModelIndex.row();
@@ -223,7 +223,7 @@ int ISListBaseForm::GetCountSelected()
 QVectorInt ISListBaseForm::GetIDs() const
 {
 	QVectorInt VectorInt;
-	for (int i = 0; i < SqlModel->rowCount(); i++)
+	for (int i = 0; i < SqlModel->rowCount(); ++i)
 	{
 		int ObjectID = SqlModel->data(SqlModel->index(i, SqlModel->GetFieldIndex("ID"))).toInt();
 		VectorInt.append(ObjectID);
@@ -238,7 +238,7 @@ QVectorInt ISListBaseForm::GetSelectedRowIndexes()
 	QModelIndexList ModelIndexList = GetTableView()->selectionModel()->selectedRows();
 	if (ModelIndexList.count())
 	{
-		for (int i = 0; i < ModelIndexList.count(); i++)
+		for (int i = 0; i < ModelIndexList.count(); ++i)
 		{
 			QModelIndex ModelIndex = ModelIndexList.at(i);
 			VectorInt.append(ModelIndex.row());
@@ -301,7 +301,7 @@ void ISListBaseForm::HeaderResized(int Column, int OldSize, int NewSize)
 	if (RememberColumnSize)
 	{
 		QString FieldName;
-		for (int i = 0; i < SqlModel->columnCount(); i++)
+		for (int i = 0; i < SqlModel->columnCount(); ++i)
 		{
 			if (Column == i)
 			{
@@ -559,7 +559,7 @@ void ISListBaseForm::CreateDelegates()
 		return;
 	}
 
-	for (int i = 0; i < SqlModel->columnCount(); i++) //Обход полей
+	for (int i = 0; i < SqlModel->columnCount(); ++i) //Обход полей
 	{
 		QString HeaderData = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
 		PMetaClassField *MetaField = MetaTable->GetField(HeaderData);
@@ -593,7 +593,7 @@ bool ISListBaseForm::CheckIsSystemObject()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::HideField(const QString &FieldName)
 {
-	for (int i = 0; i < SqlModel->columnCount(); i++)
+	for (int i = 0; i < SqlModel->columnCount(); ++i)
 	{
 		QString HeaderData = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
 		if (HeaderData == FieldName)
@@ -608,7 +608,7 @@ void ISListBaseForm::HideField(const QString &FieldName)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowField(const QString &FieldName)
 {
-	for (int i = 0; i < SqlModel->columnCount(); i++)
+	for (int i = 0; i < SqlModel->columnCount(); ++i)
 	{
 		QString HeaderData = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
 		if (HeaderData == FieldName)
@@ -661,7 +661,7 @@ void ISListBaseForm::ResizeColumnsToContents()
 {
 	disconnect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, &ISListBaseForm::HeaderResized);
 
-	for (int i = 0; i < SqlModel->columnCount(); i++)
+	for (int i = 0; i < SqlModel->columnCount(); ++i)
 	{
 		QString FieldName = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
 		int ColumnSize = ISColumnSizer::GetInstance().GetColumnSize(MetaTable->GetName(), FieldName);
@@ -710,7 +710,7 @@ void ISListBaseForm::SelectRowIndex(int row_index)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SetEnabledActionObject(bool Enabled)
 {
-	for (int i = 0; i < ActionObjectGroup->actions().count(); i++)
+	for (int i = 0; i < ActionObjectGroup->actions().count(); ++i)
 	{
 		ActionObjectGroup->actions().at(i)->setEnabled(Enabled);
 	}
@@ -1062,7 +1062,7 @@ void ISListBaseForm::Delete()
 			ProgressForm.show();
 			ProgressForm.SetText(LOCALIZATION("DeletingObjects").arg(0).arg(VectorInt.count()) + "...");
 
-			for (int i = 0; i < VectorInt.count(); i++)
+			for (int i = 0; i < VectorInt.count(); ++i)
 			{
 				ProgressForm.SetText(LOCALIZATION("DeletingObjects").arg(i + 1).arg(VectorInt.count()) + "...");
 				if (ProgressForm.wasCanceled())
@@ -1119,7 +1119,7 @@ bool ISListBaseForm::DeleteCascade()
 			ProgressForm.show();
 			ProgressForm.SetText(LOCALIZATION("DeletingCascadeObjects").arg(0).arg(VectorInt.count()) + "...");
 
-			for (int i = 0; i < VectorInt.count(); i++)
+			for (int i = 0; i < VectorInt.count(); ++i)
 			{
 				ProgressForm.SetText(LOCALIZATION("DeletingCascadeObjects").arg(i + 1).arg(VectorInt.count()) + "...");
 				ProgressForm.AddOneValue();
@@ -1510,7 +1510,7 @@ void ISListBaseForm::ResetWidthColumn()
 	{
 		ISGui::SetWaitGlobalCursor(true);
 
-		for (int i = 0; i < SqlModel->columnCount(); i++)
+		for (int i = 0; i < SqlModel->columnCount(); ++i)
 		{
 			TableView->setColumnWidth(i, 100);
 		}
@@ -1524,7 +1524,7 @@ void ISListBaseForm::CopyRecord()
 	QString Content;
 	QSqlRecord SqlRecord = GetCurrentRecord();
 
-	for (int i = 0; i < SqlModel->columnCount(); i++)
+	for (int i = 0; i < SqlModel->columnCount(); ++i)
 	{
 		Content += SqlRecord.value(i).toString() + "\n";
 	}

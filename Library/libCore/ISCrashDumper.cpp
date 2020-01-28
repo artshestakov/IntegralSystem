@@ -54,7 +54,7 @@ void ISCrashDumper::CreateReport(const QString &FileName, char *Text, _EXCEPTION
 	{
         FileCrash.write("=========================================DEBUG=======================================\r\n");
 
-		for (int i = 0; i < ISDebug::GetInstance().GetDebugMessages().count(); i++)
+		for (int i = 0; i < ISDebug::GetInstance().GetDebugMessages().count(); ++i)
 		{
 			FileCrash.write(ISDebug::GetInstance().GetDebugMessages().at(i).toUtf8() + "\r\n");
 		}
@@ -108,7 +108,7 @@ void ISCrashDumper::OnSystemSignal(int Signum)
     {
         FileCrash.write("=========================================DEBUG=======================================\r\n");
 
-        for (int i = 0; i < ISDebug::GetInstance().GetDebugMessages().count(); i++)
+        for (int i = 0; i < ISDebug::GetInstance().GetDebugMessages().count(); ++i)
         {
             FileCrash.write(ISDebug::GetInstance().GetDebugMessages().at(i).toUtf8() + "\r\n");
         }

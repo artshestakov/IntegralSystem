@@ -80,7 +80,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 
 	if (SettingGroupUID.length())
 	{
-		for (int i = 0; i < ListWidget->count(); i++)
+		for (int i = 0; i < ListWidget->count(); ++i)
 		{
 			if (ListWidget->item(i)->data(Qt::UserRole).toString() == SettingGroupUID)
 			{
@@ -126,7 +126,7 @@ void ISSettingsForm::CreateCentralPanel()
 //-----------------------------------------------------------------------------
 void ISSettingsForm::CreateSettings()
 {
-	for (int i = 0; i < ISSettings::GetInstance().GetSettingGroups().count(); i++)
+	for (int i = 0; i < ISSettings::GetInstance().GetSettingGroups().count(); ++i)
 	{
 		ISMetaSettingsGroup *MetaGroup = ISSettings::GetInstance().GetSettingGroups().at(i);
 		QListWidgetItem* ListWidgetItem = CreateItemGroup(MetaGroup);
@@ -137,7 +137,7 @@ void ISSettingsForm::CreateSettings()
 		ScrollArea->widget()->setLayout(FormLayout);
 		TabWidget->addTab(ScrollArea, QString());
 
-		for (int j = 0; j < MetaGroup->GetSettings().count(); j++)
+		for (int j = 0; j < MetaGroup->GetSettings().count(); ++j)
 		{
 			ISMetaSetting *MetaSetting = MetaGroup->GetSettings().at(j);
 			
@@ -285,7 +285,7 @@ void ISSettingsForm::Import()
 		ISProgressForm ProgressForm(0, AllKeys.count(), this);
 		ProgressForm.show();
 
-		for (int i = 0; i < AllKeys.count(); i++)
+		for (int i = 0; i < AllKeys.count(); ++i)
 		{
 			ProgressForm.setValue(i);
 			ProgressForm.SetText(LOCALIZATION("ImportSetting").arg(i).arg(Fields.count()));
@@ -336,7 +336,7 @@ void ISSettingsForm::ItemSelectionChanged()
 {
 	QListWidgetItem *ClickedItem = ListWidget->currentItem();
 
-	for (int i = 0; i < ListWidget->count(); i++)
+	for (int i = 0; i < ListWidget->count(); ++i)
 	{
 		QListWidgetItem *ListWidgetItem = ListWidget->item(i);
 		ListWidgetItem->setFont(FONT_TAHOMA_9);
