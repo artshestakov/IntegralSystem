@@ -5,7 +5,7 @@
 class ISCountingTime
 {
 public:
-	ISCountingTime(QObject *parent = 0);
+	ISCountingTime();
 	virtual ~ISCountingTime();
 
 	int GetElapsed(); //Получить результат замера в милисекундах

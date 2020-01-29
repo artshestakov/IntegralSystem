@@ -1,6 +1,6 @@
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
-ISCountingTime::ISCountingTime(QObject *parent)
+ISCountingTime::ISCountingTime()
 {
 	Elapsed = 0;
 	Time.start();

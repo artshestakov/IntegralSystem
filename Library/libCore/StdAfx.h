@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _STDAFX_H_INCLUDED
+#define _STDAFX_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include <cstdio>
 #include <iostream>
@@ -212,3 +214,4 @@
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 //-----------------------------------------------------------------------------
+#endif

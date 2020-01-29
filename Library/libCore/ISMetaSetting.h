@@ -4,13 +4,11 @@
 #include "ISNamespace.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISMetaSetting : public QObject
+class ISMetaSetting
 {
-	Q_OBJECT
-
 public:
-	ISMetaSetting(QObject *parent = 0);
-	virtual ~ISMetaSetting();
+	ISMetaSetting();
+	~ISMetaSetting();
 
 	void SetUID(const ISUuid &uid);
 	ISUuid GetUID() const;

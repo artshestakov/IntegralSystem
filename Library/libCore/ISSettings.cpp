@@ -121,7 +121,7 @@ void ISSettings::Initialize()
 			ISMetaSettingsGroup *MetaGroup = CheckExistGroup(GroupUID);
 			if (!MetaGroup) //Если группа настроек уже содержится в памяти (была создана при первой итерации обхода результатов запрос)
 			{
-				MetaGroup = new ISMetaSettingsGroup(this);
+				MetaGroup = new ISMetaSettingsGroup();
 				MetaGroup->SetUID(GroupUID);
 				MetaGroup->SetName(GroupName);
 				MetaGroup->SetLocalName(GroupLocalName);
@@ -139,7 +139,7 @@ void ISSettings::Initialize()
 			QVariant SettingDefaultValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
 			QVariant UserSetting = qSelectSettings.ReadColumn("usst_value");
 
-			ISMetaSetting *Setting = new ISMetaSetting(MetaGroup);
+			ISMetaSetting *Setting = new ISMetaSetting();
 			Setting->SetUID(SettingUID);
 			Setting->SetName(SettingName);
 			Setting->SetType(SettingType);

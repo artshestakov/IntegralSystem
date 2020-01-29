@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISCONSTANTS_H_INCLUDED
+#define _ISCONSTANTS_H_INCLUDED
 //-----------------------------------------------------------------------------
 const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
 #define CONST_UID_SETTINGS_DATABASE "{1DE3449C-C700-4EFC-A455-E99E38063D9B}" //Идентификатор настроек базы данных
@@ -289,3 +291,4 @@ const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}";
 #define CONST_CONFIG_DATABASESERVICE_FOLDERPOSTGRESBIN "DatabaseService/FolderPostgresBin"
 #define CONST_CONFIG_DATABASESERVICE_KEEP_OVER_DAYS "DatabaseService/KeepOverDays"
 //-----------------------------------------------------------------------------
+#endif

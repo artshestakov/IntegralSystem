@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISQUERY_H_INCLUDED
+#define _ISQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISQueryException.h"
@@ -62,3 +64,4 @@ private:
 	bool ShowLongQuery;
 };
 //-----------------------------------------------------------------------------
+#endif

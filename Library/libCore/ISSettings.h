@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISMetaSettingsGroup.h"
 //-----------------------------------------------------------------------------
-class ISSettings : public QObject
+class ISSettings
 {
-	Q_OBJECT
-
 public:
 	ISSettings(const ISSettings &) = delete;
 	ISSettings(ISSettings &&) = delete;

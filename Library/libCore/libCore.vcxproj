@@ -157,9 +157,9 @@
     <ClInclude Include="ISMetaNotify.h" />
     <QtMoc Include="ISNotifySender.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
-    <QtMoc Include="ISMetaSetting.h" />
-    <QtMoc Include="ISMetaSettingsGroup.h" />
-    <QtMoc Include="ISSettings.h" />
+    <ClInclude Include="ISMetaSetting.h" />
+    <ClInclude Include="ISMetaSettingsGroup.h" />
+    <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISProtocol.h" />
     <QtMoc Include="ISOpenWeatherMap.h" />
     <QtMoc Include="ISNetwork.h" />

@@ -2,9 +2,10 @@
 #include "ISDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-ISMetaSettingsGroup::ISMetaSettingsGroup(QObject *parent) : QObject(parent)
+ISMetaSettingsGroup::ISMetaSettingsGroup()
+	: System(true)
 {
-	System = true;
+	
 }
 //-----------------------------------------------------------------------------
 ISMetaSettingsGroup::~ISMetaSettingsGroup()

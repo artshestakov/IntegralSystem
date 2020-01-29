@@ -3,12 +3,10 @@
 #include "StdAfx.h"
 #include "ISMetaSetting.h"
 //-----------------------------------------------------------------------------
-class ISMetaSettingsGroup : public QObject
+class ISMetaSettingsGroup
 {
-	Q_OBJECT
-
 public:
-	ISMetaSettingsGroup(QObject *parent = 0);
+	ISMetaSettingsGroup();
 	virtual ~ISMetaSettingsGroup();
 
 	void SetName(const QString &name);

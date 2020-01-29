@@ -273,6 +273,15 @@
     <ClInclude Include="ISSingleton.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISSettings.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaSettingsGroup.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaSetting.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -621,15 +630,6 @@
     </QtMoc>
     <QtMoc Include="ISNotifySender.h">
       <Filter>Notify</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaSetting.h">
-      <Filter>Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaSettingsGroup.h">
-      <Filter>Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSettings.h">
-      <Filter>Settings</Filter>
     </QtMoc>
     <QtMoc Include="ISStorageFileLoader.h">
       <Filter>Other</Filter>

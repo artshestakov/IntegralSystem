@@ -1,6 +1,7 @@
 #pragma once
+#ifndef _ISDEFINES_H_INCLUDED
+#define _ISDEFINES_H_INCLUDED
 //-----------------------------------------------------------------------------
-
 //All
 #define APPLICATION_NAME QApplication::applicationName()
 #define APPLICATION_DIR_PATH QApplication::applicationDirPath()
@@ -13,26 +14,26 @@
 #define SCHEMA_TEMPLATE_FIELDS_PATH ":Other/ClassTemplateFields.xml"
 #define CONFIGURATOR_SCHEME_PATH ":Other/Configurator.xml"
 #define CONFIGURATION_SCHEME_PATH ":Other/Configuration.xml"
-
+//-----------------------------------------------------------------------------
 //DATABASE SERVICE
 #define PG_DUMP_WINDOWS "pg_dump.exe"
 #define PG_DUMP_LINUX "pg_dump"
 #define PG_DUMPALL_WINDOWS "pg_dumpall.exe"
 #define PG_DUMPALL_LINUX "pg_dumpall"
-
+//-----------------------------------------------------------------------------
 //PROPERTY
 #define IS_PROPERTY_LINE_EDIT_SELECTED_MENU "LineEditSelectedMenu"
-
+//-----------------------------------------------------------------------------
 //OS names
 #define OS_NAME_WINDOWS "Windows"
 #define OS_NAME_LINUX "Linux"
 #define OS_NAME_MACOS "Mac OS"
 #define OS_NAME_UNKNOWN "Unknown"
-
+//-----------------------------------------------------------------------------
 //Thread Milliseconds Values
 const int ONE_SECOND_TO_MILLISECOND = 1000;
 const int FIVE_SECOND_TO_MILLISECOND = 5000;
-
+//-----------------------------------------------------------------------------
 //INTERFACE
 const int SIZE_MINIMUM_HEIGHT_EDIT_FIELD = 24; //Минимальная высота поля ввода ввода информации
 const int EDIT_FIELD_SPACING = 4;
@@ -44,7 +45,7 @@ const int EDIT_FIELD_SPACING = 4;
 #define LAYOUT_MARGINS_10_PX QMargins(10, 10, 10, 10)
 const int ISPUSHBUTTON_MINIMUM_WIDTH = 75;
 const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
-
+//-----------------------------------------------------------------------------
 //SIZES
 #define SIZE_MAIN_WINDOW QSize(800, 559) //Размер главного окна
 #define SIZE_MAIN_WINDOW_MINIMUM QSize(700, 500) //Минимальный размер главного окна
@@ -68,11 +69,11 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define SIZE_18_18 QSize(18, 18)
 #define SIZE_16_16 QSize(16, 16)
 #define SIZE_10_10 QSize(10, 10)
-
+//-----------------------------------------------------------------------------
 //FONTS
 #define FONT_APPLICATION FONT_TAHOMA_9
 #define FONT_APPLICATION_BOLD FONT_TAHOMA_9_BOLD
-
+//-----------------------------------------------------------------------------
 #define FONT_COURIER_12 QFont("Courier", 12)
 #define FONT_TAHOMA_35 QFont("Tahoma", 35)
 #define FONT_TAHOMA_18 QFont("Tahoma", 18)
@@ -88,7 +89,7 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define FONT_TAHOMA_9 QFont("Tahoma", 9)
 #define FONT_TAHOMA_9_BOLD QFont("Tahoma", 9, QFont::Bold)
 #define FONT_TAHOMA_8 QFont("Tahoma", 8)
-
+//-----------------------------------------------------------------------------
 //CURSORS
 #define CURSOR_ARROW Qt::ArrowCursor
 #define CURSOR_POINTING_HAND Qt::PointingHandCursor
@@ -97,7 +98,7 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define CURSOR_BUSY Qt::BusyCursor
 #define CURSOR_FORBIDDEN Qt::ForbiddenCursor
 #define CURSOR_I_BEAM Qt::IBeamCursor
-
+//-----------------------------------------------------------------------------
 //LOCALIZATION
 #define LOCALIZATION_FILE_CARAT "Carat"
 #define LOCALIZATION_FILE_CONFIGURATOR "Configurator"
@@ -105,7 +106,7 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define LOCALIZATION_FILE_DATABASE_SERVICE "DatabaseService"
 #define LOCALIZATION_FILE_INTEGRAL_SYSTEM "IntegralSystem"
 #define LOCALIZATION_FILE_OBJECTS "Objects"
-
+//-----------------------------------------------------------------------------
 //SYMBOLS
 #define SYMBOL_CIRCLE QString(QChar(9679)) //Символ "Круг"
 #define SYMBOL_MULTIPLY QString(QChar(215)) //Символ "Умножение"
@@ -129,7 +130,7 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define SYMBOL_8 "8"
 #define SYMBOL_9 "9"
 #define SYMBOL_0 "0"
-
+//-----------------------------------------------------------------------------
 //COLORS
 #define EDIT_WIDGET_COLOR_RED QColor(236, 99, 99) //Цвет рамки вокруг незаполненного поля реадктирования информации
 #define COLOR_BACKGROUND_INTERFACE QColor(230, 230, 230) //Цвет фона форм интерфейса
@@ -153,7 +154,7 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 #define COLOR_LIGHT_GRAY QColor(Qt::lightGray)
 #define COLOR_MONITOR_USER QColor(210, 210, 210)
 #define COLOR_NULL QColor()
-
+//-----------------------------------------------------------------------------
 //SYSTEM
 #define SYSTEM_DATABASE_NAME "postgres"
 #define SOURCE_LINE __LINE__
@@ -186,14 +187,14 @@ const int YEAR_MAXIMUM = 8000;
 #define CARAT_UID "{88DD90C4-2DFF-4515-8C32-7371C39C598A}"
 const int MAX_FILE_SIZE_FIELD = ((1000 * 1024) * 10); //Максимальный размер файла в поле редактирования файла (10 мегабайт)
 const int PLAYER_WINDING = 10000;
-
+//-----------------------------------------------------------------------------
 //FEEDBACK
 #define FEEDBACK_SERVER "smtp.yandex.ru"
 #define FEEDBACK_PORT 465
 #define FEEDBACK_SENDER "integralfeedback@yandex.ru"
 #define FEEDBACK_SENDER_PASSWORD "QWPLH34JA961"
 #define FEEDBACK_RECIPIENT "artemshestakov@outlook.com"
-
+//-----------------------------------------------------------------------------
 //CARAT INFORMER
 #define CARAT_INFORMER_NAME "Carat-Informer"
 #define CARAT_INFORMER_SERVER "smtp.yandex.ru"
@@ -201,19 +202,19 @@ const int CARAT_INFORMER_PORT = 465;
 #define CARAT_INFORMER_LOGIN "carat-informer@yandex.ru"
 #define CARAT_INFORMER_PASSWORD "QWPLH34JA961"
 #define CARAT_INFORMER_RECIPIENT "artemshestakov@outlook.com"
-
+//-----------------------------------------------------------------------------
 //TOKENS
 #define TOKEN_DA_DATA_TOKEN "f2c204cd6ba093b294324acec5d01b25fad632cf"
 #define TOKEN_OPEN_WEATHER_MAP_TOKEN "d4e703421760e0ca1ca5944ac1b13692"
 #define TOKEN_TELEGRAM "504082486:AAE1PIdf1Oqdi5jkVeHjMsL_za5hl3UEeOo"
-
+//-----------------------------------------------------------------------------
 //REPORT TYPE
 #define REPORT_TYPE_HTML "Html"
 #define REPORT_TYPE_WORD "Word"
-
+//-----------------------------------------------------------------------------
 //TEXT CODECS
 #define TEXT_CODEC_IBM866 "IBM 866"
-
+//-----------------------------------------------------------------------------
 //RegExp's
 #define REG_EXP_IP_ADDRESS "([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?" //IP-адресс
 #define REG_EXP_UID "UID=\"\\{\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}\\}\"" //Уникальный идентфикатор из мета-данных
@@ -232,7 +233,7 @@ const int CARAT_INFORMER_PORT = 465;
 #define REG_EXP_NUMBER_COUNT_12 "^[0-9]{12}$" //12 цифр
 #define REG_EXP_NUMBER_COUNT_13 "^[0-9]{13}$" //13 цифр
 #define REG_EXP_NUMBER_COUNT_17 "^[0-9]{17}$" //17 цифр
-
+//-----------------------------------------------------------------------------
 //DateTimes Formats
 #define DATE_FORMAT_V1 "d MMMM yyyy"
 #define DATE_FORMAT_V2 "dd.MM.yyyy"
@@ -256,7 +257,7 @@ const int CARAT_INFORMER_PORT = 465;
 #define DATE_TODAY QDate::currentDate() //Сегодня
 #define DATE_TOMORROW DATE_TODAY.addDays(1) //Завтра
 #define DATE_AFTER_TOMORROW DATE_TODAY.addDays(2) //Послезавтра
-
+//-----------------------------------------------------------------------------
 //Asterisk Manager API
 #define AMI_SUCCESSFUL_AUTH "SuccessfulAuth"
 #define AMI_USER_EVENT "UserEvent"
@@ -266,7 +267,7 @@ const int CARAT_INFORMER_PORT = 465;
 #define AMI_BLIND_TRANSFER "BlindTransfer"
 #define AMI_ORIGINATE_RESPONSE "OriginateResponse"
 #define AMI_EXTENSION_STATUS "ExtensionStatus"
-
+//-----------------------------------------------------------------------------
 //FileExtensions
 #define EXTENSION_DLL "dll"
 #define EXTENSION_SO "so"
@@ -299,3 +300,5 @@ const int CARAT_INFORMER_PORT = 465;
 #define EXTENSION_WAV "wav"
 #define EXTENSION_LIC "lic"
 #define EXTENSION_XML "xml"
+//-----------------------------------------------------------------------------
+#endif

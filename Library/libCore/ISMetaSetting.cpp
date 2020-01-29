@@ -1,9 +1,10 @@
 #include "ISMetaSetting.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-ISMetaSetting::ISMetaSetting(QObject *parent) : QObject(parent)
+ISMetaSetting::ISMetaSetting()
+	: SettingType(ISNamespace::FT_Unknown)
 {
-	SettingType = ISNamespace::FT_Unknown;
+	
 }
 //-----------------------------------------------------------------------------
 ISMetaSetting::~ISMetaSetting()
