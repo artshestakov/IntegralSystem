@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISSTYLESHEET_H_INCLUDED
+#define _ISSTYLESHEET_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISTypes.h"
@@ -27,3 +29,4 @@ private:
 //-----------------------------------------------------------------------------
 #define STYLE_SHEET(STYLE_NAME) ISStyleSheet::GetInstance().GetStyle(STYLE_NAME, __FILE__, __LINE__)
 //-----------------------------------------------------------------------------
+#endif

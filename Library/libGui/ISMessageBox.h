@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISMESSAGEBOX_H_INCLUDED
+#define _ISMESSAGEBOX_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
@@ -28,3 +30,4 @@ private:
 	QMap<QPushButton*, ISNamespace::MessageBoxButton> AdditionalButtons;
 };
 //-----------------------------------------------------------------------------
+#endif

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISLOCALIZATION_H_INCLUDED
+#define _ISLOCALIZATION_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISTypes.h"
@@ -27,3 +29,4 @@ private:
 //-----------------------------------------------------------------------------
 #define LOCALIZATION(PARAMETER) ISLocalization::GetInstance().GetLocalString(PARAMETER, __FILE__, __LINE__)
 //-----------------------------------------------------------------------------
+#endif

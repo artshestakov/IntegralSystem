@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISPARAGPATHBASEFORM_H_INCLUDED
+#define _ISPARAGPATHBASEFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISMenuBar.h"
@@ -20,3 +22,4 @@ private:
 	ISParagraphButton *ParagraphButton;
 };
 //-----------------------------------------------------------------------------
+#endif

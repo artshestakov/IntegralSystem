@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISTASKBASELISTFORM_H_INCLUDED
+#define _ISTASKBASELISTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISListBaseForm.h"
@@ -21,3 +23,4 @@ private:
 	QAction *ActionTakeToWork;
 };
 //-----------------------------------------------------------------------------
+#endif

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISBUFFER_H_INCLUDED
+#define _ISBUFFER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISTypes.h"
@@ -46,3 +48,4 @@ private:
 #define BUFFER_PIXMAPS(PIXMAP_NAME) ISBuffer::GetInstance().GetPixmap(PIXMAP_NAME, __FILE__, __LINE__)
 #define BUFFER_AUDIO(AUDIO_NAME) ISBuffer::GetInstance().GetAudio(AUDIO_NAME)
 //-----------------------------------------------------------------------------
+#endif

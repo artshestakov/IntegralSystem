@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISCOMBOSEARCHBASE_H_INCLUDED
+#define _ISCOMBOSEARCHBASE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISComboEdit.h"
@@ -15,3 +17,4 @@ public:
 	ISNamespace::SearchOperatorType GetOperator();
 };
 //-----------------------------------------------------------------------------
+#endif
