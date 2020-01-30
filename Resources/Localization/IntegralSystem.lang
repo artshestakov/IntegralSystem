@@ -169,10 +169,6 @@
   <Local Name="Message.Warning.CreateCopyMessageNotDrafts" Russian="Разрешено создавать копию сообщения только со статусом &quot;Черновик&quot;."/>
   <Local Name="Message.Warning.NotCreateLogFile" Russian="Не удалось сформировать лог-файл."/>
   <Local Name="Message.Warning.NotDeleteCascadeRecord" Russian="Не удалось каскадно удалить запись с кодом &quot;%1&quot;."/>
-  <Local Name="Message.Warning.WeatherAnswer" Russian="Ошибка получения данных погоды."/>
-  <Local Name="Message.Warning.WeatherAnswer.CheckBoxText" Russian="Отключить виджет погоды"/>
-  <Local Name="Message.Warning.CurrencyAnswer" Russian="Ошибка получения данных котировок."/>
-  <Local Name="Message.Warning.CurrencyAnswer.CheckBoxText" Russian="Отключить виджет валюты"/>
   <Local Name="Message.Warning.Feedback.ConnectToHost" Russian="Не удалось соединиться с сервером."/>
   <Local Name="Message.Warning.Feedback.Authentification" Russian="Не удалось авторизоваться."/>
   <Local Name="Message.Warning.Feedback.Send" Russian="Не удалось отправить письмо."/>
@@ -536,7 +532,6 @@
   <Local Name="Reply" Russian="Ответить"/>
   <Local Name="NotificationEmpty" Russian="Уведомлений нет."/>
   <Local Name="NotificationEmpty.DetailedText" Russian="Как только Вам придут уведомления, они появятся здесь."/>
-  <Local Name="GettingData" Russian="Получение данных"/>
   <Local Name="Settings.Export" Russian="Экспорт"/>
   <Local Name="Settings.Import" Russian="Импорт"/>
   <Local Name="ConnectionInfoDatabase" Russian="Информация о подключении к базе данных"/>
@@ -746,7 +741,6 @@
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
   <Local Name="AutobootStartup" Russian="Добавить программу в автозагрузку"/>
   <Local Name="AutobootStartup.ToolTip" Russian="Программа будет запускаться автоматически при включении компьютера."/>
-  <Local Name="ClickFromGoOwerToCalendar" Russian="Нажмите, чтобы перейти в календарь"/>
   <Local Name="FeedbackFormInfo" Russian="Заполните пожалуйста поля ниже, чтобы разработчик программы мог связаться с Вами."/>
   <Local Name="ClickFromIncludeAndExcludeCore" Russian="Нажмите, чтобы включить или отключить ядро."/>
   <Local Name="InputMessageFromLinkToRecord" Russian="Прикрепите сообщение к ссылке на запись"/>
@@ -942,24 +936,6 @@
   <!--Telephony-->
   <Local Name="Telephony.CallError" Russian="Во время вызова абонента произошла ошибка!"/>
   
-  <!--Weather-->
-  <Local Name="Weather" Russian="Погода: %1"/>
-  <Local Name="Weather.Error" Russian="Ошибка получения данных"/>
-  <Local Name="Weather.CityName" Russian="Город"/>
-  <Local Name="Weather.Pressure" Russian="Давление"/>
-  <Local Name="Weather.Pressure.Reduction" Russian="мм. рт. ст."/>
-  <Local Name="Weather.Wind" Russian="Ветер"/>
-  <Local Name="Weather.Wind.Reduction" Russian="м/с"/>
-  <Local Name="Weather.Wind.Direction.Northern" Russian="Северный"/>
-  <Local Name="Weather.Wind.Direction.NorthEast" Russian="Северо-восточный"/>
-  <Local Name="Weather.Wind.Direction.Oriental" Russian="Восточный"/>
-  <Local Name="Weather.Wind.Direction.SouthEast" Russian="Юго-восточный"/>
-  <Local Name="Weather.Wind.Direction.Southerly" Russian="Южный"/>
-  <Local Name="Weather.Wind.Direction.SouthWest" Russian="Юго-западный"/>
-  <Local Name="Weather.Wind.Direction.West" Russian="Западный"/>
-  <Local Name="Weather.Wind.Direction.NorthWest" Russian="Северо-западный"/>
-  <Local Name="Weather.Humidity" Russian="Влажность"/>
-  
   <!--Task-->
   <Local Name="Task.Favorite" Russian="Добавить задачу в избранное после сохранения"/>
   <Local Name="Task.Favorite.ToolTip" Russian="Задача будет добавлена в избранные после сохранения"/>
@@ -1024,13 +1000,6 @@
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
   <Local Name="Task.ReRead" Russian="Перечитать"/>
   <Local Name="Task.ReRead.ToolTip" Russian="Перечитать карточку задачи"/>
-  
-  <!--Currency-->
-  <Local Name="Currency" Russian="Курс валют"/>
-  <Local Name="Currency.Error" Russian="Курс валют: Ошибка получения данных"/>
-  <Local Name="Currency.GettingData" Russian="Курс валют: получение данных"/>
-  <Local Name="Currency.Text" Russian="Курс валют - Доллар: %1 Евро: %2"/>
-  <Local Name="Currency.ToolTip" Russian="Курс валют на сегодня"/>
   
   <!--Languages-->
   <Local Name="Language" Russian="Язык"/>

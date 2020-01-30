@@ -57,7 +57,7 @@ void ISSplashScreen::SetMessage(const QString &Message)
 	}
 	else
 	{
-		Value = Value + 5;
+		Value += 5;
 	}
 	ProgressBar->setValue(Value);
 
@@ -82,7 +82,6 @@ void ISSplashScreen::DefaultPixmap()
 //-----------------------------------------------------------------------------
 void ISSplashScreen::mousePressEvent(QMouseEvent *e)
 {
-	//Это переопределение нужно для того, чтобы банер не скрывался при нажатии кнопок мыши
-	return;
+	return; //Это переопределение нужно для того, чтобы банер не скрывался при нажатии кнопок мыши
 }
 //-----------------------------------------------------------------------------

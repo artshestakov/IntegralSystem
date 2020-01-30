@@ -177,7 +177,6 @@ ISMetaSettingsGroup* ISSettings::CheckExistGroup(const ISUuid &GroupUID)
 			return MetaGriup;
 		}
 	}
-
 	return nullptr;
 }
 //-----------------------------------------------------------------------------

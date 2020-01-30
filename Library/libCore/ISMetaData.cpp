@@ -117,7 +117,6 @@ PMetaClassField* ISMetaData::GetMetaField(PMetaClassTable *MetaTable, const QStr
 			break;
 		}
 	}
-
 	IS_ASSERT(Result, QString("Field \"%1\" not found in meta table \"%2\"").arg(FieldName).arg(MetaTable->GetName()));
 	return Result;
 }
@@ -213,12 +212,7 @@ QVector<PMetaClassResource*> ISMetaData::GetResources()
 //-----------------------------------------------------------------------------
 bool ISMetaData::CheckExistTable(const QString &TableName) const
 {
-	if (TablesMap.value(TableName))
-	{
-		return true;
-	}
-
-	return false;
+	return TablesMap.value(TableName) ? true : false;
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::CheckExitField(PMetaClassTable *MetaTable, const QString &FieldName) const
@@ -269,7 +263,6 @@ void ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 void ISMetaData::CheckUniqueAllAliases()
 {
 	QStringList StringList;
-
 	for (const auto &MapItem : TablesMap.toStdMap()) //Обход таблиц
 	{
 		PMetaClassTable *MetaTable = MapItem.second;
@@ -279,7 +272,6 @@ void ISMetaData::CheckUniqueAllAliases()
 		IS_ASSERT(!StringList.contains(Alias), QString("Duplicate alias: %1. Table: %2.").arg(Alias).arg(MetaTable->GetName()));
 		StringList.append(Alias);
 	}
-
 	StringList.clear();
 }
 //-----------------------------------------------------------------------------
@@ -816,10 +808,8 @@ QDomNode ISMetaData::GetChildDomNode(QDomNode &TableNode, const QString &TagName
 		{
 			return DomNode;
 		}
-
 		DomNode = DomNode.nextSibling();
 	}
-
     return QDomNode();
 }
 //-----------------------------------------------------------------------------

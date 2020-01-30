@@ -807,9 +807,6 @@
     <ClCompile Include="ISTaskViewForm.cpp">
       <Filter>Form Task</Filter>
     </ClCompile>
-    <ClCompile Include="ISButtonWeather.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalculatorButton.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -850,9 +847,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISUserGroupWidget.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISButtonCurrency.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISButtonMainMenu.cpp">
@@ -1889,9 +1883,6 @@
     <QtMoc Include="ISTaskViewForm.h">
       <Filter>Form Task</Filter>
     </QtMoc>
-    <QtMoc Include="ISButtonWeather.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
     <QtMoc Include="ISCalculatorButton.h">
       <Filter>Controls</Filter>
     </QtMoc>
@@ -1932,9 +1923,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISUserGroupWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISButtonCurrency.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISButtonMainMenu.h">

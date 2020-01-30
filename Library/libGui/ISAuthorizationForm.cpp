@@ -139,11 +139,11 @@ void ISAuthorizationForm::AfterShowEvent()
 
 	QTimer *TimerCapsLook = new QTimer(this);
 	connect(TimerCapsLook, &QTimer::timeout, this, &ISAuthorizationForm::TimeoutCapsLook);
-	TimerCapsLook->start(100);
+	TimerCapsLook->start(500);
 
 	QTimer *TimerLang = new QTimer(this);
 	connect(TimerLang, &QTimer::timeout, this, &ISAuthorizationForm::TimeoutLang);
-	TimerLang->start(100);
+	TimerLang->start(500);
 
 	if (CONFIG_BOOL(CONST_CONFIG_AUTOINPUT_INCLUDED))
 	{
@@ -220,14 +220,12 @@ void ISAuthorizationForm::Input()
 	if (Check())
 	{
 		SetConnecting(true);
-
 		if (!AuthConnector)
 		{
 			AuthConnector = new ISAuthConnector(this);
 			connect(AuthConnector, &ISAuthConnector::ConnectedToHost, this, &ISAuthorizationForm::ConnectedDone);
 			connect(AuthConnector, &ISAuthConnector::ConnectedFailed, this, &ISAuthorizationForm::ConnectedFailed);
 		}
-
 		AuthConnector->Connect();
 	}
 }
@@ -278,17 +276,8 @@ void ISAuthorizationForm::ConnectedFailed()
 //-----------------------------------------------------------------------------
 void ISAuthorizationForm::SetConnecting(bool Connecting)
 {
-	if (Connecting)
-	{
-		WaitWidget->Start();
-		LabelConnectToDatabase->setText(LOCALIZATION("ConnectingToServer") + "...");
-	}
-	else
-	{
-		WaitWidget->Stop();
-		LabelConnectToDatabase->setText(QString());
-	}
-
+	Connecting ? WaitWidget->Start() : WaitWidget->Stop();
+	LabelConnectToDatabase->setText(Connecting ? LOCALIZATION("ConnectingToServer") + "..." : QString());
 	ISGui::SetWaitGlobalCursor(Connecting);
 	EditLogin->setEnabled(!Connecting);
 	EditPassword->setEnabled(!Connecting);

@@ -16,24 +16,17 @@
 //-----------------------------------------------------------------------------
 ISStatusBar::ISStatusBar(QWidget *parent) : QStatusBar(parent)
 {
-	if (SETTING_BOOL(CONST_UID_SETTING_STATUS_BAR_SHOWDATETIME))
+	ISServiceButton *ButtonConnection = new ISServiceButton(this);
+	ButtonConnection->setToolTip(LOCALIZATION("ConnectionInfoDatabase"));
+	ButtonConnection->setIcon(BUFFER_ICONS("DatabaseConnection"));
+	ButtonConnection->setFlat(true);
+	addWidget(ButtonConnection);
+	connect(ButtonConnection, &ISPushButton::clicked, [=]
 	{
-		CreateDateTime();
-	}
-
-	CreateConnectData();
-
-	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_SHOWWEATHERWIDGET))
-	{
-		ButtonWeather = new ISButtonWeather(this);
-		addWidget(ButtonWeather);
-	}
-
-	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_SHOWCURRENCYWIDGET))
-	{
-		ButtonCurrency = new ISButtonCurrency(this);
-		addWidget(ButtonCurrency);
-	}
+		ISMessageBox::ShowInformation(this, LOCALIZATION("Server") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER) + "\n" +
+											LOCALIZATION("Port") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT) + "\n" +
+											LOCALIZATION("Database") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
+	});
 
 	ISServiceButton *ButtonCall = new ISServiceButton(this);
 	ButtonCall->setToolTip(LOCALIZATION("MakeCall"));
@@ -51,50 +44,5 @@ ISStatusBar::ISStatusBar(QWidget *parent) : QStatusBar(parent)
 ISStatusBar::~ISStatusBar()
 {
 
-}
-//-----------------------------------------------------------------------------
-void ISStatusBar::CreateDateTime()
-{
-	ButtonDateTime = new ISPushButton(this);
-	ButtonDateTime->setText(GetCurrentDateTime());
-	ButtonDateTime->setToolTip(LOCALIZATION("ClickFromGoOwerToCalendar"));
-	ButtonDateTime->setCursor(CURSOR_POINTING_HAND);
-	ButtonDateTime->setFont(Font);
-	ButtonDateTime->setFlat(true);
-	connect(ButtonDateTime, &ISPushButton::clicked, this, &ISStatusBar::DateTimeClicked);
-	addWidget(ButtonDateTime);
-
-	QTimer *Timer = new QTimer(this);
-	Timer->setInterval(60000);
-	connect(Timer, &QTimer::timeout, this, &ISStatusBar::TimerTick);
-	Timer->start();
-}
-//-----------------------------------------------------------------------------
-void ISStatusBar::CreateConnectData()
-{
-	ISServiceButton *ButtonConnection = new ISServiceButton(this);
-	ButtonConnection->setToolTip(LOCALIZATION("ConnectionInfoDatabase"));
-	ButtonConnection->setIcon(BUFFER_ICONS("DatabaseConnection"));
-	ButtonConnection->setFlat(true);
-	addWidget(ButtonConnection);
-	connect(ButtonConnection, &ISPushButton::clicked, [=]
-	{
-		QString String;
-		String += LOCALIZATION("Server") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER) + "\n";
-		String += LOCALIZATION("Port") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT) + "\n";
-		String += LOCALIZATION("Database") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
-
-		ISMessageBox::ShowInformation(this, String);
-	});
-}
-//-----------------------------------------------------------------------------
-void ISStatusBar::TimerTick()
-{
-	ButtonDateTime->setText(GetCurrentDateTime());
-}
-//-----------------------------------------------------------------------------
-QString ISStatusBar::GetCurrentDateTime() const
-{
-	return QString("%1 %2").arg(ISSystem::GetCurrentDayOfWeekName()).arg(QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V1));
 }
 //-----------------------------------------------------------------------------
