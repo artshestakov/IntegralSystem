@@ -200,6 +200,9 @@
     <Filter Include="Objects\Sirona\Forms">
       <UniqueIdentifier>{c59bee7c-ae53-45b2-b100-ba11819d462e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{c02aabb1-e4c2-4f06-be12-bfd0434177b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -213,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="ISGui.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSqlModelHelper.h">
+      <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1296,6 +1302,15 @@
     <ClCompile Include="ISPrintPreviewDialog.cpp">
       <Filter>Printing</Filter>
     </ClCompile>
+    <ClCompile Include="ISSqlModelCore.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSqlModelHelper.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSqlModelView.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -2365,6 +2380,12 @@
     </QtMoc>
     <QtMoc Include="ISPrintPreviewDialog.h">
       <Filter>Printing</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSqlModelCore.h">
+      <Filter>Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSqlModelView.h">
+      <Filter>Model</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

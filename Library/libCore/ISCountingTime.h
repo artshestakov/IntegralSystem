@@ -6,7 +6,7 @@ class ISCountingTime
 {
 public:
 	ISCountingTime();
-	virtual ~ISCountingTime();
+	~ISCountingTime();
 
 	int GetElapsed(); //Получить результат замера в милисекундах
 	int GetElapsedRestart(); //Получить результат замера в милисекундах и сбросить таймер

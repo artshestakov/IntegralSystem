@@ -10,11 +10,11 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaFor
 	QString ForeignAlias = MetaTableForeign->GetAlias();
 	QStringList FieldList = MetaForeign->GetForeignViewNameField().split(";");
 
-	QString SqlQuery = "SELECT " + ForeignAlias + "_" + MetaForeign->GetForeginField().toLower() + " AS ID, concat(";
+	QString SqlQuery = "SELECT " + ForeignAlias + '_' + MetaForeign->GetForeginField().toLower() + " AS ID, concat(";
 
 	for (int i = 0; i < FieldList.count(); ++i) //Обход полей (которые должны быть отображены)
 	{
-		SqlQuery += ForeignAlias + "_" + FieldList.at(i).toLower() + ", ' ', ";
+		SqlQuery += ForeignAlias + '_' + FieldList.at(i).toLower() + ", ' ', ";
 	}
 
 	ISSystem::RemoveLastSymbolFromString(SqlQuery, 7);
@@ -31,14 +31,14 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaFor
 
 	if (ObjectID.isValid())
 	{
-		SqlQuery += "AND " + ForeignAlias + "_" + MetaForeign->GetForeginField() + " = :ObjectID \n";
+		SqlQuery += "AND " + ForeignAlias + '_' + MetaForeign->GetForeginField() + " = :ObjectID \n";
 	}
 
 	SqlQuery += "ORDER BY ";
 
 	if (MetaForeign->GetOrderField().length()) //Если указано поле для сортировки
 	{
-		SqlQuery += MetaTableForeign->GetAlias() + "_" + MetaForeign->GetOrderField() + " ASC";
+		SqlQuery += MetaTableForeign->GetAlias() + '_' + MetaForeign->GetOrderField() + " ASC";
 	}
 	else
 	{

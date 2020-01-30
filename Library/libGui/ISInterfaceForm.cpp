@@ -9,14 +9,14 @@
 #include "ISFileDialog.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags) : QWidget(parent, Flags)
+ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
+	: QWidget(parent, Flags),
+	LabelShadow(nullptr),
+	AnimationShow(nullptr),
+	FlashingTimer(nullptr),
+	ShowedFlag(false),
+	FormUID(ISSystem::GenerateUuid())
 {
-	LabelShadow = nullptr;
-	AnimationShow = nullptr;
-	FlashingTimer = nullptr;
-	ShowedFlag = false;
-	FormUID = ISSystem::GenerateUuid();
-
 	setAttribute(Qt::WA_DeleteOnClose, true);
 	setAutoFillBackground(true);
 
@@ -150,20 +150,17 @@ ISUuid ISInterfaceForm::GetFormUID() const
 void ISInterfaceForm::showEvent(QShowEvent *e)
 {
 	QWidget::showEvent(e);
-
 	if (!ShowedFlag)
 	{
 		ShowedFlag = true;
 		AfterShowEvent();
 	}
-
 	emit Showed();
 }
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::keyPressEvent(QKeyEvent *e)
 {
 	QWidget::keyPressEvent(e);
-
 	if (e->modifiers() == Qt::AltModifier && e->key() == Qt::Key_F12)
 	{
 		Screenshot();
@@ -220,30 +217,21 @@ void ISInterfaceForm::Screenshot()
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::FlashingStart(int Interval, const QColor &Color)
 {
-	if (FlashingTimer)
+	if (!FlashingTimer)
 	{
-		return;
+		FlashingTimer = new QTimer(this);
+		FlashingTimer->setProperty("Color", Color);
+		FlashingTimer->setProperty("AltColor", false);
+		connect(FlashingTimer, &QTimer::timeout, this, &ISInterfaceForm::FlashingTimeout);
+		FlashingTimer->start(Interval);
 	}
-
-	FlashingTimer = new QTimer(this);
-	FlashingTimer->setProperty("Color", Color);
-	FlashingTimer->setProperty("AltColor", false);
-	connect(FlashingTimer, &QTimer::timeout, this, &ISInterfaceForm::FlashingTimeout);
-	FlashingTimer->start(Interval);
 }
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::FlashingTimeout()
 {
-	if (FlashingTimer->property("AltColor").toBool())
-	{
-		ISControls::SetBackgroundColorWidget(this, COLOR_WHITE);
-		FlashingTimer->setProperty("AltColor", false);
-	}
-	else
-	{
-		ISControls::SetBackgroundColorWidget(this, qvariant_cast<QColor>(FlashingTimer->property("Color")));
-		FlashingTimer->setProperty("AltColor", true);
-	}
+	bool AltColor = FlashingTimer->property("AltColor").toBool();
+	ISControls::SetBackgroundColorWidget(this, AltColor ? COLOR_WHITE : qvariant_cast<QColor>(FlashingTimer->property("Color")));
+	FlashingTimer->setProperty("AliColor", !AltColor);
 }
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::FlashingStop()

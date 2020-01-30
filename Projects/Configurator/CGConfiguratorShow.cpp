@@ -251,7 +251,7 @@ PMetaClassField* CGConfiguratorShow::FoundField(PMetaClassTable *MetaTable, cons
 	for (int i = 0; i < MetaTable->GetAllFields().count(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->GetAllFields().at(i);
-		if (QString(MetaTable->GetAlias() + "_" + MetaField->GetName()).toLower() == ColumnName)
+		if (QString(MetaTable->GetAlias() + '_' + MetaField->GetName()).toLower() == ColumnName)
 		{
 			return MetaField;
 		}

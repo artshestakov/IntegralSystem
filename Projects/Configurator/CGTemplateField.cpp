@@ -37,7 +37,7 @@ QString CGTemplateField::GetSqlTextForTemplateSystemFields(const QString &ClassN
 		QString FieldDefaultValue = NodeTemplateFields.attributes().namedItem("DefaultValue").nodeValue();
 		QString FieldNotNull = NodeTemplateFields.attributes().namedItem("NotNull").nodeValue();
 
-		SqlText += ClassAlias + "_" + FieldName.toLower() + SYMBOL_SPACE + FieldType;
+		SqlText += ClassAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + FieldType;
 
 		if (FieldSequence == "true")
 		{

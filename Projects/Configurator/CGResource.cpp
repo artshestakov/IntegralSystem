@@ -32,7 +32,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 	int CountParameters = MetaResource->GetParameters().count(); //Количество параметров
 	for (int i = 0; i < CountParameters; ++i) //Обход параметров ресурса
 	{
-		QString FieldName = TableAlias + "_" + MetaResource->GetParameters().keys().at(i).toLower();
+		QString FieldName = TableAlias + '_' + MetaResource->GetParameters().keys().at(i).toLower();
 
 		InsertText += FieldName + ", ";
 		ValuesText += ":" + FieldName + ", ";
@@ -55,7 +55,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 
 	for (int i = 0; i < CountParameters; ++i)
 	{
-		QString FieldName = TableAlias + "_" + MetaResource->GetParameters().keys().at(i).toLower();
+		QString FieldName = TableAlias + '_' + MetaResource->GetParameters().keys().at(i).toLower();
 		QString FieldValue = MetaResource->GetParameters().values().at(i);
 		bool BindValue = qInsertResource.BindValue(":" + FieldName, FieldValue);
 		IS_ASSERT(BindValue, QString("Not BindValue. TableName: %1. FieldName: %2").arg(MetaResource->GetTableName()).arg(FieldName));
@@ -84,7 +84,7 @@ void CGResource::UpdateResource(PMetaClassResource *MetaResource)
 	for (const auto &Resource : Parameters.toStdMap()) //Обход параметров ресурса
 	{
 		QString FieldName = Resource.first;
-		QString FieldNameComplete = QString(TableAlias + "_" + Resource.first).toLower();
+		QString FieldNameComplete = QString(TableAlias + '_' + Resource.first).toLower();
 		QString FieldValue = Resource.second;
 
 		QString ErrorString;
@@ -113,8 +113,8 @@ void CGResource::UpdateResource(PMetaClassResource *MetaResource)
 		if (!Parameters.keys().contains(MetaField->GetName()))
 		{
 			QString ErrorString;
-			bool ResetUserField = ResetResourceField(TableName, TableAlias, TableAlias + "_" + MetaField->GetName(), ResourceUID, ErrorString);
-			IS_ASSERT(ResetUserField, QString("Not reset resource field. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(TableAlias + "_" + MetaField->GetName()).arg(ResourceUID).arg(ErrorString));
+			bool ResetUserField = ResetResourceField(TableName, TableAlias, TableAlias + '_' + MetaField->GetName(), ResourceUID, ErrorString);
+			IS_ASSERT(ResetUserField, QString("Not reset resource field. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(TableAlias + '_' + MetaField->GetName()).arg(ResourceUID).arg(ErrorString));
 		}
 	}
 

@@ -140,7 +140,7 @@ QString ISMimeMessage::toString()
             mime += " =?utf-8?B?" + QByteArray().append(sender->getName()).toBase64() + "?=";
             break;
         case ISMimePart::QuotedPrintable:
-            mime += " =?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append(sender->getName())).replace(' ', "_").replace(':',"=3A") + "?=";
+            mime += " =?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append(sender->getName())).replace(' ', '_').replace(':',"=3A") + "?=";
             break;
         default:
             mime += SYMBOL_SPACE + sender->getName();
@@ -152,7 +152,7 @@ QString ISMimeMessage::toString()
     QList<ISEmailAddress*>::iterator it;  int i;
     for (i = 0, it = recipientsTo.begin(); it != recipientsTo.end(); ++it, ++i)
     {
-        if (i != 0) { mime += ","; }
+        if (i != 0) { mime += ','; }
 
         if ((*it)->getName() != "")
         {
@@ -162,7 +162,7 @@ QString ISMimeMessage::toString()
                 mime += " =?utf-8?B?" + QByteArray().append((*it)->getName()).toBase64() + "?=";
                 break;
             case ISMimePart::QuotedPrintable:
-                mime += " =?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append((*it)->getName())).replace(' ', "_").replace(':',"=3A") + "?=";
+                mime += " =?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append((*it)->getName())).replace(' ', '_').replace(':',"=3A") + "?=";
                 break;
             default:
                 mime += SYMBOL_SPACE + (*it)->getName();
@@ -177,7 +177,7 @@ QString ISMimeMessage::toString()
     }
     for (i = 0, it = recipientsCc.begin(); it != recipientsCc.end(); ++it, ++i)
     {
-        if (i != 0) { mime += ","; }
+        if (i != 0) { mime += ','; }
 
         if ((*it)->getName() != "")
         {
@@ -187,7 +187,7 @@ QString ISMimeMessage::toString()
                 mime += " =?utf-8?B?" + QByteArray().append((*it)->getName()).toBase64() + "?=";
                 break;
             case ISMimePart::QuotedPrintable:
-                mime += " =?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append((*it)->getName())).replace(' ', "_").replace(':',"=3A") + "?=";
+                mime += " =?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append((*it)->getName())).replace(' ', '_').replace(':',"=3A") + "?=";
                 break;
             default:
                 mime += SYMBOL_SPACE + (*it)->getName();
@@ -207,7 +207,7 @@ QString ISMimeMessage::toString()
         mime += "=?utf-8?B?" + QByteArray().append(subject).toBase64() + "?=";
         break;
     case ISMimePart::QuotedPrintable:
-        mime += "=?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append(subject)).replace(' ', "_").replace(':',"=3A") + "?=";
+        mime += "=?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append(subject)).replace(' ', '_').replace(':',"=3A") + "?=";
         break;
     default:
         mime += subject;

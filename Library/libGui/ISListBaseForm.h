@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISLISTBASEFORM_H_INCLUDED
+#define _ISLISTBASEFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
@@ -175,3 +177,4 @@ private:
 	QHBoxLayout *LayoutTableView;
 };
 //-----------------------------------------------------------------------------
+#endif

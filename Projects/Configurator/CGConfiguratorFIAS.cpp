@@ -156,7 +156,7 @@ bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &
 //-----------------------------------------------------------------------------
 QString CGConfiguratorFIAS::GetFileResultName(const QString &FileName) const
 {
-	return FileName.split("_").at(1);
+	return FileName.split('_').at(1);
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::InitializeKeys()
@@ -282,7 +282,7 @@ quint64 CGConfiguratorFIAS::GetCountLine(const QString &FilePath) const
 bool CGConfiguratorFIAS::Select(PMetaClassTable *MetaTable, const QStringMap &StringMap) const
 {
 	QString KeyField = MapKeys.value(MetaTable->GetName());
-	QString SqlText = "SELECT COUNT(*) FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_" + KeyField + " = :Value";
+	QString SqlText = "SELECT COUNT(*) FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + '_' + KeyField + " = :Value";
 
 	ISQuery qSelectFIAS(SqlText);
 	qSelectFIAS.SetShowLongQuery(false);
@@ -309,12 +309,12 @@ void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const QStringMap &St
 	{
 		if (MapKeys.value(MetaTable->GetName()) == MapItem.first)
 		{
-			WhereText += MetaTable->GetAlias() + "_" + MapItem.first + " = :Value";
+			WhereText += MetaTable->GetAlias() + '_' + MapItem.first + " = :Value";
 			Parameters.insert(":Value", MapItem.second);
 		}
 		else
 		{
-			UpdateText += MetaTable->GetAlias() + "_" + MapItem.first + " = :" + MapItem.first + ", \n";
+			UpdateText += MetaTable->GetAlias() + '_' + MapItem.first + " = :" + MapItem.first + ", \n";
 			Parameters.insert(":" + MapItem.first, MapItem.second);
 		}
 	}
@@ -336,7 +336,7 @@ void CGConfiguratorFIAS::Insert(PMetaClassTable *MetaTable, const QStringMap &St
 
 	for (const QString &FieldName : StringMap.keys())
 	{
-		SqlInsert += MetaTable->GetAlias() + "_" + FieldName + ", ";
+		SqlInsert += MetaTable->GetAlias() + '_' + FieldName + ", ";
 		SqlValues += ":" + FieldName + ", ";
 	}
 

@@ -52,17 +52,17 @@ ISPhoneForm::ISPhoneForm(QWidget *parent) : ISInterfaceForm(parent)
 	ButtonGroup = new QButtonGroup(this);
 	connect(ButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), this, &ISPhoneForm::ButtonClicked);
 
-	CreateButton(1, 0, 0, SYMBOL_1, "PhoneButton_1");
-	CreateButton(2, 0, 1, SYMBOL_2, "PhoneButton_2");
-	CreateButton(3, 0, 2, SYMBOL_3, "PhoneButton_3");
-	CreateButton(4, 1, 0, SYMBOL_4, "PhoneButton_4");
-	CreateButton(5, 1, 1, SYMBOL_5, "PhoneButton_5");
-	CreateButton(6, 1, 2, SYMBOL_6, "PhoneButton_6");
-	CreateButton(7, 2, 0, SYMBOL_7, "PhoneButton_7");
-	CreateButton(8, 2, 1, SYMBOL_8, "PhoneButton_8");
-	CreateButton(9, 2, 2, SYMBOL_9, "PhoneButton_9");
+	CreateButton(1, 0, 0, QString(SYMBOL_1), "PhoneButton_1");
+	CreateButton(2, 0, 1, QString(SYMBOL_2), "PhoneButton_2");
+	CreateButton(3, 0, 2, QString(SYMBOL_3), "PhoneButton_3");
+	CreateButton(4, 1, 0, QString(SYMBOL_4), "PhoneButton_4");
+	CreateButton(5, 1, 1, QString(SYMBOL_5), "PhoneButton_5");
+	CreateButton(6, 1, 2, QString(SYMBOL_6), "PhoneButton_6");
+	CreateButton(7, 2, 0, QString(SYMBOL_7), "PhoneButton_7");
+	CreateButton(8, 2, 1, QString(SYMBOL_8), "PhoneButton_8");
+	CreateButton(9, 2, 2, QString(SYMBOL_9), "PhoneButton_9");
 	CreateButton(-1, 3, 0, "*", "PhoneButton_Star");
-	CreateButton(0, 3, 1, SYMBOL_0, "PhoneButton_0");
+	CreateButton(0, 3, 1, QString(SYMBOL_0), "PhoneButton_0");
 	CreateButton(-1, 3, 2, "#", "PhoneButton_Hash");
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();

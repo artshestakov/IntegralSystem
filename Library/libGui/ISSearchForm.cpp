@@ -273,7 +273,7 @@ void ISSearchForm::Search()
 void ISSearchForm::SearchFromField(ISSearchModel &SearchModel, QTreeWidgetItem *TreeWidgetItem)
 {
 	PMetaClassField *MetaField = MetaTable->GetField(TreeWidgetItem->data(0, Qt::UserRole).toString());
-	QString FieldName = MetaTable->GetAlias() + "_" + MetaField->GetName();
+	QString FieldName = MetaTable->GetAlias() + '_' + MetaField->GetName();
 	QString Condition = ":" + MetaField->GetName();
 
 	ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase*>(TreeWidget->itemWidget(TreeWidgetItem, 1));

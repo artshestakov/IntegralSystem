@@ -18,7 +18,7 @@ ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 	setLayout(Layout);
 
 	SystemsBar = new QToolBar(this);
-	SystemsBar->setIconSize(SIZE_SYSTEM_ICON);
+	SystemsBar->setIconSize(SIZE_32_32);
 	SystemsBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	Layout->addWidget(SystemsBar);
 

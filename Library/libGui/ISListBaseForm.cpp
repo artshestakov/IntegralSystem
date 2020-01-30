@@ -320,7 +320,7 @@ void ISListBaseForm::HeaderResized(int Column, int OldSize, int NewSize)
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortOrder)
 {
 	QString FieldName = SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString();
-	QString OrderField = MetaTable->GetAlias() + "_" + FieldName.toLower();
+	QString OrderField = MetaTable->GetAlias() + '_' + FieldName.toLower();
 	QueryModel->SetOrderField(OrderField, FieldName);
 	QueryModel->SetOrderSort(SortOrder);
 	SqlModel->SetCurrentSorting(LogicalIndex, SortOrder);
@@ -759,15 +759,15 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 					WhereText += "(SELECT concat(";
 					for (const QString &FieldName : MetaForeign->GetForeignViewNameField().split(";"))
 					{
-						WhereText += MetaForeignTable->GetAlias() + "_" + FieldName + ", ";
+						WhereText += MetaForeignTable->GetAlias() + '_' + FieldName + ", ";
 					}
 					ISSystem::RemoveLastSymbolFromString(WhereText, 2);
 					WhereText += ") FROM " + MetaForeignTable->GetName() + " ";
-					WhereText += "WHERE " + MetaForeignTable->GetAlias() + "_" + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + "_" + MetaField->GetName() + ")";
+					WhereText += "WHERE " + MetaForeignTable->GetAlias() + '_' + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + '_' + MetaField->GetName() + ")";
 				}
 				else //Поле без внешнего ключа
 				{
-					WhereText += MetaTable->GetAlias() + "_" + MetaField->GetName();
+					WhereText += MetaTable->GetAlias() + '_' + MetaField->GetName();
 				}
 			}
 

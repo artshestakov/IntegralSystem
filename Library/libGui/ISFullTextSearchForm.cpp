@@ -231,15 +231,15 @@ QString ISFullTextSearchForm::CreateQuery(PMetaClassTable *MetaTable) const
 			QueryText += "(SELECT concat(";
 			for (const QString &FieldName : MetaForeign->GetForeignViewNameField().split(";"))
 			{
-				QueryText += MetaForeignTable->GetAlias() + "_" + FieldName + ", ";
+				QueryText += MetaForeignTable->GetAlias() + '_' + FieldName + ", ";
 			}
 			ISSystem::RemoveLastSymbolFromString(QueryText, 2);
 			QueryText += ") FROM " + MetaForeignTable->GetName() + " ";
-			QueryText += "WHERE " + MetaForeignTable->GetAlias() + "_" + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + "_" + MetaField->GetName() + ")";
+			QueryText += "WHERE " + MetaForeignTable->GetAlias() + '_' + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + '_' + MetaField->GetName() + ")";
 		}
 		else
 		{
-			QueryText += MetaTable->GetAlias() + "_" + MetaField->GetName();
+			QueryText += MetaTable->GetAlias() + '_' + MetaField->GetName();
 		}
 		QueryText += ", ";
 	}

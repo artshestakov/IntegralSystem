@@ -61,7 +61,7 @@ ISContextMenuBase::ISContextMenuBase(QWidget *ParentEdit, bool ReadOnly, bool Un
 	{
 		//Вставить
 		QAction *ActionPaste = ISControls::GetActionContextPaste(this);
-		ActionPaste->setEnabled(!ReadOnly && !CLIPBOARD_TEXT.isEmpty());
+		ActionPaste->setEnabled(!ReadOnly && !QApplication::clipboard()->text().isEmpty());
 		ActionPaste->setShortcut(QKeySequence::Paste);
 		ConnectedSlot = connect(ActionPaste, SIGNAL(triggered()), ParentEdit, SLOT(paste()));
 		addAction(ActionPaste);

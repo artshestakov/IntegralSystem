@@ -21,11 +21,11 @@ ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelT
 	CreateQuerySelectFields();
 	CreateQuerySelectIsDeleted();
 
-	QuerySelectText = "SELECT \n" + ClassAlias + "." + ClassAlias + "_" + MetaTable->GetSystemFields().at(0)->GetName().toLower() + " AS \"" + MetaTable->GetSystemFields().front()->GetName() + "\", \n";
+	QuerySelectText = "SELECT \n" + ClassAlias + '.' + ClassAlias + '_' + MetaTable->GetSystemFields().at(0)->GetName().toLower() + " AS \"" + MetaTable->GetSystemFields().front()->GetName() + "\", \n";
 	QuerySelectFrom = "FROM " + MetaTable->GetName().toLower() + SYMBOL_SPACE + ClassAlias + " \n";
 	QueryWhereText = "WHERE \n";
 	QueryWhereText += QuerySelectIsDeleted;
-	OrderFieldDefault = ClassAlias + "." + ClassAlias + "_id";
+	OrderFieldDefault = ClassAlias + '.' + ClassAlias + "_id";
 }
 //-----------------------------------------------------------------------------
 ISQueryModel::~ISQueryModel()
@@ -81,7 +81,7 @@ QString ISQueryModel::GetQueryText()
 	//Если задан период отображения
 	if (PeriodRange.IsValid())
 	{
-		QString PeriodString = QString("AND " + ClassAlias + "." + ClassAlias + "_%1 BETWEEN '%2' AND '%3' \n");
+		QString PeriodString = QString("AND " + ClassAlias + '.' + ClassAlias + "_%1 BETWEEN '%2' AND '%3' \n");
 		switch (PeriodType)
 		{
 		case ISNamespace::PT_CreationDate: PeriodString = PeriodString.arg("creationdate"); break;
@@ -256,7 +256,7 @@ void ISQueryModel::CreateQuerySelectSystemFields()
 			}
 		}
 
-		QuerySelectSystemFields += ClassAlias + "." + ClassAlias + "_" + SystemField->GetName().toLower() + " AS \"" + SystemField->GetName() + "\", \n";
+		QuerySelectSystemFields += ClassAlias + '.' + ClassAlias + '_' + SystemField->GetName().toLower() + " AS \"" + SystemField->GetName() + "\", \n";
 	}
 }
 //-----------------------------------------------------------------------------
@@ -286,7 +286,7 @@ void ISQueryModel::CreateQuerySelectFields()
 			PMetaClassForeign *MetaForeign = Field->GetForeign();
 			PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass());
 			
-			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->GetName().toLower() + SYMBOL_SPACE + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->GetAlias(), i) + " ON " + ClassAlias + "." + ClassAlias + "_" + Field->GetName().toLower() + " = " + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->GetAlias(), i) + "." + MetaTableForeign->GetAlias() + "_" + MetaForeign->GetForeginField().toLower() + " \n";
+			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->GetName().toLower() + SYMBOL_SPACE + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->GetAlias(), i) + " ON " + ClassAlias + '.' + ClassAlias + '_' + Field->GetName().toLower() + " = " + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->GetAlias(), i) + '.' + MetaTableForeign->GetAlias() + '_' + MetaForeign->GetForeginField().toLower() + " \n";
 			
 			QString Temp = ISQueryModelHelper::GetForeignViewNameField(MetaTableForeign->GetAlias(), MetaForeign, i).toLower();
 			ForeignFields.insert(Field->GetName(), Temp);
@@ -301,7 +301,7 @@ void ISQueryModel::CreateQuerySelectFields()
 			}
 			else
 			{
-				QuerySelectFields += ClassAlias + "." + ClassAlias + "_" + Field->GetName().toLower() + " AS \"" + Field->GetName() + "\", \n";
+				QuerySelectFields += ClassAlias + '.' + ClassAlias + '_' + Field->GetName().toLower() + " AS \"" + Field->GetName() + "\", \n";
 			}
 		}
 	}
@@ -312,7 +312,7 @@ void ISQueryModel::CreateQuerySelectFields()
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectIsDeleted()
 {
-	QuerySelectIsDeleted = ClassAlias + "." + ClassAlias + "_isdeleted";
+	QuerySelectIsDeleted = ClassAlias + '.' + ClassAlias + "_isdeleted";
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::CheckQuery(const QString &QueryText)

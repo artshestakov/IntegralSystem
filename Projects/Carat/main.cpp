@@ -30,26 +30,26 @@ int main(int argc, char *argv[])
 	{
 		ISDebug::ShowString(LOCALIZATION("AlreadyStarted"));
 		ISSystem::SleepSeconds(3);
-		return EXIT_CODE_NORMAL;
+		return EXIT_SUCCESS;
 	}
 
 	if (!CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).length() || !CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).length())
 	{
 		ISDebug::ShowString(LOCALIZATION("NotLoginOrPassword"));
-		return EXIT_CODE_ERROR;
+		return EXIT_FAILURE;
 	}
 
 	if (!CaratService.ConnectToDB()) //Если подключение к базе данных не произошло
 	{
 		ISCommandLine::Pause();
-		return EXIT_CODE_ERROR;
+		return EXIT_FAILURE;
 	}
 
 	if (!ISLicense::GetInstance().Initialize()) //Если лицензия не инициализировалась
 	{
 		ISDebug::ShowWarningString(LOCALIZATION("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
 		ISCommandLine::Pause();
-		return EXIT_CODE_NORMAL;
+		return EXIT_SUCCESS;
 	}
 
 	try
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 	}
 	catch (ISExceptionBase &e)
 	{
-		return EXIT_CODE_ERROR;
+		return EXIT_FAILURE;
 	}
 }
 //-----------------------------------------------------------------------------

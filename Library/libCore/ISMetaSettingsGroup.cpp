@@ -10,7 +10,10 @@ ISMetaSettingsGroup::ISMetaSettingsGroup()
 //-----------------------------------------------------------------------------
 ISMetaSettingsGroup::~ISMetaSettingsGroup()
 {
-
+	while (!Settings.isEmpty())
+	{
+		delete Settings.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISMetaSettingsGroup::SetName(const QString &name)

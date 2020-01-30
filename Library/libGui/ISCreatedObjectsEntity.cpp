@@ -52,7 +52,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
 	{
 		emit Existed();
 		ISSystem::RemoveLastSymbolFromString(DetailedText, 2);
-		DetailedText += ".";
+		DetailedText += '.';
 
 		ISMessageBox MessageBox(QMessageBox::Warning, LOCALIZATION("Warning"), LOCALIZATION("Message.Information.NotSavedObjects").arg(CountNotSaved), QMessageBox::Ok);
 		MessageBox.setInformativeText(DetailedText);

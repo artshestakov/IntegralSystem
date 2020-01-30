@@ -84,14 +84,14 @@ void CGConfiguratorDelete::foreigns()
 			QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
 			QString TableName;
 
-			QStringList StringList = ForeignName.split("_");
+			QStringList StringList = ForeignName.split('_');
 			if (StringList[0].length())
 			{
 				TableName = StringList[0];
 			}
 			else
 			{
-				TableName = "_" + StringList[1];
+				TableName = '_' + StringList[1];
 			}
 
 
@@ -191,7 +191,7 @@ void CGConfiguratorDelete::fields()
 		QVector<PMetaClassField*> Fields = MetaTable->GetAllFields();
 		for (PMetaClassField* MetaField : Fields)
 		{
-			Map[TableName].append(MetaTable->GetAlias().toLower() + "_" + MetaField->GetName().toLower());
+			Map[TableName].append(MetaTable->GetAlias().toLower() + '_' + MetaField->GetName().toLower());
 		}
 	}
 

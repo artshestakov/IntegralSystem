@@ -72,7 +72,7 @@ QString ISLocalization::GetLocalString(const QString &ParameterName, const QStri
 //-----------------------------------------------------------------------------
 void ISLocalization::LoadResourceFile(const QString &FileName)
 {
-	QFile File(":Localization/" + FileName + "." + EXTENSION_LANG);
+	QFile File(":Localization/" + FileName + '.' + EXTENSION_LANG);
 	IS_ASSERT(File.open(QIODevice::ReadOnly), QString("Not opened localization file \"%1\". Error: %2").arg(File.fileName()).arg(File.errorString()));
 	InitializeContent(File.readAll());
 	File.close();

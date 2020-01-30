@@ -313,7 +313,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 
 	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
 	{
-		QString FilePath = APPLICATION_TEMP_PATH + "/" + GetCurrentRecordValueDB("UID").toString() + "." + EXTENSION_WAV;
+		QString FilePath = APPLICATION_TEMP_PATH + "/" + GetCurrentRecordValueDB("UID").toString() + '.' + EXTENSION_WAV;
 		if (QFile::exists(FilePath))
 		{
 			Play(FilePath);
@@ -336,7 +336,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 void ISAsteriskCallsListForm::SaveToStorage()
 {
 	ISUuid UID = GetCurrentRecordValueDB("UID");
-	QString FilePath = APPLICATION_TEMP_PATH + "/" + UID + "." + EXTENSION_WAV;
+	QString FilePath = APPLICATION_TEMP_PATH + "/" + UID + '.' + EXTENSION_WAV;
 
 	if (!QFile::exists(FilePath))
 	{
@@ -376,7 +376,7 @@ void ISAsteriskCallsListForm::SaveToStorage()
 			int CallDuration = qSelect.ReadColumn("ascl_duration").toInt();
 			
 			ISQuery qUpdateFile(QU_FILE);
-			qUpdateFile.BindValue(":FileName", CallDateTime + "_" + CallDirection + "_" + CallSubscriber + "_" + CallNumber + "_" + QTime(0, 0).addSecs(CallDuration).toString(TIME_FORMAT_V5));
+			qUpdateFile.BindValue(":FileName", CallDateTime + '_' + CallDirection + '_' + CallSubscriber + '_' + CallNumber + '_' + QTime(0, 0).addSecs(CallDuration).toString(TIME_FORMAT_V5));
 			qUpdateFile.BindValue(":Expansion", EXTENSION_WAV);
 			qUpdateFile.BindValue(":FileID", FileID);
 			qUpdateFile.Execute();

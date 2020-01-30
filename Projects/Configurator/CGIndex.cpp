@@ -44,7 +44,7 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	{
 		for (int i = 0; i < Index->GetFields().count(); ++i)
 		{
-			Fields += Index->GetAlias() + "_" + Index->GetFields().at(i) + ", ";
+			Fields += Index->GetAlias() + '_' + Index->GetFields().at(i) + ", ";
 		}
 
 		ISSystem::RemoveLastSymbolFromString(Fields, 2);
@@ -52,7 +52,7 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	}
 	else
 	{
-		SqlText = SqlText.arg(Index->GetAlias().toLower() + "_" + Index->GetFieldName().toLower());
+		SqlText = SqlText.arg(Index->GetAlias().toLower() + '_' + Index->GetFieldName().toLower());
 	}
 
 	ISQuery qCreateIndex;
@@ -136,17 +136,17 @@ QString CGIndex::GetIndexName(PMetaClassIndex *Index)
 
 	if (Index->GetFields().count())
 	{
-		IndexName += Index->GetTableName() + "_";
+		IndexName += Index->GetTableName() + '_';
 		for (int i = 0; i < Index->GetFields().count(); ++i)
 		{
-			IndexName += Index->GetFields().at(i) + "_";
+			IndexName += Index->GetFields().at(i) + '_';
 		}
 
 		ISSystem::RemoveLastSymbolFromString(IndexName);
 	}
 	else
 	{
-		IndexName = Index->GetTableName() + "_" + Index->GetAlias() + "_" + Index->GetFieldName() + "_index";
+		IndexName = Index->GetTableName() + '_' + Index->GetAlias() + '_' + Index->GetFieldName() + "_index";
 	}
 
 	

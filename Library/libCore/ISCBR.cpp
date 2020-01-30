@@ -76,7 +76,7 @@ QString ISCBR::GetValue(const QDomNode &DomNode) const
         if (Temp.nodeName() == "Value")
 		{
             QString Value = Temp.firstChild().nodeValue();
-			Value.replace(SYMBOL_COMMA, ".");
+			Value.replace(SYMBOL_COMMA, '.');
 			return Value;
 		}
 

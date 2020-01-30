@@ -185,9 +185,6 @@
     <ClInclude Include="ISQueryPoolObject.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="ISSearchModel.h" />
-    <QtMoc Include="ISSqlModelCore.h" />
-    <ClInclude Include="ISSqlModelHelper.h" />
-    <QtMoc Include="ISSqlModelView.h" />
     <ClInclude Include="ISQuotedPrintable.h" />
     <QtMoc Include="ISSmtpClient.h" />
     <QtMoc Include="ISRestWorker.h" />
@@ -302,9 +299,6 @@
     <ClCompile Include="ISSettingsDatabase.cpp" />
     <ClCompile Include="ISSMS.cpp" />
     <ClCompile Include="ISSmtpClient.cpp" />
-    <ClCompile Include="ISSqlModelCore.cpp" />
-    <ClCompile Include="ISSqlModelHelper.cpp" />
-    <ClCompile Include="ISSqlModelView.cpp" />
     <ClCompile Include="ISStackWalker.cpp" />
     <ClCompile Include="ISStorageFileLoader.cpp" />
     <ClCompile Include="ISStyleSheet.cpp" />

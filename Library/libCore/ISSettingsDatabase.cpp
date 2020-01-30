@@ -54,7 +54,7 @@ void ISSettingsDatabase::Initialize()
 	for (int i = 0; i < MetaTable->GetAllFields().count(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->GetAllFields().at(i);
-		QString FieldName = MetaTable->GetAlias() + "_" + MetaField->GetName().toLower();
+		QString FieldName = MetaTable->GetAlias() + '_' + MetaField->GetName().toLower();
 
 		if (VectorString.contains(FieldName))
 		{

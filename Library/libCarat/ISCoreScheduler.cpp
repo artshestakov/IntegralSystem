@@ -69,16 +69,16 @@ void ISCoreScheduler::ClearFiles()
 		{
 			if (MetaField->GetType() == ISNamespace::FT_File) //Если тип данных текущего поля является хранением файлов
 			{
-				QString SqlQuery = "SELECT " + MetaTable->GetAlias().toLower() + "_" + MetaField->GetName().toLower() + " \n";
+				QString SqlQuery = "SELECT " + MetaTable->GetAlias().toLower() + '_' + MetaField->GetName().toLower() + " \n";
 				SqlQuery += "FROM " + MetaTable->GetName().toLower() + " \n";
-				SqlQuery += "WHERE " + MetaTable->GetAlias().toLower() + "_" + MetaField->GetName().toLower() + " IS NOT NULL";
+				SqlQuery += "WHERE " + MetaTable->GetAlias().toLower() + '_' + MetaField->GetName().toLower() + " IS NOT NULL";
 				ISQuery qSelect(SqlQuery);
 				qSelect.SetShowLongQuery(false);
 				if (qSelect.Execute())
 				{
 					while (qSelect.Next())
 					{
-						int FileID = qSelect.ReadColumn(MetaTable->GetAlias() + "_" + MetaField->GetName()).toInt();
+						int FileID = qSelect.ReadColumn(MetaTable->GetAlias() + '_' + MetaField->GetName()).toInt();
 						VectorInt.removeAll(FileID);
 					}
 				}

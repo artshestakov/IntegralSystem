@@ -69,7 +69,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 		if (!qSelectUser.ReadColumn("count").toInt())
 		{
 			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.NotFoundUserWithLogin").arg(UserLogin));
-			return EXIT_CODE_ERROR;
+			return EXIT_FAILURE;
 		}
 	}
 
@@ -137,7 +137,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 		if (!ISMetaUser::GetInstance().GetData()->GroupID) //Если пользователь привязан к группе
 		{
 			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.UserGroupIsNull"));
-			return EXIT_CODE_ERROR;
+			return EXIT_FAILURE;
 		}
 	}
 
@@ -149,7 +149,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 		if (DATE_TODAY < DateStart)
 		{
 			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.AccountLifetimeNotStarted"));
-			return EXIT_CODE_ERROR;
+			return EXIT_FAILURE;
 		}
 		else if (DATE_TODAY == DateEnd) //Если сегодня истекает срок действия
 		{
@@ -162,7 +162,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 		else if (DATE_TODAY > DateEnd)
 		{
 			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.AccountLifetimeEnded"));
-			return EXIT_CODE_ERROR;
+			return EXIT_FAILURE;
 		}
 	}
 
@@ -201,7 +201,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_ALREADY_CONNECTED, ISMetaUser::GetInstance().GetData()->ID, ISMetaUser::GetInstance().GetData()->IPAddress, QString(), false);
 			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.AlreadyConnected").arg(ISMetaUser::GetInstance().GetData()->Login));
 			ISSystem::ExecLoop(1500);
-			return EXIT_CODE_ERROR;
+			return EXIT_FAILURE;
 		}
 
 		if (!ISMetaUser::GetInstance().GetData()->Birthday.isNull())
@@ -265,19 +265,19 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	MainWindow->raise();
 	MainWindow->activateWindow();
 
-	return EXIT_CODE_NORMAL;
+	return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
 int ISStartup::ExitNormal()
 {
 	ISCore::ExitApplication();
-	return EXIT_CODE_NORMAL;
+	return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
 int ISStartup::ExitError()
 {
 	ISCore::ExitApplication();
-	return EXIT_CODE_ERROR;
+	return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
 void ISStartup::SetApplicationNameQuery()

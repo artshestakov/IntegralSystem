@@ -21,7 +21,7 @@ void ISOpenWeatherMap::StartQuery()
 void ISOpenWeatherMap::QueryWeather()
 {
 	QNetworkAccessManager Manager;
-	QNetworkRequest Request(QUrl(QString("http://api.openweathermap.org/data/2.5/find?q=Stavropol,RU&type=like&appid=%1&lang=ru").arg(TOKEN_OPEN_WEATHER_MAP_TOKEN)));
+	QNetworkRequest Request(QUrl(QString("http://api.openweathermap.org/data/2.5/find?q=Stavropol,RU&type=like&appid=%1&lang=ru").arg(""/*TOKEN_OPEN_WEATHER_MAP_TOKEN*/)));
 	QNetworkReply *Reply = Manager.get(Request);
 
 	QEventLoop EventLoop;

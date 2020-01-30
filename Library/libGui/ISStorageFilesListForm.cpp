@@ -117,7 +117,7 @@ void ISStorageFilesListForm::CreateCopy()
 //-----------------------------------------------------------------------------
 void ISStorageFilesListForm::OpenFile()
 {
-	QFile File(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + "." + GetCurrentRecordValue("Expansion").toString());
+	QFile File(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + '.' + GetCurrentRecordValue("Expansion").toString());
 	if (!File.open(QIODevice::WriteOnly))
 	{
 		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.NotOpenedFile").arg(File.fileName()), File.errorString());
@@ -144,7 +144,7 @@ void ISStorageFilesListForm::SaveFile()
 	QString FileExpansion = GetCurrentRecordValue("Expansion").toString();
 	QString FileName = GetCurrentRecordValue("Name").toString();
 
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.SaveFile").arg(FileName + "." + FileExpansion)))
+	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.SaveFile").arg(FileName + '.' + FileExpansion)))
 	{
 		QString FilePath = ISFileDialog::GetSaveFileName(this, LOCALIZATION("File.Filter.File").arg(FileExpansion), FileName);
 		if (!FilePath.length())

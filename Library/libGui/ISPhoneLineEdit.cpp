@@ -67,7 +67,7 @@ void ISPhoneLineEdit::CopyClicked()
 //-----------------------------------------------------------------------------
 void ISPhoneLineEdit::PasteClicked()
 {
-	emit Pasted(CLIPBOARD_TEXT);
+	emit Pasted(QApplication::clipboard()->text());
 }
 //-----------------------------------------------------------------------------
 void ISPhoneLineEdit::CursorPositionChanged(int OldPos, int NewPos)

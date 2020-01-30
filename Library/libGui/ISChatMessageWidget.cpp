@@ -231,7 +231,7 @@ void ISChatMessageWidget::OpenFile()
 			QByteArray ByteArray = qSelectFile.ReadColumn("chat_file").toByteArray();
 			QString FileName = qSelectFile.ReadColumn("chat_filename").toString();
 
-			QFile File(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + "." + QFileInfo(FileName).suffix());
+			QFile File(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + '.' + QFileInfo(FileName).suffix());
 			if (File.open(QIODevice::WriteOnly))
 			{
 				File.write(ByteArray);

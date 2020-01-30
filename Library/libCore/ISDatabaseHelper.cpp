@@ -54,12 +54,12 @@ QVariant ISDatabaseHelper::GetObjectIDToList(PMetaClassTable *MetaTable, PMetaCl
 	QString SqlText;
 	QString TableAlias = MetaTable->GetAlias();
 
-	SqlText = "SELECT " + TableAlias + "_" + MetaField->GetName() + " FROM " + MetaTable->GetName() + " WHERE " + TableAlias + "_id = " + QString::number(ObjectID);
+	SqlText = "SELECT " + TableAlias + '_' + MetaField->GetName() + " FROM " + MetaTable->GetName() + " WHERE " + TableAlias + "_id = " + QString::number(ObjectID);
 
 	ISQuery qSelect(SqlText);
 	if (qSelect.ExecuteFirst())
 	{
-		QVariant ID = qSelect.ReadColumn(TableAlias + "_" + MetaField->GetName());
+		QVariant ID = qSelect.ReadColumn(TableAlias + '_' + MetaField->GetName());
 		return ID;
 	}
 

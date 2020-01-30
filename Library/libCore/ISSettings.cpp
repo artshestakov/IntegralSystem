@@ -33,7 +33,10 @@ ISSettings::ISSettings()
 //-----------------------------------------------------------------------------
 ISSettings::~ISSettings()
 {
-
+	while (!SettingGroups.isEmpty())
+	{
+		delete SettingGroups.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 ISSettings& ISSettings::GetInstance()

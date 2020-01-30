@@ -6,7 +6,7 @@ class ISQueryPoolObject
 {
 public:
 	ISQueryPoolObject(const QString &sql_text);
-	virtual ~ISQueryPoolObject();
+	~ISQueryPoolObject();
 
 	QString GetSqlText() const;
 	void AddBindValue(const QString &Parameter, const QVariant &Value);

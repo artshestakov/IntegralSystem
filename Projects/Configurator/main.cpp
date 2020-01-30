@@ -43,14 +43,14 @@ int main(int argc, char *argv[])
 		ISDebug::ShowString(LOCALIZATION("Configurator.InvalidArguments"));
 		ISDebug::ShowString(LOCALIZATION("Configurator.InvalidArguments.Help"));
 		ISCommandLine::Pause();
-		return EXIT_CODE_ERROR;
+		return EXIT_FAILURE;
 	}
 
 	if (!CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).length() || !CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).length())
 	{
 		ISDebug::ShowString(LOCALIZATION("Configurator.NotLoginOrPassword"));
 		ISCommandLine::Pause();
-		return EXIT_CODE_ERROR;
+		return EXIT_FAILURE;
 	}
 
     bool Connected = true;
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     if (!Connected)
     {
         ISCommandLine::Pause();
-        return EXIT_CODE_ERROR;
+        return EXIT_FAILURE;
     }
 
 	ISMetaData::GetInstanse().Initialize(ISLicense::GetInstance().GetName(), true, true);
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 		}
 
 		Configurator.InterpreterMode();
-		return EXIT_CODE_NORMAL;
+		return EXIT_SUCCESS;
 	}
 	else if (ArgumentType == ISNamespace::CAT_OneArgument)
 	{
@@ -107,12 +107,12 @@ int main(int argc, char *argv[])
 	
 	if (Executed)
 	{
-		return EXIT_CODE_NORMAL;
+		return EXIT_SUCCESS;
 	}
 	else
 	{
 		ISCommandLine::Pause();
-		return EXIT_CODE_ERROR;
+		return EXIT_FAILURE;
 	}
 }
 //-----------------------------------------------------------------------------

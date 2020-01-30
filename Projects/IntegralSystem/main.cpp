@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	if (!IntegralApplication.CheckAdminRole()) //Проверка наличия прав администратора
 	{
 		ISMessageBox::ShowCritical(nullptr, LOCALIZATION("Message.Error.NoAdministratorRights"));
-		return EXIT_CODE_ERROR;
+		return EXIT_FAILURE;
 	}
 
 	//Баннер
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 	bool Result = AuthorizationForm->ExecAnimated();
 	if (!Result)
 	{
-		return EXIT_CODE_NORMAL;
+		return EXIT_SUCCESS;
 	}
 
 	ISSplashScreen::GetInstance().show();
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	ISNamespace::UpdateResult ResultUpdate = CheckUpdate();
 	if (ResultUpdate == ISNamespace::UR_ExitApplication)
 	{
-		return EXIT_CODE_ERROR;
+		return EXIT_FAILURE;
 	}
 	else if (ResultUpdate == ISNamespace::UR_ErrorStartUpdate)
 	{
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 	{
 		ISSplashScreen::GetInstance().close();
 		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
-		return EXIT_CODE_NORMAL;
+		return EXIT_SUCCESS;
 	}
 
 	int Startup = ISStartup::Startup(UserLogin, UserPassword);

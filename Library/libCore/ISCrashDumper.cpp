@@ -125,6 +125,6 @@ void ISCrashDumper::OnSystemSignal(int Signum)
 //-----------------------------------------------------------------------------
 QString ISCrashDumper::GetLogPath(const QString &FileName)
 {
-    return APPLICATION_LOGS_PATH + "/" + FileName + "-" + qAppName() + "_" + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + ".txt";
+    return APPLICATION_LOGS_PATH + "/" + FileName + "-" + qAppName() + '_' + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + ".txt";
 }
 //-----------------------------------------------------------------------------

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISFIELDEDITBASE_H_INCLUDED
+#define _ISFIELDEDITBASE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISButtonClear.h"
@@ -71,3 +73,4 @@ private:
 	bool BorderRed;
 };
 //-----------------------------------------------------------------------------
+#endif

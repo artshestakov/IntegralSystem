@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISOBJECTFORMBASE_H_INCLUDED
+#define _ISOBJECTFORMBASE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
@@ -147,3 +149,4 @@ private:
 	QString ObjectName;
 };
 //-----------------------------------------------------------------------------
+#endif

@@ -109,7 +109,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 		TcpSocket->close();
 		Label->setText(LOCALIZATION("AsteriskRecord.Interface.Label.Downloaded"));
 
-		QFile FileRecord(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + "." + EXTENSION_WAV);
+		QFile FileRecord(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + '.' + EXTENSION_WAV);
 		if (FileRecord.open(QIODevice::WriteOnly))
 		{
 			FileRecord.write(Buffer);

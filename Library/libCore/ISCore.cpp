@@ -200,7 +200,7 @@ QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 			QueryText += "concat(";
 			for (int i = 0; i < StringList.count(); ++i)
 			{
-				QueryText += MetaTable->GetAlias() + "_" + StringList.at(i) + ", ' ', ";
+				QueryText += MetaTable->GetAlias() + '_' + StringList.at(i) + ", ' ', ";
 			}
 
 			ISSystem::RemoveLastSymbolFromString(QueryText, 7);
@@ -208,7 +208,7 @@ QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 		}
 		else //Если указано только одно поле
 		{
-			QueryText += MetaTable->GetAlias() + "_" + TitleName + " \n";
+			QueryText += MetaTable->GetAlias() + '_' + TitleName + " \n";
 		}
 
 		QueryText += "FROM " + MetaTable->GetName() + " \n";
@@ -230,15 +230,15 @@ QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 //-----------------------------------------------------------------------------
 QString ISCore::GetVersionInFileName(const QString &FileName)
 {
-	QStringList StringListFile = FileName.split("_");
+	QStringList StringListFile = FileName.split('_');
 	QString Version = StringListFile[StringListFile.length() - 1];
-	QStringList StringListVersion = Version.split(".");
+	QStringList StringListVersion = Version.split('.');
 
 	QString VersionComplete;
 	for (int i = 0; i < StringListVersion.count(); ++i)
 	{
 		QString String = StringListVersion.at(i);
-		VersionComplete += String + ".";
+		VersionComplete += String + '.';
 	}
 
 	ISSystem::RemoveLastSymbolFromString(VersionComplete);
@@ -410,11 +410,14 @@ void ISCore::SMSSend(const QString &Login, const QString &Password, const QStrin
 //-----------------------------------------------------------------------------
 void ISCore::SMSSend(const QString &Phone, const QString &Message)
 {
-	SMSSend(SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_LOGIN),
+	SMSSend
+	(
+		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_LOGIN),
 		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_PASSWORD),
 		Phone,
 		Message,
-		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_ENCODING));
+		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_ENCODING)
+	);
 }
 //-----------------------------------------------------------------------------
 ISUuid ISCore::TaskGetStatusUID(int TaskID)

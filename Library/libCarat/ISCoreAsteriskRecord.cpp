@@ -102,7 +102,7 @@ void ISCoreAsteriskRecord::ReadyRead()
 		QString FileName = TcpSocket->readAll();
 		FileName.replace("\n", QString());
 
-		QFile FileRecord(RepositoryPath + "/" + FileName + "." + EXTENSION_WAV);
+		QFile FileRecord(RepositoryPath + "/" + FileName + '.' + EXTENSION_WAV);
 
 		ISDebug::ShowInfoString(LOCALIZATION("AsteriskRecord.Server.SearchFile").arg(FileRecord.fileName()));
 		if (FileRecord.exists()) //Запрашиваемый файл существует

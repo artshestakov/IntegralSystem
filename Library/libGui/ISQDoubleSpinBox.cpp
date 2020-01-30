@@ -26,9 +26,9 @@ void ISQDoubleSpinBox::SetVisibleClear(bool Visible)
 //-----------------------------------------------------------------------------
 QValidator::State ISQDoubleSpinBox::validate(QString &Input, int &Pos) const
 {
-	if (Input.contains("."))
+	if (Input.contains('.'))
 	{
-		Input.replace(".", SYMBOL_COMMA);
+		Input.replace('.', SYMBOL_COMMA);
 	}
 
 	return QDoubleSpinBox::validate(Input, Pos);

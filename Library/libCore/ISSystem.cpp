@@ -134,7 +134,7 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
 	QStringList::Iterator DirIterator = Dirs.begin();
 	while (DirIterator != Dirs.end())
 	{
-		if (*DirIterator != "." && *DirIterator != "..")
+		if (*DirIterator != '.' && *DirIterator != "..")
 		{
 			ClearDirRecursive(DirPath + "/" + *DirIterator);
 		}

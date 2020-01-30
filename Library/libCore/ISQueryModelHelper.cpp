@@ -12,7 +12,7 @@ QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableFore
 		QString SqlText = "concat(";
 		for (int i = 0; i < StringList.count(); ++i)
 		{
-			SqlText += ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeignAlias, Iterator) + "." + MetaTableForeignAlias + "_" + StringList.at(i).toLower() + ", ' ', ";
+			SqlText += ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeignAlias, Iterator) + '.' + MetaTableForeignAlias + '_' + StringList.at(i).toLower() + ", ' ', ";
 			if (i == StringList.count() - 1)
 			{
 				continue;
@@ -24,7 +24,7 @@ QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableFore
 		return SqlText;
 	}
 
-	return ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeignAlias, Iterator) + "." + MetaTableForeignAlias + "_" + ForeignViewNameField.toLower();
+	return ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeignAlias, Iterator) + '.' + MetaTableForeignAlias + '_' + ForeignViewNameField.toLower();
 }
 //-----------------------------------------------------------------------------
 QString ISQueryModelHelper::GetAliasForLeftJoinTable(const QString &TableAlias, int Iterator)

@@ -470,7 +470,7 @@ void ISObjectFormBase::FillDataFields()
 
 		//Подготовка запроса
 		ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_Object);
-		QueryModel.SetClassFilter(MetaTable->GetAlias() + "." + MetaTable->GetAlias() + "_id = " + QString::number(ObjectID));
+		QueryModel.SetClassFilter(MetaTable->GetAlias() + '.' + MetaTable->GetAlias() + "_id = " + QString::number(ObjectID));
 		QString QueryText = QueryModel.GetQueryText();
 
 		//Выполнение запроса
@@ -837,7 +837,7 @@ bool ISObjectFormBase::Save()
 
 		for (int i = 0; i < FieldsVector.count(); ++i)
 		{
-			InsertFields += MetaTable->GetAlias() + "_" + FieldsVector.at(i) + ", ";
+			InsertFields += MetaTable->GetAlias() + '_' + FieldsVector.at(i) + ", ";
 			InsertValues += ":" + FieldsVector.at(i) + ", ";
 		}
 
@@ -858,7 +858,7 @@ bool ISObjectFormBase::Save()
 
 		for (int i = 0; i < FieldsVector.count(); ++i)
 		{
-			QueryText += MetaTable->GetAlias() + "_" + FieldsVector.at(i) + " = :" + FieldsVector.at(i) + ", \n";
+			QueryText += MetaTable->GetAlias() + '_' + FieldsVector.at(i) + " = :" + FieldsVector.at(i) + ", \n";
 		}
 
 		ISSystem::RemoveLastSymbolFromString(QueryText, 3);
@@ -1151,11 +1151,11 @@ void ISObjectFormBase::ReRead()
 			QString FieldName = FieldItem.first;
 			ISFieldEditBase *FieldWidget = FieldItem.second;
 
-			ISQuery qSelect("SELECT " + MetaTable->GetAlias() + "_" + FieldName + " FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_id = :ObjectID");
+			ISQuery qSelect("SELECT " + MetaTable->GetAlias() + '_' + FieldName + " FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_id = :ObjectID");
 			qSelect.BindValue(":ObjectID", ObjectID);
 			if (qSelect.ExecuteFirst())
 			{
-				QVariant ValueDB = qSelect.ReadColumn(MetaTable->GetAlias() + "_" + FieldName);
+				QVariant ValueDB = qSelect.ReadColumn(MetaTable->GetAlias() + '_' + FieldName);
 				disconnect(FieldWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 				FieldWidget->SetValue(ValueDB);
 				FieldWidget->SetModificationFlag(false);

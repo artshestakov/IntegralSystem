@@ -92,10 +92,10 @@ void ISAboutForm::CreateContactsTab()
 	TabWidget->addTab(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts"));
 
 	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthor"), LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthor.FullName"));
-    AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorPhone"), "+7 (903) 416-10-03");
+    AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorPhone"), "+7 (918) 412-55-10");
 	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.Telegram"), "@artem_shestakov");
-    AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.WhatsApp"), "+7 (903) 416-10-03");
-	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorMail"), "artemshestakov@outlook.com");
+    AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.WhatsApp"), "+7 (918) 412-55-10");
+	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorMail"), "art.shestakov@icloud.com");
 	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.Address"), LOCALIZATION("AboutForm.Tab.Contacts.Address.Text"));
 
 	LayoutContacts->addStretch();
@@ -238,10 +238,10 @@ void ISAboutForm::SaveAuthorInfo()
 		{
 			QString String;
 			String += LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthor") + ": " + LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthor.FullName") + "\n";
-			String += LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorPhone") + ": +7 (903) 416-10-03\n";
+			String += LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorPhone") + ": +7 (918) 412-55-10\n";
 			String += LOCALIZATION("AboutForm.Tab.Contacts.Telegram") + ": @artem_shestakov\n";
-			String += LOCALIZATION("AboutForm.Tab.Contacts.WhatsApp") + ": +7 (903) 416-10-03\n";
-			String += LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorMail") + ": artemshestakov@outlook.com";
+			String += LOCALIZATION("AboutForm.Tab.Contacts.WhatsApp") + ": +7 (918) 412-55-10\n";
+			String += LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorMail") + ": art.shestakov@icloud.com";
 
 			File.write(String.toUtf8());
 			File.close();

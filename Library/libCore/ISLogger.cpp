@@ -87,6 +87,6 @@ void ISLogger::AddData()
 //-----------------------------------------------------------------------------
 void ISLogger::UpdateLogFileName()
 {
-	LogPath = APPLICATION_LOGS_PATH + "/" + APPLICATION_NAME + "_" + QDateTime::currentDateTime().toString(DATE_FORMAT_V2) + "." + EXTENSION_LOG;
+	LogPath = APPLICATION_LOGS_PATH + "/" + APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(DATE_FORMAT_V2) + '.' + EXTENSION_LOG;
 }
 //-----------------------------------------------------------------------------

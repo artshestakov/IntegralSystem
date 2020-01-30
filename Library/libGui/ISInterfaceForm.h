@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISINTERFACEFORM_H_INCLUDED
+#define _ISINTERFACEFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISUuid.h"
@@ -60,3 +62,4 @@ private:
 	ISUuid FormUID;
 };
 //-----------------------------------------------------------------------------
+#endif

@@ -1,6 +1,7 @@
 #pragma once
+#ifndef _ISINTERFACEDIALOGFORM_H_INCLUDED
+#define _ISINTERFACEDIALOGFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 //-----------------------------------------------------------------------------
 class ISInterfaceDialogForm : public ISInterfaceForm
@@ -28,3 +29,4 @@ private:
 	bool Result;
 };
 //-----------------------------------------------------------------------------
+#endif

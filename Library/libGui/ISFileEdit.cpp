@@ -78,7 +78,7 @@ void ISFileEdit::SetValue(const QVariant &value)
 			QIcon FileIcon = ISGui::ByteArrayToIcon(qSelectFile.ReadColumn("file_icon").toByteArray());
 
 			ButtonFile->setMenu(MenuFile);
-			ButtonFile->setText(FileName + "." + FileExtension);
+			ButtonFile->setText(FileName + '.' + FileExtension);
 			ButtonFile->setToolTip(QString());
 			ButtonFile->setIcon(FileIcon);
 		}
@@ -186,7 +186,7 @@ void ISFileEdit::Open()
 	{
 		QString Extension = qSelect.ReadColumn("file_extension").toString();
 		QByteArray Data = qSelect.ReadColumn("file_data").toByteArray();
-		QString FilePathTemp = APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + "." + Extension;
+		QString FilePathTemp = APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + '.' + Extension;
 		QFile FileTemp(FilePathTemp);
 		if (FileTemp.open(QIODevice::WriteOnly))
 		{
@@ -213,7 +213,7 @@ void ISFileEdit::Rename()
 		qUpdateName.BindValue(":FileID", FileID);
 		if (qUpdateName.Execute())
 		{
-			ButtonFile->setText(NewName.toString() + "." + FileInfo.suffix());
+			ButtonFile->setText(NewName.toString() + '.' + FileInfo.suffix());
 			ValueChanged();
 		}
 

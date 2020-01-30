@@ -39,11 +39,11 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 		FieldEditBase->SetVisibleClear(false);
 		FormLayout->addRow(Label, FieldEditBase);
 
-		ISQuery qSelect("SELECT " + MetaTable->GetAlias() + "_" + MetaField->GetName() + " FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_id = :ObjectID");
+		ISQuery qSelect("SELECT " + MetaTable->GetAlias() + '_' + MetaField->GetName() + " FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_id = :ObjectID");
 		qSelect.BindValue(":ObjectID", ObjectID);
 		if (qSelect.ExecuteFirst())
 		{
-			QVariant Value = qSelect.ReadColumn(MetaTable->GetAlias() + "_" + MetaField->GetName());
+			QVariant Value = qSelect.ReadColumn(MetaTable->GetAlias() + '_' + MetaField->GetName());
 			FieldEditBase->SetValue(Value);
 		}
 	}

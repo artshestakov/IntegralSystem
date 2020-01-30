@@ -2,7 +2,7 @@
 <Localization Name="Configurator">
 
   <Local Name="Configurator.Hello" Russian="Добро пожаловать в интерпретатор базы данных IntegralSystem. База данных &quot;%1&quot; на сервере %2"/>
-  <Local Name="Configurator.Hello.Help" Russian="Введите команду help чтобы получить помощь. Об ошибках сообщайте по адресу &lt;artemshestakov@outlook.com&gt;."/>
+  <Local Name="Configurator.Hello.Help" Russian="Введите команду help чтобы получить помощь. Об ошибках сообщайте по адресу &lt;art.shestakov@icloud.com&gt;."/>
   <Local Name="Configurator.Hello.Exit" Russian="Нажмите кнопку &quot;Enter&quot; или &quot;Return&quot; чтобы выйти."/>
   
   <Local Name="Configurator.Function.NotFound" Russian="Функция &quot;%1&quot; не найдена"/>

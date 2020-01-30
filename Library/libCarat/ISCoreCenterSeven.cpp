@@ -65,7 +65,7 @@ void ISCoreCenterSeven::UserEvent(const QStringMap &StringMap)
 		int UserID = qSelect.ReadColumn("brch_administrator").toInt();
 
 		ISDebug::ShowString(LOCALIZATION("CenterSeven.IncomingCallAbonentFromBranch").arg(StringMap.value("CallerIDNum")).arg(BranchName));
-		ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, PatientID + "_" + Phone);
+		ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, PatientID + '_' + Phone);
 	}
 }
 //-----------------------------------------------------------------------------

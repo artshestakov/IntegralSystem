@@ -43,9 +43,6 @@
     <Filter Include="License">
       <UniqueIdentifier>{d6ddf5cf-e9c2-4736-9b99-ccbf7829dd11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Model">
-      <UniqueIdentifier>{935eefa7-228f-4b7a-9750-9469480ea5c3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{6f751243-38a1-499c-aacd-d094d88ce358}</UniqueIdentifier>
     </Filter>
@@ -257,9 +254,6 @@
     </ClInclude>
     <ClInclude Include="ISHtmlQuery.h">
       <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISSqlModelHelper.h">
-      <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="ISSettingsDatabase.h">
       <Filter>Settings</Filter>
@@ -485,15 +479,6 @@
     <ClCompile Include="ISLicense.cpp">
       <Filter>License</Filter>
     </ClCompile>
-    <ClCompile Include="ISSqlModelCore.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSqlModelHelper.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSqlModelView.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
     <ClCompile Include="ISCBR.cpp">
       <Filter>Network\CBR</Filter>
     </ClCompile>
@@ -633,12 +618,6 @@
     </QtMoc>
     <QtMoc Include="ISStorageFileLoader.h">
       <Filter>Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSqlModelCore.h">
-      <Filter>Model</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSqlModelView.h">
-      <Filter>Model</Filter>
     </QtMoc>
     <QtMoc Include="ISCBR.h">
       <Filter>Network\CBR</Filter>
