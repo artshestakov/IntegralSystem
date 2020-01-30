@@ -125,7 +125,6 @@
     <ClInclude Include="ISAssociationTypes.h" />
     <QtMoc Include="ISAuthConnector.h" />
     <ClInclude Include="ISBuffer.h" />
-    <QtMoc Include="ISCBR.h" />
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="ISCore.h" />
     <ClInclude Include="ISCrashDumper.h" />
@@ -161,7 +160,6 @@
     <ClInclude Include="ISMetaSettingsGroup.h" />
     <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISProtocol.h" />
-    <QtMoc Include="ISOpenWeatherMap.h" />
     <QtMoc Include="ISNetwork.h" />
     <ClInclude Include="ISMimeAttachment.h" />
     <ClInclude Include="ISMimeContentFormatter.h" />
@@ -226,7 +224,6 @@
     <ClCompile Include="ISAssociationTypes.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
-    <ClCompile Include="ISCBR.cpp" />
     <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
@@ -270,7 +267,6 @@
     <ClCompile Include="ISModelThreadWorker.cpp" />
     <ClCompile Include="ISNetwork.cpp" />
     <ClCompile Include="ISNotifySender.cpp" />
-    <ClCompile Include="ISOpenWeatherMap.cpp" />
     <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPhoneNumberParser.cpp" />
     <ClCompile Include="ISPrintingBase.cpp" />

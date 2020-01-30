@@ -46,14 +46,8 @@
     <Filter Include="Network">
       <UniqueIdentifier>{6f751243-38a1-499c-aacd-d094d88ce358}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Network\CBR">
-      <UniqueIdentifier>{e4972d1f-4f76-4247-9d45-611492e6d6e6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network\DaData">
       <UniqueIdentifier>{41a1e551-654b-4cc3-afd9-36d243506f5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\OpenWeatherMap">
-      <UniqueIdentifier>{dae7ccdc-7a8d-4366-9424-6006f1a0339e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Network\SMTP">
       <UniqueIdentifier>{75e363fa-0d60-4bfa-bef9-be5089080fc3}</UniqueIdentifier>
@@ -479,12 +473,6 @@
     <ClCompile Include="ISLicense.cpp">
       <Filter>License</Filter>
     </ClCompile>
-    <ClCompile Include="ISCBR.cpp">
-      <Filter>Network\CBR</Filter>
-    </ClCompile>
-    <ClCompile Include="ISOpenWeatherMap.cpp">
-      <Filter>Network\OpenWeatherMap</Filter>
-    </ClCompile>
     <ClCompile Include="ISAuthConnector.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -618,12 +606,6 @@
     </QtMoc>
     <QtMoc Include="ISStorageFileLoader.h">
       <Filter>Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCBR.h">
-      <Filter>Network\CBR</Filter>
-    </QtMoc>
-    <QtMoc Include="ISOpenWeatherMap.h">
-      <Filter>Network\OpenWeatherMap</Filter>
     </QtMoc>
     <QtMoc Include="ISAuthConnector.h">
       <Filter>Network</Filter>
