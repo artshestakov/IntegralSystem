@@ -258,9 +258,6 @@
     <ClInclude Include="ISDebug.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISSingleton.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISSettings.h">
       <Filter>Settings</Filter>
     </ClInclude>
