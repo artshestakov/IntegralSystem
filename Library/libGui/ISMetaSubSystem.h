@@ -3,13 +3,11 @@
 #include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISMetaSubSystem : public QObject
+class ISMetaSubSystem
 {
-	Q_OBJECT
-
 public:
-	ISMetaSubSystem(QObject *parent = 0);
-	virtual ~ISMetaSubSystem();
+	ISMetaSubSystem();
+	~ISMetaSubSystem();
 
 	void SetID(int id);
 	int GetID() const;

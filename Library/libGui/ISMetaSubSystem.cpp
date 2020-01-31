@@ -2,11 +2,12 @@
 #include "ISMetaSubSystem.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-ISMetaSubSystem::ISMetaSubSystem(QObject *parent) : QObject(parent)
+ISMetaSubSystem::ISMetaSubSystem()
+	: ID(0),
+	OrderID(0),
+	SystemID(0)
 {
-	ID = 0;
-	OrderID = 0;
-	SystemID = 0;
+	
 }
 //-----------------------------------------------------------------------------
 ISMetaSubSystem::~ISMetaSubSystem()

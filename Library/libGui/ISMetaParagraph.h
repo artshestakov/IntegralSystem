@@ -3,13 +3,11 @@
 #include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISMetaParagraph : QObject
+class ISMetaParagraph
 {
-	Q_OBJECT
-
 public:
-    ISMetaParagraph(const ISUuid &uid, const QString &name, const QString &local_name, const QString &tool_tip, const QString &icon, const QString &class_name, bool default_paragraph, QObject *parent = 0);
-	virtual ~ISMetaParagraph();
+    ISMetaParagraph(const ISUuid &uid, const QString &name, const QString &local_name, const QString &tool_tip, const QString &icon, const QString &class_name, bool default_paragraph);
+	~ISMetaParagraph();
 
 	ISUuid GetUID() const;
 	QString GetName() const;

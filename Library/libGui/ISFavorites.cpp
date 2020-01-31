@@ -20,7 +20,7 @@ static QString QD_FAVORITE = PREPARE_QUERY("DELETE FROM _favorites "
 static QString QD_ALL_FAVORITES = PREPARE_QUERY("DELETE FROM _favorites "
 												"WHERE fvts_user = currentuserid()");
 //-----------------------------------------------------------------------------
-ISFavorites::ISFavorites() : QObject()
+ISFavorites::ISFavorites()
 {
 
 }
@@ -101,7 +101,6 @@ bool ISFavorites::DeleteFavorite(const QString &TableName, int ObjectID)
 			Favorites.take(TableName);
 		}
 	}
-
 	return Executed;
 }
 //-----------------------------------------------------------------------------
@@ -120,8 +119,8 @@ void ISFavorites::DeleteAllFavorites()
 //-----------------------------------------------------------------------------
 bool ISFavorites::CheckExistFavoriteObject(const QString &TableName, int ObjectID)
 {
-	bool Result = false;
-	if (Favorites.contains(TableName))
+	bool Result = Favorites.contains(TableName);
+	if (Result)
 	{
 		Result = Favorites[TableName].contains(ObjectID);
 	}

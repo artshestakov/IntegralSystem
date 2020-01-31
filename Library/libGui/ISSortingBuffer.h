@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISSortingMetaTable.h"
 //-----------------------------------------------------------------------------
-class ISSortingBuffer : public QObject
+class ISSortingBuffer
 {
-	Q_OBJECT
-
 public:
 	ISSortingBuffer(const ISSortingBuffer &) = delete;
 	ISSortingBuffer(ISSortingBuffer &&) = delete;

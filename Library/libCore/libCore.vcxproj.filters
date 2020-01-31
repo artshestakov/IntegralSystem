@@ -52,18 +52,6 @@
     <Filter Include="Network\SMTP">
       <UniqueIdentifier>{75e363fa-0d60-4bfa-bef9-be5089080fc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Printing">
-      <UniqueIdentifier>{12b12d7e-81bc-4d8d-9784-776f53e6acc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Printing\HTML">
-      <UniqueIdentifier>{f38b0f90-4482-453e-9c66-d4da06bf0e78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Printing\MetaData">
-      <UniqueIdentifier>{fc15fbad-ae04-4e31-9e3f-66303a506d9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Printing\Word">
-      <UniqueIdentifier>{2ea335c8-c7e9-4f83-be10-9a0ed0cc37c1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISApplicationRunning.h">
@@ -239,15 +227,6 @@
     </ClInclude>
     <ClInclude Include="ISProtocol.h">
       <Filter>Other</Filter>
-    </ClInclude>
-    <ClInclude Include="ISHTML.h">
-      <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISHTMLHelper.h">
-      <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISHtmlQuery.h">
-      <Filter>Printing\HTML</Filter>
     </ClInclude>
     <ClInclude Include="ISSettingsDatabase.h">
       <Filter>Settings</Filter>
@@ -512,33 +491,6 @@
     <ClCompile Include="ISSmtpClient.cpp">
       <Filter>Network\SMTP</Filter>
     </ClCompile>
-    <ClCompile Include="ISHTML.cpp">
-      <Filter>Printing\HTML</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHTMLHelper.cpp">
-      <Filter>Printing\HTML</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHtmlQuery.cpp">
-      <Filter>Printing\HTML</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintMetaReport.cpp">
-      <Filter>Printing\MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintMetaReportField.cpp">
-      <Filter>Printing\MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintingWord.cpp">
-      <Filter>Printing\Word</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintingBase.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintingEntity.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintingHtml.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
     <ClCompile Include="ISDaDataService.cpp">
       <Filter>Network\DaData</Filter>
     </ClCompile>
@@ -612,24 +564,6 @@
     </QtMoc>
     <QtMoc Include="ISSmtpClient.h">
       <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintMetaReport.h">
-      <Filter>Printing\MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintMetaReportField.h">
-      <Filter>Printing\MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintingWord.h">
-      <Filter>Printing\Word</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintingBase.h">
-      <Filter>Printing</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintingEntity.h">
-      <Filter>Printing</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintingHtml.h">
-      <Filter>Printing</Filter>
     </QtMoc>
     <QtMoc Include="ISDaDataService.h">
       <Filter>Network\DaData</Filter>

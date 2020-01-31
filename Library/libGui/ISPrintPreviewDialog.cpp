@@ -2,14 +2,14 @@
 #include "ISDefines.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-//#include "ISControls.h"
+#include "ISControls.h"
 //-----------------------------------------------------------------------------
-ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &ReportLocalName, Qt::WindowFlags Flags) : QWidget(parent, Flags | ((Flags & Qt::WindowType_Mask) == 0 ? Qt::Dialog : Qt::WindowType(0)))
+ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &ReportLocalName, Qt::WindowFlags Flags)
+	: QWidget(parent, Flags | ((Flags & Qt::WindowType_Mask) == 0 ? Qt::Dialog : Qt::WindowType(0))),
+	Printing(false),
+	Show(false),
+	EventLoopDialog(nullptr)
 {
-	Printing = false;
-	Show = false;
-	EventLoopDialog = nullptr;
-
 	setAttribute(Qt::WA_ShowModal, true);
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_ICONS("Print"));
@@ -28,11 +28,11 @@ ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &Repor
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	MainLayout->addWidget(ToolBar);
 
-	/*QAction *ActionPrint = ISControls::CreateActionPrint(ToolBar);
+	QAction *ActionPrint = ISControls::CreateActionPrint(ToolBar);
 	ActionPrint->setText(LOCALIZATION("Print"));
 	ActionPrint->setToolTip(LOCALIZATION("Print"));
 	connect(ActionPrint, &QAction::triggered, this, &ISPrintPreviewDialog::Print);
-	ToolBar->addAction(ActionPrint);*/
+	ToolBar->addAction(ActionPrint);
 
 	QAction *ActionClose = new QAction(ToolBar);
 	ActionClose->setText(LOCALIZATION("ClosePreview"));
@@ -41,16 +41,16 @@ ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &Repor
 	connect(ActionClose, &QAction::triggered, this, &ISPrintPreviewDialog::close);
 	ToolBar->addAction(ActionClose);
 
-	/*PageTextEdit = new ISPagesTextEdit(this);
+	PageTextEdit = new ISPagesTextEdit(this);
 	PageTextEdit->setPageFormat(QPageSize::A4);
 	PageTextEdit->setPageMargins(QMarginsF(15, 15, 15, 15));
 	PageTextEdit->setUsePageMode(true);
 	PageTextEdit->setPageNumbersAlignment(Qt::AlignBottom | Qt::AlignCenter);
-	MainLayout->addWidget(PageTextEdit);*/
+	MainLayout->addWidget(PageTextEdit);
 
 	TextDocument = new QTextDocument(this);
 	TextDocument->setDefaultFont(FONT_COURIER_12);
-	//PageTextEdit->setDocument(TextDocument);
+	PageTextEdit->setDocument(TextDocument);
 
 	QStatusBar *StatusBar = new QStatusBar(this);
 	StatusBar->setSizeGripEnabled(false);
@@ -67,9 +67,8 @@ void ISPrintPreviewDialog::showEvent(QShowEvent *e)
 	if (!Show)
 	{
 		Show = true;
-		//PageTextEdit->verticalScrollBar()->setValue(0);
+		PageTextEdit->verticalScrollBar()->setValue(0);
 	}
-
 	QWidget::showEvent(e);
 }
 //-----------------------------------------------------------------------------
@@ -85,14 +84,12 @@ void ISPrintPreviewDialog::keyPressEvent(QKeyEvent *e)
 	{
 		close();
 	}
-
 	QWidget::keyPressEvent(e);
 }
 //-----------------------------------------------------------------------------
 void ISPrintPreviewDialog::Exec()
 {
 	showMaximized();
-
 	QEventLoop EventLoop;
 	EventLoopDialog = &EventLoop;
 	(void)EventLoop.exec(QEventLoop::DialogExec);
@@ -110,7 +107,7 @@ void ISPrintPreviewDialog::SetHtml(const QString &html)
 //-----------------------------------------------------------------------------
 void ISPrintPreviewDialog::SetReadOnly(bool read_only)
 {
-	//PageTextEdit->setReadOnly(read_only);
+	PageTextEdit->setReadOnly(read_only);
 }
 //-----------------------------------------------------------------------------
 void ISPrintPreviewDialog::DestroyEventLoop()

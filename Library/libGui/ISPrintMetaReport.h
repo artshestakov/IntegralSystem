@@ -4,13 +4,11 @@
 #include "ISPrintMetaReportField.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class ISPrintMetaReport : public QObject
+class ISPrintMetaReport
 {
-	Q_OBJECT
-
 public:
-	ISPrintMetaReport(QObject *parent = 0);
-	virtual ~ISPrintMetaReport();
+	ISPrintMetaReport();
+	~ISPrintMetaReport();
 
 	void SetSystem(bool system);
 	bool GetSystem() const;

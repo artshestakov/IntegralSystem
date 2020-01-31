@@ -30,14 +30,12 @@ public:
 
 protected:
 	virtual void showEvent(QShowEvent *e);
-	virtual void keyPressEvent(QKeyEvent *e);
 	virtual void resizeEvent(QResizeEvent *e);
 
 	QVBoxLayout* GetMainLayout(); //Получить указатель на главный компоновщик формы
 	bool IsShowed() const;
 
 	void ForbidResize(); //Запретить изменять размер формы
-	void Screenshot(); //Скриншот окна
 
 	void FlashingStart(int Interval, const QColor &Color); //Запуск анимации заднего фона формы
 	void FlashingTimeout(); //Событие изменения цвета анимации заднего фона формы

@@ -2,20 +2,18 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISObjectModelItem
+class ISHTML
 {
 public:
-	ISObjectModelItem();
-	~ISObjectModelItem();
+	ISHTML(QFile &FileTemplate);
+	virtual ~ISHTML();
 
-	void SetOldValue(const QVariant &old_value);
-	QVariant GetOldValue() const;
-
-	void SetNewValue(const QVariant &new_value);
-	QVariant GetNewValue() const;
+	QString GetHTML() const;
+	void Replace(const QString &ReplacedText, const QString &Text);
+	void SetTableHtmlName(const QString &Name);
 
 private:
-	QVariant OldValue;
-	QVariant NewValue;
+	QString HTML;
+	QString FilePath;
 };
 //-----------------------------------------------------------------------------

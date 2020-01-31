@@ -2,9 +2,10 @@
 #include "ISSortingMetaTable.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-ISSortingMetaTable::ISSortingMetaTable() : QObject()
+ISSortingMetaTable::ISSortingMetaTable()
+	: ModificationFlag(false)
 {
-	ModificationFlag = false;
+	
 }
 //-----------------------------------------------------------------------------
 ISSortingMetaTable::~ISSortingMetaTable()

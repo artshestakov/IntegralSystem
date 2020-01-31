@@ -2,9 +2,10 @@
 #include "ISDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-ISPrintMetaReport::ISPrintMetaReport(QObject *parent) : QObject(parent)
+ISPrintMetaReport::ISPrintMetaReport()
+	: Type(ISNamespace::RT_Unknown)
 {
-	Type = ISNamespace::RT_Unknown;
+	
 }
 //-----------------------------------------------------------------------------
 ISPrintMetaReport::~ISPrintMetaReport()

@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISPrintMetaReport.h"
 //-----------------------------------------------------------------------------
-class ISPrintingEntity : public QObject
+class ISPrintingEntity
 {
-	Q_OBJECT
-
 public:
 	ISPrintingEntity(const ISPrintingEntity &) = delete;
 	ISPrintingEntity(ISPrintingEntity &&) = delete;

@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISMetaParagraph.h"
 //-----------------------------------------------------------------------------
-class ISParagraphEntity : public QObject
+class ISParagraphEntity
 {
-	Q_OBJECT
-
 public:
 	ISParagraphEntity(const ISParagraphEntity &) = delete;
 	ISParagraphEntity(ISParagraphEntity &&) = delete;

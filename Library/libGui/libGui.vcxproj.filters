@@ -203,6 +203,15 @@
     <Filter Include="Model">
       <UniqueIdentifier>{c02aabb1-e4c2-4f06-be12-bfd0434177b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Printing\HTML">
+      <UniqueIdentifier>{950215cb-b0c6-4042-adea-e0885b58b314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Printing\Word">
+      <UniqueIdentifier>{f460dc76-e385-432a-ac73-6abedb5d4999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Printing\MetaData">
+      <UniqueIdentifier>{ab67a40c-9531-4fca-9c06-98c69b2fb01f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -219,6 +228,60 @@
     </ClInclude>
     <ClInclude Include="ISSqlModelHelper.h">
       <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ISParagraphEntity.h">
+      <Filter>Paragraphs</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaParagraph.h">
+      <Filter>Paragraphs</Filter>
+    </ClInclude>
+    <ClInclude Include="ISColumnSizer.h">
+      <Filter>ColumnSizer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISColumnSizeItem.h">
+      <Filter>ColumnSizer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaSystemsEntity.h">
+      <Filter>MetaSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaSystem.h">
+      <Filter>MetaSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaSubSystem.h">
+      <Filter>MetaSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="ISObjectModel.h">
+      <Filter>ObjectModel</Filter>
+    </ClInclude>
+    <ClInclude Include="ISObjectModelItem.h">
+      <Filter>ObjectModel</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSortingBuffer.h">
+      <Filter>SortingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSortingMetaTable.h">
+      <Filter>SortingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISFavorites.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISHTML.h">
+      <Filter>Printing\HTML</Filter>
+    </ClInclude>
+    <ClInclude Include="ISHTMLHelper.h">
+      <Filter>Printing\HTML</Filter>
+    </ClInclude>
+    <ClInclude Include="ISHtmlQuery.h">
+      <Filter>Printing\HTML</Filter>
+    </ClInclude>
+    <ClInclude Include="ISPrintingEntity.h">
+      <Filter>Printing</Filter>
+    </ClInclude>
+    <ClInclude Include="ISPrintMetaReport.h">
+      <Filter>Printing\MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISPrintMetaReportField.h">
+      <Filter>Printing\MetaData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -415,9 +478,6 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISNotifyRecipient.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISScreenshot.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISDelegateBoolean.cpp">
@@ -730,9 +790,6 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISPageMetrics.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPagesTextEdit.cpp">
       <Filter>Printing</Filter>
     </ClCompile>
     <ClCompile Include="ISAddressBox.cpp">
@@ -1293,9 +1350,6 @@
     <ClCompile Include="ISCenterSevenStatusAdmissionForm.cpp">
       <Filter>Objects\CenterSeven\Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISPrintPreviewDialog.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
     <ClCompile Include="ISSqlModelCore.cpp">
       <Filter>Model</Filter>
     </ClCompile>
@@ -1304,6 +1358,42 @@
     </ClCompile>
     <ClCompile Include="ISSqlModelView.cpp">
       <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ISScreenshot.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISHTML.cpp">
+      <Filter>Printing\HTML</Filter>
+    </ClCompile>
+    <ClCompile Include="ISHTMLHelper.cpp">
+      <Filter>Printing\HTML</Filter>
+    </ClCompile>
+    <ClCompile Include="ISHtmlQuery.cpp">
+      <Filter>Printing\HTML</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintingWord.cpp">
+      <Filter>Printing\Word</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintMetaReport.cpp">
+      <Filter>Printing\MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintMetaReportField.cpp">
+      <Filter>Printing\MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintingBase.cpp">
+      <Filter>Printing</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintingEntity.cpp">
+      <Filter>Printing</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintingHtml.cpp">
+      <Filter>Printing</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPagesTextEdit.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPrintPreviewDialog.cpp">
+      <Filter>Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1349,12 +1439,6 @@
     <QtMoc Include="ISProgressForm.h">
       <Filter>AdditionalForms</Filter>
     </QtMoc>
-    <QtMoc Include="ISColumnSizeItem.h">
-      <Filter>ColumnSizer</Filter>
-    </QtMoc>
-    <QtMoc Include="ISColumnSizer.h">
-      <Filter>ColumnSizer</Filter>
-    </QtMoc>
     <QtMoc Include="ISDevice_Atol30F.h">
       <Filter>Device</Filter>
     </QtMoc>
@@ -1393,9 +1477,6 @@
     </QtMoc>
     <QtMoc Include="ISMetaExternalTool.h">
       <Filter>FastAccess</Filter>
-    </QtMoc>
-    <QtMoc Include="ISFavorites.h">
-      <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISAsteriskTotalForm.h">
       <Filter>Forms</Filter>
@@ -1448,33 +1529,6 @@
     <QtMoc Include="ISAsteriskRecordWaitForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISMetaSubSystem.h">
-      <Filter>MetaSystems</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaSystem.h">
-      <Filter>MetaSystems</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaSystemsEntity.h">
-      <Filter>MetaSystems</Filter>
-    </QtMoc>
-    <QtMoc Include="ISObjectModel.h">
-      <Filter>ObjectModel</Filter>
-    </QtMoc>
-    <QtMoc Include="ISObjectModelItem.h">
-      <Filter>ObjectModel</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaParagraph.h">
-      <Filter>Paragraphs</Filter>
-    </QtMoc>
-    <QtMoc Include="ISParagraphEntity.h">
-      <Filter>Paragraphs</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSortingBuffer.h">
-      <Filter>SortingBuffer</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSortingMetaTable.h">
-      <Filter>SortingBuffer</Filter>
-    </QtMoc>
     <QtMoc Include="ISTelephony.h">
       <Filter>Telephony</Filter>
     </QtMoc>
@@ -1487,9 +1541,6 @@
     <QtMoc Include="PMetaUserPermission.h">
       <Filter>User Role</Filter>
     </QtMoc>
-    <QtMoc Include="ISCreatedObjectsEntity.h">
-      <Filter>System</Filter>
-    </QtMoc>
     <QtMoc Include="ISMediaPlayer.h">
       <Filter>System</Filter>
     </QtMoc>
@@ -1497,9 +1548,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISNotifyRecipient.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISScreenshot.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISDelegateBoolean.h">
@@ -1807,9 +1855,6 @@
     </QtMoc>
     <QtMoc Include="ISPopupMessage.h">
       <Filter>Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPagesTextEdit.h">
-      <Filter>Printing</Filter>
     </QtMoc>
     <QtMoc Include="ISAddressBox.h">
       <Filter>Controls</Filter>
@@ -2366,14 +2411,32 @@
     <QtMoc Include="ISObjects.h">
       <Filter>Objects</Filter>
     </QtMoc>
-    <QtMoc Include="ISPrintPreviewDialog.h">
-      <Filter>Printing</Filter>
-    </QtMoc>
     <QtMoc Include="ISSqlModelCore.h">
       <Filter>Model</Filter>
     </QtMoc>
     <QtMoc Include="ISSqlModelView.h">
       <Filter>Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCreatedObjectsEntity.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISScreenshot.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintingWord.h">
+      <Filter>Printing\Word</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintingBase.h">
+      <Filter>Printing</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintingHtml.h">
+      <Filter>Printing</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPagesTextEdit.h">
+      <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPrintPreviewDialog.h">
+      <Filter>Widgets</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

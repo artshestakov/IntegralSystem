@@ -65,7 +65,6 @@
   <Local Name="Message.Information.FeedbackSended" Russian="Письмо успешно отправлено."/>
   <Local Name="Message.Information.SharedRecord" Russian="Ссылка на запись успешно отправлена в общий чат."/>
   <Local Name="Message.Information.FileSaved" Russian="Файл успешно сохранен."/>
-  <Local Name="Message.Information.ScreenshotSaved" Russian="Скриншот окна успешно сохранен!"/>
   <Local Name="Message.Information.NotFoundChildCalls" Russian="Подробностей по выбранному звонку нет."/>
   <Local Name="Message.Information.FileRecordSavedToStorage" Russian="Запись разговора успешно сохранена в хранилище."/>
   <Local Name="Message.Information.TakeAlreadyInWorkYou" Russian="Задача уже в работе у вас!"/>
@@ -172,7 +171,6 @@
   <Local Name="Message.Warning.Feedback.ConnectToHost" Russian="Не удалось соединиться с сервером."/>
   <Local Name="Message.Warning.Feedback.Authentification" Russian="Не удалось авторизоваться."/>
   <Local Name="Message.Warning.Feedback.Send" Russian="Не удалось отправить письмо."/>
-  <Local Name="Message.Warning.ScreenshotNotSaved" Russian="Не удалось сохранить скриншот окна!"/>
   <Local Name="Message.Warning.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден, убедитесь что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
   <Local Name="Message.Warning.NotValidInputPasswordForChange" Russian="Вы ввели неверный текущий пароль!"/>
@@ -540,7 +538,6 @@
   <Local Name="AttachTask" Russian="Прикрепить к задаче"/>
   <Local Name="IncorrectPassword" Russian="Неверный пароль"/>
   <Local Name="NewNotifications" Russian="У Вас есть непросмотренные уведомления: %1"/>
-  <Local Name="Screenshot" Russian="Скриншот"/>
   <Local Name="IncomingCall" Russian="Входящий звонок"/>
   <Local Name="MessageID" Russian="Номер сообщения: %1"/>
   <Local Name="CiteCurrentMessage" Russian="Цитировать это сообщение"/>

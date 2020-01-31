@@ -4,10 +4,8 @@
 #include "ISMetaSystem.h"
 #include "ISMetaSubSystem.h"
 //-----------------------------------------------------------------------------
-class ISMetaSystemsEntity : public QObject
+class ISMetaSystemsEntity
 {
-	Q_OBJECT
-
 public:
 	ISMetaSystemsEntity(const ISMetaSystemsEntity &) = delete;
 	ISMetaSystemsEntity(ISMetaSystemsEntity &&) = delete;

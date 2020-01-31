@@ -25,14 +25,17 @@ static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
 static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_tablename, sgts_fieldname, sgts_sorting) "
 										  "VALUES(:TableName, :FieldName, :Sorting)");
 //-----------------------------------------------------------------------------
-ISSortingBuffer::ISSortingBuffer() : QObject()
+ISSortingBuffer::ISSortingBuffer()
 {
 	Initialize();
 }
 //-----------------------------------------------------------------------------
 ISSortingBuffer::~ISSortingBuffer()
 {
-
+	while (!Sortings.isEmpty())
+	{
+		delete Sortings.back();
+	}
 }
 //-----------------------------------------------------------------------------
 ISSortingBuffer& ISSortingBuffer::GetInstance()
@@ -58,7 +61,6 @@ void ISSortingBuffer::AddSorting(const QString &TableName, const QString &FieldN
 				}
 			}
 		}
-
 		Sortings.append(CreateSorting(TableName, FieldName, Sorting));
 	}
 	else
@@ -88,27 +90,20 @@ ISSortingMetaTable* ISSortingBuffer::GetSorting(const QString &TableName)
 			return MetaSorting;
 		}
 	}
-
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
 void ISSortingBuffer::Initialize()
 {
 	ISCountingTime CountingTime;
-
 	ISQuery qSelect(QS_SORTINGS);
 	if (qSelect.Execute())
 	{
 		while (qSelect.Next())
 		{
-			QString TableName = qSelect.ReadColumn("sgts_tablename").toString();
-			QString FieldName = qSelect.ReadColumn("sgts_fieldname").toString();
-			int Sorting = qSelect.ReadColumn("sgts_sorting").toInt();
-
-			Sortings.append(CreateSorting(TableName, FieldName, Sorting));
+			Sortings.append(CreateSorting(qSelect.ReadColumn("sgts_tablename").toString(), qSelect.ReadColumn("sgts_fieldname").toString(), qSelect.ReadColumn("sgts_sorting").toInt()));
 		}
 	}
-
 	ISDebug::ShowDebugString(QString("Initialized SortingBuffer %1 msec").arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
@@ -118,8 +113,7 @@ void ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
 	qSelectSorting.BindValue(":TableName", MetaSorting->GetTableName());
 	if (qSelectSorting.ExecuteFirst())
 	{
-		int Count = qSelectSorting.ReadColumn("count").toInt();
-		if (Count)
+		if (qSelectSorting.ReadColumn("count").toInt())
 		{
 			ISQuery qUpdateSorting(QU_SORTING);
 			qUpdateSorting.BindValue(":FieldName", MetaSorting->GetFieldName());

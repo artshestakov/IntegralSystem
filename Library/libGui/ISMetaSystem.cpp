@@ -2,16 +2,20 @@
 #include "ISMetaSystem.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-ISMetaSystem::ISMetaSystem(QObject *parent) : QObject(parent)
+ISMetaSystem::ISMetaSystem()
+	: IsSystem(false),
+	ID(0),
+	OrderID(0)
 {
-	IsSystem = false;
-	ID = 0;
-	OrderID = 0;
+	
 }
 //-----------------------------------------------------------------------------
 ISMetaSystem::~ISMetaSystem()
 {
-
+	while (!SubSystems.isEmpty())
+	{
+		delete SubSystems.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISMetaSystem::SetIsSystem(bool is_system)

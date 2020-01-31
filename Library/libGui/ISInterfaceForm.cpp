@@ -158,15 +158,6 @@ void ISInterfaceForm::showEvent(QShowEvent *e)
 	emit Showed();
 }
 //-----------------------------------------------------------------------------
-void ISInterfaceForm::keyPressEvent(QKeyEvent *e)
-{
-	QWidget::keyPressEvent(e);
-	if (e->modifiers() == Qt::AltModifier && e->key() == Qt::Key_F12)
-	{
-		Screenshot();
-	}
-}
-//-----------------------------------------------------------------------------
 void ISInterfaceForm::resizeEvent(QResizeEvent *e)
 {
 	QWidget::resizeEvent(e);
@@ -191,27 +182,6 @@ void ISInterfaceForm::ForbidResize()
 	if (!parentWidget())
 	{
 		setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint | Qt::MSWindowsFixedSizeDialogHint);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISInterfaceForm::Screenshot()
-{
-	if (!parent())
-	{
-		QPixmap Pixmap = grab();
-
-		QString FilePath = ISFileDialog::GetSaveFileNameImage(this, windowTitle() + " (" + LOCALIZATION("Screenshot") + ")");
-		if (FilePath.length())
-		{
-			if (Pixmap.save(FilePath))
-			{
-				ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.ScreenshotSaved"), FilePath);
-			}
-			else
-			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ScreenshotNotSaved"));
-			}
-		}
 	}
 }
 //-----------------------------------------------------------------------------

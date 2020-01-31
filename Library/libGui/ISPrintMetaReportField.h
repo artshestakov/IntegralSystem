@@ -2,13 +2,11 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISPrintMetaReportField : public QObject
+class ISPrintMetaReportField
 {
-	Q_OBJECT
-
 public:
-	ISPrintMetaReportField(QObject *parent = 0);
-	virtual ~ISPrintMetaReportField();
+	ISPrintMetaReportField();
+	~ISPrintMetaReportField();
 
 	void SetReplaceValue(const QString &replace_value);
 	QString GetReplaceValue() const;

@@ -1,9 +1,10 @@
 #include "StdAfx.h"
 #include "ISColumnSizeItem.h"
 //-----------------------------------------------------------------------------
-ISColumnSizeItem::ISColumnSizeItem(QObject *parent) : QObject(parent)
+ISColumnSizeItem::ISColumnSizeItem()
+	: ModificationFlag(false)
 {
-	ModificationFlag = false;
+	
 }
 //-----------------------------------------------------------------------------
 ISColumnSizeItem::~ISColumnSizeItem()

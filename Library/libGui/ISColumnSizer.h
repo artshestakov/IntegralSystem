@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISColumnSizeItem.h"
 //-----------------------------------------------------------------------------
-class ISColumnSizer : public QObject
+class ISColumnSizer
 {
-	Q_OBJECT
-
 public:
 	ISColumnSizer(const ISColumnSizer &) = delete;
 	ISColumnSizer(ISColumnSizer &&) = delete;

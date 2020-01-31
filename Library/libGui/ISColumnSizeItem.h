@@ -2,13 +2,11 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISColumnSizeItem : public QObject
+class ISColumnSizeItem
 {
-	Q_OBJECT
-
 public:
-	ISColumnSizeItem(QObject *parent = 0);
-	virtual ~ISColumnSizeItem();
+	ISColumnSizeItem();
+	~ISColumnSizeItem();
 
 	void SetFieldSize(const QString &FieldName, int Size);
 	int GetFieldSize(const QString &FieldName);

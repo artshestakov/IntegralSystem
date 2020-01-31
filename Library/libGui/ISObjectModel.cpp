@@ -1,19 +1,22 @@
 #include "StdAfx.h"
 #include "ISObjectModel.h"
 //-----------------------------------------------------------------------------
-ISObjectModel::ISObjectModel(QObject *parent) : QObject(parent)
+ISObjectModel::ISObjectModel()
 {
 
 }
 //-----------------------------------------------------------------------------
 ISObjectModel::~ISObjectModel()
 {
-
+	while (!Items.isEmpty())
+	{
+		delete Items.take(Items.keys().back());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISObjectModel::Append(const QString &FieldName)
 {
-	ISObjectModelItem *ModelItem = new ISObjectModelItem(this);
+	ISObjectModelItem *ModelItem = new ISObjectModelItem();
 	Items.insert(FieldName, ModelItem);
 }
 //-----------------------------------------------------------------------------

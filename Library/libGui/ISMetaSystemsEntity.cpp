@@ -24,7 +24,10 @@ ISMetaSystemsEntity::ISMetaSystemsEntity()
 //-----------------------------------------------------------------------------
 ISMetaSystemsEntity::~ISMetaSystemsEntity()
 {
-
+	while (!Systems.isEmpty())
+	{
+		delete Systems.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 ISMetaSystemsEntity& ISMetaSystemsEntity::GetInstance()
@@ -63,8 +66,7 @@ void ISMetaSystemsEntity::Initialize()
 			{
 				if (!ISMetaUser::GetInstance().GetData()->GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
 				{
-					//≈сли доступа к подсистеме нет - перезодить на следующую итерацию цикла
-					if (!ISUserRoleEntity::GetInstance().CheckAccessSubSystem(SubSystemUID))
+					if (!ISUserRoleEntity::GetInstance().CheckAccessSubSystem(SubSystemUID)) //≈сли доступа к подсистеме нет - перезодить на следующую итерацию цикла
 					{
 						continue;
 					}
@@ -74,7 +76,7 @@ void ISMetaSystemsEntity::Initialize()
 			ISMetaSystem *MetaSystem = CheckExistSystem(SystemUID);
 			if (!MetaSystem)
 			{
-				MetaSystem = new ISMetaSystem(this);
+				MetaSystem = new ISMetaSystem();
 				MetaSystem->SetIsSystem(SystemIsSystem);
 				MetaSystem->SetID(SystemID);
 				MetaSystem->SetUID(SystemUID);
@@ -85,7 +87,7 @@ void ISMetaSystemsEntity::Initialize()
 				Systems.append(MetaSystem);
 			}
 
-			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem(MetaSystem);
+			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem();
 			MetaSubSystem->SetID(SubSystemID);
 			MetaSubSystem->SetUID(SubSystemUID);
 			MetaSubSystem->SetLocalName(SubSystemLocalName);
@@ -130,7 +132,6 @@ ISMetaSubSystem* ISMetaSystemsEntity::GetSubSystem(const QString &SubSystemUID)
 			}
 		}
 	}
-
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
@@ -143,7 +144,6 @@ ISMetaSystem* ISMetaSystemsEntity::CheckExistSystem(const ISUuid &SystemUID)
 			return MetaSystem;
 		}
 	}
-
 	return nullptr;
 }
 //-----------------------------------------------------------------------------

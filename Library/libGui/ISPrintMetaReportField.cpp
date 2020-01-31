@@ -1,6 +1,6 @@
 #include "ISPrintMetaReportField.h"
 //-----------------------------------------------------------------------------
-ISPrintMetaReportField::ISPrintMetaReportField(QObject *parent) : QObject(parent)
+ISPrintMetaReportField::ISPrintMetaReportField()
 {
 
 }

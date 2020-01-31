@@ -2,13 +2,11 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISSortingMetaTable : public QObject
+class ISSortingMetaTable
 {
-	Q_OBJECT
-
 public:
 	ISSortingMetaTable();
-	virtual ~ISSortingMetaTable();
+	~ISSortingMetaTable();
 
 	void SetTableName(const QString &table_name);
 	QString GetTableName() const;

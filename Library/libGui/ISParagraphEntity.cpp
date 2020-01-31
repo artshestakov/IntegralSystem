@@ -11,7 +11,7 @@ static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_l
 											 "WHERE NOT prhs_isdeleted "
 											 "ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-ISParagraphEntity::ISParagraphEntity() : QObject()
+ISParagraphEntity::ISParagraphEntity()
 {
 	QString ParagraphView = SETTING_STRING(CONST_UID_SETTING_VIEW_PARAGRAPHVIEW);
 	QStringList EnabledParagraphs = ParagraphView.split(SYMBOL_COMMA);
@@ -31,7 +31,7 @@ ISParagraphEntity::ISParagraphEntity() : QObject()
 
 			if (ParagraphView == "All" || EnabledParagraphs.contains(UID))
 			{
-				ISMetaParagraph *MetaParagraph = new ISMetaParagraph(UID, Name, LocalName, ToolTip, Icon, ClassName, Default, this);
+				ISMetaParagraph *MetaParagraph = new ISMetaParagraph(UID, Name, LocalName, ToolTip, Icon, ClassName, Default);
 				Paragraphs.append(MetaParagraph);
 
 				if (Default || SETTING_STRING(CONST_UID_SETTING_VIEW_STARTEDPARAGRAPH) == UID)
@@ -45,7 +45,10 @@ ISParagraphEntity::ISParagraphEntity() : QObject()
 //-----------------------------------------------------------------------------
 ISParagraphEntity::~ISParagraphEntity()
 {
-
+	while (!Paragraphs.isEmpty())
+	{
+		delete Paragraphs.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 ISParagraphEntity& ISParagraphEntity::GetInstance()

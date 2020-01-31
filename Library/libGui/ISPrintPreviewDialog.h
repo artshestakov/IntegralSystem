@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-//#include "ISPagesTextEdit.h"
+#include "ISPagesTextEdit.h"
 //-----------------------------------------------------------------------------
 class ISPrintPreviewDialog : public QWidget
 {
@@ -29,7 +29,7 @@ private:
 	bool Show;
 	QEventLoop *EventLoopDialog;
 
-	//ISPagesTextEdit *PageTextEdit;
+	ISPagesTextEdit *PageTextEdit;
 	QTextDocument *TextDocument;
 };
 //-----------------------------------------------------------------------------

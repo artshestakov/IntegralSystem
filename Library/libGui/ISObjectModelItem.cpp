@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISObjectModelItem.h"
 //-----------------------------------------------------------------------------
-ISObjectModelItem::ISObjectModelItem(QObject *parent) : QObject(parent)
+ISObjectModelItem::ISObjectModelItem()
 {
 
 }

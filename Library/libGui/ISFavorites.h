@@ -3,10 +3,8 @@
 #include "StdAfx.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISFavorites : public QObject
+class ISFavorites
 {
-	Q_OBJECT
-
 public:
 	ISFavorites(const ISFavorites &) = delete;
 	ISFavorites(ISFavorites &&) = delete;

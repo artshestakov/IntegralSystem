@@ -24,14 +24,17 @@ static QString QI_COLUMN_SIZE = PREPARE_QUERY("INSERT INTO _columnsize(clsz_tabl
 static QString QD_COLUMN_SIZE = PREPARE_QUERY("DELETE FROM _columnsize "
 											  "WHERE clsz_user = currentuserid()");
 //-----------------------------------------------------------------------------
-ISColumnSizer::ISColumnSizer() : QObject()
+ISColumnSizer::ISColumnSizer()
 {
 
 }
 //-----------------------------------------------------------------------------
 ISColumnSizer::~ISColumnSizer()
 {
-
+	while (!Tables.isEmpty())
+	{
+		delete Tables.take(Tables.keys().back());
+	}
 }
 //-----------------------------------------------------------------------------
 ISColumnSizer& ISColumnSizer::GetInstance()
@@ -57,7 +60,7 @@ void ISColumnSizer::Initialize()
 			}
 			else
 			{
-				ISColumnSizeItem *ColumnSizeItem = new ISColumnSizeItem(this);
+				ISColumnSizeItem *ColumnSizeItem = new ISColumnSizeItem();
 				ColumnSizeItem->SetFieldSize(FieldName, FieldSize);
 				Tables.insert(TableName, ColumnSizeItem);
 			}
@@ -81,8 +84,7 @@ void ISColumnSizer::Save()
 				qSelect.BindValue(":FieldName", FieldItem.first);
 				if (qSelect.ExecuteFirst())
 				{
-					int Count = qSelect.ReadColumn("count").toInt();
-					if (Count)
+					if (qSelect.ReadColumn("count").toInt())
 					{
 						ISQuery qUpdate(QU_COLUMN_SIZE);
 						qUpdate.BindValue(":Size", FieldItem.second);
@@ -106,8 +108,7 @@ void ISColumnSizer::Save()
 //-----------------------------------------------------------------------------
 void ISColumnSizer::Clear()
 {
-	ISQuery qDelete(QD_COLUMN_SIZE);
-	qDelete.Execute();
+	ISQuery(QD_COLUMN_SIZE).Execute();
 }
 //-----------------------------------------------------------------------------
 void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &FieldName, int Size)
@@ -119,10 +120,9 @@ void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &Field
 	}
 	else
 	{
-		ColumnSizeItem = new ISColumnSizeItem(this);
+		ColumnSizeItem = new ISColumnSizeItem();
 		ColumnSizeItem->SetFieldSize(FieldName, Size);
 	}
-
 	ColumnSizeItem->SetModificationFlag(true);
 }
 //-----------------------------------------------------------------------------
@@ -134,7 +134,6 @@ int ISColumnSizer::GetColumnSize(const QString &TableName, const QString &FieldN
 	{
 		Result = ColumnSizeItem->GetFieldSize(FieldName);
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

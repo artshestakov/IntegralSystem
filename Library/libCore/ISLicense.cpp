@@ -193,10 +193,9 @@ bool ISLicense::Initialize()
 //-----------------------------------------------------------------------------
 void ISLicense::ClearItems()
 {
-	while (VectorTemp.count())
+	while (!VectorTemp.isEmpty())
 	{
-		ISLicenseItem *LicenseItem = VectorTemp.takeFirst();
-		delete LicenseItem;
+		delete VectorTemp.takeLast();
 	}
 }
 //-----------------------------------------------------------------------------

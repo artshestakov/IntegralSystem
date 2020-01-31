@@ -3,17 +3,20 @@
 #include "ISSystem.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-//#include "ISPrintPreviewDialog.h"
+#include "ISPrintPreviewDialog.h"
 #include "ISQuery.h"
 #include "ISHtmlQuery.h"
 #include "ISAssert.h"
 #include "ISMetaViewQuery.h"
 #include "ISDatabaseHelper.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISPrintingHtml::ISPrintingHtml(ISPrintMetaReport *meta_report, int object_id, QObject *parent) : ISPrintingBase(meta_report, object_id, parent)
+ISPrintingHtml::ISPrintingHtml(ISPrintMetaReport *meta_report, int object_id, QObject *parent)
+	: ISPrintingBase(meta_report, object_id, parent),
+	PDF(false),
+	EditPreview(false)
 {
-	PDF = false;
-	EditPreview = false;
+	
 }
 //-----------------------------------------------------------------------------
 ISPrintingHtml::~ISPrintingHtml()
@@ -29,7 +32,8 @@ bool ISPrintingHtml::Prepare()
 bool ISPrintingHtml::PrepareTempate()
 {
 	QFile File(GetMetaReport()->GetFileTemplate());
-	if (File.open(QIODevice::ReadOnly | QIODevice::Text))
+	bool Result = File.open(QIODevice::ReadOnly | QIODevice::Text);
+	if (Result)
 	{
 		Html = File.readAll();
 		File.close();
@@ -37,10 +41,8 @@ bool ISPrintingHtml::PrepareTempate()
 	else
 	{
 		SetErrorString(File.errorString());
-		return false;
 	}
-
-	return true;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::FillTemplate()
@@ -82,14 +84,12 @@ bool ISPrintingHtml::FillTemplate()
 
 			if (qSelectValue.ExistParameter(":SourceID"))
 			{
-				bool BindValue = qSelectValue.BindValue(":SourceID", GetObjectID());
-				IS_ASSERT(BindValue, "Not BindValue");
+				IS_ASSERT(qSelectValue.BindValue(":SourceID", GetObjectID()), "Not BindValue");
 			}
 
 			if (qSelectValue.ExecuteFirst())
 			{
-				QVariant Value = qSelectValue.ReadColumn(0);
-				QVariant CheckedValue = ISDatabaseHelper::CheckValue(Value);
+				QVariant CheckedValue = ISDatabaseHelper::CheckValue(qSelectValue.ReadColumn(0));
 				QString StringValue = CheckedValue.toString();
 				Html.replace(MetaReportField->GetReplaceValue(), StringValue);
 			}
@@ -101,8 +101,7 @@ bool ISPrintingHtml::FillTemplate()
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::PreviewDocument()
 {
-	//???
-	/*ISGui::SetWaitGlobalCursor(false);
+	ISGui::SetWaitGlobalCursor(false);
 	emit SetVisibleDialog(false);
 
 	ISPrintPreviewDialog PrintPreviewDialog(nullptr, GetReportLocalName());
@@ -114,8 +113,7 @@ bool ISPrintingHtml::PreviewDocument()
 	ISGui::SetWaitGlobalCursor(true);
 	emit SetVisibleDialog(true);
 
-	return Result;*/
-	return true;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::Print()
@@ -145,15 +143,14 @@ bool ISPrintingHtml::Print()
 	}
 	else
 	{
-		//???
-		/*QPrintDialog PrintDialog(&Printer);
+		QPrintDialog PrintDialog(&Printer);
 		ISGui::MoveWidgetToDesktop(&PrintDialog, ISNamespace::MWD_Center);
 		PrintDialog.setWindowTitle(LOCALIZATION("SelectPrinter"));
 		PrintDialog.setWindowIcon(BUFFER_ICONS("Print"));
 		if (PrintDialog.exec() == QPrintDialog::Accepted)
 		{
 			TextDocument.print(&Printer);
-		}*/
+		}
 	}
 
 	return true;

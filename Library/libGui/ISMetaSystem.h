@@ -3,13 +3,11 @@
 #include "StdAfx.h"
 #include "ISMetaSubSystem.h"
 //-----------------------------------------------------------------------------
-class ISMetaSystem : public QObject
+class ISMetaSystem
 {
-	Q_OBJECT
-
 public:
-	ISMetaSystem(QObject *parent = 0);
-	virtual ~ISMetaSystem();
+	ISMetaSystem();
+	~ISMetaSystem();
 
 	void SetIsSystem(bool is_system);
 	bool GetIsSystem() const;

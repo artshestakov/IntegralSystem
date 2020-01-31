@@ -3,13 +3,11 @@
 #include "StdAfx.h"
 #include "ISObjectModelItem.h"
 //-----------------------------------------------------------------------------
-class ISObjectModel : public QObject
+class ISObjectModel
 {
-	Q_OBJECT
-
 public:
-	ISObjectModel(QObject *parent = 0);
-	virtual ~ISObjectModel();
+	ISObjectModel();
+	~ISObjectModel();
 
 	void Append(const QString &FieldName);
 	

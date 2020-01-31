@@ -15,7 +15,7 @@ static QString QS_REPORT_FIELDS = PREPARE_QUERY("SELECT rpfl_replacevalue, rpfl_
 												"WHERE NOT rpfl_isdeleted "
 												"AND rpfl_report = :ReportUID");
 //-----------------------------------------------------------------------------
-ISPrintingEntity::ISPrintingEntity() : QObject()
+ISPrintingEntity::ISPrintingEntity()
 {
 	Initialize();
 }
@@ -33,15 +33,12 @@ ISPrintingEntity& ISPrintingEntity::GetInstance()
 //-----------------------------------------------------------------------------
 QVector<ISPrintMetaReport*> ISPrintingEntity::GetReports(const QString &TableName)
 {
-	QVector<ISPrintMetaReport*> Vector = Reports.value(TableName);
-	return Vector;
+	return Reports.value(TableName);
 }
 //-----------------------------------------------------------------------------
 int ISPrintingEntity::GetCountReports(const QString &TableName)
 {
-	QVector<ISPrintMetaReport*> Vector = Reports.value(TableName);
-	int Count = Vector.count();
-	return Count;
+	return Reports.value(TableName).count();
 }
 //-----------------------------------------------------------------------------
 void ISPrintingEntity::Initialize()
@@ -61,7 +58,7 @@ void ISPrintingEntity::Initialize()
 			QString LocalName = qSelectReport.ReadColumn("rprt_localname").toString();
 			QString FileTemplate = qSelectReport.ReadColumn("rprt_filetemplate").toString();
 
-			ISPrintMetaReport *MetaReport = new ISPrintMetaReport(this);
+			ISPrintMetaReport *MetaReport = new ISPrintMetaReport();
 			MetaReport->SetSystem(System);
 			MetaReport->SetType(Type);
 			MetaReport->SetName(Name);
@@ -79,7 +76,7 @@ void ISPrintingEntity::Initialize()
 					QString QueryName = qSelectReportFields.ReadColumn("rpfl_queryname").toString();
 					QString ParameterName = qSelectReportFields.ReadColumn("rpfl_parametername").toString();
 
-					ISPrintMetaReportField *MetaReportField = new ISPrintMetaReportField(MetaReport);
+					ISPrintMetaReportField *MetaReportField = new ISPrintMetaReportField();
 					MetaReportField->SetReplaceValue(ReplaceValue);
 					MetaReportField->SetFieldQuery(FieldQuery);
 					MetaReportField->SetQueryName(QueryName);
@@ -90,7 +87,6 @@ void ISPrintingEntity::Initialize()
 
 			QVector<ISPrintMetaReport*> Vector = Reports.value(TableName);
 			Vector.append(MetaReport);
-
 			Reports.insert(TableName, Vector);
 		}
 	}
