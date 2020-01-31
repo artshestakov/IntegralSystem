@@ -5,11 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Service">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISCaratApplication.cpp">
@@ -24,19 +19,10 @@
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="QtService.cpp">
-      <Filter>Service</Filter>
-    </ClCompile>
-    <ClCompile Include="QtService_Win.cpp">
-      <Filter>Service</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="QtService_p.h">
-      <Filter>Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -45,12 +31,6 @@
     </QtMoc>
     <QtMoc Include="ISProcessCore.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="QtService.h">
-      <Filter>Service</Filter>
-    </QtMoc>
-    <QtMoc Include="qtservice_win.h">
-      <Filter>Service</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

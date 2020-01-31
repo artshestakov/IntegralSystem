@@ -28,14 +28,14 @@ int main(int argc, char *argv[])
 	ISApplicationRunning ApplicationRunning(CARAT_UID);
 	if (!ApplicationRunning.TryToRun()) //Если приложение уже запущено
 	{
-		ISDebug::ShowString(LOCALIZATION("AlreadyStarted"));
+		ISDebug::ShowString(LANG("AlreadyStarted"));
 		ISSystem::SleepSeconds(3);
 		return EXIT_SUCCESS;
 	}
 
 	if (!CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).length() || !CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).length())
 	{
-		ISDebug::ShowString(LOCALIZATION("NotLoginOrPassword"));
+		ISDebug::ShowString(LANG("NotLoginOrPassword"));
 		return EXIT_FAILURE;
 	}
 
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
 	if (!ISLicense::GetInstance().Initialize()) //Если лицензия не инициализировалась
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
+		ISDebug::ShowWarningString(LANG("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
 		ISCommandLine::Pause();
 		return EXIT_SUCCESS;
 	}

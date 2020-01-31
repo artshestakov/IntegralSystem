@@ -1,21 +1,15 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "QtService.h"
 #include "ISCaratService.h"
 //-----------------------------------------------------------------------------
-class ISCaratApplication : public QtService<QCoreApplication>
+class ISCaratApplication : public QCoreApplication
 {
 public:
 	ISCaratApplication(int argc, char **argv);
 	virtual ~ISCaratApplication();
 
 	bool ConnectToDB() const; //Подключение к БД
-
-protected:
-	void start() override;
-	void pause() override;
-	void resume() override;
-	void stop() override;
+	void Start();
 
 private:
 	ISCaratService *Service;

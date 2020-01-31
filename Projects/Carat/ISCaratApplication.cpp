@@ -14,13 +14,11 @@ static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_localname "
 											 "WHERE NOT core_isdeleted "
 											 "ORDER BY core_priority");
 //-----------------------------------------------------------------------------
-ISCaratApplication::ISCaratApplication(int argc, char **argv) : QtService<QCoreApplication>(argc, argv, "Carat")
+ISCaratApplication::ISCaratApplication(int argc, char **argv)
+	: QCoreApplication(argc, argv),
+	Service(new ISCaratService(this))
 {
-	setServiceDescription("Carat");
-	setServiceFlags(QtService::CanBeSuspended);
-	createApplication(argc, argv);
-
-	Service = new ISCaratService();
+	
 }
 //-----------------------------------------------------------------------------
 ISCaratApplication::~ISCaratApplication()
@@ -51,23 +49,8 @@ bool ISCaratApplication::ConnectToDB() const
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::start()
+void ISCaratApplication::Start()
 {
 	Service->StartService();
-}
-//-----------------------------------------------------------------------------
-void ISCaratApplication::pause()
-{
-	
-}
-//-----------------------------------------------------------------------------
-void ISCaratApplication::resume()
-{
-	
-}
-//-----------------------------------------------------------------------------
-void ISCaratApplication::stop()
-{
-	
 }
 //-----------------------------------------------------------------------------

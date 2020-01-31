@@ -15,14 +15,9 @@
     <ClCompile Include="ISCaratService.cpp" />
     <ClCompile Include="ISProcessCore.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="QtService.cpp" />
-    <ClCompile Include="QtService_Win.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h" />
-    <ClInclude Include="QtService_p.h" />
-    <QtMoc Include="qtservice_win.h" />
-    <QtMoc Include="QtService.h" />
     <QtMoc Include="ISProcessCore.h" />
     <QtMoc Include="ISCaratService.h" />
   </ItemGroup>
