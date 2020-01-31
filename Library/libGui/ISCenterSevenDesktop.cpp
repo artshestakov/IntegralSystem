@@ -41,13 +41,13 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	MainLayout->addWidget(WidgetTitle);
 
 	LabelDayWeek = new QLabel(WidgetTitle);
-	LabelDayWeek->setText(LOCALIZATION("Today") + ": " + ISSystem::GetCurrentDayOfWeekName());
+	LabelDayWeek->setText(LANG("Today") + ": " + ISSystem::GetCurrentDayOfWeekName());
 	LabelDayWeek->setFont(FONT_TAHOMA_12_BOLD);
 	ISGui::SetFontWidgetUnderline(LabelDayWeek, true);
 	LayoutTitle->addWidget(LabelDayWeek);
 
 	ISPushButton *ButtonPreviousDay = new ISPushButton(WidgetTitle);
-	ButtonPreviousDay->setText(LOCALIZATION("PreviousDay"));
+	ButtonPreviousDay->setText(LANG("PreviousDay"));
 	ButtonPreviousDay->setIcon(BUFFER_ICONS("Arrow.Left"));
 	connect(ButtonPreviousDay, &ISPushButton::clicked, this, &ISCenterSevenDesktop::PreviousDay);
 	LayoutTitle->addWidget(ButtonPreviousDay);
@@ -59,7 +59,7 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	LayoutTitle->addWidget(DateEdit);
 
 	ISPushButton *ButtonNextDay = new ISPushButton(WidgetTitle);
-	ButtonNextDay->setText(LOCALIZATION("NextDay"));
+	ButtonNextDay->setText(LANG("NextDay"));
 	ButtonNextDay->setIcon(BUFFER_ICONS("Arrow.Right"));
 	connect(ButtonNextDay, &ISPushButton::clicked, this, &ISCenterSevenDesktop::NextDay);
 	LayoutTitle->addWidget(ButtonNextDay);
@@ -67,13 +67,13 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	LayoutTitle->addStretch();
 
 	ISPushButton *ButtonWaitAdmission = new ISPushButton(this);
-	ButtonWaitAdmission->setText(LOCALIZATION("CenterSeven.AddWaitAdmission"));
+	ButtonWaitAdmission->setText(LANG("CenterSeven.AddWaitAdmission"));
 	ButtonWaitAdmission->setIcon(BUFFER_ICONS("Wait"));
 	connect(ButtonWaitAdmission, &ISPushButton::clicked, this, &ISCenterSevenDesktop::AddWaitAdmission);
 	LayoutTitle->addWidget(ButtonWaitAdmission);
 
 	QLabel *LabelBranch = new QLabel(this);
-	LabelBranch->setText(LOCALIZATION("CenterSeven.Branch") + ":");
+	LabelBranch->setText(LANG("CenterSeven.Branch") + ":");
 	LayoutTitle->addWidget(LabelBranch);
 
 	ComboBranch = new ISComboEdit(this);
@@ -88,8 +88,8 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	MainLayout->addWidget(ToolBar, 0, Qt::AlignTop);
 
 	ActionDoctors = new QAction(ToolBar);
-	ActionDoctors->setText(LOCALIZATION("CenterSeven.AllDoctors"));
-	ActionDoctors->setToolTip(LOCALIZATION("CenterSeven.AllDoctors"));
+	ActionDoctors->setText(LANG("CenterSeven.AllDoctors"));
+	ActionDoctors->setToolTip(LANG("CenterSeven.AllDoctors"));
 	ActionDoctors->setCheckable(true);
 	ActionDoctors->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("AllDoctors"));
 	ActionDoctors->setMenu(new QMenu(ToolBar));
@@ -165,7 +165,7 @@ void ISCenterSevenDesktop::LoadBranches()
 
 			if (BranchID == CurrentBranchID)
 			{
-				BranchName += " (" + LOCALIZATION("CenterSeven.CurrentBranch") + ")";
+				BranchName += " (" + LANG("CenterSeven.CurrentBranch") + ")";
 			}
 
 			ComboBranch->AddItem(BranchName, BranchID);

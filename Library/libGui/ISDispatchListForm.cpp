@@ -24,8 +24,8 @@ static QString QU_DISPATCH_ORGANIZATION = PREPARE_QUERY("UPDATE dispatchorganiza
 ISDispatchListForm::ISDispatchListForm(QWidget *parent) : ISListBaseForm("Dispatch", parent)
 {
 	QAction *ActionSend = new QAction(this);
-	ActionSend->setText(LOCALIZATION("Dispatch"));
-	ActionSend->setToolTip(LOCALIZATION("Dispatch"));
+	ActionSend->setText(LANG("Dispatch"));
+	ActionSend->setToolTip(LANG("Dispatch"));
 	ActionSend->setIcon(BUFFER_ICONS("Chat.SendMessage"));
 	connect(ActionSend, &QAction::triggered, this, &ISDispatchListForm::Send);
 	AddAction(ActionSend);
@@ -73,7 +73,7 @@ void ISDispatchListForm::Send()
 					EMailRecipient = qSelectMail.ReadColumn(EMailRecipient).toString();
 				}
 
-				ProgressForm.SetText(LOCALIZATION("Dispatching").arg(OrganizationName).arg(CountOrganizations));
+				ProgressForm.SetText(LANG("Dispatching").arg(OrganizationName).arg(CountOrganizations));
 
 				if (Recipient)
 				{
@@ -107,19 +107,19 @@ void ISDispatchListForm::Send()
 						else //Сообщение не отправлено
 						{
 							qUpdate.BindValue(":Sended", true);
-							ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ErrorSendingMessageDispatch"));
+							ISMessageBox::ShowWarning(this, LANG("Message.Warning.ErrorSendingMessageDispatch"));
 						}
 
 						qUpdate.Execute();
 					}
 					else
 					{
-						ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ErrorLoginAndPasswordDispatch"));
+						ISMessageBox::ShowWarning(this, LANG("Message.Warning.ErrorLoginAndPasswordDispatch"));
 					}
 				}
 				else
 				{
-					ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ErrorConnectionHostDispath"));
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.ErrorConnectionHostDispath"));
 				}
 
 				SmtpClient.quit();

@@ -16,34 +16,34 @@ ISDateEdit::ISDateEdit(QWidget *parent) : ISDateTimeEdit(parent)
 	GetButtonCalendar()->setMenu(Menu);
 
 	ActionBeforeYesterday = new QAction(Menu);
-	ActionBeforeYesterday->setText(LOCALIZATION("BeforeYesterday"));
-	ActionBeforeYesterday->setToolTip(LOCALIZATION("BeforeYesterday"));
+	ActionBeforeYesterday->setText(LANG("BeforeYesterday"));
+	ActionBeforeYesterday->setToolTip(LANG("BeforeYesterday"));
 	connect(ActionBeforeYesterday, &QAction::triggered, this, &ISDateEdit::BeforeYesterday);
 	Menu->addAction(ActionBeforeYesterday);
 
 	ActionYesterday = new QAction(Menu);
-	ActionYesterday->setText(LOCALIZATION("Yesterday"));
-	ActionYesterday->setToolTip(LOCALIZATION("Yesterday"));
+	ActionYesterday->setText(LANG("Yesterday"));
+	ActionYesterday->setToolTip(LANG("Yesterday"));
 	connect(ActionYesterday, &QAction::triggered, this, &ISDateEdit::Yesterday);
 	Menu->addAction(ActionYesterday);
 
 	ActionToday = new QAction(Menu);
-	ActionToday->setText(LOCALIZATION("Today"));
-	ActionToday->setToolTip(LOCALIZATION("Today"));
+	ActionToday->setText(LANG("Today"));
+	ActionToday->setToolTip(LANG("Today"));
 	ActionToday->setFont(FONT_APPLICATION_BOLD);
 	ActionToday->setIcon(BUFFER_ICONS("Apply.Blue"));
 	connect(ActionToday, &QAction::triggered, this, &ISDateEdit::Today);
 	Menu->addAction(ActionToday);
 	
 	ActionTomorrow = new QAction(Menu);
-	ActionTomorrow->setText(LOCALIZATION("Tomorrow"));
-	ActionTomorrow->setToolTip(LOCALIZATION("Tomorrow"));
+	ActionTomorrow->setText(LANG("Tomorrow"));
+	ActionTomorrow->setToolTip(LANG("Tomorrow"));
 	connect(ActionTomorrow, &QAction::triggered, this, &ISDateEdit::Tomorrow);
 	Menu->addAction(ActionTomorrow);
 
 	ActionAfterTomorrow = new QAction(Menu);
-	ActionAfterTomorrow->setText(LOCALIZATION("AfterTomorrow"));
-	ActionAfterTomorrow->setToolTip(LOCALIZATION("AfterTomorrow"));
+	ActionAfterTomorrow->setText(LANG("AfterTomorrow"));
+	ActionAfterTomorrow->setToolTip(LANG("AfterTomorrow"));
 	connect(ActionAfterTomorrow, &QAction::triggered, this, &ISDateEdit::AfterTomorrow);
 	Menu->addAction(ActionAfterTomorrow);
 }

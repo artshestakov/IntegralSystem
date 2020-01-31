@@ -28,11 +28,11 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaClassTable *meta_table) :
 
 	if (MetaTable)
 	{
-		setWindowTitle(LOCALIZATION("FavoritesForTable") + ": " + MetaTable->GetLocalListName());
+		setWindowTitle(LANG("FavoritesForTable") + ": " + MetaTable->GetLocalListName());
 	}
 	else
 	{
-		setWindowTitle(LOCALIZATION("Favorites"));
+		setWindowTitle(LANG("Favorites"));
 	}
 
 	setWindowIcon(BUFFER_ICONS("Favorites"));
@@ -44,24 +44,24 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaClassTable *meta_table) :
 	GetMainLayout()->addWidget(ToolBar);
 
 	ActionOpen = new QAction(ToolBar);
-	ActionOpen->setText(LOCALIZATION("Open"));
-	ActionOpen->setToolTip(LOCALIZATION("Open"));
+	ActionOpen->setText(LANG("Open"));
+	ActionOpen->setToolTip(LANG("Open"));
 	ActionOpen->setIcon(BUFFER_ICONS("Select"));
 	ActionOpen->setEnabled(false);
 	connect(ActionOpen, &QAction::triggered, this, &ISFavoritesForm::OpenFavorite);
 	ToolBar->addAction(ActionOpen);
 
 	ActionDelete = new QAction(ToolBar);
-	ActionDelete->setText(LOCALIZATION("Delete"));
-	ActionDelete->setToolTip(LOCALIZATION("Delete"));
+	ActionDelete->setText(LANG("Delete"));
+	ActionDelete->setToolTip(LANG("Delete"));
 	ActionDelete->setIcon(BUFFER_ICONS("Delete"));
 	ActionDelete->setEnabled(false);
 	connect(ActionDelete, &QAction::triggered, this, &ISFavoritesForm::DeleteFavorite);
 	ToolBar->addAction(ActionDelete);
 
 	ActionClearFavorites = new QAction(ToolBar);
-	ActionClearFavorites->setText(LOCALIZATION("ClearFavorites"));
-	ActionClearFavorites->setToolTip(LOCALIZATION("ClearFavorites"));
+	ActionClearFavorites->setText(LANG("ClearFavorites"));
+	ActionClearFavorites->setToolTip(LANG("ClearFavorites"));
 	ActionClearFavorites->setIcon(BUFFER_ICONS("Clear"));
 	connect(ActionClearFavorites, &QAction::triggered, this, &ISFavoritesForm::ClearFavorites);
 	ToolBar->addAction(ActionClearFavorites);
@@ -133,7 +133,7 @@ void ISFavoritesForm::OpenFavorite()
 //-----------------------------------------------------------------------------
 void ISFavoritesForm::DeleteFavorite()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DeleteFavorite")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteFavorite")))
 	{
 		if (ListWidget->currentItem())
 		{
@@ -147,7 +147,7 @@ void ISFavoritesForm::DeleteFavorite()
 //-----------------------------------------------------------------------------
 void ISFavoritesForm::ClearFavorites()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DeleteFavorites")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteFavorites")))
 	{
 		ISFavorites::GetInstance().DeleteAllFavorites();
 		ReloadFavorites();

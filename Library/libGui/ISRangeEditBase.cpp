@@ -25,7 +25,7 @@ ISRangeEditBase::ISRangeEditBase(QWidget *parent, const QString &FieldName) : QW
 	}
 	else
 	{
-		LabelFieldName->setText(LOCALIZATION("Range") + ":");
+		LabelFieldName->setText(LANG("Range") + ":");
 	}
 
 	LayoutLeft = new QHBoxLayout();

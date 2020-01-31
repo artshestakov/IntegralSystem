@@ -13,12 +13,12 @@ ISCenterSevenSelectBranchForm::ISCenterSevenSelectBranchForm(QWidget *parent) : 
 {
 	SelectedBranchID = 0;
 
-	setWindowTitle(LOCALIZATION("CenterSeven.SelectBranch"));
+	setWindowTitle(LANG("CenterSeven.SelectBranch"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 	ForbidResize();
 
 	QLabel *Label = new QLabel(this);
-	Label->setText(LOCALIZATION("CenterSeven.SelectYouCurrentBranch") + ":");
+	Label->setText(LANG("CenterSeven.SelectYouCurrentBranch") + ":");
 	GetMainLayout()->addWidget(Label);
 
 	ISQuery qSelect(QS_BRANCH);

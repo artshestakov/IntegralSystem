@@ -33,7 +33,7 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	QLabel *LabelLock = new QLabel(this);
 	LabelLock->setWordWrap(true);
 	LabelLock->setFont(FONT_APPLICATION_BOLD);
-	LabelLock->setText(LOCALIZATION("ApplicationLock"));
+	LabelLock->setText(LANG("ApplicationLock"));
 	Layout->addWidget(LabelLock);
 
 	QFormLayout *FormLayout = new QFormLayout();
@@ -45,18 +45,18 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	QLabel *LabelUser = new QLabel(this);
 	LabelUser->setFont(FONT_APPLICATION_BOLD);
 	LabelUser->setText(ISMetaUser::GetInstance().GetData()->FullName);
-	FormLayout->addRow(LOCALIZATION("User") + ":", LabelUser);
+	FormLayout->addRow(LANG("User") + ":", LabelUser);
 
 	EditPassword = new ISPasswordEdit(this);
 	EditPassword->SetVisibleGenerate(false);
-	FormLayout->addRow(LOCALIZATION("Password") + ":", EditPassword);
+	FormLayout->addRow(LANG("Password") + ":", EditPassword);
 
 	LabelNotify = new QLabel(this);
 	ISGui::SetFontWidgetBold(LabelNotify, true);
 	Layout->addWidget(LabelNotify, 0, Qt::AlignLeft);
 
 	ISPushButton *ButtonUnlock = new ISPushButton(this);
-	ButtonUnlock->setText(LOCALIZATION("Unlock"));
+	ButtonUnlock->setText(LANG("Unlock"));
 	ButtonUnlock->setIcon(BUFFER_ICONS("Arrow.Right"));
 	connect(ButtonUnlock, &ISPushButton::clicked, this, &ISLockForm::Unlock);
 	Layout->addWidget(ButtonUnlock, 0, Qt::AlignRight);
@@ -75,7 +75,7 @@ void ISLockForm::closeEvent(QCloseEvent *e)
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotCloseLockForm"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCloseLockForm"));
 		e->ignore();
 	}
 }
@@ -104,15 +104,15 @@ void ISLockForm::Unlock()
 		else
 		{
 			ISGui::SetWaitGlobalCursor(false);
-			ISProtocol::Insert(true, CONST_UID_PROTOCOL_INVALID_UNLOCK_APPLICATION, QString(), QString(), QVariant(), LOCALIZATION("IncorrectPassword"));
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Password.Error"));
+			ISProtocol::Insert(true, CONST_UID_PROTOCOL_INVALID_UNLOCK_APPLICATION, QString(), QString(), QVariant(), LANG("IncorrectPassword"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Password.Error"));
 			EditPassword->BlinkRed();
 		}
 	}
 	else
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Password.IsEmpty"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Password.IsEmpty"));
 		EditPassword->BlinkRed();
 	}
 
@@ -127,6 +127,6 @@ void ISLockForm::EnterClicked()
 void ISLockForm::NewNotify()
 {
 	NewNotifyCount++;
-	LabelNotify->setText(LOCALIZATION("NewNotifications").arg(NewNotifyCount));
+	LabelNotify->setText(LANG("NewNotifications").arg(NewNotifyCount));
 }
 //-----------------------------------------------------------------------------

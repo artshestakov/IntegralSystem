@@ -26,7 +26,7 @@ bool ISPrintingWord::Prepare()
 	/*WordApplication = new QAxObject("Word.Application", this);
 	if (!WordApplication)
 	{
-		SetErrorString(LOCALIZATION("Print.Word.Error.NotInitializeApplication"));
+		SetErrorString(LANG("Print.Word.Error.NotInitializeApplication"));
 		return false;
 	}*/
 
@@ -34,7 +34,7 @@ bool ISPrintingWord::Prepare()
 	Documents = WordApplication->querySubObject("Documents");
 	if (!Documents)
 	{
-		SetErrorString(LOCALIZATION("Print.Word.Error.NotInitializeDocuments"));
+		SetErrorString(LANG("Print.Word.Error.NotInitializeDocuments"));
 		return false;
 	}*/
 
@@ -44,12 +44,12 @@ bool ISPrintingWord::Prepare()
 bool ISPrintingWord::PrepareTempate()
 {
 	SetVisibleDialog(false);
-	QString Path;// = ISFileDialog::GetSaveFileName(nullptr, LOCALIZATION("File.Filter.Word"), GetReportLocalName());
+	QString Path;// = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Word"), GetReportLocalName());
 	SetVisibleDialog(true);
 
 	if (!Path.length())
 	{
-		//SetErrorString(LOCALIZATION(""));
+		//SetErrorString(LANG(""));
 		return false;
 	}
 
@@ -73,7 +73,7 @@ bool ISPrintingWord::PrepareTempate()
 	}
 	else
 	{
-		SetErrorString(LOCALIZATION("Print.Word.Error.NotCopyTemplate").arg(File.errorString()));
+		SetErrorString(LANG("Print.Word.Error.NotCopyTemplate").arg(File.errorString()));
 		return false;
 	}
 
@@ -82,14 +82,14 @@ bool ISPrintingWord::PrepareTempate()
 	//Document = Documents->querySubObject("Open(const QString &)", Path);
 	//if (!Document)
 	{
-		SetErrorString(LOCALIZATION("Print.Word.Error.NotOpenTemplate"));
+		SetErrorString(LANG("Print.Word.Error.NotOpenTemplate"));
 		return false;
 	}
 
 	//Bookmarks = Document->querySubObject("Bookmarks()");
 	//if (!Bookmarks)
 	{
-		SetErrorString(LOCALIZATION("Print.Word.Error.NotInitializeBookmarks"));
+		SetErrorString(LANG("Print.Word.Error.NotInitializeBookmarks"));
 		return false;
 	}
 

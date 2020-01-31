@@ -70,7 +70,7 @@ bool ISUpdate::CheckUpdate(int &FileID, QString &FileName, QString &Version)
 bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 {
 	Loading = true;
-	emit Message(LOCALIZATION("Preparation") + "...");
+	emit Message(LANG("Preparation") + "...");
 
 	ISQuery qSelectID(QS_DATA_ID);
 	qSelectID.BindValue(":FileID", FileID);
@@ -81,18 +81,18 @@ bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 		QFile FileUpdate(APPLICATION_TEMP_PATH + "/" + FileName + ".exe");
 		if (FileUpdate.exists()) //Если файл такой обновления уже существует во временой папке - удалить его
 		{
-			emit Message(LOCALIZATION("DeletingExistFileUpdate") + "...");
+			emit Message(LANG("DeletingExistFileUpdate") + "...");
 			IS_ASSERT(FileUpdate.remove(), FileUpdate.errorString());
 		}
 
 		IS_ASSERT(FileUpdate.open(QIODevice::WriteOnly | QIODevice::Append), FileUpdate.errorString());
-		emit Message(LOCALIZATION("Downloading") + "...");
+		emit Message(LANG("Downloading") + "...");
 
 		while (qSelectID.Next()) //Обход данных
 		{
 			if (Stop) //Если была нажата клавиша остановки
 			{
-				if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Message.Question.UpdatingStop")))
+				if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.UpdatingStop")))
 				{
 					FileUpdate.close();
 					FileUpdate.remove();
@@ -120,7 +120,7 @@ bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 		}
 
 		FileUpdate.close();
-		emit Message(LOCALIZATION("DownloadingDone"));
+		emit Message(LANG("DownloadingDone"));
 	}
 
 	return true;

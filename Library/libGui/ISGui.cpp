@@ -272,11 +272,11 @@ int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const 
 	int CalendarID = ISCore::CalendarInsert(DateTime, Name, Text, TableName, ObjectID);
 	if (CalendarID)
 	{
-		ISNotificationService::ShowNotification(LOCALIZATION("NotifyInsertedDone").arg(Name));
+		ISNotificationService::ShowNotification(LANG("NotifyInsertedDone").arg(Name));
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.NotifyNotInserted"));
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotifyNotInserted"));
 	}
 
 	return CalendarID;

@@ -105,7 +105,7 @@ ISContextMenuBase::ISContextMenuBase(QWidget *ParentEdit, bool ReadOnly, bool Un
 
 	//Прочие действия
 	ActionOtherMenu = new QAction(this);
-	ActionOtherMenu->setText(LOCALIZATION("OtherActions"));
+	ActionOtherMenu->setText(LANG("OtherActions"));
 	ActionOtherMenu->setMenu(new QMenu(this));
 	addAction(ActionOtherMenu);
 }
@@ -132,7 +132,7 @@ void ISContextMenuBase::CallVirtualKeyboard()
 {
 	if (!ISGui::OpenFile("C:/Windows/System32/osk.exe"))
 	{
-		ISMessageBox::ShowCritical(nullptr, LOCALIZATION("Message.Error.CallVirtualKeyboard"));
+		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.CallVirtualKeyboard"));
 	}
 }
 //-----------------------------------------------------------------------------

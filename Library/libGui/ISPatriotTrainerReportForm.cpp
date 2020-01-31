@@ -30,11 +30,11 @@ ISPatriotTrainerReportForm::ISPatriotTrainerReportForm(QWidget *parent) : ISInte
 	RangeDateEdit = new ISRangeDateEdit(this);
 	Layout->addWidget(RangeDateEdit);
 
-	Layout->addWidget(new QLabel(LOCALIZATION("Patriot.Trainer") + ":", this));
+	Layout->addWidget(new QLabel(LANG("Patriot.Trainer") + ":", this));
 
 	EditTrainer = new ISComboEdit(this);
 	EditTrainer->SetEditable(false);
-	EditTrainer->AddItem(LOCALIZATION("NotSelected"), 0);
+	EditTrainer->AddItem(LANG("NotSelected"), 0);
 	Layout->addWidget(EditTrainer);
 
 	ISQuery qSelectTrainer(QS_TRAINERS);
@@ -47,7 +47,7 @@ ISPatriotTrainerReportForm::ISPatriotTrainerReportForm(QWidget *parent) : ISInte
 	}
 
 	ISPushButton *ButtonUpdate = new ISPushButton(Widget);
-	ButtonUpdate->setText(LOCALIZATION("Update"));
+	ButtonUpdate->setText(LANG("Update"));
 	ButtonUpdate->setIcon(BUFFER_ICONS("Update"));
 	connect(ButtonUpdate, &ISPushButton::clicked, this, &ISPatriotTrainerReportForm::LoadData);
 	Layout->addWidget(ButtonUpdate);
@@ -55,7 +55,7 @@ ISPatriotTrainerReportForm::ISPatriotTrainerReportForm(QWidget *parent) : ISInte
 	Layout->addStretch();
 
 	LabelReport = new QLabel(this);
-	LabelReport->setText(LOCALIZATION("Patriot.LabelReport").arg(0).arg(0));
+	LabelReport->setText(LANG("Patriot.LabelReport").arg(0).arg(0));
 	GetMainLayout()->addWidget(LabelReport, 0, Qt::AlignLeft);
 
 	ListViewWidget = new ISListViewWidget(ISMetaData::GetInstanse().GetMetaQuery("TrainerReport"), this);
@@ -89,7 +89,7 @@ void ISPatriotTrainerReportForm::LoadData()
 		Cost = qSelectCost.ReadColumn("sum").toDouble();
 	}
 
-	LabelReport->setText(LOCALIZATION("Patriot.LabelReport").arg(Subscriptions).arg(Cost));
+	LabelReport->setText(LANG("Patriot.LabelReport").arg(Subscriptions).arg(Cost));
 
 	ListViewWidget->AddCondition(":TrainerID", EditTrainer->GetValue());
 	ListViewWidget->AddCondition(":DateBegin", RangeDateEdit->GetValue().BeginValue);

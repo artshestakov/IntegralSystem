@@ -34,7 +34,7 @@ ISDesktopForm::ISDesktopForm(QWidget *parent) : ISParagraphBaseForm(parent)
 		else
 		{
 			QLabel *Label = new QLabel(this);
-			Label->setText(LOCALIZATION("NotAccessSpecialDesktop"));
+			Label->setText(LANG("NotAccessSpecialDesktop"));
 			Label->setFont(FONT_TAHOMA_12_BOLD);
 			MainLayout->addWidget(Label, 0, Qt::AlignCenter);
 		}

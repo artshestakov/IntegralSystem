@@ -47,7 +47,7 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 
 	//Выход
 	MainMenu->addSeparator();
-	MainMenu->addAction(BUFFER_ICONS("PowerOff"), LOCALIZATION("Exit"), this, &ISMenuBar::Exit, QKeySequence(Qt::AltModifier + Qt::Key_F4));
+	MainMenu->addAction(BUFFER_ICONS("PowerOff"), LANG("Exit"), this, &ISMenuBar::Exit, QKeySequence(Qt::AltModifier + Qt::Key_F4));
 
 	CheckVisibleMunuItems();
 	InstallFontMenuItems();
@@ -88,7 +88,7 @@ void ISMenuBar::CreateFastAccessMenu()
 	Icon.addPixmap(BUFFER_ICONS("MainPanel.FastAccess.Active").pixmap(SIZE_24_24), QIcon::Active);
 
 	QToolButton *ButtonFastMenu = new QToolButton(this);
-	ButtonFastMenu->setText(LOCALIZATION("FastAccess"));
+	ButtonFastMenu->setText(LANG("FastAccess"));
 	ButtonFastMenu->setFont(FONT_TAHOMA_10);
 	ButtonFastMenu->setAutoRaise(true);
 	ButtonFastMenu->setIcon(Icon);
@@ -112,59 +112,59 @@ void ISMenuBar::CreateMenuFile()
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateMenuService()
 {
-	QMenu *MenuService = MainMenu->addMenu(BUFFER_ICONS("MainMenuItem"), LOCALIZATION("Service"));
+	QMenu *MenuService = MainMenu->addMenu(BUFFER_ICONS("MainMenuItem"), LANG("Service"));
 
 	//Избранное
-	MenuService->addAction(BUFFER_ICONS("Favorites"), LOCALIZATION("Favorites"), this, &ISMenuBar::Favorites);
+	MenuService->addAction(BUFFER_ICONS("Favorites"), LANG("Favorites"), this, &ISMenuBar::Favorites);
 
 	//История
-	MenuService->addAction(BUFFER_ICONS("History"), LOCALIZATION("History"), this, &ISMenuBar::History);
+	MenuService->addAction(BUFFER_ICONS("History"), LANG("History"), this, &ISMenuBar::History);
 	
 	MenuService->addSeparator();
 
 	//Настройка устройств
-	MenuService->addAction(BUFFER_ICONS("Device.Settings"), LOCALIZATION("Device.Settings"), this, &ISMenuBar::DeviceSettings);
+	MenuService->addAction(BUFFER_ICONS("Device.Settings"), LANG("Device.Settings"), this, &ISMenuBar::DeviceSettings);
 
 	//Смена пароля
-	MenuService->addAction(LOCALIZATION("ChangePassword") + "...", this, &ISMenuBar::ChangePassword);
+	MenuService->addAction(LANG("ChangePassword") + "...", this, &ISMenuBar::ChangePassword);
 
 	//Формирование лога
-	MenuService->addAction(BUFFER_ICONS("Log"), LOCALIZATION("CreateLogToday"), this, &ISMenuBar::CreateLogToday);
+	MenuService->addAction(BUFFER_ICONS("Log"), LANG("CreateLogToday"), this, &ISMenuBar::CreateLogToday);
 }
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateMenuAddition()
 {
-	QMenu *MenuAddition = MainMenu->addMenu(BUFFER_ICONS("MainMenuItem"), LOCALIZATION("Additionally"));
+	QMenu *MenuAddition = MainMenu->addMenu(BUFFER_ICONS("MainMenuItem"), LANG("Additionally"));
 
 	//Блокнот
-	MenuAddition->addAction(BUFFER_ICONS("Note"), LOCALIZATION("Notebook"), this, &ISMenuBar::Notebook);
+	MenuAddition->addAction(BUFFER_ICONS("Note"), LANG("Notebook"), this, &ISMenuBar::Notebook);
 
 	//Калькулятор
-	MenuAddition->addAction(BUFFER_ICONS("Calculator"), LOCALIZATION("Calculator"), this, &ISMenuBar::Calculator);
+	MenuAddition->addAction(BUFFER_ICONS("Calculator"), LANG("Calculator"), this, &ISMenuBar::Calculator);
 
 	//Адресная книга
-	MenuAddition->addAction(BUFFER_ICONS("AddressBook"), LOCALIZATION("AddressBook"), this, &ISMenuBar::AddressBook);
+	MenuAddition->addAction(BUFFER_ICONS("AddressBook"), LANG("AddressBook"), this, &ISMenuBar::AddressBook);
 }
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateMenuHelp()
 {
-	QMenu *MenuHelp = MainMenu->addMenu(BUFFER_ICONS("MainMenuItem"), LOCALIZATION("Help"));
+	QMenu *MenuHelp = MainMenu->addMenu(BUFFER_ICONS("MainMenuItem"), LANG("Help"));
 
 	//Справочная система
-	//Menu->addAction(BUFFER_ICONS("Reference"), LOCALIZATION("HelpSystem"), this, &ISMenuBar::HelpSystem);
+	//Menu->addAction(BUFFER_ICONS("Reference"), LANG("HelpSystem"), this, &ISMenuBar::HelpSystem);
 	//Menu->addSeparator();
 
 	//О программе
-	MenuHelp->addAction(BUFFER_ICONS("About"), LOCALIZATION("AboutForm.AboutApplication"), this, &ISMenuBar::AboutApplication);
+	MenuHelp->addAction(BUFFER_ICONS("About"), LANG("AboutForm.AboutApplication"), this, &ISMenuBar::AboutApplication);
 
 	//Обратная форма
-	MenuHelp->addAction(BUFFER_ICONS("FeedbackForm"), LOCALIZATION("Feedback"), this, &ISMenuBar::FeedbackForm);
+	MenuHelp->addAction(BUFFER_ICONS("FeedbackForm"), LANG("Feedback"), this, &ISMenuBar::FeedbackForm);
 
 	//Qt
-	MenuHelp->addAction(BUFFER_ICONS("Qt"), LOCALIZATION("AboutFrameworkDeveloped"), this, &ISMenuBar::AboutQt);
+	MenuHelp->addAction(BUFFER_ICONS("Qt"), LANG("AboutFrameworkDeveloped"), this, &ISMenuBar::AboutQt);
 	MenuHelp->addSeparator();
 
-	MenuHelp->addAction(BUFFER_ICONS("License"), LOCALIZATION("License"), this, &ISMenuBar::License);
+	MenuHelp->addAction(BUFFER_ICONS("License"), LANG("License"), this, &ISMenuBar::License);
 }
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateButtonsPanel()
@@ -172,24 +172,24 @@ void ISMenuBar::CreateButtonsPanel()
 	//Отладка
 	if (SETTING_BOOL(CONST_UID_SETTING_DEBUG_ACCESSTODEBUGVIEW))
 	{
-		QToolButton *ButtonDebug = CreateButton(LOCALIZATION("Debug"), "MainPanel.Debug");
+		QToolButton *ButtonDebug = CreateButton(LANG("Debug"), "MainPanel.Debug");
 		connect(ButtonDebug, &QToolButton::clicked, this, &ISMenuBar::Debug);
 	}
 
 	//Статус пользователя
-	QToolButton *ButtonUserStatus = CreateButton(LOCALIZATION("StatusUser"), "MainPanel.UserStatus");
+	QToolButton *ButtonUserStatus = CreateButton(LANG("StatusUser"), "MainPanel.UserStatus");
 	connect(ButtonUserStatus, &QToolButton::clicked, this, &ISMenuBar::UserStatus);
 
 	//Настройки
-	QToolButton *ButtonSettings = CreateButton(LOCALIZATION("Settings"), "MainPanel.Settings");
+	QToolButton *ButtonSettings = CreateButton(LANG("Settings"), "MainPanel.Settings");
 	connect(ButtonSettings, &QToolButton::clicked, this, &ISMenuBar::Settings);
 
 	//Блокировка
-	QToolButton *ButtonLook = CreateButton(LOCALIZATION("ExitForm.Lock"), "MainPanel.Lock");
+	QToolButton *ButtonLook = CreateButton(LANG("ExitForm.Lock"), "MainPanel.Lock");
 	connect(ButtonLook, &QToolButton::clicked, this, &ISMenuBar::Lock);
 
 	//Смена пользователя
-	QToolButton *ButtonChangeUser = CreateButton(LOCALIZATION("ChangeUser"), "MainPanel.ChangeUser");
+	QToolButton *ButtonChangeUser = CreateButton(LANG("ChangeUser"), "MainPanel.ChangeUser");
 	connect(ButtonChangeUser, &QToolButton::clicked, this, &ISMenuBar::ChangeUser);
 }
 //-----------------------------------------------------------------------------

@@ -156,7 +156,7 @@ void ISObjectFormBase::closeEvent(QCloseEvent *e)
 	{
 		emit CurrentObjectTab();
 
-		ISMessageBox MessageBox(QMessageBox::Warning, LOCALIZATION("SavingProcess"), LOCALIZATION("Message.Question.SaveObjectChanged").arg(MetaTable->GetLocalName()), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, this);
+		ISMessageBox MessageBox(QMessageBox::Warning, LANG("SavingProcess"), LANG("Message.Question.SaveObjectChanged").arg(MetaTable->GetLocalName()), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, this);
 		MessageBox.setWindowIcon(BUFFER_ICONS("Save"));
 		MessageBox.setDefaultButton(QMessageBox::No);
         QMessageBox::StandardButtons ClickedButton = static_cast<QMessageBox::StandardButtons>(MessageBox.Exec());
@@ -269,7 +269,7 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	ToolBarNavigation->actionTriggered(ActionObject);
 
 	//Список системных эскортов
-	QAction *ActionOther = ToolBarNavigation->CreateAction(BUFFER_ICONS("AdditionallyActions"), LOCALIZATION("ObjectOther"), ISNamespace::OAT_Other);
+	QAction *ActionOther = ToolBarNavigation->CreateAction(BUFFER_ICONS("AdditionallyActions"), LANG("ObjectOther"), ISNamespace::OAT_Other);
 	ToolBarNavigation->addAction(ActionOther);
 
 	QToolButton *ToolButtonOther = dynamic_cast<QToolButton*>(ToolBarNavigation->widgetForAction(ActionOther));
@@ -277,8 +277,8 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	ToolButtonOther->setMenu(new QMenu(ToolButtonOther));
 	ToolButtonOther->setCursor(CURSOR_POINTING_HAND);
 	ToolButtonOther->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Protocol"), LOCALIZATION("ProtocolCard"), ISNamespace::OAT_Service, QString(), "ISProtocolObjectListForm"));
-	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Discussion"), LOCALIZATION("Discussion"), ISNamespace::OAT_Service, QString(), "ISDiscussionListForm"));
+	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"), ISNamespace::OAT_Service, QString(), "ISProtocolObjectListForm"));
+	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Discussion"), LANG("Discussion"), ISNamespace::OAT_Service, QString(), "ISDiscussionListForm"));
 
 	for (int i = 0; i < MetaTable->GetEscorts().count(); ++i) //Обход эскортных мета-таблиц
 	{
@@ -298,7 +298,7 @@ void ISObjectFormBase::CreateMainTabWidget()
 	GetMainLayout()->addWidget(TabWidgetMain);
 
 	StackedWidget = new QStackedWidget(TabWidgetMain);
-	TabWidgetMain->addTab(StackedWidget, LOCALIZATION("Card"));
+	TabWidgetMain->addTab(StackedWidget, LANG("Card"));
 
 	WidgetObjectLayout = new QVBoxLayout();
 	WidgetObjectLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
@@ -321,15 +321,15 @@ void ISObjectFormBase::CreateToolBar()
 	LabelIsDeleted = new QLabel(this);
 	LabelIsDeleted->setVisible(false);
 	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
-	LabelIsDeleted->setText(LOCALIZATION("RecordMarkerIsDeleted"));
+	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
 	LabelIsDeleted->setFont(FONT_TAHOMA_12_BOLD);
 	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
 	WidgetObjectLayout->addWidget(LabelIsDeleted, 0, Qt::AlignHCenter);
 
 	//Сохранить и создать новую запись
 	ActionSaveAndNew = new QAction(ToolBar);
-	ActionSaveAndNew->setText(LOCALIZATION("SaveAndCreate"));
-	ActionSaveAndNew->setToolTip(LOCALIZATION("SaveChangeCloseAndCreateNew"));
+	ActionSaveAndNew->setText(LANG("SaveAndCreate"));
+	ActionSaveAndNew->setToolTip(LANG("SaveChangeCloseAndCreateNew"));
 	ActionSaveAndNew->setIcon(BUFFER_ICONS("SaveAndNew"));
 	ActionSaveAndNew->setVisible(SETTING_BOOL(CONST_UID_SETTING_OBJECTS_SAVECLOSENEW));
 	connect(ActionSaveAndNew, &QAction::triggered, this, &ISObjectFormBase::SaveCreate);
@@ -337,25 +337,25 @@ void ISObjectFormBase::CreateToolBar()
 
 	//Сохранить и закрыть карточку
 	ActionSaveClose = ISControls::CreateActionSaveAndClose(ToolBar);
-	ActionSaveClose->setToolTip(LOCALIZATION("SaveChangeClose"));
+	ActionSaveClose->setToolTip(LANG("SaveChangeClose"));
 	connect(ActionSaveClose, &QAction::triggered, this, &ISObjectFormBase::SaveClose);
 	ToolBar->addAction(ActionSaveClose);
 
 	//Сохранить карточку
 	ActionSave = ISControls::CreateActionSave(ToolBar);
-	ActionSave->setToolTip(LOCALIZATION("SaveChange"));
+	ActionSave->setToolTip(LANG("SaveChange"));
 	connect(ActionSave, &QAction::triggered, this, &ISObjectFormBase::Save);
 	ToolBar->addAction(ActionSave);
 
 	//Закрыть карточку
 	ActionClose = ISControls::CreateActionClose(ToolBar);
-	ActionClose->setToolTip(LOCALIZATION("CloseCard"));
+	ActionClose->setToolTip(LANG("CloseCard"));
 	connect(ActionClose, &QAction::triggered, this, &ISObjectFormBase::close);
 	ToolBar->addAction(ActionClose);
 
 	ActionAdditionally = new QAction(ToolBar);
-	ActionAdditionally->setText(LOCALIZATION("Additionally"));
-	ActionAdditionally->setToolTip(LOCALIZATION("Additionally"));
+	ActionAdditionally->setText(LANG("Additionally"));
+	ActionAdditionally->setToolTip(LANG("Additionally"));
 	ActionAdditionally->setIcon(BUFFER_ICONS("AdditionallyActions"));
 	ActionAdditionally->setPriority(QAction::LowPriority);
 	ActionAdditionally->setMenu(new QMenu(ToolBar));
@@ -374,8 +374,8 @@ void ISObjectFormBase::CreateToolBar()
 
 	//Избранное
 	ActionFavorites = new QAction(ToolBar);
-	ActionFavorites->setText(LOCALIZATION("AddToFavorites"));
-	ActionFavorites->setToolTip(LOCALIZATION("AddToFavorites"));
+	ActionFavorites->setText(LANG("AddToFavorites"));
+	ActionFavorites->setToolTip(LANG("AddToFavorites"));
 	ActionFavorites->setIcon(BUFFER_ICONS("Favorites"));
 	ActionFavorites->setPriority(QAction::LowPriority);
 	ActionFavorites->setCheckable(true);
@@ -396,8 +396,8 @@ void ISObjectFormBase::CreateToolBar()
 	//Отменить изменения
 	ActionCancelChange = new QAction(ToolBar);
 	ActionCancelChange->setEnabled(false);
-	ActionCancelChange->setText(LOCALIZATION("CancelChanged"));
-	ActionCancelChange->setToolTip(LOCALIZATION("CancelChanged"));
+	ActionCancelChange->setText(LANG("CancelChanged"));
+	ActionCancelChange->setToolTip(LANG("CancelChanged"));
 	ActionCancelChange->setIcon(BUFFER_ICONS("CancelChangedObject"));
 	ActionCancelChange->setPriority(QAction::LowPriority);
 	connect(ActionCancelChange, &QAction::triggered, this, &ISObjectFormBase::CancelChanged);
@@ -406,15 +406,15 @@ void ISObjectFormBase::CreateToolBar()
 	//Перечитать
 	ActionReRead = new QAction(ToolBar);
 	ActionReRead->setEnabled(false);
-	ActionReRead->setText(LOCALIZATION("ReReadCard"));
-	ActionReRead->setToolTip(LOCALIZATION("ReReadCard"));
+	ActionReRead->setText(LANG("ReReadCard"));
+	ActionReRead->setToolTip(LANG("ReReadCard"));
 	ActionReRead->setIcon(BUFFER_ICONS("Update"));
 	ActionReRead->setPriority(QAction::LowPriority);
 	connect(ActionReRead, &QAction::triggered, this, &ISObjectFormBase::ReRead);
 	AddActionMenu(ActionReRead);
 
 	QAction *ActionSettings = new QAction(ToolBar);
-	ActionSettings->setText(LOCALIZATION("Settings"));
+	ActionSettings->setText(LANG("Settings"));
 	connect(ActionSettings, &QAction::triggered, this, &ISObjectFormBase::ShowSettingsForm);
 	AddActionMenu(ActionSettings);
 }
@@ -539,12 +539,12 @@ void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
 	{
 		QLabel *LabelSystemInfoObject = new QLabel(this);
-		LabelSystemInfoObject->setText(LOCALIZATION("SystemField.ID") + ":");
+		LabelSystemInfoObject->setText(LANG("SystemField.ID") + ":");
 		LabelSystemInfoObject->setFont(FONT_APPLICATION_BOLD);
 
 		EditObjectID = new ISLineEdit(this);
-		EditObjectID->SetValue(LOCALIZATION("SystemField.ID.NotAssigned"));
-		EditObjectID->SetToolTip(LOCALIZATION("AutoFillField"));
+		EditObjectID->SetValue(LANG("SystemField.ID.NotAssigned"));
+		EditObjectID->SetToolTip(LANG("AutoFillField"));
 		EditObjectID->SetReadOnly(true); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
 		EditObjectID->SetCursor(CURSOR_WHATS_THIS); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
 		EditObjectID->SetVisibleClear(false);
@@ -578,9 +578,9 @@ void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEdit
 	{
 		LabelField->setTextFormat(Qt::RichText);
 		LabelField->setText(QString("<font>%1:</font><font color=#FF0000 size=4>*</font>").arg(MetaField->GetLabelName()));
-		LabelField->setToolTip(LOCALIZATION("FieldNotNull"));
+		LabelField->setToolTip(LANG("FieldNotNull"));
 		LabelField->setCursor(CURSOR_WHATS_THIS);
-		FieldEditBase->SetToolTip(LOCALIZATION("FillThisField"));
+		FieldEditBase->SetToolTip(LANG("FillThisField"));
 	}
 	else
 	{
@@ -688,7 +688,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 
 	if (qvariant_cast<ISNamespace::ObjectActionType>(ActionClicked->property("Type")) == ISNamespace::OAT_Object) //Выбран объект
 	{
-		TabWidgetMain->setTabText(0, LOCALIZATION("Card"));
+		TabWidgetMain->setTabText(0, LANG("Card"));
 		StackedWidget->setCurrentWidget(WidgetObject);
 	}
 	else //Выбран эскорт
@@ -803,7 +803,7 @@ bool ISObjectFormBase::Save()
 		{
 			if (MetaField->GetNotNull() && !MetaField->GetHideFromObject()) //Если поле обязательно для заполнения
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Field.NullValue").arg(MetaField->GetLabelName()));
+				ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(MetaField->GetLabelName()));
 				FieldEditBase->BlinkRed();
 				return false;
 			}
@@ -819,7 +819,7 @@ bool ISObjectFormBase::Save()
 
 		if (!FieldEditBase->IsValid())
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ValueFieldEditInvalid").arg(MetaField->GetLabelName()));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.ValueFieldEditInvalid").arg(MetaField->GetLabelName()));
 			FieldEditBase->BlinkRed();
 			return false;
 		}
@@ -891,7 +891,7 @@ bool ISObjectFormBase::Save()
 	catch (ISQueryException &e)
 	{
 		ISDatabase::GetInstance().GetDefaultDB().rollback(); //Откат транзакции
-		ISMessageBox::ShowWarning(this, LOCALIZATION(QString("PostgreSQL.Error.%1").arg(SqlQuery.GetErrorNumber())), e.GetWhat());
+		ISMessageBox::ShowWarning(this, LANG(QString("PostgreSQL.Error.%1").arg(SqlQuery.GetErrorNumber())), e.GetWhat());
 	}
 
 	if (Executed) //Запрос выполнен успешно
@@ -943,7 +943,7 @@ void ISObjectFormBase::RenameReiconForm()
 	switch (FormType)
 	{
 	case ISNamespace::OFT_New:
-		setWindowTitle(LOCALIZATION("Creating") + " (" + MetaTable->GetLocalName() + ")");
+		setWindowTitle(LANG("Creating") + " (" + MetaTable->GetLocalName() + ")");
 		setWindowIcon(BUFFER_ICONS("Add"));
 		break;
 
@@ -953,7 +953,7 @@ void ISObjectFormBase::RenameReiconForm()
 		break;
 
 	case ISNamespace::OFT_Copy:
-		setWindowTitle(LOCALIZATION("Coping") + " (" + MetaTable->GetLocalName() + "): " + ObjectName);
+		setWindowTitle(LANG("Coping") + " (" + MetaTable->GetLocalName() + "): " + ObjectName);
 		setWindowIcon(BUFFER_ICONS("AddCopy"));
 		break;
 	}
@@ -1038,13 +1038,13 @@ void ISObjectFormBase::AddFavoite()
 	{
 		ISFavorites::GetInstance().DeleteFavorite(MetaTable->GetName(), ObjectID);
 		ActionFavorites->setChecked(false);
-		ISNotificationService::ShowNotification(LOCALIZATION("RecordRemoveFavorites").arg(ObjectName));
+		ISNotificationService::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName));
 	}
 	else
 	{
 		ISFavorites::GetInstance().AddFavorite(MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectName, ObjectID);
 		ActionFavorites->setChecked(true);
-		ISNotificationService::ShowNotification(LOCALIZATION("RecordAddFavorites").arg(ObjectName));
+		ISNotificationService::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -1052,13 +1052,13 @@ void ISObjectFormBase::Delete()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
 	if (RecordIsDeleted)
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.RecoveryThisRecord")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryThisRecord")))
 		{
 			if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->GetName(), MetaTable->GetAlias(), GetObjectID(), MetaTable->GetLocalListName()))
 			{
@@ -1069,7 +1069,7 @@ void ISObjectFormBase::Delete()
 	}
 	else
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DeleteThisRecord")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteThisRecord")))
 		{
 			if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->GetName(), MetaTable->GetAlias(), GetObjectID(), MetaTable->GetLocalListName()))
 			{
@@ -1084,15 +1084,15 @@ void ISObjectFormBase::DeleteCascade()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Object.Delete.Cascade"), LOCALIZATION("Message.Object.Delete.Cascade.Help")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
 	{
 		if (ISCore::DeleteCascadeObject(MetaTable->GetName(), MetaTable->GetAlias(), GetObjectID()))
 		{
-			ISNotificationService::ShowNotification(LOCALIZATION("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
+			ISNotificationService::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
 			ISProtocol::DeleteCascadeObject(MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID());
 			
 			emit UpdateList();
@@ -1103,7 +1103,7 @@ void ISObjectFormBase::DeleteCascade()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CancelChanged()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CancelChanged")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CancelChanged")))
 	{
 		ISGui::SetWaitGlobalCursor(true);
 
@@ -1143,7 +1143,7 @@ void ISObjectFormBase::CancelChanged()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::ReRead()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ReReadCard")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ReReadCard")))
 	{
 		ISGui::SetWaitGlobalCursor(true);
 		for (const auto &FieldItem : FieldsMap.toStdMap())

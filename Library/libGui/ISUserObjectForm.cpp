@@ -61,11 +61,11 @@ bool ISUserObjectForm::Save()
 		if (Result)
 		{
 			QString UserFullName = GetFieldValue("Surname").toString() + SYMBOL_SPACE + GetFieldValue("Name").toString() + SYMBOL_SPACE + GetFieldValue("Patronymic").toString();
-			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CreatePasswordUser").arg(UserFullName)))
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreatePasswordUser").arg(UserFullName)))
 			{
 				if (ISGui::ShowUserPasswordForm(GetObjectID()))
 				{
-					ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.CreatedPasswordUser"));
+					ISMessageBox::ShowInformation(this, LANG("Message.Information.CreatedPasswordUser"));
 				}
 			}
 		}
@@ -111,7 +111,7 @@ void ISUserObjectForm::PasswordChange()
 	if (ISGui::ShowUserPasswordForm(GetObjectID()))
 	{
 		QString FullName = GetFieldValue("Surname").toString() + SYMBOL_SPACE + GetFieldValue("Name").toString() + SYMBOL_SPACE + GetFieldValue("Patronymic").toString();
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.ChangePasswordUser").arg(FullName));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.ChangePasswordUser").arg(FullName));
 	}
 }
 //-----------------------------------------------------------------------------

@@ -90,7 +90,7 @@ void ISCoreScheduler::ClearFiles()
 	for (int FileID : VectorInt) //Обход и удаление не привязанных файлов
 	{
 		Index++;
-		ISDebug::ShowInfoString(LOCALIZATION("Core.Scheduler.Delete").arg(Index).arg(VectorInt.count()));
+		ISDebug::ShowInfoString(LANG("Core.Scheduler.Delete").arg(Index).arg(VectorInt.count()));
 
 		ISQuery qDeleteFile(QD_FILE);
 		qDeleteFile.SetShowLongQuery(false);

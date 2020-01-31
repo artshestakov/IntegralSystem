@@ -86,21 +86,21 @@ void ISPlayerWidget::CreateInterface()
 	MainLayout->addLayout(LayoutPlayer);
 
 	ButtonPlay = new ISServiceButton(this);
-	ButtonPlay->setToolTip(LOCALIZATION("Player.Play"));
+	ButtonPlay->setToolTip(LANG("Player.Play"));
 	ButtonPlay->setIcon(BUFFER_ICONS("Player.Play"));
 	connect(ButtonPlay, &ISServiceButton::clicked, this, &ISPlayerWidget::Play);
 	LayoutPlayer->addWidget(ButtonPlay);
 
 	ButtonPause = new ISServiceButton(this);
 	ButtonPause->setEnabled(false);
-	ButtonPause->setToolTip(LOCALIZATION("Player.Pause"));
+	ButtonPause->setToolTip(LANG("Player.Pause"));
 	ButtonPause->setIcon(BUFFER_ICONS("Player.Pause"));
 	connect(ButtonPause, &ISServiceButton::clicked, this, &ISPlayerWidget::Pause);
 	LayoutPlayer->addWidget(ButtonPause);
 
 	ButtonStop = new ISServiceButton(this);
 	ButtonStop->setEnabled(false);
-	ButtonStop->setToolTip(LOCALIZATION("Player.Stop"));
+	ButtonStop->setToolTip(LANG("Player.Stop"));
 	ButtonStop->setIcon(BUFFER_ICONS("Player.Stop"));
 	connect(ButtonStop, &ISServiceButton::clicked, this, &ISPlayerWidget::Stop);
 	LayoutPlayer->addWidget(ButtonStop);
@@ -125,18 +125,18 @@ void ISPlayerWidget::CreateInterface()
 
 	ButtonPrevious = new ISServiceButton(this);
 	ButtonPrevious->setIcon(BUFFER_ICONS("Player.Previous"));
-	ButtonPrevious->setToolTip(LOCALIZATION("Player.Previous"));
+	ButtonPrevious->setToolTip(LANG("Player.Previous"));
 	connect(ButtonPrevious, &ISServiceButton::clicked, this, &ISPlayerWidget::Previous);
 	LayoutVolume->addWidget(ButtonPrevious);
 
 	ButtonNext = new ISServiceButton(this);
 	ButtonNext->setIcon(BUFFER_ICONS("Player.Next"));
-	ButtonNext->setToolTip(LOCALIZATION("Player.Next"));
+	ButtonNext->setToolTip(LANG("Player.Next"));
 	connect(ButtonNext, &ISServiceButton::clicked, this, &ISPlayerWidget::Next);
 	LayoutVolume->addWidget(ButtonNext);
 
 	ButtonVolume = new ISServiceButton(this);
-	ButtonVolume->setToolTip(LOCALIZATION("Player.Volume.Off"));
+	ButtonVolume->setToolTip(LANG("Player.Volume.Off"));
 	ButtonVolume->setIcon(BUFFER_ICONS("Volume.Maximum"));
 	connect(ButtonVolume, &ISServiceButton::clicked, this, &ISPlayerWidget::VolumeClicked);
 	LayoutVolume->addWidget(ButtonVolume);
@@ -166,14 +166,14 @@ void ISPlayerWidget::VolumeClicked()
 		LastVolume = MediaPlayer->volume();
 		MediaPlayer->setVolume(0);
 
-		ButtonVolume->setToolTip(LOCALIZATION("Player.Volume.On"));
+		ButtonVolume->setToolTip(LANG("Player.Volume.On"));
 		ButtonVolume->setIcon(BUFFER_ICONS("Volume.Null"));
 	}
 	else //¬ключить громкость
 	{
 		MediaPlayer->setVolume(LastVolume);
 
-		ButtonVolume->setToolTip(LOCALIZATION("Player.Volume.Off"));
+		ButtonVolume->setToolTip(LANG("Player.Volume.Off"));
 		ButtonVolume->setIcon(BUFFER_ICONS("Volume.Maximum"));
 	}
 
@@ -232,11 +232,11 @@ void ISPlayerWidget::MediaError(QMediaPlayer::Error NewError)
 	QString ErrorString;
 	switch (NewError)
 	{
-	case QMediaPlayer::ResourceError: ErrorString = LOCALIZATION("QMediaPlayer.Error.ResourceError"); break;
-	case QMediaPlayer::FormatError: ErrorString = LOCALIZATION("QMediaPlayer.Error.FormatError"); break;
-	case QMediaPlayer::NetworkError: ErrorString = LOCALIZATION("QMediaPlayer.Error.NetworkError"); break;
-	case QMediaPlayer::AccessDeniedError: ErrorString = LOCALIZATION("QMediaPlayer.Error.AccessDeniedError"); break;
-	case QMediaPlayer::ServiceMissingError: ErrorString = LOCALIZATION("QMediaPlayer.Error.ServiceMissingError"); break;
+	case QMediaPlayer::ResourceError: ErrorString = LANG("QMediaPlayer.Error.ResourceError"); break;
+	case QMediaPlayer::FormatError: ErrorString = LANG("QMediaPlayer.Error.FormatError"); break;
+	case QMediaPlayer::NetworkError: ErrorString = LANG("QMediaPlayer.Error.NetworkError"); break;
+	case QMediaPlayer::AccessDeniedError: ErrorString = LANG("QMediaPlayer.Error.AccessDeniedError"); break;
+	case QMediaPlayer::ServiceMissingError: ErrorString = LANG("QMediaPlayer.Error.ServiceMissingError"); break;
 	}
 
 	if (MediaPlayer->error() == QMediaPlayer::NoError)
@@ -247,7 +247,7 @@ void ISPlayerWidget::MediaError(QMediaPlayer::Error NewError)
 	{
 		LabelErrorIcon->setVisible(true);
 		LabelErrorText->setVisible(true);
-		LabelErrorText->setText(LOCALIZATION("Error") + ": " + ErrorString);
+		LabelErrorText->setText(LANG("Error") + ": " + ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------

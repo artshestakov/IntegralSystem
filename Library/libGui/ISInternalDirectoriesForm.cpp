@@ -43,7 +43,7 @@ ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent) : ISInterf
 
 	Label = new QLabel(this);
 	Label->setWordWrap(true);
-	Label->setText(LOCALIZATION("ClickFromViewList"));
+	Label->setText(LANG("ClickFromViewList"));
 	Label->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	Label->setFont(FONT_TAHOMA_14_BOLD);
 	Layout->addWidget(Label, 0, Qt::AlignCenter);

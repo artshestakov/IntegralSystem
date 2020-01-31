@@ -50,19 +50,19 @@ ISChatForm::ISChatForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	LayoutCenter->addLayout(LayoutTitle);
 
-	LayoutTitle->addWidget(new QLabel(LOCALIZATION("ChatForm.ShowMessages") + ":", this));
+	LayoutTitle->addWidget(new QLabel(LANG("ChatForm.ShowMessages") + ":", this));
 
-	QRadioButton *ButtonShowAll = new QRadioButton(LOCALIZATION("ChatForm.AllMessages"), this);
+	QRadioButton *ButtonShowAll = new QRadioButton(LANG("ChatForm.AllMessages"), this);
 	LayoutTitle->addWidget(ButtonShowAll);
 
-	QRadioButton *ButtonLast10 = new QRadioButton(LOCALIZATION("ChatForm.Last10Messages"), this);
+	QRadioButton *ButtonLast10 = new QRadioButton(LANG("ChatForm.Last10Messages"), this);
 	ButtonLast10->setChecked(true);
 	LayoutTitle->addWidget(ButtonLast10);
 
-	QRadioButton *ButtonLast20 = new QRadioButton(LOCALIZATION("ChatForm.Last20Messages"), this);
+	QRadioButton *ButtonLast20 = new QRadioButton(LANG("ChatForm.Last20Messages"), this);
 	LayoutTitle->addWidget(ButtonLast20);
 
-	QRadioButton *ButtonLast100 = new QRadioButton(LOCALIZATION("ChatForm.Last100Messages"), this);
+	QRadioButton *ButtonLast100 = new QRadioButton(LANG("ChatForm.Last100Messages"), this);
 	LayoutTitle->addWidget(ButtonLast100);
 
 	LayoutTitle->addStretch();
@@ -77,7 +77,7 @@ ISChatForm::ISChatForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	QVBoxLayout *LayouGroupBox = new QVBoxLayout();
 	LayouGroupBox->setContentsMargins(QMargins(0, 1, 0, 1));
 
-	QGroupBox *GroupBox = new QGroupBox(LOCALIZATION("ChatForm.GroupBox.Title"), this);
+	QGroupBox *GroupBox = new QGroupBox(LANG("ChatForm.GroupBox.Title"), this);
 	GroupBox->setLayout(LayouGroupBox);
 	LayoutCenter->addWidget(GroupBox);
 
@@ -92,7 +92,7 @@ ISChatForm::ISChatForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	LayoutCenter->addLayout(LayoutBar);
 	
 	LabelLoading = new QLabel(this);
-	LabelLoading->setText(LOCALIZATION("ChatForm.LoadingMessages") + "...");
+	LabelLoading->setText(LANG("ChatForm.LoadingMessages") + "...");
 	LabelLoading->setVisible(false);
 	LayoutBar->addWidget(LabelLoading);
 	
@@ -102,38 +102,38 @@ ISChatForm::ISChatForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	LayoutBar->addWidget(LabelAttachPath);
 
 	ISPushButton *ButtonAttach = new ISPushButton(this);
-	ButtonAttach->setText(LOCALIZATION("ChatForm.Attach"));
+	ButtonAttach->setText(LANG("ChatForm.Attach"));
 	ButtonAttach->setMenu(new QMenu(ButtonAttach));
 	LayoutBar->addWidget(ButtonAttach);
 
 	ActionAttachImage = new QAction(ButtonAttach->menu());
-	ActionAttachImage->setText(LOCALIZATION("Image"));
+	ActionAttachImage->setText(LANG("Image"));
 	connect(ActionAttachImage, &QAction::triggered, this, &ISChatForm::AttachImage);
 	ButtonAttach->menu()->addAction(ActionAttachImage);
 
 	ActionAttachFile = new QAction(ButtonAttach->menu());
-	ActionAttachFile->setText(LOCALIZATION("File"));
+	ActionAttachFile->setText(LANG("File"));
 	connect(ActionAttachFile, &QAction::triggered, this, &ISChatForm::AttachFile);
 	ButtonAttach->menu()->addAction(ActionAttachFile);
 
 	ButtonAttach->menu()->addSeparator();
 
 	ActionClearAttach = new QAction(ButtonAttach->menu());
-	ActionClearAttach->setText(LOCALIZATION("ChatForm.ClearAttach"));
+	ActionClearAttach->setText(LANG("ChatForm.ClearAttach"));
 	ActionClearAttach->setEnabled(false);
 	ButtonAttach->menu()->addAction(ActionClearAttach);
 	connect(ActionClearAttach, &QAction::triggered, this, &ISChatForm::ClearAttach);
 
 	ButtonSend = new ISPushButton(this);
-	ButtonSend->setText(LOCALIZATION("ChatForm.Send"));
-	ButtonSend->setToolTip(LOCALIZATION("ChatForm.Send.ToolTip"));
+	ButtonSend->setText(LANG("ChatForm.Send"));
+	ButtonSend->setToolTip(LANG("ChatForm.Send.ToolTip"));
 	ButtonSend->setIcon(BUFFER_ICONS("Chat.SendMessage"));
 	ButtonSend->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonSend, &ISPushButton::clicked, this, &ISChatForm::SendMessage);
 	LayoutBar->addWidget(ButtonSend);
 
 	TextEdit = new ISTextEdit(this);
-	TextEdit->SetPlaceholderText(LOCALIZATION("ChatForm.InputMessage") + "...");
+	TextEdit->SetPlaceholderText(LANG("ChatForm.InputMessage") + "...");
 	TextEdit->SetExecuteEnter(false);
 	TextEdit->setMaximumHeight(80);
 	connect(TextEdit, &ISTextEdit::KeyPressEnter, this, &ISChatForm::SendMessage);
@@ -197,7 +197,7 @@ void ISChatForm::SendMessage()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_SEND_MESSAGE_TO_CHAT))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Special.SendMessageToChat"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.SendMessageToChat"));
 		return;
 	}
 
@@ -206,7 +206,7 @@ void ISChatForm::SendMessage()
 
 	if (Message.length() || CurrentAttach == ISNamespace::ACT_Image || CurrentAttach == ISNamespace::ACT_File)
 	{
-		ButtonSend->setText(LOCALIZATION("ChatForm.Sending") + "...");
+		ButtonSend->setText(LANG("ChatForm.Sending") + "...");
 		ISGui::RepaintWidget(ButtonSend);
 		ISGui::SetWaitGlobalCursor(true);
 
@@ -231,7 +231,7 @@ void ISChatForm::SendMessage()
 			ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO("Chat.SendMessage"));
 		}
 
-		ButtonSend->setText(LOCALIZATION("ChatForm.Send"));
+		ButtonSend->setText(LANG("ChatForm.Send"));
 		ISGui::SetWaitGlobalCursor(false);
 	}
 	else
@@ -248,7 +248,7 @@ void ISChatForm::AttachImage()
 		qint64 Kbytes = ISSystem::GetFileSize(ImagePath) / 1024;
 		if (Kbytes > 5120) //5mb
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ChatImageSizeConstraint"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.ChatImageSizeConstraint"));
 		}
 		else
 		{
@@ -268,7 +268,7 @@ void ISChatForm::AttachFile()
 		qint64 Kbytes = ISSystem::GetFileSize(FilePath) / 1024;
 		if (Kbytes > 15360) //15mb
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ChatFileSizeConstraint"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.ChatFileSizeConstraint"));
 		}
 		else
 		{
@@ -390,7 +390,7 @@ void ISChatForm::NewMessage(const QVariantMap &VariantMap)
 	{
 		CountMessage++;
 		GetButtonParagraph()->SetText(QString("(+%1)").arg(CountMessage));
-		GetButtonParagraph()->SetToolTip(LOCALIZATION("ChatForm.UnreadMessages"));
+		GetButtonParagraph()->SetToolTip(LANG("ChatForm.UnreadMessages"));
 		GetButtonParagraph()->SetCursor(CURSOR_WHATS_THIS);
 	}
 }

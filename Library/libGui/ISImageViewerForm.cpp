@@ -8,40 +8,40 @@ ISImageViewerForm::ISImageViewerForm(const QPixmap &Pixmap, QWidget *parent) : I
 {
 	ScaleFactor = 1;
 
-	setWindowTitle(LOCALIZATION("ViewImage"));
+	setWindowTitle(LANG("ViewImage"));
 	setWindowIcon(BUFFER_ICONS("Image"));
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	GetMainLayout()->addWidget(ToolBar);
 
-	ActionPrint = ToolBar->addAction(BUFFER_ICONS("Print"), LOCALIZATION("Print"), this, &ISImageViewerForm::Print);
+	ActionPrint = ToolBar->addAction(BUFFER_ICONS("Print"), LANG("Print"), this, &ISImageViewerForm::Print);
 	ActionPrint->setShortcut(QKeySequence::Print);
 	ActionPrint->setEnabled(false);
 
 	ToolBar->addSeparator();
 
-	ActionCopy = ToolBar->addAction(BUFFER_ICONS("Copy"), LOCALIZATION("Copy"), this, &ISImageViewerForm::Copy);
+	ActionCopy = ToolBar->addAction(BUFFER_ICONS("Copy"), LANG("Copy"), this, &ISImageViewerForm::Copy);
 	ActionCopy->setShortcut(QKeySequence::Copy);
 	ActionCopy->setEnabled(false);
 
 	ToolBar->addSeparator();
 
-	ActionZoomIn = ToolBar->addAction(BUFFER_ICONS("ZoomIn"), LOCALIZATION("ZoomIn"), this, &ISImageViewerForm::ZoomIn);
+	ActionZoomIn = ToolBar->addAction(BUFFER_ICONS("ZoomIn"), LANG("ZoomIn"), this, &ISImageViewerForm::ZoomIn);
 	ActionZoomIn->setShortcut(QKeySequence::ZoomIn);
 	ActionZoomIn->setEnabled(false);
 
-	ActionZoomOut = ToolBar->addAction(BUFFER_ICONS("ZoomOut"), LOCALIZATION("ZoomOut"), this, &ISImageViewerForm::ZoomOut);
+	ActionZoomOut = ToolBar->addAction(BUFFER_ICONS("ZoomOut"), LANG("ZoomOut"), this, &ISImageViewerForm::ZoomOut);
 	ActionZoomOut->setShortcut(QKeySequence::ZoomOut);
 	ActionZoomOut->setEnabled(false);
 
-	ActionNormalSize = ToolBar->addAction(BUFFER_ICONS("NormalSize"), LOCALIZATION("NormalSize"), this, &ISImageViewerForm::NormalSize);
+	ActionNormalSize = ToolBar->addAction(BUFFER_ICONS("NormalSize"), LANG("NormalSize"), this, &ISImageViewerForm::NormalSize);
 	ActionNormalSize->setShortcut(QKeySequence("Ctrl+S"));
 	ActionNormalSize->setEnabled(false);
 
 	ToolBar->addSeparator();
 
-	ActionFitToWindow = ToolBar->addAction(BUFFER_ICONS("FitToWindow"), LOCALIZATION("FitToWindow"), this, &ISImageViewerForm::FitToWindow);
+	ActionFitToWindow = ToolBar->addAction(BUFFER_ICONS("FitToWindow"), LANG("FitToWindow"), this, &ISImageViewerForm::FitToWindow);
 	ActionFitToWindow->setEnabled(false);
 	ActionFitToWindow->setCheckable(true);
 	ActionFitToWindow->setShortcut(QKeySequence("Ctrl+F"));
@@ -188,7 +188,7 @@ void ISImageViewerForm::UpdateActions()
 void ISImageViewerForm::SetPixmap(const QPixmap &NewPixmap)
 {
 	LabelImage->setPixmap(NewPixmap);
-	LabelSize->setText(LOCALIZATION("ImageSize") + ": " + QString("%1 X %2").arg(NewPixmap.width()).arg(NewPixmap.height()));
+	LabelSize->setText(LANG("ImageSize") + ": " + QString("%1 X %2").arg(NewPixmap.width()).arg(NewPixmap.height()));
 	ScaleFactor = 1.0;
 
 	ScrollArea->setVisible(true);

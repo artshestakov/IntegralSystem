@@ -8,7 +8,7 @@ ISButtonClear::ISButtonClear(QWidget *parent) : ISPushButton(parent)
 {
 	setFixedSize(SIZE_22_22);
 	setCursor(CURSOR_POINTING_HAND);
-	setToolTip(LOCALIZATION("Clear.Field"));
+	setToolTip(LANG("Clear.Field"));
 	setFocusPolicy(Qt::NoFocus);
 	setIcon(BUFFER_ICONS("ButtonClear"));
 	setFlat(true);

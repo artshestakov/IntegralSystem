@@ -42,39 +42,39 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	addAction(ActionUser);
 
 	QAction *ActionShowInfo = new QAction(this);
-	ActionShowInfo->setText(LOCALIZATION("MonitorActivity.ActivityUser"));
+	ActionShowInfo->setText(LANG("MonitorActivity.ActivityUser"));
 	ActionShowInfo->setIcon(BUFFER_ICONS("ActivityUser"));
 	connect(ActionShowInfo, &QAction::triggered, this, &ISMonitorUserWidget::ShowActivity);
 	addAction(ActionShowInfo);
 
 	QAction *ActionProtocol = new QAction(this);
-	ActionProtocol->setText(LOCALIZATION("ProtocolUser"));
+	ActionProtocol->setText(LANG("ProtocolUser"));
 	ActionProtocol->setIcon(BUFFER_ICONS("Protocol"));
 	connect(ActionProtocol, &QAction::triggered, this, &ISMonitorUserWidget::ShowProtocol);
 	addAction(ActionProtocol);
 
 	QAction *ActionDetails = new QAction(this);
-	ActionDetails->setText(LOCALIZATION("Details"));
+	ActionDetails->setText(LANG("Details"));
 	ActionDetails->setIcon(BUFFER_ICONS("Information"));
 	ActionDetails->setEnabled(is_online);
 	connect(ActionDetails, &QAction::triggered, this, &ISMonitorUserWidget::ShowDetails);
 	addAction(ActionDetails);
 
 	QAction *ActionTerminate = new QAction(this);
-	ActionTerminate->setText(LOCALIZATION("MonitorActivity.EndSession"));
+	ActionTerminate->setText(LANG("MonitorActivity.EndSession"));
 	ActionTerminate->setIcon(BUFFER_ICONS("EndSessionUser"));
 	connect(ActionTerminate, &QAction::triggered, this, &ISMonitorUserWidget::EndSession);
 	addAction(ActionTerminate);
 
 	QAction *ActionGetScreenshot = new QAction(this);
-	ActionGetScreenshot->setText(LOCALIZATION("MonitorActivity.GetScreenshot"));
+	ActionGetScreenshot->setText(LANG("MonitorActivity.GetScreenshot"));
 	ActionGetScreenshot->setIcon(BUFFER_ICONS("GetScreenshot"));
 	ActionGetScreenshot->setEnabled(is_online);
 	connect(ActionGetScreenshot, &QAction::triggered, this, &ISMonitorUserWidget::GetScreenshot);
 	addAction(ActionGetScreenshot);
 
 	QAction *ActionSendNotify = new QAction(this);
-	ActionSendNotify->setText(LOCALIZATION("SendNotify"));
+	ActionSendNotify->setText(LANG("SendNotify"));
 	ActionSendNotify->setIcon(BUFFER_ICONS("SendNotify"));
 	ActionSendNotify->setEnabled(is_online);
 	connect(ActionSendNotify, &QAction::triggered, this, &ISMonitorUserWidget::SendNotify);
@@ -83,12 +83,12 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	if (is_online)
 	{
 		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Online").pixmap(SIZE_32_32));
-		LabelUserName->setText(LabelUserName->text() + "\n(" + LOCALIZATION("MonitorActivity.MonitorUser.Online") + ")");
+		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Online") + ")");
 	}
 	else
 	{
 		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Offline").pixmap(SIZE_32_32));
-		LabelUserName->setText(LabelUserName->text() + "\n(" + LOCALIZATION("MonitorActivity.MonitorUser.Offline") + ")");
+		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Offline") + ")");
 	}
 }
 //-----------------------------------------------------------------------------

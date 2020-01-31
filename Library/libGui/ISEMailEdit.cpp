@@ -11,10 +11,10 @@ ISEMailEdit::ISEMailEdit(QWidget *parent) : ISLineEdit(parent)
 	setMaximumWidth(280);
 
 	SetIcon(BUFFER_ICONS("EMail.FieldEdit.Acceptable"));
-	SetPlaceholderText(LOCALIZATION("Field.EMail.PlaceholderText"));
+	SetPlaceholderText(LANG("Field.EMail.PlaceholderText"));
 
 	ISServiceButton *ButtonSend = new ISServiceButton(this);
-	ButtonSend->setToolTip(LOCALIZATION("Send"));
+	ButtonSend->setToolTip(LANG("Send"));
 	ButtonSend->setIcon(BUFFER_ICONS("EMailSend"));
 	connect(ButtonSend, &ISServiceButton::clicked, this, &ISEMailEdit::Send);
 	AddWidgetToRight(ButtonSend);
@@ -36,7 +36,7 @@ void ISEMailEdit::Send()
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.EMailIsEmpty"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.EMailIsEmpty"));
 		BlinkRed();
 	}
 }

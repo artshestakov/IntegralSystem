@@ -15,48 +15,48 @@ ISFileDialog::~ISFileDialog()
 QString ISFileDialog::GetOpenFileNameImage(QWidget *parent)
 {
 	QString FilterString;
-	FilterString += LOCALIZATION("File.Filter.Images") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.PNG") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.JPEG") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.JPG") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.DDS") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.GIF") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.ICNS") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.ICO") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.SVG") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.TGA") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.TIFF") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.WBMP") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.BMP") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.WEBP");
+	FilterString += LANG("File.Filter.Images") + ";;";
+	FilterString += LANG("File.Filter.Image.PNG") + ";;";
+	FilterString += LANG("File.Filter.Image.JPEG") + ";;";
+	FilterString += LANG("File.Filter.Image.JPG") + ";;";
+	FilterString += LANG("File.Filter.Image.DDS") + ";;";
+	FilterString += LANG("File.Filter.Image.GIF") + ";;";
+	FilterString += LANG("File.Filter.Image.ICNS") + ";;";
+	FilterString += LANG("File.Filter.Image.ICO") + ";;";
+	FilterString += LANG("File.Filter.Image.SVG") + ";;";
+	FilterString += LANG("File.Filter.Image.TGA") + ";;";
+	FilterString += LANG("File.Filter.Image.TIFF") + ";;";
+	FilterString += LANG("File.Filter.Image.WBMP") + ";;";
+	FilterString += LANG("File.Filter.Image.BMP") + ";;";
+	FilterString += LANG("File.Filter.Image.WEBP");
 
-	return ISFileDialog::getOpenFileName(parent, LOCALIZATION("FileDialog.Image.Select.Title"), QDir::homePath(), FilterString);
+	return ISFileDialog::getOpenFileName(parent, LANG("FileDialog.Image.Select.Title"), QDir::homePath(), FilterString);
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetSaveFileNameImage(QWidget *parent, const QString &FileName)
 {
 	QString FilterString;
-	FilterString += LOCALIZATION("File.Filter.Images") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.PNG") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.JPEG") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.JPG") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.DDS") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.GIF") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.ICNS") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.ICO") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.SVG") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.TGA") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.TIFF") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.WBMP") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.BMP") + ";;";
-	FilterString += LOCALIZATION("File.Filter.Image.WEBP");
+	FilterString += LANG("File.Filter.Images") + ";;";
+	FilterString += LANG("File.Filter.Image.PNG") + ";;";
+	FilterString += LANG("File.Filter.Image.JPEG") + ";;";
+	FilterString += LANG("File.Filter.Image.JPG") + ";;";
+	FilterString += LANG("File.Filter.Image.DDS") + ";;";
+	FilterString += LANG("File.Filter.Image.GIF") + ";;";
+	FilterString += LANG("File.Filter.Image.ICNS") + ";;";
+	FilterString += LANG("File.Filter.Image.ICO") + ";;";
+	FilterString += LANG("File.Filter.Image.SVG") + ";;";
+	FilterString += LANG("File.Filter.Image.TGA") + ";;";
+	FilterString += LANG("File.Filter.Image.TIFF") + ";;";
+	FilterString += LANG("File.Filter.Image.WBMP") + ";;";
+	FilterString += LANG("File.Filter.Image.BMP") + ";;";
+	FilterString += LANG("File.Filter.Image.WEBP");
 
-	return ISFileDialog::getSaveFileName(parent, LOCALIZATION("FileDialog.Image.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, FilterString);
+	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.Image.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, FilterString);
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetSaveFileNameAsteriskRecord(QWidget *parent, const QString &FileName)
 {
-	return ISFileDialog::getSaveFileName(parent, LOCALIZATION("FileDialog.AsteriskRecord.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, LOCALIZATION("File.Filter.AsteriskRecord"));
+	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.AsteriskRecord.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, LANG("File.Filter.AsteriskRecord"));
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetOpenFileName(QWidget *parent, const QString &FilePath, const QString &FilterName)
@@ -72,21 +72,21 @@ QString ISFileDialog::GetOpenFileName(QWidget *parent, const QString &FilePath, 
 		Dir = QDir::homePath();
 	}
 
-	return ISFileDialog::getOpenFileName(parent, LOCALIZATION("FileDialog.File.Open.Title"), Dir, FilterName);
+	return ISFileDialog::getOpenFileName(parent, LANG("FileDialog.File.Open.Title"), Dir, FilterName);
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetSaveFileName(QWidget *parent, const QString &FilterName, const QString &FileName)
 {
-	return ISFileDialog::getSaveFileName(parent, LOCALIZATION("FileDialog.File.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, FilterName);
+	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.File.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, FilterName);
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetDirectoryPath(QWidget *parent)
 {
-	return ISFileDialog::getExistingDirectory(parent, LOCALIZATION("FileDialog.Directory.Title"), QDir::homePath(), ISFileDialog::ShowDirsOnly);
+	return ISFileDialog::getExistingDirectory(parent, LANG("FileDialog.Directory.Title"), QDir::homePath(), ISFileDialog::ShowDirsOnly);
 }
 //-----------------------------------------------------------------------------
 QStringList ISFileDialog::GetOpenFilesName(QWidget *parent, const QString &FilterName)
 {
-	return ISFileDialog::getOpenFileNames(parent, LOCALIZATION("FileDialog.Files.Open.Title"), QDir::homePath(), FilterName);
+	return ISFileDialog::getOpenFileNames(parent, LANG("FileDialog.Files.Open.Title"), QDir::homePath(), FilterName);
 }
 //-----------------------------------------------------------------------------

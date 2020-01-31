@@ -55,7 +55,7 @@ void ISCoreCalendar::Timeout()
 			QString Name = qSelectEvents.ReadColumn("cldr_name").toString();
 
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_CALENDAR_EVENT, UserID, EventID, Name, false);
-			ISDebug::ShowString(LOCALIZATION("Calendar.Sended").arg(EventID).arg(UserName));
+			ISDebug::ShowString(LANG("Calendar.Sended").arg(EventID).arg(UserName));
 		}
 	}
 }

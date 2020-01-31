@@ -9,7 +9,7 @@ ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount, QW
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 	ForbidResize();
 
-	QLabel *Label = new QLabel(LOCALIZATION("SelectUserFromOrganizationWork").arg(OrganizationCount), this);
+	QLabel *Label = new QLabel(LANG("SelectUserFromOrganizationWork").arg(OrganizationCount), this);
 	Label->setWordWrap(true);
 	GetMainLayout()->addWidget(Label);
 
@@ -17,13 +17,13 @@ ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount, QW
 	GetMainLayout()->addLayout(FormLayout);
 
 	UserEdit = new ISUserEdit(this);
-	FormLayout->addRow(LOCALIZATION("User") + ":", UserEdit);
+	FormLayout->addRow(LANG("User") + ":", UserEdit);
 
 	DateEdit = new ISDateEdit(this);
 	DateEdit->SetMinimumDate(DATE_TODAY);
 	DateEdit->SetCheckEnable(Qt::Checked);
 	DateEdit->SetVisibleCheck(false);
-	FormLayout->addRow(LOCALIZATION("Date") + ":", DateEdit);
+	FormLayout->addRow(LANG("Date") + ":", DateEdit);
 
 	ISButtonDialog *ButtonDialog = new ISButtonDialog(this);
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISTransferOrganizationForm::Select);

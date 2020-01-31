@@ -26,7 +26,7 @@ ISButtonDialog::ISButtonDialog(QWidget *parent, const QString &ApplyText, const 
 	}
 	else
 	{
-		button(QDialogButtonBox::Ok)->setText(LOCALIZATION("Apply"));
+		button(QDialogButtonBox::Ok)->setText(LANG("Apply"));
 	}
 
 	if (CloseText.length())
@@ -35,7 +35,7 @@ ISButtonDialog::ISButtonDialog(QWidget *parent, const QString &ApplyText, const 
 	}
 	else
 	{
-		button(QDialogButtonBox::Cancel)->setText(LOCALIZATION("Close"));
+		button(QDialogButtonBox::Cancel)->setText(LANG("Close"));
 	}
 }
 //-----------------------------------------------------------------------------

@@ -33,7 +33,7 @@ void ISUserListForm::CreateCopy()
 {
 	if (CheckThisUser())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotCreateCopyThisUser"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCreateCopyThisUser"));
 	}
 	else
 	{
@@ -45,7 +45,7 @@ void ISUserListForm::Edit()
 {
 	if (CheckThisUser())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotEditThisUser"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotEditThisUser"));
 	}
 	else
 	{
@@ -63,20 +63,20 @@ void ISUserListForm::ChangePassword()
 {
 	if (CheckThisUser())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotEditThisUser"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotEditThisUser"));
 		return;
 	}
 
 	if (ISDatabase::GetInstance().GetValue("_Users", "IsSystem", GetObjectID()).toBool())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.User.ChangePassword.Postgres"));
+		ISMessageBox::ShowWarning(this, LANG("Message.User.ChangePassword.Postgres"));
 		return;
 	}
 
 	if (ISGui::ShowUserPasswordForm(GetCurrentRecordValue("ID").toInt()))
 	{
 		QString FullName = GetCurrentRecordValue("Surname").toString() + SYMBOL_SPACE + GetCurrentRecordValue("Name").toString() + SYMBOL_SPACE + GetCurrentRecordValue("Patronymic").toString();
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.ChangePasswordUser").arg(FullName));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.ChangePasswordUser").arg(FullName));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void ISUserListForm::UpdateLabelOnline()
 	ISQuery qSelect(QS_USERS_ONLINE);
 	if (qSelect.ExecuteFirst())
 	{
-		LabelOnline->setText(LOCALIZATION("OnlineUsers") + ": " + qSelect.ReadColumn("count").toString());
+		LabelOnline->setText(LANG("OnlineUsers") + ": " + qSelect.ReadColumn("count").toString());
 	}
 }
 //-----------------------------------------------------------------------------

@@ -13,10 +13,10 @@ static QString QS_CLIENT = PREPARE_QUERY("SELECT clts_fio, cltp_name, EXTRACT(YE
 //-----------------------------------------------------------------------------
 ISPatriotClientsBirthdayForm::ISPatriotClientsBirthdayForm(QWidget *parent) : ISInterfaceForm(parent)
 {
-	setWindowTitle(LOCALIZATION("Patriot.Birthdays"));
+	setWindowTitle(LANG("Patriot.Birthdays"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 
-	GetMainLayout()->addWidget(new QLabel(LOCALIZATION("Patriot.BirthdayCurrentDate") + ":", this));
+	GetMainLayout()->addWidget(new QLabel(LANG("Patriot.BirthdayCurrentDate") + ":", this));
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setAlternatingRowColors(true);
@@ -43,7 +43,7 @@ void ISPatriotClientsBirthdayForm::AddClient(int ClientID)
 		int YearCount = qSelectClient.ReadColumn("YearCount").toInt();
 		
 		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-		ListWidgetItem->setText(FIO + " (" + Type + "). " + LOCALIZATION("Patriot.WasFulfilled").arg(YearCount));
+		ListWidgetItem->setText(FIO + " (" + Type + "). " + LANG("Patriot.WasFulfilled").arg(YearCount));
 		ListWidgetItem->setIcon(BUFFER_ICONS("Birthday"));
 		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 	}

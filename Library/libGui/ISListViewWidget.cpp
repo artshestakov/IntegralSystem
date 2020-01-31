@@ -46,7 +46,7 @@ ISListViewWidget::ISListViewWidget(PMetaClassTable *meta_query, QWidget *parent)
 	GetMainLayout()->addWidget(TableView);
 
 	LabelRows = new QLabel(this);
-	LabelRows->setText(QString("%1: %2...").arg(LOCALIZATION("RecordsCount")).arg(LOCALIZATION("Calculated"))); //Изменение значения в надписе "Записей"
+	LabelRows->setText(QString("%1: %2...").arg(LANG("RecordsCount")).arg(LANG("Calculated"))); //Изменение значения в надписе "Записей"
 	GetMainLayout()->addWidget(LabelRows);
 }
 //-----------------------------------------------------------------------------
@@ -139,14 +139,14 @@ void ISListViewWidget::ModelThreadStarted()
 	LabelAnimation->setMovie(Movie);
 	Movie->start();
 
-	LabelLoading->setText(LOCALIZATION("LoadDataPleceWait") + "...");
+	LabelLoading->setText(LANG("LoadDataPleceWait") + "...");
 }
 //-----------------------------------------------------------------------------
 void ISListViewWidget::ModelThreadFinished()
 {
 	ISGui::SetWaitGlobalCursor(false);
 	ActionUpdate->setEnabled(true);
-	LabelRows->setText(QString("%1: %2").arg(LOCALIZATION("RecordsCount")).arg(SqlModel->rowCount())); //Изменение значения в надписе "Записей"
+	LabelRows->setText(QString("%1: %2").arg(LANG("RecordsCount")).arg(SqlModel->rowCount())); //Изменение значения в надписе "Записей"
 
 	QMovie *Movie = LabelAnimation->movie();
 	Movie->stop();

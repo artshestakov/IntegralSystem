@@ -11,21 +11,21 @@ ISExportForm::ISExportForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 	SelectedType = ISNamespace::ET_Unknown;
 
 	setWindowIcon(BUFFER_ICONS("ExportTable"));
-	setWindowTitle(LOCALIZATION("Export.Table"));
+	setWindowTitle(LANG("Export.Table"));
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
 	QLabel *LabelText = new QLabel(this);
-	LabelText->setText(LOCALIZATION("SelectExportType") + ":");
+	LabelText->setText(LANG("SelectExportType") + ":");
 	GetMainLayout()->addWidget(LabelText);
 
 	ComboBoxType = new ISComboEdit(this);
 	ComboBoxType->SetEditable(false);
-	ComboBoxType->AddItem(LOCALIZATION("NotSelected"), ISNamespace::ET_Unknown);
-	ComboBoxType->AddItem(LOCALIZATION("Export.Type.CSV"), ISNamespace::ET_CSV);
-	ComboBoxType->AddItem(LOCALIZATION("Export.Type.HTML"), ISNamespace::ET_HTML);
-	ComboBoxType->AddItem(LOCALIZATION("Export.Type.DBF"), ISNamespace::ET_DBF);
-	ComboBoxType->AddItem(LOCALIZATION("Export.Type.XML"), ISNamespace::ET_XML);
+	ComboBoxType->AddItem(LANG("NotSelected"), ISNamespace::ET_Unknown);
+	ComboBoxType->AddItem(LANG("Export.Type.CSV"), ISNamespace::ET_CSV);
+	ComboBoxType->AddItem(LANG("Export.Type.HTML"), ISNamespace::ET_HTML);
+	ComboBoxType->AddItem(LANG("Export.Type.DBF"), ISNamespace::ET_DBF);
+	ComboBoxType->AddItem(LANG("Export.Type.XML"), ISNamespace::ET_XML);
 	GetMainLayout()->addWidget(ComboBoxType);
 
 	TabWidget = new QTabWidget(this);
@@ -34,7 +34,7 @@ ISExportForm::ISExportForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 	CreateTabSettings();
 	CreateTabFields();
 
-	ButtonPanel = new ISButtonDialog(this, LOCALIZATION("Export"));
+	ButtonPanel = new ISButtonDialog(this, LANG("Export"));
 	connect(ButtonPanel, &ISButtonDialog::Apply, this, &ISExportForm::Select);
 	connect(ButtonPanel, &ISButtonDialog::Close, this, &ISExportForm::close);
 	GetMainLayout()->addWidget(ButtonPanel);
@@ -71,11 +71,11 @@ void ISExportForm::CreateTabSettings()
 
 	QWidget *TabSettings = new QWidget(TabWidget);
 	TabSettings->setLayout(FormLayout);
-	TabWidget->addTab(TabSettings, LOCALIZATION("Export.Settings"));
+	TabWidget->addTab(TabSettings, LANG("Export.Settings"));
 
 	CheckHeader = new ISCheckEdit(TabSettings);
 	CheckHeader->SetValue(true);
-	FormLayout->addRow(LOCALIZATION("Export.Setting.Header") + ":", CheckHeader);
+	FormLayout->addRow(LANG("Export.Setting.Header") + ":", CheckHeader);
 }
 //-----------------------------------------------------------------------------
 void ISExportForm::CreateTabFields()
@@ -84,14 +84,14 @@ void ISExportForm::CreateTabFields()
 
 	QWidget *TabFields = new QWidget(TabWidget);
 	TabFields->setLayout(LayoutFields);
-	TabWidget->addTab(TabFields, LOCALIZATION("Export.Fields"));
+	TabWidget->addTab(TabFields, LANG("Export.Fields"));
 
 	QToolBar *ToolBar = new QToolBar(TabFields);
 	LayoutFields->addWidget(ToolBar);
 
 	QAction *ActionSelectAll = new QAction(ToolBar);
-	ActionSelectAll->setText(LOCALIZATION("SelectAllFields"));
-	ActionSelectAll->setToolTip(LOCALIZATION("SelectAllFields"));
+	ActionSelectAll->setText(LANG("SelectAllFields"));
+	ActionSelectAll->setToolTip(LANG("SelectAllFields"));
 	ActionSelectAll->setIcon(BUFFER_ICONS("CheckAll"));
 	ToolBar->addAction(ActionSelectAll);
 	connect(ActionSelectAll, &QAction::triggered, [=]
@@ -103,8 +103,8 @@ void ISExportForm::CreateTabFields()
 	});
 
 	QAction *ActionDeselectAll = new QAction(ToolBar);
-	ActionDeselectAll->setText(LOCALIZATION("DeselectAllFields"));
-	ActionDeselectAll->setToolTip(LOCALIZATION("DeselectAllFields"));
+	ActionDeselectAll->setText(LANG("DeselectAllFields"));
+	ActionDeselectAll->setToolTip(LANG("DeselectAllFields"));
 	ActionDeselectAll->setIcon(BUFFER_ICONS("CheckNotAll"));
 	ToolBar->addAction(ActionDeselectAll);
 	connect(ActionDeselectAll, &QAction::triggered, [=]
@@ -145,13 +145,13 @@ void ISExportForm::Select()
 
 	if (SelectedType == ISNamespace::ET_Unknown)
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Export.UnknownType"));
+		ISMessageBox::ShowWarning(this, LANG("Export.UnknownType"));
 		return;
 	}
 
 	if (!SelectedFields.count())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Export.NotSelectedFields"));
+		ISMessageBox::ShowWarning(this, LANG("Export.NotSelectedFields"));
 		return;
 	}
 

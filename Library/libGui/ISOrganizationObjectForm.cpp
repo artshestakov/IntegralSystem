@@ -51,21 +51,21 @@ ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType f
 	}
 
 	QAction *ActionNotify = new QAction(this);
-	ActionNotify->setText(LOCALIZATION("OrganizationNotify"));
-	ActionNotify->setToolTip(LOCALIZATION("OrganizationNotify"));
+	ActionNotify->setText(LANG("OrganizationNotify"));
+	ActionNotify->setToolTip(LANG("OrganizationNotify"));
 	ActionNotify->setIcon(BUFFER_ICONS("Bell"));
 	connect(ActionNotify, &QAction::triggered, this, &ISOrganizationObjectForm::Notify);
 	AddActionToolBar(ActionNotify);
 
 	ActionDemo = new QAction(this);
-	ActionDemo->setText(LOCALIZATION("DemoAccess"));
-	ActionDemo->setToolTip(LOCALIZATION("DemoAccess"));
+	ActionDemo->setText(LANG("DemoAccess"));
+	ActionDemo->setToolTip(LANG("DemoAccess"));
 	connect(ActionDemo, &QAction::triggered, this, &ISOrganizationObjectForm::DemoAccess);
 	AddActionToolBar(ActionDemo);
 
 	ActionScore = new QAction(this);
-	ActionScore->setText(LOCALIZATION("Score"));
-	ActionScore->setToolTip(LOCALIZATION("Score"));
+	ActionScore->setText(LANG("Score"));
+	ActionScore->setToolTip(LANG("Score"));
 	connect(ActionScore, &QAction::triggered, this, &ISOrganizationObjectForm::Score);
 	AddActionToolBar(ActionScore);
 
@@ -82,7 +82,7 @@ ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType f
 
 			QLabel *LabelWorkIn = new QLabel(GetToolBar());
 			LabelWorkIn->setFont(FONT_APPLICATION_BOLD);
-			LabelWorkIn->setText(LOCALIZATION("OrganizationInWorkFromUser").arg(UserName));
+			LabelWorkIn->setText(LANG("OrganizationInWorkFromUser").arg(UserName));
 			LabelWorkIn->setContentsMargins(10, 0, 0, 0);
 			GetToolBar()->addWidget(LabelWorkIn);
 		}
@@ -112,7 +112,7 @@ void ISOrganizationObjectForm::INNChanged(const QVariant &value)
 				return;
 			}
 
-			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.FoundOrganizationCard").arg(value.toString())))
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.FoundOrganizationCard").arg(value.toString())))
 			{
 				ISObjectFormBase *ObjectForm = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, GetMetaTable()->GetName(), OrganizationID);
 				QMetaObject::invokeMethod(ISMemoryObjects::GetInstance().GetWorkspaceForm(), "AddObjectForm", Q_ARG(QWidget *, ObjectForm));
@@ -123,10 +123,10 @@ void ISOrganizationObjectForm::INNChanged(const QVariant &value)
 //-----------------------------------------------------------------------------
 void ISOrganizationObjectForm::Notify()
 {
-	QDateTime DateTime = ISInputDialog::GetDateTime(this, LOCALIZATION("Reminder"), LOCALIZATION("DateTime") + ":").toDateTime();
+	QDateTime DateTime = ISInputDialog::GetDateTime(this, LANG("Reminder"), LANG("DateTime") + ":").toDateTime();
 	if (DateTime.isValid())
 	{
-		if (ISGui::CalendarInsert(DateTime, LOCALIZATION("CallToOrganization").arg(GetFieldWidget("Name")->GetValue().toString()), QVariant(), GetMetaTable()->GetName(), GetObjectID()))
+		if (ISGui::CalendarInsert(DateTime, LANG("CallToOrganization").arg(GetFieldWidget("Name")->GetValue().toString()), QVariant(), GetMetaTable()->GetName(), GetObjectID()))
 		{
 			ISQuery qUpdate(QI_ORGANIZATION_WORK);
 			qUpdate.BindValue(":User", ISMetaUser::GetInstance().GetData()->ID);
@@ -177,7 +177,7 @@ void ISOrganizationObjectForm::Called()
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SaveOrganizationCard"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveOrganizationCard"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ void ISOrganizationObjectForm::UpdateDemo()
 			if (CountDemo)
 			{
 				ActionDemo->setFont(FONT_APPLICATION_BOLD);
-				ActionDemo->setText(LOCALIZATION("DemoAccess") + " (" + QString::number(CountDemo) + ")");
+				ActionDemo->setText(LANG("DemoAccess") + " (" + QString::number(CountDemo) + ")");
 			}
 		}
 	}
@@ -203,7 +203,7 @@ void ISOrganizationObjectForm::SearchFromINN()
 {
 	if (!INNEdit->GetValue().isValid())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.InvalidINN"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.InvalidINN"));
 		INNEdit->BlinkRed();
 		return;
 	}
@@ -257,7 +257,7 @@ void ISOrganizationObjectForm::SearchFinished()
 			}
 			else
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.OkvedNotFound").arg(GetFieldValue("INN").toString()));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.OkvedNotFound").arg(GetFieldValue("INN").toString()));
 				GetFieldWidget("INN")->BlinkRed();
 			}
 		}

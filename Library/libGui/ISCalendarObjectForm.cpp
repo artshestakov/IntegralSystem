@@ -23,8 +23,8 @@ ISCalendarObjectForm::ISCalendarObjectForm(ISNamespace::ObjectFormType form_type
 	if (GetFieldValue("TableName").isValid())
 	{
 		QAction *ActionCard = new QAction(this);
-		ActionCard->setText(LOCALIZATION("Card"));
-		ActionCard->setToolTip(LOCALIZATION("Card"));
+		ActionCard->setText(LANG("Card"));
+		ActionCard->setToolTip(LANG("Card"));
 		ActionCard->setIcon(BUFFER_ICONS("Document"));
 		connect(ActionCard, &QAction::triggered, this, &ISCalendarObjectForm::OpenCard);
 		AddActionToolBar(ActionCard);
@@ -49,7 +49,7 @@ bool ISCalendarObjectForm::Save()
 
 	if (!Date.isValid())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("Date")));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("Date")));
 		GetFieldWidget("Date")->BlinkRed();
 		dynamic_cast<ISDateEdit*>(GetFieldWidget("Date"))->SetCheckEnable(Qt::Checked);
 		return false;
@@ -57,7 +57,7 @@ bool ISCalendarObjectForm::Save()
 
 	if (!TimeAlert.isValid())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("TimeAlert")));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("TimeAlert")));
 		GetFieldWidget("TimeAlert")->BlinkRed();
 		dynamic_cast<ISTimeEdit*>(GetFieldWidget("TimeAlert"))->SetCheckEnable(Qt::Checked);
 		return false;
@@ -65,7 +65,7 @@ bool ISCalendarObjectForm::Save()
 
 	if (DateTime < QDateTime::currentDateTime())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotCreateCalendarEventPast"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCreateCalendarEventPast"));
 		return false;
 	}
 

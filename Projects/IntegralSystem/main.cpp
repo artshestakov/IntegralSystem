@@ -24,13 +24,13 @@ int main(int argc, char *argv[])
 	ISIntegralSystem IntegralApplication(argc, argv);
 	if (!IntegralApplication.CheckAdminRole()) //Проверка наличия прав администратора
 	{
-		ISMessageBox::ShowCritical(nullptr, LOCALIZATION("Message.Error.NoAdministratorRights"));
+		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.NoAdministratorRights"));
 		return EXIT_FAILURE;
 	}
 
 	//Баннер
 	ISSplashScreen::GetInstance().show();
-	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.Initialize.System"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.System"));
 	ISRegisterMetaType::RegisterMetaType();
 
 	//Создание формы авторизации
@@ -57,10 +57,10 @@ int main(int argc, char *argv[])
 	}
 	else if (ResultUpdate == ISNamespace::UR_ErrorStartUpdate)
 	{
-		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.ErrorStartUpdate"));
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.ErrorStartUpdate"));
 	}
 
-	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.Initialize.CheckLicense"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CheckLicense"));
 	if (ISLicense::GetInstance().Initialize())
 	{
 		ISObjects::GetInstance().Initialize();
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 	else
 	{
 		ISSplashScreen::GetInstance().close();
-		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
+		ISMessageBox::ShowWarning(nullptr, LANG("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
 		return EXIT_SUCCESS;
 	}
 
@@ -90,7 +90,7 @@ ISNamespace::UpdateResult CheckUpdate() //Проверка обновлений
 	QString FileName;
 	QString Version;
 
-	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.Initialize.CheckUpdate"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CheckUpdate"));
 	bool UpdateExist = ISUpdate::GetInstance().CheckUpdate(FileID, FileName, Version);
 	if (UpdateExist) //Если обновление найдено
 	{
@@ -111,7 +111,7 @@ ISNamespace::UpdateResult CheckUpdate() //Проверка обновлений
 		}
 		else
 		{
-			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.DownloadUpdateError"));
+			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.DownloadUpdateError"));
 		}
 
 		ISSplashScreen::GetInstance().show();

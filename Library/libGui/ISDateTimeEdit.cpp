@@ -12,7 +12,7 @@ ISDateTimeEdit::ISDateTimeEdit(QWidget *parent) : ISFieldEditBase(parent)
 	CheckEnable = new QCheckBox(this);
 	CheckEnable->setCursor(CURSOR_POINTING_HAND);
 	CheckEnable->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-	CheckEnable->setToolTip(LOCALIZATION("ActivateDeactivateField"));
+	CheckEnable->setToolTip(LANG("ActivateDeactivateField"));
 	connect(CheckEnable, &QCheckBox::stateChanged, this, &ISDateTimeEdit::DateEnableChanged);
 	AddWidgetToLeft(CheckEnable);
 
@@ -22,12 +22,12 @@ ISDateTimeEdit::ISDateTimeEdit(QWidget *parent) : ISFieldEditBase(parent)
 	DateTimeEdit->setAccelerated(true);
 	DateTimeEdit->setButtonSymbols(QAbstractSpinBox::NoButtons);
 	DateTimeEdit->setDisplayFormat(DATE_TIME_FORMAT_V1);
-	DateTimeEdit->setSpecialValueText(LOCALIZATION("NotIndicated"));
+	DateTimeEdit->setSpecialValueText(LANG("NotIndicated"));
 	DateTimeEdit->setAlignment(Qt::AlignCenter);
 	AddWidgetEdit(DateTimeEdit, this);
 
 	ButtonCalendar = new QToolButton(this);
-	ButtonCalendar->setToolTip(LOCALIZATION("ShowCalendar") + "...");
+	ButtonCalendar->setToolTip(LANG("ShowCalendar") + "...");
 	ButtonCalendar->setIcon(BUFFER_ICONS("Calendar"));
 	ButtonCalendar->setCursor(CURSOR_POINTING_HAND);
 	ButtonCalendar->setFocusPolicy(Qt::NoFocus);
@@ -173,7 +173,7 @@ void ISDateTimeEdit::DateEnableChanged(int State)
 	}
 	else
 	{
-		DateTimeEdit->setSpecialValueText(LOCALIZATION("NotIndicated"));
+		DateTimeEdit->setSpecialValueText(LANG("NotIndicated"));
 		DateTimeEdit->setDateTime(DateTimeEdit->minimumDateTime());
 		DateTimeEdit->setEnabled(false);
 		ButtonCalendar->setEnabled(false);

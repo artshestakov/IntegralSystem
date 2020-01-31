@@ -14,14 +14,14 @@ ISPathEditDir::ISPathEditDir(QWidget *parent) : ISLineEdit(parent)
 	SetFocusPolicy(Qt::NoFocus);
 
 	ISPushButton *ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LOCALIZATION("Overview") + "...");
-	ButtonSelect->setToolTip(LOCALIZATION("SelectFolder"));
+	ButtonSelect->setText(LANG("Overview") + "...");
+	ButtonSelect->setToolTip(LANG("SelectFolder"));
 	connect(ButtonSelect, &ISPushButton::clicked, this, &ISPathEditDir::SelectDir);
 	AddWidgetToRight(ButtonSelect);
 
 	ButtonOpenDir = new ISServiceButton(this);
 	ButtonOpenDir->setIcon(BUFFER_ICONS("FolderClosed"));
-	ButtonOpenDir->setToolTip(LOCALIZATION("OpenFolder"));
+	ButtonOpenDir->setToolTip(LANG("OpenFolder"));
 	ButtonOpenDir->setEnabled(false);
 	connect(ButtonOpenDir, &ISPushButton::clicked, this, &ISPathEditDir::OpenDir);
 	AddWidgetToRight(ButtonOpenDir);
@@ -66,7 +66,7 @@ void ISPathEditDir::OpenDir()
 {
 	if (!ISGui::OpenFolder(GetValue().toString()))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.ErrorOpenedFolderPath").arg(GetValue().toString()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.ErrorOpenedFolderPath").arg(GetValue().toString()));
 	}
 }
 //-----------------------------------------------------------------------------

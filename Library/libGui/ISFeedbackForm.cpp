@@ -20,18 +20,18 @@ static QString QS_FEEDBACK_TYPE = PREPARE_QUERY("SELECT fbtp_name, fbtp_icon "
 //-----------------------------------------------------------------------------
 ISFeedbackForm::ISFeedbackForm(QWidget *parent) : ISInterfaceForm(parent)
 {
-	setWindowTitle(LOCALIZATION("Feedback"));
+	setWindowTitle(LANG("Feedback"));
 	setWindowIcon(BUFFER_ICONS("FeedbackForm"));
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
 	QLabel *LabelTitle = new QLabel(this);
 	LabelTitle->setFont(FONT_TAHOMA_15);
-	LabelTitle->setText(LOCALIZATION("Feedback"));
+	LabelTitle->setText(LANG("Feedback"));
 	GetMainLayout()->addWidget(LabelTitle);
 
 	QLabel *LabelInfo = new QLabel(this);
-	LabelInfo->setText(LOCALIZATION("FeedbackFormInfo"));
+	LabelInfo->setText(LANG("FeedbackFormInfo"));
 	GetMainLayout()->addWidget(LabelInfo);
 
 	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
@@ -42,27 +42,27 @@ ISFeedbackForm::ISFeedbackForm(QWidget *parent) : ISInterfaceForm(parent)
 	GetMainLayout()->addLayout(FormLayout);
 
 	EditName = new ISLineEdit(this);
-	FormLayout->addRow(LOCALIZATION("Feedback.YourName") + ":", EditName);
+	FormLayout->addRow(LANG("Feedback.YourName") + ":", EditName);
 
 	EditPhone = new ISPhoneBaseEdit(this);
 	EditPhone->SetVisibleCall(false);
-	FormLayout->addRow(LOCALIZATION("Feedback.YourPhone") + ":", EditPhone);
+	FormLayout->addRow(LANG("Feedback.YourPhone") + ":", EditPhone);
 
 	EditMail = new ISEMailEdit(this);
-	FormLayout->addRow(LOCALIZATION("Feedback.YourEMail") + ":", EditMail);
+	FormLayout->addRow(LANG("Feedback.YourEMail") + ":", EditMail);
 
 	EditTitle = new ISLineEdit(this);
-	EditTitle->SetPlaceholderText(LOCALIZATION("Feedback.Title.PlaceholderText"));
-	FormLayout->addRow(LOCALIZATION("Feedback.Title") + ":", EditTitle);
+	EditTitle->SetPlaceholderText(LANG("Feedback.Title.PlaceholderText"));
+	FormLayout->addRow(LANG("Feedback.Title") + ":", EditTitle);
 
 	EditDescription = new ISTextEdit(this);
-	EditDescription->SetPlaceholderText(LOCALIZATION("Feedback.ReviewText"));
-	FormLayout->addRow(LOCALIZATION("Feedback.Review") + ":", EditDescription);
+	EditDescription->SetPlaceholderText(LANG("Feedback.ReviewText"));
+	FormLayout->addRow(LANG("Feedback.Review") + ":", EditDescription);
 
 	EditPathFile = new ISPathEditFile(this);
-	FormLayout->addRow(LOCALIZATION("FilePath") + ":", EditPathFile);
+	FormLayout->addRow(LANG("FilePath") + ":", EditPathFile);
 
-	ButtonDialog = new ISButtonDialog(this, LOCALIZATION("Send"));
+	ButtonDialog = new ISButtonDialog(this, LANG("Send"));
 	ButtonDialog->SetApplyEnabled(false);
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISFeedbackForm::SendReview);
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISFeedbackForm::close);
@@ -114,21 +114,21 @@ bool ISFeedbackForm::CheckReview()
 {
 	if (!EditName->GetValue().toString().length())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("Feedback.YourName")));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("Feedback.YourName")));
 		EditName->BlinkRed();
 		return false;
 	}
 
 	if (!EditPhone->IsValid())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ValueFieldEditInvalid").arg(LOCALIZATION("Feedback.YourPhone")));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.ValueFieldEditInvalid").arg(LANG("Feedback.YourPhone")));
 		EditPhone->BlinkRed();
 		return false;
 	}
 
 	if (!EditMail->IsValid())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.ValueFieldEditInvalid").arg(LOCALIZATION("Feedback.YourEMail")));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.ValueFieldEditInvalid").arg(LANG("Feedback.YourEMail")));
 		EditMail->BlinkRed();
 		return false;
 	}
@@ -140,11 +140,11 @@ void ISFeedbackForm::SendReview()
 {
 	if (CheckReview())
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.FeedbackSend")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.FeedbackSend")))
 		{
 			ISSmtpClient SmtpClient(FEEDBACK_SERVER, FEEDBACK_PORT, ISSmtpClient::SslConnection);
 
-			ISEmailAddress EMailSender(FEEDBACK_SENDER, LOCALIZATION("Feedback.Name"));
+			ISEmailAddress EMailSender(FEEDBACK_SENDER, LANG("Feedback.Name"));
 			ISEmailAddress EMailRecipient(FEEDBACK_RECIPIENT);
 
 			ISMimeMessage MimeMessage;
@@ -167,7 +167,7 @@ void ISFeedbackForm::SendReview()
 				}
 				else
 				{
-					ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.NotFoundFile").arg(FilePath));
+					ISMessageBox::ShowWarning(this, LANG("Message.Error.NotFoundFile").arg(FilePath));
 					EditPathFile->BlinkRed();
 					return;
 				}
@@ -175,25 +175,25 @@ void ISFeedbackForm::SendReview()
 
 			if (!SmtpClient.connectToHost())
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.Feedback.ConnectToHost"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.Feedback.ConnectToHost"));
 				return;
 			}
 
 			if (!SmtpClient.login(FEEDBACK_SENDER, FEEDBACK_SENDER_PASSWORD))
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.Feedback.Authentification"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.Feedback.Authentification"));
 				return;
 			}
 
 			if (!SmtpClient.sendMail(MimeMessage))
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.Feedback.Send"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.Feedback.Send"));
 				return;
 			}
 
 			SmtpClient.quit();
 
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.FeedbackSended"));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.FeedbackSended"));
 			close();
 		}
 	}
@@ -203,31 +203,31 @@ QString ISFeedbackForm::CreateMessage() const
 {
 	QString Message;
 
-	Message += QString(LOCALIZATION("Feedback.Type") + ": " + ButtonGroup->checkedButton()->text() + "\n");
-	Message += QString(LOCALIZATION("Feedback.SpecifiedName") + ": " + EditName->GetValue().toString() + "\n");
-	Message += QString(LOCALIZATION("Feedback.SpecifiedPhone") + ": " + EditPhone->GetValue().toString() + "\n");
-	Message += QString(LOCALIZATION("Feedback.SpecifiedMail") + ": " + EditMail->GetValue().toString() + "\n");
+	Message += QString(LANG("Feedback.Type") + ": " + ButtonGroup->checkedButton()->text() + "\n");
+	Message += QString(LANG("Feedback.SpecifiedName") + ": " + EditName->GetValue().toString() + "\n");
+	Message += QString(LANG("Feedback.SpecifiedPhone") + ": " + EditPhone->GetValue().toString() + "\n");
+	Message += QString(LANG("Feedback.SpecifiedMail") + ": " + EditMail->GetValue().toString() + "\n");
 
 	if (EditTitle->GetValue().toString().length())
 	{
-		Message += QString(LOCALIZATION("Feedback.Title") + ": " + EditTitle->GetValue().toString() + "\n");
+		Message += QString(LANG("Feedback.Title") + ": " + EditTitle->GetValue().toString() + "\n");
 	}
 
 	if (EditDescription->GetValue().toString().length())
 	{
-		Message += QString(LOCALIZATION("Feedback.Review") + ": " + EditDescription->GetValue().toString() + "\n");
+		Message += QString(LANG("Feedback.Review") + ": " + EditDescription->GetValue().toString() + "\n");
 	}
 
 	if (EditPathFile->GetValue().toString().length())
 	{
-		Message += QString(LOCALIZATION("FilePath") + ": " + EditPathFile->GetValue().toString() + "\n");
+		Message += QString(LANG("FilePath") + ": " + EditPathFile->GetValue().toString() + "\n");
 	}
 
-	Message += QString(LOCALIZATION("Feedback.Version") + ": " + ISVersion::GetInstance().GetVersion() + "\n");
-	Message += QString(LOCALIZATION("Feedback.VersionDate") + ": " + ISVersion::GetInstance().GetDate().toString(DATE_FORMAT_V2) + "\n");
-	Message += QString(LOCALIZATION("Feedback.ApplicationDirPath") + ": " + APPLICATION_DIR_PATH + "\n");
-	Message += QString(LOCALIZATION("Feedback.User") + ": " + ISMetaUser::GetInstance().GetData()->FullName + "\n");
-	Message += QString(LOCALIZATION("Feedback.Login") + ": " + ISMetaUser::GetInstance().GetData()->Login + "\n");
+	Message += QString(LANG("Feedback.Version") + ": " + ISVersion::GetInstance().GetVersion() + "\n");
+	Message += QString(LANG("Feedback.VersionDate") + ": " + ISVersion::GetInstance().GetDate().toString(DATE_FORMAT_V2) + "\n");
+	Message += QString(LANG("Feedback.ApplicationDirPath") + ": " + APPLICATION_DIR_PATH + "\n");
+	Message += QString(LANG("Feedback.User") + ": " + ISMetaUser::GetInstance().GetData()->FullName + "\n");
+	Message += QString(LANG("Feedback.Login") + ": " + ISMetaUser::GetInstance().GetData()->Login + "\n");
 
 	ISSystem::RemoveLastSymbolFromString(Message);
 	return Message;

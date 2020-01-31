@@ -13,10 +13,10 @@ static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_uid, tsst_name "
 ISTaskMyListForm::ISTaskMyListForm(QWidget *parent) : ISTaskBaseListForm(parent)
 {
 	GetQueryModel()->SetClassFilter("task_executor = currentuserid()");
-	GetToolBar()->addWidget(new QLabel(LOCALIZATION("Filter") + ":", this));
+	GetToolBar()->addWidget(new QLabel(LANG("Filter") + ":", this));
 
 	ActionFilter = new QAction(this);
-	ActionFilter->setText(LOCALIZATION("All"));
+	ActionFilter->setText(LANG("All"));
 	ActionFilter->setIcon(BUFFER_ICONS("Filter"));
 	ActionFilter->setFont(FONT_APPLICATION_BOLD);
 	ActionFilter->setMenu(new QMenu(this));
@@ -31,7 +31,7 @@ ISTaskMyListForm::ISTaskMyListForm(QWidget *parent) : ISTaskBaseListForm(parent)
 	ISQuery qSelectStatus(QS_TASK_STATUS);
 	if (qSelectStatus.Execute())
 	{
-		QAction *ActionAll = CreateActionFilter(LOCALIZATION("All"), ISUuid());
+		QAction *ActionAll = CreateActionFilter(LANG("All"), ISUuid());
 		ActionAll->setFont(FONT_APPLICATION_BOLD);
 		ActionAll->setChecked(true);
 

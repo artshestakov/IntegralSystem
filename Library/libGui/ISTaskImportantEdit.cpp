@@ -6,7 +6,7 @@
 ISTaskImportantEdit::ISTaskImportantEdit(QWidget *parent) : ISCheckEdit(parent)
 {
 	GetCheckBox()->setIcon(BUFFER_ICONS("Task.Important.Unchecked"));
-	GetCheckBox()->setToolTip(LOCALIZATION("ISImportantEditToolTip"));
+	GetCheckBox()->setToolTip(LANG("ISImportantEditToolTip"));
 	connect(this, &ISTaskImportantEdit::ValueChange, this, &ISTaskImportantEdit::ImportantChanged);
 }
 //-----------------------------------------------------------------------------

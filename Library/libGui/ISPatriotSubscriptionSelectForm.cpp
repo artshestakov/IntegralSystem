@@ -18,10 +18,10 @@ static QString QS_SUBSCRIPTION = PREPARE_QUERY("SELECT sbsr_id, sbtp_name, sbtp_
 //-----------------------------------------------------------------------------
 ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &Barcode, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("Patriot.SubscriptionSelect"));
+	setWindowTitle(LANG("Patriot.SubscriptionSelect"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 
-	GetMainLayout()->addWidget(new QLabel(LOCALIZATION("Patriot.SelectSebscriptionClientForVisit") + ":", this));
+	GetMainLayout()->addWidget(new QLabel(LANG("Patriot.SelectSebscriptionClientForVisit") + ":", this));
 
 	ButtonGroup = new QButtonGroup(this);
 
@@ -42,7 +42,7 @@ ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &
 			bool NowExist = qSelect.ReadColumn("sbsr_nowexist").toBool();
 
 			QLabel *Label = new QLabel(this);
-			Label->setText(Name + SYMBOL_SPACE + LOCALIZATION("Patriot.SubscriptionForVisits").arg(Count).arg(LeftCount));
+			Label->setText(Name + SYMBOL_SPACE + LANG("Patriot.SubscriptionForVisits").arg(Count).arg(LeftCount));
 
 			ISPushButton *PushButton = new ISPushButton(this);
 			PushButton->setSizePolicy(QSizePolicy::Maximum, PushButton->sizePolicy().verticalPolicy());
@@ -50,12 +50,12 @@ ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &
 			if (NowExist)
 			{
 				Label->setFont(FONT_APPLICATION_BOLD);
-				PushButton->setText(LOCALIZATION("Patriot.CloseVisit"));
+				PushButton->setText(LANG("Patriot.CloseVisit"));
 				connect(PushButton, &ISPushButton::clicked, this, &ISPatriotSubscriptionSelectForm::CloseVisit);
 			}
 			else
 			{
-				PushButton->setText(LOCALIZATION("Patriot.OpenVisit"));
+				PushButton->setText(LANG("Patriot.OpenVisit"));
 				connect(PushButton, &ISPushButton::clicked, this, &ISPatriotSubscriptionSelectForm::OpenVisit);
 			}
 			

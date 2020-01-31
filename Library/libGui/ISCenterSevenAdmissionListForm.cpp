@@ -15,8 +15,8 @@ static QString QU_ADMISSION_STATUS = PREPARE_QUERY("UPDATE admission SET "
 ISCenterSevenAdmissionListForm::ISCenterSevenAdmissionListForm(QWidget *parent) : ISListBaseForm("Admission", parent)
 {
 	QAction *ActionStatus = new QAction(this);
-	ActionStatus->setText(LOCALIZATION("CenterSeven.ChangeStatus"));
-	ActionStatus->setToolTip(LOCALIZATION("CenterSeven.ChangeStatus"));
+	ActionStatus->setText(LANG("CenterSeven.ChangeStatus"));
+	ActionStatus->setToolTip(LANG("CenterSeven.ChangeStatus"));
 	ActionStatus->setIcon(BUFFER_ICONS("Apply.Blue"));
 	connect(ActionStatus, &QAction::triggered, this, &ISCenterSevenAdmissionListForm::StatusChange);
 	AddAction(ActionStatus, true, true);

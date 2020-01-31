@@ -40,20 +40,20 @@ ISFileEdit::ISFileEdit(QWidget *parent) : ISFieldEditBase(parent)
 
 	ButtonFile = new ISButtonFile(this);
 	ButtonFile->setFlat(true);
-	ButtonFile->setText(LOCALIZATION("FileNotSelected"));
-	ButtonFile->setToolTip(LOCALIZATION("ClickOverviewFromSelectFile"));
+	ButtonFile->setText(LANG("FileNotSelected"));
+	ButtonFile->setToolTip(LANG("ClickOverviewFromSelectFile"));
 	ButtonFile->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonFile, &ISButtonFile::DragAndDropFile, this, &ISFileEdit::HandlingFile);
 	AddWidgetEdit(ButtonFile, this);
 
 	MenuFile = new QMenu(ButtonFile);
-	MenuFile->addAction(LOCALIZATION("Open"), this, &ISFileEdit::Open);
-	MenuFile->addAction(LOCALIZATION("Rename"), this, &ISFileEdit::Rename);
-	MenuFile->addAction(LOCALIZATION("SaveToDisk"), this, &ISFileEdit::Save);
+	MenuFile->addAction(LANG("Open"), this, &ISFileEdit::Open);
+	MenuFile->addAction(LANG("Rename"), this, &ISFileEdit::Rename);
+	MenuFile->addAction(LANG("SaveToDisk"), this, &ISFileEdit::Save);
 
 	ISPushButton *ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LOCALIZATION("Overview") + "...");
-	ButtonSelect->setToolTip(LOCALIZATION("SelectFile"));
+	ButtonSelect->setText(LANG("Overview") + "...");
+	ButtonSelect->setToolTip(LANG("SelectFile"));
 	ButtonSelect->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonSelect, &ISPushButton::clicked, this, &ISFileEdit::SelectFile);
 	AddWidgetToRight(ButtonSelect);
@@ -97,8 +97,8 @@ void ISFileEdit::Clear()
 	{
 		FileID.clear();
 		ButtonFile->setMenu(nullptr);
-		ButtonFile->setText(LOCALIZATION("FileNotSelected"));
-		ButtonFile->setToolTip(LOCALIZATION("ClickOverviewFromSelectFile"));
+		ButtonFile->setText(LANG("FileNotSelected"));
+		ButtonFile->setToolTip(LANG("ClickOverviewFromSelectFile"));
 		ButtonFile->setIcon(QIcon());
 		ValueChanged();
 	}
@@ -124,14 +124,14 @@ void ISFileEdit::HandlingFile(const QString &FilePath)
 	QFileInfo FileInfo(FilePath);
 	if (FileInfo.size() > MAX_FILE_SIZE_FIELD) //Если размер файла больше установленного ограничения
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.FileSizeExceedsLimit").arg(MAX_FILE_SIZE_FIELD / 1024 / 1000));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.FileSizeExceedsLimit").arg(MAX_FILE_SIZE_FIELD / 1024 / 1000));
 		return;
 	}
 
 	QFile File(FilePath);
 	if (!File.open(QIODevice::ReadOnly)) //Если файл не удалось открыть на чтение
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.NotOpenedFile").arg(FilePath));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FilePath));
 		return;
 	}
 
@@ -143,12 +143,12 @@ void ISFileEdit::HandlingFile(const QString &FilePath)
 
 	if (!FileData.size())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.FileEmptyOrInvalid").arg(FilePath));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.FileEmptyOrInvalid").arg(FilePath));
 		return;
 	}
 
 	ISGui::SetWaitGlobalCursor(true);
-	ButtonFile->setText(LOCALIZATION("Adding") + "...");
+	ButtonFile->setText(LANG("Adding") + "...");
 	ISGui::RepaintWidget(ButtonFile);
 
 	if (FileID.isValid())
@@ -203,7 +203,7 @@ void ISFileEdit::Open()
 void ISFileEdit::Rename()
 {
 	QFileInfo FileInfo(ButtonFile->text());
-	QVariant NewName = ISInputDialog::GetString(this, LOCALIZATION("Renaming"), LOCALIZATION("NewFileName"), FileInfo.baseName());
+	QVariant NewName = ISInputDialog::GetString(this, LANG("Renaming"), LANG("NewFileName"), FileInfo.baseName());
 	if (NewName.isValid())
 	{
 		ISGui::SetWaitGlobalCursor(true);
@@ -229,7 +229,7 @@ void ISFileEdit::Save()
 	{
 		QString Name = qSelectFile.ReadColumn("file_name").toString();
 		QString Extension = qSelectFile.ReadColumn("file_extension").toString();
-		QString FilePath = ISFileDialog::GetSaveFileName(this, LOCALIZATION("File.Filter.File").arg(Extension), Name);
+		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(Extension), Name);
 		if (FilePath.length())
 		{
 			QFile File(FilePath);
@@ -237,7 +237,7 @@ void ISFileEdit::Save()
 			{
 				if (!File.remove())
 				{
-					ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotDeletedFile").arg(FilePath));
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeletedFile").arg(FilePath));
 				}
 			}
 

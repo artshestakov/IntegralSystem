@@ -53,7 +53,7 @@ bool ISCenterSevenAdmissionObjectForm::Save()
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("CenterSeven.Message.Warning.AdmissionTimeInvalid"));
+		ISMessageBox::ShowWarning(this, LANG("CenterSeven.Message.Warning.AdmissionTimeInvalid"));
 		GetFieldWidget("Time")->BlinkRed();
 		Result = false;
 	}

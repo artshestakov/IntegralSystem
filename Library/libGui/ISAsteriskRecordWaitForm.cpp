@@ -14,7 +14,7 @@ ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id, QWi
 	Size = 0;
 	UniqueID = unique_id;
 
-	setWindowTitle(LOCALIZATION("AsteriskRecord.Interface.Title"));
+	setWindowTitle(LANG("AsteriskRecord.Interface.Title"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 	ForbidResize();
 
@@ -24,7 +24,7 @@ ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id, QWi
 	connect(TcpSocket, &QTcpSocket::readyRead, this, &ISAsteriskRecordWaitForm::ReadyRead);
 
 	Label = new QLabel(this);
-	Label->setText(LOCALIZATION("AsteriskRecord.Interface.Label.Prepare"));
+	Label->setText(LANG("AsteriskRecord.Interface.Label.Prepare"));
 	GetMainLayout()->addWidget(Label, 0, Qt::AlignLeft);
 
 	ProgressBar = new QProgressBar(this);
@@ -65,13 +65,13 @@ void ISAsteriskRecordWaitForm::AfterShowEvent()
 void ISAsteriskRecordWaitForm::Connect()
 {
 	setCursor(CURSOR_BUSY);
-	Label->setText(LOCALIZATION("AsteriskRecord.Interface.Label.Connecting"));
+	Label->setText(LANG("AsteriskRecord.Interface.Label.Connecting"));
 	TcpSocket->connectToHost(SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_ASTERISK_SERVER), SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_ASTERISK_RECORDS_PORT));
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskRecordWaitForm::Connected()
 {
-	Label->setText(LOCALIZATION("AsteriskRecord.Interface.Label.Connected"));
+	Label->setText(LANG("AsteriskRecord.Interface.Label.Connected"));
 	TcpSocket->write(UniqueID.toUtf8());
 }
 //-----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 		QStringList StringList = QString(ByteArray).split(":");
 		Size = StringList.at(1).toInt();
 
-		Label->setText(LOCALIZATION("AsteriskRecord.Interface.Label.Downloading"));
+		Label->setText(LANG("AsteriskRecord.Interface.Label.Downloading"));
 		ProgressBar->setValue(0);
 		ProgressBar->setMaximum(Size);
 		ProgressBar->setTextVisible(true);
@@ -99,7 +99,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 	else if (ByteArray.contains("message")) //Сообщение от сервера
 	{
 		QStringList StringList = QString(ByteArray).split(":");
-		Label->setText(LOCALIZATION(StringList.at(1)));
+		Label->setText(LANG(StringList.at(1)));
 		ProgressBar->setRange(0, 100);
 		setCursor(CURSOR_ARROW);
 		TcpSocket->close();
@@ -107,7 +107,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 	else if (ByteArray.contains(QString("end:%1").arg(UniqueID).toUtf8())) //Окончание загрузки файла
 	{
 		TcpSocket->close();
-		Label->setText(LOCALIZATION("AsteriskRecord.Interface.Label.Downloaded"));
+		Label->setText(LANG("AsteriskRecord.Interface.Label.Downloaded"));
 
 		QFile FileRecord(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + '.' + EXTENSION_WAV);
 		if (FileRecord.open(QIODevice::WriteOnly))

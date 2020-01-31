@@ -32,7 +32,7 @@ ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
 	AddWidgetToRight(Label);
 
 	ButtonCheck = new ISServiceButton(this);
-	ButtonCheck->setToolTip(LOCALIZATION("ClickFromCheckLevelVolume"));
+	ButtonCheck->setToolTip(LANG("ClickFromCheckLevelVolume"));
 	ButtonCheck->setIcon(BUFFER_ICONS("Volume.Check"));
 	ButtonCheck->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonCheck, &ISServiceButton::clicked, this, &ISVolumeEdit::VolumeCheck);

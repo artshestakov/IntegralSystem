@@ -13,7 +13,7 @@ static QString QS_ADMISSION_STATUS = PREPARE_QUERY("SELECT adst_uid, adst_name "
 //-----------------------------------------------------------------------------
 ISCenterSevenStatusAdmissionForm::ISCenterSevenStatusAdmissionForm(const ISUuid &CurrentStatusUID, const QString &Comment, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("CenterSeven.ChangeStatusAdmission"));
+	setWindowTitle(LANG("CenterSeven.ChangeStatusAdmission"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
 	ButtonGroup = new QButtonGroup(this);
@@ -44,7 +44,7 @@ ISCenterSevenStatusAdmissionForm::ISCenterSevenStatusAdmissionForm(const ISUuid 
 
 	EditComment = new ISLineEdit(this);
 	EditComment->SetValue(Comment);
-	EditComment->SetPlaceholderText(LOCALIZATION("CenterSeven.ChangeStatusComment"));
+	EditComment->SetPlaceholderText(LANG("CenterSeven.ChangeStatusComment"));
 	GetMainLayout()->addWidget(EditComment);
 
 	GetMainLayout()->addStretch();

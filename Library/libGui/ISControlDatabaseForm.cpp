@@ -19,7 +19,7 @@ static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _sett
 ISControlDatabaseForm::ISControlDatabaseForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	ISPushButton *ButtonSettings = new ISPushButton(this);
-	ButtonSettings->setText(LOCALIZATION("SettingsDatabase"));
+	ButtonSettings->setText(LANG("SettingsDatabase"));
 	ButtonSettings->setIcon(BUFFER_ICONS("DatabaseSettings"));
 	connect(ButtonSettings, &ISPushButton::clicked, this, &ISControlDatabaseForm::ShowDatabaseSettings);
 	GetMainLayout()->addWidget(ButtonSettings, 0, Qt::AlignRight);
@@ -49,31 +49,31 @@ void ISControlDatabaseForm::CreateGeneralTab()
 
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(FormLayout);
-	TabWidget->addTab(ScrollArea, LOCALIZATION("GeneralInformation"));
+	TabWidget->addTab(ScrollArea, LANG("GeneralInformation"));
 
 	//Наименование базы
-	FormLayout->addRow(LOCALIZATION("DatabaseName") + ":", new QLabel(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), ScrollArea));
+	FormLayout->addRow(LANG("DatabaseName") + ":", new QLabel(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), ScrollArea));
 
 	//Размер базы данных
-	FormLayout->addRow(LOCALIZATION("DatabaseSize") + ":", new QLabel(ISDatabase::GetInstance().GetCurrentDatabaseSize(), ScrollArea));
+	FormLayout->addRow(LANG("DatabaseSize") + ":", new QLabel(ISDatabase::GetInstance().GetCurrentDatabaseSize(), ScrollArea));
 
 	//Версия PostgreSQL
-	FormLayout->addRow(LOCALIZATION("VersionPostgreSQL") + ":", new QLabel(ISDatabase::GetInstance().GetVersionPostgres(), ScrollArea));
+	FormLayout->addRow(LANG("VersionPostgreSQL") + ":", new QLabel(ISDatabase::GetInstance().GetVersionPostgres(), ScrollArea));
 
 	//Время запуска сервера
-	FormLayout->addRow(LOCALIZATION("ServerStartTime") + ":", new QLabel(ISDatabase::GetInstance().GetStartTimeServer(), ScrollArea));
+	FormLayout->addRow(LANG("ServerStartTime") + ":", new QLabel(ISDatabase::GetInstance().GetStartTimeServer(), ScrollArea));
 
 	//Время загрузки конфигурации
-	FormLayout->addRow(LOCALIZATION("ServerLoadConfigrationTime") + ":", new QLabel(ISDatabase::GetInstance().GetLoadConfigurationTime(), ScrollArea));
+	FormLayout->addRow(LANG("ServerLoadConfigrationTime") + ":", new QLabel(ISDatabase::GetInstance().GetLoadConfigurationTime(), ScrollArea));
 
 	//Адресс локального соединения
-	FormLayout->addRow(LOCALIZATION("InetClientAddress") + ":", new QLabel(ISDatabase::GetInstance().GetInetClientAddress(), ScrollArea));
+	FormLayout->addRow(LANG("InetClientAddress") + ":", new QLabel(ISDatabase::GetInstance().GetInetClientAddress(), ScrollArea));
 
 	//Адрес удаленного соединения
-	FormLayout->addRow(LOCALIZATION("InetServerAddress") + ":", new QLabel(ISDatabase::GetInstance().GetInetServerAddress(), ScrollArea));
+	FormLayout->addRow(LANG("InetServerAddress") + ":", new QLabel(ISDatabase::GetInstance().GetInetServerAddress(), ScrollArea));
 
 	//Код серверного процесса обслуживающего текущий сеанс
-	FormLayout->addRow(LOCALIZATION("CodeServerProcess") + ":", new QLabel(QString::number(ISDatabase::GetInstance().GetServerProcessID()), ScrollArea));
+	FormLayout->addRow(LANG("CodeServerProcess") + ":", new QLabel(QString::number(ISDatabase::GetInstance().GetServerProcessID()), ScrollArea));
 
 	//LCCollate базы
 	FormLayout->addRow("LC_COLLATE:", new QLabel(ISDatabase::GetInstance().GetDatabaseCollate(), ScrollArea));
@@ -82,26 +82,26 @@ void ISControlDatabaseForm::CreateGeneralTab()
 	FormLayout->addRow("CType:", new QLabel(ISDatabase::GetInstance().GetDatabaseCType(), ScrollArea));
 
 	//Путь к кластеру на сервере СУБД
-	FormLayout->addRow(LOCALIZATION("ClusterDirectory") + ":", new QLabel(ISDatabase::GetInstance().GetDatabaseDataDirectory()));
+	FormLayout->addRow(LANG("ClusterDirectory") + ":", new QLabel(ISDatabase::GetInstance().GetDatabaseDataDirectory()));
 }
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::CreatePGSettings()
 {
 	ISPGSettingsForm *PGSettingsForm = new ISPGSettingsForm(TabWidget);
-	TabWidget->addTab(PGSettingsForm, LOCALIZATION("PG_Settings"));
+	TabWidget->addTab(PGSettingsForm, LANG("PG_Settings"));
 }
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::CreateStatisticTablesForm()
 {
 	ISStatisticTablesForm *StatisticTablesForm = new ISStatisticTablesForm(TabWidget);
-	TabWidget->addTab(StatisticTablesForm, BUFFER_ICONS("TablesStatistics"), LOCALIZATION("StatisticTables"));
+	TabWidget->addTab(StatisticTablesForm, BUFFER_ICONS("TablesStatistics"), LANG("StatisticTables"));
 }
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::CreateDistFilesForm()
 {
 	ISDistFileListForm *DistFileListForm = new ISDistFileListForm(TabWidget);
 	DistFileListForm->LoadData();
-	TabWidget->addTab(DistFileListForm, BUFFER_ICONS("Updates"), LOCALIZATION("Updates"));
+	TabWidget->addTab(DistFileListForm, BUFFER_ICONS("Updates"), LANG("Updates"));
 }
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::ShowDatabaseSettings()

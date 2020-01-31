@@ -31,7 +31,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 	GetMainLayout()->addWidget(Frame);
 
 	LineEdit = new ISLineEdit(this);
-	LineEdit->SetPlaceholderText(LOCALIZATION("Search"));
+	LineEdit->SetPlaceholderText(LANG("Search"));
 	LineEdit->SetIcon(BUFFER_ICONS("Search"));
 	connect(LineEdit, &ISLineEdit::ValueChange, this, &ISListEditPopup::Search);
 	LayoutFrame->addWidget(LineEdit);
@@ -61,21 +61,21 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 	{
 		ISServiceButton *ButtonAdd = new ISServiceButton(this);
 		ButtonAdd->setFlat(true);
-		ButtonAdd->setToolTip(LOCALIZATION("ClickFromAddNewrecordInList"));
+		ButtonAdd->setToolTip(LANG("ClickFromAddNewrecordInList"));
 		ButtonAdd->setIcon(BUFFER_ICONS("Add"));
 		connect(ButtonAdd, &ISServiceButton::clicked, this, &ISListEditPopup::Add);
 		StatusBar->addWidget(ButtonAdd);
 	}
 
 	ISPushButton *ButtonHide = new ISPushButton(StatusBar);
-	ButtonHide->setText(LOCALIZATION("Hide"));
+	ButtonHide->setText(LANG("Hide"));
 	ButtonHide->setIcon(BUFFER_ICONS("ArrowUp"));
 	ButtonHide->setFlat(true);
 	connect(ButtonHide, &ISPushButton::clicked, this, &ISListEditPopup::Hide);
 	StatusBar->addPermanentWidget(ButtonHide);
 
 	LabelEmpty = new QLabel(this);
-	LabelEmpty->setText(LOCALIZATION("ListIsEmpty"));
+	LabelEmpty->setText(LANG("ListIsEmpty"));
 	LabelEmpty->setFont(FONT_TAHOMA_12_BOLD);
 	LabelEmpty->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LabelEmpty->setVisible(false);
@@ -173,7 +173,7 @@ void ISListEditPopup::Search(const QVariant &value)
 		}
 
 		LabelSearch->setVisible(true);
-		LabelSearch->setText(LOCALIZATION("Founded") + ": " + QString::number(Founded));
+		LabelSearch->setText(LANG("Founded") + ": " + QString::number(Founded));
 	}
 	else
 	{
@@ -238,7 +238,7 @@ void ISListEditPopup::LoadDataFromQuery()
 			CurrentItem->setSelected(true);
 		}
 
-		LabelCountRow->setText(LOCALIZATION("RecordsCount") + ": " + QString::number(ListWidget->count()));
+		LabelCountRow->setText(LANG("RecordsCount") + ": " + QString::number(ListWidget->count()));
 	}
 
 	LabelEmpty->setVisible(!ListWidget->count());

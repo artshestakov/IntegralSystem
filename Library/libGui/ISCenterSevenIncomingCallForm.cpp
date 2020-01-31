@@ -17,11 +17,11 @@ ISCenterSevenIncomingCallForm::ISCenterSevenIncomingCallForm(const QVariantMap &
 	qSelect.BindValue(":PatientID", PatientID);
 	if (qSelect.ExecuteFirst())
 	{
-		AddLabel(LOCALIZATION("CenterSeven.CallingPatient") + ":", qSelect.ReadColumn("ptnt_fio").toString());
+		AddLabel(LANG("CenterSeven.CallingPatient") + ":", qSelect.ReadColumn("ptnt_fio").toString());
 	}
 	else
 	{
-		AddLabel(LOCALIZATION("CenterSeven.CallingPatient") + ":", LOCALIZATION("CenterSeven.CallingPatient.Unknown").arg(PhoneMain));
+		AddLabel(LANG("CenterSeven.CallingPatient") + ":", LANG("CenterSeven.CallingPatient.Unknown").arg(PhoneMain));
 	}
 }
 //-----------------------------------------------------------------------------

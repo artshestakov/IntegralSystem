@@ -130,19 +130,19 @@ bool ISIntegralSystem::notify(QObject *Object, QEvent *e)
 	catch (ISQueryExceptionSyntax &QueryExceptionSyntax)
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.QueryExceptionSyntax"), QueryExceptionSyntax.GetWhat());
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.QueryExceptionSyntax"), QueryExceptionSyntax.GetWhat());
 	}
 	catch (ISQueryExceptionConnection &QueryExceptionConnection)
 	{
 		ISGui::SetWaitGlobalCursor(false);
 
-		if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Message.Question.Reconnect")))
+		if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.Reconnect")))
 		{
 			ISReconnectForm::GetInstance().show();
 			ISReconnectForm::GetInstance().StartReconnect(Result);
 			if (Result)
 			{
-				ISMessageBox::ShowInformation(nullptr, LOCALIZATION("Message.Information.Reconnect.Done"));
+				ISMessageBox::ShowInformation(nullptr, LANG("Message.Information.Reconnect.Done"));
 			}
 		}
 	}

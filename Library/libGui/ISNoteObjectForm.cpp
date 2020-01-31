@@ -23,7 +23,7 @@ ISNoteObjectForm::ISNoteObjectForm(const QString &table_name, int object_id, QWi
 	TableName = table_name;
 	ObjectID = object_id;
 
-	setWindowTitle(LOCALIZATION("Note"));
+	setWindowTitle(LANG("Note"));
 	setWindowIcon(BUFFER_ICONS("NoteObject"));
 
 	ForbidResize();
@@ -38,7 +38,7 @@ ISNoteObjectForm::ISNoteObjectForm(const QString &table_name, int object_id, QWi
 	GetMainLayout()->addLayout(Layout);
 
 	ISPushButton *ButtonSave = new ISPushButton(this);
-	ButtonSave->setText(LOCALIZATION("Save"));
+	ButtonSave->setText(LANG("Save"));
 	ButtonSave->setIcon(BUFFER_ICONS("Save"));
 	connect(ButtonSave, &ISPushButton::clicked, this, &ISNoteObjectForm::Save);
 	Layout->addWidget(ButtonSave);

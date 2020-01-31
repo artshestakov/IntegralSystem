@@ -26,18 +26,18 @@ ISTaskInfoWidget::ISTaskInfoWidget(int task_id, QWidget *parent) : QWidget(paren
 	FormLayout = new QFormLayout();
 	setLayout(FormLayout);
 
-	LabelStatus = AddLabel(LOCALIZATION("Task.Status") + ":");
+	LabelStatus = AddLabel(LANG("Task.Status") + ":");
 	LabelStatus->setFont(FONT_TAHOMA_10);
 	LabelStatus->setSizePolicy(QSizePolicy::Maximum, LabelStatus->sizePolicy().verticalPolicy());
 
-	LabelNumber = AddLabel(LOCALIZATION("Task.Number") + ":");
-	LabelPriority = AddLabel(LOCALIZATION("Task.Priority") + ":");
-	LabelDeadline = AddLabel(LOCALIZATION("Task.Deadline") + ":");
-	LabelOwner = AddLabel(LOCALIZATION("Task.Owner") + ":");
-	LabelExecutor = AddLabel(LOCALIZATION("Task.Executor") + ":");
-	LabelDateTime = AddLabel(LOCALIZATION("Task.DateTime") + ":");
+	LabelNumber = AddLabel(LANG("Task.Number") + ":");
+	LabelPriority = AddLabel(LANG("Task.Priority") + ":");
+	LabelDeadline = AddLabel(LANG("Task.Deadline") + ":");
+	LabelOwner = AddLabel(LANG("Task.Owner") + ":");
+	LabelExecutor = AddLabel(LANG("Task.Executor") + ":");
+	LabelDateTime = AddLabel(LANG("Task.DateTime") + ":");
 
-	LabelResolution = AddLabel(LOCALIZATION("Task.Resolution") + ":");
+	LabelResolution = AddLabel(LANG("Task.Resolution") + ":");
 	LabelResolution->setWordWrap(true);
 }
 //-----------------------------------------------------------------------------

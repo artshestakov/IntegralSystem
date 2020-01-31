@@ -24,39 +24,39 @@ CGConfiguratorFIAS::~CGConfiguratorFIAS()
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::prepare()
 {
-	ISDebug::ShowString(LOCALIZATION("Configurator.FIAS.EnterPathUnloading") + ":");
+	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathUnloading") + ":");
 	QString UnloadPath = ISCommandLine::GetText(); //Путь к файлам ФИАС
 	if (!UnloadPath.length()) //Если путь не введен
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.EnterPathEmpty"));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.EnterPathEmpty"));
 		return;
 	}
 
 	QDir UnloadDir(UnloadPath);
 	if (!UnloadDir.exists()) //Если папка по введенному пути не существует
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.PathNotExist").arg(UnloadPath));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.PathNotExist").arg(UnloadPath));
 		return;
 	}
 
-	ISDebug::ShowString(LOCALIZATION("Configurator.FIAS.EnterPathResult") + ":");
+	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathResult") + ":");
 	QString ResultPath = ISCommandLine::GetText();
 	if (!ResultPath.length())
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.EnterPathEmpty"));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.EnterPathEmpty"));
 		return;
 	}
 
 	QDir ResultDir(ResultPath);
 	if (!ResultDir.exists())
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.PathNotExist").arg(ResultPath));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.PathNotExist").arg(ResultPath));
 		return;
 	}
 
 	if (ResultDir.entryInfoList(QDir::Files).count())
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.ResultPathNotEmpty").arg(ResultPath));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.ResultPathNotEmpty").arg(ResultPath));
 		return;
 	}
 
@@ -69,18 +69,18 @@ void CGConfiguratorFIAS::prepare()
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::update()
 {
-	ISDebug::ShowString(LOCALIZATION("Configurator.FIAS.EnterPathPrepareFiles") + ":");
+	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathPrepareFiles") + ":");
 	QString DirPath = ISCommandLine::GetText();
 	if (!DirPath.length()) //Если путь не введен
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.EnterPathEmpty"));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.EnterPathEmpty"));
 		return;
 	}
 
 	QDir Dir(DirPath);
 	if (!Dir.exists()) //Если папка по введенному пути не существует
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.PathNotExist").arg(DirPath));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.PathNotExist").arg(DirPath));
 		return;
 	}
 
@@ -95,11 +95,11 @@ void CGConfiguratorFIAS::update()
 bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &ResultPath)
 {
 	ISDebug::ShowEmptyString();
-	ISDebug::ShowInfoString(LOCALIZATION("Configurator.FIAS.FileHandling.Start").arg(FileInfo.baseName()));
+	ISDebug::ShowInfoString(LANG("Configurator.FIAS.FileHandling.Start").arg(FileInfo.baseName()));
 	QFile FileOriginal(FileInfo.absoluteFilePath());
 	if (!FileOriginal.open(QIODevice::ReadOnly))
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.FileNotOpen").arg(FileOriginal.fileName()).arg(FileOriginal.errorString()));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.FileNotOpen").arg(FileOriginal.fileName()).arg(FileOriginal.errorString()));
 		return false;
 	}
 
@@ -107,7 +107,7 @@ bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &
 	if (!FileResult.open(QIODevice::Append))
 	{
 		FileOriginal.close();
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.FileNotOpen").arg(FileResult.fileName()).arg(FileResult.errorString()));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.FileNotOpen").arg(FileResult.fileName()).arg(FileResult.errorString()));
 		return false;
 	}
 
@@ -119,7 +119,7 @@ bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &
 		if (FileSize > MaxLen) //Если размер файла меньше макисмального размера блока - один проход
 		{
 			ProcessedSize += MaxLen;
-			ISDebug::ShowInfoString(LOCALIZATION("Configurator.FIAS.WriteToFile").arg(GetFileResultName(FileInfo.baseName())).arg(ProcessedSize / (1000 * 1024)).arg(FileSize / (1000 * 1024)));
+			ISDebug::ShowInfoString(LANG("Configurator.FIAS.WriteToFile").arg(GetFileResultName(FileInfo.baseName())).arg(ProcessedSize / (1000 * 1024)).arg(FileSize / (1000 * 1024)));
 		}
 
 		QString Content = FileOriginal.read(MaxLen);
@@ -148,7 +148,7 @@ bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &
 		FileResult.flush();
 	}
 
-	ISDebug::ShowInfoString(LOCALIZATION("Configurator.FIAS.FileHandling.End").arg(FileInfo.baseName()));
+	ISDebug::ShowInfoString(LANG("Configurator.FIAS.FileHandling.End").arg(FileInfo.baseName()));
 	FileResult.close();
 	FileOriginal.close();
 	return true;
@@ -175,12 +175,12 @@ void CGConfiguratorFIAS::InitializeKeys()
 bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 {
 	ISDebug::ShowEmptyString();
-	ISDebug::ShowInfoString(LOCALIZATION("Configurator.FIAS.FileHandling.Start").arg(FileInfo.baseName()));
+	ISDebug::ShowInfoString(LANG("Configurator.FIAS.FileHandling.Start").arg(FileInfo.baseName()));
 
 	QString TableName = "_FIAS_" + GetTableName(FileInfo.absoluteFilePath());
 	if (!ISMetaData::GetInstanse().CheckExistTable(TableName))
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Configurator.FIAS.TableNotExist").arg(TableName));
+		ISDebug::ShowWarningString(LANG("Configurator.FIAS.TableNotExist").arg(TableName));
 		return false;
 	}
 
@@ -200,7 +200,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 		Percent = round(Percent * 100) / 100;
 		if (!fmod((double)Inserted, 1000))
 		{
-			ISDebug::ShowInfoString(LOCALIZATION("Configurator.FIAS.Processed").arg(TableName).arg(Inserted).arg(CountLine).arg(Percent));
+			ISDebug::ShowInfoString(LANG("Configurator.FIAS.Processed").arg(TableName).arg(Inserted).arg(CountLine).arg(Percent));
 		}
 
 		QString StringXML = File.readLine();
@@ -217,7 +217,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 	}
 
 	File.close();
-	ISDebug::ShowInfoString(LOCALIZATION("Configurator.FIAS.FileHandling.End").arg(FileInfo.baseName()));
+	ISDebug::ShowInfoString(LANG("Configurator.FIAS.FileHandling.End").arg(FileInfo.baseName()));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -264,7 +264,7 @@ QStringMap CGConfiguratorFIAS::ParseLine(const QString &Content) const
 //-----------------------------------------------------------------------------
 quint64 CGConfiguratorFIAS::GetCountLine(const QString &FilePath) const
 {
-	ISDebug::ShowInfoString(LOCALIZATION("Configurator.FIAS.GetCountLine"));
+	ISDebug::ShowInfoString(LANG("Configurator.FIAS.GetCountLine"));
 	quint64 CountLine = 0;
 	QFile File(FilePath);
 	if (File.open(QIODevice::ReadOnly))

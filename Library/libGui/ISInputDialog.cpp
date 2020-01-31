@@ -40,7 +40,7 @@ ISInputDialog::ISInputDialog(const QString &Title, const QString &LabelText, QWi
 	LayoutBottom->addWidget(ButtonApply);
 
 	ISPushButton *ButtonCancel = new ISPushButton(this);
-	ButtonCancel->setText(LOCALIZATION("Cancel"));
+	ButtonCancel->setText(LANG("Cancel"));
 	ButtonCancel->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonCancel, &ISPushButton::clicked, this, &ISInputDialog::close);
 	LayoutBottom->addWidget(ButtonCancel);

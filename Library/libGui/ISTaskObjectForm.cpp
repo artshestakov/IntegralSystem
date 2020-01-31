@@ -22,8 +22,8 @@ ISTaskObjectForm::ISTaskObjectForm(ISNamespace::ObjectFormType form_type, PMetaC
 
 	ActionTakeToWork = new QAction(this);
 	ActionTakeToWork->setEnabled(false);
-	ActionTakeToWork->setText(LOCALIZATION("Task.TakeToWork"));
-	ActionTakeToWork->setToolTip(LOCALIZATION("Task.TakeToWork"));
+	ActionTakeToWork->setText(LANG("Task.TakeToWork"));
+	ActionTakeToWork->setToolTip(LANG("Task.TakeToWork"));
 	ActionTakeToWork->setIcon(BUFFER_ICONS("Task.TakeToWork"));
 	connect(ActionTakeToWork, &QAction::triggered, this, &ISTaskObjectForm::TakeToWork);
 	AddActionToolBar(ActionTakeToWork);
@@ -41,8 +41,8 @@ void ISTaskObjectForm::AfterShowEvent()
 	if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
 	{
 		CheckFavorite = new ISCheckEdit(this);
-		CheckFavorite->SetText(LOCALIZATION("Task.Favorite"));
-		CheckFavorite->SetToolTip(LOCALIZATION("Task.Favorite.ToolTip"));
+		CheckFavorite->SetText(LANG("Task.Favorite"));
+		CheckFavorite->SetToolTip(LANG("Task.Favorite.ToolTip"));
 		CheckFavorite->SetFont(FONT_APPLICATION_BOLD);
 		CheckFavorite->setContentsMargins(5, 0, 0, 0);
 		GetLayoutWidgetObject()->insertWidget(GetLayoutWidgetObject()->indexOf(GetToolBar()) + 2, CheckFavorite, 0, Qt::AlignLeft);
@@ -50,7 +50,7 @@ void ISTaskObjectForm::AfterShowEvent()
 		if (GetFormType() == ISNamespace::OFT_Copy)
 		{
 			QString TaskName = GetFieldValue("Name").toString();
-			TaskName += " - " + LOCALIZATION("Task.CloneTask.Copy");
+			TaskName += " - " + LANG("Task.CloneTask.Copy");
 			GetFieldWidget("Name")->SetValue(TaskName);
 		}
 	}
@@ -66,7 +66,7 @@ bool ISTaskObjectForm::Save()
 	{
 		if (GetFieldValue("Deadline").toDate() < DATE_TODAY) //≈сли дата срока исполнени€ меньше текущей даты
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.TaskDeadlineOverdue"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskDeadlineOverdue"));
 			GetFieldWidget("Deadline")->BlinkRed();
 			return false;
 		}
@@ -99,7 +99,7 @@ bool ISTaskObjectForm::Save()
 		{
 			if (CheckFavorite->GetValue().toBool())
 			{
-				ISFavorites::GetInstance().AddFavorite("_Task", LOCALIZATION("Tasks"), TaskName, GetObjectID());
+				ISFavorites::GetInstance().AddFavorite("_Task", LANG("Tasks"), TaskName, GetObjectID());
 			}
 
 			CheckFavorite->setVisible(false);
@@ -115,13 +115,13 @@ void ISTaskObjectForm::TakeToWork()
 {
 	if (GetModificationFlag()) //≈сли карточка задачи изменена - предлжить сохранить
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.SaveChangedBeforeTaskTakeToWork")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveChangedBeforeTaskTakeToWork")))
 		{
 			Save();
 		}
 		else
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.TaskSaveBeforeTakeToWork"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskSaveBeforeTakeToWork"));
 			return;
 		}
 	}
@@ -130,7 +130,7 @@ void ISTaskObjectForm::TakeToWork()
 	{
 		if (GetFieldValue("Executor").toInt() == ISMetaUser::GetInstance().GetData()->ID) //≈сли исполнителем задачи €вл€етс€ текущий пользователь
 		{
-			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.TaskTakeToWork")))
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskTakeToWork")))
 			{
 				ISCore::TaskSetStatus(GetObjectID(), CONST_UID_TASK_STATUS_IN_WORK);
 				close();
@@ -139,13 +139,13 @@ void ISTaskObjectForm::TakeToWork()
 		}
 		else //»сполнителем задачи €вл€етс€ не текущий пользователь
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.AlienTask"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.AlienTask"));
 			GetFieldWidget("Executor")->BlinkRed();
 		}
 	}
 	else //” задачи отсутствует исполнитель
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.TaskExecutorEmpty"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskExecutorEmpty"));
 		GetFieldWidget("Executor")->BlinkRed();
 	}
 }

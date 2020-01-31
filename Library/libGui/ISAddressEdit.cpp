@@ -11,8 +11,8 @@
 ISAddressEdit::ISAddressEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	ISPushButton *ButtonList = new ISPushButton(this);
-	ButtonList->setText(LOCALIZATION("Address.ListFIAS"));
-	ButtonList->setToolTip(LOCALIZATION("Address.ListFIAS"));
+	ButtonList->setText(LANG("Address.ListFIAS"));
+	ButtonList->setToolTip(LANG("Address.ListFIAS"));
 	ButtonList->setIcon(BUFFER_ICONS("Address"));
 	connect(ButtonList, &ISPushButton::clicked, this, &ISAddressEdit::ListFIAS);
 	AddWidgetToRight(ButtonList);

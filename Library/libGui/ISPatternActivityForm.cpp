@@ -71,7 +71,7 @@ void ISPatternActivityForm::CreateMainPanel()
 	if (!Map.count())
 	{
 		QLabel *Label = new QLabel(Widget);
-		Label->setText(LOCALIZATION("TelephonyForm.Activity.EmptyPatterns"));
+		Label->setText(LANG("TelephonyForm.Activity.EmptyPatterns"));
 		Label->setFont(FONT_TAHOMA_12);
 		Widget->layout()->addWidget(Label);
 	}
@@ -82,7 +82,7 @@ void ISPatternActivityForm::CreateSignPanel()
 	QHBoxLayout *LayoutGroupBox = new QHBoxLayout();
 
 	QGroupBox *GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LOCALIZATION("TelephonyForm.Activity.Sign"));
+	GroupBox->setTitle(LANG("TelephonyForm.Activity.Sign"));
 	GroupBox->setLayout(LayoutGroupBox);
 	GroupBox->setSizePolicy(GroupBox->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	GetMainLayout()->addWidget(GroupBox);
@@ -93,7 +93,7 @@ void ISPatternActivityForm::CreateSignPanel()
 	LayoutGroupBox->addWidget(WidgetFree);
 
 	QLabel *LabelFree = new QLabel(GroupBox);
-	LabelFree->setText("- " + LOCALIZATION("TelephonyForm.Activity.Sign.Free"));
+	LabelFree->setText("- " + LANG("TelephonyForm.Activity.Sign.Free"));
 	LabelFree->setFont(FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelFree);
 
@@ -103,7 +103,7 @@ void ISPatternActivityForm::CreateSignPanel()
 	LayoutGroupBox->addWidget(WidgetBusy);
 
 	QLabel *LabelBusy = new QLabel(GroupBox);
-	LabelBusy->setText("- " + LOCALIZATION("TelephonyForm.Activity.Sign.Busy"));
+	LabelBusy->setText("- " + LANG("TelephonyForm.Activity.Sign.Busy"));
 	LabelBusy->setFont(FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelBusy);
 
@@ -113,7 +113,7 @@ void ISPatternActivityForm::CreateSignPanel()
 	LayoutGroupBox->addWidget(WidgetNotRegistered);
 
 	QLabel *LabelNotRegistered = new QLabel(GroupBox);
-	LabelNotRegistered->setText("- " + LOCALIZATION("TelephonyForm.Activity.Sign.NotRegistered"));
+	LabelNotRegistered->setText("- " + LANG("TelephonyForm.Activity.Sign.NotRegistered"));
 	LabelNotRegistered->setFont(FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelNotRegistered);
 

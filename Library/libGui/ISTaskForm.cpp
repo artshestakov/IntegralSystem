@@ -33,28 +33,28 @@ ISTaskForm::ISTaskForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	CreateTempWidget();
 	
 	QAction *ActionCreate = new QAction(ToolBar);
-	ActionCreate->setText(LOCALIZATION("Task.CreateTask"));
-	ActionCreate->setToolTip(LOCALIZATION("Task.CreateTask"));
+	ActionCreate->setText(LANG("Task.CreateTask"));
+	ActionCreate->setToolTip(LANG("Task.CreateTask"));
 	ActionCreate->setIcon(BUFFER_ICONS("Add"));
 	connect(ActionCreate, &QAction::triggered, this, &ISTaskForm::CreateTask);
 	ToolBar->addAction(ActionCreate);
 	ISGui::SetFontWidgetUnderline(ToolBar->widgetForAction(ActionCreate), true);
 
 	QAction *ActionSearchByNumber = new QAction(ToolBar);
-	ActionSearchByNumber->setText(LOCALIZATION("Task.SearchByNumber"));
-	ActionSearchByNumber->setToolTip(LOCALIZATION("Task.SearchByNumber"));
+	ActionSearchByNumber->setText(LANG("Task.SearchByNumber"));
+	ActionSearchByNumber->setToolTip(LANG("Task.SearchByNumber"));
 	ActionSearchByNumber->setIcon(BUFFER_ICONS("Search"));
 	connect(ActionSearchByNumber, &QAction::triggered, this, &ISTaskForm::SearchByNumber);
 	ToolBar->addAction(ActionSearchByNumber);
 
 	ToolBar->addSeparator();
 
-	CreateActionFilter(LOCALIZATION("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), "ISTaskAllListForm");
-	CreateActionFilter(LOCALIZATION("Task.Filter.My"), BUFFER_ICONS("Task.Filters.My"), "ISTaskMyListForm");
-	CreateActionFilter(LOCALIZATION("Task.Filter.From"), BUFFER_ICONS("Task.Filters.From"), "ISTaskFromListForm");
-	CreateActionFilter(LOCALIZATION("Task.Filter.Favorite"), BUFFER_ICONS("Task.Filters.Favorite"), "ISTaskFavoriteListForm");
-	CreateActionFilter(LOCALIZATION("Task.Filter.Deadline"), BUFFER_ICONS("Task.Filters.Deadline"), "ISTaskTodayListForm");
-	CreateActionFilter(LOCALIZATION("Task.Filter.Overdue"), BUFFER_ICONS("Task.Filter.Overdue"), "ISTaskOverdueListForm");
+	CreateActionFilter(LANG("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), "ISTaskAllListForm");
+	CreateActionFilter(LANG("Task.Filter.My"), BUFFER_ICONS("Task.Filters.My"), "ISTaskMyListForm");
+	CreateActionFilter(LANG("Task.Filter.From"), BUFFER_ICONS("Task.Filters.From"), "ISTaskFromListForm");
+	CreateActionFilter(LANG("Task.Filter.Favorite"), BUFFER_ICONS("Task.Filters.Favorite"), "ISTaskFavoriteListForm");
+	CreateActionFilter(LANG("Task.Filter.Deadline"), BUFFER_ICONS("Task.Filters.Deadline"), "ISTaskTodayListForm");
+	CreateActionFilter(LANG("Task.Filter.Overdue"), BUFFER_ICONS("Task.Filter.Overdue"), "ISTaskOverdueListForm");
 }
 //-----------------------------------------------------------------------------
 ISTaskForm::~ISTaskForm()
@@ -88,7 +88,7 @@ void ISTaskForm::CreateTempWidget()
 	LayoutLabel->addWidget(LabelIcon);
 
 	QLabel *LabelText = new QLabel(this);
-	LabelText->setText(LOCALIZATION("Task.LabelCentral"));
+	LabelText->setText(LANG("Task.LabelCentral"));
 	LabelText->setFont(FONT_TAHOMA_12_BOLD);
 	LabelText->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LabelText->setAlignment(Qt::AlignCenter);
@@ -168,7 +168,7 @@ void ISTaskForm::CreateTask()
 //-----------------------------------------------------------------------------
 void ISTaskForm::SearchByNumber()
 {
-	int TaskID = ISInputDialog::GetInteger(this, LOCALIZATION("Search"), LOCALIZATION("InputTheTaskNumber") + ":", 0, INTEGER_MAXIMUM).toInt();
+	int TaskID = ISInputDialog::GetInteger(this, LANG("Search"), LANG("InputTheTaskNumber") + ":", 0, INTEGER_MAXIMUM).toInt();
 	if (TaskID)
 	{
 		if (ISCore::TaskCheckExist(TaskID))
@@ -185,7 +185,7 @@ void ISTaskForm::SearchByNumber()
 		}
 		else
 		{
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.TaskWithNumberNotFound").arg(TaskID));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.TaskWithNumberNotFound").arg(TaskID));
 		}
 	}
 }

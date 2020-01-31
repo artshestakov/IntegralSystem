@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 ISComboTableDateFormat::ISComboTableDateFormat(QWidget *parent) : ISComboSettingEdit(parent)
 {
-	AddItem(LOCALIZATION("Settings.Table.DateFormat.Default"), "Default");
-	AddItem(LOCALIZATION("Settings.Table.DateFormat.Extended"), "Extended");
+	AddItem(LANG("Settings.Table.DateFormat.Default"), "Default");
+	AddItem(LANG("Settings.Table.DateFormat.Extended"), "Extended");
 }
 //-----------------------------------------------------------------------------
 ISComboTableDateFormat::~ISComboTableDateFormat()

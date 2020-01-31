@@ -20,7 +20,7 @@ ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 	GroupBox->layout()->addWidget(WidgetColor);
 
 	ISServiceButton *ButtonSelectColor = new ISServiceButton(this);
-	ButtonSelectColor->setToolTip(LOCALIZATION("SelectColor") + "...");
+	ButtonSelectColor->setToolTip(LANG("SelectColor") + "...");
 	ButtonSelectColor->setIcon(BUFFER_ICONS("Color"));
 	ButtonSelectColor->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonSelectColor, &ISServiceButton::clicked, this, &ISColorEdit::SelectColor);
@@ -70,7 +70,7 @@ void ISColorEdit::SetReadOnly(bool read_only)
 //-----------------------------------------------------------------------------
 void ISColorEdit::SelectColor()
 {
-	QColor Color = QColorDialog::getColor(WidgetColor->palette().color(QPalette::Background), this, LOCALIZATION("SelectedColor"), QColorDialog::DontUseNativeDialog);
+	QColor Color = QColorDialog::getColor(WidgetColor->palette().color(QPalette::Background), this, LANG("SelectedColor"), QColorDialog::DontUseNativeDialog);
 	QString ColorName = Color.name();
 	if (ColorName != COLOR_STANDART)
 	{

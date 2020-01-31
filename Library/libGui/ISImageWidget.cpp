@@ -181,13 +181,13 @@ void ISImageWidget::PasteFromLink()
 		{
 			ISProcessForm ProcessForm;
 			ProcessForm.show();
-			ProcessForm.SetText(LOCALIZATION("DownloadingImage"));
+			ProcessForm.SetText(LANG("DownloadingImage"));
 
 			QByteArray ByteArray;
 			QString ErrorString;
 			if (ISNetwork().DownloadFile(Url, ByteArray, ErrorString))
 			{
-				ProcessForm.SetText(LOCALIZATION("ImageOpening"));
+				ProcessForm.SetText(LANG("ImageOpening"));
 
 				QPixmap Pixmap;
 				if (Pixmap.loadFromData(ByteArray))
@@ -196,22 +196,22 @@ void ISImageWidget::PasteFromLink()
 				}
 				else
 				{
-					ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotOpenedImage"));
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotOpenedImage"));
 				}
 			}
 			else
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotDownloadedImage"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDownloadedImage"));
 			}
 		}
 		else
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.LinkInBufferInvalid"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.LinkInBufferInvalid"));
 		}
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotExistLinkInBuffer"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotExistLinkInBuffer"));
 	}
 }
 //-----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISPhoneBaseEdit(parent)
 	
 	if (!ISTelephony::CheckSetUp())
 	{
-		SetToolTipCall(LOCALIZATION("NotSettingTelephonyForCurrentUser"));
+		SetToolTipCall(LANG("NotSettingTelephonyForCurrentUser"));
 		SetCursorCall(CURSOR_FORBIDDEN);
 	}
 }
@@ -45,7 +45,7 @@ void ISPhoneEdit::Call()
 		qInsert.BindValue(":Parameters", ISSystem::VariantMapToJsonString(VariantMap));
 		if (qInsert.Execute())
 		{
-			ISNotificationService::ShowNotification(LOCALIZATION("OutcomingCall").arg(Phone));
+			ISNotificationService::ShowNotification(LANG("OutcomingCall").arg(Phone));
 			emit Called();
 		}
 
@@ -53,7 +53,7 @@ void ISPhoneEdit::Call()
 	}
 	else
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("NotSettingTelephonyForCurrentUser"));
+		ISMessageBox::ShowInformation(this, LANG("NotSettingTelephonyForCurrentUser"));
 	}
 }
 //-----------------------------------------------------------------------------

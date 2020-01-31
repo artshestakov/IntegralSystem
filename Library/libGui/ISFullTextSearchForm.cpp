@@ -22,19 +22,19 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaFor
 	GetMainLayout()->addLayout(Layout);
 
 	LineEdit = new ISLineEdit(this);
-	LineEdit->SetPlaceholderText(LOCALIZATION("InputThisSearchQuery"));
+	LineEdit->SetPlaceholderText(LANG("InputThisSearchQuery"));
 	LineEdit->SetIcon(BUFFER_ICONS("Search"));
 	LineEdit->SetFont(FONT_TAHOMA_10);
 	Layout->addWidget(LineEdit);
 
 	ButtonSearch = new ISPushButton(this);
-	ButtonSearch->setText(LOCALIZATION("Search"));
+	ButtonSearch->setText(LANG("Search"));
 	ButtonSearch->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonSearch, &ISPushButton::clicked, this, &ISFullTextSearchForm::Search);
 	Layout->addWidget(ButtonSearch);
 
 	ButtonStop = new ISPushButton(this);
-	ButtonStop->setText(LOCALIZATION("Search.Stop"));
+	ButtonStop->setText(LANG("Search.Stop"));
 	ButtonStop->setEnabled(false);
 	connect(ButtonStop, &ISPushButton::clicked, this, &ISFullTextSearchForm::Stop);
 	Layout->addWidget(ButtonStop);
@@ -112,7 +112,7 @@ void ISFullTextSearchForm::Search()
 		if (Stopped)
 		{
 			ISGui::SetWaitGlobalCursor(false);
-			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.StopFullTextSearch")))
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.StopFullTextSearch")))
 			{
 				ProgressBar->setValue(0);
 				AfterSearch();
@@ -128,7 +128,7 @@ void ISFullTextSearchForm::Search()
 		}
 
 		ProgressBar->setValue(ProgressBar->value() + 1);
-		LabelSearch->setText(LOCALIZATION("SearchIn") + ": " + MetaTable->GetLocalListName());
+		LabelSearch->setText(LANG("SearchIn") + ": " + MetaTable->GetLocalListName());
 
 		if (!MetaTable->GetIsSystem()) //Таблица не системная
 		{
@@ -138,7 +138,7 @@ void ISFullTextSearchForm::Search()
 		}
 	}
 
-	LabelSearch->setText(LOCALIZATION("BuildingListResult"));
+	LabelSearch->setText(LANG("BuildingListResult"));
 	ISGui::RepaintWidget(LabelSearch);
 	int ResultCount = 0;
 
@@ -163,7 +163,7 @@ void ISFullTextSearchForm::Search()
 		}
 	}
 	dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addStretch();
-	LabelResult->setText(LOCALIZATION("Search.ResultCount") + ": " + QString::number(ResultCount));
+	LabelResult->setText(LANG("Search.ResultCount") + ": " + QString::number(ResultCount));
 	AfterSearch();
 }
 //-----------------------------------------------------------------------------

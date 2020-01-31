@@ -8,14 +8,14 @@ ISRangeDateEdit::ISRangeDateEdit(QWidget *parent, const QString &FieldName) : IS
 {
 	ISComboEdit *ComboEdit = new ISComboEdit(this);
 	ComboEdit->SetEditable(false);
-	ComboEdit->AddItem(LOCALIZATION("Range.Date.Select"), ISNamespace::RangeDatePeriod::RDP_Unknown);
-	ComboEdit->AddItem(LOCALIZATION("Range.Date.Today"), ISNamespace::RangeDatePeriod::RDP_Today);
-	ComboEdit->AddItem(LOCALIZATION("Range.Date.Yesterday"), ISNamespace::RangeDatePeriod::RDP_Yesterday);
-	ComboEdit->AddItem(LOCALIZATION("Range.Date.CurrentMonth"), ISNamespace::RangeDatePeriod::RDP_CurrentMonth);
-	ComboEdit->AddItem(LOCALIZATION("Range.Date.PreviousMonth"), ISNamespace::RangeDatePeriod::RDP_LastMonth);
-	ComboEdit->AddItem(LOCALIZATION("Range.Date.CurrentYear"), ISNamespace::RangeDatePeriod::RDP_CurrentYear);
-	ComboEdit->AddItem(LOCALIZATION("Range.Date.PreviousYear"), ISNamespace::RangeDatePeriod::RDP_LastYear);
-	ComboEdit->AddItem(LOCALIZATION("Range.Date.Other"), ISNamespace::RangeDatePeriod::RDP_Other);
+	ComboEdit->AddItem(LANG("Range.Date.Select"), ISNamespace::RangeDatePeriod::RDP_Unknown);
+	ComboEdit->AddItem(LANG("Range.Date.Today"), ISNamespace::RangeDatePeriod::RDP_Today);
+	ComboEdit->AddItem(LANG("Range.Date.Yesterday"), ISNamespace::RangeDatePeriod::RDP_Yesterday);
+	ComboEdit->AddItem(LANG("Range.Date.CurrentMonth"), ISNamespace::RangeDatePeriod::RDP_CurrentMonth);
+	ComboEdit->AddItem(LANG("Range.Date.PreviousMonth"), ISNamespace::RangeDatePeriod::RDP_LastMonth);
+	ComboEdit->AddItem(LANG("Range.Date.CurrentYear"), ISNamespace::RangeDatePeriod::RDP_CurrentYear);
+	ComboEdit->AddItem(LANG("Range.Date.PreviousYear"), ISNamespace::RangeDatePeriod::RDP_LastYear);
+	ComboEdit->AddItem(LANG("Range.Date.Other"), ISNamespace::RangeDatePeriod::RDP_Other);
 	connect(ComboEdit, &ISComboEdit::ValueChange, this, &ISRangeDateEdit::PeriodChanged);
 	AddWidgetToLeft(ComboEdit);
 
@@ -27,7 +27,7 @@ ISRangeDateEdit::ISRangeDateEdit(QWidget *parent, const QString &FieldName) : IS
 	EndDateEdit->SetCheckEnable(Qt::Checked);
 	EndDateEdit->SetVisibleCheck(false);
 
-	AddFields(LOCALIZATION("FieldRange.DateTime.Begin"), BeginDateEdit, LOCALIZATION("FieldRange.DateTime.End"), EndDateEdit);
+	AddFields(LANG("FieldRange.DateTime.Begin"), BeginDateEdit, LANG("FieldRange.DateTime.End"), EndDateEdit);
 }
 //-----------------------------------------------------------------------------
 ISRangeDateEdit::~ISRangeDateEdit()

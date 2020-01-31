@@ -34,7 +34,7 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(pare
 	Frame->setLayout(LayoutFrame);
 	GetMainLayout()->addWidget(Frame);
 
-	LayoutFrame->addWidget(new QLabel(LOCALIZATION("Notifications") + ":", this));
+	LayoutFrame->addWidget(new QLabel(LANG("Notifications") + ":", this));
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setVerticalScrollMode(ISListWidget::ScrollPerPixel);
@@ -48,18 +48,18 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(pare
 
 	ButtonClear = new ISPushButton(this);
 	ButtonClear->setEnabled(false);
-	ButtonClear->setText(LOCALIZATION("Clear"));
+	ButtonClear->setText(LANG("Clear"));
 	connect(ButtonClear, &ISPushButton::clicked, this, &ISNotificationsForm::Clear);
 	LayoutButtons->addWidget(ButtonClear);
 
 	ISPushButton *ButtonHide = new ISPushButton(this);
-	ButtonHide->setText(LOCALIZATION("Hide"));
+	ButtonHide->setText(LANG("Hide"));
 	connect(ButtonHide, &ISPushButton::clicked, [=] { HideAnimation(350); });
 	LayoutButtons->addWidget(ButtonHide);
 
 	LabelEmpty = new QLabel(this);
 	LabelEmpty->setVisible(false);
-	LabelEmpty->setText(LOCALIZATION("NotificationEmpty") + "\n" + LOCALIZATION("NotificationEmpty.DetailedText"));
+	LabelEmpty->setText(LANG("NotificationEmpty") + "\n" + LANG("NotificationEmpty.DetailedText"));
 	LabelEmpty->setWordWrap(true);
 	LabelEmpty->setFont(FONT_TAHOMA_10);
 	LabelEmpty->setAlignment(Qt::AlignCenter);
@@ -123,7 +123,7 @@ void ISNotificationsForm::ReloadNotify()
 //-----------------------------------------------------------------------------
 void ISNotificationsForm::Clear()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ClearListNotifications")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ClearListNotifications")))
 	{
 		ISQuery qClear(QD_NOTIFICATION_CLEAR);
 		if (qClear.Execute())

@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("ConnectionSettings"));
+	setWindowTitle(LANG("ConnectionSettings"));
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 	ForbidResize();
@@ -18,8 +18,8 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 	GetMainLayout()->addLayout(FormLayout);
 
 	QLabel *LabelServer = new QLabel(this);
-	LabelServer->setText(LOCALIZATION("Server") + ":");
-	LabelServer->setToolTip(LOCALIZATION("ConnectionForm.Hint.Server"));
+	LabelServer->setText(LANG("Server") + ":");
+	LabelServer->setToolTip(LANG("ConnectionForm.Hint.Server"));
 	LabelServer->setCursor(CURSOR_WHATS_THIS);
 
 	EditServer = new ISIPAddressEdit(this);
@@ -27,8 +27,8 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 	FormLayout->addRow(LabelServer, EditServer);
 
 	QLabel *LabelPort = new QLabel(this);
-	LabelPort->setText(LOCALIZATION("Port") + ":");
-	LabelPort->setToolTip(LOCALIZATION("ConnectionForm.Hint.Port"));
+	LabelPort->setText(LANG("Port") + ":");
+	LabelPort->setToolTip(LANG("ConnectionForm.Hint.Port"));
 	LabelPort->setCursor(CURSOR_WHATS_THIS);
 
 	EditPort = new ISIntegerEdit(this);
@@ -36,17 +36,17 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 	FormLayout->addRow(LabelPort, EditPort);
 
 	QLabel *LabelDatabase = new QLabel(this);
-	LabelDatabase->setText(LOCALIZATION("DatabaseName") + ":");
-	LabelDatabase->setToolTip(LOCALIZATION("ConnectionForm.Hint.Database"));
+	LabelDatabase->setText(LANG("DatabaseName") + ":");
+	LabelDatabase->setToolTip(LANG("ConnectionForm.Hint.Database"));
 	LabelDatabase->setCursor(CURSOR_WHATS_THIS);
 
 	EditDatabase = new ISDatabaseEdit(this);
 	EditDatabase->SetCurrentText(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
-	EditDatabase->SetPlaceholderText(LOCALIZATION("EnterDatabaseName"));
+	EditDatabase->SetPlaceholderText(LANG("EnterDatabaseName"));
 	FormLayout->addRow(LabelDatabase, EditDatabase);
 
 	QLabel *LabelLanguage = new QLabel(this);
-	LabelLanguage->setText(LOCALIZATION("Language") + ":");
+	LabelLanguage->setText(LANG("Language") + ":");
 	LabelLanguage->setCursor(CURSOR_WHATS_THIS);
 
 	EditLanguage = new ISLanguageEdit(this);
@@ -55,7 +55,7 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 
 	QFormLayout *FormLayoutInput = new QFormLayout();
 
-	GroupBoxInput = new QGroupBox(LOCALIZATION("AutoInput"), this);
+	GroupBoxInput = new QGroupBox(LANG("AutoInput"), this);
 	GroupBoxInput->setCheckable(true);
 	GroupBoxInput->setChecked(CONFIG_BOOL(CONST_CONFIG_AUTOINPUT_INCLUDED));
 	GroupBoxInput->setLayout(FormLayoutInput);
@@ -63,20 +63,20 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 
 	EditLogin = new ISLineEdit(GroupBoxInput);
 	EditLogin->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_LOGIN));
-	FormLayoutInput->addRow(LOCALIZATION("Login") + ":", EditLogin);
+	FormLayoutInput->addRow(LANG("Login") + ":", EditLogin);
 
 	EditPassword = new ISPasswordEdit(GroupBoxInput);
 	EditPassword->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_PASSWORD));
-	FormLayoutInput->addRow(LOCALIZATION("Password") + ":", EditPassword);
+	FormLayoutInput->addRow(LANG("Password") + ":", EditPassword);
 
 	CheckAutoboot = new ISCheckEdit(this);
-	CheckAutoboot->SetText(LOCALIZATION("AutobootStartup"));
-	CheckAutoboot->SetToolTip(LOCALIZATION("AutobootStartup.ToolTip"));
+	CheckAutoboot->SetText(LANG("AutobootStartup"));
+	CheckAutoboot->SetToolTip(LANG("AutobootStartup.ToolTip"));
 	CheckAutoboot->SetValue(CONFIG_VALUE(CONST_CONFIG_OTHER_AUTOBOOT));
 	GetMainLayout()->addWidget(CheckAutoboot);
 
 	ButtonSave = new ISPushButton(this);
-	ButtonSave->setText(LOCALIZATION("Save"));
+	ButtonSave->setText(LANG("Save"));
 	ButtonSave->setIcon(BUFFER_ICONS("Save"));
 	connect(ButtonSave, &ISPushButton::clicked, this, &ISConnectionForm::SaveSettings);
 	GetMainLayout()->addWidget(ButtonSave, 0, Qt::AlignRight);
@@ -135,17 +135,17 @@ bool ISConnectionForm::CheckFields()
 {
 	if (EditServer->GetValue().toString().isEmpty())
 	{
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("Server")));
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.Field.NullValue").arg(LANG("Server")));
 		return false;
 	}
 	else if (EditPort->GetValue().toString().isEmpty())
 	{
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("Port")));
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.Field.NullValue").arg(LANG("Port")));
 		return false;
 	}
 	else if (EditDatabase->GetCurrentText().isEmpty())
 	{
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("DatabaseName")));
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.Field.NullValue").arg(LANG("DatabaseName")));
 		return false;
 	}
 

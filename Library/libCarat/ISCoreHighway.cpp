@@ -55,7 +55,7 @@ void ISCoreHighway::UserEvent(const QStringMap &StringMap)
 	if (EventType == "call") //Событие входящего звонка
 	{
 		QString Number = StringMap.value("CallerIDNum");
-		ISDebug::ShowInfoString(LOCALIZATION("Highway.Core.Search").arg(Number));
+		ISDebug::ShowInfoString(LANG("Highway.Core.Search").arg(Number));
 
 		ISQuery qSelect(QS_ORGANIZATION_USER);
 		qSelect.BindValue(":Phone", ISPhoneNumberParser::PasteEvent(StringList.at(1)));
@@ -66,13 +66,13 @@ void ISCoreHighway::UserEvent(const QStringMap &StringMap)
 			int UserID = qSelect.ReadColumn("orgz_user").toInt();
 			QString Pattern = qSelect.ReadColumn("aspt_pattern").toString();
 
-			ISDebug::ShowInfoString(LOCALIZATION("Highway.Core.SearchComplete").arg(OrganizationName).arg(Number).arg(Pattern));
+			ISDebug::ShowInfoString(LANG("Highway.Core.SearchComplete").arg(OrganizationName).arg(Number).arg(Pattern));
 			AsteriskSocket->Redirect(StringMap, Pattern);
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, OrganizationID);
 		}
 		else
 		{
-			ISDebug::ShowInfoString(LOCALIZATION("Highway.Core.SearchInvalid").arg(Number));
+			ISDebug::ShowInfoString(LANG("Highway.Core.SearchInvalid").arg(Number));
 		}
 	}
 	else if (EventType == "rating") //Событие оценки качества
@@ -85,7 +85,7 @@ void ISCoreHighway::UserEvent(const QStringMap &StringMap)
 		qInsertRaiting.BindValue(":Pattern", Pattern);
 		if (qInsertRaiting.ExecuteFirst())
 		{
-			ISDebug::ShowString(LOCALIZATION("Highway.Core.NewRaiting").arg(Rating).arg(qInsertRaiting.ReadColumn("userfullname").toString()));
+			ISDebug::ShowString(LANG("Highway.Core.NewRaiting").arg(Rating).arg(qInsertRaiting.ReadColumn("userfullname").toString()));
 		}
 	}
 }

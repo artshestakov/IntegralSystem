@@ -20,7 +20,7 @@ ISContextMenuText::ISContextMenuText(QWidget *ParentEdit, bool ReadOnly, bool Un
 
 	QAction *ActionSearch = new QAction(this);
 	ActionSearch->setEnabled(!ReadOnly && !Empty && EchoMode == QLineEdit::Normal);
-	ActionSearch->setText(LOCALIZATION("SearchIn"));
+	ActionSearch->setText(LANG("SearchIn"));
 	ActionSearch->setMenu(new QMenu(this));
 	addAction(ActionSearch);
 

@@ -91,7 +91,7 @@ void ISWorkspaceForm::CreateTabWidget()
 	if (!ISMetaSystemsEntity::GetInstance().GetSystems().count())
 	{
 		QLabel *Label = new QLabel(TabWidget);
-		Label->setText(LOCALIZATION("NotAccessSystems"));
+		Label->setText(LANG("NotAccessSystems"));
 		Label->setFont(FONT_TAHOMA_12_BOLD);
 		dynamic_cast<QVBoxLayout*>(TabWidget->GetMainTab()->layout())->addWidget(Label, 0, Qt::AlignCenter);
 	}

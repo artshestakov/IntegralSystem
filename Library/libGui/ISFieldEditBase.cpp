@@ -175,7 +175,7 @@ void ISFieldEditBase::CreateHint(const QString &Hint)
 			ButtonHint->setAutoRaise(true);
 			ButtonHint->setFixedSize(SIZE_22_22);
 			ButtonHint->setCursor(CURSOR_POINTING_HAND);
-			ButtonHint->setToolTip(LOCALIZATION("ClickToViewHelp"));
+			ButtonHint->setToolTip(LANG("ClickToViewHelp"));
 			connect(ButtonHint, &QToolButton::clicked, this, &ISFieldEditBase::ShowHint);
 			LayoutLeft->addWidget(ButtonHint);
 		}

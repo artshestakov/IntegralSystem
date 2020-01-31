@@ -29,11 +29,11 @@ static QString QD_EXTERNAL_TOOLS = PREPARE_QUERY("DELETE FROM _externaltools WHE
 //-----------------------------------------------------------------------------
 ISExternalToolsForm::ISExternalToolsForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("ExternalTools"));
+	setWindowTitle(LANG("ExternalTools"));
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 
-	QLabel *Label = new QLabel(LOCALIZATION("MenuStructure") + ":", this);
+	QLabel *Label = new QLabel(LANG("MenuStructure") + ":", this);
 	GetMainLayout()->addWidget(Label);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
@@ -46,21 +46,21 @@ ISExternalToolsForm::ISExternalToolsForm(QWidget *parent) : ISInterfaceDialogFor
 	QVBoxLayout *LayoutSettings = new QVBoxLayout();
 	Layout->addLayout(LayoutSettings);
 
-	ButtonAdd = new ISPushButton(LOCALIZATION("Add"), this);
+	ButtonAdd = new ISPushButton(LANG("Add"), this);
 	connect(ButtonAdd, &ISPushButton::clicked, this, &ISExternalToolsForm::Add);
 	LayoutSettings->addWidget(ButtonAdd);
 
-	ButtonDelete = new ISPushButton(LOCALIZATION("Delete"), this);
+	ButtonDelete = new ISPushButton(LANG("Delete"), this);
 	connect(ButtonDelete, &ISPushButton::clicked, this, &ISExternalToolsForm::Delete);
 	LayoutSettings->addWidget(ButtonDelete);
 
 	LayoutSettings->addStretch();
 
-	ButtonUp = new ISPushButton(LOCALIZATION("Up"), this);
+	ButtonUp = new ISPushButton(LANG("Up"), this);
 	connect(ButtonUp, &ISPushButton::clicked, this, &ISExternalToolsForm::Up);
 	LayoutSettings->addWidget(ButtonUp);
 
-	ButtonDown = new ISPushButton(LOCALIZATION("Down"), this);
+	ButtonDown = new ISPushButton(LANG("Down"), this);
 	connect(ButtonDown, &ISPushButton::clicked, this, &ISExternalToolsForm::Down);
 	LayoutSettings->addWidget(ButtonDown);
 
@@ -69,13 +69,13 @@ ISExternalToolsForm::ISExternalToolsForm(QWidget *parent) : ISInterfaceDialogFor
 
 	EditName = new ISLineEdit(this);
 	connect(EditName, &ISLineEdit::ValueChange, this, &ISExternalToolsForm::NameChanged);
-	FormLayout->addRow(LOCALIZATION("Named") + ":", EditName);
+	FormLayout->addRow(LANG("Named") + ":", EditName);
 
 	EditCommand = new ISPathEditFile(this);
 	connect(EditCommand, &ISPathEditFile::ValueChange, this, &ISExternalToolsForm::CommandChanged);
-	FormLayout->addRow(LOCALIZATION("Command") + ":", EditCommand);
+	FormLayout->addRow(LANG("Command") + ":", EditCommand);
 
-	ButtonDialog = new ISButtonDialog(this, LOCALIZATION("Save"));
+	ButtonDialog = new ISButtonDialog(this, LANG("Save"));
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISExternalToolsForm::Save);
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISExternalToolsForm::close);
 	GetMainLayout()->addWidget(ButtonDialog);
@@ -120,7 +120,7 @@ void ISExternalToolsForm::Save()
 		{
 			ListWidget->setCurrentItem(ListWidgetItem);
 			ListWidget->setFocus();
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SelectNamedTools"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SelectNamedTools"));
 			return;
 		}
 
@@ -128,7 +128,7 @@ void ISExternalToolsForm::Save()
 		{
 			ListWidget->setCurrentItem(ListWidgetItem);
 			ListWidget->setFocus();
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SelectCommandTools"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SelectCommandTools"));
 			return;
 		}
 
@@ -166,7 +166,7 @@ void ISExternalToolsForm::Save()
 void ISExternalToolsForm::Add()
 {
 	QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-	ListWidgetItem->setText("[" + LOCALIZATION("NewTools") + "]");
+	ListWidgetItem->setText("[" + LANG("NewTools") + "]");
 	ListWidget->setCurrentItem(ListWidgetItem);
 
 	EditName->SetValue(ListWidgetItem->text());

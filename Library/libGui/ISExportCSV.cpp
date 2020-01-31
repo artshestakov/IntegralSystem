@@ -17,7 +17,7 @@ ISExportCSV::~ISExportCSV()
 //-----------------------------------------------------------------------------
 bool ISExportCSV::Prepare()
 {
-	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LOCALIZATION("File.Filter.Csv"), LocalName);
+	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Csv"), LocalName);
 	if (!FilePath.length())
 	{
 		return false;
@@ -69,7 +69,7 @@ bool ISExportCSV::Export()
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
-			if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Export.Process.Cancel"), LOCALIZATION("Export.Process.Cancel.DetailedText")))
+			if (ISMessageBox::ShowQuestion(nullptr, LANG("Export.Process.Cancel"), LANG("Export.Process.Cancel.DetailedText")))
 			{
 				FileCSV->close();
 				QFile::remove(FileCSV->fileName());
@@ -105,7 +105,7 @@ bool ISExportCSV::Export()
 		FileCSV->write(RowString.toLocal8Bit());
 
 		emit ExportedRow();
-		emit Message(LOCALIZATION("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
 	}
 
 	FileCSV->close();

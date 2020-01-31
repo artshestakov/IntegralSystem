@@ -64,21 +64,21 @@ void CGConfiguratorCreate::database()
 		bool Exist = ISDatabase::GetInstance().CheckExistDatabase(DatabaseName);
 		if (Exist)
 		{
-			ISDebug::ShowString(LOCALIZATION("Configurator.DatabaseAlreadyExist").arg(DatabaseName));
+			ISDebug::ShowString(LANG("Configurator.DatabaseAlreadyExist").arg(DatabaseName));
 		}
 		else //Если база данных не существует - создать её
 		{
-			ISDebug::ShowString(LOCALIZATION("Configurator.CreatingDatabase").arg(DatabaseName));
+			ISDebug::ShowString(LANG("Configurator.CreatingDatabase").arg(DatabaseName));
 			QSqlQuery SqlQuery = ISDatabase::GetInstance().GetSystemDB().exec(QC_DATABASE.arg(DatabaseName).arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN))); //Исполнение запроса на создание базы данных
 			QSqlError SqlError = SqlQuery.lastError();
 			if (SqlError.type() == QSqlError::NoError)
 			{
-				ISDebug::ShowString(LOCALIZATION("Configurator.CreatingDatabaseDone").arg(DatabaseName));
+				ISDebug::ShowString(LANG("Configurator.CreatingDatabaseDone").arg(DatabaseName));
 				Exist = true;
 			}
 			else
 			{
-				ISDebug::ShowString(LOCALIZATION("Configurator.CreatingDatabaseError").arg(DatabaseName).arg(SqlError.text()));
+				ISDebug::ShowString(LANG("Configurator.CreatingDatabaseError").arg(DatabaseName).arg(SqlError.text()));
 			}
 		}
 
@@ -109,9 +109,9 @@ void CGConfiguratorCreate::systemuser()
 		{
 			ISQuery qUpdate(QU_SYSTEM_USER);
 			qUpdate.BindValue(":IsSystem", true);
-			qUpdate.BindValue(":Surname", LOCALIZATION("SystemUser.Surname"));
-			qUpdate.BindValue(":Name", LOCALIZATION("SystemUser.Name"));
-			qUpdate.BindValue(":Patronymic", LOCALIZATION("SystemUser.Patronymic"));
+			qUpdate.BindValue(":Surname", LANG("SystemUser.Surname"));
+			qUpdate.BindValue(":Name", LANG("SystemUser.Name"));
+			qUpdate.BindValue(":Patronymic", LANG("SystemUser.Patronymic"));
 			qUpdate.BindValue(":SexUID", CONST_UID_SEX_MALE);
 			qUpdate.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
 			qUpdate.BindValue(":AccessAllowed", true);
@@ -126,9 +126,9 @@ void CGConfiguratorCreate::systemuser()
 			ISQuery qInsert(QI_SYSTEM_USER);
 			qInsert.BindValue(":IsSystem", true);
 			qInsert.BindValue(":UID", CONST_UID_USER_POSTGRES);
-			qInsert.BindValue(":Surname", LOCALIZATION("SystemUser.Surname"));
-			qInsert.BindValue(":Name", LOCALIZATION("SystemUser.Name"));
-			qInsert.BindValue(":Patronymic", LOCALIZATION("SystemUser.Patronymic"));
+			qInsert.BindValue(":Surname", LANG("SystemUser.Surname"));
+			qInsert.BindValue(":Name", LANG("SystemUser.Name"));
+			qInsert.BindValue(":Patronymic", LANG("SystemUser.Patronymic"));
 			qInsert.BindValue(":SexUID", CONST_UID_SEX_MALE);
 			qInsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
 			qInsert.BindValue(":AccessAllowed", true);
@@ -150,7 +150,7 @@ void CGConfiguratorCreate::databasesettings()
 		{
 			ISQuery qUpdate(QU_SETTINGS_DATABASE);
 			qUpdate.BindValue(":IsSystem", true);
-			qUpdate.BindValue(":SettingName", LOCALIZATION("SettingDatabase.Name"));
+			qUpdate.BindValue(":SettingName", LANG("SettingDatabase.Name"));
 			qUpdate.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
 			qUpdate.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
 			if (qUpdate.Execute())
@@ -163,7 +163,7 @@ void CGConfiguratorCreate::databasesettings()
 			ISQuery qInsert(QI_SETTINGS_DATABASE);
 			qInsert.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
 			qInsert.BindValue(":IsSystem", true);
-			qInsert.BindValue(":SettingName", LOCALIZATION("SettingDatabase.Name"));
+			qInsert.BindValue(":SettingName", LANG("SettingDatabase.Name"));
 			qInsert.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
 			if (qInsert.Execute())
 			{

@@ -7,8 +7,8 @@
 ISCenterSevenPatientsObjectForm::ISCenterSevenPatientsObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	QAction *ActionWaitAdmission = new QAction(this);
-	ActionWaitAdmission->setText(LOCALIZATION("CenterSeven.AddWaitAdmission"));
-	ActionWaitAdmission->setToolTip(LOCALIZATION("CenterSeven.AddWaitAdmission"));
+	ActionWaitAdmission->setText(LANG("CenterSeven.AddWaitAdmission"));
+	ActionWaitAdmission->setToolTip(LANG("CenterSeven.AddWaitAdmission"));
 	ActionWaitAdmission->setIcon(BUFFER_ICONS("Wait"));
 	connect(ActionWaitAdmission, &QAction::triggered, this, &ISCenterSevenPatientsObjectForm::AddWaitAdmission);
 	AddActionToolBar(ActionWaitAdmission);

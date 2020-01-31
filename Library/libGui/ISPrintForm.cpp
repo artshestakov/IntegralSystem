@@ -9,7 +9,7 @@ ISPrintForm::ISPrintForm(const QString &TableName, QWidget *parent) : ISInterfac
 {
 	MetaReport = nullptr;
 
-	setWindowTitle(LOCALIZATION("PrintForms"));
+	setWindowTitle(LANG("PrintForms"));
 	setWindowIcon(BUFFER_ICONS("Print"));
 	
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
@@ -39,14 +39,14 @@ ISPrintForm::ISPrintForm(const QString &TableName, QWidget *parent) : ISInterfac
 	}
 
 	CheckEditPreview = new ISCheckEdit(this);
-	CheckEditPreview->SetText(LOCALIZATION("PreviewPrint"));
+	CheckEditPreview->SetText(LANG("PreviewPrint"));
 	GetMainLayout()->addWidget(CheckEditPreview, 0, Qt::AlignLeft);
 
 	CheckEditPDF = new ISCheckEdit(this);
-	CheckEditPDF->SetText(LOCALIZATION("PrintOutput.PDF"));
+	CheckEditPDF->SetText(LANG("PrintOutput.PDF"));
 	GetMainLayout()->addWidget(CheckEditPDF, 0, Qt::AlignLeft);
 
-	ButtonPanel = new ISButtonDialog(this, LOCALIZATION("Print"));
+	ButtonPanel = new ISButtonDialog(this, LANG("Print"));
 	ButtonPanel->SetApplyEnabled(false);
 	connect(ButtonPanel, &ISButtonDialog::Apply, this, &ISPrintForm::Print);
 	connect(ButtonPanel, &ISButtonDialog::Close, this, &ISPrintForm::close);

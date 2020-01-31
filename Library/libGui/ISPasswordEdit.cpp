@@ -8,18 +8,18 @@
 ISPasswordEdit::ISPasswordEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	SetEchoMode(QLineEdit::Password);
-	SetPlaceholderText(LOCALIZATION("Field.Password.PlaceholderText"));
+	SetPlaceholderText(LANG("Field.Password.PlaceholderText"));
 
 	CheckPasswordVisible = new QCheckBox(this);
 	CheckPasswordVisible->setFocusPolicy(Qt::NoFocus);
 	CheckPasswordVisible->setCursor(CURSOR_POINTING_HAND);
-	CheckPasswordVisible->setToolTip(LOCALIZATION("ShowHidePassword"));
+	CheckPasswordVisible->setToolTip(LANG("ShowHidePassword"));
 	connect(CheckPasswordVisible, &QCheckBox::stateChanged, this, &ISPasswordEdit::PasswordVisibleChanged);
 	AddWidgetToLeft(CheckPasswordVisible);
 
 	ButtonGeneratePassword = new ISServiceButton(this);
 	ButtonGeneratePassword->setVisible(true);
-	ButtonGeneratePassword->setToolTip(LOCALIZATION("GeneratePassword") + "...");
+	ButtonGeneratePassword->setToolTip(LANG("GeneratePassword") + "...");
 	ButtonGeneratePassword->setIcon(BUFFER_ICONS("PasswordGenerate"));
 	connect(ButtonGeneratePassword, &ISPushButton::clicked, this, &ISPasswordEdit::GeneratePassword);
 	AddWidgetToRight(ButtonGeneratePassword);

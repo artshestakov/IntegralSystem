@@ -26,7 +26,7 @@ ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name
 	FileID = file_id;
 	FileName = file_name;
 
-	setWindowTitle(LOCALIZATION("UpdateApplication"));
+	setWindowTitle(LANG("UpdateApplication"));
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 	resize(SIZE_500_90);
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
@@ -34,14 +34,14 @@ ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name
 
 	QLabel *LabelInformation = new QLabel(this);
 	LabelInformation->setWordWrap(true);
-	LabelInformation->setText(LOCALIZATION("LoadingUpdateText") + "\n\n" + LOCALIZATION("CurrentVersion") + ": " + ISVersion::GetInstance().GetVersion() + "\n" + LOCALIZATION("NewVersion") + ": " + version);
+	LabelInformation->setText(LANG("LoadingUpdateText") + "\n\n" + LANG("CurrentVersion") + ": " + ISVersion::GetInstance().GetVersion() + "\n" + LANG("NewVersion") + ": " + version);
 	GetMainLayout()->addWidget(LabelInformation);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
 
 	QLabel *Label = new QLabel(this);
-	Label->setText(LOCALIZATION("Action") + ":");
+	Label->setText(LANG("Action") + ":");
 	LayoutTitle->addWidget(Label);
 
 	LabelStatus = new QLabel(this);
@@ -52,7 +52,7 @@ ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name
 	ProgressBar = new QProgressBar(this);
 	GetMainLayout()->addWidget(ProgressBar);
 
-	ButtonDialog = new ISButtonDialog(this, LOCALIZATION("StartDownloading"), LOCALIZATION("Annulment"));
+	ButtonDialog = new ISButtonDialog(this, LANG("StartDownloading"), LANG("Annulment"));
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISUpdateDownloadForm::Start);
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISUpdateDownloadForm::Close);
 	GetMainLayout()->addWidget(ButtonDialog);
@@ -85,7 +85,7 @@ void ISUpdateDownloadForm::Start()
 	bool Loaded = ISUpdate::GetInstance().LoadUpdate(FileID, FileName);
 	if (Loaded)
 	{
-		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.NotCloseUpdating"));
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotCloseUpdating"));
 	}
 
 	SetResult(Loaded);

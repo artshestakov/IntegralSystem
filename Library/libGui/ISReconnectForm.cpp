@@ -17,7 +17,7 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 {
 	CurrentAttemp = 0;
 
-	setWindowTitle(LOCALIZATION("ReconnectToDatabase"));
+	setWindowTitle(LANG("ReconnectToDatabase"));
 	setWindowIcon(BUFFER_ICONS("Reconnect"));
 	setWindowFlags(Qt::WindowStaysOnTopHint | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 	setCursor(CURSOR_BUSY);
@@ -44,14 +44,14 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 
 	QLabel *LabelConnectionLost = new QLabel(this);
 	LabelConnectionLost->setFont(FONT_APPLICATION_BOLD);
-	LabelConnectionLost->setText(LOCALIZATION("ConnectionDatabaseLost"));
+	LabelConnectionLost->setText(LANG("ConnectionDatabaseLost"));
 	Layout->addWidget(LabelConnectionLost, 0, Qt::AlignLeft);
 
-	AddLabel(LOCALIZATION("CausesReconnect") + ":");
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LOCALIZATION("Causes.Server.NotLocalNet") + ";");
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LOCALIZATION("Causes.Server.NotEntered") + ";");
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LOCALIZATION("Causes.PatchCord.NotConnected") + ";");
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LOCALIZATION("Causes.Service.NotEntered") + ";");
+	AddLabel(LANG("CausesReconnect") + ":");
+	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotLocalNet") + ";");
+	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotEntered") + ";");
+	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.PatchCord.NotConnected") + ";");
+	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Service.NotEntered") + ";");
 
 	Layout->addWidget(ISControls::CreateHorizontalLine(this));
 
@@ -61,11 +61,11 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 
 	QLabel *LabelStatus = new QLabel(this);
 	LabelStatus->setFont(FONT_APPLICATION_BOLD);
-	LabelStatus->setText(LOCALIZATION("Status.Current") + ":");
+	LabelStatus->setText(LANG("Status.Current") + ":");
 	LayoutReconnect->addWidget(LabelStatus);
 
 	LabelCurrentStatus = new QLabel(this);
-	LabelCurrentStatus->setText(LOCALIZATION("ReconnectText").arg("1") + "...");
+	LabelCurrentStatus->setText(LANG("ReconnectText").arg("1") + "...");
 	LayoutReconnect->addWidget(LabelCurrentStatus);
 
 	LayoutReconnect->addStretch();
@@ -73,7 +73,7 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	Layout->addWidget(ISControls::CreateHorizontalLine(this));
 
 	QLabel *LabelReconnectStartDate = new QLabel(this);
-	LabelReconnectStartDate->setText(LOCALIZATION("ReconnectWaitFor") + ": " + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V3));
+	LabelReconnectStartDate->setText(LANG("ReconnectWaitFor") + ": " + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V3));
 	Layout->addWidget(LabelReconnectStartDate);
 
 	QHBoxLayout *LayoutButtons = new QHBoxLayout();
@@ -81,12 +81,12 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	Layout->addLayout(LayoutButtons);
 
 	ISPushButton *ButtonRestart = new ISPushButton(this);
-	ButtonRestart->setText(LOCALIZATION("RestartApplication"));
+	ButtonRestart->setText(LANG("RestartApplication"));
 	connect(ButtonRestart, &ISPushButton::clicked, this, &ISReconnectForm::Restart);
 	LayoutButtons->addWidget(ButtonRestart);
 
 	ISPushButton *ButtonExit = new ISPushButton(this);
-	ButtonExit->setText(LOCALIZATION("Exit"));
+	ButtonExit->setText(LANG("Exit"));
 	connect(ButtonExit, &ISPushButton::clicked, this, &ISReconnectForm::Exit);
 	LayoutButtons->addWidget(ButtonExit);
 
@@ -152,7 +152,7 @@ void ISReconnectForm::TimerTick()
 {
 	CurrentAttemp++;
 
-	LabelCurrentStatus->setText(LOCALIZATION("ReconnectText").arg(CurrentAttemp) + "...");
+	LabelCurrentStatus->setText(LANG("ReconnectText").arg(CurrentAttemp) + "...");
 
 	Connected = Connect();
 	if (Connected)
@@ -166,7 +166,7 @@ void ISReconnectForm::TimerTick()
 void ISReconnectForm::EscapeClicked()
 {
 	Timer->stop();
-	ISMessageBox::ShowWarning(this, LOCALIZATION("ProgramWillExit"));
+	ISMessageBox::ShowWarning(this, LANG("ProgramWillExit"));
 	Exit();
 }
 //-----------------------------------------------------------------------------

@@ -35,7 +35,7 @@ ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id
 
 	ISServiceButton *ButtonDelete = new ISServiceButton(this);
 	ButtonDelete->setIcon(BUFFER_ICONS("Exit"));
-	ButtonDelete->setToolTip(LOCALIZATION("DeleteNotification"));
+	ButtonDelete->setToolTip(LANG("DeleteNotification"));
 	ButtonDelete->setFlat(true);
 	connect(ButtonDelete, &ISServiceButton::clicked, this, &ISNotifyWidgetItem::DeleteClicked);
 	Layout->addWidget(ButtonDelete);

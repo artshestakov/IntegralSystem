@@ -14,7 +14,7 @@ ISCalendarEventsWidget::ISCalendarEventsWidget(QWidget *parent) : ISListWidget(p
 	LabelEmpty = new QLabel(this);
 	LabelEmpty->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LabelEmpty->setFont(FONT_TAHOMA_12_BOLD);
-	LabelEmpty->setText(LOCALIZATION("NotEventsWithSelectedDay"));
+	LabelEmpty->setText(LANG("NotEventsWithSelectedDay"));
 	LabelEmpty->setWordWrap(true);
 	LabelEmpty->setAlignment(Qt::AlignCenter);
 }

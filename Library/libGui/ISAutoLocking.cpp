@@ -5,10 +5,12 @@
 #include "ISNotificationService.h"
 #include "ISMediaPlayer.h"
 //-----------------------------------------------------------------------------
-ISAutoLocking::ISAutoLocking() : QObject()
+ISAutoLocking::ISAutoLocking()
+	: QObject(),
+	Lock(false),
+	Initialized(false)
 {
-	Lock = false;
-	Initialized = false;
+	
 }
 //-----------------------------------------------------------------------------
 ISAutoLocking::~ISAutoLocking()
@@ -71,7 +73,7 @@ void ISAutoLocking::Timeout()
 	{
 		ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO("Locking"));
 
-		ISNotificationService::ShowNotification(LOCALIZATION("AutoLocking"));
+		ISNotificationService::ShowNotification(LANG("AutoLocking"));
 		LockApplication();
 		emit AutoLock();
 	}

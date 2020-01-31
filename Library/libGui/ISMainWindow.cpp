@@ -76,7 +76,7 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 
 	SystemTrayIcon = new QSystemTrayIcon(this);
 	SystemTrayIcon->setIcon(BUFFER_ICONS("Logo"));
-	SystemTrayIcon->setToolTip(LOCALIZATION("ClickedFromExpandApplicationTray"));
+	SystemTrayIcon->setToolTip(LANG("ClickedFromExpandApplicationTray"));
 	connect(SystemTrayIcon, &QSystemTrayIcon::activated, this, &ISMainWindow::SystemTrayActivated);
 
 	PhoneForm = new ISPhoneForm();
@@ -151,13 +151,13 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 		{
 			if (SETTING_BOOL(CONST_UID_SETTING_SECURITY_PASSWORDEXITSHOW))
 			{
-				QString Password = ISInputDialog::GetPassword(this, LOCALIZATION("Security"), LOCALIZATION("EnterThePasswordForExit")).toString();
+				QString Password = ISInputDialog::GetPassword(this, LANG("Security"), LANG("EnterThePasswordForExit")).toString();
 				if (Password.length())
 				{
 					if (Password != SETTING_STRING(CONST_UID_SETTING_SECURITY_PASSWORDEXIT))
 					{
 						e->ignore();
-						ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Password.Error"));
+						ISMessageBox::ShowWarning(this, LANG("Message.Password.Error"));
 						return;
 					}
 				}
@@ -244,7 +244,7 @@ void ISMainWindow::AfterShowEvent()
 	if (NewNotifyCount)
 	{
 		MenuBar->GetbuttonNotify()->SetCountNotify(NewNotifyCount);
-		ISNotificationService::ShowNotification(LOCALIZATION("NewNotifications").arg(NewNotifyCount));
+		ISNotificationService::ShowNotification(LANG("NewNotifications").arg(NewNotifyCount));
 		QApplication::beep();
 	}
 
@@ -258,7 +258,7 @@ void ISMainWindow::AfterShowEvent()
 	int CountOverdue = ISCore::TaskCountOverdue();
 	if (CountOverdue)
 	{
-		ISNotificationService::ShowNotification(LOCALIZATION("YouHaveExpiredTasks").arg(CountOverdue));
+		ISNotificationService::ShowNotification(LANG("YouHaveExpiredTasks").arg(CountOverdue));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -319,7 +319,7 @@ void ISMainWindow::CreateStackWidget()
 		ISMetaParagraph *MetaParagraph = ISParagraphEntity::GetInstance().GetParagraphs().at(i);
 		ISUuid ParagraphUID = MetaParagraph->GetUID();
 
-		ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->GetLocalName()));
+		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->GetLocalName()));
 		ISCountingTime CountingTime;
 
 		int ObjectType = QMetaType::type((MetaParagraph->GetClassName() + "*").toLocal8Bit().constData());
@@ -401,14 +401,14 @@ void ISMainWindow::TerminateMe(const QVariantMap &VariantMap)
 	activateWindow();
 	raise();
 	ISGui::ProcessEvents();
-	ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.TerminateMe"));
+	ISMessageBox::ShowInformation(this, LANG("Message.Information.TerminateMe"));
 	BeforeClose();
 	ISCore::ExitApplication();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::UpdateAviable(const QVariantMap &VariantMap)
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.NotifyUpdateAviable")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.NotifyUpdateAviable")))
 	{
 		if (ISCreatedObjectsEntity::GetInstance().CheckExistForms())
 		{
@@ -430,7 +430,7 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 //-----------------------------------------------------------------------------
 void ISMainWindow::AlreadyConnected(const QVariantMap &VariantMap)
 {
-	ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Warning.AlreadyConnected.MessageBox").arg(VariantMap.value("Payload").toString()));
+	ISMessageBox::ShowCritical(this, LANG("Message.Warning.AlreadyConnected.MessageBox").arg(VariantMap.value("Payload").toString()));
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::BeforeClose()
@@ -443,31 +443,31 @@ void ISMainWindow::BeforeClose()
 	ISSplashScreen::GetInstance().show();
 	ISGui::ProcessEvents();
 
-	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.CloseApplication.FixingExitToProtocol"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.FixingExitToProtocol"));
 	ISProtocol::ExitApplication();
 	ISOnline::GetInstance().Exit();
 
-	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.CloseApplication.SaveUserSortings"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.SaveUserSortings"));
 	ISSortingBuffer::GetInstance().SaveSortings();
 
-	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.CloseApplication.CommandOnExit"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.CommandOnExit"));
 	ISCore::ExecuteExitComamnd();
 
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
 	{
-		ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.CloseApplication.ColumnSize.Save"));
+		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ColumnSize.Save"));
 		ISColumnSizer::GetInstance().Save();
 	}
 	else
 	{
-		ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.CloseApplication.ColumnSize.Clear"));
+		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ColumnSize.Clear"));
 		ISColumnSizer::GetInstance().Clear();
 	}
 
-	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.CloseApplication.DisconnectFromDatabase"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.DisconnectFromDatabase"));
 	ISDatabase::GetInstance().DisconnectFromDefaultDB();
 
-	ISSplashScreen::GetInstance().SetMessage(LOCALIZATION("Banner.CloseApplication.ExitApplication"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ExitApplication"));
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)
@@ -489,7 +489,7 @@ void ISMainWindow::InitializePlugin()
 {
 	if (!SETTING_DATABASE_VALUE(CONST_UID_DATABASE_SETTING_GENERAL_ADMINISTRATOR).isValid()) //Если не настроен администратор - вывести предупреждение
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotSettingAdministratorInSettingDatabase"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotSettingAdministratorInSettingDatabase"));
 	}
 
 	ISObjects::GetInstance().GetInterface()->InitializePlugin();
@@ -497,7 +497,7 @@ void ISMainWindow::InitializePlugin()
 //-----------------------------------------------------------------------------
 void ISMainWindow::LockClicked()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.Lock")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.Lock")))
 	{
 		LockApplication();
 	}
@@ -505,7 +505,7 @@ void ISMainWindow::LockClicked()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ChangeUser()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ChangeUser")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser")))
 	{
 		BeforeClose();
 		ISCore::ChangeUser();
@@ -549,19 +549,19 @@ void ISMainWindow::ShowChangePasswordForm()
 {
 	if (ISMetaUser::GetInstance().GetData()->System)
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotChangeSystemUserPassword"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotChangeSystemUserPassword"));
 		return;
 	}
 
 	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_CHANGE_PASSWORD))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Special.UserPasswordChange"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.UserPasswordChange"));
 		return;
 	}
 
 	if (ISGui::ShowUserPasswordForm(ISMetaUser::GetInstance().GetData()->ID))
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.YouPasswordDoneChanged"));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.YouPasswordDoneChanged"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -569,13 +569,13 @@ void ISMainWindow::CreateLogToday()
 {
 	QString LogPath = ISLogger::GetInstance().GetLogFileName();
 	QString FileName = ISSystem::GetFileName(LogPath);
-	QString FilePath = ISFileDialog::GetSaveFileName(this, LOCALIZATION("File.Filter.Log"), FileName);
+	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.Log"), FileName);
 	if (FilePath.length())
 	{
 		QFile FileLog(LogPath);
 		if (!FileLog.copy(FilePath))
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotCreateLogFile"), FileLog.errorString());
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCreateLogFile"), FileLog.errorString());
 		}
 	}
 }
@@ -614,7 +614,7 @@ void ISMainWindow::UserStatusChange()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_USER_STATUS_CHANGE))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Special.UserStatusChange"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.UserStatusChange"));
 		return;
 	}
 
@@ -638,12 +638,12 @@ void ISMainWindow::ShowSettingsForm()
 {
 	if (SETTING_BOOL(CONST_UID_SETTING_SECURITY_PASSWORDSETTINGSSHOW))
 	{
-		QString InputPassword = ISInputDialog::GetPassword(this, LOCALIZATION("Security"), LOCALIZATION("EnterThePasswordForShowSettingsForm")).toString();
+		QString InputPassword = ISInputDialog::GetPassword(this, LANG("Security"), LANG("EnterThePasswordForShowSettingsForm")).toString();
 		if (InputPassword.length())
 		{
 			if (InputPassword != SETTING_STRING(CONST_UID_SETTING_SECURITY_PASSWORDSETTINGS))
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Password.Error"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Password.Error"));
 				return;
 			}
 		}
@@ -704,7 +704,7 @@ void ISMainWindow::MakeCall()
 	}
 	else
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("NotSettingTelephonyForCurrentUser"));
+		ISMessageBox::ShowInformation(this, LANG("NotSettingTelephonyForCurrentUser"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -713,7 +713,7 @@ void ISMainWindow::TrayClicked()
 	hide();
 
 	SystemTrayIcon->show();
-	SystemTrayIcon->showMessage(LOCALIZATION("Information"), LOCALIZATION("TrayMessage"), QSystemTrayIcon::Information, 4000);
+	SystemTrayIcon->showMessage(LANG("Information"), LANG("TrayMessage"), QSystemTrayIcon::Information, 4000);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::SystemTrayActivated(QSystemTrayIcon::ActivationReason Reason)

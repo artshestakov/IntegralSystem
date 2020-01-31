@@ -11,7 +11,7 @@ ISYearEdit::ISYearEdit(QWidget *parent) : ISIntegerEdit(parent)
 	SetMaximum(YEAR_MAXIMUM);
 
 	ISServiceButton *ButtonCurrentYear = new ISServiceButton(this);
-	ButtonCurrentYear->setToolTip(LOCALIZATION("CurrentYear"));
+	ButtonCurrentYear->setToolTip(LANG("CurrentYear"));
 	ButtonCurrentYear->setIcon(BUFFER_ICONS("Calendar"));
 	ButtonCurrentYear->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonCurrentYear, &ISServiceButton::clicked, this, &ISYearEdit::SelectCurrentYear);

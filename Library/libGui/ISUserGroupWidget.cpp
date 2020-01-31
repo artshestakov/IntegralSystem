@@ -39,7 +39,7 @@ ISUserGroupWidget::ISUserGroupWidget(int group_id, const QString &group_name, QW
 	Layout->addLayout(LayoutTitle);
 
 	QLabel *LabelInfo = new QLabel(this);
-	LabelInfo->setText(LOCALIZATION("AccessRights.SettingAcceessFromGroup") + ":");
+	LabelInfo->setText(LANG("AccessRights.SettingAcceessFromGroup") + ":");
 	LayoutTitle->addWidget(LabelInfo);
 
 	QLabel *LabelGroup = new QLabel(this);
@@ -66,7 +66,7 @@ void ISUserGroupWidget::CreateSubSystems()
 {
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
-	TabWidget->addTab(ScrollArea, LOCALIZATION("AccessRights.SubSystems"));
+	TabWidget->addTab(ScrollArea, LANG("AccessRights.SubSystems"));
 
 	QVector<ISMetaSystem*> Systems = ISMetaSystemsEntity::GetInstance().GetSystems();
 	for (ISMetaSystem *MetaSystem : Systems) //Обход всех систем
@@ -86,7 +86,7 @@ void ISUserGroupWidget::CreateSubSystems()
 			CheckEdit->SetValue(ISUserRoleEntity::CheckExistSubSystemAccess(GroupID, SubSystem->GetUID()));
 			CheckEdit->setProperty("SubSystemUID", SubSystem->GetUID());
 			CheckEdit->setProperty("SubSystemName", SubSystem->GetLocalName());
-			CheckEdit->SetToolTip(LOCALIZATION("AccessRights.ClickedToGiveAccessFromSubSystem"));
+			CheckEdit->SetToolTip(LANG("AccessRights.ClickedToGiveAccessFromSubSystem"));
 			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupWidget::SubSystemClicked);
 			FormLayout->addRow(SubSystem->GetLocalName() + ":", CheckEdit);
 		}
@@ -98,7 +98,7 @@ void ISUserGroupWidget::CreateTables()
 	QFormLayout *FormLayout = new QFormLayout();
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(FormLayout);
-	TabWidget->addTab(ScrollArea, LOCALIZATION("AccessRights.Tables"));
+	TabWidget->addTab(ScrollArea, LANG("AccessRights.Tables"));
 
 	QMap<QString, ISUuid> Map;
 	QList<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
@@ -123,7 +123,7 @@ void ISUserGroupWidget::CreateSpecial()
 	QFormLayout *FormLayout = new QFormLayout();
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(FormLayout);
-	TabWidget->addTab(ScrollArea, LOCALIZATION("AccessRights.SpecialRoles"));
+	TabWidget->addTab(ScrollArea, LANG("AccessRights.SpecialRoles"));
 
 	ISQuery qSelectSpecialGroup(QS_GROUP_ACCESS_SPECIAL_GROUP);
 	if (qSelectSpecialGroup.Execute())

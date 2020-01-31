@@ -15,7 +15,7 @@ ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 	ActionGroupTools = new QActionGroup(this);
 	connect(ActionGroupTools, &QActionGroup::triggered, this, &ISMenuFastAccess::StartExternalTool);
 
-	QLabel *LabelCreateRecords = new QLabel(LOCALIZATION("CreateRecords") + ":", this);
+	QLabel *LabelCreateRecords = new QLabel(LANG("CreateRecords") + ":", this);
 	ISGui::SetFontWidgetUnderline(LabelCreateRecords, true);
 	LabelCreateRecords->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 
@@ -23,9 +23,9 @@ ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 	WidgetActionCreateRecords->setDefaultWidget(LabelCreateRecords);
 	addAction(WidgetActionCreateRecords);
 
-	ActionCreateRecords = addAction(LOCALIZATION("Setting"), this, &ISMenuFastAccess::CreateRecords);
+	ActionCreateRecords = addAction(LANG("Setting"), this, &ISMenuFastAccess::CreateRecords);
 
-	QLabel *LabelExternalTools = new QLabel(LOCALIZATION("ExternalTools") + ":", this);
+	QLabel *LabelExternalTools = new QLabel(LANG("ExternalTools") + ":", this);
 	ISGui::SetFontWidgetUnderline(LabelExternalTools, true);
 	LabelExternalTools->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 
@@ -33,7 +33,7 @@ ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 	WidgetActionExternalTools->setDefaultWidget(LabelExternalTools);
 	addAction(WidgetActionExternalTools);
 
-	ActionExternalTools = addAction(LOCALIZATION("Setting"), this, &ISMenuFastAccess::ExternalTools);
+	ActionExternalTools = addAction(LANG("Setting"), this, &ISMenuFastAccess::ExternalTools);
 
 	connect(this, &ISMenuFastAccess::aboutToShow, this, &ISMenuFastAccess::AboutToShow);
 }
@@ -61,7 +61,7 @@ void ISMenuFastAccess::AboutToShow()
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(VectorRecords.at(i));
 
-		QAction *ActionRecord = new QAction(LOCALIZATION("CreateRecord") + ": " + MetaTable->GetLocalName(), this);
+		QAction *ActionRecord = new QAction(LANG("CreateRecord") + ": " + MetaTable->GetLocalName(), this);
 		ActionRecord->setFont(FONT_TAHOMA_10);
 		ActionRecord->setData(MetaTable->GetName());
 		insertAction(ActionCreateRecords, ActionRecord);
@@ -103,13 +103,13 @@ void ISMenuFastAccess::StartExternalTool(QAction *ActionTriggered)
 
 	if (!QFile::exists(Command))
 	{
-		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Error.NotFoundFile").arg(Command));
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Error.NotFoundFile").arg(Command));
 		return;
 	}
 
 	if (!ISGui::OpenFile(Command))
 	{
-		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.NotStartedExternalTool").arg(ActionTriggered->text()));
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotStartedExternalTool").arg(ActionTriggered->text()));
 	}
 }
 //-----------------------------------------------------------------------------

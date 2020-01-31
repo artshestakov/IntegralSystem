@@ -7,8 +7,8 @@ ISComboSearchBase::ISComboSearchBase(QWidget *parent) : ISComboEdit(parent)
 	SetEditable(false);
 	SetWheelScroll(true);
 
-	AddItem(LOCALIZATION("Search.Operator.Equally"), ISNamespace::SOT_Equally);
-	AddItem(LOCALIZATION("Search.Operator.NotEqually"), ISNamespace::SOT_NotEqually);
+	AddItem(LANG("Search.Operator.Equally"), ISNamespace::SOT_Equally);
+	AddItem(LANG("Search.Operator.NotEqually"), ISNamespace::SOT_NotEqually);
 }
 //-----------------------------------------------------------------------------
 ISComboSearchBase::~ISComboSearchBase()

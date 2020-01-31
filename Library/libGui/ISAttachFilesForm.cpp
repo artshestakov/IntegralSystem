@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------
 ISAttachFilesForm::ISAttachFilesForm(QWidget *parent) : ISAttachFileBaseForm(parent)
 {
-	setWindowTitle(LOCALIZATION("AddingFiles"));
+	setWindowTitle(LANG("AddingFiles"));
 	resize(SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
@@ -19,13 +19,13 @@ ISAttachFilesForm::ISAttachFilesForm(QWidget *parent) : ISAttachFileBaseForm(par
 	GetMainLayout()->addLayout(Layout);
 
 	ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LOCALIZATION("ListForm.Select") + "...");
+	ButtonSelect->setText(LANG("ListForm.Select") + "...");
 	connect(ButtonSelect, &ISPushButton::clicked, this, &ISAttachFilesForm::SelectFiles);
 	Layout->addWidget(ButtonSelect);
 
 	ButtonClean = new ISPushButton(this);
 	ButtonClean->setEnabled(false);
-	ButtonClean->setText(LOCALIZATION("Clear"));
+	ButtonClean->setText(LANG("Clear"));
 	connect(ButtonClean, &ISPushButton::clicked, this, &ISAttachFilesForm::Clean);
 	Layout->addWidget(ButtonClean);
 
@@ -35,7 +35,7 @@ ISAttachFilesForm::ISAttachFilesForm(QWidget *parent) : ISAttachFileBaseForm(par
 	GetMainLayout()->addWidget(ListWidget);
 
 	LabelFiles = new QLabel(this);
-	LabelFiles->setText(LOCALIZATION("FilesCount") + ": 0");
+	LabelFiles->setText(LANG("FilesCount") + ": 0");
 	GetMainLayout()->addWidget(LabelFiles, 0, Qt::AlignLeft);
 
 	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
@@ -56,18 +56,18 @@ ISAttachFilesForm::ISAttachFilesForm(QWidget *parent) : ISAttachFileBaseForm(par
 
 	ButtonStart = new ISPushButton(this);
 	ButtonStart->setEnabled(false);
-	ButtonStart->setText(LOCALIZATION("Download"));
+	ButtonStart->setText(LANG("Download"));
 	connect(ButtonStart, &ISPushButton::clicked, this, &ISAttachFilesForm::StartDownload);
 	LayoutBottom->addWidget(ButtonStart);
 
 	ButtonStop = new ISPushButton(this);
 	ButtonStop->setEnabled(false);
-	ButtonStop->setText(LOCALIZATION("Stop"));
+	ButtonStop->setText(LANG("Stop"));
 	connect(ButtonStop, &ISPushButton::clicked, this, &ISAttachFilesForm::StopDownload);
 	LayoutBottom->addWidget(ButtonStop);
 
 	ButtonClose = new ISPushButton(this);
-	ButtonClose->setText(LOCALIZATION("Close"));
+	ButtonClose->setText(LANG("Close"));
 	ButtonClose->setIcon(BUFFER_ICONS("Close"));
 	connect(ButtonClose, &ISPushButton::clicked, this, &ISAttachFilesForm::close);
 	LayoutBottom->addWidget(ButtonClose);
@@ -96,7 +96,7 @@ void ISAttachFilesForm::UpdateButtons()
 		ButtonStart->setEnabled(false);
 	}
 
-	LabelFiles->setText(LOCALIZATION("FilesCount") + ": " + QString::number(Count));
+	LabelFiles->setText(LANG("FilesCount") + ": " + QString::number(Count));
 }
 //-----------------------------------------------------------------------------
 void ISAttachFilesForm::SelectFiles()
@@ -160,7 +160,7 @@ void ISAttachFilesForm::StartDownload()
 		QListWidgetItem *ListWidgetItem = ListWidget->item(0);
 		ISAttachFileItem *FileItem = dynamic_cast<ISAttachFileItem*>(ListWidget->itemWidget(ListWidgetItem));
 		QString FilePath = FileItem->GetFilePath();
-		FileItem->SetFilePath(FileItem->GetFilePath() + SYMBOL_SPACE + LOCALIZATION("Loaded") + "...");
+		FileItem->SetFilePath(FileItem->GetFilePath() + SYMBOL_SPACE + LANG("Loaded") + "...");
 		FileItem->SetFont(FONT_APPLICATION_BOLD);
 		ISGui::ProcessEvents();
 

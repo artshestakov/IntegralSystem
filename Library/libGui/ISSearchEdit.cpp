@@ -18,15 +18,15 @@ ISSearchEdit::ISSearchEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	connect(this, &ISSearchEdit::DataChanged, this, &ISSearchEdit::SearchChanged);
 
-	SetPlaceholderText(LOCALIZATION("Search"));
-	SetToolTip(LOCALIZATION("EnteringSearchQuery"));
+	SetPlaceholderText(LANG("Search"));
+	SetToolTip(LANG("EnteringSearchQuery"));
 	SetIcon(BUFFER_ICONS("Search"));
 
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_SEARCH_FAST_REMEMBER))
 	{
 		ButtonLastSearch = new ISServiceButton(this);
 		ButtonLastSearch->setText("...");
-		ButtonLastSearch->setToolTip(LOCALIZATION("ClickFromViewMyLLastSearchQuery"));
+		ButtonLastSearch->setToolTip(LANG("ClickFromViewMyLLastSearchQuery"));
 		ButtonLastSearch->setMenu(new QMenu(ButtonLastSearch));
 		connect(ButtonLastSearch->menu(), &QMenu::aboutToShow, this, &ISSearchEdit::AboutToShow);
 		connect(ButtonLastSearch->menu(), &QMenu::aboutToHide, this, &ISSearchEdit::AboutToHide);

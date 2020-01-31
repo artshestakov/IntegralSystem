@@ -36,11 +36,11 @@ ISDistFileListForm::ISDistFileListForm(QWidget *parent) : ISListBaseForm("_DistF
 {
 	QWidget::setAcceptDrops(true);
 
-	GetAction(ISNamespace::AT_Create)->setText(LOCALIZATION("Addition"));
+	GetAction(ISNamespace::AT_Create)->setText(LANG("Addition"));
 
 	QAction *ActionActual = new QAction(this);
-	ActionActual->setText(LOCALIZATION("ActualInstall"));
-	ActionActual->setToolTip(LOCALIZATION("ActualInstall"));
+	ActionActual->setText(LANG("ActualInstall"));
+	ActionActual->setToolTip(LANG("ActualInstall"));
 	ActionActual->setIcon(BUFFER_ICONS("Apply.Blue"));
 	connect(ActionActual, &QAction::triggered, this, &ISDistFileListForm::Actual);
 	AddAction(ActionActual);
@@ -80,7 +80,7 @@ void ISDistFileListForm::dropEvent(QDropEvent *e)
 //-----------------------------------------------------------------------------
 void ISDistFileListForm::Create()
 {
-	QString FilePath = ISFileDialog::GetOpenFileName(this, QString(), LOCALIZATION("File.Filter.Exe"));
+	QString FilePath = ISFileDialog::GetOpenFileName(this, QString(), LANG("File.Filter.Exe"));
 	if (FilePath.length())
 	{
 		InsertFile(FilePath);
@@ -92,11 +92,11 @@ bool ISDistFileListForm::DeleteCascade()
 	bool Result = ISListBaseForm::DeleteCascade();
 	if (Result)
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.VacuumDistTable")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.VacuumDistTable")))
 		{
 			ISProcessForm ProcessForm;
 			ProcessForm.show();
-			ProcessForm.SetText(LOCALIZATION("VacuumTableDist"));
+			ProcessForm.SetText(LANG("VacuumTableDist"));
 
 			ISQuery qVacuum;
 			qVacuum.Execute("VACUUM _distfiles");
@@ -112,12 +112,12 @@ void ISDistFileListForm::InsertFile(const QString &FilePath)
 	ISProgressForm ProgressForm(0, 0, this);
 	ProgressForm.show();
 
-	ProgressForm.SetText(LOCALIZATION("OpeningFile") + "...");
+	ProgressForm.SetText(LANG("OpeningFile") + "...");
 
 	QFile FileUpdate(FilePath);
 	if (!FileUpdate.open(QIODevice::ReadOnly))
 	{
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ErrorOpenedFile"), FileUpdate.errorString());
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorOpenedFile"), FileUpdate.errorString());
 		return;
 	}
 
@@ -140,11 +140,11 @@ void ISDistFileListForm::InsertFile(const QString &FilePath)
 	int Count = qSelect.ReadColumn("count").toInt();
 	if (Count)
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.VersionAlreadyExist").arg(FileVersion));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.VersionAlreadyExist").arg(FileVersion));
 		return;
 	}
 	
-	ProgressForm.SetText(LOCALIZATION("AddingFile") + "...");
+	ProgressForm.SetText(LANG("AddingFile") + "...");
 
 	ISQuery qActualDisable(QU_ACTUAL_DISABLE);
 	if (qActualDisable.Execute())
@@ -164,7 +164,7 @@ void ISDistFileListForm::InsertFile(const QString &FilePath)
 		{
 			int FileID = qInsertFile.ReadColumn("dsfs_id").toInt();
 
-			ProgressForm.SetText(LOCALIZATION("ReadFile") + SYMBOL_SPACE + FileName + " ...");
+			ProgressForm.SetText(LANG("ReadFile") + SYMBOL_SPACE + FileName + " ...");
 
 			QString Base64 = FileUpdate.readAll().toBase64();
 			IS_ASSERT(Base64.length(), QString("File \"%1\" is null").arg(FilePath));
@@ -185,12 +185,12 @@ void ISDistFileListForm::InsertFile(const QString &FilePath)
 				QString Temp = Base64.mid(i, 1000000);
 
 				ProgressForm.setValue(Part);
-				ProgressForm.SetText(LOCALIZATION("AddingDataFile").arg(Part).arg(CountBlocks) + "...");
+				ProgressForm.SetText(LANG("AddingDataFile").arg(Part).arg(CountBlocks) + "...");
 
 				if (!InsertData(FileID, Temp))
 				{
 					Temp.clear();
-					ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.InsertFileDataInstaller").arg(FilePath));
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertFileDataInstaller").arg(FilePath));
 					break;
 				}
 
@@ -215,7 +215,7 @@ void ISDistFileListForm::Actual()
 {
 	if (GetCurrentRecordValue("Actual").toBool())
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.SelectedUpdateAlreadyActual"));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.SelectedUpdateAlreadyActual"));
 	}
 	else
 	{
@@ -234,9 +234,9 @@ void ISDistFileListForm::Actual()
 //-----------------------------------------------------------------------------
 void ISDistFileListForm::Save()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.SaveDist")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveDist")))
 	{
-		QString FileName = ISFileDialog::GetSaveFileName(this, LOCALIZATION("File.Filter.Exe"), GetCurrentRecordValueDB("FileName").toString());
+		QString FileName = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.Exe"), GetCurrentRecordValueDB("FileName").toString());
 		if (FileName.length())
 		{
 			QFile FileDist(FileName);
@@ -247,7 +247,7 @@ void ISDistFileListForm::Save()
 
 			ISProcessForm ProcessForm;
 			ProcessForm.show();
-			ProcessForm.SetText(LOCALIZATION("SavingDistFile"));
+			ProcessForm.SetText(LANG("SavingDistFile"));
 
 			ISQuery qSelectData(QS_FILE_DATA);
 			qSelectData.BindValue(":FileID", GetObjectID());
@@ -263,7 +263,7 @@ void ISDistFileListForm::Save()
 
 					ProcessForm.close();
 					FileDist.close();
-					ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.SaveDistFile"));
+					ISMessageBox::ShowInformation(this, LANG("Message.Information.SaveDistFile"));
 				}
 			}
 		}

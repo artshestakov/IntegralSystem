@@ -17,25 +17,25 @@
 ISStatusBar::ISStatusBar(QWidget *parent) : QStatusBar(parent)
 {
 	ISServiceButton *ButtonConnection = new ISServiceButton(this);
-	ButtonConnection->setToolTip(LOCALIZATION("ConnectionInfoDatabase"));
+	ButtonConnection->setToolTip(LANG("ConnectionInfoDatabase"));
 	ButtonConnection->setIcon(BUFFER_ICONS("DatabaseConnection"));
 	ButtonConnection->setFlat(true);
 	addWidget(ButtonConnection);
 	connect(ButtonConnection, &ISPushButton::clicked, [=]
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Server") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER) + "\n" +
-											LOCALIZATION("Port") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT) + "\n" +
-											LOCALIZATION("Database") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
+		ISMessageBox::ShowInformation(this, LANG("Server") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER) + "\n" +
+											LANG("Port") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT) + "\n" +
+											LANG("Database") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 	});
 
 	ISServiceButton *ButtonCall = new ISServiceButton(this);
-	ButtonCall->setToolTip(LOCALIZATION("MakeCall"));
+	ButtonCall->setToolTip(LANG("MakeCall"));
 	ButtonCall->setIcon(BUFFER_ICONS("CallPhone"));
 	connect(ButtonCall, &ISServiceButton::clicked, this, &ISStatusBar::MakeCall);
 	addPermanentWidget(ButtonCall);
 
 	ISServiceButton *ButtonTray = new ISServiceButton(this);
-	ButtonTray->setToolTip(LOCALIZATION("ClickedFromCurtailApplicationTray"));
+	ButtonTray->setToolTip(LANG("ClickedFromCurtailApplicationTray"));
 	ButtonTray->setIcon(BUFFER_ICONS("CurtailTray"));
 	connect(ButtonTray, &ISServiceButton::clicked, this, &ISStatusBar::TrayClicked);
 	addPermanentWidget(ButtonTray);

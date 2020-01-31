@@ -77,12 +77,12 @@ void ISTabBarMain::mousePressEvent(QMouseEvent *e)
 		{
 			if (FixedTabs.contains(tabData(MouseRightClickTabIndex).toString()))
 			{
-				ActionFixedTab->setText(LOCALIZATION("UnfixedTab"));
+				ActionFixedTab->setText(LANG("UnfixedTab"));
 				ActionFixedTab->setIcon(BUFFER_ICONS("Tab.Unfixed"));
 			}
 			else
 			{
-				ActionFixedTab->setText(LOCALIZATION("FixedTab"));
+				ActionFixedTab->setText(LANG("FixedTab"));
 				ActionFixedTab->setIcon(BUFFER_ICONS("Tab.Fixed"));
 			}
 		}
@@ -151,7 +151,7 @@ void ISTabBarMain::CreateContextMenu()
 	ContextMenu = new QMenu(this);
 	
 	ActionCloseTab = new QAction(ContextMenu);
-	ActionCloseTab->setText(LOCALIZATION("CloseTab"));
+	ActionCloseTab->setText(LANG("CloseTab"));
 	ActionCloseTab->setIcon(BUFFER_ICONS("Tab.Close"));
 	ContextMenu->addAction(ActionCloseTab);
 	connect(ActionCloseTab, &QAction::triggered, this, [=] 
@@ -161,32 +161,32 @@ void ISTabBarMain::CreateContextMenu()
 	});
 
 	ActionCloseRightTabs = new QAction(ContextMenu);
-	ActionCloseRightTabs->setText(LOCALIZATION("CloseRightTabs"));
+	ActionCloseRightTabs->setText(LANG("CloseRightTabs"));
 	ActionCloseRightTabs->setIcon(BUFFER_ICONS("Tab.CloseRightTabs"));
 	connect(ActionCloseRightTabs, &QAction::triggered, this, &ISTabBarMain::CloseRightTabs);
 	ContextMenu->addAction(ActionCloseRightTabs);
 
 	ActionCloseOtherTabs = new QAction(ContextMenu);
-	ActionCloseOtherTabs->setText(LOCALIZATION("CloseOtherTabs"));
+	ActionCloseOtherTabs->setText(LANG("CloseOtherTabs"));
 	ActionCloseOtherTabs->setIcon(BUFFER_ICONS("Tab.CloseOtherTabs"));
 	connect(ActionCloseOtherTabs, &QAction::triggered, this, &ISTabBarMain::CloseOtherTabs);
 	ContextMenu->addAction(ActionCloseOtherTabs);
 
 	ActionCloseAllTabs = new QAction(ContextMenu);
-	ActionCloseAllTabs->setText(LOCALIZATION("CloseAllTabs"));
+	ActionCloseAllTabs->setText(LANG("CloseAllTabs"));
 	ActionCloseAllTabs->setIcon(BUFFER_ICONS("Tab.CloseAllTabs"));
 	connect(ActionCloseAllTabs, &QAction::triggered, this, &ISTabBarMain::CloseAllTabs);
 	ContextMenu->addAction(ActionCloseAllTabs);
 
 	ActionSettings = new QAction(ContextMenu);
-	ActionSettings->setText(LOCALIZATION("Settings"));
+	ActionSettings->setText(LANG("Settings"));
 	connect(ActionSettings, &QAction::triggered, this, &ISTabBarMain::ShowSettingsForm);
 	ContextMenu->addAction(ActionSettings);
 
 	ContextMenu->addSeparator();
 
 	ActionDuplicate = new QAction(ContextMenu);
-	ActionDuplicate->setText(LOCALIZATION("DuplicateTab"));
+	ActionDuplicate->setText(LANG("DuplicateTab"));
 	ActionDuplicate->setIcon(BUFFER_ICONS("Tab.Duplicate"));
 	ContextMenu->addAction(ActionDuplicate);
 	connect(ActionDuplicate, &QAction::triggered, [=]
@@ -196,7 +196,7 @@ void ISTabBarMain::CreateContextMenu()
 	});
 
 	ActionSeparateWindow = new QAction(ContextMenu);
-	ActionSeparateWindow->setText(LOCALIZATION("InSeparateWindow"));
+	ActionSeparateWindow->setText(LANG("InSeparateWindow"));
 	ActionSeparateWindow->setIcon(BUFFER_ICONS("Tab.Separated"));
 	ContextMenu->addAction(ActionSeparateWindow);
 	connect(ActionSeparateWindow, &QAction::triggered, [=]
@@ -206,7 +206,7 @@ void ISTabBarMain::CreateContextMenu()
 	});
 
 	ActionFixedTab = new QAction(ContextMenu);
-	ActionFixedTab->setText(LOCALIZATION("FixedTab"));
+	ActionFixedTab->setText(LANG("FixedTab"));
 	ActionFixedTab->setIcon(BUFFER_ICONS("Tab.Fixed"));
 	ContextMenu->addAction(ActionFixedTab);
 	connect(ActionFixedTab, &QAction::triggered, [=]

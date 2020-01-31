@@ -11,7 +11,7 @@ ISTaskDoneForm::ISTaskDoneForm(int task_id, QWidget *parent) : ISInterfaceDialog
 {
 	TaskID = task_id;
 
-	setWindowTitle(LOCALIZATION("Task.ResolutionTask"));
+	setWindowTitle(LANG("Task.ResolutionTask"));
 	setWindowIcon(BUFFER_ICONS("Task"));
 	setFixedWidth(550);
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
@@ -20,25 +20,25 @@ ISTaskDoneForm::ISTaskDoneForm(int task_id, QWidget *parent) : ISInterfaceDialog
 	QVBoxLayout *LayoutGroupBox = new QVBoxLayout();
 
 	QGroupBox *GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LOCALIZATION("Task.SelectResolution"));
+	GroupBox->setTitle(LANG("Task.SelectResolution"));
 	GroupBox->setLayout(LayoutGroupBox);
 	GetMainLayout()->addWidget(GroupBox);
 
 	QRadioButton *RadioDone = new QRadioButton(GroupBox);
 	RadioDone->setChecked(true);
-	RadioDone->setText(LOCALIZATION("Task.SelectResolution.Done"));
+	RadioDone->setText(LANG("Task.SelectResolution.Done"));
 	RadioDone->setCursor(CURSOR_POINTING_HAND);
 	RadioDone->setObjectName(CONST_UID_TASK_STATUS_DONE);
 	LayoutGroupBox->addWidget(RadioDone);
 
 	QRadioButton *RadioNotDone = new QRadioButton(GroupBox);
-	RadioNotDone->setText(LOCALIZATION("Task.SelectResolution.NotDone"));
+	RadioNotDone->setText(LANG("Task.SelectResolution.NotDone"));
 	RadioNotDone->setCursor(CURSOR_POINTING_HAND);
 	RadioNotDone->setObjectName(CONST_UID_TASK_STATUS_NOT_DONE);
 	LayoutGroupBox->addWidget(RadioNotDone);
 
 	QRadioButton *RadioCanceled = new QRadioButton(GroupBox);
-	RadioCanceled->setText(LOCALIZATION("Task.SelectResolution.Canceled"));
+	RadioCanceled->setText(LANG("Task.SelectResolution.Canceled"));
 	RadioCanceled->setCursor(CURSOR_POINTING_HAND);
 	RadioCanceled->setObjectName(CONST_UID_TASK_STATUS_CANCELED);
 	LayoutGroupBox->addWidget(RadioCanceled);
@@ -48,11 +48,11 @@ ISTaskDoneForm::ISTaskDoneForm(int task_id, QWidget *parent) : ISInterfaceDialog
 	ButtonGroup->addButton(RadioNotDone);
 	ButtonGroup->addButton(RadioCanceled);
 
-	GetMainLayout()->addWidget(new QLabel(LOCALIZATION("Comment"), this));
+	GetMainLayout()->addWidget(new QLabel(LANG("Comment"), this));
 
 	EditComment = new ISTextEdit(this);
 	EditComment->setFixedHeight(180);
-	EditComment->SetPlaceholderText(LOCALIZATION("Task.ResolutionComment"));
+	EditComment->SetPlaceholderText(LANG("Task.ResolutionComment"));
 	GetMainLayout()->addWidget(EditComment);
 
 	ISButtonDialog *ButtonDialog = new ISButtonDialog(this);

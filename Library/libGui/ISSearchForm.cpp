@@ -18,22 +18,22 @@ ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 {
 	MetaTable = meta_table;
 
-	setWindowTitle(LOCALIZATION("Search.Advanced") + " - " + MetaTable->GetLocalListName());
+	setWindowTitle(LANG("Search.Advanced") + " - " + MetaTable->GetLocalListName());
 	setWindowIcon(BUFFER_ICONS("Search"));
 	resize(SIZE_550_300);
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
 	QLabel *LabelTitle = new QLabel(this);
-	LabelTitle->setText(LOCALIZATION("Search.Advanced"));
+	LabelTitle->setText(LANG("Search.Advanced"));
 	LabelTitle->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LabelTitle->setFont(FONT_TAHOMA_12_BOLD);
 	GetMainLayout()->addWidget(LabelTitle);
 
 	QStringList HeaderLabels;
-	HeaderLabels.append(LOCALIZATION("Search.Title.Field"));
-	HeaderLabels.append(LOCALIZATION("Search.Title.Conditiion"));
-	HeaderLabels.append(LOCALIZATION("Search.Title.Value"));
+	HeaderLabels.append(LANG("Search.Title.Field"));
+	HeaderLabels.append(LANG("Search.Title.Conditiion"));
+	HeaderLabels.append(LANG("Search.Title.Value"));
 	HeaderLabels.append(QString());
 
 	TreeWidget = new QTreeWidget(this);
@@ -50,7 +50,7 @@ ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	ButtonAddFilter = new ISPushButton(this);
-	ButtonAddFilter->setText(LOCALIZATION("Search.AddFilter"));
+	ButtonAddFilter->setText(LANG("Search.AddFilter"));
 	ButtonAddFilter->setIcon(BUFFER_ICONS("Add"));
 	ButtonAddFilter->setCursor(CURSOR_POINTING_HAND);
 	ButtonAddFilter->setMenu(new QMenu(ButtonAddFilter));
@@ -58,7 +58,7 @@ ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 
 	ButtonClear = new ISPushButton(this);
 	ButtonClear->setEnabled(false);
-	ButtonClear->setText(LOCALIZATION("Clear"));
+	ButtonClear->setText(LANG("Clear"));
 	connect(ButtonClear, &ISPushButton::clicked, this, &ISSearchForm::DeleteAllFields);
 	LayoutBottom->addWidget(ButtonClear);
 
@@ -66,13 +66,13 @@ ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 
 	ButtonSearch = new ISPushButton(this);
 	ButtonSearch->setEnabled(false);
-	ButtonSearch->setText(LOCALIZATION("Search"));
+	ButtonSearch->setText(LANG("Search"));
 	ButtonSearch->setIcon(BUFFER_ICONS("Search"));
 	connect(ButtonSearch, &ISPushButton::clicked, this, &ISSearchForm::Search);
 	LayoutBottom->addWidget(ButtonSearch);
 
 	ButtonHide = new ISPushButton(this);
-	ButtonHide->setText(LOCALIZATION("Search.HideForm"));
+	ButtonHide->setText(LANG("Search.HideForm"));
 	connect(ButtonHide, &ISPushButton::clicked, this, &ISSearchForm::Hide);
 	LayoutBottom->addWidget(ButtonHide);
 
@@ -190,7 +190,7 @@ void ISSearchForm::AddFilter()
 			}
 		}
 		
-		TreeWidgetItem->setText(0, LOCALIZATION("Search.Or"));
+		TreeWidgetItem->setText(0, LANG("Search.Or"));
 		TreeWidgetItem->setTextAlignment(0, Qt::AlignVCenter | Qt::AlignRight);
 		TopLevelItem->addChild(TreeWidgetItem);
 	}
@@ -218,7 +218,7 @@ void ISSearchForm::AddFilter()
 
 	ISServiceButton *ButtonDelete = new ISServiceButton(Widget);
 	ButtonDelete->setIcon(BUFFER_ICONS("DeleteSearchField"));
-	ButtonDelete->setToolTip(LOCALIZATION("Search.DeleteField"));
+	ButtonDelete->setToolTip(LANG("Search.DeleteField"));
 	connect(ButtonDelete, &ISPushButton::clicked, this, &ISSearchForm::DeleteFieldClicked);
 	LayoutWidget->addWidget(ButtonDelete);
 	LayoutWidget->addStretch();
@@ -288,7 +288,7 @@ void ISSearchForm::SearchFromField(ISSearchModel &SearchModel, QTreeWidgetItem *
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SearchFieldNotValid").arg(MetaField->GetLabelName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SearchFieldNotValid").arg(MetaField->GetLabelName()));
 		FieldEditBase->BlinkRed();
 	}
 }

@@ -434,9 +434,6 @@
     <ClCompile Include="ISQueryModelHelper.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="ISQueryPool.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="ISQueryPoolObject.cpp">
       <Filter>Database</Filter>
     </ClCompile>
@@ -499,6 +496,9 @@
     </ClCompile>
     <ClCompile Include="EXLicense.cpp">
       <Filter>License</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryPool.cpp">
+      <Filter>Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -571,10 +571,10 @@
     <QtMoc Include="ISRestWorker.h">
       <Filter>Network</Filter>
     </QtMoc>
-    <QtMoc Include="ISQueryPool.h">
+    <QtMoc Include="ISQueryModel.h">
       <Filter>Database</Filter>
     </QtMoc>
-    <QtMoc Include="ISQueryModel.h">
+    <QtMoc Include="ISQueryPool.h">
       <Filter>Database</Filter>
     </QtMoc>
   </ItemGroup>

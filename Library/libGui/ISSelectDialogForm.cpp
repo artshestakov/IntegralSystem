@@ -27,11 +27,11 @@ ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, c
 
 	if (SelectMode == ISNamespace::SLM_Single)
 	{
-		LabelInfo->setText(LOCALIZATION("SelectDialog.Title.Single") + ":");
+		LabelInfo->setText(LANG("SelectDialog.Title.Single") + ":");
 	}
 	else if (SelectMode == ISNamespace::SLM_Multi)
 	{
-		LabelInfo->setText(LOCALIZATION("SelectDialog.Title.Multi") + ":");
+		LabelInfo->setText(LANG("SelectDialog.Title.Multi") + ":");
 	}
 }
 //-----------------------------------------------------------------------------

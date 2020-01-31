@@ -16,7 +16,7 @@ static QString QS_TASK_HISTORY = PREPARE_QUERY("SELECT thst_creationdate, userfu
 ISTaskHistoryTab::ISTaskHistoryTab(int task_id, QTabWidget *parent) : ISTaskTabBase(task_id, parent)
 {
 	ISPushButton *ButtonUpdate = new ISPushButton(this);
-	ButtonUpdate->setText(LOCALIZATION("Update"));
+	ButtonUpdate->setText(LANG("Update"));
 	ButtonUpdate->setIcon(BUFFER_ICONS("Update"));
 	ButtonUpdate->setFlat(true);
 	connect(ButtonUpdate, &ISPushButton::clicked, this, &ISTaskHistoryTab::Update);

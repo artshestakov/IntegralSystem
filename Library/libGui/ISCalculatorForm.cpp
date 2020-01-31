@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 ISCalculatorForm::ISCalculatorForm(QWidget *parent) : ISInterfaceForm(parent)
 {
-	setWindowTitle(LOCALIZATION("Calculator"));
+	setWindowTitle(LANG("Calculator"));
 	setWindowIcon(BUFFER_ICONS("Calculator"));
 
 	ForbidResize();

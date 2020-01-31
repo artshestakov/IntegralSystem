@@ -40,7 +40,7 @@ void ISLoginEdit::LoginChanged()
 				QPoint Point = GetLineEdit()->mapToGlobal(QPoint());
 				Point.setX(Point.x() - 2);
 				Point.setY(Point.y() + 8);
-				QToolTip::showText(Point, LOCALIZATION("ThisLoginAlreadyExist"), GetLineEdit(), QRect(), 5000);
+				QToolTip::showText(Point, LANG("ThisLoginAlreadyExist"), GetLineEdit(), QRect(), 5000);
 			}
 
 			Valid = false;

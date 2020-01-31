@@ -28,7 +28,7 @@ ISPhoneLineEdit::ISPhoneLineEdit(QWidget *parent) : QLineEdit(parent)
 	connect(ActionPaste, &QAction::triggered, this, &ISPhoneLineEdit::PasteClicked);
 
 	ActionClear = new QAction(this);
-	ActionClear->setToolTip(LOCALIZATION("Clear.Field"));
+	ActionClear->setToolTip(LANG("Clear.Field"));
 	ActionClear->setIcon(BUFFER_ICONS("ButtonClear"));
 	connect(ActionClear, &QAction::triggered, this, &ISPhoneLineEdit::ClearClicked);
 	addAction(ActionClear, QLineEdit::TrailingPosition);

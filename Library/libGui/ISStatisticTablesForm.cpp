@@ -26,7 +26,7 @@ ISStatisticTablesForm::ISStatisticTablesForm(QWidget *parent) : ISInterfaceForm(
 			QString TableName = qSelect.ReadColumn("tablename").toString();
 			
 			ISPushButton *ButtonTable = new ISPushButton(ScrollArea);
-			ButtonTable->setText(LOCALIZATION("Details"));
+			ButtonTable->setText(LANG("Details"));
 			ButtonTable->setProperty("TableName", TableName);
 			ButtonTable->setSizePolicy(QSizePolicy::Maximum, ButtonTable->sizePolicy().verticalPolicy());
 			connect(ButtonTable, &ISPushButton::clicked, this, &ISStatisticTablesForm::DetailsClicked);

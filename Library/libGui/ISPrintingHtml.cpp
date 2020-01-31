@@ -128,12 +128,12 @@ bool ISPrintingHtml::Print()
 	if (PDF)
 	{
 		emit SetVisibleDialog(false);
-		QString Path = QFileDialog::getSaveFileName(nullptr, LOCALIZATION("PrintSavePDF"), PathPDF, LOCALIZATION("File.Filter.Pdf"));
+		QString Path = QFileDialog::getSaveFileName(nullptr, LANG("PrintSavePDF"), PathPDF, LANG("File.Filter.Pdf"));
 		emit SetVisibleDialog(true);
 
 		if (Path.length())
 		{
-			emit Message(LOCALIZATION("PrintProcess.SavedToPDF"));
+			emit Message(LANG("PrintProcess.SavedToPDF"));
 
 			Printer.setOutputFormat(QPrinter::PdfFormat);
 			Printer.setOutputFileName(Path);
@@ -145,7 +145,7 @@ bool ISPrintingHtml::Print()
 	{
 		QPrintDialog PrintDialog(&Printer);
 		ISGui::MoveWidgetToDesktop(&PrintDialog, ISNamespace::MWD_Center);
-		PrintDialog.setWindowTitle(LOCALIZATION("SelectPrinter"));
+		PrintDialog.setWindowTitle(LANG("SelectPrinter"));
 		PrintDialog.setWindowIcon(BUFFER_ICONS("Print"));
 		if (PrintDialog.exec() == QPrintDialog::Accepted)
 		{

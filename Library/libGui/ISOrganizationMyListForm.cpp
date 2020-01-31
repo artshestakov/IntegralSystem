@@ -14,8 +14,8 @@ ISOrganizationMyListForm::ISOrganizationMyListForm(QWidget *parent) : ISListBase
 	GetQueryModel()->SetClassFilter(QString("orgz_user = %1").arg(ISMetaUser::GetInstance().GetData()->ID));
 	
 	QAction *ActionReturn = new QAction(GetToolBar());
-	ActionReturn->setText(LOCALIZATION("ReturnOrganization"));
-	ActionReturn->setToolTip(LOCALIZATION("ReturnOrganization"));
+	ActionReturn->setText(LANG("ReturnOrganization"));
+	ActionReturn->setToolTip(LANG("ReturnOrganization"));
 	ActionReturn->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("ReturnOrganization"));
 	connect(ActionReturn, &QAction::triggered, this, &ISOrganizationMyListForm::Return);
 	AddAction(ActionReturn, false, true);
@@ -31,7 +31,7 @@ void ISOrganizationMyListForm::Return()
 	QVectorInt Objects = GetSelectedIDs();
 	if (Objects.count())
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ReturnOrganization").arg(Objects.count())))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ReturnOrganization").arg(Objects.count())))
 		{
 			for (int i = 0; i < Objects.count(); ++i)
 			{
@@ -46,7 +46,7 @@ void ISOrganizationMyListForm::Return()
 				}
 			}
 
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.ReturnOrganizationDone").arg(Objects.count()));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.ReturnOrganizationDone").arg(Objects.count()));
 			Update();
 		}
 	}

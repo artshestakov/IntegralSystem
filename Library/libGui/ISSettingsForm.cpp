@@ -27,7 +27,7 @@ static QString QU_SETTINGS_DEFAULT = PREPARE_QUERY("UPDATE _usersettings SET uss
 ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowIcon(BUFFER_ICONS("Settings"));
-	setWindowTitle(LOCALIZATION("Settings"));
+	setWindowTitle(LANG("Settings"));
 	setMinimumSize(SIZE_MAIN_WINDOW_MINIMUM);
 
 	Layout = new QHBoxLayout();
@@ -52,19 +52,19 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	ISPushButton *ButtonDefault = new ISPushButton(this);
-	ButtonDefault->setText(LOCALIZATION("SettingsDefault"));
+	ButtonDefault->setText(LANG("SettingsDefault"));
 	ButtonDefault->setIcon(BUFFER_ICONS("SettingsDefault"));
 	connect(ButtonDefault, &ISPushButton::clicked, this, &ISSettingsForm::DefaultSettings);
 	LayoutBottom->addWidget(ButtonDefault);
 
 	ISPushButton *ButtonExport = new ISPushButton(this);
-	ButtonExport->setText(LOCALIZATION("Settings.Export"));
+	ButtonExport->setText(LANG("Settings.Export"));
 	ButtonExport->setIcon(BUFFER_ICONS("Arrow.Up"));
 	connect(ButtonExport, &ISPushButton::clicked, this, &ISSettingsForm::Export);
 	LayoutBottom->addWidget(ButtonExport);
 
 	ISPushButton *ButtonImport = new ISPushButton(this);
-	ButtonImport->setText(LOCALIZATION("Settings.Import"));
+	ButtonImport->setText(LANG("Settings.Import"));
 	ButtonImport->setIcon(BUFFER_ICONS("Arrow.Down"));
 	connect(ButtonImport, &ISPushButton::clicked, this, &ISSettingsForm::Import);
 	LayoutBottom->addWidget(ButtonImport);
@@ -182,7 +182,7 @@ void ISSettingsForm::Save()
 	{
 		Iterator++;
 		ProgressForm.setValue(Iterator);
-		ProgressForm.SetText(LOCALIZATION("SavedSetting").arg(Iterator).arg(Fields.count()));
+		ProgressForm.SetText(LANG("SavedSetting").arg(Iterator).arg(Fields.count()));
 
 		QString SettingUID = MapItem.first;
 		ISFieldEditBase *FieldEditBase = MapItem.second;
@@ -194,7 +194,7 @@ void ISSettingsForm::Save()
 
 	ProgressForm.hide();
 
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.SettingsSaved")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SettingsSaved")))
 	{
 		Restart();
 	}
@@ -206,7 +206,7 @@ void ISSettingsForm::Save()
 //-----------------------------------------------------------------------------
 void ISSettingsForm::DefaultSettings()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ChangeSettingsToDefault"), LOCALIZATION("ThisActionCanNotUndone")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeSettingsToDefault"), LANG("ThisActionCanNotUndone")))
 	{
 		ISQuery qSelectSettings(QS_SETTINGS);
 		if (qSelectSettings.Execute())
@@ -225,7 +225,7 @@ void ISSettingsForm::DefaultSettings()
 				QString SettingLocalName = qSelectSettings.ReadColumn("stgs_localname").toString();
 
 				ProgressForm.setValue(ProgressForm.value() + 1);
-				ProgressForm.SetText(LOCALIZATION("SavedSetting").arg(Iterator).arg(qSelectSettings.GetCountResultRows()));
+				ProgressForm.SetText(LANG("SavedSetting").arg(Iterator).arg(qSelectSettings.GetCountResultRows()));
 
 				ISQuery qUpdateDefault(QU_SETTINGS_DEFAULT);
 				qUpdateDefault.BindValue(":SettingValue", SettingValue);
@@ -235,7 +235,7 @@ void ISSettingsForm::DefaultSettings()
 
 			ProgressForm.hide();
 
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.AppliocationWillBeRestart"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.AppliocationWillBeRestart"));
 			Restart();
 		}
 	}
@@ -243,7 +243,7 @@ void ISSettingsForm::DefaultSettings()
 //-----------------------------------------------------------------------------
 void ISSettingsForm::Export()
 {
-	QString FilePath = ISFileDialog::GetSaveFileName(this, LOCALIZATION("File.Filter.SettingsIntegralSystem"));
+	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.SettingsIntegralSystem"));
 	if (FilePath.length())
 	{
 		QFile FileSettings(FilePath);
@@ -276,7 +276,7 @@ void ISSettingsForm::Export()
 //-----------------------------------------------------------------------------
 void ISSettingsForm::Import()
 {
-	QString FilePath = ISFileDialog::GetOpenFileName(this, QString(), LOCALIZATION("File.Filter.SettingsIntegralSystem"));
+	QString FilePath = ISFileDialog::GetOpenFileName(this, QString(), LANG("File.Filter.SettingsIntegralSystem"));
 	if (FilePath.length())
 	{
 		QSettings Settings(FilePath, QSettings::IniFormat);
@@ -288,7 +288,7 @@ void ISSettingsForm::Import()
 		for (int i = 0; i < AllKeys.count(); ++i)
 		{
 			ProgressForm.setValue(i);
-			ProgressForm.SetText(LOCALIZATION("ImportSetting").arg(i).arg(Fields.count()));
+			ProgressForm.SetText(LANG("ImportSetting").arg(i).arg(Fields.count()));
 
 			QString SettingKey = AllKeys.at(i);
 
@@ -300,7 +300,7 @@ void ISSettingsForm::Import()
 
 		ProgressForm.close();
 
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ImportedSettings")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ImportedSettings")))
 		{
 			Restart();
 		}

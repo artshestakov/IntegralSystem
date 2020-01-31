@@ -34,7 +34,7 @@ ISCaratForm::ISCaratForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 	QFormLayout *FormLayout = new QFormLayout();
 
 	QGroupBox *GroupBoxCores = new QGroupBox(this);
-	GroupBoxCores->setTitle(LOCALIZATION("Cores"));
+	GroupBoxCores->setTitle(LANG("Cores"));
 	GroupBoxCores->setLayout(FormLayout);
 	Layout->addWidget(GroupBoxCores);
 
@@ -49,7 +49,7 @@ ISCaratForm::ISCaratForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 
 			ISCheckEdit *CheckBox = new ISCheckEdit(GroupBoxCores);
 			CheckBox->SetValue(CoreActive);
-			CheckBox->SetToolTip(LOCALIZATION("ClickFromIncludeAndExcludeCore"));
+			CheckBox->SetToolTip(LANG("ClickFromIncludeAndExcludeCore"));
 			CheckBox->setObjectName(CoreUID);
 			connect(CheckBox, &ISCheckEdit::ValueChange, this, &ISCaratForm::CoreChecked);
 			FormLayout->addRow(CoreName + ":", CheckBox);

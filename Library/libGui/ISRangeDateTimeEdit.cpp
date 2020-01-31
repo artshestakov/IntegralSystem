@@ -12,7 +12,7 @@ ISRangeDateTimeEdit::ISRangeDateTimeEdit(QWidget *parent, const QString &FieldNa
 	EndDateTimeEdit->SetCheckEnable(Qt::Checked);
 	EndDateTimeEdit->SetVisibleCheck(false);
 
-	AddFields(LOCALIZATION("FieldRange.DateTime.Begin"), BeginDateTimeEdit, LOCALIZATION("FieldRange.DateTime.End"), EndDateTimeEdit);
+	AddFields(LANG("FieldRange.DateTime.Begin"), BeginDateTimeEdit, LANG("FieldRange.DateTime.End"), EndDateTimeEdit);
 }
 //-----------------------------------------------------------------------------
 ISRangeDateTimeEdit::~ISRangeDateTimeEdit()

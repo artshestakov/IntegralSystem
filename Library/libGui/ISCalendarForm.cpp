@@ -61,28 +61,28 @@ ISCalendarForm::ISCalendarForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	ToolBar->addWidget(Spacer);
 
 	ActionCreate = ISControls::CreateActionCreate(ToolBar);
-	ActionCreate->setText(LOCALIZATION("CalendarForm.CreateEvent"));
-	ActionCreate->setToolTip(LOCALIZATION("CalendarForm.CreateEvent.ToolTip"));
+	ActionCreate->setText(LANG("CalendarForm.CreateEvent"));
+	ActionCreate->setToolTip(LANG("CalendarForm.CreateEvent.ToolTip"));
 	connect(ActionCreate, &QAction::triggered, this, &ISCalendarForm::Create);
 	ToolBar->addAction(ActionCreate);
 
 	ActionDateTo = new QAction(ToolBar);
-	ActionDateTo->setText(LOCALIZATION("CalendarForm.CalendarDateTo"));
-	ActionDateTo->setToolTip(LOCALIZATION("CalendarForm.CalendarDateTo"));
+	ActionDateTo->setText(LANG("CalendarForm.CalendarDateTo"));
+	ActionDateTo->setToolTip(LANG("CalendarForm.CalendarDateTo"));
 	ActionDateTo->setIcon(BUFFER_ICONS("CalendarMain.DateTo"));
 	connect(ActionDateTo, &QAction::triggered, this, &ISCalendarForm::DateTo);
 	ToolBar->addAction(ActionDateTo);
 
 	ActionToday = new QAction(ToolBar);
-	ActionToday->setText(LOCALIZATION("Today"));
-	ActionToday->setToolTip(LOCALIZATION("Today"));
+	ActionToday->setText(LANG("Today"));
+	ActionToday->setToolTip(LANG("Today"));
 	ActionToday->setIcon(BUFFER_ICONS("CalendarMain.Today"));
 	connect(ActionToday, &QAction::triggered, this, &ISCalendarForm::ToCurrentDate);
 	ToolBar->addAction(ActionToday);
 
 	ActionSettings = new QAction(ToolBar);
-	ActionSettings->setText(LOCALIZATION("Settings"));
-	ActionSettings->setToolTip(LOCALIZATION("Settings"));
+	ActionSettings->setText(LANG("Settings"));
+	ActionSettings->setToolTip(LANG("Settings"));
 	ActionSettings->setIcon(BUFFER_ICONS("Settings"));
 	connect(ActionSettings, &QAction::triggered, this, &ISCalendarForm::ShowSettingsForm);
 	ToolBar->addAction(ActionSettings);
@@ -92,19 +92,19 @@ ISCalendarForm::ISCalendarForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	connect(ActionEdit, &QAction::triggered, this, &ISCalendarForm::Edit);
 
 	ActionDelete = ISControls::CreateActionDelete(this);
-	ActionDelete->setText(LOCALIZATION("CalendarForm.Delete"));
-	ActionDelete->setToolTip(LOCALIZATION("CalendarForm.Delete"));
+	ActionDelete->setText(LANG("CalendarForm.Delete"));
+	ActionDelete->setToolTip(LANG("CalendarForm.Delete"));
 	ActionDelete->setEnabled(false);
 	connect(ActionDelete, &QAction::triggered, this, &ISCalendarForm::Delete);
 
 	ActionCloseEvent = new QAction(this);
-	ActionCloseEvent->setText(LOCALIZATION("CalendarCloseEvent"));
+	ActionCloseEvent->setText(LANG("CalendarCloseEvent"));
 	ActionCloseEvent->setIcon(BUFFER_ICONS("Close"));
 	ActionCloseEvent->setEnabled(false);
 	connect(ActionCloseEvent, &QAction::triggered, this, &ISCalendarForm::CloseEvent);
 
 	ActionDateEvent = new QAction(this);
-	ActionDateEvent->setText(LOCALIZATION("CalendarForm.OnDateEvent"));
+	ActionDateEvent->setText(LANG("CalendarForm.OnDateEvent"));
 	ActionDateEvent->setIcon(BUFFER_ICONS("Arrow.Left"));
 	ActionDateEvent->setEnabled(false);
 	connect(ActionDateEvent, &QAction::triggered, this, &ISCalendarForm::DateEvent);
@@ -122,12 +122,12 @@ ISCalendarForm::ISCalendarForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	LayoutRight->addWidget(SelectedDayWidget);
 
 	EditSearch = new ISLineEdit(this);
-	EditSearch->SetPlaceholderText(LOCALIZATION("CalendarForm.EnteringSearchQuery"));
+	EditSearch->SetPlaceholderText(LANG("CalendarForm.EnteringSearchQuery"));
 	connect(EditSearch, &ISLineEdit::ValueChange, this, &ISCalendarForm::SearchChanged);
 	LayoutRight->addWidget(EditSearch);
 
 	GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LOCALIZATION("CalendarForm.Events").arg(CalendarPanel->selectedDate().toString(DATE_FORMAT_V1)));
+	GroupBox->setTitle(LANG("CalendarForm.Events").arg(CalendarPanel->selectedDate().toString(DATE_FORMAT_V1)));
 	GroupBox->setLayout(new QVBoxLayout());
 	LayoutRight->addWidget(GroupBox);
 
@@ -204,7 +204,7 @@ void ISCalendarForm::SelectedDateChanged()
 		}
 	}
 
-	GroupBox->setTitle(LOCALIZATION("CalendarForm.Events").arg(CalendarPanel->selectedDate().toString(DATE_FORMAT_V1)));
+	GroupBox->setTitle(LANG("CalendarForm.Events").arg(CalendarPanel->selectedDate().toString(DATE_FORMAT_V1)));
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ void ISCalendarForm::Create()
 //-----------------------------------------------------------------------------
 void ISCalendarForm::DateTo()
 {
-	QVariant Date = ISInputDialog::GetDate(this, LOCALIZATION("CalendarForm.CalendarDateTo"), LOCALIZATION("SelectDate"));
+	QVariant Date = ISInputDialog::GetDate(this, LANG("CalendarForm.CalendarDateTo"), LANG("SelectDate"));
 	if (Date.isValid())
 	{
 		CalendarPanel->setSelectedDate(Date.toDate());
@@ -264,7 +264,7 @@ void ISCalendarForm::CloseEvent()
 	ISCalendarEventItem *EventItem = dynamic_cast<ISCalendarEventItem*>(ListWidget->itemWidget(ListWidget->currentItem()));
 	if (EventItem)
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CalendarCloseEvent")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CalendarCloseEvent")))
 		{
 			if (ISCore::CalendarCloseEvent(EventItem->GetCalendarID()))
 			{
@@ -328,7 +328,7 @@ void ISCalendarForm::EditEvent(int CalendarID)
 //-----------------------------------------------------------------------------
 void ISCalendarForm::DeleteEvent(int CalendarID)
 {
-	if (ISMessageBox::ShowQuestion(CalendarPanel, LOCALIZATION("Message.Question.DeleteCalendarEvent")))
+	if (ISMessageBox::ShowQuestion(CalendarPanel, LANG("Message.Question.DeleteCalendarEvent")))
 	{
 		ISQuery qDelete(QD_CALENDAR);
 		qDelete.BindValue(":CalendarID", CalendarID);
@@ -346,7 +346,7 @@ void ISCalendarForm::SearchChanged(const QVariant &value)
 
 	if (value.isValid())
 	{
-		GroupBox->setTitle(LOCALIZATION("CalendarForm.SearchResults"));
+		GroupBox->setTitle(LANG("CalendarForm.SearchResults"));
 		QString SearchValue = value.toString();
 
 		ISQuery qSelect(QS_CALENDAR_SEARCH);

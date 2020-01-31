@@ -33,11 +33,11 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id, QWidget *parent) : ISInterfa
 		UserFullName = qSelectUser.ReadColumn("userfullname").toString();
 	}
 
-	setWindowTitle(LOCALIZATION("ChangePassword"));
+	setWindowTitle(LANG("ChangePassword"));
 	ForbidResize();
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
-	GetMainLayout()->addWidget(new QLabel(LOCALIZATION("User") + ": " + UserFullName, this));
+	GetMainLayout()->addWidget(new QLabel(LANG("User") + ": " + UserFullName, this));
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -46,7 +46,7 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id, QWidget *parent) : ISInterfa
 	LabelIcon->setPixmap(BUFFER_ICONS("Keyboard").pixmap(SIZE_25_25));
 	Layout->addWidget(LabelIcon);
 
-	LabelText = new QLabel(LOCALIZATION("EnterThePassword"), this);
+	LabelText = new QLabel(LANG("EnterThePassword"), this);
 	Layout->addWidget(LabelText);
 
 	Layout->addStretch();
@@ -56,17 +56,17 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id, QWidget *parent) : ISInterfa
 
 	EditCurrentPassword = new ISLineEdit(this);
 	EditCurrentPassword->SetEchoMode(QLineEdit::Password);
-	FormLayout->addRow(LOCALIZATION("CurrentPassword") + ":", EditCurrentPassword);
+	FormLayout->addRow(LANG("CurrentPassword") + ":", EditCurrentPassword);
 
 	EditPassword = new ISLineEdit(this);
 	EditPassword->SetEchoMode(QLineEdit::Password);
 	connect(EditPassword, &ISLineEdit::DataChanged, this, &ISUserPasswordForm::PasswordChecked);
-	FormLayout->addRow(LOCALIZATION("Password") + ":", EditPassword);
+	FormLayout->addRow(LANG("Password") + ":", EditPassword);
 
 	EditPasswordCheck = new ISLineEdit(this);
 	EditPasswordCheck->SetEchoMode(QLineEdit::Password);
 	connect(EditPasswordCheck, &ISLineEdit::DataChanged, this, &ISUserPasswordForm::PasswordChecked);
-	FormLayout->addRow(LOCALIZATION("PasswordCheck") + ":", EditPasswordCheck);
+	FormLayout->addRow(LANG("PasswordCheck") + ":", EditPasswordCheck);
 
 	ISPasswordWidthWidget *PasswordWidthWidget = new ISPasswordWidthWidget(this);
 	connect(EditPassword, &ISLineEdit::ValueChange, PasswordWidthWidget, &ISPasswordWidthWidget::SetPassword);
@@ -99,7 +99,7 @@ void ISUserPasswordForm::ChangePassword()
 {
 	if (EditPassword->GetValue().toString().length() < MINIMUM_PASSWORD_LENGHT)
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.PasswordLenghtSmall").arg(MINIMUM_PASSWORD_LENGHT));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.PasswordLenghtSmall").arg(MINIMUM_PASSWORD_LENGHT));
 		return;
 	}
 
@@ -135,7 +135,7 @@ void ISUserPasswordForm::ChangePassword()
 		else
 		{
 			ISGui::SetWaitGlobalCursor(false);
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotValidInputPasswordForChange"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotValidInputPasswordForChange"));
 			EditCurrentPassword->BlinkRed();
 		}
 	}
@@ -153,23 +153,23 @@ void ISUserPasswordForm::PasswordChecked()
 		if (EditPassword->GetValue().toString() == EditPasswordCheck->GetValue().toString())
 		{
 			ButtonDialog->SetApplyEnabled(true);
-			SetIconAndTextHeader(BUFFER_ICONS("Apply.Green"), LOCALIZATION("PasswordsMatch"));
+			SetIconAndTextHeader(BUFFER_ICONS("Apply.Green"), LANG("PasswordsMatch"));
 		}
 		else
 		{
 			ButtonDialog->SetApplyEnabled(false);
-			SetIconAndTextHeader(BUFFER_ICONS("Exit"), LOCALIZATION("PasswordsNotMatch"));
+			SetIconAndTextHeader(BUFFER_ICONS("Exit"), LANG("PasswordsNotMatch"));
 		}
 	}
 	else if (!Password.length() && !PasswordCheck.length())
 	{
 		ButtonDialog->SetApplyEnabled(false);
-		SetIconAndTextHeader(BUFFER_ICONS("Keyboard"), LOCALIZATION("EnterThePassword"));
+		SetIconAndTextHeader(BUFFER_ICONS("Keyboard"), LANG("EnterThePassword"));
 	}
 	else
 	{
 		ButtonDialog->SetApplyEnabled(false);
-		SetIconAndTextHeader(BUFFER_ICONS("Exit"), LOCALIZATION("OneFieldPasswordIsEmpty"));
+		SetIconAndTextHeader(BUFFER_ICONS("Exit"), LANG("OneFieldPasswordIsEmpty"));
 	}
 }
 //-----------------------------------------------------------------------------

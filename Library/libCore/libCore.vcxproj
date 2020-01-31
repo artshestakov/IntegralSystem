@@ -151,6 +151,7 @@
     <QtMoc Include="ISModelThreadQuery.h" />
     <ClInclude Include="ISMetaNotify.h" />
     <QtMoc Include="ISNotifySender.h" />
+    <QtMoc Include="ISQueryPool.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
     <ClInclude Include="ISMetaSetting.h" />
     <ClInclude Include="ISMetaSettingsGroup.h" />
@@ -169,7 +170,6 @@
     <ClInclude Include="ISQuery.h" />
     <QtMoc Include="ISQueryModel.h" />
     <ClInclude Include="ISQueryModelHelper.h" />
-    <QtMoc Include="ISQueryPool.h" />
     <ClInclude Include="ISQueryPoolObject.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="ISSearchModel.h" />

@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 ISPeriodForm::ISPeriodForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("Period"));
+	setWindowTitle(LANG("Period"));
 	setWindowIcon(BUFFER_ICONS("Period"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 	ForbidResize();
@@ -15,17 +15,17 @@ ISPeriodForm::ISPeriodForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	GetMainLayout()->addLayout(Layout);
 
 	QLabel *Label = new QLabel(this);
-	Label->setText(LOCALIZATION("SelectFrom") + ":");
+	Label->setText(LANG("SelectFrom") + ":");
 	Label->setFont(FONT_APPLICATION_BOLD);
 	Layout->addWidget(Label);
 
 	RadioButtonCreate = new QRadioButton(this);
-	RadioButtonCreate->setText(LOCALIZATION("PeriodCreate"));
+	RadioButtonCreate->setText(LANG("PeriodCreate"));
 	connect(RadioButtonCreate, &QRadioButton::clicked, this, &ISPeriodForm::RadioChanged);
 	Layout->addWidget(RadioButtonCreate);
 
 	RadioButtonEdit = new QRadioButton(this);
-	RadioButtonEdit->setText(LOCALIZATION("PeriodUpdate"));
+	RadioButtonEdit->setText(LANG("PeriodUpdate"));
 	connect(RadioButtonEdit, &QRadioButton::clicked, this, &ISPeriodForm::RadioChanged);
 	Layout->addWidget(RadioButtonEdit);
 

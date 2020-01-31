@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 ISExportWorker::ISExportWorker(QObject *parent) : QObject(parent)
 {
-	ErrorString = LOCALIZATION("Export.Error.NoError");
+	ErrorString = LANG("Export.Error.NoError");
 	Model = nullptr;
 	Header = false;
 	Canceled = false;
@@ -62,11 +62,11 @@ QVariant ISExportWorker::PrepareValue(const QVariant &Value) const
 	{
 		if (Value.toBool())
 		{
-			Result = LOCALIZATION("Yes");
+			Result = LANG("Yes");
 		}
 		else
 		{
-			Result = LOCALIZATION("No");
+			Result = LANG("No");
 		}
 	}
 	else

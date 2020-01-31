@@ -51,7 +51,7 @@ static QString QS_REGION_CODE = PREPARE_QUERY("SELECT fobj_regioncode "
 //-----------------------------------------------------------------------------
 ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("Address"));
+	setWindowTitle(LANG("Address"));
 	setWindowIcon(BUFFER_ICONS("Address"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 	setFixedSize(530, 230);
@@ -60,31 +60,31 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	GetMainLayout()->addLayout(FormLayout);
 
 	ComboRegion = new ISAddressBox(this);
-	ComboRegion->lineEdit()->setPlaceholderText(LOCALIZATION("Address.Region.PlaceholderText"));
+	ComboRegion->lineEdit()->setPlaceholderText(LANG("Address.Region.PlaceholderText"));
 	connect(ComboRegion, &ISAddressBox::ChangeValue, this, &ISAddressForm::RegionChanged);
 	connect(ComboRegion, &ISAddressBox::ChangeValue, this, &ISAddressForm::UpdatePerfomance);
-	FormLayout->addRow(LOCALIZATION("Address.Region") + ":", ComboRegion);
+	FormLayout->addRow(LANG("Address.Region") + ":", ComboRegion);
 
 	ComboCity = new ISAddressBox(this);
-	ComboCity->lineEdit()->setPlaceholderText(LOCALIZATION("Address.City.PlaceholderText"));
+	ComboCity->lineEdit()->setPlaceholderText(LANG("Address.City.PlaceholderText"));
 	connect(ComboCity, &ISAddressBox::ChangeValue, this, &ISAddressForm::CityChanged);
-	FormLayout->addRow(LOCALIZATION("Address.City") + ":", ComboCity);
+	FormLayout->addRow(LANG("Address.City") + ":", ComboCity);
 
 	ComboStreet = new ISAddressBox(this);
-	ComboStreet->lineEdit()->setPlaceholderText(LOCALIZATION("Address.Street.PlaceholderText"));
+	ComboStreet->lineEdit()->setPlaceholderText(LANG("Address.Street.PlaceholderText"));
 	connect(ComboStreet, &ISAddressBox::ChangeValue, this, &ISAddressForm::StreetChanged);
-	FormLayout->addRow(LOCALIZATION("Address.Street") + ":", ComboStreet);
+	FormLayout->addRow(LANG("Address.Street") + ":", ComboStreet);
 
 	ComboHouse = new ISAddressBox(this);
-	ComboHouse->lineEdit()->setPlaceholderText(LOCALIZATION("Address.House.PlaceholderText"));
+	ComboHouse->lineEdit()->setPlaceholderText(LANG("Address.House.PlaceholderText"));
 	connect(ComboHouse, &ISAddressBox::ChangeValue, this, &ISAddressForm::HouseChanged);
-	FormLayout->addRow(LOCALIZATION("Address.House") + ":", ComboHouse);
+	FormLayout->addRow(LANG("Address.House") + ":", ComboHouse);
 
 	QHBoxLayout *LayoutGroupBox = new QHBoxLayout();
 	LayoutGroupBox->setContentsMargins(LAYOUT_MARGINS_2_PX);
 
 	GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LOCALIZATION("Address.PerformanceAddress"));
+	GroupBox->setTitle(LANG("Address.PerformanceAddress"));
 	GroupBox->setLayout(LayoutGroupBox);
 	GetMainLayout()->addWidget(GroupBox);
 
@@ -102,17 +102,17 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	QLabel *LabelInput = new QLabel(this);
-	LabelInput->setText(LOCALIZATION("Address.Mode") + ":");
+	LabelInput->setText(LANG("Address.Mode") + ":");
 	LayoutBottom->addWidget(LabelInput);
 
 	RadioList = new QRadioButton(this);
-	RadioList->setText(LOCALIZATION("Address.Mode.List"));
+	RadioList->setText(LANG("Address.Mode.List"));
 	RadioList->setShortcut(Qt::Key_F1);
 	connect(RadioList, &QRadioButton::clicked, this, &ISAddressForm::ModeList);
 	LayoutBottom->addWidget(RadioList);
 
 	RadioFree = new QRadioButton(this);
-	RadioFree->setText(LOCALIZATION("Address.Mode.Free"));
+	RadioFree->setText(LANG("Address.Mode.Free"));
 	RadioFree->setShortcut(Qt::Key_F2);
 	connect(RadioFree, &QRadioButton::clicked, this, &ISAddressForm::ModeFree);
 	LayoutBottom->addWidget(RadioFree);
@@ -120,7 +120,7 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	LayoutBottom->addStretch();
 
 	ISPushButton *ButtonApply = new ISPushButton(this);
-	ButtonApply->setText(LOCALIZATION("Address.Select"));
+	ButtonApply->setText(LANG("Address.Select"));
 	ButtonApply->setIcon(BUFFER_ICONS("Apply.Blue"));
 	connect(ButtonApply, &ISPushButton::clicked, this, &ISAddressForm::Apply);
 	LayoutBottom->addWidget(ButtonApply);
@@ -177,7 +177,7 @@ void ISAddressForm::ModeList()
 	ComboCity->setEnabled(false);
 	ComboStreet->setEnabled(false);
 	ComboHouse->setEnabled(false);
-	GroupBox->setTitle(LOCALIZATION("Address.PerformanceAddress"));
+	GroupBox->setTitle(LANG("Address.PerformanceAddress"));
 	LineEdit->setReadOnly(true);
 	LineEdit->setFrame(false);
 	LineEdit->clear();
@@ -194,7 +194,7 @@ void ISAddressForm::ModeFree()
 	ComboCity->setEnabled(false);
 	ComboStreet->setEnabled(false);
 	ComboHouse->setEnabled(false);
-	GroupBox->setTitle(LOCALIZATION("Address.AddressInFreeForm"));
+	GroupBox->setTitle(LANG("Address.AddressInFreeForm"));
 	LineEdit->setReadOnly(false);
 	LineEdit->setFrame(true);
 	LineEdit->clear();

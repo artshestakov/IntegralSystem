@@ -31,7 +31,7 @@ static QString QU_USER_STATUS_CLEAR = PREPARE_QUERY("UPDATE _users SET "
 //-----------------------------------------------------------------------------
 ISUserStatusForm::ISUserStatusForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("StatusUser"));
+	setWindowTitle(LANG("StatusUser"));
 	ForbidResize();
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 
@@ -49,11 +49,11 @@ ISUserStatusForm::ISUserStatusForm(QWidget *parent) : ISInterfaceDialogForm(pare
 		if (StatusID)
 		{
 			QString StatusName = qSelectCurrentStatus.ReadColumn("usts_name").toString();
-			LabelCurrentStatus->setText(LOCALIZATION("StatusUser") + ": " + StatusName);
+			LabelCurrentStatus->setText(LANG("StatusUser") + ": " + StatusName);
 		}
 		else
 		{
-			LabelCurrentStatus->setText(LOCALIZATION("StatusUser") + ": " + LOCALIZATION("StatusUser.NotInstalled"));
+			LabelCurrentStatus->setText(LANG("StatusUser") + ": " + LANG("StatusUser.NotInstalled"));
 		}
 	}
 
@@ -78,7 +78,7 @@ ISUserStatusForm::ISUserStatusForm(QWidget *parent) : ISInterfaceDialogForm(pare
 		GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 
 		QCommandLinkButton *CommandLinkButtonClear = new QCommandLinkButton(this);
-		CommandLinkButtonClear->setText(LOCALIZATION("ClearStatus"));
+		CommandLinkButtonClear->setText(LANG("ClearStatus"));
 		CommandLinkButtonClear->setCursor(CURSOR_POINTING_HAND);
 		connect(CommandLinkButtonClear, &QCommandLinkButton::clicked, this, &ISUserStatusForm::StatusClear);
 		GetMainLayout()->addWidget(CommandLinkButtonClear);

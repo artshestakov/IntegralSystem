@@ -13,7 +13,7 @@ ISPassportEdit::ISPassportEdit(QWidget *parent) : ISLineEdit(parent)
 	Clear();
 
 	ISServiceButton *ButtonEdit = new ISServiceButton(this);
-	ButtonEdit->setToolTip(LOCALIZATION("Passport.EditPassport"));
+	ButtonEdit->setToolTip(LANG("Passport.EditPassport"));
 	ButtonEdit->setIcon(BUFFER_ICONS("Passport"));
 	ButtonEdit->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonEdit, &ISServiceButton::clicked, this, &ISPassportEdit::Edit);
@@ -33,7 +33,7 @@ void ISPassportEdit::SetValue(const QVariant &value)
 	}
 	else
 	{
-		GetLineEdit()->setText(LOCALIZATION("NotFill"));
+		GetLineEdit()->setText(LANG("NotFill"));
 	}
 
 	PassportString = value.toString();
@@ -47,7 +47,7 @@ QVariant ISPassportEdit::GetValue() const
 void ISPassportEdit::Clear()
 {
 	disconnect(GetLineEdit(), &ISQLineEdit::textChanged, this, &ISPassportEdit::ValueChanged);
-	GetLineEdit()->setText(LOCALIZATION("NotFill"));
+	GetLineEdit()->setText(LANG("NotFill"));
 	connect(GetLineEdit(), &ISQLineEdit::textChanged, this, &ISPassportEdit::ValueChanged);
 
 	PassportString.clear();
@@ -82,27 +82,27 @@ QString ISPassportEdit::PreparePassport(const QString &passport_string)
 
 		if (Seria.length())
 		{
-			Result += LOCALIZATION("Passport.Seria") + ": " + Seria + SYMBOL_SPACE;
+			Result += LANG("Passport.Seria") + ": " + Seria + SYMBOL_SPACE;
 		}
 
 		if (Number.length())
 		{
-			Result += LOCALIZATION("Passport.Number") + ": " + Number + SYMBOL_SPACE;
+			Result += LANG("Passport.Number") + ": " + Number + SYMBOL_SPACE;
 		}
 
 		if (DateOfIssue.length())
 		{
-			Result += LOCALIZATION("Passport.DateOfIssue") + ": " + DateOfIssue + SYMBOL_SPACE;
+			Result += LANG("Passport.DateOfIssue") + ": " + DateOfIssue + SYMBOL_SPACE;
 		}
 
 		if (Issued.length())
 		{
-			Result += LOCALIZATION("Passport.Issued") + ": " + Issued + SYMBOL_SPACE;
+			Result += LANG("Passport.Issued") + ": " + Issued + SYMBOL_SPACE;
 		}
 
 		if (DivisionCode.length())
 		{
-			Result += LOCALIZATION("Passport.DivisionCode") + ": " + DivisionCode + SYMBOL_SPACE;
+			Result += LANG("Passport.DivisionCode") + ": " + DivisionCode + SYMBOL_SPACE;
 		}
 	}
 

@@ -40,7 +40,7 @@ void ISCalendarDayWidget::SetSelectedDate(const QDate &Date)
 	QString DayName;
 	if (Date == DATE_TODAY)
 	{
-		DayName = Date.longDayName(Date.dayOfWeek()) + " (" + LOCALIZATION("Today") + ")";
+		DayName = Date.longDayName(Date.dayOfWeek()) + " (" + LANG("Today") + ")";
 	}
 	else
 	{

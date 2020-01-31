@@ -56,7 +56,7 @@ ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, c
 		else if (NoteViewType == "List")
 		{
 			QLabel *LabelNote = new QLabel(this);
-			LabelNote->setText(LOCALIZATION("Note") + ":\n" + Text);
+			LabelNote->setText(LANG("Note") + ":\n" + Text);
 			LabelNote->setWordWrap(true);
 			Layout->addWidget(LabelNote);
 		}

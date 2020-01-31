@@ -15,7 +15,7 @@ static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablen
 //-----------------------------------------------------------------------------
 ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {
-	setWindowTitle(LOCALIZATION("History"));
+	setWindowTitle(LANG("History"));
 	setWindowIcon(BUFFER_ICONS("History"));
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);

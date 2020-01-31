@@ -54,7 +54,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
 		ISSystem::RemoveLastSymbolFromString(DetailedText, 2);
 		DetailedText += '.';
 
-		ISMessageBox MessageBox(QMessageBox::Warning, LOCALIZATION("Warning"), LOCALIZATION("Message.Information.NotSavedObjects").arg(CountNotSaved), QMessageBox::Ok);
+		ISMessageBox MessageBox(QMessageBox::Warning, LANG("Warning"), LANG("Message.Information.NotSavedObjects").arg(CountNotSaved), QMessageBox::Ok);
 		MessageBox.setInformativeText(DetailedText);
 		MessageBox.Exec();
 

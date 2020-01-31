@@ -66,7 +66,7 @@ CGConfigurator::~CGConfigurator()
 void CGConfigurator::InterpreterMode()
 {
 	ISDebug::ShowEmptyString();
-	ISDebug::ShowString(LOCALIZATION("Configurator.InputCommand") + ":");
+	ISDebug::ShowString(LANG("Configurator.InputCommand") + ":");
 
 	std::string InputCommand;
 	std::getline(std::cin, InputCommand);
@@ -87,7 +87,7 @@ void CGConfigurator::InterpreterMode()
 		}
 		else if (StringList.at(0) == "restart") //Перезапуск
 		{
-			ISDebug::ShowString(LOCALIZATION("Configurator.Restart") + "...");
+			ISDebug::ShowString(LANG("Configurator.Restart") + "...");
 			ISSystem::SleepMilliseconds(400);
 			QProcess::startDetached(APPLICATION_FILE_PATH);
 			return;
@@ -101,7 +101,7 @@ void CGConfigurator::InterpreterMode()
 	}
 	else
 	{
-		ISDebug::ShowString(LOCALIZATION("Configurator.Command.NotFound"));
+		ISDebug::ShowString(LANG("Configurator.Command.NotFound"));
 	}
 
 	InterpreterMode();
@@ -133,13 +133,13 @@ bool CGConfigurator::Execute(const QString &Argument)
 		{
 			ISCountingTime CountingTime;
 			Result = QMetaObject::invokeMethod(this, Argument.toUtf8().data());
-			ISDebug::ShowString(LOCALIZATION("Configurator.Command.Executed").arg(Argument).arg(ISSystem::MillisecondsToString(CountingTime.GetElapsed())));
+			ISDebug::ShowString(LANG("Configurator.Command.Executed").arg(Argument).arg(ISSystem::MillisecondsToString(CountingTime.GetElapsed())));
 		}
 		catch (ISQueryException &QueryException) { }
 	}
 	else
 	{
-		ISDebug::ShowString(LOCALIZATION("Configurator.Function.NotFound").arg(Argument));
+		ISDebug::ShowString(LANG("Configurator.Function.NotFound").arg(Argument));
 	}
 
 	return Result;
@@ -165,25 +165,25 @@ bool CGConfigurator::Execute(const QString &Argument, const QString &SubArgument
 				}
 				else
 				{
-					ISDebug::ShowString(LOCALIZATION("Configurator.Function.NotFound").arg(SubArgument));
+					ISDebug::ShowString(LANG("Configurator.Function.NotFound").arg(SubArgument));
 					return false;
 				}
 			}
 			else
 			{
-				ISDebug::ShowString(LOCALIZATION("Configurator.Class.NotFound").arg(Argument));
+				ISDebug::ShowString(LANG("Configurator.Class.NotFound").arg(Argument));
 				return false;
 			}
 		}
 		else
 		{
-			ISDebug::ShowString(LOCALIZATION("Configurator.Class.NotFound").arg(Argument));
+			ISDebug::ShowString(LANG("Configurator.Class.NotFound").arg(Argument));
 			return false;
 		}
 	}
 	else
 	{
-		ISDebug::ShowString(LOCALIZATION("Configurator.Class.NotFound").arg(Argument));
+		ISDebug::ShowString(LANG("Configurator.Class.NotFound").arg(Argument));
 		return false;
 	}
 	
@@ -193,7 +193,7 @@ bool CGConfigurator::Execute(const QString &Argument, const QString &SubArgument
 	{
 		ISCountingTime CountingTime;
 		Invoked = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
-		ISDebug::ShowString(LOCALIZATION("Configurator.Commands.Executed").arg(Argument).arg(SubArgument).arg(ISSystem::MillisecondsToString(CountingTime.GetElapsed())));
+		ISDebug::ShowString(LANG("Configurator.Commands.Executed").arg(Argument).arg(SubArgument).arg(ISSystem::MillisecondsToString(CountingTime.GetElapsed())));
 	}
 	catch (ISQueryException &e) { }
 
@@ -258,15 +258,15 @@ void CGConfigurator::ProgressMessage(const QString &Message)
 //-----------------------------------------------------------------------------
 void CGConfigurator::Exit()
 {
-	ISDebug::ShowString(LOCALIZATION("Configurator.CompletionWork") + "...");
+	ISDebug::ShowString(LANG("Configurator.CompletionWork") + "...");
 	ISSystem::SleepMilliseconds(400);
 }
 //-----------------------------------------------------------------------------
 void CGConfigurator::help()
 {
-	ISDebug::ShowString(LOCALIZATION("Configurator.Help.Description"));
-	ISDebug::ShowString(LOCALIZATION("Configurator.Help.Using.Standart"));
-	ISDebug::ShowString(LOCALIZATION("Configurator.Help.Using.Personal"));
+	ISDebug::ShowString(LANG("Configurator.Help.Description"));
+	ISDebug::ShowString(LANG("Configurator.Help.Using.Standart"));
+	ISDebug::ShowString(LANG("Configurator.Help.Using.Personal"));
 	ISDebug::ShowEmptyString();
 
 	for (CGSection *Section : Arguments)

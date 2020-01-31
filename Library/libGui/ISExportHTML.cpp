@@ -17,7 +17,7 @@ ISExportHTML::~ISExportHTML()
 //-----------------------------------------------------------------------------
 bool ISExportHTML::Prepare()
 {
-	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LOCALIZATION("File.Filter.Html"), LocalName);
+	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Html"), LocalName);
 	if (!FilePath.length())
 	{
 		return false;
@@ -82,7 +82,7 @@ bool ISExportHTML::Export()
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
-			if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Export.Process.Cancel"), LOCALIZATION("Export.Process.Cancel.DetailedText")))
+			if (ISMessageBox::ShowQuestion(nullptr, LANG("Export.Process.Cancel"), LANG("Export.Process.Cancel.DetailedText")))
 			{
 				FileHTML->close();
 				QFile::remove(FileHTML->fileName());
@@ -117,7 +117,7 @@ bool ISExportHTML::Export()
 		FileHTML->write(RowString.toUtf8());
 
 		emit ExportedRow();
-		emit Message(LOCALIZATION("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()) + "...");
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()) + "...");
 	}
 
 	FileHTML->write("  </table>\r\n");

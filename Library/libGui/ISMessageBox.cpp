@@ -18,28 +18,28 @@ ISMessageBox::~ISMessageBox()
 //-----------------------------------------------------------------------------
 void ISMessageBox::ShowInformation(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
-	ISMessageBox MessageBox(QMessageBox::Information, LOCALIZATION("Information"), Message, QMessageBox::Ok, parent);
+	ISMessageBox MessageBox(QMessageBox::Information, LANG("Information"), Message, QMessageBox::Ok, parent);
 	MessageBox.setDetailedText(DetailedText);
 	MessageBox.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMessageBox::ShowWarning(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
-	ISMessageBox MessageBox(QMessageBox::Warning, LOCALIZATION("Warning"), Message, QMessageBox::Ok, parent);
+	ISMessageBox MessageBox(QMessageBox::Warning, LANG("Warning"), Message, QMessageBox::Ok, parent);
 	MessageBox.setDetailedText(DetailedText);
 	MessageBox.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMessageBox::ShowCritical(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
-	ISMessageBox MessageBox(QMessageBox::Critical, LOCALIZATION("Error"), Message, QMessageBox::Ok, parent);
+	ISMessageBox MessageBox(QMessageBox::Critical, LANG("Error"), Message, QMessageBox::Ok, parent);
 	MessageBox.setDetailedText(DetailedText);
 	MessageBox.Exec();
 }
 //-----------------------------------------------------------------------------
 bool ISMessageBox::ShowQuestion(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
-	ISMessageBox MessageBox(QMessageBox::Question, LOCALIZATION("Question"), Message, QMessageBox::Yes | QMessageBox::No, parent);
+	ISMessageBox MessageBox(QMessageBox::Question, LANG("Question"), Message, QMessageBox::Yes | QMessageBox::No, parent);
 	MessageBox.setDetailedText(DetailedText);
 	MessageBox.setDefaultButton(QMessageBox::No);
 

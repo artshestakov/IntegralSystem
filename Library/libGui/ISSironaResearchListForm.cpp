@@ -14,7 +14,7 @@ ISSironaResearchListForm::ISSironaResearchListForm(QWidget *parent) : ISListBase
 {
 	LabelSummary = new QLabel(this);
 	LabelSummary->setFont(FONT_TAHOMA_11);
-	LabelSummary->setText(LOCALIZATION("Sirona.TotalMoney.Research").arg(0).arg(0).arg(0));
+	LabelSummary->setText(LANG("Sirona.TotalMoney.Research").arg(0).arg(0).arg(0));
 	GetStatusBar()->addWidget(LabelSummary);
 }
 //-----------------------------------------------------------------------------
@@ -60,6 +60,6 @@ void ISSironaResearchListForm::LoadDataAfterEvent()
 		}
 	}
 
-	LabelSummary->setText(LOCALIZATION("Sirona.TotalMoney.Research").arg(Cash).arg(NonCash).arg(Cash + NonCash));
+	LabelSummary->setText(LANG("Sirona.TotalMoney.Research").arg(Cash).arg(NonCash).arg(Cash + NonCash));
 }
 //-----------------------------------------------------------------------------

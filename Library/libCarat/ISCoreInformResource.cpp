@@ -56,7 +56,7 @@ void ISCoreInformResource::SuccessfulAuth(const QStringMap &StringMap)
 void ISCoreInformResource::UserEvent(const QStringMap &StringMap)
 {
 	QString Number = ISPhoneNumberParser::PasteEvent(StringMap.value("CallerIDNum"));
-	ISDebug::ShowString(LOCALIZATION("Core.InformResource.Search").arg(Number));
+	ISDebug::ShowString(LANG("Core.InformResource.Search").arg(Number));
 
 	ISQuery qSelect(QS_ORGANIZATION);
 	qSelect.BindValue(":Phone", Number);
@@ -71,14 +71,14 @@ void ISCoreInformResource::UserEvent(const QStringMap &StringMap)
 			{
 				QString UserName = qSelect.ReadColumn("userfullname").toString();
 
-				ISDebug::ShowString(LOCALIZATION("Core.InformResource.Founded").arg(Number).arg(UserName));
+				ISDebug::ShowString(LANG("Core.InformResource.Founded").arg(Number).arg(UserName));
 				AsteriskSocket->Redirect(StringMap, Pattern);
 				ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, OrganizationID);
 			}
 		}
 		else
 		{
-			ISDebug::ShowString(LOCALIZATION("Core.InformResource.NotFound").arg(Number));
+			ISDebug::ShowString(LANG("Core.InformResource.NotFound").arg(Number));
 		}
 	}
 }

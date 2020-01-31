@@ -14,7 +14,7 @@ ISHighwayIncomingCallForm::ISHighwayIncomingCallForm(const QVariantMap &payload,
 	qSelect.BindValue(":OrganizationID", OrganizationID);
 	if (qSelect.ExecuteFirst())
 	{
-		AddLabel(LOCALIZATION("CallingOrganization") + ":", qSelect.ReadColumn("orgz_name").toString());
+		AddLabel(LANG("CallingOrganization") + ":", qSelect.ReadColumn("orgz_name").toString());
 	}
 }
 //-----------------------------------------------------------------------------

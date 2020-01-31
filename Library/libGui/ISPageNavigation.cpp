@@ -19,7 +19,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 
 	ButtonBegin = new ISServiceButton(this);
 	ButtonBegin->setEnabled(false);
-	ButtonBegin->setToolTip(LOCALIZATION("Page.Begin"));
+	ButtonBegin->setToolTip(LANG("Page.Begin"));
 	ButtonBegin->setIcon(BUFFER_ICONS("PageNavigation.Begin"));
 	ButtonBegin->setFlat(true);
 	ButtonBegin->setFixedSize(SIZE_22_22);
@@ -29,7 +29,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 
 	ButtonPrevious = new ISServiceButton(this);
 	ButtonPrevious->setEnabled(false);
-	ButtonPrevious->setToolTip(LOCALIZATION("Page.Previous"));
+	ButtonPrevious->setToolTip(LANG("Page.Previous"));
 	ButtonPrevious->setIcon(BUFFER_ICONS("PageNavigation.Previous"));
 	ButtonPrevious->setFlat(true);
 	ButtonPrevious->setFixedSize(SIZE_22_22);
@@ -38,14 +38,14 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 	Layout->addWidget(ButtonPrevious);
 
 	ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LOCALIZATION("Page.Select").arg(0).arg(0));
-	ButtonSelect->setToolTip(LOCALIZATION("ClickFromSelectNumberPage"));
+	ButtonSelect->setText(LANG("Page.Select").arg(0).arg(0));
+	ButtonSelect->setToolTip(LANG("ClickFromSelectNumberPage"));
 	ButtonSelect->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonSelect, &QToolButton::clicked, this, &ISPageNavigation::Select);
 	Layout->addWidget(ButtonSelect);
 
 	ButtonNext = new ISServiceButton(this);
-	ButtonNext->setToolTip(LOCALIZATION("Page.Next"));
+	ButtonNext->setToolTip(LANG("Page.Next"));
 	ButtonNext->setIcon(BUFFER_ICONS("PageNavigation.Next"));
 	ButtonNext->setFlat(true);
 	ButtonNext->setFixedSize(SIZE_22_22);
@@ -54,7 +54,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 	Layout->addWidget(ButtonNext);
 
 	ButtonEnd = new ISServiceButton(this);
-	ButtonEnd->setToolTip(LOCALIZATION("Page.End"));
+	ButtonEnd->setToolTip(LANG("Page.End"));
 	ButtonEnd->setIcon(BUFFER_ICONS("PageNavigation.End"));
 	ButtonEnd->setFlat(true);
 	ButtonEnd->setFixedSize(SIZE_22_22);
@@ -80,7 +80,7 @@ void ISPageNavigation::SetRowCount(int row_count)
 			PageCount++;
 		}
 
-		ButtonSelect->setText(LOCALIZATION("Page.Select").arg(CurrentPage + 1).arg(PageCount));
+		ButtonSelect->setText(LANG("Page.Select").arg(CurrentPage + 1).arg(PageCount));
 
 		if (PageCount == 1) //Если количество страниц одна
 		{
@@ -120,7 +120,7 @@ void ISPageNavigation::PreviousClicked()
 //-----------------------------------------------------------------------------
 void ISPageNavigation::Select()
 {
-	int Page = ISInputDialog::GetInteger(this, LOCALIZATION("Page"), LOCALIZATION("InputNumberPage"), 1, PageCount, CurrentPage + 1).toInt();
+	int Page = ISInputDialog::GetInteger(this, LANG("Page"), LANG("InputNumberPage"), 1, PageCount, CurrentPage + 1).toInt();
 	if (Page)
 	{
 		CurrentPage = Page - 1;

@@ -31,7 +31,7 @@ ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 
 	ButtonPrevMouth = findChild<QToolButton*>("qt_calendar_prevmonth");
 	ButtonPrevMouth->setIcon(IconPrevMouth);
-	ButtonPrevMouth->setToolTip(LOCALIZATION("PrevMouth"));
+	ButtonPrevMouth->setToolTip(LANG("PrevMouth"));
 	ButtonPrevMouth->setCursor(CURSOR_POINTING_HAND);
 
 	ButtonMonth = findChild<QToolButton*>("qt_calendar_monthbutton");
@@ -65,7 +65,7 @@ ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 	
 	ButtonNextMouth = findChild<QToolButton*>("qt_calendar_nextmonth");
 	ButtonNextMouth->setIcon(IconNextMouth);
-	ButtonNextMouth->setToolTip(LOCALIZATION("NextMouth"));
+	ButtonNextMouth->setToolTip(LANG("NextMouth"));
 	ButtonNextMouth->setCursor(CURSOR_POINTING_HAND);
 
 	//Формат заголовка

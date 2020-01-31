@@ -12,7 +12,7 @@ ISImageEdit::ISImageEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ImageWidget = new ISImageWidget(this);
 	ImageWidget->setFixedSize(QSize(150, 150));
 	ImageWidget->setCursor(CURSOR_POINTING_HAND);
-	ImageWidget->setToolTip(LOCALIZATION("ClickRightButtonMouseForCallContextMenu"));
+	ImageWidget->setToolTip(LANG("ClickRightButtonMouseForCallContextMenu"));
 	connect(ImageWidget, &ISImageWidget::ImageChanged, this, &ISImageEdit::ValueChanged);
 	AddWidgetEdit(ImageWidget, this);
 

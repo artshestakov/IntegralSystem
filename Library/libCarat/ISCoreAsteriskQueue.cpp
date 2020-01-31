@@ -79,7 +79,7 @@ void ISCoreAsteriskQueue::Timeout()
 			QString UserFullName = qSelectQueue.ReadColumn("userfullname").toString();
 			QString Parameters = qSelectQueue.ReadColumn("astq_parameters").toString();
 
-			ISDebug::ShowString(LOCALIZATION("Telephony.QueueEvent.Found").arg(UserFullName).arg(TypeName));
+			ISDebug::ShowString(LANG("Telephony.QueueEvent.Found").arg(UserFullName).arg(TypeName));
 			QueueEvent(TypeUID, UserID, Parameters);
 
 			ISQuery qDelete(QD_ASTERISK_QUEUE);
@@ -124,7 +124,7 @@ void ISCoreAsteriskQueue::Originate(int UserID, const QVariantMap &Parameters)
 //-----------------------------------------------------------------------------
 void ISCoreAsteriskQueue::ClearQueue()
 {
-	ISDebug::ShowString(LOCALIZATION("AsteriskQueue.ClearQueue.Process"));
+	ISDebug::ShowString(LANG("AsteriskQueue.ClearQueue.Process"));
 
 	ISQuery qDeleteQueue(QD_ASTERISK_QUEUES);
 	qDeleteQueue.SetShowLongQuery(false);
@@ -133,11 +133,11 @@ void ISCoreAsteriskQueue::ClearQueue()
 		int CountAffected = qDeleteQueue.GetCountAffected();
 		if (CountAffected)
 		{
-			ISDebug::ShowString(LOCALIZATION("AsteriskQueue.ClearQueue.Done").arg(CountAffected));
+			ISDebug::ShowString(LANG("AsteriskQueue.ClearQueue.Done").arg(CountAffected));
 		}
 		else
 		{
-			ISDebug::ShowString(LOCALIZATION("AsteriskQueue.ClearQueue.Empty"));
+			ISDebug::ShowString(LANG("AsteriskQueue.ClearQueue.Empty"));
 		}
 	}
 }

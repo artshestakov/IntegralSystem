@@ -7,7 +7,7 @@
 //-----------------------------------------------------------------------------
 ISAddressBookListForm::ISAddressBookListForm(QWidget *parent) : ISListBaseForm("_AddressBook", parent)
 {
-	setWindowTitle(LOCALIZATION("AddressBook"));
+	setWindowTitle(LANG("AddressBook"));
 	setWindowIcon(BUFFER_ICONS("AddressBook"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 	connect(this, &ISAddressBookListForm::AddFormFromTab, this, &ISAddressBookListForm::CreateObjectForm);

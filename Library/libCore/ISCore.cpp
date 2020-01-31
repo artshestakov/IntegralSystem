@@ -247,7 +247,7 @@ QString ISCore::GetVersionInFileName(const QString &FileName)
 //-----------------------------------------------------------------------------
 QString ISCore::ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat)
 {
-	return ConvertDateToString(DateTime.date(), DateFormat) + " " + LOCALIZATION("At") + " " + DateTime.time().toString(TimeFormat);
+	return ConvertDateToString(DateTime.date(), DateFormat) + " " + LANG("At") + " " + DateTime.time().toString(TimeFormat);
 }
 //-----------------------------------------------------------------------------
 QString ISCore::ConvertDateToString(const QDate &Date, const QString &DateFormat)
@@ -255,15 +255,15 @@ QString ISCore::ConvertDateToString(const QDate &Date, const QString &DateFormat
 	QString Result;
 	if (Date == DATE_YESTERDAY) //Вчера
 	{
-		Result = LOCALIZATION("Yesterday");
+		Result = LANG("Yesterday");
 	}
 	else if (Date == DATE_TODAY) //Сегодня
 	{
-		Result = LOCALIZATION("Today");
+		Result = LANG("Today");
 	}
 	else if (Date == DATE_TOMORROW) //Завтра
 	{
-		Result = LOCALIZATION("Tomorrow");
+		Result = LANG("Tomorrow");
 	}
 	else
 	{

@@ -30,21 +30,21 @@ ISSironaReportForm::ISSironaReportForm(QWidget *parent) : ISInterfaceMetaForm(pa
 	LayoutTitle->addWidget(RangeDateEdit);
 
 	ISPushButton *ButtonFilter = new ISPushButton(this);
-	ButtonFilter->setText(LOCALIZATION("Apply"));
+	ButtonFilter->setText(LANG("Apply"));
 	connect(ButtonFilter, &ISPushButton::clicked, this, &ISSironaReportForm::LoadData);
 	LayoutTitle->addWidget(ButtonFilter);
 
 	LayoutTitle->addStretch();
 
 	ISPushButton *ButtonPrint = new ISPushButton(this);
-	ButtonPrint->setText(LOCALIZATION("Sirona.OutputList"));
+	ButtonPrint->setText(LANG("Sirona.OutputList"));
 	ButtonPrint->setIcon(BUFFER_ICONS("Print"));
 	connect(ButtonPrint, &ISPushButton::clicked, this, &ISSironaReportForm::OutputList);
 	LayoutTitle->addWidget(ButtonPrint);
 
 	QStringList TreeHeader;
-	TreeHeader.append(LOCALIZATION("Sirona.Doctor"));
-	TreeHeader.append(LOCALIZATION("Sirona.Bonus"));
+	TreeHeader.append(LANG("Sirona.Doctor"));
+	TreeHeader.append(LANG("Sirona.Bonus"));
 
 	TreeWidget = new QTreeWidget(this);
 	TreeWidget->setRootIsDecorated(false);
@@ -84,11 +84,11 @@ void ISSironaReportForm::LoadData()
 
 			if (DoctorBonus)
 			{
-				TreeWidgetItem->setText(1, LOCALIZATION("Sirona.DoctorBonus").arg(GetDoctorBonus(DoctorID)));
+				TreeWidgetItem->setText(1, LANG("Sirona.DoctorBonus").arg(GetDoctorBonus(DoctorID)));
 			}
 			else
 			{
-				TreeWidgetItem->setText(1, LOCALIZATION("Sirona.DoctorNotWorkBonus"));
+				TreeWidgetItem->setText(1, LANG("Sirona.DoctorNotWorkBonus"));
 			}
 
 			RowID++;
@@ -100,7 +100,7 @@ void ISSironaReportForm::LoadData()
 //-----------------------------------------------------------------------------
 void ISSironaReportForm::OutputList()
 {
-	QString FilePath = ISFileDialog::GetSaveFileName(this, LOCALIZATION("File.Filter.Csv"), LOCALIZATION("Sirona.ReportDoctors"));
+	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.Csv"), LANG("Sirona.ReportDoctors"));
 	if (FilePath.length())
 	{
 		QFile FileReport(FilePath);
@@ -114,7 +114,7 @@ void ISSironaReportForm::OutputList()
 			}
 
 			FileReport.close();
-			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Sirona.Message.Question.OutputListDone")))
+			if (ISMessageBox::ShowQuestion(this, LANG("Sirona.Message.Question.OutputListDone")))
 			{
 				ISGui::OpenFile(FilePath);
 			}

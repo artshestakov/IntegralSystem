@@ -8,7 +8,7 @@
 ISExecutorEdit::ISExecutorEdit(QWidget *parent) : ISListEdit(parent)
 {
 	ButtonDesignateMe = new ISPushButton(this);
-	ButtonDesignateMe->setText(LOCALIZATION("Task.DesignateMe"));
+	ButtonDesignateMe->setText(LANG("Task.DesignateMe"));
 	ButtonDesignateMe->setIcon(BUFFER_ICONS("User"));
 	ButtonDesignateMe->setCursor(CURSOR_POINTING_HAND);
 	ButtonDesignateMe->setSizePolicy(QSizePolicy::Maximum, ButtonDesignateMe->sizePolicy().verticalPolicy());

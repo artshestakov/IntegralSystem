@@ -19,15 +19,15 @@ static QString QS_TEMPLATE = PREPARE_QUERY("SELECT stmp_text FROM smstemplate WH
 ISCenterSevenPatientsListForm::ISCenterSevenPatientsListForm(QWidget *parent) : ISListBaseForm("Patients", parent)
 {
 	QAction *ActionBirthday = new QAction(this);
-	ActionBirthday->setText(LOCALIZATION("Send"));
-	ActionBirthday->setToolTip(LOCALIZATION("Send"));
+	ActionBirthday->setText(LANG("Send"));
+	ActionBirthday->setToolTip(LANG("Send"));
 	ActionBirthday->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("SendMessage"));
 	connect(ActionBirthday, &QAction::triggered, this, &ISCenterSevenPatientsListForm::Send);
 	AddAction(ActionBirthday, false);
 
 	QAction *ActionWaitAdmission = new QAction(this);
-	ActionWaitAdmission->setText(LOCALIZATION("CenterSeven.AddWaitAdmission"));
-	ActionWaitAdmission->setToolTip(LOCALIZATION("CenterSeven.AddWaitAdmission"));
+	ActionWaitAdmission->setText(LANG("CenterSeven.AddWaitAdmission"));
+	ActionWaitAdmission->setToolTip(LANG("CenterSeven.AddWaitAdmission"));
 	ActionWaitAdmission->setIcon(BUFFER_ICONS("Wait"));
 	connect(ActionWaitAdmission, &QAction::triggered, this, &ISCenterSevenPatientsListForm::AddWaitAdmission);
 	AddAction(ActionWaitAdmission, true, true);
@@ -40,7 +40,7 @@ ISCenterSevenPatientsListForm::~ISCenterSevenPatientsListForm()
 //-----------------------------------------------------------------------------
 void ISCenterSevenPatientsListForm::Send()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("CenterSeven.Message.Question.SendMessagePatients").arg(GetSqlModel()->rowCount())))
+	if (ISMessageBox::ShowQuestion(this, LANG("CenterSeven.Message.Question.SendMessagePatients").arg(GetSqlModel()->rowCount())))
 	{
 		int TemplateID = ISGui::SelectObject("SMSTemplate");
 		if (TemplateID)
@@ -54,7 +54,7 @@ void ISCenterSevenPatientsListForm::Send()
 
 			for (int PatientID : VectorInt)
 			{
-				ProgressForm.SetText(LOCALIZATION("CenterSeven.Sending").arg(Iterator).arg(VectorInt.count()));
+				ProgressForm.SetText(LANG("CenterSeven.Sending").arg(Iterator).arg(VectorInt.count()));
 				ProgressForm.AddOneValue();
 
 				ISQuery qSelect(QS_PATIENT);

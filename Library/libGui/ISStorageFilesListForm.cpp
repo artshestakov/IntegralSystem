@@ -36,34 +36,34 @@ ISStorageFilesListForm::ISStorageFilesListForm(QWidget *parent) : ISListBaseForm
 	GetQueryModel()->SetClassFilter("NOT sgfs_private");
 
 	QAction *ActionCreateMore = new QAction(this);
-	ActionCreateMore->setText(LOCALIZATION("StorageFiles.AddMore"));
-	ActionCreateMore->setToolTip(LOCALIZATION("StorageFiles.AddMore"));
+	ActionCreateMore->setText(LANG("StorageFiles.AddMore"));
+	ActionCreateMore->setToolTip(LANG("StorageFiles.AddMore"));
 	ActionCreateMore->setIcon(BUFFER_ICONS("StorageFiles.AddMore"));
 	connect(ActionCreateMore, &QAction::triggered, this, &ISStorageFilesListForm::AddMore);
 	InsertAction(ActionCreateMore, GetAction(ISNamespace::AT_Create), false);
 
-	ActionSetText(ISNamespace::AT_Create, LOCALIZATION("StorageFiles.Create"));
-	ActionSetToolTip(ISNamespace::AT_Create, LOCALIZATION("StorageFiles.Create"));
+	ActionSetText(ISNamespace::AT_Create, LANG("StorageFiles.Create"));
+	ActionSetToolTip(ISNamespace::AT_Create, LANG("StorageFiles.Create"));
 	
 	QAction *ActionSave = ISControls::CreateActionSave(this);
 	connect(ActionSave, &QAction::triggered, this, &ISStorageFilesListForm::SaveFile);
 	AddAction(ActionSave, true, true);
 	
 	QAction *ActionOpen = new QAction(this);
-	ActionOpen->setText(LOCALIZATION("StorageFiles.Open"));
-	ActionOpen->setToolTip(LOCALIZATION("StorageFiles.Open"));
+	ActionOpen->setText(LANG("StorageFiles.Open"));
+	ActionOpen->setToolTip(LANG("StorageFiles.Open"));
 	ActionOpen->setIcon(BUFFER_ICONS("File.Open"));
 	connect(ActionOpen, &QAction::triggered, this, &ISStorageFilesListForm::OpenFile);
 	AddAction(ActionSave, true, true);
 
 	RadioAll = new QRadioButton(this);
-	RadioAll->setText(LOCALIZATION("StorageFiles.AllFiles"));
+	RadioAll->setText(LANG("StorageFiles.AllFiles"));
 	RadioAll->setChecked(true);
 	connect(RadioAll, &QRadioButton::clicked, this, &ISStorageFilesListForm::FilterChanged);
 	GetToolBar()->addWidget(RadioAll);
 
 	RadioPrivate = new QRadioButton(this);
-	RadioPrivate->setText(LOCALIZATION("StorageFiles.MyPrivateFiles"));
+	RadioPrivate->setText(LANG("StorageFiles.MyPrivateFiles"));
 	connect(RadioPrivate, &QRadioButton::clicked, this, &ISStorageFilesListForm::FilterChanged);
 	GetToolBar()->addWidget(RadioPrivate);
 }
@@ -91,9 +91,9 @@ void ISStorageFilesListForm::CreateCopy()
 {
 	QString FileName = GetCurrentRecordValue("Name").toString();
 
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CreateCopyFile").arg(FileName)))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreateCopyFile").arg(FileName)))
 	{
-		FileName = ISInputDialog::GetString(this, LOCALIZATION("Named"), LOCALIZATION("FileName"), FileName).toString();
+		FileName = ISInputDialog::GetString(this, LANG("Named"), LANG("FileName"), FileName).toString();
 
 		if (FileName.length())
 		{
@@ -110,7 +110,7 @@ void ISStorageFilesListForm::CreateCopy()
 		}
 		else
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.FileNameIsNull"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.FileNameIsNull"));
 		}
 	}
 }
@@ -120,7 +120,7 @@ void ISStorageFilesListForm::OpenFile()
 	QFile File(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + '.' + GetCurrentRecordValue("Expansion").toString());
 	if (!File.open(QIODevice::WriteOnly))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.NotOpenedFile").arg(File.fileName()), File.errorString());
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(File.fileName()), File.errorString());
 		return;
 	}
 
@@ -144,9 +144,9 @@ void ISStorageFilesListForm::SaveFile()
 	QString FileExpansion = GetCurrentRecordValue("Expansion").toString();
 	QString FileName = GetCurrentRecordValue("Name").toString();
 
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.SaveFile").arg(FileName + '.' + FileExpansion)))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(FileName + '.' + FileExpansion)))
 	{
-		QString FilePath = ISFileDialog::GetSaveFileName(this, LOCALIZATION("File.Filter.File").arg(FileExpansion), FileName);
+		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(FileExpansion), FileName);
 		if (!FilePath.length())
 		{
 			return;
@@ -155,7 +155,7 @@ void ISStorageFilesListForm::SaveFile()
 		QFile File(FilePath);
 		if (!File.open(QIODevice::WriteOnly))
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
+			ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
 			return;
 		}
 
@@ -171,7 +171,7 @@ void ISStorageFilesListForm::SaveFile()
 
 			File.close();
 
-			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.File.SavedToPath").arg(FilePath)))
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.File.SavedToPath").arg(FilePath)))
 			{
 				ISGui::OpenFile(FilePath);
 			}

@@ -7,7 +7,7 @@ ISWeekDayEdit::ISWeekDayEdit(QWidget *parent) : ISComboEdit(parent)
 {
 	SetEditable(false);
 
-	AddItem(LOCALIZATION("Everyday"), 0);
+	AddItem(LANG("Everyday"), 0);
 	AddItem(ISSystem::GetDayOfWeekName(Qt::Monday), Qt::Monday);
 	AddItem(ISSystem::GetDayOfWeekName(Qt::Tuesday), Qt::Tuesday);
 	AddItem(ISSystem::GetDayOfWeekName(Qt::Wednesday), Qt::Wednesday);

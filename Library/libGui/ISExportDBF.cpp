@@ -62,7 +62,7 @@ bool ISExportDBF::Export()
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
-			if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Export.Process.Cancel"), LOCALIZATION("Export.Process.Cancel.DetailedText")))
+			if (ISMessageBox::ShowQuestion(nullptr, LANG("Export.Process.Cancel"), LANG("Export.Process.Cancel.DetailedText")))
 			{
 				return true;
 			}
@@ -120,7 +120,7 @@ bool ISExportDBF::Export()
 		}
 
 		emit ExportedRow();
-		emit Message(LOCALIZATION("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()) + "...");
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()) + "...");
 	}
 
 	return true;

@@ -22,7 +22,7 @@ void ISTabWidgetObject::tabInserted(int Index)
 	if (Index)
 	{
 		QToolButton *ButtonClose = new QToolButton(this);
-		ButtonClose->setToolTip(LOCALIZATION("CloseTab"));
+		ButtonClose->setToolTip(LANG("CloseTab"));
 		ButtonClose->setIcon(BUFFER_ICONS("Exit"));
 		ButtonClose->setAutoRaise(true);
 		ButtonClose->setFixedSize(SIZE_16_16);

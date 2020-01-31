@@ -37,12 +37,12 @@ ISKnowledgeBaseSubSystem::ISKnowledgeBaseSubSystem(QWidget *parent) : ISInterfac
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	LayoutTreeWidget->addWidget(ToolBar);
 
-	ActionCreate = ToolBar->addAction(BUFFER_ICONS("Add"), LOCALIZATION("Add"), this, &ISKnowledgeBaseSubSystem::CreateGroup);
+	ActionCreate = ToolBar->addAction(BUFFER_ICONS("Add"), LANG("Add"), this, &ISKnowledgeBaseSubSystem::CreateGroup);
 
-	ActionEdit = ToolBar->addAction(BUFFER_ICONS("Edit"), LOCALIZATION("Edit"), this, &ISKnowledgeBaseSubSystem::EditGroup);
+	ActionEdit = ToolBar->addAction(BUFFER_ICONS("Edit"), LANG("Edit"), this, &ISKnowledgeBaseSubSystem::EditGroup);
 	ActionEdit->setEnabled(false);
 
-	ActionDelete = ToolBar->addAction(BUFFER_ICONS("Delete"), LOCALIZATION("Delete"), this, &ISKnowledgeBaseSubSystem::DeleteGroup);
+	ActionDelete = ToolBar->addAction(BUFFER_ICONS("Delete"), LANG("Delete"), this, &ISKnowledgeBaseSubSystem::DeleteGroup);
 	ActionDelete->setEnabled(false);
 
 	TreeWidget = new QTreeWidget(this);
@@ -124,7 +124,7 @@ void ISKnowledgeBaseSubSystem::EditGroup()
 void ISKnowledgeBaseSubSystem::DeleteGroup()
 {
 	QTreeWidgetItem *TreeItemGroup = TreeWidget->selectedItems().first();
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DeleteGroup").arg(TreeItemGroup->text(0))))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteGroup").arg(TreeItemGroup->text(0))))
 	{
 		ISQuery qDeleteGroup(QD_GROUP);
 		qDeleteGroup.BindValue(":GroupID", TreeItemGroup->data(0, Qt::UserRole));

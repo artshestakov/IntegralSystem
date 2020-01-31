@@ -12,8 +12,8 @@ static QString QU_CLOSE_WAIT = PREPARE_QUERY("UPDATE waitadmission SET "
 ISCenterSevenWaitAdmissionListForm::ISCenterSevenWaitAdmissionListForm(QWidget *parent) : ISListBaseForm("WaitAdmission", parent)
 {
 	QAction *ActionClose = new QAction(this);
-	ActionClose->setText(LOCALIZATION("CenterSeven.CloseWait"));
-	ActionClose->setToolTip(LOCALIZATION("CenterSeven.CloseWait"));
+	ActionClose->setText(LANG("CenterSeven.CloseWait"));
+	ActionClose->setToolTip(LANG("CenterSeven.CloseWait"));
 	ActionClose->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("CloseWait"));
 	connect(ActionClose, &QAction::triggered, this, &ISCenterSevenWaitAdmissionListForm::CloseWait);
 	AddAction(ActionClose, true, true);
@@ -28,11 +28,11 @@ void ISCenterSevenWaitAdmissionListForm::CloseWait()
 {
 	if (GetCurrentRecordValue("Closed").toBool())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("CenterSeven.Message.Warning.AlreadyCloseWait"));
+		ISMessageBox::ShowWarning(this, LANG("CenterSeven.Message.Warning.AlreadyCloseWait"));
 		return;
 	}
 
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("CenterSeven.Message.Question.CloseWait")))
+	if (ISMessageBox::ShowQuestion(this, LANG("CenterSeven.Message.Question.CloseWait")))
 	{
 		ISQuery qCloseWait(QU_CLOSE_WAIT);
 		qCloseWait.BindValue(":ObjectID", GetObjectID());

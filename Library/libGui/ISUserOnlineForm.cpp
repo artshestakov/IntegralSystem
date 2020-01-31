@@ -19,14 +19,14 @@ ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidge
 {
 	UserID = user_id;
 
-	setWindowTitle(LOCALIZATION("MonitorActivity.ActivityUser") + ": " + user_name);
+	setWindowTitle(LANG("MonitorActivity.ActivityUser") + ": " + user_name);
 	setWindowIcon(BUFFER_ICONS("User"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
 
-	LayoutTitle->addWidget(new QLabel(LOCALIZATION("Date") + ":", this));
+	LayoutTitle->addWidget(new QLabel(LANG("Date") + ":", this));
 
 	DateEdit = new ISDateEdit(this);
 	DateEdit->SetCheckEnable(Qt::Checked);
@@ -35,7 +35,7 @@ ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidge
 	LayoutTitle->addWidget(DateEdit);
 
 	ISPushButton *ButtonUpdate = new ISPushButton(this);
-	ButtonUpdate->setText(LOCALIZATION("Update"));
+	ButtonUpdate->setText(LANG("Update"));
 	ButtonUpdate->setIcon(BUFFER_ICONS("Update"));
 	connect(ButtonUpdate, &ISPushButton::clicked, this, &ISUserOnlineForm::Update);
 	LayoutTitle->addWidget(ButtonUpdate);
@@ -47,7 +47,7 @@ ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidge
 
 	LabelNotRegistered = new QLabel(this);
 	LabelNotRegistered->setVisible(false);
-	LabelNotRegistered->setText(LOCALIZATION("ActivityUserNotRegisteredFromDate").arg(DateEdit->GetValue().toDate().toString(DATE_FORMAT_V2)));
+	LabelNotRegistered->setText(LANG("ActivityUserNotRegisteredFromDate").arg(DateEdit->GetValue().toDate().toString(DATE_FORMAT_V2)));
 	ISGui::SetFontWidgetBold(LabelNotRegistered, true);
 	LayoutTitle->addWidget(LabelNotRegistered);
 
@@ -115,7 +115,7 @@ void ISUserOnlineForm::Update()
 
 			QTime TimeActive = QTime(0, 0).addSecs(SecondsActive);
 			QTime TimeInactive = QTime(0, 0).addSecs(SecondsInactive);
-			LabelCountTime->setText(LOCALIZATION("MonitorActivity.ActivityUserCount").arg(TimeActive.toString(TIME_FORMAT_V3)).arg(TimeInactive.toString(TIME_FORMAT_V3)));
+			LabelCountTime->setText(LANG("MonitorActivity.ActivityUserCount").arg(TimeActive.toString(TIME_FORMAT_V3)).arg(TimeInactive.toString(TIME_FORMAT_V3)));
 		}
 		else
 		{

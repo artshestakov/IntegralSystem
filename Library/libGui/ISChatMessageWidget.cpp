@@ -59,7 +59,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	MainLayout->addLayout(LayoutTop);
 
 	ISServiceButton *ButtonIcon = new ISServiceButton(this);
-	ButtonIcon->setToolTip(LOCALIZATION("MessageID").arg(MessageID));
+	ButtonIcon->setToolTip(LANG("MessageID").arg(MessageID));
 	ButtonIcon->setIcon(BUFFER_ICONS("Chat.Message"));
 	ButtonIcon->setIconSize(SIZE_16_16);
 	ButtonIcon->setFlat(true);
@@ -67,9 +67,9 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	ButtonIcon->setMenu(new QMenu(ButtonIcon));
 	LayoutTop->addWidget(ButtonIcon);
 
-	ButtonIcon->menu()->addAction(LOCALIZATION("CiteCurrentMessage"), this, &ISChatMessageWidget::Cite);
-	ButtonIcon->menu()->addAction(LOCALIZATION("SelectMessage"), this, &ISChatMessageWidget::SelectMessage);
-	ButtonIcon->menu()->addAction(LOCALIZATION("CopyMessage"), this, &ISChatMessageWidget::CopyMessage);
+	ButtonIcon->menu()->addAction(LANG("CiteCurrentMessage"), this, &ISChatMessageWidget::Cite);
+	ButtonIcon->menu()->addAction(LANG("SelectMessage"), this, &ISChatMessageWidget::SelectMessage);
+	ButtonIcon->menu()->addAction(LANG("CopyMessage"), this, &ISChatMessageWidget::CopyMessage);
 
 	QLabel *LabelOnline = new QLabel(this);
 	LayoutTop->addWidget(LabelOnline);
@@ -77,12 +77,12 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	if (UserOnline)
 	{
 		LabelOnline->setPixmap(BUFFER_ICONS("ChatUser.Online").pixmap(SIZE_10_10));
-		LabelOnline->setToolTip(LOCALIZATION("ChatForm.User.Online"));
+		LabelOnline->setToolTip(LANG("ChatForm.User.Online"));
 	}
 	else
 	{
 		LabelOnline->setPixmap(BUFFER_ICONS("ChatUser.Offline").pixmap(SIZE_10_10));
-		LabelOnline->setToolTip(LOCALIZATION("ChatForm.User.Offline"));
+		LabelOnline->setToolTip(LANG("ChatForm.User.Offline"));
 	}
 
 	QLabel *LabelUser = new QLabel(UserFullName + ":", this);
@@ -105,7 +105,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 		{
 			LabelMessage = new ISLabelLink(this);
 			LabelMessage->setCursor(CURSOR_POINTING_HAND);
-			LabelMessage->setToolTip(LOCALIZATION("ClickFromOpenUrlInBrowser"));
+			LabelMessage->setToolTip(LANG("ClickFromOpenUrlInBrowser"));
 			connect(dynamic_cast<ISLabelLink*>(LabelMessage), &ISLabelLink::Clicked, this, &ISChatMessageWidget::OpenUrlLink);
 		}
 		else
@@ -124,28 +124,28 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	if (ImageSize) //Если к сообщению прикреплено изображение
 	{
 		ISToolButton *ButtonImage = new ISToolButton(this);
-		ButtonImage->setText(LOCALIZATION("Image"));
-		ButtonImage->setToolTip(LOCALIZATION("ClickFromOpenImage"));
+		ButtonImage->setText(LANG("Image"));
+		ButtonImage->setToolTip(LANG("ClickFromOpenImage"));
 		ButtonImage->setPopupMode(QToolButton::MenuButtonPopup);
 		connect(ButtonImage, &ISToolButton::clicked, this, &ISChatMessageWidget::OpenImage);
 		MainLayout->addWidget(ButtonImage, 0, Qt::AlignLeft);
 
 		QMenu *Menu = new QMenu(ButtonImage);
-		Menu->addAction(BUFFER_ICONS("Save"), LOCALIZATION("Save"), this, &ISChatMessageWidget::SaveImage);
+		Menu->addAction(BUFFER_ICONS("Save"), LANG("Save"), this, &ISChatMessageWidget::SaveImage);
 		ButtonImage->setMenu(Menu);
 	}
 
 	if (FileName.length()) //Если к сообщению прикреплен файл
 	{
 		ISToolButton *ButtonFile = new ISToolButton(this);
-		ButtonFile->setText(LOCALIZATION("File") + ": " + FileName);
-		ButtonFile->setToolTip(LOCALIZATION("ClickFromOpenFile")); //ClickFromSaveFile
+		ButtonFile->setText(LANG("File") + ": " + FileName);
+		ButtonFile->setToolTip(LANG("ClickFromOpenFile")); //ClickFromSaveFile
 		ButtonFile->setPopupMode(QToolButton::MenuButtonPopup);
 		connect(ButtonFile, &ISToolButton::clicked, this, &ISChatMessageWidget::OpenFile);
 		MainLayout->addWidget(ButtonFile, 0, Qt::AlignLeft);
 
 		QMenu *Menu = new QMenu(ButtonFile);
-		QAction *ActionSave = Menu->addAction(BUFFER_ICONS("Save"), LOCALIZATION("Save"), this, &ISChatMessageWidget::SaveFile);
+		QAction *ActionSave = Menu->addAction(BUFFER_ICONS("Save"), LANG("Save"), this, &ISChatMessageWidget::SaveFile);
 		ActionSave->setData(FileName);
 		ButtonFile->setMenu(Menu);
 	}
@@ -153,8 +153,8 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	if (TableName.length() && ObjectID) //Если к сообщению прикреплена ссылка на запись
 	{
 		ISPushButton *ButtonLink = new ISPushButton(this);
-		ButtonLink->setText(LOCALIZATION("LinkToRecordInTable").arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName()));
-		ButtonLink->setToolTip(LOCALIZATION("ClickFromOpenRecord"));
+		ButtonLink->setText(LANG("LinkToRecordInTable").arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName()));
+		ButtonLink->setToolTip(LANG("ClickFromOpenRecord"));
 		ButtonLink->setCursor(CURSOR_POINTING_HAND);
 		ButtonLink->setProperty("TableName", TableName);
 		ButtonLink->setProperty("ObjectID", ObjectID);
@@ -208,7 +208,7 @@ void ISChatMessageWidget::SaveImage()
 				if (Pixmap.save(ImagePath))
 				{
 					ISGui::SetWaitGlobalCursor(false);
-					ISMessageBox::ShowInformation(nullptr, LOCALIZATION("Message.Information.FileSaved"), ImagePath);
+					ISMessageBox::ShowInformation(nullptr, LANG("Message.Information.FileSaved"), ImagePath);
 				}
 			}
 		}
@@ -219,7 +219,7 @@ void ISChatMessageWidget::SaveImage()
 //-----------------------------------------------------------------------------
 void ISChatMessageWidget::OpenFile()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.OpenFileInChat"), LOCALIZATION("OpeningLargeFilesMayTakeSomeTime")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.OpenFileInChat"), LANG("OpeningLargeFilesMayTakeSomeTime")))
 	{
 		ISGui::ProcessEvents();
 		ISGui::SetWaitGlobalCursor(true);
@@ -268,7 +268,7 @@ void ISChatMessageWidget::SaveFile()
 					File.close();
 
 					ISGui::SetWaitGlobalCursor(false);
-					if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Message.Question.FileSaved")))
+					if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.FileSaved")))
 					{
 						ISGui::OpenFile(FilePath);
 					}
@@ -304,6 +304,6 @@ void ISChatMessageWidget::SelectMessage()
 void ISChatMessageWidget::CopyMessage()
 {
 	QApplication::clipboard()->setText(LabelMessage->text());
-	ISNotificationService::ShowNotification(LOCALIZATION("MessageCopyToClipboard"));
+	ISNotificationService::ShowNotification(LANG("MessageCopyToClipboard"));
 }
 //-----------------------------------------------------------------------------

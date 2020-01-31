@@ -16,17 +16,17 @@ public:
 
 	static ISLocalization& GetInstance();
 
-	QString GetLocalString(const QString &ParameterName, const QString &SourceFile, int FileLine) const;
+	QString GetString(const QString &ParameterName) const; //Получить локализованную строку
 	void LoadResourceFile(const QString &FileName); //Инициализация файла из ресурсов
 	void InitializeContent(const QString &Content); //Загрузка структуры локализации в буфер
 
 private:
 	ISLocalization();
 
-	QStringMap Localization;
+	std::map<QString, QString> Dictionary;
 	QVectorString  LoadedFiles;
 };
 //-----------------------------------------------------------------------------
-#define LOCALIZATION(PARAMETER) ISLocalization::GetInstance().GetLocalString(PARAMETER, __FILE__, __LINE__)
+#define LANG(PARAMETER) ISLocalization::GetInstance().GetString(PARAMETER)
 //-----------------------------------------------------------------------------
 #endif

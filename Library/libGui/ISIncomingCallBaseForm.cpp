@@ -14,7 +14,7 @@ ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload, QWidg
 {
 	Payload = payload;
 
-	setWindowTitle(LOCALIZATION("IncomingCall"));
+	setWindowTitle(LANG("IncomingCall"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 	ForbidResize();
 
@@ -27,8 +27,8 @@ ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload, QWidg
 	LayoutTitle->addWidget(LabelIcon);
 
 	ISPushButton *ButtonCard = new ISPushButton(this);
-	ButtonCard->setText(LOCALIZATION("Card"));
-	ButtonCard->setToolTip(LOCALIZATION("Card"));
+	ButtonCard->setText(LANG("Card"));
+	ButtonCard->setToolTip(LANG("Card"));
 	ButtonCard->setIcon(BUFFER_ICONS("Document"));
 	connect(ButtonCard, &ISPushButton::clicked, this, &ISIncomingCallBaseForm::OpenCard);
 	LayoutTitle->addWidget(ButtonCard);
@@ -45,7 +45,7 @@ ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload, QWidg
 		CurrentTimeout = 0;
 
 		LabelTimeout = new QLabel(this);
-		LabelTimeout->setText(LOCALIZATION("AutoCloseIncomingForm").arg(SettingTimeout));
+		LabelTimeout->setText(LANG("AutoCloseIncomingForm").arg(SettingTimeout));
 		GetMainLayout()->addWidget(LabelTimeout);
 
 		GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
@@ -56,7 +56,7 @@ ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload, QWidg
 	}
 
 	GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LOCALIZATION("InfoAboutCall"));
+	GroupBox->setTitle(LANG("InfoAboutCall"));
 	GroupBox->setLayout(new QFormLayout());
 	GroupBox->setVisible(false);
 	GetMainLayout()->addWidget(GroupBox);
@@ -99,7 +99,7 @@ void ISIncomingCallBaseForm::AfterShowEvent()
 void ISIncomingCallBaseForm::Timeout()
 {
 	SettingTimeout--;
-	LabelTimeout->setText(LOCALIZATION("AutoCloseIncomingForm").arg(SettingTimeout));
+	LabelTimeout->setText(LANG("AutoCloseIncomingForm").arg(SettingTimeout));
 	if (SettingTimeout < 1)
 	{
 		SetResult(true);

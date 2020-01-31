@@ -21,7 +21,7 @@ ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)
 
 	QLabel *LabelCopyright = new QLabel(this);
 	LabelCopyright->setFont(FONT_TAHOMA_8);
-	LabelCopyright->setText(LOCALIZATION("SplashSceen.Copyright"));
+	LabelCopyright->setText(LANG("SplashSceen.Copyright"));
 	MainLayout->addWidget(LabelCopyright, 0, Qt::AlignRight);
 
 	QHBoxLayout *Layout = new QHBoxLayout();

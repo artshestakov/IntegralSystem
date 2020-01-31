@@ -53,8 +53,8 @@ ISAsteriskCallsListForm::ISAsteriskCallsListForm(QWidget *parent) : ISListBaseFo
 	DefaultFilter();
 
 	ActionDetails = new QAction(this);
-	ActionDetails->setText(LOCALIZATION("CallDetails"));
-	ActionDetails->setToolTip(LOCALIZATION("CallDetails"));
+	ActionDetails->setText(LANG("CallDetails"));
+	ActionDetails->setToolTip(LANG("CallDetails"));
 	ActionDetails->setIcon(BUFFER_ICONS("Information"));
 	connect(ActionDetails, &QAction::triggered, this, &ISAsteriskCallsListForm::DetailsClicked);
 	AddAction(ActionDetails, true, true);
@@ -64,15 +64,15 @@ ISAsteriskCallsListForm::ISAsteriskCallsListForm(QWidget *parent) : ISListBaseFo
 	AddAction(ActionSave, true, true);
 
 	ActionPlay = new QAction(this);
-	ActionPlay->setText(LOCALIZATION("ListeningRecordVoice"));
-	ActionPlay->setToolTip(LOCALIZATION("ListeningRecordVoice"));
+	ActionPlay->setText(LANG("ListeningRecordVoice"));
+	ActionPlay->setToolTip(LANG("ListeningRecordVoice"));
 	ActionPlay->setIcon(BUFFER_ICONS("PlayRecord"));
 	connect(ActionPlay, &QAction::triggered, this, &ISAsteriskCallsListForm::PlayRecord);
 	AddAction(ActionPlay, false, true);
 
 	ActionStorage = new QAction(this);
-	ActionStorage->setText(LOCALIZATION("SaveToStorage"));
-	ActionStorage->setToolTip(LOCALIZATION("SaveToStorage"));
+	ActionStorage->setText(LANG("SaveToStorage"));
+	ActionStorage->setToolTip(LANG("SaveToStorage"));
 	ActionStorage->setIcon(BUFFER_ICONS("Favorites"));
 	connect(ActionStorage, &QAction::triggered, this, &ISAsteriskCallsListForm::SaveToStorage);
 	AddAction(ActionStorage, true, true);
@@ -99,8 +99,8 @@ void ISAsteriskCallsListForm::CreateDetailsPanel()
 	LayoutWidget->addLayout(LayoutInfo);
 
 	ButtonBack = new ISPushButton(WidgetCallInfo);
-	ButtonBack->setText(LOCALIZATION("Back"));
-	ButtonBack->setToolTip(LOCALIZATION("ClickFromGoMainJournal"));
+	ButtonBack->setText(LANG("Back"));
+	ButtonBack->setToolTip(LANG("ClickFromGoMainJournal"));
 	ButtonBack->setIcon(BUFFER_ICONS("Arrow.Left"));
 	ButtonBack->setSizePolicy(QSizePolicy::Maximum, ButtonBack->sizePolicy().verticalPolicy());
 	connect(ButtonBack, &ISPushButton::clicked, this, &ISAsteriskCallsListForm::Back);
@@ -109,7 +109,7 @@ void ISAsteriskCallsListForm::CreateDetailsPanel()
 	QHBoxLayout *LayoutGroupBox = new QHBoxLayout();
 
 	QGroupBox *GroupBox = new QGroupBox(WidgetCallInfo);
-	GroupBox->setTitle(LOCALIZATION("CallDetails"));
+	GroupBox->setTitle(LANG("CallDetails"));
 	GroupBox->setLayout(LayoutGroupBox);
 	LayoutInfo->addWidget(GroupBox);
 
@@ -132,33 +132,33 @@ void ISAsteriskCallsListForm::CreateDetailsPanel()
 	LabelStatus->setFont(FONT_APPLICATION_BOLD);
 
 	QFormLayout *FormLayoutLeft = new QFormLayout();
-	FormLayoutLeft->addRow(LOCALIZATION("Call.DateTime") + ":", LabelDateTime);
-	FormLayoutLeft->addRow(LOCALIZATION("Call.Direction") + ":", LabelDirection);
+	FormLayoutLeft->addRow(LANG("Call.DateTime") + ":", LabelDateTime);
+	FormLayoutLeft->addRow(LANG("Call.Direction") + ":", LabelDirection);
 	LayoutGroupBox->addLayout(FormLayoutLeft);
 
 	LayoutGroupBox->addWidget(ISControls::CreateVerticalLine(GroupBox));
 
 	QFormLayout *FormLayoutCentral = new QFormLayout();
-	FormLayoutCentral->addRow(LOCALIZATION("Call.Subscriber") + ":", LabelSubscriber);
-	FormLayoutCentral->addRow(LOCALIZATION("Call.Whom") + ":", LabelNumber);
+	FormLayoutCentral->addRow(LANG("Call.Subscriber") + ":", LabelSubscriber);
+	FormLayoutCentral->addRow(LANG("Call.Whom") + ":", LabelNumber);
 	LayoutGroupBox->addLayout(FormLayoutCentral);
 
 	LayoutGroupBox->addWidget(ISControls::CreateVerticalLine(GroupBox));
 
 	QFormLayout *FormLayoutRight = new QFormLayout();
-	FormLayoutRight->addRow(LOCALIZATION("Call.Duration") + ":", LabelDuration);
-	FormLayoutRight->addRow(LOCALIZATION("Call.Status") + ":", LabelStatus);
+	FormLayoutRight->addRow(LANG("Call.Duration") + ":", LabelDuration);
+	FormLayoutRight->addRow(LANG("Call.Status") + ":", LabelStatus);
 	LayoutGroupBox->addLayout(FormLayoutRight);
 
 	LayoutGroupBox->addStretch();
 
-	LayoutWidget->addWidget(new QLabel(LOCALIZATION("TransferCall") + ":", WidgetCallInfo));
+	LayoutWidget->addWidget(new QLabel(LANG("TransferCall") + ":", WidgetCallInfo));
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskCallsListForm::CreateStatusDescription()
 {
 	ISPushButton *ButtonStatus = new ISPushButton(this);
-	ButtonStatus->setText(LOCALIZATION("CallStatuses"));
+	ButtonStatus->setText(LANG("CallStatuses"));
 	ButtonStatus->setIcon(BUFFER_ICONS("Apply.Green"));
 	ButtonStatus->setMenu(new QMenu(ButtonStatus));
 	GetStatusBar()->addWidget(ButtonStatus);
@@ -187,13 +187,13 @@ void ISAsteriskCallsListForm::SaveRecord()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_SAVE_ASTERISK_RECORD))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Special.SaveAsteriskRecord"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.SaveAsteriskRecord"));
 		return;
 	}
 
 	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
 	{
-		QString AsteriskFileRecordName = LOCALIZATION("AsteriskFileRecordName").arg(GetCurrentRecordValue("Subscriber").toString()).arg(GetCurrentRecordValue("DialBegin").toDateTime().toString(DATE_TIME_FORMAT_V6));
+		QString AsteriskFileRecordName = LANG("AsteriskFileRecordName").arg(GetCurrentRecordValue("Subscriber").toString()).arg(GetCurrentRecordValue("DialBegin").toDateTime().toString(DATE_TIME_FORMAT_V6));
 		QString SavedPath = ISFileDialog::GetSaveFileNameAsteriskRecord(this, AsteriskFileRecordName);
 		if (SavedPath.length())
 		{
@@ -209,21 +209,21 @@ void ISAsteriskCallsListForm::SaveRecord()
 				if (FileRecord.copy(SavedPath))
 				{
 					ISProtocol::Insert(true, CONST_UID_PROTOCOL_ASTERISK_RECORD_SAVE, QString(), QString(), QVariant(), QString::number(GetObjectID()));
-					if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.FileRecordSaved")))
+					if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.FileRecordSaved")))
 					{
 						Play(SavedPath);
 					}
 				}
 				else
 				{
-					ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.FileRecordNotSaved"), FileRecord.errorString());
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.FileRecordNotSaved"), FileRecord.errorString());
 				}
 			}
 		}
 	}
 	else
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.SaveRecordOnlyAnswer"));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.SaveRecordOnlyAnswer"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -257,7 +257,7 @@ void ISAsteriskCallsListForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 	}
 	else
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.NotFoundChildCalls"));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.NotFoundChildCalls"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -307,7 +307,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_PLAY_ASTERISK_RECORD))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Special.PlayAsteriskRecord"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.PlayAsteriskRecord"));
 		return;
 	}
 
@@ -329,7 +329,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 	}
 	else
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.PlayRecordOnlyAnswer"));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.PlayRecordOnlyAnswer"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -352,7 +352,7 @@ void ISAsteriskCallsListForm::SaveToStorage()
 		}
 		else
 		{
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.FileRecordInvalid"));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.FileRecordInvalid"));
 		}
 	}
 
@@ -361,7 +361,7 @@ void ISAsteriskCallsListForm::SaveToStorage()
 	AttachFileForm.SetFilePath(FilePath);
 	connect(&AttachFileForm, &ISAttachFileForm::UpdateList, [=]
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.FileRecordSavedToStorage"));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.FileRecordSavedToStorage"));
 	});
 	connect(&AttachFileForm, &ISAttachFileForm::Loaded, [=](int FileID)
 	{

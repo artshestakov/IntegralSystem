@@ -22,7 +22,7 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 {
 	AuthConnector = nullptr;
 
-	setWindowTitle(LOCALIZATION("InputInSystem"));
+	setWindowTitle(LANG("InputInSystem"));
 	ForbidResize();
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_NULL);
 
@@ -35,17 +35,17 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	Layout->setContentsMargins(LAYOUT_MARGINS_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
-	Layout->addWidget(new QLabel(LOCALIZATION("InputLoginAndPassword") + ":", this));
+	Layout->addWidget(new QLabel(LANG("InputLoginAndPassword") + ":", this));
 
 	EditLogin = new ISLineEdit(this);
-	EditLogin->SetPlaceholderText(LOCALIZATION("Login"));
+	EditLogin->SetPlaceholderText(LANG("Login"));
 	EditLogin->SetIcon(BUFFER_ICONS("Auth.Login"));
 	EditLogin->SetVisibleClear(false);
 	EditLogin->SetRegExp(REG_EXP_LOGIN);
 	Layout->addWidget(EditLogin);
 
 	EditPassword = new ISPasswordEdit(this);
-	EditPassword->SetPlaceholderText(LOCALIZATION("Password"));
+	EditPassword->SetPlaceholderText(LANG("Password"));
 	EditPassword->SetVisibleGenerate(false);
 	EditPassword->SetIcon(BUFFER_ICONS("Auth.Password"));
 	EditPassword->SetVisibleCheckBox(false);
@@ -63,7 +63,7 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	LayoutLabels->addStretch();
 
 	LabelLang = new QLabel(this);
-	LabelLang->setToolTip(LOCALIZATION("CurrentLayout"));
+	LabelLang->setToolTip(LANG("CurrentLayout"));
 	LabelLang->setCursor(CURSOR_WHATS_THIS);
 	ISGui::SetFontWidgetBold(LabelLang, true);
 	ISGui::SetFontWidgetUnderline(LabelLang, true);
@@ -78,14 +78,14 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	Layout->addLayout(LayoutBottom);
 
 	ButtonMenu = new ISServiceButton(this);
-	ButtonMenu->setToolTip(LOCALIZATION("Additionally"));
+	ButtonMenu->setToolTip(LANG("Additionally"));
 	ButtonMenu->setIcon(BUFFER_ICONS("Auth.Additionally"));
 	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	LayoutBottom->addWidget(ButtonMenu);
 
-	ButtonMenu->menu()->addAction(LOCALIZATION("Form.Authorization.ConnectionSettings"), this, &ISAuthorizationForm::ShowConnectionForm, Qt::Key_F9);
-	ButtonMenu->menu()->addAction(LOCALIZATION("Form.Authorization.About"), this, &ISAuthorizationForm::ShowAboutForm, Qt::Key_F1);
+	ButtonMenu->menu()->addAction(LANG("Form.Authorization.ConnectionSettings"), this, &ISAuthorizationForm::ShowConnectionForm, Qt::Key_F9);
+	ButtonMenu->menu()->addAction(LANG("Form.Authorization.About"), this, &ISAuthorizationForm::ShowAboutForm, Qt::Key_F1);
 
 	LayoutBottom->addStretch();
 
@@ -100,15 +100,15 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	WaitWidget->SetRevolutionsPerSecond(2);
 	LayoutBottom->addWidget(WaitWidget);
 
-	ButtonInput = new ISPushButton(BUFFER_ICONS("Apply.Blue"), LOCALIZATION("Input"), this);
-	ButtonInput->setToolTip(LOCALIZATION("Input.ToolTip"));
+	ButtonInput = new ISPushButton(BUFFER_ICONS("Apply.Blue"), LANG("Input"), this);
+	ButtonInput->setToolTip(LANG("Input.ToolTip"));
 	ButtonInput->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonInput, &ISPushButton::clicked, this, &ISAuthorizationForm::Input);
 	LayoutBottom->addWidget(ButtonInput);
 
-	ButtonExit = new ISPushButton(BUFFER_ICONS("Auth.Exit"), LOCALIZATION("Exit"), this);
+	ButtonExit = new ISPushButton(BUFFER_ICONS("Auth.Exit"), LANG("Exit"), this);
 	ButtonExit->setCursor(CURSOR_POINTING_HAND);
-	ButtonExit->setToolTip(LOCALIZATION("Exit.ToolTip"));
+	ButtonExit->setToolTip(LANG("Exit.ToolTip"));
 	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthorizationForm::close);
 	LayoutBottom->addWidget(ButtonExit);
 
@@ -139,11 +139,11 @@ void ISAuthorizationForm::AfterShowEvent()
 
 	QTimer *TimerCapsLook = new QTimer(this);
 	connect(TimerCapsLook, &QTimer::timeout, this, &ISAuthorizationForm::TimeoutCapsLook);
-	TimerCapsLook->start(500);
+	TimerCapsLook->start(200);
 
 	QTimer *TimerLang = new QTimer(this);
 	connect(TimerLang, &QTimer::timeout, this, &ISAuthorizationForm::TimeoutLang);
-	TimerLang->start(500);
+	TimerLang->start(200);
 
 	if (CONFIG_BOOL(CONST_CONFIG_AUTOINPUT_INCLUDED))
 	{
@@ -176,7 +176,7 @@ void ISAuthorizationForm::TimeoutCapsLook()
 	{
 		if (!LabelCapsLook->text().length())
 		{
-			LabelCapsLook->setText(LOCALIZATION("CapsLookActivate"));
+			LabelCapsLook->setText(LANG("CapsLookActivate"));
 		}
 	}
 	else
@@ -244,8 +244,8 @@ void ISAuthorizationForm::ConnectedDone()
 	}
 	else //Ошибка подключения к базе данных
 	{
-		ISMessageBox MessageBox(ISMessageBox::Warning, LOCALIZATION("ErrorConnectionDatabase"), LOCALIZATION("Message.Question.ConnectionError.Reconnect").arg(ErrorConnection), ISMessageBox::Yes | ISMessageBox::No | ISMessageBox::Close, this);
-		MessageBox.setButtonText(ISMessageBox::Close, LOCALIZATION("Exit"));
+		ISMessageBox MessageBox(ISMessageBox::Warning, LANG("ErrorConnectionDatabase"), LANG("Message.Question.ConnectionError.Reconnect").arg(ErrorConnection), ISMessageBox::Yes | ISMessageBox::No | ISMessageBox::Close, this);
+		MessageBox.setButtonText(ISMessageBox::Close, LANG("Exit"));
 		MessageBox.setDefaultButton(ISMessageBox::No);
 		MessageBox.adjustSize();
 		ISGui::MoveWidgetToDesktop(&MessageBox, ISNamespace::MWD_Center);
@@ -271,13 +271,13 @@ void ISAuthorizationForm::ConnectedDone()
 void ISAuthorizationForm::ConnectedFailed()
 {
 	SetConnecting(false);
-	ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SslConnectionDBFailed").arg(AuthConnector->errorString().toLower()));
+	ISMessageBox::ShowWarning(this, LANG("Message.Warning.SslConnectionDBFailed").arg(AuthConnector->errorString().toLower()));
 }
 //-----------------------------------------------------------------------------
 void ISAuthorizationForm::SetConnecting(bool Connecting)
 {
 	Connecting ? WaitWidget->Start() : WaitWidget->Stop();
-	LabelConnectToDatabase->setText(Connecting ? LOCALIZATION("ConnectingToServer") + "..." : QString());
+	LabelConnectToDatabase->setText(Connecting ? LANG("ConnectingToServer") + "..." : QString());
 	ISGui::SetWaitGlobalCursor(Connecting);
 	EditLogin->setEnabled(!Connecting);
 	EditPassword->setEnabled(!Connecting);
@@ -291,28 +291,28 @@ bool ISAuthorizationForm::Check()
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ConnectionSetting.Input.ServerEmpty"));
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.ServerEmpty"));
 		return false;
 	}
 
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT).isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ConnectionSetting.Input.PortEmpty"));
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.PortEmpty"));
 		return false;
 	}
 
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ConnectionSetting.Input.DatabaseNameEmpty"));
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.DatabaseNameEmpty"));
 		return false;
 	}
 
 	if (!EditLogin->GetValue().toString().length())
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Input.LoginEmpty"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.LoginEmpty"));
 		EditLogin->BlinkRed();
 		return false;
 	}
@@ -320,7 +320,7 @@ bool ISAuthorizationForm::Check()
 	if (!EditPassword->GetValue().toString().length())
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Input.PasswordEmpty"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.PasswordEmpty"));
 		EditPassword->BlinkRed();
 		return false;
 	}

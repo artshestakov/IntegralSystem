@@ -22,18 +22,18 @@ static QString QD_FAST_CREATE_OBJECT = PREPARE_QUERY("DELETE FROM _fastcreateobj
 //-----------------------------------------------------------------------------
 ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("CreateRecords"));
+	setWindowTitle(LANG("CreateRecords"));
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
 
-	Layout->addWidget(new QLabel(LOCALIZATION("Table") + ":", this));
+	Layout->addWidget(new QLabel(LANG("Table") + ":", this));
 
 	ComboEdit = new ISComboEdit(this);
 	ComboEdit->SetEditable(false);
-	ComboEdit->AddItem(LOCALIZATION("NotSelected"), QVariant());
+	ComboEdit->AddItem(LANG("NotSelected"), QVariant());
 	connect(ComboEdit, &ISComboEdit::ValueChange, this, &ISFastCreateRecordsForm::TableChanged);
 	Layout->addWidget(ComboEdit);
 
@@ -46,12 +46,12 @@ ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceD
 		}
 	}
 
-	ButtonAdd = new ISPushButton(LOCALIZATION("Addition"), this);
+	ButtonAdd = new ISPushButton(LANG("Addition"), this);
 	ButtonAdd->setEnabled(false);
 	connect(ButtonAdd, &ISPushButton::clicked, this, &ISFastCreateRecordsForm::Add);
 	Layout->addWidget(ButtonAdd);
 
-	ButtonDelete = new ISPushButton(LOCALIZATION("Delete"), this);
+	ButtonDelete = new ISPushButton(LANG("Delete"), this);
 	ButtonDelete->setEnabled(false);
 	connect(ButtonDelete, &ISPushButton::clicked, this, &ISFastCreateRecordsForm::Delete);
 	GetMainLayout()->addWidget(ButtonDelete, 0, Qt::AlignRight);
@@ -100,7 +100,7 @@ void ISFastCreateRecordsForm::Add()
 	{
 		if (ListWidget->item(i)->text() == LocalListName)
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.TableAlreadyExistList").arg(LocalListName));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.TableAlreadyExistList").arg(LocalListName));
 			return;
 		}
 	}

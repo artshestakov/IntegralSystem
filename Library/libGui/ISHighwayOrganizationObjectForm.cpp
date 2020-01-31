@@ -37,7 +37,7 @@ ISHighwayOrganizationObjectForm::ISHighwayOrganizationObjectForm(ISNamespace::Ob
 	: ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	ActionBranchMenu = new QAction(this);
-	ActionBranchMenu->setText(LOCALIZATION("Highway.Branches").arg(0));
+	ActionBranchMenu->setText(LANG("Highway.Branches").arg(0));
 	ActionBranchMenu->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Branch"));
 	ActionBranchMenu->setMenu(new QMenu(this));
 	AddActionToolBar(ActionBranchMenu);
@@ -65,7 +65,7 @@ void ISHighwayOrganizationObjectForm::AfterShowEvent()
 			ActionBranchMenu->setVisible(false);
 
 			ActionRebind = new QAction(this);
-			ActionRebind->setText(LOCALIZATION("Highway.Branches.Rebind").arg(qSelect.ReadColumn("orgz_name").toString()));
+			ActionRebind->setText(LANG("Highway.Branches.Rebind").arg(qSelect.ReadColumn("orgz_name").toString()));
 			connect(ActionRebind, &QAction::triggered, this, &ISHighwayOrganizationObjectForm::RebindBranch);
 			AddActionToolBar(ActionRebind);
 		}
@@ -119,7 +119,7 @@ void ISHighwayOrganizationObjectForm::BindBranch()
 	}
 
 	ISGui::SetWaitGlobalCursor(false);
-	QVariant Value = ISInputDialog::GetList(this, LOCALIZATION("Highway.Branche"), LOCALIZATION("Highway.SelectBranche") + ":", VariantMap);
+	QVariant Value = ISInputDialog::GetList(this, LANG("Highway.Branche"), LANG("Highway.SelectBranche") + ":", VariantMap);
 	if (Value.isValid())
 	{
 		ISQuery qUpdateBranch(QU_ORGANIZATION_BRANCH);
@@ -135,7 +135,7 @@ void ISHighwayOrganizationObjectForm::BindBranch()
 //-----------------------------------------------------------------------------
 void ISHighwayOrganizationObjectForm::RebindBranch()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Highway.Message.Question.Rebind").arg(GetObjectName())))
+	if (ISMessageBox::ShowQuestion(this, LANG("Highway.Message.Question.Rebind").arg(GetObjectName())))
 	{
 		ISQuery qRebind(QU_REBIND);
 		qRebind.BindValue(":OrganizationID", GetObjectID());
@@ -170,14 +170,14 @@ void ISHighwayOrganizationObjectForm::ReloadBranch()
 				ActionBranchMenu->menu()->addAction(Action);
 			}
 			ActionBranchMenu->menu()->addSeparator();
-			ActionBranchMenu->setText(LOCALIZATION("Highway.Branches") + " (" + QString::number(qSelectParent.GetCountResultRows()) + ")");
+			ActionBranchMenu->setText(LANG("Highway.Branches") + " (" + QString::number(qSelectParent.GetCountResultRows()) + ")");
 		}
 		else
 		{
-			ActionBranchMenu->setText(LOCALIZATION("Highway.Branches").arg(0));
+			ActionBranchMenu->setText(LANG("Highway.Branches").arg(0));
 		}
 	}
 
-	ActionBranchMenu->menu()->addAction(BUFFER_ICONS("Add"), LOCALIZATION("Highway.Branches.Bind"), this, &ISHighwayOrganizationObjectForm::BindBranch);
+	ActionBranchMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Highway.Branches.Bind"), this, &ISHighwayOrganizationObjectForm::BindBranch);
 }
 //-----------------------------------------------------------------------------

@@ -46,7 +46,7 @@ static QString QS_DURATION_INCOMING = PREPARE_QUERY("SELECT to_char(((SELECT SUM
 //-----------------------------------------------------------------------------
 ISAsteriskTotalForm::ISAsteriskTotalForm(QWidget *parent) : ISInterfaceForm(parent)
 {
-	GetMainLayout()->addWidget(new QLabel(LOCALIZATION("ClickDoneFromFilter"), this));
+	GetMainLayout()->addWidget(new QLabel(LANG("ClickDoneFromFilter"), this));
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	Layout->setContentsMargins(LAYOUT_MARGINS_NULL);
@@ -56,12 +56,12 @@ ISAsteriskTotalForm::ISAsteriskTotalForm(QWidget *parent) : ISInterfaceForm(pare
 	Widget->setSizePolicy(Widget->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	GetMainLayout()->addWidget(Widget);
 
-	RangeDateTimeEdit = new ISRangeDateTimeEdit(this, LOCALIZATION("Period") + ":");
+	RangeDateTimeEdit = new ISRangeDateTimeEdit(this, LANG("Period") + ":");
 	RangeDateTimeEdit->SetValue(ISRangeStruct(QDateTime(QDate::currentDate(), QTime(0, 0)), QDateTime::currentDateTime()));
 	Layout->addWidget(RangeDateTimeEdit);
 
 	ButtonRange = new ISPushButton(this);
-	ButtonRange->setText(LOCALIZATION("Apply"));
+	ButtonRange->setText(LANG("Apply"));
 	ButtonRange->setIcon(BUFFER_ICONS("Apply.Blue"));
 	connect(ButtonRange, &ISPushButton::clicked, this, &ISAsteriskTotalForm::Update);
 	Layout->addWidget(ButtonRange);
@@ -83,34 +83,34 @@ void ISAsteriskTotalForm::CreateTotal()
 	GetMainLayout()->addLayout(FormLayout);
 
 	LabelCountTotal = new QLabel(this);
-	FormLayout->addRow(LOCALIZATION("TelephonyForm.Count.Total") + ":", LabelCountTotal);
+	FormLayout->addRow(LANG("TelephonyForm.Count.Total") + ":", LabelCountTotal);
 
 	LabelCountIncoming = new QLabel(this);
-	FormLayout->addRow(LOCALIZATION("TelephonyForm.Count.Incoming") + ":", LabelCountIncoming);
+	FormLayout->addRow(LANG("TelephonyForm.Count.Incoming") + ":", LabelCountIncoming);
 
 	LabelCountOutcoming = new QLabel(this);
-	FormLayout->addRow(LOCALIZATION("TelephonyForm.Count.Outcoming") + ":", LabelCountOutcoming);
+	FormLayout->addRow(LANG("TelephonyForm.Count.Outcoming") + ":", LabelCountOutcoming);
 
 	LabelDurationTotal = new QLabel(this);
-	FormLayout->addRow(LOCALIZATION("TelephonyForm.Duration.Total") + ":", LabelDurationTotal);
+	FormLayout->addRow(LANG("TelephonyForm.Duration.Total") + ":", LabelDurationTotal);
 
 	LabelDurationIncoming = new QLabel(this);
-	FormLayout->addRow(LOCALIZATION("TelephonyForm.Duration.Incoming") + ":", LabelDurationIncoming);
+	FormLayout->addRow(LANG("TelephonyForm.Duration.Incoming") + ":", LabelDurationIncoming);
 
 	LabelDurationOutcoming = new QLabel(this);
-	FormLayout->addRow(LOCALIZATION("TelephonyForm.Duration.Outcoming") + ":", LabelDurationOutcoming);
+	FormLayout->addRow(LANG("TelephonyForm.Duration.Outcoming") + ":", LabelDurationOutcoming);
 
 	LabelAverageIncoming = new QLabel(this);
-	FormLayout->addRow(LOCALIZATION("TelephonyForm.Average.Incoming") + ":", LabelAverageIncoming);
+	FormLayout->addRow(LANG("TelephonyForm.Average.Incoming") + ":", LabelAverageIncoming);
 
 	LabelAverageOutcoming = new QLabel(this);
-	FormLayout->addRow(LOCALIZATION("TelephonyForm.Average.Outcoming") + ":", LabelAverageOutcoming);
+	FormLayout->addRow(LANG("TelephonyForm.Average.Outcoming") + ":", LabelAverageOutcoming);
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskTotalForm::CreateUsers()
 {
 	QGroupBox *GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LOCALIZATION("TelephonyForm.Summary.Users"));
+	GroupBox->setTitle(LANG("TelephonyForm.Summary.Users"));
 	GroupBox->setLayout(new QVBoxLayout());
 	GetMainLayout()->addWidget(GroupBox);
 
@@ -121,13 +121,13 @@ void ISAsteriskTotalForm::CreateUsers()
 	GroupBox->layout()->addWidget(TreeWidget);
 
 	QStringList StringList;
-	StringList.append(LOCALIZATION("User"));
-	StringList.append(LOCALIZATION("TelephonyForm.Pattern"));
-	StringList.append(LOCALIZATION("TelephonyForm.Count.Outcoming"));
-	StringList.append(LOCALIZATION("TelephonyForm.Count.Incoming"));
+	StringList.append(LANG("User"));
+	StringList.append(LANG("TelephonyForm.Pattern"));
+	StringList.append(LANG("TelephonyForm.Count.Outcoming"));
+	StringList.append(LANG("TelephonyForm.Count.Incoming"));
 
-	StringList.append(LOCALIZATION("TelephonyForm.Duration.Outcoming"));
-	StringList.append(LOCALIZATION("TelephonyForm.Duration.Incoming"));
+	StringList.append(LANG("TelephonyForm.Duration.Outcoming"));
+	StringList.append(LANG("TelephonyForm.Duration.Incoming"));
 	TreeWidget->setHeaderLabels(StringList);
 }
 //-----------------------------------------------------------------------------
@@ -135,14 +135,14 @@ void ISAsteriskTotalForm::Update()
 {
 	ISGui::SetWaitGlobalCursor(true);
 
-	ButtonRange->setText(LOCALIZATION("TelephonyForm.Summary.Requery"));
+	ButtonRange->setText(LANG("TelephonyForm.Summary.Requery"));
 	ButtonRange->setIcon(BUFFER_ICONS("LoadData"));
 	ISGui::RepaintWidget(ButtonRange);
 
 	ReloadTotal();
 	ReloadUsers();
 
-	ButtonRange->setText(LOCALIZATION("Apply"));
+	ButtonRange->setText(LANG("Apply"));
 	ButtonRange->setIcon(BUFFER_ICONS("Apply.Blue"));
 
 	ISGui::SetWaitGlobalCursor(false);

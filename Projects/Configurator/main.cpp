@@ -40,15 +40,15 @@ int main(int argc, char *argv[])
 	if (ArgumentType == ISNamespace::CAT_Unknown)
 	{
 		ISDebug::ShowEmptyString();
-		ISDebug::ShowString(LOCALIZATION("Configurator.InvalidArguments"));
-		ISDebug::ShowString(LOCALIZATION("Configurator.InvalidArguments.Help"));
+		ISDebug::ShowString(LANG("Configurator.InvalidArguments"));
+		ISDebug::ShowString(LANG("Configurator.InvalidArguments.Help"));
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
 
 	if (!CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).length() || !CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).length())
 	{
-		ISDebug::ShowString(LOCALIZATION("Configurator.NotLoginOrPassword"));
+		ISDebug::ShowString(LANG("Configurator.NotLoginOrPassword"));
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
@@ -83,14 +83,14 @@ int main(int argc, char *argv[])
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
 	{
 		ISDebug::ShowEmptyString();
-		ISDebug::ShowString(LOCALIZATION("Configurator.Hello").arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)).arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER)));
-		ISDebug::ShowString(LOCALIZATION("Configurator.Hello.Help"));
-		ISDebug::ShowString(LOCALIZATION("Configurator.Hello.Exit"));
+		ISDebug::ShowString(LANG("Configurator.Hello").arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)).arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER)));
+		ISDebug::ShowString(LANG("Configurator.Hello.Help"));
+		ISDebug::ShowString(LANG("Configurator.Hello.Exit"));
 
 		if (!ExistDB)
 		{
 			ISDebug::ShowEmptyString();
-			ISDebug::ShowString(LOCALIZATION("Configurator.DatabaseNotExist").arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)));
+			ISDebug::ShowString(LANG("Configurator.DatabaseNotExist").arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)));
 		}
 
 		Configurator.InterpreterMode();

@@ -22,7 +22,7 @@ ISDiscussionObjectForm::ISDiscussionObjectForm(const QString &table_name, int pa
 	ObjectID = parent_object_id;
 	Message = message;
 
-	setWindowTitle(LOCALIZATION("Discussion"));
+	setWindowTitle(LANG("Discussion"));
 	setWindowIcon(BUFFER_ICONS("Discussion"));
 
 	ForbidResize();
@@ -43,9 +43,9 @@ ISDiscussionObjectForm::ISDiscussionObjectForm(const QString &table_name, int pa
 	GetMainLayout()->addLayout(FormLayout);
 
 	EditMessage = new ISTextEdit(this);
-	EditMessage->SetPlaceholderText(LOCALIZATION("WhatDoYouWantToSay"));
+	EditMessage->SetPlaceholderText(LANG("WhatDoYouWantToSay"));
 	EditMessage->SetValue(Message);
-	FormLayout->addRow(LOCALIZATION("Message") + ":", EditMessage);
+	FormLayout->addRow(LANG("Message") + ":", EditMessage);
 }
 //-----------------------------------------------------------------------------
 ISDiscussionObjectForm::~ISDiscussionObjectForm()
@@ -100,7 +100,7 @@ void ISDiscussionObjectForm::Save()
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("Message")));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("Message")));
 	}
 }
 //-----------------------------------------------------------------------------

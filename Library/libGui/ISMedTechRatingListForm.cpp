@@ -8,8 +8,8 @@ ISMedTechRatingListForm::ISMedTechRatingListForm(QWidget *parent) : ISListBaseFo
 	QAction *ActionFilterAll = new QAction(this);
 	ActionFilterAll->setCheckable(true);
 	ActionFilterAll->setChecked(true);
-	ActionFilterAll->setText(LOCALIZATION("Rating.Filter.All"));
-	ActionFilterAll->setToolTip(LOCALIZATION("Rating.Filter.All"));
+	ActionFilterAll->setText(LANG("Rating.Filter.All"));
+	ActionFilterAll->setToolTip(LANG("Rating.Filter.All"));
 	ActionFilterAll->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.All"));
 	ActionFilterAll->setProperty("Filter", QVariant());
 	connect(ActionFilterAll, &QAction::triggered, this, &ISMedTechRatingListForm::FilterClicked);

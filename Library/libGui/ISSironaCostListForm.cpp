@@ -9,7 +9,7 @@ ISSironaCostListForm::ISSironaCostListForm(QWidget *parent) : ISListBaseForm("Co
 {
 	LabelSum = new QLabel(this);
 	LabelSum->setFont(FONT_TAHOMA_11);
-	LabelSum->setText(LOCALIZATION("Sirona.TotalMoney.Cost").arg(0));
+	LabelSum->setText(LANG("Sirona.TotalMoney.Cost").arg(0));
 	GetStatusBar()->addWidget(LabelSum);
 }
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ void ISSironaCostListForm::LoadDataAfterEvent()
 		ISQuery qSelect("SELECT SUM(cost_sum) FROM cost WHERE cost_id IN(" + SqlIN + ")");
 		if (qSelect.ExecuteFirst())
 		{
-			LabelSum->setText(LOCALIZATION("Sirona.TotalMoney.Cost").arg(qSelect.ReadColumn("sum").toDouble()));
+			LabelSum->setText(LANG("Sirona.TotalMoney.Cost").arg(qSelect.ReadColumn("sum").toDouble()));
 		}
 	}
 }

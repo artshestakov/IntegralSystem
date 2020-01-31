@@ -64,11 +64,11 @@ void ISPatriotHelper::OpenVisit(int SubscriptionID)
 		QString SubscriptionName = qInsertVisit.ReadColumn("sbtp_name").toString();
 
 		SetNowExist(SubscriptionID, true);
-		ISNotificationService::ShowNotification(ClientFIO, LOCALIZATION("Patriot.Notify.OpenVisit").arg(LeftCount));
+		ISNotificationService::ShowNotification(ClientFIO, LANG("Patriot.Notify.OpenVisit").arg(LeftCount));
 
 		if (LeftCount == 1)
 		{
-			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Patriot.Message.Warning.OneVisitLeft").arg(ClientFIO).arg(SubscriptionName));
+			ISMessageBox::ShowWarning(nullptr, LANG("Patriot.Message.Warning.OneVisitLeft").arg(ClientFIO).arg(SubscriptionName));
 		}
 	}
 }
@@ -86,7 +86,7 @@ void ISPatriotHelper::CloseVisit(int SubscriptionID)
 		qLeftCount.Execute();
 
 		SetNowExist(SubscriptionID, false);
-		ISNotificationService::ShowNotification(ClientFIO, LOCALIZATION("Patriot.Notify.CloseVisit"));
+		ISNotificationService::ShowNotification(ClientFIO, LANG("Patriot.Notify.CloseVisit"));
 	}
 }
 //-----------------------------------------------------------------------------

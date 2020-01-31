@@ -33,7 +33,7 @@ ISPhoneForm::ISPhoneForm(QWidget *parent) : ISInterfaceForm(parent)
 	LayoutFrame->addLayout(LayoutTitle);
 
 	EditNumber = new ISLineEdit(this);
-	EditNumber->SetPlaceholderText(LOCALIZATION("InputtheNumber"));
+	EditNumber->SetPlaceholderText(LANG("InputtheNumber"));
 	EditNumber->SetReadOnly(true);
 	EditNumber->SetFocusPolicy(Qt::NoFocus);
 	LayoutTitle->addWidget(EditNumber);
@@ -71,8 +71,8 @@ ISPhoneForm::ISPhoneForm(QWidget *parent) : ISInterfaceForm(parent)
 	LayoutBottom->addStretch();
 
 	ISPushButton *ButtonCall = new ISPushButton(this);
-	ButtonCall->setText(LOCALIZATION("Call"));
-	ButtonCall->setToolTip(LOCALIZATION("ClickedFromMakeCallWithInputNumber"));
+	ButtonCall->setText(LANG("Call"));
+	ButtonCall->setToolTip(LANG("ClickedFromMakeCallWithInputNumber"));
 	ButtonCall->setIcon(BUFFER_ICONS("Phone.Correcting.True"));
 	ButtonCall->setFlat(true);
 	connect(ButtonCall, &ISPushButton::clicked, this, &ISPhoneForm::Call);
@@ -83,8 +83,8 @@ ISPhoneForm::ISPhoneForm(QWidget *parent) : ISInterfaceForm(parent)
 	ButtonCall->menu()->addAction(new QAction("action 2", ButtonCall));
 
 	ISPushButton *ButtonHide = new ISPushButton(this);
-	ButtonHide->setText(LOCALIZATION("Hide"));
-	ButtonHide->setToolTip(LOCALIZATION("HidePanelInputNumber"));
+	ButtonHide->setText(LANG("Hide"));
+	ButtonHide->setToolTip(LANG("HidePanelInputNumber"));
 	ButtonHide->setIcon(BUFFER_ICONS("ArrowDown"));
 	ButtonHide->setFlat(true);
 	connect(ButtonHide, &ISPushButton::clicked, this, &ISPhoneForm::Hide);
@@ -155,7 +155,7 @@ void ISPhoneForm::ButtonClicked(QAbstractButton *AbstractButton)
 void ISPhoneForm::Call()
 {
 	HideAnimation(400);
-	ISNotificationService::ShowNotification(LOCALIZATION("CallWithNumber").arg(EditNumber->GetValue().toString()));
+	ISNotificationService::ShowNotification(LANG("CallWithNumber").arg(EditNumber->GetValue().toString()));
 
 	QVariantMap VariantMap;
 	VariantMap.insert(":Number", EditNumber->GetValue());

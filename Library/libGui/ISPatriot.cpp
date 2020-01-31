@@ -92,7 +92,7 @@ void ISPatriot::InputScannerData(const QString &Barcode)
 {
 	if (!IsActiveCard(Barcode))
 	{
-		ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Patriot.Message.Warning.CardDeactivate").arg(Barcode));
+		ISMessageBox::ShowWarning(nullptr, LANG("Patriot.Message.Warning.CardDeactivate").arg(Barcode));
 		return;
 	}
 
@@ -108,7 +108,7 @@ void ISPatriot::InputScannerData(const QString &Barcode)
 
 			if (CountSubscriptions == 0) //Если абонементы отсутствуют у клиента
 			{
-				if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Patriot.Message.Question.CreateSubscription").arg(ClientFIO)))
+				if (ISMessageBox::ShowQuestion(nullptr, LANG("Patriot.Message.Question.CreateSubscription").arg(ClientFIO)))
 				{
 					ISPatriotSubscriptionObjectForm *SubscriptionObjectForm = dynamic_cast<ISPatriotSubscriptionObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_New, "Subscriptions"));
 					SubscriptionObjectForm->SetClient(ClientID);
@@ -141,7 +141,7 @@ void ISPatriot::InputScannerData(const QString &Barcode)
 	}
 	else //Карта не найдена - предложить привязать её к клиенту
 	{
-		if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Patriot.Message.Question.CreateCard").arg(Barcode))) //Если нужно привязать карту к клиенту
+		if (ISMessageBox::ShowQuestion(nullptr, LANG("Patriot.Message.Question.CreateCard").arg(Barcode))) //Если нужно привязать карту к клиенту
 		{
 			ISObjectFormBase *CardObjectForm = ISGui::CreateObjectForm(ISNamespace::OFT_New, "Card");
 			CardObjectForm->SetFieldValue("Barcode", Barcode);

@@ -13,23 +13,23 @@ static QString QU_ADMISSION_FINISHED = PREPARE_QUERY("UPDATE appointment SET "
 ISSironaAppointmentListForm::ISSironaAppointmentListForm(QWidget *parent) : ISListBaseForm("Appointment", parent)
 {
 	QAction *ActionFinished = new QAction(this);
-	ActionFinished->setText(LOCALIZATION("Sirona.AdmissionFinished"));
-	ActionFinished->setToolTip(LOCALIZATION("Sirona.AdmissionFinished"));
+	ActionFinished->setText(LANG("Sirona.AdmissionFinished"));
+	ActionFinished->setToolTip(LANG("Sirona.AdmissionFinished"));
 	ActionFinished->setIcon(BUFFER_ICONS("Apply.Blue"));
 	connect(ActionFinished, &QAction::triggered, this, &ISSironaAppointmentListForm::AdmissionFinished);
 	AddAction(ActionFinished, true, true);
 
 	RadioAll = new QRadioButton(this);
-	RadioAll->setText(LOCALIZATION("Sirona.Admission.Filter.All"));
+	RadioAll->setText(LANG("Sirona.Admission.Filter.All"));
 	GetToolBar()->addWidget(RadioAll);
 
 	RadioActual = new QRadioButton(this);
 	RadioActual->setChecked(true);
-	RadioActual->setText(LOCALIZATION("Sirona.Admission.Filter.Actial"));
+	RadioActual->setText(LANG("Sirona.Admission.Filter.Actial"));
 	GetToolBar()->addWidget(RadioActual);
 
 	RadioFinished = new QRadioButton(this);
-	RadioFinished->setText(LOCALIZATION("Sirona.Admission.Filter.Finished"));
+	RadioFinished->setText(LANG("Sirona.Admission.Filter.Finished"));
 	GetToolBar()->addWidget(RadioFinished);
 
 	QButtonGroup *ButtonGroup = new QButtonGroup(this);
@@ -50,11 +50,11 @@ void ISSironaAppointmentListForm::AdmissionFinished()
 	bool Finished = GetCurrentRecordValue("Finished").toBool();
 	if (Finished) //Если приём уже окончен
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Sirona.Message.Information.AdmissionAlreadyFinished").arg(PatientName));
+		ISMessageBox::ShowInformation(this, LANG("Sirona.Message.Information.AdmissionAlreadyFinished").arg(PatientName));
 		return;
 	}
 
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Sirona.Message.Question.AdmissionFinished").arg(PatientName).arg(GetCurrentRecordValue("DateTime").toDate().toString(DATE_FORMAT_V2))))
+	if (ISMessageBox::ShowQuestion(this, LANG("Sirona.Message.Question.AdmissionFinished").arg(PatientName).arg(GetCurrentRecordValue("DateTime").toDate().toString(DATE_FORMAT_V2))))
 	{
 		ISQuery qUpdate(QU_ADMISSION_FINISHED);
 		qUpdate.BindValue(":ObjectID", GetObjectID());

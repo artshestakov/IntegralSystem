@@ -13,8 +13,8 @@ ISTaskBaseListForm::ISTaskBaseListForm(QWidget *parent) : ISListBaseForm("_Task"
 {
 	ActionTakeToWork = new QAction(this);
 	ActionTakeToWork->setEnabled(false);
-	ActionTakeToWork->setText(LOCALIZATION("Task.TakeToWork"));
-	ActionTakeToWork->setToolTip(LOCALIZATION("Task.TakeToWork"));
+	ActionTakeToWork->setText(LANG("Task.TakeToWork"));
+	ActionTakeToWork->setToolTip(LANG("Task.TakeToWork"));
 	ActionTakeToWork->setIcon(BUFFER_ICONS("Task.TakeToWork"));
 	connect(ActionTakeToWork, &QAction::triggered, this, &ISTaskBaseListForm::TakeToWork);
 	AddAction(ActionTakeToWork, true, true);
@@ -51,18 +51,18 @@ void ISTaskBaseListForm::TakeToWork()
 		{
 			if (GetCurrentRecordValueDB("Executor").toInt() == ISMetaUser::GetInstance().GetData()->ID) //≈сли задача уже в работе у текущего пользовател€
 			{
-				ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.TakeAlreadyInWorkYou"));
+				ISMessageBox::ShowInformation(this, LANG("Message.Information.TakeAlreadyInWorkYou"));
 			}
 			else //«адача уже в работе у другого пользовател€
 			{
-				ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.TakeAlreadyInWorkUser").arg(GetCurrentRecordValue("Executor").toString()));
+				ISMessageBox::ShowInformation(this, LANG("Message.Information.TakeAlreadyInWorkUser").arg(GetCurrentRecordValue("Executor").toString()));
 			}
 		}
 		else //«адача не в работе
 		{
 			if (GetCurrentRecordValueDB("Executor").toInt() == ISMetaUser::GetInstance().GetData()->ID) //≈сли исполнителем задачи €вл€етс€ текущий пользователь
 			{
-				if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.TaskTakeToWork")))
+				if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskTakeToWork")))
 				{
 					ISCore::TaskSetStatus(GetObjectID(), CONST_UID_TASK_STATUS_IN_WORK);
 					SetSelectObjectAfterUpdate(GetObjectID());
@@ -72,13 +72,13 @@ void ISTaskBaseListForm::TakeToWork()
 			}
 			else //»сполнителем задачи €вл€етс€ не текущий пользователь
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.AlienTask"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.AlienTask"));
 			}
 		}
 	}
 	else //” задачи отсутствует исполнитель
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.TaskExecutorEmpty"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskExecutorEmpty"));
 	}
 }
 //-----------------------------------------------------------------------------

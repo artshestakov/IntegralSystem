@@ -14,8 +14,8 @@ ISOrganizationWorkListForm::ISOrganizationWorkListForm(QWidget *parent) : ISList
 	GetQueryModel()->SetClassFilter("orgz_perspective");
 
 	QAction *ActionTakeToWork = new QAction(GetToolBar());
-	ActionTakeToWork->setText(LOCALIZATION("TakeOrganization") + "...");
-	ActionTakeToWork->setToolTip(LOCALIZATION("TakeOrganization"));
+	ActionTakeToWork->setText(LANG("TakeOrganization") + "...");
+	ActionTakeToWork->setToolTip(LANG("TakeOrganization"));
 	ActionTakeToWork->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("TakeOrganization"));
 	connect(ActionTakeToWork, &QAction::triggered, this, &ISOrganizationWorkListForm::TakeToWork);
 	AddAction(ActionTakeToWork, false, true);
@@ -31,7 +31,7 @@ void ISOrganizationWorkListForm::TakeToWork()
 	QVectorInt Objects = GetSelectedIDs();
 	if (Objects.count())
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.OrganizationTakeToWork").arg(Objects.count())))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.OrganizationTakeToWork").arg(Objects.count())))
 		{
 			for (int i = 0; i < Objects.count(); ++i)
 			{
@@ -46,7 +46,7 @@ void ISOrganizationWorkListForm::TakeToWork()
 				}
 			}
 
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.OrganizationTakeToWorkDone").arg(Objects.count()));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.OrganizationTakeToWorkDone").arg(Objects.count()));
 			Update();
 		}
 	}

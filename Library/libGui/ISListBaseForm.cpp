@@ -209,7 +209,7 @@ QVectorInt ISListBaseForm::GetSelectedIDs()
 	}
 	else
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.SelectAtLeastOneRecord"));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.SelectAtLeastOneRecord"));
 	}
 
 	return VectorInt;
@@ -273,7 +273,7 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 	{
 		if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
 			return;
 		}
 
@@ -343,7 +343,7 @@ void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortOrder)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingDefault()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.SortingDefault")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SortingDefault")))
 	{
 		TableView->horizontalHeader()->sortIndicatorChanged(0, Qt::AscendingOrder);
 	}
@@ -372,9 +372,9 @@ void ISListBaseForm::VisibleIndicatorWidget()
 	else
 	{
 		ListIndicatorWidget->SetPixmap(BUFFER_ICONS("LabelNoDataTable").pixmap(SIZE_32_32));
-		ListIndicatorWidget->SetText(LOCALIZATION("NoData"));
+		ListIndicatorWidget->SetText(LANG("NoData"));
 		ListIndicatorWidget->setCursor(CURSOR_WHATS_THIS);
-		ListIndicatorWidget->setToolTip(LOCALIZATION("ClickCreateFromCreateObject"));
+		ListIndicatorWidget->setToolTip(LANG("ClickCreateFromCreateObject"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -401,7 +401,7 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 	if (SelectedRows)
 	{
 		LabelSelectedRow->setVisible(true);
-		LabelSelectedRow->setText(LOCALIZATION("SelectedRecords") + ": " + QString::number(SelectedRows));
+		LabelSelectedRow->setText(LANG("SelectedRecords") + ": " + QString::number(SelectedRows));
 	}
 	else
 	{
@@ -435,7 +435,7 @@ void ISListBaseForm::LoadDataAfterEvent()
 {
 	ResizeColumnsToContents();
 	
-	LabelRowCount->setText(QString("%1: %2").arg(LOCALIZATION("RecordsCount")).arg(SqlModel->rowCount())); //Изменение значения в надписе "Записей"
+	LabelRowCount->setText(QString("%1: %2").arg(LANG("RecordsCount")).arg(SqlModel->rowCount())); //Изменение значения в надписе "Записей"
 
 	SetEnabledActionObject(false);
 	SelectRowObject(SelectObjectAfterUpdate);
@@ -637,8 +637,8 @@ void ISListBaseForm::Period()
 
 		switch (PeriodForm.GetPeriodType())
 		{
-		case ISNamespace::PT_CreationDate: LabelPeriod->setText(LOCALIZATION("PeriodLabelCreate").arg(StartDate.toString(DATE_FORMAT_V2)).arg(EndDate.toString(DATE_FORMAT_V2))); break;
-		case ISNamespace::PT_UpdationDate: LabelPeriod->setText(LOCALIZATION("PeriodLabelUpdate").arg(StartDate.toString(DATE_FORMAT_V2)).arg(EndDate.toString(DATE_FORMAT_V2))); break;
+		case ISNamespace::PT_CreationDate: LabelPeriod->setText(LANG("PeriodLabelCreate").arg(StartDate.toString(DATE_FORMAT_V2)).arg(EndDate.toString(DATE_FORMAT_V2))); break;
+		case ISNamespace::PT_UpdationDate: LabelPeriod->setText(LANG("PeriodLabelUpdate").arg(StartDate.toString(DATE_FORMAT_V2)).arg(EndDate.toString(DATE_FORMAT_V2))); break;
 		}
 		
 		LabelPeriod->setVisible(true);
@@ -840,10 +840,10 @@ void ISListBaseForm::ModelThreadStarted()
 
 	ListIndicatorWidget->SetPixmap(QPixmap());
 	ListIndicatorWidget->SetVisibleAnimation(true);
-	ListIndicatorWidget->SetText(LOCALIZATION("LoadDataPleceWait") + "...");
+	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait") + "...");
 	ListIndicatorWidget->setVisible(true);
 
-	LabelRowCount->setText(QString("%1: %2...").arg(LOCALIZATION("RecordsCount")).arg(LOCALIZATION("Calculated"))); //Изменение значения в надписе "Записей"
+	LabelRowCount->setText(QString("%1: %2...").arg(LANG("RecordsCount")).arg(LANG("Calculated"))); //Изменение значения в надписе "Записей"
 	ToolBar->setEnabled(false);
 	SetEnabledPageNavigation(false);
 	EditSearch->setEnabled(false);
@@ -851,7 +851,7 @@ void ISListBaseForm::ModelThreadStarted()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadLoadingData()
 {
-	ListIndicatorWidget->SetText(LOCALIZATION("FillTableData") + "...");
+	ListIndicatorWidget->SetText(LANG("FillTableData") + "...");
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadFinished()
@@ -882,7 +882,7 @@ void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
 	else
 	{
 		ISDebug::ShowWarningString(SqlError.text());
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text());
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -900,7 +900,7 @@ void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QStr
 	else
 	{
 		ISDebug::ShowWarningString(SqlError.text());
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text(), QueryText);
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text(), QueryText);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -908,7 +908,7 @@ void ISListBaseForm::Create()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Create").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
@@ -925,13 +925,13 @@ void ISListBaseForm::CreateCopy()
 {
 	if (CheckIsSystemObject())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SystemObject.NotEdit"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotEdit"));
 		return;
 	}
 
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.CreateCopy").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
@@ -948,13 +948,13 @@ void ISListBaseForm::Edit()
 {
 	if (CheckIsSystemObject())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SystemObject.NotEdit"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotEdit"));
 		return;
 	}
 
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
@@ -1004,7 +1004,7 @@ void ISListBaseForm::Delete()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
@@ -1013,13 +1013,13 @@ void ISListBaseForm::Delete()
 	{
 		if (CheckIsSystemObject())
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SystemObject.NotDelete"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
 			return;
 		}
 
 		if (GetCurrentRecordValue("IsDeleted").toBool()) //Если объект удаленный - восстановить
 		{
-			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.RecoveryObjectSelected")))
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryObjectSelected")))
 			{
 				if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->GetName(), MetaTable->GetAlias(), VectorInt.at(0), MetaTable->GetLocalListName())) //Если восстановление прошло успешно, обновить таблицу
 				{
@@ -1037,7 +1037,7 @@ void ISListBaseForm::Delete()
 		}
 		else //Если объект не удаленный - удалить
 		{
-			if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DeleteSelectedRecord")))
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteSelectedRecord")))
 			{
 				if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->GetName(), MetaTable->GetAlias(), VectorInt.at(0), MetaTable->GetLocalListName())) //Если удаление прошло успешно, обновить таблицу
 				{
@@ -1056,15 +1056,15 @@ void ISListBaseForm::Delete()
 	}
 	else //Помечается на удаление несколько записей
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Objects.Delete").arg(VectorInt.count())))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.count())))
 		{
 			ISProgressForm ProgressForm(0, VectorInt.count(), this);
 			ProgressForm.show();
-			ProgressForm.SetText(LOCALIZATION("DeletingObjects").arg(0).arg(VectorInt.count()) + "...");
+			ProgressForm.SetText(LANG("DeletingObjects").arg(0).arg(VectorInt.count()) + "...");
 
 			for (int i = 0; i < VectorInt.count(); ++i)
 			{
-				ProgressForm.SetText(LOCALIZATION("DeletingObjects").arg(i + 1).arg(VectorInt.count()) + "...");
+				ProgressForm.SetText(LANG("DeletingObjects").arg(i + 1).arg(VectorInt.count()) + "...");
 				if (ProgressForm.wasCanceled())
 				{
 					break;
@@ -1085,7 +1085,7 @@ bool ISListBaseForm::DeleteCascade()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
 		return false;
 	}
 
@@ -1094,16 +1094,16 @@ bool ISListBaseForm::DeleteCascade()
 	{
 		if (CheckIsSystemObject())
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.SystemObject.NotDelete"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
 			return false;
 		}
 
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Object.Delete.Cascade"), LOCALIZATION("Message.Object.Delete.Cascade.Help")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
 		{
 			int ObjectID = VectorInt.at(0);
 			if (ISCore::DeleteCascadeObject(MetaTable->GetName(), MetaTable->GetAlias(), ObjectID))
 			{
-				ISNotificationService::ShowNotification(LOCALIZATION("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
+				ISNotificationService::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
 				ISProtocol::DeleteCascadeObject(MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID());
 				Update();
 
@@ -1113,15 +1113,15 @@ bool ISListBaseForm::DeleteCascade()
 	}
 	else //Удаляется несколько записей
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Objects.Delete.Cascade").arg(VectorInt.count()), LOCALIZATION("Message.Object.Delete.Cascade.Help")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete.Cascade").arg(VectorInt.count()), LANG("Message.Object.Delete.Cascade.Help")))
 		{
 			ISProgressForm ProgressForm(0, VectorInt.count(), this);
 			ProgressForm.show();
-			ProgressForm.SetText(LOCALIZATION("DeletingCascadeObjects").arg(0).arg(VectorInt.count()) + "...");
+			ProgressForm.SetText(LANG("DeletingCascadeObjects").arg(0).arg(VectorInt.count()) + "...");
 
 			for (int i = 0; i < VectorInt.count(); ++i)
 			{
-				ProgressForm.SetText(LOCALIZATION("DeletingCascadeObjects").arg(i + 1).arg(VectorInt.count()) + "...");
+				ProgressForm.SetText(LANG("DeletingCascadeObjects").arg(i + 1).arg(VectorInt.count()) + "...");
 				ProgressForm.AddOneValue();
 
 				int ObjectID = VectorInt.at(i);
@@ -1131,7 +1131,7 @@ bool ISListBaseForm::DeleteCascade()
 				}
 				else
 				{
-					ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotDeleteCascadeRecord").arg(ObjectID));
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteCascadeRecord").arg(ObjectID));
 					return false;
 				}
 
@@ -1154,7 +1154,7 @@ void ISListBaseForm::ShowDeleted()
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
 	{
 		GetAction(ISNamespace::AT_ShowDeleted)->setChecked(false);
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.IsDeleted").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.IsDeleted").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
@@ -1196,13 +1196,13 @@ void ISListBaseForm::Export()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Export").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
 	if (!SqlModel->rowCount())
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Export.NoData"));
+		ISMessageBox::ShowWarning(this, LANG("Export.NoData"));
 		return;
 	}
 
@@ -1230,7 +1230,7 @@ void ISListBaseForm::Export()
 
 	ISProgressForm ProgressForm(0, SqlModel->rowCount(), this);
 	ProgressForm.show();
-	ProgressForm.SetText(LOCALIZATION("Export.Process.Prepare") + "...");
+	ProgressForm.SetText(LANG("Export.Process.Prepare") + "...");
 	connect(&ProgressForm, &ISProgressForm::canceled, ExportWorker, &ISExportWorker::Cancel);
 	connect(ExportWorker, &ISExportWorker::ExportedRow, &ProgressForm, &ISProgressForm::AddOneValue);
 	connect(ExportWorker, &ISExportWorker::Message, &ProgressForm, &ISProgressForm::SetText);
@@ -1243,16 +1243,16 @@ void ISListBaseForm::Export()
 		{
 			ProgressForm.close();
 			ISProtocol::Insert(true, CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTable->GetName(), MetaTable->GetLocalListName(), QVariant(), ExportForm.GetSelectTypeName());
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Export.Completed").arg(MetaTable->GetLocalListName()).arg(ExportForm.GetSelectTypeName()));
+			ISMessageBox::ShowInformation(this, LANG("Export.Completed").arg(MetaTable->GetLocalListName()).arg(ExportForm.GetSelectTypeName()));
 		}
 		else
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Export.Error.Export"), ExportWorker->GetErrorString());
+			ISMessageBox::ShowWarning(this, LANG("Export.Error.Export"), ExportWorker->GetErrorString());
 		}
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Export.Error.Prepare"), ExportWorker->GetErrorString());
+		ISMessageBox::ShowWarning(this, LANG("Export.Error.Prepare"), ExportWorker->GetErrorString());
 	}
 
 	delete ExportWorker;
@@ -1263,7 +1263,7 @@ void ISListBaseForm::Print()
 {
 	if (!ISPrintingEntity::GetInstance().GetCountReports(MetaTable->GetName()))
 	{
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.NotFoundPrintFormFromMetaTable").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.NotFoundPrintFormFromMetaTable").arg(MetaTable->GetLocalListName()));
 		return;
 	}
 
@@ -1284,7 +1284,7 @@ void ISListBaseForm::Print()
 
     ISProcessForm ProcessForm;
 	ProcessForm.show();
-	ProcessForm.SetText(LOCALIZATION("PrintProcess.Preapre"));
+	ProcessForm.SetText(LANG("PrintProcess.Preapre"));
 	
 	ISPrintingBase *PrintingBase = nullptr;
 	bool EditPrintForm = ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT);
@@ -1313,11 +1313,11 @@ void ISListBaseForm::Print()
 	Result = PrintingBase->Prepare();
 	if (Result)
 	{
-		ProcessForm.SetText(LOCALIZATION("PrintProcess.ReadFileTemplate"));
+		ProcessForm.SetText(LANG("PrintProcess.ReadFileTemplate"));
 		Result = PrintingBase->PrepareTempate();
 		if (Result)
 		{
-			ProcessForm.SetText(LOCALIZATION("PrintProcess.FillTemplateData"));
+			ProcessForm.SetText(LANG("PrintProcess.FillTemplateData"));
 
 			Result = PrintingBase->FillTemplate(); //Заполнение шаблона данными
 			if (Result)
@@ -1329,18 +1329,18 @@ void ISListBaseForm::Print()
 
 				if (Result)
 				{
-					ProcessForm.SetText(LOCALIZATION("PrintProcess.Printing"));
+					ProcessForm.SetText(LANG("PrintProcess.Printing"));
 					Result = PrintingBase->Print();
 				}
 			}
 			else
 			{
-				ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ErrorFillTemplateData"), PrintingBase->GetErrorString());
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorFillTemplateData"), PrintingBase->GetErrorString());
 			}
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Error.ErrorOpenedFileTemplatePrinting"), PrintingBase->GetErrorString());
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorOpenedFileTemplatePrinting"), PrintingBase->GetErrorString());
 		}
 	}
 	else
@@ -1364,9 +1364,9 @@ void ISListBaseForm::ShowSystemInfo()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Share()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ShareRecordFromChat")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ShareRecordFromChat")))
 	{
-		QVariant MessageText = ISInputDialog::GetString(this, LOCALIZATION("Share"), LOCALIZATION("InputMessageFromLinkToRecord"));
+		QVariant MessageText = ISInputDialog::GetString(this, LANG("Share"), LANG("InputMessageFromLinkToRecord"));
 
 		ISQuery qShare(QI_SHARE_RECORD);
 		qShare.BindValue(":Message", MessageText);
@@ -1377,7 +1377,7 @@ void ISListBaseForm::Share()
 			int MessageID = qShare.ReadColumn("chat_id").toInt();
 			ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_NEW_CHAT_MESSAGE, MessageID, QString(), false);
 			ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHARE_RECORD, MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID());
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.SharedRecord"));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.SharedRecord"));
 		}
 	}
 }
@@ -1386,11 +1386,11 @@ void ISListBaseForm::AttachTask()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_ATTACH_OBEJCT_TASK))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Special.AttachObjectTask"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.AttachObjectTask"));
 		return;
 	}
 
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.AttachRecordFromTask")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.AttachRecordFromTask")))
 	{
 		int TaskID = ISGui::SelectObject("_Task");
 		if (TaskID)
@@ -1399,13 +1399,13 @@ void ISListBaseForm::AttachTask()
 			if (ISCore::TaskIsAttachedObject(TaskID, MetaTable->GetName(), GetObjectID())) //Если запись уже прикреплена к выбранной задаче
 			{
 				ISGui::SetWaitGlobalCursor(false);
-				if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DetachObjectTask")))
+				if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DetachObjectTask")))
 				{
 					ISGui::SetWaitGlobalCursor(true);
 					if (ISCore::TaskDetachObject(TaskID, MetaTable->GetName(), GetObjectID()))
 					{
 						ISGui::SetWaitGlobalCursor(false);
-						ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.DetachedObjectTask"));
+						ISMessageBox::ShowInformation(this, LANG("Message.Information.DetachedObjectTask"));
 					}
 				}
 			}
@@ -1416,7 +1416,7 @@ void ISListBaseForm::AttachTask()
 				{
 					ISGui::SetWaitGlobalCursor(false);
 					ISProtocol::Insert(true, CONST_UID_PROTOCOL_ATTACH_OBJECT_TASK, MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID());
-					ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.AttachedObjectTask"));
+					ISMessageBox::ShowInformation(this, LANG("Message.Information.AttachedObjectTask"));
 				}
 			}
 		}
@@ -1487,7 +1487,7 @@ void ISListBaseForm::NoteObject()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE))
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Special.RecordNote"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.RecordNote"));
 		return;
 	}
 
@@ -1506,7 +1506,7 @@ void ISListBaseForm::AutoFitColumnWidth()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ResetWidthColumn()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ResetWidthColumn")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ResetWidthColumn")))
 	{
 		ISGui::SetWaitGlobalCursor(true);
 
@@ -1651,23 +1651,23 @@ void ISListBaseForm::CreateSpecialActions()
 
 	//Автоподбор ширины
 	QAction *ActionResizeFromContent = new QAction(this);
-	ActionResizeFromContent->setText(LOCALIZATION("AutoFitColumnWidth"));
-	ActionResizeFromContent->setToolTip(LOCALIZATION("AutoFitColumnWidth"));
+	ActionResizeFromContent->setText(LANG("AutoFitColumnWidth"));
+	ActionResizeFromContent->setToolTip(LANG("AutoFitColumnWidth"));
 	ActionResizeFromContent->setIcon(BUFFER_ICONS("AutoFitColumnWidth"));
 	connect(ActionResizeFromContent, &QAction::triggered, this, &ISListBaseForm::AutoFitColumnWidth);
 	ActionsSpecial.insert(ISNamespace::AST_ResizeFromContent, ActionResizeFromContent);
 
 	//Сброс ширины колонок
 	QAction *ActionResetWidthColumn = new QAction(this);
-	ActionResetWidthColumn->setText(LOCALIZATION("ResetWidthColumn"));
-	ActionResetWidthColumn->setToolTip(LOCALIZATION("ResetWidthColumn"));
+	ActionResetWidthColumn->setText(LANG("ResetWidthColumn"));
+	ActionResetWidthColumn->setToolTip(LANG("ResetWidthColumn"));
 	connect(ActionResetWidthColumn, &QAction::triggered, this, &ISListBaseForm::ResetWidthColumn);
 	ActionsSpecial.insert(ISNamespace::AST_ResetWidthColumn, ActionResetWidthColumn);
 
 	//Копирование записи в буфер
 	QAction *ActionCopyRecord = new QAction(this);
-	ActionCopyRecord->setText(LOCALIZATION("CopyRecord"));
-	ActionCopyRecord->setToolTip(LOCALIZATION("CopyRecord"));
+	ActionCopyRecord->setText(LANG("CopyRecord"));
+	ActionCopyRecord->setToolTip(LANG("CopyRecord"));
 	connect(ActionCopyRecord, &QAction::triggered, this, &ISListBaseForm::CopyRecord);
 	ActionsSpecial.insert(ISNamespace::AST_CopyRecord, ActionCopyRecord);
 
@@ -1692,8 +1692,8 @@ void ISListBaseForm::CreateToolBar()
 	ToolBar->addAction(GetAction(ISNamespace::AT_Print));
 
 	QAction *ActionPeriod = new QAction(ToolBar);
-	ActionPeriod->setText(LOCALIZATION("Period"));
-	ActionPeriod->setToolTip(LOCALIZATION("Period"));
+	ActionPeriod->setText(LANG("Period"));
+	ActionPeriod->setToolTip(LANG("Period"));
 	ActionPeriod->setIcon(BUFFER_ICONS("Period"));
 	ActionPeriod->setMenu(new QMenu(ToolBar));
 	ToolBar->addAction(ActionPeriod);
@@ -1704,22 +1704,22 @@ void ISListBaseForm::CreateToolBar()
 	ButtonPeriod->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
 
 	QAction *ActionPeriodSelect = new QAction(ActionPeriod);
-	ActionPeriodSelect->setText(LOCALIZATION("PeriodSelect"));
-	ActionPeriodSelect->setToolTip(LOCALIZATION("PeriodSelect"));
+	ActionPeriodSelect->setText(LANG("PeriodSelect"));
+	ActionPeriodSelect->setToolTip(LANG("PeriodSelect"));
 	connect(ActionPeriodSelect, &QAction::triggered, this, &ISListBaseForm::Period);
 	ActionPeriod->menu()->addAction(ActionPeriodSelect);
 
 	ActionPeriod->menu()->addSeparator();
 
 	QAction *ActionPeriodClear = new QAction(ActionPeriod);
-	ActionPeriodClear->setText(LOCALIZATION("PeriodClear"));
-	ActionPeriodClear->setToolTip(LOCALIZATION("PeriodClear"));
+	ActionPeriodClear->setText(LANG("PeriodClear"));
+	ActionPeriodClear->setToolTip(LANG("PeriodClear"));
 	connect(ActionPeriodClear, &QAction::triggered, this, &ISListBaseForm::PeriodClear);
 	ActionPeriod->menu()->addAction(ActionPeriodClear);
 
 	QAction *ActionAdditionally = new QAction(ToolBar);
-	ActionAdditionally->setText(LOCALIZATION("Additionally"));
-	ActionAdditionally->setToolTip(LOCALIZATION("Additionally"));
+	ActionAdditionally->setText(LANG("Additionally"));
+	ActionAdditionally->setToolTip(LANG("Additionally"));
 	ActionAdditionally->setIcon(BUFFER_ICONS("AdditionallyActions"));
 	ActionAdditionally->setMenu(new QMenu(ToolBar));
 	ToolBar->addAction(ActionAdditionally);
@@ -1738,7 +1738,7 @@ void ISListBaseForm::CreateToolBar()
 	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResetWidthColumn));
 	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_CopyRecord));
 
-	ActionAdditionally->menu()->addAction(LOCALIZATION("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
+	ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
 
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWNAVIGATION))
 	{
@@ -1764,8 +1764,8 @@ void ISListBaseForm::CreateTableView()
 	GetMainLayout()->addLayout(LayoutTableView);
 
 	TableView = new ISBaseTableView(this);
-	TableView->SetCornerText(LOCALIZATION("Reduction.SerialNumber"));
-	TableView->SetCornerToolTip(LOCALIZATION("OrdinalNumber"));
+	TableView->SetCornerText(LANG("Reduction.SerialNumber"));
+	TableView->SetCornerToolTip(LANG("OrdinalNumber"));
 	
 	connect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, &ISListBaseForm::HeaderResized);
 	connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
@@ -1855,7 +1855,7 @@ void ISListBaseForm::CreateStatusBar()
 
 	LabelRowCount = new QLabel(StatusBar);
 	LabelRowCount->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWCOUNTRECORD));
-	LabelRowCount->setText(LOCALIZATION("RecordsCount") + ": " + LOCALIZATION("Calculated") + "...");
+	LabelRowCount->setText(LANG("RecordsCount") + ": " + LANG("Calculated") + "...");
 	StatusBar->addWidget(LabelRowCount);
 
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
@@ -1879,7 +1879,7 @@ void ISListBaseForm::CreateStatusBar()
 	StatusBar->addWidget(LabelSelectedRow);
 
 	LabelSearchResult = new QLabel(StatusBar);
-	LabelSearchResult->setText(LOCALIZATION("Search.Results.Empty"));
+	LabelSearchResult->setText(LANG("Search.Results.Empty"));
 	LabelSearchResult->setFont(FONT_APPLICATION_BOLD);
 	LabelSearchResult->setVisible(false);
 	StatusBar->addPermanentWidget(LabelSearchResult);

@@ -110,7 +110,7 @@ void ISCoreTelephony::HandlingCDR(int ID)
 		DirectionID = GetDirection(CONST_UID_ASTERISK_DIRECTION_INTERNAL);
 		Subscriber = SRC;
 		Number = DST;
-		ISDebug::ShowInfoString(LOCALIZATION("Telephony.HanglingInternalCall").arg(Subscriber).arg(Number).arg(ID));
+		ISDebug::ShowInfoString(LANG("Telephony.HanglingInternalCall").arg(Subscriber).arg(Number).arg(ID));
 		UserID = GetUser(ID, Subscriber);
 	}
 	else if (SRC.length() == AsteriskDigitNumbers) //Исходящий вызов
@@ -118,7 +118,7 @@ void ISCoreTelephony::HandlingCDR(int ID)
 		DirectionID = GetDirection(CONST_UID_ASTERISK_DIRECTION_OUTGOING);
 		Subscriber = SRC;
 		Number = ISPhoneNumberParser::PasteEvent(DST);
-		ISDebug::ShowInfoString(LOCALIZATION("Telephony.HanglingOutgoingCall").arg(Subscriber).arg(Number).arg(ID));
+		ISDebug::ShowInfoString(LANG("Telephony.HanglingOutgoingCall").arg(Subscriber).arg(Number).arg(ID));
 		UserID = GetUser(ID, Subscriber);
 	}
 	else //Входящий вызов
@@ -126,7 +126,7 @@ void ISCoreTelephony::HandlingCDR(int ID)
 		DirectionID = GetDirection(CONST_UID_ASTERISK_DIRECTION_INCOMING);
 		Subscriber = ISPhoneNumberParser::PasteEvent(SRC);
 		Number = GetPattern(ID, DSTChannel);
-		ISDebug::ShowInfoString(LOCALIZATION("Telephony.HanglingIncomingCall").arg(Subscriber).arg(Number).arg(ID));
+		ISDebug::ShowInfoString(LANG("Telephony.HanglingIncomingCall").arg(Subscriber).arg(Number).arg(ID));
 		UserID = GetUser(ID, Number);
 	}
 
@@ -215,7 +215,7 @@ QVariant ISCoreTelephony::GetDialStatus(int ID, const QString &DialStatus) const
 
 	if (!DiasStatusID.isValid())
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Telephony.NotFoundDiasStatus").arg(DialStatus).arg(ID));
+		ISDebug::ShowWarningString(LANG("Telephony.NotFoundDiasStatus").arg(DialStatus).arg(ID));
 	}
 
 	return DiasStatusID;
@@ -236,7 +236,7 @@ QString ISCoreTelephony::GetPattern(int ID, const QString &String) const
 
 	if (Pattern.length() != AsteriskDigitNumbers)
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Telephony.ParsePatternInvalid").arg(String).arg(ID));
+		ISDebug::ShowWarningString(LANG("Telephony.ParsePatternInvalid").arg(String).arg(ID));
 	}
 
 	return Pattern;
@@ -260,7 +260,7 @@ QVariant ISCoreTelephony::GetUser(int ID, const QVariant &Pattern) const
 
 	if (!UserID.isValid())
 	{
-		ISDebug::ShowWarningString(LOCALIZATION("Telephony.NotFoundUser").arg(Pattern.toString()).arg(ID));
+		ISDebug::ShowWarningString(LANG("Telephony.NotFoundUser").arg(Pattern.toString()).arg(ID));
 	}
 
 	return UserID;

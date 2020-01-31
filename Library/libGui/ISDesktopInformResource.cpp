@@ -62,7 +62,7 @@ void ISDesktopInformResource::CreateLeftPanel()
 	LayoutCentral->addLayout(LayoutLeft);
 	
 	QGroupBox *GroupBoxDemoAccess = new QGroupBox(this);
-	GroupBoxDemoAccess->setTitle(LOCALIZATION("DemoAccessesInWord"));
+	GroupBoxDemoAccess->setTitle(LANG("DemoAccessesInWord"));
 	GroupBoxDemoAccess->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxDemoAccess);
 
@@ -71,7 +71,7 @@ void ISDesktopInformResource::CreateLeftPanel()
 	GroupBoxDemoAccess->layout()->addWidget(ListViewDemoAccesses);
 
 	QGroupBox *GroupBoxOrganizations = new QGroupBox(this);
-	GroupBoxOrganizations->setTitle(LOCALIZATION("OrganizationsInWork"));
+	GroupBoxOrganizations->setTitle(LANG("OrganizationsInWork"));
 	GroupBoxOrganizations->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxOrganizations);
 
@@ -98,13 +98,13 @@ void ISDesktopInformResource::CreateCentralPanel()
 	LayoutCenter->addWidget(CalendarWidget, 0, Qt::AlignHCenter);
 
 	TextEdit = new ISTextEdit(this);
-	TextEdit->SetPlaceholderText(LOCALIZATION("InputNoteFromDay"));
+	TextEdit->SetPlaceholderText(LANG("InputNoteFromDay"));
 	TextEdit->SetVisibleClear(false);
 	TextEdit->setSizePolicy(QSizePolicy::Maximum, TextEdit->sizePolicy().verticalPolicy());
 	LayoutCenter->addWidget(TextEdit);
 
 	ISPushButton *ButtonSaveNote = new ISPushButton(this);
-	ButtonSaveNote->setText(LOCALIZATION("Save"));
+	ButtonSaveNote->setText(LANG("Save"));
 	ButtonSaveNote->setIcon(BUFFER_ICONS("Save"));
 	connect(ButtonSaveNote, &ISPushButton::clicked, this, &ISDesktopInformResource::UpdateDayNote);
 	LayoutCenter->addWidget(ButtonSaveNote, 0, Qt::AlignLeft);
@@ -116,7 +116,7 @@ void ISDesktopInformResource::CreateRightPanel()
 	LayoutGroupBox->setContentsMargins(LAYOUT_MARGINS_5_PX);
 
 	QGroupBox *GroupBoxCallHistory = new QGroupBox(this);
-	GroupBoxCallHistory->setTitle(LOCALIZATION("CallHistory"));
+	GroupBoxCallHistory->setTitle(LANG("CallHistory"));
 	GroupBoxCallHistory->setLayout(LayoutGroupBox);
 	LayoutCentral->addWidget(GroupBoxCallHistory);
 

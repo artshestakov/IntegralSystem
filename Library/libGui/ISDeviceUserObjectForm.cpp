@@ -40,7 +40,7 @@ bool ISDeviceUserObjectForm::Save()
 		{
 			if (qSelectExist.ReadColumn("count").toInt())
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.DeviceAlreadyExist"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.DeviceAlreadyExist"));
 				return false;
 			}
 		}

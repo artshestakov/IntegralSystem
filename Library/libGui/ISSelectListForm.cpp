@@ -16,7 +16,7 @@ ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, cons
 	}
 
 	ActionSelect = new QAction(this);
-	ActionSelect->setText(LOCALIZATION("Select"));
+	ActionSelect->setText(LANG("Select"));
 	ActionSelect->setEnabled(false);
 	ActionSelect->setIcon(BUFFER_ICONS("Select"));
 	connect(ActionSelect, &QAction::triggered, this, &ISSelectListForm::Select);
@@ -31,7 +31,7 @@ ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, cons
 		GetTableView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
 		QAction *ActionSelectAll = new QAction(this);
-		ActionSelectAll->setText(LOCALIZATION("SelectAll"));
+		ActionSelectAll->setText(LANG("SelectAll"));
 		ActionSelectAll->setIcon(BUFFER_ICONS("Select"));
 		connect(ActionSelectAll, &QAction::triggered, this, &ISSelectListForm::SelectAll);
 		GetToolBar()->addAction(ActionSelectAll);
@@ -61,11 +61,11 @@ void ISSelectListForm::SelectedRowEvent(const QItemSelection &ItemSelected, cons
 	{
 		if (SelectedRows)
 		{
-			ActionSelect->setText(LOCALIZATION("Select") + " (" + QString::number(SelectedRows) + ")");
+			ActionSelect->setText(LANG("Select") + " (" + QString::number(SelectedRows) + ")");
 		}
 		else
 		{
-			ActionSelect->setText(LOCALIZATION("Select"));
+			ActionSelect->setText(LANG("Select"));
 		}
 	}
 }

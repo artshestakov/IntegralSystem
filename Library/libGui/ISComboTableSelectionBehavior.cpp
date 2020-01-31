@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 ISComboTableSelectionBehavior::ISComboTableSelectionBehavior(QWidget *parent) : ISComboSettingEdit(parent)
 {
-	AddItem(LOCALIZATION("Settings.Table.SelectionBehavior.SelectItems"), "SelectItems");
-	AddItem(LOCALIZATION("Settings.Table.SelectionBehavior.SelectRows"), "SelectRows");
-	AddItem(LOCALIZATION("Settings.Table.SelectionBehavior.SelectColumns"), "SelectColumns");
+	AddItem(LANG("Settings.Table.SelectionBehavior.SelectItems"), "SelectItems");
+	AddItem(LANG("Settings.Table.SelectionBehavior.SelectRows"), "SelectRows");
+	AddItem(LANG("Settings.Table.SelectionBehavior.SelectColumns"), "SelectColumns");
 }
 //-----------------------------------------------------------------------------
 ISComboTableSelectionBehavior::~ISComboTableSelectionBehavior()

@@ -14,7 +14,7 @@ ISAttachFileItem::ISAttachFileItem(QWidget *parent) : QWidget(parent)
 	Layout->addWidget(Label);
 
 	ISButtonClear *ButtonClear = new ISButtonClear(this);
-	ButtonClear->setToolTip(LOCALIZATION("Delete"));
+	ButtonClear->setToolTip(LANG("Delete"));
 	connect(ButtonClear, &ISButtonClear::clicked, this, &ISAttachFileItem::Delete);
 	Layout->addWidget(ButtonClear);
 }

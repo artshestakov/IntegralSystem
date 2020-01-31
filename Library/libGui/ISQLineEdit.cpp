@@ -23,7 +23,7 @@ ISQLineEdit::ISQLineEdit(QWidget *parent) : QLineEdit(parent)
 	}
 
 	ActionClear = new QAction(this);
-	ActionClear->setToolTip(LOCALIZATION("Clear.Field"));
+	ActionClear->setToolTip(LANG("Clear.Field"));
 	ActionClear->setIcon(BUFFER_ICONS("ButtonClear"));
 	connect(ActionClear, &QAction::triggered, this, &ISQLineEdit::ClearClicked);
 	AddAction(ActionClear, QLineEdit::TrailingPosition);

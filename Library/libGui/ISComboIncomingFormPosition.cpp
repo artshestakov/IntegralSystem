@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 ISComboIncomingFormPosition::ISComboIncomingFormPosition(QWidget *parent) : ISComboSettingEdit(parent)
 {
-	AddItem(LOCALIZATION("Settings.IncomingForm.Position.LeftUp"), "LeftUp");
-	AddItem(LOCALIZATION("Settings.IncomingForm.Position.LeftBottom"), "LeftBottom");
-	AddItem(LOCALIZATION("Settings.IncomingForm.Position.RightUp"), "RightUp");
-	AddItem(LOCALIZATION("Settings.IncomingForm.Position.RightBottom"), "RightBottom");
-	AddItem(LOCALIZATION("Settings.IncomingForm.Position.Center"), "Center");
+	AddItem(LANG("Settings.IncomingForm.Position.LeftUp"), "LeftUp");
+	AddItem(LANG("Settings.IncomingForm.Position.LeftBottom"), "LeftBottom");
+	AddItem(LANG("Settings.IncomingForm.Position.RightUp"), "RightUp");
+	AddItem(LANG("Settings.IncomingForm.Position.RightBottom"), "RightBottom");
+	AddItem(LANG("Settings.IncomingForm.Position.Center"), "Center");
 }
 //-----------------------------------------------------------------------------
 ISComboIncomingFormPosition::~ISComboIncomingFormPosition()

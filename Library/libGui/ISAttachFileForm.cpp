@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : ISAttachFileBaseForm(parent)
 {
-	setWindowTitle(LOCALIZATION("AddingFiles"));
+	setWindowTitle(LANG("AddingFiles"));
 	setMinimumWidth(500);
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 	ForbidResize();
@@ -17,7 +17,7 @@ ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : I
 	GetMainLayout()->addLayout(LayoutFile);
 
 	QLabel *LabelFile = new QLabel(this);
-	LabelFile->setText(LOCALIZATION("File") + ":");
+	LabelFile->setText(LANG("File") + ":");
 	LayoutFile->addWidget(LabelFile);
 
 	PathFileEdit = new ISPathEditFile(this);
@@ -28,18 +28,18 @@ ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : I
 	GetMainLayout()->addLayout(LayoutNote);
 
 	QLabel *LabelNote = new QLabel(this);
-	LabelNote->setText(LOCALIZATION("Note") + ":");
+	LabelNote->setText(LANG("Note") + ":");
 	LayoutNote->addWidget(LabelNote);
 
 	NoteEdit = new ISLineEdit(this);
-	NoteEdit->SetPlaceholderText(LOCALIZATION("InputNoteFileStorage"));
+	NoteEdit->SetPlaceholderText(LANG("InputNoteFileStorage"));
 	LayoutNote->addWidget(NoteEdit);
 
 	ProgressBar = new QProgressBar(this);
 	ProgressBar->setValue(0);
 	GetMainLayout()->addWidget(ProgressBar);
 
-	ButtonDialog = new ISButtonDialog(this, LOCALIZATION("Download"));
+	ButtonDialog = new ISButtonDialog(this, LANG("Download"));
 	ButtonDialog->SetApplyEnabled(false);
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISAttachFileForm::StartDownload);
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISAttachFileForm::close);

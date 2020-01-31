@@ -10,7 +10,7 @@ ISButtonMainMenu::ISButtonMainMenu(QWidget *parent) : QToolButton(parent)
 	IconDefault = BUFFER_ICONS("MainPanel.Menu");
 	IconActive = BUFFER_ICONS("MainPanel.Menu.Active");
 
-	setText(LOCALIZATION("MainMenu"));
+	setText(LANG("MainMenu"));
 	setFont(FONT_TAHOMA_10);
 	setAutoRaise(true);
 	setCheckable(true);

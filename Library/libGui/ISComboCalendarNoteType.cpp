@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 ISComboCalendarNoteType::ISComboCalendarNoteType(QWidget *parent) : ISComboSettingEdit(parent)
 {
-	AddItem(LOCALIZATION("Settings.CalendarEvents.NoteView.ToolTip"), "ToolTip");
-	AddItem(LOCALIZATION("Settings.CalendarEvents.NoteView.List"), "List");
+	AddItem(LANG("Settings.CalendarEvents.NoteView.ToolTip"), "ToolTip");
+	AddItem(LANG("Settings.CalendarEvents.NoteView.List"), "List");
 }
 //-----------------------------------------------------------------------------
 ISComboCalendarNoteType::~ISComboCalendarNoteType()

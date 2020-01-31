@@ -18,7 +18,7 @@ ISTaskFileInsertForm::ISTaskFileInsertForm(int task_id, QWidget *parent) : ISInt
 {
 	TaskID = task_id;
 
-	setWindowTitle(LOCALIZATION("Task.AttachingFile"));
+	setWindowTitle(LANG("Task.AttachingFile"));
 	setMinimumWidth(500);
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 	ForbidResize();
@@ -28,17 +28,17 @@ ISTaskFileInsertForm::ISTaskFileInsertForm(int task_id, QWidget *parent) : ISInt
 
 	PathEditFile = new ISPathEditFile(this);
 	connect(PathEditFile, &ISPathEditFile::DataChanged, this, &ISTaskFileInsertForm::PathEditfileChanged);
-	FormLayout->addRow(LOCALIZATION("File") + ":", PathEditFile);
+	FormLayout->addRow(LANG("File") + ":", PathEditFile);
 
 	EditNote = new ISLineEdit(this);
-	EditNote->SetPlaceholderText(LOCALIZATION("Task.FileNote"));
-	FormLayout->addRow(LOCALIZATION("Note") + ":", EditNote);
+	EditNote->SetPlaceholderText(LANG("Task.FileNote"));
+	FormLayout->addRow(LANG("Note") + ":", EditNote);
 
 	ProgressBar = new QProgressBar(this);
 	ProgressBar->setValue(0);
 	GetMainLayout()->addWidget(ProgressBar);
 
-	ButtonDialog = new ISButtonDialog(this, LOCALIZATION("Task.AttachFile"));
+	ButtonDialog = new ISButtonDialog(this, LANG("Task.AttachFile"));
 	ButtonDialog->SetApplyEnabled(false);
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISTaskFileInsertForm::Insert);
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISTaskFileInsertForm::close);
@@ -121,7 +121,7 @@ void ISTaskFileInsertForm::Insert()
 	}
 	else //Файл не открылся
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
 	}
 }
 //-----------------------------------------------------------------------------

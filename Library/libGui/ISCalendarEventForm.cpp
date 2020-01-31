@@ -44,7 +44,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	TableName = qSelectEvent.ReadColumn("cldr_tablename").toString();
 	ObjectID = qSelectEvent.ReadColumn("cldr_objectid").toInt();
 
-	setWindowTitle(LOCALIZATION("Reminder"));
+	setWindowTitle(LANG("Reminder"));
 	setWindowIcon(BUFFER_ICONS("Bell"));
 	//setWindowFlags(Qt::WindowStaysOnTopHint);
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
@@ -76,31 +76,31 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	LayoutDate->addWidget(LabelOverdueIcon);
 
 	QLabel *LabelDate = new QLabel(this);
-	LabelDate->setText(QString("%1: %2 %3 %4 %5").arg(LOCALIZATION("Date")).arg(EventDate.day()).arg(QDate::longMonthName(EventDate.month())).arg(EventDate.year()).arg(LOCALIZATION("Year.Reduction")));
+	LabelDate->setText(QString("%1: %2 %3 %4 %5").arg(LANG("Date")).arg(EventDate.day()).arg(QDate::longMonthName(EventDate.month())).arg(EventDate.year()).arg(LANG("Year.Reduction")));
 	LayoutDate->addWidget(LabelDate);
 
 	if (EventDate == DATE_TODAY) //Событие сегодня
 	{
-		LabelDate->setText(LabelDate->text() + " (" + LOCALIZATION("Today") + ")");
+		LabelDate->setText(LabelDate->text() + " (" + LANG("Today") + ")");
 	}
 	else if (EventDate < DATE_TODAY) //Событие просрочено
 	{
 		LabelOverdueIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(SIZE_16_16));
 		LabelOverdueIcon->setVisible(true);
 
-		LabelDate->setText(LabelDate->text() + " (" + LOCALIZATION("OverdueEvent") + ")");
+		LabelDate->setText(LabelDate->text() + " (" + LANG("OverdueEvent") + ")");
 		LabelDate->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
 		LabelDate->setFont(FONT_APPLICATION_BOLD);
 	}
 
 	QLabel *LabelTime = new QLabel(this);
-	LabelTime->setText(LOCALIZATION("Time") + ": " + EventTimeAlert.toString(TIME_FORMAT_V1));
+	LabelTime->setText(LANG("Time") + ": " + EventTimeAlert.toString(TIME_FORMAT_V1));
 	Layout->addWidget(LabelTime);
 
 	LayoutInfo->addStretch();
 
 	QGroupBox *GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LOCALIZATION("Text"));
+	GroupBox->setTitle(LANG("Text"));
 	GroupBox->setLayout(new QVBoxLayout());
 	GetMainLayout()->addWidget(GroupBox);
 
@@ -116,14 +116,14 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	LayoutBottom->addWidget(ComboEdit);
 
 	ISPushButton *ButtonDefer = new ISPushButton(this);
-	ButtonDefer->setText(LOCALIZATION("Defer"));
+	ButtonDefer->setText(LANG("Defer"));
 	connect(ButtonDefer, &ISPushButton::clicked, this, &ISCalendarEventForm::Defer);
 	LayoutBottom->addWidget(ButtonDefer);
 
 	if (TableName.length()) //Если таблица была указана
 	{
 		ISPushButton *ButtonCard = new ISPushButton(this);
-		ButtonCard->setText(LOCALIZATION("Card"));
+		ButtonCard->setText(LANG("Card"));
 		ButtonCard->setIcon(BUFFER_ICONS("Document"));
 		connect(ButtonCard, &ISPushButton::clicked, this, &ISCalendarEventForm::OpenCard);
 		LayoutBottom->addWidget(ButtonCard);
@@ -132,7 +132,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	LayoutBottom->addStretch();
 
 	ISButtonClose *ButtonClose = new ISButtonClose(this);
-	ButtonClose->setText(LOCALIZATION("CalendarCloseEvent"));
+	ButtonClose->setText(LANG("CalendarCloseEvent"));
 	connect(ButtonClose, &ISButtonClose::clicked, this, &ISCalendarEventForm::EventClose);
 	LayoutBottom->addWidget(ButtonClose);
 
@@ -168,7 +168,7 @@ void ISCalendarEventForm::closeEvent(QCloseEvent *e)
 {
 	if (CloseEvent)
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CalendarEventFormClose")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CalendarEventFormClose")))
 		{
 			EventClose();
 		}

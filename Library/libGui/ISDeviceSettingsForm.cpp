@@ -20,7 +20,7 @@ static QString QD_DEVICE_USER = PREPARE_QUERY("DELETE FROM _deviceuser WHERE dvu
 //-----------------------------------------------------------------------------
 ISDeviceSettingsForm::ISDeviceSettingsForm(QWidget *parent) : ISInterfaceForm(parent)
 {
-	setWindowTitle(LOCALIZATION("Device.Settings"));
+	setWindowTitle(LANG("Device.Settings"));
 	setWindowIcon(BUFFER_ICONS("Device.Settings"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
@@ -29,27 +29,27 @@ ISDeviceSettingsForm::ISDeviceSettingsForm(QWidget *parent) : ISInterfaceForm(pa
 	GetMainLayout()->addWidget(ToolBar);
 
 	ActionCreate = new QAction(ToolBar);
-	ActionCreate->setText(LOCALIZATION("Add"));
+	ActionCreate->setText(LANG("Add"));
 	ActionCreate->setIcon(BUFFER_ICONS("Add"));
 	connect(ActionCreate, &QAction::triggered, this, &ISDeviceSettingsForm::Create);
 	ToolBar->addAction(ActionCreate);
 
 	ActionEdit = new QAction(ToolBar);
 	ActionEdit->setEnabled(false);
-	ActionEdit->setText(LOCALIZATION("Edit"));
+	ActionEdit->setText(LANG("Edit"));
 	ActionEdit->setIcon(BUFFER_ICONS("Edit"));
 	connect(ActionEdit, &QAction::triggered, this, &ISDeviceSettingsForm::Edit);
 	ToolBar->addAction(ActionEdit);
 
 	ActionDelete = new QAction(ToolBar);
 	ActionDelete->setEnabled(false);
-	ActionDelete->setText(LOCALIZATION("Delete"));
+	ActionDelete->setText(LANG("Delete"));
 	ActionDelete->setIcon(BUFFER_ICONS("Delete"));
 	connect(ActionDelete, &QAction::triggered, this, &ISDeviceSettingsForm::Delete);
 	ToolBar->addAction(ActionDelete);
 
 	ActionUpdate = new QAction(ToolBar);
-	ActionUpdate->setText(LOCALIZATION("Update"));
+	ActionUpdate->setText(LANG("Update"));
 	ActionUpdate->setIcon(BUFFER_ICONS("Update"));
 	connect(ActionUpdate, &QAction::triggered, this, &ISDeviceSettingsForm::Update);
 	ToolBar->addAction(ActionUpdate);
@@ -58,7 +58,7 @@ ISDeviceSettingsForm::ISDeviceSettingsForm(QWidget *parent) : ISInterfaceForm(pa
 	GroupBoxLayout->setContentsMargins(LAYOUT_MARGINS_5_PX);
 
 	QGroupBox *GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LOCALIZATION("Device.My"));
+	GroupBox->setTitle(LANG("Device.My"));
 	GroupBox->setLayout(GroupBoxLayout);
 	GetMainLayout()->addWidget(GroupBox);
 
@@ -120,13 +120,13 @@ void ISDeviceSettingsForm::Reload()
 				else
 				{
 					ListWidgetItem->setIcon(BUFFER_ICONS("Importance.High"));
-					ListWidgetItem->setToolTip(LOCALIZATION("Device.Error") + ": " + DeviceObjectBase->GetErrorText());
+					ListWidgetItem->setToolTip(LANG("Device.Error") + ": " + DeviceObjectBase->GetErrorText());
 				}
 			}
 			else //Устройство не подключено
 			{
 				ListWidgetItem->setIcon(BUFFER_ICONS("Device.Disconnect"));
-				ListWidgetItem->setText(ListWidgetItem->text() + " (" + LOCALIZATION("Device.NotConnected") + ")");
+				ListWidgetItem->setText(ListWidgetItem->text() + " (" + LANG("Device.NotConnected") + ")");
 			}
 		}
 	}
@@ -151,7 +151,7 @@ void ISDeviceSettingsForm::Edit()
 //-----------------------------------------------------------------------------
 void ISDeviceSettingsForm::Delete()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DeleteDeviceUser")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteDeviceUser")))
 	{
 		ISQuery qDelete(QD_DEVICE_USER);
 		qDelete.BindValue(":DeviceUserID", ListWidget->currentItem()->data(Qt::UserRole));

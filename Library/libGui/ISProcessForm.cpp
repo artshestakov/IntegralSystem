@@ -8,7 +8,7 @@
 ISProcessForm::ISProcessForm(const QString &Text, QWidget *parent) : ISInterfaceForm(parent)
 {
 	setCursor(CURSOR_WAIT);
-	setWindowTitle(LOCALIZATION("PleaseWait") + "...");
+	setWindowTitle(LANG("PleaseWait") + "...");
 	setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::MSWindowsFixedSizeDialogHint);
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);

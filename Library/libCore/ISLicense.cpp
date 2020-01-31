@@ -130,13 +130,13 @@ bool ISLicense::Initialize()
 
 	if (!CheckExistLicenseTable())
 	{
-		ErrorString = LOCALIZATION("License.TableNotExist");
+		ErrorString = LANG("License.TableNotExist");
 		return false;
 	}
 
 	if (!CheckExistLicense())
 	{
-		ErrorString = LOCALIZATION("License.NotExist");
+		ErrorString = LANG("License.NotExist");
 		return false;
 	}
 
@@ -149,14 +149,14 @@ bool ISLicense::Initialize()
 		
 		if (!LicenseString.length()) //Если лицензия не установлена
 		{
-			ErrorString = LOCALIZATION("License.Empty");
+			ErrorString = LANG("License.Empty");
 			return false;
 		}
 
 		if (!QRegExp(REG_EXP_LICENSE).exactMatch(LicenseString)) //Лицензия не корректная
 		{
 			Delete();
-			ErrorString = LOCALIZATION("License.NotValid");
+			ErrorString = LANG("License.NotValid");
 			return false;
 		}
 
@@ -179,11 +179,11 @@ bool ISLicense::Initialize()
 
 		if (Initialized) //Лицензия найдена и инициализированна
 		{
-			ISDebug::ShowInfoString(LOCALIZATION("License.Done").arg(CountingTime.GetElapsed()).arg(ConfName));
+			ISDebug::ShowInfoString(LANG("License.Done").arg(CountingTime.GetElapsed()).arg(ConfName));
 		}
 		else //Лицензия не соответствует ни одной из конфигураций
 		{
-			ErrorString = LOCALIZATION("License.NotFound");
+			ErrorString = LANG("License.NotFound");
 			return false;
 		}
 	}

@@ -13,7 +13,7 @@ ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &Repor
 	setAttribute(Qt::WA_ShowModal, true);
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_ICONS("Print"));
-	setWindowTitle(LOCALIZATION("PreviewPrintWindow"));
+	setWindowTitle(LANG("PreviewPrintWindow"));
 
 	if (!ReportLocalName.isEmpty())
 	{
@@ -29,14 +29,14 @@ ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &Repor
 	MainLayout->addWidget(ToolBar);
 
 	QAction *ActionPrint = ISControls::CreateActionPrint(ToolBar);
-	ActionPrint->setText(LOCALIZATION("Print"));
-	ActionPrint->setToolTip(LOCALIZATION("Print"));
+	ActionPrint->setText(LANG("Print"));
+	ActionPrint->setToolTip(LANG("Print"));
 	connect(ActionPrint, &QAction::triggered, this, &ISPrintPreviewDialog::Print);
 	ToolBar->addAction(ActionPrint);
 
 	QAction *ActionClose = new QAction(ToolBar);
-	ActionClose->setText(LOCALIZATION("ClosePreview"));
-	ActionClose->setToolTip(LOCALIZATION("ClosePreview"));
+	ActionClose->setText(LANG("ClosePreview"));
+	ActionClose->setToolTip(LANG("ClosePreview"));
 	ActionClose->setIcon(BUFFER_ICONS("Close"));
 	connect(ActionClose, &QAction::triggered, this, &ISPrintPreviewDialog::close);
 	ToolBar->addAction(ActionClose);

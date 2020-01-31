@@ -23,7 +23,7 @@ ISButtonNotify::ISButtonNotify(QWidget *parent) : QToolButton(parent)
 	connect(&ISNotifyRecipient::GetInstance(), static_cast<void(ISNotifyRecipient::*)(const QVariantMap &)>(&ISNotifyRecipient::Notify), this, &ISButtonNotify::NotifyEvent);
 
 	setIcon(IconNull);
-	setToolTip(LOCALIZATION("Notifications"));
+	setToolTip(LANG("Notifications"));
 	setAutoRaise(true);
 	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	setCursor(CURSOR_POINTING_HAND);
@@ -49,14 +49,14 @@ void ISButtonNotify::SetCountNotify(int Count)
 	{
 		setIcon(IconNew);
 		setText(QString("+(%1)").arg(NotifyCount));
-		setToolTip(LOCALIZATION("Notifications.ToolTip") + ": " + QString::number(NotifyCount));
+		setToolTip(LANG("Notifications.ToolTip") + ": " + QString::number(NotifyCount));
 		Timer->start();
 	}
 	else
 	{
 		setIcon(IconNull);
 		setText(QString());
-		setToolTip(LOCALIZATION("Notifications"));
+		setToolTip(LANG("Notifications"));
 		Timer->stop();
 	}
 }

@@ -21,8 +21,8 @@ ISListEdit::ISListEdit(QWidget *parent) : ISFieldEditBase(parent)
 	CreateButtonClear();
 
 	ButtonMain = new ISPushButton(this);
-	ButtonMain->setText(LOCALIZATION("NotSelected"));
-	ButtonMain->setToolTip(LOCALIZATION("ClickFromShowList"));
+	ButtonMain->setText(LANG("NotSelected"));
+	ButtonMain->setToolTip(LANG("ClickFromShowList"));
 	ButtonMain->setIcon(BUFFER_ICONS("ArrowDown"));
 	ButtonMain->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	ButtonMain->setCursor(CURSOR_POINTING_HAND);
@@ -34,7 +34,7 @@ ISListEdit::ISListEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ButtonList = new QToolButton(this);
 	ButtonList->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	ButtonList->setIcon(BUFFER_ICONS("Search"));
-	ButtonList->setToolTip(LOCALIZATION("OpenList"));
+	ButtonList->setToolTip(LANG("OpenList"));
 	ButtonList->setCursor(CURSOR_POINTING_HAND);
 	ButtonList->setAutoRaise(true);
 	ButtonList->setFocusPolicy(Qt::NoFocus);
@@ -80,7 +80,7 @@ QVariant ISListEdit::GetValue() const
 void ISListEdit::Clear()
 {
 	ID.clear();
-	ButtonMain->setText(LOCALIZATION("NotSelected"));
+	ButtonMain->setText(LANG("NotSelected"));
 	ValueChanged();
 	
 	if (ActionEdit)
@@ -231,7 +231,7 @@ void ISListEdit::CreateObject()
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Create").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->GetLocalListName()));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -243,7 +243,7 @@ void ISListEdit::EditObject()
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
 	}
 	
 }

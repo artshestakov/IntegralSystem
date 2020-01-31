@@ -20,13 +20,13 @@ static QString QU_ISSUE = PREPARE_QUERY("UPDATE device SET dvce_DateIssue = now(
 ISDeviceListForm::ISDeviceListForm(QWidget *parent) : ISListBaseForm("Device", parent)
 {
 	QAction *ActionIssue = new QAction(GetToolBar());
-	ActionIssue->setToolTip(LOCALIZATION("Issue"));
+	ActionIssue->setToolTip(LANG("Issue"));
 	ActionIssue->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("SubSystemIssued"));
 	connect(ActionIssue, &QAction::triggered, this, &ISDeviceListForm::Issue);
 	AddAction(ActionIssue);
 
 	QLabel *LabelTotalSum = new QLabel(this);
-	LabelTotalSum->setText(LOCALIZATION("Math.Sum") + ":");
+	LabelTotalSum->setText(LANG("Math.Sum") + ":");
 	AddWidgetToBottom(LabelTotalSum);
 
 	DoubleEdit = new ISDoubleEdit(this);
@@ -47,9 +47,9 @@ void ISDeviceListForm::Issue()
 	{
 		bool Result = false;
 
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.Issue")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.Issue")))
 		{
-			QString Defect = ISInputDialog::GetText(this, LOCALIZATION("Defect"), LOCALIZATION("EnterDefect") + ":").toString();
+			QString Defect = ISInputDialog::GetText(this, LANG("Defect"), LANG("EnterDefect") + ":").toString();
 
 			ISQuery qUpdate(QU_ISSUE);
 
@@ -67,13 +67,13 @@ void ISDeviceListForm::Issue()
 			if (qUpdate.Execute())
 			{
 				Update();
-				ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.Issued"));
+				ISMessageBox::ShowInformation(this, LANG("Message.Information.Issued"));
 			}
 		}
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.AlreadyIssued"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.AlreadyIssued"));
 	}
 }
 //-----------------------------------------------------------------------------

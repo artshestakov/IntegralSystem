@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 ISButtonClose::ISButtonClose(QWidget *parent) : ISPushButton(parent)
 {
-	setText(LOCALIZATION("Close"));
+	setText(LANG("Close"));
 	setIcon(BUFFER_ICONS("Close"));
 }
 //-----------------------------------------------------------------------------

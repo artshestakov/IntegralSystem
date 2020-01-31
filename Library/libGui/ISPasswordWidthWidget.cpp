@@ -11,7 +11,7 @@ ISPasswordWidthWidget::ISPasswordWidthWidget(QWidget *parent) : QWidget(parent)
 	setLayout(Layout);
 
 	LabelWidth = new QLabel(this);
-	LabelWidth->setText(LOCALIZATION("PasswordWidth") + ": -");
+	LabelWidth->setText(LANG("PasswordWidth") + ": -");
 	Layout->addWidget(LabelWidth);
 
 	ProgressBar = new QProgressBar(this);
@@ -51,27 +51,27 @@ void ISPasswordWidthWidget::SetPassword(const QVariant &Password)
 
 	if (Width < 0) //[-бесконечность; 0]
 	{
-		LabelWidth->setText(LOCALIZATION("PasswordWidth") + ": -");
+		LabelWidth->setText(LANG("PasswordWidth") + ": -");
 	}
 	else if (Width >= 0 && Width <= 25) //[0; 25]
 	{
-		LabelWidth->setText(LOCALIZATION("PasswordWidth") + ": " + LOCALIZATION("PasswordWidth.VeryLow"));
+		LabelWidth->setText(LANG("PasswordWidth") + ": " + LANG("PasswordWidth.VeryLow"));
 	}
 	else if (Width > 25 && Width <= 50) //[26; 50]
 	{
-		LabelWidth->setText(LOCALIZATION("PasswordWidth") + ": " + LOCALIZATION("PasswordWidth.Low"));
+		LabelWidth->setText(LANG("PasswordWidth") + ": " + LANG("PasswordWidth.Low"));
 	}
 	else if (Width > 51 && Width <= 75) //[51; 75]
 	{
-		LabelWidth->setText(LOCALIZATION("PasswordWidth") + ": " + LOCALIZATION("PasswordWidth.Mean"));
+		LabelWidth->setText(LANG("PasswordWidth") + ": " + LANG("PasswordWidth.Mean"));
 	}
 	else if (Width > 75 && Width <= 100) //[76; 100]
 	{
-		LabelWidth->setText(LOCALIZATION("PasswordWidth") + ": " + LOCALIZATION("PasswordWidth.High"));
+		LabelWidth->setText(LANG("PasswordWidth") + ": " + LANG("PasswordWidth.High"));
 	}
 	else if (Width > 100) //[100; бесконечность]
 	{
-		LabelWidth->setText(LOCALIZATION("PasswordWidth") + ": " + LOCALIZATION("PasswordWidth.VeryHigh"));
+		LabelWidth->setText(LANG("PasswordWidth") + ": " + LANG("PasswordWidth.VeryHigh"));
 	}
 }
 //-----------------------------------------------------------------------------

@@ -15,14 +15,14 @@ ISUserEdit::ISUserEdit(QWidget *parent) : ISComboEdit(parent)
 {
 	SetEditable(false);
 	SetCursor(CURSOR_POINTING_HAND);
-	SetToolTip(LOCALIZATION("ClickFromShowUserList"));
+	SetToolTip(LANG("ClickFromShowUserList"));
 
 	ISQuery qSelect(QS_USERS);
 	if (qSelect.Execute())
 	{
 		if (qSelect.GetCountResultRows())
 		{
-			AddItem(QIcon(BUFFER_ICONS("Arrow.Down").pixmap(SIZE_16_16)), LOCALIZATION("SelectUser"), QVariant());
+			AddItem(QIcon(BUFFER_ICONS("Arrow.Down").pixmap(SIZE_16_16)), LANG("SelectUser"), QVariant());
 			while (qSelect.Next())
 			{
 				QString UserFullName = qSelect.ReadColumn("userfullname").toString();
@@ -30,7 +30,7 @@ ISUserEdit::ISUserEdit(QWidget *parent) : ISComboEdit(parent)
 
 				if (UserID == ISMetaUser::GetInstance().GetData()->ID)
 				{
-					UserFullName += " (" + LOCALIZATION("You") + ")";
+					UserFullName += " (" + LANG("You") + ")";
 				}
 
 				AddItem(UserFullName, UserID);

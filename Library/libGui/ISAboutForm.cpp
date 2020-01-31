@@ -21,7 +21,7 @@ static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_descript
 //-----------------------------------------------------------------------------
 ISAboutForm::ISAboutForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("AboutForm.AboutApplication"));
+	setWindowTitle(LANG("AboutForm.AboutApplication"));
 	setMinimumSize(SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 
@@ -66,19 +66,19 @@ void ISAboutForm::CreateCommonTab()
 
 	QWidget *TabCommon = new QWidget(TabWidget);
 	TabCommon->setLayout(LayoutCommon);
-	TabWidget->addTab(TabCommon, LOCALIZATION("AboutForm.Tab.Common"));
+	TabWidget->addTab(TabCommon, LANG("AboutForm.Tab.Common"));
 
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.ProductName"), LOCALIZATION("IntegralSystem"));
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.Cofiguration"), ISSystem::GetConfigurationName());
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.OS"), ISSystem::GetCurrentOSName());
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.Platform"), ISVersion::GetInstance().GetPlatform());
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.ProductVersion"), ISVersion::GetInstance().GetVersion());
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersion::GetInstance().GetRevision()));
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.ProductVersionBuild"), QString::number(ISVersion::GetInstance().GetBuild()));
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.ReleaseDate"), ISVersion::GetInstance().GetDate().toString(DATE_FORMAT_V2));
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.ReleaseTime"), ISVersion::GetInstance().GetTime().toString(TIME_FORMAT_V1));
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.ProductVersionHash"), ISVersion::GetInstance().GetHash());
-	AddLabel(TabCommon, LOCALIZATION("AboutForm.Tab.Common.QtVersion"), qVersion());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), LANG("IntegralSystem"));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISSystem::GetConfigurationName());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.OS"), ISSystem::GetCurrentOSName());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersion::GetInstance().GetPlatform());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersion::GetInstance().GetVersion());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersion::GetInstance().GetRevision()));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionBuild"), QString::number(ISVersion::GetInstance().GetBuild()));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersion::GetInstance().GetDate().toString(DATE_FORMAT_V2));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersion::GetInstance().GetTime().toString(TIME_FORMAT_V1));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionHash"), ISVersion::GetInstance().GetHash());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
 
 	LayoutCommon->addStretch();
 }
@@ -89,19 +89,19 @@ void ISAboutForm::CreateContactsTab()
 
 	QWidget *TabContacts = new QWidget(TabWidget);
 	TabContacts->setLayout(LayoutContacts);
-	TabWidget->addTab(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts"));
+	TabWidget->addTab(TabContacts, LANG("AboutForm.Tab.Contacts"));
 
-	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthor"), LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthor.FullName"));
-    AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorPhone"), "+7 (918) 412-55-10");
-	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.Telegram"), "@artem_shestakov");
-    AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.WhatsApp"), "+7 (918) 412-55-10");
-	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorMail"), "art.shestakov@icloud.com");
-	AddLabel(TabContacts, LOCALIZATION("AboutForm.Tab.Contacts.Address"), LOCALIZATION("AboutForm.Tab.Contacts.Address.Text"));
+	AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.ProductAuthor"), LANG("AboutForm.Tab.Contacts.ProductAuthor.FullName"));
+    AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.ProductAuthorPhone"), "+7 (918) 412-55-10");
+	AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.Telegram"), "@artem_shestakov");
+    AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.WhatsApp"), "+7 (918) 412-55-10");
+	AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.ProductAuthorMail"), "art.shestakov@icloud.com");
+	AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.Address"), LANG("AboutForm.Tab.Contacts.Address.Text"));
 
 	LayoutContacts->addStretch();
 
 	ISPushButton *ButtonSaveInfo = new ISPushButton(TabContacts);
-	ButtonSaveInfo->setText(LOCALIZATION("AboutForm.Tab.Contacts.SaveAuthorInformation"));
+	ButtonSaveInfo->setText(LANG("AboutForm.Tab.Contacts.SaveAuthorInformation"));
 	ButtonSaveInfo->setIcon(BUFFER_ICONS("Save"));
 	connect(ButtonSaveInfo, &ISPushButton::clicked, this, &ISAboutForm::SaveAuthorInfo);
 	LayoutContacts->addWidget(ButtonSaveInfo, 0, Qt::AlignRight);
@@ -118,10 +118,10 @@ void ISAboutForm::CreateModuleTab()
 
 	QWidget *TabModule = new QWidget(TabWidget);
 	TabModule->setLayout(LayoutModule);
-	TabWidget->addTab(TabModule, LOCALIZATION("AboutForm.Tab.Configuration"));
+	TabWidget->addTab(TabModule, LANG("AboutForm.Tab.Configuration"));
 
-	AddLabel(TabModule, LOCALIZATION("AboutForm.Tab.Configuration.Name"), ISLicense::GetInstance().GetName());
-	AddLabel(TabModule, LOCALIZATION("AboutForm.Tab.Configuration.LocalName"), ISLicense::GetInstance().GetLocalName());
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISLicense::GetInstance().GetName());
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISLicense::GetInstance().GetLocalName());
 
 	LayoutModule->addStretch();
 }
@@ -132,10 +132,10 @@ void ISAboutForm::CreateDescriptionTab()
 
 	QWidget *TabDescription = new QWidget(TabWidget);
 	TabDescription->setLayout(LayoutDescription);
-	TabWidget->addTab(TabDescription, LOCALIZATION("AboutForm.Tab.Description"));
+	TabWidget->addTab(TabDescription, LANG("AboutForm.Tab.Description"));
 
 	ISTextEdit *TextEdit = new ISTextEdit(TabDescription);
-	TextEdit->SetValue(LOCALIZATION("DescriptionApplication"));
+	TextEdit->SetValue(LANG("DescriptionApplication"));
 	TextEdit->SetReadOnly(true);
 	TabDescription->layout()->addWidget(TextEdit);
 }
@@ -146,7 +146,7 @@ void ISAboutForm::CreateLicenseTab()
 
 	QWidget *TabLicense = new QWidget(TabWidget);
 	TabLicense->setLayout(LayoutLicense);
-	TabWidget->addTab(TabLicense, LOCALIZATION("AboutForm.Tab.License"));
+	TabWidget->addTab(TabLicense, LANG("AboutForm.Tab.License"));
 
 	ISTextEdit *TextEdit = new ISTextEdit(TabLicense);
 	TextEdit->SetReadOnly(true);
@@ -171,7 +171,7 @@ void ISAboutForm::CreateShortcuts()
 
 	QWidget *TabShortcuts = new QWidget(TabWidget);
 	TabShortcuts->setLayout(FormLayout);
-	TabWidget->addTab(TabShortcuts, LOCALIZATION("AboutForm.Tab.Shortcuts"));
+	TabWidget->addTab(TabShortcuts, LANG("AboutForm.Tab.Shortcuts"));
 
 	ISQuery qSelect(QS_SHORTCUTS);
 	if (qSelect.Execute())
@@ -196,11 +196,11 @@ void ISAboutForm::CreateOtherTab()
 
 	QWidget *TabOther = new QWidget(TabWidget);
 	TabOther->setLayout(LayoutOther);
-	TabWidget->addTab(TabOther, LOCALIZATION("AboutForm.Tab.Other"));
+	TabWidget->addTab(TabOther, LANG("AboutForm.Tab.Other"));
 
-	AddLabel(TabOther, LOCALIZATION("AboutForm.Tab.Other.SizeTemp"), ISSystem::GetSizeDir(APPLICATION_TEMP_PATH));
-	AddLabel(TabOther, LOCALIZATION("AboutForm.Tab.Other.SizeLogger"), ISSystem::GetSizeDir(APPLICATION_LOGS_PATH));
-	AddLabel(TabOther, LOCALIZATION("AboutForm.Tab.Other.ApplicationDir"), APPLICATION_DIR_PATH);
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeTemp"), ISSystem::GetSizeDir(APPLICATION_TEMP_PATH));
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeLogger"), ISSystem::GetSizeDir(APPLICATION_LOGS_PATH));
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.ApplicationDir"), APPLICATION_DIR_PATH);
 
 	LayoutOther->addStretch();
 }
@@ -230,23 +230,23 @@ void ISAboutForm::AddLabel(QWidget *parent, const QString &LabelText, const QStr
 //-----------------------------------------------------------------------------
 void ISAboutForm::SaveAuthorInfo()
 {
-	QString FilePath = ISFileDialog::GetSaveFileName(this, LOCALIZATION("File.Filter.Txt"));
+	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.Txt"));
 	if (FilePath.length())
 	{
 		QFile File(FilePath);
 		if (File.open(QIODevice::WriteOnly | QIODevice::Text))
 		{
 			QString String;
-			String += LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthor") + ": " + LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthor.FullName") + "\n";
-			String += LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorPhone") + ": +7 (918) 412-55-10\n";
-			String += LOCALIZATION("AboutForm.Tab.Contacts.Telegram") + ": @artem_shestakov\n";
-			String += LOCALIZATION("AboutForm.Tab.Contacts.WhatsApp") + ": +7 (918) 412-55-10\n";
-			String += LOCALIZATION("AboutForm.Tab.Contacts.ProductAuthorMail") + ": art.shestakov@icloud.com";
+			String += LANG("AboutForm.Tab.Contacts.ProductAuthor") + ": " + LANG("AboutForm.Tab.Contacts.ProductAuthor.FullName") + "\n";
+			String += LANG("AboutForm.Tab.Contacts.ProductAuthorPhone") + ": +7 (918) 412-55-10\n";
+			String += LANG("AboutForm.Tab.Contacts.Telegram") + ": @artem_shestakov\n";
+			String += LANG("AboutForm.Tab.Contacts.WhatsApp") + ": +7 (918) 412-55-10\n";
+			String += LANG("AboutForm.Tab.Contacts.ProductAuthorMail") + ": art.shestakov@icloud.com";
 
 			File.write(String.toUtf8());
 			File.close();
 
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.FileSaved"));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.FileSaved"));
 		}
 	}
 }

@@ -35,29 +35,29 @@ ISOrganizationListForm::ISOrganizationListForm(QWidget *parent) : ISListBaseForm
 	GetToolBar()->addWidget(UserEdit);
 
 	QAction *ActionTransfer = new QAction(GetToolBar());
-	ActionTransfer->setText(LOCALIZATION("TransferInWork") + "...");
-	ActionTransfer->setToolTip(LOCALIZATION("TransferInWork"));
+	ActionTransfer->setText(LANG("TransferInWork") + "...");
+	ActionTransfer->setToolTip(LANG("TransferInWork"));
 	ActionTransfer->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("TransferOrganization"));
 	connect(ActionTransfer, &QAction::triggered, this, &ISOrganizationListForm::Transfer);
 	AddAction(ActionTransfer, false, true);
 
 	QAction *ActionResetExecutor = new QAction(GetToolBar());
-	ActionResetExecutor->setText(LOCALIZATION("ResetExecutor"));
-	ActionResetExecutor->setToolTip(LOCALIZATION("ResetExecutor"));
+	ActionResetExecutor->setText(LANG("ResetExecutor"));
+	ActionResetExecutor->setToolTip(LANG("ResetExecutor"));
 	ActionResetExecutor->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("ResetOrganizationExecutor"));
 	connect(ActionResetExecutor, &QAction::triggered, this, &ISOrganizationListForm::ResetExecutor);
 	AddAction(ActionResetExecutor, false, true);
 
 	QAction *ActionPercentage = new QAction(this);
-	ActionPercentage->setText(LOCALIZATION("CalculatePercentageFill"));
-	ActionPercentage->setToolTip(LOCALIZATION("CalculatePercentageFill"));
+	ActionPercentage->setText(LANG("CalculatePercentageFill"));
+	ActionPercentage->setToolTip(LANG("CalculatePercentageFill"));
 	ActionPercentage->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Percentage"));
 	connect(ActionPercentage, &QAction::triggered, this, &ISOrganizationListForm::Percentage);
 	AddAction(ActionPercentage, false, true);
 
 	QAction *ActionCalledMore = new QAction(this);
-	ActionCalledMore->setText(LOCALIZATION("InformResource.SelectDays"));
-	ActionCalledMore->setToolTip(LOCALIZATION("InformResource.SelectDays"));
+	ActionCalledMore->setText(LANG("InformResource.SelectDays"));
+	ActionCalledMore->setToolTip(LANG("InformResource.SelectDays"));
 	connect(ActionCalledMore, &QAction::triggered, this, &ISOrganizationListForm::CalledMoreDays);
 	AddAction(ActionCalledMore, false, false);
 }
@@ -108,18 +108,18 @@ void ISOrganizationListForm::Transfer()
 						qUpdateOrgUser.BindValue(":OrganizationID", ObjectID);
 						qUpdateOrgUser.Execute();
 
-						ISProtocol::Insert(true, "{BB6C46A0-C8E4-48F7-AC19-3A31D8FE7888}", GetMetaTable()->GetName(), GetMetaTable()->GetLocalListName(), ObjectID, LOCALIZATION("Protocol.Transfer").arg(OrganizationName).arg(TransferOrganizationForm.GetSelectedUserName()));
+						ISProtocol::Insert(true, "{BB6C46A0-C8E4-48F7-AC19-3A31D8FE7888}", GetMetaTable()->GetName(), GetMetaTable()->GetLocalListName(), ObjectID, LANG("Protocol.Transfer").arg(OrganizationName).arg(TransferOrganizationForm.GetSelectedUserName()));
 						ISNotifySender::GetInstance().SendToUser("{F436CA43-860B-4728-83E1-0F38A05A6282}", UserID, OrganizationName);
 					}
 				}
 				else
 				{
-					ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotSelectedUserWithTransfer"));
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotSelectedUserWithTransfer"));
 					return;
 				}
 			}
 
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.TrasferOrganizationUserDone").arg(Objects.count()).arg(TransferOrganizationForm.GetSelectedUserName()));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.TrasferOrganizationUserDone").arg(Objects.count()).arg(TransferOrganizationForm.GetSelectedUserName()));
 			Update();
 		}
 	}
@@ -130,7 +130,7 @@ void ISOrganizationListForm::ResetExecutor()
 	QVectorInt Objects = GetSelectedIDs();
 	if (Objects.count())
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.ResetOrganizationExecutor").arg(Objects.count())))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ResetOrganizationExecutor").arg(Objects.count())))
 		{
 			for (int i = 0; i < Objects.count(); ++i)
 			{
@@ -139,7 +139,7 @@ void ISOrganizationListForm::ResetExecutor()
 				qUpdate.Execute();
 			}
 
-			ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.ResetOrganizationExecutor").arg(Objects.count()));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.ResetOrganizationExecutor").arg(Objects.count()));
 			Update();
 		}
 	}
@@ -155,7 +155,7 @@ void ISOrganizationListForm::Percentage()
 
 		for (int i = 0; i < Objects.count(); ++i) //Обход всех организаций
 		{
-			ProgressForm.SetText(LOCALIZATION("CalculatePercentage").arg(i).arg(Objects.count()));
+			ProgressForm.SetText(LANG("CalculatePercentage").arg(i).arg(Objects.count()));
 			ProgressForm.setValue(i);
 
 			int CountFill = 0; //Количество заполненных полей
@@ -192,14 +192,14 @@ void ISOrganizationListForm::Percentage()
 		}
 
 		ProgressForm.close();
-		ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.CalculatePercantageOrganizations"));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.CalculatePercantageOrganizations"));
 		Update();
 	}
 }
 //-----------------------------------------------------------------------------
 void ISOrganizationListForm::CalledMoreDays()
 {
-	QVariant Days = ISInputDialog::GetInteger(this, LOCALIZATION("Days"), LOCALIZATION("InformResource.InputCountDays") + ":");
+	QVariant Days = ISInputDialog::GetInteger(this, LANG("Days"), LANG("InformResource.InputCountDays") + ":");
 	if (Days.isValid())
 	{
 		if (Days.toInt() > 0)

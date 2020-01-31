@@ -13,7 +13,7 @@ ISTimeEdit::ISTimeEdit(QWidget *parent) : ISDateTimeEdit(parent)
 
 	ButtonTime = new ISServiceButton(this);
 	ButtonTime->setEnabled(false);
-	ButtonTime->setToolTip(LOCALIZATION("ClickFromSelectDoneTime"));
+	ButtonTime->setToolTip(LANG("ClickFromSelectDoneTime"));
 	ButtonTime->setIcon(BUFFER_ICONS("Time"));
 	ButtonTime->setMenu(new QMenu(ButtonTime));
 	ButtonTime->setFocusPolicy(Qt::NoFocus);

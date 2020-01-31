@@ -16,7 +16,7 @@ ISExportXML::~ISExportXML()
 //-----------------------------------------------------------------------------
 bool ISExportXML::Prepare()
 {
-	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LOCALIZATION("File.Filter.Xml"), LocalName);
+	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Xml"), LocalName);
 	if (!FilePath.length())
 	{
 		return false;
@@ -52,7 +52,7 @@ bool ISExportXML::Export()
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
-			if (ISMessageBox::ShowQuestion(nullptr, LOCALIZATION("Export.Process.Cancel"), LOCALIZATION("Export.Process.Cancel.DetailedText")))
+			if (ISMessageBox::ShowQuestion(nullptr, LANG("Export.Process.Cancel"), LANG("Export.Process.Cancel.DetailedText")))
 			{
 				FileXML->close();
 				QFile::remove(FileXML->fileName());
@@ -84,7 +84,7 @@ bool ISExportXML::Export()
 		}
 
 		emit ExportedRow();
-		emit Message(LOCALIZATION("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()) + "...");
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()) + "...");
 	}
 
 	QString Content = DomDocument.toString();

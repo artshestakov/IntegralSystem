@@ -14,8 +14,8 @@ static QString QU_DEACTIVATE = PREPARE_QUERY("UPDATE card SET "
 ISPatriotCardListForm::ISPatriotCardListForm(QWidget *parent) : ISListBaseForm("Card", parent)
 {
 	QAction *ActionDeactivate = new QAction(this);
-	ActionDeactivate->setText(LOCALIZATION("Patriot.DeactivateCard"));
-	ActionDeactivate->setToolTip(LOCALIZATION("Patriot.DeactivateCard"));
+	ActionDeactivate->setText(LANG("Patriot.DeactivateCard"));
+	ActionDeactivate->setToolTip(LANG("Patriot.DeactivateCard"));
 	ActionDeactivate->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("DeactivateCard"));
 	connect(ActionDeactivate, &QAction::triggered, this, &ISPatriotCardListForm::Deactivate);
 	AddAction(ActionDeactivate, true, true);
@@ -29,9 +29,9 @@ ISPatriotCardListForm::~ISPatriotCardListForm()
 void ISPatriotCardListForm::Deactivate()
 {
 	QString Barcode = GetCurrentRecordValue("Barcode").toString();
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Patriot.Message.Question.DeactivateCard").arg(Barcode)))
+	if (ISMessageBox::ShowQuestion(this, LANG("Patriot.Message.Question.DeactivateCard").arg(Barcode)))
 	{
-		QVariant Reason = ISInputDialog::GetText(this, LOCALIZATION("Patriot.Deactivating"), LOCALIZATION("Patriot.DeactivatingReason") + ":");
+		QVariant Reason = ISInputDialog::GetText(this, LANG("Patriot.Deactivating"), LANG("Patriot.DeactivatingReason") + ":");
 
 		ISQuery qDeactivate(QU_DEACTIVATE);
 		qDeactivate.BindValue(":Reason", Reason);

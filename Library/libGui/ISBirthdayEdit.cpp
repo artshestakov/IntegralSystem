@@ -44,11 +44,11 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
 			Age--;
 		}
 
-		Label->setText(LOCALIZATION("Age") + ": " + QString::number(Age));
+		Label->setText(LANG("Age") + ": " + QString::number(Age));
 	}
 	else
 	{
-		Label->setText(LOCALIZATION("Age") + ": " + LOCALIZATION("AgeNotSelected"));
+		Label->setText(LANG("Age") + ": " + LANG("AgeNotSelected"));
 	}
 }
 //-----------------------------------------------------------------------------

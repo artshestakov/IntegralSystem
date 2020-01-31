@@ -10,11 +10,11 @@ ISPathEditFile::ISPathEditFile(QWidget *parent) : ISLineEdit(parent)
 	SetReadOnly(true);
 	SetVisibleClear(true); //„тобы кнопка очистки отображалась, пор€док SetReadOnly и SetVisibleClear доллжен быть именно такой
 	SetFocusPolicy(Qt::NoFocus);
-	SetPlaceholderText(LOCALIZATION("ClickOverviewFromSelectFile"));
+	SetPlaceholderText(LANG("ClickOverviewFromSelectFile"));
 
 	ISPushButton *ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LOCALIZATION("Overview") + "...");
-	ButtonSelect->setToolTip(LOCALIZATION("SelectFile"));
+	ButtonSelect->setText(LANG("Overview") + "...");
+	ButtonSelect->setToolTip(LANG("SelectFile"));
 	connect(ButtonSelect, &ISPushButton::clicked, this, &ISPathEditFile::SelectFile);
 	AddWidgetToRight(ButtonSelect);
 }

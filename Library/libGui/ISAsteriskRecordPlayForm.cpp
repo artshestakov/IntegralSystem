@@ -7,7 +7,7 @@
 //-----------------------------------------------------------------------------
 ISAsteriskRecordPlayForm::ISAsteriskRecordPlayForm(const QString &FilePath, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("ReproductionAsteriskRecord"));
+	setWindowTitle(LANG("ReproductionAsteriskRecord"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
 	ForbidResize();
 

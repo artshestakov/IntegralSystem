@@ -25,7 +25,7 @@ ISNoteForm::ISNoteForm(QWidget *parent) : ISInterfaceForm(parent)
 	ModificationFlag = false;
 	PreviousItem = nullptr;
 
-	setWindowTitle(LOCALIZATION("Notebook"));
+	setWindowTitle(LANG("Notebook"));
 	setWindowIcon(BUFFER_ICONS("NoteObject"));
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
@@ -88,7 +88,7 @@ void ISNoteForm::ItemSelectionChanged()
 	QListWidgetItem *CurrentItem = ListWidget->currentItem();
 	if (ModificationFlag)
 	{
-		if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.SaveNote").arg(PreviousItem->text())))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveNote").arg(PreviousItem->text())))
 		{
 			QString Text = TextEdit->GetValue().toString();
 
@@ -149,7 +149,7 @@ void ISNoteForm::Reload()
 //-----------------------------------------------------------------------------
 void ISNoteForm::Create()
 {
-	QString Name = ISInputDialog::GetString(this, LOCALIZATION("NewRecord"), LOCALIZATION("Named")).toString();
+	QString Name = ISInputDialog::GetString(this, LANG("NewRecord"), LANG("Named")).toString();
 	if (Name.length())
 	{
 		ISQuery qInsert(QI_NOTE);
@@ -165,13 +165,13 @@ void ISNoteForm::Create()
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("Named")));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("Named")));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISNoteForm::Edit()
 {
-	QString Name = ISInputDialog::GetString(this, LOCALIZATION("EditRecord"), LOCALIZATION("Named") + ":", ListWidget->currentItem()->text()).toString();
+	QString Name = ISInputDialog::GetString(this, LANG("EditRecord"), LANG("Named") + ":", ListWidget->currentItem()->text()).toString();
 
 	if (Name == ListWidget->currentItem()->text())
 	{
@@ -193,13 +193,13 @@ void ISNoteForm::Edit()
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Error.Field.NullValue").arg(LOCALIZATION("Named")));
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("Named")));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISNoteForm::Delete()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.DeleteNote")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteNote")))
 	{
 		ISQuery qDelete(QD_NOTE);
 		qDelete.BindValue(":ObjectID", Items.value(ListWidget->currentItem()));

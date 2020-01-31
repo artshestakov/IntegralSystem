@@ -20,7 +20,7 @@ ISPhoneBaseEdit::ISPhoneBaseEdit(QWidget *parent) : ISFieldEditBase(parent)
 
 	ButtonCall = new ISServiceButton(this);
 	ButtonCall->setVisible(false);
-	ButtonCall->setToolTip(LOCALIZATION("Call"));
+	ButtonCall->setToolTip(LANG("Call"));
 	ButtonCall->setIcon(BUFFER_ICONS("CallPhone"));
 	ButtonCall->setEnabled(false);
 	ButtonCall->setFocusPolicy(Qt::NoFocus);
@@ -116,7 +116,7 @@ void ISPhoneBaseEdit::PhoneChanged()
 			QPoint Point = PhoneLineEdit->mapToGlobal(QPoint());
 			Point.setX(Point.x() - 2);
 			Point.setY(Point.y() + 8);
-			QToolTip::showText(Point, LOCALIZATION("PhoneNumberInputIncorrect"), PhoneLineEdit, QRect(), 2000);
+			QToolTip::showText(Point, LANG("PhoneNumberInputIncorrect"), PhoneLineEdit, QRect(), 2000);
 
 			PhoneLineEdit->SetIcon(ISNamespace::PIT_FALSE);
 		}

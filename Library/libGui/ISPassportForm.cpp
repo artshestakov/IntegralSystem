@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 ISPassportForm::ISPassportForm(const QString &PassportString, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	setWindowTitle(LOCALIZATION("Passport.EditingPassport"));
+	setWindowTitle(LANG("Passport.EditingPassport"));
 	setWindowIcon(BUFFER_ICONS("Passport"));
 
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
@@ -19,25 +19,25 @@ ISPassportForm::ISPassportForm(const QString &PassportString, QWidget *parent) :
 
 	EditSeria = new ISLineEdit(this);
 	EditSeria->SetMaxLength(4);
-	EditSeria->SetPlaceholderText(LOCALIZATION("Passport.Seria.Placeholder"));
-	FormLayout->addRow(LOCALIZATION("Passport.Seria") + ":", EditSeria);
+	EditSeria->SetPlaceholderText(LANG("Passport.Seria.Placeholder"));
+	FormLayout->addRow(LANG("Passport.Seria") + ":", EditSeria);
 
 	EditNumber = new ISLineEdit(this);
 	EditNumber->SetMaxLength(6);
-	EditNumber->SetPlaceholderText(LOCALIZATION("Passport.Number.Placeholder"));
-	FormLayout->addRow(LOCALIZATION("Passport.Number") + ":", EditNumber);
+	EditNumber->SetPlaceholderText(LANG("Passport.Number.Placeholder"));
+	FormLayout->addRow(LANG("Passport.Number") + ":", EditNumber);
 
 	EditDateOfIssue = new ISDateEdit(this);
-	FormLayout->addRow(LOCALIZATION("Passport.DateOfIssue") + ":", EditDateOfIssue);
+	FormLayout->addRow(LANG("Passport.DateOfIssue") + ":", EditDateOfIssue);
 
 	EditIssuedBy = new ISTextEdit(this);
 	EditIssuedBy->SetUppercase(true);
-	FormLayout->addRow(LOCALIZATION("Passport.IssuedBy") + ":", EditIssuedBy);
+	FormLayout->addRow(LANG("Passport.IssuedBy") + ":", EditIssuedBy);
 
 	EditDivisionCode = new ISDivisionCodeEdit(this);
-	FormLayout->addRow(LOCALIZATION("Passport.DivisionCode") + ":", EditDivisionCode);
+	FormLayout->addRow(LANG("Passport.DivisionCode") + ":", EditDivisionCode);
 
-	ISButtonDialog *ButtonDialog = new ISButtonDialog(this, LOCALIZATION("Save"));
+	ISButtonDialog *ButtonDialog = new ISButtonDialog(this, LANG("Save"));
 	ButtonDialog->SetApplyIcon(BUFFER_ICONS("Save"));
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISPassportForm::Apply);
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISPassportForm::close);

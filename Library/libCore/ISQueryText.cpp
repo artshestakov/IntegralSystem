@@ -78,9 +78,9 @@ void ISQueryText::ErrorQuery(const QString &About, const QString &SqlText, const
 	/*if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
 	{
 		QMessageBox MessageBox;
-		MessageBox.setWindowTitle(LOCALIZATION("Error"));
+		MessageBox.setWindowTitle(LANG("Error"));
 		MessageBox.setIcon(QMessageBox::Critical);
-		MessageBox.setText(LOCALIZATION("Message.Warning.SqlQueryError"));
+		MessageBox.setText(LANG("Message.Warning.SqlQueryError"));
 		MessageBox.setInformativeText(About + "\r\n\r\n" + ErrorText);
 		MessageBox.setDetailedText(SqlText);
 		MessageBox.exec();

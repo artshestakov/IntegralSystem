@@ -114,7 +114,7 @@ void ISCoreNotification::SendNotification(const QString &NotificationUID, const 
 	qNotify.BindValue(":Payload", ISSystem::VariantMapToJsonString(VariantMap));
 	if (qNotify.ExecuteFirst()) //Если нотификация отправлена успешно
 	{
-		ISDebug::ShowString(LOCALIZATION("Notification.Sended").arg(NotificationName).arg(qNotify.ReadColumn("userfullname").toString()));
+		ISDebug::ShowString(LANG("Notification.Sended").arg(NotificationName).arg(qNotify.ReadColumn("userfullname").toString()));
 	}
 }
 //-----------------------------------------------------------------------------

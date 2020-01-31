@@ -18,7 +18,7 @@ ISAddressBox::ISAddressBox(QWidget *parent) : QComboBox(parent)
 	connect(this, static_cast<void(ISAddressBox::*)(int)>(&ISAddressBox::activated), this, &ISAddressBox::Activated);
 
 	QAction *ActionClear = new QAction(this);
-	ActionClear->setToolTip(LOCALIZATION("Clear.Field"));
+	ActionClear->setToolTip(LANG("Clear.Field"));
 	ActionClear->setIcon(BUFFER_ICONS("ButtonClear"));
 	connect(ActionClear, &QAction::triggered, this, &ISAddressBox::ClearClicked);
 	lineEdit()->addAction(ActionClear, QLineEdit::TrailingPosition);

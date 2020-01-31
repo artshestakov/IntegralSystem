@@ -20,10 +20,10 @@ ISTelephonyForm::ISTelephonyForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	connect(ListWidget, &QListWidget::itemSelectionChanged, this, &ISTelephonyForm::ItemSelectionChanged);
 	MainLayout->addWidget(ListWidget);
 
-	CreateItem(BUFFER_ICONS("TelephonyForm.Calls"), LOCALIZATION("TelephonyForm.Journal"), ISNamespace::TF_Journal);
-	CreateItem(BUFFER_ICONS("TelephonyForm.Summary"), LOCALIZATION("TelephonyForm.Summary"), ISNamespace::TF_Summary);
-	CreateItem(BUFFER_ICONS("TelephonyForm.Pattern"), LOCALIZATION("TelephonyForm.Patterns"), ISNamespace::TF_Pattern);
-	CreateItem(BUFFER_ICONS("TelephonyForm.Activity"), LOCALIZATION("TelephonyForm.Activity"), ISNamespace::TF_Activity);
+	CreateItem(BUFFER_ICONS("TelephonyForm.Calls"), LANG("TelephonyForm.Journal"), ISNamespace::TF_Journal);
+	CreateItem(BUFFER_ICONS("TelephonyForm.Summary"), LANG("TelephonyForm.Summary"), ISNamespace::TF_Summary);
+	CreateItem(BUFFER_ICONS("TelephonyForm.Pattern"), LANG("TelephonyForm.Patterns"), ISNamespace::TF_Pattern);
+	CreateItem(BUFFER_ICONS("TelephonyForm.Activity"), LANG("TelephonyForm.Activity"), ISNamespace::TF_Activity);
 
 	QHBoxLayout *LayoutCentral = new QHBoxLayout();
 	LayoutCentral->addStretch();

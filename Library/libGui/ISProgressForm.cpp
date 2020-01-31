@@ -10,7 +10,7 @@
 ISProgressForm::ISProgressForm(int Minimum, int Maximum, QWidget *parent) : QProgressDialog(parent)
 {
 	Value = 0;
-	setWindowTitle(LOCALIZATION("PleaseWait"));
+	setWindowTitle(LANG("PleaseWait"));
 	setWindowModality(Qt::WindowModal);
 	setFixedSize(SIZE_PROGRESS_FORM);
 	setMinimum(Minimum);

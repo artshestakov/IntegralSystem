@@ -13,7 +13,7 @@ ISUrlEdit::ISUrlEdit(QWidget *parent) : ISLineEdit(parent)
 	connect(this, &ISUrlEdit::DataChanged, this, &ISUrlEdit::UrlChanged);
 
 	ButtonUrl = new ISServiceButton(this);
-	ButtonUrl->setToolTip(LOCALIZATION("OpenUrlLink"));
+	ButtonUrl->setToolTip(LANG("OpenUrlLink"));
 	ButtonUrl->setIcon(BUFFER_ICONS("Url"));
 	connect(ButtonUrl, &ISServiceButton::clicked, this, &ISUrlEdit::OpenUrl);
 	AddWidgetToRight(ButtonUrl);
@@ -32,18 +32,18 @@ void ISUrlEdit::OpenUrl()
 		if (ISGui::OpenUrl(UrlString))
 		{
 			ISPopupMessage *PopupMessage = new ISPopupMessage(nullptr);
-			PopupMessage->SetTitle(LOCALIZATION("OpeningUrl") + "...");
+			PopupMessage->SetTitle(LANG("OpeningUrl") + "...");
 			PopupMessage->SetMessage(UrlString);
 			PopupMessage->show();
 		}
 		else
 		{
-			ISMessageBox::ShowWarning(nullptr, LOCALIZATION("Message.Warning.OpenUrl.Failed").arg(UrlString));
+			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.OpenUrl.Failed").arg(UrlString));
 		}
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.OpenUrl.Empty"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.OpenUrl.Empty"));
 		BlinkRed();
 	}
 }

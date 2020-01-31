@@ -8,7 +8,7 @@ ISOKPOEdit::ISOKPOEdit(QWidget *parent) : ISLineEdit(parent)
 	SetFixedWidth(180);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_8), this));
-	SetPlaceholderText(LOCALIZATION("Field.Okpo.PlaceholderText"));
+	SetPlaceholderText(LANG("Field.Okpo.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
 ISOKPOEdit::~ISOKPOEdit()

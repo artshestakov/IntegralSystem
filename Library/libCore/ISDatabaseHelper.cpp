@@ -12,11 +12,11 @@ QVariant ISDatabaseHelper::CheckValue(QVariant &Value)
 	{
 		if (Value.toBool())
 		{
-			Value = LOCALIZATION("Yes");
+			Value = LANG("Yes");
 		}
 		else
 		{
-			Value = LOCALIZATION("No");
+			Value = LANG("No");
 		}
 	}
 	else if (ValueType == QVariant::Date)

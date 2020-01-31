@@ -80,7 +80,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 		TabBar->setTabData(Index, ID);
 
 		QToolButton *ButtonClose = new QToolButton(this);
-		ButtonClose->setToolTip(LOCALIZATION("CloseTab"));
+		ButtonClose->setToolTip(LANG("CloseTab"));
 		ButtonClose->setIcon(BUFFER_ICONS("CloseTab"));
 		ButtonClose->setAutoRaise(true);
 		ButtonClose->setProperty("ID", ID);
@@ -104,7 +104,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 	{
 		ButtonMenu = new QToolButton(this);
 		ButtonMenu->setAutoRaise(true);
-		ButtonMenu->setToolTip(LOCALIZATION("AllTabs"));
+		ButtonMenu->setToolTip(LANG("AllTabs"));
 		ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
 		ButtonMenu->setFixedSize(SIZE_18_18);
 		ButtonMenu->setPopupMode(QToolButton::InstantPopup);
@@ -151,7 +151,7 @@ void ISTabWidgetMain::DuplicateWindow(int Index)
 	}
 	else
 	{
-		ISMessageBox::ShowCritical(this, LOCALIZATION("Message.Warning.DuplicateFormNotObjectFormBase"));
+		ISMessageBox::ShowCritical(this, LANG("Message.Warning.DuplicateFormNotObjectFormBase"));
 	}
 }
 //-----------------------------------------------------------------------------

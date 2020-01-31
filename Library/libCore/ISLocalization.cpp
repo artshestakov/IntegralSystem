@@ -39,7 +39,7 @@ ISLocalization::ISLocalization()
 //-----------------------------------------------------------------------------
 ISLocalization::~ISLocalization()
 {
-
+	
 }
 //-----------------------------------------------------------------------------
 ISLocalization& ISLocalization::GetInstance()
@@ -48,26 +48,14 @@ ISLocalization& ISLocalization::GetInstance()
 	return Localization;
 }
 //-----------------------------------------------------------------------------
-QString ISLocalization::GetLocalString(const QString &ParameterName, const QString &SourceFile, int FileLine) const
+QString ISLocalization::GetString(const QString &ParameterName) const
 {
-    Q_UNUSED(SourceFile);
-    Q_UNUSED(FileLine);
-
-	QString LocalString;
-	if (Localization.contains(ParameterName))
+	std::map<QString, QString>::const_iterator It = Dictionary.find(ParameterName);
+	if (It == Dictionary.end())
 	{
-		LocalString = Localization.value(ParameterName);
+		return ParameterName;
 	}
-	else if (!ParameterName.length())
-	{
-		LocalString = "Localization parameter is null";
-	}
-	else
-	{
-		LocalString = ParameterName;
-	}
-
-	return LocalString;
+	return It->second;
 }
 //-----------------------------------------------------------------------------
 void ISLocalization::LoadResourceFile(const QString &FileName)
@@ -100,8 +88,12 @@ void ISLocalization::InitializeContent(const QString &Content)
 
 			if (LocalKey.length())
 			{
-				IS_ASSERT(!Localization.contains(LocalKey), QString("Key \"%1\" already exist in localization map. File: %2. Line: %3").arg(LocalKey).arg(LocalizationName).arg(NodeLocalization.lineNumber()));
-				Localization.insert(LocalKey, Value);
+				//IS_ASSERT(!Localization.contains(LocalKey), QString("Key \"%1\" already exist in localization map. File: %2. Line: %3").arg(LocalKey).arg(LocalizationName).arg(NodeLocalization.lineNumber()));
+				//Localization.insert(LocalKey, Value);
+
+				IS_ASSERT(Dictionary.find(LocalKey) == Dictionary.end(), QString("Key \"%1\" already exist in localization map. File: %2. Line: %3").arg(LocalKey).arg(LocalizationName).arg(NodeLocalization.lineNumber()))
+				Dictionary.emplace(LocalKey, Value);
+
 				CountItems++;
 			}
 

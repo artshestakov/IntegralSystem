@@ -54,7 +54,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent) : ISInterfaceForm(p
 	TaskID = task_id;
 
 	SelectTask();
-	setWindowTitle(LOCALIZATION("Task.CardTask") + ": " + TaskName);
+	setWindowTitle(LANG("Task.CardTask") + ": " + TaskName);
 	setWindowIcon(BUFFER_ICONS("Task"));
 	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
 
@@ -85,7 +85,7 @@ void ISTaskViewForm::SelectTask()
 
 		if (!TaskDescription.length())
 		{
-			TaskDescription = LOCALIZATION("Task.Description.Empty");
+			TaskDescription = LANG("Task.Description.Empty");
 		}
 	}
 }
@@ -112,7 +112,7 @@ void ISTaskViewForm::CreateTitle()
 	{
 		QLabel *LabelImportant = new QLabel(this);
 		LabelImportant->setPixmap(BUFFER_ICONS("Task.Important.Checked").pixmap(SIZE_32_32));
-		LabelImportant->setToolTip(LOCALIZATION("Task.Important.ToolTip"));
+		LabelImportant->setToolTip(LANG("Task.Important.ToolTip"));
 		LabelImportant->setCursor(CURSOR_WHATS_THIS);
 		LayoutTitle->addWidget(LabelImportant);
 	}
@@ -126,7 +126,7 @@ void ISTaskViewForm::CreateTitle()
 	LayoutTitle->addStretch();
 
 	ISPushButton *ButtonRename = new ISPushButton(this);
-	ButtonRename->setText(LOCALIZATION("Task.Rename"));
+	ButtonRename->setText(LANG("Task.Rename"));
 	ButtonRename->setIcon(BUFFER_ICONS("Edit"));
 	ButtonRename->setIconSize(SIZE_24_24);
 	ButtonRename->setFlat(true);
@@ -136,7 +136,7 @@ void ISTaskViewForm::CreateTitle()
 	LayoutTitle->addWidget(ButtonRename);
 
 	ISPushButton *ButtonCreate = new ISPushButton(this);
-	ButtonCreate->setText(LOCALIZATION("Task.CreateTask"));
+	ButtonCreate->setText(LANG("Task.CreateTask"));
 	ButtonCreate->setIcon(BUFFER_ICONS("Add"));
 	ButtonCreate->setIconSize(SIZE_24_24);
 	ButtonCreate->setFlat(true);
@@ -156,22 +156,22 @@ void ISTaskViewForm::CreateLeft()
 	Layout->addWidget(ToolBar);
 
 	ActionDone = new QAction(ToolBar);
-	ActionDone->setText(LOCALIZATION("Task.Done"));
-	ActionDone->setToolTip(LOCALIZATION("Task.Done"));
+	ActionDone->setText(LANG("Task.Done"));
+	ActionDone->setToolTip(LANG("Task.Done"));
 	ActionDone->setIcon(BUFFER_ICONS("Task.Done"));
 	connect(ActionDone, &QAction::triggered, this, &ISTaskViewForm::DoneTask);
 	ToolBar->addAction(ActionDone);
 
 	ActionClose = new QAction(ToolBar);
-	ActionClose->setText(LOCALIZATION("Task.Close"));
-	ActionClose->setToolTip(LOCALIZATION("Task.Close"));
+	ActionClose->setText(LANG("Task.Close"));
+	ActionClose->setToolTip(LANG("Task.Close"));
 	ActionClose->setIcon(BUFFER_ICONS("Task.Close"));
 	connect(ActionClose, &QAction::triggered, this, &ISTaskViewForm::CloseTask);
 	ToolBar->addAction(ActionClose);
 
 	ActionProcess = new QAction(ToolBar);
-	ActionProcess->setText(LOCALIZATION("Task.Process"));
-	ActionProcess->setToolTip(LOCALIZATION("Task.Process"));
+	ActionProcess->setText(LANG("Task.Process"));
+	ActionProcess->setToolTip(LANG("Task.Process"));
 	ActionProcess->setIcon(BUFFER_ICONS("Task.Process"));
 	ActionProcess->setMenu(new QMenu(ToolBar));
 	ToolBar->addAction(ActionProcess);
@@ -179,50 +179,50 @@ void ISTaskViewForm::CreateLeft()
 	dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionProcess))->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
 
 	QAction *ActionClone = new QAction(ToolBar);
-	ActionClone->setText(LOCALIZATION("Task.CloneTask"));
-	ActionClone->setToolTip(LOCALIZATION("Task.CloneTask"));
+	ActionClone->setText(LANG("Task.CloneTask"));
+	ActionClone->setToolTip(LANG("Task.CloneTask"));
 	ActionClone->setIcon(BUFFER_ICONS("Task.Clone"));
 	connect(ActionClone, &QAction::triggered, this, &ISTaskViewForm::CloneTask);
 	ActionProcess->menu()->addAction(ActionClone);
 
 	QAction *ActionDuplicate = new QAction(ToolBar);
-	ActionDuplicate->setText(LOCALIZATION("Task.Duplicate"));
-	ActionDuplicate->setToolTip(LOCALIZATION("Task.Duplicate"));
+	ActionDuplicate->setText(LANG("Task.Duplicate"));
+	ActionDuplicate->setToolTip(LANG("Task.Duplicate"));
 	ActionDuplicate->setIcon(BUFFER_ICONS("Task.Duplicate"));
 	connect(ActionDuplicate, &QAction::triggered, this, &ISTaskViewForm::Duplicate);
 	ActionProcess->menu()->addAction(ActionDuplicate);
 
 	QAction *ActionLink = new QAction(ToolBar);
-	ActionLink->setText(LOCALIZATION("Task.Link"));
-	ActionLink->setToolTip(LOCALIZATION("Task.Link"));
+	ActionLink->setText(LANG("Task.Link"));
+	ActionLink->setToolTip(LANG("Task.Link"));
 	connect(ActionLink, &QAction::triggered, this, &ISTaskViewForm::Link);
 	ActionProcess->menu()->addAction(ActionLink);
 
 	ActionProcess->menu()->addSeparator();
 
 	QAction *ActionComment = new QAction(ToolBar);
-	ActionComment->setText(LOCALIZATION("Task.CreateComment"));
-	ActionComment->setToolTip(LOCALIZATION("Task.CreateComment"));
+	ActionComment->setText(LANG("Task.CreateComment"));
+	ActionComment->setToolTip(LANG("Task.CreateComment"));
 	ActionComment->setIcon(BUFFER_ICONS("Task.Comments"));
 	connect(ActionComment, &QAction::triggered, this, &ISTaskViewForm::AddComment);
 	ActionProcess->menu()->addAction(ActionComment);
 
 	QAction *ActionFile = new QAction(ToolBar);
-	ActionFile->setText(LOCALIZATION("Task.CreateFile"));
-	ActionFile->setToolTip(LOCALIZATION("Task.CreateFile"));
+	ActionFile->setText(LANG("Task.CreateFile"));
+	ActionFile->setToolTip(LANG("Task.CreateFile"));
 	ActionFile->setIcon(BUFFER_ICONS("Task.CreateFile"));
 	connect(ActionFile, &QAction::triggered, this, &ISTaskViewForm::AddFile);
 	ActionProcess->menu()->addAction(ActionFile);
 
 	QAction *ActionReRead = ISControls::CreateActionUpdate(ToolBar);
-	ActionReRead->setText(LOCALIZATION("Task.ReRead"));
-	ActionReRead->setToolTip(LOCALIZATION("Task.ReRead.ToolTip"));
+	ActionReRead->setText(LANG("Task.ReRead"));
+	ActionReRead->setToolTip(LANG("Task.ReRead.ToolTip"));
 	ActionReRead->setShortcut(QKeySequence(Qt::Key_F5));
 	connect(ActionReRead, &QAction::triggered, this, &ISTaskViewForm::ReRead);
 	ToolBar->addAction(ActionReRead);
 
 	QGroupBox *GroupBoxDescription = new QGroupBox(this);
-	GroupBoxDescription->setTitle(LOCALIZATION("Task.Description"));
+	GroupBoxDescription->setTitle(LANG("Task.Description"));
 	GroupBoxDescription->setLayout(new QVBoxLayout());
 	GroupBoxDescription->layout()->setContentsMargins(LAYOUT_MARGINS_2_PX);
 	GroupBoxDescription->setSizePolicy(GroupBoxDescription->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
@@ -244,7 +244,7 @@ void ISTaskViewForm::CreateLeft()
 		{
 			QFormLayout *FormLayout = new QFormLayout();
 			QGroupBox *GroupBoxLinked = new QGroupBox(this);
-			GroupBoxLinked->setTitle(LOCALIZATION("Task.Linked"));
+			GroupBoxLinked->setTitle(LANG("Task.Linked"));
 			GroupBoxLinked->setLayout(FormLayout);
 			GroupBoxLinked->setSizePolicy(GroupBoxLinked->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 			Layout->addWidget(GroupBoxLinked);
@@ -259,7 +259,7 @@ void ISTaskViewForm::CreateLeft()
 				LabelLink->setCursor(CURSOR_POINTING_HAND);
 				LabelLink->setProperty("LinkTaskID", LinkTaskID);
 				LabelLink->setText(LinkTaskName);
-				LabelLink->setToolTip(LOCALIZATION("Task.LinkedUser").arg(LinkUser));
+				LabelLink->setToolTip(LANG("Task.LinkedUser").arg(LinkUser));
 				LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
 				connect(LabelLink, &ISLabelLink::Clicked, this, &ISTaskViewForm::OpenLinkTask);
 				FormLayout->addRow("#" + QString::number(LinkTaskID) + ":", LabelLink);
@@ -272,31 +272,31 @@ void ISTaskViewForm::CreateLeft()
 	Layout->addWidget(TabWidget);
 
 	TaskCommentsTab = new ISTaskCommentsTab(TaskID, TabWidget);
-	TabWidget->addTab(TaskCommentsTab, BUFFER_ICONS("Task.Comments"), LOCALIZATION("Task.Comments").arg(0));
+	TabWidget->addTab(TaskCommentsTab, BUFFER_ICONS("Task.Comments"), LANG("Task.Comments").arg(0));
 	connect(TaskCommentsTab, &ISTaskCommentsTab::TabTextChanged, [=](int Count) 
 	{ 
-		TabWidget->setTabText(TabWidget->indexOf(TaskCommentsTab), LOCALIZATION("Task.Comments").arg(Count));
+		TabWidget->setTabText(TabWidget->indexOf(TaskCommentsTab), LANG("Task.Comments").arg(Count));
 	});
 	TaskCommentsTab->Update();
 
 	TaskFilesTab = new ISTaskFilesTab(TaskID, TabWidget);
-	TabWidget->addTab(TaskFilesTab, BUFFER_ICONS("Task.Files"), LOCALIZATION("Task.Files").arg(0));
+	TabWidget->addTab(TaskFilesTab, BUFFER_ICONS("Task.Files"), LANG("Task.Files").arg(0));
 	connect(TaskFilesTab, &ISTaskFilesTab::TabTextChanged, [=](int Count)
 	{
-		TabWidget->setTabText(TabWidget->indexOf(TaskFilesTab), LOCALIZATION("Task.Files").arg(Count));
+		TabWidget->setTabText(TabWidget->indexOf(TaskFilesTab), LANG("Task.Files").arg(Count));
 	});
 	TaskFilesTab->Update();
 
 	TaskDuplicatesTab = new ISTaskDuplicatesTab(TaskID, TabWidget);
-	TabWidget->addTab(TaskDuplicatesTab, BUFFER_ICONS("Task.Duplicate"), LOCALIZATION("Task.Duplicates").arg(0));
+	TabWidget->addTab(TaskDuplicatesTab, BUFFER_ICONS("Task.Duplicate"), LANG("Task.Duplicates").arg(0));
 	connect(TaskDuplicatesTab, &ISTaskDuplicatesTab::TabTextChanged, [=](int Count)
 	{
-		TabWidget->setTabText(TabWidget->indexOf(TaskDuplicatesTab), LOCALIZATION("Task.Duplicates").arg(Count));
+		TabWidget->setTabText(TabWidget->indexOf(TaskDuplicatesTab), LANG("Task.Duplicates").arg(Count));
 	});
 	TaskDuplicatesTab->Update();
 
 	TaskHistoryTab = new ISTaskHistoryTab(TaskID, TabWidget);
-	TabWidget->addTab(TaskHistoryTab, BUFFER_ICONS("Task.History"), LOCALIZATION("Task.History"));
+	TabWidget->addTab(TaskHistoryTab, BUFFER_ICONS("Task.History"), LANG("Task.History"));
 	TaskHistoryTab->Update();
 }
 //-----------------------------------------------------------------------------
@@ -308,7 +308,7 @@ void ISTaskViewForm::CreateRight()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Rename()
 {
-	QVariant NewName = ISInputDialog::GetString(this, LOCALIZATION("Renaming"), LOCALIZATION("Task.Rename.Description") + ":", TaskName);
+	QVariant NewName = ISInputDialog::GetString(this, LANG("Renaming"), LANG("Task.Rename.Description") + ":", TaskName);
 	if (NewName.isValid())
 	{
 		ISQuery qRename(QU_TASK_NAME);
@@ -354,7 +354,7 @@ void ISTaskViewForm::UpdateActions()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::DoneTask()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.TaskDone")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskDone")))
 	{
 		ISTaskDoneForm TaskDoneForm(TaskID);
 		if (TaskDoneForm.Exec())
@@ -366,7 +366,7 @@ void ISTaskViewForm::DoneTask()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CloseTask()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.TaskClose")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskClose")))
 	{
 		ISCore::TaskSetStatus(TaskID, CONST_UID_TASK_STATUS_CLOSE);
 		UpdateActions();
@@ -375,7 +375,7 @@ void ISTaskViewForm::CloseTask()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::AddComment()
 {
-	QVariant Comment = ISInputDialog::GetText(this, LOCALIZATION("Task.CommentTask"), LOCALIZATION("Task.InputTheComment") + ":");
+	QVariant Comment = ISInputDialog::GetText(this, LANG("Task.CommentTask"), LANG("Task.InputTheComment") + ":");
 	if (Comment.isValid())
 	{
 		ISQuery qInsertComment(QI_COMMENT);
@@ -411,7 +411,7 @@ void ISTaskViewForm::AddFile()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CloneTask()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CloneThisTask")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CloneThisTask")))
 	{
 		ISGui::ShowTaskObjectForm(ISNamespace::OFT_Copy, TaskID);
 	}
@@ -419,16 +419,16 @@ void ISTaskViewForm::CloneTask()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Duplicate()
 {
-	if (ISMessageBox::ShowQuestion(this, LOCALIZATION("Message.Question.CheckThisTaskAsDuplicate")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CheckThisTaskAsDuplicate")))
 	{
-		int TaskOriginal = ISInputDialog::GetInteger(this, LOCALIZATION("Task.Duplicate"), LOCALIZATION("Task.NumberTask") + ":", 1, INTEGER_MAXIMUM).toInt();
+		int TaskOriginal = ISInputDialog::GetInteger(this, LANG("Task.Duplicate"), LANG("Task.NumberTask") + ":", 1, INTEGER_MAXIMUM).toInt();
 		if (TaskOriginal)
 		{
 			if (ISCore::TaskCheckExist(TaskID)) //Задача найдена
 			{
 				if (ISCore::TaskIsDuplicate(TaskOriginal, TaskID)) //Если задача уже отмечена как дубликат
 				{
-					ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.TaskAlreadyCheckDuplicate").arg(TaskID).arg(TaskOriginal));
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskAlreadyCheckDuplicate").arg(TaskID).arg(TaskOriginal));
 				}
 				else //Задача не отмечена как дубликат
 				{
@@ -439,7 +439,7 @@ void ISTaskViewForm::Duplicate()
 			}
 			else //Задача не найдена
 			{
-				ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.TaskWithNumberNotFound").arg(TaskID));
+				ISMessageBox::ShowInformation(this, LANG("Message.Information.TaskWithNumberNotFound").arg(TaskID));
 			}
 		}
 	}
@@ -452,7 +452,7 @@ void ISTaskViewForm::Link()
 	{
 		if (ObjectID == TaskID)
 		{
-			ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.NotLinkTaskCurrentForCurrent"));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotLinkTaskCurrentForCurrent"));
 			return;
 		}
 
@@ -464,7 +464,7 @@ void ISTaskViewForm::Link()
 			int Count = qSelect.ReadColumn("count").toInt();
 			if (Count)
 			{
-				ISMessageBox::ShowWarning(this, LOCALIZATION("Message.Warning.TaskLinkAlreadyExist"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskLinkAlreadyExist"));
 			}
 			else
 			{
@@ -475,7 +475,7 @@ void ISTaskViewForm::Link()
 				{
 					QString TaskName = qInsert.ReadColumn("task").toString();
 					QString LinkTaskName = qInsert.ReadColumn("linktask").toString();
-					ISMessageBox::ShowInformation(this, LOCALIZATION("Message.Information.TaskLinkedDone").arg(LinkTaskName).arg(TaskName));
+					ISMessageBox::ShowInformation(this, LANG("Message.Information.TaskLinkedDone").arg(LinkTaskName).arg(TaskName));
 					ISCore::TaskInsertHistory(TaskID, CONST_UID_TASK_HISTORY_LINKED, LinkTaskName + " -> " + TaskName);
 					ReRead();
 				}
