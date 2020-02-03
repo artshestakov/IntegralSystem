@@ -30,32 +30,37 @@ void ISBuffer::Initialize()
 //-----------------------------------------------------------------------------
 QMovie* ISBuffer::GetAnimation(const QString &AnimationName, QObject *parent, const QString &SourceFile, int FileLine)
 {
-	std::map<QString, QMovie *>::const_iterator It = Animations.find(AnimationName);
-	if (It == Animations.end())
-	{
-		return nullptr;
-	}
-	return It->second;
+	bool Contains = Animations.contains(AnimationName);
+    IS_ASSERT(Contains, QString("Animation \"%1\" not found in buffer animations. File: %2. Line: %3.").arg(AnimationName).arg(SourceFile).arg(FileLine));
+
+	QString AnimationPath = Animations.value(AnimationName);
+	QMovie *Movie = new QMovie(AnimationPath, nullptr, parent);
+	return Movie;
 }
 //-----------------------------------------------------------------------------
 QIcon ISBuffer::GetIcon(const QString &IconName, const QString &SourceFile, int FileLine)
 {
-	std::map<QString, QIcon>::const_iterator It = Icons.find(IconName);
-	if (It == Icons.end())
+	QIcon Icon;
+	if (Icons.contains(IconName))
 	{
-		return QIcon();
+		Icon = QIcon(Icons.value(IconName));
 	}
-	return It->second;
+	else
+	{
+		IS_ASSERT(false, QString("Icon \"%1\" not found in buffer icons. File: %2. Line: %3.").arg(IconName).arg(SourceFile).arg(FileLine));
+	}
+
+	return Icon;
 }
 //-----------------------------------------------------------------------------
 QPixmap ISBuffer::GetPixmap(const QString &PixmapName, const QString &SourceFile, int FileLine)
 {
-	std::map<QString, QPixmap>::const_iterator It = Pixmaps.find(PixmapName);
-	if (It == Pixmaps.end())
-	{
-		return QPixmap(0, 0);
-	}
-	return It->second;
+	bool Contains = Pixmaps.contains(PixmapName);
+    IS_ASSERT(Contains, QString("Pixmap \"%1\" not found in buffer pixmaps. File: %2. Line: %3.").arg(PixmapName).arg(SourceFile).arg(FileLine));
+
+	QString PixmapPath = Pixmaps.value(PixmapName);
+	QPixmap Pixmap(PixmapPath);
+	return Pixmap;
 }
 //-----------------------------------------------------------------------------
 QString ISBuffer::GetAudio(const QString &AudioName)
@@ -76,7 +81,7 @@ void ISBuffer::InitializeAnimations()
 		AddAnimations(FileName, FilePath);
 	}
 
-	ISDebug::ShowDebugString(QString("Buffer animation initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Animations.size()));
+	ISDebug::ShowDebugString(QString("Buffer animation initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Animations.count()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializeIcons()
@@ -89,10 +94,10 @@ void ISBuffer::InitializeIcons()
 		QString FileName = FileInfo.completeBaseName();
 		QString FilePath = FileInfo.filePath();
 
-		AddIcon(FileName, FilePath);
+		AddImageIcon(FileName, FilePath);
 	}
 
-	ISDebug::ShowDebugString(QString("Buffer icons initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Icons.size()));
+	ISDebug::ShowDebugString(QString("Buffer icons initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Icons.count()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializePixmaps()
@@ -105,10 +110,10 @@ void ISBuffer::InitializePixmaps()
 		QString FileName = FileInfo.completeBaseName();
 		QString FilePath = FileInfo.filePath();
 
-		AddPixmap(FileName, FilePath);
+		AddImage(FileName, FilePath);
 	}
 
-	ISDebug::ShowDebugString(QString("Buffer images initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Pixmaps.size()));
+	ISDebug::ShowDebugString(QString("Buffer images initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Pixmaps.count()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializeAudios()
@@ -129,20 +134,31 @@ void ISBuffer::InitializeAudios()
 //-----------------------------------------------------------------------------
 void ISBuffer::AddAnimations(const QString &AnimationName, const QString &AnimationPath)
 {
-	IS_ASSERT(Animations.find(AnimationName) == Animations.end(), QString("Animation \"%1\" already exist in buffer animations").arg(AnimationName));
-	Animations.emplace(AnimationName, new QMovie(AnimationPath));
+	IS_ASSERT(!Animations.count(AnimationName), QString("Animation \"%1\" already exist in buffer animations").arg(AnimationName));
+
+	QFile File(AnimationPath);
+	QMovie Movie(&File);
+	Movie.setObjectName(AnimationName);
+	IS_ASSERT(Movie.isValid(), "Animation invalid: " + AnimationName);
+	Animations.insert(AnimationName, AnimationPath);
 }
 //-----------------------------------------------------------------------------
-void ISBuffer::AddIcon(const QString &IconName, const QString &IconPath)
+void ISBuffer::AddImageIcon(const QString &IconName, const QString &IconPath)
 {
-	IS_ASSERT(Icons.find(IconName) == Icons.end(), QString("Icon \"%1\" already exist in buffer icons").arg(IconName));
-	Icons.emplace(IconName, QIcon(IconPath));
+	IS_ASSERT(!Icons.contains(IconName), QString("Icon \"%1\" already exist in buffer icons").arg(IconName));
+
+	QIcon Icon(IconPath);
+	IS_ASSERT(!Icon.isNull(), "Null icon: " + IconName);
+	Icons.insert(IconName, IconPath);
 }
 //-----------------------------------------------------------------------------
-void ISBuffer::AddPixmap(const QString &PixmapName, const QString &PixmapPath)
+void ISBuffer::AddImage(const QString &PixmapName, const QString &PixmapPath)
 {
-	IS_ASSERT(Pixmaps.find(PixmapName) == Pixmaps.end(), QString("Pixmap \"%1\" already exist in buffer pixmaps").arg(PixmapName));
-	Pixmaps.emplace(PixmapName, QPixmap(PixmapPath));
+	IS_ASSERT(!Pixmaps.contains(PixmapName), QString("Pixmap \"%1\" already exist in buffer pixmaps").arg(PixmapName));
+
+	QPixmap Pixmap(PixmapPath);
+	IS_ASSERT(!Pixmap.isNull(), "Null pixmap: " + PixmapName);
+	Pixmaps.insert(PixmapName, PixmapPath);
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::AddAudio(const QString &AudioName, const QString &AudioPath)

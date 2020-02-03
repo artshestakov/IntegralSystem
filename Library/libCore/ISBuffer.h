@@ -30,16 +30,16 @@ protected:
 	void InitializeAudios(); //Инициализация аудио ресурсов
 
 	void AddAnimations(const QString &AnimationName, const QString &AnimationPath); //Добавление анимации в буфер
-	void AddIcon(const QString &IconName, const QString &IconPath); //Добавление иконки в буфер
-	void AddPixmap(const QString &PixmapName, const QString &PixmapPath); //Добавление изображения в буфер
+	void AddImageIcon(const QString &IconName, const QString &IconPath); //Добавление иконки в буфер
+	void AddImage(const QString &PixmapName, const QString &PixmapPath); //Добавление изображения в буфер
 	void AddAudio(const QString &AudioName, const QString &AudioPath); //Добавление аудио файла в буфер
 
 private:
 	ISBuffer();
 
-	std::map<QString, QMovie *> Animations;
-	std::map<QString, QIcon> Icons;
-	std::map<QString, QPixmap> Pixmaps;
+	QStringMap Animations;
+	QStringMap Icons;
+	QStringMap Pixmaps;
 	QStringMap Audios;
 };
 //-----------------------------------------------------------------------------
