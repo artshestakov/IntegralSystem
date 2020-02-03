@@ -10,9 +10,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{c2fb5a80-5b77-4908-8047-c0f12909a144}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{6fe865a6-b4fb-44bd-bb0c-62466bef6537}</UniqueIdentifier>
     </Filter>
@@ -78,9 +75,6 @@
     <ClInclude Include="ISNamespace.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISPassword.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISPhoneNumberParser.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -126,15 +120,6 @@
     <ClInclude Include="ISDefines.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISBuffer.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="ISLocalization.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="ISStyleSheet.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="ISCrashDumper.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -166,9 +151,6 @@
       <Filter>License</Filter>
     </ClInclude>
     <ClInclude Include="ISDatabase.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="ISDatabaseHelper.h">
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ISQueryModelHelper.h">
@@ -275,9 +257,6 @@
     <ClCompile Include="ISLogger.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISPassword.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISPhoneNumberParser.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -313,15 +292,6 @@
     </ClCompile>
     <ClCompile Include="StdAfx.cpp">
       <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISBuffer.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="ISLocalization.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="ISStyleSheet.cpp">
-      <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="ISCrashDumper.cpp">
       <Filter>System</Filter>
@@ -420,9 +390,6 @@
       <Filter>Other</Filter>
     </ClCompile>
     <ClCompile Include="ISDatabase.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDatabaseHelper.cpp">
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="ISQuery.cpp">

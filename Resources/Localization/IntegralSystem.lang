@@ -2,7 +2,7 @@
 <Localization Name="IntegralSystem">
   
   <Local Name="DescriptionApplication" Russian="Система учёта данных IntegralSystem — это современный инструмент для ведения учёта базы данных любого предприятия. IntegralSystem позволяет в комплексе автоматизировать задачи оперативного и управленческого учёта, анализа и отчетных операций."/>
-  <Local Name="SplashSceen.Copyright" Russian="Copyright © 2015-2018 IntegralSystem. Все права защищены."/>
+  <Local Name="SplashSceen.Copyright" Russian="Copyright © 2015-2020 IntegralSystem. Все права защищены."/>
   
   <Local Name="Form.Authorization.ConnectionSettings" Russian="Настройки подключения"/>
   <Local Name="Form.Authorization.About" Russian="О программе"/>

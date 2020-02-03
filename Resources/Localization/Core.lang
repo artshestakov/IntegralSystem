@@ -323,17 +323,6 @@
   <!--SmtpClient-->
   <Local Name="SmtpClient.Error.AuthenticationFailedError" Russian="Ошибка аутентификации"/>
   
-  <!--License-->
-  <Local Name="License.TableNotExist" Russian="таблица лицензии не существует. Требуется обновление базы данных."/>
-  <Local Name="License.NotExist" Russian="лицензия не существует."/>
-  <Local Name="License.Empty" Russian="лицензия отсутствует."/>
-  <Local Name="License.NotValid" Russian="лицензия является некорректной или была несанкционировано изменена. Предполагается вмешательство в систему лицензирования данного программного обеспечения, в связи с чем существующая лицензия будет удалена навсегда. За помощью обратитесь к разработчику программы."/>
-  <Local Name="License.NotFound" Russian="установленная лицензия не соответствует ни одной из конфигураций поддерживаемых программой."/>
-  <Local Name="License.Done" Russian="Лицензия загружена (%1 msec): %2"/>
-  <Local Name="License.Failed" Russian="Не удалось загрузить лицензию: %1"/>
-  <Local Name="License.Configuration" Russian="Конфигурация"/>
-  <Local Name="License.Name" Russian="Наименование"/>
-  
   <!--Other-->
   <Local Name="SaveAndCreate" Russian="Сохранить и создать новую запись"/>
   <Local Name="SaveClose" Russian="Сохранить и закрыть"/>

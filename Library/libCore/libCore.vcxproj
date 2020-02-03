@@ -123,12 +123,10 @@
     <ClInclude Include="EXLicense.h" />
     <ClInclude Include="ISAssociationTypes.h" />
     <QtMoc Include="ISAuthConnector.h" />
-    <ClInclude Include="ISBuffer.h" />
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="ISCore.h" />
     <ClInclude Include="ISCrashDumper.h" />
     <ClInclude Include="ISDatabase.h" />
-    <ClInclude Include="ISDatabaseHelper.h" />
     <QtMoc Include="ISDaDataService.h" />
     <ClInclude Include="ISDefines.h" />
     <QtMoc Include="ISEMail.h" />
@@ -139,7 +137,6 @@
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISCountingTime.h" />
     <ClInclude Include="ISEmailAddress.h" />
-    <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISMemoryObjects.h" />
     <QtMoc Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />
@@ -178,7 +175,6 @@
     <QtMoc Include="ISRestWorker.h" />
     <ClInclude Include="ISStackWalker.h" />
     <QtMoc Include="ISStorageFileLoader.h" />
-    <ClInclude Include="ISStyleSheet.h" />
     <QtMoc Include="PMetaClass.h" />
     <QtMoc Include="PMetaClassEscort.h" />
     <QtMoc Include="PMetaClassField.h" />
@@ -195,7 +191,6 @@
     <ClInclude Include="ISExceptionBase.h" />
     <QtMoc Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
-    <ClInclude Include="ISPassword.h" />
     <ClInclude Include="ISPhoneNumberParser.h" />
     <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISQueryException.h" />
@@ -213,12 +208,10 @@
     <ClCompile Include="EXLicense.cpp" />
     <ClCompile Include="ISAssociationTypes.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
-    <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
-    <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDefines.cpp" />
     <ClCompile Include="ISEMail.cpp" />
     <ClCompile Include="ISEmailAddress.cpp" />
@@ -231,7 +224,6 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />
     <ClCompile Include="ISExceptionBase.cpp" />
-    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMemoryObjects.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
@@ -255,7 +247,6 @@
     <ClCompile Include="ISModelThreadWorker.cpp" />
     <ClCompile Include="ISNetwork.cpp" />
     <ClCompile Include="ISNotifySender.cpp" />
-    <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPhoneNumberParser.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocol.cpp" />
@@ -279,7 +270,6 @@
     <ClCompile Include="ISSmtpClient.cpp" />
     <ClCompile Include="ISStackWalker.cpp" />
     <ClCompile Include="ISStorageFileLoader.cpp" />
-    <ClCompile Include="ISStyleSheet.cpp" />
     <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="ISUuid.cpp" />
