@@ -1,4 +1,0 @@
-wget http://repo.yandex.ru/yandex-disk/yandex-disk-latest.x86_64.rpm
-yum install ./yandex-disk-latest.x86_64.rpm
-rpm --import http://repo.yandex.ru/yandex-disk/YANDEX-DISK-KEY.GPG
-yandex-disk setup
