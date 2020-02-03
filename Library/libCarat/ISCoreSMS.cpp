@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreSMS.h"
 #include "ISConstants.h"
 #include "ISQuery.h"

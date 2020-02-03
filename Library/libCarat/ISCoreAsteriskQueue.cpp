@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreAsteriskQueue.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

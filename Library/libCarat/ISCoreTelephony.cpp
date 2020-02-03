@@ -1,5 +1,4 @@
-﻿#include "StdAfx.h"
-#include "ISCoreTelephony.h"
+﻿#include "ISCoreTelephony.h"
 #include "ISConstants.h"
 #include "ISSettingsDatabase.h"
 #include "ISQuery.h"

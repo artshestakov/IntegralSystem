@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreScheduler.h"
 #include "ISTypes.h"
 #include "ISQuery.h"

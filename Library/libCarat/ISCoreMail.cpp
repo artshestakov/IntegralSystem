@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreMail.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
