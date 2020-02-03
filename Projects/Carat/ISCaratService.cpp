@@ -54,7 +54,7 @@ void ISCaratService::StartService()
 
 			ISDebug::ShowEmptyString();
 			ISDebug::ShowInfoString(LANG("Core.Starting").arg(LocalName));
-			QString CorePath = APPLICATION_DIR_PATH + '/' + FileName;
+			QString CorePath = PATH_APPLICATION_DIR + '/' + FileName;
 
 			ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
 			connect(ProcessCore, &ISProcessCore::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);
@@ -170,7 +170,7 @@ void ISCaratService::CrashedCore(const QString &CoreName)
 {
 	if (SETTING_DATABASE_VALUE_DB(CONST_SETTING_DATABASE_CARAT_SEND_CRASH_REPORT).toBool()) //Если отправка отчёта включена в настройках базы данных
 	{
-		QString InformerPath = APPLICATION_DIR_PATH + "/Informer";
+		QString InformerPath = PATH_APPLICATION_DIR + "/Informer";
 		if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
 		{
 			InformerPath.append(".exe");

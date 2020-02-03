@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISProcessCore.h"
 //-----------------------------------------------------------------------------
 ISProcessCore::ISProcessCore(const QString &name, const QString &local_name, const QString &core_file_name, QObject *parent)
