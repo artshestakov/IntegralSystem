@@ -15,7 +15,7 @@ ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 	ActionGroupTools = new QActionGroup(this);
 	connect(ActionGroupTools, &QActionGroup::triggered, this, &ISMenuFastAccess::StartExternalTool);
 
-	QLabel *LabelCreateRecords = new QLabel(LANG("CreateRecords") + ":", this);
+	QLabel *LabelCreateRecords = new QLabel(LANG("CreateRecords") + ':', this);
 	ISGui::SetFontWidgetUnderline(LabelCreateRecords, true);
 	LabelCreateRecords->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 
@@ -25,7 +25,7 @@ ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 
 	ActionCreateRecords = addAction(LANG("Setting"), this, &ISMenuFastAccess::CreateRecords);
 
-	QLabel *LabelExternalTools = new QLabel(LANG("ExternalTools") + ":", this);
+	QLabel *LabelExternalTools = new QLabel(LANG("ExternalTools") + ':', this);
 	ISGui::SetFontWidgetUnderline(LabelExternalTools, true);
 	LabelExternalTools->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 

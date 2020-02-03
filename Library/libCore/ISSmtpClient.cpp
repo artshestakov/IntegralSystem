@@ -346,7 +346,7 @@ bool ISSmtpClient::sendMail(ISMimeMessage& email)
     try
     {
         // Send the MAIL command with the sender
-        sendMessage("MAIL FROM: <" + email.getSender().getAddress() + ">");
+        sendMessage("MAIL FROM: <" + email.getSender().getAddress() + '>');
 
         waitForResponse();
 
@@ -361,7 +361,7 @@ bool ISSmtpClient::sendMail(ISMimeMessage& email)
         for (it = email.getRecipients().begin(), itEnd = email.getRecipients().end();
              it != itEnd; ++it)
         {
-            sendMessage("RCPT TO: <" + (*it)->getAddress() + ">");
+            sendMessage("RCPT TO: <" + (*it)->getAddress() + '>');
             waitForResponse();
 
 			if (responseCode != 250)
@@ -374,7 +374,7 @@ bool ISSmtpClient::sendMail(ISMimeMessage& email)
         for (it = email.getRecipients(ISMimeMessage::Cc).begin(), itEnd = email.getRecipients(ISMimeMessage::Cc).end();
              it != itEnd; ++it)
         {
-            sendMessage("RCPT TO: <" + (*it)->getAddress() + ">");
+            sendMessage("RCPT TO: <" + (*it)->getAddress() + '>');
             waitForResponse();
 
 			if (responseCode != 250)
@@ -387,7 +387,7 @@ bool ISSmtpClient::sendMail(ISMimeMessage& email)
         for (it = email.getRecipients(ISMimeMessage::Bcc).begin(), itEnd = email.getRecipients(ISMimeMessage::Bcc).end();
              it != itEnd; ++it)
         {
-            sendMessage("RCPT TO: <" + (*it)->getAddress() + ">");
+            sendMessage("RCPT TO: <" + (*it)->getAddress() + '>');
             waitForResponse();
 
 			if (responseCode != 250)

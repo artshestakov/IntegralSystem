@@ -22,7 +22,7 @@ QString ISHTML::GetHTML() const
 void ISHTML::Replace(const QString &ReplacedText, const QString &Text)
 {
 	bool Contains = HTML.contains(ReplacedText);
-	IS_ASSERT(Contains, "String '" + ReplacedText + "' not found in file '" + FilePath + "'");
+	IS_ASSERT(Contains, "String '" + ReplacedText + "' not found in file '" + FilePath + '\'');
 	HTML.replace(ReplacedText, Text);
 }
 //-----------------------------------------------------------------------------

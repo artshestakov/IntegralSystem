@@ -10,7 +10,7 @@ ISRangeEditBase::ISRangeEditBase(QWidget *parent, const QString &FieldName) : QW
 	EndFieldEdit = nullptr;
 
 	QHBoxLayout *MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	MainLayout->setSpacing(EDIT_FIELD_SPACING);
 	setLayout(MainLayout);
 
@@ -25,7 +25,7 @@ ISRangeEditBase::ISRangeEditBase(QWidget *parent, const QString &FieldName) : QW
 	}
 	else
 	{
-		LabelFieldName->setText(LANG("Range") + ":");
+		LabelFieldName->setText(LANG("Range") + ':');
 	}
 
 	LayoutLeft = new QHBoxLayout();

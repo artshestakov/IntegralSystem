@@ -9,10 +9,10 @@ ISLogger::ISLogger()
 {
 	UpdateLogFileName();
 
-	QDir DirLogs(APPLICATION_LOGS_PATH);
+	QDir DirLogs(PATH_LOGS_DIR);
 	if (!DirLogs.exists())
 	{
-		DirLogs.mkdir(APPLICATION_LOGS_PATH);
+		DirLogs.mkdir(PATH_LOGS_DIR);
 	}
 
 	QFile LogFile(LogPath);
@@ -87,6 +87,6 @@ void ISLogger::AddData()
 //-----------------------------------------------------------------------------
 void ISLogger::UpdateLogFileName()
 {
-	LogPath = APPLICATION_LOGS_PATH + "/" + APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(DATE_FORMAT_V2) + '.' + EXTENSION_LOG;
+	LogPath = PATH_LOGS_DIR + '/' + APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(DATE_FORMAT_V2) + SYMBOL_POINT + EXTENSION_LOG;
 }
 //-----------------------------------------------------------------------------

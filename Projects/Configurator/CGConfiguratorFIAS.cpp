@@ -24,7 +24,7 @@ CGConfiguratorFIAS::~CGConfiguratorFIAS()
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::prepare()
 {
-	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathUnloading") + ":");
+	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathUnloading") + ':');
 	QString UnloadPath = ISCommandLine::GetText(); //Путь к файлам ФИАС
 	if (!UnloadPath.length()) //Если путь не введен
 	{
@@ -39,7 +39,7 @@ void CGConfiguratorFIAS::prepare()
 		return;
 	}
 
-	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathResult") + ":");
+	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathResult") + ':');
 	QString ResultPath = ISCommandLine::GetText();
 	if (!ResultPath.length())
 	{
@@ -69,7 +69,7 @@ void CGConfiguratorFIAS::prepare()
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::update()
 {
-	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathPrepareFiles") + ":");
+	ISDebug::ShowString(LANG("Configurator.FIAS.EnterPathPrepareFiles") + ':');
 	QString DirPath = ISCommandLine::GetText();
 	if (!DirPath.length()) //Если путь не введен
 	{
@@ -103,7 +103,7 @@ bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &
 		return false;
 	}
 
-	QFile FileResult(ResultPath + "/" + GetFileResultName(FileInfo.baseName()));
+	QFile FileResult(ResultPath + '/' + GetFileResultName(FileInfo.baseName()));
 	if (!FileResult.open(QIODevice::Append))
 	{
 		FileOriginal.close();
@@ -315,7 +315,7 @@ void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const QStringMap &St
 		else
 		{
 			UpdateText += MetaTable->GetAlias() + '_' + MapItem.first + " = :" + MapItem.first + ", \n";
-			Parameters.insert(":" + MapItem.first, MapItem.second);
+			Parameters.insert(':' + MapItem.first, MapItem.second);
 		}
 	}
 
@@ -331,25 +331,25 @@ void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const QStringMap &St
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::Insert(PMetaClassTable *MetaTable, const QStringMap &StringMap)
 {
-	QString SqlInsert = "INSERT INTO " + MetaTable->GetName() + "(";
+	QString SqlInsert = "INSERT INTO " + MetaTable->GetName() + '(';
 	QString SqlValues = "VALUES(";
 
 	for (const QString &FieldName : StringMap.keys())
 	{
 		SqlInsert += MetaTable->GetAlias() + '_' + FieldName + ", ";
-		SqlValues += ":" + FieldName + ", ";
+		SqlValues += ':' + FieldName + ", ";
 	}
 
 	ISSystem::RemoveLastSymbolFromString(SqlInsert, 2);
 	ISSystem::RemoveLastSymbolFromString(SqlValues, 2);
-	SqlInsert += ")";
-	SqlValues += ")";
+	SqlInsert += ')';
+	SqlValues += ')';
 
 	ISQuery qInsertFIAS(SqlInsert + " \n" + SqlValues);
 	qInsertFIAS.SetShowLongQuery(false);
 	for (const auto &MapItem : StringMap.toStdMap())
 	{
-		qInsertFIAS.BindValue(":" + MapItem.first, MapItem.second);
+		qInsertFIAS.BindValue(':' + MapItem.first, MapItem.second);
 	}
 	qInsertFIAS.Execute();
 }

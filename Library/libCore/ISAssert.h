@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISASSERT_H_INCLUDED
+#define _ISASSERT_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
@@ -16,3 +18,4 @@ protected:
 	static void ShowAssert(const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &File);
 };
 //-----------------------------------------------------------------------------
+#endif

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISQUERYEXCEPTION_H_INCLUDED
+#define _ISQUERYEXCEPTION_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISExceptionBase.h"
@@ -10,3 +12,4 @@ public:
 	virtual ~ISQueryException();
 };
 //-----------------------------------------------------------------------------
+#endif

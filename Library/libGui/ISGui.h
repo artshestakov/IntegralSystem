@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISGUI_H_INCLUDED
+#define _ISGUI_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
@@ -59,3 +61,4 @@ protected:
 	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaClassField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());
 };
 //-----------------------------------------------------------------------------
+#endif

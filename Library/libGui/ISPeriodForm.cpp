@@ -8,14 +8,14 @@ ISPeriodForm::ISPeriodForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("Period"));
 	setWindowIcon(BUFFER_ICONS("Period"));
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
 	ForbidResize();
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
 
 	QLabel *Label = new QLabel(this);
-	Label->setText(LANG("SelectFrom") + ":");
+	Label->setText(LANG("SelectFrom") + ':');
 	Label->setFont(FONT_APPLICATION_BOLD);
 	Layout->addWidget(Label);
 

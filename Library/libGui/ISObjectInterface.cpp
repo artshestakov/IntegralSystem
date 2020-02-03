@@ -17,6 +17,6 @@ ISObjectInterface::~ISObjectInterface()
 //-----------------------------------------------------------------------------
 QIcon ISObjectInterface::GetIcon(const QString &IconName) const
 {
-	return QIcon(":_" + LicenseName + "/" + IconName + ".png");
+	return QIcon(":_" + LicenseName + '/' + IconName + ".png");
 }
 //-----------------------------------------------------------------------------

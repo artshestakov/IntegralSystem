@@ -78,7 +78,7 @@ bool ISPrintingWord::PrepareTempate()
 	}
 
 	//Document = Documents->querySubObject("Add(QVariant)", QVariant(Path));
-	Path = Path.replace("/", "\\");
+	Path = Path.replace('/', "\\");
 	//Document = Documents->querySubObject("Open(const QString &)", Path);
 	//if (!Document)
 	{
@@ -127,20 +127,20 @@ bool ISPrintingWord::FillTemplate()
 			QList<QVariant> Parameters =
 			{
 				QVariant(MetaReportField->GetReplaceValue()),
-				QVariant("0"),
-				QVariant("0"),
-				QVariant("0"),
-				QVariant("0"),
-				QVariant("0"),
+				QVariant('0'),
+				QVariant('0'),
+				QVariant('0'),
+				QVariant('0'),
+				QVariant('0'),
 				QVariant(true),
-				QVariant("0"),
-				QVariant("0"),
+				QVariant('0'),
+				QVariant('0'),
 				QVariant(StringValue),
-				QVariant("2"),
-				QVariant("0"),
-				QVariant("0"),
-				QVariant("0"),
-				QVariant("0"),
+				QVariant('2'),
+				QVariant('0'),
+				QVariant('0'),
+				QVariant('0'),
+				QVariant('0'),
 			};
 
 			/*Find->dynamicCall("Execute(const QVariant&,const QVariant&,const QVariant&,const QVariant&,"

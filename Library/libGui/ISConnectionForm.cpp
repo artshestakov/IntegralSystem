@@ -11,14 +11,14 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 {
 	setWindowTitle(LANG("ConnectionSettings"));
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);
 
 	QLabel *LabelServer = new QLabel(this);
-	LabelServer->setText(LANG("Server") + ":");
+	LabelServer->setText(LANG("Server") + ':');
 	LabelServer->setToolTip(LANG("ConnectionForm.Hint.Server"));
 	LabelServer->setCursor(CURSOR_WHATS_THIS);
 
@@ -27,7 +27,7 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 	FormLayout->addRow(LabelServer, EditServer);
 
 	QLabel *LabelPort = new QLabel(this);
-	LabelPort->setText(LANG("Port") + ":");
+	LabelPort->setText(LANG("Port") + ':');
 	LabelPort->setToolTip(LANG("ConnectionForm.Hint.Port"));
 	LabelPort->setCursor(CURSOR_WHATS_THIS);
 
@@ -36,7 +36,7 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 	FormLayout->addRow(LabelPort, EditPort);
 
 	QLabel *LabelDatabase = new QLabel(this);
-	LabelDatabase->setText(LANG("DatabaseName") + ":");
+	LabelDatabase->setText(LANG("DatabaseName") + ':');
 	LabelDatabase->setToolTip(LANG("ConnectionForm.Hint.Database"));
 	LabelDatabase->setCursor(CURSOR_WHATS_THIS);
 
@@ -46,33 +46,33 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 	FormLayout->addRow(LabelDatabase, EditDatabase);
 
 	QLabel *LabelLanguage = new QLabel(this);
-	LabelLanguage->setText(LANG("Language") + ":");
+	LabelLanguage->setText(LANG("Language") + ':');
 	LabelLanguage->setCursor(CURSOR_WHATS_THIS);
 
 	EditLanguage = new ISLanguageEdit(this);
-	EditLanguage->SetValue(ISConfig::GetInstance().GetValueString(CONST_CONFIG_OTHER_LANGUAGE));
+	//EditLanguage->SetValue(ISConfig::GetInstance().GetValueString(CONST_CONFIG_OTHER_LANGUAGE));//???
 	FormLayout->addRow(LabelLanguage, EditLanguage);
 
 	QFormLayout *FormLayoutInput = new QFormLayout();
 
 	GroupBoxInput = new QGroupBox(LANG("AutoInput"), this);
 	GroupBoxInput->setCheckable(true);
-	GroupBoxInput->setChecked(CONFIG_BOOL(CONST_CONFIG_AUTOINPUT_INCLUDED));
+	//GroupBoxInput->setChecked(CONFIG_BOOL(CONST_CONFIG_AUTOINPUT_INCLUDED));//???
 	GroupBoxInput->setLayout(FormLayoutInput);
 	GetMainLayout()->addWidget(GroupBoxInput);
 
 	EditLogin = new ISLineEdit(GroupBoxInput);
-	EditLogin->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_LOGIN));
-	FormLayoutInput->addRow(LANG("Login") + ":", EditLogin);
+	//EditLogin->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_LOGIN));//???
+	FormLayoutInput->addRow(LANG("Login") + ':', EditLogin);
 
 	EditPassword = new ISPasswordEdit(GroupBoxInput);
-	EditPassword->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_PASSWORD));
-	FormLayoutInput->addRow(LANG("Password") + ":", EditPassword);
+	//EditPassword->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_PASSWORD));//???
+	FormLayoutInput->addRow(LANG("Password") + ':', EditPassword);
 
 	CheckAutoboot = new ISCheckEdit(this);
 	CheckAutoboot->SetText(LANG("AutobootStartup"));
 	CheckAutoboot->SetToolTip(LANG("AutobootStartup.ToolTip"));
-	CheckAutoboot->SetValue(CONFIG_VALUE(CONST_CONFIG_OTHER_AUTOBOOT));
+	//CheckAutoboot->SetValue(CONFIG_VALUE(CONST_CONFIG_OTHER_AUTOBOOT));//???
 	GetMainLayout()->addWidget(CheckAutoboot);
 
 	ButtonSave = new ISPushButton(this);
@@ -107,11 +107,11 @@ void ISConnectionForm::SaveSettings()
 	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
 	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
 	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetCurrentText());
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_OTHER_AUTOBOOT, CheckAutoboot->GetValue());
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_OTHER_LANGUAGE, EditLanguage->GetValue());
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_AUTOINPUT_INCLUDED, GroupBoxInput->isChecked());
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_AUTOINPUT_LOGIN, EditLogin->GetValue());
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_AUTOINPUT_PASSWORD, EditPassword->GetValue());
+	//ISConfig::GetInstance().SetValue(CONST_CONFIG_OTHER_AUTOBOOT, CheckAutoboot->GetValue());
+	//ISConfig::GetInstance().SetValue(CONST_CONFIG_OTHER_LANGUAGE, EditLanguage->GetValue());
+	//ISConfig::GetInstance().SetValue(CONST_CONFIG_AUTOINPUT_INCLUDED, GroupBoxInput->isChecked());
+	//ISConfig::GetInstance().SetValue(CONST_CONFIG_AUTOINPUT_LOGIN, EditLogin->GetValue());
+	//ISConfig::GetInstance().SetValue(CONST_CONFIG_AUTOINPUT_PASSWORD, EditPassword->GetValue());
 
 #ifdef Q_OS_WIN32
 	QSettings Settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
@@ -154,12 +154,12 @@ bool ISConnectionForm::CheckFields()
 //-----------------------------------------------------------------------------
 void ISConnectionForm::SaveDatabaseName()
 {
-	QFile FileTemp(APPLICATION_TEMP_PATH + "/ConnectDatabases");
+	QFile FileTemp(PATH_TEMP_DIR + "/ConnectDatabases");
 	if (FileTemp.open(QIODevice::ReadWrite))
 	{
 		QString DatabaseName = EditDatabase->GetCurrentText();
 		QString Content = FileTemp.readAll();
-		QStringList StringList = Content.split(";");
+		QStringList StringList = Content.split(';');
 		if (!StringList.contains(DatabaseName))
 		{
 			StringList.append(DatabaseName);
@@ -167,7 +167,7 @@ void ISConnectionForm::SaveDatabaseName()
 			{
 				if (String.length())
 				{
-					FileTemp.write(String.toUtf8() + ";");
+					FileTemp.write(String.toUtf8() + ';');
 				}
 			}
 		}

@@ -12,15 +12,15 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	setWindowTitle(LANG("Exit"));
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *Label = new QLabel(this);
-	Label->setText(LANG("SelectAction") + ":");
+	Label->setText(LANG("SelectAction") + ':');
 	GetMainLayout()->addWidget(Label);
 
 	QVBoxLayout *LayoutButtons = new QVBoxLayout();
-	LayoutButtons->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutButtons->setContentsMargins(MARGINS_LAYOUT_NULL);
 	LayoutButtons->setSpacing(0);
 	GetMainLayout()->addLayout(LayoutButtons);
 

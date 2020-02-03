@@ -29,7 +29,7 @@ ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name
 	setWindowTitle(LANG("UpdateApplication"));
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 	resize(SIZE_500_90);
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *LabelInformation = new QLabel(this);
@@ -41,7 +41,7 @@ ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name
 	GetMainLayout()->addLayout(LayoutTitle);
 
 	QLabel *Label = new QLabel(this);
-	Label->setText(LANG("Action") + ":");
+	Label->setText(LANG("Action") + ':');
 	LayoutTitle->addWidget(Label);
 
 	LabelStatus = new QLabel(this);

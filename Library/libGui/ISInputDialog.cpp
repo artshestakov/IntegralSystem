@@ -15,7 +15,7 @@ ISInputDialog::ISInputDialog(const QString &Title, const QString &LabelText, QWi
 	Label = nullptr;
 
 	setWindowTitle(Title);
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	if (LabelText.length())

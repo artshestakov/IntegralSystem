@@ -8,7 +8,7 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaFor
 {
 	PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass()); //Таблица на которую ссылается внешний ключ
 	QString ForeignAlias = MetaTableForeign->GetAlias();
-	QStringList FieldList = MetaForeign->GetForeignViewNameField().split(";");
+	QStringList FieldList = MetaForeign->GetForeignViewNameField().split(';');
 
 	QString SqlQuery = "SELECT " + ForeignAlias + '_' + MetaForeign->GetForeginField().toLower() + " AS ID, concat(";
 

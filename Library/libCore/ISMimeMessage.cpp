@@ -168,7 +168,7 @@ QString ISMimeMessage::toString()
                 mime += SYMBOL_SPACE + (*it)->getName();
             }
         }
-        mime += " <" + (*it)->getAddress() + ">";
+        mime += " <" + (*it)->getAddress() + '>';
     }
     mime += "\r\n";
 
@@ -193,7 +193,7 @@ QString ISMimeMessage::toString()
                 mime += SYMBOL_SPACE + (*it)->getName();
             }
         }
-        mime += " <" + (*it)->getAddress() + ">";
+        mime += " <" + (*it)->getAddress() + '>';
     }
     if (recipientsCc.size() != 0) {
         mime += "\r\n";

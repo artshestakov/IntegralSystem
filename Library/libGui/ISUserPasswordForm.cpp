@@ -35,7 +35,7 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id, QWidget *parent) : ISInterfa
 
 	setWindowTitle(LANG("ChangePassword"));
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	GetMainLayout()->addWidget(new QLabel(LANG("User") + ": " + UserFullName, this));
 
@@ -56,17 +56,17 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id, QWidget *parent) : ISInterfa
 
 	EditCurrentPassword = new ISLineEdit(this);
 	EditCurrentPassword->SetEchoMode(QLineEdit::Password);
-	FormLayout->addRow(LANG("CurrentPassword") + ":", EditCurrentPassword);
+	FormLayout->addRow(LANG("CurrentPassword") + ':', EditCurrentPassword);
 
 	EditPassword = new ISLineEdit(this);
 	EditPassword->SetEchoMode(QLineEdit::Password);
 	connect(EditPassword, &ISLineEdit::DataChanged, this, &ISUserPasswordForm::PasswordChecked);
-	FormLayout->addRow(LANG("Password") + ":", EditPassword);
+	FormLayout->addRow(LANG("Password") + ':', EditPassword);
 
 	EditPasswordCheck = new ISLineEdit(this);
 	EditPasswordCheck->SetEchoMode(QLineEdit::Password);
 	connect(EditPasswordCheck, &ISLineEdit::DataChanged, this, &ISUserPasswordForm::PasswordChecked);
-	FormLayout->addRow(LANG("PasswordCheck") + ":", EditPasswordCheck);
+	FormLayout->addRow(LANG("PasswordCheck") + ':', EditPasswordCheck);
 
 	ISPasswordWidthWidget *PasswordWidthWidget = new ISPasswordWidthWidget(this);
 	connect(EditPassword, &ISLineEdit::ValueChange, PasswordWidthWidget, &ISPasswordWidthWidget::SetPassword);

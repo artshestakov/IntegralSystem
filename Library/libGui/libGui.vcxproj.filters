@@ -283,6 +283,12 @@
     <ClInclude Include="ISPrintMetaReportField.h">
       <Filter>Printing\MetaData</Filter>
     </ClInclude>
+    <ClInclude Include="PMetaUserPermission.h">
+      <Filter>User Role</Filter>
+    </ClInclude>
+    <ClInclude Include="ISUserRoleEntity.h">
+      <Filter>User Role</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISIncomingCallBaseForm.cpp">
@@ -1062,9 +1068,6 @@
     <ClCompile Include="ISFastCreateObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISFeedbackForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISFullTextSearchForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -1534,12 +1537,6 @@
     </QtMoc>
     <QtMoc Include="ISTelephonySummary.h">
       <Filter>Telephony</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserRoleEntity.h">
-      <Filter>User Role</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaUserPermission.h">
-      <Filter>User Role</Filter>
     </QtMoc>
     <QtMoc Include="ISMediaPlayer.h">
       <Filter>System</Filter>
@@ -2124,9 +2121,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISFastCreateObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISFeedbackForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISFullTextSearchForm.h">

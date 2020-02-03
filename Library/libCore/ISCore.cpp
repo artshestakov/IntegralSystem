@@ -84,8 +84,8 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 bool ISCore::Startup()
 {
-	ISSystem::CreateDir(APPLICATION_LOGS_PATH);
-	ISSystem::CreateDir(APPLICATION_TEMP_PATH);
+	ISSystem::CreateDir(PATH_LOGS_DIR);
+	ISSystem::CreateDir(PATH_TEMP_DIR);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ void ISCore::RestartApplication()
 {
 	ExitApplication();
 	ISSystem::SleepSeconds(1);
-	QProcess::startDetached(APPLICATION_FILE_PATH);
+	QProcess::startDetached(PATH_APPLICATION_FILE);
 }
 //-----------------------------------------------------------------------------
 void ISCore::ExitApplication()
@@ -172,27 +172,13 @@ void ISCore::ExitApplication()
 	qApp->quit();*/
 }
 //-----------------------------------------------------------------------------
-void ISCore::TerminateCurrentProcess()
-{
-	QStringList StringList;
-	QString Program;
-	if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
-	{
-		Program = "TASKKILL";
-		StringList.append("/PID");
-		StringList.append(QString::number(CURRENT_PID));
-		StringList.append("/F");
-	}
-	QProcess::execute(Program, StringList);
-}
-//-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 {
 	QString ObjectName;
 	if (MetaTable->GetTitleName().length())
 	{
 		QString TitleName = MetaTable->GetTitleName();
-		QStringList StringList = TitleName.split(";");
+		QStringList StringList = TitleName.split(';');
 		QString QueryText = "SELECT ";
 
 		if (StringList.count() > 1) //Если имя объекта строится из нескольких полей
@@ -232,13 +218,13 @@ QString ISCore::GetVersionInFileName(const QString &FileName)
 {
 	QStringList StringListFile = FileName.split('_');
 	QString Version = StringListFile[StringListFile.length() - 1];
-	QStringList StringListVersion = Version.split('.');
+	QStringList StringListVersion = Version.split(SYMBOL_POINT);
 
 	QString VersionComplete;
 	for (int i = 0; i < StringListVersion.count(); ++i)
 	{
 		QString String = StringListVersion.at(i);
-		VersionComplete += String + '.';
+		VersionComplete += String + SYMBOL_POINT;
 	}
 
 	ISSystem::RemoveLastSymbolFromString(VersionComplete);
@@ -247,7 +233,7 @@ QString ISCore::GetVersionInFileName(const QString &FileName)
 //-----------------------------------------------------------------------------
 QString ISCore::ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat)
 {
-	return ConvertDateToString(DateTime.date(), DateFormat) + " " + LANG("At") + " " + DateTime.time().toString(TimeFormat);
+	return ConvertDateToString(DateTime.date(), DateFormat) + SYMBOL_SPACE + LANG("At") + SYMBOL_SPACE + DateTime.time().toString(TimeFormat);
 }
 //-----------------------------------------------------------------------------
 QString ISCore::ConvertDateToString(const QDate &Date, const QString &DateFormat)

@@ -26,7 +26,7 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(pare
 	setWindowFlags(Qt::Popup);
 	
 	QVBoxLayout *LayoutFrame = new QVBoxLayout();
-	LayoutFrame->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	LayoutFrame->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
 	QFrame *Frame = new QFrame(this);
 	Frame->setFrameShape(QFrame::Box);
@@ -34,7 +34,7 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(pare
 	Frame->setLayout(LayoutFrame);
 	GetMainLayout()->addWidget(Frame);
 
-	LayoutFrame->addWidget(new QLabel(LANG("Notifications") + ":", this));
+	LayoutFrame->addWidget(new QLabel(LANG("Notifications") + ':', this));
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setVerticalScrollMode(ISListWidget::ScrollPerPixel);

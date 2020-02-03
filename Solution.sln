@@ -208,6 +208,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratTelephony", "Projects\
 		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigTemplate", "ConfigTemplate", "{0E0DF063-6722-4FD3-9334-A6AF7BBD2C14}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\ConfigTemplate\Carat.ini = Resources\ConfigTemplate\Carat.ini
+		Resources\ConfigTemplate\Configurator.ini = Resources\ConfigTemplate\Configurator.ini
+		Resources\ConfigTemplate\IntegralSystem.ini = Resources\ConfigTemplate\IntegralSystem.ini
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -351,9 +358,10 @@ Global
 		{7591334D-499C-4ACC-934F-3416EBC179DE} = {08698096-FA74-4437-85DA-7CDC9B1C17B6}
 		{D326150C-504A-46B5-B138-A6C093820B2F} = {08698096-FA74-4437-85DA-7CDC9B1C17B6}
 		{ADF90776-C5D8-44F7-B840-EA8008316E18} = {08698096-FA74-4437-85DA-7CDC9B1C17B6}
+		{0E0DF063-6722-4FD3-9334-A6AF7BBD2C14} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

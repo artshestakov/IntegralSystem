@@ -6,7 +6,7 @@ ISTaskNameEdit::ISTaskNameEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	Completer = nullptr;
 
-	QFile File(APPLICATION_TEMP_PATH + "/TaskNameLog");
+	QFile File(PATH_TEMP_DIR + "/TaskNameLog");
 	if (File.exists())
 	{
 		if (File.open(QIODevice::ReadOnly))
@@ -37,7 +37,7 @@ void ISTaskNameEdit::Invoke()
 	StringList.removeDuplicates();
 	StringList.sort();
 
-	QFile File(APPLICATION_TEMP_PATH + "/TaskNameLog");
+	QFile File(PATH_TEMP_DIR + "/TaskNameLog");
 	if (File.open(QIODevice::Truncate | QIODevice::Append))
 	{
 		QTextStream TextStream(&File);

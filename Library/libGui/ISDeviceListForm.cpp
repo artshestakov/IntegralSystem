@@ -26,7 +26,7 @@ ISDeviceListForm::ISDeviceListForm(QWidget *parent) : ISListBaseForm("Device", p
 	AddAction(ActionIssue);
 
 	QLabel *LabelTotalSum = new QLabel(this);
-	LabelTotalSum->setText(LANG("Math.Sum") + ":");
+	LabelTotalSum->setText(LANG("Math.Sum") + ':');
 	AddWidgetToBottom(LabelTotalSum);
 
 	DoubleEdit = new ISDoubleEdit(this);
@@ -49,7 +49,7 @@ void ISDeviceListForm::Issue()
 
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.Issue")))
 		{
-			QString Defect = ISInputDialog::GetText(this, LANG("Defect"), LANG("EnterDefect") + ":").toString();
+			QString Defect = ISInputDialog::GetText(this, LANG("Defect"), LANG("EnterDefect") + ':').toString();
 
 			ISQuery qUpdate(QU_ISSUE);
 

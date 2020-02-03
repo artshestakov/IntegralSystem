@@ -748,7 +748,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 
 			if (MetaField->GetQueryText().length()) //Если поле является виртуальным
 			{
-				WhereText += "(" + MetaField->GetQueryText() + ")";
+				WhereText += '(' + MetaField->GetQueryText() + ')';
 			}
 			else //Стандартное мета-поле
 			{
@@ -757,13 +757,13 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 				{
 					PMetaClassTable *MetaForeignTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass());
 					WhereText += "(SELECT concat(";
-					for (const QString &FieldName : MetaForeign->GetForeignViewNameField().split(";"))
+					for (const QString &FieldName : MetaForeign->GetForeignViewNameField().split(';'))
 					{
 						WhereText += MetaForeignTable->GetAlias() + '_' + FieldName + ", ";
 					}
 					ISSystem::RemoveLastSymbolFromString(WhereText, 2);
-					WhereText += ") FROM " + MetaForeignTable->GetName() + " ";
-					WhereText += "WHERE " + MetaForeignTable->GetAlias() + '_' + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + '_' + MetaField->GetName() + ")";
+					WhereText += ") FROM " + MetaForeignTable->GetName() + SYMBOL_SPACE;
+					WhereText += "WHERE " + MetaForeignTable->GetAlias() + '_' + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + '_' + MetaField->GetName() + ')';
 				}
 				else //Поле без внешнего ключа
 				{
@@ -1293,7 +1293,7 @@ void ISListBaseForm::Print()
 	{
 		PrintingBase = new ISPrintingHtml(MetaReport, GetObjectID(), this);
 		PrintingBase->setProperty("PDF", PrintListForm.GetPDF());
-		PrintingBase->setProperty("PathPDF", QDir::homePath() + "/" + MetaReport->GetLocalName());
+		PrintingBase->setProperty("PathPDF", QDir::homePath() + '/' + MetaReport->GetLocalName());
 		PrintingBase->setProperty("EditPreview", EditPrintForm);
 	}
 	else if (MetaReport->GetType() == ISNamespace::RT_Word)
@@ -1819,7 +1819,7 @@ void ISListBaseForm::CreateModels()
 	QString SqlModelName = MetaTable->GetSqlModel();
 	if (SqlModelName.length()) //Если в мета-данных таблицы указана пользовательская модель, создавать её
 	{
-		int ObjectType = QMetaType::type((SqlModelName + "*").toLocal8Bit().constData());
+		int ObjectType = QMetaType::type((SqlModelName + '*').toLocal8Bit().constData());
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 		SqlModel = dynamic_cast<ISSqlModelCore*>(MetaObject->newInstance(Q_ARG(PMetaClassTable *, MetaTable), Q_ARG(QObject *, TableView)));
 	}

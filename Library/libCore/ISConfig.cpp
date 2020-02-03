@@ -5,46 +5,11 @@
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
-	: Settings(nullptr)
+	: ErrorString("No error."),
+	Settings(nullptr),
+	PathConfigTemplate(":/ConfigTemplate/" + APPLICATION_NAME + SYMBOL_POINT + EXTENSION_INI)
 {
-	Structure =
-	{
-		{
-			"Connection",
-			{
-				{ "Server" , "" },
-				{ "Port", "" },
-				{ "Database", "" },
-				{ "Login", "" },
-				{ "Password", "" }
-			}
-		},
-		{
-			"AutoInput",
-			{
-				{ "Included" , "false" },
-				{ "Login", "" },
-				{ "Password", "" }
-			}
-		},
-		{
-			"Other",
-			{
-				{ "Autoboot" , "false" },
-				{ "Language", "ru" }
-			}
-		},
-		{
-			"DatabaseService",
-			{
-				{ "Login" , "" },
-				{ "Password" , "" },
-				{ "FolderBackup" , "" },
-				{ "FolderPostgresBin" , "" },
-				{ "KeepOverDays", "" }
-			}
-		}
-	};
+	
 }
 //-----------------------------------------------------------------------------
 ISConfig::~ISConfig()
@@ -61,15 +26,20 @@ ISConfig& ISConfig::GetInstance()
 	return Config;
 }
 //-----------------------------------------------------------------------------
-void ISConfig::Initialize(const QString &config_file_path)
+bool ISConfig::Initialize()
 {
-	ConfigFilePath = config_file_path;
-	if (!QFile::exists(ConfigFilePath))
+	bool Result = QFile::exists(PATH_CONFIG_FILE);
+	if (Result) //Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления
 	{
-		Generate();
+		Settings = new QSettings(PATH_CONFIG_FILE, QSettings::IniFormat);
+		Result = Update();
 	}
-
-	Settings = new QSettings(ConfigFilePath, QSettings::IniFormat);
+	else //Конфигурационный файл не существует - создаём его из шаблона
+	{
+		Result = Create();
+		Settings = new QSettings(PATH_CONFIG_FILE, QSettings::IniFormat);
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QVariant ISConfig::GetValue(const QString &ParameterName)
@@ -106,19 +76,36 @@ void ISConfig::ClearValue(const QString &ParameterName)
 	Settings->setValue(ParameterName, QVariant());
 }
 //-----------------------------------------------------------------------------
-void ISConfig::Generate()
+bool ISConfig::Update()
 {
-	//??? Вероятно, это временное решениие и тут будет использоваться класс CLSettings из монорепозитория
-	Settings = new QSettings(ConfigFilePath, QSettings::IniFormat);
-	for (const auto &SectionItem : Structure)
+	QSettings settings_local(PathConfigTemplate, QSettings::IniFormat);
+	QStringList Keys = settings_local.allKeys();
+	int CountAdded = 0; //Количество добавленных
+	for (const QString &Key : Keys)
 	{
-		for (const auto &ParameterItem : SectionItem.second)
+		if (!Settings->contains(Key)) //Если такой ключ не существует в конфигурационном файле - добавляем его
 		{
-			Settings->setValue(SectionItem.first + "/" + ParameterItem.first, ParameterItem.second);
+			Settings->setValue(Key, settings_local.value(Key));
+			++CountAdded;
 		}
 	}
 
-	delete Settings;
-	Settings = nullptr;
+	if (CountAdded) //Если параметры были добавлены - синхронизируем
+	{
+		Settings->sync();
+	}
+
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISConfig::Create()
+{
+	QFile File(PathConfigTemplate);
+	bool Result = File.copy(PATH_CONFIG_FILE);
+	if (!Result)
+	{
+		ErrorString = "Error create config file \"" + PATH_CONFIG_FILE + "\": " + File.errorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

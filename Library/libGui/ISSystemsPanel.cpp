@@ -13,7 +13,7 @@
 ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 {
 	Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	Layout->setSpacing(0);
 	setLayout(Layout);
 

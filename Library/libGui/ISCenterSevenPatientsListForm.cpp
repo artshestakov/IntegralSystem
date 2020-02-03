@@ -64,7 +64,7 @@ void ISCenterSevenPatientsListForm::Send()
 					QString Phone = qSelect.ReadColumn("ptnt_phonemain").toString();
 					if (Phone.length())
 					{
-						ISCore::SMSSend("7" + Phone, TemplateText);
+						ISCore::SMSSend('7' + Phone, TemplateText);
 					}
 
 					QString PatientEMail = qSelect.ReadColumn("ptnt_email").toString();

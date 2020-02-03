@@ -31,7 +31,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 	setMinimumSize(SIZE_MAIN_WINDOW_MINIMUM);
 
 	Layout = new QHBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	Layout->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
 	ListWidget = new ISListWidget(this);
@@ -48,7 +48,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	LayoutBottom->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	LayoutBottom->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	ISPushButton *ButtonDefault = new ISPushButton(this);
@@ -73,7 +73,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 
 	ButtonDialog = new ISButtonDialog(this);
 	ButtonDialog->SetApplyEnabled(false);
-	ButtonDialog->layout()->setContentsMargins(LAYOUT_MARGINS_NULL);
+	ButtonDialog->layout()->setContentsMargins(MARGINS_LAYOUT_NULL);
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISSettingsForm::Save);
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISSettingsForm::close);
 	LayoutBottom->addWidget(ButtonDialog, 0, Qt::AlignRight);
@@ -142,7 +142,7 @@ void ISSettingsForm::CreateSettings()
 			ISMetaSetting *MetaSetting = MetaGroup->GetSettings().at(j);
 			
 			ISQLabel *LabelRow = new ISQLabel(ScrollArea);
-			LabelRow->setText(MetaSetting->GetLocalName() + ":");
+			LabelRow->setText(MetaSetting->GetLocalName() + ':');
 
 			if (MetaSetting->GetHint().length())
 			{
@@ -265,7 +265,7 @@ void ISSettingsForm::Export()
 		{
 			while (qSelect.Next())
 			{
-				QString SettingUID = "{" + qSelect.ReadColumn("usst_setting").toString().toUpper() + "}";
+				QString SettingUID = '{' + qSelect.ReadColumn("usst_setting").toString().toUpper() + '}';
 				QString SettingValue = qSelect.ReadColumn("usst_value").toString();
 
 				Settings.setValue("Settings/" + SettingUID, SettingValue);
@@ -292,7 +292,7 @@ void ISSettingsForm::Import()
 
 			QString SettingKey = AllKeys.at(i);
 
-			QString SettingUID = SettingKey.split("/").at(1);
+			QString SettingUID = SettingKey.split('/').at(1);
 			QString SettingValue = Settings.value(SettingKey).toString();
 
 			ISSettings::GetInstance().SaveValue(SettingUID, SettingValue);

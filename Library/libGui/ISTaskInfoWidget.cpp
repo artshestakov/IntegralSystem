@@ -26,18 +26,18 @@ ISTaskInfoWidget::ISTaskInfoWidget(int task_id, QWidget *parent) : QWidget(paren
 	FormLayout = new QFormLayout();
 	setLayout(FormLayout);
 
-	LabelStatus = AddLabel(LANG("Task.Status") + ":");
+	LabelStatus = AddLabel(LANG("Task.Status") + ':');
 	LabelStatus->setFont(FONT_TAHOMA_10);
 	LabelStatus->setSizePolicy(QSizePolicy::Maximum, LabelStatus->sizePolicy().verticalPolicy());
 
-	LabelNumber = AddLabel(LANG("Task.Number") + ":");
-	LabelPriority = AddLabel(LANG("Task.Priority") + ":");
-	LabelDeadline = AddLabel(LANG("Task.Deadline") + ":");
-	LabelOwner = AddLabel(LANG("Task.Owner") + ":");
-	LabelExecutor = AddLabel(LANG("Task.Executor") + ":");
-	LabelDateTime = AddLabel(LANG("Task.DateTime") + ":");
+	LabelNumber = AddLabel(LANG("Task.Number") + ':');
+	LabelPriority = AddLabel(LANG("Task.Priority") + ':');
+	LabelDeadline = AddLabel(LANG("Task.Deadline") + ':');
+	LabelOwner = AddLabel(LANG("Task.Owner") + ':');
+	LabelExecutor = AddLabel(LANG("Task.Executor") + ':');
+	LabelDateTime = AddLabel(LANG("Task.DateTime") + ':');
 
-	LabelResolution = AddLabel(LANG("Task.Resolution") + ":");
+	LabelResolution = AddLabel(LANG("Task.Resolution") + ':');
 	LabelResolution->setWordWrap(true);
 }
 //-----------------------------------------------------------------------------

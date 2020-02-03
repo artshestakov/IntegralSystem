@@ -31,9 +31,9 @@ ISExternalToolsForm::ISExternalToolsForm(QWidget *parent) : ISInterfaceDialogFor
 {
 	setWindowTitle(LANG("ExternalTools"));
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
-	QLabel *Label = new QLabel(LANG("MenuStructure") + ":", this);
+	QLabel *Label = new QLabel(LANG("MenuStructure") + ':', this);
 	GetMainLayout()->addWidget(Label);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
@@ -69,11 +69,11 @@ ISExternalToolsForm::ISExternalToolsForm(QWidget *parent) : ISInterfaceDialogFor
 
 	EditName = new ISLineEdit(this);
 	connect(EditName, &ISLineEdit::ValueChange, this, &ISExternalToolsForm::NameChanged);
-	FormLayout->addRow(LANG("Named") + ":", EditName);
+	FormLayout->addRow(LANG("Named") + ':', EditName);
 
 	EditCommand = new ISPathEditFile(this);
 	connect(EditCommand, &ISPathEditFile::ValueChange, this, &ISExternalToolsForm::CommandChanged);
-	FormLayout->addRow(LANG("Command") + ":", EditCommand);
+	FormLayout->addRow(LANG("Command") + ':', EditCommand);
 
 	ButtonDialog = new ISButtonDialog(this, LANG("Save"));
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISExternalToolsForm::Save);
@@ -166,7 +166,7 @@ void ISExternalToolsForm::Save()
 void ISExternalToolsForm::Add()
 {
 	QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-	ListWidgetItem->setText("[" + LANG("NewTools") + "]");
+	ListWidgetItem->setText('[' + LANG("NewTools") + ']');
 	ListWidget->setCurrentItem(ListWidgetItem);
 
 	EditName->SetValue(ListWidgetItem->text());

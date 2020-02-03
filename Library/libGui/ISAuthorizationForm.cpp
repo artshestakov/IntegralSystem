@@ -24,7 +24,7 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 
 	setWindowTitle(LANG("InputInSystem"));
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_NULL);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_NULL);
 
 	QLabel *LableImage = new QLabel(this);
 	LableImage->setScaledContents(true);
@@ -32,10 +32,10 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	GetMainLayout()->addWidget(LableImage);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	Layout->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
-	Layout->addWidget(new QLabel(LANG("InputLoginAndPassword") + ":", this));
+	Layout->addWidget(new QLabel(LANG("InputLoginAndPassword") + ':', this));
 
 	EditLogin = new ISLineEdit(this);
 	EditLogin->SetPlaceholderText(LANG("Login"));
@@ -53,7 +53,7 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	Layout->addWidget(EditPassword);
 
 	QHBoxLayout *LayoutLabels = new QHBoxLayout();
-	LayoutLabels->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutLabels->setContentsMargins(MARGINS_LAYOUT_NULL);
 	Layout->addLayout(LayoutLabels);
 
 	LabelCapsLook = new QLabel(this);
@@ -145,7 +145,7 @@ void ISAuthorizationForm::AfterShowEvent()
 	connect(TimerLang, &QTimer::timeout, this, &ISAuthorizationForm::TimeoutLang);
 	TimerLang->start(200);
 
-	if (CONFIG_BOOL(CONST_CONFIG_AUTOINPUT_INCLUDED))
+	/*if (CONFIG_BOOL(CONST_CONFIG_AUTOINPUT_INCLUDED)) //???
 	{
 		EditLogin->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_LOGIN));
 		EditPassword->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_PASSWORD));
@@ -162,7 +162,7 @@ void ISAuthorizationForm::AfterShowEvent()
 	else
 	{
 		EditLogin->SetFocus();
-	}
+	}*/
 }
 //-----------------------------------------------------------------------------
 void ISAuthorizationForm::EnterClicked()

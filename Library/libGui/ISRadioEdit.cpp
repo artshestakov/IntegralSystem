@@ -5,7 +5,7 @@
 ISRadioEdit::ISRadioEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	LayoutPanel = new QHBoxLayout();
-	LayoutPanel->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutPanel->setContentsMargins(MARGINS_LAYOUT_NULL);
 
 	WidgetPanel = new QWidget(this);
 	WidgetPanel->setLayout(LayoutPanel);

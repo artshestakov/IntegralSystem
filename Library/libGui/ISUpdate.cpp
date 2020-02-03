@@ -78,7 +78,7 @@ bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 	{
 		emit ProgressMaximum(qSelectID.GetCountResultRows());
 
-		QFile FileUpdate(APPLICATION_TEMP_PATH + "/" + FileName + ".exe");
+		QFile FileUpdate(PATH_TEMP_DIR + '/' + FileName + ".exe");
 		if (FileUpdate.exists()) //Если файл такой обновления уже существует во временой папке - удалить его
 		{
 			emit Message(LANG("DeletingExistFileUpdate") + "...");
@@ -128,6 +128,6 @@ bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 //-----------------------------------------------------------------------------
 bool ISUpdate::StartInstallUpdate(const QString &FileName)
 {
-	return QProcess::startDetached(APPLICATION_DIR_PATH + "/Update.cmd", QStringList() << FileName, APPLICATION_DIR_PATH);
+	return QProcess::startDetached(PATH_APPLICATION_DIR + "/Update.cmd", QStringList() << FileName, PATH_APPLICATION_DIR);
 }
 //-----------------------------------------------------------------------------

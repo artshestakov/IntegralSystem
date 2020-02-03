@@ -27,7 +27,7 @@ ISDiscussionObjectForm::ISDiscussionObjectForm(const QString &table_name, int pa
 
 	ForbidResize();
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -45,7 +45,7 @@ ISDiscussionObjectForm::ISDiscussionObjectForm(const QString &table_name, int pa
 	EditMessage = new ISTextEdit(this);
 	EditMessage->SetPlaceholderText(LANG("WhatDoYouWantToSay"));
 	EditMessage->SetValue(Message);
-	FormLayout->addRow(LANG("Message") + ":", EditMessage);
+	FormLayout->addRow(LANG("Message") + ':', EditMessage);
 }
 //-----------------------------------------------------------------------------
 ISDiscussionObjectForm::~ISDiscussionObjectForm()

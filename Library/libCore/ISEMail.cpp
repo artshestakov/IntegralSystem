@@ -16,7 +16,7 @@ ISEMail::ISEMail(const QString &server, int port, const ISUuid &connection_type,
 	Message(message)
 {
 	Process = new QProcess(this);
-	Process->setProgram(APPLICATION_DIR_PATH + "/EMailSender");
+	Process->setProgram(PATH_APPLICATION_DIR + "/EMailSender");
 	Process->setReadChannel(QProcess::StandardOutput);
 	connect(Process, &QProcess::readyReadStandardOutput, this, &ISEMail::ReadyReadStandardOutput);
 	connect(Process, &QProcess::readyReadStandardError, this, &ISEMail::ReadyReadStandardError);
@@ -128,7 +128,7 @@ void ISEMail::ReadyReadStandardError()
 //-----------------------------------------------------------------------------
 bool ISEMail::CreateSenderFile(QString &FilePath)
 {
-	QFile File(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + ".json");
+	QFile File(PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + ".json");
 	if (File.open(QIODevice::WriteOnly)) //Если файл отправки открылся
 	{
 		//Запись контента и закрытие файла

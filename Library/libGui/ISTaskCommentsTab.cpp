@@ -15,7 +15,7 @@ static QString QS_COMMENTS = PREPARE_QUERY("SELECT tcom_creationdate, userfullna
 ISTaskCommentsTab::ISTaskCommentsTab(int task_id, QTabWidget *parent) : ISTaskTabBase(task_id, parent)
 {
 	LayoutComments = new QVBoxLayout();
-	LayoutComments->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutComments->setContentsMargins(MARGINS_LAYOUT_NULL);
 	LayoutComments->addStretch();
 
 	ScrollAreaComments = new ISScrollArea(this);

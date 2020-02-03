@@ -43,7 +43,7 @@ ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &Use
 	Layout->addWidget(LabelFile);
 	ISGui::SetFontWidgetUnderline(LabelFile, true);
 
-	Layout->addWidget(new QLabel("(" + Size + ")", this));
+	Layout->addWidget(new QLabel('(' + Size + ')', this));
 	Layout->addStretch();
 	Layout->addWidget(new QLabel(DateTime.toString(DATE_TIME_FORMAT_V2), this));
 

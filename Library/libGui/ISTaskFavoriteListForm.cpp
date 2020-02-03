@@ -37,7 +37,7 @@ void ISTaskFavoriteListForm::Update()
 	if (TaskFavorites)
 	{
 		ISSystem::RemoveLastSymbolFromString(StringIN, 2);
-		GetQueryModel()->SetClassFilter("task_id IN(" + StringIN + ")");
+		GetQueryModel()->SetClassFilter("task_id IN(" + StringIN + ')');
 	}
 	*/
 	ISTaskBaseListForm::Update();

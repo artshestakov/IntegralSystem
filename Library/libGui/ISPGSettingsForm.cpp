@@ -44,7 +44,7 @@ ISPGSettingsForm::ISPGSettingsForm(QWidget *parent) : ISInterfaceForm(parent)
 					QLabel *LabelValue = new QLabel(GroupBox);
 					LabelValue->setText(SettingValue);
 					ISGui::SetFontWidgetBold(LabelValue, true);
-					FormLayout->addRow(SettingName + ":", LabelValue);
+					FormLayout->addRow(SettingName + ':', LabelValue);
 				}
 			}
 		}

@@ -39,7 +39,6 @@
 #include "ISFileDialog.h"
 #include "ISNotificationService.h"
 #include "ISCreatedObjectsEntity.h"
-#include "ISFeedbackForm.h"
 #include "ISLogger.h"
 #include "ISListViewWidget.h"
 #include "ISIncomingCallBaseForm.h"
@@ -276,14 +275,12 @@ void ISMainWindow::CreateMenuBar()
 	connect(MenuBar, &ISMenuBar::DeviceSettings, this, &ISMainWindow::ShowDeviceSettings);
 	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
 	connect(MenuBar, &ISMenuBar::CreateLogToday, this, &ISMainWindow::CreateLogToday);
-	connect(MenuBar, &ISMenuBar::Debug, this, &ISMainWindow::ShowDebugApplication);
 	connect(MenuBar, &ISMenuBar::UserStatus, this, &ISMainWindow::UserStatusChange);
 	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
 	connect(MenuBar, &ISMenuBar::Notebook, this, &ISMainWindow::ShowNoteForm);
 	connect(MenuBar, &ISMenuBar::Calculator, this, &ISMainWindow::ShowCalculator);
 	connect(MenuBar, &ISMenuBar::AddressBook, this, &ISMainWindow::ShowAddressBook);
 	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
-	connect(MenuBar, &ISMenuBar::FeedbackForm, this, &ISMainWindow::ShowFeedbackForm);
 	connect(MenuBar, &ISMenuBar::AboutQt, this, &ISMainWindow::ShowAboutQt);
 	connect(MenuBar, &ISMenuBar::License, this, &ISMainWindow::ShowLicenseForm);
 	GetMainLayout()->addWidget(MenuBar);
@@ -322,7 +319,7 @@ void ISMainWindow::CreateStackWidget()
 		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->GetLocalName()));
 		ISCountingTime CountingTime;
 
-		int ObjectType = QMetaType::type((MetaParagraph->GetClassName() + "*").toLocal8Bit().constData());
+		int ObjectType = QMetaType::type((MetaParagraph->GetClassName() + '*').toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("Invalid object type from paragraph: %1").arg(MetaParagraph->GetName()));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
@@ -421,7 +418,7 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	QString ClassName = ISLicense::GetInstance().GetIncomingCallForm();
-	int ObjectType = QMetaType::type((ClassName + "*").toLocal8Bit().constData());
+	int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
 	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 	ISIncomingCallBaseForm *IncomingCallForm = dynamic_cast<ISIncomingCallBaseForm*>(MetaObject->newInstance(Q_ARG(const QVariantMap &, VariantMap)));
 	ISGui::SetWaitGlobalCursor(false);
@@ -603,13 +600,6 @@ void ISMainWindow::ShowAddressBook()
 	AddressBookListForm->showMaximized();
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::ShowDebugApplication()
-{
-	ISGui::SetWaitGlobalCursor(true);
-	ISGui::OpenFile(DEBUG_VIEW_PATH);
-	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
 void ISMainWindow::UserStatusChange()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_USER_STATUS_CHANGE))
@@ -662,16 +652,6 @@ void ISMainWindow::ShowAboutForm()
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_ABOUT_FORM, QString(), QString(), QVariant());
 	ISAboutForm AboutForm;
 	AboutForm.Exec();
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowFeedbackForm()
-{
-	ISGui::SetWaitGlobalCursor(true);
-
-	ISFeedbackForm *FeedbackForm = new ISFeedbackForm();
-	FeedbackForm->show();
-
-	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAboutQt()

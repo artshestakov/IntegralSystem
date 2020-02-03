@@ -52,7 +52,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	int ObjectID = qSelectMessage.ReadColumn("chat_objectid").toInt();
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_4_PX);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_4_PX);
 	setLayout(MainLayout);
 
 	QHBoxLayout *LayoutTop = new QHBoxLayout();
@@ -85,7 +85,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 		LabelOnline->setToolTip(LANG("ChatForm.User.Offline"));
 	}
 
-	QLabel *LabelUser = new QLabel(UserFullName + ":", this);
+	QLabel *LabelUser = new QLabel(UserFullName + ':', this);
 	LabelUser->setFont(FONT_APPLICATION_BOLD);
 	LayoutTop->addWidget(LabelUser);
 
@@ -231,7 +231,7 @@ void ISChatMessageWidget::OpenFile()
 			QByteArray ByteArray = qSelectFile.ReadColumn("chat_file").toByteArray();
 			QString FileName = qSelectFile.ReadColumn("chat_filename").toString();
 
-			QFile File(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + '.' + QFileInfo(FileName).suffix());
+			QFile File(PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + QFileInfo(FileName).suffix());
 			if (File.open(QIODevice::WriteOnly))
 			{
 				File.write(ByteArray);

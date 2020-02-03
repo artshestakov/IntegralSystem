@@ -21,7 +21,7 @@ ISDesktopForm::ISDesktopForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	{
 		if (ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_DESKTOP))
 		{
-			int ObjectType = QMetaType::type((DesktopFormName + "*").toLocal8Bit().constData());
+			int ObjectType = QMetaType::type((DesktopFormName + '*').toLocal8Bit().constData());
 			IS_ASSERT(ObjectType, QString("Class for desktop form is NULL. DesktopFormName: %1").arg(DesktopFormName));
 
 			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

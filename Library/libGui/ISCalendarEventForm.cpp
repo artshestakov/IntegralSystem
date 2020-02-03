@@ -49,7 +49,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	//setWindowFlags(Qt::WindowStaysOnTopHint);
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutInfo = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutInfo, 0);
@@ -81,14 +81,14 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 
 	if (EventDate == DATE_TODAY) //Событие сегодня
 	{
-		LabelDate->setText(LabelDate->text() + " (" + LANG("Today") + ")");
+		LabelDate->setText(LabelDate->text() + " (" + LANG("Today") + ')');
 	}
 	else if (EventDate < DATE_TODAY) //Событие просрочено
 	{
 		LabelOverdueIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(SIZE_16_16));
 		LabelOverdueIcon->setVisible(true);
 
-		LabelDate->setText(LabelDate->text() + " (" + LANG("OverdueEvent") + ")");
+		LabelDate->setText(LabelDate->text() + " (" + LANG("OverdueEvent") + ')');
 		LabelDate->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
 		LabelDate->setFont(FONT_APPLICATION_BOLD);
 	}

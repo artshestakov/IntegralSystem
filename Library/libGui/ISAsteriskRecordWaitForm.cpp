@@ -15,7 +15,7 @@ ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id, QWi
 	UniqueID = unique_id;
 
 	setWindowTitle(LANG("AsteriskRecord.Interface.Title"));
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	TcpSocket = new QTcpSocket(this);
@@ -87,7 +87,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 	QByteArray ByteArray = TcpSocket->readAll();
 	if (ByteArray.contains("start")) //Начало загрузки файла
 	{
-		QStringList StringList = QString(ByteArray).split(":");
+		QStringList StringList = QString(ByteArray).split(':');
 		Size = StringList.at(1).toInt();
 
 		Label->setText(LANG("AsteriskRecord.Interface.Label.Downloading"));
@@ -98,7 +98,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 	}
 	else if (ByteArray.contains("message")) //Сообщение от сервера
 	{
-		QStringList StringList = QString(ByteArray).split(":");
+		QStringList StringList = QString(ByteArray).split(':');
 		Label->setText(LANG(StringList.at(1)));
 		ProgressBar->setRange(0, 100);
 		setCursor(CURSOR_ARROW);
@@ -109,7 +109,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 		TcpSocket->close();
 		Label->setText(LANG("AsteriskRecord.Interface.Label.Downloaded"));
 
-		QFile FileRecord(APPLICATION_TEMP_PATH + "/" + ISSystem::GenerateUuid() + '.' + EXTENSION_WAV);
+		QFile FileRecord(PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + EXTENSION_WAV);
 		if (FileRecord.open(QIODevice::WriteOnly))
 		{
 			FileRecord.write(Buffer);

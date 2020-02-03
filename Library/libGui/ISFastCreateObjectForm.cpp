@@ -24,12 +24,12 @@ ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceD
 {
 	setWindowTitle(LANG("CreateRecords"));
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
 
-	Layout->addWidget(new QLabel(LANG("Table") + ":", this));
+	Layout->addWidget(new QLabel(LANG("Table") + ':', this));
 
 	ComboEdit = new ISComboEdit(this);
 	ComboEdit->SetEditable(false);

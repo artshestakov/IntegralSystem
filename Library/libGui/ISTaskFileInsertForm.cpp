@@ -20,7 +20,7 @@ ISTaskFileInsertForm::ISTaskFileInsertForm(int task_id, QWidget *parent) : ISInt
 
 	setWindowTitle(LANG("Task.AttachingFile"));
 	setMinimumWidth(500);
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();
@@ -28,11 +28,11 @@ ISTaskFileInsertForm::ISTaskFileInsertForm(int task_id, QWidget *parent) : ISInt
 
 	PathEditFile = new ISPathEditFile(this);
 	connect(PathEditFile, &ISPathEditFile::DataChanged, this, &ISTaskFileInsertForm::PathEditfileChanged);
-	FormLayout->addRow(LANG("File") + ":", PathEditFile);
+	FormLayout->addRow(LANG("File") + ':', PathEditFile);
 
 	EditNote = new ISLineEdit(this);
 	EditNote->SetPlaceholderText(LANG("Task.FileNote"));
-	FormLayout->addRow(LANG("Note") + ":", EditNote);
+	FormLayout->addRow(LANG("Note") + ':', EditNote);
 
 	ProgressBar = new QProgressBar(this);
 	ProgressBar->setValue(0);

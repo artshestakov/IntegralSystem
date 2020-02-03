@@ -27,7 +27,7 @@ ISUserOnlineDetailsForm::ISUserOnlineDetailsForm(int user_id, QWidget *parent) :
 {
 	setWindowTitle(LANG("MonitorActivity.DetailsSession"));
 	setWindowIcon(BUFFER_ICONS("Information"));
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);
@@ -65,12 +65,12 @@ void ISUserOnlineDetailsForm::AddLabel(const QString &LabelName, const QString &
 	QLabel *Label = new QLabel(this);
 	Label->setText(LabelValue);
 	ISGui::SetFontWidgetBold(Label, true);
-	FormLayout->addRow(LabelName + ":", Label);
+	FormLayout->addRow(LabelName + ':', Label);
 }
 //-----------------------------------------------------------------------------
 QString ISUserOnlineDetailsForm::GetState(const QString &State) const
 {
-	QString Result = "-";
+	QString Result = SYMBOL_MINUS;
 	if (State == "active")
 	{
 		Result = LANG("MonitorActivity.UserOnlineDetails.State.Active");

@@ -34,7 +34,7 @@ static QString QU_DESKTOP_DAY_NOTE = PREPARE_QUERY("UPDATE desktopdaynote SET "
 ISDesktopInformResource::ISDesktopInformResource(QWidget *parent) : QWidget(parent)
 {
 	MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	LayoutCentral = new QHBoxLayout();
@@ -113,7 +113,7 @@ void ISDesktopInformResource::CreateCentralPanel()
 void ISDesktopInformResource::CreateRightPanel()
 {
 	QVBoxLayout *LayoutGroupBox = new QVBoxLayout();
-	LayoutGroupBox->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	LayoutGroupBox->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
 	QGroupBox *GroupBoxCallHistory = new QGroupBox(this);
 	GroupBoxCallHistory->setTitle(LANG("CallHistory"));

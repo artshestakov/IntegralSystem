@@ -15,7 +15,7 @@
 CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
 	Q_INIT_RESOURCE(Resources);
-	ISConfig::GetInstance().Initialize(CONFIG_FILE_PATH);
+	ISConfig::GetInstance().Initialize();
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
     ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
@@ -66,7 +66,7 @@ CGConfigurator::~CGConfigurator()
 void CGConfigurator::InterpreterMode()
 {
 	ISDebug::ShowEmptyString();
-	ISDebug::ShowString(LANG("Configurator.InputCommand") + ":");
+	ISDebug::ShowString(LANG("Configurator.InputCommand") + ':');
 
 	std::string InputCommand;
 	std::getline(std::cin, InputCommand);

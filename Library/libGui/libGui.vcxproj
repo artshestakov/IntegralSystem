@@ -243,7 +243,6 @@
     <ClCompile Include="ISFastCreateObjectForm.cpp" />
     <ClCompile Include="ISFavorites.cpp" />
     <ClCompile Include="ISFavoritesForm.cpp" />
-    <ClCompile Include="ISFeedbackForm.cpp" />
     <ClCompile Include="ISFieldEditBase.cpp" />
     <ClCompile Include="ISFileDialog.cpp" />
     <ClCompile Include="ISFileEdit.cpp" />
@@ -497,7 +496,7 @@
     <QtMoc Include="ISSqlModelView.h" />
     <QtMoc Include="ISSqlModelCore.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
-    <QtMoc Include="PMetaUserPermission.h" />
+    <ClInclude Include="PMetaUserPermission.h" />
     <QtMoc Include="ISIncomingCallBaseForm.h" />
     <QtMoc Include="ISInterfaceMetaForm.h" />
     <QtMoc Include="ISListBaseForm.h" />
@@ -556,7 +555,7 @@
     <ClInclude Include="ISSortingMetaTable.h" />
     <QtMoc Include="ISTelephony.h" />
     <QtMoc Include="ISTelephonySummary.h" />
-    <QtMoc Include="ISUserRoleEntity.h" />
+    <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISCreatedObjectsEntity.h" />
     <ClInclude Include="ISGui.h" />
     <QtMoc Include="ISMediaPlayer.h" />
@@ -732,7 +731,6 @@
     <QtMoc Include="ISExitForm.h" />
     <QtMoc Include="ISExternalToolsForm.h" />
     <QtMoc Include="ISFastCreateObjectForm.h" />
-    <QtMoc Include="ISFeedbackForm.h" />
     <QtMoc Include="ISFullTextSearchForm.h" />
     <QtMoc Include="ISHistoryForm.h" />
     <QtMoc Include="ISInternalDirectoriesForm.h" />

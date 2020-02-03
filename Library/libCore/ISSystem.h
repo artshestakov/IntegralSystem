@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISSYSTEM_H_INCLUDED
+#define _ISSYSTEM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
@@ -58,3 +60,4 @@ public:
 	static QDateTime GetLastModifiedFile(const QString &FilePath); //Получить дату и время последнего изменения файла
 };
 //-----------------------------------------------------------------------------
+#endif

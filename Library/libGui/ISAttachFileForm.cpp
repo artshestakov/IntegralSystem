@@ -8,7 +8,7 @@ ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : I
 {
 	setWindowTitle(LANG("AddingFiles"));
 	setMinimumWidth(500);
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	connect(this, &ISAttachFileForm::UpdateList, this, &ISAttachFileForm::close);
@@ -17,7 +17,7 @@ ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : I
 	GetMainLayout()->addLayout(LayoutFile);
 
 	QLabel *LabelFile = new QLabel(this);
-	LabelFile->setText(LANG("File") + ":");
+	LabelFile->setText(LANG("File") + ':');
 	LayoutFile->addWidget(LabelFile);
 
 	PathFileEdit = new ISPathEditFile(this);
@@ -28,7 +28,7 @@ ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : I
 	GetMainLayout()->addLayout(LayoutNote);
 
 	QLabel *LabelNote = new QLabel(this);
-	LabelNote->setText(LANG("Note") + ":");
+	LabelNote->setText(LANG("Note") + ':');
 	LayoutNote->addWidget(LabelNote);
 
 	NoteEdit = new ISLineEdit(this);

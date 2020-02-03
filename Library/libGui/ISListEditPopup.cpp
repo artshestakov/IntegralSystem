@@ -22,7 +22,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 	setAttribute(Qt::WA_DeleteOnClose, false);
 
 	QVBoxLayout *LayoutFrame = new QVBoxLayout();
-	LayoutFrame->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	LayoutFrame->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
 	QFrame *Frame = new QFrame(this);
 	Frame->setFrameShape(QFrame::Box);
@@ -37,7 +37,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 	LayoutFrame->addWidget(LineEdit);
 
 	LabelName = new QLabel(this);
-	LabelName->setText(MetaTableForeign->GetLocalListName() + ":");
+	LabelName->setText(MetaTableForeign->GetLocalListName() + ':');
 	LabelName->setFont(FONT_APPLICATION_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutFrame->addWidget(LabelName);

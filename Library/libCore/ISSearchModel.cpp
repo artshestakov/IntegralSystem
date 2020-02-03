@@ -21,11 +21,11 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 		{
 			for (const QVariant &Value : ModelItem.Values)
 			{
-				QString Condition = ":" + ModelItem.FieldName + '_' + ISRandom::String();
+				QString Condition = ':' + ModelItem.FieldName + '_' + ISRandom::String();
 
 				if (ModelItem.FieldType == ISNamespace::FT_String)
 				{
-					SearchString += CreateSubString(ModelItem.Operator, "lower(" + ModelItem.FieldName + ")", Condition, false);
+					SearchString += CreateSubString(ModelItem.Operator, "lower(" + ModelItem.FieldName + ')', Condition, false);
 				}
 				else
 				{
@@ -38,11 +38,11 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 		}
 		else //Поиск одного значения
 		{
-			QString Condition = ":" + ModelItem.FieldName + '_' + ISRandom::String();
+			QString Condition = ':' + ModelItem.FieldName + '_' + ISRandom::String();
 
 			if (ModelItem.FieldType == ISNamespace::FT_String)
 			{
-				SearchString += CreateSubString(ModelItem.Operator, "lower(" + ModelItem.FieldName + ")", Condition, true);
+				SearchString += CreateSubString(ModelItem.Operator, "lower(" + ModelItem.FieldName + ')', Condition, true);
 			}
 			else
 			{

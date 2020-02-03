@@ -25,7 +25,7 @@ static QString QD_GROUP = PREPARE_QUERY("DELETE FROM _questionanswergroup "
 //-----------------------------------------------------------------------------
 ISKnowledgeBaseSubSystem::ISKnowledgeBaseSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -196,7 +196,7 @@ void ISKnowledgeBaseSubSystem::LoadSubGroup(QTreeWidgetItem *TreeItemParent)
 
 	if (TreeItemParent->childCount())
 	{
-		TreeItemParent->setText(0, TreeItemParent->text(0) + " (" + QString::number(TreeItemParent->childCount()) + ")");
+		TreeItemParent->setText(0, TreeItemParent->text(0) + " (" + QString::number(TreeItemParent->childCount()) + ')');
 	}
 }
 //-----------------------------------------------------------------------------

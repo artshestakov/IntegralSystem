@@ -21,7 +21,7 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	ISMemoryObjects::GetInstance().SetWorkspaceForm(this);
 
 	Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	Layout->setSpacing(0);
 	setLayout(Layout);
 
@@ -137,7 +137,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 	{
 		ISProtocol::OpenSubSystem(QString(), MetaSubSystem->GetLocalName());
 
-		int ObjectType = QMetaType::type((ClassName + "*").toLocal8Bit().constData());
+		int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("Class for SybSystem is NULL. ClassName: %1").arg(ClassName));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

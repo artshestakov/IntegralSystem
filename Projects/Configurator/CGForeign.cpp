@@ -36,7 +36,7 @@ bool CGForeign::CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorStri
 	QString SqlText = QString();
 	SqlText += "ALTER TABLE public." + MetaTable->GetName().toLower() + " \n";
 	SqlText += "ADD CONSTRAINT " + OnGetForeignName(MetaForeign) + " FOREIGN KEY (" + MetaTable->GetAlias() + '_' + MetaForeign->GetFieldName().toLower() + ") \n";
-	SqlText += "REFERENCES public." + MetaTableForeign->GetName().toLower() + "(" + MetaTableForeign->GetAlias().toLower() + '_' + MetaForeign->GetForeginField().toLower() + ") \n";
+	SqlText += "REFERENCES public." + MetaTableForeign->GetName().toLower() + '(' + MetaTableForeign->GetAlias().toLower() + '_' + MetaForeign->GetForeginField().toLower() + ") \n";
 	SqlText += "ON DELETE CASCADE \n";
 	SqlText += "ON UPDATE NO ACTION \n";
 	SqlText += "NOT DEFERRABLE;";

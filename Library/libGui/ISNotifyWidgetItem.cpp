@@ -12,7 +12,7 @@ ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id
 	ID = notification_user_id;
 
 	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	Layout->setContentsMargins(MARGINS_LAYOUT_5_PX);
 	setLayout(Layout);
 
 	QVBoxLayout *LayoutLeft = new QVBoxLayout();

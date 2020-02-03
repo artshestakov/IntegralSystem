@@ -125,7 +125,7 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
 	QStringList::Iterator FileIterator = Files.begin();
 	while (FileIterator != Files.end())
 	{
-		QFile File(DirPath + "/" + *FileIterator);
+		QFile File(DirPath + '/' + *FileIterator);
 		File.remove();
 		++FileIterator;
 	}
@@ -134,9 +134,9 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
 	QStringList::Iterator DirIterator = Dirs.begin();
 	while (DirIterator != Dirs.end())
 	{
-		if (*DirIterator != '.' && *DirIterator != "..")
+		if (*DirIterator != SYMBOL_POINT && *DirIterator != "..")
 		{
-			ClearDirRecursive(DirPath + "/" + *DirIterator);
+			ClearDirRecursive(DirPath + '/' + *DirIterator);
 		}
 		++DirIterator;
 	}
@@ -270,7 +270,7 @@ QString ISSystem::MillisecondsToString(int Milliseconds)
 	int minutes = (Milliseconds - (hours * 1000 * 60 * 60)) / (1000 * 60);
 	int seconds = (Milliseconds - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60)) / 1000;
 	int milliseconds = Milliseconds - (seconds * 1000) - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60);
-	return QString().append(QString("%1").arg(hours, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(minutes, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(seconds, 2, 10, QLatin1Char('0')) + ":" + QString("%1").arg(milliseconds, 3, 10, QLatin1Char('0')));
+	return QString().append(QString("%1").arg(hours, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(minutes, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(seconds, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(milliseconds, 3, 10, QLatin1Char('0')));
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::StringToBase64(const QString &String)

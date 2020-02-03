@@ -13,7 +13,7 @@ static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_uid, tsst_name "
 ISTaskMyListForm::ISTaskMyListForm(QWidget *parent) : ISTaskBaseListForm(parent)
 {
 	GetQueryModel()->SetClassFilter("task_executor = currentuserid()");
-	GetToolBar()->addWidget(new QLabel(LANG("Filter") + ":", this));
+	GetToolBar()->addWidget(new QLabel(LANG("Filter") + ':', this));
 
 	ActionFilter = new QAction(this);
 	ActionFilter->setText(LANG("All"));

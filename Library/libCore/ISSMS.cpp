@@ -113,7 +113,7 @@ QString ISSMS::CreateUrl() const
 	QString UrlMessage = "mes=" + Message;
 	QString UrlCharset = "charset=" + Charset;
 	QString UrlFormat = "fmt=3";
-	UrlString = UrlString + UrlLogin + "&" + UrlPassword + "&" + UrlPhone + "&" + UrlMessage + "&" + UrlCharset + "&" + UrlFormat;
+	UrlString = UrlString + UrlLogin + '&' + UrlPassword + '&' + UrlPhone + '&' + UrlMessage + '&' + UrlCharset + '&' + UrlFormat;
 	return UrlString;
 }
 //-----------------------------------------------------------------------------

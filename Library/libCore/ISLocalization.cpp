@@ -9,8 +9,8 @@
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 {
-	QString TranslatorFileName = "qt_" + ISConfig::GetInstance().GetValueString(CONST_CONFIG_OTHER_LANGUAGE) + ".qm";
-	QString TranslatorFilePath = APPLICATION_TRANSLATIONS_DIR + "/" + TranslatorFileName;
+	QString TranslatorFileName = "qt_";// + /*ISConfig::GetInstance().GetValueString(CONST_CONFIG_OTHER_LANGUAGE) +*/ ".qm";//???
+	QString TranslatorFilePath = PATH_TRANSLATIONS_DIR + '/' + TranslatorFileName;
 
 	if (QFile::exists(TranslatorFilePath))
 	{
@@ -60,7 +60,7 @@ QString ISLocalization::GetString(const QString &ParameterName) const
 //-----------------------------------------------------------------------------
 void ISLocalization::LoadResourceFile(const QString &FileName)
 {
-	QFile File(":Localization/" + FileName + '.' + EXTENSION_LANG);
+	QFile File(":Localization/" + FileName + SYMBOL_POINT + EXTENSION_LANG);
 	IS_ASSERT(File.open(QIODevice::ReadOnly), QString("Not opened localization file \"%1\". Error: %2").arg(File.fileName()).arg(File.errorString()));
 	InitializeContent(File.readAll());
 	File.close();

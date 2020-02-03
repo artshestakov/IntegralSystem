@@ -14,7 +14,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 	Offset = 0;
 
 	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	setLayout(Layout);
 
 	ButtonBegin = new ISServiceButton(this);

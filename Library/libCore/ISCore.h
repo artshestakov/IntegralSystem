@@ -15,7 +15,6 @@ public:
 	static void ChangeUser(); //Смена пользователя
 	static void RestartApplication(); //Перезапуск программы
 	static void ExitApplication(); //Выход из программы
-	static void TerminateCurrentProcess(); //Принудительное завершение процесса
 
 	static QString GetObjectName(PMetaClassTable *MetaTable, int ObjectID); //Получить наименование объекта
 	static QString GetVersionInFileName(const QString &FileName); //Получить версию из наименования файла программы IntegralSystem

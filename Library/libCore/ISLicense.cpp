@@ -25,7 +25,7 @@ ISLicense::ISLicense()
 {
 	Initialized = false;
 
-	QFile File(CONFIGURATION_SCHEME_PATH);
+	QFile File(PATH_CONFIGURATION_SCHEME);
 	IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
 	QString Content = File.readAll();
 	File.close();

@@ -26,7 +26,7 @@ static QString QU_CARAT_CORE_ACTIVE = PREPARE_QUERY("UPDATE _caratcoreactive SET
 //-----------------------------------------------------------------------------
 ISCaratForm::ISCaratForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -52,7 +52,7 @@ ISCaratForm::ISCaratForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 			CheckBox->SetToolTip(LANG("ClickFromIncludeAndExcludeCore"));
 			CheckBox->setObjectName(CoreUID);
 			connect(CheckBox, &ISCheckEdit::ValueChange, this, &ISCaratForm::CoreChecked);
-			FormLayout->addRow(CoreName + ":", CheckBox);
+			FormLayout->addRow(CoreName + ':', CheckBox);
 		}
 	}
 }

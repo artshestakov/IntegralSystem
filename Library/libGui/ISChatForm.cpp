@@ -50,7 +50,7 @@ ISChatForm::ISChatForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	LayoutCenter->addLayout(LayoutTitle);
 
-	LayoutTitle->addWidget(new QLabel(LANG("ChatForm.ShowMessages") + ":", this));
+	LayoutTitle->addWidget(new QLabel(LANG("ChatForm.ShowMessages") + ':', this));
 
 	QRadioButton *ButtonShowAll = new QRadioButton(LANG("ChatForm.AllMessages"), this);
 	LayoutTitle->addWidget(ButtonShowAll);
@@ -296,7 +296,7 @@ void ISChatForm::CiteMessage(int MessageID)
 	qSelect.BindValue(":MessageID", MessageID);
 	if (qSelect.ExecuteFirst())
 	{
-		TextEdit->SetValue("[" + qSelect.ReadColumn("chat_message").toString() + "]");
+		TextEdit->SetValue('[' + qSelect.ReadColumn("chat_message").toString() + ']');
 		TextEdit->SetFocus();
 	}
 

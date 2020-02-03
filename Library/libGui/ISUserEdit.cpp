@@ -30,7 +30,7 @@ ISUserEdit::ISUserEdit(QWidget *parent) : ISComboEdit(parent)
 
 				if (UserID == ISMetaUser::GetInstance().GetData()->ID)
 				{
-					UserFullName += " (" + LANG("You") + ")";
+					UserFullName += " (" + LANG("You") + ')';
 				}
 
 				AddItem(UserFullName, UserID);

@@ -69,7 +69,7 @@
   <_Settings IsSystem="true" UID="{B03FBAC5-F793-4565-92A3-821C87AE3B56}" Group="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Order="1" Name="NoteViewType" Type="String" WidgetEditName="ISComboCalendarNoteType" LocalName="Отображение примечаний" DefaultValue="ToolTip"/>
 
   <_SettingsGroup IsSystem="true" UID="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Name="Debug" LocalName="Отладка" IconName="Settings.Debug" Order="11" System="true"/>
-  <_Settings IsSystem="true" UID="{DC11DFE1-5CF8-405D-AF0B-FBB63E7D76AA}" Group="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Order="1" Name="AccessToDebugView" Type="Bool" LocalName="Доступ к отладчику" DefaultValue="false"/>
+  <_Settings IsDeleted="true" IsSystem="true" UID="{DC11DFE1-5CF8-405D-AF0B-FBB63E7D76AA}" Group="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Order="1" Name="AccessToDebugView" Type="Bool" LocalName="Доступ к отладчику" DefaultValue="false"/>
   <_Settings IsSystem="true" UID="{5332D8E9-6D80-4901-A720-33132AA51F37}" Group="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Order="2" Name="TimeShowListForm" Type="Bool" LocalName="Выводить время отображения формы списка" DefaultValue="false"/>
   <_Settings IsSystem="true" UID="{3AB3621F-EC12-40C9-8E93-9E5BFFB73173}" Group="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Order="3" Name="TimeShowObjectForm" Type="Bool" LocalName="Выводить время отображения формы объекта" DefaultValue="false"/>
 

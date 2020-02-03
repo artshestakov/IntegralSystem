@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISNAMESPACE_H_INCLUDED
+#define _ISNAMESPACE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
@@ -309,3 +311,4 @@ Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
 Q_DECLARE_METATYPE(ISNamespace::RangeDatePeriod);
 Q_DECLARE_METATYPE(ISNamespace::SMSErrorType);
 //-----------------------------------------------------------------------------
+#endif

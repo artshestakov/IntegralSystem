@@ -24,7 +24,6 @@ signals:
 	void DeviceSettings();
 	void ChangePassword();
 	void CreateLogToday();
-	void Debug();
 	void UserStatus();
 	void Settings();
 	void Notebook();
@@ -32,7 +31,6 @@ signals:
 	void AddressBook();
 	void HelpSystem();
 	void AboutApplication();
-	void FeedbackForm();
 	void AboutQt();
 	void License();
 

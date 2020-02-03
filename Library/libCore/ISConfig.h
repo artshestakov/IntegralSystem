@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISCONFIG_H_INCLUDED
+#define _ISCONFIG_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
@@ -13,7 +15,7 @@ public:
 
 	static ISConfig& GetInstance();
 
-	void Initialize(const QString &config_file_path);
+	bool Initialize();
 	
 	QVariant GetValue(const QString &ParameterName); //Получить значение параметра
 	bool GetValueBool(const QString &ParameterName);
@@ -24,14 +26,15 @@ public:
 	void ClearValue(const QString &ParameterName); //Очистить значение параметра
 
 private:
-	void Generate();
+	bool Update();
+	bool Create();
 
 private:
 	ISConfig();
 
+	QString ErrorString;
 	QSettings *Settings;
-	std::map<QString, std::map<QString, QString>> Structure;
-	QString ConfigFilePath;
+	QString PathConfigTemplate;
 };
 //-----------------------------------------------------------------------------
 #define CONFIG_VALUE(PARAMETER_NAME) ISConfig::GetInstance().GetValue(PARAMETER_NAME)
@@ -39,3 +42,4 @@ private:
 #define CONFIG_STRING(PARAMETER_NAME) ISConfig::GetInstance().GetValueString(PARAMETER_NAME)
 #define CONFIG_INT(PARAMETER_NAME) ISConfig::GetInstance().GetValueInt(PARAMETER_NAME)
 //-----------------------------------------------------------------------------
+#endif

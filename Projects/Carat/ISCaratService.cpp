@@ -54,7 +54,7 @@ void ISCaratService::StartService()
 
 			ISDebug::ShowEmptyString();
 			ISDebug::ShowInfoString(LANG("Core.Starting").arg(LocalName));
-			QString CorePath = APPLICATION_DIR_PATH + "/" + FileName;
+			QString CorePath = APPLICATION_DIR_PATH + '/' + FileName;
 
 			ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
 			connect(ProcessCore, &ISProcessCore::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);

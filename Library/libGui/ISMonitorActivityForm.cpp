@@ -33,7 +33,7 @@ static QString QD_SCREENSHOT = PREPARE_QUERY("DELETE FROM _screenshots WHERE scr
 //-----------------------------------------------------------------------------
 ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
@@ -69,7 +69,7 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 
 	ScrollArea = new ISScrollArea(this);
 	ScrollArea->widget()->setLayout(new ISFlowLayout());
-	ScrollArea->widget()->layout()->setContentsMargins(LAYOUT_MARGINS_NULL);
+	ScrollArea->widget()->layout()->setContentsMargins(MARGINS_LAYOUT_NULL);
 	Layout->addWidget(ScrollArea);
 
 	QAction *ActionUpdate = new QAction(this);
@@ -285,7 +285,7 @@ void ISMonitorActivityForm::SendNotify()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		QVariant NotifyText = ISInputDialog::GetText(this, LANG("Notify"), LANG("NotifyText") + ":");
+		QVariant NotifyText = ISInputDialog::GetText(this, LANG("Notify"), LANG("NotifyText") + ':');
 		if (NotifyText.isValid())
 		{
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_MESSAGE, MonitorUserWidget->GetUserID(), QVariant(), LANG("NotifyUserMessage").arg(ISMetaUser::GetInstance().GetData()->FullName).arg(NotifyText.toString()), true);

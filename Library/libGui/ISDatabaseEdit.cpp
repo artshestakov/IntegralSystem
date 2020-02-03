@@ -7,10 +7,10 @@ ISDatabaseEdit::ISDatabaseEdit(QWidget *parent) : ISComboEdit(parent)
 	SetDuplicatesEnabled(false);
 	SetSizePolicyHorizontal(QSizePolicy::Minimum);
 
-	QFile FileTemp(APPLICATION_TEMP_PATH + "/ConnectDatabases");
+	QFile FileTemp(PATH_TEMP_DIR + "/ConnectDatabases");
 	if (FileTemp.open(QIODevice::ReadOnly))
 	{
-		QStringList StringList = QString(FileTemp.readAll()).split(";");
+		QStringList StringList = QString(FileTemp.readAll()).split(';');
 		FileTemp.close();
 		StringList.removeDuplicates();
 		StringList.removeOne(QString());

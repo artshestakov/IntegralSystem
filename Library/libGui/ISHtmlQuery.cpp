@@ -28,7 +28,7 @@ QString ISHtmlQuery::GetTableHtmlName() const
 void ISHtmlQuery::BindValue(const QString &Parameter, const QVariant &Value)
 {
 	bool BindValue = qSelect.BindValue(Parameter, Value);
-	IS_ASSERT(BindValue, "BindValue false from parameter '" + Parameter + "'");
+	IS_ASSERT(BindValue, "BindValue false from parameter '" + Parameter + '\'');
 }
 //-----------------------------------------------------------------------------
 void ISHtmlQuery::Replace(const QString &AsField, const QString &ReplaceText)

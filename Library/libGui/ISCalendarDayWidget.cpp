@@ -6,7 +6,7 @@
 ISCalendarDayWidget::ISCalendarDayWidget(QWidget *parent) : QWidget(parent)
 {
 	QHBoxLayout *MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	LabelDayNumber = new QLabel(this);
@@ -14,7 +14,7 @@ ISCalendarDayWidget::ISCalendarDayWidget(QWidget *parent) : QWidget(parent)
 	MainLayout->addWidget(LabelDayNumber, 0, Qt::AlignVCenter);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	MainLayout->addLayout(Layout);
 
 	LabelDayName = new QLabel(this);
@@ -40,7 +40,7 @@ void ISCalendarDayWidget::SetSelectedDate(const QDate &Date)
 	QString DayName;
 	if (Date == DATE_TODAY)
 	{
-		DayName = Date.longDayName(Date.dayOfWeek()) + " (" + LANG("Today") + ")";
+		DayName = Date.longDayName(Date.dayOfWeek()) + " (" + LANG("Today") + ')';
 	}
 	else
 	{
