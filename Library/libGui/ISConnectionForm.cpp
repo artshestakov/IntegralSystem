@@ -10,7 +10,6 @@
 ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("ConnectionSettings"));
-
 	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 

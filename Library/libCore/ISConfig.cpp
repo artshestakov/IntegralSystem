@@ -40,15 +40,28 @@ void ISConfig::Initialize()
 //-----------------------------------------------------------------------------
 QVariant ISConfig::GetValue(const QString &ParameterName)
 {
-	IS_ASSERT(Settings, "Config not initialized");
-	IS_ASSERT(Settings->contains(ParameterName), QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
-	return Settings->value(ParameterName);
+	QVariant Value;
+	if (Settings->contains(ParameterName))
+	{
+		Value = Settings->value(ParameterName);
+	}
+	else
+	{
+		ISDebug::ShowWarningString(QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
+	}
+	return Value;
 }
 //-----------------------------------------------------------------------------
 void ISConfig::SetValue(const QString &ParameterName, const QVariant &Value)
 {
-	IS_ASSERT(Settings->contains(ParameterName), QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
-	Settings->setValue(ParameterName, Value);
+	if (Settings->contains(ParameterName))
+	{
+		Settings->setValue(ParameterName, Value);
+	}
+	else
+	{
+		ISDebug::ShowWarningString(QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISConfig::Update()
