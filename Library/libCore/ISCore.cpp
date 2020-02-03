@@ -2,8 +2,6 @@
 #include "ISDefines.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
-#include "ISLocalization.h"
-#include "ISBuffer.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISConfig.h"
@@ -229,33 +227,6 @@ QString ISCore::GetVersionInFileName(const QString &FileName)
 
 	ISSystem::RemoveLastSymbolFromString(VersionComplete);
 	return VersionComplete;
-}
-//-----------------------------------------------------------------------------
-QString ISCore::ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat)
-{
-	return ConvertDateToString(DateTime.date(), DateFormat) + SYMBOL_SPACE + LANG("At") + SYMBOL_SPACE + DateTime.time().toString(TimeFormat);
-}
-//-----------------------------------------------------------------------------
-QString ISCore::ConvertDateToString(const QDate &Date, const QString &DateFormat)
-{
-	QString Result;
-	if (Date == DATE_YESTERDAY) //Вчера
-	{
-		Result = LANG("Yesterday");
-	}
-	else if (Date == DATE_TODAY) //Сегодня
-	{
-		Result = LANG("Today");
-	}
-	else if (Date == DATE_TOMORROW) //Завтра
-	{
-		Result = LANG("Tomorrow");
-	}
-	else
-	{
-		Result = Date.toString(DateFormat);
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISCore::ExecuteStartCommand()

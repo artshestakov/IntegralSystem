@@ -13,6 +13,7 @@ QString SYMBOL_DIVIDE;
 QString SYMBOL_OBJECT_CHANGED;
 QString SYMBOL_SPACE_HIDE;
 QString SYMBOL_FIAS_SPLIT;
+#ifdef GUI
 QStringList AVIABLE_IMAGE_EXTENSION;
 QMargins MARGINS_LAYOUT_NULL;
 QMargins MARGINS_LAYOUT_1_PX;
@@ -41,7 +42,6 @@ QSize SIZE_20_20;
 QSize SIZE_18_18;
 QSize SIZE_16_16;
 QSize SIZE_10_10;
-//#ifdef GUI
 QColor EDIT_WIDGET_COLOR_RED;
 QColor COLOR_BACKGROUND_INTERFACE;
 QColor COLOR_MAIN_MENU_BAR;
@@ -79,13 +79,13 @@ QFont FONT_TAHOMA_9_BOLD;
 QFont FONT_TAHOMA_8;
 QFont FONT_APPLICATION;
 QFont FONT_APPLICATION_BOLD;
-//#endif
+#endif
 //-----------------------------------------------------------------------------
 void DefinesInitialize()
 {
-	APPLICATION_NAME = QApplication::applicationName();
-	PATH_APPLICATION_DIR = QApplication::applicationDirPath();
-	PATH_APPLICATION_FILE = QApplication::applicationFilePath();
+	APPLICATION_NAME = QCoreApplication::applicationName();
+	PATH_APPLICATION_DIR = QCoreApplication::applicationDirPath();
+	PATH_APPLICATION_FILE = QCoreApplication::applicationFilePath();
 	PATH_LOGS_DIR = PATH_APPLICATION_DIR + "/Logs";
 	PATH_TEMP_DIR = PATH_APPLICATION_DIR + "/Temp";
 	PATH_TRANSLATIONS_DIR = PATH_APPLICATION_DIR + "/translations";
@@ -96,6 +96,7 @@ void DefinesInitialize()
 	SYMBOL_OBJECT_CHANGED = QString(" {*}");
 	SYMBOL_SPACE_HIDE = QString::fromLocal8Bit(" ");
 	SYMBOL_FIAS_SPLIT = QString(SYMBOL_COMMA + SYMBOL_SPACE_HIDE);
+#ifdef GUI
 	AVIABLE_IMAGE_EXTENSION = QStringList() << EXTENSION_PNG << EXTENSION_JPEG << EXTENSION_JPG << EXTENSION_DDS << EXTENSION_GIF << EXTENSION_ICNS << EXTENSION_ICO << EXTENSION_SVG << EXTENSION_TGA << EXTENSION_TIFF << EXTENSION_WBMP << EXTENSION_BMP << EXTENSION_WEBP;
 	MARGINS_LAYOUT_NULL = QMargins();
 	MARGINS_LAYOUT_1_PX = QMargins(1, 1, 1, 1);
@@ -124,7 +125,6 @@ void DefinesInitialize()
 	SIZE_18_18 = QSize(18, 18);
 	SIZE_16_16 = QSize(16, 16);
 	SIZE_10_10 = QSize(10, 10);
-//#ifdef GUI
 	EDIT_WIDGET_COLOR_RED = QColor(236, 99, 99);
 	COLOR_BACKGROUND_INTERFACE = QColor(230, 230, 230);
 	COLOR_MAIN_MENU_BAR = QColor(81, 145, 189);
@@ -162,6 +162,6 @@ void DefinesInitialize()
 	FONT_TAHOMA_8 = QFont("Tahoma", 8);
 	FONT_APPLICATION = FONT_TAHOMA_9;
 	FONT_APPLICATION_BOLD = FONT_TAHOMA_9_BOLD;
-//#endif
+#endif
 }
 //-----------------------------------------------------------------------------

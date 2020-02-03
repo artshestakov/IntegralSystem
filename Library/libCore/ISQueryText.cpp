@@ -7,7 +7,6 @@
 #include "ISMetaData.h"
 #include "ISMetaViewQuery.h"
 #include "ISDatabase.h"
-#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISQueryText::ISQueryText()
 {

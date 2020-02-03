@@ -76,6 +76,31 @@
 #include <QtCore/QSharedMemory>
 #include <QtCore/QSystemSemaphore>
 //-----------------------------------------------------------------------------
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQueryModel>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlRecord>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlDriver>
+#include <QtSql/QSqlField>
+//-----------------------------------------------------------------------------
+#include <QtXml/QDomElement>
+#include <QtXml/QDomNode>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomNamedNodeMap>
+//-----------------------------------------------------------------------------
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
+#include <QtNetwork/QSslSocket>
+#include <QtNetwork/QHostAddress>
+//-----------------------------------------------------------------------------
+#include <QtConcurrent/QtConcurrent>
+//-----------------------------------------------------------------------------
+#ifdef GUI
+//-----------------------------------------------------------------------------
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QLayout>
@@ -180,38 +205,16 @@
 #include <QtGui/QTextFrame>
 #include <QtGui/QBitmap>
 //-----------------------------------------------------------------------------
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQueryModel>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlRecord>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlDriver>
-#include <QtSql/QSqlField>
-//-----------------------------------------------------------------------------
-#include <QtXml/qdom.h>
-#include <QtXml/QDomElement>
-#include <QtXml/QDomNode>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomNamedNodeMap>
-//-----------------------------------------------------------------------------
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QTcpServer>
-#include <QtNetwork/QTcpSocket>
-#include <QtNetwork/QSslSocket>
-#include <QtNetwork/QHostAddress>
-//-----------------------------------------------------------------------------
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtPrintSupport/QPrintDialog>
-//-----------------------------------------------------------------------------
-#include <QtConcurrent/QtConcurrent>
 //-----------------------------------------------------------------------------
 #include <QtMultimedia/QMediaPlayer>
 #include <QtMultimedia/QSound>
 //-----------------------------------------------------------------------------
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
+//-----------------------------------------------------------------------------
+#endif
 //-----------------------------------------------------------------------------
 #endif

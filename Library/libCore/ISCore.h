@@ -18,8 +18,6 @@ public:
 
 	static QString GetObjectName(PMetaClassTable *MetaTable, int ObjectID); //Получить наименование объекта
 	static QString GetVersionInFileName(const QString &FileName); //Получить версию из наименования файла программы IntegralSystem
-	static QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
-	static QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
 
 	static void ExecuteStartCommand(); //Выплнение команды перед запуском программы
 	static void ExecuteExitComamnd(); //Выполнение команды перед выходом

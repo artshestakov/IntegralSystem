@@ -5,7 +5,6 @@
 #include "ISQuery.h"
 #include "EXLicense.h"
 #include "ISDebug.h"
-#include "ISLocalization.h"
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLE = PREPARE_QUERY("SELECT COUNT(*) "
@@ -22,9 +21,8 @@ static QString QS_LICENSE = PREPARE_QUERY("SELECT clcn_uid, clcn_license "
 static QString QD_LICENSE = PREPARE_QUERY("DELETE FROM _configurationlicense");
 //-----------------------------------------------------------------------------
 ISLicense::ISLicense()
+	: Initialized(false)
 {
-	Initialized = false;
-
 	QFile File(PATH_CONFIGURATION_SCHEME);
 	IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
 	QString Content = File.readAll();
@@ -42,7 +40,6 @@ ISLicense::ISLicense()
 		LicenseItem->DesktopForm = DomNode.attributes().namedItem("DesktopForm").nodeValue();
 		LicenseItem->IncomingCallForm = DomNode.attributes().namedItem("IncomingCallForm").nodeValue();
 		VectorTemp.append(LicenseItem);
-		
 		DomNode = DomNode.nextSibling();
 	}
 }
@@ -130,13 +127,13 @@ bool ISLicense::Initialize()
 
 	if (!CheckExistLicenseTable())
 	{
-		ErrorString = LANG("License.TableNotExist");
+		ErrorString = "Table \"_configurationlicense\" not exist. Please, update database.";
 		return false;
 	}
 
 	if (!CheckExistLicense())
 	{
-		ErrorString = LANG("License.NotExist");
+		ErrorString = "License not exist";
 		return false;
 	}
 
@@ -149,14 +146,14 @@ bool ISLicense::Initialize()
 		
 		if (!LicenseString.length()) //Если лицензия не установлена
 		{
-			ErrorString = LANG("License.Empty");
+			ErrorString = "License is empty";
 			return false;
 		}
 
 		if (!QRegExp(REG_EXP_LICENSE).exactMatch(LicenseString)) //Лицензия не корректная
 		{
 			Delete();
-			ErrorString = LANG("License.NotValid");
+			ErrorString = "License not valid";
 			return false;
 		}
 
@@ -179,11 +176,11 @@ bool ISLicense::Initialize()
 
 		if (Initialized) //Лицензия найдена и инициализированна
 		{
-			ISDebug::ShowInfoString(LANG("License.Done").arg(CountingTime.GetElapsed()).arg(ConfName));
+			//ISDebug::ShowInfoString(LANG("License.Done").arg(CountingTime.GetElapsed()).arg(ConfName));
 		}
 		else //Лицензия не соответствует ни одной из конфигураций
 		{
-			ErrorString = LANG("License.NotFound");
+			//ErrorString = LANG("License.NotFound");
 			return false;
 		}
 	}

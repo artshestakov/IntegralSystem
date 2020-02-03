@@ -188,6 +188,7 @@ extern QString SYMBOL_DIVIDE; //Символ "Деление"
 extern QString SYMBOL_OBJECT_CHANGED;
 extern QString SYMBOL_SPACE_HIDE; //Невидмый символ (НЕ ЯВЛЯЕТСЯ СТАНДАРТНЫМ СИМВОЛОМ ПРОБЕЛА)
 extern QString SYMBOL_FIAS_SPLIT;
+#ifdef GUI
 extern QStringList AVIABLE_IMAGE_EXTENSION;
 extern QMargins MARGINS_LAYOUT_NULL;
 extern QMargins MARGINS_LAYOUT_1_PX;
@@ -216,7 +217,6 @@ extern QSize SIZE_20_20;
 extern QSize SIZE_18_18;
 extern QSize SIZE_16_16;
 extern QSize SIZE_10_10;
-#ifdef GUI
 extern QColor EDIT_WIDGET_COLOR_RED; //Цвет рамки вокруг незаполненного поля реадктирования информации
 extern QColor COLOR_BACKGROUND_INTERFACE; //Цвет фона форм интерфейса
 extern QColor COLOR_MAIN_MENU_BAR;

@@ -23,7 +23,6 @@
  *  2005-08-05   v5    - Removed most Lint (http://www.gimpel.com/) errors... thanks to Okko Willeboordse!
  *
  **********************************************************************/
-#include "StdAfx.h"
 #include "StackWalker.h"
 #pragma comment(lib, "version.lib")  // for "VerQueryValue"
 #pragma warning(disable: 4091)

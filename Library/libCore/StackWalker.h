@@ -23,6 +23,7 @@ typedef unsigned long SIZE_T, *PSIZE_T;
 #endif  // _MSC_VER < 1300
 
 #include <windows.h>
+#include "StdAfx.h"
 
 class StackWalkerInternal;  // forward
 class StackWalker 
