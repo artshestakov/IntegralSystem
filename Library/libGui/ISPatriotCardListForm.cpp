@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPatriotCardListForm.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"

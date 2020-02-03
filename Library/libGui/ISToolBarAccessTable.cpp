@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISToolBarAccessTable.h"
 #include "ISDefines.h"
 #include "ISBuffer.h"

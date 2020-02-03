@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISContextMenuDouble.h"
 #include "ISControls.h"
 //-----------------------------------------------------------------------------

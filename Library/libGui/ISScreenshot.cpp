@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISScreenshot.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

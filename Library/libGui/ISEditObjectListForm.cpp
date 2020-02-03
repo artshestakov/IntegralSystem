@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISEditObjectListForm.h"
 //-----------------------------------------------------------------------------
 ISEditObjectListForm::ISEditObjectListForm(PMetaClassTable *MetaTable, int ParentObjectID, QWidget *parent) : ISListObjectForm("_Protocol", ParentObjectID, parent)

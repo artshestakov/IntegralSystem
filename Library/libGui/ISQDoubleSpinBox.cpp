@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQDoubleSpinBox.h"
 #include "ISDefines.h"
 #include "ISContextMenuDouble.h"

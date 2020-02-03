@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMenuBar.h"
 #include "ISConstants.h"
 #include "ISBuffer.h"

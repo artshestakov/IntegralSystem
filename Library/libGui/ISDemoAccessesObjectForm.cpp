@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDemoAccessesObjectForm.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"

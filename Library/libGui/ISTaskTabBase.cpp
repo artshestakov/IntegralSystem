@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskTabBase.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

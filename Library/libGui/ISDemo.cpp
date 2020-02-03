@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDemo.h"
 //-----------------------------------------------------------------------------
 ISDemo::ISDemo(QObject *parent) : ISObjectInterface(parent)

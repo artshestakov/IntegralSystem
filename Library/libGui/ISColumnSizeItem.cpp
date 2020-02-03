@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISColumnSizeItem.h"
 //-----------------------------------------------------------------------------
 ISColumnSizeItem::ISColumnSizeItem()

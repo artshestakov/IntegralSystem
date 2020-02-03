@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPathEditFile.h"
 #include "ISPushButton.h"
 #include "ISLocalization.h"

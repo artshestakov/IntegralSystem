@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPushButton.h"
 #include "ISDefines.h"
 #include "ISStyleSheet.h"

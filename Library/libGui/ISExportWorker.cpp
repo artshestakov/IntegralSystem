@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISExportWorker.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

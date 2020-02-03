@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSironaCostObjectForm.h"
 //-----------------------------------------------------------------------------
 ISSironaCostObjectForm::ISSironaCostObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)

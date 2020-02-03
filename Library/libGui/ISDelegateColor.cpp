@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDelegateColor.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

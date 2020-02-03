@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISFrame.h"
 //-----------------------------------------------------------------------------
 #include "ISFrameClientsListForm.h"

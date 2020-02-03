@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISDefines.h"
 #include "ISMessageBox.h"

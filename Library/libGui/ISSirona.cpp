@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSirona.h"
 //-----------------------------------------------------------------------------
 #include "ISSironaAppointmentListForm.h"

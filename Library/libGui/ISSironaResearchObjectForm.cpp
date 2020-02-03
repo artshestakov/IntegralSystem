@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSironaResearchObjectForm.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"

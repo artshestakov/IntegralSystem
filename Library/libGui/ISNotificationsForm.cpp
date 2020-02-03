@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISNotificationsForm.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"

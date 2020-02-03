@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISFavorites.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"

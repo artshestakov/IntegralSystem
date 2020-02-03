@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISKPPEdit.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"

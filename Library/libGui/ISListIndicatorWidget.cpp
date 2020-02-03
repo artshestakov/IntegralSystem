@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISListIndicatorWidget.h"
 #include "ISDefines.h"
 #include "ISStyleSheet.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISFlowLayout.h"
 //-----------------------------------------------------------------------------
 ISFlowLayout::ISFlowLayout(QWidget *parent, int margin, int hSpacing, int vSpacing) : QLayout(parent), m_hSpace(hSpacing), m_vSpace(vSpacing)

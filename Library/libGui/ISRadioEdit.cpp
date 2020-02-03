@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISRadioEdit.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

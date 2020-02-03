@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTabWidgetMain.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPGSettingsForm.h"
 #include "ISQuery.h"
 #include "ISScrollArea.h"

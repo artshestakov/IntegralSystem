@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMedTechRatingSubSystem.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------

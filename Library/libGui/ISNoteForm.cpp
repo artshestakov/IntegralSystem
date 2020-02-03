@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISNoteForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

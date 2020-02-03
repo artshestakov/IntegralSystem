@@ -3,13 +3,11 @@
 #include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISMetaExternalTool : public QObject
+class ISMetaExternalTool
 {
-	Q_OBJECT
-
 public:
-	ISMetaExternalTool(QObject *parent = 0);
-	virtual ~ISMetaExternalTool();
+	ISMetaExternalTool();
+	~ISMetaExternalTool();
 
 	void SetLocalName(const QString &local_name);
 	QString GetLocalName() const;

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCalendarForm.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

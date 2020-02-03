@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboIncomingFormPosition.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

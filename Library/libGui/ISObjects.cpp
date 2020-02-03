@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISObjects.h"
 #include "ISDefines.h"
 #include "ISLicense.h"

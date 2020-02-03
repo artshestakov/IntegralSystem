@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISListViewWidget.h"
 #include "ISDefines.h"
 #include "ISBuffer.h"

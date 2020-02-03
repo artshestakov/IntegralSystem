@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISGui.h"
 #include "ISDefines.h"
 #include "ISConstants.h"
@@ -265,6 +264,33 @@ bool ISGui::IsStringUrl(const QString &Url)
 bool ISGui::OpenFolder(const QString &FolderPath)
 {
 	return QDesktopServices::openUrl(QUrl(FolderPath));
+}
+//-----------------------------------------------------------------------------
+QString ISGui::ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat)
+{
+	return ConvertDateToString(DateTime.date(), DateFormat) + SYMBOL_SPACE + LANG("At") + SYMBOL_SPACE + DateTime.time().toString(TimeFormat);
+}
+//-----------------------------------------------------------------------------
+QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
+{
+	QString Result;
+	if (Date == DATE_YESTERDAY) //Вчера
+	{
+		Result = LANG("Yesterday");
+	}
+	else if (Date == DATE_TODAY) //Сегодня
+	{
+		Result = LANG("Today");
+	}
+	else if (Date == DATE_TOMORROW) //Завтра
+	{
+		Result = LANG("Tomorrow");
+	}
+	else
+	{
+		Result = Date.toString(DateFormat);
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName, int ObjectID)

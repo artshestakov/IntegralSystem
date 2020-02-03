@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISButtonFile.h"
 //-----------------------------------------------------------------------------
 ISButtonFile::ISButtonFile(QWidget *parent) : ISPushButton(parent)

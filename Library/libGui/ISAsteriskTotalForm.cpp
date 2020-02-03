@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISAsteriskTotalForm.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISProtocolObjectListForm.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------

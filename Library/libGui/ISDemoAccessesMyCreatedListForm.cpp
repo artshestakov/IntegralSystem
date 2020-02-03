@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDemoAccessesMyCreatedListForm.h"
 #include "ISMetaUser.h"
 //-----------------------------------------------------------------------------

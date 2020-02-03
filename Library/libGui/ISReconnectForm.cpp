@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISReconnectForm.h"
 #include "ISCore.h"
 #include "ISLocalization.h"

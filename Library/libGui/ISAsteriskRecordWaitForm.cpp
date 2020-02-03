@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISAsteriskRecordWaitForm.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSortingMetaTable.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

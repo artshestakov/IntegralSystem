@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCenterSevenIncomingCallForm.h"
 #include "ISQuery.h"
 #include "ISGui.h"

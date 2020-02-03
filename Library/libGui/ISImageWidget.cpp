@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISImageWidget.h"
 #include "ISDefines.h"
 #include "ISContextMenuImage.h"

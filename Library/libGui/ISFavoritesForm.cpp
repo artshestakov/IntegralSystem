@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISFavoritesForm.h"
 #include "ISLocalization.h"
 #include "ISFavorites.h"

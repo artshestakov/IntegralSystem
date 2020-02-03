@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskCommentWidget.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

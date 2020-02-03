@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSelectDialogForm.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"

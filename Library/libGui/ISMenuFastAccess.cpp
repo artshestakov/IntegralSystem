@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMenuFastAccess.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"

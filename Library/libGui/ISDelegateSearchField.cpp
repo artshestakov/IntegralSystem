@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDelegateSearchField.h"
 //-----------------------------------------------------------------------------
 ISDelegateSearchField::ISDelegateSearchField(QObject *parent) : QStyledItemDelegate(parent)

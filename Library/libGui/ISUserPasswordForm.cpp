@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISUserPasswordForm.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

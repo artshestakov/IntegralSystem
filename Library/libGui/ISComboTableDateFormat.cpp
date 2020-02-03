@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboTableDateFormat.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

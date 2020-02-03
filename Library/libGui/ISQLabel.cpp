@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQLabel.h"
 //-----------------------------------------------------------------------------
 ISQLabel::ISQLabel(const QString &Text, QWidget *parent) : QLabel(Text, parent)

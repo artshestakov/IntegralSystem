@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPageMetrics.h"
 //-----------------------------------------------------------------------------
 namespace 

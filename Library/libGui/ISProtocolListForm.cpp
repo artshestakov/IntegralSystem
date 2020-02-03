@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISProtocolListForm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

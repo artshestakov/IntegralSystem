@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMedTechRatingListForm.h"
 #include "ISLocalization.h"
 #include "ISObjects.h"

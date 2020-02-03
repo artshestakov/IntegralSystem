@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISLabelLink.h"
 #include "ISDefines.h"
 #include "ISStyleSheet.h"

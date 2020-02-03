@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISExportCSV.h"
 #include "ISLocalization.h"
 #include "ISFileDialog.h"

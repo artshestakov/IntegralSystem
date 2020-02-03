@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISIntegralSystem.h"
 #include "ISDefines.h"
 #include "ISQueryExceptionSyntax.h"

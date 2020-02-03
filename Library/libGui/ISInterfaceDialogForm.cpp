@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

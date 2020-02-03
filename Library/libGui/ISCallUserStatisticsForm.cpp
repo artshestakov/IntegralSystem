@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCallUserStatisticsForm.h"
 #include "ISDefines.h"
 #include "ISMetaData.h"

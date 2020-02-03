@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQTextEdit.h"
 #include "ISContextMenuText.h"
 #include "ISStyleSheet.h"

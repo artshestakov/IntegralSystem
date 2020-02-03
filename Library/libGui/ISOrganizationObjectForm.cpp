@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISOrganizationObjectForm.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"

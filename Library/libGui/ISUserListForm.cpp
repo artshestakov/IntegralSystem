@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISUserListForm.h"
 #include "ISDefines.h"
 #include "ISControls.h"

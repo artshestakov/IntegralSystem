@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISFileDialog.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

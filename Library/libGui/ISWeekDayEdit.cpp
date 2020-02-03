@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISWeekDayEdit.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"

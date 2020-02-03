@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISStatusBar.h"
 #include "ISLocalization.h"
 #include "ISCore.h"

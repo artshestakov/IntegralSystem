@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboTableSelectionBehavior.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

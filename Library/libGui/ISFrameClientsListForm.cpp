@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISFrameClientsListForm.h"
 //-----------------------------------------------------------------------------
 ISFrameClientsListForm::ISFrameClientsListForm(QWidget *parent) : ISListBaseForm("Clients", parent)

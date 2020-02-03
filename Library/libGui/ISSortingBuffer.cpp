@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSortingBuffer.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"

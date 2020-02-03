@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskBaseListForm.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"

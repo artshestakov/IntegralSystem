@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISParagraphBaseForm.h"
 //-----------------------------------------------------------------------------
 ISParagraphBaseForm::ISParagraphBaseForm(QWidget *parent) : QWidget(parent)

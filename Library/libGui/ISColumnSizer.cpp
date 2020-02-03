@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISColumnSizer.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskFavoriteListForm.h"
 #include "ISQuery.h"
 #include "ISSystem.h"

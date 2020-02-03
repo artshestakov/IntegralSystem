@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISStatisticTablesForm.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"

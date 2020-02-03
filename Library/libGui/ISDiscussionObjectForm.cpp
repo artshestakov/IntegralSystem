@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDiscussionObjectForm.h"
 #include "ISDefines.h"
 #include "ISBuffer.h"

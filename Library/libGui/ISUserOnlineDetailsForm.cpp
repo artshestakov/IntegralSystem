@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISUserOnlineDetailsForm.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"
@@ -7,7 +6,7 @@
 #include "ISButtonClose.h"
 #include "ISQuery.h"
 #include "ISGui.h"
-#include "ISCore.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_PG_STAT_ACTIVITY = PREPARE_QUERY("SELECT "
 												   "userfullname(:UserID), "
@@ -43,7 +42,7 @@ ISUserOnlineDetailsForm::ISUserOnlineDetailsForm(int user_id, QWidget *parent) :
 	AddLabel(LANG("MonitorActivity.UserOnlineDetails.ClientAddress"), qSelect.ReadColumn("client_addr").toString());
 	AddLabel(LANG("MonitorActivity.UserOnlineDetails.HostName"), qSelect.ReadColumn("client_hostname").toString());
 	AddLabel(LANG("MonitorActivity.UserOnlineDetails.Port"), qSelect.ReadColumn("client_port").toString());
-	AddLabel(LANG("MonitorActivity.UserOnlineDetails.BackendStart"), ISCore::ConvertDateTimeToString(qSelect.ReadColumn("backend_start").toDateTime(), DATE_FORMAT_V2, TIME_FORMAT_V1));
+	AddLabel(LANG("MonitorActivity.UserOnlineDetails.BackendStart"), ISGui::ConvertDateTimeToString(qSelect.ReadColumn("backend_start").toDateTime(), DATE_FORMAT_V2, TIME_FORMAT_V1));
 	AddLabel(LANG("MonitorActivity.UserOnlineDetails.Time"), qSelect.ReadColumn("time").toString());
 	AddLabel(LANG("MonitorActivity.UserOnlineDetails.State"), GetState(qSelect.ReadColumn("state").toString()));
 

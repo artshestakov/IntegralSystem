@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISObjectFormBase.h"
 #include "ISDefines.h"
 #include "ISTrace.h"

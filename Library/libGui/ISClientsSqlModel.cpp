@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISClientsSqlModel.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

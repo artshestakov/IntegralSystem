@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSearchEdit.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"

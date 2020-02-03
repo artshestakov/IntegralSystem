@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISOrganizationMyListForm.h"
 #include "ISMetaUser.h"
 #include "ISQuery.h"

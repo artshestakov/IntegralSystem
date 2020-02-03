@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSettingsDatabaseObjectForm.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"

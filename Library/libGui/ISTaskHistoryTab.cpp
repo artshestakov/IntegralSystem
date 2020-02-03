@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskHistoryTab.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"

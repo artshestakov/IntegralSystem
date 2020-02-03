@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMainMenu.h"
 //-----------------------------------------------------------------------------
 ISMainMenu::ISMainMenu(QWidget *parent) : QMenu(parent)

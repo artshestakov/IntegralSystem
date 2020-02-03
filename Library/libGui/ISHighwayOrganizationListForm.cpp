@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISHighwayOrganizationListForm.h"
 //-----------------------------------------------------------------------------
 ISHighwayOrganizationListForm::ISHighwayOrganizationListForm(QWidget *parent) : ISListBaseForm("Organization", parent)

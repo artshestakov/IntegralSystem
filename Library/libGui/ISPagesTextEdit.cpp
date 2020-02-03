@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPagesTextEdit.h"
 //-----------------------------------------------------------------------------
 ISPagesTextEdit::ISPagesTextEdit(QWidget *parent) :	QTextEdit(parent), m_document(0), m_usePageMode(false), m_addBottomSpace(true),	m_showPageNumbers(true), m_pageNumbersAlignment(Qt::AlignTop | Qt::AlignRight)

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 //-----------------------------------------------------------------------------
 ISInterfaceMetaForm::ISInterfaceMetaForm(QWidget *parent) : ISInterfaceForm(parent)

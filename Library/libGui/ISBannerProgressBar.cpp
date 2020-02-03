@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISBannerProgressBar.h"
 #include "ISStyleSheet.h"
 #include "ISSystem.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISOrganizationWorkListForm.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"

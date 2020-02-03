@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMediaPlayer.h"
 #include "ISConstants.h"
 #include "ISSettings.h"

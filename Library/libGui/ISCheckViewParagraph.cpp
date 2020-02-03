@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCheckViewParagraph.h"
 #include "ISDefines.h"
 #include "ISQuery.h"

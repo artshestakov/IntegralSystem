@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISEMailSelectEdit.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------

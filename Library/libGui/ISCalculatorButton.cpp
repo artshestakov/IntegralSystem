@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCalculatorButton.h"
 //-----------------------------------------------------------------------------
 ISCalculatorButton::ISCalculatorButton(QWidget *parent) : ISPushButton(parent)

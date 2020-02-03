@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISImageEdit64.h"
 //-----------------------------------------------------------------------------
 ISImageEdit64::ISImageEdit64(QWidget *parent) : ISImageEdit(parent)

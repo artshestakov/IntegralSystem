@@ -4,10 +4,8 @@
 #include "ISMetaExternalTool.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISFastAccessEntity : public QObject
+class ISFastAccessEntity
 {
-	Q_OBJECT
-
 public:
 	ISFastAccessEntity(const ISFastAccessEntity &) = delete;
 	ISFastAccessEntity(ISFastAccessEntity &&) = delete;

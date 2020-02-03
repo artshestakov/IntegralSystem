@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISAttachFileItem.h"
 #include "ISButtonClear.h"
 #include "ISLocalization.h"

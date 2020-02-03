@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISAddressEdit.h"
 #include "ISDefines.h"
 #include "ISPushButton.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPatriotHelper.h"
 #include "ISQuery.h"
 #include "ISNotificationService.h"

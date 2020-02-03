@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSironaResearchListForm.h"
 #include "ISDefines.h"
 #include "ISSystem.h"

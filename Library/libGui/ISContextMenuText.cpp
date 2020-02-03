@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISContextMenuText.h"
 #include "ISControls.h"
 #include "ISLocalization.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISColorEdit.h"
 #include "ISServiceButton.h"
 #include "ISLocalization.h"

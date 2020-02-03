@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCalendarWidget.h"
 #include "ISPushButton.h"
 #include "ISLocalization.h"

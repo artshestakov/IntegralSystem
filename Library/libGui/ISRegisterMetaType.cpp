@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISRegisterMetaType.h"
 //-----------------------------------------------------------------------------
 #include "ISDelegateBoolean.h"

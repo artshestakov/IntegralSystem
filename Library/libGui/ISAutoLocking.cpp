@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISAutoLocking.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"

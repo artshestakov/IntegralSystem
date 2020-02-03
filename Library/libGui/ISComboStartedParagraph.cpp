@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboStartedParagraph.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------

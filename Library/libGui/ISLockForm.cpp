@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISLockForm.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPatriot.h"
 #include "ISQuery.h"
 #include "ISPatriotClientsBirthdayForm.h"

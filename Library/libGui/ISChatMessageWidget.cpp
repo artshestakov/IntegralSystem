@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISChatMessageWidget.h"
 #include "ISDefines.h"
 #include "ISBuffer.h"
@@ -15,7 +14,6 @@
 #include "ISGui.h"
 #include "ISServiceButton.h"
 #include "ISNotificationService.h"
-#include "ISCore.h"
 #include "ISLabelLink.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHAT_MESSAGE = PREPARE_QUERY("SELECT "
@@ -92,7 +90,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	LayoutTop->addStretch();
 
 	QLabel *LabelDateTime = new QLabel(this);
-	LabelDateTime->setText(ISCore::ConvertDateTimeToString(DateTime, DATE_FORMAT_V1, TIME_FORMAT_V3));
+	LabelDateTime->setText(ISGui::ConvertDateTimeToString(DateTime, DATE_FORMAT_V1, TIME_FORMAT_V3));
 	LayoutTop->addWidget(LabelDateTime);
 	
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();

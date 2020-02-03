@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDeviceUserObjectForm.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDelegateBoolean.h"
 #include "ISDefines.h"
 #include "ISBuffer.h"

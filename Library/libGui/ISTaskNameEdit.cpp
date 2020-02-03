@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskNameEdit.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

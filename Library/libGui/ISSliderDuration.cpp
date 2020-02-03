@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSliderDuration.h"
 //-----------------------------------------------------------------------------
 ISSliderDuration::ISSliderDuration(QWidget *parent) : QSlider(Qt::Horizontal, parent)

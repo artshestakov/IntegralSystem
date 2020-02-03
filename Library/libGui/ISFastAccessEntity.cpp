@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISFastAccessEntity.h"
 #include "ISQuery.h"
 #include "ISGui.h"
@@ -8,14 +7,17 @@ static QString QS_EXTERNAL_TOOLS = PREPARE_QUERY("SELECT extl_uid, extl_uid, ext
 //-----------------------------------------------------------------------------
 static QString QS_CREATE_RECORDS = PREPARE_QUERY("SELECT fcob_table FROM _fastcreateobject WHERE fcob_user = currentuserid() ORDER BY fcob_id");
 //-----------------------------------------------------------------------------
-ISFastAccessEntity::ISFastAccessEntity() : QObject()
+ISFastAccessEntity::ISFastAccessEntity()
 {
 
 }
 //-----------------------------------------------------------------------------
 ISFastAccessEntity::~ISFastAccessEntity()
 {
-
+	while (!ExternalTools.isEmpty())
+	{
+		delete ExternalTools.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 ISFastAccessEntity& ISFastAccessEntity::GetInstance()
@@ -36,7 +38,7 @@ void ISFastAccessEntity::LoadExternalTools()
 			QString Command = qSelect.ReadColumn("extl_command").toString();
 			QIcon Icon = QIcon(ISGui::ByteArrayToPixmap(qSelect.ReadColumn("extl_icon").toByteArray()));
 
-			ISMetaExternalTool *MetaExternalTool = new ISMetaExternalTool(this);
+			ISMetaExternalTool *MetaExternalTool = new ISMetaExternalTool();
 			MetaExternalTool->SetUID(UID);
 			MetaExternalTool->SetLocalName(LocalName);
 			MetaExternalTool->SetCommand(Command);

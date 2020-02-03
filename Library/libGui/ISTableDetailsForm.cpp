@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTableDetailsForm.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboEdit.h"
 #include "ISDefines.h"
 #include "ISQLineEdit.h"

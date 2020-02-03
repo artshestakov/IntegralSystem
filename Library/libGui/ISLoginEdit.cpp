@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISLoginEdit.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"

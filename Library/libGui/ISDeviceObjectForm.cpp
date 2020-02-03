@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDeviceObjectForm.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

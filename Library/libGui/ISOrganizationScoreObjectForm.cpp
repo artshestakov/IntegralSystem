@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISOrganizationScoreObjectForm.h"
 #include "ISNotifySender.h"
 //-----------------------------------------------------------------------------

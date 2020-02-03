@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboSettingEdit.h"
 //-----------------------------------------------------------------------------
 ISComboSettingEdit::ISComboSettingEdit(QWidget *parent) : ISComboEdit(parent)

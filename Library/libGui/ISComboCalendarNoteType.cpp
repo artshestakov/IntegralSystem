@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboCalendarNoteType.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

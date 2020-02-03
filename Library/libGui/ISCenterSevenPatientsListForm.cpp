@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCenterSevenPatientsListForm.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"

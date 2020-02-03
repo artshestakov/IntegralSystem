@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISStackedWidget.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

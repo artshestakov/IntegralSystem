@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPatriotSubscriptionSelectForm.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"

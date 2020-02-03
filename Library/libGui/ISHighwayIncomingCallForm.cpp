@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISHighwayIncomingCallForm.h"
 #include "ISQuery.h"
 #include "ISGui.h"

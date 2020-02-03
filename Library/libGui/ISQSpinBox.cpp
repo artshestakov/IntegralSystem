@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQSpinBox.h"
 #include "ISDefines.h"
 #include "ISContextMenuInteger.h"

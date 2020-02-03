@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISListBaseForm.h"
 #include "ISAssert.h"
 #include "ISTrace.h"

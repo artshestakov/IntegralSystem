@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboSearchString.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

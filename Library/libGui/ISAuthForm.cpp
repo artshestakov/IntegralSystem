@@ -1,5 +1,4 @@
-﻿#include "StdAfx.h"
-#include "ISAuthForm.h"
+﻿#include "ISAuthForm.h"
 #include "ISCore.h"
 #include "ISSystem.h"
 #include "ISConstants.h"

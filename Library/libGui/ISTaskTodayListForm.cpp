@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskTodayListForm.h"
 //-----------------------------------------------------------------------------
 ISTaskTodayListForm::ISTaskTodayListForm(QWidget *parent) : ISTaskBaseListForm(parent)

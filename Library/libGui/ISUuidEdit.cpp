@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISUuidEdit.h"
 #include "ISUuid.h"
 #include "ISServiceButton.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISPercentEdit.h"
 //-----------------------------------------------------------------------------
 ISPercentEdit::ISPercentEdit(QWidget *parent) : ISDoubleEdit(parent)

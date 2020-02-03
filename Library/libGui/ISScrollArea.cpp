@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISScrollArea.h"
 #include "ISDefines.h"
 #include "ISStyleSheet.h"

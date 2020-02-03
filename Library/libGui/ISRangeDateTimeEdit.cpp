@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISRangeDateTimeEdit.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISSystemsPanel.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

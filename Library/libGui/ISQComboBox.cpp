@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQComboBox.h"
 //-----------------------------------------------------------------------------
 ISQComboBox::ISQComboBox(QWidget *parent) : QComboBox(parent)

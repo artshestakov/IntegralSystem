@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCallHistoryObjectForm.h"
 //-----------------------------------------------------------------------------
 ISCallHistoryObjectForm::ISCallHistoryObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)

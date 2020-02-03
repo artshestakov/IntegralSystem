@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCalendarPopup.h"
 #include "ISDefines.h"
 #include "ISLocalization.h"

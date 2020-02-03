@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISDefines.h"
 #include "ISControls.h"

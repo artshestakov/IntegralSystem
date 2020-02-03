@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDivisionCodeEdit.h"
 //-----------------------------------------------------------------------------
 ISDivisionCodeEdit::ISDivisionCodeEdit(QWidget *parent) : ISLineEdit(parent)

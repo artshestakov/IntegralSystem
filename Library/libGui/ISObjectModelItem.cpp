@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISObjectModelItem.h"
 //-----------------------------------------------------------------------------
 ISObjectModelItem::ISObjectModelItem()

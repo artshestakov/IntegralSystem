@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISUserEdit.h"
 #include "ISDefines.h"
 #include "ISQuery.h"

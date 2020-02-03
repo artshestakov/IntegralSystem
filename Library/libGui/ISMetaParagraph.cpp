@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMetaParagraph.h"
 //-----------------------------------------------------------------------------
 ISMetaParagraph::ISMetaParagraph(const ISUuid &uid, const QString &name, const QString &local_name, const QString &tool_tip, const QString &icon, const QString &class_name, bool default_paragraph)

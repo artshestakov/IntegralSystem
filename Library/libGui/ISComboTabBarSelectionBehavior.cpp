@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISComboTabBarSelectionBehavior.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

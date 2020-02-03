@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISServiceButton.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISNotifyRecipient.h"
 #include "ISDefines.h"
 #include "ISDatabase.h"

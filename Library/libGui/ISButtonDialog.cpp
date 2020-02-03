@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISButtonDialog.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISQDateTimeEdit.h"
 #include "ISStyleSheet.h"
 #include "ISContextMenuDateTime.h"

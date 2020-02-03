@@ -10,8 +10,10 @@ public:
     ISSplashWidget(QWidget *parent = 0);
 	virtual ~ISSplashWidget();
 
-	void showEvent(QShowEvent *e);
 	void SetText(const QString &Text);
+
+protected:
+	void showEvent(QShowEvent *e);
 
 private:
 	QLabel *LabelText;

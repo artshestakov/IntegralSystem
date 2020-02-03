@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"

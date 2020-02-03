@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISMedTech.h"
 //-----------------------------------------------------------------------------
 #include "ISMedTechRatingSubSystem.h"

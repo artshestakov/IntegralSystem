@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDeviceComObject.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------

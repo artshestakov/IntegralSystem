@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 ISListWidget::ISListWidget(QWidget *parent) : QListWidget(parent)

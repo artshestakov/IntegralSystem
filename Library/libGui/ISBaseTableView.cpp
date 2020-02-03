@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISBaseTableView.h"
 #include "ISDefines.h"
 #include "ISStyleSheet.h"

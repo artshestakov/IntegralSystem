@@ -3,7 +3,7 @@
 #include "ISConstants.h"
 #include "ISPhoneNumberParser.h"
 #include "ISSettings.h"
-#include "ISCore.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::FieldType Type)
 {
@@ -18,7 +18,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 		}
 		else if (DateFormat == "Extended")
 		{
-			Result = ISCore::ConvertDateToString(Value.toDate(), DATE_FORMAT_V1);
+			Result = ISGui::ConvertDateToString(Value.toDate(), DATE_FORMAT_V1);
 		}
 	}
 	else if (Type == ISNamespace::FT_Birthday)
@@ -38,7 +38,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 		}
 		else if (DateFormat == "Extended")
 		{
-			Result = ISCore::ConvertDateTimeToString(Value.toDateTime(), DATE_FORMAT_V1, TIME_FORMAT_V1);
+			Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), DATE_FORMAT_V1, TIME_FORMAT_V1);
 		}
 	}
 	else if (Type == ISNamespace::FT_Password)

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISDelegateCallDetails.h"
 #include "ISDefines.h"
 #include "ISBuffer.h"

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISContextMenuBase.h"
 #include "ISAssert.h"
 #include "ISGui.h"

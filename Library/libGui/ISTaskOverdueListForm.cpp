@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskOverdueListForm.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------

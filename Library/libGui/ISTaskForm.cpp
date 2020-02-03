@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskForm.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

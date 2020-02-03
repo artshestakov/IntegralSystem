@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCheckEdit.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

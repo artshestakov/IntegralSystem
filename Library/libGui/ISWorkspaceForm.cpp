@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISWorkspaceForm.h"
 #include "ISDefines.h"
 #include "ISMemoryObjects.h"

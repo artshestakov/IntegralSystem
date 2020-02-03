@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISIPAddressEdit.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCenterSevenAdmissionObjectForm.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"

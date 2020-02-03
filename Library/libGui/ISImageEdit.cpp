@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISImageEdit.h"
 #include "ISDefines.h"
 #include "ISGui.h"

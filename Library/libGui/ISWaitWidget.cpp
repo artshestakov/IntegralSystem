@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISWaitWidget.h"
 //-----------------------------------------------------------------------------
 ISWaitWidget::ISWaitWidget(QWidget *parent, bool centerOnParent, bool disableParentWhenSpinning)

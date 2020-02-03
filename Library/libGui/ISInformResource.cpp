@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISInformResource.h"
 //-----------------------------------------------------------------------------
 #include "ISDesktopInformResource.h"

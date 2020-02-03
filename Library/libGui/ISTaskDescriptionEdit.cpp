@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTaskDescriptionEdit.h"
 //-----------------------------------------------------------------------------
 ISTaskDescriptionEdit::ISTaskDescriptionEdit(QWidget *parent) : ISTextEdit(parent)

@@ -1,7 +1,6 @@
-#include "StdAfx.h"
 #include "ISMetaExternalTool.h"
 //-----------------------------------------------------------------------------
-ISMetaExternalTool::ISMetaExternalTool(QObject *parent) : QObject(parent)
+ISMetaExternalTool::ISMetaExternalTool()
 {
 
 }

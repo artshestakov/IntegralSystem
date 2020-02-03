@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISIntegerEdit.h"
 #include "ISDefines.h"
 #include "ISStyleSheet.h"

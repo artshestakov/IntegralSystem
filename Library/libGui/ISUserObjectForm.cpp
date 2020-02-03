@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISUserObjectForm.h"
 #include "ISDefines.h"
 #include "ISConstants.h"

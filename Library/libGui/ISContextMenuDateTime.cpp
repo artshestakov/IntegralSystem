@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISContextMenuDateTime.h"
 #include "ISControls.h"
 //-----------------------------------------------------------------------------
