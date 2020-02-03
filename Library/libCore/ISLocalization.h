@@ -24,7 +24,7 @@ private:
 	ISLocalization();
 
 	std::map<QString, QString> Dictionary;
-	QVectorString  LoadedFiles;
+	QVectorString LoadedFiles;
 };
 //-----------------------------------------------------------------------------
 #define LANG(PARAMETER) ISLocalization::GetInstance().GetString(PARAMETER)

@@ -17,13 +17,12 @@ public:
 	static ISBuffer& GetInstance();
 
 	void Initialize();
-
 	QMovie* GetAnimation(const QString &AnimationName, QObject *parent, const QString &SourceFile, int FileLine);
 	QIcon GetIcon(const QString &IconName, const QString &SourceFile, int FileLine);
 	QPixmap GetPixmap(const QString &PixmapName, const QString &SourceFile, int FileLine);
 	QString GetAudio(const QString &AudioName);
 
-protected:
+private:
 	void InitializeAnimations(); //Инициализация анимаций
 	void InitializeIcons(); //Инициализация иконок
 	void InitializePixmaps(); //Инициализация изображений
@@ -37,10 +36,10 @@ protected:
 private:
 	ISBuffer();
 
-	QStringMap Animations;
-	QStringMap Icons;
-	QStringMap Pixmaps;
-	QStringMap Audios;
+	std::map<QString, QString> Animations;
+	std::map<QString, QIcon> Icons;
+	std::map<QString, QPixmap> Pixmaps;
+	std::map<QString, QString> Audios;
 };
 //-----------------------------------------------------------------------------
 #define BUFFER_ANIMATION(ANIMATION_NAME, PARENT) ISBuffer::GetInstance().GetAnimation(ANIMATION_NAME, PARENT, __FILE__, __LINE__)

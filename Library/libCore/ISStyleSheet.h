@@ -24,7 +24,7 @@ protected:
 private:
 	ISStyleSheet();
 
-	QStringMap StyleSheets;
+	std::map<QString, QString> StyleSheets;
 };
 //-----------------------------------------------------------------------------
 #define STYLE_SHEET(STYLE_NAME) ISStyleSheet::GetInstance().GetStyle(STYLE_NAME, __FILE__, __LINE__)
