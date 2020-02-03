@@ -59,7 +59,7 @@ void ISCoreMedTech::UserEvent(const QStringMap &StringMap)
 	QString Pattern = StringList.at(1); //Внутренний номер
 	if (Pattern.contains("SIP"))
 	{
-		InteriorNumber = Pattern.split("/").at(1).toInt();
+		InteriorNumber = Pattern.split('/').at(1).toInt();
 	}
 	else
 	{

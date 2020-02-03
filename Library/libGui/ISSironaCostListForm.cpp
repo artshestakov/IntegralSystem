@@ -32,7 +32,7 @@ void ISSironaCostListForm::LoadDataAfterEvent()
 		}
 		ISSystem::RemoveLastSymbolFromString(SqlIN, 2);
 
-		ISQuery qSelect("SELECT SUM(cost_sum) FROM cost WHERE cost_id IN(" + SqlIN + ")");
+		ISQuery qSelect("SELECT SUM(cost_sum) FROM cost WHERE cost_id IN(" + SqlIN + ')');
 		if (qSelect.ExecuteFirst())
 		{
 			LabelSum->setText(LANG("Sirona.TotalMoney.Cost").arg(qSelect.ReadColumn("sum").toDouble()));

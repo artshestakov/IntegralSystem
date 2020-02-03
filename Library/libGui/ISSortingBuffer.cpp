@@ -34,7 +34,7 @@ ISSortingBuffer::~ISSortingBuffer()
 {
 	while (!Sortings.isEmpty())
 	{
-		delete Sortings.back();
+		delete Sortings.takeLast();
 	}
 }
 //-----------------------------------------------------------------------------

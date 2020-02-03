@@ -6,10 +6,8 @@
 #include "ISTypes.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISUserRoleEntity : public QObject
+class ISUserRoleEntity
 {
-	Q_OBJECT
-
 public:
 	ISUserRoleEntity(const ISUserRoleEntity &) = delete;
 	ISUserRoleEntity(ISUserRoleEntity &&) = delete;

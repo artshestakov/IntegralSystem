@@ -56,7 +56,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent) : ISInterfaceForm(p
 	SelectTask();
 	setWindowTitle(LANG("Task.CardTask") + ": " + TaskName);
 	setWindowIcon(BUFFER_ICONS("Task"));
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	CreateTitle();
 
@@ -118,7 +118,7 @@ void ISTaskViewForm::CreateTitle()
 	}
 
 	LabelName = new QLabel(this);
-	LabelName->setText("#" + QString::number(TaskID) + SYMBOL_SPACE + TaskName);
+	LabelName->setText('#' + QString::number(TaskID) + SYMBOL_SPACE + TaskName);
 	LabelName->setFont(FONT_TAHOMA_15_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutTitle->addWidget(LabelName);
@@ -224,7 +224,7 @@ void ISTaskViewForm::CreateLeft()
 	QGroupBox *GroupBoxDescription = new QGroupBox(this);
 	GroupBoxDescription->setTitle(LANG("Task.Description"));
 	GroupBoxDescription->setLayout(new QVBoxLayout());
-	GroupBoxDescription->layout()->setContentsMargins(LAYOUT_MARGINS_2_PX);
+	GroupBoxDescription->layout()->setContentsMargins(MARGINS_LAYOUT_2_PX);
 	GroupBoxDescription->setSizePolicy(GroupBoxDescription->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	Layout->addWidget(GroupBoxDescription);
 
@@ -262,7 +262,7 @@ void ISTaskViewForm::CreateLeft()
 				LabelLink->setToolTip(LANG("Task.LinkedUser").arg(LinkUser));
 				LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
 				connect(LabelLink, &ISLabelLink::Clicked, this, &ISTaskViewForm::OpenLinkTask);
-				FormLayout->addRow("#" + QString::number(LinkTaskID) + ":", LabelLink);
+				FormLayout->addRow('#' + QString::number(LinkTaskID) + ':', LabelLink);
 			}
 		}
 	}
@@ -308,7 +308,7 @@ void ISTaskViewForm::CreateRight()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Rename()
 {
-	QVariant NewName = ISInputDialog::GetString(this, LANG("Renaming"), LANG("Task.Rename.Description") + ":", TaskName);
+	QVariant NewName = ISInputDialog::GetString(this, LANG("Renaming"), LANG("Task.Rename.Description") + ':', TaskName);
 	if (NewName.isValid())
 	{
 		ISQuery qRename(QU_TASK_NAME);
@@ -319,7 +319,7 @@ void ISTaskViewForm::Rename()
 			ISCore::TaskInsertHistory(TaskID, CONST_UID_TASK_HISTORY_RENAME, TaskName + " -> " + NewName.toString());
 
 			TaskName = NewName.toString();
-			LabelName->setText("#" + QString::number(TaskID) + SYMBOL_SPACE + TaskName);
+			LabelName->setText('#' + QString::number(TaskID) + SYMBOL_SPACE + TaskName);
 			TaskHistoryTab->Update();
 		}
 	}
@@ -375,7 +375,7 @@ void ISTaskViewForm::CloseTask()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::AddComment()
 {
-	QVariant Comment = ISInputDialog::GetText(this, LANG("Task.CommentTask"), LANG("Task.InputTheComment") + ":");
+	QVariant Comment = ISInputDialog::GetText(this, LANG("Task.CommentTask"), LANG("Task.InputTheComment") + ':');
 	if (Comment.isValid())
 	{
 		ISQuery qInsertComment(QI_COMMENT);
@@ -421,7 +421,7 @@ void ISTaskViewForm::Duplicate()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CheckThisTaskAsDuplicate")))
 	{
-		int TaskOriginal = ISInputDialog::GetInteger(this, LANG("Task.Duplicate"), LANG("Task.NumberTask") + ":", 1, INTEGER_MAXIMUM).toInt();
+		int TaskOriginal = ISInputDialog::GetInteger(this, LANG("Task.Duplicate"), LANG("Task.NumberTask") + ':', 1, MAXIMUM_INTEGER).toInt();
 		if (TaskOriginal)
 		{
 			if (ISCore::TaskCheckExist(TaskID)) //Задача найдена

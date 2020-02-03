@@ -301,7 +301,7 @@ void ISObjectFormBase::CreateMainTabWidget()
 	TabWidgetMain->addTab(StackedWidget, LANG("Card"));
 
 	WidgetObjectLayout = new QVBoxLayout();
-	WidgetObjectLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	WidgetObjectLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 
 	WidgetObject = new QWidget(TabWidgetMain);
 	WidgetObject->setLayout(WidgetObjectLayout);
@@ -470,7 +470,7 @@ void ISObjectFormBase::FillDataFields()
 
 		//Подготовка запроса
 		ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_Object);
-		QueryModel.SetClassFilter(MetaTable->GetAlias() + '.' + MetaTable->GetAlias() + "_id = " + QString::number(ObjectID));
+		QueryModel.SetClassFilter(MetaTable->GetAlias() + SYMBOL_POINT + MetaTable->GetAlias() + "_id = " + QString::number(ObjectID));
 		QString QueryText = QueryModel.GetQueryText();
 
 		//Выполнение запроса
@@ -539,7 +539,7 @@ void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
 	{
 		QLabel *LabelSystemInfoObject = new QLabel(this);
-		LabelSystemInfoObject->setText(LANG("SystemField.ID") + ":");
+		LabelSystemInfoObject->setText(LANG("SystemField.ID") + ':');
 		LabelSystemInfoObject->setFont(FONT_APPLICATION_BOLD);
 
 		EditObjectID = new ISLineEdit(this);
@@ -584,7 +584,7 @@ void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEdit
 	}
 	else
 	{
-		LabelField->setText(MetaField->GetLabelName() + ":");
+		LabelField->setText(MetaField->GetLabelName() + ':');
 	}
 
 	if (MetaField->GetReadOnly()) //Если доступно только для просмотра
@@ -626,7 +626,7 @@ void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEdit
 		LabelTab->setFont(FONT_TAHOMA_10_BOLD);
 
 		QHBoxLayout *LayoutLine = new QHBoxLayout();
-		LayoutLine->setContentsMargins(LAYOUT_MARGINS_NULL);
+		LayoutLine->setContentsMargins(MARGINS_LAYOUT_NULL);
 
 		QWidget *WidgetLine = new QWidget(this);
 		WidgetLine->setLayout(LayoutLine);
@@ -702,7 +702,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 
 		if (ClassName.length()) //Открытие виджета
 		{
-			int ObjectType = QMetaType::type((ClassName + "*").toLocal8Bit().constData());
+			int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
 			IS_ASSERT(ObjectType, "Class for SybSystem is NULL. ClassName: " + ClassName);
 
 			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
@@ -838,7 +838,7 @@ bool ISObjectFormBase::Save()
 		for (int i = 0; i < FieldsVector.count(); ++i)
 		{
 			InsertFields += MetaTable->GetAlias() + '_' + FieldsVector.at(i) + ", ";
-			InsertValues += ":" + FieldsVector.at(i) + ", ";
+			InsertValues += ':' + FieldsVector.at(i) + ", ";
 		}
 
 		ISSystem::RemoveLastSymbolFromString(InsertFields, 2);
@@ -874,7 +874,7 @@ bool ISObjectFormBase::Save()
 	ISQuery SqlQuery(QueryText);
 	for (const auto &Value : ValuesMap.toStdMap())
 	{
-		bool BindValue = SqlQuery.BindValue(":" + Value.first, Value.second);
+		bool BindValue = SqlQuery.BindValue(':' + Value.first, Value.second);
 		IS_ASSERT(BindValue, "Not bind value");
 	}
 
@@ -943,7 +943,7 @@ void ISObjectFormBase::RenameReiconForm()
 	switch (FormType)
 	{
 	case ISNamespace::OFT_New:
-		setWindowTitle(LANG("Creating") + " (" + MetaTable->GetLocalName() + ")");
+		setWindowTitle(LANG("Creating") + " (" + MetaTable->GetLocalName() + ')');
 		setWindowIcon(BUFFER_ICONS("Add"));
 		break;
 

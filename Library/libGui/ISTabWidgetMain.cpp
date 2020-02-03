@@ -29,7 +29,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	setUsesScrollButtons(SETTING_BOOL(CONST_UID_SETTING_TABS_VIEWUSESSCROLLBUTTONS));
 
 	QVBoxLayout *LayoutMainTab = new QVBoxLayout();
-	LayoutMainTab->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutMainTab->setContentsMargins(MARGINS_LAYOUT_NULL);
 	LayoutMainTab->setSpacing(0);
 
 	MainTab = new QWidget(this);

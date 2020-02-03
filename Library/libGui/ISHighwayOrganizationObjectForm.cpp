@@ -119,7 +119,7 @@ void ISHighwayOrganizationObjectForm::BindBranch()
 	}
 
 	ISGui::SetWaitGlobalCursor(false);
-	QVariant Value = ISInputDialog::GetList(this, LANG("Highway.Branche"), LANG("Highway.SelectBranche") + ":", VariantMap);
+	QVariant Value = ISInputDialog::GetList(this, LANG("Highway.Branche"), LANG("Highway.SelectBranche") + ':', VariantMap);
 	if (Value.isValid())
 	{
 		ISQuery qUpdateBranch(QU_ORGANIZATION_BRANCH);
@@ -170,7 +170,7 @@ void ISHighwayOrganizationObjectForm::ReloadBranch()
 				ActionBranchMenu->menu()->addAction(Action);
 			}
 			ActionBranchMenu->menu()->addSeparator();
-			ActionBranchMenu->setText(LANG("Highway.Branches") + " (" + QString::number(qSelectParent.GetCountResultRows()) + ")");
+			ActionBranchMenu->setText(LANG("Highway.Branches") + " (" + QString::number(qSelectParent.GetCountResultRows()) + ')');
 		}
 		else
 		{

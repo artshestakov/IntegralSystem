@@ -70,7 +70,7 @@ void ISTaskForm::Invoke()
 void ISTaskForm::CreateTempWidget()
 {
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	
 	TempWidget = new QWidget(this);
 	TempWidget->setLayout(Layout);
@@ -134,7 +134,7 @@ void ISTaskForm::FilterClicked()
 		TaskListForm = nullptr;
 	}
 
-	int ObjectType = QMetaType::type((ListFormName + "*").toLocal8Bit().constData());
+	int ObjectType = QMetaType::type((ListFormName + '*').toLocal8Bit().constData());
 	IS_ASSERT(ObjectType, QString("Class for task list form is NULL. ClassName: %1").arg(ListFormName));
 
 	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
@@ -168,7 +168,7 @@ void ISTaskForm::CreateTask()
 //-----------------------------------------------------------------------------
 void ISTaskForm::SearchByNumber()
 {
-	int TaskID = ISInputDialog::GetInteger(this, LANG("Search"), LANG("InputTheTaskNumber") + ":", 0, INTEGER_MAXIMUM).toInt();
+	int TaskID = ISInputDialog::GetInteger(this, LANG("Search"), LANG("InputTheTaskNumber") + ':', 0, MAXIMUM_INTEGER).toInt();
 	if (TaskID)
 	{
 		if (ISCore::TaskCheckExist(TaskID))

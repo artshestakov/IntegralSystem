@@ -54,7 +54,7 @@ static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatb_ac
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gasp_specialaccess FROM _groupaccessspecial WHERE gasp_group = :GroupID");
 //-----------------------------------------------------------------------------
-ISUserRoleEntity::ISUserRoleEntity() : QObject()
+ISUserRoleEntity::ISUserRoleEntity()
 {
 	
 }

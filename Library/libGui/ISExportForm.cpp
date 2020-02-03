@@ -13,10 +13,10 @@ ISExportForm::ISExportForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 	setWindowIcon(BUFFER_ICONS("ExportTable"));
 	setWindowTitle(LANG("Export.Table"));
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelText = new QLabel(this);
-	LabelText->setText(LANG("SelectExportType") + ":");
+	LabelText->setText(LANG("SelectExportType") + ':');
 	GetMainLayout()->addWidget(LabelText);
 
 	ComboBoxType = new ISComboEdit(this);
@@ -75,7 +75,7 @@ void ISExportForm::CreateTabSettings()
 
 	CheckHeader = new ISCheckEdit(TabSettings);
 	CheckHeader->SetValue(true);
-	FormLayout->addRow(LANG("Export.Setting.Header") + ":", CheckHeader);
+	FormLayout->addRow(LANG("Export.Setting.Header") + ':', CheckHeader);
 }
 //-----------------------------------------------------------------------------
 void ISExportForm::CreateTabFields()

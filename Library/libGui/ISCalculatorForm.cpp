@@ -10,7 +10,7 @@ ISCalculatorForm::ISCalculatorForm(QWidget *parent) : ISInterfaceForm(parent)
 	setWindowIcon(BUFFER_ICONS("Calculator"));
 
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
     SumInMemory = 0.0;
     SumSoFar = 0.0;
@@ -309,7 +309,7 @@ void ISCalculatorForm::PointClicked()
 		DisplayEdit->setText("0");
 	}
 
-	if (!DisplayEdit->text().contains('.'))
+	if (!DisplayEdit->text().contains(SYMBOL_POINT))
 	{
 		DisplayEdit->setText(DisplayEdit->text() + tr("."));
 	}

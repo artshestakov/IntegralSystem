@@ -27,7 +27,7 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	GetMainLayout()->addWidget(LabelLogo);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	Layout->setContentsMargins(MARGINS_LAYOUT_5_PX);
 	GetMainLayout()->addLayout(Layout);
 
 	QLabel *LabelLock = new QLabel(this);
@@ -45,11 +45,11 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	QLabel *LabelUser = new QLabel(this);
 	LabelUser->setFont(FONT_APPLICATION_BOLD);
 	LabelUser->setText(ISMetaUser::GetInstance().GetData()->FullName);
-	FormLayout->addRow(LANG("User") + ":", LabelUser);
+	FormLayout->addRow(LANG("User") + ':', LabelUser);
 
 	EditPassword = new ISPasswordEdit(this);
 	EditPassword->SetVisibleGenerate(false);
-	FormLayout->addRow(LANG("Password") + ":", EditPassword);
+	FormLayout->addRow(LANG("Password") + ':', EditPassword);
 
 	LabelNotify = new QLabel(this);
 	ISGui::SetFontWidgetBold(LabelNotify, true);

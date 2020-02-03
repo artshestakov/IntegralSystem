@@ -43,7 +43,7 @@ void ISMedTechRatingSubSystem::SelectedRating()
 			QString UniqueID = qSelect.ReadColumn("rtng_uniqueid").toString();
 
 			AsteriskCallsListForm->setEnabled(true);
-			AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_uniqueid IS NOT NULL AND ascl_uniqueid = '" + UniqueID + "'");
+			AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_uniqueid IS NOT NULL AND ascl_uniqueid = '" + UniqueID + '\'');
 			if (CDRLoadData)
 			{
 				AsteriskCallsListForm->Update();

@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	ISCaratApplication CaratService(argc, argv);
 	ISCrashDumper::Startup();
 
-	ISConfig::GetInstance().Initialize(CONFIG_FILE_PATH);
+	ISConfig::GetInstance().Initialize();
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CARAT);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 

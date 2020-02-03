@@ -7,7 +7,7 @@
 //-----------------------------------------------------------------------------
 ISQSpinBox::ISQSpinBox(QWidget *parent) : QSpinBox(parent)
 {
-	setMaximum(INTEGER_MAXIMUM);
+	setMaximum(MAXIMUM_INTEGER);
 
 	ISQLineEdit *LineEdit = new ISQLineEdit(this);
 	connect(LineEdit, &ISQLineEdit::ClearClicked, this, &ISQSpinBox::ClearClicked);

@@ -51,12 +51,12 @@ QString ISFileDialog::GetSaveFileNameImage(QWidget *parent, const QString &FileN
 	FilterString += LANG("File.Filter.Image.BMP") + ";;";
 	FilterString += LANG("File.Filter.Image.WEBP");
 
-	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.Image.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, FilterString);
+	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.Image.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + '/' + FileName, FilterString);
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetSaveFileNameAsteriskRecord(QWidget *parent, const QString &FileName)
 {
-	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.AsteriskRecord.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, LANG("File.Filter.AsteriskRecord"));
+	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.AsteriskRecord.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + '/' + FileName, LANG("File.Filter.AsteriskRecord"));
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetOpenFileName(QWidget *parent, const QString &FilePath, const QString &FilterName)
@@ -77,7 +77,7 @@ QString ISFileDialog::GetOpenFileName(QWidget *parent, const QString &FilePath, 
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetSaveFileName(QWidget *parent, const QString &FilterName, const QString &FileName)
 {
-	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.File.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/" + FileName, FilterName);
+	return ISFileDialog::getSaveFileName(parent, LANG("FileDialog.File.Save.Title"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + '/' + FileName, FilterName);
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetDirectoryPath(QWidget *parent)

@@ -56,7 +56,7 @@ bool ISExportCSV::Export()
 			{
 				QString LocalName = Model->GetFieldLocalName(FieldName);
 				HeaderString.append(LocalName);
-				HeaderString.append(";");
+				HeaderString.append(';');
 			}
 		}
 
@@ -97,7 +97,7 @@ bool ISExportCSV::Export()
 			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
 			Value = PrepareValue(Value);
 			RowString.append(Value.toString());
-			RowString.append(";");
+			RowString.append(';');
 		}
 
 		ISSystem::RemoveLastSymbolFromString(RowString);

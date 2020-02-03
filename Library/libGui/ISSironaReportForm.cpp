@@ -21,7 +21,7 @@ static QString QS_DOCTOR_BONUS = PREPARE_QUERY("SELECT SUM(resr_moneydoctor) "
 //-----------------------------------------------------------------------------
 ISSironaReportForm::ISSironaReportForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
@@ -109,7 +109,7 @@ void ISSironaReportForm::OutputList()
 			for (int i = 0; i < TreeWidget->topLevelItemCount(); ++i)
 			{
 				QTreeWidgetItem *TreeWidgetItem = TreeWidget->topLevelItem(i);
-				QString Data = TreeWidgetItem->text(0) + ";" + TreeWidgetItem->text(1) + "\r\n";
+				QString Data = TreeWidgetItem->text(0) + ';' + TreeWidgetItem->text(1) + "\r\n";
 				FileReport.write(Data.toUtf8());
 			}
 

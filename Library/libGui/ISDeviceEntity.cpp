@@ -47,7 +47,7 @@ void ISDeviceEntity::Initialize()
 			ISDebug::ShowInfoString(LANG("Device.Initialize.Process").arg(DeviceUserName));
 			ISCountingTime Time;
 
-			int ObjectType = QMetaType::type((ClassName + "*").toLocal8Bit().constData());
+			int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
 			IS_ASSERT(ObjectType, QString("Class for device is NULL. ClassName: %1").arg(ClassName));
 
 			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

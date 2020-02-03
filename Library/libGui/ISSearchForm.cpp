@@ -22,7 +22,7 @@ ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 	setWindowIcon(BUFFER_ICONS("Search"));
 	resize(SIZE_550_300);
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelTitle = new QLabel(this);
 	LabelTitle->setText(LANG("Search.Advanced"));
@@ -274,7 +274,7 @@ void ISSearchForm::SearchFromField(ISSearchModel &SearchModel, QTreeWidgetItem *
 {
 	PMetaClassField *MetaField = MetaTable->GetField(TreeWidgetItem->data(0, Qt::UserRole).toString());
 	QString FieldName = MetaTable->GetAlias() + '_' + MetaField->GetName();
-	QString Condition = ":" + MetaField->GetName();
+	QString Condition = ':' + MetaField->GetName();
 
 	ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase*>(TreeWidget->itemWidget(TreeWidgetItem, 1));
 	ISNamespace::SearchOperatorType SearchOperator = ComboSearchBase->GetOperator();

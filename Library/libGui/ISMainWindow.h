@@ -68,12 +68,10 @@ protected:
 	void ShowNoteForm(); //Открыть форму "Блокнот"
 	void ShowCalculator(); //Открыть калькулятор
 	void ShowAddressBook(); //Открыть адресную книгу
-	void ShowDebugApplication(); //Открыть отладчик
 	void UserStatusChange(); //Изменение текущего статуса пользователя
 	void ShowSettingsForm(); //Открыть форму "Настройки"
 	void ShowHelpSystem(); //Открыть справочную систему
 	void ShowAboutForm(); //Открыть форму "О программе"
-	void ShowFeedbackForm(); //Открыть форму "Обратная связь"
 	void ShowAboutQt(); //Открыть форму "О Qt"
 	void ShowLicenseForm(); //Открыть форму "Лицензия"
 

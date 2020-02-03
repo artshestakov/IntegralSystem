@@ -28,7 +28,7 @@ ISNoteForm::ISNoteForm(QWidget *parent) : ISInterfaceForm(parent)
 	setWindowTitle(LANG("Notebook"));
 	setWindowIcon(BUFFER_ICONS("NoteObject"));
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -171,7 +171,7 @@ void ISNoteForm::Create()
 //-----------------------------------------------------------------------------
 void ISNoteForm::Edit()
 {
-	QString Name = ISInputDialog::GetString(this, LANG("EditRecord"), LANG("Named") + ":", ListWidget->currentItem()->text()).toString();
+	QString Name = ISInputDialog::GetString(this, LANG("EditRecord"), LANG("Named") + ':', ListWidget->currentItem()->text()).toString();
 
 	if (Name == ListWidget->currentItem()->text())
 	{

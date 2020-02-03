@@ -21,7 +21,7 @@ ISPhoneForm::ISPhoneForm(QWidget *parent) : ISInterfaceForm(parent)
 	setAttribute(Qt::WA_DeleteOnClose, false);
 
 	QVBoxLayout *LayoutFrame = new QVBoxLayout();
-	LayoutFrame->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	LayoutFrame->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
 	QFrame *Frame = new QFrame(this);
 	Frame->setFrameShape(QFrame::Box);
@@ -46,7 +46,7 @@ ISPhoneForm::ISPhoneForm(QWidget *parent) : ISInterfaceForm(parent)
 
 	GridLayout = new QGridLayout();
 	GridLayout->setSpacing(5);
-	GridLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	GridLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	LayoutFrame->addLayout(GridLayout);
 
 	ButtonGroup = new QButtonGroup(this);

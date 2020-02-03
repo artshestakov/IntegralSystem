@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISTRACE_H_INCLUDED
+#define _ISTRACE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISCountingTime.h"
@@ -17,3 +19,4 @@ private:
 	QString Q_FUNC_INFO_STRING;
 };
 //-----------------------------------------------------------------------------
+#endif

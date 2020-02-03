@@ -21,7 +21,7 @@ ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &Repor
 	}
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	QToolBar *ToolBar = new QToolBar(this);

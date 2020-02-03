@@ -27,15 +27,15 @@ void ISNotificationService::ShowNotification(ISNamespace::NotificationFormType N
 	switch (NotificationType)
 	{
 	case ISNamespace::NFT_Create:
-		PopupMessage->SetTitle(LANG("NotificationForm.Title.Created") + " - " + MetaObjectName.toLower() + ":");
+		PopupMessage->SetTitle(LANG("NotificationForm.Title.Created") + " - " + MetaObjectName.toLower() + ':');
 		break;
 
 	case ISNamespace::NFT_CreateCopy:
-		PopupMessage->SetTitle(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaObjectName.toLower() + ":");
+		PopupMessage->SetTitle(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaObjectName.toLower() + ':');
 		break;
 
 	case ISNamespace::NFT_Edit:
-		PopupMessage->SetTitle(LANG("NotificationForm.Title.Edited") + " - " + MetaObjectName.toLower() + ":");
+		PopupMessage->SetTitle(LANG("NotificationForm.Title.Edited") + " - " + MetaObjectName.toLower() + ':');
 		break;
 
 	case ISNamespace::NFT_Delete:

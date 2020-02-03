@@ -53,7 +53,7 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 {
 	setWindowTitle(LANG("Address"));
 	setWindowIcon(BUFFER_ICONS("Address"));
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	setFixedSize(530, 230);
 
 	QFormLayout *FormLayout = new QFormLayout();
@@ -63,25 +63,25 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	ComboRegion->lineEdit()->setPlaceholderText(LANG("Address.Region.PlaceholderText"));
 	connect(ComboRegion, &ISAddressBox::ChangeValue, this, &ISAddressForm::RegionChanged);
 	connect(ComboRegion, &ISAddressBox::ChangeValue, this, &ISAddressForm::UpdatePerfomance);
-	FormLayout->addRow(LANG("Address.Region") + ":", ComboRegion);
+	FormLayout->addRow(LANG("Address.Region") + ':', ComboRegion);
 
 	ComboCity = new ISAddressBox(this);
 	ComboCity->lineEdit()->setPlaceholderText(LANG("Address.City.PlaceholderText"));
 	connect(ComboCity, &ISAddressBox::ChangeValue, this, &ISAddressForm::CityChanged);
-	FormLayout->addRow(LANG("Address.City") + ":", ComboCity);
+	FormLayout->addRow(LANG("Address.City") + ':', ComboCity);
 
 	ComboStreet = new ISAddressBox(this);
 	ComboStreet->lineEdit()->setPlaceholderText(LANG("Address.Street.PlaceholderText"));
 	connect(ComboStreet, &ISAddressBox::ChangeValue, this, &ISAddressForm::StreetChanged);
-	FormLayout->addRow(LANG("Address.Street") + ":", ComboStreet);
+	FormLayout->addRow(LANG("Address.Street") + ':', ComboStreet);
 
 	ComboHouse = new ISAddressBox(this);
 	ComboHouse->lineEdit()->setPlaceholderText(LANG("Address.House.PlaceholderText"));
 	connect(ComboHouse, &ISAddressBox::ChangeValue, this, &ISAddressForm::HouseChanged);
-	FormLayout->addRow(LANG("Address.House") + ":", ComboHouse);
+	FormLayout->addRow(LANG("Address.House") + ':', ComboHouse);
 
 	QHBoxLayout *LayoutGroupBox = new QHBoxLayout();
-	LayoutGroupBox->setContentsMargins(LAYOUT_MARGINS_2_PX);
+	LayoutGroupBox->setContentsMargins(MARGINS_LAYOUT_2_PX);
 
 	GroupBox = new QGroupBox(this);
 	GroupBox->setTitle(LANG("Address.PerformanceAddress"));
@@ -98,11 +98,11 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	GroupBox->layout()->addWidget(LineEdit);
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	LayoutBottom->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutBottom->setContentsMargins(MARGINS_LAYOUT_NULL);
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	QLabel *LabelInput = new QLabel(this);
-	LabelInput->setText(LANG("Address.Mode") + ":");
+	LabelInput->setText(LANG("Address.Mode") + ':');
 	LayoutBottom->addWidget(LabelInput);
 
 	RadioList = new QRadioButton(this);
@@ -249,7 +249,7 @@ void ISAddressForm::LoadRegion()
 			QString RegionName = qSelectRegion.ReadColumn("fobj_offname").toString();
 			ISUuid RegionUID = ISUuid(qSelectRegion.ReadColumn("fobj_aoguid"));
 			QString ObjectType = qSelectRegion.ReadColumn("fscb_socrname").toString();
-			ComboRegion->addItem(RegionName + " " + ObjectType.toLower(), RegionUID);
+			ComboRegion->addItem(RegionName + SYMBOL_SPACE + ObjectType.toLower(), RegionUID);
 		}
 	}
 
@@ -331,7 +331,7 @@ void ISAddressForm::LoadStreet(const QVariant &CityGUID)
 			QString StreetName = qSelectCity.ReadColumn("fobj_offname").toString();
 			QString ShortName = qSelectCity.ReadColumn("fobj_shortname").toString();
 			ISUuid StreetGUID = qSelectCity.ReadColumn("fobj_aoguid");
-			ComboStreet->addItem(StreetName + " " + ShortName, StreetGUID);
+			ComboStreet->addItem(StreetName + SYMBOL_SPACE + ShortName, StreetGUID);
 		}
 	}
 	ComboStreet->clearEditText();

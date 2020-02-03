@@ -136,7 +136,7 @@ void CGConfiguratorShow::obsoleteresources()
 		QString NotIN;
 		for (int i = 0; i < Vector->count(); ++i)
 		{
-			NotIN += "'" + Vector->at(i) + "', ";
+			NotIN += '\'' + Vector->at(i) + "', ";
 		}
 
 		ISSystem::RemoveLastSymbolFromString(NotIN, 2);
@@ -167,7 +167,7 @@ void CGConfiguratorShow::obsoleteresources()
 		QString TableName = OutputItem.first;
 		QVectorString *Vector = OutputItem.second;
 
-		ISDebug::ShowString(TableName + ":");
+		ISDebug::ShowString(TableName + ':');
 
 		for (int i = 0; i < Vector->count(); ++i)
 		{
@@ -189,7 +189,7 @@ void CGConfiguratorShow::obsoletesequence()
 	{
 		QString TableName = ISMetaData::GetInstanse().GetTables().at(i)->GetName().toLower();
 		QString SequnceName = TableName + "_sequence";
-		Where += "'" + SequnceName + "', ";
+		Where += '\'' + SequnceName + "', ";
 	}
 
 	ISSystem::RemoveLastSymbolFromString(Where, 2);

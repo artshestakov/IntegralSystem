@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISLOGGER_H_INCLUDED
+#define _ISLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
@@ -36,3 +38,4 @@ private:
 #define IS_LOGGER(Message) ISLogger::GetInstance().AddMessage(Message) //Добавить сообщение в лог-файл
 #define IS_LOGGER_FUNC(Message) ISLogger::GetInstance().AddMessageFunc(Q_FUNC_INFO, Message) //Добавить сообщение в лог-файл из функции
 //-----------------------------------------------------------------------------
+#endif

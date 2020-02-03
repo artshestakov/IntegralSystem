@@ -22,7 +22,7 @@ ISDeviceSettingsForm::ISDeviceSettingsForm(QWidget *parent) : ISInterfaceForm(pa
 {
 	setWindowTitle(LANG("Device.Settings"));
 	setWindowIcon(BUFFER_ICONS("Device.Settings"));
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -55,7 +55,7 @@ ISDeviceSettingsForm::ISDeviceSettingsForm(QWidget *parent) : ISInterfaceForm(pa
 	ToolBar->addAction(ActionUpdate);
 
 	QVBoxLayout *GroupBoxLayout = new QVBoxLayout();
-	GroupBoxLayout->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GroupBoxLayout->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
 	QGroupBox *GroupBox = new QGroupBox(this);
 	GroupBox->setTitle(LANG("Device.My"));
@@ -126,7 +126,7 @@ void ISDeviceSettingsForm::Reload()
 			else //Устройство не подключено
 			{
 				ListWidgetItem->setIcon(BUFFER_ICONS("Device.Disconnect"));
-				ListWidgetItem->setText(ListWidgetItem->text() + " (" + LANG("Device.NotConnected") + ")");
+				ListWidgetItem->setText(ListWidgetItem->text() + " (" + LANG("Device.NotConnected") + ')');
 			}
 		}
 	}

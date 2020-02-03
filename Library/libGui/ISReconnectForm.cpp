@@ -33,7 +33,7 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 
 	Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	Layout->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
 	ProgressBar = new QProgressBar(this);
@@ -47,25 +47,25 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	LabelConnectionLost->setText(LANG("ConnectionDatabaseLost"));
 	Layout->addWidget(LabelConnectionLost, 0, Qt::AlignLeft);
 
-	AddLabel(LANG("CausesReconnect") + ":");
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotLocalNet") + ";");
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotEntered") + ";");
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.PatchCord.NotConnected") + ";");
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Service.NotEntered") + ";");
+	AddLabel(LANG("CausesReconnect") + ':');
+	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotLocalNet") + ';');
+	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotEntered") + ';');
+	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.PatchCord.NotConnected") + ';');
+	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Service.NotEntered") + ';');
 
 	Layout->addWidget(ISControls::CreateHorizontalLine(this));
 
 	QHBoxLayout *LayoutReconnect = new QHBoxLayout();
-	LayoutReconnect->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutReconnect->setContentsMargins(MARGINS_LAYOUT_NULL);
 	Layout->addLayout(LayoutReconnect);
 
 	QLabel *LabelStatus = new QLabel(this);
 	LabelStatus->setFont(FONT_APPLICATION_BOLD);
-	LabelStatus->setText(LANG("Status.Current") + ":");
+	LabelStatus->setText(LANG("Status.Current") + ':');
 	LayoutReconnect->addWidget(LabelStatus);
 
 	LabelCurrentStatus = new QLabel(this);
-	LabelCurrentStatus->setText(LANG("ReconnectText").arg("1") + "...");
+	LabelCurrentStatus->setText(LANG("ReconnectText").arg('1') + "...");
 	LayoutReconnect->addWidget(LabelCurrentStatus);
 
 	LayoutReconnect->addStretch();

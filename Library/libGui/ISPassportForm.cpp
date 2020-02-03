@@ -11,7 +11,7 @@ ISPassportForm::ISPassportForm(const QString &PassportString, QWidget *parent) :
 	setWindowTitle(LANG("Passport.EditingPassport"));
 	setWindowIcon(BUFFER_ICONS("Passport"));
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();
@@ -20,22 +20,22 @@ ISPassportForm::ISPassportForm(const QString &PassportString, QWidget *parent) :
 	EditSeria = new ISLineEdit(this);
 	EditSeria->SetMaxLength(4);
 	EditSeria->SetPlaceholderText(LANG("Passport.Seria.Placeholder"));
-	FormLayout->addRow(LANG("Passport.Seria") + ":", EditSeria);
+	FormLayout->addRow(LANG("Passport.Seria") + ':', EditSeria);
 
 	EditNumber = new ISLineEdit(this);
 	EditNumber->SetMaxLength(6);
 	EditNumber->SetPlaceholderText(LANG("Passport.Number.Placeholder"));
-	FormLayout->addRow(LANG("Passport.Number") + ":", EditNumber);
+	FormLayout->addRow(LANG("Passport.Number") + ':', EditNumber);
 
 	EditDateOfIssue = new ISDateEdit(this);
-	FormLayout->addRow(LANG("Passport.DateOfIssue") + ":", EditDateOfIssue);
+	FormLayout->addRow(LANG("Passport.DateOfIssue") + ':', EditDateOfIssue);
 
 	EditIssuedBy = new ISTextEdit(this);
 	EditIssuedBy->SetUppercase(true);
-	FormLayout->addRow(LANG("Passport.IssuedBy") + ":", EditIssuedBy);
+	FormLayout->addRow(LANG("Passport.IssuedBy") + ':', EditIssuedBy);
 
 	EditDivisionCode = new ISDivisionCodeEdit(this);
-	FormLayout->addRow(LANG("Passport.DivisionCode") + ":", EditDivisionCode);
+	FormLayout->addRow(LANG("Passport.DivisionCode") + ':', EditDivisionCode);
 
 	ISButtonDialog *ButtonDialog = new ISButtonDialog(this, LANG("Save"));
 	ButtonDialog->SetApplyIcon(BUFFER_ICONS("Save"));

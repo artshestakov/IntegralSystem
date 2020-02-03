@@ -16,7 +16,7 @@
 ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	Stopped = false;
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -229,13 +229,13 @@ QString ISFullTextSearchForm::CreateQuery(PMetaClassTable *MetaTable) const
 		{
 			PMetaClassTable *MetaForeignTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass());
 			QueryText += "(SELECT concat(";
-			for (const QString &FieldName : MetaForeign->GetForeignViewNameField().split(";"))
+			for (const QString &FieldName : MetaForeign->GetForeignViewNameField().split(';'))
 			{
 				QueryText += MetaForeignTable->GetAlias() + '_' + FieldName + ", ";
 			}
 			ISSystem::RemoveLastSymbolFromString(QueryText, 2);
-			QueryText += ") FROM " + MetaForeignTable->GetName() + " ";
-			QueryText += "WHERE " + MetaForeignTable->GetAlias() + '_' + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + '_' + MetaField->GetName() + ")";
+			QueryText += ") FROM " + MetaForeignTable->GetName() + SYMBOL_SPACE;
+			QueryText += "WHERE " + MetaForeignTable->GetAlias() + '_' + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + '_' + MetaField->GetName() + ')';
 		}
 		else
 		{

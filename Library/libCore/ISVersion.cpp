@@ -34,7 +34,7 @@ void ISVersion::Initialize()
 //-----------------------------------------------------------------------------
 void ISVersion::SetVersion(const QString &version)
 {
-	QStringList StringList = version.split('.');
+	QStringList StringList = version.split(SYMBOL_POINT);
 	if (StringList.count() == 4)
 	{
 		VersionString = version;
@@ -47,7 +47,7 @@ void ISVersion::SetVersion(const QString &version)
 //-----------------------------------------------------------------------------
 bool ISVersion::IsValid() const
 {
-	if (VersionString.split('.').count() == 4)
+	if (VersionString.split(SYMBOL_POINT).count() == 4)
 	{
 		return true;
 	}
@@ -103,7 +103,7 @@ QString ISVersion::GetPlatform() const
 QString ISVersion::GetFileData(const QString &FileName) const
 {
 	QString Result;
-	QFile File(":/Version/" + FileName + '.' + EXTENSION_TXT);
+	QFile File(":/Version/" + FileName + SYMBOL_POINT + EXTENSION_TXT);
 	if (File.open(QIODevice::ReadOnly))
 	{
 		Result = File.readAll();

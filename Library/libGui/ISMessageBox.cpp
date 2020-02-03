@@ -4,11 +4,11 @@
 #include "ISStyleSheet.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-ISMessageBox::ISMessageBox(QMessageBox::Icon Icon, const QString &Title, const QString &Message, QMessageBox::StandardButtons Buttons, QWidget *parent) : QMessageBox(Icon, Title, Message, Buttons, parent)
+ISMessageBox::ISMessageBox(QMessageBox::Icon Icon, const QString &Title, const QString &Message, QMessageBox::StandardButtons Buttons, QWidget *parent)
+	: QMessageBox(Icon, Title, Message, Buttons, parent),
+	AdditionalButtonClicked(ISNamespace::MBB_Unknown)
 {
-	AdditionalButtonClicked = ISNamespace::MBB_Unknown;
 	
-	setWindowIcon(QApplication::windowIcon());
 }
 //-----------------------------------------------------------------------------
 ISMessageBox::~ISMessageBox()
@@ -88,6 +88,7 @@ int ISMessageBox::Exec()
 		Button->setFixedHeight(23);
 	}
 
+	QApplication::beep();
 	return exec();
 }
 //-----------------------------------------------------------------------------

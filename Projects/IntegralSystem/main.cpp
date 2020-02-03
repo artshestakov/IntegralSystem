@@ -7,7 +7,7 @@
 #include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISSplashScreen.h"
-#include "ISAuthorizationForm.h"
+#include "ISAuthForm.h"
 #include "ISRegisterMetaType.h"
 #include "ISIntegralSystem.h"
 #include "ISStartup.h"
@@ -34,20 +34,20 @@ int main(int argc, char *argv[])
 	ISRegisterMetaType::RegisterMetaType();
 
 	//Создание формы авторизации
-	ISAuthorizationForm *AuthorizationForm = new ISAuthorizationForm(nullptr);
+	ISAuthForm *AuthForm = new ISAuthForm(nullptr);
 	ISSplashScreen::GetInstance().hide();
 	ISSplashScreen::GetInstance().clearMessage();
 
-	bool Result = AuthorizationForm->ExecAnimated();
+	bool Result = AuthForm->ExecAnimated();
 	if (!Result)
 	{
 		return EXIT_SUCCESS;
 	}
 
 	ISSplashScreen::GetInstance().show();
-	QString UserLogin = AuthorizationForm->GetEnteredLogin();
-	QString UserPassword = AuthorizationForm->GetEnteredPassword();
-	delete AuthorizationForm;
+	QString UserLogin = AuthForm->GetEnteredLogin();
+	QString UserPassword = AuthForm->GetEnteredPassword();
+	delete AuthForm;
 
 	//Проверка обновления
 	ISNamespace::UpdateResult ResultUpdate = CheckUpdate();

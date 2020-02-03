@@ -299,7 +299,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 	if (MetaTable->GetObjectForm().length()) //Если у мета-таблицы есть переопределенная форма объекта
 	{
-		int ObjectType = QMetaType::type((MetaTable->GetObjectForm() + "*").toLocal8Bit().constData());
+		int ObjectType = QMetaType::type((MetaTable->GetObjectForm() + '*').toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("ObjectForm for table \"%1\" is null.").arg(MetaTable->GetObjectForm()));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
@@ -328,7 +328,7 @@ ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::Fie
 		SearchOperatorWidget = ISMetaData::GetInstanse().GetAssociationTypes().GetSearchOperatorWidget(DataType);
 	}
 
-	int ObjectType = QMetaType::type((SearchOperatorWidget + "*").toLocal8Bit().constData());
+	int ObjectType = QMetaType::type((SearchOperatorWidget + '*').toLocal8Bit().constData());
 	IS_ASSERT(ObjectType, "Widget search operator is null.");
 
 	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
@@ -443,7 +443,7 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaClassFie
 
 	if (Temp.length())
 	{
-		int ObjectType = QMetaType::type((Temp + "*").toLocal8Bit().constData());
+		int ObjectType = QMetaType::type((Temp + '*').toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("ObjectType for field edit \"%1\" NULL.").arg(Temp));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

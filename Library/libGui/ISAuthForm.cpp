@@ -1,5 +1,5 @@
 ﻿#include "StdAfx.h"
-#include "ISAuthorizationForm.h"
+#include "ISAuthForm.h"
 #include "ISCore.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
@@ -18,13 +18,13 @@
 #include "ISStyleSheet.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogForm(parent)
+ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	AuthConnector = nullptr;
 
 	setWindowTitle(LANG("InputInSystem"));
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_NULL);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_NULL);
 
 	QLabel *LableImage = new QLabel(this);
 	LableImage->setScaledContents(true);
@@ -32,10 +32,10 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	GetMainLayout()->addWidget(LableImage);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	Layout->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
-	Layout->addWidget(new QLabel(LANG("InputLoginAndPassword") + ":", this));
+	Layout->addWidget(new QLabel(LANG("InputLoginAndPassword") + ':', this));
 
 	EditLogin = new ISLineEdit(this);
 	EditLogin->SetPlaceholderText(LANG("Login"));
@@ -53,7 +53,7 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	Layout->addWidget(EditPassword);
 
 	QHBoxLayout *LayoutLabels = new QHBoxLayout();
-	LayoutLabels->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutLabels->setContentsMargins(MARGINS_LAYOUT_NULL);
 	Layout->addLayout(LayoutLabels);
 
 	LabelCapsLook = new QLabel(this);
@@ -84,8 +84,8 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	LayoutBottom->addWidget(ButtonMenu);
 
-	ButtonMenu->menu()->addAction(LANG("Form.Authorization.ConnectionSettings"), this, &ISAuthorizationForm::ShowConnectionForm, Qt::Key_F9);
-	ButtonMenu->menu()->addAction(LANG("Form.Authorization.About"), this, &ISAuthorizationForm::ShowAboutForm, Qt::Key_F1);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("DatabaseConnection"), LANG("Form.Authorization.ConnectionSettings"), this, &ISAuthForm::ShowConnectionForm, Qt::Key_F9);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("About"), LANG("Form.Authorization.About"), this, &ISAuthForm::ShowAboutForm, Qt::Key_F1);
 
 	LayoutBottom->addStretch();
 
@@ -103,74 +103,55 @@ ISAuthorizationForm::ISAuthorizationForm(QWidget *parent) : ISInterfaceDialogFor
 	ButtonInput = new ISPushButton(BUFFER_ICONS("Apply.Blue"), LANG("Input"), this);
 	ButtonInput->setToolTip(LANG("Input.ToolTip"));
 	ButtonInput->setCursor(CURSOR_POINTING_HAND);
-	connect(ButtonInput, &ISPushButton::clicked, this, &ISAuthorizationForm::Input);
+	connect(ButtonInput, &ISPushButton::clicked, this, &ISAuthForm::Input);
 	LayoutBottom->addWidget(ButtonInput);
 
 	ButtonExit = new ISPushButton(BUFFER_ICONS("Auth.Exit"), LANG("Exit"), this);
 	ButtonExit->setCursor(CURSOR_POINTING_HAND);
 	ButtonExit->setToolTip(LANG("Exit.ToolTip"));
-	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthorizationForm::close);
+	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
 	LayoutBottom->addWidget(ButtonExit);
 
 	QAction *ActionClearFields = new QAction(this);
 	ActionClearFields->setShortcut(Qt::Key_F12);
-	connect(ActionClearFields, &QAction::triggered, this, &ISAuthorizationForm::ClearFields);
+	connect(ActionClearFields, &QAction::triggered, this, &ISAuthForm::ClearFields);
 	addAction(ActionClearFields);
 }
 //-----------------------------------------------------------------------------
-ISAuthorizationForm::~ISAuthorizationForm()
+ISAuthForm::~ISAuthForm()
 {
 	
 }
 //-----------------------------------------------------------------------------
-QString ISAuthorizationForm::GetEnteredLogin() const
+QString ISAuthForm::GetEnteredLogin() const
 {
 	return EditLogin->GetValue().toString();
 }
 //-----------------------------------------------------------------------------
-QString ISAuthorizationForm::GetEnteredPassword() const
+QString ISAuthForm::GetEnteredPassword() const
 {
 	return EditPassword->GetValue().toString();
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::AfterShowEvent()
+void ISAuthForm::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
 
 	QTimer *TimerCapsLook = new QTimer(this);
-	connect(TimerCapsLook, &QTimer::timeout, this, &ISAuthorizationForm::TimeoutCapsLook);
+	connect(TimerCapsLook, &QTimer::timeout, this, &ISAuthForm::TimeoutCapsLook);
 	TimerCapsLook->start(200);
 
 	QTimer *TimerLang = new QTimer(this);
-	connect(TimerLang, &QTimer::timeout, this, &ISAuthorizationForm::TimeoutLang);
+	connect(TimerLang, &QTimer::timeout, this, &ISAuthForm::TimeoutLang);
 	TimerLang->start(200);
-
-	if (CONFIG_BOOL(CONST_CONFIG_AUTOINPUT_INCLUDED))
-	{
-		EditLogin->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_LOGIN));
-		EditPassword->SetValue(CONFIG_VALUE(CONST_CONFIG_AUTOINPUT_PASSWORD));
-
-		if (EditPassword->GetValue().toString().length())
-		{
-			ButtonInput->setFocus();
-		}
-		else
-		{
-			EditPassword->SetFocus();
-		}
-	}
-	else
-	{
-		EditLogin->SetFocus();
-	}
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::EnterClicked()
+void ISAuthForm::EnterClicked()
 {
 	Input();
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::TimeoutCapsLook()
+void ISAuthForm::TimeoutCapsLook()
 {
 	if (ISGui::CheckPressCapsLook())
 	{
@@ -185,7 +166,7 @@ void ISAuthorizationForm::TimeoutCapsLook()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::TimeoutLang()
+void ISAuthForm::TimeoutLang()
 {
 	QString LayoutName = ISGui::GetCurrentLayoutName();
 	if (LayoutName == "ENG")
@@ -198,24 +179,19 @@ void ISAuthorizationForm::TimeoutLang()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::ShowConnectionForm()
+void ISAuthForm::ShowConnectionForm()
 {
 	ISConnectionForm ConnectionForm;
-	connect(&ConnectionForm, &ISConnectionForm::AutiInputChanged, [=](const QString &Login, const QString &Password)
-	{
-		EditLogin->SetValue(Login);
-		EditPassword->SetValue(Password);
-	});
 	ConnectionForm.Exec();
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::ShowAboutForm()
+void ISAuthForm::ShowAboutForm()
 {
 	ISAboutForm AboutForm;
 	AboutForm.Exec();
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::Input()
+void ISAuthForm::Input()
 {
 	if (Check())
 	{
@@ -223,14 +199,14 @@ void ISAuthorizationForm::Input()
 		if (!AuthConnector)
 		{
 			AuthConnector = new ISAuthConnector(this);
-			connect(AuthConnector, &ISAuthConnector::ConnectedToHost, this, &ISAuthorizationForm::ConnectedDone);
-			connect(AuthConnector, &ISAuthConnector::ConnectedFailed, this, &ISAuthorizationForm::ConnectedFailed);
+			connect(AuthConnector, &ISAuthConnector::ConnectedToHost, this, &ISAuthForm::ConnectedDone);
+			connect(AuthConnector, &ISAuthConnector::ConnectedFailed, this, &ISAuthForm::ConnectedFailed);
 		}
 		AuthConnector->Connect();
 	}
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::ConnectedDone()
+void ISAuthForm::ConnectedDone()
 {
 	AuthConnector->Disconnect();
 	SetConnecting(false);
@@ -268,13 +244,13 @@ void ISAuthorizationForm::ConnectedDone()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::ConnectedFailed()
+void ISAuthForm::ConnectedFailed()
 {
 	SetConnecting(false);
 	ISMessageBox::ShowWarning(this, LANG("Message.Warning.SslConnectionDBFailed").arg(AuthConnector->errorString().toLower()));
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::SetConnecting(bool Connecting)
+void ISAuthForm::SetConnecting(bool Connecting)
 {
 	Connecting ? WaitWidget->Start() : WaitWidget->Stop();
 	LabelConnectToDatabase->setText(Connecting ? LANG("ConnectingToServer") + "..." : QString());
@@ -286,7 +262,7 @@ void ISAuthorizationForm::SetConnecting(bool Connecting)
 	ButtonExit->setEnabled(!Connecting);
 }
 //-----------------------------------------------------------------------------
-bool ISAuthorizationForm::Check()
+bool ISAuthForm::Check()
 {
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
 	{
@@ -328,7 +304,7 @@ bool ISAuthorizationForm::Check()
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISAuthorizationForm::ClearFields()
+void ISAuthForm::ClearFields()
 {
 	EditLogin->Clear();
 	EditPassword->Clear();

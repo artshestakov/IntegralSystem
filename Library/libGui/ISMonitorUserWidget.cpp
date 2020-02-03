@@ -22,7 +22,7 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	setPalette(Palette);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	Layout->setContentsMargins(MARGINS_LAYOUT_5_PX);
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
@@ -83,12 +83,12 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	if (is_online)
 	{
 		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Online").pixmap(SIZE_32_32));
-		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Online") + ")");
+		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Online") + ')');
 	}
 	else
 	{
 		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Offline").pixmap(SIZE_32_32));
-		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Offline") + ")");
+		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Offline") + ')');
 	}
 }
 //-----------------------------------------------------------------------------

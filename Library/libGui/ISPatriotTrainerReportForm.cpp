@@ -30,7 +30,7 @@ ISPatriotTrainerReportForm::ISPatriotTrainerReportForm(QWidget *parent) : ISInte
 	RangeDateEdit = new ISRangeDateEdit(this);
 	Layout->addWidget(RangeDateEdit);
 
-	Layout->addWidget(new QLabel(LANG("Patriot.Trainer") + ":", this));
+	Layout->addWidget(new QLabel(LANG("Patriot.Trainer") + ':', this));
 
 	EditTrainer = new ISComboEdit(this);
 	EditTrainer->SetEditable(false);

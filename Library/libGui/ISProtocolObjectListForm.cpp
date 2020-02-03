@@ -26,7 +26,7 @@ void ISProtocolObjectListForm::LoadData()
 	if (GetParentObjectID())
 	{
 		QString ClassFilter = GetQueryModel()->GetClassFilter();
-		ClassFilter += " prtc_tablename = '" + GetParentTableName() + "'";
+		ClassFilter += " prtc_tablename = '" + GetParentTableName() + '\'';
 		ClassFilter += " AND prtc_objectid = " + QString::number(GetParentObjectID());
 		GetQueryModel()->SetClassFilter(ClassFilter);
 	}

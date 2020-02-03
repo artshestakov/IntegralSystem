@@ -12,7 +12,7 @@ ISPatternWidget::ISPatternWidget(QWidget *parent) : QFrame(parent)
 	setAutoFillBackground(true);
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_5_PX);
 	setLayout(MainLayout);
 
 	LabelIcon = new QLabel(this);

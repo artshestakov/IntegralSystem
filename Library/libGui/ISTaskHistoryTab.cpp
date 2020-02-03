@@ -48,13 +48,13 @@ void ISTaskHistoryTab::Update()
 			QString Information = qSelect.ReadColumn("thst_information").toString();
 
 			QVBoxLayout *Layout = new QVBoxLayout();
-			Layout->setContentsMargins(LAYOUT_MARGINS_2_PX);
+			Layout->setContentsMargins(MARGINS_LAYOUT_2_PX);
 
 			QWidget *Widget = new QWidget(ListWidget);
 			Widget->setLayout(Layout);
 			
 			QLabel *LabelTitle = new QLabel(Widget);
-			LabelTitle->setText(SYMBOL_CIRCLE + " " + CreationDate + " (" + UserFullName + "): " + ActionName);
+			LabelTitle->setText(SYMBOL_CIRCLE + SYMBOL_SPACE + CreationDate + " (" + UserFullName + "): " + ActionName);
 			LabelTitle->setFont(FONT_TAHOMA_10);
 			Layout->addWidget(LabelTitle);
 

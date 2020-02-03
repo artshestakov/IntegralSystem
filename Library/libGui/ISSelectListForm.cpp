@@ -61,7 +61,7 @@ void ISSelectListForm::SelectedRowEvent(const QItemSelection &ItemSelected, cons
 	{
 		if (SelectedRows)
 		{
-			ActionSelect->setText(LANG("Select") + " (" + QString::number(SelectedRows) + ")");
+			ActionSelect->setText(LANG("Select") + " (" + QString::number(SelectedRows) + ')');
 		}
 		else
 		{

@@ -20,6 +20,7 @@
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
 	Q_INIT_RESOURCE(Resources);
+	DefinesInitialize();
 	ISCore::Startup();
 
 	ISDebug::ShowString("Starting system... Version: " + ISVersion::GetInstance().GetVersion());
@@ -31,7 +32,7 @@ ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	
 	ISGui::ProcessEvents();
 
 	//Загрузка конфигурационного файла
-	ISConfig::GetInstance().Initialize(CONFIG_FILE_PATH);
+	ISConfig::GetInstance().Initialize();
 
 	//Загрузка локализации
 	SplashWidget.SetText("Loading localization...");
@@ -75,7 +76,7 @@ bool ISIntegralSystem::CheckAdminRole()
 {
 	ISDebug::ShowDebugString("Check administrator role...");
 
-	QFile File(APPLICATION_TEMP_PATH + "/CheckAdmin");
+	QFile File(PATH_TEMP_DIR + "/CheckAdmin");
 	bool Opened = File.open(QIODevice::WriteOnly);
 
 	if (Opened)

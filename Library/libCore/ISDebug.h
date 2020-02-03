@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISDEBUG_H_INCLUDED
+#define _ISDEBUG_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
@@ -50,3 +52,4 @@ private:
 	QString AssertMessage;
 };
 //-----------------------------------------------------------------------------
+#endif

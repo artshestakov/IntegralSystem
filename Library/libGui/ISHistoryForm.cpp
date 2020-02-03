@@ -18,7 +18,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	setWindowTitle(LANG("History"));
 	setWindowIcon(BUFFER_ICONS("History"));
 
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setCursor(CURSOR_POINTING_HAND);
@@ -39,7 +39,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 			int ObjectID = qSelectHistory.ReadColumn("htry_objectid").toInt();
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-			ListWidgetItem->setText(TableLocalName + ": " + ObjectName + " (" + DateTimeOpened + ")");
+			ListWidgetItem->setText(TableLocalName + ": " + ObjectName + " (" + DateTimeOpened + ')');
 			ListWidgetItem->setData(Qt::UserRole, TableName);
 			ListWidgetItem->setData(Qt::UserRole * 2, ObjectID);
 		}

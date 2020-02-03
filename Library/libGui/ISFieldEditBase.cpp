@@ -20,7 +20,7 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 
 	//Главный компоновщик
 	MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	MainLayout->setSpacing(EDIT_FIELD_SPACING);
 	setLayout(MainLayout);
 
@@ -30,14 +30,14 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 
 	//Компоновщик редактора
 	LayoutEdit = new QHBoxLayout();
-	LayoutEdit->setContentsMargins(LAYOUT_MARGINS_2_PX);
+	LayoutEdit->setContentsMargins(MARGINS_LAYOUT_2_PX);
 	MainLayout->addLayout(LayoutEdit);
 
 	//Правый компоновщик
 	LayoutRight = new QHBoxLayout();
 	MainLayout->addLayout(LayoutRight);
 
-	//CreateHint(MetaField->property("Hint").toString());
+	//CreateHint(MetaField->property("Hint").toString());//???
 }
 //-----------------------------------------------------------------------------
 ISFieldEditBase::~ISFieldEditBase()

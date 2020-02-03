@@ -39,7 +39,7 @@ ISUserGroupWidget::ISUserGroupWidget(int group_id, const QString &group_name, QW
 	Layout->addLayout(LayoutTitle);
 
 	QLabel *LabelInfo = new QLabel(this);
-	LabelInfo->setText(LANG("AccessRights.SettingAcceessFromGroup") + ":");
+	LabelInfo->setText(LANG("AccessRights.SettingAcceessFromGroup") + ':');
 	LayoutTitle->addWidget(LabelInfo);
 
 	QLabel *LabelGroup = new QLabel(this);
@@ -88,7 +88,7 @@ void ISUserGroupWidget::CreateSubSystems()
 			CheckEdit->setProperty("SubSystemName", SubSystem->GetLocalName());
 			CheckEdit->SetToolTip(LANG("AccessRights.ClickedToGiveAccessFromSubSystem"));
 			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupWidget::SubSystemClicked);
-			FormLayout->addRow(SubSystem->GetLocalName() + ":", CheckEdit);
+			FormLayout->addRow(SubSystem->GetLocalName() + ':', CheckEdit);
 		}
 	}
 }
@@ -114,7 +114,7 @@ void ISUserGroupWidget::CreateTables()
 	{
 		ISToolBarAccessTable *ToolBarAccessRights = new ISToolBarAccessTable(GroupID, MapItem.second, MapItem.first, ScrollArea);
 		connect(ToolBarAccessRights, &ISToolBarAccessTable::actionTriggered, this, &ISUserGroupWidget::TableClicked);
-		FormLayout->addRow(MapItem.first + ":", ToolBarAccessRights);
+		FormLayout->addRow(MapItem.first + ':', ToolBarAccessRights);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ void ISUserGroupWidget::CreateSpecial()
 			QString SpecialGroupName = qSelectSpecialGroup.ReadColumn("gast_name").toString();
 
 			QLabel *LabelSpecialGroup = new QLabel(ScrollArea);
-			LabelSpecialGroup->setText(SpecialGroupName + ":");
+			LabelSpecialGroup->setText(SpecialGroupName + ':');
 			LabelSpecialGroup->setSizePolicy(QSizePolicy::Maximum, LabelSpecialGroup->sizePolicy().verticalPolicy());
 			LabelSpecialGroup->setFont(FONT_APPLICATION_BOLD);
 			
@@ -159,7 +159,7 @@ void ISUserGroupWidget::CreateSpecial()
 					CheckEdit->setProperty("SpecialAccessName", Name);
 					CheckEdit->SetValue(ISUserRoleEntity::CheckExistSpecialAccess(GroupID, SpecialAccessUID));
 					connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupWidget::SpecialClicked);
-					FormLayout->addRow("  " + Name + ":", CheckEdit);
+					FormLayout->addRow("  " + Name + ':', CheckEdit);
 				}
 			}
 		}
@@ -198,12 +198,12 @@ void ISUserGroupWidget::TableClicked(QAction *Action)
 	if (Action->isChecked()) //Если право было включено
 	{
 		ISUserRoleEntity::InsertTableAccess(GroupID, TableUID, AccessUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->GetLocalListName(), GroupID, TableName + " (" + Action->toolTip() + ")");
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->GetLocalListName(), GroupID, TableName + " (" + Action->toolTip() + ')');
 	}
 	else
 	{
 		ISUserRoleEntity::DeleteTableAccess(GroupID, TableUID, AccessUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->GetLocalListName(), GroupID, TableName + " (" + Action->toolTip() + ")");
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->GetLocalListName(), GroupID, TableName + " (" + Action->toolTip() + ')');
 	}
 
 	ISGui::SetWaitGlobalCursor(false);

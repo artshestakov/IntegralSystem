@@ -29,11 +29,11 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	CurrentDoctorID = 0;
 
 	MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
-	LayoutTitle->setContentsMargins(LAYOUT_MARGINS_NULL);
+	LayoutTitle->setContentsMargins(MARGINS_LAYOUT_NULL);
 
 	QWidget *WidgetTitle = new QWidget(this);
 	WidgetTitle->setLayout(LayoutTitle);
@@ -73,7 +73,7 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	LayoutTitle->addWidget(ButtonWaitAdmission);
 
 	QLabel *LabelBranch = new QLabel(this);
-	LabelBranch->setText(LANG("CenterSeven.Branch") + ":");
+	LabelBranch->setText(LANG("CenterSeven.Branch") + ':');
 	LayoutTitle->addWidget(LabelBranch);
 
 	ComboBranch = new ISComboEdit(this);
@@ -165,7 +165,7 @@ void ISCenterSevenDesktop::LoadBranches()
 
 			if (BranchID == CurrentBranchID)
 			{
-				BranchName += " (" + LANG("CenterSeven.CurrentBranch") + ")";
+				BranchName += " (" + LANG("CenterSeven.CurrentBranch") + ')';
 			}
 
 			ComboBranch->AddItem(BranchName, BranchID);

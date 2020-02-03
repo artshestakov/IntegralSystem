@@ -2,22 +2,23 @@
 #include "PMetaUserPermission.h"
 #include "ISDefines.h"
 //-----------------------------------------------------------------------------
-PMetaUserPermission::PMetaUserPermission(QObject *parent) : QObject(parent)
+PMetaUserPermission::PMetaUserPermission()
+	: Show(false),
+	CreateCopy(false),
+	Edit(false),
+	Delete(false),
+	DeleteCascade(false),
+	UpdateList(false),
+	ShowDeleted(false),
+	ShowAll(false),
+	Search(false),
+	Export(false),
+	Print(false),
+	SystemInformation(false),
+	AttachTask(false),
+	TableNavigation(false)
 {
-	Show = false;
-	CreateCopy = false;
-	Edit = false;
-	Delete = false;
-	DeleteCascade = false;
-	UpdateList = false;
-	ShowDeleted = false;
-	ShowAll = false;
-	Search = false;
-	Export = false;
-	Print = false;
-	SystemInformation = false;
-	AttachTask = false;
-	TableNavigation = false;
+	
 }
 //-----------------------------------------------------------------------------
 PMetaUserPermission::~PMetaUserPermission()

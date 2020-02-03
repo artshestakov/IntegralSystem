@@ -49,14 +49,14 @@ ISAsteriskTotalForm::ISAsteriskTotalForm(QWidget *parent) : ISInterfaceForm(pare
 	GetMainLayout()->addWidget(new QLabel(LANG("ClickDoneFromFilter"), this));
 
 	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
 
 	QWidget *Widget = new QWidget(this);
 	Widget->setLayout(Layout);
 	Widget->setSizePolicy(Widget->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	GetMainLayout()->addWidget(Widget);
 
-	RangeDateTimeEdit = new ISRangeDateTimeEdit(this, LANG("Period") + ":");
+	RangeDateTimeEdit = new ISRangeDateTimeEdit(this, LANG("Period") + ':');
 	RangeDateTimeEdit->SetValue(ISRangeStruct(QDateTime(QDate::currentDate(), QTime(0, 0)), QDateTime::currentDateTime()));
 	Layout->addWidget(RangeDateTimeEdit);
 
@@ -83,28 +83,28 @@ void ISAsteriskTotalForm::CreateTotal()
 	GetMainLayout()->addLayout(FormLayout);
 
 	LabelCountTotal = new QLabel(this);
-	FormLayout->addRow(LANG("TelephonyForm.Count.Total") + ":", LabelCountTotal);
+	FormLayout->addRow(LANG("TelephonyForm.Count.Total") + ':', LabelCountTotal);
 
 	LabelCountIncoming = new QLabel(this);
-	FormLayout->addRow(LANG("TelephonyForm.Count.Incoming") + ":", LabelCountIncoming);
+	FormLayout->addRow(LANG("TelephonyForm.Count.Incoming") + ':', LabelCountIncoming);
 
 	LabelCountOutcoming = new QLabel(this);
-	FormLayout->addRow(LANG("TelephonyForm.Count.Outcoming") + ":", LabelCountOutcoming);
+	FormLayout->addRow(LANG("TelephonyForm.Count.Outcoming") + ':', LabelCountOutcoming);
 
 	LabelDurationTotal = new QLabel(this);
-	FormLayout->addRow(LANG("TelephonyForm.Duration.Total") + ":", LabelDurationTotal);
+	FormLayout->addRow(LANG("TelephonyForm.Duration.Total") + ':', LabelDurationTotal);
 
 	LabelDurationIncoming = new QLabel(this);
-	FormLayout->addRow(LANG("TelephonyForm.Duration.Incoming") + ":", LabelDurationIncoming);
+	FormLayout->addRow(LANG("TelephonyForm.Duration.Incoming") + ':', LabelDurationIncoming);
 
 	LabelDurationOutcoming = new QLabel(this);
-	FormLayout->addRow(LANG("TelephonyForm.Duration.Outcoming") + ":", LabelDurationOutcoming);
+	FormLayout->addRow(LANG("TelephonyForm.Duration.Outcoming") + ':', LabelDurationOutcoming);
 
 	LabelAverageIncoming = new QLabel(this);
-	FormLayout->addRow(LANG("TelephonyForm.Average.Incoming") + ":", LabelAverageIncoming);
+	FormLayout->addRow(LANG("TelephonyForm.Average.Incoming") + ':', LabelAverageIncoming);
 
 	LabelAverageOutcoming = new QLabel(this);
-	FormLayout->addRow(LANG("TelephonyForm.Average.Outcoming") + ":", LabelAverageOutcoming);
+	FormLayout->addRow(LANG("TelephonyForm.Average.Outcoming") + ':', LabelAverageOutcoming);
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskTotalForm::CreateUsers()

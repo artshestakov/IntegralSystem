@@ -38,9 +38,9 @@ QString ISRandom::String(int Symbols)
 	if (Symbols)
 	{
 		QString Code = ISSystem::GenerateUuid();
-		Code.replace("{", QString());
-		Code.replace("}", QString());
-		Code.replace("-", QString());
+		Code.replace('{', QString());
+		Code.replace('}', QString());
+		Code.replace('-', QString());
 		if (Symbols > Code.length())
 		{
 			return Result;

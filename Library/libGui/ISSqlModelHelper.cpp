@@ -60,7 +60,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_Percent)
 	{
-		Result = Value.toString() + "%";
+		Result = Value.toString() + '%';
 	}
 
 	return Result;

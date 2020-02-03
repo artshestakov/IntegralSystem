@@ -224,7 +224,7 @@ QVariant ISCoreTelephony::GetDialStatus(int ID, const QString &DialStatus) const
 QString ISCoreTelephony::GetPattern(int ID, const QString &String) const
 {
 	QString Pattern;
-	QStringList StringList = String.split("/");
+	QStringList StringList = String.split('/');
 	if (StringList.count() == 2)
 	{
 		StringList = StringList.at(1).split("-");

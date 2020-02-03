@@ -29,7 +29,7 @@ ISSqlModelCore::~ISSqlModelCore()
 void ISSqlModelCore::FillColumns()
 {
 	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
-	QueryModel.SetClassFilter(MetaTable->GetAlias() + '.' + MetaTable->GetAlias() + "_id = 0");
+	QueryModel.SetClassFilter(MetaTable->GetAlias() + SYMBOL_POINT + MetaTable->GetAlias() + "_id = 0");
 
 	ISQuery qSelectColumns(QueryModel.GetQueryText());
 	if (qSelectColumns.Execute())

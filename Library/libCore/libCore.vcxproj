@@ -219,6 +219,7 @@
     <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISDatabaseHelper.cpp" />
+    <ClCompile Include="ISDefines.cpp" />
     <ClCompile Include="ISEMail.cpp" />
     <ClCompile Include="ISEmailAddress.cpp" />
     <ClCompile Include="ISLicense.cpp" />

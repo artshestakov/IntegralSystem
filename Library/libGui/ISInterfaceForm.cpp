@@ -21,7 +21,7 @@ ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	setAutoFillBackground(true);
 
 	MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	ISControls::SetBackgroundColorWidget(this, COLOR_WHITE);

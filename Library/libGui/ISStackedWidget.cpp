@@ -5,7 +5,7 @@
 ISStackedWidget::ISStackedWidget(QWidget *parent) : QStackedWidget(parent)
 {
 	MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 
 	MainWidget = new QWidget(this);
 	MainWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -14,7 +14,7 @@ ISStackedWidget::ISStackedWidget(QWidget *parent) : QStackedWidget(parent)
 
 	ScreenWidget = new QWidget(this);
 	ScreenWidget->setLayout(new QVBoxLayout());
-	ScreenWidget->layout()->setContentsMargins(LAYOUT_MARGINS_NULL);
+	ScreenWidget->layout()->setContentsMargins(MARGINS_LAYOUT_NULL);
 	addWidget(ScreenWidget);
 
 	LabelScreen = new QLabel(ScreenWidget);

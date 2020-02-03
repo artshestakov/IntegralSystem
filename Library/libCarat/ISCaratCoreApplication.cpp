@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 ISCaratCoreApplication::ISCaratCoreApplication(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
-	ISConfig::GetInstance().Initialize(CONFIG_FILE_PATH);
+	ISConfig::GetInstance().Initialize();
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CARAT);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);

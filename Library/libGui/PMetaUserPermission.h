@@ -2,13 +2,11 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class PMetaUserPermission : public QObject
+class PMetaUserPermission
 {
-	Q_OBJECT
-
 public:
-	PMetaUserPermission(QObject *parent);
-	virtual ~PMetaUserPermission();
+	PMetaUserPermission();
+	~PMetaUserPermission();
 
 	void SetSubSystemUID(const QString &sub_system_uid);
 	QString GetSubSystemUID() const;

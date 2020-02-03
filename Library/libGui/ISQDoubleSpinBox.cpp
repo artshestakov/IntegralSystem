@@ -7,7 +7,7 @@
 //-----------------------------------------------------------------------------
 ISQDoubleSpinBox::ISQDoubleSpinBox(QWidget *parent) : QDoubleSpinBox(parent)
 {
-    setMaximum(DOUBLE_MAXIMUM);
+    setMaximum(MAXIMUM_DOUBLE);
 
 	ISQLineEdit *LineEdit = new ISQLineEdit(this);
 	connect(LineEdit, &ISQLineEdit::ClearClicked, this, &ISQDoubleSpinBox::ClearClicked);
@@ -26,9 +26,9 @@ void ISQDoubleSpinBox::SetVisibleClear(bool Visible)
 //-----------------------------------------------------------------------------
 QValidator::State ISQDoubleSpinBox::validate(QString &Input, int &Pos) const
 {
-	if (Input.contains('.'))
+	if (Input.contains(SYMBOL_POINT))
 	{
-		Input.replace('.', SYMBOL_COMMA);
+		Input.replace(SYMBOL_POINT, SYMBOL_COMMA);
 	}
 
 	return QDoubleSpinBox::validate(Input, Pos);

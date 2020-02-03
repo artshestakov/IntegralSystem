@@ -127,7 +127,7 @@ void ISDistFileListForm::InsertFile(const QString &FilePath)
 	QDateTime LastModified = ISSystem::GetLastModifiedFile(FilePath);
 	QString FileVersion = ISCore::GetVersionInFileName(FileName);
 
-	QStringList Version = FileVersion.split('.');
+	QStringList Version = FileVersion.split(SYMBOL_POINT);
 	IS_ASSERT(Version.count() == 4, "Invalid version file");
 	int Version_1 = Version[0].toInt();
 	int Version_2 = Version[1].toInt();

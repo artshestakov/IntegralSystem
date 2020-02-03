@@ -70,14 +70,14 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 
 		if (FieldSize) //Если указан размер поля
 		{
-			SqlText += "(" + QString::number(FieldSize) + ")";
+			SqlText += '(' + QString::number(FieldSize) + ')';
 		}
 
 		if (FieldDefalutValue.length()) //Если указано значение по умолчанию
 		{
 			if (FieldType == ISNamespace::FT_UID)
 			{
-				SqlText += " DEFAULT '" + FieldDefalutValue + "'";
+				SqlText += " DEFAULT '" + FieldDefalutValue + '\'';
 			}
 			else
 			{
@@ -191,7 +191,7 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 
 				if (MetaSize)
 				{
-					QueryText += "(" + QString::number(MetaSize) + ") \n";
+					QueryText += '(' + QString::number(MetaSize) + ") \n";
 				}
 				else
 				{
@@ -228,7 +228,7 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 						}
 						else
 						{
-							QueryText = "ALTER TABLE public." + MetaTable->GetName() + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT '" + MetaDefaultValue + "'";
+							QueryText = "ALTER TABLE public." + MetaTable->GetName() + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT '" + MetaDefaultValue + '\'';
 						}
 					}
 				}
@@ -278,11 +278,11 @@ void CGTable::CreateNewFields(PMetaClassTable *MetaTable)
 		if (!CGHelper::CheckExistColumn(MetaTable, FieldName)) //Если поле не существует
 		{
 			QString AddColumn = "ALTER TABLE public." + MetaTable->GetName() + " \n" +
-				"ADD COLUMN \"" + FieldName + "\" " + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->GetType());
+				"ADD COLUMN \"" + FieldName + "\SYMBOL_SPACE + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->GetType());
 
 			if (MetaField->GetSize()) //Если указан размер поля
 			{
-				AddColumn += "(" + QString::number(MetaField->GetSize()) + ")";
+				AddColumn += '(' + QString::number(MetaField->GetSize()) + ')';
 			}
 
 			if (!MetaField->GetDefaultValue().toString().isEmpty()) //Если указано значение по умолчанию
@@ -296,7 +296,7 @@ void CGTable::CreateNewFields(PMetaClassTable *MetaTable)
 				}
 				else
 				{
-					AddColumn += " DEFAULT '" + MetaField->GetDefaultValue().toString() + "'"; //Указание NULL с кавычек
+					AddColumn += " DEFAULT '" + MetaField->GetDefaultValue().toString() + '\''; //Указание NULL с кавычек
 				}
 			}
 

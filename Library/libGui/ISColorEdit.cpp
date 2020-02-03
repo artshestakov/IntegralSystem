@@ -11,7 +11,7 @@ ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 
 	QGroupBox *GroupBox = new QGroupBox(this);
 	GroupBox->setLayout(new QHBoxLayout());
-	GroupBox->layout()->setContentsMargins(LAYOUT_MARGINS_NULL);
+	GroupBox->layout()->setContentsMargins(MARGINS_LAYOUT_NULL);
 	GroupBox->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	AddWidgetEdit(GroupBox, this);
 

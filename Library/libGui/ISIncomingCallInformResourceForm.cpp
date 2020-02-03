@@ -14,7 +14,7 @@ ISIncomingCallInformResourceForm::ISIncomingCallInformResourceForm(const QVarian
 	qSelect.BindValue(":OrganizationID", OrganizationID);
 	if (qSelect.ExecuteFirst())
 	{
-		AddLabel(LANG("CallingOrganization") + ":", qSelect.ReadColumn("orgz_name").toString());
+		AddLabel(LANG("CallingOrganization") + ':', qSelect.ReadColumn("orgz_name").toString());
 	}
 }
 //-----------------------------------------------------------------------------

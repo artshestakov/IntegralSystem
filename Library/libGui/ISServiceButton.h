@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISSERVICEBUTTON_H_INCLUDED
+#define _ISSERVICEBUTTON_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISPushButton.h"
@@ -15,3 +17,4 @@ public:
 	virtual ~ISServiceButton();
 };
 //-----------------------------------------------------------------------------
+#endif

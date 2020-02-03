@@ -5,7 +5,7 @@
 ISDemoAccessesListForm::ISDemoAccessesListForm(QWidget *parent) : ISListBaseForm("DemoAccesses", parent)
 {
 	QLabel *Label = new QLabel(this);
-	Label->setText(LANG("AgreementDateTimeFilter") + ":");
+	Label->setText(LANG("AgreementDateTimeFilter") + ':');
 	GetToolBar()->addWidget(Label);
 
 	DateEdit = new ISDateEdit(this);

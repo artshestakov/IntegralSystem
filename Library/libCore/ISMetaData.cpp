@@ -394,7 +394,7 @@ void ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 //-----------------------------------------------------------------------------
 void ISMetaData::InitializeXSNTableSystemFields(PMetaClassTable *MetaTable)
 {
-    QFile File(SCHEMA_TEMPLATE_FIELDS_PATH);
+    QFile File(PATH_SCHEMA_TEMPLATE_FIELDS);
     IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
     QString Content = File.readAll();
     File.close();
@@ -542,7 +542,7 @@ void ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDo
 		IS_ASSERT(FieldName.length(), QString("Empty index name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
 
 		bool Unique = QVariant(Temp.attributes().namedItem("Unique").nodeValue()).toBool();
-		QStringList IndexList = FieldName.split(";");
+		QStringList IndexList = FieldName.split(';');
 
 		if (IndexList.count() > 1) //Если индекс составной
 		{

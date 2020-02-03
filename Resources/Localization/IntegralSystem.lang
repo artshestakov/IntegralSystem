@@ -62,7 +62,6 @@
   <Local Name="Message.Information.SaveDistFile" Russian="Дистрибутив успешно сохранен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.TerminateMe" Russian="ВНИМАНИЕ! Вашу учётную запись отключили. Нажмите кнопку ОК для выхода из программы."/>
-  <Local Name="Message.Information.FeedbackSended" Russian="Письмо успешно отправлено."/>
   <Local Name="Message.Information.SharedRecord" Russian="Ссылка на запись успешно отправлена в общий чат."/>
   <Local Name="Message.Information.FileSaved" Russian="Файл успешно сохранен."/>
   <Local Name="Message.Information.NotFoundChildCalls" Russian="Подробностей по выбранному звонку нет."/>
@@ -168,9 +167,6 @@
   <Local Name="Message.Warning.CreateCopyMessageNotDrafts" Russian="Разрешено создавать копию сообщения только со статусом &quot;Черновик&quot;."/>
   <Local Name="Message.Warning.NotCreateLogFile" Russian="Не удалось сформировать лог-файл."/>
   <Local Name="Message.Warning.NotDeleteCascadeRecord" Russian="Не удалось каскадно удалить запись с кодом &quot;%1&quot;."/>
-  <Local Name="Message.Warning.Feedback.ConnectToHost" Russian="Не удалось соединиться с сервером."/>
-  <Local Name="Message.Warning.Feedback.Authentification" Russian="Не удалось авторизоваться."/>
-  <Local Name="Message.Warning.Feedback.Send" Russian="Не удалось отправить письмо."/>
   <Local Name="Message.Warning.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден, убедитесь что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
   <Local Name="Message.Warning.NotValidInputPasswordForChange" Russian="Вы ввели неверный текущий пароль!"/>
@@ -263,7 +259,6 @@
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его программой по умолчанию?"/>
   <Local Name="Message.Question.ImportedSettings" Russian="Настройки успешно импортированы! Для того чтобы все импортированные настройки вступили в силу, рекомендуется перезапустить программу. Сделать это сейчас?"/>
   <Local Name="Message.Question.NotifyUpdateAviable" Russian="Доступно обновление. Выполнить перезапуск программы для последующего обновления?"/>
-  <Local Name="Message.Question.FeedbackSend" Russian="Отправить отзыв?"/>
   <Local Name="Message.Question.ShareRecordFromChat" Russian="Поделиться ссылкой на эту запись в общий чат?"/>
   <Local Name="Message.Question.AttachRecordFromTask" Russian="Прикрепить выбранную запись к задаче?"/>
   <Local Name="Message.Question.ClearListNotifications" Russian="Очистить список уведомлений?"/>
@@ -423,7 +418,6 @@
   <Local Name="DefaultSorting" Russian="Установить сортировку по умолчанию"/>
   <Local Name="Debug" Russian="Отладка"/>
   <Local Name="Notebook" Russian="Блокнот"/>
-  <Local Name="AutoInput" Russian="Авто вход"/>
   <Local Name="NewRecord" Russian="Новая запись"/>
   <Local Name="EditRecord" Russian="Изменение записи"/>
   <Local Name="AddingDataFile" Russian="Добавление данных файла %1 из %2"/>
@@ -641,26 +635,6 @@
   <Local Name="AccessRights.Tables" Russian="Таблицы"/>
   <Local Name="AccessRights.SpecialRoles" Russian="Специальные права"/>
   
-  <!--Feedback-->
-  <Local Name="Feedback" Russian="Обратная связь"/>
-  <Local Name="Feedback.YourName" Russian="Ваше имя"/>
-  <Local Name="Feedback.YourPhone" Russian="Ваш номер телефона"/>
-  <Local Name="Feedback.YourEMail" Russian="Ваш E-Mail"/>
-  <Local Name="Feedback.Review" Russian="Отзыв"/>
-  <Local Name="Feedback.ReviewText" Russian="Текст отзыва"/>
-  <Local Name="Feedback.Title" Russian="Заголовок"/>
-  <Local Name="Feedback.Title.PlaceholderText" Russian="Укажите заголовок письма"/>
-  <Local Name="Feedback.Name" Russian="IntegralSystem - обратная связь"/>
-  <Local Name="Feedback.Type" Russian="Тип"/>
-  <Local Name="Feedback.SpecifiedName" Russian="Указанное имя"/>
-  <Local Name="Feedback.SpecifiedPhone" Russian="Указанный номер телефона"/>
-  <Local Name="Feedback.SpecifiedMail" Russian="Указанная почта"/>
-  <Local Name="Feedback.Version" Russian="Версия"/>
-  <Local Name="Feedback.VersionDate" Russian="Дата релиза"/>
-  <Local Name="Feedback.ApplicationDirPath" Russian="Папка программы"/>
-  <Local Name="Feedback.User" Russian="Авторизованный пользователь"/>
-  <Local Name="Feedback.Login" Russian="Логин"/>
-  
   <!--ExitForm-->
   <Local Name="ExitForm.Lock" Russian="Блокировать программу"/>
   <Local Name="ExitForm.Lock.ToolTip" Russian="Блокировка программы закроет доступ в Вашим данным пока Вас нет на месте."/>
@@ -736,9 +710,6 @@
   <Local Name="AutoLocking" Russian="Блокировка программы..."/>
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
-  <Local Name="AutobootStartup" Russian="Добавить программу в автозагрузку"/>
-  <Local Name="AutobootStartup.ToolTip" Russian="Программа будет запускаться автоматически при включении компьютера."/>
-  <Local Name="FeedbackFormInfo" Russian="Заполните пожалуйста поля ниже, чтобы разработчик программы мог связаться с Вами."/>
   <Local Name="ClickFromIncludeAndExcludeCore" Russian="Нажмите, чтобы включить или отключить ядро."/>
   <Local Name="InputMessageFromLinkToRecord" Russian="Прикрепите сообщение к ссылке на запись"/>
   <Local Name="LinkToRecordInTable" Russian="Ссылка на запись из таблицы &quot;%1&quot;"/>
@@ -770,6 +741,7 @@
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickDoneFromFilter" Russian="Нажмите кнопку &quot;Применить&quot; для получения сводных данных за период."/>
   <Local Name="ClickFromSelectDoneTime" Russian="Нажмите, чтобы выбрать время"/>
+  <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
   <Local Name="OutcomingCall" Russian="Исходщяий вызов на номер: %1"/>
   <Local Name="ClickOverviewFromSelectFile" Russian="Нажмите &quot;Обзор&quot; чтобы выбрать файл"/>
   <Local Name="InputTheTaskNumber" Russian="Введите номер задачи"/>
@@ -997,22 +969,6 @@
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
   <Local Name="Task.ReRead" Russian="Перечитать"/>
   <Local Name="Task.ReRead.ToolTip" Russian="Перечитать карточку задачи"/>
-  
-  <!--Languages-->
-  <Local Name="Language" Russian="Язык"/>
-  <Local Name="Language.Canada" Russian="Канадский (В разработке)"/>
-  <Local Name="Language.Germany" Russian="Немецкий"/>
-  <Local Name="Language.English" Russian="Английский"/>
-  <Local Name="Language.Finland" Russian="Финский"/>
-  <Local Name="Language.France" Russian="Французский"/>
-  <Local Name="Language.Hungary" Russian="Венгерский"/>
-  <Local Name="Language.Italy" Russian="Итальянский"/>
-  <Local Name="Language.Japan" Russian="Японский"/>
-  <Local Name="Language.Latvia" Russian="Латвийский"/>
-  <Local Name="Language.Poland" Russian="Польский"/>
-  <Local Name="Language.Russia" Russian="Русский"/>
-  <Local Name="Language.Slovakia" Russian="Словакский"/>
-  <Local Name="Language.Ukraine" Russian="Украинский"/>
   
   <!--PostgresqlErrors-->
   <Local Name="PostgreSQL.Error.23505" Russian="Ошибка повторяющегося ключа, нарушение ограничения уникальности."/>

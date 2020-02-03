@@ -15,7 +15,7 @@ ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload, QWidg
 	Payload = payload;
 
 	setWindowTitle(LANG("IncomingCall"));
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();

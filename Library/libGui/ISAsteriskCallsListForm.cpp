@@ -132,27 +132,27 @@ void ISAsteriskCallsListForm::CreateDetailsPanel()
 	LabelStatus->setFont(FONT_APPLICATION_BOLD);
 
 	QFormLayout *FormLayoutLeft = new QFormLayout();
-	FormLayoutLeft->addRow(LANG("Call.DateTime") + ":", LabelDateTime);
-	FormLayoutLeft->addRow(LANG("Call.Direction") + ":", LabelDirection);
+	FormLayoutLeft->addRow(LANG("Call.DateTime") + ':', LabelDateTime);
+	FormLayoutLeft->addRow(LANG("Call.Direction") + ':', LabelDirection);
 	LayoutGroupBox->addLayout(FormLayoutLeft);
 
 	LayoutGroupBox->addWidget(ISControls::CreateVerticalLine(GroupBox));
 
 	QFormLayout *FormLayoutCentral = new QFormLayout();
-	FormLayoutCentral->addRow(LANG("Call.Subscriber") + ":", LabelSubscriber);
-	FormLayoutCentral->addRow(LANG("Call.Whom") + ":", LabelNumber);
+	FormLayoutCentral->addRow(LANG("Call.Subscriber") + ':', LabelSubscriber);
+	FormLayoutCentral->addRow(LANG("Call.Whom") + ':', LabelNumber);
 	LayoutGroupBox->addLayout(FormLayoutCentral);
 
 	LayoutGroupBox->addWidget(ISControls::CreateVerticalLine(GroupBox));
 
 	QFormLayout *FormLayoutRight = new QFormLayout();
-	FormLayoutRight->addRow(LANG("Call.Duration") + ":", LabelDuration);
-	FormLayoutRight->addRow(LANG("Call.Status") + ":", LabelStatus);
+	FormLayoutRight->addRow(LANG("Call.Duration") + ':', LabelDuration);
+	FormLayoutRight->addRow(LANG("Call.Status") + ':', LabelStatus);
 	LayoutGroupBox->addLayout(FormLayoutRight);
 
 	LayoutGroupBox->addStretch();
 
-	LayoutWidget->addWidget(new QLabel(LANG("TransferCall") + ":", WidgetCallInfo));
+	LayoutWidget->addWidget(new QLabel(LANG("TransferCall") + ':', WidgetCallInfo));
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskCallsListForm::CreateStatusDescription()
@@ -313,7 +313,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 
 	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
 	{
-		QString FilePath = APPLICATION_TEMP_PATH + "/" + GetCurrentRecordValueDB("UID").toString() + '.' + EXTENSION_WAV;
+		QString FilePath = PATH_TEMP_DIR + '/' + GetCurrentRecordValueDB("UID").toString() + SYMBOL_POINT + EXTENSION_WAV;
 		if (QFile::exists(FilePath))
 		{
 			Play(FilePath);
@@ -336,7 +336,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 void ISAsteriskCallsListForm::SaveToStorage()
 {
 	ISUuid UID = GetCurrentRecordValueDB("UID");
-	QString FilePath = APPLICATION_TEMP_PATH + "/" + UID + '.' + EXTENSION_WAV;
+	QString FilePath = PATH_TEMP_DIR + '/' + UID + SYMBOL_POINT + EXTENSION_WAV;
 
 	if (!QFile::exists(FilePath))
 	{

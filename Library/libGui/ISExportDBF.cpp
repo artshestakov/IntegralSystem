@@ -43,7 +43,7 @@ bool ISExportDBF::Export()
 	}
 
 	ISSystem::RemoveLastSymbolFromString(CreateTableSql, 2);
-	CreateTableSql += ")";
+	CreateTableSql += ')';
 
 	QSqlQuery SqlQuery(QSqlDatabase::database(ConnectionName));
 	if (!SqlQuery.prepare(CreateTableSql))
@@ -82,7 +82,7 @@ bool ISExportDBF::Export()
 
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		QStringMap Bind;
-		QString InsertFields = "INSERT INTO " + TableName + "(";
+		QString InsertFields = "INSERT INTO " + TableName + '(';
 		QString ValuesField = "VALUES(";
 
 		for (int Column = 0; Column < Fields.count(); Column++) //Обход колонок
@@ -91,16 +91,16 @@ bool ISExportDBF::Export()
 			QString FieldValue = SqlRecord.value(FieldName).toString();
 			
 			InsertFields += FieldName + ", ";
-			ValuesField += ":" + FieldName + ", ";
+			ValuesField += ':' + FieldName + ", ";
 
-			Bind.insert(":" + FieldName, FieldValue);
+			Bind.insert(':' + FieldName, FieldValue);
 		}
 
 		ISSystem::RemoveLastSymbolFromString(InsertFields, 2);
-		InsertFields += ")";
+		InsertFields += ')';
 
 		ISSystem::RemoveLastSymbolFromString(ValuesField, 2);
-		ValuesField += ")";
+		ValuesField += ')';
 
 		if (!SqlQuery.prepare(InsertFields + SYMBOL_SPACE + ValuesField))
 		{

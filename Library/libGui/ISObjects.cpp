@@ -42,7 +42,7 @@ void ISObjects::Initialize()
 {
 	QString ClassName = ISLicense::GetInstance().GetClassName();
 
-	int ObjectType = QMetaType::type((ClassName + "*").toLocal8Bit().constData());
+	int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
 	IS_ASSERT(ObjectType, QString("Class for configuration is null. ClassName: %1.").arg(ClassName));
 
 	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

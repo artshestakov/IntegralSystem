@@ -26,7 +26,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 {
 	QString TableAlias = ISMetaData::GetInstanse().GetMetaTable(MetaResource->GetTableName())->GetAlias();
 
-	QString InsertText = "INSERT INTO " + MetaResource->GetTableName().toLower() + "(" + TableAlias + "_uid, ";
+	QString InsertText = "INSERT INTO " + MetaResource->GetTableName().toLower() + '(' + TableAlias + "_uid, ";
 	QString ValuesText = "VALUES(:UID, ";
 
 	int CountParameters = MetaResource->GetParameters().count(); //Количество параметров
@@ -35,7 +35,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 		QString FieldName = TableAlias + '_' + MetaResource->GetParameters().keys().at(i).toLower();
 
 		InsertText += FieldName + ", ";
-		ValuesText += ":" + FieldName + ", ";
+		ValuesText += ':' + FieldName + ", ";
 	}
 
 	//Подготовка запроса на добавление ресурса
@@ -57,7 +57,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 	{
 		QString FieldName = TableAlias + '_' + MetaResource->GetParameters().keys().at(i).toLower();
 		QString FieldValue = MetaResource->GetParameters().values().at(i);
-		bool BindValue = qInsertResource.BindValue(":" + FieldName, FieldValue);
+		bool BindValue = qInsertResource.BindValue(':' + FieldName, FieldValue);
 		IS_ASSERT(BindValue, QString("Not BindValue. TableName: %1. FieldName: %2").arg(MetaResource->GetTableName()).arg(FieldName));
 	}
 

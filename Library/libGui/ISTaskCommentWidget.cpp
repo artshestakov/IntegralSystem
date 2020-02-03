@@ -5,7 +5,7 @@
 ISTaskCommentWidget::ISTaskCommentWidget(const QDateTime &CreationDate, const QString &UserFullName, const QString &Comment, QWidget *parent) : QWidget(parent)
 {
 	QHBoxLayout *MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_2_PX);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_2_PX);
 	setLayout(MainLayout);
 
 	QVBoxLayout *Layout = new QVBoxLayout();

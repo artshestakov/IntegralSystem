@@ -74,7 +74,6 @@
 #include "ISDivisionCodeEdit.h"
 #include "ISVolumeEdit.h"
 #include "ISBirthdayEdit.h"
-#include "ISLanguageEdit.h"
 #include "ISMonthEdit.h"
 #include "ISTaskNameEdit.h"
 #include "ISTaskPriorityEdit.h"
@@ -193,7 +192,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISDivisionCodeEdit*>("ISDivisionCodeEdit");
 	qRegisterMetaType<ISVolumeEdit*>("ISVolumeEdit");
 	qRegisterMetaType<ISBirthdayEdit*>("ISBirthdayEdit");
-	qRegisterMetaType<ISLanguageEdit*>("ISLanguageEdit");
 	qRegisterMetaType<ISMonthEdit*>("ISMonthEdit");
 	qRegisterMetaType<ISTaskNameEdit*>("ISTaskNameEdit");
 	qRegisterMetaType<ISTaskPriorityEdit*>("ISTaskPriorityEdit");

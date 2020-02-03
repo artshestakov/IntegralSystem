@@ -7,13 +7,13 @@
 #include "ISWaitWidget.h"
 #include "ISAuthConnector.h"
 //-----------------------------------------------------------------------------
-class ISAuthorizationForm : public ISInterfaceDialogForm
+class ISAuthForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISAuthorizationForm(QWidget *parent = 0);
-	virtual ~ISAuthorizationForm();
+	ISAuthForm(QWidget *parent = 0);
+	virtual ~ISAuthForm();
 	
 	QString GetEnteredLogin() const; //Получить введенный логин
 	QString GetEnteredPassword() const; //Получить введенный пароль

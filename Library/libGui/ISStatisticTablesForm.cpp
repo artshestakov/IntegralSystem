@@ -30,7 +30,7 @@ ISStatisticTablesForm::ISStatisticTablesForm(QWidget *parent) : ISInterfaceForm(
 			ButtonTable->setProperty("TableName", TableName);
 			ButtonTable->setSizePolicy(QSizePolicy::Maximum, ButtonTable->sizePolicy().verticalPolicy());
 			connect(ButtonTable, &ISPushButton::clicked, this, &ISStatisticTablesForm::DetailsClicked);
-			FormLayout->addRow(TableName + ":", ButtonTable);
+			FormLayout->addRow(TableName + ':', ButtonTable);
 		}
 	}
 }

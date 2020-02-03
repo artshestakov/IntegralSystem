@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISCONFIG_H_INCLUDED
+#define _ISCONFIG_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
@@ -13,29 +15,26 @@ public:
 
 	static ISConfig& GetInstance();
 
-	void Initialize(const QString &config_file_path);
+	void Initialize();
 	
 	QVariant GetValue(const QString &ParameterName); //Получить значение параметра
-	bool GetValueBool(const QString &ParameterName);
-	QString GetValueString(const QString &ParameterName);
-	int GetValueInt(const QString &ParameterName);
-
 	void SetValue(const QString &ParameterName, const QVariant &Value); //Изменить значение параметра
-	void ClearValue(const QString &ParameterName); //Очистить значение параметра
 
 private:
-	void Generate();
+	void Update(); //Обновление файла
+	void Create(); //Генерация файла из шаблона
 
 private:
 	ISConfig();
 
+	QString ErrorString;
 	QSettings *Settings;
-	std::map<QString, std::map<QString, QString>> Structure;
-	QString ConfigFilePath;
+	QString PathConfigTemplate;
 };
 //-----------------------------------------------------------------------------
 #define CONFIG_VALUE(PARAMETER_NAME) ISConfig::GetInstance().GetValue(PARAMETER_NAME)
-#define CONFIG_BOOL(PARAMETER_NAME) ISConfig::GetInstance().GetValueBool(PARAMETER_NAME)
-#define CONFIG_STRING(PARAMETER_NAME) ISConfig::GetInstance().GetValueString(PARAMETER_NAME)
-#define CONFIG_INT(PARAMETER_NAME) ISConfig::GetInstance().GetValueInt(PARAMETER_NAME)
+#define CONFIG_BOOL(PARAMETER_NAME) ISConfig::GetInstance().GetValue(PARAMETER_NAME).toBool()
+#define CONFIG_STRING(PARAMETER_NAME) ISConfig::GetInstance().GetValue(PARAMETER_NAME).toString()
+#define CONFIG_INT(PARAMETER_NAME) ISConfig::GetInstance().GetValue(PARAMETER_NAME).toInt()
 //-----------------------------------------------------------------------------
+#endif

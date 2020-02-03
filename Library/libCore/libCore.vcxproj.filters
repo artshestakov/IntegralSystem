@@ -500,6 +500,9 @@
     <ClCompile Include="ISQueryPool.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="ISDefines.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISLogger.h">

@@ -9,7 +9,7 @@ ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, c
 {
 	resize(SIZE_640_480);
 	setWindowTitle(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName());
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_10_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelInfo = new QLabel(this);
 	LabelInfo->setFont(FONT_APPLICATION_BOLD);
@@ -27,11 +27,11 @@ ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, c
 
 	if (SelectMode == ISNamespace::SLM_Single)
 	{
-		LabelInfo->setText(LANG("SelectDialog.Title.Single") + ":");
+		LabelInfo->setText(LANG("SelectDialog.Title.Single") + ':');
 	}
 	else if (SelectMode == ISNamespace::SLM_Multi)
 	{
-		LabelInfo->setText(LANG("SelectDialog.Title.Multi") + ":");
+		LabelInfo->setText(LANG("SelectDialog.Title.Multi") + ':');
 	}
 }
 //-----------------------------------------------------------------------------

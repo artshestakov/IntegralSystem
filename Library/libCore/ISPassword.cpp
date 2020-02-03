@@ -6,10 +6,10 @@
 QString ISPassword::GeneratePassword()
 {
 	ISUuid UID = ISSystem::GenerateUuid();
-	UID.replace("{", QString());
-	UID.replace("}", QString());
+	UID.replace('{', QString());
+	UID.replace('}', QString());
 
-	QStringList StringList = UID.split("-");
+	QStringList StringList = UID.split(SYMBOL_MINUS);
 	if (StringList.count() == 5)
 	{
 		QString GeneratedPassword = StringList[4];

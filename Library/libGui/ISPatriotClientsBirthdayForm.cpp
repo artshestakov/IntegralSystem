@@ -14,9 +14,9 @@ static QString QS_CLIENT = PREPARE_QUERY("SELECT clts_fio, cltp_name, EXTRACT(YE
 ISPatriotClientsBirthdayForm::ISPatriotClientsBirthdayForm(QWidget *parent) : ISInterfaceForm(parent)
 {
 	setWindowTitle(LANG("Patriot.Birthdays"));
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
-	GetMainLayout()->addWidget(new QLabel(LANG("Patriot.BirthdayCurrentDate") + ":", this));
+	GetMainLayout()->addWidget(new QLabel(LANG("Patriot.BirthdayCurrentDate") + ':', this));
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setAlternatingRowColors(true);

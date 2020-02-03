@@ -33,7 +33,7 @@ ISUserStatusForm::ISUserStatusForm(QWidget *parent) : ISInterfaceDialogForm(pare
 {
 	setWindowTitle(LANG("StatusUser"));
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(LAYOUT_MARGINS_5_PX);
+	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
 
 	QLabel *LabelCurrentStatus = new QLabel(this);
 	LabelCurrentStatus->setFont(FONT_TAHOMA_10_BOLD);

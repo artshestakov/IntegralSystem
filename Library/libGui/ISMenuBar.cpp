@@ -22,7 +22,7 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	setPalette(Palette);
 
 	MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(LAYOUT_MARGINS_NULL);
+	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	ButtonMenu = new ISButtonMainMenu(this);
@@ -157,9 +157,6 @@ void ISMenuBar::CreateMenuHelp()
 	//О программе
 	MenuHelp->addAction(BUFFER_ICONS("About"), LANG("AboutForm.AboutApplication"), this, &ISMenuBar::AboutApplication);
 
-	//Обратная форма
-	MenuHelp->addAction(BUFFER_ICONS("FeedbackForm"), LANG("Feedback"), this, &ISMenuBar::FeedbackForm);
-
 	//Qt
 	MenuHelp->addAction(BUFFER_ICONS("Qt"), LANG("AboutFrameworkDeveloped"), this, &ISMenuBar::AboutQt);
 	MenuHelp->addSeparator();
@@ -169,28 +166,10 @@ void ISMenuBar::CreateMenuHelp()
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateButtonsPanel()
 {
-	//Отладка
-	if (SETTING_BOOL(CONST_UID_SETTING_DEBUG_ACCESSTODEBUGVIEW))
-	{
-		QToolButton *ButtonDebug = CreateButton(LANG("Debug"), "MainPanel.Debug");
-		connect(ButtonDebug, &QToolButton::clicked, this, &ISMenuBar::Debug);
-	}
-
-	//Статус пользователя
-	QToolButton *ButtonUserStatus = CreateButton(LANG("StatusUser"), "MainPanel.UserStatus");
-	connect(ButtonUserStatus, &QToolButton::clicked, this, &ISMenuBar::UserStatus);
-
-	//Настройки
-	QToolButton *ButtonSettings = CreateButton(LANG("Settings"), "MainPanel.Settings");
-	connect(ButtonSettings, &QToolButton::clicked, this, &ISMenuBar::Settings);
-
-	//Блокировка
-	QToolButton *ButtonLook = CreateButton(LANG("ExitForm.Lock"), "MainPanel.Lock");
-	connect(ButtonLook, &QToolButton::clicked, this, &ISMenuBar::Lock);
-
-	//Смена пользователя
-	QToolButton *ButtonChangeUser = CreateButton(LANG("ChangeUser"), "MainPanel.ChangeUser");
-	connect(ButtonChangeUser, &QToolButton::clicked, this, &ISMenuBar::ChangeUser);
+	connect(CreateButton(LANG("StatusUser"), "MainPanel.UserStatus"), &QToolButton::clicked, this, &ISMenuBar::UserStatus); //Статус пользователя
+	connect(CreateButton(LANG("Settings"), "MainPanel.Settings"), &QToolButton::clicked, this, &ISMenuBar::Settings); //Настройки
+	connect(CreateButton(LANG("ExitForm.Lock"), "MainPanel.Lock"), &QToolButton::clicked, this, &ISMenuBar::Lock); //Блокировка
+	connect(CreateButton(LANG("ChangeUser"), "MainPanel.ChangeUser"), &QToolButton::clicked, this, &ISMenuBar::ChangeUser); //Смена пользователя
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &IconName)
