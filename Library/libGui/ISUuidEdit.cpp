@@ -13,7 +13,7 @@ ISUuidEdit::ISUuidEdit(QWidget *parent) : ISLineEdit(parent)
 
 	ISServiceButton *ButtonGenerate = new ISServiceButton(this);
 	ButtonGenerate->setToolTip(LANG("ClickFromGenerateNewUID"));
-	//ButtonGenerate->setIcon(BUFFER_ICONS(""));
+	ButtonGenerate->setIcon(BUFFER_ICONS("UUID.Generate"));
 	AddWidgetToRight(ButtonGenerate);
 }
 //-----------------------------------------------------------------------------
