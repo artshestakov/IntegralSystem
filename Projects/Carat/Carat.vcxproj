@@ -21,6 +21,9 @@
     <QtMoc Include="ISProcessCore.h" />
     <QtMoc Include="ISCaratService.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Carat.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0E5C4046-F164-4AEA-91E1-E0B899A28F3D}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
