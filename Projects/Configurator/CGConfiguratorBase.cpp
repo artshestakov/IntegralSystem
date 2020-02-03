@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGConfiguratorBase.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

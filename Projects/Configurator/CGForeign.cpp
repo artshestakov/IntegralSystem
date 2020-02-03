@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGForeign.h"
 #include "ISDefines.h"
 #include "ISQuery.h"
@@ -17,16 +16,6 @@ static QString QC_FOREIGN = "ALTER TABLE public.%1 "
 							"NOT DEFERRABLE;";
 //-----------------------------------------------------------------------------
 static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT; ";
-//-----------------------------------------------------------------------------
-CGForeign::CGForeign() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGForeign::~CGForeign()
-{
-
-}
 //-----------------------------------------------------------------------------
 bool CGForeign::CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorString)
 {

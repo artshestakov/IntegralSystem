@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGConfiguratorFIAS.h"
 #include "ISDefines.h"
 #include "ISDebug.h"

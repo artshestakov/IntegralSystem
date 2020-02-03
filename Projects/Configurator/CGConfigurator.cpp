@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGConfigurator.h"
 #include "ISDefines.h"
 #include "ISConstants.h"
@@ -20,7 +19,7 @@ CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, 
     ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 
-	QFile File(CONFIGURATOR_SCHEME_PATH);
+	QFile File(PATH_CONFIGURATOR_SCHEME);
 	IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
 	QString Content = File.readAll();
 	File.close();
@@ -33,7 +32,7 @@ CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, 
 		QString SectionName = NodeSections.attributes().namedItem("Name").nodeValue();
 		QString SectionClassName = NodeSections.attributes().namedItem("ClassName").nodeValue();
 
-		CGSection *Section = new CGSection(this);
+		CGSection *Section = new CGSection();
 		Section->SetName(SectionName);
 		Section->SetClassName(SectionClassName);
 		Arguments.append(Section);
@@ -45,7 +44,7 @@ CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, 
 			QString FunctionLocalName = NodeFunctions.attributes().namedItem("FunctionLocalName").nodeValue();
 			QString FunctionDescription = NodeFunctions.attributes().namedItem("Description").nodeValue();
 
-			CGSectionItem *SectionItem = new CGSectionItem(Section);
+			CGSectionItem *SectionItem = new CGSectionItem();
 			SectionItem->SetFunction(FunctionName);
 			SectionItem->SetLocalName(FunctionLocalName);
 			SectionItem->SetDescription(FunctionDescription);
@@ -60,7 +59,10 @@ CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, 
 //-----------------------------------------------------------------------------
 CGConfigurator::~CGConfigurator()
 {
-
+	while (!Arguments.isEmpty())
+	{
+		delete Arguments.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 void CGConfigurator::InterpreterMode()
@@ -89,7 +91,7 @@ void CGConfigurator::InterpreterMode()
 		{
 			ISDebug::ShowString(LANG("Configurator.Restart") + "...");
 			ISSystem::SleepMilliseconds(400);
-			QProcess::startDetached(APPLICATION_FILE_PATH);
+			QProcess::startDetached(PATH_APPLICATION_FILE);
 			return;
 		}
 

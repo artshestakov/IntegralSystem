@@ -2,13 +2,11 @@
 //-----------------------------------------------------------------------------
 #include "CGSectionItem.h"
 //-----------------------------------------------------------------------------
-class CGSection : public QObject
+class CGSection
 {
-	Q_OBJECT
-
 public:
-	CGSection(QObject *parent = 0);
-	virtual ~CGSection();
+	CGSection();
+	~CGSection();
 
 	void SetName(const QString &name);
 	QString GetName() const;
@@ -22,7 +20,6 @@ public:
 private:
 	QString Name;
 	QString ClassName;
-
 	QVector<CGSectionItem*> Items;
 };
 //-----------------------------------------------------------------------------

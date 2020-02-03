@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGResource.h"
 #include "ISDefines.h"
 #include "ISQuery.h"
@@ -11,16 +10,6 @@ static QString QS_RESOURCE = "SELECT COUNT(*) FROM %1 WHERE %2_uid = :ResourceUI
 static QString QU_RESET_RESOURCE_FIELD = "UPDATE %1 SET %2 = NULL WHERE %3_uid = :ResourceUID";
 //-----------------------------------------------------------------------------
 static QString QU_RESOURCE_FIELD = "UPDATE %1 SET %2 = :ResourceValue WHERE %3_uid = :ResourceUID";
-//-----------------------------------------------------------------------------
-CGResource::CGResource() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGResource::~CGResource()
-{
-
-}
 //-----------------------------------------------------------------------------
 bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &ErrorString)
 {

@@ -1,14 +1,16 @@
-#include "StdAfx.h"
 #include "CGSection.h"
 //-----------------------------------------------------------------------------
-CGSection::CGSection(QObject *parent) : QObject(parent)
+CGSection::CGSection()
 {
 
 }
 //-----------------------------------------------------------------------------
 CGSection::~CGSection()
 {
-
+	while (!Items.isEmpty())
+	{
+		delete Items.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 void CGSection::SetName(const QString &name)

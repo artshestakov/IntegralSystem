@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGHelper.h"
 #include "ISDefines.h"
 #include "ISQuery.h"
@@ -14,16 +13,6 @@ static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 static QString QU_COMMENT_TABLE = "COMMENT ON TABLE public.%1 IS '%2'";
 //-----------------------------------------------------------------------------
 static QString QU_COMMENT_FIELD = "COMMENT ON COLUMN public.%1.%2 IS '%3'";
-//-----------------------------------------------------------------------------
-CGHelper::CGHelper() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGHelper::~CGHelper()
-{
-
-}
 //-----------------------------------------------------------------------------
 bool CGHelper::CheckExistColumn(PMetaClassTable *MetaTable, const QString &ColumnName)
 {

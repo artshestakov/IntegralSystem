@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGSequence.h"
 #include "ISDefines.h"
 #include "ISQuery.h"
@@ -14,16 +13,6 @@ static QString QC_SEQUENCE = "CREATE SEQUENCE public.%1 "
 							 "INCREMENT 1 MINVALUE 1 "
 							 "MAXVALUE 2147483647 START 1 "
 							 "CACHE 1";
-//-----------------------------------------------------------------------------
-CGSequence::CGSequence() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGSequence::~CGSequence()
-{
-
-}
 //-----------------------------------------------------------------------------
 bool CGSequence::CreateSequence(const QString &ClassName)
 {

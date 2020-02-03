@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGConfiguratorDelete.h"
 #include "ISDefines.h"
 #include "ISQuery.h"

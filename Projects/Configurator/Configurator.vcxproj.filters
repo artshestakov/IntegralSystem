@@ -99,12 +99,6 @@
     <QtMoc Include="CGConfigurator.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="CGSection.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="CGSectionItem.h">
-      <Filter>System</Filter>
-    </QtMoc>
     <QtMoc Include="CGConfiguratorBase.h">
       <Filter>Command</Filter>
     </QtMoc>
@@ -129,35 +123,43 @@
     <QtMoc Include="CGConfiguratorUpdate.h">
       <Filter>Command</Filter>
     </QtMoc>
-    <QtMoc Include="CGClass.h">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CGSectionItem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CGSection.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CGTemplateField.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGClassField.h">
+    </ClInclude>
+    <ClInclude Include="CGTable.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGForeign.h">
+    </ClInclude>
+    <ClInclude Include="CGSequence.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGFunction.h">
+    </ClInclude>
+    <ClInclude Include="CGResource.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGHelper.h">
+    </ClInclude>
+    <ClInclude Include="CGHelper.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGIndex.h">
+    </ClInclude>
+    <ClInclude Include="CGIndex.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGResource.h">
+    </ClInclude>
+    <ClInclude Include="CGForeign.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGSequence.h">
+    </ClInclude>
+    <ClInclude Include="CGFunction.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGTable.h">
+    </ClInclude>
+    <ClInclude Include="CGClassField.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
-    <QtMoc Include="CGTemplateField.h">
+    </ClInclude>
+    <ClInclude Include="CGClass.h">
       <Filter>Configurator</Filter>
-    </QtMoc>
+    </ClInclude>
   </ItemGroup>
 </Project>

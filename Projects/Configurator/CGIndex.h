@@ -2,14 +2,9 @@
 //-----------------------------------------------------------------------------
 #include "PMetaClassIndex.h"
 //-----------------------------------------------------------------------------
-class CGIndex : public QObject
+class CGIndex
 {
-	Q_OBJECT
-
 public:
-	CGIndex();
-	virtual ~CGIndex();
-
 	static bool CreateIndex(PMetaClassIndex *Index, QString &ErrorString); //Создание индекса
 	static bool UpdateIndex(PMetaClassIndex *Index, QString &ErrorString); //Обновление индекса
 	static bool CheckExistIndex(PMetaClassIndex *Index); //Проверка существования индекса

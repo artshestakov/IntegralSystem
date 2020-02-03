@@ -2,13 +2,11 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class CGSectionItem : public QObject
+class CGSectionItem
 {
-	Q_OBJECT
-
 public:
-	CGSectionItem(QObject *parent = 0);
-	virtual ~CGSectionItem();
+	CGSectionItem();
+	~CGSectionItem();
 
 	void SetFunction(const QString &function);
 	QString GetFunction() const;

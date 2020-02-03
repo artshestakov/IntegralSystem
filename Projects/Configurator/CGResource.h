@@ -2,14 +2,9 @@
 //-----------------------------------------------------------------------------
 #include "PMetaClassResource.h"
 //-----------------------------------------------------------------------------
-class CGResource : public QObject
+class CGResource
 {
-	Q_OBJECT
-
 public:
-	CGResource();
-	virtual ~CGResource();
-
 	static bool InsertResource(PMetaClassResource *MetaResource, QString &ErrorString);
 	static void UpdateResource(PMetaClassResource *MetaResource);
 	static bool CheckExistResource(PMetaClassResource *MetaResource);

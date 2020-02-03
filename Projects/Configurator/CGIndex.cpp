@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGIndex.h"
 #include "ISDefines.h"
 #include "ISQuery.h"
@@ -14,16 +13,6 @@ static QString QD_INDEX = "DROP INDEX public.%1;";
 static QString QC_INDEX = "CREATE %1 INDEX %2 ON public.%3 USING btree(%4);";
 //-----------------------------------------------------------------------------
 static QString Q_REINDEX = "REINDEX INDEX %1";
-//-----------------------------------------------------------------------------
-CGIndex::CGIndex() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGIndex::~CGIndex()
-{
-
-}
 //-----------------------------------------------------------------------------
 bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 {

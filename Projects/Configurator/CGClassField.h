@@ -2,14 +2,9 @@
 //-----------------------------------------------------------------------------
 #include "PMetaClassField.h"
 //-----------------------------------------------------------------------------
-class CGClassField : public QObject
+class CGClassField
 {
-	Q_OBJECT
-
 public:
-	CGClassField();
-	virtual ~CGClassField();
-
 	static bool CheckExistClassField(PMetaClassField *MetaField);
 	static void InsertClassField(const ISUuid &ClassUID, PMetaClassField *MetaField);
 	static void UpdateClassField(const ISUuid &ClassUID, PMetaClassField *MetaField);

@@ -1,7 +1,6 @@
-#include "StdAfx.h"
 #include "CGSectionItem.h"
 //-----------------------------------------------------------------------------
-CGSectionItem::CGSectionItem(QObject *parent) : QObject(parent)
+CGSectionItem::CGSectionItem()
 {
 
 }

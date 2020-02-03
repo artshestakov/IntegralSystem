@@ -41,10 +41,10 @@
     <QtMoc Include="CGConfigurator.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGSection.h" />
+    <ClInclude Include="CGSection.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGSectionItem.h" />
+    <ClInclude Include="CGSectionItem.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CGConfiguratorBase.h" />
@@ -71,34 +71,34 @@
     <QtMoc Include="CGConfiguratorUpdate.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGClass.h" />
+    <ClInclude Include="CGClass.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGClassField.h" />
+    <ClInclude Include="CGClassField.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGForeign.h" />
+    <ClInclude Include="CGForeign.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGFunction.h" />
+    <ClInclude Include="CGFunction.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGHelper.h" />
+    <ClInclude Include="CGHelper.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGIndex.h" />
+    <ClInclude Include="CGIndex.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGResource.h" />
+    <ClInclude Include="CGResource.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGSequence.h" />
+    <ClInclude Include="CGSequence.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGTable.h" />
+    <ClInclude Include="CGTable.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGTemplateField.h" />
+    <ClInclude Include="CGTemplateField.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{641EC90D-70E1-42F5-9F2F-22C5238F1D02}</ProjectGuid>

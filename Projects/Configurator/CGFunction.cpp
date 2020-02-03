@@ -1,16 +1,5 @@
-#include "StdAfx.h"
 #include "CGFunction.h"
 #include "ISQuery.h"
-//-----------------------------------------------------------------------------
-CGFunction::CGFunction() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGFunction::~CGFunction()
-{
-
-}
 //-----------------------------------------------------------------------------
 void CGFunction::CreateOrReplaceFunction(PMetaClassFunction *MetaFunction, QString &ErrorString)
 {

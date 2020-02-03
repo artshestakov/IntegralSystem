@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGTable.h"
 #include "ISDefines.h"
 #include "ISQuery.h"
@@ -23,16 +22,6 @@ static QString QS_COLUMNS = PREPARE_QUERY("SELECT column_name, column_default, i
 										  "AND table_schema = current_schema() "
 										  "AND table_name = :TableName "
 										  "ORDER BY ordinal_position");
-//-----------------------------------------------------------------------------
-CGTable::CGTable() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGTable::~CGTable()
-{
-
-}
 //-----------------------------------------------------------------------------
 void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 {
@@ -278,7 +267,7 @@ void CGTable::CreateNewFields(PMetaClassTable *MetaTable)
 		if (!CGHelper::CheckExistColumn(MetaTable, FieldName)) //Если поле не существует
 		{
 			QString AddColumn = "ALTER TABLE public." + MetaTable->GetName() + " \n" +
-				"ADD COLUMN \"" + FieldName + "\SYMBOL_SPACE + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->GetType());
+				"ADD COLUMN \"" + FieldName + "\"" + SYMBOL_SPACE + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->GetType());
 
 			if (MetaField->GetSize()) //Если указан размер поля
 			{

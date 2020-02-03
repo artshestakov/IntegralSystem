@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGClassField.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
@@ -16,16 +15,6 @@ static QString QU_CLASS_FIELD = PREPARE_QUERY("UPDATE _classfield SET "
 											  "clsf_labelname = :LabelName, "
 											  "clsf_locallistname = :LocalListName "
 											  "WHERE clsf_uid = :UID");
-//-----------------------------------------------------------------------------
-CGClassField::CGClassField() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGClassField::~CGClassField()
-{
-
-}
 //-----------------------------------------------------------------------------
 bool CGClassField::CheckExistClassField(PMetaClassField *MetaField)
 {

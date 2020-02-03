@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGConfiguratorLicense.h"
 #include "ISQuery.h"
 #include "ISDebug.h"

@@ -2,14 +2,9 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class CGTemplateField : public QObject
+class CGTemplateField
 {
-	Q_OBJECT
-
 public:
-	CGTemplateField();
-	virtual ~CGTemplateField();
-
 	static QString GetSqlTextForTemplateSystemFields(const QString &ClassName, const QString &ClassAlias); //Получить текст запроса для создания базовых полей класса
 };
 //-----------------------------------------------------------------------------

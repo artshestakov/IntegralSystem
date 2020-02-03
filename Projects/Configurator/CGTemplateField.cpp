@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGTemplateField.h"
 #include "ISDefines.h"
 #include "ISSystem.h"
@@ -6,21 +5,11 @@
 #include "CGSequence.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
-CGTemplateField::CGTemplateField() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGTemplateField::~CGTemplateField()
-{
-
-}
-//-----------------------------------------------------------------------------
 QString CGTemplateField::GetSqlTextForTemplateSystemFields(const QString &ClassName, const QString &ClassAlias)
 {
     QString SqlText;
 
-    QFile File(SCHEMA_TEMPLATE_FIELDS_PATH);
+    QFile File(PATH_SCHEMA_TEMPLATE_FIELDS);
     IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
     QString Content = File.readAll();
     File.close();

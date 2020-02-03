@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGClass.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
@@ -14,16 +13,6 @@ static QString QU_CLASS = PREPARE_QUERY("UPDATE _class SET "
 										"clss_localname = :LocalName, "
 										"clss_locallistname = :LocalListName "
 										"WHERE clss_uid = :UID");
-//-----------------------------------------------------------------------------
-CGClass::CGClass() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-CGClass::~CGClass()
-{
-
-}
 //-----------------------------------------------------------------------------
 bool CGClass::CheckExistClass(PMetaClassTable *MetaTable)
 {

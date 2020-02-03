@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGConfiguratorShow.h"
 #include "ISDefines.h"
 #include "ISConfig.h"
@@ -208,7 +207,7 @@ void CGConfiguratorShow::obsoletesequence()
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::config()
 {
-	QFile FileConfig(APPLICATION_DIR_PATH + "/Config.ini");
+	QFile FileConfig(PATH_CONFIG_FILE);
 	if (FileConfig.exists())
 	{
 		if (FileConfig.open(QIODevice::ReadOnly))
