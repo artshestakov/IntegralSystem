@@ -131,6 +131,7 @@
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBIKEdit.cpp" />
     <ClCompile Include="ISBirthdayEdit.cpp" />
+    <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISButtonClear.cpp" />
     <ClCompile Include="ISButtonClose.cpp" />
     <ClCompile Include="ISButtonDialog.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
     <ClCompile Include="ISCurrentAffairsForm.cpp" />
+    <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDateEdit.cpp" />
     <ClCompile Include="ISDateTimeEdit.cpp" />
     <ClCompile Include="ISDelegateBoolean.cpp" />
@@ -289,6 +291,7 @@
     <ClCompile Include="ISListObjectForm.cpp" />
     <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
+    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLockForm.cpp" />
     <ClCompile Include="ISLoginEdit.cpp" />
     <ClCompile Include="ISMainMenu.cpp" />
@@ -336,6 +339,7 @@
     <ClCompile Include="ISParagraphEntity.cpp" />
     <ClCompile Include="ISPassportEdit.cpp" />
     <ClCompile Include="ISPassportForm.cpp" />
+    <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPasswordEdit.cpp" />
     <ClCompile Include="ISPasswordWidthWidget.cpp" />
     <ClCompile Include="ISPathEditDir.cpp" />
@@ -420,6 +424,7 @@
     <ClCompile Include="ISStatisticTablesForm.cpp" />
     <ClCompile Include="ISStatusBar.cpp" />
     <ClCompile Include="ISStorageFilesListForm.cpp" />
+    <ClCompile Include="ISStyleSheet.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
     <ClCompile Include="ISTableDetailsForm.cpp" />
@@ -481,10 +486,14 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISScreenshot.h" />
+    <ClInclude Include="ISBuffer.h" />
+    <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISHTML.h" />
     <ClInclude Include="ISHTMLHelper.h" />
     <ClInclude Include="ISHtmlQuery.h" />
     <QtMoc Include="ISPrintingWord.h" />
+    <ClInclude Include="ISLocalization.h" />
+    <ClInclude Include="ISPassword.h" />
     <ClInclude Include="ISPrintMetaReport.h" />
     <ClInclude Include="ISPrintMetaReportField.h" />
     <QtMoc Include="ISPrintingBase.h" />
@@ -494,6 +503,7 @@
     <QtMoc Include="ISSqlModelView.h" />
     <QtMoc Include="ISSqlModelCore.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
+    <ClInclude Include="ISStyleSheet.h" />
     <ClInclude Include="PMetaUserPermission.h" />
     <QtMoc Include="ISIncomingCallBaseForm.h" />
     <QtMoc Include="ISInterfaceMetaForm.h" />
@@ -522,8 +532,8 @@
     <QtMoc Include="ISExportHTML.h" />
     <QtMoc Include="ISExportWorker.h" />
     <QtMoc Include="ISExportXML.h" />
-    <QtMoc Include="ISFastAccessEntity.h" />
-    <QtMoc Include="ISMetaExternalTool.h" />
+    <ClInclude Include="ISFastAccessEntity.h" />
+    <ClInclude Include="ISMetaExternalTool.h" />
     <ClInclude Include="ISFavorites.h" />
     <QtMoc Include="ISAsteriskTotalForm.h" />
     <QtMoc Include="ISAttachFileBaseForm.h" />

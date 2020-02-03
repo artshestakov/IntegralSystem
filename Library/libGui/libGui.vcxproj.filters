@@ -209,6 +209,12 @@
     <Filter Include="Controls\Labels">
       <UniqueIdentifier>{877e8bc8-6a0c-4df9-bdbc-726c688ab7b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{fd190b60-95fc-4868-9bc4-a7ebef8f88e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{8c46924d-88ed-4505-853e-3e9c6d3d8e31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -285,6 +291,27 @@
     </ClInclude>
     <ClInclude Include="ISUserRoleEntity.h">
       <Filter>User Role</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaExternalTool.h">
+      <Filter>FastAccess</Filter>
+    </ClInclude>
+    <ClInclude Include="ISFastAccessEntity.h">
+      <Filter>FastAccess</Filter>
+    </ClInclude>
+    <ClInclude Include="ISBuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLocalization.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStyleSheet.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDatabaseHelper.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISPassword.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1389,6 +1416,21 @@
     <ClCompile Include="ISTaskViewForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISBuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLocalization.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStyleSheet.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDatabaseHelper.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPassword.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1465,12 +1507,6 @@
     </QtMoc>
     <QtMoc Include="ISExportXML.h">
       <Filter>Export</Filter>
-    </QtMoc>
-    <QtMoc Include="ISFastAccessEntity.h">
-      <Filter>FastAccess</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaExternalTool.h">
-      <Filter>FastAccess</Filter>
     </QtMoc>
     <QtMoc Include="ISAsteriskTotalForm.h">
       <Filter>Forms</Filter>
