@@ -116,9 +116,6 @@
     <Filter Include="Edits">
       <UniqueIdentifier>{3a317b4a-c489-4456-a2dd-db4f3d3927fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Labels">
-      <UniqueIdentifier>{877e8bc8-6a0c-4df9-bdbc-726c688ab7b7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Layouts">
       <UniqueIdentifier>{d3507f21-7dec-4a5e-82d9-0274fbc4d9df}</UniqueIdentifier>
     </Filter>
@@ -130,9 +127,6 @@
     </Filter>
     <Filter Include="Printing">
       <UniqueIdentifier>{bc1a5c63-9800-4fa0-baf9-da0f709d48fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Form Task">
-      <UniqueIdentifier>{02d2c124-3f4c-42e0-bae1-bbd4cfd7070f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Controls\Mail Calendar">
       <UniqueIdentifier>{b854530b-1edd-4651-8fe8-c0ee31e025dd}</UniqueIdentifier>
@@ -211,6 +205,9 @@
     </Filter>
     <Filter Include="Printing\MetaData">
       <UniqueIdentifier>{ab67a40c-9531-4fca-9c06-98c69b2fb01f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls\Labels">
+      <UniqueIdentifier>{877e8bc8-6a0c-4df9-bdbc-726c688ab7b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -645,9 +642,6 @@
     <ClCompile Include="ISKPPEdit.cpp">
       <Filter>Fields\Other</Filter>
     </ClCompile>
-    <ClCompile Include="ISLanguageEdit.cpp">
-      <Filter>Fields\Other</Filter>
-    </ClCompile>
     <ClCompile Include="ISOGRNEdit.cpp">
       <Filter>Fields\Other</Filter>
     </ClCompile>
@@ -754,10 +748,10 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISLabelLink.cpp">
-      <Filter>Labels</Filter>
+      <Filter>Controls\Labels</Filter>
     </ClCompile>
     <ClCompile Include="ISQLabel.cpp">
-      <Filter>Labels</Filter>
+      <Filter>Controls\Labels</Filter>
     </ClCompile>
     <ClCompile Include="ISFlowLayout.cpp">
       <Filter>Layouts</Filter>
@@ -834,42 +828,6 @@
     <ClCompile Include="ISAutoLocking.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISTaskAllListForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskBaseListForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskDoneForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskFavoriteListForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskFileInsertForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskFromListForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskMyListForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskObjectForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskOverdueListForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskTodayListForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskViewForm.cpp">
-      <Filter>Form Task</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalculatorButton.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -919,9 +877,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISComboTimeEdit.cpp">
-      <Filter>Controls\Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDatabaseEdit.cpp">
       <Filter>Controls\Fields</Filter>
     </ClCompile>
     <ClCompile Include="ISExecutorEdit.cpp">
@@ -1009,9 +964,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISAddressBookListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAuthorizationForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISCalculatorForm.cpp">
@@ -1398,6 +1350,45 @@
     <ClCompile Include="ISPrintPreviewDialog.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="ISAuthForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskAllListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskBaseListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskDoneForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskFavoriteListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskFileInsertForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskFromListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskMyListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskObjectForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskOverdueListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskTodayListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTaskViewForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1706,9 +1697,6 @@
     <QtMoc Include="ISKPPEdit.h">
       <Filter>Fields\Other</Filter>
     </QtMoc>
-    <QtMoc Include="ISLanguageEdit.h">
-      <Filter>Fields\Other</Filter>
-    </QtMoc>
     <QtMoc Include="ISOGRNEdit.h">
       <Filter>Fields\Other</Filter>
     </QtMoc>
@@ -1815,10 +1803,10 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISLabelLink.h">
-      <Filter>Labels</Filter>
+      <Filter>Controls\Labels</Filter>
     </QtMoc>
     <QtMoc Include="ISQLabel.h">
-      <Filter>Labels</Filter>
+      <Filter>Controls\Labels</Filter>
     </QtMoc>
     <QtMoc Include="ISFlowLayout.h">
       <Filter>Layouts</Filter>
@@ -1889,42 +1877,6 @@
     <QtMoc Include="ISAutoLocking.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISTaskAllListForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskBaseListForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskDoneForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskFavoriteListForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskFileInsertForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskFromListForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskMyListForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskObjectForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskOverdueListForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskTodayListForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskViewForm.h">
-      <Filter>Form Task</Filter>
-    </QtMoc>
     <QtMoc Include="ISCalculatorButton.h">
       <Filter>Controls</Filter>
     </QtMoc>
@@ -1974,9 +1926,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISComboTimeEdit.h">
-      <Filter>Controls\Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDatabaseEdit.h">
       <Filter>Controls\Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISExecutorEdit.h">
@@ -2064,9 +2013,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISAddressBookListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAuthorizationForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISCalculatorForm.h">
@@ -2431,6 +2377,45 @@
     </QtMoc>
     <QtMoc Include="ISPrintPreviewDialog.h">
       <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAuthForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskViewForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskAllListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskBaseListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskDoneForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskFavoriteListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskFileInsertForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskFromListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskMyListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskObjectForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskOverdueListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskTodayListForm.h">
+      <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

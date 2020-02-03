@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 {
-	QString TranslatorFileName = "qt_";// + /*ISConfig::GetInstance().GetValueString(CONST_CONFIG_OTHER_LANGUAGE) +*/ ".qm";//???
+	QString TranslatorFileName = "qt_ru.qm";
 	QString TranslatorFilePath = PATH_TRANSLATIONS_DIR + '/' + TranslatorFileName;
 
 	if (QFile::exists(TranslatorFilePath))

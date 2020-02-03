@@ -125,7 +125,7 @@
     <ClCompile Include="ISAttachFileForm.cpp" />
     <ClCompile Include="ISAttachFileItem.cpp" />
     <ClCompile Include="ISAttachFilesForm.cpp" />
-    <ClCompile Include="ISAuthorizationForm.cpp" />
+    <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISAutoLocking.cpp" />
     <ClCompile Include="ISBannerProgressBar.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
@@ -193,7 +193,6 @@
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
     <ClCompile Include="ISCurrentAffairsForm.cpp" />
-    <ClCompile Include="ISDatabaseEdit.cpp" />
     <ClCompile Include="ISDateEdit.cpp" />
     <ClCompile Include="ISDateTimeEdit.cpp" />
     <ClCompile Include="ISDelegateBoolean.cpp" />
@@ -281,7 +280,6 @@
     <ClCompile Include="ISKnowledgeBaseSubSystem.cpp" />
     <ClCompile Include="ISKPPEdit.cpp" />
     <ClCompile Include="ISLabelLink.cpp" />
-    <ClCompile Include="ISLanguageEdit.cpp" />
     <ClCompile Include="ISLicenseForm.cpp" />
     <ClCompile Include="ISLineEdit.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
@@ -614,7 +612,6 @@
     <QtMoc Include="ISINNEdit.h" />
     <QtMoc Include="ISIPAddressEdit.h" />
     <QtMoc Include="ISKPPEdit.h" />
-    <QtMoc Include="ISLanguageEdit.h" />
     <QtMoc Include="ISOGRNEdit.h" />
     <QtMoc Include="ISOKPOEdit.h" />
     <QtMoc Include="ISPasswordEdit.h" />
@@ -687,7 +684,7 @@
     <QtMoc Include="ISComboTableSelectionBehavior.h" />
     <QtMoc Include="ISAboutForm.h" />
     <QtMoc Include="ISAddressBookListForm.h" />
-    <QtMoc Include="ISAuthorizationForm.h" />
+    <QtMoc Include="ISAuthForm.h" />
     <QtMoc Include="ISCalculatorForm.h" />
     <QtMoc Include="ISCalendarEventForm.h" />
     <QtMoc Include="ISCalendarForm.h" />
@@ -718,7 +715,6 @@
     <QtMoc Include="ISMenuFastAccess.h" />
     <QtMoc Include="ISMonitorUserWidget.h" />
     <QtMoc Include="ISNotifyWidgetItem.h" />
-    <QtMoc Include="ISDatabaseEdit.h" />
     <QtMoc Include="ISExecutorEdit.h" />
     <QtMoc Include="ISLoginEdit.h" />
     <QtMoc Include="ISDesktopForm.h" />

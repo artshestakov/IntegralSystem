@@ -418,7 +418,6 @@
   <Local Name="DefaultSorting" Russian="Установить сортировку по умолчанию"/>
   <Local Name="Debug" Russian="Отладка"/>
   <Local Name="Notebook" Russian="Блокнот"/>
-  <Local Name="AutoInput" Russian="Авто вход"/>
   <Local Name="NewRecord" Russian="Новая запись"/>
   <Local Name="EditRecord" Russian="Изменение записи"/>
   <Local Name="AddingDataFile" Russian="Добавление данных файла %1 из %2"/>
@@ -711,8 +710,6 @@
   <Local Name="AutoLocking" Russian="Блокировка программы..."/>
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
-  <Local Name="AutobootStartup" Russian="Добавить программу в автозагрузку"/>
-  <Local Name="AutobootStartup.ToolTip" Russian="Программа будет запускаться автоматически при включении компьютера."/>
   <Local Name="ClickFromIncludeAndExcludeCore" Russian="Нажмите, чтобы включить или отключить ядро."/>
   <Local Name="InputMessageFromLinkToRecord" Russian="Прикрепите сообщение к ссылке на запись"/>
   <Local Name="LinkToRecordInTable" Russian="Ссылка на запись из таблицы &quot;%1&quot;"/>
@@ -744,6 +741,7 @@
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickDoneFromFilter" Russian="Нажмите кнопку &quot;Применить&quot; для получения сводных данных за период."/>
   <Local Name="ClickFromSelectDoneTime" Russian="Нажмите, чтобы выбрать время"/>
+  <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
   <Local Name="OutcomingCall" Russian="Исходщяий вызов на номер: %1"/>
   <Local Name="ClickOverviewFromSelectFile" Russian="Нажмите &quot;Обзор&quot; чтобы выбрать файл"/>
   <Local Name="InputTheTaskNumber" Russian="Введите номер задачи"/>
@@ -971,22 +969,6 @@
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
   <Local Name="Task.ReRead" Russian="Перечитать"/>
   <Local Name="Task.ReRead.ToolTip" Russian="Перечитать карточку задачи"/>
-  
-  <!--Languages-->
-  <Local Name="Language" Russian="Язык"/>
-  <Local Name="Language.Canada" Russian="Канадский (В разработке)"/>
-  <Local Name="Language.Germany" Russian="Немецкий"/>
-  <Local Name="Language.English" Russian="Английский"/>
-  <Local Name="Language.Finland" Russian="Финский"/>
-  <Local Name="Language.France" Russian="Французский"/>
-  <Local Name="Language.Hungary" Russian="Венгерский"/>
-  <Local Name="Language.Italy" Russian="Итальянский"/>
-  <Local Name="Language.Japan" Russian="Японский"/>
-  <Local Name="Language.Latvia" Russian="Латвийский"/>
-  <Local Name="Language.Poland" Russian="Польский"/>
-  <Local Name="Language.Russia" Russian="Русский"/>
-  <Local Name="Language.Slovakia" Russian="Словакский"/>
-  <Local Name="Language.Ukraine" Russian="Украинский"/>
   
   <!--PostgresqlErrors-->
   <Local Name="PostgreSQL.Error.23505" Russian="Ошибка повторяющегося ключа, нарушение ограничения уникальности."/>
