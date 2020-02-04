@@ -18,11 +18,10 @@
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
-	DefinesInitialize();
-	ISCore::Startup();
+	QString ErrorString;
+	ISCore::Startup(ErrorString);
 
 	ISDebug::ShowString("Starting system... Version: " + ISVersion::GetInstance().GetVersion());
-	ISCrashDumper::Startup();
 
 	ISSplashWidget SplashWidget;
 	SplashWidget.SetText("Starting system...");

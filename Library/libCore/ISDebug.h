@@ -20,6 +20,7 @@ public:
 	static void ShowString(const QString &String);
 	static void ShowEmptyString(bool AddInLog = true);
 
+	static void ShowCrashString(const QString &String); //Вывод сообщения о падении
 	static void ShowDebugString(const QString &String); //Вывод отладочного сообщения
 	static void ShowInfoString(const QString &String); //Вывод информационного сообщения
 	static void ShowWarningString(const QString &String); //Вывод предупреждения
@@ -31,6 +32,7 @@ public:
 	void EmptyString(bool AddInLog = true); //Добавить пустую строку
 
 	void CaratString(const QString &CoreName, const QString &String); //Вывод сообщения в Карат
+	void CrashString(const QString &String); //Вывод сообщения о падении
 	void DebugString(const QString &String); //Вывод отладочного сообщения
 	void InfoString(const QString &String); //Вывод информационного сообщения
 	void WarningString(const QString &String); //Вывод предупреждения

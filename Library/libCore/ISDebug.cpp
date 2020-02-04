@@ -36,6 +36,11 @@ void ISDebug::ShowEmptyString(bool AddInLog)
 	GetInstance().EmptyString(AddInLog);
 }
 //-----------------------------------------------------------------------------
+void ISDebug::ShowCrashString(const QString &String)
+{
+	GetInstance().CrashString(String);
+}
+//-----------------------------------------------------------------------------
 void ISDebug::ShowDebugString(const QString &String)
 {
 	GetInstance().DebugString(String);
@@ -102,6 +107,11 @@ void ISDebug::CaratString(const QString &CoreName, const QString &String)
 	OutputString(QString("%1 [%2]: %3").arg(QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V4)).arg(CoreName).arg(String));
 }
 //-----------------------------------------------------------------------------
+void ISDebug::CrashString(const QString &String)
+{
+	OutputString(GetCompleteString(ISNamespace::DMT_Crash, String));
+}
+//-----------------------------------------------------------------------------
 void ISDebug::DebugString(const QString &String)
 {
 	OutputString(GetCompleteString(ISNamespace::DMT_Debug, String));
@@ -150,9 +160,9 @@ QStringList ISDebug::GetDebugMessages() const
 QString ISDebug::GetCompleteString(ISNamespace::DebugMessageType MessageType, const QString &String) const
 {
 	QString MessageTypeString;
-
 	switch (MessageType)
 	{
+	case ISNamespace::DMT_Crash: MessageTypeString = "[Crash]"; break;
 	case ISNamespace::DMT_Debug: MessageTypeString = "[Debug]"; break;
 	case ISNamespace::DMT_Info: MessageTypeString = "[Info]"; break;
 	case ISNamespace::DMT_Warning: MessageTypeString = "[Warning]"; break;
@@ -160,7 +170,6 @@ QString ISDebug::GetCompleteString(ISNamespace::DebugMessageType MessageType, co
 	case ISNamespace::DMT_Assert: MessageTypeString = "[Assert]"; break;
 	case ISNamespace::DMT_Exception: MessageTypeString = "[Exception]"; break;
 	}
-
 	return QString("%1 %2: %3").arg(QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V4)).arg(MessageTypeString).arg(String);
 }
 //-----------------------------------------------------------------------------

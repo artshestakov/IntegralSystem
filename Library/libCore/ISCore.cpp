@@ -13,6 +13,7 @@
 #include "ISDebug.h"
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
+#include "ISCrashDumper.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
@@ -83,6 +84,11 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 bool ISCore::Startup(QString &ErrorString)
 {
 	DefinesInitialize(); //Инициализация глобальных переменных
+	ISCrashDumper::Startup();
+	
+	int *i;
+	i = 0;
+	*i = 100;
 
 	bool Result = ISSystem::CreateDir(PATH_TEMP_DIR, ErrorString); //Попытка создания временной папки
 	if (!Result)

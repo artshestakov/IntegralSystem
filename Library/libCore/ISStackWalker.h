@@ -8,10 +8,10 @@ class ISStackWalker : public StackWalker
 public:
 	ISStackWalker();
 
-	virtual void OnOutput(LPCSTR szText);
-	QString GetCallStack() const;
+	virtual void OnOutput(LPCSTR Data);
+	std::string GetCallStack() const;
 
 private:
-	QString StackString;
+	std::string String;
 };
 //-----------------------------------------------------------------------------

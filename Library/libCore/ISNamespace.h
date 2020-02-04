@@ -249,6 +249,7 @@ public:
 
 	enum DebugMessageType //Тип отладочоного сообщения
 	{
+		DMT_Crash, //Падение
 		DMT_Debug, //Отладочное
 		DMT_Info, //Информационное
 		DMT_Warning, //Предупреждение

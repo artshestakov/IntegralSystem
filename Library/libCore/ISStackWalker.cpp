@@ -5,13 +5,13 @@ ISStackWalker::ISStackWalker() : StackWalker(RetrieveLine)
 
 }
 //-----------------------------------------------------------------------------
-void ISStackWalker::OnOutput(LPCSTR szText)
+void ISStackWalker::OnOutput(LPCSTR Data)
 {
-	StackString += QString(szText);
+	String += Data;
 }
 //-----------------------------------------------------------------------------
-QString ISStackWalker::GetCallStack() const
+std::string ISStackWalker::GetCallStack() const
 {
-	return StackString;
+	return String;
 }
 //-----------------------------------------------------------------------------
