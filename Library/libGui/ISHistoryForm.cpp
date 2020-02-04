@@ -10,7 +10,11 @@
 #include "PMetaClassTable.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid FROM _history WHERE htry_user = :CurrentUserID ORDER BY htry_id DESC LIMIT :Limit OFFSET 0");
+static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid "
+										  "FROM _history "
+										  "WHERE htry_user = currentuserid() "
+										  "ORDER BY htry_id DESC "
+										  "LIMIT :Limit OFFSET 0");
 //-----------------------------------------------------------------------------
 ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {
@@ -25,7 +29,6 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	GetMainLayout()->addWidget(ListWidget);
 
 	ISQuery qSelectHistory(QS_HISTORY);
-	qSelectHistory.BindValue(":CurrentUserID", ISMetaUser::GetInstance().GetData()->ID);
 	qSelectHistory.BindValue(":Limit", SETTING_STRING(CONST_UID_SETTING_OTHER_MAXIMUMVIEWHISTORY));
 	if (qSelectHistory.Execute())
 	{

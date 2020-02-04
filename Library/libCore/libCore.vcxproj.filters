@@ -228,6 +228,9 @@
     <ClInclude Include="ISMetaSetting.h">
       <Filter>Settings</Filter>
     </ClInclude>
+    <ClInclude Include="ISLocalization.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -468,6 +471,9 @@
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="ISDefines.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLocalization.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>

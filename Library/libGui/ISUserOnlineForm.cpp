@@ -14,10 +14,10 @@ static QString QS_USER_ONLINE = PREPARE_QUERY("SELECT uotp_uid, uotp_name, uonl_
 											  "AND uonl_date = :Date "
 											  "ORDER BY uonl_creationdate");
 //-----------------------------------------------------------------------------
-ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidget *parent) : ISInterfaceForm(parent)
+ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidget *parent)
+	: ISInterfaceForm(parent),
+	UserID(user_id)
 {
-	UserID = user_id;
-
 	setWindowTitle(LANG("MonitorActivity.ActivityUser") + ": " + user_name);
 	setWindowIcon(BUFFER_ICONS("User"));
 	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);

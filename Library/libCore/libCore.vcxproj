@@ -137,6 +137,7 @@
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISCountingTime.h" />
     <ClInclude Include="ISEmailAddress.h" />
+    <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISMemoryObjects.h" />
     <QtMoc Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />
     <ClCompile Include="ISExceptionBase.cpp" />
+    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMemoryObjects.cpp" />
     <ClCompile Include="ISMetaData.cpp" />

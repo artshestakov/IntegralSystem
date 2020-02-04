@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISFILEDIALOG_H_INCLUDED
+#define _ISFILEDIALOG_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
@@ -19,3 +21,4 @@ public:
 	static QStringList GetOpenFilesName(QWidget *parent, const QString &FilterName = QString()); //Получить путь к открываемым файлам
 };
 //-----------------------------------------------------------------------------
+#endif

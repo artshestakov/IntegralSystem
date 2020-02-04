@@ -23,7 +23,7 @@ static QString QU_OBJECT = "UPDATE %1 SET %2_deletiondate = now(), %2_deletionus
 static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_user, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid) "
 										  "VALUES(:CurrentUserID, :TableName, :TableLocalName, :ObjectName, :ObjectID)");
 //-----------------------------------------------------------------------------
-static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_user = :CurrentUserID");
+static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_user = currentuserid()");
 //-----------------------------------------------------------------------------
 static QString QI_CALENDAR = PREPARE_QUERY("INSERT INTO _calendar(cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_tablename, cldr_objectid) "
                                            "VALUES(:Date, :TimeAlert, :Name, :Text, :TableName, :ObjectID) "
@@ -284,9 +284,7 @@ void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, 
 //-----------------------------------------------------------------------------
 void ISCore::ClearHistory()
 {
-	QVariantMap Parameters;
-	Parameters.insert(":CurrentUserID", ISMetaUser::GetInstance().GetData()->ID);
-	ISQueryPool::GetInstance().AddQuery(QD_HISTORY, Parameters);
+	ISQueryPool::GetInstance().AddQuery(QD_HISTORY);
 }
 //-----------------------------------------------------------------------------
 int ISCore::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName, int ObjectID)

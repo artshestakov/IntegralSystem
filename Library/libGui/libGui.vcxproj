@@ -291,7 +291,6 @@
     <ClCompile Include="ISListObjectForm.cpp" />
     <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
-    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLockForm.cpp" />
     <ClCompile Include="ISLoginEdit.cpp" />
     <ClCompile Include="ISMainMenu.cpp" />
@@ -492,7 +491,6 @@
     <ClInclude Include="ISHTMLHelper.h" />
     <ClInclude Include="ISHtmlQuery.h" />
     <QtMoc Include="ISPrintingWord.h" />
-    <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISPassword.h" />
     <ClInclude Include="ISPrintMetaReport.h" />
     <ClInclude Include="ISPrintMetaReportField.h" />
