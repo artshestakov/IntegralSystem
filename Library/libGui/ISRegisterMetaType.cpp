@@ -102,16 +102,6 @@
 #include "ISDevice_Atol1101Plus.h"
 #include "ISDevice_Atol30F.h"
 //-----------------------------------------------------------------------------
-ISRegisterMetaType::ISRegisterMetaType() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISRegisterMetaType::~ISRegisterMetaType()
-{
-
-}
-//-----------------------------------------------------------------------------
 void ISRegisterMetaType::RegisterMetaType()
 {
 	qRegisterMetaType<QList<QSqlRecord>>("QList<QSqlRecord>");

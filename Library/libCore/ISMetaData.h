@@ -1,13 +1,15 @@
 #pragma once
+#ifndef _ISMETADATA_H_INCLUDED
+#define _ISMETADATA_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "PMetaClassFunction.h"
 #include "PMetaClassTable.h"
 #include "PMetaClassQuery.h"
 #include "PMetaClassResource.h"
 #include "ISAssociationTypes.h"
 //-----------------------------------------------------------------------------
-class ISMetaData : public QObject
+class LIBCORE_EXPORT ISMetaData : public QObject
 {
 	Q_OBJECT
 
@@ -86,3 +88,4 @@ private:
 	ISAssociationTypes AssociationTypes;
 };
 //-----------------------------------------------------------------------------
+#endif

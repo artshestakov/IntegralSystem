@@ -2,9 +2,10 @@
 #ifndef _ISINTERFACEDIALOGFORM_H_INCLUDED
 #define _ISINTERFACEDIALOGFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "libGui_global.h"
 #include "ISInterfaceForm.h"
 //-----------------------------------------------------------------------------
-class ISInterfaceDialogForm : public ISInterfaceForm
+class LIBGUI_EXPORT	ISInterfaceDialogForm : public ISInterfaceForm
 {
 	Q_OBJECT
 

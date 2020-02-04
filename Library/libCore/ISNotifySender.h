@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISMetaNotify.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISNotifySender : public QObject
+class LIBCORE_EXPORT ISNotifySender : public QObject
 {
 	Q_OBJECT
 

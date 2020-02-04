@@ -128,8 +128,8 @@
     <ClInclude Include="ISCrashDumper.h" />
     <ClInclude Include="ISDatabase.h" />
     <QtMoc Include="ISDaDataService.h" />
-    <ClInclude Include="ISDefines.h" />
     <QtMoc Include="ISEMail.h" />
+    <ClInclude Include="ISDefines.h" />
     <ClInclude Include="ISLicense.h" />
     <ClInclude Include="ISApplicationRunning.h" />
     <ClInclude Include="ISAssert.h" />
@@ -142,11 +142,9 @@
     <QtMoc Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />
     <ClInclude Include="ISMetaUuidCheckeder.h" />
-    <QtMoc Include="ISMetaViewQuery.h" />
+    <ClInclude Include="ISMetaViewQuery.h" />
     <QtMoc Include="ISSMS.h" />
     <ClInclude Include="ISMetaUser.h" />
-    <QtMoc Include="ISModelThreadWorker.h" />
-    <QtMoc Include="ISModelThreadQuery.h" />
     <ClInclude Include="ISMetaNotify.h" />
     <QtMoc Include="ISNotifySender.h" />
     <QtMoc Include="ISQueryPool.h" />
@@ -246,8 +244,6 @@
     <ClCompile Include="ISMimeMultipart.cpp" />
     <ClCompile Include="ISMimePart.cpp" />
     <ClCompile Include="ISMimeText.cpp" />
-    <ClCompile Include="ISModelThreadQuery.cpp" />
-    <ClCompile Include="ISModelThreadWorker.cpp" />
     <ClCompile Include="ISNetwork.cpp" />
     <ClCompile Include="ISNotifySender.cpp" />
     <ClCompile Include="ISPhoneNumberParser.cpp" />

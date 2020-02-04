@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _ISPROTOCOL_H_INCLUDED
+#define _ISPROTOCOL_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class ISProtocol
+class LIBCORE_EXPORT ISProtocol
 {
 public:
 	static void EnterApplication(); //¬ход в программу
@@ -23,3 +25,4 @@ public:
 	static int Insert(bool Thread, const QString &TypeUID, const QString &TableName, const QString &LocalListName, const QVariant &ObjectID, const QString &Information = QString());
 };
 //-----------------------------------------------------------------------------
+#endif

@@ -18,7 +18,6 @@
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
-	Q_INIT_RESOURCE(Resources);
 	DefinesInitialize();
 	ISCore::Startup();
 

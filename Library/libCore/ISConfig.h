@@ -2,9 +2,9 @@
 #ifndef _ISCONFIG_H_INCLUDED
 #define _ISCONFIG_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISConfig
+class LIBCORE_EXPORT ISConfig
 {
 public:
 	ISConfig(const ISConfig &) = delete;

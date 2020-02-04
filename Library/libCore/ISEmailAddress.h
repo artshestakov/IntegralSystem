@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISEmailAddress
+class LIBCORE_EXPORT ISEmailAddress
 {
 public:
     ISEmailAddress();

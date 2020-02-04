@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISMimeMessage.h"
 //-----------------------------------------------------------------------------
-class ISSmtpClient : public QObject
+class LIBCORE_EXPORT ISSmtpClient : public QObject
 {
     Q_OBJECT
 

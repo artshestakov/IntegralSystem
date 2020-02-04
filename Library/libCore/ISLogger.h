@@ -2,9 +2,9 @@
 #ifndef _ISLOGGER_H_INCLUDED
 #define _ISLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISLogger : public QObject
+class LIBCORE_EXPORT ISLogger : public QObject
 {
 	Q_OBJECT
 

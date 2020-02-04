@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISEMail : public QObject
+class LIBCORE_EXPORT ISEMail : public QObject
 {
 	Q_OBJECT
 

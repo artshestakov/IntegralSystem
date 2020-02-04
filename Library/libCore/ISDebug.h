@@ -2,10 +2,10 @@
 #ifndef _ISDEBUG_H_INCLUDED
 #define _ISDEBUG_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class ISDebug
+class LIBCORE_EXPORT ISDebug
 {
 public:
 	ISDebug(const ISDebug &) = delete;

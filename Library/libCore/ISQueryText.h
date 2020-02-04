@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _ISQUERYTEXT_H_INCLUDED
+#define _ISQUERYTEXT_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISQueryText
+class LIBCORE_EXPORT ISQueryText
 {
 public:
 	ISQueryText(const ISQueryText &) = delete;
@@ -28,3 +30,4 @@ private:
 //-----------------------------------------------------------------------------
 #define PREPARE_QUERY(SqlText) ISQueryText::GetInstance().InsertQuery(SqlText, __FILE__, __LINE__);
 //-----------------------------------------------------------------------------
+#endif

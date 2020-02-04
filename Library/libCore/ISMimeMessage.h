@@ -1,11 +1,11 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISMimePart.h"
 #include "ISMimeMultipart.h"
 #include "ISEmailAddress.h"
 //-----------------------------------------------------------------------------
-class ISMimeMessage : public QObject
+class LIBCORE_EXPORT ISMimeMessage : public QObject
 {
 public:
 

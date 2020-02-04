@@ -1,11 +1,13 @@
 #pragma once
+#ifndef _PMETACLASSTABLE_H_INCLUDED
+#define _PMETACLASSTABLE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "PMetaClass.h"
 #include "PMetaClassField.h"
 #include "PMetaClassEscort.h"
 //-----------------------------------------------------------------------------
-class PMetaClassTable : public PMetaClass
+class LIBCORE_EXPORT PMetaClassTable : public PMetaClass
 {
 	Q_OBJECT
 
@@ -118,3 +120,4 @@ private:
 	QVectorString Joins;
 };
 //-----------------------------------------------------------------------------
+#endif

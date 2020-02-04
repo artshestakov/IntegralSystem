@@ -2,10 +2,10 @@
 #ifndef _ISLOCALIZATION_H_INCLUDED
 #define _ISLOCALIZATION_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISLocalization
+class LIBCORE_EXPORT ISLocalization
 {
 public:
 	ISLocalization(const ISLocalization &) = delete;

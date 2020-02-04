@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _ISSETTINGS_H_INCLUDED
+#define _ISSETTINGS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISMetaSettingsGroup.h"
 //-----------------------------------------------------------------------------
-class ISSettings
+class LIBCORE_EXPORT ISSettings
 {
 public:
 	ISSettings(const ISSettings &) = delete;
@@ -42,3 +44,4 @@ private:
 #define SETTING_STRING(SETTING_UID) ISSettings::GetInstance().GetValueString(SETTING_UID)
 #define SETTING_INT(SETTING_UID) ISSettings::GetInstance().GetValueInt(SETTING_UID)
 //-----------------------------------------------------------------------------
+#endif

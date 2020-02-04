@@ -2,12 +2,12 @@
 #ifndef _ISSYSTEM_H_INCLUDED
 #define _ISSYSTEM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISNamespace.h"
 #include "ISUuid.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISSystem
+class LIBCORE_EXPORT ISSystem
 {
 public:
 

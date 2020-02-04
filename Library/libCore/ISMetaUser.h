@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _ISMETAUSER_H_INCLUDED
+#define _ISMETAUSER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISMetaUser
+class LIBCORE_EXPORT ISMetaUser
 {
 public:
 	ISMetaUser(const ISMetaUser &) = delete;
@@ -27,3 +29,4 @@ private:
 	ISMetaUserData *UserData;
 };
 //-----------------------------------------------------------------------------
+#endif

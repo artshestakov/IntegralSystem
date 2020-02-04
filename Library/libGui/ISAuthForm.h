@@ -1,13 +1,13 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISLineEdit.h"
 #include "ISPasswordEdit.h"
 #include "ISWaitWidget.h"
 #include "ISAuthConnector.h"
 //-----------------------------------------------------------------------------
-class ISAuthForm : public ISInterfaceDialogForm
+class LIBGUI_EXPORT	ISAuthForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

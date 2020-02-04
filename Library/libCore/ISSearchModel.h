@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISNamespace.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISSearchModel
+class LIBCORE_EXPORT ISSearchModel
 {
 public:
 	ISSearchModel();

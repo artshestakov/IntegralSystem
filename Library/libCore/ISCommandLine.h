@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISCommandLine
+class LIBCORE_EXPORT ISCommandLine
 {
 public:
 	static bool Question(const QString &QuestionText); //Задать вопрос пользователю

@@ -1,10 +1,12 @@
 #pragma once
+#ifndef _ISASSOCIATIONTYPES_H_INCLUDED
+#define _ISASSOCIATIONTYPES_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISNamespace.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISAssociationTypes
+class LIBCORE_EXPORT ISAssociationTypes
 {
 public:
 	ISAssociationTypes();
@@ -23,3 +25,4 @@ private:
 	QVector<ISMetaDataType> Types;
 };
 //-----------------------------------------------------------------------------
+#endif

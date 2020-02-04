@@ -2,7 +2,7 @@
 #ifndef _ISQUERY_H_INCLUDED
 #define _ISQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISQueryException.h"
 #include "ISQueryExceptionConnection.h"
 #include "ISQueryExceptionSyntax.h"
@@ -10,12 +10,12 @@
 #include "ISQueryText.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISQuery
+class LIBCORE_EXPORT ISQuery
 {
 public:
     ISQuery(const QString& text = QString(), bool prepare = true);
 	ISQuery(QSqlDatabase& db, const QString &text = QString(), bool prepare = true);
-	virtual ~ISQuery();
+	~ISQuery();
 
 	bool Prepare(const QString& text) throw(ISQueryException);
 	bool Prepare(QSqlDatabase& db, const QString& text) throw(ISQueryException);

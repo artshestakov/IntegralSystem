@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISQueryPoolObject.h"
 //-----------------------------------------------------------------------------
-class ISQueryPool : public QObject
+class LIBCORE_EXPORT ISQueryPool : public QObject
 {
 	Q_OBJECT
 

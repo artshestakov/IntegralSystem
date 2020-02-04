@@ -1,11 +1,13 @@
 #pragma once
+#ifndef _LIBGUI_GLOBAL_H_INCLUDED
+#define _LIBGUI_GLOBAL_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "libCore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISPhoneNumberParser
-{
-public:
-	static QString RemoveNotDigits(const QString &String); //Удаление НЕ цифр из строки
-	static QString PasteEvent(const QString &PastedString); //Парсинг вставляемой строки
-};
+#if defined(LIBGUI_LIBRARY)
+# define LIBGUI_EXPORT Q_DECL_EXPORT
+#else
+# define LIBGUI_EXPORT Q_DECL_IMPORT
+#endif
 //-----------------------------------------------------------------------------
+#endif

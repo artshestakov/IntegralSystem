@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISSettingsDatabase
+class LIBCORE_EXPORT ISSettingsDatabase
 {
 public:
 	ISSettingsDatabase(const ISSettingsDatabase &) = delete;

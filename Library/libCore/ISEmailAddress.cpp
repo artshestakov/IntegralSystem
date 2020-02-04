@@ -1,5 +1,10 @@
 #include "ISEmailAddress.h"
 //-----------------------------------------------------------------------------
+ISEmailAddress::ISEmailAddress()
+{
+
+}
+//-----------------------------------------------------------------------------
 ISEmailAddress::ISEmailAddress(const QString &address, const QString &name)
 {
     Address = address;

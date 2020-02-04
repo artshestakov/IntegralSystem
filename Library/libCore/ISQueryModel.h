@@ -1,13 +1,13 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISNamespace.h"
 #include "ISTypes.h"
 #include "ISQueryModelHelper.h"
 #include "PMetaClassTable.h"
 #include "PMetaClassField.h"
 //-----------------------------------------------------------------------------
-class ISQueryModel : public QObject
+class LIBCORE_EXPORT ISQueryModel : public QObject
 {
 	Q_OBJECT
 

@@ -1,12 +1,14 @@
 #pragma once
+#ifndef _PMETACLASSFIELD_H_INCLUDED
+#define _PMETACLASSFIELD_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISNamespace.h"
 #include "PMetaClass.h"
 #include "PMetaClassIndex.h"
 #include "PMetaClassForeign.h"
 //-----------------------------------------------------------------------------
-class PMetaClassField : public PMetaClass
+class LIBCORE_EXPORT PMetaClassField : public PMetaClass
 {
 	Q_OBJECT
 
@@ -143,3 +145,4 @@ private:
 	QString SeparatorName; //Наименование вкладки
 };
 //-----------------------------------------------------------------------------
+#endif

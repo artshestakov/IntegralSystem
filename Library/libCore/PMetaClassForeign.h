@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _PMETACLASSFOREIGN_H_INCLUDED
+#define _PMETACLASSFOREIGN_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
-class PMetaClassForeign : public PMetaClass
+class LIBCORE_EXPORT PMetaClassForeign : public PMetaClass
 {
 	Q_OBJECT
 
@@ -51,3 +53,4 @@ private:
 	QString SqlQuery; //Запрос на выбору по внешнему ключу
 };
 //-----------------------------------------------------------------------------
+#endif

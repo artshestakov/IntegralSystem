@@ -2,10 +2,10 @@
 #ifndef _ISMESSAGEBOX_H_INCLUDED
 #define _ISMESSAGEBOX_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class ISMessageBox : public QMessageBox
+class LIBGUI_EXPORT	ISMessageBox : public QMessageBox
 {
 	Q_OBJECT
 

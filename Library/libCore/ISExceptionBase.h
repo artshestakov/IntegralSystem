@@ -2,9 +2,9 @@
 #ifndef _ISEXCEPTIONBASE_H_INCLUDED
 #define _ISEXCEPTIONBASE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-struct ISExceptionBase : public std::exception
+struct LIBCORE_EXPORT ISExceptionBase : public std::exception
 {
 public:
 	ISExceptionBase(const QString& ExceptionString);

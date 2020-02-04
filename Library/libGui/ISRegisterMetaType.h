@@ -1,15 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 //-----------------------------------------------------------------------------
-class ISRegisterMetaType : public QObject
+class LIBGUI_EXPORT	ISRegisterMetaType
 {
-	Q_OBJECT
-
 public:
-	ISRegisterMetaType();
-	virtual ~ISRegisterMetaType();
-
 	static void RegisterMetaType(); //Регистрация мета-типов
 };
 //-----------------------------------------------------------------------------

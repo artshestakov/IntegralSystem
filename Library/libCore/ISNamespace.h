@@ -2,9 +2,9 @@
 #ifndef _ISNAMESPACE_H_INCLUDED
 #define _ISNAMESPACE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISNamespace
+class LIBCORE_EXPORT ISNamespace
 {
 public:
 	enum ApplicationType //Тип запущенного приложения

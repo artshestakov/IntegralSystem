@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISMemoryObjects
+class LIBCORE_EXPORT ISMemoryObjects
 {
 public:
 	ISMemoryObjects(const ISMemoryObjects &) = delete;

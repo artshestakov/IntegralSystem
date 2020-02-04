@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISUuid : public QString
+class LIBCORE_EXPORT ISUuid : public QString
 {
 public:
 	ISUuid(const QString &UID);

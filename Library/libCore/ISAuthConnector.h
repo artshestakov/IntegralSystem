@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISAuthConnector : public QTcpSocket
+class LIBCORE_EXPORT ISAuthConnector : public QTcpSocket
 {
 	Q_OBJECT
 

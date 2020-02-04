@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 //-----------------------------------------------------------------------------
-class ISUpdate : public QObject
+class LIBGUI_EXPORT ISUpdate : public QObject
 {
 	Q_OBJECT
 

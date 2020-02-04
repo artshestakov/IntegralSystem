@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISUuid.h"
 #include "PMetaClassTable.h"
 //-----------------------------------------------------------------------------
-class ISCore
+class LIBCORE_EXPORT ISCore
 {
 public:
 	static bool Startup();

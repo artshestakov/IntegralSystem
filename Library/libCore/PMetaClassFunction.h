@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _PMETACLASSFUNCTION_H_INCLUDED
+#define _PMETACLASSFUNCTION_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
-class PMetaClassFunction : public PMetaClass
+class LIBCORE_EXPORT PMetaClassFunction : public PMetaClass
 {
 	Q_OBJECT
 
@@ -20,3 +22,4 @@ private:
 	QString Text;
 };
 //-----------------------------------------------------------------------------
+#endif

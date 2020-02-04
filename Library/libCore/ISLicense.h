@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISUuid.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISLicense
+class LIBCORE_EXPORT ISLicense
 {
 public:
 	ISLicense(const ISLicense &) = delete;

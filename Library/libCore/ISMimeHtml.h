@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISMimeText.h"
 //-----------------------------------------------------------------------------
-class ISMimeHtml : public ISMimeText
+class LIBCORE_EXPORT ISMimeHtml : public ISMimeText
 {
 public:
     ISMimeHtml(const QString &html = "");

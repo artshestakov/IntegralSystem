@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _PMETACLASSINDEX_H_INCLUDED
+#define _PMETACLASSINDEX_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class PMetaClassIndex : public QObject
+class LIBCORE_EXPORT PMetaClassIndex : public QObject
 {
 	Q_OBJECT
 
@@ -40,3 +42,4 @@ private:
 	QVectorString Fields;
 };
 //-----------------------------------------------------------------------------
+#endif

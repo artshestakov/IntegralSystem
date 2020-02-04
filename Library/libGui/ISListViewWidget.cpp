@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 ISListViewWidget::ISListViewWidget(PMetaClassTable *meta_query, QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	MetaViewQuery = new ISMetaViewQuery(meta_query->GetName(), this);
+	MetaViewQuery = new ISMetaViewQuery(meta_query->GetName());
 	MetaQuery = meta_query;
 
 	SqlModel = new ISSqlModelView(MetaQuery, this);
@@ -53,6 +53,7 @@ ISListViewWidget::~ISListViewWidget()
 {
 	ModelThreadQuery->quit();
 	IS_ASSERT(ModelThreadQuery->wait(), "Not wait() thread");
+	delete MetaViewQuery;
 }
 //-----------------------------------------------------------------------------
 void ISListViewWidget::LoadData()

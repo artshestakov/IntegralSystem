@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------------------
 CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
-	Q_INIT_RESOURCE(Resources);
+	DefinesInitialize();
 	ISConfig::GetInstance().Initialize();
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
     ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);

@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISCountingTime
+class LIBCORE_EXPORT ISCountingTime
 {
 public:
 	ISCountingTime();

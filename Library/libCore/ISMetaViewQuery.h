@@ -1,15 +1,13 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "PMetaClassTable.h"
 //-----------------------------------------------------------------------------
-class ISMetaViewQuery : public QObject
+class LIBCORE_EXPORT ISMetaViewQuery
 {
-	Q_OBJECT
-
 public:
-	ISMetaViewQuery(const QString &QueryName, QObject *parent = 0);
-	virtual ~ISMetaViewQuery();
+	ISMetaViewQuery(const QString &QueryName);
+	~ISMetaViewQuery();
 
 	QString GetQueryText(); //Получить текст мета-запроса
 

@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISNamespace.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISMetaSetting
+class LIBCORE_EXPORT ISMetaSetting
 {
 public:
 	ISMetaSetting();

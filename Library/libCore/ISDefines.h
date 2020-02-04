@@ -2,7 +2,7 @@
 #ifndef _ISDEFINES_H_INCLUDED
 #define _ISDEFINES_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //EXTENSIONS-------------------------------------------------------------------
 const char EXTENSION_DLL[] = "dll";
 const char EXTENSION_SO[] = "so";
@@ -173,87 +173,87 @@ const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 #define DATE_TOMORROW DATE_TODAY.addDays(1) //Завтра
 #define DATE_AFTER_TOMORROW DATE_TODAY.addDays(2) //Послезавтра
 //-----------------------------------------------------------------------------
-void DefinesInitialize(); //Инициализация вычисляемых дефайнов
+LIBCORE_EXPORT void DefinesInitialize(); //Инициализация вычисляемых дефайнов
 //-----------------------------------------------------------------------------
-extern QString APPLICATION_NAME;
-extern QString PATH_APPLICATION_DIR;
-extern QString PATH_APPLICATION_FILE;
-extern QString PATH_LOGS_DIR;
-extern QString PATH_TEMP_DIR;
-extern QString PATH_TRANSLATIONS_DIR;
-extern QString PATH_CONFIG_FILE;
-extern QString SYMBOL_CIRCLE; //Символ "Круг"
-extern QString SYMBOL_MULTIPLY; //Символ "Умножение"
-extern QString SYMBOL_DIVIDE; //Символ "Деление"
-extern QString SYMBOL_OBJECT_CHANGED;
-extern QString SYMBOL_SPACE_HIDE; //Невидмый символ (НЕ ЯВЛЯЕТСЯ СТАНДАРТНЫМ СИМВОЛОМ ПРОБЕЛА)
-extern QString SYMBOL_FIAS_SPLIT;
-#ifdef GUI
-extern QStringList AVIABLE_IMAGE_EXTENSION;
-extern QMargins MARGINS_LAYOUT_NULL;
-extern QMargins MARGINS_LAYOUT_1_PX;
-extern QMargins MARGINS_LAYOUT_2_PX;
-extern QMargins MARGINS_LAYOUT_4_PX;
-extern QMargins MARGINS_LAYOUT_5_PX;
-extern QMargins MARGINS_LAYOUT_10_PX;
-extern QSize SIZE_MAIN_WINDOW;
-extern QSize SIZE_MAIN_WINDOW_MINIMUM;
-extern QSize SIZE_TASK_OBJECT_FORM;
-extern QSize SIZE_AUTHORIZATION_FORM;
-extern QSize SIZE_PROGRESS_FORM;
-extern QSize SIZE_640_480;
-extern QSize SIZE_500_90;
-extern QSize SIZE_450_450;
-extern QSize SIZE_550_300;
-extern QSize SIZE_200_200;
-extern QSize SIZE_100_100;
-extern QSize SIZE_64_64;
-extern QSize SIZE_45_45;
-extern QSize SIZE_32_32;
-extern QSize SIZE_25_25;
-extern QSize SIZE_24_24;
-extern QSize SIZE_22_22;
-extern QSize SIZE_20_20;
-extern QSize SIZE_18_18;
-extern QSize SIZE_16_16;
-extern QSize SIZE_10_10;
-extern QColor EDIT_WIDGET_COLOR_RED; //Цвет рамки вокруг незаполненного поля реадктирования информации
-extern QColor COLOR_BACKGROUND_INTERFACE; //Цвет фона форм интерфейса
-extern QColor COLOR_MAIN_MENU_BAR;
-extern QColor COLOR_WIDGET_BOX_TITLE;
-extern QColor COLOR_CALENDAR_SELECTED_DATE_BACKGROUND;
-extern QColor COLOR_CALENDAR_EVENT_FORM_FLASH;
-extern QColor COLOR_CALENDAR_CELL_BACKGROUP;
-extern QColor COLOR_CAALENDAR_DAY_NOT_CURRENT_MONTH;
-extern QColor COLOR_SPLASH_SCREEN_TEXT;
-extern QColor COLOR_MAIN_WINDOW_SHADOW;
-extern QColor COLOR_POPUP_BRUSH;
-extern QColor COLOR_FLASH_INCOMING_FORM;
-extern QColor COLOR_WHITE;
-extern QColor COLOR_RED;
-extern QColor COLOR_BLUE;
-extern QColor COLOR_BLACK;
-extern QColor COLOR_DARK_GREEN;
-extern QColor COLOR_LIGHT_GRAY;
-extern QColor COLOR_MONITOR_USER;
-extern QColor COLOR_NULL;
-extern QFont FONT_COURIER_12;
-extern QFont FONT_TAHOMA_35;
-extern QFont FONT_TAHOMA_18;
-extern QFont FONT_TAHOMA_15;
-extern QFont FONT_TAHOMA_15_BOLD;
-extern QFont FONT_TAHOMA_14;
-extern QFont FONT_TAHOMA_14_BOLD;
-extern QFont FONT_TAHOMA_12;
-extern QFont FONT_TAHOMA_12_BOLD;
-extern QFont FONT_TAHOMA_11;
-extern QFont FONT_TAHOMA_10_BOLD;
-extern QFont FONT_TAHOMA_10;
-extern QFont FONT_TAHOMA_9;
-extern QFont FONT_TAHOMA_9_BOLD;
-extern QFont FONT_TAHOMA_8;
-extern QFont FONT_APPLICATION;
-extern QFont FONT_APPLICATION_BOLD;
-#endif
+extern LIBCORE_EXPORT QString APPLICATION_NAME;
+extern LIBCORE_EXPORT QString PATH_APPLICATION_DIR;
+extern LIBCORE_EXPORT QString PATH_APPLICATION_FILE;
+extern LIBCORE_EXPORT QString PATH_LOGS_DIR;
+extern LIBCORE_EXPORT QString PATH_TEMP_DIR;
+extern LIBCORE_EXPORT QString PATH_TRANSLATIONS_DIR;
+extern LIBCORE_EXPORT QString PATH_CONFIG_FILE;
+extern LIBCORE_EXPORT QString SYMBOL_CIRCLE; //Символ "Круг"
+extern LIBCORE_EXPORT QString SYMBOL_MULTIPLY; //Символ "Умножение"
+extern LIBCORE_EXPORT QString SYMBOL_DIVIDE; //Символ "Деление"
+extern LIBCORE_EXPORT QString SYMBOL_OBJECT_CHANGED;
+extern LIBCORE_EXPORT QString SYMBOL_SPACE_HIDE; //Невидмый символ (НЕ ЯВЛЯЕТСЯ СТАНДАРТНЫМ СИМВОЛОМ ПРОБЕЛА)
+extern LIBCORE_EXPORT QString SYMBOL_FIAS_SPLIT;
+//#ifdef GUI
+extern LIBCORE_EXPORT QStringList AVIABLE_IMAGE_EXTENSION;
+extern LIBCORE_EXPORT QMargins MARGINS_LAYOUT_NULL;
+extern LIBCORE_EXPORT QMargins MARGINS_LAYOUT_1_PX;
+extern LIBCORE_EXPORT QMargins MARGINS_LAYOUT_2_PX;
+extern LIBCORE_EXPORT QMargins MARGINS_LAYOUT_4_PX;
+extern LIBCORE_EXPORT QMargins MARGINS_LAYOUT_5_PX;
+extern LIBCORE_EXPORT QMargins MARGINS_LAYOUT_10_PX;
+extern LIBCORE_EXPORT QSize SIZE_MAIN_WINDOW;
+extern LIBCORE_EXPORT QSize SIZE_MAIN_WINDOW_MINIMUM;
+extern LIBCORE_EXPORT QSize SIZE_TASK_OBJECT_FORM;
+extern LIBCORE_EXPORT QSize SIZE_AUTHORIZATION_FORM;
+extern LIBCORE_EXPORT QSize SIZE_PROGRESS_FORM;
+extern LIBCORE_EXPORT QSize SIZE_640_480;
+extern LIBCORE_EXPORT QSize SIZE_500_90;
+extern LIBCORE_EXPORT QSize SIZE_450_450;
+extern LIBCORE_EXPORT QSize SIZE_550_300;
+extern LIBCORE_EXPORT QSize SIZE_200_200;
+extern LIBCORE_EXPORT QSize SIZE_100_100;
+extern LIBCORE_EXPORT QSize SIZE_64_64;
+extern LIBCORE_EXPORT QSize SIZE_45_45;
+extern LIBCORE_EXPORT QSize SIZE_32_32;
+extern LIBCORE_EXPORT QSize SIZE_25_25;
+extern LIBCORE_EXPORT QSize SIZE_24_24;
+extern LIBCORE_EXPORT QSize SIZE_22_22;
+extern LIBCORE_EXPORT QSize SIZE_20_20;
+extern LIBCORE_EXPORT QSize SIZE_18_18;
+extern LIBCORE_EXPORT QSize SIZE_16_16;
+extern LIBCORE_EXPORT QSize SIZE_10_10;
+extern LIBCORE_EXPORT QColor EDIT_WIDGET_COLOR_RED; //Цвет рамки вокруг незаполненного поля реадктирования информации
+extern LIBCORE_EXPORT QColor COLOR_BACKGROUND_INTERFACE; //Цвет фона форм интерфейса
+extern LIBCORE_EXPORT QColor COLOR_MAIN_MENU_BAR;
+extern LIBCORE_EXPORT QColor COLOR_WIDGET_BOX_TITLE;
+extern LIBCORE_EXPORT QColor COLOR_CALENDAR_SELECTED_DATE_BACKGROUND;
+extern LIBCORE_EXPORT QColor COLOR_CALENDAR_EVENT_FORM_FLASH;
+extern LIBCORE_EXPORT QColor COLOR_CALENDAR_CELL_BACKGROUP;
+extern LIBCORE_EXPORT QColor COLOR_CAALENDAR_DAY_NOT_CURRENT_MONTH;
+extern LIBCORE_EXPORT QColor COLOR_SPLASH_SCREEN_TEXT;
+extern LIBCORE_EXPORT QColor COLOR_MAIN_WINDOW_SHADOW;
+extern LIBCORE_EXPORT QColor COLOR_POPUP_BRUSH;
+extern LIBCORE_EXPORT QColor COLOR_FLASH_INCOMING_FORM;
+extern LIBCORE_EXPORT QColor COLOR_WHITE;
+extern LIBCORE_EXPORT QColor COLOR_RED;
+extern LIBCORE_EXPORT QColor COLOR_BLUE;
+extern LIBCORE_EXPORT QColor COLOR_BLACK;
+extern LIBCORE_EXPORT QColor COLOR_DARK_GREEN;
+extern LIBCORE_EXPORT QColor COLOR_LIGHT_GRAY;
+extern LIBCORE_EXPORT QColor COLOR_MONITOR_USER;
+extern LIBCORE_EXPORT QColor COLOR_NULL;
+extern LIBCORE_EXPORT QFont FONT_COURIER_12;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_35;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_18;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_15;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_15_BOLD;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_14;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_14_BOLD;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_12;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_12_BOLD;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_11;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_10_BOLD;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_10;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_9;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_9_BOLD;
+extern LIBCORE_EXPORT QFont FONT_TAHOMA_8;
+extern LIBCORE_EXPORT QFont FONT_APPLICATION;
+extern LIBCORE_EXPORT QFont FONT_APPLICATION_BOLD;
+//#endif
 //-----------------------------------------------------------------------------
 #endif

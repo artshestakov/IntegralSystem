@@ -2,11 +2,11 @@
 #ifndef _ISINTERFACEFORM_H_INCLUDED
 #define _ISINTERFACEFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы интерфейса
-class ISInterfaceForm : public QWidget
+class LIBGUI_EXPORT	ISInterfaceForm : public QWidget
 {
 	Q_OBJECT
 

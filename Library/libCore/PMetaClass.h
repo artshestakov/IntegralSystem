@@ -1,8 +1,10 @@
 #pragma once
+#ifndef _PMETACLASS_H_INCLUDED
+#define _PMETACLASS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class PMetaClass : public QObject
+class LIBCORE_EXPORT PMetaClass : public QObject
 {
 	Q_OBJECT
 
@@ -29,3 +31,4 @@ private:
 	QString TypeObject; //“ËÔ
 };
 //-----------------------------------------------------------------------------
+#endif

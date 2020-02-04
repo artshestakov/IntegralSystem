@@ -215,6 +215,9 @@
     <Filter Include="Database">
       <UniqueIdentifier>{8c46924d-88ed-4505-853e-3e9c6d3d8e31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ModelThread">
+      <UniqueIdentifier>{8c2dfde7-a4f1-439f-b30d-b863e8e88e8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -308,6 +311,10 @@
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ISPassword.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="libGui_global.h" />
+    <ClInclude Include="ISRegisterMetaType.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1425,6 +1432,12 @@
     <ClCompile Include="ISPassword.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISModelThreadQuery.cpp">
+      <Filter>ModelThread</Filter>
+    </ClCompile>
+    <ClCompile Include="ISModelThreadWorker.cpp">
+      <Filter>ModelThread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1893,9 +1906,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISOnline.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISRegisterMetaType.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISStartup.h">
@@ -2446,6 +2456,12 @@
     </QtMoc>
     <QtMoc Include="ISTaskTodayListForm.h">
       <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISModelThreadQuery.h">
+      <Filter>ModelThread</Filter>
+    </QtMoc>
+    <QtMoc Include="ISModelThreadWorker.h">
+      <Filter>ModelThread</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

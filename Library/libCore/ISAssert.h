@@ -2,11 +2,11 @@
 #ifndef _ISASSERT_H_INCLUDED
 #define _ISASSERT_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
 #define IS_ASSERT(CONDITION, FALSE_MESSAGE) ISASSERT::Assert(CONDITION, FALSE_MESSAGE, Q_FUNC_INFO, __LINE__, __FILE__);
 //-----------------------------------------------------------------------------
-class ISASSERT
+class LIBCORE_EXPORT ISASSERT
 {
 public:
 	static void Assert(QObject *Object, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);

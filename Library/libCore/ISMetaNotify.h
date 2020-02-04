@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISMetaNotify
+class LIBCORE_EXPORT ISMetaNotify
 {
 public:
 	ISMetaNotify();

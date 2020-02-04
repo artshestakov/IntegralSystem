@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISVersion
+class LIBCORE_EXPORT ISVersion
 {
 public:
 	ISVersion(const ISVersion &) = delete;

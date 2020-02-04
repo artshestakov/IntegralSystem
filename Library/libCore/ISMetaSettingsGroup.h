@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISMetaSetting.h"
 //-----------------------------------------------------------------------------
-class ISMetaSettingsGroup
+class LIBCORE_EXPORT ISMetaSettingsGroup
 {
 public:
 	ISMetaSettingsGroup();

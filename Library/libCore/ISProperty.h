@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISProperty
+class LIBCORE_EXPORT ISProperty
 {
 public:
 	ISProperty(const ISProperty &) = delete;

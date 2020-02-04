@@ -4,11 +4,11 @@
 #include "PMetaClassField.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISMetaViewQuery::ISMetaViewQuery(const QString &QueryName, QObject *parent) : QObject(parent)
+ISMetaViewQuery::ISMetaViewQuery(const QString &QueryName)
+	: MetaQuery(ISMetaData::GetInstanse().GetMetaQuery(QueryName)),
+	OrderSort(Qt::AscendingOrder)
 {
-	MetaQuery = ISMetaData::GetInstanse().GetMetaQuery(QueryName);
-
-	OrderSort = Qt::AscendingOrder;
+	
 }
 //-----------------------------------------------------------------------------
 ISMetaViewQuery::~ISMetaViewQuery()

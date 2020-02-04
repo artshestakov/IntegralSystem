@@ -22,9 +22,6 @@
     <Filter Include="MetaUser">
       <UniqueIdentifier>{1e53ab4d-3b6d-4fff-9d97-772c608efd54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ModelThread">
-      <UniqueIdentifier>{5f551f3a-8ea2-4057-a6e6-f697c2f7aee0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Notify">
       <UniqueIdentifier>{26655469-7ee1-4f37-a840-d43a09db2971}</UniqueIdentifier>
     </Filter>
@@ -115,9 +112,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISConstants.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISDefines.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISCrashDumper.h">
@@ -232,6 +226,12 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="libCore_global.h" />
+    <ClInclude Include="ISMetaViewQuery.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDefines.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -363,12 +363,6 @@
     <ClCompile Include="ISMetaUser.cpp">
       <Filter>MetaUser</Filter>
     </ClCompile>
-    <ClCompile Include="ISModelThreadQuery.cpp">
-      <Filter>ModelThread</Filter>
-    </ClCompile>
-    <ClCompile Include="ISModelThreadWorker.cpp">
-      <Filter>ModelThread</Filter>
-    </ClCompile>
     <ClCompile Include="ISMetaNotify.cpp">
       <Filter>Notify</Filter>
     </ClCompile>
@@ -471,10 +465,10 @@
     <ClCompile Include="ISQueryPool.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="ISDefines.cpp">
+    <ClCompile Include="ISLocalization.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISLocalization.cpp">
+    <ClCompile Include="ISDefines.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -483,9 +477,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISMetaData.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaViewQuery.h">
       <Filter>MetaData</Filter>
     </QtMoc>
     <QtMoc Include="PMetaClass.h">
@@ -520,12 +511,6 @@
     </QtMoc>
     <QtMoc Include="ISSMS.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISModelThreadWorker.h">
-      <Filter>ModelThread</Filter>
-    </QtMoc>
-    <QtMoc Include="ISModelThreadQuery.h">
-      <Filter>ModelThread</Filter>
     </QtMoc>
     <QtMoc Include="ISNotifySender.h">
       <Filter>Notify</Filter>

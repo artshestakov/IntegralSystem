@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISApplicationRunning
+class LIBCORE_EXPORT ISApplicationRunning
 {
 public:
 	ISApplicationRunning(const QString &key);

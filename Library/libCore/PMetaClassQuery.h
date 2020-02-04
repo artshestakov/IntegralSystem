@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _PMETACLASSQUERY_H_INCLUDED
+#define _PMETACLASSQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "PMetaClassTable.h"
@@ -40,3 +42,4 @@ private:
 	QVectorString Joins;
 };
 //-----------------------------------------------------------------------------
+#endif

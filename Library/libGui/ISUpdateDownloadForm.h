@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISButtonDialog.h"
 //-----------------------------------------------------------------------------
-class ISUpdateDownloadForm : public ISInterfaceDialogForm
+class LIBGUI_EXPORT	ISUpdateDownloadForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 

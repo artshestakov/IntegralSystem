@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class ISIntegralSystem : public QApplication
+class LIBGUI_EXPORT ISIntegralSystem : public QApplication
 {
 	Q_OBJECT
 

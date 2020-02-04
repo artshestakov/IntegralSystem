@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISNetwork : public QObject
+class LIBCORE_EXPORT ISNetwork : public QObject
 {
 	Q_OBJECT
 

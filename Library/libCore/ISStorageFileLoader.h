@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISStorageFileLoader : public QObject
+class LIBCORE_EXPORT ISStorageFileLoader : public QObject
 {
 	Q_OBJECT
 

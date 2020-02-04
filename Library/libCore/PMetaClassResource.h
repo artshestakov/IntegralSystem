@@ -1,10 +1,12 @@
 #pragma once
+#ifndef _PMETACLASSRESOURCE_H_INCLUDED
+#define _PMETACLASSRESOURCE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "ISUuid.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class PMetaClassResource : public QObject
+class LIBCORE_EXPORT PMetaClassResource : public QObject
 {
 	Q_OBJECT
 
@@ -29,3 +31,4 @@ private:
 	QStringMap Parameters;
 };
 //-----------------------------------------------------------------------------
+#endif

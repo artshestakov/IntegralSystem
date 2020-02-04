@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _PMETACLASSESCORT_H_INCLUDED
+#define _PMETACLASSESCORT_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
-class PMetaClassEscort : public PMetaClass
+class LIBCORE_EXPORT PMetaClassEscort : public PMetaClass
 {
 	Q_OBJECT
 
@@ -35,3 +37,4 @@ private:
 	QString ClassFilter;
 };
 //-----------------------------------------------------------------------------
+#endif
