@@ -1,5 +1,5 @@
 #include "ISDoubleEdit.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISStyleSheet.h"
 //-----------------------------------------------------------------------------
 ISDoubleEdit::ISDoubleEdit(QWidget *parent) : ISFieldEditBase(parent)

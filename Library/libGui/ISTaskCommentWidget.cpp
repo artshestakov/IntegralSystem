@@ -1,5 +1,5 @@
 #include "ISTaskCommentWidget.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISTaskCommentWidget::ISTaskCommentWidget(const QDateTime &CreationDate, const QString &UserFullName, const QString &Comment, QWidget *parent) : QWidget(parent)
 {

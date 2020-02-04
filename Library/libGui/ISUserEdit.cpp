@@ -1,5 +1,5 @@
 #include "ISUserEdit.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

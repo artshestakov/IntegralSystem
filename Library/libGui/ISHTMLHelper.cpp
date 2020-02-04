@@ -1,5 +1,5 @@
 #include "ISHTMLHelper.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 QString ISHTMLHelper::GenerateTableFromQuerySelect(const QString &QueryText)
 {

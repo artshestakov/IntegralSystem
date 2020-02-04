@@ -1,5 +1,5 @@
 #include "CGForeign.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
 #include "ISConfig.h"

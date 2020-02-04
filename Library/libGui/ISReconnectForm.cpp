@@ -7,7 +7,7 @@
 #include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISConfig.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISControls.h"
 #include "ISDatabase.h"
 #include "ISMemoryObjects.h"

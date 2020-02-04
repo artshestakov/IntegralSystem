@@ -2,7 +2,7 @@
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISStyleSheet.h"
 #include "ISMetaUser.h"
 #include "ISSettings.h"

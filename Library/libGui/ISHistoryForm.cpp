@@ -1,7 +1,7 @@
 #include "ISHistoryForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISButtonDialog.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"

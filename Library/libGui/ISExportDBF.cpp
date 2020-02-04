@@ -1,5 +1,5 @@
 #include "ISExportDBF.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"

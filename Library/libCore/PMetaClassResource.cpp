@@ -1,5 +1,4 @@
 #include "PMetaClassResource.h"
-#include "ISDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 PMetaClassResource::PMetaClassResource(QObject *parent) : QObject(parent)

@@ -1,5 +1,4 @@
 #include "PMetaClassForeign.h"
-#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 PMetaClassForeign::PMetaClassForeign(QObject *parent) : PMetaClass(parent)
 {

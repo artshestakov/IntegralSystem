@@ -1,5 +1,5 @@
 #include "ISWorkspaceForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISMemoryObjects.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISUserRoleEntity.h"

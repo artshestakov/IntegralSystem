@@ -1,5 +1,5 @@
 #include "ISIntegerEdit.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISStyleSheet.h"
 //-----------------------------------------------------------------------------
 ISIntegerEdit::ISIntegerEdit(QWidget *parent) : ISFieldEditBase(parent)

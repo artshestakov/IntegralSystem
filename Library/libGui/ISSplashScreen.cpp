@@ -1,6 +1,6 @@
 #include "ISSplashScreen.h"
 #include "ISAssert.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISDebug.h"
 #include "ISGui.h"
 #include "ISLocalization.h"

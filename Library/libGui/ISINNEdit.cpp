@@ -1,5 +1,5 @@
 #include "ISINNEdit.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISServiceButton.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

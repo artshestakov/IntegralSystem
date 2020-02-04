@@ -1,5 +1,5 @@
 #include "ISSettingsForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISBuffer.h"
 #include "ISAssert.h"
 #include "ISMessageBox.h"

@@ -1,5 +1,5 @@
 #include "ISIntegralSystem.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQueryExceptionSyntax.h"
 #include "ISQueryExceptionConnection.h"
 #include "ISMessageBox.h"

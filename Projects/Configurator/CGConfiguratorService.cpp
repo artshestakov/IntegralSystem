@@ -1,5 +1,5 @@
 #include "CGConfiguratorService.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISSystem.h"

@@ -1,6 +1,6 @@
 #include "ISMetaUser.h"
 #include "ISAssert.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISDatabase.h"

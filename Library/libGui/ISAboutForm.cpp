@@ -1,7 +1,7 @@
 #include "ISAboutForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISConfig.h"
 #include "ISMessageBox.h"

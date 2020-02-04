@@ -1,5 +1,5 @@
 #include "ISDeviceObjectForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISDeviceObjectForm::ISDeviceObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {

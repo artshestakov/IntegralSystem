@@ -1,6 +1,6 @@
 #include "ISUpdate.h"
 #include "ISAssert.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"

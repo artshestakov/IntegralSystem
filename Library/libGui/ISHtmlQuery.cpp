@@ -1,6 +1,6 @@
 #include "ISHtmlQuery.h"
 #include "ISAssert.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISHtmlQuery::ISHtmlQuery(const QString &sql_query_text, const QString &table_html_name)
 {

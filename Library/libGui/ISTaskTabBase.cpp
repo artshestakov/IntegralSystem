@@ -1,5 +1,5 @@
 #include "ISTaskTabBase.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISTaskTabBase::ISTaskTabBase(int task_id, QTabWidget *parent) : QWidget(parent)
 {

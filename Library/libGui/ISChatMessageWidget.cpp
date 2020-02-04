@@ -1,5 +1,5 @@
 #include "ISChatMessageWidget.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISBuffer.h"
 #include "ISQLabel.h"
 #include "ISQuery.h"

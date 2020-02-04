@@ -1,5 +1,5 @@
 #include "ISQueryModel.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISDebug.h"

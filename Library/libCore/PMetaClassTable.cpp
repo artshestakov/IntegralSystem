@@ -1,5 +1,4 @@
 #include "PMetaClassTable.h"
-#include "ISDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 PMetaClassTable::PMetaClassTable(QObject *parent) : PMetaClass(parent)

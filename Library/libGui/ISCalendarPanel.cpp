@@ -1,5 +1,5 @@
 #include "ISCalendarPanel.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"

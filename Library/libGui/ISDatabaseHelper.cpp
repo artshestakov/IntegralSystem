@@ -1,6 +1,6 @@
 #include "ISDatabaseHelper.h"
 #include "ISLocalization.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------

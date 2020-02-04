@@ -1,5 +1,5 @@
 #include "ISCheckViewParagraph.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------

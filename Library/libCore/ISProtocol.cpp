@@ -3,7 +3,6 @@
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
-#include "ISDefines.h"
 #include "ISConstants.h"
 #include "ISQueryPool.h"
 //-----------------------------------------------------------------------------

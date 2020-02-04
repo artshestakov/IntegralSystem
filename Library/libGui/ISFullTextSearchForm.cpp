@@ -1,5 +1,5 @@
 #include "ISFullTextSearchForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDatabase.h"

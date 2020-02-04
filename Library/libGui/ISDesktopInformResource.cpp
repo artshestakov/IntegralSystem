@@ -1,5 +1,5 @@
 #include "ISDesktopInformResource.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"

@@ -3,7 +3,7 @@
 #include "ISTrace.h"
 #include "ISCore.h"
 #include "ISSettings.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISSortingBuffer.h"
 #include "ISProtocol.h"

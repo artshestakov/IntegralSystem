@@ -1,5 +1,5 @@
 #include "ISPatternWidget.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
 #include "ISGui.h"

@@ -9,7 +9,7 @@
 #include "ISSplashScreen.h"
 #include "ISMetaUser.h"
 #include "ISConfig.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISAssert.h"
 #include "ISConnectionForm.h"
 #include "ISMessageBox.h"

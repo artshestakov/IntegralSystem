@@ -1,5 +1,5 @@
 #include "ISSironaResearchListForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"

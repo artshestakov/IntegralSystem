@@ -1,5 +1,5 @@
 #include "ISQueryModelHelper.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableForeignAlias, PMetaClassForeign *MetaForeign, int Iterator)
@@ -29,7 +29,6 @@ QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableFore
 //-----------------------------------------------------------------------------
 QString ISQueryModelHelper::GetAliasForLeftJoinTable(const QString &TableAlias, int Iterator)
 {
-	QString Alias = TableAlias + QString::number(Iterator);
-	return Alias;
+	return TableAlias + QString::number(Iterator);
 }
 //-----------------------------------------------------------------------------

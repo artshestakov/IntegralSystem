@@ -1,7 +1,7 @@
 #include "ISTabWidgetObject.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISTabWidgetObject::ISTabWidgetObject(QWidget *parent) : QTabWidget(parent)
 {

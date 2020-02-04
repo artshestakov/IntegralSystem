@@ -1,5 +1,5 @@
 #include "ISCoreMedTech.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"

@@ -1,5 +1,5 @@
 #include "ISScreenshot.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISGui.h"
 #include "ISDatabase.h"

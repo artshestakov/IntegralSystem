@@ -1,5 +1,5 @@
 #include "CGResource.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"

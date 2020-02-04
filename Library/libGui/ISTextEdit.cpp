@@ -1,6 +1,6 @@
 #include "ISTextEdit.h"
 #include "ISAssert.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISTextEdit::ISTextEdit(QWidget *parent) : ISFieldEditBase(parent)
 {

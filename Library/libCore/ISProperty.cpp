@@ -1,5 +1,4 @@
 #include "ISProperty.h"
-#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 ISProperty::ISProperty()
 {

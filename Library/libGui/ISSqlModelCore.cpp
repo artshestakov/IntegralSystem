@@ -1,6 +1,6 @@
 #include "ISSqlModelCore.h"
 #include "ISBuffer.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISTrace.h"
 #include "ISQueryModel.h"
 #include "ISQuery.h"

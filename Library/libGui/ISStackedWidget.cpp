@@ -1,5 +1,5 @@
 #include "ISStackedWidget.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISStackedWidget::ISStackedWidget(QWidget *parent) : QStackedWidget(parent)
 {

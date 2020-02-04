@@ -1,5 +1,5 @@
 #include "ISAsteriskSocket.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISSettingsDatabase.h"
 #include "ISLocalization.h"

@@ -46,6 +46,9 @@
     <Filter Include="Network\SMTP">
       <UniqueIdentifier>{75e363fa-0d60-4bfa-bef9-be5089080fc3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Defines">
+      <UniqueIdentifier>{085366a9-3be5-4a92-a148-bed4e66025ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISApplicationRunning.h">
@@ -229,8 +232,8 @@
     <ClInclude Include="ISMetaViewQuery.h">
       <Filter>MetaData</Filter>
     </ClInclude>
-    <ClInclude Include="ISDefines.h">
-      <Filter>System</Filter>
+    <ClInclude Include="..\..\Components\Source\EXDefines.h">
+      <Filter>Defines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -468,8 +471,8 @@
     <ClCompile Include="ISLocalization.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISDefines.cpp">
-      <Filter>System</Filter>
+    <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
+      <Filter>Defines</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 #include "ISNetwork.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISNetwork::ISNetwork(QObject *parent) : QObject(parent)

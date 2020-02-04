@@ -1,5 +1,5 @@
 #include "ISDelegateBoolean.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISDelegateBoolean::ISDelegateBoolean(QObject *parent) : QStyledItemDelegate(parent)

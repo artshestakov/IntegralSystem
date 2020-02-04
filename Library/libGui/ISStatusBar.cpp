@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
 #include "ISConfig.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISSettings.h"
 #include "ISConstants.h"

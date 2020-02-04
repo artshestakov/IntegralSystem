@@ -1,5 +1,5 @@
 #include "ISPrintingHtml.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"

@@ -1,5 +1,5 @@
 #include "ISComboEdit.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQLineEdit.h"
 #include "ISPopupDelegate.h"
 //-----------------------------------------------------------------------------

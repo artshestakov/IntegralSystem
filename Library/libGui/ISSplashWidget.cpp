@@ -1,8 +1,7 @@
 #include "ISSplashWidget.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISGui.h"
 #include "ISDebug.h"
-#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISSplashWidget::ISSplashWidget(QWidget *parent) : QFrame(parent)
 {
@@ -14,7 +13,7 @@ ISSplashWidget::ISSplashWidget(QWidget *parent) : QFrame(parent)
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
-	LabelIcon->setPixmap(BUFFER_ICONS("Add").pixmap(SIZE_64_64));
+	LabelIcon->setPixmap(QIcon(":ImageIcons/Logo.png").pixmap(SIZE_32_32));
 	Layout->addWidget(LabelIcon);
 
 	LabelText = new QLabel(this);

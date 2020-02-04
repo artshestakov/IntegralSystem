@@ -1,5 +1,5 @@
 #include "ISMetaData.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISSystem.h"

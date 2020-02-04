@@ -71,7 +71,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;LIBCORE_LIBRARY</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\Source\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
     </ClCompile>
@@ -119,6 +119,7 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Components\Source\EXDefines.h" />
     <ClInclude Include="call_stack.hpp" />
     <ClInclude Include="EXLicense.h" />
     <ClInclude Include="ISAssociationTypes.h" />
@@ -129,7 +130,6 @@
     <ClInclude Include="ISDatabase.h" />
     <QtMoc Include="ISDaDataService.h" />
     <QtMoc Include="ISEMail.h" />
-    <ClInclude Include="ISDefines.h" />
     <ClInclude Include="ISLicense.h" />
     <ClInclude Include="ISApplicationRunning.h" />
     <ClInclude Include="ISAssert.h" />
@@ -205,6 +205,7 @@
     <ClInclude Include="ISVersion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Components\Source\EXDefines.cpp" />
     <ClCompile Include="EXLicense.cpp" />
     <ClCompile Include="ISAssociationTypes.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
@@ -212,7 +213,6 @@
     <ClCompile Include="ISCrashDumper.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
-    <ClCompile Include="ISDefines.cpp" />
     <ClCompile Include="ISEMail.cpp" />
     <ClCompile Include="ISEmailAddress.cpp" />
     <ClCompile Include="ISLicense.cpp" />

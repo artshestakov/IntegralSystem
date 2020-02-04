@@ -1,5 +1,5 @@
 #include "ISVersion.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISVersion::ISVersion()

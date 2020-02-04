@@ -1,5 +1,5 @@
 #include "ISTableDetailsForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------

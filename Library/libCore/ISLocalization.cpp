@@ -1,5 +1,5 @@
 #include "ISLocalization.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISDebug.h"

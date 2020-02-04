@@ -1,5 +1,5 @@
 #include "ISInterfaceForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISControls.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"

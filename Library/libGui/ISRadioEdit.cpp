@@ -1,5 +1,5 @@
 #include "ISRadioEdit.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISRadioEdit::ISRadioEdit(QWidget *parent) : ISFieldEditBase(parent)
 {

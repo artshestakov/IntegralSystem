@@ -1,5 +1,5 @@
 #include "ISDebug.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISProperty.h"
 #include "ISLogger.h"
 #include "ISSystem.h"

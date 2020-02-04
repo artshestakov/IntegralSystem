@@ -1,7 +1,7 @@
 #include "ISCalculatorForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISCalculatorForm::ISCalculatorForm(QWidget *parent) : ISInterfaceForm(parent)
 {

@@ -1,5 +1,4 @@
 #include "PMetaClassIndex.h"
-#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 PMetaClassIndex::PMetaClassIndex(QObject *parent) : QObject(parent)
 {

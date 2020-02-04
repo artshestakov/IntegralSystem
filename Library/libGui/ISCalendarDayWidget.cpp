@@ -1,5 +1,5 @@
 #include "ISCalendarDayWidget.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISCalendarDayWidget::ISCalendarDayWidget(QWidget *parent) : QWidget(parent)

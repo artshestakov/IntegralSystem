@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"

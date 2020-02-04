@@ -1,5 +1,4 @@
 #include "ISNotifySender.h"
-#include "ISDefines.h"
 #include "ISAssert.h"
 #include "ISQuery.h"
 #include "ISDatabase.h"

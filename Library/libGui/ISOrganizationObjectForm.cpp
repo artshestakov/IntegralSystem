@@ -6,7 +6,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISInputDialog.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISCallHistoryObjectForm.h"
 #include "ISPhoneEdit.h"
 #include "ISDemoAccessesObjectForm.h"

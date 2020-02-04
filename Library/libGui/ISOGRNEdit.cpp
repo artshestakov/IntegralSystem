@@ -1,6 +1,6 @@
 #include "ISOGRNEdit.h"
 #include "ISLocalization.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISOGRNEdit::ISOGRNEdit(QWidget *parent) : ISLineEdit(parent)
 {

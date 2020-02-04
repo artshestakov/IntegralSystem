@@ -1,5 +1,5 @@
 #include "ISTaskDuplicatesTab.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISBuffer.h"
 #include "ISGui.h"

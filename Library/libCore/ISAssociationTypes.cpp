@@ -1,5 +1,5 @@
 #include "ISAssociationTypes.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISAssociationTypes::ISAssociationTypes()

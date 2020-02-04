@@ -1,5 +1,5 @@
 #include "ISDelegateImage.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISTrace.h"
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------

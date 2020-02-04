@@ -8,6 +8,9 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{55bbb2cc-d3ad-46b1-9192-305925c0e72f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Defines">
+      <UniqueIdentifier>{08655dde-35bd-4a2c-b68c-448630923b05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISCaratApplication.cpp">
@@ -22,10 +25,16 @@
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
+      <Filter>Defines</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Components\Source\EXDefines.h">
+      <Filter>Defines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

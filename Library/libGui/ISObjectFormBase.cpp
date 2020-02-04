@@ -1,5 +1,5 @@
 #include "ISObjectFormBase.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISTrace.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

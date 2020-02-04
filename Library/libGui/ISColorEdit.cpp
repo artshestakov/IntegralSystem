@@ -2,7 +2,7 @@
 #include "ISServiceButton.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 {

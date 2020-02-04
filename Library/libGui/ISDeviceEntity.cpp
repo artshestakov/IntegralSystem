@@ -1,5 +1,5 @@
 #include "ISDeviceEntity.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISDebug.h"
 #include "ISAssert.h"

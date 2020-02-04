@@ -1,7 +1,7 @@
 #include "ISProcessForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISProcessForm::ISProcessForm(const QString &Text, QWidget *parent) : ISInterfaceForm(parent)

@@ -21,6 +21,9 @@
     <Filter Include="Configurator">
       <UniqueIdentifier>{a57a8b35-1407-49c6-85ff-1baeea34b4d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Defines">
+      <UniqueIdentifier>{41bdc338-c807-42e4-a43d-2e21a6805ce0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Configurator.rc">
@@ -94,6 +97,9 @@
     <ClCompile Include="CGTemplateField.cpp">
       <Filter>Configurator</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
+      <Filter>Defines</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CGConfigurator.h">
@@ -160,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="CGClass.h">
       <Filter>Configurator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Components\Source\EXDefines.h">
+      <Filter>Defines</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

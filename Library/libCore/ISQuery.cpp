@@ -2,7 +2,7 @@
 #include "ISSystem.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISDatabase.h"
 #include "ISCountingTime.h"
 #include "ISQueryExceptionConnection.h"
@@ -10,7 +10,11 @@
 #include "ISQueryExceptionTransaction.h"
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(const QString& text, bool prepare)
-	: SqlQuery(ISDatabase::GetInstance().GetDefaultDB()), DB(ISDatabase::GetInstance().GetDefaultDB()), SqlText(text), Prepared(false), ShowLongQuery(true)
+	: SqlQuery(ISDatabase::GetInstance().GetDefaultDB()),
+	DB(ISDatabase::GetInstance().GetDefaultDB()),
+	SqlText(text),
+	Prepared(false),
+	ShowLongQuery(true)
 {
 	if (prepare && !text.isEmpty())
 	{
@@ -23,7 +27,10 @@ ISQuery::ISQuery(const QString& text, bool prepare)
 }
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(QSqlDatabase& db, const QString& text, bool prepare)
-	: SqlQuery(db), DB(db), SqlText(text), Prepared(false)
+	: SqlQuery(db),
+	DB(db),
+	SqlText(text),
+	Prepared(false)
 {
 	if (prepare && !text.isEmpty())
 	{

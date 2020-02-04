@@ -1,5 +1,5 @@
 #include "ISObjectInterface.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISLicense.h"
 //-----------------------------------------------------------------------------
 ISObjectInterface::ISObjectInterface(QObject *parent)

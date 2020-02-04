@@ -1,5 +1,5 @@
 #include "ISSortingMetaTable.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISSortingMetaTable::ISSortingMetaTable()
 	: ModificationFlag(false)

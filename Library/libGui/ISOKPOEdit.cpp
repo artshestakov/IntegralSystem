@@ -1,6 +1,6 @@
 #include "ISOKPOEdit.h"
 #include "ISLocalization.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISOKPOEdit::ISOKPOEdit(QWidget *parent) : ISLineEdit(parent)
 {

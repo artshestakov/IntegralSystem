@@ -1,5 +1,4 @@
 #include "PMetaClassQuery.h"
-#include "ISDefines.h"
 //-----------------------------------------------------------------------------
 PMetaClassQuery::PMetaClassQuery(QObject *parent) : PMetaClassTable(parent)
 {

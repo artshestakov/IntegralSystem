@@ -1,5 +1,5 @@
 #include "CGSequence.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISConfig.h"
 #include "ISConstants.h"

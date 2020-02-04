@@ -1,5 +1,5 @@
 #include "ISAddressEdit.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISPushButton.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

@@ -1,5 +1,5 @@
 #include "ISNotifyRecipient.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISDatabase.h"
 #include "ISSystem.h"
 #include "ISBuffer.h"

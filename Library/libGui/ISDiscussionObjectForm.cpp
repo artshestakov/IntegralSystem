@@ -1,5 +1,5 @@
 #include "ISDiscussionObjectForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"

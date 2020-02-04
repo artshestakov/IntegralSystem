@@ -1,5 +1,5 @@
 #include "ISNotificationsForm.h"
-#include "ISDefines.h"
+#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
