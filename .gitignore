@@ -1,8 +1,8 @@
 /Bin
 /Library/**/Debug-Win32
+/Library/**/Release-Win32
 /Projects/**/Debug-Win32
-
-
+/Projects/**/Release-Win32
 
 *.obj
 *.pdb
