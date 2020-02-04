@@ -3,7 +3,7 @@
 #include "ISCaratCoreApplication.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class ISCoreSMS : public ISCaratCoreApplication
+class LIBCARAT_EXPORT ISCoreSMS : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

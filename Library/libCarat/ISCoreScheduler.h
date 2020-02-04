@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "ISCaratCoreApplication.h"
 //-----------------------------------------------------------------------------
-class ISCoreScheduler : public ISCaratCoreApplication
+class LIBCARAT_EXPORT ISCoreScheduler : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

@@ -127,6 +127,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegralSystem", "Projects\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCarat", "Library\libCarat\libCarat.vcxproj", "{66BE6C4D-80E3-42FF-9619-AE79FE6C9519}"
+	ProjectSection(ProjectDependencies) = postProject
+		{213782BA-68EA-4749-A28D-2A9AB81F114A} = {213782BA-68EA-4749-A28D-2A9AB81F114A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Carat", "Projects\Carat\Carat.vcxproj", "{0E5C4046-F164-4AEA-91E1-E0B899A28F3D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -361,7 +364,7 @@ Global
 		{0E0DF063-6722-4FD3-9334-A6AF7BBD2C14} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal
