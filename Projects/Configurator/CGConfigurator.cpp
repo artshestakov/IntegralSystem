@@ -10,11 +10,13 @@
 #include "CGConfiguratorBase.h"
 #include "ISQueryException.h"
 #include "ISCountingTime.h"
+#include "ISCore.h"
 //-----------------------------------------------------------------------------
 CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
-	DefinesInitialize();
-	ISConfig::GetInstance().Initialize();
+	QString ErrorString;
+	ISCore::Startup(ErrorString);
+
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
     ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
@@ -137,13 +139,12 @@ bool CGConfigurator::Execute(const QString &Argument)
 			Result = QMetaObject::invokeMethod(this, Argument.toUtf8().data());
 			ISDebug::ShowString(LANG("Configurator.Command.Executed").arg(Argument).arg(ISSystem::MillisecondsToString(CountingTime.GetElapsed())));
 		}
-		catch (ISQueryException &QueryException) { }
+		catch (const ISQueryException &QueryException) { }
 	}
 	else
 	{
 		ISDebug::ShowString(LANG("Configurator.Function.NotFound").arg(Argument));
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -197,7 +198,7 @@ bool CGConfigurator::Execute(const QString &Argument, const QString &SubArgument
 		Invoked = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
 		ISDebug::ShowString(LANG("Configurator.Commands.Executed").arg(Argument).arg(SubArgument).arg(ISSystem::MillisecondsToString(CountingTime.GetElapsed())));
 	}
-	catch (ISQueryException &e) { }
+	catch (const ISQueryException &QueryException) { }
 
 	if (CommandBase)
 	{
@@ -210,19 +211,12 @@ bool CGConfigurator::Execute(const QString &Argument, const QString &SubArgument
 //-----------------------------------------------------------------------------
 ISNamespace::ConsoleArgumentType CGConfigurator::CheckArguments() const
 {
-	if (arguments().count() == 1) //Интерпретатор
+	switch (arguments().size())
 	{
-		return ISNamespace::CAT_Interpreter;
+	case 1: return ISNamespace::CAT_Interpreter; break; //Интерпретатор
+	case 2: return ISNamespace::CAT_OneArgument; break; //Один аргумент
+	case 3: return ISNamespace::CAT_Standart; break; //Два аргумента
 	}
-	else if (arguments().count() == 2) //Один аргумент
-	{
-		return ISNamespace::CAT_OneArgument;
-	}
-	else if (arguments().count() == 3) //Два аргумента
-	{
-		return ISNamespace::CAT_Standart;
-	}
-
 	return ISNamespace::CAT_Unknown;
 }
 //-----------------------------------------------------------------------------
@@ -235,7 +229,6 @@ QString CGConfigurator::GetClassName(const QString &Argument)
 			return Section->GetClassName();
 		}
 	}
-
 	return QString();
 }
 //-----------------------------------------------------------------------------
@@ -249,7 +242,6 @@ QStringList CGConfigurator::ParseInputCommand(const QString &Command)
 			StringList.append(String.toLower());
 		}
 	}
-
 	return StringList;
 }
 //-----------------------------------------------------------------------------
@@ -270,7 +262,6 @@ void CGConfigurator::help()
 	ISDebug::ShowString(LANG("Configurator.Help.Using.Standart"));
 	ISDebug::ShowString(LANG("Configurator.Help.Using.Personal"));
 	ISDebug::ShowEmptyString();
-
 	for (CGSection *Section : Arguments)
 	{
 		for (CGSectionItem *SectionItem : Section->GetItems())

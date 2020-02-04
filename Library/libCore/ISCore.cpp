@@ -80,11 +80,24 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 												"AND task_executor = currentuserid() "
 												"AND task_deadline < CURRENT_DATE");
 //-----------------------------------------------------------------------------
-bool ISCore::Startup()
+bool ISCore::Startup(QString &ErrorString)
 {
-	ISSystem::CreateDir(PATH_LOGS_DIR);
-	ISSystem::CreateDir(PATH_TEMP_DIR);
-	return true;
+	DefinesInitialize(); //Инициализация глобальных переменных
+
+	bool Result = ISSystem::CreateDir(PATH_TEMP_DIR, ErrorString); //Попытка создания временной папки
+	if (!Result)
+	{
+		return Result;
+	}
+
+	Result = ISConfig::GetInstance().Initialize();
+	if (!Result)
+	{
+		ErrorString = ISConfig::GetInstance().GetErrorString();
+		return Result;
+	}
+
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISCore::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName)

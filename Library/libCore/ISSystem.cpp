@@ -240,11 +240,21 @@ bool ISSystem::AddressIsList(const QString &AddressString)
 //-----------------------------------------------------------------------------
 bool ISSystem::CreateDir(const QString &DirPath)
 {
+	QString ErrorString;
+	return CreateDir(DirPath, ErrorString);
+}
+//-----------------------------------------------------------------------------
+bool ISSystem::CreateDir(const QString &DirPath, QString &ErrorString)
+{
 	QDir Dir(DirPath);
 	bool Result = Dir.exists();
 	if (!Result)
 	{
 		Result = Dir.mkdir(DirPath);
+		if (!Result)
+		{
+			ErrorString = "Error creting dir with path: " + DirPath;
+		}
 	}
 	return Result;
 }

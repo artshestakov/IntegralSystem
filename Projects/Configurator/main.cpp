@@ -33,6 +33,7 @@ void RegisterMetatype()
 int main(int argc, char *argv[])
 {
 	RegisterMetatype();
+
 	CGConfigurator Configurator(argc, argv);
 	ISNamespace::ConsoleArgumentType ArgumentType = Configurator.CheckArguments();
 	if (ArgumentType == ISNamespace::CAT_Unknown)

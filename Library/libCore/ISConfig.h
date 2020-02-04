@@ -15,14 +15,15 @@ public:
 
 	static ISConfig& GetInstance();
 
-	void Initialize();
+	QString GetErrorString() const;
+	bool Initialize();
 	
 	QVariant GetValue(const QString &ParameterName); //Получить значение параметра
 	void SetValue(const QString &ParameterName, const QVariant &Value); //Изменить значение параметра
 
 private:
-	void Update(); //Обновление файла
-	void Create(); //Генерация файла из шаблона
+	bool Update(); //Обновление файла
+	bool Create(); //Генерация файла из шаблона
 
 private:
 	ISConfig();
