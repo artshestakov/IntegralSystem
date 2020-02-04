@@ -231,6 +231,7 @@
     <ClInclude Include="ISLocalization.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="libCore_global.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">

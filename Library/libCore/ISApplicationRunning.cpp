@@ -62,7 +62,6 @@ bool ISApplicationRunning::TryToRun()
 		Release();
 		return false;
 	}
-
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -73,7 +72,6 @@ void ISApplicationRunning::Release()
 	{
 		SharedMemory.detach();
 	}
-
 	SystemSemaphore.release();
 }
 //-----------------------------------------------------------------------------
