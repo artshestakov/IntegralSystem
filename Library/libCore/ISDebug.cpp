@@ -75,7 +75,7 @@ void ISDebug::OutputString(const QString &String, bool AddInLog)
 {
 	QString NewString = String.simplified();
 	std::cout << NewString.toStdString() << std::endl;
-	if (ISSystem::GetApplicationType() == ISNamespace::AT_CONSOLE)
+	/*if (ISSystem::GetApplicationType() == ISNamespace::AT_CONSOLE)
 	{
 		QTextStream TextStream(stdout);
 
@@ -89,7 +89,7 @@ void ISDebug::OutputString(const QString &String, bool AddInLog)
 	else if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
 	{
 		qDebug().noquote() << NewString;
-	}
+	}*/
 
 	if (AddInLog)
 	{

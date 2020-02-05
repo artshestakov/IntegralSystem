@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISATTACHFILEFORM_H_INCLUDED
+#define _ISATTACHFILEFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISAttachFileBaseForm.h"
@@ -30,3 +32,4 @@ private:
 	ISButtonDialog *ButtonDialog;
 };
 //-----------------------------------------------------------------------------
+#endif

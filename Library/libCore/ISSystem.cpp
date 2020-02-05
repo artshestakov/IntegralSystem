@@ -149,17 +149,6 @@ void ISSystem::RemoveLastSymbolFromString(QString &String, int CountSymbols)
 	String.chop(CountSymbols);
 }
 //-----------------------------------------------------------------------------
-ISNamespace::ApplicationType ISSystem::GetApplicationType()
-{
-#if defined(IS_GUI)
-	return ISNamespace::AT_GUI;
-#elif defined(IS_CONSOLE)
-	return ISNamespace::AT_CONSOLE;
-#else
-	return ISNamespace::AT_UNKNOWN;
-#endif
-}
-//-----------------------------------------------------------------------------
 ISUuid ISSystem::GenerateUuid()
 {
 	return QUuid::createUuid();

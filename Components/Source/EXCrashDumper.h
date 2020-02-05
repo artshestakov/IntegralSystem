@@ -1,21 +1,19 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libCore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISCrashDumper
+class EXCrashDumper
 {
 public:
-	static void Startup();
+	static void Init();
 
 private:
 #ifdef WIN32
 	static int ReportHook(int ReportType, char *Message, int *ReturnValue);
 	static LONG ExceptionHandling(_EXCEPTION_POINTERS *ExceptionInfo);
-	static void CreateReport(char *Text, _EXCEPTION_POINTERS *ExceptionInfo);
+	static void CreateReport(_EXCEPTION_POINTERS *ExceptionInfo);
 #else
     static void OnSystemSignal(int Signum);
 #endif
-
-    static QString GetLogPath(const QString &FileName);
 };
 //-----------------------------------------------------------------------------

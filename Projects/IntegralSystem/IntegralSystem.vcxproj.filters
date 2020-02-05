@@ -15,7 +15,7 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Defines">
+    <Filter Include="External">
       <UniqueIdentifier>{aaffc7f6-3b2e-4d74-b101-0710d3b89076}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -24,7 +24,10 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
-      <Filter>Defines</Filter>
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp">
+      <Filter>External</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -34,7 +37,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>Defines</Filter>
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h">
+      <Filter>External</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

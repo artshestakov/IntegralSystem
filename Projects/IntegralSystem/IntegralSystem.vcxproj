@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp" />
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -18,6 +19,7 @@
     <ResourceCompile Include="IntegralSystem.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h" />
     <ClInclude Include="..\..\Components\Source\EXDefines.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

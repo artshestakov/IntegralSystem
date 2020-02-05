@@ -1,14 +1,14 @@
-#include "ISCrashDumper.h"
+#include "EXCrashDumper.h"
 #include "EXDefines.h"
 #include "ISDebug.h"
 #include "ISCore.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-void ISCrashDumper::Startup()
+void EXCrashDumper::Init()
 {
 #ifdef WIN32
-	SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)ISCrashDumper::ExceptionHandling);
-	_CrtSetReportHook(&ISCrashDumper::ReportHook);
+	SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)EXCrashDumper::ExceptionHandling);
+	_CrtSetReportHook(&EXCrashDumper::ReportHook);
 #else
 	signal(SIGTERM, OnSystemSignal);
 	signal(SIGSEGV, OnSystemSignal);
@@ -21,17 +21,19 @@ void ISCrashDumper::Startup()
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include "ISStackWalker.h"
-int ISCrashDumper::ReportHook(int ReportType, char *Message, int *ReturnValue)
+int EXCrashDumper::ReportHook(int ReportType, char *Message, int *ReturnValue)
 {
-    CreateReport(Message, nullptr);
+	printf("ReportHook()\n");
+    CreateReport(NULL);
 	return 0;
 }
-LONG ISCrashDumper::ExceptionHandling(_EXCEPTION_POINTERS *ExceptionInfo)
+LONG EXCrashDumper::ExceptionHandling(_EXCEPTION_POINTERS *ExceptionInfo)
 {
-    CreateReport("Exception handling", ExceptionInfo);
+	printf("ExceptionHandling()\n");
+    CreateReport(ExceptionInfo);
 	return EXCEPTION_EXECUTE_HANDLER;
 }
-void ISCrashDumper::CreateReport(char *Text, _EXCEPTION_POINTERS *ExceptionInfo)
+void EXCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo)
 {
     ISStackWalker stack_walker;
 	stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
@@ -56,21 +58,20 @@ void ISCrashDumper::CreateReport(char *Text, _EXCEPTION_POINTERS *ExceptionInfo)
 		printf("Error open crash file (%s): %s\n", FilePath.c_str(), strerror(errno));
 	}
 
-#ifdef GUI
-	/*QErrorMessage *ErrorMessage = new QErrorMessage();
-	ErrorMessage->showMessage(Text, "MessageType");
-	ErrorMessage->exec();*/
-	MessageBox(NULL, "1", "2", MB_OK | MB_ICONERROR | MB_DEFBUTTON1 | MB_TOPMOST);
-#else
-	printf("123: %s\n", Text);
-#endif
-
-	ISCore::ExitApplication();
+	if (TEST_BOOL)
+	{
+		QProcess::startDetached(PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << QString::fromStdString(FilePath));
+		//system(s.toStdString().c_str());
+	}
+	else
+	{
+		printf("error\n");
+	}
 }
 //-----------------------------------------------------------------------------
 #else
 #include "call_stack.hpp"
-void ISCrashDumper::OnSystemSignal(int Signum)
+void EXCrashDumper::OnSystemSignal(int Signum)
 {
     stacktrace::call_stack stack_trace;
 
@@ -105,9 +106,4 @@ void ISCrashDumper::OnSystemSignal(int Signum)
 }
 //-----------------------------------------------------------------------------
 #endif
-//-----------------------------------------------------------------------------
-QString ISCrashDumper::GetLogPath(const QString &FileName)
-{
-    return PATH_LOGS_DIR + '/' + FileName + SYMBOL_MINUS + qAppName() + '_' + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + ".txt";
-}
 //-----------------------------------------------------------------------------

@@ -15,7 +15,7 @@
 CGConfigurator::CGConfigurator(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
 	QString ErrorString;
-	ISCore::Startup(ErrorString);
+	ISCore::Startup(false, ErrorString);
 
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
     ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);

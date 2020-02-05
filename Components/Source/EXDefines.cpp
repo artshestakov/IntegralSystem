@@ -1,5 +1,6 @@
 #include "EXDefines.h"
 //-----------------------------------------------------------------------------
+bool TEST_BOOL;
 QString APPLICATION_NAME;
 QString PATH_APPLICATION_DIR;
 QString PATH_APPLICATION_FILE;
@@ -81,8 +82,9 @@ QFont FONT_APPLICATION;
 QFont FONT_APPLICATION_BOLD;
 #endif
 //-----------------------------------------------------------------------------
-void DefinesInitialize()
+void DefinesInitialize(bool val)
 {
+	TEST_BOOL = val;
 	APPLICATION_NAME = QCoreApplication::applicationName();
 	PATH_APPLICATION_DIR = QCoreApplication::applicationDirPath();
 	PATH_APPLICATION_FILE = QCoreApplication::applicationFilePath();

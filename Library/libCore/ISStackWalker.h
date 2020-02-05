@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 #include "StackWalker.h"
 //-----------------------------------------------------------------------------
-class ISStackWalker : public StackWalker
+class LIBCORE_EXPORT ISStackWalker : public StackWalker
 {
 public:
 	ISStackWalker();

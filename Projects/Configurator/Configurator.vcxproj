@@ -14,6 +14,7 @@
     <ResourceCompile Include="Configurator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp" />
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp" />
     <ClCompile Include="CGClass.cpp" />
     <ClCompile Include="CGClassField.cpp" />
@@ -42,6 +43,7 @@
     <QtMoc Include="CGConfigurator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h" />
     <ClInclude Include="..\..\Components\Source\EXDefines.h" />
     <ClInclude Include="CGSection.h" />
   </ItemGroup>

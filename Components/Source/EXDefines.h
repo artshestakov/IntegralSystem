@@ -83,7 +83,7 @@ const char DATE_TIME_FORMAT_V4[] = "dd.MM.yyyy hh:mm:ss.zzz";
 const char DATE_TIME_FORMAT_V5[] = "d MMMM yy hh:mm:ss.zzz";
 const char DATE_TIME_FORMAT_V6[] = "dd.MM.yyyy hh.mm";
 const char DATE_TIME_FORMAT_V7[] = "yyyy-MM-dd hh:mm:ss";
-const char DATE_TIME_FORMAT_V8[] = "dd.MM.yyyy hh.mm.ss";
+const char DATE_TIME_FORMAT_V8[] = "dd.MM.yyyy_hh.mm.ss";
 //TOKENS-----------------------------------------------------------------------
 const char TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 //PROPERTY---------------------------------------------------------------------
@@ -173,8 +173,9 @@ const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 #define DATE_TOMORROW DATE_TODAY.addDays(1) //Завтра
 #define DATE_AFTER_TOMORROW DATE_TODAY.addDays(2) //Послезавтра
 //-----------------------------------------------------------------------------
-void DefinesInitialize(); //Инициализация вычисляемых дефайнов
+void DefinesInitialize(bool val); //Инициализация вычисляемых дефайнов
 //-----------------------------------------------------------------------------
+extern bool TEST_BOOL; //Флаг наличия графического интерфейса
 extern QString APPLICATION_NAME;
 extern QString PATH_APPLICATION_DIR;
 extern QString PATH_APPLICATION_FILE;

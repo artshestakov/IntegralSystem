@@ -13,7 +13,7 @@
 #include "ISDebug.h"
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
-#include "ISCrashDumper.h"
+#include "EXCrashDumper.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
@@ -81,20 +81,27 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 												"AND task_executor = currentuserid() "
 												"AND task_deadline < CURRENT_DATE");
 //-----------------------------------------------------------------------------
-bool ISCore::Startup(QString &ErrorString)
+bool ISCore::Startup(bool IsGui, QString &ErrorString)
 {
-	DefinesInitialize(); //Инициализация глобальных переменных
-	ISCrashDumper::Startup();
-	
-	int *i;
-	i = 0;
-	*i = 100;
+	DefinesInitialize(IsGui); //Инициализация глобальных переменных
 
-	bool Result = ISSystem::CreateDir(PATH_TEMP_DIR, ErrorString); //Попытка создания временной папки
+	bool Result = ISSystem::CreateDir(PATH_LOGS_DIR, ErrorString); //Создание папки для логов
 	if (!Result)
 	{
 		return Result;
 	}
+
+	Result = ISSystem::CreateDir(PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
+	if (!Result)
+	{
+		return Result;
+	}
+
+	EXCrashDumper::Init();
+
+	int *i;
+	i = 0;
+	*i = 100;
 
 	Result = ISConfig::GetInstance().Initialize();
 	if (!Result)

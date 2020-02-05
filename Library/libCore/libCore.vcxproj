@@ -119,6 +119,7 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h" />
     <ClInclude Include="..\..\Components\Source\EXDefines.h" />
     <ClInclude Include="call_stack.hpp" />
     <ClInclude Include="EXLicense.h" />
@@ -126,7 +127,6 @@
     <QtMoc Include="ISAuthConnector.h" />
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="ISCore.h" />
-    <ClInclude Include="ISCrashDumper.h" />
     <ClInclude Include="ISDatabase.h" />
     <QtMoc Include="ISDaDataService.h" />
     <QtMoc Include="ISEMail.h" />
@@ -205,12 +205,12 @@
     <ClInclude Include="ISVersion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp" />
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp" />
     <ClCompile Include="EXLicense.cpp" />
     <ClCompile Include="ISAssociationTypes.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
     <ClCompile Include="ISCore.cpp" />
-    <ClCompile Include="ISCrashDumper.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISEMail.cpp" />

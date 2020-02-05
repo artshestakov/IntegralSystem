@@ -43,7 +43,7 @@
     <Filter Include="Telephony">
       <UniqueIdentifier>{5ff9b1df-9073-4df2-97e7-c7977521f172}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Defines">
+    <Filter Include="External">
       <UniqueIdentifier>{f0e326a2-e967-4c92-b947-a79ead8db7e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -91,7 +91,10 @@
       <Filter>Notification</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
-      <Filter>Defines</Filter>
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp">
+      <Filter>External</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,8 +143,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>Defines</Filter>
+      <Filter>External</Filter>
     </ClInclude>
     <ClInclude Include="libCarat_global.h" />
+    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h">
+      <Filter>External</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

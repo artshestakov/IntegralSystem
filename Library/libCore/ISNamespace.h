@@ -7,13 +7,6 @@
 class LIBCORE_EXPORT ISNamespace
 {
 public:
-	enum ApplicationType //Тип запущенного приложения
-	{
-		AT_UNKNOWN,
-		AT_GUI,
-		AT_CONSOLE,
-	};
-
 	enum FieldType //Типы данных поля
 	{
 		FT_Unknown, //Неизвестный
@@ -285,7 +278,6 @@ public:
 	};
 };
 //-----------------------------------------------------------------------------
-Q_DECLARE_METATYPE(ISNamespace::ApplicationType);
 Q_DECLARE_METATYPE(ISNamespace::FieldType);
 Q_DECLARE_METATYPE(ISNamespace::ObjectFormType);
 Q_DECLARE_METATYPE(ISNamespace::NotificationFormType);

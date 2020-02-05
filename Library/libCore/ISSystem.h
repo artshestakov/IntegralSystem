@@ -25,7 +25,6 @@ public:
 	static bool IsConfigurationDebug(); //Является ли текущая конфигурация отладочной
 	static void ClearDirRecursive(const QString &DirPath); //Очистить папку рекурсиво (с подпапками)
 	static void RemoveLastSymbolFromString(QString &String, int CountSymbols = 1); //Удалить последние символы из строки
-	static ISNamespace::ApplicationType GetApplicationType(); //Получить тип запущенного приложения
 	static ISUuid GenerateUuid(); //Сгенерировать новый UID
 	static void BeginSymbolToUpper(QString &String); //Преобразование первого символа строки в верхний регистр
 	static QString GetCurrentOSName(); //Получить наименование текущей операционной системы

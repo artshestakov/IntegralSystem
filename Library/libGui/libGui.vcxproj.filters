@@ -218,7 +218,7 @@
     <Filter Include="ModelThread">
       <UniqueIdentifier>{8c2dfde7-a4f1-439f-b30d-b863e8e88e8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Defines">
+    <Filter Include="External">
       <UniqueIdentifier>{29db29bb-f9c1-4a98-a3bd-2427d0232489}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -321,7 +321,10 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>Defines</Filter>
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h">
+      <Filter>External</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1445,7 +1448,10 @@
       <Filter>ModelThread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
-      <Filter>Defines</Filter>
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp">
+      <Filter>External</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

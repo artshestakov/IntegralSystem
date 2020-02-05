@@ -11,7 +11,6 @@
 class ISGui
 {
 public:
-
 	static bool CheckPressCapsLook(); //Проверить активность кнопки CapsLook
 	static QString GetCurrentLayoutName(); //Получить наименование текущей раскладки клавиатуры
 	static void RepaintWidget(QWidget *Widget, bool adjust_size = true); //Перерисовать указанный в параметре виджет

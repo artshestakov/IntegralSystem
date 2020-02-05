@@ -11,7 +11,7 @@
 #include "ISGui.h"
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
-#include "ISCrashDumper.h"
+#include "EXCrashDumper.h"
 #include "ISDebug.h"
 #include "ISVersion.h"
 #include "ISCore.h"
@@ -19,7 +19,7 @@
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
 	QString ErrorString;
-	ISCore::Startup(ErrorString);
+	ISCore::Startup(true, ErrorString);
 
 	ISDebug::ShowString("Starting system... Version: " + ISVersion::GetInstance().GetVersion());
 

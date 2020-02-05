@@ -21,7 +21,7 @@
     <Filter Include="Configurator">
       <UniqueIdentifier>{a57a8b35-1407-49c6-85ff-1baeea34b4d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Defines">
+    <Filter Include="External">
       <UniqueIdentifier>{41bdc338-c807-42e4-a43d-2e21a6805ce0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -98,7 +98,10 @@
       <Filter>Configurator</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
-      <Filter>Defines</Filter>
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp">
+      <Filter>External</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +171,10 @@
       <Filter>Configurator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>Defines</Filter>
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h">
+      <Filter>External</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

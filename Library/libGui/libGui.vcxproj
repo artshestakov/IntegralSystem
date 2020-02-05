@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp" />
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp" />
     <ClCompile Include="ISAboutForm.cpp" />
     <ClCompile Include="ISAddressBookListForm.cpp" />
@@ -488,6 +489,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISScreenshot.h" />
+    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h" />
     <ClInclude Include="..\..\Components\Source\EXDefines.h" />
     <ClInclude Include="ISBuffer.h" />
     <ClInclude Include="ISDatabaseHelper.h" />
