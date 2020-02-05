@@ -96,7 +96,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp" />
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp" />
     <ClCompile Include="ISAsteriskSocket.cpp" />
     <ClCompile Include="ISCaratCoreApplication.cpp" />
@@ -156,7 +155,6 @@
     <QtMoc Include="ISCoreNotification.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h" />
     <ClInclude Include="..\..\Components\Source\EXDefines.h" />
     <ClInclude Include="libCarat_global.h" />
   </ItemGroup>

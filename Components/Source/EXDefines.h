@@ -175,7 +175,7 @@ const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 //-----------------------------------------------------------------------------
 void DefinesInitialize(bool val); //Инициализация вычисляемых дефайнов
 //-----------------------------------------------------------------------------
-extern bool TEST_BOOL; //Флаг наличия графического интерфейса
+extern bool IS_GUI_APPLICATION; //Флаг наличия графического интерфейса
 extern QString APPLICATION_NAME;
 extern QString PATH_APPLICATION_DIR;
 extern QString PATH_APPLICATION_FILE;

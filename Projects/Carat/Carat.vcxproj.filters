@@ -28,18 +28,12 @@
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
       <Filter>External</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h">
       <Filter>External</Filter>
     </ClInclude>
   </ItemGroup>

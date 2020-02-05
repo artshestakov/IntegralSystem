@@ -13,7 +13,7 @@
 #include "ISDebug.h"
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
-#include "EXCrashDumper.h"
+#include "ISCrashDumper.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 		return Result;
 	}
 
-	EXCrashDumper::Init();
+	ISCrashDumper::Init();
 
 	int *i;
 	i = 0;

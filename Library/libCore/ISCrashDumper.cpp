@@ -1,14 +1,14 @@
-#include "EXCrashDumper.h"
+#include "ISCrashDumper.h"
 #include "EXDefines.h"
 #include "ISDebug.h"
 #include "ISCore.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-void EXCrashDumper::Init()
+void ISCrashDumper::Init()
 {
 #ifdef WIN32
-	SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)EXCrashDumper::ExceptionHandling);
-	_CrtSetReportHook(&EXCrashDumper::ReportHook);
+	SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)ISCrashDumper::ExceptionHandling);
+	_CrtSetReportHook(&ISCrashDumper::ReportHook);
 #else
 	signal(SIGTERM, OnSystemSignal);
 	signal(SIGSEGV, OnSystemSignal);
@@ -21,19 +21,19 @@ void EXCrashDumper::Init()
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include "ISStackWalker.h"
-int EXCrashDumper::ReportHook(int ReportType, char *Message, int *ReturnValue)
+int ISCrashDumper::ReportHook(int ReportType, char *Message, int *ReturnValue)
 {
 	printf("ReportHook()\n");
     CreateReport(NULL);
 	return 0;
 }
-LONG EXCrashDumper::ExceptionHandling(_EXCEPTION_POINTERS *ExceptionInfo)
+LONG ISCrashDumper::ExceptionHandling(_EXCEPTION_POINTERS *ExceptionInfo)
 {
 	printf("ExceptionHandling()\n");
     CreateReport(ExceptionInfo);
 	return EXCEPTION_EXECUTE_HANDLER;
 }
-void EXCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo)
+void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo)
 {
     ISStackWalker stack_walker;
 	stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
@@ -58,20 +58,19 @@ void EXCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo)
 		printf("Error open crash file (%s): %s\n", FilePath.c_str(), strerror(errno));
 	}
 
-	if (TEST_BOOL)
+	if (IS_GUI_APPLICATION)
 	{
 		QProcess::startDetached(PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << QString::fromStdString(FilePath));
-		//system(s.toStdString().c_str());
 	}
 	else
 	{
-		printf("error\n");
+		printf("Crash\n");
 	}
 }
 //-----------------------------------------------------------------------------
 #else
 #include "call_stack.hpp"
-void EXCrashDumper::OnSystemSignal(int Signum)
+void ISCrashDumper::OnSystemSignal(int Signum)
 {
     stacktrace::call_stack stack_trace;
 

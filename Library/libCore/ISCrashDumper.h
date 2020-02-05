@@ -1,8 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
+#include "libCore_global.h"
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class EXCrashDumper
+class LIBCORE_EXPORT ISCrashDumper
 {
 public:
 	static void Init();

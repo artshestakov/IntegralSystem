@@ -93,9 +93,6 @@
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
       <Filter>External</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCoreAsteriskQueue.h">
@@ -146,8 +143,5 @@
       <Filter>External</Filter>
     </ClInclude>
     <ClInclude Include="libCarat_global.h" />
-    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h">
-      <Filter>External</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

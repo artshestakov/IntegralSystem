@@ -232,8 +232,8 @@
     <ClInclude Include="..\..\Components\Source\EXDefines.h">
       <Filter>External</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Components\Source\EXCrashDumper.h">
-      <Filter>External</Filter>
+    <ClInclude Include="ISCrashDumper.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -471,8 +471,8 @@
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
       <Filter>External</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Components\Source\EXCrashDumper.cpp">
-      <Filter>External</Filter>
+    <ClCompile Include="ISCrashDumper.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

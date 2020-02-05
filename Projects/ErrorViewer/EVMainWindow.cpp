@@ -13,6 +13,8 @@
 //-----------------------------------------------------------------------------
 EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWidget(parent)
 {
+	setWindowFlags(Qt::WindowStaysOnTopHint);
+
 	QVBoxLayout *MainLayout = new QVBoxLayout();
 	setLayout(MainLayout);
 

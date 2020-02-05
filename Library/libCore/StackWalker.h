@@ -23,10 +23,10 @@ typedef unsigned long SIZE_T, *PSIZE_T;
 #endif  // _MSC_VER < 1300
 
 #include <windows.h>
-#include "libCore_global.h"
+#include "StdAfx.h"
 
 class StackWalkerInternal;  // forward
-class LIBCORE_EXPORT StackWalker 
+class StackWalker 
 {
 public:
   typedef enum StackWalkOptions
