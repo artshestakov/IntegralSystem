@@ -9,7 +9,7 @@
 #include "ISSettingsDatabase.h"
 #include "ISDatabase.h"
 #include "ISConfig.h"
-#include "EXCrashDumper.h"
+#include "ISCrashDumper.h"
 #include "ISQuery.h"
 #include "ISExceptionBase.h"
 #include "ISQueryExceptionSyntax.h"
@@ -19,7 +19,7 @@
 int main(int argc, char *argv[])
 {
 	ISCaratApplication CaratService(argc, argv);
-	EXCrashDumper::Init();
+	ISCrashDumper::Init();
 
 	ISConfig::GetInstance().Initialize();
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CARAT);

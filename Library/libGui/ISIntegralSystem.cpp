@@ -11,7 +11,7 @@
 #include "ISGui.h"
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
-#include "EXCrashDumper.h"
+#include "ISCrashDumper.h"
 #include "ISDebug.h"
 #include "ISVersion.h"
 #include "ISCore.h"
