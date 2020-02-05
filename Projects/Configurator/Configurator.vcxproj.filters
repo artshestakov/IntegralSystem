@@ -34,9 +34,6 @@
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="CGConfigurator.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="CGSection.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -100,11 +97,11 @@
     <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
       <Filter>External</Filter>
     </ClCompile>
+    <ClCompile Include="CGConfigurator.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="CGConfigurator.h">
-      <Filter>System</Filter>
-    </QtMoc>
     <QtMoc Include="CGConfiguratorBase.h">
       <Filter>Command</Filter>
     </QtMoc>
@@ -127,6 +124,9 @@
       <Filter>Command</Filter>
     </QtMoc>
     <QtMoc Include="CGConfiguratorUpdate.h">
+      <Filter>Command</Filter>
+    </QtMoc>
+    <QtMoc Include="CGConfigurator.h">
       <Filter>Command</Filter>
     </QtMoc>
   </ItemGroup>

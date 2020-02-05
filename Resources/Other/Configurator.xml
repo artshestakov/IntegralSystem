@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Scheme>
   
-  <Section Name="Create" LocalName="Создание" Icon="Service.Database.Create" ClassName="CGConfiguratorCreate">
+  <Section Name="Create" ClassName="CGConfiguratorCreate">
     <Function FunctionName="Database" LocalName="Создание базы данных" Description="Создание пустой базы данных указанной в конфигурационном файле."/>
     <Function FunctionName="SystemUser" LocalName="Создание пользователя postgres" Description="Создание системного пользователя postgres на уровне IntegralSystem."/>
     <Function FunctionName="DatabaseSettings" LocalName="Создание стандартных настроек базы" Description="Создание стандартных настроек базы данных IntegralSystem."/>
     <Function FunctionName="Resources" LocalName="Ресурсы" Description="Добавление новых ресурсов и заполнение существующих справочников."/>
   </Section>
 
-  <Section Name="Update" LocalName="Обновление" Icon="Service.Database.Update" ClassName="CGConfiguratorUpdate">
+  <Section Name="Update" ClassName="CGConfiguratorUpdate">
     <Function FunctionName="Database" LocalName="База данных" Description="Полное обновление базы данных."/>
     <Function FunctionName="Functions" LocalName="Функции" Description="Обновление всех функций базы данных."/>
     <Function FunctionName="Tables" LocalName="Таблицы" Description="Обновление таблиц базы данных."/>
@@ -22,7 +22,7 @@
     <Function FunctionName="VersionDatabase" LocalName="Версия базы данных" Description="Обновление версии базы данных."/>
   </Section>
 
-  <Section Name="Delete" LocalName="Удаление" Icon="Service.Database.Delete" ClassName="CGConfiguratorDelete">
+  <Section Name="Delete" ClassName="CGConfiguratorDelete">
     <Function FunctionName="Indexes" LocalName="Индексы" Description="Удаление всех индексов из базы данных."/>
     <Function FunctionName="Foreigns" LocalName="Внешние ключи" Description="Удаление всех внешних ключей из базы данных."/>
     <Function FunctionName="Systems" LocalName="Системы" Description="Удаление всех систем из базы данных."/>
@@ -32,7 +32,7 @@
     <Function FunctionName="Resources" LocalName="Ресусры" Description="Удаление всех устаревших ресурсов."/>
   </Section>
 
-  <Section Name="Service" LocalName="Сервис" Icon="Service.Database.Service" ClassName="CGConfiguratorService">
+  <Section Name="Service" ClassName="CGConfiguratorService">
     <Function FunctionName="Reindex" LocalName="Переиндексация базы данных" Description="Переиндексация всех индексов базы данных."/>
     <Function FunctionName="Vacuum" LocalName="Вакуум" Description="Высвобождение пространства, занимаемое мёртвыми кортежами."/>
     <Function FunctionName="VacuumAnalyze" LocalName="Вакуум с анализом" Description="Обновление статистики, которую использует планировщик для выбора наиболее эффективного способа выполнения запросов."/>
@@ -40,13 +40,13 @@
     <Function FunctionName="ClearTable" LocalName="Очистка таблицы" Description="Очистка таблицы от данных"/>
   </Section>
 
-  <Section Name="License" LocalName="Лицензия" Icon="Service.Database.Service" ClassName="CGConfiguratorLicense">
+  <Section Name="License" ClassName="CGConfiguratorLicense">
     <Function FunctionName="Create" LocalName="Создание лицензии" Description="Создание лицензии"/>
     <Function FunctionName="Show" LocalName="Просмотр серийного номера лицензии" Description="Просмотр серийного номера лицензии"/>
     <Function FunctionName="Update" LocalName="Обновление лицензии" Description="Обновление лицензии"/>
   </Section>
 
-  <Section Name="Show" LocalName="Показать" Icon="Service.Database.Service" ClassName="CGConfiguratorShow">
+  <Section Name="Show" ClassName="CGConfiguratorShow">
     <Function FunctionName="ObsoleteTables" LocalName="Показать устаревшие таблицы" Description="Вывести список таблиц, которые существуют в базе данных, но не существуют в схемах мета-данных."/>
     <Function FunctionName="ObsoleteFields" LocalName="Показать устаревшие поля" Description="Вывести список полей, которые существуют в базе данных, но не существуют в схемах мета-данных."/>
     <Function FunctionName="ObsoleteResources" LocalName="Показать устаревшие ресурсы" Description="Вывести список идентификаторов ресурсов, которые существуют в базе данных, но не существуют в схемах мета-данных."/>
@@ -55,7 +55,7 @@
     <Function FunctionName="DatabaseSize" LocalName="Показать размер базы данных" Description="Показать размер базы данных"/>
   </Section>
 
-  <Section Name="FIAS" LocalName="Федеральная информационная адресная система" Icon="Service.Database.Service" ClassName="CGConfiguratorFIAS">
+  <Section Name="FIAS" ClassName="CGConfiguratorFIAS">
     <Function FunctionName="Prepare" LocalName="Подготовка" Description="Подготовка ФИАС"/>
     <Function FunctionName="Update" LocalName="Обновление" Description="Обновление ФИАС"/>
   </Section>

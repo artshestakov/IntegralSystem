@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _CGCONFIGURATORBASE_H_INCLUDED
+#define _CGCONFIGURATORBASE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
@@ -17,3 +19,4 @@ protected:
 	void Progress(const QString &ProgressName, int Step, int Steps);
 };
 //-----------------------------------------------------------------------------
+#endif

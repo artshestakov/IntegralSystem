@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _CGCONFIGURATORCREATE_H_INCLUDED
+#define _CGCONFIGURATORCREATE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
 //-----------------------------------------------------------------------------
@@ -17,3 +19,4 @@ public slots:
 	void resources();
 };
 //-----------------------------------------------------------------------------
+#endif

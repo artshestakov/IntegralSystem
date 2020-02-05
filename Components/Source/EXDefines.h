@@ -36,6 +36,11 @@ const char EXTENSION_WAV[] = "wav";
 const char EXTENSION_LIC[] = "lic";
 const char EXTENSION_XML[] = "xml";
 const char EXTENSION_INI[] = "ini";
+#ifdef WIN32
+const char EXTENSION_EXECUTE_BINARY[] = ".exe"; //Расширение исполняемого файла
+#else
+const char EXTENSION_EXECUTE_BINARY[] = ""; //Расширение исполняемого файла
+#endif
 //OS_TYPES---------------------------------------------------------------------
 const char OS_NAME_WINDOWS[] = "Windows";
 const char OS_NAME_LINUX[] = "Linux";

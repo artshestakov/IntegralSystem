@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _CGCONFIGURATORSERVICE_H_INCLUDED
+#define _CGCONFIGURATORSERVICE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
 //-----------------------------------------------------------------------------
@@ -18,3 +20,4 @@ public slots:
 	void cleartable();
 };
 //-----------------------------------------------------------------------------
+#endif

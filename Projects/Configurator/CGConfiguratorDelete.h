@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _CGCONFIGURATORDELETE_H_INCLUDED
+#define _CGCONFIGURATORDELETE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
 #include "PMetaClassTable.h"
@@ -24,3 +26,4 @@ protected:
 	void ShowResourceConsole(PMetaClassTable *MetaTable, const ISUuid &ResourceUID);
 };
 //-----------------------------------------------------------------------------
+#endif

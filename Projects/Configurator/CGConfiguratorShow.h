@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _CGCONFIGURATORSHOW_H_INCLUDED
+#define _CGCONFIGURATORSHOW_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
 #include "PMetaClassTable.h"
@@ -25,3 +27,4 @@ private:
 	PMetaClassField* FoundField(PMetaClassTable *MetaTable, const QString &ColumnName);
 };
 //-----------------------------------------------------------------------------
+#endif

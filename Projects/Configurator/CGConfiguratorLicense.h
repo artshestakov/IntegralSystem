@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _CGCONFIGURATORLICENSE_H_INCLUDED
+#define _CGCONFIGURATORLICENSE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
 //-----------------------------------------------------------------------------
@@ -16,3 +18,4 @@ public slots:
 	void update();
 };
 //-----------------------------------------------------------------------------
+#endif

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _CGCONFIGURATORUPDATE_H_INCLUDED
+#define _CGCONFIGURATORUPDATE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
 //-----------------------------------------------------------------------------
@@ -23,3 +25,4 @@ public slots:
 	void classfields(); //Обновление описания полей таблиц
 };
 //-----------------------------------------------------------------------------
+#endif

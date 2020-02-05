@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _CGCONFIGURATORFIAS_H_INCLUDED
+#define _CGCONFIGURATORFIAS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
 #include "ISTypes.h"
@@ -36,3 +38,4 @@ private:
 	QStringMap MapKeys;
 };
 //-----------------------------------------------------------------------------
+#endif

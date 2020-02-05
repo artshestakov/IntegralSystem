@@ -63,22 +63,16 @@ void CGConfiguratorCreate::database()
 		bool Exist = ISDatabase::GetInstance().CheckExistDatabase(DatabaseName);
 		if (Exist)
 		{
-			ISDebug::ShowString(LANG("Configurator.DatabaseAlreadyExist").arg(DatabaseName));
+			ISDebug::ShowString("Database \"" + DatabaseName + "\" already exist");
 		}
 		else //Если база данных не существует - создать её
 		{
-			ISDebug::ShowString(LANG("Configurator.CreatingDatabase").arg(DatabaseName));
+			ISDebug::ShowString("Configurator.Creating database: " + DatabaseName);
 			QSqlQuery SqlQuery = ISDatabase::GetInstance().GetSystemDB().exec(QC_DATABASE.arg(DatabaseName).arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN))); //Исполнение запроса на создание базы данных
 			QSqlError SqlError = SqlQuery.lastError();
-			if (SqlError.type() == QSqlError::NoError)
-			{
-				ISDebug::ShowString(LANG("Configurator.CreatingDatabaseDone").arg(DatabaseName));
-				Exist = true;
-			}
-			else
-			{
-				ISDebug::ShowString(LANG("Configurator.CreatingDatabaseError").arg(DatabaseName).arg(SqlError.text()));
-			}
+			Exist = SqlError.type() == QSqlError::NoError;
+			Exist ? ISDebug::ShowString("The \"" + DatabaseName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
+				: ISDebug::ShowString("Error creating database \"" + DatabaseName + "\": " + SqlError.text());
 		}
 
 		if (Exist) //Если база данных создана
@@ -89,7 +83,6 @@ void CGConfiguratorCreate::database()
 				Exist = false;
 			}
 		}
-
 		ISDatabase::GetInstance().DisconnectFromSystemDB();
 	}
 	else

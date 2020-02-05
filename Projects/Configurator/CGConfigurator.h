@@ -1,34 +1,23 @@
 #pragma once
+#ifndef _CGCONFIGURATOR_H_INCLUDED
+#define _CGCONFIGURATOR_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "CGConfiguratorBase.h"
 #include "CGSection.h"
-#include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class CGConfigurator : public QCoreApplication
+class CGConfigurator : public CGConfiguratorBase
 {
 	Q_OBJECT
 
 public:
-	CGConfigurator(int &argc, char **argv);
+	Q_INVOKABLE CGConfigurator(const QVector<CGSection*> &arguments);
 	virtual ~CGConfigurator();
 
-	void InterpreterMode();
-
-    bool CheckExistDatabase(bool &Connected);
-	bool Execute(const QString &Argument);
-	bool Execute(const QString &Argument, const QString &SubArgument);
-
-	ISNamespace::ConsoleArgumentType CheckArguments() const; //Проверка аргументов командной строки
-
-protected:
-	QString GetClassName(const QString &Argument);
-	QStringList ParseInputCommand(const QString &Command);
-	void ProgressMessage(const QString &Message);
-	void Exit();
-
-protected slots:
+public slots:
 	void help(); //Показать помощь
 
 private:
 	QVector<CGSection*> Arguments;
 };
 //-----------------------------------------------------------------------------
+#endif

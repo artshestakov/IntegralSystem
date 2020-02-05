@@ -10,7 +10,7 @@
 #include <map>
 //-----------------------------------------------------------------------------
 #ifdef WIN32
-#include "windows.h"
+#include <windows.h>
 #else
 #include <float.h>
 #endif

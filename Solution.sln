@@ -12,7 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localization", "Localization", "{EAFD2DAF-1A32-4503-8314-9A1E942ABBCA}"
 	ProjectSection(SolutionItems) = preProject
 		Resources\Localization\Carat.lang = Resources\Localization\Carat.lang
-		Resources\Localization\Configurator.lang = Resources\Localization\Configurator.lang
 		Resources\Localization\Core.lang = Resources\Localization\Core.lang
 		Resources\Localization\DatabaseService.lang = Resources\Localization\DatabaseService.lang
 		Resources\Localization\IntegralSystem.lang = Resources\Localization\IntegralSystem.lang

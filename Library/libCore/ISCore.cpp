@@ -99,9 +99,6 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 
 	ISCrashDumper::Init();
 
-	QObject *o = nullptr;
-	o->setObjectName("");
-
 	Result = ISConfig::GetInstance().Initialize();
 	if (!Result)
 	{
