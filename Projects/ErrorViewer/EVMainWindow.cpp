@@ -1,11 +1,15 @@
 #include "EVMainWindow.h"
 #include <QtCore/QFile>
+#include <QtCore/QDir>
+#include <QtGui/QClipboard>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QGroupBox>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QAction>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMessageBox>
 //-----------------------------------------------------------------------------
 EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWidget(parent)
 {
@@ -21,16 +25,29 @@ EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWid
 	GroupBox->setLayout(new QVBoxLayout());
 	MainLayout->addWidget(GroupBox);
 
-	QTextEdit *TextEdit = new QTextEdit(GroupBox);
+	TextEdit = new QTextEdit(GroupBox);
 	TextEdit->setReadOnly(true);
 	TextEdit->setContextMenuPolicy(Qt::NoContextMenu);
 	GroupBox->layout()->addWidget(TextEdit);
 
+	QHBoxLayout *LayoutBottom = new QHBoxLayout();
+	LayoutBottom->addStretch();
+	MainLayout->addLayout(LayoutBottom);
+
 	QPushButton *ButtonOK = new QPushButton(this);
 	ButtonOK->setText("OK");
-	ButtonOK->setFocus(Qt::FocusReason::TabFocusReason);
 	connect(ButtonOK, &QPushButton::clicked, this, &EVMainWindow::close);
-	MainLayout->addWidget(ButtonOK, 0, Qt::AlignHCenter);
+	LayoutBottom->addWidget(ButtonOK);
+
+	QPushButton *ButtonClipboard = new QPushButton(this);
+	ButtonClipboard->setText("Copy to clipboard");
+	connect(ButtonClipboard, &QPushButton::clicked, this, &EVMainWindow::CopyToClipboard);
+	LayoutBottom->addWidget(ButtonClipboard);
+
+	QPushButton *ButtonSave = new QPushButton(this);
+	ButtonSave->setText("Save...");
+	connect(ButtonSave, &QPushButton::clicked, this, &EVMainWindow::Save);
+	LayoutBottom->addWidget(ButtonSave);
 
 	QAction *ActionEscape = new QAction(this);
 	ActionEscape->setShortcut(Qt::Key_Escape);
@@ -69,5 +86,32 @@ EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWid
 EVMainWindow::~EVMainWindow()
 {
 
+}
+//-----------------------------------------------------------------------------
+void EVMainWindow::CopyToClipboard()
+{
+	QApplication::clipboard()->setText(TextEdit->toPlainText());
+}
+//-----------------------------------------------------------------------------
+void EVMainWindow::Save()
+{
+	QString FilePath = QFileDialog::getSaveFileName(this, "Save", QDir::homePath(), "Log file (*.log)");
+	if (!FilePath.isEmpty())
+	{
+		QFile FileCrash(FilePath);
+		if (FileCrash.open(QIODevice::WriteOnly | QIODevice::Text))
+		{
+			FileCrash.write(TextEdit->toPlainText().toUtf8());
+			FileCrash.close();
+			
+			QApplication::beep();
+			QMessageBox::information(this, "Information", "File saving with path: " + FilePath, QMessageBox::Ok, QMessageBox::Ok);
+		}
+		else
+		{
+			QApplication::beep();
+			QMessageBox::warning(this, "Warning", "Error save file \"" + FilePath + "\": " + FileCrash.errorString(), QMessageBox::Ok, QMessageBox::Ok);
+		}
+	}
 }
 //-----------------------------------------------------------------------------

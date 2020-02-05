@@ -3,6 +3,7 @@
 #define _EVMAINWINDOW_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QTextEdit>
 //-----------------------------------------------------------------------------
 class EVMainWindow : public QWidget
 {
@@ -11,6 +12,13 @@ class EVMainWindow : public QWidget
 public:
 	EVMainWindow(const QString &PathCrashFile, QWidget *parent = 0);
 	virtual ~EVMainWindow();
+
+private:
+	void CopyToClipboard();
+	void Save();
+
+private:
+	QTextEdit *TextEdit;
 };
 //-----------------------------------------------------------------------------
 #endif
