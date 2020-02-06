@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISQLineEdit.h"
 #include "ISPopupDelegate.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISComboEdit::ISComboEdit(QWidget *parent) : ISFieldEditBase(parent)

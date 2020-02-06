@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISCalendarEventsWidget::ISCalendarEventsWidget(QWidget *parent) : ISListWidget(parent)
 {

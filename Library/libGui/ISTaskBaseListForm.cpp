@@ -2,7 +2,6 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISQuery.h"
 #include "ISMessageBox.h"
 #include "ISCore.h"
 #include "ISMetaUser.h"

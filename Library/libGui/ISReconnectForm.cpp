@@ -5,12 +5,9 @@
 #include "ISMetaUser.h"
 #include "ISBuffer.h"
 #include "ISPushButton.h"
-#include "ISSystem.h"
 #include "ISMessageBox.h"
-#include "ISConfig.h"
 #include "ISControls.h"
 #include "ISDatabase.h"
-#include "ISMemoryObjects.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------

@@ -2,9 +2,7 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISPlayerWidget::ISPlayerWidget(const QString &FilePath, bool auto_play, QWidget *parent) : QWidget(parent)
 {

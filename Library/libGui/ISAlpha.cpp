@@ -1,5 +1,4 @@
 #include "ISAlpha.h"
-#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 #include "ISDeviceObjectForm.h"
 #include "ISDeviceListForm.h"

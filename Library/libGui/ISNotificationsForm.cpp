@@ -7,9 +7,7 @@
 #include "ISNotifyWidgetItem.h"
 #include "ISMessageBox.h"
 #include "ISQuery.h"
-#include "ISDatabase.h"
-#include "ISNotificationService.h"
-#include "ISNotifySender.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_NOTIFICATION = PREPARE_QUERY("SELECT ntfu_id, ntfn_uid, ntfu_creationdate, ntfu_payload "
 											   "FROM _notificationuser "

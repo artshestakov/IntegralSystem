@@ -1,6 +1,5 @@
 #include "ISBannerProgressBar.h"
 #include "ISStyleSheet.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISBannerProgressBar::ISBannerProgressBar(QWidget *parent) : QProgressBar(parent)
 {

@@ -2,6 +2,7 @@
 #include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEVICE_EXIST = PREPARE_QUERY("SELECT COUNT(*) "
 											   "FROM _deviceuser "

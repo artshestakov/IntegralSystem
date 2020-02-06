@@ -5,6 +5,7 @@
 #include "ISPhoneNumberParser.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CDR_ID = PREPARE_QUERY("SELECT id "
 										 "FROM _cdr "

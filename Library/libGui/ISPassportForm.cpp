@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISButtonDialog.h"
-#include "ISMessageBox.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------

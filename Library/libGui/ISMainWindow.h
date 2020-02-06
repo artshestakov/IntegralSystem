@@ -7,7 +7,6 @@
 #include "ISStatusBar.h"
 #include "ISCalendarForm.h"
 #include "ISChatForm.h"
-#include "ISSystemsPanel.h"
 #include "ISWorkspaceForm.h"
 #include "ISPhoneForm.h"
 //-----------------------------------------------------------------------------

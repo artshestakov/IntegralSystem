@@ -1,6 +1,5 @@
 #include "ISConfig.h"
 #include "ISDefinesCore.h"
-#include "ISAssert.h"
 #include "ISDebug.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------

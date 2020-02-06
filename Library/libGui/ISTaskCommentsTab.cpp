@@ -3,8 +3,7 @@
 #include "ISQuery.h"
 #include "ISTaskCommentWidget.h"
 #include "ISControls.h"
-#include "ISSystem.h"
-#include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_COMMENTS = PREPARE_QUERY("SELECT tcom_creationdate, userfullname(tcom_user), tcom_comment "
 										   "FROM _taskcomment "

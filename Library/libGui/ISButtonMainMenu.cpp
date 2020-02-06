@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISButtonMainMenu::ISButtonMainMenu(QWidget *parent) : QToolButton(parent)

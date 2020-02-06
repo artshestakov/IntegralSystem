@@ -1,6 +1,5 @@
 #include "ISDesktopInformResource.h"
 #include "ISDefinesGui.h"
-#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
@@ -9,12 +8,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISBuffer.h"
 #include "ISPushButton.h"
-#include "ISSystem.h"
-#include "ISDefinesCore.h"
-//-----------------------------------------------------------------------------
-static QString QI_CALL_HISTORY = PREPARE_QUERY("INSERT INTO callhistory(clhs_organization, clhs_phone, clhs_result) "
-											   "VALUES(:Organization, :Phone, (SELECT clrs_id FROM callresult WHERE clrs_uid = '{5A92BB6B-9D51-4189-8BCE-787792964C99}')) "
-											   "RETURNING clhs_id");
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEMO_ORGANIZATION = PREPARE_QUERY("SELECT dacc_organization FROM demoaccesses WHERE dacc_id = :DemoID");
 //-----------------------------------------------------------------------------

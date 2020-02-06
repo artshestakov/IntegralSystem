@@ -5,6 +5,7 @@
 #include "ISMetaData.h"
 #include "ISCommandLine.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString Q_VACUUM = "VACUUM";
 //-----------------------------------------------------------------------------

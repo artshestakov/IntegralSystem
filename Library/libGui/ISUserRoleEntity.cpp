@@ -1,12 +1,10 @@
 #include "ISUserRoleEntity.h"
-#include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
-#include "ISSystem.h"
 #include "ISMetaSystemsEntity.h"
-#include "ISAssert.h"
 #include "ISCountingTime.h"
 #include "ISDebug.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SUBSYSTEM_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 															   "FROM _groupaccesssubsystem "

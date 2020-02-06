@@ -2,6 +2,7 @@
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_LOGIN_EXIST = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _users "

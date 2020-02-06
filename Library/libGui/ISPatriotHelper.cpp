@@ -3,6 +3,7 @@
 #include "ISNotificationService.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_VISIT = PREPARE_QUERY("SELECT sbsr_nowexist "
 										"FROM subscriptions "

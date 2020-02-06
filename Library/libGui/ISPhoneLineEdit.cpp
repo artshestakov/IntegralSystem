@@ -6,7 +6,6 @@
 #include "ISPhoneNumberParser.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISPhoneLineEdit::ISPhoneLineEdit(QWidget *parent) : QLineEdit(parent)

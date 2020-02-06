@@ -2,6 +2,7 @@
 #include "ISLocalization.h"
 #include "ISSettings.h"
 #include "ISConstants.h"
+#include "ISPopupMessage.h"
 //-----------------------------------------------------------------------------
 ISNotificationService::ISNotificationService()
 {

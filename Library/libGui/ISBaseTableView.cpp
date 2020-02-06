@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISBaseTableView::ISBaseTableView(QWidget *parent) : QTableView(parent)
 {

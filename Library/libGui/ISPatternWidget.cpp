@@ -3,7 +3,6 @@
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISPatternWidget::ISPatternWidget(QWidget *parent) : QFrame(parent)

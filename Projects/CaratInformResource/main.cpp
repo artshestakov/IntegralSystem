@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreInformResource.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])

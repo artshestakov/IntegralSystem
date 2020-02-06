@@ -2,7 +2,6 @@
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
 #include "ISMimePart.h"
-#include "ISMimeMultipart.h"
 #include "ISEmailAddress.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISMimeMessage : public QObject

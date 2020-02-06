@@ -1,9 +1,6 @@
 #include "ISCrashDumper.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
-#include "ISDebug.h"
-#include "ISCore.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 void ISCrashDumper::Init()
 {

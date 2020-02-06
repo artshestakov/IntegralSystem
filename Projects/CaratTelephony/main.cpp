@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreTelephony.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])

@@ -9,7 +9,6 @@
 #include "ISControls.h"
 #include "ISGui.h"
 #include "ISUserRoleEntity.h"
-#include "ISSystem.h"
 #include "ISStyleSheet.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 #include "ISDelegateFile.h"
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDelegateFile::ISDelegateFile(QWidget *parent) : QStyledItemDelegate(parent)
 {

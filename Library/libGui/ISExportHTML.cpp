@@ -2,7 +2,6 @@
 #include "ISLocalization.h"
 #include "ISFileDialog.h"
 #include "ISMessageBox.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISExportHTML::ISExportHTML(QObject *parent) : ISExportWorker(parent)
 {

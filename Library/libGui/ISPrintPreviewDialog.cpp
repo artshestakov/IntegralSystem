@@ -3,7 +3,6 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &ReportLocalName, Qt::WindowFlags Flags)
 	: QWidget(parent, Flags | ((Flags & Qt::WindowType_Mask) == 0 ? Qt::Dialog : Qt::WindowType(0))),

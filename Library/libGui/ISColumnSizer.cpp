@@ -1,5 +1,6 @@
 #include "ISColumnSizer.h"
 #include "ISQuery.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "

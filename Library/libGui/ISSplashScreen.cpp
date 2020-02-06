@@ -1,12 +1,10 @@
 #include "ISSplashScreen.h"
 #include "ISDefinesGui.h"
-#include "ISAssert.h"
 #include "ISDebug.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)

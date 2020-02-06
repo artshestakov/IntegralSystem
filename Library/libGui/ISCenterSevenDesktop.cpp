@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISPushButton.h"
 #include "ISSystem.h"
@@ -11,8 +10,8 @@
 #include "ISControls.h"
 #include "ISObjects.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_BRANCHES = PREPARE_QUERY("SELECT brch_id, brch_name "
 										   "FROM branches "

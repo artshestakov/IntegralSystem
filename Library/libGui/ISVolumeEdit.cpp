@@ -3,7 +3,6 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
 {

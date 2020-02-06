@@ -3,12 +3,10 @@
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
-#include "ISUserRoleEntity.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISProtocol.h"
 #include "ISObjects.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 {

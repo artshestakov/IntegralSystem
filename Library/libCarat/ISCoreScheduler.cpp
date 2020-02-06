@@ -5,6 +5,7 @@
 #include "ISLicense.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT file_id "
 									   "FROM _file "

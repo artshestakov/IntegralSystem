@@ -4,8 +4,8 @@
 #include "ISAssert.h"
 #include "ISQuery.h"
 #include "EXLicense.h"
-#include "ISDebug.h"
 #include "ISCountingTime.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLE = PREPARE_QUERY("SELECT COUNT(*) "
 										"FROM pg_tables "

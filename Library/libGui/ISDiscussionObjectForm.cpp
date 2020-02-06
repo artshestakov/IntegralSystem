@@ -4,9 +4,9 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
-#include "ISCore.h"
 #include "ISMessageBox.h"
 #include "ISControls.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_DISCUSSION = PREPARE_QUERY("INSERT INTO _discussion(dson_tablename, dson_objectid, dson_message) "
 											  "VALUES(:TableName, :ObjectID, :Message)");

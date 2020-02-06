@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreMail.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])

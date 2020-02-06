@@ -1,6 +1,7 @@
 #include "ISTelephonySummary.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_COUNT_RANGE = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _asteriskcalls "

@@ -4,9 +4,8 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISIPAddressEdit.h"
 #include "ISIntegerEdit.h"
-#include "ISCheckEdit.h"
 #include "ISPasswordEdit.h"
-#include "ISPushButton.h"
+
 //-----------------------------------------------------------------------------
 class ISConnectionForm : public ISInterfaceDialogForm
 {

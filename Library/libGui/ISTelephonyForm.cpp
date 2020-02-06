@@ -1,7 +1,6 @@
 #include "ISTelephonyForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 #include "ISAsteriskCallsListForm.h"

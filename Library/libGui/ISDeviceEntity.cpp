@@ -1,11 +1,11 @@
 #include "ISDeviceEntity.h"
-#include "ISConstants.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISCountingTime.h"
 #include "ISSystem.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEVICE_USER = PREPARE_QUERY("SELECT dvus_id, dvus_uid, concat(dvtp_name, '/', dvce_name), dvce_class "
 											  "FROM _deviceuser "

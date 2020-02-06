@@ -1,6 +1,5 @@
 #include "ISFieldEditBase.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISSystem.h"

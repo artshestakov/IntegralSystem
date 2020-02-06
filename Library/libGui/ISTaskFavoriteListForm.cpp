@@ -1,6 +1,5 @@
 #include "ISTaskFavoriteListForm.h"
-#include "ISQuery.h"
-#include "ISSystem.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_objectid "
 											"FROM _favorites "

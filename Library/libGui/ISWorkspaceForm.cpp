@@ -5,14 +5,12 @@
 #include "ISUserRoleEntity.h"
 #include "ISSystemsPanel.h"
 #include "ISProtocol.h"
-#include "ISSystem.h"
 #include "ISAssert.h"
 #include "ISListBaseForm.h"
 #include "ISMetaData.h"
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISWorkspaceForm::ISWorkspaceForm(QWidget *parent) : ISParagraphBaseForm(parent)

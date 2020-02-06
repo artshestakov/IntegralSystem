@@ -9,11 +9,11 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISInputDialog.h"
-#include "ISCallHistoryObjectForm.h"
 #include "ISPhoneEdit.h"
 #include "ISDemoAccessesObjectForm.h"
 #include "ISOrganizationScoreObjectForm.h"
 #include "ISMetaUser.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_id FROM organizations WHERE orgz_inn = :INN");
 //-----------------------------------------------------------------------------
@@ -23,7 +23,7 @@ static QString QI_CALL_HISTORY = PREPARE_QUERY("INSERT INTO callhistory(clhs_org
 											   "VALUES(:Organization, :Phone, (SELECT clrs_id FROM callresult WHERE clrs_uid = :ResultUID)) "
 											   "RETURNING clhs_id");
 //-----------------------------------------------------------------------------
-static QString QS_OVED_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM okved WHERE okvd_code = :Code")
+static QString QS_OVED_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM okved WHERE okvd_code = :Code");
 //-----------------------------------------------------------------------------
 static QString QS_OKVED = PREPARE_QUERY("SELECT okvd_id FROM okved WHERE okvd_code = :Code");
 //-----------------------------------------------------------------------------

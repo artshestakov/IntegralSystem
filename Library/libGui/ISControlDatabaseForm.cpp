@@ -11,6 +11,7 @@
 #include "ISPGSettingsForm.h"
 #include "ISStatisticTablesForm.h"
 #include "ISDistFileListForm.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _settingsdatabase WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------

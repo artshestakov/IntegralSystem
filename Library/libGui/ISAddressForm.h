@@ -3,7 +3,6 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISAddressBox.h"
-#include "ISComboEdit.h"
 #include "ISQLineEdit.h"
 //-----------------------------------------------------------------------------
 class ISAddressForm : public ISInterfaceDialogForm

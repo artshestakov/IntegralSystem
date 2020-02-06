@@ -6,6 +6,7 @@
 #include "ISGui.h"
 #include "ISVersion.h"
 #include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ACTUAL_INSTALL = PREPARE_QUERY("SELECT dsfs_id, dsfs_filename, dsfs_version, dsfs_version_4 FROM _distfiles WHERE NOT dsfs_isdeleted AND dsfs_actual");
 //-----------------------------------------------------------------------------

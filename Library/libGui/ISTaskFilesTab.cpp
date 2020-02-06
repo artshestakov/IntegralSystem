@@ -1,7 +1,7 @@
 #include "ISTaskFilesTab.h"
 #include "ISQuery.h"
 #include "ISTaskFileWidget.h"
-#include "ISSystem.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_FILES = PREPARE_QUERY("SELECT tfls_creationdate, userfullname(tfls_user), tfls_filename, tfls_size, tfls_icon, tfls_note "
 										"FROM _taskfile "

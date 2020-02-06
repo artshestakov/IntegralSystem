@@ -10,9 +10,6 @@
 #include "ISControls.h"
 #include "ISCore.h"
 #include "ISGui.h"
-#include "ISMetaData.h"
-#include "ISIntegralSystem.h"
-#include "ISQuery.h"
 #include "ISInputDialog.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------

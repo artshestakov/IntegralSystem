@@ -2,6 +2,7 @@
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARAFGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_localname "
 											 "FROM _paragraphs "

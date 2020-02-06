@@ -1,9 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "PMetaUserPermission.h"
-#include "ISNamespace.h"
-#include "ISTypes.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
 class ISUserRoleEntity

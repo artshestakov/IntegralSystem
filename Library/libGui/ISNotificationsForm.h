@@ -4,7 +4,7 @@
 #include "ISInterfaceForm.h"
 #include "ISPushButton.h"
 #include "ISListWidget.h"
-#include "ISMetaNotify.h"
+
 //-----------------------------------------------------------------------------
 class ISNotificationsForm : public ISInterfaceForm
 {

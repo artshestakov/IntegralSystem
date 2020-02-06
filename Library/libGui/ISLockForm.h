@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISPasswordEdit.h"
-#include "ISCountingTime.h"
+
 //-----------------------------------------------------------------------------
 class ISLockForm : public ISInterfaceDialogForm
 {

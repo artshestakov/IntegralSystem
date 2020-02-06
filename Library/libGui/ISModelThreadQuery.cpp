@@ -1,6 +1,5 @@
 #include "ISModelThreadQuery.h"
 #include "ISMetaData.h"
-#include "ISAssert.h"
 #include "ISTrace.h"
 //-----------------------------------------------------------------------------
 ISModelThreadQuery::ISModelThreadQuery(QObject *parent) : QThread(parent)

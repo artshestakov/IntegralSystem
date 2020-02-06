@@ -1,6 +1,6 @@
 #include "CGHelper.h"
 #include "ISQuery.h"
-#include "ISAssert.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 										 "FROM information_schema.columns "

@@ -6,7 +6,6 @@
 #include "ISGui.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, const QString &Text, const QTime &Time, bool closed, QWidget *parent) : QWidget(parent)
 {

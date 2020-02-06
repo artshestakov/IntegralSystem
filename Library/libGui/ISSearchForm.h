@@ -4,8 +4,6 @@
 #include "ISInterfaceForm.h"
 #include "PMetaClassTable.h"
 #include "ISPushButton.h"
-#include "ISFieldEditBase.h"
-#include "ISComboSearchBase.h"
 #include "ISServiceButton.h"
 #include "ISSearchModel.h"
 //-----------------------------------------------------------------------------

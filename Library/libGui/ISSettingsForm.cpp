@@ -11,17 +11,15 @@
 #include "ISProgressForm.h"
 #include "ISQLabel.h"
 #include "ISControls.h"
-#include "ISMemoryObjects.h"
 #include "ISFileDialog.h"
 #include "ISGui.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue, stgs_localname FROM _settings WHERE NOT stgs_isdeleted ORDER BY stgs_id");
 //-----------------------------------------------------------------------------
 static QString QS_SETTING_EXPORT = PREPARE_QUERY("SELECT usst_setting, usst_value FROM _usersettings WHERE NOT usst_isdeleted ORDER BY usst_id");
-//-----------------------------------------------------------------------------
-static QString QU_SETTING_IMPORT = PREPARE_QUERY("UPDATE _usersettings SET usst_value = :Value WHERE usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
 static QString QU_SETTINGS_DEFAULT = PREPARE_QUERY("UPDATE _usersettings SET usst_value = :SettingValue WHERE usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------

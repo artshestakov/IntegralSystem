@@ -6,10 +6,9 @@
 #include "ISPushButton.h"
 #include "ISSystem.h"
 #include "ISNotificationService.h"
-#include "ISQuery.h"
 #include "ISQueryPool.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_MAKE_CALL = PREPARE_QUERY("INSERT INTO _makecallhistory(mchs_number) "
 											"VALUES(:Number)");

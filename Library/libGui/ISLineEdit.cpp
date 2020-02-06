@@ -1,6 +1,4 @@
 #include "ISLineEdit.h"
-#include "ISAssert.h"
-#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISLineEdit::ISLineEdit(QWidget *parent) : ISFieldEditBase(parent)
 {

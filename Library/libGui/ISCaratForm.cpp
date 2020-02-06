@@ -5,7 +5,7 @@
 #include "ISQuery.h"
 #include "ISCheckEdit.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_uid, core_localname, crca_active "
 											 "FROM _caratcore "

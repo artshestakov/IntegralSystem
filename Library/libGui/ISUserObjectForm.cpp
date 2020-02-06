@@ -5,7 +5,6 @@
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISQuery.h"
-#include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISNotifySender.h"
 //-----------------------------------------------------------------------------

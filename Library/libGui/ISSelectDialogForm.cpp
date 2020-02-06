@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISMetaData.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
 {

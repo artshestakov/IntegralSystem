@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreScheduler.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])

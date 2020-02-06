@@ -1,9 +1,9 @@
 #include "ISMetaUser.h"
-#include "ISAssert.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISDatabase.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER = PREPARE_QUERY("SELECT "
 									   "usrs_issystem, "

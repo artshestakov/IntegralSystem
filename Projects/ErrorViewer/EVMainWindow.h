@@ -2,7 +2,6 @@
 #ifndef _EVMAINWINDOW_H_INCLUDED
 #define _EVMAINWINDOW_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include <QtWidgets/QWidget>
 #include <QtWidgets/QTextEdit>
 //-----------------------------------------------------------------------------
 class EVMainWindow : public QWidget

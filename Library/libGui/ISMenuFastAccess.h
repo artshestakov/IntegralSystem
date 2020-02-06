@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISFastAccessEntity.h"
+
 //-----------------------------------------------------------------------------
 class ISMenuFastAccess : public QMenu
 {

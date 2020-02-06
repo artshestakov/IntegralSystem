@@ -1,10 +1,8 @@
 #include "ISAboutForm.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSystem.h"
-#include "ISConfig.h"
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
 #include "ISMetaData.h"
@@ -16,6 +14,7 @@
 #include "ISVersion.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_description "
 											"FROM _keyboardshortcuts "

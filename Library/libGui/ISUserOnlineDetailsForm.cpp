@@ -8,6 +8,7 @@
 #include "ISQuery.h"
 #include "ISGui.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PG_STAT_ACTIVITY = PREPARE_QUERY("SELECT "
 												   "userfullname(:UserID), "

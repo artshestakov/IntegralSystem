@@ -9,6 +9,7 @@
 #include "ISMetaData.h"
 #include "ISLicense.h"
 #include "ISSettingsDatabase.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_id, orgz_user, aspt_pattern, userfullname(orgz_user) "
 											   "FROM organizations "

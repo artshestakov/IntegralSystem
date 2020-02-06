@@ -5,9 +5,7 @@
 #include "ISQueryModel.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
-#include "ISSystem.h"
 #include "ISSqlModelHelper.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISSqlModelCore::ISSqlModelCore(PMetaClassTable *meta_table, QObject *parent) : QAbstractItemModel(parent)

@@ -7,6 +7,7 @@
 #include "ISMetaUser.h"
 #include "ISFastAccessEntity.h"
 #include "ISGui.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_EXTERNAL_TOOLS = PREPARE_QUERY("SELECT extl_uid, extl_localname, extl_command "
 												 "FROM _externaltools "

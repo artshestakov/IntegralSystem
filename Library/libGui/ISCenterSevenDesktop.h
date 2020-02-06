@@ -3,6 +3,7 @@
 #include "StdAfx.h"
 #include "ISDateEdit.h"
 #include "ISCenterSevenAdmissionListForm.h"
+#include "ISComboEdit.h"
 //-----------------------------------------------------------------------------
 class ISCenterSevenDesktop : public QWidget
 {

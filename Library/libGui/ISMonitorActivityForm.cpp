@@ -22,6 +22,7 @@
 #include "ISNotifyRecipient.h"
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS = PREPARE_QUERY("SELECT useronline(usrs_login), usrs_id, userfullname(usrs_id) "
 										"FROM _users "

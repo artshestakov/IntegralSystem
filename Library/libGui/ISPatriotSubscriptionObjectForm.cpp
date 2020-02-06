@@ -1,5 +1,6 @@
 #include "ISPatriotSubscriptionObjectForm.h"
 #include "ISQuery.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DISCOUNT = PREPARE_QUERY("SELECT (SELECT dcnt_percent FROM discount WHERE dcnt_id = clts_discount) "
 										   "FROM subscriptions "

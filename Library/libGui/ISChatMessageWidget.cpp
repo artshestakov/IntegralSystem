@@ -3,7 +3,6 @@
 #include "ISBuffer.h"
 #include "ISQLabel.h"
 #include "ISQuery.h"
-#include "ISImageViewerForm.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISFileDialog.h"
@@ -17,6 +16,7 @@
 #include "ISLabelLink.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHAT_MESSAGE = PREPARE_QUERY("SELECT "
 											   "chat_creationdate, "

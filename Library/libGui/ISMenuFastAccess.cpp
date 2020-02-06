@@ -4,8 +4,7 @@
 #include "ISMessageBox.h"
 #include "ISMetaData.h"
 #include "ISGui.h"
-#include "ISSystem.h"
-#include "ISDefinesCore.h"
+#include "ISFastAccessEntity.h"
 //-----------------------------------------------------------------------------
 ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 {

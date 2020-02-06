@@ -3,6 +3,7 @@
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DUPLICATES = PREPARE_QUERY("SELECT tsdp_duplicate, task_name "
 											 "FROM _taskduplicate "

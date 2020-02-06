@@ -10,6 +10,7 @@
 #include "ISGui.h"
 #include "ISButtonClose.h"
 #include "ISProtocol.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_STATUS = PREPARE_QUERY("SELECT usrs_currentstatus, usts_name "
 											  "FROM _users "

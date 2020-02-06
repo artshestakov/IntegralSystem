@@ -1,5 +1,6 @@
 #include "ISComboStartedParagraph.h"
 #include "ISQuery.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARAFGRAPH = PREPARE_QUERY("SELECT prhs_localname, prhs_uid "
 											 "FROM _paragraphs "

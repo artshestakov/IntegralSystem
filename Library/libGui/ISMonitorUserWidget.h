@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISNamespace.h"
+
 //-----------------------------------------------------------------------------
 class ISMonitorUserWidget : public QFrame
 {

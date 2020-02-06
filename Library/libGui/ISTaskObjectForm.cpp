@@ -10,7 +10,7 @@
 #include "ISMessageBox.h"
 #include "ISCore.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_id "
                                               "FROM _taskstatus "

@@ -2,6 +2,7 @@
 #include "ISQuery.h"
 #include "ISScrollArea.h"
 #include "ISGui.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CATEGORY = PREPARE_QUERY("SELECT DISTINCT category "
 										   "FROM pg_settings "

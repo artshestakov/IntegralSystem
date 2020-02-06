@@ -3,6 +3,7 @@
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISSMS.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SMS_QUEUE = PREPARE_QUERY("SELECT smsq_id, smsq_login, smsq_password, smsq_phone, smsq_message, smsq_charset "
 											"FROM _smsqueue "

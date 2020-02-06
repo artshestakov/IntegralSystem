@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreSMS.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])

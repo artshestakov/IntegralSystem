@@ -12,10 +12,8 @@
 #include "ISGui.h"
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
-#include "ISCrashDumper.h"
 #include "ISDebug.h"
 #include "ISVersion.h"
-#include "ISCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)

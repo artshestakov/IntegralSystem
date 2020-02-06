@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISUuid.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISLicense

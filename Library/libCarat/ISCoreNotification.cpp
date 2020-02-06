@@ -4,6 +4,7 @@
 #include "ISSystem.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id "
 										"FROM _users "

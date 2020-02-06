@@ -1,10 +1,10 @@
 #include "ISOrganizationWorkListForm.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
-#include "ISMetaUser.h"
 #include "ISMessageBox.h"
 #include "ISProtocol.h"
 #include "ISObjects.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_ORGANIZATION_USER = PREPARE_QUERY("UPDATE organizations SET orgz_user = currentuserid() WHERE orgz_id = :ObjectID");
 //-----------------------------------------------------------------------------

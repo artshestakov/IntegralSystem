@@ -1,15 +1,12 @@
 #include "ISAttachFilesForm.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
-#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISFileDialog.h"
 #include "ISAttachFileItem.h"
 #include "ISGui.h"
 #include "ISStorageFileLoader.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISAttachFilesForm::ISAttachFilesForm(QWidget *parent) : ISAttachFileBaseForm(parent)

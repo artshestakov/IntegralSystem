@@ -1,6 +1,5 @@
 #include "ISClientsSqlModel.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISClientsSqlModel::ISClientsSqlModel(PMetaClassTable *meta_table, QObject *parent) : ISSqlModelCore(meta_table, parent)
 {

@@ -2,16 +2,13 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISAssert.h"
 #include "ISStyleSheet.h"
 #include "ISMessageBox.h"
-#include "ISSystem.h"
 #include "ISGui.h"
 #include "ISListEdit.h"
 #include "ISServiceButton.h"
 #include "ISDelegateSearchField.h"
 #include "ISMetaData.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInterfaceForm(parent)

@@ -1,7 +1,6 @@
 #include "ISCalendarObjectForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISMetaUser.h"
 #include "ISGui.h"
 #include "ISSystem.h"
 #include "ISMessageBox.h"

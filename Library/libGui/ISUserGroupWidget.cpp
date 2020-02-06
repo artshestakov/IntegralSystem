@@ -7,7 +7,6 @@
 #include "ISStyleSheet.h"
 #include "ISScrollArea.h"
 #include "ISMetaSystemsEntity.h"
-#include "ISPushButton.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISToolBarAccessTable.h"
@@ -17,6 +16,7 @@
 #include "ISControls.h"
 #include "ISProtocol.h"
 #include "ISGui.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL_GROUP = PREPARE_QUERY("SELECT gast_uid, gast_name "
 															 "FROM _groupaccessspecialtype "

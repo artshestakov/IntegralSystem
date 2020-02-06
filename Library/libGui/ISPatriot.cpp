@@ -7,6 +7,7 @@
 #include "ISGui.h"
 #include "ISPatriotSubscriptionSelectForm.h"
 #include "ISPatriotHelper.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 #include "ISPatriotSubscriptionListForm.h"
 #include "ISPatriotSubscriptionObjectForm.h"

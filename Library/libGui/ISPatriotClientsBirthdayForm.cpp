@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISButtonClose.h"
 #include "ISQuery.h"
-#include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CLIENT = PREPARE_QUERY("SELECT clts_fio, cltp_name, EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM clts_birthday) as YearCount "
 										 "FROM clients "

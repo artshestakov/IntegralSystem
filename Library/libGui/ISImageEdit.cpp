@@ -1,7 +1,6 @@
 #include "ISImageEdit.h"
 #include "ISConstants.h"
 #include "ISGui.h"
-#include "ISBuffer.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISImageEdit::ISImageEdit(QWidget *parent) : ISFieldEditBase(parent)

@@ -1,11 +1,9 @@
 #include "ISCalendarPanel.h"
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
-#include "ISLocalization.h"
-#include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT COUNT(*) "
 										   "FROM _calendar "

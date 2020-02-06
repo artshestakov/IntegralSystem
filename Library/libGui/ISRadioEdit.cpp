@@ -1,6 +1,5 @@
 #include "ISRadioEdit.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISRadioEdit::ISRadioEdit(QWidget *parent) : ISFieldEditBase(parent)

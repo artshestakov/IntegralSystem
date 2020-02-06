@@ -3,7 +3,6 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISLineEdit.h"
-#include "ISPasswordWidthWidget.h"
 #include "ISButtonDialog.h"
 //-----------------------------------------------------------------------------
 class ISUserPasswordForm : public ISInterfaceDialogForm

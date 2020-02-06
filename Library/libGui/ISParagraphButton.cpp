@@ -1,6 +1,5 @@
 #include "ISParagraphButton.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"

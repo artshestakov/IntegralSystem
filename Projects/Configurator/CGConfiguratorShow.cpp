@@ -6,6 +6,7 @@
 #include "ISSystem.h"
 #include "ISDatabase.h"
 #include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLES = PREPARE_QUERY("SELECT tablename "
 										 "FROM pg_tables "
@@ -23,7 +24,7 @@ static QString QS_SEQUENCES = PREPARE_QUERY("SELECT sequence_name "
 											"FROM information_schema.sequences "
 											"WHERE sequence_catalog = current_database() "
 											"AND sequence_name NOT IN(:Where) "
-											"ORDER BY sequence_name")
+											"ORDER BY sequence_name");
 //-----------------------------------------------------------------------------
 CGConfiguratorShow::CGConfiguratorShow() : CGConfiguratorBase()
 {

@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
-#include "ISPopupMessage.h"
+
 //-----------------------------------------------------------------------------
 class ISNotificationService : public QObject
 {

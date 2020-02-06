@@ -1,20 +1,14 @@
 #include "CGTable.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "ISAssert.h"
 #include "CGTemplateField.h"
 #include "CGHelper.h"
 #include "CGSequence.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLE = PREPARE_QUERY("SELECT COUNT(*) FROM pg_tables WHERE schemaname = current_schema() AND tablename = :TableName");
-//-----------------------------------------------------------------------------
-static QString QS_COLUMNS_COUNT = PREPARE_QUERY("SELECT COUNT(*) "
-								  "FROM information_schema.columns "
-								  "WHERE table_catalog = current_database() "
-								  "AND table_schema = current_schema() "
-								  "AND table_name = :TableName");
 //-----------------------------------------------------------------------------
 static QString QS_COLUMNS = PREPARE_QUERY("SELECT column_name, column_default, is_nullable::BOOLEAN, data_type, character_maximum_length "
 										  "FROM information_schema.columns "

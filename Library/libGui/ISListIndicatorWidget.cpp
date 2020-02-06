@@ -1,9 +1,7 @@
 #include "ISListIndicatorWidget.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISListIndicatorWidget::ISListIndicatorWidget(QWidget *parent) : QWidget(parent)
 {

@@ -5,7 +5,6 @@
 #include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISCountingTime.h"
-#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 {

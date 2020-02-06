@@ -2,6 +2,7 @@
 #include "ISQuery.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_name FROM organizations WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------

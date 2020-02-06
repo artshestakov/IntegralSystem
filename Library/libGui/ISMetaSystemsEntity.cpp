@@ -1,11 +1,10 @@
 #include "ISMetaSystemsEntity.h"
-#include "ISConstants.h"
 #include "ISQuery.h"
-#include "ISAssert.h"
 #include "ISCountingTime.h"
 #include "ISDebug.h"
 #include "ISMetaUser.h"
 #include "ISUserRoleEntity.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 										  "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "

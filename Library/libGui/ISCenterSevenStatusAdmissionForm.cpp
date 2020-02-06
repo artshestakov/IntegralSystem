@@ -5,7 +5,7 @@
 #include "ISControls.h"
 #include "ISButtonDialog.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ADMISSION_STATUS = PREPARE_QUERY("SELECT adst_uid, adst_name "
 												   "FROM admissionstatus "

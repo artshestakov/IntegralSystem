@@ -7,16 +7,10 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISAboutForm.h"
-#include "ISSplashScreen.h"
-#include "ISMetaUser.h"
 #include "ISConfig.h"
-#include "ISAssert.h"
 #include "ISConnectionForm.h"
 #include "ISMessageBox.h"
-#include "ISControls.h"
-#include "ISStyleSheet.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {

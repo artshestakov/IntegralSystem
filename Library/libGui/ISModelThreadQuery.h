@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISQueryModel.h"
 #include "ISModelThreadWorker.h"
 //-----------------------------------------------------------------------------
 class ISModelThreadQuery : public QThread

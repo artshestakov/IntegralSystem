@@ -1,5 +1,4 @@
 #include "PMetaClassField.h"
-#include "ISAssert.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 PMetaClassField::PMetaClassField(QObject *parent) : PMetaClass(parent)

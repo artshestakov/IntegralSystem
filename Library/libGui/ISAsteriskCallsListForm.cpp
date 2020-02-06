@@ -12,11 +12,10 @@
 #include "ISAttachFileForm.h"
 #include "ISAsteriskRecordWaitForm.h"
 #include "ISAsteriskRecordPlayForm.h"
-#include "ISSystem.h"
 #include "ISProtocol.h"
 #include "ISUserRoleEntity.h"
 #include "ISDefinesCore.h"
-#include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHILD_COUNT = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _asteriskcalls "

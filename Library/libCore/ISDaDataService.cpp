@@ -1,6 +1,4 @@
 #include "ISDaDataService.h"
-#include "ISAssert.h"
-#include "ISDebug.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISDaDataService::ISDaDataService(QObject *parent) : QObject(parent)

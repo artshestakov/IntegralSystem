@@ -4,6 +4,7 @@
 #include "ISDatabase.h"
 #include "ISQuery.h"
 #include "ISNotifySender.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_SCREENSHOT = PREPARE_QUERY("INSERT INTO _screenshots(scrn_screenshot) "
 											 "VALUES(:Screenshot) "

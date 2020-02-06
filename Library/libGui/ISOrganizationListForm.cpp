@@ -5,11 +5,11 @@
 #include "ISTransferOrganizationForm.h"
 #include "ISMessageBox.h"
 #include "ISProtocol.h"
-#include "ISDaDataService.h"
 #include "ISProgressForm.h"
 #include "ISNotifySender.h"
 #include "ISObjects.h"
 #include "ISInputDialog.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_ORGANIZATION_WORK = PREPARE_QUERY("INSERT INTO organizationwork(orgw_user, orgw_organization, orgw_date) "
 													"VALUES(:User, :Organization, :Date)");

@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISPassword.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISPasswordWidthWidget::ISPasswordWidthWidget(QWidget *parent) : QWidget(parent)
 {

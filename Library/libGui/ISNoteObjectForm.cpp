@@ -9,6 +9,7 @@
 #include "ISQuery.h"
 #include "ISProtocol.h"
 #include "ISMetaData.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_NOTE_OBJECT = PREPARE_QUERY("SELECT COUNT(*) FROM _noteobject WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");
 //-----------------------------------------------------------------------------

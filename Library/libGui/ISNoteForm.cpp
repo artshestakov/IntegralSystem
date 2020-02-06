@@ -3,13 +3,12 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
-#include "ISDefinesCore.h"
-#include "ISCore.h"
 #include "ISQuery.h"
 #include "ISInputDialog.h"
 #include "ISControls.h"
 #include "ISButtonClose.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_NOTE = PREPARE_QUERY("SELECT note_id, note_name, note_text FROM _note WHERE NOT note_isdeleted AND note_user = currentuserid() ORDER BY note_id");
 //-----------------------------------------------------------------------------

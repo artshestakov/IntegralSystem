@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISNamespace.h"
-#include "ISPushButton.h"
+
 //-----------------------------------------------------------------------------
 class ISExitForm : public ISInterfaceDialogForm
 {

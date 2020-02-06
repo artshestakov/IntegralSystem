@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISListBaseForm.h"
-#include "ISProcessForm.h"
+
 //-----------------------------------------------------------------------------
 class ISUserListForm : public ISListBaseForm
 {

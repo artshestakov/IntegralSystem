@@ -1,9 +1,7 @@
 #include "ISCalendarDayWidget.h"
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISCalendarDayWidget::ISCalendarDayWidget(QWidget *parent) : QWidget(parent)
 {

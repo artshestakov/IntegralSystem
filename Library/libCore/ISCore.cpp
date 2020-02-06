@@ -7,13 +7,13 @@
 #include "ISQueryPool.h"
 #include "ISProtocol.h"
 #include "ISSystem.h"
-#include "ISMemoryObjects.h"
 #include "ISSettings.h"
 #include "ISDebug.h"
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
 #include "ISCrashDumper.h"
 #include "ISDefinesCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------

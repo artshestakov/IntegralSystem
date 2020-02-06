@@ -2,11 +2,11 @@
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"
-#include "ISPhoneNumberParser.h"
 #include "ISMetaData.h"
 #include "ISLicense.h"
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_RATING = PREPARE_QUERY("INSERT INTO rating(rtng_uniqueid, rtng_datetimecall, rtng_branch, rtng_rating) "
 										 "VALUES(:UniqueID, now(), (SELECT brnm_branch FROM branchesnumber WHERE brnm_number = :InteriorNumber), :Rating) "

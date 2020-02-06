@@ -1,6 +1,5 @@
 #include "ISToolBarObject.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISToolBarObject::ISToolBarObject(QWidget *parent) : QToolBar(parent)
 {

@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISNamespace.h"
 #include "ISMainMenu.h"
 #include "ISButtonNotify.h"
 #include "ISParagraphButton.h"

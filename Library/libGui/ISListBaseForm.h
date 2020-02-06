@@ -11,7 +11,6 @@
 #include "ISBaseTableView.h"
 #include "ISListIndicatorWidget.h"
 #include "ISSearchForm.h"
-#include "ISLineEdit.h"
 #include "ISPageNavigation.h"
 #include "ISSearchEdit.h"
 //-----------------------------------------------------------------------------

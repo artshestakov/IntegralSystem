@@ -1,8 +1,8 @@
 #include "ISSironaResearchObjectForm.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"
-#include "ISLocalization.h"
 #include "ISDatabase.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_RESEARCH = PREPARE_QUERY("UPDATE research SET "
 										   "resr_money = (SELECT rstp_value FROM researchtype WHERE rstp_id = :ResearchTypeID), "

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISCoreMedTech.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])

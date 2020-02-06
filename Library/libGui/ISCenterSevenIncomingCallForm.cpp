@@ -3,6 +3,7 @@
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISCenterSevenPatientsObjectForm.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PATIENTS = PREPARE_QUERY("SELECT ptnt_fio FROM patients WHERE ptnt_id = :PatientID");
 //-----------------------------------------------------------------------------

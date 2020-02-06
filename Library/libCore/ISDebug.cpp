@@ -3,7 +3,6 @@
 #include "ISProperty.h"
 #include "ISLogger.h"
 #include "ISSystem.h"
-#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISDebug::ISDebug()
 {

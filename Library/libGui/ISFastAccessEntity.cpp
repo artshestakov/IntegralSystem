@@ -1,7 +1,7 @@
 #include "ISFastAccessEntity.h"
 #include "ISQuery.h"
 #include "ISGui.h"
-#include "ISFastAccessEntity.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_EXTERNAL_TOOLS = PREPARE_QUERY("SELECT extl_uid, extl_uid, extl_localname, extl_command, extl_icon FROM _externaltools WHERE extl_user = currentuserid() ORDER BY extl_order");
 //-----------------------------------------------------------------------------

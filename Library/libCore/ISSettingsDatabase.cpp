@@ -6,6 +6,7 @@
 #include "ISMetaData.h"
 #include "ISDebug.h"
 #include "ISCountingTime.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SETTING = PREPARE_QUERY("SELECT column_name "
 												 "FROM information_schema.columns "

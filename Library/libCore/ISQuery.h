@@ -4,11 +4,8 @@
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
 #include "ISQueryException.h"
-#include "ISQueryExceptionConnection.h"
 #include "ISQueryExceptionSyntax.h"
-#include "ISQueryExceptionTransaction.h"
-#include "ISQueryText.h"
-#include "ISUuid.h"
+
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISQuery
 {

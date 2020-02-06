@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISPeriodForm::ISPeriodForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {

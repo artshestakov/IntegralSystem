@@ -9,8 +9,6 @@
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
 #include "ISMessageBox.h"
-#include "ISDefinesCore.h"
-#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {

@@ -5,7 +5,6 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISConfig.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {

@@ -5,7 +5,6 @@
 #include "ISBuffer.h"
 #include "ISButtonDialog.h"
 #include "ISCore.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISTaskDoneForm::ISTaskDoneForm(int task_id, QWidget *parent) : ISInterfaceDialogForm(parent)
 {

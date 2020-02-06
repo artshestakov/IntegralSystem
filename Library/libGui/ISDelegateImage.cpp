@@ -1,8 +1,5 @@
 #include "ISDelegateImage.h"
 #include "ISDefinesGui.h"
-#include "ISTrace.h"
-#include "ISCountingTime.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDelegateImage::ISDelegateImage(QObject *parent) : QStyledItemDelegate(parent)
 {

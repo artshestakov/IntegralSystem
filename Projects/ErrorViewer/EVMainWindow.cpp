@@ -1,6 +1,4 @@
 #include "EVMainWindow.h"
-#include <QtCore/QFile>
-#include <QtCore/QDir>
 #include <QtGui/QClipboard>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QVBoxLayout>

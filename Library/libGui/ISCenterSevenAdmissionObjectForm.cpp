@@ -4,6 +4,7 @@
 #include "ISLocalization.h"
 #include "ISProperty.h"
 #include "ISListEdit.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ADMISSION_STATUS = PREPARE_QUERY("SELECT adst_id "
 												   "FROM admissionstatus "

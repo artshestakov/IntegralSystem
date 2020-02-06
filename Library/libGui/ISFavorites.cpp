@@ -4,6 +4,7 @@
 #include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISMetaUser.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
 											"FROM _favorites "

@@ -4,7 +4,6 @@
 #include "ISBuffer.h"
 #include "ISButtonClose.h"
 #include "ISSystem.h"
-#include "ISDebug.h"
 #include "ISSettingsDatabase.h"
 #include "ISDefinesCore.h"
 #include "ISDefinesGui.h"

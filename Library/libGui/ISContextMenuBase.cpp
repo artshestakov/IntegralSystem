@@ -2,7 +2,6 @@
 #include "ISAssert.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
-#include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------

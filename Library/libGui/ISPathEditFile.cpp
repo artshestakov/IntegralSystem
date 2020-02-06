@@ -2,7 +2,6 @@
 #include "ISPushButton.h"
 #include "ISLocalization.h"
 #include "ISFileDialog.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISPathEditFile::ISPathEditFile(QWidget *parent) : ISLineEdit(parent)
 {

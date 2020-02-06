@@ -4,8 +4,6 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
-#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QString &user_name, QWidget *parent) : QFrame(parent)
 {

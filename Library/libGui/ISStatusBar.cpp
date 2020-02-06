@@ -2,15 +2,10 @@
 #include "ISLocalization.h"
 #include "ISCore.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISConfig.h"
-#include "ISSystem.h"
-#include "ISSettings.h"
 #include "ISConstants.h"
 #include "ISMessageBox.h"
 #include "ISServiceButton.h"
-#include "ISSettingsDatabase.h"
-#include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISStatusBar::ISStatusBar(QWidget *parent) : QStatusBar(parent)
 {

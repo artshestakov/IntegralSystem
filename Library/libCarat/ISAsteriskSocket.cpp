@@ -4,6 +4,7 @@
 #include "ISDebug.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_CONTEXT = PREPARE_QUERY("SELECT aspt_context "
 											   "FROM _asteriskpattern "

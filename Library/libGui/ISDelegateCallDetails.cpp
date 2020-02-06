@@ -1,7 +1,6 @@
 #include "ISDelegateCallDetails.h"
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDelegateCallDetails::ISDelegateCallDetails(QObject *parent) : QStyledItemDelegate(parent)
 {

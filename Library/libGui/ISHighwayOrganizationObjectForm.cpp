@@ -8,6 +8,7 @@
 #include "ISGui.h"
 #include "ISObjects.h"
 #include "ISMessageBox.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARENT = PREPARE_QUERY("SELECT o.orgz_parent, (SELECT orgz_name FROM organization WHERE orgz_id = o.orgz_parent) "
 										 "FROM organization o "

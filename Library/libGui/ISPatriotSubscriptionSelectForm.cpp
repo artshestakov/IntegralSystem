@@ -6,8 +6,8 @@
 #include "ISPushButton.h"
 #include "ISButtonClose.h"
 #include "ISPatriotHelper.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SUBSCRIPTION = PREPARE_QUERY("SELECT sbsr_id, sbtp_name, sbtp_count, sbsr_leftcount, sbsr_nowexist "
 											   "FROM subscriptions "

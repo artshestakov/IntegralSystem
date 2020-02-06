@@ -10,9 +10,9 @@
 #include "ISMessageBox.h"
 #include "ISCalendarEventForm.h"
 #include "ISInputDialog.h"
-#include "ISAssert.h"
 #include "ISNotifyRecipient.h"
 #include "ISCore.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
 										   "FROM _calendar "

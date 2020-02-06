@@ -4,6 +4,7 @@
 #include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
+#include "ISQueryModelHelper.h"
 //-----------------------------------------------------------------------------
 ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent)
 	: QObject(parent),

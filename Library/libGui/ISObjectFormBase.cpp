@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
-#include "ISTrace.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMetaData.h"
@@ -24,7 +23,6 @@
 #include "ISDatabaseHelper.h"
 #include "ISStyleSheet.h"
 #include "ISFavorites.h"
-#include "ISConstants.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
 //-----------------------------------------------------------------------------

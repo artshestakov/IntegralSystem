@@ -3,7 +3,7 @@
 #define _ISPROTOCOL_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISNamespace.h"
+
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISProtocol
 {

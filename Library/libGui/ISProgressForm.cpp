@@ -5,7 +5,6 @@
 #include "ISControls.h"
 #include "ISGui.h"
 #include "ISButtonClose.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISProgressForm::ISProgressForm(int Minimum, int Maximum, QWidget *parent) : QProgressDialog(parent)
 {

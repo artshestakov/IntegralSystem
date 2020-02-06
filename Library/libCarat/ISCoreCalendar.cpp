@@ -3,9 +3,9 @@
 #include "ISDatabase.h"
 #include "ISDebug.h"
 #include "ISNotifySender.h"
-#include "ISDebug.h"
 #include "ISLocalization.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_id, cldr_user, userfullname(cldr_user), cldr_name "
 										   "FROM _calendar "

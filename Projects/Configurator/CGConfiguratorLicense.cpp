@@ -2,6 +2,8 @@
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISCommandLine.h"
+#include "ISUuid.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_LICENSE_EXIST = PREPARE_QUERY("SELECT COUNT(*) FROM _configurationlicense");
 //-----------------------------------------------------------------------------

@@ -3,9 +3,8 @@
 #include "libCore_global.h"
 #include "ISNamespace.h"
 #include "ISTypes.h"
-#include "ISQueryModelHelper.h"
 #include "PMetaClassTable.h"
-#include "PMetaClassField.h"
+
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISQueryModel : public QObject
 {

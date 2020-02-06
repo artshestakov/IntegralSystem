@@ -5,6 +5,7 @@
 #include "ISMetaData.h"
 #include "ISCommandLine.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname FROM pg_indexes WHERE schemaname = current_schema()");
 //-----------------------------------------------------------------------------

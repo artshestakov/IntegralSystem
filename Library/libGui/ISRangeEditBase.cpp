@@ -3,7 +3,6 @@
 #include "ISAssert.h"
 #include "ISLocalization.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISRangeEditBase::ISRangeEditBase(QWidget *parent, const QString &FieldName) : QWidget(parent)
 {

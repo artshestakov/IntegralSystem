@@ -1,6 +1,5 @@
 #include "ISPopupMessage.h"
 #include "ISStyleSheet.h"
-#include "ISDefinesCore.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISPopupMessage::ISPopupMessage(QWidget *parent) : QWidget(parent)

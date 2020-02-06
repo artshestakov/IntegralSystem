@@ -1,7 +1,5 @@
 #include "CGConfiguratorUpdate.h"
-#include "ISAssert.h"
 #include "ISDebug.h"
-#include "ISSystem.h"
 #include "ISMetaData.h"
 #include "CGFunction.h"
 #include "CGTable.h"

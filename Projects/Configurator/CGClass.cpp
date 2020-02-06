@@ -1,5 +1,6 @@
 #include "CGClass.h"
 #include "ISQuery.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CLASS = PREPARE_QUERY("SELECT COUNT(*) FROM _class WHERE clss_name = :Name");
 //-----------------------------------------------------------------------------

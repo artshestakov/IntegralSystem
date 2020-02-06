@@ -5,9 +5,7 @@
 #include "ISStyleSheet.h"
 #include "ISFieldEditBase.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
 {

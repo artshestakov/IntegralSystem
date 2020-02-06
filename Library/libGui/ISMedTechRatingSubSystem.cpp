@@ -1,5 +1,6 @@
 #include "ISMedTechRatingSubSystem.h"
 #include "ISQuery.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_RATING = PREPARE_QUERY("SELECT rtng_uniqueid FROM rating WHERE rtng_id = :RatingID")
 //-----------------------------------------------------------------------------

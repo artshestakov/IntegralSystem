@@ -2,11 +2,9 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "ISNotifySender.h"
 #include "ISNotifyRecipient.h"
 #include "ISGui.h"
 #include "ISNotificationsForm.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------

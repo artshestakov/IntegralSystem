@@ -14,8 +14,6 @@
 #include "ISProtocol.h"
 #include "ISSelectDialogForm.h"
 #include "ISTaskViewForm.h"
-#include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {

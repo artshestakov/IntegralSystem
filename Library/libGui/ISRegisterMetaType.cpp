@@ -3,7 +3,6 @@
 #include "ISDelegateBoolean.h"
 #include "ISDelegateImage.h"
 #include "ISDelegateColor.h"
-#include "ISDelegateCallDetails.h"
 //-----------------------------------------------------------------------------
 #include "ISListObjectForm.h"
 #include "ISUserListForm.h"
@@ -55,7 +54,6 @@
 #include "ISPathEditDir.h"
 #include "ISPasswordEdit.h"
 #include "ISColorEdit.h"
-#include "ISPathEditDir.h"
 #include "ISWeekDayEdit.h"
 #include "ISINNEdit.h"
 #include "ISOKPOEdit.h"

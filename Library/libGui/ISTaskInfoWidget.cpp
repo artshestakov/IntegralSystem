@@ -5,6 +5,7 @@
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "tsst_name, "
@@ -18,7 +19,7 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "FROM _task "
 									   "LEFT JOIN _taskstatus ON tsst_id = task_status "
 									   "LEFT JOIN _taskpriority ON tspr_id = task_priority "
-									   "WHERE task_id = :TaskID")
+									   "WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
 ISTaskInfoWidget::ISTaskInfoWidget(int task_id, QWidget *parent) : QWidget(parent)
 {

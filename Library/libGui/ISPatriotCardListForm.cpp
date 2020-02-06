@@ -4,6 +4,7 @@
 #include "ISQuery.h"
 #include "ISInputDialog.h"
 #include "ISObjects.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_DEACTIVATE = PREPARE_QUERY("UPDATE card SET "
 											 "card_active = false, "

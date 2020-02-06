@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISPatriot.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISRangeDateEdit.h"
 #include "ISComboEdit.h"

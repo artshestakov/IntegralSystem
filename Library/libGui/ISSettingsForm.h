@@ -5,7 +5,6 @@
 #include "ISMetaSettingsGroup.h"
 #include "ISFieldEditBase.h"
 #include "ISButtonDialog.h"
-#include "ISScrollArea.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISSettingsForm : public ISInterfaceDialogForm

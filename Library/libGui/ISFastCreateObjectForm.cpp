@@ -8,6 +8,7 @@
 #include "ISMessageBox.h"
 #include "ISFastAccessEntity.h"
 #include "ISButtonClose.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAST_CREATE_OBJECT = PREPARE_QUERY("SELECT fcob_table "
 													 "FROM _fastcreateobject "

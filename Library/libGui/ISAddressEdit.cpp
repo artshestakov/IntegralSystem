@@ -4,7 +4,6 @@
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISAddressForm.h"
-#include "ISQuery.h"
 //-----------------------------------------------------------------------------
 ISAddressEdit::ISAddressEdit(QWidget *parent) : ISLineEdit(parent)
 {

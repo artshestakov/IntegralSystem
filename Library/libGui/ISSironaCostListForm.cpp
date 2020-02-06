@@ -3,7 +3,6 @@
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISSironaCostListForm::ISSironaCostListForm(QWidget *parent) : ISListBaseForm("Cost", parent)
 {
