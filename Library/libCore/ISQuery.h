@@ -5,7 +5,6 @@
 #include "libCore_global.h"
 #include "ISQueryException.h"
 #include "ISQueryExceptionSyntax.h"
-
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISQuery
 {
@@ -14,26 +13,26 @@ public:
 	ISQuery(QSqlDatabase& db, const QString &text = QString(), bool prepare = true);
 	~ISQuery();
 
-	bool Prepare(const QString& text) throw(ISQueryException);
-	bool Prepare(QSqlDatabase& db, const QString& text) throw(ISQueryException);
+	bool Prepare(const QString& text) /*throw(ISQueryException)*/;
+	bool Prepare(QSqlDatabase& db, const QString& text) /*throw(ISQueryException)*/;
 
-	bool Execute() throw(ISQueryException);
-	bool Execute(const QString& query_text) throw(ISQueryException);
-	bool Execute(QSqlDatabase& db, const QString& query_text) throw(ISQueryException);
+	bool Execute() /*throw(ISQueryException)*/;
+	bool Execute(const QString& query_text) /*throw(ISQueryException)*/;
+	bool Execute(QSqlDatabase& db, const QString& query_text) /*throw(ISQueryException)*/;
 
-	bool ExecuteFirst() throw(ISQueryException);
-	bool ExecuteFirst(QSqlDatabase& db, const QString& query_text) throw(ISQueryException);
+	bool ExecuteFirst() /*throw(ISQueryException)*/;
+	bool ExecuteFirst(QSqlDatabase& db, const QString& query_text) /*throw(ISQueryException)*/;
 
-	bool BindValue(const QString& name, const QVariant& value) throw(ISQueryException);
+	bool BindValue(const QString& name, const QVariant& value) /*throw(ISQueryException)*/;
 
-	QVariant ReadColumn(const QString& name) throw(ISQueryException);
-	QVariant ReadColumn(int index) throw(ISQueryException);
+	QVariant ReadColumn(const QString& name) /*throw(ISQueryException)*/;
+	QVariant ReadColumn(int index) /*throw(ISQueryException)*/;
 	
-	bool Next() throw(ISQueryException);
-	bool First() throw(ISQueryException);
-	bool Previous() throw(ISQueryException);
+	bool Next() /*throw(ISQueryException)*/;
+	bool First() /*throw(ISQueryException)*/;
+	bool Previous() /*throw(ISQueryException)*/;
 
-	QSqlRecord GetRecord() throw(ISQueryException);
+	QSqlRecord GetRecord() /*throw(ISQueryException)*/;
 	QSqlQuery GetSqlQuery() const;
 
 	bool IsValid() const;
@@ -48,7 +47,7 @@ public:
 	void SetShowLongQuery(bool show);
 
 protected:
-	void Raise() throw(ISQueryException);
+	void Raise() /*throw(ISQueryException)*/;
 	void PrepareColumnIndices() throw();
 
 private:

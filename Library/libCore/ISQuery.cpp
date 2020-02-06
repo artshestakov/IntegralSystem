@@ -47,7 +47,7 @@ ISQuery::~ISQuery()
 	
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Prepare(const QString& text) throw(ISQueryException)
+bool ISQuery::Prepare(const QString& text) /*throw(ISQueryException)*/
 {
 	SqlText = text;
 	Prepared = SqlQuery.prepare(text);
@@ -59,7 +59,7 @@ bool ISQuery::Prepare(const QString& text) throw(ISQueryException)
 	return Prepared;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Prepare(QSqlDatabase& db, const QString& text) throw(ISQueryException)
+bool ISQuery::Prepare(QSqlDatabase& db, const QString& text) /*throw(ISQueryException)*/
 {
 	SqlText = text;
 	SqlQuery = QSqlQuery(db);
@@ -68,7 +68,7 @@ bool ISQuery::Prepare(QSqlDatabase& db, const QString& text) throw(ISQueryExcept
 	return Prepare(text);
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute() throw(ISQueryException)
+bool ISQuery::Execute() /*throw(ISQueryException)*/
 {
 	ColumnIndices.clear();
 	ISCountingTime Time;
@@ -91,7 +91,7 @@ bool ISQuery::Execute() throw(ISQueryException)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute(const QString& query_text) throw(ISQueryException)
+bool ISQuery::Execute(const QString& query_text) /*throw(ISQueryException)*/
 {
 	SqlText = query_text;
 	ColumnIndices.clear();
@@ -115,7 +115,7 @@ bool ISQuery::Execute(const QString& query_text) throw(ISQueryException)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute(QSqlDatabase& db, const QString& query_text) throw(ISQueryException)
+bool ISQuery::Execute(QSqlDatabase& db, const QString& query_text) /*throw(ISQueryException)*/
 {
 	SqlText = query_text;
 	ColumnIndices.clear();
@@ -136,21 +136,21 @@ bool ISQuery::Execute(QSqlDatabase& db, const QString& query_text) throw(ISQuery
 	return SqlQuery.lastError().type() == QSqlError::NoError;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::ExecuteFirst() throw(ISQueryException)
+bool ISQuery::ExecuteFirst() /*throw(ISQueryException)*/
 {
 	bool ok = Execute();
 	ok = ok && First();
 	return ok;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::ExecuteFirst(QSqlDatabase& db, const QString& query_text) throw(ISQueryException)
+bool ISQuery::ExecuteFirst(QSqlDatabase& db, const QString& query_text) /*throw(ISQueryException)*/
 {
 	bool ok = Execute(db, query_text);
 	ok == ok && First();
 	return ok;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::BindValue(const QString& name, const QVariant& value) throw(ISQueryException)
+bool ISQuery::BindValue(const QString& name, const QVariant& value) /*throw(ISQueryException)*/
 {
 	if (!SqlQuery.boundValues().contains(name))
 	{
@@ -163,7 +163,7 @@ bool ISQuery::BindValue(const QString& name, const QVariant& value) throw(ISQuer
 	return true;
 }
 //-----------------------------------------------------------------------------
-QVariant ISQuery::ReadColumn(const QString &name) throw(ISQueryException)
+QVariant ISQuery::ReadColumn(const QString &name) /*throw(ISQueryException)*/
 {
 	if (ColumnIndices.empty())
 	{
@@ -180,12 +180,12 @@ QVariant ISQuery::ReadColumn(const QString &name) throw(ISQueryException)
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISQuery::ReadColumn(int index) throw(ISQueryException)
+QVariant ISQuery::ReadColumn(int index) /*throw(ISQueryException)*/
 {
 	return SqlQuery.value(index);
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Next() throw(ISQueryException)
+bool ISQuery::Next() /*throw(ISQueryException)*/
 {
 	bool Result = SqlQuery.next();
 	if (!Result)
@@ -196,7 +196,7 @@ bool ISQuery::Next() throw(ISQueryException)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::First() throw(ISQueryException)
+bool ISQuery::First() /*throw(ISQueryException)*/
 {
 	bool Result = SqlQuery.first();
 	if (!Result)
@@ -207,7 +207,7 @@ bool ISQuery::First() throw(ISQueryException)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Previous() throw(ISQueryException)
+bool ISQuery::Previous() /*throw(ISQueryException)*/
 {
 	bool Result = SqlQuery.previous();
 	if (!Result)
@@ -218,7 +218,7 @@ bool ISQuery::Previous() throw(ISQueryException)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QSqlRecord ISQuery::GetRecord() throw(ISQueryException)
+QSqlRecord ISQuery::GetRecord() /*throw(ISQueryException)*/
 {
 	if (SqlQuery.lastError().type() == QSqlError::NoError)
 	{
@@ -293,7 +293,7 @@ void ISQuery::SetShowLongQuery(bool show)
 	ShowLongQuery = show;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::Raise() throw(ISQueryException)
+void ISQuery::Raise() /*throw(ISQueryException)*/
 {
 	if (SqlQuery.lastError().type() != QSqlError::NoError)
 	{
