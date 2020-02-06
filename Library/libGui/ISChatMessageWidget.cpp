@@ -1,5 +1,5 @@
 #include "ISChatMessageWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISQLabel.h"
 #include "ISQuery.h"
@@ -15,6 +15,8 @@
 #include "ISServiceButton.h"
 #include "ISNotificationService.h"
 #include "ISLabelLink.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHAT_MESSAGE = PREPARE_QUERY("SELECT "
 											   "chat_creationdate, "
@@ -50,7 +52,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	int ObjectID = qSelectMessage.ReadColumn("chat_objectid").toInt();
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(MARGINS_LAYOUT_4_PX);
+	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_4_PX);
 	setLayout(MainLayout);
 
 	QHBoxLayout *LayoutTop = new QHBoxLayout();
@@ -59,7 +61,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	ISServiceButton *ButtonIcon = new ISServiceButton(this);
 	ButtonIcon->setToolTip(LANG("MessageID").arg(MessageID));
 	ButtonIcon->setIcon(BUFFER_ICONS("Chat.Message"));
-	ButtonIcon->setIconSize(SIZE_16_16);
+	ButtonIcon->setIconSize(DEFINES_GUI.SIZE_16_16);
 	ButtonIcon->setFlat(true);
 	ButtonIcon->setCursor(CURSOR_POINTING_HAND);
 	ButtonIcon->setMenu(new QMenu(ButtonIcon));
@@ -74,17 +76,17 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 
 	if (UserOnline)
 	{
-		LabelOnline->setPixmap(BUFFER_ICONS("ChatUser.Online").pixmap(SIZE_10_10));
+		LabelOnline->setPixmap(BUFFER_ICONS("ChatUser.Online").pixmap(DEFINES_GUI.SIZE_10_10));
 		LabelOnline->setToolTip(LANG("ChatForm.User.Online"));
 	}
 	else
 	{
-		LabelOnline->setPixmap(BUFFER_ICONS("ChatUser.Offline").pixmap(SIZE_10_10));
+		LabelOnline->setPixmap(BUFFER_ICONS("ChatUser.Offline").pixmap(DEFINES_GUI.SIZE_10_10));
 		LabelOnline->setToolTip(LANG("ChatForm.User.Offline"));
 	}
 
 	QLabel *LabelUser = new QLabel(UserFullName + ':', this);
-	LabelUser->setFont(FONT_APPLICATION_BOLD);
+	LabelUser->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LayoutTop->addWidget(LabelUser);
 
 	LayoutTop->addStretch();
@@ -111,7 +113,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 			LabelMessage = new QLabel(this);
 			LabelMessage->setTextInteractionFlags(Qt::TextSelectableByMouse);
 			LabelMessage->setCursor(CURSOR_I_BEAM);
-			LabelMessage->setFont(FONT_TAHOMA_10);
+			LabelMessage->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 		}
 		
 		LabelMessage->setText(Message);
@@ -229,7 +231,7 @@ void ISChatMessageWidget::OpenFile()
 			QByteArray ByteArray = qSelectFile.ReadColumn("chat_file").toByteArray();
 			QString FileName = qSelectFile.ReadColumn("chat_filename").toString();
 
-			QFile File(PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + QFileInfo(FileName).suffix());
+			QFile File(DEFINES_CORE.PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + QFileInfo(FileName).suffix());
 			if (File.open(QIODevice::WriteOnly))
 			{
 				File.write(ByteArray);

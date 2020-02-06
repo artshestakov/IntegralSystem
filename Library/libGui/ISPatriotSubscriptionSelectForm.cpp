@@ -1,11 +1,13 @@
 #include "ISPatriotSubscriptionSelectForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISPushButton.h"
 #include "ISButtonClose.h"
 #include "ISPatriotHelper.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_SUBSCRIPTION = PREPARE_QUERY("SELECT sbsr_id, sbtp_name, sbtp_count, sbsr_leftcount, sbsr_nowexist "
 											   "FROM subscriptions "
@@ -18,7 +20,7 @@ static QString QS_SUBSCRIPTION = PREPARE_QUERY("SELECT sbsr_id, sbtp_name, sbtp_
 ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &Barcode, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("Patriot.SubscriptionSelect"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	GetMainLayout()->addWidget(new QLabel(LANG("Patriot.SelectSebscriptionClientForVisit") + ':', this));
 
@@ -48,7 +50,7 @@ ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &
 			
 			if (NowExist)
 			{
-				Label->setFont(FONT_APPLICATION_BOLD);
+				Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 				PushButton->setText(LANG("Patriot.CloseVisit"));
 				connect(PushButton, &ISPushButton::clicked, this, &ISPatriotSubscriptionSelectForm::CloseVisit);
 			}

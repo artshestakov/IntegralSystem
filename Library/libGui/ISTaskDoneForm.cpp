@@ -1,10 +1,11 @@
 #include "ISTaskDoneForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISButtonDialog.h"
 #include "ISCore.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISTaskDoneForm::ISTaskDoneForm(int task_id, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -13,7 +14,7 @@ ISTaskDoneForm::ISTaskDoneForm(int task_id, QWidget *parent) : ISInterfaceDialog
 	setWindowTitle(LANG("Task.ResolutionTask"));
 	setWindowIcon(BUFFER_ICONS("Task"));
 	setFixedWidth(550);
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QVBoxLayout *LayoutGroupBox = new QVBoxLayout();

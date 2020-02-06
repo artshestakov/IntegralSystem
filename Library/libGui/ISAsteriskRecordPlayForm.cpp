@@ -1,13 +1,13 @@
 #include "ISAsteriskRecordPlayForm.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISButtonClose.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISAsteriskRecordPlayForm::ISAsteriskRecordPlayForm(const QString &FilePath, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("ReproductionAsteriskRecord"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 	ForbidResize();
 
 	PlayerWidget = new ISPlayerWidget(FilePath, true, this);

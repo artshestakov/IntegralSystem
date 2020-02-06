@@ -1,5 +1,5 @@
 #include "ISDesktopInformResource.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
@@ -10,6 +10,7 @@
 #include "ISBuffer.h"
 #include "ISPushButton.h"
 #include "ISSystem.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QI_CALL_HISTORY = PREPARE_QUERY("INSERT INTO callhistory(clhs_organization, clhs_phone, clhs_result) "
 											   "VALUES(:Organization, :Phone, (SELECT clrs_id FROM callresult WHERE clrs_uid = '{5A92BB6B-9D51-4189-8BCE-787792964C99}')) "
@@ -33,7 +34,7 @@ static QString QU_DESKTOP_DAY_NOTE = PREPARE_QUERY("UPDATE desktopdaynote SET "
 ISDesktopInformResource::ISDesktopInformResource(QWidget *parent) : QWidget(parent)
 {
 	MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	LayoutCentral = new QHBoxLayout();
@@ -112,7 +113,7 @@ void ISDesktopInformResource::CreateCentralPanel()
 void ISDesktopInformResource::CreateRightPanel()
 {
 	QVBoxLayout *LayoutGroupBox = new QVBoxLayout();
-	LayoutGroupBox->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	LayoutGroupBox->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	QGroupBox *GroupBoxCallHistory = new QGroupBox(this);
 	GroupBoxCallHistory->setTitle(LANG("CallHistory"));
@@ -125,7 +126,7 @@ void ISDesktopInformResource::CreateRightPanel()
 	LayoutGroupBox->addWidget(ListViewAllCalls);
 
 	ListViewOrganizationCalls = new ISListViewWidget(ISMetaData::GetInstanse().GetMetaQuery("CallHistoryOrganization"), GroupBoxCallHistory);
-	ListViewOrganizationCalls->AddCondition(":Date", DATE_TODAY);
+	ListViewOrganizationCalls->AddCondition(":Date", QDate::currentDate());
 	LayoutGroupBox->addWidget(ListViewOrganizationCalls);
 }
 //-----------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 #include "ISUserStatusForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -32,10 +33,10 @@ ISUserStatusForm::ISUserStatusForm(QWidget *parent) : ISInterfaceDialogForm(pare
 {
 	setWindowTitle(LANG("StatusUser"));
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	QLabel *LabelCurrentStatus = new QLabel(this);
-	LabelCurrentStatus->setFont(FONT_TAHOMA_10_BOLD);
+	LabelCurrentStatus->setFont(DEFINES_GUI.FONT_TAHOMA_10_BOLD);
 	LabelCurrentStatus->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	GetMainLayout()->addWidget(LabelCurrentStatus);
 

@@ -1,5 +1,6 @@
 #include "ISLockForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -22,16 +23,16 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	connect(this, &ISLockForm::AnimationFinished, this, &ISLockForm::close);
 
 	QLabel *LabelLogo = new QLabel(this);
-	LabelLogo->setPixmap(BUFFER_PIXMAPS("BannerText").scaled(SIZE_450_450, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	LabelLogo->setPixmap(BUFFER_PIXMAPS("BannerText").scaled(DEFINES_GUI.SIZE_450_450, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 	GetMainLayout()->addWidget(LabelLogo);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 	GetMainLayout()->addLayout(Layout);
 
 	QLabel *LabelLock = new QLabel(this);
 	LabelLock->setWordWrap(true);
-	LabelLock->setFont(FONT_APPLICATION_BOLD);
+	LabelLock->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelLock->setText(LANG("ApplicationLock"));
 	Layout->addWidget(LabelLock);
 
@@ -42,7 +43,7 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	Layout->addWidget(GroupBox);
 
 	QLabel *LabelUser = new QLabel(this);
-	LabelUser->setFont(FONT_APPLICATION_BOLD);
+	LabelUser->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelUser->setText(ISMetaUser::GetInstance().GetData()->FullName);
 	FormLayout->addRow(LANG("User") + ':', LabelUser);
 

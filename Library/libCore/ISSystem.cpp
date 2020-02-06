@@ -1,5 +1,6 @@
 #include "ISSystem.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
@@ -83,7 +84,7 @@ QString ISSystem::FormatQFuncInfo(const QString &QFuncInfo, ISNamespace::Functio
 //-----------------------------------------------------------------------------
 QString ISSystem::GetCurrentDayOfWeekName()
 {
-	QString DayOfWeekName = QDate::longDayName(DATE_TODAY.dayOfWeek());
+	QString DayOfWeekName = QDate::longDayName(QDate::currentDate().dayOfWeek());
 	BeginSymbolToUpper(DayOfWeekName);
 	return DayOfWeekName;
 }
@@ -224,7 +225,7 @@ void ISSystem::ExecLoop(unsigned long Milliseconds)
 //-----------------------------------------------------------------------------
 bool ISSystem::AddressIsList(const QString &AddressString)
 {
-	return AddressString.contains(SYMBOL_FIAS_SPLIT);
+	return AddressString.contains(DEFINES_CORE.SYMBOL_FIAS_SPLIT);
 }
 //-----------------------------------------------------------------------------
 bool ISSystem::CreateDir(const QString &DirPath)

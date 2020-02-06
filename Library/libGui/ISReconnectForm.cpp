@@ -1,4 +1,5 @@
 #include "ISReconnectForm.h"
+#include "ISDefinesGui.h"
 #include "ISCore.h"
 #include "ISLocalization.h"
 #include "ISMetaUser.h"
@@ -7,10 +8,11 @@
 #include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISConfig.h"
-#include "EXDefines.h"
 #include "ISControls.h"
 #include "ISDatabase.h"
 #include "ISMemoryObjects.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 {
@@ -32,7 +34,7 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 
 	Layout = new QVBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
 	ProgressBar = new QProgressBar(this);
@@ -42,24 +44,24 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	Layout->addWidget(ProgressBar);
 
 	QLabel *LabelConnectionLost = new QLabel(this);
-	LabelConnectionLost->setFont(FONT_APPLICATION_BOLD);
+	LabelConnectionLost->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelConnectionLost->setText(LANG("ConnectionDatabaseLost"));
 	Layout->addWidget(LabelConnectionLost, 0, Qt::AlignLeft);
 
 	AddLabel(LANG("CausesReconnect") + ':');
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotLocalNet") + ';');
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotEntered") + ';');
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.PatchCord.NotConnected") + ';');
-	AddLabel(SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Service.NotEntered") + ';');
+	AddLabel(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotLocalNet") + ';');
+	AddLabel(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotEntered") + ';');
+	AddLabel(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.PatchCord.NotConnected") + ';');
+	AddLabel(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Service.NotEntered") + ';');
 
 	Layout->addWidget(ISControls::CreateHorizontalLine(this));
 
 	QHBoxLayout *LayoutReconnect = new QHBoxLayout();
-	LayoutReconnect->setContentsMargins(MARGINS_LAYOUT_NULL);
+	LayoutReconnect->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	Layout->addLayout(LayoutReconnect);
 
 	QLabel *LabelStatus = new QLabel(this);
-	LabelStatus->setFont(FONT_APPLICATION_BOLD);
+	LabelStatus->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelStatus->setText(LANG("Status.Current") + ':');
 	LayoutReconnect->addWidget(LabelStatus);
 

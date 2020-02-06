@@ -1,6 +1,8 @@
 #include "ISBaseTableView.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISStyleSheet.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISBaseTableView::ISBaseTableView(QWidget *parent) : QTableView(parent)
 {
@@ -26,7 +28,7 @@ ISBaseTableView::ISBaseTableView(QWidget *parent) : QTableView(parent)
 	ButtonCorner = new ISPushButton(this);
 	ButtonCorner->setCursor(CURSOR_POINTING_HAND);
 	ButtonCorner->setFlat(true);
-	ButtonCorner->setFont(FONT_TAHOMA_8);
+	ButtonCorner->setFont(DEFINES_GUI.FONT_TAHOMA_8);
 	connect(ButtonCorner, &QPushButton::clicked, this, &ISBaseTableView::CornerClicked);
 }
 //-----------------------------------------------------------------------------

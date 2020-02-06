@@ -1,7 +1,7 @@
 #include "ISPassword.h"
-#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISUuid.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 QString ISPassword::GeneratePassword()
 {

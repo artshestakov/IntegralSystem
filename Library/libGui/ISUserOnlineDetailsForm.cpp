@@ -1,12 +1,13 @@
 #include "ISUserOnlineDetailsForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISButtonClose.h"
 #include "ISQuery.h"
 #include "ISGui.h"
-#include "ISGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_PG_STAT_ACTIVITY = PREPARE_QUERY("SELECT "
 												   "userfullname(:UserID), "
@@ -26,7 +27,7 @@ ISUserOnlineDetailsForm::ISUserOnlineDetailsForm(int user_id, QWidget *parent) :
 {
 	setWindowTitle(LANG("MonitorActivity.DetailsSession"));
 	setWindowIcon(BUFFER_ICONS("Information"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);

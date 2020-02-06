@@ -1,9 +1,11 @@
 #include "ISUserEdit.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMetaUser.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, userfullname(usrs_id) "
 										"FROM _users "
@@ -21,7 +23,7 @@ ISUserEdit::ISUserEdit(QWidget *parent) : ISComboEdit(parent)
 	{
 		if (qSelect.GetCountResultRows())
 		{
-			AddItem(QIcon(BUFFER_ICONS("Arrow.Down").pixmap(SIZE_16_16)), LANG("SelectUser"), QVariant());
+			AddItem(QIcon(BUFFER_ICONS("Arrow.Down").pixmap(DEFINES_GUI.SIZE_16_16)), LANG("SelectUser"), QVariant());
 			while (qSelect.Next())
 			{
 				QString UserFullName = qSelect.ReadColumn("userfullname").toString();

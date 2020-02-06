@@ -1,7 +1,7 @@
 #include "ISMetaUuidCheckeder.h"
-#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISAssert.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISMetaUuidCheckeder::ISMetaUuidCheckeder()
 {

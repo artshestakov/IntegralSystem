@@ -1,5 +1,4 @@
 #include "ISDiscussionListForm.h"
-#include "EXDefines.h"
 #include "ISDiscussionObjectForm.h"
 //-----------------------------------------------------------------------------
 ISDiscussionListForm::ISDiscussionListForm(QWidget *parent) : ISListBaseForm("_Discussion", parent)

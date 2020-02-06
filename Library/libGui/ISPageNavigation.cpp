@@ -1,5 +1,7 @@
 #include "ISPageNavigation.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISInputDialog.h"
@@ -13,7 +15,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 	Offset = 0;
 
 	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	setLayout(Layout);
 
 	ButtonBegin = new ISServiceButton(this);
@@ -21,7 +23,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 	ButtonBegin->setToolTip(LANG("Page.Begin"));
 	ButtonBegin->setIcon(BUFFER_ICONS("PageNavigation.Begin"));
 	ButtonBegin->setFlat(true);
-	ButtonBegin->setFixedSize(SIZE_22_22);
+	ButtonBegin->setFixedSize(DEFINES_GUI.SIZE_22_22);
 	ButtonBegin->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonBegin, &QToolButton::clicked, this, &ISPageNavigation::BeginClicked);
 	Layout->addWidget(ButtonBegin);
@@ -31,7 +33,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 	ButtonPrevious->setToolTip(LANG("Page.Previous"));
 	ButtonPrevious->setIcon(BUFFER_ICONS("PageNavigation.Previous"));
 	ButtonPrevious->setFlat(true);
-	ButtonPrevious->setFixedSize(SIZE_22_22);
+	ButtonPrevious->setFixedSize(DEFINES_GUI.SIZE_22_22);
 	ButtonPrevious->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonPrevious, &QToolButton::clicked, this, &ISPageNavigation::PreviousClicked);
 	Layout->addWidget(ButtonPrevious);
@@ -47,7 +49,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 	ButtonNext->setToolTip(LANG("Page.Next"));
 	ButtonNext->setIcon(BUFFER_ICONS("PageNavigation.Next"));
 	ButtonNext->setFlat(true);
-	ButtonNext->setFixedSize(SIZE_22_22);
+	ButtonNext->setFixedSize(DEFINES_GUI.SIZE_22_22);
 	ButtonNext->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonNext, &QToolButton::clicked, this, &ISPageNavigation::NextClicked);
 	Layout->addWidget(ButtonNext);
@@ -56,7 +58,7 @@ ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
 	ButtonEnd->setToolTip(LANG("Page.End"));
 	ButtonEnd->setIcon(BUFFER_ICONS("PageNavigation.End"));
 	ButtonEnd->setFlat(true);
-	ButtonEnd->setFixedSize(SIZE_22_22);
+	ButtonEnd->setFixedSize(DEFINES_GUI.SIZE_22_22);
 	ButtonEnd->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonEnd, &QToolButton::clicked, this, &ISPageNavigation::EndClicked);
 	Layout->addWidget(ButtonEnd);

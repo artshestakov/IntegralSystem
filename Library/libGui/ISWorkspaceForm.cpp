@@ -1,5 +1,5 @@
 #include "ISWorkspaceForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISMemoryObjects.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISUserRoleEntity.h"
@@ -12,6 +12,8 @@
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISWorkspaceForm::ISWorkspaceForm(QWidget *parent) : ISParagraphBaseForm(parent)
 {
@@ -20,7 +22,7 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	ISMemoryObjects::GetInstance().SetWorkspaceForm(this);
 
 	Layout = new QVBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	Layout->setSpacing(0);
 	setLayout(Layout);
 
@@ -91,7 +93,7 @@ void ISWorkspaceForm::CreateTabWidget()
 	{
 		QLabel *Label = new QLabel(TabWidget);
 		Label->setText(LANG("NotAccessSystems"));
-		Label->setFont(FONT_TAHOMA_12_BOLD);
+		Label->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 		dynamic_cast<QVBoxLayout*>(TabWidget->GetMainTab()->layout())->addWidget(Label, 0, Qt::AlignCenter);
 	}
 }

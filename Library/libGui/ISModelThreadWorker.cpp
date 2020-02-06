@@ -1,10 +1,10 @@
 #include "ISModelThreadWorker.h"
-#include "EXDefines.h"
 #include "ISDatabase.h"
 #include "ISCountingTime.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISModelThreadWorker::ISModelThreadWorker(QObject *parent) : QObject(parent)
 {

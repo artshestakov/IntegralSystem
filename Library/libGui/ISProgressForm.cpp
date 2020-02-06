@@ -1,21 +1,22 @@
 #include "ISProgressForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
 #include "ISGui.h"
 #include "ISButtonClose.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISProgressForm::ISProgressForm(int Minimum, int Maximum, QWidget *parent) : QProgressDialog(parent)
 {
 	Value = 0;
 	setWindowTitle(LANG("PleaseWait"));
 	setWindowModality(Qt::WindowModal);
-	setFixedSize(SIZE_PROGRESS_FORM);
+	setFixedSize(DEFINES_GUI.SIZE_PROGRESS_FORM);
 	setMinimum(Minimum);
 	setMaximum(Maximum);
 
-	ISControls::SetBackgroundColorWidget(this, COLOR_WHITE);
+	ISControls::SetBackgroundColorWidget(this, DEFINES_GUI.COLOR_WHITE);
 
 	LabelStatus = new QLabel(this);
 	LabelStatus->setAlignment(Qt::AlignLeft);

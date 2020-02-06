@@ -1,8 +1,9 @@
 #include "ISDateTimeEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDateTimeEdit::ISDateTimeEdit(QWidget *parent) : ISFieldEditBase(parent)
 {

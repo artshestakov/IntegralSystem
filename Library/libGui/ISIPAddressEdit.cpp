@@ -1,5 +1,5 @@
 #include "ISIPAddressEdit.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISIPAddressEdit::ISIPAddressEdit(QWidget *parent) : ISLineEdit(parent)
 {

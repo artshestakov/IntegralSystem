@@ -1,5 +1,5 @@
 #include "ISKPPEdit.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISKPPEdit::ISKPPEdit(QWidget *parent) : ISLineEdit(parent)

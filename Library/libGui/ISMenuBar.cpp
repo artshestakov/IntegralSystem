@@ -1,14 +1,15 @@
 #include "ISMenuBar.h"
+#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-#include "EXDefines.h"
 #include "ISStyleSheet.h"
 #include "ISMetaUser.h"
 #include "ISSettings.h"
 #include "ISFastAccessEntity.h"
 #include "ISMenuFastAccess.h"
 #include "ISParagraphEntity.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 {
@@ -17,11 +18,11 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	setAutoFillBackground(true);
 
 	QPalette Palette(palette());
-	Palette.setColor(QPalette::Background, COLOR_MAIN_MENU_BAR);
+	Palette.setColor(QPalette::Background, DEFINES_GUI.COLOR_MAIN_MENU_BAR);
 	setPalette(Palette);
 
 	MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	ButtonMenu = new ISButtonMainMenu(this);
@@ -84,14 +85,14 @@ ISButtonNotify* ISMenuBar::GetbuttonNotify()
 void ISMenuBar::CreateFastAccessMenu()
 {
 	QIcon Icon = BUFFER_ICONS("MainPanel.FastAccess");
-	Icon.addPixmap(BUFFER_ICONS("MainPanel.FastAccess.Active").pixmap(SIZE_24_24), QIcon::Active);
+	Icon.addPixmap(BUFFER_ICONS("MainPanel.FastAccess.Active").pixmap(DEFINES_GUI.SIZE_24_24), QIcon::Active);
 
 	QToolButton *ButtonFastMenu = new QToolButton(this);
 	ButtonFastMenu->setText(LANG("FastAccess"));
-	ButtonFastMenu->setFont(FONT_TAHOMA_10);
+	ButtonFastMenu->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 	ButtonFastMenu->setAutoRaise(true);
 	ButtonFastMenu->setIcon(Icon);
-	ButtonFastMenu->setIconSize(SIZE_25_25);
+	ButtonFastMenu->setIconSize(DEFINES_GUI.SIZE_25_25);
 	ButtonFastMenu->setCursor(CURSOR_POINTING_HAND);
 	ButtonFastMenu->setPopupMode(QToolButton::InstantPopup);
 	ButtonFastMenu->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -174,14 +175,14 @@ void ISMenuBar::CreateButtonsPanel()
 QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &IconName)
 {
 	QIcon Icon = BUFFER_ICONS(IconName);
-	Icon.addPixmap(BUFFER_ICONS(IconName + ".Active").pixmap(SIZE_24_24), QIcon::Active);
+	Icon.addPixmap(BUFFER_ICONS(IconName + ".Active").pixmap(DEFINES_GUI.SIZE_24_24), QIcon::Active);
 
 	QToolButton *ToolButton = new QToolButton(this);
 	ToolButton->setToolTip(ToolTip);
 	ToolButton->setIcon(Icon);
 	ToolButton->setAutoRaise(true);
 	ToolButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	ToolButton->setIconSize(SIZE_24_24);
+	ToolButton->setIconSize(DEFINES_GUI.SIZE_24_24);
 	ToolButton->setCursor(CURSOR_POINTING_HAND);
 	ToolButton->setStyleSheet(STYLE_SHEET("ISMenuBar.Button"));
 	LayoutButtons->addWidget(ToolButton);
@@ -218,13 +219,13 @@ void ISMenuBar::InstallFontMenuItems()
 {
 	for (QAction *ActionMainItem : MainMenu->actions())
 	{
-		ActionMainItem->setFont(FONT_TAHOMA_10);
+		ActionMainItem->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 
 		if (ActionMainItem->menu())
 		{
 			for (QAction *ActionChildItem : ActionMainItem->menu()->actions())
 			{
-				ActionChildItem->setFont(FONT_TAHOMA_10);
+				ActionChildItem->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 			}
 		}
 	}

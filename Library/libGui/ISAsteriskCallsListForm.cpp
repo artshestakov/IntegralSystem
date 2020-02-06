@@ -1,5 +1,5 @@
 #include "ISAsteriskCallsListForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
@@ -15,6 +15,8 @@
 #include "ISSystem.h"
 #include "ISProtocol.h"
 #include "ISUserRoleEntity.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHILD_COUNT = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _asteriskcalls "
@@ -113,22 +115,22 @@ void ISAsteriskCallsListForm::CreateDetailsPanel()
 	LayoutInfo->addWidget(GroupBox);
 
 	LabelDateTime = new QLabel(GroupBox);
-	LabelDateTime->setFont(FONT_APPLICATION_BOLD);
+	LabelDateTime->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 	LabelDirection = new QLabel(GroupBox);
-	LabelDirection->setFont(FONT_APPLICATION_BOLD);
+	LabelDirection->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 	LabelSubscriber = new QLabel(GroupBox);
-	LabelSubscriber->setFont(FONT_APPLICATION_BOLD);
+	LabelSubscriber->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 	LabelNumber = new QLabel(GroupBox);
-	LabelNumber->setFont(FONT_APPLICATION_BOLD);
+	LabelNumber->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 	LabelDuration = new QLabel(GroupBox);
-	LabelDuration->setFont(FONT_APPLICATION_BOLD);
+	LabelDuration->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 	LabelStatus = new QLabel(GroupBox);
-	LabelStatus->setFont(FONT_APPLICATION_BOLD);
+	LabelStatus->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 	QFormLayout *FormLayoutLeft = new QFormLayout();
 	FormLayoutLeft->addRow(LANG("Call.DateTime") + ':', LabelDateTime);
@@ -312,7 +314,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 
 	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
 	{
-		QString FilePath = PATH_TEMP_DIR + '/' + GetCurrentRecordValueDB("UID").toString() + SYMBOL_POINT + EXTENSION_WAV;
+		QString FilePath = DEFINES_CORE.PATH_TEMP_DIR + '/' + GetCurrentRecordValueDB("UID").toString() + SYMBOL_POINT + EXTENSION_WAV;
 		if (QFile::exists(FilePath))
 		{
 			Play(FilePath);
@@ -335,7 +337,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 void ISAsteriskCallsListForm::SaveToStorage()
 {
 	ISUuid UID = GetCurrentRecordValueDB("UID");
-	QString FilePath = PATH_TEMP_DIR + '/' + UID + SYMBOL_POINT + EXTENSION_WAV;
+	QString FilePath = DEFINES_CORE.PATH_TEMP_DIR + '/' + UID + SYMBOL_POINT + EXTENSION_WAV;
 
 	if (!QFile::exists(FilePath))
 	{

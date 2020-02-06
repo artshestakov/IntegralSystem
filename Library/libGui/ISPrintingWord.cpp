@@ -1,5 +1,4 @@
 #include "ISPrintingWord.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISAssert.h"

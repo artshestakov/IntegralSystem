@@ -1,5 +1,5 @@
 #include "ISICQEdit.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISICQEdit::ISICQEdit(QWidget *parent) : ISLineEdit(parent)

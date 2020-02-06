@@ -1,9 +1,10 @@
 #include "ISTaskCommentsTab.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISQuery.h"
 #include "ISTaskCommentWidget.h"
 #include "ISControls.h"
 #include "ISSystem.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_COMMENTS = PREPARE_QUERY("SELECT tcom_creationdate, userfullname(tcom_user), tcom_comment "
 										   "FROM _taskcomment "
@@ -14,7 +15,7 @@ static QString QS_COMMENTS = PREPARE_QUERY("SELECT tcom_creationdate, userfullna
 ISTaskCommentsTab::ISTaskCommentsTab(int task_id, QTabWidget *parent) : ISTaskTabBase(task_id, parent)
 {
 	LayoutComments = new QVBoxLayout();
-	LayoutComments->setContentsMargins(MARGINS_LAYOUT_NULL);
+	LayoutComments->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	LayoutComments->addStretch();
 
 	ScrollAreaComments = new ISScrollArea(this);

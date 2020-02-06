@@ -1,9 +1,10 @@
 #include "ISListBaseForm.h"
+#include "ISDefinesGui.h"
 #include "ISAssert.h"
 #include "ISTrace.h"
 #include "ISCore.h"
 #include "ISSettings.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISSortingBuffer.h"
 #include "ISProtocol.h"
@@ -370,7 +371,7 @@ void ISListBaseForm::VisibleIndicatorWidget()
 	}
 	else
 	{
-		ListIndicatorWidget->SetPixmap(BUFFER_ICONS("LabelNoDataTable").pixmap(SIZE_32_32));
+		ListIndicatorWidget->SetPixmap(BUFFER_ICONS("LabelNoDataTable").pixmap(DEFINES_GUI.SIZE_32_32));
 		ListIndicatorWidget->SetText(LANG("NoData"));
 		ListIndicatorWidget->setCursor(CURSOR_WHATS_THIS);
 		ListIndicatorWidget->setToolTip(LANG("ClickCreateFromCreateObject"));
@@ -1536,7 +1537,7 @@ void ISListBaseForm::CreateActions()
 {
 	//Создать
 	QAction *ActionCreate = ISControls::CreateActionCreate(this);
-	ActionCreate->setFont(FONT_APPLICATION_BOLD);
+	ActionCreate->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	connect(ActionCreate, &QAction::triggered, this, &ISListBaseForm::Create);
 	Actions.insert(ISNamespace::AT_Create, ActionCreate);
 
@@ -1869,7 +1870,7 @@ void ISListBaseForm::CreateStatusBar()
 	}
 
 	LabelPeriod = new QLabel(StatusBar);
-	LabelPeriod->setFont(FONT_APPLICATION_BOLD);
+	LabelPeriod->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelPeriod->setVisible(false);
 	StatusBar->addWidget(LabelPeriod);
 
@@ -1879,7 +1880,7 @@ void ISListBaseForm::CreateStatusBar()
 
 	LabelSearchResult = new QLabel(StatusBar);
 	LabelSearchResult->setText(LANG("Search.Results.Empty"));
-	LabelSearchResult->setFont(FONT_APPLICATION_BOLD);
+	LabelSearchResult->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelSearchResult->setVisible(false);
 	StatusBar->addPermanentWidget(LabelSearchResult);
 

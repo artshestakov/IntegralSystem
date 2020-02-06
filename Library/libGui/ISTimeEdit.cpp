@@ -1,7 +1,7 @@
 #include "ISTimeEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISTimeEdit::ISTimeEdit(QWidget *parent) : ISDateTimeEdit(parent)
 {

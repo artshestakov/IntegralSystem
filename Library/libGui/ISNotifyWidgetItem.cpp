@@ -1,5 +1,7 @@
 #include "ISNotifyWidgetItem.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISServiceButton.h"
@@ -11,7 +13,7 @@ ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id
 	ID = notification_user_id;
 
 	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 	setLayout(Layout);
 
 	QVBoxLayout *LayoutLeft = new QVBoxLayout();
@@ -19,7 +21,7 @@ ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id
 
 	QLabel *LabelDateTime = new QLabel(this);
 	LabelDateTime->setText(ISGui::ConvertDateTimeToString(DateTime, DATE_FORMAT_V2, TIME_FORMAT_V1));
-	LabelDateTime->setFont(FONT_APPLICATION_BOLD);
+	LabelDateTime->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LayoutLeft->addWidget(LabelDateTime, 0, Qt::AlignLeft);
 	
 	QLabel *LabelMessage = new QLabel(this);

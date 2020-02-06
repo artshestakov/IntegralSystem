@@ -1,5 +1,4 @@
 #include "ISOrganizationListForm.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISUserEdit.h"

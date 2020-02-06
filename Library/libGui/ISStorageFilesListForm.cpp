@@ -1,5 +1,4 @@
 #include "ISStorageFilesListForm.h"
-#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISCore.h"
 #include "ISLocalization.h"
@@ -15,6 +14,7 @@
 #include "ISInputDialog.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size) "
 											"SELECT sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size "
@@ -116,7 +116,7 @@ void ISStorageFilesListForm::CreateCopy()
 //-----------------------------------------------------------------------------
 void ISStorageFilesListForm::OpenFile()
 {
-	QFile File(PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + GetCurrentRecordValue("Expansion").toString());
+	QFile File(DEFINES_CORE.PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + GetCurrentRecordValue("Expansion").toString());
 	if (!File.open(QIODevice::WriteOnly))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(File.fileName()), File.errorString());

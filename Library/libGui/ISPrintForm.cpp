@@ -1,8 +1,10 @@
 #include "ISPrintForm.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISPrintingEntity.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISPrintForm::ISPrintForm(const QString &TableName, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -11,7 +13,7 @@ ISPrintForm::ISPrintForm(const QString &TableName, QWidget *parent) : ISInterfac
 	setWindowTitle(LANG("PrintForms"));
 	setWindowIcon(BUFFER_ICONS("Print"));
 	
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setCursor(CURSOR_POINTING_HAND);

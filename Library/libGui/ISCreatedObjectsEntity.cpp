@@ -1,9 +1,10 @@
 #include "ISCreatedObjectsEntity.h"
-#include "EXDefines.h"
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
 #include "ISInterfaceForm.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISCreatedObjectsEntity::ISCreatedObjectsEntity() : QObject()
 {
@@ -43,7 +44,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
 		if (ObjectFormBase->property("ModificationFlag").toBool())
 		{
 			CountNotSaved++;
-			DetailedText += QString::number(i + 1) + ") " + ObjectFormBase->windowTitle().remove(SYMBOL_OBJECT_CHANGED) + ";\n";
+			DetailedText += QString::number(i + 1) + ") " + ObjectFormBase->windowTitle().remove(DEFINES_CORE.SYMBOL_OBJECT_CHANGED) + ";\n";
 		}
 	}
 

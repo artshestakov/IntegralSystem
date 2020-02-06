@@ -1,15 +1,17 @@
 #include "ISSplashScreen.h"
+#include "ISDefinesGui.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
 #include "ISDebug.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)
 {
-	setFont(FONT_TAHOMA_12);
+	setFont(DEFINES_GUI.FONT_TAHOMA_12);
 	setCursor(CURSOR_WAIT);
 	DefaultPixmap();
 
@@ -19,7 +21,7 @@ ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)
 	setLayout(MainLayout);
 
 	QLabel *LabelCopyright = new QLabel(this);
-	LabelCopyright->setFont(FONT_TAHOMA_8);
+	LabelCopyright->setFont(DEFINES_GUI.FONT_TAHOMA_8);
 	LabelCopyright->setText(LANG("SplashSceen.Copyright"));
 	MainLayout->addWidget(LabelCopyright, 0, Qt::AlignRight);
 
@@ -61,7 +63,7 @@ void ISSplashScreen::SetMessage(const QString &Message)
 	ProgressBar->setValue(Value);
 
 	ISDebug::ShowInfoString(Message);
-	showMessage(Message, Qt::AlignHCenter | Qt::AlignBottom, COLOR_SPLASH_SCREEN_TEXT);
+	showMessage(Message, Qt::AlignHCenter | Qt::AlignBottom, DEFINES_GUI.COLOR_SPLASH_SCREEN_TEXT);
 	activateWindow();
 
 	ISGui::RepaintWidget(ProgressBar, false);

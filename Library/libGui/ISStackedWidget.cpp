@@ -1,10 +1,11 @@
 #include "ISStackedWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISStackedWidget::ISStackedWidget(QWidget *parent) : QStackedWidget(parent)
 {
 	MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 
 	MainWidget = new QWidget(this);
 	MainWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -13,7 +14,7 @@ ISStackedWidget::ISStackedWidget(QWidget *parent) : QStackedWidget(parent)
 
 	ScreenWidget = new QWidget(this);
 	ScreenWidget->setLayout(new QVBoxLayout());
-	ScreenWidget->layout()->setContentsMargins(MARGINS_LAYOUT_NULL);
+	ScreenWidget->layout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	addWidget(ScreenWidget);
 
 	LabelScreen = new QLabel(ScreenWidget);
@@ -49,7 +50,7 @@ void ISStackedWidget::ActivateScreenWidget()
 	QPainter Painter;
 	Painter.begin(&Image);
 	Painter.drawPixmap(0, 0, Pixmap);
-	Painter.fillRect(Image.rect(), COLOR_MAIN_WINDOW_SHADOW);
+	Painter.fillRect(Image.rect(), DEFINES_GUI.COLOR_MAIN_WINDOW_SHADOW);
 	Painter.end();
 
 	LabelScreen->setPixmap(QPixmap::fromImage(Image));

@@ -1,6 +1,4 @@
 #include "ISCoreCenterSeven.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISNotifySender.h"
 #include "ISSystem.h"
 #include "ISPhoneNumberParser.h"
@@ -10,6 +8,7 @@
 #include "ISMetaData.h"
 #include "ISLicense.h"
 #include "ISSettingsDatabase.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_BRANCH = PREPARE_QUERY("SELECT (SELECT ptnt_id FROM patients WHERE concat(ptnt_phonemain, ptnt_phoneother) LIKE '%' || :Phone || '%' ), brch_name, brch_administrator "
 										 "FROM branches "

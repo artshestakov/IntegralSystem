@@ -1,104 +1,24 @@
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
-bool IS_GUI_APPLICATION;
-QString APPLICATION_NAME;
-QString PATH_APPLICATION_DIR;
-QString PATH_APPLICATION_FILE;
-QString PATH_LOGS_DIR;
-QString PATH_TEMP_DIR;
-QString PATH_TRANSLATIONS_DIR;
-QString PATH_CONFIG_FILE;
-QString SYMBOL_CIRCLE;
-QString SYMBOL_MULTIPLY;
-QString SYMBOL_DIVIDE;
-QString SYMBOL_OBJECT_CHANGED;
-QString SYMBOL_SPACE_HIDE;
-QString SYMBOL_FIAS_SPLIT;
-#ifdef GUI
-QStringList AVIABLE_IMAGE_EXTENSION;
-QMargins MARGINS_LAYOUT_NULL;
-QMargins MARGINS_LAYOUT_1_PX;
-QMargins MARGINS_LAYOUT_2_PX;
-QMargins MARGINS_LAYOUT_4_PX;
-QMargins MARGINS_LAYOUT_5_PX;
-QMargins MARGINS_LAYOUT_10_PX;
-QSize SIZE_MAIN_WINDOW;
-QSize SIZE_MAIN_WINDOW_MINIMUM;
-QSize SIZE_TASK_OBJECT_FORM;
-QSize SIZE_AUTHORIZATION_FORM;
-QSize SIZE_PROGRESS_FORM;
-QSize SIZE_640_480;
-QSize SIZE_500_90;
-QSize SIZE_450_450;
-QSize SIZE_550_300;
-QSize SIZE_200_200;
-QSize SIZE_100_100;
-QSize SIZE_64_64;
-QSize SIZE_45_45;
-QSize SIZE_32_32;
-QSize SIZE_25_25;
-QSize SIZE_24_24;
-QSize SIZE_22_22;
-QSize SIZE_20_20;
-QSize SIZE_18_18;
-QSize SIZE_16_16;
-QSize SIZE_10_10;
-QColor EDIT_WIDGET_COLOR_RED;
-QColor COLOR_BACKGROUND_INTERFACE;
-QColor COLOR_MAIN_MENU_BAR;
-QColor COLOR_WIDGET_BOX_TITLE;
-QColor COLOR_CALENDAR_SELECTED_DATE_BACKGROUND;
-QColor COLOR_CALENDAR_EVENT_FORM_FLASH;
-QColor COLOR_CALENDAR_CELL_BACKGROUP;
-QColor COLOR_CAALENDAR_DAY_NOT_CURRENT_MONTH;
-QColor COLOR_SPLASH_SCREEN_TEXT;
-QColor COLOR_MAIN_WINDOW_SHADOW;
-QColor COLOR_POPUP_BRUSH;
-QColor COLOR_FLASH_INCOMING_FORM;
-QColor COLOR_WHITE;
-QColor COLOR_RED;
-QColor COLOR_BLUE;
-QColor COLOR_BLACK;
-QColor COLOR_DARK_GREEN;
-QColor COLOR_LIGHT_GRAY;
-QColor COLOR_MONITOR_USER;
-QColor COLOR_NULL;
-QFont FONT_COURIER_12;
-QFont FONT_TAHOMA_35;
-QFont FONT_TAHOMA_18;
-QFont FONT_TAHOMA_15;
-QFont FONT_TAHOMA_15_BOLD;
-QFont FONT_TAHOMA_14;
-QFont FONT_TAHOMA_14_BOLD;
-QFont FONT_TAHOMA_12;
-QFont FONT_TAHOMA_12_BOLD;
-QFont FONT_TAHOMA_11;
-QFont FONT_TAHOMA_10_BOLD;
-QFont FONT_TAHOMA_10;
-QFont FONT_TAHOMA_9;
-QFont FONT_TAHOMA_9_BOLD;
-QFont FONT_TAHOMA_8;
-QFont FONT_APPLICATION;
-QFont FONT_APPLICATION_BOLD;
-#endif
-//-----------------------------------------------------------------------------
-void DefinesInitialize(bool val)
+ISDefinesGui::ISDefinesGui()
 {
-	IS_GUI_APPLICATION = val;
-	APPLICATION_NAME = QCoreApplication::applicationName();
-	PATH_APPLICATION_DIR = QCoreApplication::applicationDirPath();
-	PATH_APPLICATION_FILE = QCoreApplication::applicationFilePath();
-	PATH_LOGS_DIR = PATH_APPLICATION_DIR + "/Logs";
-	PATH_TEMP_DIR = PATH_APPLICATION_DIR + "/Temp";
-	PATH_TRANSLATIONS_DIR = PATH_APPLICATION_DIR + "/translations";
-	PATH_CONFIG_FILE = PATH_APPLICATION_DIR + '/' + APPLICATION_NAME + SYMBOL_POINT + EXTENSION_INI;
-	SYMBOL_CIRCLE = QString(QChar(9679));
-	SYMBOL_MULTIPLY = QString(QChar(215));
-	SYMBOL_DIVIDE = QString(QChar(247));
-	SYMBOL_OBJECT_CHANGED = QString(" {*}");
-	SYMBOL_SPACE_HIDE = QString::fromLocal8Bit(" ");
-	SYMBOL_FIAS_SPLIT = QString(SYMBOL_COMMA + SYMBOL_SPACE_HIDE);
-#ifdef GUI
+
+}
+//-----------------------------------------------------------------------------
+ISDefinesGui::~ISDefinesGui()
+{
+
+}
+//-----------------------------------------------------------------------------
+ISDefinesGui& ISDefinesGui::Instance()
+{
+	static ISDefinesGui Defines;
+	return Defines;
+}
+//-----------------------------------------------------------------------------
+void ISDefinesGui::Init()
+{
 	AVIABLE_IMAGE_EXTENSION = QStringList() << EXTENSION_PNG << EXTENSION_JPEG << EXTENSION_JPG << EXTENSION_DDS << EXTENSION_GIF << EXTENSION_ICNS << EXTENSION_ICO << EXTENSION_SVG << EXTENSION_TGA << EXTENSION_TIFF << EXTENSION_WBMP << EXTENSION_BMP << EXTENSION_WEBP;
 	MARGINS_LAYOUT_NULL = QMargins();
 	MARGINS_LAYOUT_1_PX = QMargins(1, 1, 1, 1);
@@ -164,6 +84,5 @@ void DefinesInitialize(bool val)
 	FONT_TAHOMA_8 = QFont("Tahoma", 8);
 	FONT_APPLICATION = FONT_TAHOMA_9;
 	FONT_APPLICATION_BOLD = FONT_TAHOMA_9_BOLD;
-#endif
 }
 //-----------------------------------------------------------------------------

@@ -1,11 +1,10 @@
 #include "ISCoreAsteriskRecord.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISDebug.h"
 #include "ISSettingsDatabase.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
 #include "ISNetwork.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISCoreAsteriskRecord::ISCoreAsteriskRecord(int &argc, char **argv) : ISCaratCoreApplication(argc, argv)
 {

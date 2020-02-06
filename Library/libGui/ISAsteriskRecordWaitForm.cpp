@@ -1,5 +1,4 @@
 #include "ISAsteriskRecordWaitForm.h"
-#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -7,6 +6,8 @@
 #include "ISSystem.h"
 #include "ISDebug.h"
 #include "ISSettingsDatabase.h"
+#include "ISDefinesCore.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -14,7 +15,7 @@ ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id, QWi
 	UniqueID = unique_id;
 
 	setWindowTitle(LANG("AsteriskRecord.Interface.Title"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	TcpSocket = new QTcpSocket(this);
@@ -108,7 +109,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 		TcpSocket->close();
 		Label->setText(LANG("AsteriskRecord.Interface.Label.Downloaded"));
 
-		QFile FileRecord(PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + EXTENSION_WAV);
+		QFile FileRecord(DEFINES_CORE.PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + EXTENSION_WAV);
 		if (FileRecord.open(QIODevice::WriteOnly))
 		{
 			FileRecord.write(Buffer);

@@ -1,10 +1,11 @@
 #include "ISCaratForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISCheckEdit.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_uid, core_localname, crca_active "
 											 "FROM _caratcore "
@@ -25,7 +26,7 @@ static QString QU_CARAT_CORE_ACTIVE = PREPARE_QUERY("UPDATE _caratcoreactive SET
 //-----------------------------------------------------------------------------
 ISCaratForm::ISCaratForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);

@@ -1,5 +1,6 @@
 #include "ISExternalToolsForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"
@@ -30,7 +31,7 @@ ISExternalToolsForm::ISExternalToolsForm(QWidget *parent) : ISInterfaceDialogFor
 {
 	setWindowTitle(LANG("ExternalTools"));
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	QLabel *Label = new QLabel(LANG("MenuStructure") + ':', this);
 	GetMainLayout()->addWidget(Label);
@@ -141,7 +142,7 @@ void ISExternalToolsForm::Save()
 				ISQuery qUpdate(QU_EXTERNAL_TOOLS);
 				qUpdate.BindValue(":LocalName", LocalName);
 				qUpdate.BindValue(":Command", Command);
-				qUpdate.BindValue(":Icon", ISGui::PixmapToByteArray(Icon.pixmap(SIZE_32_32)));
+				qUpdate.BindValue(":Icon", ISGui::PixmapToByteArray(Icon.pixmap(DEFINES_GUI.SIZE_32_32)));
 				qUpdate.BindValue(":Order", Order);
 				qUpdate.BindValue(":UID", UID);
 				qUpdate.Execute();
@@ -151,7 +152,7 @@ void ISExternalToolsForm::Save()
 				ISQuery qInsert(QI_EXTERNAL_TOOLS);
 				qInsert.BindValue(":LocalName", LocalName);
 				qInsert.BindValue(":Command", Command);
-				qInsert.BindValue(":Icon", ISGui::PixmapToByteArray(Icon.pixmap(SIZE_32_32)));
+				qInsert.BindValue(":Icon", ISGui::PixmapToByteArray(Icon.pixmap(DEFINES_GUI.SIZE_32_32)));
 				qInsert.BindValue(":Order", Order);
 				qInsert.Execute();
 			}

@@ -15,26 +15,15 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>{aaffc7f6-3b2e-4d74-b101-0710d3b89076}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
-      <Filter>External</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IntegralSystem.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>External</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

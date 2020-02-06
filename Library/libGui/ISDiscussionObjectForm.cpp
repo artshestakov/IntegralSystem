@@ -1,5 +1,6 @@
 #include "ISDiscussionObjectForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
@@ -26,7 +27,7 @@ ISDiscussionObjectForm::ISDiscussionObjectForm(const QString &table_name, int pa
 
 	ForbidResize();
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

@@ -1,5 +1,4 @@
 #include "ISStartup.h"
-#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISSplashScreen.h"
@@ -145,20 +144,20 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 		QDate DateStart = ISMetaUser::GetInstance().GetData()->AccountLifetimeStart;
 		QDate DateEnd = ISMetaUser::GetInstance().GetData()->AccountLifetimeEnd;
 
-		if (DATE_TODAY < DateStart)
+		if (QDate::currentDate() < DateStart)
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeNotStarted"));
 			return EXIT_FAILURE;
 		}
-		else if (DATE_TODAY == DateEnd) //Если сегодня истекает срок действия
+		else if (QDate::currentDate() == DateEnd) //Если сегодня истекает срок действия
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeLeftLastDay"));
 		}
-		else if (DATE_TODAY.addDays(1) == DateEnd) //Если завтра истекает срок действия
+		else if (QDate::currentDate().addDays(1) == DateEnd) //Если завтра истекает срок действия
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeLeftLastDayTwo"));
 		}
-		else if (DATE_TODAY > DateEnd)
+		else if (QDate::currentDate() > DateEnd)
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeEnded"));
 			return EXIT_FAILURE;
@@ -205,7 +204,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 		if (!ISMetaUser::GetInstance().GetData()->Birthday.isNull())
 		{
-			if (ISMetaUser::GetInstance().GetData()->Birthday == DATE_TODAY)
+			if (ISMetaUser::GetInstance().GetData()->Birthday == QDate::currentDate())
 			{
 				ISSplashScreen::GetInstance().hide();
 				ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO("HappyBirthday"));

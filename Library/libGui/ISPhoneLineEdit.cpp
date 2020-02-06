@@ -1,11 +1,13 @@
 #include "ISPhoneLineEdit.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
 #include "ISControls.h"
 #include "ISPhoneNumberParser.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISPhoneLineEdit::ISPhoneLineEdit(QWidget *parent) : QLineEdit(parent)
 {
@@ -42,9 +44,9 @@ void ISPhoneLineEdit::SetIcon(ISNamespace::PhoneIconType IconType)
 {
 	switch (IconType)
 	{
-	case ISNamespace::PIT_Standart: Icon = BUFFER_ICONS("Phone.Correcting.Standart").pixmap(SIZE_16_16); break;
-	case ISNamespace::PIT_TRUE: Icon = BUFFER_ICONS("Phone.Correcting.True").pixmap(SIZE_16_16); break;
-	case ISNamespace::PIT_FALSE: Icon = BUFFER_ICONS("Phone.Correcting.False").pixmap(SIZE_16_16); break;
+	case ISNamespace::PIT_Standart: Icon = BUFFER_ICONS("Phone.Correcting.Standart").pixmap(DEFINES_GUI.SIZE_16_16); break;
+	case ISNamespace::PIT_TRUE: Icon = BUFFER_ICONS("Phone.Correcting.True").pixmap(DEFINES_GUI.SIZE_16_16); break;
+	case ISNamespace::PIT_FALSE: Icon = BUFFER_ICONS("Phone.Correcting.False").pixmap(DEFINES_GUI.SIZE_16_16); break;
 	}
 }
 //-----------------------------------------------------------------------------

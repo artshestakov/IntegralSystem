@@ -1,14 +1,16 @@
 #include "ISTabWidgetMain.h"
+#include "ISDefinesGui.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
 #include "ISMessageBox.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {
@@ -28,7 +30,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	setUsesScrollButtons(SETTING_BOOL(CONST_UID_SETTING_TABS_VIEWUSESSCROLLBUTTONS));
 
 	QVBoxLayout *LayoutMainTab = new QVBoxLayout();
-	LayoutMainTab->setContentsMargins(MARGINS_LAYOUT_NULL);
+	LayoutMainTab->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	LayoutMainTab->setSpacing(0);
 
 	MainTab = new QWidget(this);
@@ -84,7 +86,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 		ButtonClose->setAutoRaise(true);
 		ButtonClose->setProperty("ID", ID);
 		ButtonClose->setCursor(CURSOR_POINTING_HAND);
-		ButtonClose->setFixedSize(SIZE_18_18);
+		ButtonClose->setFixedSize(DEFINES_GUI.SIZE_18_18);
 		connect(ButtonClose, &QToolButton::clicked, this, &ISTabWidgetMain::CloseCliciked);
 		TabBar->setTabButton(Index, QTabBar::RightSide, ButtonClose);
 
@@ -105,7 +107,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 		ButtonMenu->setAutoRaise(true);
 		ButtonMenu->setToolTip(LANG("AllTabs"));
 		ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
-		ButtonMenu->setFixedSize(SIZE_18_18);
+		ButtonMenu->setFixedSize(DEFINES_GUI.SIZE_18_18);
 		ButtonMenu->setPopupMode(QToolButton::InstantPopup);
 		ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
 		TabBar->setTabButton(Index, QTabBar::RightSide, ButtonMenu);
@@ -128,7 +130,7 @@ void ISTabWidgetMain::FixedTab(int Index)
 	if (TabBar->CheckFixedTab(TabUID)) //Если вкладка уже закреплена
 	{
 		TabBar->RemoveFixedTab(TabUID);
-		TabBar->setTabTextColor(Index, COLOR_NULL);
+		TabBar->setTabTextColor(Index, DEFINES_GUI.COLOR_NULL);
 		TabBar->tabButton(Index, QTabBar::RightSide)->setEnabled(true);
 	}
 	else //Если вкладка не закреплена - закрепить
@@ -202,13 +204,6 @@ void ISTabWidgetMain::TabsMenuTriggered(QAction *ActionClicked)
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::DocumentMode()
 {
-	if (count() == 1)
-	{
-		setDocumentMode(true);
-	}
-	else
-	{
-		setDocumentMode(false);
-	}
+	setDocumentMode(count());
 }
 //-----------------------------------------------------------------------------

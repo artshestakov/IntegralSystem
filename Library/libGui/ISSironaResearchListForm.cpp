@@ -1,8 +1,9 @@
 #include "ISSironaResearchListForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_RESEARCH = PREPARE_QUERY("SELECT pmtp_uid, resr_money "
 										   "FROM research "
@@ -12,7 +13,7 @@ static QString QS_RESEARCH = PREPARE_QUERY("SELECT pmtp_uid, resr_money "
 ISSironaResearchListForm::ISSironaResearchListForm(QWidget *parent) : ISListBaseForm("Research", parent)
 {
 	LabelSummary = new QLabel(this);
-	LabelSummary->setFont(FONT_TAHOMA_11);
+	LabelSummary->setFont(DEFINES_GUI.FONT_TAHOMA_11);
 	LabelSummary->setText(LANG("Sirona.TotalMoney.Research").arg(0).arg(0).arg(0));
 	GetStatusBar()->addWidget(LabelSummary);
 }

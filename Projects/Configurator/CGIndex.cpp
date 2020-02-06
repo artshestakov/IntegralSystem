@@ -1,5 +1,4 @@
 #include "CGIndex.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "PMetaClassForeign.h"

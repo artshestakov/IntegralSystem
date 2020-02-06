@@ -1,13 +1,13 @@
 #include "ISAttachFileForm.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISStorageFileLoader.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : ISAttachFileBaseForm(parent)
 {
 	setWindowTitle(LANG("AddingFiles"));
 	setMinimumWidth(500);
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	connect(this, &ISAttachFileForm::UpdateList, this, &ISAttachFileForm::close);

@@ -1,13 +1,14 @@
 #include "ISSironaCostListForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISSironaCostListForm::ISSironaCostListForm(QWidget *parent) : ISListBaseForm("Cost", parent)
 {
 	LabelSum = new QLabel(this);
-	LabelSum->setFont(FONT_TAHOMA_11);
+	LabelSum->setFont(DEFINES_GUI.FONT_TAHOMA_11);
 	LabelSum->setText(LANG("Sirona.TotalMoney.Cost").arg(0));
 	GetStatusBar()->addWidget(LabelSum);
 }

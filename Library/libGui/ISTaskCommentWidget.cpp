@@ -1,10 +1,12 @@
 #include "ISTaskCommentWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISTaskCommentWidget::ISTaskCommentWidget(const QDateTime &CreationDate, const QString &UserFullName, const QString &Comment, QWidget *parent) : QWidget(parent)
 {
 	QHBoxLayout *MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(MARGINS_LAYOUT_2_PX);
+	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_2_PX);
 	setLayout(MainLayout);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
@@ -12,7 +14,7 @@ ISTaskCommentWidget::ISTaskCommentWidget(const QDateTime &CreationDate, const QS
 
 	QLabel *LabelUser = new QLabel(this);
 	LabelUser->setText(UserFullName);
-	LabelUser->setFont(FONT_APPLICATION_BOLD);
+	LabelUser->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	Layout->addWidget(LabelUser);
 
 	QLabel *LabelComment = new QLabel(this);

@@ -1,11 +1,11 @@
 #include "ISBirthdayEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISBirthdayEdit::ISBirthdayEdit(QWidget *parent) : ISDateEdit(parent)
 {
 	SetMinimumDate(QDate(1900, 1, 1));
-	SetMaximumDate(DATE_TODAY);
+	SetMaximumDate(QDate::currentDate());
 
 	Label = new QLabel(this);
 	Label->setFrameShape(QFrame::Shape::Panel);
@@ -37,8 +37,8 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
 {
 	if (Date.isValid())
 	{
-		int Age = DATE_TODAY.year() - Date.year();
-		if (Date.month() > DATE_TODAY.month() || (Date.month() == DATE_TODAY.month() && Date.day() > DATE_TODAY.day()))
+		int Age = QDate::currentDate().year() - Date.year();
+		if (Date.month() > QDate::currentDate().month() || (Date.month() == QDate::currentDate().month() && Date.day() > QDate::currentDate().day()))
 		{
 			Age--;
 		}

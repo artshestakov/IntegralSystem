@@ -3,7 +3,6 @@
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
 #include "ISControls.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------

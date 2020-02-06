@@ -1,8 +1,10 @@
 #include "ISToolBarAccessTable.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISUserRoleEntity.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, gatt_name, gatt_icon "
 														  "FROM _groupaccesstabletype "
@@ -12,7 +14,7 @@ static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, gatt
 ISToolBarAccessTable::ISToolBarAccessTable(int GroupID, const ISUuid &TableUID, const QString &TableName, QWidget *parent) : QToolBar(parent)
 {
 	setToolButtonStyle(Qt::ToolButtonIconOnly);
-	setIconSize(SIZE_20_20);
+	setIconSize(DEFINES_GUI.SIZE_20_20);
 
 	ISQuery qSelectAccess(QS_GROUP_ACCESS_TABLE_TYPE);
 	if (qSelectAccess.Execute())

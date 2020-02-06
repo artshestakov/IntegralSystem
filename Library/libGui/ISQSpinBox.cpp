@@ -1,8 +1,8 @@
 #include "ISQSpinBox.h"
-#include "EXDefines.h"
 #include "ISContextMenuInteger.h"
 #include "ISQLineEdit.h"
 #include "ISGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISQSpinBox::ISQSpinBox(QWidget *parent) : QSpinBox(parent)
 {

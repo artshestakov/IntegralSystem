@@ -1,5 +1,4 @@
 #include "CGTable.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"
@@ -7,6 +6,7 @@
 #include "CGHelper.h"
 #include "CGSequence.h"
 #include "ISSystem.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLE = PREPARE_QUERY("SELECT COUNT(*) FROM pg_tables WHERE schemaname = current_schema() AND tablename = :TableName");
 //-----------------------------------------------------------------------------

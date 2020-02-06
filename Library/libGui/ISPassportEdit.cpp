@@ -1,10 +1,11 @@
 #include "ISPassportEdit.h"
-#include "EXDefines.h"
 #include "ISServiceButton.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISPassportForm.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISPassportEdit::ISPassportEdit(QWidget *parent) : ISLineEdit(parent)
 {
@@ -72,7 +73,7 @@ QString ISPassportEdit::PreparePassport(const QString &passport_string)
 
 	if (passport_string.length())
 	{
-		QStringList StringList = passport_string.split(SYMBOL_SPACE_HIDE);
+		QStringList StringList = passport_string.split(DEFINES_CORE.SYMBOL_SPACE_HIDE);
 		QString Seria = StringList.at(0);
 		QString Number = StringList.at(1);
 		QString DateOfIssue = StringList.at(2);

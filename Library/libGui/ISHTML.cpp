@@ -1,6 +1,5 @@
 #include "ISHTML.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISHTML::ISHTML(QFile &FileTemplate)
 {

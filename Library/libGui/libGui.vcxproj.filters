@@ -218,9 +218,6 @@
     <Filter Include="ModelThread">
       <UniqueIdentifier>{8c2dfde7-a4f1-439f-b30d-b863e8e88e8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>{29db29bb-f9c1-4a98-a3bd-2427d0232489}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -320,8 +317,8 @@
     <ClInclude Include="ISRegisterMetaType.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>External</Filter>
+    <ClInclude Include="ISDefinesGui.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1444,8 +1441,8 @@
     <ClCompile Include="ISModelThreadWorker.cpp">
       <Filter>ModelThread</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
-      <Filter>External</Filter>
+    <ClCompile Include="ISDefinesGui.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

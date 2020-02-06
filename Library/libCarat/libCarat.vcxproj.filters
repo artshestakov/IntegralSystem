@@ -43,9 +43,6 @@
     <Filter Include="Telephony">
       <UniqueIdentifier>{5ff9b1df-9073-4df2-97e7-c7977521f172}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>{f0e326a2-e967-4c92-b947-a79ead8db7e3}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISCoreAsteriskQueue.cpp">
@@ -89,9 +86,6 @@
     </ClCompile>
     <ClCompile Include="ISCoreNotification.cpp">
       <Filter>Notification</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
-      <Filter>External</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,9 +133,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>External</Filter>
-    </ClInclude>
     <ClInclude Include="libCarat_global.h" />
   </ItemGroup>
 </Project>

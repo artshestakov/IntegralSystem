@@ -1,13 +1,14 @@
 #include "ISPeriodForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISPeriodForm::ISPeriodForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("Period"));
 	setWindowIcon(BUFFER_ICONS("Period"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 	ForbidResize();
 
 	QHBoxLayout *Layout = new QHBoxLayout();
@@ -15,7 +16,7 @@ ISPeriodForm::ISPeriodForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 
 	QLabel *Label = new QLabel(this);
 	Label->setText(LANG("SelectFrom") + ':');
-	Label->setFont(FONT_APPLICATION_BOLD);
+	Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	Layout->addWidget(Label);
 
 	RadioButtonCreate = new QRadioButton(this);

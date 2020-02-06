@@ -1,10 +1,11 @@
 #include "ISCalendarPanel.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT COUNT(*) "
 										   "FROM _calendar "
@@ -14,10 +15,10 @@ static QString QS_CALENDAR = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 ISCalendarPanel::ISCalendarPanel(QWidget *parent) : ISCalendarWidget(parent)
 {
-	PixmapIndicator = BUFFER_ICONS("CalendarMain.Indicator").pixmap(SIZE_45_45);
+	PixmapIndicator = BUFFER_ICONS("CalendarMain.Indicator").pixmap(DEFINES_GUI.SIZE_45_45);
 
 	setHorizontalHeaderFormat(QCalendarWidget::LongDayNames);
-	setFont(FONT_TAHOMA_14);
+	setFont(DEFINES_GUI.FONT_TAHOMA_14);
 	GetNavigationBar()->setMinimumHeight(GetNavigationBar()->height() * 1.5);
 	GetButtonPrevMonth()->setIconSize(GetButtonPrevMonth()->iconSize() * 1.5);
 	GetButtonNextMonth()->setIconSize(GetButtonNextMonth()->iconSize() * 1.5);
@@ -39,23 +40,23 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 {
 	Painter->save();
 
-	if (Date == DATE_TODAY) //Если рисуется текущая дата
+	if (Date == QDate::currentDate()) //Если рисуется текущая дата
 	{
 		if (Date == selectedDate())
 		{
-			Painter->fillRect(Rect, COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
+			Painter->fillRect(Rect, DEFINES_GUI.COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
 		}
 
 		//Рисование рамки
 		Painter->setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
-		Painter->setPen(QPen(COLOR_MAIN_MENU_BAR, 3, Qt::SolidLine));
+		Painter->setPen(QPen(DEFINES_GUI.COLOR_MAIN_MENU_BAR, 3, Qt::SolidLine));
 		Painter->drawRect(QRect(Rect.x() + 1, Rect.y() + 1, Rect.width() - 3, Rect.height() - 3));
 	}
 	else
 	{
 		if (Date == selectedDate()) //Если рисуется выделенная пользоваелем дата
 		{
-			Painter->fillRect(Rect, COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
+			Painter->fillRect(Rect, DEFINES_GUI.COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
 		}
 		else
 		{
@@ -65,14 +66,14 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 
 	if (Date.month() != monthShown()) //Если рисуется дни НЕ ТЕКУЩЕГО месяца
 	{
-		Painter->fillRect(Rect, COLOR_CAALENDAR_DAY_NOT_CURRENT_MONTH); //Заполнение фона
+		Painter->fillRect(Rect, DEFINES_GUI.COLOR_CAALENDAR_DAY_NOT_CURRENT_MONTH); //Заполнение фона
 	}
 
 	QRect RectText(Rect.x() + 3, Rect.y() + 3, Rect.width(), Rect.height()); //Расположение текста
 	QPoint PointIndicator(Rect.x(), Rect.y()); //Расположение индикатора события
 	QString Text = QString::number(Date.day()); //Текст
 
-	if (Date == DATE_TODAY)
+	if (Date == QDate::currentDate())
 	{
 		RectText = QRect(Rect.x() + 3, Rect.y() + 1, Rect.width(), Rect.height());
 		PointIndicator = QPoint(Rect.x() + 3, Rect.y() + 3);

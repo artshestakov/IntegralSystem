@@ -1,5 +1,6 @@
 #include "ISToolBarObject.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISToolBarObject::ISToolBarObject(QWidget *parent) : QToolBar(parent)
 {
@@ -53,12 +54,12 @@ void ISToolBarObject::ActionTriggered(QAction *ActionTriggered)
 {
 	for (int i = 0; i < actions().count(); ++i)
 	{
-		actions().at(i)->setFont(FONT_APPLICATION);
+		actions().at(i)->setFont(DEFINES_GUI.FONT_APPLICATION);
 	}
 
 	if (qvariant_cast<ISNamespace::ObjectActionType>(ActionTriggered->property("Type")) != ISNamespace::OAT_Service)
 	{
-		ActionTriggered->setFont(FONT_APPLICATION_BOLD);
+		ActionTriggered->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	}
 
 	if (CurrentAction != ActionTriggered)

@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
 #include "ISCountingTime.h"
 #include "ISDebug.h"
 #include "ISSystem.h"

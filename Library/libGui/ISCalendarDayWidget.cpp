@@ -1,27 +1,30 @@
 #include "ISCalendarDayWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISCalendarDayWidget::ISCalendarDayWidget(QWidget *parent) : QWidget(parent)
 {
 	QHBoxLayout *MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	LabelDayNumber = new QLabel(this);
-	LabelDayNumber->setFont(FONT_TAHOMA_35);
+	LabelDayNumber->setFont(DEFINES_GUI.FONT_TAHOMA_35);
 	MainLayout->addWidget(LabelDayNumber, 0, Qt::AlignVCenter);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	MainLayout->addLayout(Layout);
 
 	LabelDayName = new QLabel(this);
-	LabelDayName->setFont(FONT_TAHOMA_18);
+	LabelDayName->setFont(DEFINES_GUI.FONT_TAHOMA_18);
 	Layout->addWidget(LabelDayName);
 
 	LabelMonthYear = new QLabel(this);
-	LabelMonthYear->setFont(FONT_TAHOMA_12);
+	LabelMonthYear->setFont(DEFINES_GUI.FONT_TAHOMA_12);
 	Layout->addWidget(LabelMonthYear);
 
 	MainLayout->addStretch();
@@ -37,7 +40,7 @@ void ISCalendarDayWidget::SetSelectedDate(const QDate &Date)
 	LabelDayNumber->setText(QString::number(Date.day()));
 
 	QString DayName;
-	if (Date == DATE_TODAY)
+	if (Date == QDate::currentDate())
 	{
 		DayName = Date.longDayName(Date.dayOfWeek()) + " (" + LANG("Today") + ')';
 	}

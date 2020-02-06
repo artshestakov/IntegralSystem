@@ -1,5 +1,6 @@
 #include "ISKnowledgeBaseSubSystem.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
@@ -24,7 +25,7 @@ static QString QD_GROUP = PREPARE_QUERY("DELETE FROM _questionanswergroup "
 //-----------------------------------------------------------------------------
 ISKnowledgeBaseSubSystem::ISKnowledgeBaseSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);

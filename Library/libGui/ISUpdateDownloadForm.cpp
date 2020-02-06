@@ -1,5 +1,6 @@
 #include "ISUpdateDownloadForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
@@ -27,8 +28,8 @@ ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name
 
 	setWindowTitle(LANG("UpdateApplication"));
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-	resize(SIZE_500_90);
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	resize(DEFINES_GUI.SIZE_500_90);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *LabelInformation = new QLabel(this);

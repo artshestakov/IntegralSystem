@@ -1,11 +1,11 @@
 #include "CGConfiguratorShow.h"
-#include "EXDefines.h"
 #include "ISConfig.h"
 #include "ISDebug.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISSystem.h"
 #include "ISDatabase.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLES = PREPARE_QUERY("SELECT tablename "
 										 "FROM pg_tables "
@@ -207,7 +207,7 @@ void CGConfiguratorShow::obsoletesequence()
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::config()
 {
-	QFile FileConfig(PATH_CONFIG_FILE);
+	QFile FileConfig(DEFINES_CORE.PATH_CONFIG_FILE);
 	if (FileConfig.exists())
 	{
 		if (FileConfig.open(QIODevice::ReadOnly))

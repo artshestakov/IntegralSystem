@@ -1,5 +1,6 @@
 #include "ISIntegralSystem.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISQueryExceptionSyntax.h"
 #include "ISQueryExceptionConnection.h"
 #include "ISMessageBox.h"
@@ -15,11 +16,12 @@
 #include "ISDebug.h"
 #include "ISVersion.h"
 #include "ISCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
 	QString ErrorString;
-	ISCore::Startup(true, ErrorString);
+	ISGui::Startup(ErrorString);
 
 	ISDebug::ShowString("Starting system... Version: " + ISVersion::GetInstance().GetVersion());
 
@@ -57,9 +59,9 @@ ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	
 	setWindowIcon(BUFFER_ICONS("Logo"));
 	setApplicationName("IntegralSystem");
 	setApplicationVersion(ISVersion::GetInstance().GetVersion());
-	setFont(FONT_APPLICATION);
+	setFont(DEFINES_GUI.FONT_APPLICATION);
 
-	QToolTip::setFont(FONT_APPLICATION);
+	QToolTip::setFont(DEFINES_GUI.FONT_APPLICATION);
 
 	SplashWidget.close();
 }
@@ -73,7 +75,7 @@ bool ISIntegralSystem::CheckAdminRole()
 {
 	ISDebug::ShowDebugString("Check administrator role...");
 
-	QFile File(PATH_TEMP_DIR + "/CheckAdmin");
+	QFile File(DEFINES_CORE.PATH_TEMP_DIR + "/CheckAdmin");
 	bool Opened = File.open(QIODevice::WriteOnly);
 
 	if (Opened)

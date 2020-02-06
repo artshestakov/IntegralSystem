@@ -1,5 +1,4 @@
 #include "ISSqlModelView.h"
-#include "EXDefines.h"
 #include "ISAssert.h"
 #include "ISTrace.h"
 #include "ISBuffer.h"

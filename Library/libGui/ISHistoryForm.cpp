@@ -1,7 +1,8 @@
 #include "ISHistoryForm.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
 #include "ISButtonDialog.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
@@ -21,7 +22,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	setWindowTitle(LANG("History"));
 	setWindowIcon(BUFFER_ICONS("History"));
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setCursor(CURSOR_POINTING_HAND);

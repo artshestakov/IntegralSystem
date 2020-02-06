@@ -1,6 +1,7 @@
 #include "ISPopupMessage.h"
 #include "ISStyleSheet.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISPopupMessage::ISPopupMessage(QWidget *parent) : QWidget(parent)
 {
@@ -96,15 +97,15 @@ void ISPopupMessage::paintEvent(QPaintEvent *e)
 	QPainter Painter(this);
 	Painter.setRenderHint(QPainter::Antialiasing); // Включаем сглаживание
 
+	
+	Painter.setBrush(QBrush(DEFINES_GUI.COLOR_POPUP_BRUSH));
+	Painter.setPen(Qt::NoPen); // Край уведомления не будет выделен
+
 	QRect RoundedRect;
 	RoundedRect.setX(rect().x() + 5);
 	RoundedRect.setY(rect().y() + 5);
 	RoundedRect.setWidth(rect().width() - 10);
 	RoundedRect.setHeight(rect().height() - 10);
-
-	Painter.setBrush(QBrush(COLOR_POPUP_BRUSH));
-	Painter.setPen(Qt::NoPen); // Край уведомления не будет выделен
-
 	Painter.drawRoundedRect(RoundedRect, 10, 10);
 }
 //-----------------------------------------------------------------------------

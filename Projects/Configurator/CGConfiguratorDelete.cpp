@@ -1,10 +1,10 @@
 #include "CGConfiguratorDelete.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISCommandLine.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname FROM pg_indexes WHERE schemaname = current_schema()");
 //-----------------------------------------------------------------------------

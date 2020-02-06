@@ -1,11 +1,12 @@
 #include "ISDelegateFile.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDelegateFile::ISDelegateFile(QWidget *parent) : QStyledItemDelegate(parent)
 {
-	ImageNotSelected = BUFFER_ICONS("Delegate.File.NotSelected").pixmap(SIZE_16_16).toImage();
-	ImageSelected = BUFFER_ICONS("Delegate.File.Selected").pixmap(SIZE_16_16).toImage();
+	ImageNotSelected = BUFFER_ICONS("Delegate.File.NotSelected").pixmap(DEFINES_GUI.SIZE_16_16).toImage();
+	ImageSelected = BUFFER_ICONS("Delegate.File.Selected").pixmap(DEFINES_GUI.SIZE_16_16).toImage();
 }
 //-----------------------------------------------------------------------------
 ISDelegateFile::~ISDelegateFile()

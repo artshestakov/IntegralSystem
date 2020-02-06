@@ -1,6 +1,4 @@
 #include "ISCoreAsteriskQueue.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISDebug.h"
@@ -8,6 +6,7 @@
 #include "ISMetaData.h"
 #include "ISLicense.h"
 #include "ISSettingsDatabase.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_QUEUE = PREPARE_QUERY("SELECT astq_id, astq_creationdate, asqt_uid, asqt_name, astq_initiated, userfullname(astq_initiated), astq_parameters "
 												 "FROM _asteriskqueue "

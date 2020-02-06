@@ -1,5 +1,7 @@
 #include "ISInternalDirectoriesForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
@@ -36,7 +38,7 @@ ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent) : ISInterf
 			ListWidgetItem->setText(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName());
 			ListWidgetItem->setData(Qt::UserRole, TableName);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
-			ListWidgetItem->setFont(FONT_APPLICATION);
+			ListWidgetItem->setFont(DEFINES_GUI.FONT_APPLICATION);
 		}
 	}
 
@@ -44,7 +46,7 @@ ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent) : ISInterf
 	Label->setWordWrap(true);
 	Label->setText(LANG("ClickFromViewList"));
 	Label->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	Label->setFont(FONT_TAHOMA_14_BOLD);
+	Label->setFont(DEFINES_GUI.FONT_TAHOMA_14_BOLD);
 	Layout->addWidget(Label, 0, Qt::AlignCenter);
 }
 //-----------------------------------------------------------------------------
@@ -76,11 +78,11 @@ void ISInternalDirectoriesForm::ItemSelectionChanged()
 
 	for (int i = 0; i < ListWidget->count(); ++i)
 	{
-		ListWidget->item(i)->setFont(FONT_APPLICATION);
+		ListWidget->item(i)->setFont(DEFINES_GUI.FONT_APPLICATION);
 	}
 
 	QListWidgetItem *CurrentItem = ListWidget->currentItem();
-	CurrentItem->setFont(FONT_APPLICATION_BOLD);
+	CurrentItem->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 	ListBaseForm = new ISListBaseForm(CurrentItem->data(Qt::UserRole).toString(), this);
 	ListBaseForm->LoadData();

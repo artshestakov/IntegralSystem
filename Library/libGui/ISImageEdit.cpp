@@ -1,5 +1,5 @@
 #include "ISImageEdit.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
 #include "ISGui.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"

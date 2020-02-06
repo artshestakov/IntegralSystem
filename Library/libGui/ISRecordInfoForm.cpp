@@ -1,12 +1,13 @@
 #include "ISRecordInfoForm.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "EXDefines.h"
 #include "ISFieldEditBase.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -15,12 +16,12 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();
-	FormLayout->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	FormLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(FormLayout);
 
 	QLabel *LabelTitle = new QLabel(this);
 	LabelTitle->setText(LANG("SystemInformation") + ':');
-	LabelTitle->setFont(FONT_TAHOMA_12_BOLD);
+	LabelTitle->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 	LabelTitle->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	ISGui::SetFontWidgetUnderline(LabelTitle, true);
 	FormLayout->addRow(LabelTitle, new QWidget(this));
@@ -30,7 +31,7 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 		PMetaClassField *MetaField = MetaTable->GetSystemFields().at(i);
 
 		QLabel *Label = new QLabel(this);
-		Label->setFont(FONT_APPLICATION_BOLD);
+		Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 		Label->setText(MetaField->GetLabelName() + ':');
 
 		ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, MetaField);

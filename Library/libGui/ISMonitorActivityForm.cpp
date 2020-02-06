@@ -1,5 +1,6 @@
 #include "ISMonitorActivityForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
@@ -32,7 +33,7 @@ static QString QD_SCREENSHOT = PREPARE_QUERY("DELETE FROM _screenshots WHERE scr
 //-----------------------------------------------------------------------------
 ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
@@ -68,7 +69,7 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 
 	ScrollArea = new ISScrollArea(this);
 	ScrollArea->widget()->setLayout(new ISFlowLayout());
-	ScrollArea->widget()->layout()->setContentsMargins(MARGINS_LAYOUT_NULL);
+	ScrollArea->widget()->layout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	Layout->addWidget(ScrollArea);
 
 	QAction *ActionUpdate = new QAction(this);

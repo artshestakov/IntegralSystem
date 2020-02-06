@@ -1,7 +1,8 @@
 #include "ISDelegateImage.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISTrace.h"
 #include "ISCountingTime.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDelegateImage::ISDelegateImage(QObject *parent) : QStyledItemDelegate(parent)
 {
@@ -48,7 +49,7 @@ void ISDelegateImage::paint(QPainter *Painter, const QStyleOptionViewItem &Optio
 		return;
 	}
 	
-	Image = Image.scaled(SIZE_100_100, Qt::KeepAspectRatio);
+	Image = Image.scaled(DEFINES_GUI.SIZE_100_100, Qt::KeepAspectRatio);
 
 	const int x = Option.rect.center().x() - Image.rect().width() / 2;
 	const int y = Option.rect.center().y() - Image.rect().height() / 2;

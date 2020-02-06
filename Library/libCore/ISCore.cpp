@@ -1,5 +1,4 @@
 #include "ISCore.h"
-#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISMetaData.h"
@@ -14,6 +13,7 @@
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
 #include "ISCrashDumper.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
@@ -83,15 +83,15 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 bool ISCore::Startup(bool IsGui, QString &ErrorString)
 {
-	DefinesInitialize(IsGui); //Инициализация глобальных переменных
+	ISDefinesCore::Instance().Init(IsGui);
 
-	bool Result = ISSystem::CreateDir(PATH_LOGS_DIR, ErrorString); //Создание папки для логов
+	bool Result = ISSystem::CreateDir(DEFINES_CORE.PATH_LOGS_DIR, ErrorString); //Создание папки для логов
 	if (!Result)
 	{
 		return Result;
 	}
 
-	Result = ISSystem::CreateDir(PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
+	Result = ISSystem::CreateDir(DEFINES_CORE.PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
 	if (!Result)
 	{
 		return Result;
@@ -175,7 +175,7 @@ void ISCore::RestartApplication()
 {
 	ExitApplication();
 	ISSystem::SleepSeconds(1);
-	QProcess::startDetached(PATH_APPLICATION_FILE);
+	QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_FILE);
 }
 //-----------------------------------------------------------------------------
 void ISCore::ExitApplication()

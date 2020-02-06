@@ -1,6 +1,4 @@
 #include "CGConfiguratorCreate.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
@@ -10,6 +8,7 @@
 #include "CGResource.h"
 #include "ISMetaData.h"
 #include "ISConfig.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 #include "ISPasswordEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISPassword.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISPasswordEdit::ISPasswordEdit(QWidget *parent) : ISLineEdit(parent)
 {

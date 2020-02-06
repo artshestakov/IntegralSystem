@@ -1,5 +1,6 @@
 #include "ISUserGroupWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -135,7 +136,7 @@ void ISUserGroupWidget::CreateSpecial()
 			QLabel *LabelSpecialGroup = new QLabel(ScrollArea);
 			LabelSpecialGroup->setText(SpecialGroupName + ':');
 			LabelSpecialGroup->setSizePolicy(QSizePolicy::Maximum, LabelSpecialGroup->sizePolicy().verticalPolicy());
-			LabelSpecialGroup->setFont(FONT_APPLICATION_BOLD);
+			LabelSpecialGroup->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 			
 			QHBoxLayout *Layout = new QHBoxLayout();
 			Layout->addWidget(LabelSpecialGroup);

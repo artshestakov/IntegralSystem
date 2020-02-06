@@ -1,8 +1,10 @@
 #include "ISDateEdit.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSystem.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISDateEdit::ISDateEdit(QWidget *parent) : ISDateTimeEdit(parent)
 {
@@ -29,7 +31,7 @@ ISDateEdit::ISDateEdit(QWidget *parent) : ISDateTimeEdit(parent)
 	ActionToday = new QAction(Menu);
 	ActionToday->setText(LANG("Today"));
 	ActionToday->setToolTip(LANG("Today"));
-	ActionToday->setFont(FONT_APPLICATION_BOLD);
+	ActionToday->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	ActionToday->setIcon(BUFFER_ICONS("Apply.Blue"));
 	connect(ActionToday, &QAction::triggered, this, &ISDateEdit::Today);
 	Menu->addAction(ActionToday);
@@ -83,33 +85,33 @@ void ISDateEdit::DateEnableChanged(int State)
 
 	if (State == Qt::Unchecked)
 	{
-		SetActionsIcon(DATE_TODAY);
+		SetActionsIcon(QDate::currentDate());
 	}
 }
 //-----------------------------------------------------------------------------
 void ISDateEdit::BeforeYesterday()
 {
-	SetValue(DATE_BEFORE_YESTERDAY);
+	SetValue(QDate::currentDate().addDays(-2));
 }
 //-----------------------------------------------------------------------------
 void ISDateEdit::Yesterday()
 {
-	SetValue(DATE_YESTERDAY);
+	SetValue(QDate::currentDate().addDays(-1));
 }
 //-----------------------------------------------------------------------------
 void ISDateEdit::Today()
 {
-	SetValue(DATE_TODAY);
+	SetValue(QDate::currentDate());
 }
 //-----------------------------------------------------------------------------
 void ISDateEdit::Tomorrow()
 {
-	SetValue(DATE_TOMORROW);
+	SetValue(QDate::currentDate().addDays(1));
 }
 //-----------------------------------------------------------------------------
 void ISDateEdit::AfterTomorrow()
 {
-	SetValue(DATE_AFTER_TOMORROW);
+	SetValue(QDate::currentDate().addDays(2));
 }
 //-----------------------------------------------------------------------------
 void ISDateEdit::SetActionsIcon(const QDate &Date)
@@ -122,23 +124,23 @@ void ISDateEdit::SetActionsIcon(const QDate &Date)
 
 	if (Date.isValid())
 	{
-		if (Date == DATE_BEFORE_YESTERDAY)
+		if (Date == QDate::currentDate().addDays(-2))
 		{
 			ActionBeforeYesterday->setIcon(BUFFER_ICONS("Apply.Blue"));
 		}
-		else if (Date == DATE_YESTERDAY)
+		else if (Date == QDate::currentDate().addDays(-1))
 		{
 			ActionYesterday->setIcon(BUFFER_ICONS("Apply.Blue"));
 		}
-		else if (Date == DATE_TODAY)
+		else if (Date == QDate::currentDate())
 		{
 			ActionToday->setIcon(BUFFER_ICONS("Apply.Blue"));
 		}
-		else if (Date == DATE_TOMORROW)
+		else if (Date == QDate::currentDate().addDays(1))
 		{
 			ActionTomorrow->setIcon(BUFFER_ICONS("Apply.Blue"));
 		}
-		else if (Date == DATE_AFTER_TOMORROW)
+		else if (Date == QDate::currentDate().addDays(2))
 		{
 			ActionAfterTomorrow->setIcon(BUFFER_ICONS("Apply.Blue"));
 		}

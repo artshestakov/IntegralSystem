@@ -1,6 +1,6 @@
 #include "ISBIKEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISBIKEdit::ISBIKEdit(QWidget *parent) : ISLineEdit(parent)
 {

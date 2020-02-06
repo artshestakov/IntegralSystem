@@ -1,5 +1,7 @@
 #include "ISObjectFormBase.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISTrace.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -258,7 +260,7 @@ void ISObjectFormBase::AfterShowEvent()
 void ISObjectFormBase::CreateToolBarEscorts()
 {
 	ToolBarNavigation = new ISToolBarObject(this);
-	ToolBarNavigation->setIconSize(SIZE_20_20);
+	ToolBarNavigation->setIconSize(DEFINES_GUI.SIZE_20_20);
 	GetMainLayout()->addWidget(ToolBarNavigation);
 
 	//Действие объекта
@@ -300,7 +302,7 @@ void ISObjectFormBase::CreateMainTabWidget()
 	TabWidgetMain->addTab(StackedWidget, LANG("Card"));
 
 	WidgetObjectLayout = new QVBoxLayout();
-	WidgetObjectLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	WidgetObjectLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 
 	WidgetObject = new QWidget(TabWidgetMain);
 	WidgetObject->setLayout(WidgetObjectLayout);
@@ -321,7 +323,7 @@ void ISObjectFormBase::CreateToolBar()
 	LabelIsDeleted->setVisible(false);
 	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
 	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
-	LabelIsDeleted->setFont(FONT_TAHOMA_12_BOLD);
+	LabelIsDeleted->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
 	WidgetObjectLayout->addWidget(LabelIsDeleted, 0, Qt::AlignHCenter);
 
@@ -539,7 +541,7 @@ void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
 	{
 		QLabel *LabelSystemInfoObject = new QLabel(this);
 		LabelSystemInfoObject->setText(LANG("SystemField.ID") + ':');
-		LabelSystemInfoObject->setFont(FONT_APPLICATION_BOLD);
+		LabelSystemInfoObject->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 		EditObjectID = new ISLineEdit(this);
 		EditObjectID->SetValue(LANG("SystemField.ID.NotAssigned"));
@@ -622,10 +624,10 @@ void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEdit
 	{
 		QLabel *LabelTab = new QLabel(this);
 		LabelTab->setText(Separator);
-		LabelTab->setFont(FONT_TAHOMA_10_BOLD);
+		LabelTab->setFont(DEFINES_GUI.FONT_TAHOMA_10_BOLD);
 
 		QHBoxLayout *LayoutLine = new QHBoxLayout();
-		LayoutLine->setContentsMargins(MARGINS_LAYOUT_NULL);
+		LayoutLine->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 
 		QWidget *WidgetLine = new QWidget(this);
 		WidgetLine->setLayout(LayoutLine);
@@ -973,16 +975,16 @@ void ISObjectFormBase::SetModificationFlag(bool modification)
 	QString WindowTitle = windowTitle();
 	if (ModificationFlag)
 	{
-		if (!WindowTitle.contains(SYMBOL_OBJECT_CHANGED))
+		if (!WindowTitle.contains(DEFINES_CORE.SYMBOL_OBJECT_CHANGED))
 		{
-			WindowTitle += SYMBOL_OBJECT_CHANGED;
+			WindowTitle += DEFINES_CORE.SYMBOL_OBJECT_CHANGED;
 		}
 	}
 	else
 	{
-		if (WindowTitle.contains(SYMBOL_OBJECT_CHANGED))
+		if (WindowTitle.contains(DEFINES_CORE.SYMBOL_OBJECT_CHANGED))
 		{
-			WindowTitle.remove(SYMBOL_OBJECT_CHANGED);
+			WindowTitle.remove(DEFINES_CORE.SYMBOL_OBJECT_CHANGED);
 		}
 	}
 

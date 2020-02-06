@@ -1,5 +1,6 @@
 #include "ISImageWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISContextMenuImage.h"
 #include "ISStyleSheet.h"
 #include "ISFileDialog.h"
@@ -19,7 +20,7 @@ ISImageWidget::ISImageWidget(QWidget *parent) : QLabel(parent)
 	setMouseTracking(true);
 	setAutoFillBackground(true);
 	setAcceptDrops(true);
-	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(SIZE_64_64));
+	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(DEFINES_GUI.SIZE_64_64));
 }
 //-----------------------------------------------------------------------------
 ISImageWidget::~ISImageWidget()
@@ -53,7 +54,7 @@ void ISImageWidget::dragEnterEvent(QDragEnterEvent *e)
 		}
 
 		QString FilePath = MimeData->urls()[0].toString();
-		if (!QStringList(AVIABLE_IMAGE_EXTENSION).contains(QFileInfo(FilePath).suffix().toLower())) //≈сли происходит перетаскивание не изображени€
+		if (!QStringList(DEFINES_GUI.AVIABLE_IMAGE_EXTENSION).contains(QFileInfo(FilePath).suffix().toLower())) //≈сли происходит перетаскивание не изображени€
 		{
 			return;
 		}
@@ -113,7 +114,7 @@ void ISImageWidget::SetPixmap(const QPixmap &Pixmap)
 
 	Clear();
 	CurrentPixmap = Pixmap;
-	QPixmap CompletePixmap = Pixmap.scaled(SIZE_200_200, Qt::KeepAspectRatio);
+	QPixmap CompletePixmap = Pixmap.scaled(DEFINES_GUI.SIZE_200_200, Qt::KeepAspectRatio);
 	setPixmap(CompletePixmap);
 	emit ImageChanged();
 
@@ -140,7 +141,7 @@ void ISImageWidget::Clear()
 	CurrentPixmap = QPixmap();
 	setPixmap(QPixmap());
 	emit ImageChanged();
-	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(SIZE_64_64));
+	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(DEFINES_GUI.SIZE_64_64));
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

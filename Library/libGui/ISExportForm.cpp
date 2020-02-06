@@ -1,5 +1,6 @@
 #include "ISExportForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
@@ -12,7 +13,7 @@ ISExportForm::ISExportForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 	setWindowIcon(BUFFER_ICONS("ExportTable"));
 	setWindowTitle(LANG("Export.Table"));
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelText = new QLabel(this);
 	LabelText->setText(LANG("SelectExportType") + ':');

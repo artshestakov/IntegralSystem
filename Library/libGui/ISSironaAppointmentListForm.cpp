@@ -1,9 +1,9 @@
 #include "ISSironaAppointmentListForm.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISQuery.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QU_ADMISSION_FINISHED = PREPARE_QUERY("UPDATE appointment SET "
 													 "apnm_finished = true "

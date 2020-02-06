@@ -1,12 +1,11 @@
 #include "ISCaratApplication.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISDatabase.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
 #include "ISConfig.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_localname "
 											 "FROM _caratcore "

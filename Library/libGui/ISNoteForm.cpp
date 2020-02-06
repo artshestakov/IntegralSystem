@@ -1,13 +1,15 @@
 #include "ISNoteForm.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
 #include "ISCore.h"
 #include "ISQuery.h"
 #include "ISInputDialog.h"
 #include "ISControls.h"
 #include "ISButtonClose.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_NOTE = PREPARE_QUERY("SELECT note_id, note_name, note_text FROM _note WHERE NOT note_isdeleted AND note_user = currentuserid() ORDER BY note_id");
 //-----------------------------------------------------------------------------
@@ -27,7 +29,7 @@ ISNoteForm::ISNoteForm(QWidget *parent) : ISInterfaceForm(parent)
 	setWindowTitle(LANG("Notebook"));
 	setWindowIcon(BUFFER_ICONS("NoteObject"));
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

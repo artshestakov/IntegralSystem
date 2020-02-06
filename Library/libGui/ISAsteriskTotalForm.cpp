@@ -1,12 +1,13 @@
 #include "ISAsteriskTotalForm.h"
-#include "EXDefines.h"
 #include "ISConstants.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISPushButton.h"
 #include "ISGui.h"
 #include "ISTelephonySummary.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_PATTER = PREPARE_QUERY("SELECT userfullname(aspt_user), aspt_pattern "
 												  "FROM _asteriskpattern "
@@ -48,7 +49,7 @@ ISAsteriskTotalForm::ISAsteriskTotalForm(QWidget *parent) : ISInterfaceForm(pare
 	GetMainLayout()->addWidget(new QLabel(LANG("ClickDoneFromFilter"), this));
 
 	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 
 	QWidget *Widget = new QWidget(this);
 	Widget->setLayout(Layout);

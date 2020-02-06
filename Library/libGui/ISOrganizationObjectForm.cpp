@@ -1,4 +1,7 @@
 #include "ISOrganizationObjectForm.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"
 #include "ISMemoryObjects.h"
@@ -6,7 +9,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISInputDialog.h"
-#include "EXDefines.h"
 #include "ISCallHistoryObjectForm.h"
 #include "ISPhoneEdit.h"
 #include "ISDemoAccessesObjectForm.h"
@@ -80,7 +82,7 @@ ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType f
 			QString UserName = qSelect.ReadColumn("usrs_surname").toString() + SYMBOL_SPACE + qSelect.ReadColumn("usrs_name").toString() + SYMBOL_SPACE + qSelect.ReadColumn("usrs_patronymic").toString();
 
 			QLabel *LabelWorkIn = new QLabel(GetToolBar());
-			LabelWorkIn->setFont(FONT_APPLICATION_BOLD);
+			LabelWorkIn->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 			LabelWorkIn->setText(LANG("OrganizationInWorkFromUser").arg(UserName));
 			LabelWorkIn->setContentsMargins(10, 0, 0, 0);
 			GetToolBar()->addWidget(LabelWorkIn);
@@ -191,7 +193,7 @@ void ISOrganizationObjectForm::UpdateDemo()
 			int CountDemo = qSelectDemo.ReadColumn("count").toInt();
 			if (CountDemo)
 			{
-				ActionDemo->setFont(FONT_APPLICATION_BOLD);
+				ActionDemo->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 				ActionDemo->setText(LANG("DemoAccess") + " (" + QString::number(CountDemo) + ')');
 			}
 		}

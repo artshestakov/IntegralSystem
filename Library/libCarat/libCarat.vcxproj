@@ -68,7 +68,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;LIBCARAT_LIBRARY</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\Source\;$(ProjectDir)..\libCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\libCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,7 +85,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;LIBCARAT_LIBRARY</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\Source\;$(ProjectDir)..\libCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\libCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -96,7 +96,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Components\Source\EXDefines.cpp" />
     <ClCompile Include="ISAsteriskSocket.cpp" />
     <ClCompile Include="ISCaratCoreApplication.cpp" />
     <ClCompile Include="ISCoreAsteriskQueue.cpp" />
@@ -155,7 +154,6 @@
     <QtMoc Include="ISCoreNotification.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Components\Source\EXDefines.h" />
     <ClInclude Include="libCarat_global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

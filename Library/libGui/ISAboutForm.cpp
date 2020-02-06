@@ -1,7 +1,8 @@
 #include "ISAboutForm.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISConfig.h"
 #include "ISMessageBox.h"
@@ -13,6 +14,8 @@
 #include "ISQuery.h"
 #include "ISLicense.h"
 #include "ISVersion.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_description "
 											"FROM _keyboardshortcuts "
@@ -21,8 +24,8 @@ static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_descript
 ISAboutForm::ISAboutForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("AboutForm.AboutApplication"));
-	setMinimumSize(SIZE_MAIN_WINDOW_MINIMUM);
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	setMinimumSize(DEFINES_GUI.SIZE_MAIN_WINDOW_MINIMUM);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -35,7 +38,7 @@ ISAboutForm::ISAboutForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	Layout->addWidget(LabelImage);
 
 	LayoutRight = new QVBoxLayout();
-	LayoutRight->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	LayoutRight->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	Layout->addLayout(LayoutRight);
 
 	TabWidget = new QTabWidget(this);
@@ -182,7 +185,7 @@ void ISAboutForm::CreateShortcuts()
 
 			QLabel *Label = new QLabel(this);
 			Label->setText(Shortcut + ':');
-			Label->setFont(FONT_APPLICATION_BOLD);
+			Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 			FormLayout->addRow(Label, new QLabel(Description, this));
 		}
@@ -197,9 +200,9 @@ void ISAboutForm::CreateOtherTab()
 	TabOther->setLayout(LayoutOther);
 	TabWidget->addTab(TabOther, LANG("AboutForm.Tab.Other"));
 
-	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeTemp"), ISSystem::GetSizeDir(PATH_TEMP_DIR));
-	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeLogger"), ISSystem::GetSizeDir(PATH_LOGS_DIR));
-	AddLabel(TabOther, LANG("AboutForm.Tab.Other.ApplicationDir"), PATH_APPLICATION_DIR);
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeTemp"), ISSystem::GetSizeDir(DEFINES_CORE.PATH_TEMP_DIR));
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeLogger"), ISSystem::GetSizeDir(DEFINES_CORE.PATH_LOGS_DIR));
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.ApplicationDir"), DEFINES_CORE.PATH_APPLICATION_DIR);
 
 	LayoutOther->addStretch();
 }
@@ -207,18 +210,18 @@ void ISAboutForm::CreateOtherTab()
 void ISAboutForm::AddLabel(QWidget *parent, const QString &LabelText, const QString &Text)
 {
 	QHBoxLayout *LayoutRow = new QHBoxLayout();
-	LayoutRow->setContentsMargins(MARGINS_LAYOUT_NULL);
+	LayoutRow->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 
 	QWidget *WidgetRow = new QWidget(parent);
 	WidgetRow->setLayout(LayoutRow);
 
 	QLabel *LabelRow = new QLabel(parent);
-	LabelRow->setFont(FONT_APPLICATION_BOLD);
+	LabelRow->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelRow->setText(LabelText + ':');
 	LayoutRow->addWidget(LabelRow);
 
 	QLabel *Label = new QLabel(parent);
-	Label->setFont(FONT_APPLICATION_BOLD);
+	Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	Label->setText(Text);
 	LayoutRow->addWidget(Label);
 

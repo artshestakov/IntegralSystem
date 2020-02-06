@@ -1,6 +1,7 @@
 #include "ISDelegateCallDetails.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDelegateCallDetails::ISDelegateCallDetails(QObject *parent) : QStyledItemDelegate(parent)
 {
@@ -33,7 +34,7 @@ void ISDelegateCallDetails::paint(QPainter *Painter, const QStyleOptionViewItem 
 		IconDetails = IconDetailsNull;
 	}
 
-	QImage Image = IconDetails.pixmap(SIZE_18_18).toImage();
+	QImage Image = IconDetails.pixmap(DEFINES_GUI.SIZE_18_18).toImage();
 	if (Image.isNull())
 	{
 		return;

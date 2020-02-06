@@ -1,10 +1,11 @@
 #include "ISMenuFastAccess.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISMetaData.h"
 #include "ISGui.h"
 #include "ISSystem.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISMenuFastAccess::ISMenuFastAccess(QWidget *parent) : QMenu(parent)
 {
@@ -61,7 +62,7 @@ void ISMenuFastAccess::AboutToShow()
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(VectorRecords.at(i));
 
 		QAction *ActionRecord = new QAction(LANG("CreateRecord") + ": " + MetaTable->GetLocalName(), this);
-		ActionRecord->setFont(FONT_TAHOMA_10);
+		ActionRecord->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 		ActionRecord->setData(MetaTable->GetName());
 		insertAction(ActionCreateRecords, ActionRecord);
 		ActionGroupRecords->addAction(ActionRecord);
@@ -84,7 +85,7 @@ void ISMenuFastAccess::AboutToShow()
 		ISMetaExternalTool *MetaExternalTool = VectorTools.at(i);
 
 		QAction *ActionExternalTool = new QAction(MetaExternalTool->GetIcon(), MetaExternalTool->GetLocalName(), this);
-		ActionExternalTool->setFont(FONT_TAHOMA_10);
+		ActionExternalTool->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 		ActionExternalTool->setData(MetaExternalTool->GetCommand());
 		insertAction(ActionExternalTools, ActionExternalTool);
 		ActionGroupTools->addAction(ActionExternalTool);

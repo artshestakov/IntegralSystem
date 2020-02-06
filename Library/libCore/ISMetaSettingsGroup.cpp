@@ -1,5 +1,4 @@
 #include "ISMetaSettingsGroup.h"
-#include "EXDefines.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISMetaSettingsGroup::ISMetaSettingsGroup()

@@ -1,5 +1,6 @@
 #include "ISLogger.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
@@ -9,10 +10,10 @@ ISLogger::ISLogger()
 {
 	UpdateLogFileName();
 
-	QDir DirLogs(PATH_LOGS_DIR);
+	QDir DirLogs(DEFINES_CORE.PATH_LOGS_DIR);
 	if (!DirLogs.exists())
 	{
-		DirLogs.mkdir(PATH_LOGS_DIR);
+		DirLogs.mkdir(DEFINES_CORE.PATH_LOGS_DIR);
 	}
 
 	QFile LogFile(LogPath);
@@ -87,6 +88,6 @@ void ISLogger::AddData()
 //-----------------------------------------------------------------------------
 void ISLogger::UpdateLogFileName()
 {
-	LogPath = PATH_LOGS_DIR + '/' + APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(DATE_FORMAT_V2) + SYMBOL_POINT + EXTENSION_LOG;
+	LogPath = DEFINES_CORE.PATH_LOGS_DIR + '/' + DEFINES_CORE.APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(DATE_FORMAT_V2) + SYMBOL_POINT + EXTENSION_LOG;
 }
 //-----------------------------------------------------------------------------

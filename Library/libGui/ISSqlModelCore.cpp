@@ -1,12 +1,14 @@
 #include "ISSqlModelCore.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
 #include "ISTrace.h"
 #include "ISQueryModel.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
 #include "ISSqlModelHelper.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISSqlModelCore::ISSqlModelCore(PMetaClassTable *meta_table, QObject *parent) : QAbstractItemModel(parent)
 {
@@ -155,11 +157,11 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 	{
 		if (GetIsSystem(ModelIndex.row())) //Если запись системная
 		{
-			return qVariantFromValue(COLOR_BLUE); //Пометить её синим цветом
+			return qVariantFromValue(DEFINES_GUI.COLOR_BLUE); //Пометить её синим цветом
 		}
 		else if (GetIsDeleted(ModelIndex.row())) //Если запись удаленная
 		{
-			return qVariantFromValue(COLOR_RED); //Пометить её красным цветом
+			return qVariantFromValue(DEFINES_GUI.COLOR_RED); //Пометить её красным цветом
 		}
 	}
 	else if (Role == Qt::ToolTipRole) //Роль отображения подсказки для ячейки (ToolTip)

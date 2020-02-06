@@ -1,5 +1,6 @@
 #include "ISListEditPopup.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
@@ -11,6 +12,7 @@
 #include "ISMetaData.h"
 #include "ISServiceButton.h"
 #include "ISGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *ComboBox) : ISInterfaceForm(ComboBox)
 {
@@ -21,7 +23,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 	setAttribute(Qt::WA_DeleteOnClose, false);
 
 	QVBoxLayout *LayoutFrame = new QVBoxLayout();
-	LayoutFrame->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	LayoutFrame->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	QFrame *Frame = new QFrame(this);
 	Frame->setFrameShape(QFrame::Box);
@@ -37,7 +39,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 
 	LabelName = new QLabel(this);
 	LabelName->setText(MetaTableForeign->GetLocalListName() + ':');
-	LabelName->setFont(FONT_APPLICATION_BOLD);
+	LabelName->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutFrame->addWidget(LabelName);
 
@@ -75,7 +77,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 
 	LabelEmpty = new QLabel(this);
 	LabelEmpty->setText(LANG("ListIsEmpty"));
-	LabelEmpty->setFont(FONT_TAHOMA_12_BOLD);
+	LabelEmpty->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 	LabelEmpty->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LabelEmpty->setVisible(false);
 }
@@ -233,7 +235,7 @@ void ISListEditPopup::LoadDataFromQuery()
 		{
 			ListWidget->setItemSelected(CurrentItem, true);
 			ListWidget->scrollToItem(CurrentItem, QAbstractItemView::ScrollHint::PositionAtCenter);
-			CurrentItem->setFont(FONT_APPLICATION_BOLD);
+			CurrentItem->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 			CurrentItem->setSelected(true);
 		}
 

@@ -1,5 +1,6 @@
 #include "ISDeviceSettingsForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
@@ -21,7 +22,7 @@ ISDeviceSettingsForm::ISDeviceSettingsForm(QWidget *parent) : ISInterfaceForm(pa
 {
 	setWindowTitle(LANG("Device.Settings"));
 	setWindowIcon(BUFFER_ICONS("Device.Settings"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -54,7 +55,7 @@ ISDeviceSettingsForm::ISDeviceSettingsForm(QWidget *parent) : ISInterfaceForm(pa
 	ToolBar->addAction(ActionUpdate);
 
 	QVBoxLayout *GroupBoxLayout = new QVBoxLayout();
-	GroupBoxLayout->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GroupBoxLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	QGroupBox *GroupBox = new QGroupBox(this);
 	GroupBox->setTitle(LANG("Device.My"));

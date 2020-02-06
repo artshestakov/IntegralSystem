@@ -1,7 +1,7 @@
 #include "ISCheckViewParagraph.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARAFGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_localname "
 											 "FROM _paragraphs "

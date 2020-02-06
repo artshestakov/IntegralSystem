@@ -1,5 +1,4 @@
 #include "ISMetaSubSystem.h"
-#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISMetaSubSystem::ISMetaSubSystem()
 	: ID(0),

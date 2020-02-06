@@ -1,7 +1,5 @@
 #include "StdAfx.h"
 #include "ISCaratApplication.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"
 #include "ISCommandLine.h"
@@ -15,6 +13,7 @@
 #include "ISQueryExceptionSyntax.h"
 #include "ISApplicationRunning.h"
 #include "ISLicense.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

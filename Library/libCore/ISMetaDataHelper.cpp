@@ -1,5 +1,4 @@
 #include "ISMetaDataHelper.h"
-#include "EXDefines.h"
 #include "ISAssert.h"
 #include "ISMetaData.h"
 #include "ISSystem.h"

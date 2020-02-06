@@ -1,5 +1,4 @@
 #include "ISChatForm.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

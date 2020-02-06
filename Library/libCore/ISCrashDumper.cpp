@@ -1,5 +1,6 @@
 #include "ISCrashDumper.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 #include "ISDebug.h"
 #include "ISCore.h"
 #include "ISSystem.h"
@@ -38,7 +39,7 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo)
     ISStackWalker stack_walker;
 	stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
 
-	std::string FilePath = QString(PATH_LOGS_DIR + "/Crash_" + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_LOG).toStdString();
+	std::string FilePath = QString(DEFINES_CORE.PATH_LOGS_DIR + "/Crash_" + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_LOG).toStdString();
 	FILE *File = fopen(FilePath.c_str(), "w");
 	if (File)
 	{
@@ -58,9 +59,9 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo)
 		printf("Error open crash file (%s): %s\n", FilePath.c_str(), strerror(errno));
 	}
 
-	if (IS_GUI_APPLICATION)
+	if (DEFINES_CORE.IS_GUI)
 	{
-		QProcess::startDetached(PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << QString::fromStdString(FilePath));
+		QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << QString::fromStdString(FilePath));
 	}
 	else
 	{

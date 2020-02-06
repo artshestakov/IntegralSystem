@@ -1,10 +1,9 @@
 #include "CGForeign.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
-#include "ISConstants.h"
 #include "ISConfig.h"
 #include "ISMetaData.h"
 #include "PMetaClassTable.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) FROM information_schema.constraint_table_usage WHERE table_catalog = :DatabaseName AND table_schema = current_schema() AND constraint_name = :ForeignName");
 //-----------------------------------------------------------------------------

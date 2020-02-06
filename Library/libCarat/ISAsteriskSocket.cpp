@@ -1,10 +1,9 @@
 #include "ISAsteriskSocket.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISSettingsDatabase.h"
 #include "ISLocalization.h"
 #include "ISDebug.h"
 #include "ISQuery.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_CONTEXT = PREPARE_QUERY("SELECT aspt_context "
 											   "FROM _asteriskpattern "

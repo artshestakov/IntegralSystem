@@ -1,5 +1,6 @@
 #include "ISTaskForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
@@ -69,7 +70,7 @@ void ISTaskForm::Invoke()
 void ISTaskForm::CreateTempWidget()
 {
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	
 	TempWidget = new QWidget(this);
 	TempWidget->setLayout(Layout);
@@ -83,12 +84,12 @@ void ISTaskForm::CreateTempWidget()
 	LayoutLabel->addStretch();
 
 	QLabel *LabelIcon = new QLabel(this);
-	LabelIcon->setPixmap(BUFFER_ICONS("Arrow.Up").pixmap(SIZE_32_32));
+	LabelIcon->setPixmap(BUFFER_ICONS("Arrow.Up").pixmap(DEFINES_GUI.SIZE_32_32));
 	LayoutLabel->addWidget(LabelIcon);
 
 	QLabel *LabelText = new QLabel(this);
 	LabelText->setText(LANG("Task.LabelCentral"));
-	LabelText->setFont(FONT_TAHOMA_12_BOLD);
+	LabelText->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 	LabelText->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LabelText->setAlignment(Qt::AlignCenter);
 	LayoutLabel->addWidget(LabelText);
@@ -149,12 +150,12 @@ void ISTaskForm::FilterClicked()
 
 	for (QAction *Action : ActionGroup->actions())
 	{
-		Action->setFont(FONT_APPLICATION);
+		Action->setFont(DEFINES_GUI.FONT_APPLICATION);
 		Action->setChecked(false);
 
 		if (Action == sender())
 		{
-			Action->setFont(FONT_APPLICATION_BOLD);
+			Action->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 			Action->setChecked(true);
 		}
 	}

@@ -1,7 +1,9 @@
 #include "ISRangeEditBase.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISRangeEditBase::ISRangeEditBase(QWidget *parent, const QString &FieldName) : QWidget(parent)
 {
@@ -9,12 +11,12 @@ ISRangeEditBase::ISRangeEditBase(QWidget *parent, const QString &FieldName) : QW
 	EndFieldEdit = nullptr;
 
 	QHBoxLayout *MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	MainLayout->setSpacing(EDIT_FIELD_SPACING);
 	setLayout(MainLayout);
 
 	QLabel *LabelFieldName = new QLabel(this);
-	LabelFieldName->setFont(FONT_APPLICATION_BOLD);
+	LabelFieldName->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	MainLayout->addWidget(LabelFieldName);
 
 	if (FieldName.length())

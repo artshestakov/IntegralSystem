@@ -1,10 +1,10 @@
 #include "ISUrlEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISMessageBox.h"
 #include "ISPopupMessage.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISUrlEdit::ISUrlEdit(QWidget *parent) : ISLineEdit(parent)
 {

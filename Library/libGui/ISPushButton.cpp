@@ -1,6 +1,6 @@
 #include "ISPushButton.h"
-#include "EXDefines.h"
 #include "ISStyleSheet.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISPushButton::ISPushButton(const QIcon &Icon, const QString &Text, const QString &ToolTip, QWidget *parent) : QPushButton(Icon, Text, parent)
 {

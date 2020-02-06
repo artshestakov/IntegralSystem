@@ -1,5 +1,7 @@
 #include "ISFieldEditBase.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
@@ -19,7 +21,7 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 
 	//Главный компоновщик
 	MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	MainLayout->setSpacing(EDIT_FIELD_SPACING);
 	setLayout(MainLayout);
 
@@ -29,7 +31,7 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 
 	//Компоновщик редактора
 	LayoutEdit = new QHBoxLayout();
-	LayoutEdit->setContentsMargins(MARGINS_LAYOUT_2_PX);
+	LayoutEdit->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_2_PX);
 	MainLayout->addLayout(LayoutEdit);
 
 	//Правый компоновщик
@@ -172,7 +174,7 @@ void ISFieldEditBase::CreateHint(const QString &Hint)
 			ButtonHint->setFocusPolicy(Qt::NoFocus);
 			ButtonHint->setIcon(BUFFER_ICONS("Hint"));
 			ButtonHint->setAutoRaise(true);
-			ButtonHint->setFixedSize(SIZE_22_22);
+			ButtonHint->setFixedSize(DEFINES_GUI.SIZE_22_22);
 			ButtonHint->setCursor(CURSOR_POINTING_HAND);
 			ButtonHint->setToolTip(LANG("ClickToViewHelp"));
 			connect(ButtonHint, &QToolButton::clicked, this, &ISFieldEditBase::ShowHint);
@@ -200,7 +202,7 @@ void ISFieldEditBase::paintEvent(QPaintEvent *PaintEvent)
 
 			QPainter Painter(this);
 			Painter.setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
-			Painter.setPen(QPen(EDIT_WIDGET_COLOR_RED, 2.5, Qt::SolidLine));
+			Painter.setPen(QPen(DEFINES_GUI.EDIT_WIDGET_COLOR_RED, 2.5, Qt::SolidLine));
 			Painter.drawRect(Rect);
 		}
 	}

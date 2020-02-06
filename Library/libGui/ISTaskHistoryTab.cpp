@@ -1,10 +1,12 @@
 #include "ISTaskHistoryTab.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISPushButton.h"
 #include "ISGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK_HISTORY = PREPARE_QUERY("SELECT thst_creationdate, userfullname(thst_user), thac_name, thst_information "
 											   "FROM _taskhistory "
@@ -47,14 +49,14 @@ void ISTaskHistoryTab::Update()
 			QString Information = qSelect.ReadColumn("thst_information").toString();
 
 			QVBoxLayout *Layout = new QVBoxLayout();
-			Layout->setContentsMargins(MARGINS_LAYOUT_2_PX);
+			Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_2_PX);
 
 			QWidget *Widget = new QWidget(ListWidget);
 			Widget->setLayout(Layout);
 			
 			QLabel *LabelTitle = new QLabel(Widget);
-			LabelTitle->setText(SYMBOL_CIRCLE + SYMBOL_SPACE + CreationDate + " (" + UserFullName + "): " + ActionName);
-			LabelTitle->setFont(FONT_TAHOMA_10);
+			LabelTitle->setText(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + CreationDate + " (" + UserFullName + "): " + ActionName);
+			LabelTitle->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 			Layout->addWidget(LabelTitle);
 
 			if (Information.length())

@@ -1,7 +1,5 @@
 #include "StdAfx.h"
 #include "CGConfigurator.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISNamespace.h"
 #include "ISLocalization.h"
 #include "ISDebug.h"
@@ -15,6 +13,8 @@
 #include "ISCountingTime.h"
 #include "ISQueryException.h"
 #include "CGSection.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorCreate.h"
 #include "CGConfiguratorUpdate.h"
@@ -50,7 +50,6 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
 	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 
@@ -245,7 +244,7 @@ void InterpreterMode(bool &IsRunning)
 			}
 			else if (StringList.at(0) == "restart") //Перезапуск
 			{
-				QProcess::startDetached(PATH_APPLICATION_FILE);
+				QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_FILE);
 				IsRunning = false;
 				return;
 			}

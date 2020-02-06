@@ -1,5 +1,6 @@
 #include "ISTaskTabBase.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISTaskTabBase::ISTaskTabBase(int task_id, QTabWidget *parent) : QWidget(parent)
 {
@@ -7,7 +8,7 @@ ISTaskTabBase::ISTaskTabBase(int task_id, QTabWidget *parent) : QWidget(parent)
 	Count = 0;
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 	setLayout(Layout);
 }
 //-----------------------------------------------------------------------------

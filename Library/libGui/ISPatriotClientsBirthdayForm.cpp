@@ -1,9 +1,10 @@
 #include "ISPatriotClientsBirthdayForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISButtonClose.h"
 #include "ISQuery.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_CLIENT = PREPARE_QUERY("SELECT clts_fio, cltp_name, EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM clts_birthday) as YearCount "
 										 "FROM clients "
@@ -13,7 +14,7 @@ static QString QS_CLIENT = PREPARE_QUERY("SELECT clts_fio, cltp_name, EXTRACT(YE
 ISPatriotClientsBirthdayForm::ISPatriotClientsBirthdayForm(QWidget *parent) : ISInterfaceForm(parent)
 {
 	setWindowTitle(LANG("Patriot.Birthdays"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	GetMainLayout()->addWidget(new QLabel(LANG("Patriot.BirthdayCurrentDate") + ':', this));
 

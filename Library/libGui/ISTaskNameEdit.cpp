@@ -1,11 +1,11 @@
 #include "ISTaskNameEdit.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISTaskNameEdit::ISTaskNameEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	Completer = nullptr;
 
-	QFile File(PATH_TEMP_DIR + "/TaskNameLog");
+	QFile File(DEFINES_CORE.PATH_TEMP_DIR + "/TaskNameLog");
 	if (File.exists())
 	{
 		if (File.open(QIODevice::ReadOnly))
@@ -36,7 +36,7 @@ void ISTaskNameEdit::Invoke()
 	StringList.removeDuplicates();
 	StringList.sort();
 
-	QFile File(PATH_TEMP_DIR + "/TaskNameLog");
+	QFile File(DEFINES_CORE.PATH_TEMP_DIR + "/TaskNameLog");
 	if (File.open(QIODevice::Truncate | QIODevice::Append))
 	{
 		QTextStream TextStream(&File);

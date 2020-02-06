@@ -1,11 +1,10 @@
 #include "ISCaratCoreApplication.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISDebug.h"
 #include "ISConfig.h"
 #include "ISLocalization.h"
 #include "ISDatabase.h"
 #include "ISLicense.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISCaratCoreApplication::ISCaratCoreApplication(int &argc, char **argv) : QCoreApplication(argc, argv)
 {

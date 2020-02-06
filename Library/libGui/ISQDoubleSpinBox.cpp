@@ -1,8 +1,8 @@
 #include "ISQDoubleSpinBox.h"
-#include "EXDefines.h"
 #include "ISContextMenuDouble.h"
 #include "ISQLineEdit.h"
 #include "ISGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISQDoubleSpinBox::ISQDoubleSpinBox(QWidget *parent) : QDoubleSpinBox(parent)
 {

@@ -1,5 +1,5 @@
 #include "ISCalendarEventForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
@@ -16,6 +16,7 @@
 #include "ISMediaPlayer.h"
 #include "ISAssert.h"
 #include "ISCore.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_tablename, cldr_objectid "
 										   "FROM _calendar "
@@ -48,13 +49,13 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	//setWindowFlags(Qt::WindowStaysOnTopHint);
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutInfo = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutInfo, 0);
 
 	QLabel *LabelImage = new QLabel(this);
-	LabelImage->setPixmap(BUFFER_ICONS("Calendar").pixmap(SIZE_32_32));
+	LabelImage->setPixmap(BUFFER_ICONS("Calendar").pixmap(DEFINES_GUI.SIZE_32_32));
 	LayoutInfo->addWidget(LabelImage);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
@@ -62,7 +63,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 
 	QLabel *LabelName = new QLabel(this);
 	LabelName->setText(EventName);
-	LabelName->setFont(FONT_TAHOMA_12_BOLD);
+	LabelName->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 	LabelName->setWordWrap(true);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	Layout->addWidget(LabelName);
@@ -78,18 +79,18 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	LabelDate->setText(QString("%1: %2 %3 %4 %5").arg(LANG("Date")).arg(EventDate.day()).arg(QDate::longMonthName(EventDate.month())).arg(EventDate.year()).arg(LANG("Year.Reduction")));
 	LayoutDate->addWidget(LabelDate);
 
-	if (EventDate == DATE_TODAY) //Событие сегодня
+	if (EventDate == QDate::currentDate()) //Событие сегодня
 	{
 		LabelDate->setText(LabelDate->text() + " (" + LANG("Today") + ')');
 	}
-	else if (EventDate < DATE_TODAY) //Событие просрочено
+	else if (EventDate < QDate::currentDate()) //Событие просрочено
 	{
-		LabelOverdueIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(SIZE_16_16));
+		LabelOverdueIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(DEFINES_GUI.SIZE_16_16));
 		LabelOverdueIcon->setVisible(true);
 
 		LabelDate->setText(LabelDate->text() + " (" + LANG("OverdueEvent") + ')');
 		LabelDate->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
-		LabelDate->setFont(FONT_APPLICATION_BOLD);
+		LabelDate->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	}
 
 	QLabel *LabelTime = new QLabel(this);
@@ -160,7 +161,7 @@ ISCalendarEventForm::~ISCalendarEventForm()
 void ISCalendarEventForm::AfterShowEvent()
 {
 	ISInterfaceForm::AfterShowEvent();
-	FlashingStart(1000, COLOR_CALENDAR_EVENT_FORM_FLASH);
+	FlashingStart(1000, DEFINES_GUI.COLOR_CALENDAR_EVENT_FORM_FLASH);
 }
 //-----------------------------------------------------------------------------
 void ISCalendarEventForm::closeEvent(QCloseEvent *e)

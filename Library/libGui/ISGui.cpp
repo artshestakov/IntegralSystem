@@ -1,5 +1,5 @@
 #include "ISGui.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
@@ -14,6 +14,14 @@
 #include "ISProtocol.h"
 #include "ISSelectDialogForm.h"
 #include "ISTaskViewForm.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+//-----------------------------------------------------------------------------
+bool ISGui::Startup(QString &ErrorString)
+{
+	ISDefinesGui::Instance().Init();
+	return ISCore::Startup(true, ErrorString);
+}
 //-----------------------------------------------------------------------------
 bool ISGui::CheckPressCapsLook()
 {
@@ -153,7 +161,7 @@ QFont ISGui::StringToFont(const QString &FontText)
 //-----------------------------------------------------------------------------
 QByteArray ISGui::IconToByteArray(const QIcon &Icon)
 {
-	QPixmap PixmapIcon = Icon.pixmap(SIZE_16_16);
+	QPixmap PixmapIcon = Icon.pixmap(DEFINES_GUI.SIZE_16_16);
 	QByteArray ByteArray;
 	QBuffer Buffer(&ByteArray);
 	if (Buffer.open(QIODevice::WriteOnly))
@@ -274,15 +282,15 @@ QString ISGui::ConvertDateTimeToString(const QDateTime &DateTime, const QString 
 QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 {
 	QString Result;
-	if (Date == DATE_YESTERDAY) //Вчера
+	if (Date == QDate::currentDate().addDays(-1)) //Вчера
 	{
 		Result = LANG("Yesterday");
 	}
-	else if (Date == DATE_TODAY) //Сегодня
+	else if (Date == QDate::currentDate()) //Сегодня
 	{
 		Result = LANG("Today");
 	}
-	else if (Date == DATE_TOMORROW) //Завтра
+	else if (Date == QDate::currentDate().addDays(1)) //Завтра
 	{
 		Result = LANG("Tomorrow");
 	}
@@ -457,7 +465,7 @@ void ISGui::ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID)
 void ISGui::ShowTaskObjectForm(QWidget *TaskObjectForm)
 {
 	TaskObjectForm->setParent(nullptr);
-	TaskObjectForm->resize(SIZE_TASK_OBJECT_FORM);
+	TaskObjectForm->resize(DEFINES_GUI.SIZE_TASK_OBJECT_FORM);
 	ISGui::MoveWidgetToDesktop(TaskObjectForm, ISNamespace::MWD_Center);
 	TaskObjectForm->show();
 }

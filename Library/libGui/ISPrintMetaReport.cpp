@@ -1,6 +1,6 @@
 #include "ISPrintMetaReport.h"
-#include "EXDefines.h"
 #include "ISAssert.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISPrintMetaReport::ISPrintMetaReport()
 	: Type(ISNamespace::RT_Unknown)

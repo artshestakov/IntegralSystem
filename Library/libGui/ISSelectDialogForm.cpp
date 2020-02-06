@@ -1,17 +1,18 @@
 #include "ISSelectDialogForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISMetaData.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	resize(SIZE_640_480);
+	resize(DEFINES_GUI.SIZE_640_480);
 	setWindowTitle(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName());
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelInfo = new QLabel(this);
-	LabelInfo->setFont(FONT_APPLICATION_BOLD);
+	LabelInfo->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	ISGui::SetFontWidgetUnderline(LabelInfo, true);
 	GetMainLayout()->addWidget(LabelInfo);
 

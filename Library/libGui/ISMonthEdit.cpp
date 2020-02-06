@@ -1,5 +1,4 @@
 #include "ISMonthEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISMonthEdit::ISMonthEdit(QWidget *parent) : ISComboEdit(parent)
@@ -27,6 +26,6 @@ ISMonthEdit::~ISMonthEdit()
 //-----------------------------------------------------------------------------
 void ISMonthEdit::SelectCurrentMonth()
 {
-	SetValue(DATE_TODAY.month());
+	SetValue(QDate::currentDate().month());
 }
 //-----------------------------------------------------------------------------

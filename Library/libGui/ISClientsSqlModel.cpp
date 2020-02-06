@@ -1,5 +1,6 @@
 #include "ISClientsSqlModel.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISClientsSqlModel::ISClientsSqlModel(PMetaClassTable *meta_table, QObject *parent) : ISSqlModelCore(meta_table, parent)
 {
@@ -20,11 +21,11 @@ QVariant ISClientsSqlModel::data(const QModelIndex &ModelIndex, int Role) const
 		int CountInWork = GetRecord(ModelIndex.row()).value("CountInWork").toInt();
 		if (CountInWork)
 		{
-			Value = qVariantFromValue(COLOR_RED);
+			Value = qVariantFromValue(DEFINES_GUI.COLOR_RED);
 		}
 		else
 		{
-			Value = qVariantFromValue(COLOR_DARK_GREEN);
+			Value = qVariantFromValue(DEFINES_GUI.COLOR_DARK_GREEN);
 		}
 	}
 

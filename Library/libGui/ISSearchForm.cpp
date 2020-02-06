@@ -1,5 +1,5 @@
 #include "ISSearchForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISAssert.h"
@@ -11,7 +11,8 @@
 #include "ISServiceButton.h"
 #include "ISDelegateSearchField.h"
 #include "ISMetaData.h"
-
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInterfaceForm(parent)
 {
@@ -19,14 +20,14 @@ ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 
 	setWindowTitle(LANG("Search.Advanced") + " - " + MetaTable->GetLocalListName());
 	setWindowIcon(BUFFER_ICONS("Search"));
-	resize(SIZE_550_300);
+	resize(DEFINES_GUI.SIZE_550_300);
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelTitle = new QLabel(this);
 	LabelTitle->setText(LANG("Search.Advanced"));
 	LabelTitle->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	LabelTitle->setFont(FONT_TAHOMA_12_BOLD);
+	LabelTitle->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 	GetMainLayout()->addWidget(LabelTitle);
 
 	QStringList HeaderLabels;

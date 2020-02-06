@@ -1,5 +1,6 @@
 #include "ISFileEdit.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISFileDialog.h"
 #include "ISMessageBox.h"
@@ -185,7 +186,7 @@ void ISFileEdit::Open()
 	{
 		QString Extension = qSelect.ReadColumn("file_extension").toString();
 		QByteArray Data = qSelect.ReadColumn("file_data").toByteArray();
-		QString FilePathTemp = PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + Extension;
+		QString FilePathTemp = DEFINES_CORE.PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + Extension;
 		QFile FileTemp(FilePathTemp);
 		if (FileTemp.open(QIODevice::WriteOnly))
 		{

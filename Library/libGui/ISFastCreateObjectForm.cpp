@@ -1,5 +1,6 @@
 #include "ISFastCreateObjectForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMetaData.h"
@@ -23,7 +24,7 @@ ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceD
 {
 	setWindowTitle(LANG("CreateRecords"));
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);

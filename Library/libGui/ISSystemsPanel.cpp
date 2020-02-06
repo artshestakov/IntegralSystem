@@ -1,5 +1,5 @@
 #include "ISSystemsPanel.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
@@ -8,16 +8,17 @@
 #include "ISProtocol.h"
 #include "ISObjects.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 {
 	Layout = new QVBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	Layout->setSpacing(0);
 	setLayout(Layout);
 
 	SystemsBar = new QToolBar(this);
-	SystemsBar->setIconSize(SIZE_32_32);
+	SystemsBar->setIconSize(DEFINES_GUI.SIZE_32_32);
 	SystemsBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	Layout->addWidget(SystemsBar);
 
@@ -25,12 +26,12 @@ ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 	Layout->addWidget(LineSystems);
 
 	QPalette PaletteSystems = LineSystems->palette();
-	PaletteSystems.setColor(QPalette::Dark, COLOR_MAIN_MENU_BAR);
+	PaletteSystems.setColor(QPalette::Dark, DEFINES_GUI.COLOR_MAIN_MENU_BAR);
 	LineSystems->setPalette(PaletteSystems);
 
 	SubSystemBar = new QToolBar(this);
 	SubSystemBar->setVisible(false);
-	SubSystemBar->setIconSize(SIZE_25_25);
+	SubSystemBar->setIconSize(DEFINES_GUI.SIZE_25_25);
 	SubSystemBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	Layout->addWidget(SubSystemBar);
 
@@ -39,7 +40,7 @@ ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 	Layout->addWidget(LineSubSystems);
 
 	QPalette PaletteSubSystems = LineSubSystems->palette();
-	PaletteSubSystems.setColor(QPalette::Dark, COLOR_MAIN_MENU_BAR);
+	PaletteSubSystems.setColor(QPalette::Dark, DEFINES_GUI.COLOR_MAIN_MENU_BAR);
 	LineSubSystems->setPalette(PaletteSubSystems);
 
 	ActionSystemGroup = new QActionGroup(this);
@@ -55,7 +56,7 @@ void ISSystemsPanel::AddSystem(ISMetaSystem *MetaSystem)
 {
 	QAction *ActionSystem = SystemsBar->addAction(GetSystemIcon(MetaSystem), MetaSystem->GetLocalName(), this, &ISSystemsPanel::SystemClicked);
 	ActionSystem->setToolTip(GetSystemToolTip(MetaSystem));
-	ActionSystem->setFont(FONT_TAHOMA_15);
+	ActionSystem->setFont(DEFINES_GUI.FONT_TAHOMA_15);
 	ActionSystem->setCheckable(true);
 	SystemsBar->widgetForAction(ActionSystem)->setCursor(CURSOR_POINTING_HAND);
 

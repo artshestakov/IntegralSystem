@@ -1,5 +1,5 @@
 #include "ISAddressForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISComboEdit.h"
@@ -7,6 +7,8 @@
 #include "ISSystem.h"
 #include "ISButtonClose.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_REGION = PREPARE_QUERY("SELECT fobj_offname, fobj_aoguid, "
 										 "(SELECT fscb_socrname FROM _fias_addressobjecttype WHERE fscb_level = fobj_aolevel AND fscb_scname = fobj_shortname) "
@@ -52,7 +54,7 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 {
 	setWindowTitle(LANG("Address"));
 	setWindowIcon(BUFFER_ICONS("Address"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	setFixedSize(530, 230);
 
 	QFormLayout *FormLayout = new QFormLayout();
@@ -80,7 +82,7 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	FormLayout->addRow(LANG("Address.House") + ':', ComboHouse);
 
 	QHBoxLayout *LayoutGroupBox = new QHBoxLayout();
-	LayoutGroupBox->setContentsMargins(MARGINS_LAYOUT_2_PX);
+	LayoutGroupBox->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_2_PX);
 
 	GroupBox = new QGroupBox(this);
 	GroupBox->setTitle(LANG("Address.PerformanceAddress"));
@@ -97,7 +99,7 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	GroupBox->layout()->addWidget(LineEdit);
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	LayoutBottom->setContentsMargins(MARGINS_LAYOUT_NULL);
+	LayoutBottom->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	QLabel *LabelInput = new QLabel(this);
@@ -204,7 +206,7 @@ void ISAddressForm::ModeFree()
 //-----------------------------------------------------------------------------
 void ISAddressForm::SetValue(const QString &AddressText)
 {
-	QStringList StringList = AddressText.split(SYMBOL_FIAS_SPLIT);
+	QStringList StringList = AddressText.split(DEFINES_CORE.SYMBOL_FIAS_SPLIT);
 	StringList.removeOne(QString());
 	if (0 < StringList.count())
 	{
@@ -419,21 +421,21 @@ void ISAddressForm::FieldEnabled(ISAddressBox *AddressBox, bool Enabled)
 //-----------------------------------------------------------------------------
 void ISAddressForm::UpdatePerfomance()
 {
-	QString String = ComboRegion->currentText() + SYMBOL_FIAS_SPLIT;
+	QString String = ComboRegion->currentText() + DEFINES_CORE.SYMBOL_FIAS_SPLIT;
 
 	if (ComboCity->currentText().length())
 	{
-		String += ComboCity->currentText() + SYMBOL_FIAS_SPLIT;
+		String += ComboCity->currentText() + DEFINES_CORE.SYMBOL_FIAS_SPLIT;
 	}
 
 	if (ComboStreet->currentText().length())
 	{
-		String += ComboStreet->currentText() + SYMBOL_FIAS_SPLIT;
+		String += ComboStreet->currentText() + DEFINES_CORE.SYMBOL_FIAS_SPLIT;
 	}
 
 	if (ComboHouse->currentText().length())
 	{
-		String += ComboHouse->currentText() + SYMBOL_FIAS_SPLIT;
+		String += ComboHouse->currentText() + DEFINES_CORE.SYMBOL_FIAS_SPLIT;
 	}
 
 	ISSystem::RemoveLastSymbolFromString(String, 2);

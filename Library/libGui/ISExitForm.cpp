@@ -1,8 +1,10 @@
 #include "ISExitForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMemoryObjects.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -11,7 +13,7 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	setWindowTitle(LANG("Exit"));
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *Label = new QLabel(this);
@@ -19,7 +21,7 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	GetMainLayout()->addWidget(Label);
 
 	QVBoxLayout *LayoutButtons = new QVBoxLayout();
-	LayoutButtons->setContentsMargins(MARGINS_LAYOUT_NULL);
+	LayoutButtons->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	LayoutButtons->setSpacing(0);
 	GetMainLayout()->addLayout(LayoutButtons);
 

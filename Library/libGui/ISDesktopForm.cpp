@@ -1,5 +1,6 @@
 #include "ISDesktopForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -34,7 +35,7 @@ ISDesktopForm::ISDesktopForm(QWidget *parent) : ISParagraphBaseForm(parent)
 		{
 			QLabel *Label = new QLabel(this);
 			Label->setText(LANG("NotAccessSpecialDesktop"));
-			Label->setFont(FONT_TAHOMA_12_BOLD);
+			Label->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 			MainLayout->addWidget(Label, 0, Qt::AlignCenter);
 		}
 	}
@@ -48,7 +49,7 @@ ISDesktopForm::ISDesktopForm(QWidget *parent) : ISParagraphBaseForm(parent)
 
 		QLabel *LabelLocalName = new QLabel(this);
 		LabelLocalName->setText(ISLicense::GetInstance().GetLocalName());
-		LabelLocalName->setFont(FONT_TAHOMA_15_BOLD);
+		LabelLocalName->setFont(DEFINES_GUI.FONT_TAHOMA_15_BOLD);
 		LabelLocalName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 		MainLayout->addWidget(LabelLocalName, 0, Qt::AlignCenter);
 

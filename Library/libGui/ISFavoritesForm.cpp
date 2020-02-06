@@ -1,7 +1,8 @@
 #include "ISFavoritesForm.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISFavorites.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISQueryModel.h"
@@ -36,7 +37,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaClassTable *meta_table) :
 
 	setWindowIcon(BUFFER_ICONS("Favorites"));
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

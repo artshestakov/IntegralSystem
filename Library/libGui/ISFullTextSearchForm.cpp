@@ -1,5 +1,7 @@
 #include "ISFullTextSearchForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDatabase.h"
@@ -15,7 +17,7 @@
 ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	Stopped = false;
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -23,7 +25,7 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaFor
 	LineEdit = new ISLineEdit(this);
 	LineEdit->SetPlaceholderText(LANG("InputThisSearchQuery"));
 	LineEdit->SetIcon(BUFFER_ICONS("Search"));
-	LineEdit->SetFont(FONT_TAHOMA_10);
+	LineEdit->SetFont(DEFINES_GUI.FONT_TAHOMA_10);
 	Layout->addWidget(LineEdit);
 
 	ButtonSearch = new ISPushButton(this);

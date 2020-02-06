@@ -1,9 +1,11 @@
 #include "ISCenterSevenStatusAdmissionForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISControls.h"
 #include "ISButtonDialog.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_ADMISSION_STATUS = PREPARE_QUERY("SELECT adst_uid, adst_name "
 												   "FROM admissionstatus "
@@ -13,7 +15,7 @@ static QString QS_ADMISSION_STATUS = PREPARE_QUERY("SELECT adst_uid, adst_name "
 ISCenterSevenStatusAdmissionForm::ISCenterSevenStatusAdmissionForm(const ISUuid &CurrentStatusUID, const QString &Comment, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("CenterSeven.ChangeStatusAdmission"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	ButtonGroup = new QButtonGroup(this);
 

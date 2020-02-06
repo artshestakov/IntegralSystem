@@ -1,5 +1,6 @@
 #include "ISUserGroupListForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
@@ -8,7 +9,7 @@ ISUserGroupListForm::ISUserGroupListForm(QWidget *parent) : ISListBaseForm("_Use
 	Label = new QLabel(this);
 	Label->setWordWrap(true);
 	Label->setText(LANG("SelectedUserGroupLeftFromAccessSetting"));
-	Label->setFont(FONT_TAHOMA_12);
+	Label->setFont(DEFINES_GUI.FONT_TAHOMA_12);
 	Label->setSizePolicy(QSizePolicy::Minimum, Label->sizePolicy().verticalPolicy());
 	GetLayoutTableView()->addWidget(Label, 0, Qt::AlignCenter);
 

@@ -1,7 +1,7 @@
 #include "ISMetaData.h"
-#include "EXDefines.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
+#include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISCountingTime.h"
 #include "ISMetaDataHelper.h"

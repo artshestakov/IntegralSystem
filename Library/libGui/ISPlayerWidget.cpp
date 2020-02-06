@@ -1,8 +1,10 @@
 #include "ISPlayerWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
+#include "ISConstants.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISPlayerWidget::ISPlayerWidget(const QString &FilePath, bool auto_play, QWidget *parent) : QWidget(parent)
 {
@@ -147,7 +149,7 @@ void ISPlayerWidget::CreateInterface()
 	LayoutVolume->addWidget(SliderVolume);
 
 	LabelErrorIcon = new QLabel(this);
-	LabelErrorIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(SIZE_16_16));
+	LabelErrorIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(DEFINES_GUI.SIZE_16_16));
 	LabelErrorIcon->setVisible(false);
 	LayoutVolume->addWidget(LabelErrorIcon);
 

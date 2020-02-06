@@ -1,5 +1,5 @@
 #include "ISTaskObjectForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -10,6 +10,7 @@
 #include "ISMessageBox.h"
 #include "ISCore.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_id "
                                               "FROM _taskstatus "
@@ -42,7 +43,7 @@ void ISTaskObjectForm::AfterShowEvent()
 		CheckFavorite = new ISCheckEdit(this);
 		CheckFavorite->SetText(LANG("Task.Favorite"));
 		CheckFavorite->SetToolTip(LANG("Task.Favorite.ToolTip"));
-		CheckFavorite->SetFont(FONT_APPLICATION_BOLD);
+		CheckFavorite->SetFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 		CheckFavorite->setContentsMargins(5, 0, 0, 0);
 		GetLayoutWidgetObject()->insertWidget(GetLayoutWidgetObject()->indexOf(GetToolBar()) + 2, CheckFavorite, 0, Qt::AlignLeft);
 
@@ -63,7 +64,7 @@ bool ISTaskObjectForm::Save()
 {
 	if (GetFieldValue("Deadline").toDate().isValid()) //≈сли срок исполни€ валидный
 	{
-		if (GetFieldValue("Deadline").toDate() < DATE_TODAY) //≈сли дата срока исполнени€ меньше текущей даты
+		if (GetFieldValue("Deadline").toDate() < QDate::currentDate()) //≈сли дата срока исполнени€ меньше текущей даты
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskDeadlineOverdue"));
 			GetFieldWidget("Deadline")->BlinkRed();

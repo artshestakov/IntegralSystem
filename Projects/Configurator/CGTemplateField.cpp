@@ -1,9 +1,9 @@
 #include "CGTemplateField.h"
-#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISAssert.h"
 #include "CGSequence.h"
 #include "ISMetaData.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 QString CGTemplateField::GetSqlTextForTemplateSystemFields(const QString &ClassName, const QString &ClassAlias)
 {

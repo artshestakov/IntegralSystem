@@ -1,9 +1,9 @@
 #include "ISAddressBox.h"
-#include "EXDefines.h"
 #include "ISQLineEdit.h"
 #include "ISPopupDelegate.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISAddressBox::ISAddressBox(QWidget *parent) : QComboBox(parent)
 {

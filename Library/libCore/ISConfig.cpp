@@ -1,5 +1,5 @@
 #include "ISConfig.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
 #include "ISAssert.h"
 #include "ISDebug.h"
 #include "ISConstants.h"
@@ -7,7 +7,7 @@
 ISConfig::ISConfig()
 	: ErrorString("No error."),
 	Settings(nullptr),
-	PathConfigTemplate(":/ConfigTemplate/" + APPLICATION_NAME + SYMBOL_POINT + EXTENSION_INI)
+	PathConfigTemplate(":/ConfigTemplate/" + DEFINES_CORE.APPLICATION_NAME + SYMBOL_POINT + EXTENSION_INI)
 {
 	
 }
@@ -39,12 +39,12 @@ bool ISConfig::Initialize()
 		Result = !Settings;
 		if (Result)
 		{
-			Settings = new QSettings(PATH_CONFIG_FILE, QSettings::IniFormat);
+			Settings = new QSettings(DEFINES_CORE.PATH_CONFIG_FILE, QSettings::IniFormat);
 			QSettings::Status SettingsStatus = Settings->status();
 			Result = SettingsStatus == QSettings::NoError;
 			if (Result)
 			{
-				if (QFile::exists(PATH_CONFIG_FILE)) //Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления
+				if (QFile::exists(DEFINES_CORE.PATH_CONFIG_FILE)) //Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления
 				{
 					Result = Update();
 				}
@@ -57,7 +57,7 @@ bool ISConfig::Initialize()
 			{
 				switch (SettingsStatus)
 				{
-				case QSettings::AccessError: ErrorString = "access error with path " + PATH_CONFIG_FILE; break;
+				case QSettings::AccessError: ErrorString = "access error with path " + DEFINES_CORE.PATH_CONFIG_FILE; break;
 				case QSettings::FormatError: ErrorString = "format error"; break;
 				}
 			}

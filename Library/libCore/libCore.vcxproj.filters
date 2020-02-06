@@ -46,9 +46,6 @@
     <Filter Include="Network\SMTP">
       <UniqueIdentifier>{75e363fa-0d60-4bfa-bef9-be5089080fc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>{085366a9-3be5-4a92-a148-bed4e66025ef}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISApplicationRunning.h">
@@ -229,10 +226,10 @@
     <ClInclude Include="ISMetaViewQuery.h">
       <Filter>MetaData</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Components\Source\EXDefines.h">
-      <Filter>External</Filter>
-    </ClInclude>
     <ClInclude Include="ISCrashDumper.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDefinesCore.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
@@ -468,10 +465,10 @@
     <ClCompile Include="ISLocalization.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Components\Source\EXDefines.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
     <ClCompile Include="ISCrashDumper.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDefinesCore.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>

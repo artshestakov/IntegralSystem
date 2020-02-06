@@ -1,5 +1,4 @@
 #include "ISMetaSystem.h"
-#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISMetaSystem::ISMetaSystem()
 	: IsSystem(false),

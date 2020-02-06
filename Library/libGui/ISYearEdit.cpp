@@ -1,8 +1,8 @@
 #include "ISYearEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISServiceButton.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISYearEdit::ISYearEdit(QWidget *parent) : ISIntegerEdit(parent)
 {
@@ -24,6 +24,6 @@ ISYearEdit::~ISYearEdit()
 //-----------------------------------------------------------------------------
 void ISYearEdit::SelectCurrentYear()
 {
-	SetValue(DATE_TODAY.year());
+	SetValue(QDate::currentDate().year());
 }
 //-----------------------------------------------------------------------------

@@ -1,6 +1,4 @@
 #include "CGConfigurator.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
 #include "ISDatabase.h"
@@ -11,6 +9,7 @@
 #include "ISQueryException.h"
 #include "ISCountingTime.h"
 #include "ISCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 CGConfigurator::CGConfigurator(const QVector<CGSection*> &arguments)
 	: CGConfiguratorBase(),

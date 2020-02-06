@@ -1,15 +1,16 @@
 #include "ISVolumeEdit.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	setMaximumWidth(300);
 
 	QLabel *LabelImageMinimum = new QLabel(this);
-	LabelImageMinimum->setPixmap(BUFFER_ICONS("Volume.Minimum").pixmap(SIZE_20_20));
+	LabelImageMinimum->setPixmap(BUFFER_ICONS("Volume.Minimum").pixmap(DEFINES_GUI.SIZE_20_20));
 	LabelImageMinimum->setContentsMargins(0, 0, 0, 5);
 	AddWidgetToLeft(LabelImageMinimum);
 
@@ -22,7 +23,7 @@ ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
 	AddWidgetEdit(Slider, this);
 
 	QLabel *LabelImageMaximum = new QLabel(this);
-	LabelImageMaximum->setPixmap(BUFFER_ICONS("Volume.Maximum").pixmap(SIZE_20_20));
+	LabelImageMaximum->setPixmap(BUFFER_ICONS("Volume.Maximum").pixmap(DEFINES_GUI.SIZE_20_20));
 	LabelImageMaximum->setContentsMargins(0, 0, 0, 5);
 	AddWidgetToRight(LabelImageMaximum);
 

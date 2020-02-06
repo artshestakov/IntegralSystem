@@ -1,5 +1,7 @@
 #include "ISParagraphButton.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
@@ -12,14 +14,14 @@ ISParagraphButton::ISParagraphButton(ISMetaParagraph *MetaParagraph, QWidget *pa
 	setLayout(Layout);
 
 	QIcon Icon = BUFFER_ICONS(MetaParagraph->GetIcon());
-	Icon.addPixmap(BUFFER_ICONS(MetaParagraph->GetIcon() + ".Active").pixmap(SIZE_32_32), QIcon::Active);
+	Icon.addPixmap(BUFFER_ICONS(MetaParagraph->GetIcon() + ".Active").pixmap(DEFINES_GUI.SIZE_32_32), QIcon::Active);
 
 	ToolButton = new QToolButton(this);
 	ToolButton->setToolTip(MetaParagraph->GetToolTip());
 	ToolButton->setIcon(Icon);
 	ToolButton->setAutoRaise(true);
 	ToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	ToolButton->setIconSize(SIZE_32_32);
+	ToolButton->setIconSize(DEFINES_GUI.SIZE_32_32);
 	ToolButton->setCursor(CURSOR_POINTING_HAND);
 	ToolButton->setStyleSheet(STYLE_SHEET("ISParagraphButton"));
 	connect(ToolButton, &QToolButton::clicked, this, &ISParagraphButton::Clicked);
@@ -34,7 +36,7 @@ ISParagraphButton::ISParagraphButton(ISMetaParagraph *MetaParagraph, QWidget *pa
 	LineLeft->setFixedWidth(45);
 	LineLeft->setSizePolicy(QSizePolicy::Minimum, LineLeft->sizePolicy().verticalPolicy());
 	LayoutLine->addWidget(LineLeft, 0, Qt::AlignBottom);
-	ISControls::SetBackgroundColorWidget(LineLeft, COLOR_WHITE);
+	ISControls::SetBackgroundColorWidget(LineLeft, DEFINES_GUI.COLOR_WHITE);
 
 	LineCenter = new QLabel(this);
 	LineCenter->setPixmap(BUFFER_PIXMAPS("MainMenuButton.Bottom"));
@@ -47,7 +49,7 @@ ISParagraphButton::ISParagraphButton(ISMetaParagraph *MetaParagraph, QWidget *pa
 	LineRight->setFixedWidth(45);
 	LineRight->setSizePolicy(QSizePolicy::Minimum, LineRight->sizePolicy().verticalPolicy());
 	LayoutLine->addWidget(LineRight, 0, Qt::AlignBottom);
-	ISControls::SetBackgroundColorWidget(LineRight, COLOR_WHITE);
+	ISControls::SetBackgroundColorWidget(LineRight, DEFINES_GUI.COLOR_WHITE);
 
 	setFixedWidth(LineLeft->width() + LineCenter->width() + LineRight->width());
 	SetVisibleLine(false);

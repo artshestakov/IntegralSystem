@@ -1,5 +1,5 @@
 #include "ISLocalization.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISDebug.h"
@@ -10,7 +10,7 @@
 ISLocalization::ISLocalization()
 {
 	QString TranslatorFileName = "qt_ru.qm";
-	QString TranslatorFilePath = PATH_TRANSLATIONS_DIR + '/' + TranslatorFileName;
+	QString TranslatorFilePath = DEFINES_CORE.PATH_TRANSLATIONS_DIR + '/' + TranslatorFileName;
 
 	if (QFile::exists(TranslatorFilePath))
 	{

@@ -1,5 +1,4 @@
 #include "ISRangeDateEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISComboEdit.h"
 //-----------------------------------------------------------------------------
@@ -51,33 +50,33 @@ void ISRangeDateEdit::PeriodChanged(const QVariant &value)
 	ISRangeStruct RangeStruct;
 	if (SelectedPeriod == ISNamespace::RDP_Today)
 	{
-		RangeStruct.BeginValue = DATE_TODAY;
-		RangeStruct.EndValue = DATE_TODAY;
+		RangeStruct.BeginValue = QDate::currentDate();
+		RangeStruct.EndValue = QDate::currentDate();
 	}
 	else if (SelectedPeriod == ISNamespace::RDP_Yesterday)
 	{
-		RangeStruct.BeginValue = DATE_YESTERDAY;
-		RangeStruct.EndValue = DATE_YESTERDAY;
+		RangeStruct.BeginValue = QDate::currentDate().addDays(-1);
+		RangeStruct.EndValue = QDate::currentDate().addDays(-1);
 	}
 	else if (SelectedPeriod == ISNamespace::RDP_CurrentMonth)
 	{
-		RangeStruct.BeginValue = QDate(DATE_TODAY.year(), DATE_TODAY.month(), 1);
-		RangeStruct.EndValue = QDate(DATE_TODAY.year(), DATE_TODAY.month(), QDate::currentDate().daysInMonth());
+		RangeStruct.BeginValue = QDate(QDate::currentDate().year(), QDate::currentDate().month(), 1);
+		RangeStruct.EndValue = QDate(QDate::currentDate().year(), QDate::currentDate().month(), QDate::currentDate().daysInMonth());
 	}
 	else if (SelectedPeriod == ISNamespace::RDP_LastMonth)
 	{
-		QDate Date = DATE_TODAY.addMonths(-1);
+		QDate Date = QDate::currentDate().addMonths(-1);
 		RangeStruct.BeginValue = QDate(Date.year(), Date.month(), 1);
 		RangeStruct.EndValue = QDate(Date.year(), Date.month(), Date.daysInMonth());
 	}
 	else if (SelectedPeriod == ISNamespace::RDP_CurrentYear)
 	{
-		RangeStruct.BeginValue = QDate(DATE_TODAY.year(), 1, 1);
-		RangeStruct.EndValue = QDate(DATE_TODAY.year(), 12, 31);
+		RangeStruct.BeginValue = QDate(QDate::currentDate().year(), 1, 1);
+		RangeStruct.EndValue = QDate(QDate::currentDate().year(), 12, 31);
 	}
 	else if (SelectedPeriod == ISNamespace::RDP_LastYear)
 	{
-		QDate Date = DATE_TODAY.addYears(-1);
+		QDate Date = QDate::currentDate().addYears(-1);
 		RangeStruct.BeginValue = QDate(Date.year(), 1, 1);
 		RangeStruct.EndValue = QDate(Date.year(), 12, 31);
 	}

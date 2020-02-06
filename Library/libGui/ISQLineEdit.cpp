@@ -1,5 +1,4 @@
 #include "ISQLineEdit.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
@@ -7,6 +6,7 @@
 #include "ISControls.h"
 #include "ISProperty.h"
 #include "ISGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISQLineEdit::ISQLineEdit(QWidget *parent) : QLineEdit(parent)
 {

@@ -1,5 +1,6 @@
 #include "ISUserOnlineForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -20,7 +21,7 @@ ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidge
 {
 	setWindowTitle(LANG("MonitorActivity.ActivityUser") + ": " + user_name);
 	setWindowIcon(BUFFER_ICONS("User"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);

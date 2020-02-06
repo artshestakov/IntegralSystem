@@ -1,5 +1,5 @@
 #include "ISPatternActivityForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
@@ -7,6 +7,8 @@
 #include "ISDatabase.h"
 #include "ISMetaUser.h"
 #include "ISFlowLayout.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_PATTERN = PREPARE_QUERY("SELECT aspt_uid, aspt_pattern "
 										  "FROM _asteriskpattern "
@@ -71,7 +73,7 @@ void ISPatternActivityForm::CreateMainPanel()
 	{
 		QLabel *Label = new QLabel(Widget);
 		Label->setText(LANG("TelephonyForm.Activity.EmptyPatterns"));
-		Label->setFont(FONT_TAHOMA_12);
+		Label->setFont(DEFINES_GUI.FONT_TAHOMA_12);
 		Widget->layout()->addWidget(Label);
 	}
 }
@@ -87,33 +89,33 @@ void ISPatternActivityForm::CreateSignPanel()
 	GetMainLayout()->addWidget(GroupBox);
 
 	QWidget *WidgetFree = new QWidget(GroupBox);
-	WidgetFree->setFixedSize(SIZE_22_22);
+	WidgetFree->setFixedSize(DEFINES_GUI.SIZE_22_22);
 	WidgetFree->setStyleSheet(STYLE_SHEET("Pattern.Color.Free"));
 	LayoutGroupBox->addWidget(WidgetFree);
 
 	QLabel *LabelFree = new QLabel(GroupBox);
 	LabelFree->setText("- " + LANG("TelephonyForm.Activity.Sign.Free"));
-	LabelFree->setFont(FONT_APPLICATION_BOLD);
+	LabelFree->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelFree);
 
 	QWidget *WidgetBusy = new QWidget(GroupBox);
-	WidgetBusy->setFixedSize(SIZE_22_22);
+	WidgetBusy->setFixedSize(DEFINES_GUI.SIZE_22_22);
 	WidgetBusy->setStyleSheet(STYLE_SHEET("Pattern.Color.Busy"));
 	LayoutGroupBox->addWidget(WidgetBusy);
 
 	QLabel *LabelBusy = new QLabel(GroupBox);
 	LabelBusy->setText("- " + LANG("TelephonyForm.Activity.Sign.Busy"));
-	LabelBusy->setFont(FONT_APPLICATION_BOLD);
+	LabelBusy->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelBusy);
 
 	QWidget *WidgetNotRegistered = new QWidget(GroupBox);
-	WidgetNotRegistered->setFixedSize(SIZE_22_22);
+	WidgetNotRegistered->setFixedSize(DEFINES_GUI.SIZE_22_22);
 	WidgetNotRegistered->setStyleSheet(STYLE_SHEET("Pattern.Color.NotRegistered"));
 	LayoutGroupBox->addWidget(WidgetNotRegistered);
 
 	QLabel *LabelNotRegistered = new QLabel(GroupBox);
 	LabelNotRegistered->setText("- " + LANG("TelephonyForm.Activity.Sign.NotRegistered"));
-	LabelNotRegistered->setFont(FONT_APPLICATION_BOLD);
+	LabelNotRegistered->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelNotRegistered);
 
 	LayoutGroupBox->addStretch();

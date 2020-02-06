@@ -1,12 +1,13 @@
 #include "ISPasswordWidthWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISPassword.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISPasswordWidthWidget::ISPasswordWidthWidget(QWidget *parent) : QWidget(parent)
 {
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	setLayout(Layout);
 
 	LabelWidth = new QLabel(this);

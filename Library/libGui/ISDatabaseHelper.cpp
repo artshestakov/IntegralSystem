@@ -1,8 +1,8 @@
 #include "ISDatabaseHelper.h"
 #include "ISLocalization.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 QVariant ISDatabaseHelper::CheckValue(QVariant &Value)
 {

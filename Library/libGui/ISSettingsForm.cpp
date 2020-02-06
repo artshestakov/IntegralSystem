@@ -1,5 +1,5 @@
 #include "ISSettingsForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISAssert.h"
 #include "ISMessageBox.h"
@@ -14,6 +14,8 @@
 #include "ISMemoryObjects.h"
 #include "ISFileDialog.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue, stgs_localname FROM _settings WHERE NOT stgs_isdeleted ORDER BY stgs_id");
 //-----------------------------------------------------------------------------
@@ -27,10 +29,10 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 {
 	setWindowIcon(BUFFER_ICONS("Settings"));
 	setWindowTitle(LANG("Settings"));
-	setMinimumSize(SIZE_MAIN_WINDOW_MINIMUM);
+	setMinimumSize(DEFINES_GUI.SIZE_MAIN_WINDOW_MINIMUM);
 
 	Layout = new QHBoxLayout();
-	Layout->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
 	ListWidget = new ISListWidget(this);
@@ -47,7 +49,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	LayoutBottom->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	LayoutBottom->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	ISPushButton *ButtonDefault = new ISPushButton(this);
@@ -72,7 +74,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 
 	ButtonDialog = new ISButtonDialog(this);
 	ButtonDialog->SetApplyEnabled(false);
-	ButtonDialog->layout()->setContentsMargins(MARGINS_LAYOUT_NULL);
+	ButtonDialog->layout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISSettingsForm::Save);
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISSettingsForm::close);
 	LayoutBottom->addWidget(ButtonDialog, 0, Qt::AlignRight);
@@ -107,7 +109,7 @@ void ISSettingsForm::CreateCentralPanel()
 	LayoutCentral->addWidget(WidgetTitle);
 
 	LabelCurrentGroup = new QLabel(WidgetTitle);
-	LabelCurrentGroup->setFont(FONT_TAHOMA_12_BOLD);
+	LabelCurrentGroup->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
 	LayoutTitle->addWidget(LabelCurrentGroup, 0, Qt::AlignLeft);
 
 	LabelCurrentGroupHint = new QLabel(WidgetTitle);
@@ -338,10 +340,10 @@ void ISSettingsForm::ItemSelectionChanged()
 	for (int i = 0; i < ListWidget->count(); ++i)
 	{
 		QListWidgetItem *ListWidgetItem = ListWidget->item(i);
-		ListWidgetItem->setFont(FONT_TAHOMA_9);
+		ListWidgetItem->setFont(DEFINES_GUI.FONT_TAHOMA_9);
 	}
 
-	ClickedItem->setFont(FONT_TAHOMA_9_BOLD);
+	ClickedItem->setFont(DEFINES_GUI.FONT_TAHOMA_9_BOLD);
 
 	int IndexClicked = ListWidget->row(ClickedItem);
 	TabWidget->setCurrentIndex(IndexClicked);
@@ -351,7 +353,7 @@ void ISSettingsForm::ItemSelectionChanged()
 	QString GroupHint = Groups.value(ClickedItem)->GetHint();
 	if (GroupHint.length())
 	{
-		LabelCurrentGroupHint->setText(SYMBOL_CIRCLE + SYMBOL_SPACE + GroupHint);
+		LabelCurrentGroupHint->setText(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + GroupHint);
 		LabelCurrentGroupHint->setVisible(true);
 	}
 	else

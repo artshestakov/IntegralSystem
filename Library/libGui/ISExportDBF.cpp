@@ -1,8 +1,8 @@
 #include "ISExportDBF.h"
-#include "EXDefines.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISExportDBF::ISExportDBF(QObject *parent) : ISExportWorker(parent)
 {

@@ -1,11 +1,10 @@
 #include "ISCoreHighway.h"
-#include "EXDefines.h"
-#include "ISConstants.h"
 #include "ISDebug.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISPhoneNumberParser.h"
 #include "ISNotifySender.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_ORGANIZATION_USER = PREPARE_QUERY("SELECT orgz_id, orgz_name, orgz_user, aspt_pattern "
 													"FROM organization "

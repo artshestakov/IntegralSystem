@@ -1,8 +1,10 @@
 #include "ISColorEdit.h"
+#include "ISDefinesGui.h"
 #include "ISServiceButton.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "EXDefines.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
@@ -10,7 +12,7 @@ ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 
 	QGroupBox *GroupBox = new QGroupBox(this);
 	GroupBox->setLayout(new QHBoxLayout());
-	GroupBox->layout()->setContentsMargins(MARGINS_LAYOUT_NULL);
+	GroupBox->layout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
 	GroupBox->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	AddWidgetEdit(GroupBox, this);
 

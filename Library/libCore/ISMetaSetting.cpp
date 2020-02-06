@@ -1,5 +1,4 @@
 #include "ISMetaSetting.h"
-#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 ISMetaSetting::ISMetaSetting()
 	: SettingType(ISNamespace::FT_Unknown)

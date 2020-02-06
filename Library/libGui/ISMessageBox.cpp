@@ -1,7 +1,7 @@
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISMessageBox::ISMessageBox(QMessageBox::Icon Icon, const QString &Title, const QString &Message, QMessageBox::StandardButtons Buttons, QWidget *parent)
 	: QMessageBox(Icon, Title, Message, Buttons, parent),

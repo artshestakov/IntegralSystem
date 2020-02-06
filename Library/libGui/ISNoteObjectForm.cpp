@@ -1,5 +1,6 @@
 #include "ISNoteObjectForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -27,7 +28,7 @@ ISNoteObjectForm::ISNoteObjectForm(const QString &table_name, int object_id, QWi
 
 	ForbidResize();
 
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	TextEdit = new ISTextEdit(this);
 	GetMainLayout()->addWidget(TextEdit);

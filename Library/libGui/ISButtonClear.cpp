@@ -1,11 +1,12 @@
 #include "ISButtonClear.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
+#include "ISDefinesGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISButtonClear::ISButtonClear(QWidget *parent) : ISPushButton(parent)
 {
-	setFixedSize(SIZE_22_22);
+	setFixedSize(DEFINES_GUI.SIZE_22_22);
 	setCursor(CURSOR_POINTING_HAND);
 	setToolTip(LANG("Clear.Field"));
 	setFocusPolicy(Qt::NoFocus);

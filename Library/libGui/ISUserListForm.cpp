@@ -1,5 +1,5 @@
 #include "ISUserListForm.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
 #include "ISControls.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

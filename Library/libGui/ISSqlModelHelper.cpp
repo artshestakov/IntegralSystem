@@ -1,9 +1,9 @@
 #include "ISSqlModelHelper.h"
-#include "EXDefines.h"
 #include "ISConstants.h"
 #include "ISPhoneNumberParser.h"
 #include "ISSettings.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::FieldType Type)
 {
@@ -46,7 +46,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 		QString ValueString = Result.toString();
 		for (int i = 0; i < ValueString.count(); ++i)
 		{
-			ValueString.replace(i, 1, SYMBOL_CIRCLE);
+			ValueString.replace(i, 1, DEFINES_CORE.SYMBOL_CIRCLE);
 		}
 		Result = ValueString;
 	}

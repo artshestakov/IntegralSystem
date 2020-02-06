@@ -1,10 +1,11 @@
 #include "ISTaskFileInsertForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_user, tfls_filename, tfls_size, tfls_icon, tfls_note) "
 									   "VALUES(:TaskID, currentuserid(), :FileName, :Size, :Icon, :Note) "
@@ -19,7 +20,7 @@ ISTaskFileInsertForm::ISTaskFileInsertForm(int task_id, QWidget *parent) : ISInt
 
 	setWindowTitle(LANG("Task.AttachingFile"));
 	setMinimumWidth(500);
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();

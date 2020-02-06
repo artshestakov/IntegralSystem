@@ -1,11 +1,12 @@
 #include "ISTransferOrganizationForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISButtonDialog.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *Label = new QLabel(LANG("SelectUserFromOrganizationWork").arg(OrganizationCount), this);
@@ -19,7 +20,7 @@ ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount, QW
 	FormLayout->addRow(LANG("User") + ':', UserEdit);
 
 	DateEdit = new ISDateEdit(this);
-	DateEdit->SetMinimumDate(DATE_TODAY);
+	DateEdit->SetMinimumDate(QDate::currentDate());
 	DateEdit->SetCheckEnable(Qt::Checked);
 	DateEdit->SetVisibleCheck(false);
 	FormLayout->addRow(LANG("Date") + ':', DateEdit);

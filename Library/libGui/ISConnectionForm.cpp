@@ -1,15 +1,16 @@
 #include "ISConnectionForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISConfig.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("ConnectionSettings"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();

@@ -1,5 +1,4 @@
 #include "CGHelper.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------

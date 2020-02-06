@@ -1,7 +1,9 @@
 #include "ISComboEdit.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISQLineEdit.h"
 #include "ISPopupDelegate.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISComboEdit::ISComboEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
@@ -14,7 +16,7 @@ ISComboEdit::ISComboEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ComboBox->setLineEdit(LineEdit);
 	ComboBox->setItemDelegate(new ISPopupDelegate(ComboBox));
 	ComboBox->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
-	ComboBox->setIconSize(SIZE_22_22);
+	ComboBox->setIconSize(DEFINES_GUI.SIZE_22_22);
 	connect(ComboBox, static_cast<void(ISQComboBox::*)(int Index)>(&ISQComboBox::currentIndexChanged), this, &ISComboEdit::ValueChanged);
 	AddWidgetEdit(ComboBox, this);
 }

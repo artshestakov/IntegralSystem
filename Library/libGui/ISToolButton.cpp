@@ -1,6 +1,6 @@
 #include "ISToolButton.h"
-#include "EXDefines.h"
 #include "ISStyleSheet.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISToolButton::ISToolButton(QWidget *parent) : QToolButton(parent)
 {

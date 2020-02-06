@@ -1,5 +1,6 @@
 #include "ISLicenseForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISLicense.h"
@@ -9,7 +10,7 @@ ISLicenseForm::ISLicenseForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("License"));
 	setWindowIcon(BUFFER_ICONS("License"));
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();

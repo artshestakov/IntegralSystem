@@ -1,5 +1,4 @@
 #include "PMetaUserPermission.h"
-#include "EXDefines.h"
 //-----------------------------------------------------------------------------
 PMetaUserPermission::PMetaUserPermission()
 	: Show(false),

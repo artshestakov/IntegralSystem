@@ -1,5 +1,6 @@
 #include "ISNotificationsForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
@@ -25,7 +26,7 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(pare
 	setWindowFlags(Qt::Popup);
 	
 	QVBoxLayout *LayoutFrame = new QVBoxLayout();
-	LayoutFrame->setContentsMargins(MARGINS_LAYOUT_5_PX);
+	LayoutFrame->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
 
 	QFrame *Frame = new QFrame(this);
 	Frame->setFrameShape(QFrame::Box);
@@ -60,7 +61,7 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(pare
 	LabelEmpty->setVisible(false);
 	LabelEmpty->setText(LANG("NotificationEmpty") + "\n" + LANG("NotificationEmpty.DetailedText"));
 	LabelEmpty->setWordWrap(true);
-	LabelEmpty->setFont(FONT_TAHOMA_10);
+	LabelEmpty->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 	LabelEmpty->setAlignment(Qt::AlignCenter);
 	LabelEmpty->adjustSize();
 

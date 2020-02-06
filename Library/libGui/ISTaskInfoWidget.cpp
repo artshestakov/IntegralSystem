@@ -1,8 +1,10 @@
 #include "ISTaskInfoWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "tsst_name, "
@@ -26,7 +28,7 @@ ISTaskInfoWidget::ISTaskInfoWidget(int task_id, QWidget *parent) : QWidget(paren
 	setLayout(FormLayout);
 
 	LabelStatus = AddLabel(LANG("Task.Status") + ':');
-	LabelStatus->setFont(FONT_TAHOMA_10);
+	LabelStatus->setFont(DEFINES_GUI.FONT_TAHOMA_10);
 	LabelStatus->setSizePolicy(QSizePolicy::Maximum, LabelStatus->sizePolicy().verticalPolicy());
 
 	LabelNumber = AddLabel(LANG("Task.Number") + ':');
@@ -100,7 +102,7 @@ QLabel* ISTaskInfoWidget::AddLabel(const QString &RowText)
 {
 	QLabel *LabelRow = new QLabel(this);
 	LabelRow->setText(RowText);
-	LabelRow->setFont(FONT_APPLICATION_BOLD);
+	LabelRow->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 
 	QLabel *Label = new QLabel(this);
 

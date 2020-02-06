@@ -1,5 +1,4 @@
 #include "ISLineEdit.h"
-#include "EXDefines.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------

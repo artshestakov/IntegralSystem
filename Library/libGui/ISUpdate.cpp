@@ -1,11 +1,11 @@
 #include "ISUpdate.h"
 #include "ISAssert.h"
-#include "EXDefines.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
 #include "ISVersion.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_ACTUAL_INSTALL = PREPARE_QUERY("SELECT dsfs_id, dsfs_filename, dsfs_version, dsfs_version_4 FROM _distfiles WHERE NOT dsfs_isdeleted AND dsfs_actual");
 //-----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 	{
 		emit ProgressMaximum(qSelectID.GetCountResultRows());
 
-		QFile FileUpdate(PATH_TEMP_DIR + '/' + FileName + ".exe");
+		QFile FileUpdate(DEFINES_CORE.PATH_TEMP_DIR + '/' + FileName + ".exe");
 		if (FileUpdate.exists()) //Если файл такой обновления уже существует во временой папке - удалить его
 		{
 			emit Message(LANG("DeletingExistFileUpdate") + "...");
@@ -127,6 +127,6 @@ bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 //-----------------------------------------------------------------------------
 bool ISUpdate::StartInstallUpdate(const QString &FileName)
 {
-	return QProcess::startDetached(PATH_APPLICATION_DIR + "/Update.cmd", QStringList() << FileName, PATH_APPLICATION_DIR);
+	return QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_DIR + "/Update.cmd", QStringList() << FileName, DEFINES_CORE.PATH_APPLICATION_DIR);
 }
 //-----------------------------------------------------------------------------

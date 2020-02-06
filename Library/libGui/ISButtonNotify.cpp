@@ -1,5 +1,4 @@
 #include "ISButtonNotify.h"
-#include "EXDefines.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
@@ -7,6 +6,9 @@
 #include "ISNotifyRecipient.h"
 #include "ISGui.h"
 #include "ISNotificationsForm.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISButtonNotify::ISButtonNotify(QWidget *parent) : QToolButton(parent)
 {
@@ -26,8 +28,8 @@ ISButtonNotify::ISButtonNotify(QWidget *parent) : QToolButton(parent)
 	setAutoRaise(true);
 	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	setCursor(CURSOR_POINTING_HAND);
-	setIconSize(SIZE_24_24);
-	setFont(FONT_APPLICATION_BOLD);
+	setIconSize(DEFINES_GUI.SIZE_24_24);
+	setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	setStyleSheet(STYLE_SHEET("ISButtonNotify.White"));
 	connect(this, &ISButtonNotify::clicked, this, &ISButtonNotify::Clicked);
 

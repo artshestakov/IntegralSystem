@@ -1,8 +1,10 @@
 #include "ISTaskFileWidget.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISLabelLink.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &UserName, const QString &FileName, const QString &Size, const QByteArray &Icon, const QString &Note, QWidget *parent) : QWidget(parent)
 {
@@ -11,7 +13,7 @@ ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &Use
 
 	QLabel *LabelUser = new QLabel(this);
 	LabelUser->setText(UserName);
-	LabelUser->setFont(FONT_APPLICATION_BOLD);
+	LabelUser->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	MainLayout->addWidget(LabelUser);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
@@ -25,16 +27,16 @@ ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &Use
 		QPixmap Pixmap;
 		if (Pixmap.loadFromData(Icon))
 		{		
-			LabelImage->setPixmap(Pixmap.scaled(SIZE_18_18));
+			LabelImage->setPixmap(Pixmap.scaled(DEFINES_GUI.SIZE_18_18));
 		}
 		else
 		{
-			LabelImage->setPixmap(BUFFER_ICONS("Task.AttachFileItem").pixmap(SIZE_18_18));
+			LabelImage->setPixmap(BUFFER_ICONS("Task.AttachFileItem").pixmap(DEFINES_GUI.SIZE_18_18));
 		}
 	}
 	else
 	{
-		LabelImage->setPixmap(BUFFER_ICONS("Task.AttachFileItem").pixmap(SIZE_18_18));
+		LabelImage->setPixmap(BUFFER_ICONS("Task.AttachFileItem").pixmap(DEFINES_GUI.SIZE_18_18));
 	}
 
 	ISLabelLink *LabelFile = new ISLabelLink(this);

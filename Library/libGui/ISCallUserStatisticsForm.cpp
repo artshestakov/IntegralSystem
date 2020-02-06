@@ -1,6 +1,6 @@
 #include "ISCallUserStatisticsForm.h"
-#include "EXDefines.h"
 #include "ISMetaData.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISCallUserStatisticsForm::ISCallUserStatisticsForm(QWidget *parent) : ISListViewWidget(ISMetaData::GetInstanse().GetMetaQuery("CallUserStatistics"), parent)
 {

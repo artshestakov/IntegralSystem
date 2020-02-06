@@ -1,6 +1,6 @@
 #include "ISMimeMessage.h"
-#include "EXDefines.h"
 #include "ISQuotedPrintable.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISMimeMessage::ISMimeMessage(bool createAutoMimeContent) : hEncoding(ISMimePart::_8Bit)
 {

@@ -1,5 +1,5 @@
 #include "ISCheckEdit.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
 {

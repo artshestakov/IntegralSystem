@@ -1,9 +1,11 @@
 #include "ISServiceButton.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISServiceButton::ISServiceButton(const QIcon &Icon, const QString &Text, const QString &ToolTip, QWidget *parent) : ISPushButton(Icon, Text, ToolTip, parent)
 {
-	setFixedSize(SIZE_22_22);
+	setFixedSize(DEFINES_GUI.SIZE_22_22);
 	setCursor(CURSOR_POINTING_HAND);
 }
 //-----------------------------------------------------------------------------

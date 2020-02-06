@@ -1,11 +1,12 @@
 #include "ISDelegateBoolean.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDelegateBoolean::ISDelegateBoolean(QObject *parent) : QStyledItemDelegate(parent)
 {
-	ImageNotSelected = BUFFER_ICONS("Delegate.Boolean.NotSelected").pixmap(SIZE_16_16).toImage();
-	ImageSelected = BUFFER_ICONS("Delegate.Boolean.Selected").pixmap(SIZE_16_16).toImage();
+	ImageNotSelected = BUFFER_ICONS("Delegate.Boolean.NotSelected").pixmap(DEFINES_GUI.SIZE_16_16).toImage();
+	ImageSelected = BUFFER_ICONS("Delegate.Boolean.Selected").pixmap(DEFINES_GUI.SIZE_16_16).toImage();
 }
 //-----------------------------------------------------------------------------
 ISDelegateBoolean::~ISDelegateBoolean()

@@ -1,18 +1,22 @@
 #include "ISAttachFilesForm.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
+#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISFileDialog.h"
 #include "ISAttachFileItem.h"
 #include "ISGui.h"
 #include "ISStorageFileLoader.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISAttachFilesForm::ISAttachFilesForm(QWidget *parent) : ISAttachFileBaseForm(parent)
 {
 	setWindowTitle(LANG("AddingFiles"));
-	resize(SIZE_MAIN_WINDOW_MINIMUM);
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	resize(DEFINES_GUI.SIZE_MAIN_WINDOW_MINIMUM);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -160,7 +164,7 @@ void ISAttachFilesForm::StartDownload()
 		ISAttachFileItem *FileItem = dynamic_cast<ISAttachFileItem*>(ListWidget->itemWidget(ListWidgetItem));
 		QString FilePath = FileItem->GetFilePath();
 		FileItem->SetFilePath(FileItem->GetFilePath() + SYMBOL_SPACE + LANG("Loaded") + "...");
-		FileItem->SetFont(FONT_APPLICATION_BOLD);
+		FileItem->SetFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 		ISGui::ProcessEvents();
 
 		ISStorageFileLoader StorageFileLoader(FilePath, QString(), this);

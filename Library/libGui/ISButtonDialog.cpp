@@ -2,7 +2,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "EXDefines.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISButtonDialog::ISButtonDialog(QWidget *parent, const QString &ApplyText, const QString &CloseText) : QDialogButtonBox(parent)
 {

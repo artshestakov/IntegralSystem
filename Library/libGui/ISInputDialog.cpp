@@ -1,5 +1,7 @@
 #include "ISInputDialog.h"
-#include "EXDefines.h"
+#include "ISDefinesGui.h"
+#include "ISDefinesCore.h"
+#include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
 #include "ISIntegerEdit.h"
@@ -14,7 +16,7 @@ ISInputDialog::ISInputDialog(const QString &Title, const QString &LabelText, QWi
 	Label = nullptr;
 
 	setWindowTitle(Title);
-	GetMainLayout()->setContentsMargins(MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	if (LabelText.length())
