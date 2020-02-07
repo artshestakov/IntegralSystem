@@ -1,8 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISMetaSystem.h"
-#include "ISMetaSubSystem.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISMetaSystemsEntity
 {

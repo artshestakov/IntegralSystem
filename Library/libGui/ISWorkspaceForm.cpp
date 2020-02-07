@@ -118,32 +118,29 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 		CentralForm = nullptr;
 	}
 
-	QString TableName = MetaSubSystem->GetTableName();
-	QString ClassName = MetaSubSystem->GetClassName();
-
 	TabWidget->tabBar()->setTabIcon(0, IconSubSystem);
-	TabWidget->tabBar()->setTabText(0, MetaSubSystem->GetLocalName());
+	TabWidget->tabBar()->setTabText(0, MetaSubSystem->LocalName);
 	TabWidget->tabBar()->setCurrentIndex(0);
 
-	if (TableName.length()) //Открытие таблицы
+	if (!MetaSubSystem->TableName.isEmpty()) //Открытие таблицы
 	{
-		ISProtocol::OpenSubSystem(TableName, ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName());
+		ISProtocol::OpenSubSystem(MetaSubSystem->TableName, ISMetaData::GetInstanse().GetMetaTable(MetaSubSystem->TableName)->GetLocalListName());
 
-		ISListBaseForm *ListBaseForm = new ISListBaseForm(TableName, this);
+		ISListBaseForm *ListBaseForm = new ISListBaseForm(MetaSubSystem->TableName, this);
 		CentralForm = ListBaseForm;
 	}
-	else if (ClassName.length()) //Открытие класса (виджета)
+	else if (!MetaSubSystem->ClassName.isEmpty()) //Открытие класса (виджета)
 	{
-		ISProtocol::OpenSubSystem(QString(), MetaSubSystem->GetLocalName());
+		ISProtocol::OpenSubSystem(QString(), MetaSubSystem->LocalName);
 
-		int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
-		IS_ASSERT(ObjectType, QString("Class for SybSystem is NULL. ClassName: %1").arg(ClassName));
+		int ObjectType = QMetaType::type((MetaSubSystem->ClassName + '*').toLocal8Bit().constData());
+		IS_ASSERT(ObjectType, QString("Class for SybSystem is NULL. ClassName: %1").arg(MetaSubSystem->ClassName));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 		IS_ASSERT(MetaObject, "Error opening subsystem widget.");
 
 		CentralForm = dynamic_cast<ISInterfaceMetaForm*>(MetaObject->newInstance(Q_ARG(QWidget *, this)));
-		IS_ASSERT(CentralForm, QString("Error instance subsystem. ClassName: %1").arg(ClassName));
+		IS_ASSERT(CentralForm, QString("Error instance subsystem. ClassName: %1").arg(MetaSubSystem->ClassName));
 	}
 
 	CentralForm->SetUID(SubSystemUID);

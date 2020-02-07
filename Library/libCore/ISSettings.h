@@ -3,7 +3,7 @@
 #define _ISSETTINGS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISMetaSettingsGroup.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISSettings
 {

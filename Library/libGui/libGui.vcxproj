@@ -163,7 +163,6 @@
     <ClCompile Include="ISCheckViewParagraph.cpp" />
     <ClCompile Include="ISClientsSqlModel.cpp" />
     <ClCompile Include="ISColorEdit.cpp" />
-    <ClCompile Include="ISColumnSizeItem.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboCalendarNoteType.cpp" />
     <ClCompile Include="ISComboEdit.cpp" />
@@ -289,10 +288,6 @@
     <ClCompile Include="ISMenuBar.cpp" />
     <ClCompile Include="ISMenuFastAccess.cpp" />
     <ClCompile Include="ISMessageBox.cpp" />
-    <ClCompile Include="ISMetaExternalTool.cpp" />
-    <ClCompile Include="ISMetaParagraph.cpp" />
-    <ClCompile Include="ISMetaSubSystem.cpp" />
-    <ClCompile Include="ISMetaSystem.cpp" />
     <ClCompile Include="ISMetaSystemsEntity.cpp" />
     <ClCompile Include="ISModelThreadQuery.cpp" />
     <ClCompile Include="ISModelThreadWorker.cpp" />
@@ -309,7 +304,6 @@
     <ClCompile Include="ISObjectFormBase.cpp" />
     <ClCompile Include="ISObjectInterface.cpp" />
     <ClCompile Include="ISObjectModel.cpp" />
-    <ClCompile Include="ISObjectModelItem.cpp" />
     <ClCompile Include="ISObjects.cpp" />
     <ClCompile Include="ISOGRNEdit.cpp" />
     <ClCompile Include="ISOKPOEdit.cpp" />
@@ -358,8 +352,6 @@
     <ClCompile Include="ISPrintingEntity.cpp" />
     <ClCompile Include="ISPrintingHtml.cpp" />
     <ClCompile Include="ISPrintingWord.cpp" />
-    <ClCompile Include="ISPrintMetaReport.cpp" />
-    <ClCompile Include="ISPrintMetaReportField.cpp" />
     <ClCompile Include="ISPrintPreviewDialog.cpp" />
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
@@ -391,7 +383,6 @@
     <ClCompile Include="ISSironaResearchTypeObjectForm.cpp" />
     <ClCompile Include="ISSliderDuration.cpp" />
     <ClCompile Include="ISSortingBuffer.cpp" />
-    <ClCompile Include="ISSortingMetaTable.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSplashWidget.cpp" />
     <ClCompile Include="ISSqlModelCore.cpp" />
@@ -459,7 +450,6 @@
     <ClCompile Include="ISWeekDayEdit.cpp" />
     <ClCompile Include="ISWorkspaceForm.cpp" />
     <ClCompile Include="ISYearEdit.cpp" />
-    <ClCompile Include="PMetaUserPermission.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISScreenshot.h" />
@@ -477,8 +467,6 @@
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISLabels.h" />
     <ClInclude Include="ISPassword.h" />
-    <ClInclude Include="ISPrintMetaReport.h" />
-    <ClInclude Include="ISPrintMetaReportField.h" />
     <QtMoc Include="ISPrintingBase.h" />
     <ClInclude Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
@@ -488,7 +476,6 @@
     <QtMoc Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISStyleSheet.h" />
     <ClInclude Include="libGui_global.h" />
-    <ClInclude Include="PMetaUserPermission.h" />
     <QtMoc Include="ISIncomingCallBaseForm.h" />
     <QtMoc Include="ISInterfaceMetaForm.h" />
     <QtMoc Include="ISListBaseForm.h" />
@@ -503,7 +490,6 @@
     <QtMoc Include="ISInputDialog.h" />
     <QtMoc Include="ISPeriodForm.h" />
     <QtMoc Include="ISProgressForm.h" />
-    <ClInclude Include="ISColumnSizeItem.h" />
     <ClInclude Include="ISColumnSizer.h" />
     <QtMoc Include="ISDevice_Atol30F.h" />
     <QtMoc Include="ISDevice_Atol1101.h" />
@@ -517,7 +503,6 @@
     <QtMoc Include="ISExportWorker.h" />
     <QtMoc Include="ISExportXML.h" />
     <ClInclude Include="ISFastAccessEntity.h" />
-    <ClInclude Include="ISMetaExternalTool.h" />
     <ClInclude Include="ISFavorites.h" />
     <QtMoc Include="ISAsteriskTotalForm.h" />
     <QtMoc Include="ISAttachFileBaseForm.h" />
@@ -536,15 +521,10 @@
     <QtMoc Include="ISAsteriskCallsListForm.h" />
     <QtMoc Include="ISAsteriskRecordPlayForm.h" />
     <QtMoc Include="ISAsteriskRecordWaitForm.h" />
-    <ClInclude Include="ISMetaSubSystem.h" />
-    <ClInclude Include="ISMetaSystem.h" />
     <ClInclude Include="ISMetaSystemsEntity.h" />
     <ClInclude Include="ISObjectModel.h" />
-    <ClInclude Include="ISObjectModelItem.h" />
-    <ClInclude Include="ISMetaParagraph.h" />
     <ClInclude Include="ISParagraphEntity.h" />
     <ClInclude Include="ISSortingBuffer.h" />
-    <ClInclude Include="ISSortingMetaTable.h" />
     <QtMoc Include="ISTelephony.h" />
     <QtMoc Include="ISTelephonySummary.h" />
     <ClInclude Include="ISUserRoleEntity.h" />

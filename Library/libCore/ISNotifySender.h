@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISMetaNotify.h"
+#include "ISStructs.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISNotifySender : public QObject

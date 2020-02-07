@@ -6,7 +6,6 @@
 #include "ISLocalization.h"
 #include "ISCore.h"
 #include "ISSettings.h"
-#include "ISMetaSettingsGroup.h"
 #include "ISQuery.h"
 #include "ISProgressForm.h"
 #include "ISLabels.h"

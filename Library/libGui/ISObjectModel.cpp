@@ -21,21 +21,21 @@ void ISObjectModel::Append(const QString &FieldName)
 //-----------------------------------------------------------------------------
 QVariant ISObjectModel::GetOldValue(const QString &FieldName) const
 {
-	return Items.value(FieldName)->GetOldValue();
+	return Items.value(FieldName)->OldValue;
 }
 //-----------------------------------------------------------------------------
 void ISObjectModel::SetOldValue(const QString &FieldName, const QVariant &Value)
 {
-	Items.value(FieldName)->SetOldValue(Value);
+	Items.value(FieldName)->OldValue = Value;
 }
 //-----------------------------------------------------------------------------
 QVariant ISObjectModel::GetNewValue(const QString &FieldName) const
 {
-	return Items.value(FieldName)->GetNewValue();
+	return Items.value(FieldName)->NewValue;
 }
 //-----------------------------------------------------------------------------
 void ISObjectModel::SetNewValue(const QString &FieldName, const QVariant &Value)
 {
-	Items.value(FieldName)->SetNewValue(Value);
+	Items.value(FieldName)->NewValue = Value;
 }
 //-----------------------------------------------------------------------------

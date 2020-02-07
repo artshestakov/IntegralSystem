@@ -1267,7 +1267,7 @@ void ISListBaseForm::Print()
 		return;
 	}
 
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_PRINT, MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID(), MetaReport->GetLocalName());
+	ISProtocol::Insert(true, CONST_UID_PROTOCOL_PRINT, MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID(), MetaReport->LocalName);
 
 	ISGui::SetWaitGlobalCursor(true);
 
@@ -1278,21 +1278,21 @@ void ISListBaseForm::Print()
 	ISPrintingBase *PrintingBase = nullptr;
 	bool EditPrintForm = ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT);
 
-	if (MetaReport->GetType() == ISNamespace::RT_Html)
+	if (MetaReport->Type == ISNamespace::RT_Html)
 	{
 		PrintingBase = new ISPrintingHtml(MetaReport, GetObjectID(), this);
 		PrintingBase->setProperty("PDF", PrintListForm.GetPDF());
-		PrintingBase->setProperty("PathPDF", QDir::homePath() + '/' + MetaReport->GetLocalName());
+		PrintingBase->setProperty("PathPDF", QDir::homePath() + '/' + MetaReport->LocalName);
 		PrintingBase->setProperty("EditPreview", EditPrintForm);
 	}
-	else if (MetaReport->GetType() == ISNamespace::RT_Word)
+	else if (MetaReport->Type == ISNamespace::RT_Word)
 	{
 #ifdef WIN32
 		PrintingBase = new ISPrintingWord(MetaReport, GetObjectID(), this);
 #endif
     }
 
-	PrintingBase->SetReportLocalName(MetaReport->GetLocalName());
+	PrintingBase->SetReportLocalName(MetaReport->LocalName);
 
 	connect(PrintingBase, &ISPrintingBase::SetVisibleDialog, &ProcessForm, &ISProcessForm::setVisible);
 	connect(PrintingBase, &ISPrintingBase::Message, &ProcessForm, &ISProcessForm::SetText);

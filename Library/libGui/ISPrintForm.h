@@ -4,7 +4,7 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISButtonDialog.h"
 #include "ISCheckEdit.h"
-#include "ISPrintMetaReport.h"
+#include "ISStructs.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISPrintForm : public ISInterfaceDialogForm

@@ -195,9 +195,6 @@
     <ClInclude Include="ISQuotedPrintable.h">
       <Filter>Network\SMTP</Filter>
     </ClInclude>
-    <ClInclude Include="ISMetaNotify.h">
-      <Filter>Notify</Filter>
-    </ClInclude>
     <ClInclude Include="ISProtocol.h">
       <Filter>Other</Filter>
     </ClInclude>
@@ -211,12 +208,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISSettings.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaSettingsGroup.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaSetting.h">
       <Filter>Settings</Filter>
     </ClInclude>
     <ClInclude Include="ISLocalization.h">
@@ -234,6 +225,9 @@
     </ClInclude>
     <ClInclude Include="PMetaClassResource.h">
       <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStructs.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -363,17 +357,8 @@
     <ClCompile Include="ISMetaUser.cpp">
       <Filter>MetaUser</Filter>
     </ClCompile>
-    <ClCompile Include="ISMetaNotify.cpp">
-      <Filter>Notify</Filter>
-    </ClCompile>
     <ClCompile Include="ISNotifySender.cpp">
       <Filter>Notify</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMetaSetting.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMetaSettingsGroup.cpp">
-      <Filter>Settings</Filter>
     </ClCompile>
     <ClCompile Include="ISSettings.cpp">
       <Filter>Settings</Filter>

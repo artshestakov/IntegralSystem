@@ -42,22 +42,8 @@ void ISMetaSystemsEntity::Initialize()
 	{
 		while (qSelect.Next())
 		{
-			bool SystemIsSystem = qSelect.ReadColumn("stms_issystem").toBool();
-			int SystemID = qSelect.ReadColumn("stms_id").toInt();
 			ISUuid SystemUID = qSelect.ReadColumn("stms_uid");
-			QString SystemLocalName = qSelect.ReadColumn("stms_localname").toString();
-			int SystemOrderID = qSelect.ReadColumn("stms_orderid").toInt();
-			QString SystemIcon = qSelect.ReadColumn("stms_icon").toString();
-			QString SystemHint = qSelect.ReadColumn("stms_hint").toString();
-
-			int SubSystemID = qSelect.ReadColumn("sbsm_id").toInt();
 			ISUuid SubSystemUID = qSelect.ReadColumn("sbsm_uid");
-			QString SubSystemLocalName = qSelect.ReadColumn("sbsm_localname").toString();
-			int SubSystemOrderID = qSelect.ReadColumn("sbsm_orderid").toInt();
-			QString SubSystemIcon = qSelect.ReadColumn("sbsm_icon").toString();
-			QString SubSystemClassName = qSelect.ReadColumn("sbsm_classname").toString();
-			QString SubSystemTableName = qSelect.ReadColumn("sbsm_tablename").toString();
-			QString SubSystemHint = qSelect.ReadColumn("sbsm_hint").toString();
 
 			if (!ISMetaUser::GetInstance().GetData()->System) //≈сли текущий пользователь не системный
 			{
@@ -74,27 +60,27 @@ void ISMetaSystemsEntity::Initialize()
 			if (!MetaSystem)
 			{
 				MetaSystem = new ISMetaSystem();
-				MetaSystem->SetIsSystem(SystemIsSystem);
-				MetaSystem->SetID(SystemID);
-				MetaSystem->SetUID(SystemUID);
-				MetaSystem->SetLocalName(SystemLocalName);
-				MetaSystem->SetOrderID(SystemOrderID);
-				MetaSystem->SetIconName(SystemIcon);
-				MetaSystem->SetHint(SystemHint);
+				MetaSystem->IsSystem = qSelect.ReadColumn("stms_issystem").toBool();
+				MetaSystem->ID = qSelect.ReadColumn("stms_id").toInt();
+				MetaSystem->UID = SystemUID;
+				MetaSystem->LocalName = qSelect.ReadColumn("stms_localname").toString();
+				MetaSystem->OrderID = qSelect.ReadColumn("stms_orderid").toInt();
+				MetaSystem->IconName = qSelect.ReadColumn("stms_icon").toString();
+				MetaSystem->Hint = qSelect.ReadColumn("stms_hint").toString();
 				Systems.append(MetaSystem);
 			}
 
 			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem();
-			MetaSubSystem->SetID(SubSystemID);
-			MetaSubSystem->SetUID(SubSystemUID);
-			MetaSubSystem->SetLocalName(SubSystemLocalName);
-			MetaSubSystem->SetOrderID(SubSystemOrderID);
-			MetaSubSystem->SetIconName(SubSystemIcon);
-			MetaSubSystem->SetClassName(SubSystemClassName);
-			MetaSubSystem->SetTableName(SubSystemTableName);
-			MetaSubSystem->SetHint(SubSystemHint);
-			MetaSubSystem->SetSystemUID(SystemUID);
-			MetaSystem->AppendSubSystem(MetaSubSystem);
+			MetaSubSystem->ID = qSelect.ReadColumn("sbsm_id").toInt();
+			MetaSubSystem->UID = SubSystemUID;
+			MetaSubSystem->LocalName = qSelect.ReadColumn("sbsm_localname").toString();
+			MetaSubSystem->OrderID = qSelect.ReadColumn("sbsm_orderid").toInt();
+			MetaSubSystem->IconName = qSelect.ReadColumn("sbsm_icon").toString();
+			MetaSubSystem->ClassName = qSelect.ReadColumn("sbsm_classname").toString();
+			MetaSubSystem->TableName = qSelect.ReadColumn("sbsm_tablename").toString();
+			MetaSubSystem->Hint = qSelect.ReadColumn("sbsm_hint").toString();
+			MetaSubSystem->SystemUID = SystemUID;
+			MetaSystem->SubSystems.append(MetaSubSystem);
 		}
 	}
 
@@ -121,9 +107,9 @@ ISMetaSubSystem* ISMetaSystemsEntity::GetSubSystem(const QString &SubSystemUID)
 {
 	for (ISMetaSystem *MetaSystem : Systems)
 	{
-		for (ISMetaSubSystem *MetaSubSystem : MetaSystem->GetSubSystems())
+		for (ISMetaSubSystem *MetaSubSystem : MetaSystem->SubSystems)
 		{
-			if (MetaSubSystem->GetUID() == SubSystemUID)
+			if (MetaSubSystem->UID == SubSystemUID)
 			{
 				return MetaSubSystem;
 			}
@@ -136,7 +122,7 @@ ISMetaSystem* ISMetaSystemsEntity::CheckExistSystem(const ISUuid &SystemUID)
 {
 	for (ISMetaSystem *MetaSystem : Systems)
 	{
-		if (MetaSystem->GetUID() == SystemUID)
+		if (MetaSystem->UID == SystemUID)
 		{
 			return MetaSystem;
 		}

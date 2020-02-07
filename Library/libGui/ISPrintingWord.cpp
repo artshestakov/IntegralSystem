@@ -63,7 +63,7 @@ bool ISPrintingWord::PrepareTempate()
 		}
 	}
 
-	QFile File(GetMetaReport()->GetFileTemplate());
+	QFile File(GetMetaReport()->FileTemplate);
 	if (File.copy(Path))
 	{
 		File.setFileName(Path);
@@ -97,12 +97,12 @@ bool ISPrintingWord::PrepareTempate()
 //-----------------------------------------------------------------------------
 bool ISPrintingWord::FillTemplate()
 {
-	QVector<ISPrintMetaReportField*> Fields = GetMetaReport()->GetFields();
+	QVector<ISPrintMetaReportField*> Fields = GetMetaReport()->Fields;
 	for (int i = 0; i < Fields.count(); ++i)
 	{
 		ISPrintMetaReportField *MetaReportField = Fields.at(i);
 
-		ISQuery qSelectValue(MetaReportField->GetFieldQuery());
+		ISQuery qSelectValue(MetaReportField->FieldQuery);
 		if (qSelectValue.ExistParameter(":SourceID"))
 		{
 			bool BindValue = qSelectValue.BindValue(":SourceID", GetObjectID());
@@ -125,7 +125,7 @@ bool ISPrintingWord::FillTemplate()
 
 			QList<QVariant> Parameters =
 			{
-				QVariant(MetaReportField->GetReplaceValue()),
+				QVariant(MetaReportField->ReplaceValue),
 				QVariant('0'),
 				QVariant('0'),
 				QVariant('0'),

@@ -26,10 +26,10 @@ ISPrintForm::ISPrintForm(const QString &TableName, QWidget *parent) : ISInterfac
 		ISPrintMetaReport *MetaReport = Vector.at(i);
 
 		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-		ListWidgetItem->setText(MetaReport->GetLocalName());
+		ListWidgetItem->setText(MetaReport->LocalName);
 		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 
-		switch (MetaReport->GetType())
+		switch (MetaReport->Type)
 		{
 		case ISNamespace::RT_Html: ListWidgetItem->setIcon(BUFFER_ICONS("Print.Type.Html")); break;
 		case ISNamespace::RT_Word: ListWidgetItem->setIcon(BUFFER_ICONS("Print.Type.Word")); break;

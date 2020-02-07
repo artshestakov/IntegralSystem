@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISMetaParagraph.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISParagraphButton : public QWidget
 {

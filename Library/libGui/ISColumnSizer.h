@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISColumnSizeItem.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISColumnSizer
 {

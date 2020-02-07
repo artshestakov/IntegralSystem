@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISMetaExternalTool.h"
+#include "ISStructs.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
 class ISFastAccessEntity

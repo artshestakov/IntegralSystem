@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISPrintMetaReport.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISPrintingEntity
 {

@@ -188,9 +188,6 @@
     <Filter Include="Printing\Word">
       <UniqueIdentifier>{f460dc76-e385-432a-ac73-6abedb5d4999}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Printing\MetaData">
-      <UniqueIdentifier>{ab67a40c-9531-4fca-9c06-98c69b2fb01f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{fd190b60-95fc-4868-9bc4-a7ebef8f88e6}</UniqueIdentifier>
     </Filter>
@@ -220,34 +217,16 @@
     <ClInclude Include="ISParagraphEntity.h">
       <Filter>Paragraphs</Filter>
     </ClInclude>
-    <ClInclude Include="ISMetaParagraph.h">
-      <Filter>Paragraphs</Filter>
-    </ClInclude>
     <ClInclude Include="ISColumnSizer.h">
-      <Filter>ColumnSizer</Filter>
-    </ClInclude>
-    <ClInclude Include="ISColumnSizeItem.h">
       <Filter>ColumnSizer</Filter>
     </ClInclude>
     <ClInclude Include="ISMetaSystemsEntity.h">
       <Filter>MetaSystems</Filter>
     </ClInclude>
-    <ClInclude Include="ISMetaSystem.h">
-      <Filter>MetaSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaSubSystem.h">
-      <Filter>MetaSystems</Filter>
-    </ClInclude>
     <ClInclude Include="ISObjectModel.h">
       <Filter>ObjectModel</Filter>
     </ClInclude>
-    <ClInclude Include="ISObjectModelItem.h">
-      <Filter>ObjectModel</Filter>
-    </ClInclude>
     <ClInclude Include="ISSortingBuffer.h">
-      <Filter>SortingBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="ISSortingMetaTable.h">
       <Filter>SortingBuffer</Filter>
     </ClInclude>
     <ClInclude Include="ISFavorites.h">
@@ -265,20 +244,8 @@
     <ClInclude Include="ISPrintingEntity.h">
       <Filter>Printing</Filter>
     </ClInclude>
-    <ClInclude Include="ISPrintMetaReport.h">
-      <Filter>Printing\MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintMetaReportField.h">
-      <Filter>Printing\MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="PMetaUserPermission.h">
-      <Filter>User Role</Filter>
-    </ClInclude>
     <ClInclude Include="ISUserRoleEntity.h">
       <Filter>User Role</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaExternalTool.h">
-      <Filter>FastAccess</Filter>
     </ClInclude>
     <ClInclude Include="ISFastAccessEntity.h">
       <Filter>FastAccess</Filter>
@@ -346,9 +313,6 @@
     <ClCompile Include="ISProgressForm.cpp">
       <Filter>AdditionalForms</Filter>
     </ClCompile>
-    <ClCompile Include="ISColumnSizeItem.cpp">
-      <Filter>ColumnSizer</Filter>
-    </ClCompile>
     <ClCompile Include="ISColumnSizer.cpp">
       <Filter>ColumnSizer</Filter>
     </ClCompile>
@@ -386,9 +350,6 @@
       <Filter>Export</Filter>
     </ClCompile>
     <ClCompile Include="ISFastAccessEntity.cpp">
-      <Filter>FastAccess</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMetaExternalTool.cpp">
       <Filter>FastAccess</Filter>
     </ClCompile>
     <ClCompile Include="ISFavorites.cpp">
@@ -445,31 +406,16 @@
     <ClCompile Include="ISAsteriskRecordWaitForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISMetaSubSystem.cpp">
-      <Filter>MetaSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMetaSystem.cpp">
-      <Filter>MetaSystems</Filter>
-    </ClCompile>
     <ClCompile Include="ISMetaSystemsEntity.cpp">
       <Filter>MetaSystems</Filter>
     </ClCompile>
     <ClCompile Include="ISObjectModel.cpp">
       <Filter>ObjectModel</Filter>
     </ClCompile>
-    <ClCompile Include="ISObjectModelItem.cpp">
-      <Filter>ObjectModel</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMetaParagraph.cpp">
-      <Filter>Paragraphs</Filter>
-    </ClCompile>
     <ClCompile Include="ISParagraphEntity.cpp">
       <Filter>Paragraphs</Filter>
     </ClCompile>
     <ClCompile Include="ISSortingBuffer.cpp">
-      <Filter>SortingBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSortingMetaTable.cpp">
       <Filter>SortingBuffer</Filter>
     </ClCompile>
     <ClCompile Include="ISTelephony.cpp">
@@ -479,9 +425,6 @@
       <Filter>Telephony</Filter>
     </ClCompile>
     <ClCompile Include="ISUserRoleEntity.cpp">
-      <Filter>User Role</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaUserPermission.cpp">
       <Filter>User Role</Filter>
     </ClCompile>
     <ClCompile Include="ISCreatedObjectsEntity.cpp">
@@ -1254,12 +1197,6 @@
     </ClCompile>
     <ClCompile Include="ISPrintingWord.cpp">
       <Filter>Printing\Word</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintMetaReport.cpp">
-      <Filter>Printing\MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintMetaReportField.cpp">
-      <Filter>Printing\MetaData</Filter>
     </ClCompile>
     <ClCompile Include="ISPrintingBase.cpp">
       <Filter>Printing</Filter>

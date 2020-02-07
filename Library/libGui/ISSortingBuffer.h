@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISSortingMetaTable.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISSortingBuffer
 {

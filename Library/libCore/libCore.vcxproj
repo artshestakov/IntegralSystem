@@ -147,12 +147,9 @@
     <ClInclude Include="ISMetaViewQuery.h" />
     <QtMoc Include="ISSMS.h" />
     <ClInclude Include="ISMetaUser.h" />
-    <ClInclude Include="ISMetaNotify.h" />
     <QtMoc Include="ISNotifySender.h" />
     <QtMoc Include="ISQueryPool.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
-    <ClInclude Include="ISMetaSetting.h" />
-    <ClInclude Include="ISMetaSettingsGroup.h" />
     <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISProtocol.h" />
     <QtMoc Include="ISNetwork.h" />
@@ -183,6 +180,7 @@
     <QtMoc Include="PMetaClassFunction.h" />
     <QtMoc Include="PMetaClassIndex.h" />
     <QtMoc Include="PMetaClassQuery.h" />
+    <ClInclude Include="ISStructs.h" />
     <ClInclude Include="PMetaClassResource.h" />
     <QtMoc Include="PMetaClassTable.h" />
     <ClInclude Include="libCore_global.h" />
@@ -231,9 +229,6 @@
     <ClCompile Include="ISMemoryObjects.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISMetaDataHelper.cpp" />
-    <ClCompile Include="ISMetaNotify.cpp" />
-    <ClCompile Include="ISMetaSetting.cpp" />
-    <ClCompile Include="ISMetaSettingsGroup.cpp" />
     <ClCompile Include="ISMetaUser.cpp" />
     <ClCompile Include="ISMetaUuidCheckeder.cpp" />
     <ClCompile Include="ISMetaViewQuery.cpp" />

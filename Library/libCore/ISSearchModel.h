@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
 #include "ISNamespace.h"
-#include "ISTypes.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISSearchModel
 {

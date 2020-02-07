@@ -52,7 +52,7 @@ ISSystemsPanel::~ISSystemsPanel()
 //-----------------------------------------------------------------------------
 void ISSystemsPanel::AddSystem(ISMetaSystem *MetaSystem)
 {
-	QAction *ActionSystem = SystemsBar->addAction(GetSystemIcon(MetaSystem), MetaSystem->GetLocalName(), this, &ISSystemsPanel::SystemClicked);
+	QAction *ActionSystem = SystemsBar->addAction(GetSystemIcon(MetaSystem), MetaSystem->LocalName, this, &ISSystemsPanel::SystemClicked);
 	ActionSystem->setToolTip(GetSystemToolTip(MetaSystem));
 	ActionSystem->setFont(DEFINES_GUI.FONT_TAHOMA_15);
 	ActionSystem->setCheckable(true);
@@ -65,7 +65,7 @@ void ISSystemsPanel::AddSystem(ISMetaSystem *MetaSystem)
 void ISSystemsPanel::SystemClicked()
 {
 	QAction *ActionClicked = dynamic_cast<QAction*>(sender());
-	QString ClickedSystemUID = Systems.value(ActionClicked)->GetUID();
+	QString ClickedSystemUID = Systems.value(ActionClicked)->UID;
 	if (CurrentSystemUID == ClickedSystemUID)
 	{
 		return;
@@ -82,7 +82,7 @@ void ISSystemsPanel::SystemClicked()
 	LineSubSystems->setVisible(true);
 
 	LoadSubSystemsBar(Systems.value(ActionClicked));
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_SYSTEM, QString(), QString(), QVariant(), Systems.value(ActionClicked)->GetLocalName());
+	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_SYSTEM, QString(), QString(), QVariant(), Systems.value(ActionClicked)->LocalName);
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -96,10 +96,10 @@ void ISSystemsPanel::SubSystemClicked()
 //-----------------------------------------------------------------------------
 void ISSystemsPanel::LoadSubSystemsBar(ISMetaSystem *MetaSystem)
 {
-	for (ISMetaSubSystem *MetaSubSystem : MetaSystem->GetSubSystems())
+	for (ISMetaSubSystem *MetaSubSystem : MetaSystem->SubSystems)
 	{
-		QAction *ActionSubSystem = SubSystemBar->addAction(GetSubSystemIcon(MetaSubSystem), MetaSubSystem->GetLocalName(), this, &ISSystemsPanel::SubSystemClicked);
-		ActionSubSystem->setObjectName(MetaSubSystem->GetUID());
+		QAction *ActionSubSystem = SubSystemBar->addAction(GetSubSystemIcon(MetaSubSystem), MetaSubSystem->LocalName, this, &ISSystemsPanel::SubSystemClicked);
+		ActionSubSystem->setObjectName(MetaSubSystem->UID);
 		ActionSubSystem->setToolTip(GetSubSystemToolTip(MetaSubSystem));
 		ActionSubSystem->setCheckable(true);
 
@@ -132,67 +132,27 @@ void ISSystemsPanel::ClearSubSystemsBar()
 //-----------------------------------------------------------------------------
 QString ISSystemsPanel::GetSystemToolTip(ISMetaSystem *MetaSystem) const
 {
-	QString ToolTip;
-
-	if (MetaSystem->GetHint().length())
-	{
-		ToolTip = MetaSystem->GetHint();
-	}
-	else
-	{
-		ToolTip = MetaSystem->GetLocalName();
-	}
-
+	QString ToolTip = MetaSystem->Hint.isEmpty() ? MetaSystem->LocalName : MetaSystem->Hint;
 	ToolTip = ISGui::PrepareLongToolTip(ToolTip);
 	return ToolTip;
 }
 //-----------------------------------------------------------------------------
 QString ISSystemsPanel::GetSubSystemToolTip(ISMetaSubSystem *MetaSubSystem) const
 {
-	QString ToolTip;
-
-	if (MetaSubSystem->GetHint().length())
-	{
-		ToolTip = MetaSubSystem->GetHint();
-	}
-	else
-	{
-		ToolTip = MetaSubSystem->GetLocalName();
-	}
-
+	QString ToolTip = MetaSubSystem->Hint.isEmpty() ? MetaSubSystem->LocalName : MetaSubSystem->Hint;
 	ToolTip = ISGui::PrepareLongToolTip(ToolTip);
 	return ToolTip;
 }
 //-----------------------------------------------------------------------------
 QIcon ISSystemsPanel::GetSystemIcon(ISMetaSystem *MetaSystem) const
 {
-	QIcon IconSystem;
-
-	if (MetaSystem->GetIsSystem()) //Система является движковой
-	{
-		IconSystem = BUFFER_ICONS(MetaSystem->GetIconName());
-	}
-	else //Система является пользовательской (т.е. из конфигурации)
-	{
-		IconSystem = ISObjects::GetInstance().GetInterface()->GetIcon(MetaSystem->GetIconName());
-	}
-
-	return IconSystem;
+	return MetaSystem->IsSystem ? BUFFER_ICONS(MetaSystem->IconName) : ISObjects::GetInstance().GetInterface()->GetIcon(MetaSystem->IconName);
 }
 //-----------------------------------------------------------------------------
 QIcon ISSystemsPanel::GetSubSystemIcon(ISMetaSubSystem *MetaSubSystem) const
 {
-	QIcon IconSubSystem;
-
-	if (ISMetaSystemsEntity::GetInstance().GetSystem(MetaSubSystem->GetSystemUID())->GetIsSystem())
-	{
-		IconSubSystem = BUFFER_ICONS(MetaSubSystem->GetIconName());
-	}
-	else
-	{
-		IconSubSystem = ISObjects::GetInstance().GetInterface()->GetIcon(MetaSubSystem->GetIconName());
-	}
-
-	return IconSubSystem;
+	return ISMetaSystemsEntity::GetInstance().GetSystem(MetaSubSystem->SystemUID)->IsSystem ?
+		BUFFER_ICONS(MetaSubSystem->IconName) :
+		ISObjects::GetInstance().GetInterface()->GetIcon(MetaSubSystem->IconName);
 }
 //-----------------------------------------------------------------------------

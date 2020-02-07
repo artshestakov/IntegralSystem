@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISNotificationService.h"
 #include "ISMediaPlayer.h"
-#include "ISMetaNotify.h"
+#include "ISStructs.h"
 #include "ISAssert.h"
 #include "ISNotifySender.h"
 #include "ISGui.h"

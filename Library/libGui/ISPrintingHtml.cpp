@@ -30,7 +30,7 @@ bool ISPrintingHtml::Prepare()
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::PrepareTempate()
 {
-	QFile File(GetMetaReport()->GetFileTemplate());
+	QFile File(GetMetaReport()->FileTemplate);
 	bool Result = File.open(QIODevice::ReadOnly | QIODevice::Text);
 	if (Result)
 	{
@@ -46,20 +46,20 @@ bool ISPrintingHtml::PrepareTempate()
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::FillTemplate()
 {
-	QVector<ISPrintMetaReportField*> Fields = GetMetaReport()->GetFields();
+	QVector<ISPrintMetaReportField*> Fields = GetMetaReport()->Fields;
 	for (int i = 0; i < Fields.count(); ++i)
 	{
 		ISPrintMetaReportField *MetaReportField = Fields.at(i);
 
-		bool Contains = Html.contains(MetaReportField->GetReplaceValue());
-		IS_ASSERT(Contains, QString("Not found replace value \"%1\" in file template \"%2\"").arg(MetaReportField->GetReplaceValue()).arg(""/*File.fileName()*/));
+		bool Contains = Html.contains(MetaReportField->ReplaceValue);
+		IS_ASSERT(Contains, QString("Not found replace value \"%1\" in file template \"%2\"").arg(MetaReportField->ReplaceValue).arg(""/*File.fileName()*/));
 
-		if (MetaReportField->GetQueryName().length())
+		if (MetaReportField->QueryName.length())
 		{
-			ISMetaViewQuery MetaViewQuery(MetaReportField->GetQueryName());
+			ISMetaViewQuery MetaViewQuery(MetaReportField->QueryName);
 			QString QueryText = MetaViewQuery.GetQueryText();
 			ISQuery qSelect(QueryText);
-			qSelect.BindValue(MetaReportField->GetParameterName(), GetObjectID());
+			qSelect.BindValue(MetaReportField->ParameterName, GetObjectID());
 			if (qSelect.Execute())
 			{
 				if (qSelect.GetCountResultRows())
@@ -69,17 +69,17 @@ bool ISPrintingHtml::FillTemplate()
 
 					ISHtmlQuery HtmlQuery(qSelect, "Services");
 					QString Html = HtmlQuery.GetHtmlTableQuery();
-					Html.replace(MetaReportField->GetReplaceValue(), Html);
+					Html.replace(MetaReportField->ReplaceValue, Html);
 				}
 				else
 				{
-					Html.replace(MetaReportField->GetReplaceValue(), QString());
+					Html.replace(MetaReportField->ReplaceValue, QString());
 				}
 			}
 		}
 		else
 		{
-			ISQuery qSelectValue(MetaReportField->GetFieldQuery());
+			ISQuery qSelectValue(MetaReportField->FieldQuery);
 
 			if (qSelectValue.ExistParameter(":SourceID"))
 			{
@@ -90,7 +90,7 @@ bool ISPrintingHtml::FillTemplate()
 			{
 				QVariant CheckedValue = ISDatabaseHelper::CheckValue(qSelectValue.ReadColumn(0));
 				QString StringValue = CheckedValue.toString();
-				Html.replace(MetaReportField->GetReplaceValue(), StringValue);
+				Html.replace(MetaReportField->ReplaceValue, StringValue);
 			}
 		}
 	}

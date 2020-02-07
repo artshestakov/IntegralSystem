@@ -3,7 +3,7 @@
 #define _ISMETAUSER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISTypes.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISMetaUser
 {

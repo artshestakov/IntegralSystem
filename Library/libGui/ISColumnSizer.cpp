@@ -56,12 +56,12 @@ void ISColumnSizer::Initialize()
 
 			if (Tables.contains(TableName))
 			{
-				Tables[TableName]->SetFieldSize(FieldName, FieldSize);
+				Tables[TableName]->Fields.insert(FieldName, FieldSize);
 			}
 			else
 			{
 				ISColumnSizeItem *ColumnSizeItem = new ISColumnSizeItem();
-				ColumnSizeItem->SetFieldSize(FieldName, FieldSize);
+				ColumnSizeItem->Fields.insert(FieldName, FieldSize);
 				Tables.insert(TableName, ColumnSizeItem);
 			}
 		}
@@ -75,9 +75,9 @@ void ISColumnSizer::Save()
 		QString TableName = TableItem.first;
 		ISColumnSizeItem *ColumnSizeItem = TableItem.second;
 
-		if (ColumnSizeItem->GetModificationFlag())
+		if (ColumnSizeItem->ModificationFlag)
 		{
-			for (const auto &FieldItem : ColumnSizeItem->GetFields().toStdMap())
+			for (const auto &FieldItem : ColumnSizeItem->Fields.toStdMap())
 			{
 				ISQuery qSelect(QS_COLUMN_SIZE_COUNT);
 				qSelect.BindValue(":TableName", TableName);
@@ -116,14 +116,14 @@ void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &Field
 	ISColumnSizeItem *ColumnSizeItem = Tables.value(TableName);
 	if (ColumnSizeItem)
 	{
-		ColumnSizeItem->SetFieldSize(FieldName, Size);
+		ColumnSizeItem->Fields.insert(FieldName, Size);
 	}
 	else
 	{
 		ColumnSizeItem = new ISColumnSizeItem();
-		ColumnSizeItem->SetFieldSize(FieldName, Size);
+		ColumnSizeItem->Fields.insert(FieldName, Size);
 	}
-	ColumnSizeItem->SetModificationFlag(true);
+	ColumnSizeItem->ModificationFlag = true;
 }
 //-----------------------------------------------------------------------------
 int ISColumnSizer::GetColumnSize(const QString &TableName, const QString &FieldName) const
@@ -132,7 +132,7 @@ int ISColumnSizer::GetColumnSize(const QString &TableName, const QString &FieldN
 	ISColumnSizeItem *ColumnSizeItem = Tables.value(TableName);
 	if (ColumnSizeItem)
 	{
-		Result = ColumnSizeItem->GetFieldSize(FieldName);
+		Result = ColumnSizeItem->Fields.value(FieldName);
 	}
 	return Result;
 }

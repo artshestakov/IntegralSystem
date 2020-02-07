@@ -74,21 +74,21 @@ void ISUserGroupWidget::CreateSubSystems()
 		QFormLayout *FormLayout = new QFormLayout();
 
 		QGroupBox *GroupBox = new QGroupBox(ScrollArea);
-		GroupBox->setTitle(MetaSystem->GetLocalName());
+		GroupBox->setTitle(MetaSystem->LocalName);
 		GroupBox->setLayout(FormLayout);
 		GroupBox->setStyleSheet(STYLE_SHEET("QGroupBoxAccessSubSystem"));
 		ScrollArea->widget()->layout()->addWidget(GroupBox);
 
-		QVector<ISMetaSubSystem*> SubSystems = MetaSystem->GetSubSystems();
+		QVector<ISMetaSubSystem*> SubSystems = MetaSystem->SubSystems;
 		for (ISMetaSubSystem *SubSystem : SubSystems) //Обход всех подсистем текущей системы
 		{
 			ISCheckEdit *CheckEdit = new ISCheckEdit(GroupBox);
-			CheckEdit->SetValue(ISUserRoleEntity::CheckExistSubSystemAccess(GroupID, SubSystem->GetUID()));
-			CheckEdit->setProperty("SubSystemUID", SubSystem->GetUID());
-			CheckEdit->setProperty("SubSystemName", SubSystem->GetLocalName());
+			CheckEdit->SetValue(ISUserRoleEntity::CheckExistSubSystemAccess(GroupID, SubSystem->UID));
+			CheckEdit->setProperty("SubSystemUID", SubSystem->UID);
+			CheckEdit->setProperty("SubSystemName", SubSystem->LocalName);
 			CheckEdit->SetToolTip(LANG("AccessRights.ClickedToGiveAccessFromSubSystem"));
 			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupWidget::SubSystemClicked);
-			FormLayout->addRow(SubSystem->GetLocalName() + ':', CheckEdit);
+			FormLayout->addRow(SubSystem->LocalName + ':', CheckEdit);
 		}
 	}
 }
