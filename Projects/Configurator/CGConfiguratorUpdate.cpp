@@ -35,46 +35,31 @@ void CGConfiguratorUpdate::database()
 void CGConfiguratorUpdate::functions()
 {
 	ISDebug::ShowDebugString("Updating functions...");
-
-	int CountFunctions = ISMetaData::GetInstanse().GetFunctions().count();
-	for (int i = 0; i < CountFunctions; ++i)
+	for (int i = 0, CountFunctions = ISMetaData::GetInstanse().GetFunctions().count(); i < CountFunctions; ++i)
 	{
 		Progress("Functions", i, CountFunctions);
-
-		PMetaClassFunction *MetaFunction = ISMetaData::GetInstanse().GetFunctions().at(i);
 		QString ErrorString;
-		CGFunction::CreateOrReplaceFunction(MetaFunction, ErrorString);
+		CGFunction::CreateOrReplaceFunction(ISMetaData::GetInstanse().GetFunctions()[i], ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::tables()
 {
 	ISDebug::ShowDebugString("Updating tables...");
-
-	int CountTables = ISMetaData::GetInstanse().GetTables().count();
-	for (int i = 0; i < CountTables; ++i) //Обход таблиц
+	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i) //Обход таблиц
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		Progress(QString("Table: %1").arg(MetaTable->GetName()), i, CountTables);
 
 		QString ErrorString;
-		if (CGTable::CheckExistTable(MetaTable)) //Если таблица существует, обновить её, иначе - создать
-		{
-            CGTable::UpdateTable(MetaTable);
-		}
-		else
-		{
-            CGTable::CreateTable(MetaTable, ErrorString);
-		}
+		CGTable::CheckExistTable(MetaTable) ? CGTable::UpdateTable(MetaTable) : CGTable::CreateTable(MetaTable, ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::systemindexes()
 {
 	ISDebug::ShowDebugString("Updating system indexes...");
-
-	int CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().count();
-	for (int i = 0; i < CountIndexes; ++i) //Обход индексов
+	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().count(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes().at(i);
 		Progress(QString("System indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
@@ -105,135 +90,76 @@ void CGConfiguratorUpdate::systemindexes()
 void CGConfiguratorUpdate::indexes()
 {
 	ISDebug::ShowDebugString("Updating indexes...");
-
-	int CountIndexes = ISMetaData::GetInstanse().GetIndexes().count();
-	for (int i = 0; i < CountIndexes; ++i) //Обход индексов
+	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetIndexes().count(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes().at(i);
 		Progress(QString("Indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
 
 		QString ErrorString;
-		if (CGIndex::CheckExistIndex(MetaIndex))
-		{
-            CGIndex::UpdateIndex(MetaIndex, ErrorString);
-		}
-		else
-		{
-            CGIndex::CreateIndex(MetaIndex, ErrorString);
-		}
+		CGIndex::CheckExistIndex(MetaIndex) ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::compoundindexes()
 {
 	ISDebug::ShowDebugString("Updating compound indexes...");
-
-	int CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().count();
-	for (int i = 0; i < CountIndexes; ++i)
+	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().count(); i < CountIndexes; ++i)
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes().at(i);
 		Progress(QString("Compound indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
 
 		QString ErrorString;
-		if (CGIndex::CheckExistIndex(MetaIndex))
-		{
-            CGIndex::UpdateIndex(MetaIndex, ErrorString);
-		}
-		else
-		{
-            CGIndex::CreateIndex(MetaIndex, ErrorString);
-		}
+		CGIndex::CheckExistIndex(MetaIndex) ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::foreigns()
 {
 	ISDebug::ShowDebugString("Updating foreigns...");
-
-	int CountForeigns = ISMetaData::GetInstanse().GetForeigns().count();
-	for (int i = 0; i < CountForeigns; ++i)
+	for (int i = 0, CountForeigns = ISMetaData::GetInstanse().GetForeigns().count(); i < CountForeigns; ++i)
 	{
 		Progress("Foreigns", i, CountForeigns);
-
 		PMetaClassForeign *MetaForeign = ISMetaData::GetInstanse().GetForeigns().at(i);
 		QString ErrorString;
-
-		if (CGForeign::CheckExistForeign(MetaForeign))
-		{
-            CGForeign::UpdateForeign(MetaForeign, ErrorString);
-		}
-		else
-		{
-            CGForeign::CreateForeign(MetaForeign, ErrorString);
-		}
+		CGForeign::CheckExistForeign(MetaForeign) ? CGForeign::UpdateForeign(MetaForeign, ErrorString) : CGForeign::CreateForeign(MetaForeign, ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::resources()
 {
 	ISDebug::ShowDebugString("Updating resources...");
-
-	int CountResources = ISMetaData::GetInstanse().GetResources().count();
-	for (int i = 0; i < CountResources; ++i)
+	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().count(); i < CountResources; ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
 		Progress(QString("Resources for: %1").arg(MetaResource->GetTableName()), i, CountResources);
 		
 		QString ErrorString;
-		if (CGResource::CheckExistResource(MetaResource))
-		{
-			CGResource::UpdateResource(MetaResource);
-		}
-		else
-		{
-			CGResource::InsertResource(MetaResource, ErrorString);
-		}
+		CGResource::CheckExistResource(MetaResource) ? CGResource::UpdateResource(MetaResource) : CGResource::InsertResource(MetaResource, ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::classes()
 {
 	ISDebug::ShowDebugString("Updating class...");
-
-	int CountTables = ISMetaData::GetInstanse().GetTables().count();
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
+	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i)
 	{
 		Progress("Classes", i, CountTables);
-
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-		if (CGClass::CheckExistClass(MetaTable))
-		{
-			CGClass::UpdateClass(MetaTable);
-		}
-		else
-		{
-			CGClass::InsertClass(MetaTable);
-		}
+		CGClass::CheckExistClass(MetaTable) ? CGClass::UpdateClass(MetaTable) : CGClass::InsertClass(MetaTable);
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::classfields()
 {
 	ISDebug::ShowDebugString("Updation class fields...");
-
-	int CountTables = ISMetaData::GetInstanse().GetTables().count();
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
+	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i)
 	{
 		Progress("Class fields", i, CountTables);
-		
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-
-		for (int i = 0; i < MetaTable->GetFields().count(); ++i)
+		for (int j = 0, CountFields = MetaTable->GetFields().count(); j < CountFields; ++j)
 		{
-			PMetaClassField *MetaField = MetaTable->GetFields().at(i);
-			if (CGClassField::CheckExistClassField(MetaField))
-			{
-				CGClassField::UpdateClassField(MetaTable->GetUID(), MetaField);
-			}
-			else
-			{
-				CGClassField::InsertClassField(MetaTable->GetUID(), MetaField);
-			}
+			PMetaClassField *MetaField = MetaTable->GetFields().at(j);
+			CGClassField::CheckExistClassField(MetaField) ? CGClassField::UpdateClassField(MetaTable->GetUID(), MetaField) : CGClassField::InsertClassField(MetaTable->GetUID(), MetaField);
 		}
 	}
 }
