@@ -127,7 +127,7 @@ void ISSettingsForm::CreateSettings()
 {
 	for (int i = 0; i < ISSettings::GetInstance().GetSettingGroups().count(); ++i)
 	{
-		ISMetaSettingsGroup *MetaGroup = ISSettings::GetInstance().GetSettingGroups().at(i);
+		ISMetaSettingsGroup *MetaGroup = ISSettings::GetInstance().GetSettingGroups()[i];
 		QListWidgetItem* ListWidgetItem = CreateItemGroup(MetaGroup);
 
 		QFormLayout *FormLayout = new QFormLayout();
@@ -136,28 +136,28 @@ void ISSettingsForm::CreateSettings()
 		ScrollArea->widget()->setLayout(FormLayout);
 		TabWidget->addTab(ScrollArea, QString());
 
-		for (int j = 0; j < MetaGroup->GetSettings().count(); ++j)
+		for (int j = 0; j < MetaGroup->Settings.count(); ++j)
 		{
-			ISMetaSetting *MetaSetting = MetaGroup->GetSettings().at(j);
+			ISMetaSetting *MetaSetting = MetaGroup->Settings[j];
 			
 			ISQLabel *LabelRow = new ISQLabel(ScrollArea);
-			LabelRow->setText(MetaSetting->GetLocalName() + ':');
+			LabelRow->setText(MetaSetting->LocalName + ':');
 
-			if (MetaSetting->GetHint().length())
+			if (!MetaSetting->Hint.isEmpty())
 			{
-				LabelRow->setToolTip(ISGui::PrepareLongToolTip(MetaSetting->GetHint()));
+				LabelRow->setToolTip(ISGui::PrepareLongToolTip(MetaSetting->Hint));
 				LabelRow->setCursor(CURSOR_WHATS_THIS);
 				ISGui::SetFontWidgetUnderline(LabelRow, true);
 				connect(LabelRow, &ISQLabel::Clicked, this, &ISSettingsForm::LabelRowClicked);
 			}
 
-			ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(ScrollArea, MetaSetting->GetType(), MetaSetting->GetWidgetEditName());
+			ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(ScrollArea, MetaSetting->SettingType, MetaSetting->WidgetEditName);
 
-			QVariant Value = SETTING_VALUE(MetaSetting->GetUID());
+			QVariant Value = SETTING_VALUE(MetaSetting->UID);
 			FieldEditBase->SetValue(Value);
 			connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSettingsForm::DataChanged);
 			FormLayout->addRow(LabelRow, FieldEditBase);
-			Fields.insert(MetaSetting->GetUID(), FieldEditBase);
+			Fields.insert(MetaSetting->UID, FieldEditBase);
 		}
 		
 		Groups.insert(ListWidgetItem, MetaGroup);
@@ -289,9 +289,9 @@ void ISSettingsForm::Import()
 			ProgressForm.setValue(i);
 			ProgressForm.SetText(LANG("ImportSetting").arg(i).arg(Fields.count()));
 
-			QString SettingKey = AllKeys.at(i);
+			QString SettingKey = AllKeys[i];
 
-			QString SettingUID = SettingKey.split('/').at(1);
+			QString SettingUID = SettingKey.split('/')[1];
 			QString SettingValue = Settings.value(SettingKey).toString();
 
 			ISSettings::GetInstance().SaveValue(SettingUID, SettingValue);
@@ -318,14 +318,14 @@ void ISSettingsForm::Restart()
 QListWidgetItem* ISSettingsForm::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)
 {
 	QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-	ListWidgetItem->setText(MetaGroup->GetLocalName());
-	ListWidgetItem->setToolTip(MetaGroup->GetHint());
+	ListWidgetItem->setText(MetaGroup->LocalName);
+	ListWidgetItem->setToolTip(MetaGroup->Hint);
 	ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
-	ListWidgetItem->setData(Qt::UserRole, MetaGroup->GetUID());
+	ListWidgetItem->setData(Qt::UserRole, MetaGroup->UID);
 
-	if (MetaGroup->GetSystem())
+	if (MetaGroup->System)
 	{
-		ListWidgetItem->setIcon(BUFFER_ICONS(MetaGroup->GetIconName()));
+		ListWidgetItem->setIcon(BUFFER_ICONS(MetaGroup->IconName));
 	}
 
 	return ListWidgetItem;
@@ -348,8 +348,8 @@ void ISSettingsForm::ItemSelectionChanged()
 
 	LabelCurrentGroup->setText(ClickedItem->text());
 
-	QString GroupHint = Groups.value(ClickedItem)->GetHint();
-	if (GroupHint.length())
+	QString GroupHint = Groups.value(ClickedItem)->Hint;
+	if (!GroupHint.isEmpty())
 	{
 		LabelCurrentGroupHint->setText(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + GroupHint);
 		LabelCurrentGroupHint->setVisible(true);

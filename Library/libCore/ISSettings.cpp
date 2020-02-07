@@ -62,12 +62,12 @@ int ISSettings::GetValueInt(const QString &SettingUID)
 //-----------------------------------------------------------------------------
 QVariant ISSettings::GetValue(const QString &SettingUID)
 {
-	return GetMetaSetting(SettingUID)->GetValue();
+	return GetMetaSetting(SettingUID)->Value;
 }
 //-----------------------------------------------------------------------------
 void ISSettings::SetValue(const QString &SettingUID, const QVariant &Value)
 {
-	GetMetaSetting(SettingUID)->SetValue(Value);
+	GetMetaSetting(SettingUID)->Value = Value;
 }
 //-----------------------------------------------------------------------------
 QVector<ISMetaSettingsGroup*> ISSettings::GetSettingGroups()
@@ -80,17 +80,15 @@ ISMetaSetting* ISSettings::GetMetaSetting(const QString &SettingUID)
 	for (int i = 0; i < SettingGroups.count(); ++i)
 	{
 		ISMetaSettingsGroup *MetaGroup = SettingGroups.at(i);
-
-		for (int j = 0; j < MetaGroup->GetSettings().count(); ++j)
+		for (int j = 0; j < MetaGroup->Settings.count(); ++j)
 		{
-			ISMetaSetting *MetaSetting = MetaGroup->GetSettings()[j];
-			if (MetaSetting->GetUID() == SettingUID)
+			ISMetaSetting *MetaSetting = MetaGroup->Settings[j];
+			if (MetaSetting->UID == SettingUID)
 			{
 				return MetaSetting;
 			}
 		}
 	}
-
 	IS_ASSERT(false, QString("Not found setting \"%1\"").arg(SettingUID));
 	return nullptr;
 }
@@ -116,51 +114,39 @@ void ISSettings::Initialize()
 		while (qSelectSettings.Next())
 		{
 			ISUuid GroupUID = qSelectSettings.ReadColumn("stgp_uid");
-			QString GroupName = qSelectSettings.ReadColumn("stgp_name").toString();
-			QString GroupLocalName = qSelectSettings.ReadColumn("stgp_localname").toString();
-			QString GroupIconName = qSelectSettings.ReadColumn("stgp_iconname").toString();
-			QString GroupHint = qSelectSettings.ReadColumn("stgp_hint").toString();
-
 			ISMetaSettingsGroup *MetaGroup = CheckExistGroup(GroupUID);
 			if (!MetaGroup) //Если группа настроек уже содержится в памяти (была создана при первой итерации обхода результатов запрос)
 			{
 				MetaGroup = new ISMetaSettingsGroup();
-				MetaGroup->SetUID(GroupUID);
-				MetaGroup->SetName(GroupName);
-				MetaGroup->SetLocalName(GroupLocalName);
-				MetaGroup->SetIconName(GroupIconName);
-				MetaGroup->SetHint(GroupHint);
+				MetaGroup->UID = GroupUID;
+				MetaGroup->Name = qSelectSettings.ReadColumn("stgp_name").toString();
+				MetaGroup->LocalName = qSelectSettings.ReadColumn("stgp_localname").toString();
+				MetaGroup->IconName = qSelectSettings.ReadColumn("stgp_iconname").toString();
+				MetaGroup->Hint = qSelectSettings.ReadColumn("stgp_hint").toString();
 				SettingGroups.append(MetaGroup);
 			}
 
 			ISUuid SettingUID = qSelectSettings.ReadColumn("stgs_uid");
-			QString SettingName = qSelectSettings.ReadColumn("stgs_name").toString();
-			ISNamespace::FieldType SettingType = ISMetaData::GetInstanse().GetAssociationTypes().GetTypeField(qSelectSettings.ReadColumn("stgs_type").toString());
-			QString SettingWidgetEditName = qSelectSettings.ReadColumn("stgs_widgeteditname").toString();
-			QString SettingLocalName = qSelectSettings.ReadColumn("stgs_localname").toString();
-			QString SettingHint = qSelectSettings.ReadColumn("stgs_hint").toString();
-			QVariant SettingDefaultValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
-			QVariant UserSetting = qSelectSettings.ReadColumn("usst_value");
 
 			ISMetaSetting *Setting = new ISMetaSetting();
-			Setting->SetUID(SettingUID);
-			Setting->SetName(SettingName);
-			Setting->SetType(SettingType);
-			Setting->SetWidgetEditName(SettingWidgetEditName);
-			Setting->SetLocalName(SettingLocalName);
-			Setting->SetHint(SettingHint);
-			Setting->SetDefaultValue(SettingDefaultValue);
-			MetaGroup->AppendSetting(Setting);
+			Setting->UID = SettingUID;
+			Setting->Name = qSelectSettings.ReadColumn("stgs_name").toString();
+			Setting->SettingType = ISMetaData::GetInstanse().GetAssociationTypes().GetTypeField(qSelectSettings.ReadColumn("stgs_type").toString());
+			Setting->WidgetEditName = qSelectSettings.ReadColumn("stgs_widgeteditname").toString();
+			Setting->LocalName = qSelectSettings.ReadColumn("stgs_localname").toString();
+			Setting->Hint = qSelectSettings.ReadColumn("stgs_hint").toString();
+			Setting->DefaultValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
+			MetaGroup->Settings.append(Setting);
 
-			int Count = qSelectSettings.ReadColumn("count").toInt();
-			if (Count)
+			if (qSelectSettings.ReadColumn("count").toInt())
 			{
-				Setting->SetValue(UserSetting);
+				Setting->Value = qSelectSettings.ReadColumn("usst_value");
 			}
 			else //Если такой настройки нет у пользователя - добавить
 			{
+				QVariant SettingDefaultValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
 				InsertSetting(SettingUID, SettingDefaultValue);
-				Setting->SetValue(SettingDefaultValue);
+				Setting->Value = SettingDefaultValue;
 			}
 		}
 	}
@@ -172,7 +158,7 @@ ISMetaSettingsGroup* ISSettings::CheckExistGroup(const ISUuid &GroupUID)
 {
 	for (ISMetaSettingsGroup *MetaGriup : SettingGroups)
 	{
-		if (MetaGriup->GetUID() == GroupUID)
+		if (MetaGriup->UID == GroupUID)
 		{
 			return MetaGriup;
 		}
