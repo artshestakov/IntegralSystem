@@ -14,7 +14,7 @@
 #include "ISInputDialog.h"
 #include "ISTaskFileInsertForm.h"
 #include "ISTaskDoneForm.h"
-#include "ISLabelLink.h"
+#include "ISLabels.h"
 #include "ISNotifySender.h"
 #include "ISMetaUser.h"
 #include "ISQueryText.h"

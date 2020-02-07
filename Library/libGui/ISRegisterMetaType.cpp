@@ -1,9 +1,5 @@
 #include "ISRegisterMetaType.h"
 //-----------------------------------------------------------------------------
-#include "ISDelegateBoolean.h"
-#include "ISDelegateImage.h"
-#include "ISDelegateColor.h"
-//-----------------------------------------------------------------------------
 #include "ISListObjectForm.h"
 #include "ISUserListForm.h"
 #include "ISUserObjectForm.h"
@@ -36,6 +32,7 @@
 #include "ISMonitorActivityForm.h"
 #include "ISFullTextSearchForm.h"
 #include "ISKnowledgeBaseSubSystem.h"
+#include "ISDelegates.h"
 //-----------------------------------------------------------------------------
 #include "ISLineEdit.h"
 #include "ISCheckEdit.h"

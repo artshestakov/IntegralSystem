@@ -9,7 +9,7 @@
 #include "ISMetaSettingsGroup.h"
 #include "ISQuery.h"
 #include "ISProgressForm.h"
-#include "ISQLabel.h"
+#include "ISLabels.h"
 #include "ISControls.h"
 #include "ISFileDialog.h"
 #include "ISGui.h"
