@@ -4,7 +4,7 @@
 #include "ISParagraphBaseForm.h"
 #include "ISTextEdit.h"
 #include "ISNamespace.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISChatForm : public ISParagraphBaseForm

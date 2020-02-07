@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISListWidget.h"
 
 //-----------------------------------------------------------------------------

@@ -8,9 +8,9 @@
 #include "ISMetaDataHelper.h"
 #include "PMetaClassForeign.h"
 #include "ISSystem.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISMetaData.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
 #include "ISGui.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------

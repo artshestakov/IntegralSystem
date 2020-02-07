@@ -1,5 +1,5 @@
 #include "ISCalendarWidget.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"

@@ -4,7 +4,7 @@
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
 #include "ISGui.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 ISPathEditDir::ISPathEditDir(QWidget *parent) : ISLineEdit(parent)
 {

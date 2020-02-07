@@ -132,12 +132,11 @@
     <ClCompile Include="ISBIKEdit.cpp" />
     <ClCompile Include="ISBirthdayEdit.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
-    <ClCompile Include="ISButtonClear.cpp" />
-    <ClCompile Include="ISButtonClose.cpp" />
     <ClCompile Include="ISButtonDialog.cpp" />
     <ClCompile Include="ISButtonFile.cpp" />
     <ClCompile Include="ISButtonMainMenu.cpp" />
     <ClCompile Include="ISButtonNotify.cpp" />
+    <ClCompile Include="ISButtons.cpp" />
     <ClCompile Include="ISCalculatorButton.cpp" />
     <ClCompile Include="ISCalculatorForm.cpp" />
     <ClCompile Include="ISCalendarDayWidget.cpp" />
@@ -375,7 +374,6 @@
     <ClCompile Include="ISProgressForm.cpp" />
     <ClCompile Include="ISProtocolListForm.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
-    <ClCompile Include="ISPushButton.cpp" />
     <ClCompile Include="ISQComboBox.cpp" />
     <ClCompile Include="ISQDateTimeEdit.cpp" />
     <ClCompile Include="ISQDoubleSpinBox.cpp" />
@@ -397,7 +395,6 @@
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSelectDialogForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
-    <ClCompile Include="ISServiceButton.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
     <ClCompile Include="ISSirona.cpp" />
@@ -458,7 +455,6 @@
     <ClCompile Include="ISTimeEdit.cpp" />
     <ClCompile Include="ISToolBarAccessTable.cpp" />
     <ClCompile Include="ISToolBarObject.cpp" />
-    <ClCompile Include="ISToolButton.cpp" />
     <ClCompile Include="ISTransferOrganizationForm.cpp" />
     <ClCompile Include="ISUpdate.cpp" />
     <ClCompile Include="ISUpdateDownloadForm.cpp" />
@@ -484,6 +480,7 @@
   <ItemGroup>
     <QtMoc Include="ISScreenshot.h" />
     <ClInclude Include="ISBuffer.h" />
+    <QtMoc Include="ISButtons.h" />
     <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesGui.h" />
     <ClInclude Include="ISHTML.h" />
@@ -632,11 +629,6 @@
     <QtMoc Include="ISUrlEdit.h" />
     <QtMoc Include="ISUuidEdit.h" />
     <QtMoc Include="ISWeekDayEdit.h" />
-    <QtMoc Include="ISButtonClear.h" />
-    <QtMoc Include="ISButtonClose.h" />
-    <QtMoc Include="ISPushButton.h" />
-    <QtMoc Include="ISServiceButton.h" />
-    <QtMoc Include="ISToolButton.h" />
     <QtMoc Include="ISCalendarPopup.h" />
     <QtMoc Include="ISCalendarWidget.h" />
     <QtMoc Include="ISInterfaceDialogForm.h" />

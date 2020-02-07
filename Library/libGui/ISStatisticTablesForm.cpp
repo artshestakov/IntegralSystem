@@ -2,7 +2,7 @@
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISScrollArea.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISTableDetailsForm.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------

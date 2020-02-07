@@ -5,7 +5,7 @@
 #include "ISConfig.h"
 #include "ISConstants.h"
 #include "ISMessageBox.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 ISStatusBar::ISStatusBar(QWidget *parent) : QStatusBar(parent)
 {

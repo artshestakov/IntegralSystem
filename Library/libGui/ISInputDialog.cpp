@@ -5,7 +5,7 @@
 #include "ISAssert.h"
 #include "ISLocalization.h"
 #include "ISIntegerEdit.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISComboEdit.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

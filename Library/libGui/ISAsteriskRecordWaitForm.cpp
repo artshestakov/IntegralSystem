@@ -2,7 +2,7 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISButtonClose.h"
+#include "ISButtons.h"
 #include "ISSystem.h"
 #include "ISSettingsDatabase.h"
 #include "ISDefinesCore.h"

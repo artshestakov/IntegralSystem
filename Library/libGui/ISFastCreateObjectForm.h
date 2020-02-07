@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISComboEdit.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISFastCreateRecordsForm : public ISInterfaceDialogForm

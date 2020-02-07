@@ -7,7 +7,7 @@
 #include "ISQueryModel.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "ISButtonClose.h"
+#include "ISButtons.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_id, fvts_tablename, fvts_tablelocalname, fvts_objectname, fvts_objectid "

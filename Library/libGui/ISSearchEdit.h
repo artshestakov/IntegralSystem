@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISLineEdit.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISSearchEdit : public ISLineEdit
 {

@@ -1,7 +1,7 @@
 #include "ISAsteriskRecordPlayForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISButtonClose.h"
+#include "ISButtons.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISAsteriskRecordPlayForm::ISAsteriskRecordPlayForm(const QString &FilePath, QWidget *parent) : ISInterfaceDialogForm(parent)

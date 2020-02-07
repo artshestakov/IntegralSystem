@@ -7,7 +7,7 @@
 #include "ISMetaData.h"
 #include "ISUserRoleEntity.h"
 #include "ISBuffer.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEMO_ORGANIZATION = PREPARE_QUERY("SELECT dacc_organization FROM demoaccesses WHERE dacc_id = :DemoID");

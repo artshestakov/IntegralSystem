@@ -4,7 +4,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISLicense.h"
-#include "ISButtonClose.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 ISLicenseForm::ISLicenseForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {

@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISPhoneLineEdit.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISPhoneBaseEdit : public ISFieldEditBase
 {

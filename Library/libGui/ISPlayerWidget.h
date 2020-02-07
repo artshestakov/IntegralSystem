@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
 #include "ISSliderDuration.h"
 //-----------------------------------------------------------------------------
 class ISPlayerWidget : public QWidget

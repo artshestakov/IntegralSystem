@@ -4,7 +4,7 @@
 #include "ISLocalization.h"
 #include "ISMetaUser.h"
 #include "ISBuffer.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISMessageBox.h"
 #include "ISControls.h"
 #include "ISDatabase.h"

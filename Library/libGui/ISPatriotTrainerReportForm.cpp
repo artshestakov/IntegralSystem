@@ -1,7 +1,7 @@
 #include "ISPatriotTrainerReportForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISQueryText.h"

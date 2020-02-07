@@ -703,21 +703,6 @@
     <ClCompile Include="ISWeekDayEdit.cpp">
       <Filter>Fields\Other</Filter>
     </ClCompile>
-    <ClCompile Include="ISButtonClear.cpp">
-      <Filter>Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="ISButtonClose.cpp">
-      <Filter>Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPushButton.cpp">
-      <Filter>Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="ISServiceButton.cpp">
-      <Filter>Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="ISToolButton.cpp">
-      <Filter>Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalendarPopup.cpp">
       <Filter>Calendar</Filter>
     </ClCompile>
@@ -1426,6 +1411,9 @@
     <ClCompile Include="ISContextMenu.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="ISButtons.cpp">
+      <Filter>Buttons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1757,21 +1745,6 @@
     </QtMoc>
     <QtMoc Include="ISWeekDayEdit.h">
       <Filter>Fields\Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISButtonClear.h">
-      <Filter>Buttons</Filter>
-    </QtMoc>
-    <QtMoc Include="ISButtonClose.h">
-      <Filter>Buttons</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPushButton.h">
-      <Filter>Buttons</Filter>
-    </QtMoc>
-    <QtMoc Include="ISServiceButton.h">
-      <Filter>Buttons</Filter>
-    </QtMoc>
-    <QtMoc Include="ISToolButton.h">
-      <Filter>Buttons</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarPopup.h">
       <Filter>Calendar</Filter>
@@ -2435,6 +2408,9 @@
     </QtMoc>
     <QtMoc Include="ISContextMenu.h">
       <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISButtons.h">
+      <Filter>Buttons</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@
 #include "ISQuery.h"
 #include "ISInputDialog.h"
 #include "ISControls.h"
-#include "ISButtonClose.h"
+#include "ISButtons.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------

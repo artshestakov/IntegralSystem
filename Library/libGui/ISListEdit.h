@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "PMetaClassTable.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISListEditPopup.h"
 //-----------------------------------------------------------------------------
 class ISListEdit : public ISFieldEditBase

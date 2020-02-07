@@ -1,5 +1,5 @@
 #include "ISAttachFileItem.h"
-#include "ISButtonClear.h"
+#include "ISButtons.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISAttachFileItem::ISAttachFileItem(QWidget *parent) : QWidget(parent)

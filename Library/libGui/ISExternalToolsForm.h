@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISLineEdit.h"
 #include "ISPathEditFile.h"
 #include "ISButtonDialog.h"

@@ -6,7 +6,7 @@
 #include "ISMessageBox.h"
 #include "ISGui.h"
 #include "ISListEdit.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
 #include "ISDelegateSearchField.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"

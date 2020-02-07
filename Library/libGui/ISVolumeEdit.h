@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISVolumeEdit : public ISFieldEditBase
 {

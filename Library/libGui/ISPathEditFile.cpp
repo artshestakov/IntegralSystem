@@ -1,5 +1,5 @@
 #include "ISPathEditFile.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISLocalization.h"
 #include "ISFileDialog.h"
 //-----------------------------------------------------------------------------

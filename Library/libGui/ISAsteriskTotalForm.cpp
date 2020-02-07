@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISGui.h"
 #include "ISTelephonySummary.h"
 #include "ISQueryText.h"

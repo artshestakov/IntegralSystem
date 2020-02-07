@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISAttachFileBaseForm.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISAttachFilesForm : public ISAttachFileBaseForm

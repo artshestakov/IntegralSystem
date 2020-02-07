@@ -8,7 +8,7 @@
 #include "ISQuery.h"
 #include "ISControls.h"
 #include "ISGui.h"
-#include "ISButtonClose.h"
+#include "ISButtons.h"
 #include "ISProtocol.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------

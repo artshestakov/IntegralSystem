@@ -3,7 +3,7 @@
 #define _ISFIELDEDITBASE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISButtonClear.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 //Базовый класс для всех полей редактирования информации
 class ISFieldEditBase : public QWidget

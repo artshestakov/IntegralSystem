@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
-#include "ISButtonClose.h"
+#include "ISButtons.h"
 #include "ISGui.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"

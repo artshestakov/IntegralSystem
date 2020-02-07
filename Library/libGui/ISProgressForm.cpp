@@ -4,7 +4,7 @@
 #include "ISLocalization.h"
 #include "ISControls.h"
 #include "ISGui.h"
-#include "ISButtonClose.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 ISProgressForm::ISProgressForm(int Minimum, int Maximum, QWidget *parent) : QProgressDialog(parent)
 {

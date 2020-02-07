@@ -1,7 +1,7 @@
 #include "ISEMailEdit.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
 #include "ISGui.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------

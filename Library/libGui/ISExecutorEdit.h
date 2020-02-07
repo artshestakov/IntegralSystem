@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISListEdit.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISExecutorEdit : public ISListEdit
 {

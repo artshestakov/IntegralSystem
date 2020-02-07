@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISCalculatorButton : public ISPushButton
 {

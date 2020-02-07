@@ -3,8 +3,8 @@
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "PMetaClassTable.h"
-#include "ISPushButton.h"
-#include "ISServiceButton.h"
+#include "ISButtons.h"
+#include "ISButtons.h"
 #include "ISSearchModel.h"
 //-----------------------------------------------------------------------------
 class ISSearchForm : public ISInterfaceForm

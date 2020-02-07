@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISServiceButton.h"
-#include "ISPushButton.h"
+#include "ISButtons.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISPageNavigation : public QWidget
 {
