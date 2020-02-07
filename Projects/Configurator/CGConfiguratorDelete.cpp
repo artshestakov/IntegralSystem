@@ -60,7 +60,7 @@ void CGConfiguratorDelete::indexes()
 			ISQuery qDeleteIndex;
 			if (qDeleteIndex.Execute(QD_INDEX.arg(IndexName)))
 			{
-				Deleted++;
+				++Deleted;
 			}
 		}
 
@@ -98,7 +98,7 @@ void CGConfiguratorDelete::foreigns()
 			ISQuery qDeleteForeign;
 			if (qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName)))
 			{
-				Deleted++;
+				++Deleted;
 			}
 		}
 
@@ -157,13 +157,13 @@ void CGConfiguratorDelete::tables()
 					bool Executed = qDeleteTable.Execute("DROP TABLE public." + TableName);
 					if (Executed)
 					{
-						Removed++;
+						++Removed;
 						ISDebug::ShowString("Removed table");
 					}
 				}
 				else //Пропустить удаление таблицы
 				{
-					Skipped++;
+					++Skipped;
 				}
 			}
 		}
@@ -218,13 +218,13 @@ void CGConfiguratorDelete::fields()
 						bool Executed = qDeleteField.Execute("ALTER TABLE public." + TableName + " DROP COLUMN " + ColumnName);
 						if (Executed)
 						{
-							Removed++;
+							++Removed;
 							ISDebug::ShowString("Removed column");
 						}
 					}
 					else //Пропустить удаление поля
 					{
-						Skipped++;
+						++Skipped;
 					}
 				}
 			}
@@ -285,12 +285,12 @@ void CGConfiguratorDelete::resources()
 						qDeleteResources.BindValue(":ResourceUID", ResourceUID);
 						if (qDeleteResources.Execute())
 						{
-							Removed++;
+							++Removed;
 						}
 					}
 					else
 					{
-						Skipped++;
+						++Skipped;
 					}
 				}
 			}

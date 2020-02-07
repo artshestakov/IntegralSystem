@@ -1,6 +1,5 @@
 #include "ISCoreAsteriskQueue.h"
 #include "ISQuery.h"
-#include "ISLocalization.h"
 #include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
@@ -78,7 +77,7 @@ void ISCoreAsteriskQueue::Timeout()
 			QString UserFullName = qSelectQueue.ReadColumn("userfullname").toString();
 			QString Parameters = qSelectQueue.ReadColumn("astq_parameters").toString();
 
-			ISDebug::ShowString(LANG("Telephony.QueueEvent.Found").arg(UserFullName).arg(TypeName));
+			ISDebug::ShowString("Event in queue from \"" + UserFullName + "\": " + TypeName);
 			QueueEvent(TypeUID, UserID, Parameters);
 
 			ISQuery qDelete(QD_ASTERISK_QUEUE);
@@ -123,21 +122,13 @@ void ISCoreAsteriskQueue::Originate(int UserID, const QVariantMap &Parameters)
 //-----------------------------------------------------------------------------
 void ISCoreAsteriskQueue::ClearQueue()
 {
-	ISDebug::ShowString(LANG("AsteriskQueue.ClearQueue.Process"));
-
+	ISDebug::ShowString("Clear asterisk task queue...");
 	ISQuery qDeleteQueue(QD_ASTERISK_QUEUES);
 	qDeleteQueue.SetShowLongQuery(false);
 	if (qDeleteQueue.Execute())
 	{
 		int CountAffected = qDeleteQueue.GetCountAffected();
-		if (CountAffected)
-		{
-			ISDebug::ShowString(LANG("AsteriskQueue.ClearQueue.Done").arg(CountAffected));
-		}
-		else
-		{
-			ISDebug::ShowString(LANG("AsteriskQueue.ClearQueue.Empty"));
-		}
+		CountAffected ? ISDebug::ShowString("Clear finished. Deleted event count:" + QString::number(CountAffected)) : ISDebug::ShowString("Clear not required");
 	}
 }
 //-----------------------------------------------------------------------------

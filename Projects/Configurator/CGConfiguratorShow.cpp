@@ -55,7 +55,7 @@ void CGConfiguratorShow::obsoletetables()
 			if (!MetaTable)
 			{
 				ISDebug::ShowString(TableName);
-				FoundedTables++;
+				++FoundedTables;
 			}
 		}
 	}

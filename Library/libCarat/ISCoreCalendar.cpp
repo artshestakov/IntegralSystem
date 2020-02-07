@@ -3,7 +3,6 @@
 #include "ISDatabase.h"
 #include "ISDebug.h"
 #include "ISNotifySender.h"
-#include "ISLocalization.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
@@ -53,7 +52,7 @@ void ISCoreCalendar::Timeout()
 			QString Name = qSelectEvents.ReadColumn("cldr_name").toString();
 
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_CALENDAR_EVENT, UserID, EventID, Name, false);
-			ISDebug::ShowString(LANG("Calendar.Sended").arg(EventID).arg(UserName));
+			ISDebug::ShowString("Sended reminder \"" + QString::number(EventID) + "\" for: " + UserName);
 		}
 	}
 }

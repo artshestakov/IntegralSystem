@@ -4,7 +4,6 @@
 #include "ISMetaData.h"
 #include "ISLicense.h"
 #include "ISDebug.h"
-#include "ISLocalization.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT file_id "
@@ -89,8 +88,8 @@ void ISCoreScheduler::ClearFiles()
 	int Index = 0;
 	for (int FileID : VectorInt) //Обход и удаление не привязанных файлов
 	{
-		Index++;
-		ISDebug::ShowInfoString(LANG("Core.Scheduler.Delete").arg(Index).arg(VectorInt.count()));
+		++Index;
+		ISDebug::ShowInfoString("Deleting file " + QString::number(Index) + " of " + QString::number(VectorInt.count()));
 
 		ISQuery qDeleteFile(QD_FILE);
 		qDeleteFile.SetShowLongQuery(false);

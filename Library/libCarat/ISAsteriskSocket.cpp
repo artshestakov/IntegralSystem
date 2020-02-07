@@ -1,6 +1,5 @@
 #include "ISAsteriskSocket.h"
 #include "ISSettingsDatabase.h"
-#include "ISLocalization.h"
 #include "ISDebug.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
@@ -45,7 +44,7 @@ void ISAsteriskSocket::AddFilter(const QString &EventName)
 	write(QString("Filter: Event: %1\r\n").arg(EventName).toUtf8().data());
 	write("\r\n");
 
-	ISDebug::ShowInfoString(LANG("Telephony.AddFilter").arg(EventName));
+	ISDebug::ShowInfoString("Append filter for event: " + EventName);
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskSocket::Redirect(const QStringMap &StringMap, const QString &Pattern)
@@ -58,7 +57,7 @@ void ISAsteriskSocket::Redirect(const QStringMap &StringMap, const QString &Patt
 		QString Context = qSelectContext.ReadColumn("aspt_context").toString();
 		QString Channel = StringMap.value("Channel");
 
-		ISDebug::ShowString(LANG("Telephony.Redirect").arg(Pattern).arg(Channel));
+		ISDebug::ShowString("Redirect to number \"" + Pattern + "\". Channel: " + Channel);
 		write(QString("Action: Redirect\r\n").toUtf8().data());
 		write(QString("Channel: %1\r\n").arg(Channel).toUtf8().data());
 		write(QString("Exten: %1\r\n").arg(Pattern).toUtf8().data());
@@ -68,7 +67,7 @@ void ISAsteriskSocket::Redirect(const QStringMap &StringMap, const QString &Patt
 	}
 	else
 	{
-		ISDebug::ShowString(LANG("Telephony.RedirectFailed").arg(Pattern));
+		ISDebug::ShowString("Forwarding is not possible, outgoing context is not specified for number: " + Pattern);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -79,7 +78,7 @@ void ISAsteriskSocket::ConnectedHost()
 		Timer->stop();
 	}
 
-	ISDebug::ShowInfoString(LANG("Telephony.AuthToAMI.Process") + "...");
+	ISDebug::ShowInfoString("Connecting to Asterisk Manager Interface...");
 	write(QString("Action: Login\r\n").toUtf8().data());
 	write(QString("Username: %1\r\n").arg(Login).toUtf8().data());
 	write(QString("Secret: %1\r\n").arg(Password).toUtf8().data());
@@ -96,13 +95,13 @@ void ISAsteriskSocket::StateChangedHost(QAbstractSocket::SocketState NewState)
 {
 	switch (NewState)
 	{
-	case QAbstractSocket::UnconnectedState: ISDebug::ShowInfoString(LANG("QAbstractSocket.State.UnconnectedState")); break;
-	case QAbstractSocket::HostLookupState: ISDebug::ShowInfoString(LANG("QAbstractSocket.State.HostLookupState")); break;
-	case QAbstractSocket::ConnectingState: ISDebug::ShowInfoString(LANG("QAbstractSocket.State.ConnectingState")); break;
-	case QAbstractSocket::ConnectedState: ISDebug::ShowInfoString(LANG("QAbstractSocket.State.ConnectedState")); break;
-	case QAbstractSocket::BoundState: ISDebug::ShowInfoString(LANG("QAbstractSocket.State.BoundState")); break;
-	case QAbstractSocket::ClosingState: ISDebug::ShowInfoString(LANG("QAbstractSocket.State.ClosingState")); break;
-	case QAbstractSocket::ListeningState: ISDebug::ShowInfoString(LANG("QAbstractSocket.State.ListeningState")); break;
+	case QAbstractSocket::UnconnectedState: ISDebug::ShowInfoString("Unconnected"); break;
+	case QAbstractSocket::HostLookupState: ISDebug::ShowInfoString("Host lookup"); break;
+	case QAbstractSocket::ConnectingState: ISDebug::ShowInfoString("Connecting"); break;
+	case QAbstractSocket::ConnectedState: ISDebug::ShowInfoString("Connected"); break;
+	case QAbstractSocket::BoundState: ISDebug::ShowInfoString("Bound"); break;
+	case QAbstractSocket::ClosingState: ISDebug::ShowInfoString("Closing"); break;
+	case QAbstractSocket::ListeningState: ISDebug::ShowInfoString("Listening"); break;
 	}
 }
 //-----------------------------------------------------------------------------
@@ -121,7 +120,7 @@ void ISAsteriskSocket::ReadyRead()
 		QString EventName = VariantMapEvent.value("Event"); //Наименование события
 		if (EventName == AMI_SUCCESSFUL_AUTH)
 		{
-			ISDebug::ShowString(LANG("Telephony.AuthToAMI.Done"));
+			ISDebug::ShowString("Connected to Asterisk Manager Interface");
 			emit SuccessfulAuth(VariantMapEvent);
 		}
 		else if (EventName == AMI_USER_EVENT)
@@ -190,7 +189,7 @@ QVector<QStringMap> ISAsteriskSocket::ParseReadyRead(const QString &String)
 //-----------------------------------------------------------------------------
 void ISAsteriskSocket::Timeout()
 {
-	ISDebug::ShowDebugString(LANG("Telephony.Reconnect"));
+	ISDebug::ShowDebugString("Reconnect to Asterisk Manager Interface...");
 	Connect();
 }
 //-----------------------------------------------------------------------------

@@ -194,7 +194,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 	double Percent = 0;
 	while (!File.atEnd()) //Чтение файла построчно
 	{
-		Inserted++;
+		++Inserted;
 		Percent = ((double)Inserted * 100) / (double)CountLine;
 		Percent = round(Percent * 100) / 100;
 		if (!fmod((double)Inserted, 1000))
@@ -271,7 +271,7 @@ quint64 CGConfiguratorFIAS::GetCountLine(const QString &FilePath) const
 		while (!File.atEnd())
 		{
 			File.readLine();
-			CountLine++;
+			++CountLine;
 		}
 		File.close();
 	}

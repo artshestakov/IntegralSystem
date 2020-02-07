@@ -4,7 +4,6 @@
 #include "ISPhoneNumberParser.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
-#include "ISLocalization.h"
 #include "ISMetaData.h"
 #include "ISLicense.h"
 #include "ISSettingsDatabase.h"
@@ -63,7 +62,7 @@ void ISCoreCenterSeven::UserEvent(const QStringMap &StringMap)
 		QString BranchName = qSelect.ReadColumn("brch_name").toString();
 		int UserID = qSelect.ReadColumn("brch_administrator").toInt();
 
-		ISDebug::ShowString(LANG("CenterSeven.IncomingCallAbonentFromBranch").arg(StringMap.value("CallerIDNum")).arg(BranchName));
+		ISDebug::ShowString("Incoming call from \"" + StringMap.value("CallerIDNum") + "\" to filial: " + BranchName);
 		ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, PatientID + '_' + Phone);
 	}
 }

@@ -1,7 +1,6 @@
 #include "ISCaratCoreApplication.h"
 #include "ISDebug.h"
 #include "ISConfig.h"
-#include "ISLocalization.h"
 #include "ISDatabase.h"
 #include "ISLicense.h"
 #include "ISConstants.h"
@@ -9,9 +8,6 @@
 ISCaratCoreApplication::ISCaratCoreApplication(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
 	ISConfig::GetInstance().Initialize();
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CARAT);
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);
 }
 //-----------------------------------------------------------------------------
 ISCaratCoreApplication::~ISCaratCoreApplication()

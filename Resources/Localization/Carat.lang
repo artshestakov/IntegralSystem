@@ -19,24 +19,6 @@
   
   <!--Notification-->
   <Local Name="Notification.Sended" Russian="Отправлено уведомление %1 для пользователя %2"/>
-  
-  <!--Calendar-->
-  <Local Name="Calendar.Sended" Russian="Отправлено напоминание &quot;%1&quot; для &quot;%2&quot;"/>
-
-  <!--Telephony-->
-  <Local Name="Telephony.Connect" Russian="Подключение к службе телефонии"/>
-  <Local Name="Telephony.Reconnect" Russian="Запуск повторного подключения к службе телефонии"/>
-  <Local Name="Telephony.AuthToAMI.Process" Russian="Подключение к службе Asterisk Manager Interface"/>
-  <Local Name="Telephony.AuthToAMI.Done" Russian="Подключение к службе Asterisk Manager Interface выполнено успешно"/>
-  <Local Name="Telephony.AddFilter" Russian="Добавлен фильтр на событие: %1"/>
-  <Local Name="Telephony.OutgoingCall" Russian="Исходящий звонок с номера %1 на номер %2"/>
-  <Local Name="Telephony.IncomingCall" Russian="Входящий звонок с номера %1 на номер %2"/>
-  <Local Name="Telephony.DialEnd" Russian="Соединение абонента %1 с номером %2"/>
-  <Local Name="Telephony.Hangup" Russian="Завершение разговора абонента %1 с номером %2"/>
-  <Local Name="Telephony.ExtensionStateChanged" Russian="Внутренний номер %1 сменил статус на &quot;%2&quot;"/>
-  <Local Name="Telephony.Redirect" Russian="Переадресация на номер %1. Канал: %2"/>
-  <Local Name="Telephony.RedirectFailed" Russian="Переадресация невозможна, для номера %1 не указан исходящий контекст"/>
-  <Local Name="Telephony.QueueEvent.Found" Russian="Событие в очереди от %1: %2"/>
 
   <Local Name="Telephony.HanglingInternalCall" Russian="Обработка внутреннего вызова с номера %1 на номер %2. Идентификатор вызова: %3"/>
   <Local Name="Telephony.HanglingOutgoingCall" Russian="Обработка исходящего вызова с номера %1 на номер %2. Идентификатор вызова: %3"/>

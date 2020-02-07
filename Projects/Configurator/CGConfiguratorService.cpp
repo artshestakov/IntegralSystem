@@ -150,7 +150,7 @@ void CGConfiguratorService::cleartable()
 			if (qDelete.Execute())
 			{
 				ISDebug::ShowString(QString("Delete record %1 of %2").arg(Removed).arg(RecordCount));
-				Removed++;
+				++Removed;
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "ISCaratApplication.h"
 #include "ISDebug.h"
-#include "ISLocalization.h"
 #include "ISCommandLine.h"
 #include "ISSystem.h"
 #include "ISConfig.h"
@@ -15,20 +14,18 @@ int main(int argc, char *argv[])
 	ISCaratApplication CaratService(argc, argv);
 
 	ISConfig::GetInstance().Initialize();
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CARAT);
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 
 	ISApplicationRunning ApplicationRunning(CARAT_UID);
 	if (!ApplicationRunning.TryToRun()) //Если приложение уже запущено
 	{
-		ISDebug::ShowString(LANG("AlreadyStarted"));
+		//ISDebug::ShowString(LANG("AlreadyStarted"));
 		ISSystem::SleepSeconds(3);
 		return EXIT_SUCCESS;
 	}
 
 	if (!CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).length() || !CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).length())
 	{
-		ISDebug::ShowString(LANG("NotLoginOrPassword"));
+		//ISDebug::ShowString(LANG("NotLoginOrPassword"));
 		return EXIT_FAILURE;
 	}
 
@@ -40,7 +37,7 @@ int main(int argc, char *argv[])
 
 	if (!ISLicense::GetInstance().Initialize()) //Если лицензия не инициализировалась
 	{
-		ISDebug::ShowWarningString(LANG("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
+		//ISDebug::ShowWarningString(LANG("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
 		ISCommandLine::Pause();
 		return EXIT_SUCCESS;
 	}

@@ -4,7 +4,6 @@
 #include "ISDebug.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"
-#include "ISLocalization.h"
 #include "ISSystem.h"
 #include "ISLicense.h"
 #include "ISNetwork.h"
@@ -52,7 +51,7 @@ void ISCaratService::StartService()
 			}
 
 			ISDebug::ShowEmptyString();
-			ISDebug::ShowInfoString(LANG("Core.Starting").arg(LocalName));
+			ISDebug::ShowInfoString("Core \"" + LocalName + "\": starting...");
 			QString CorePath = DEFINES_CORE.PATH_APPLICATION_DIR + '/' + FileName;
 
 			ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
@@ -66,9 +65,8 @@ void ISCaratService::StartService()
 			}
 			else //Ядро не существует
 			{
-				ISDebug::ShowWarningString(LANG("Core.NotFound").arg(LocalName).arg(CorePath));
+				ISDebug::ShowWarningString("Core \"" + LocalName + "\" not found. Path: " + CorePath);
 				ISSystem::SleepSeconds(3);
-				ISDebug::ShowInfoString(LANG("Core.NotStarted").arg(LocalName));
 			}
 		}
 	}
@@ -79,17 +77,17 @@ void ISCaratService::StartService()
 	}
 	else //Если активных ядер нет
 	{
-		ISDebug::ShowInfoString(LANG("NotFoundActiveCores"));
+		ISDebug::ShowInfoString("Not found active cores");
 	}
 
 	if (TcpServer->listen(QHostAddress::Any, CARAT_PORT)) //Если прослушивание порта запущено успешно
 	{
-		ISDebug::ShowInfoString(LANG("Started").arg(CARAT_PORT));
+		ISDebug::ShowInfoString("Started and listen port: " + QString::number(CARAT_PORT));
 		//connect(&ISDebug::GetInstance(), &ISDebug::Output, this, &ISCaratService::AppendSocketMessage); //???
 	}
 	else //Прослушивание порта не запущено
 	{
-		ISDebug::ShowCriticalString(LANG("NotStarted").arg(CARAT_PORT).arg(TcpServer->errorString()));
+		ISDebug::ShowCriticalString("Not listen port: " + QString::number(CARAT_PORT) + ". Error: " + TcpServer->errorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -114,11 +112,11 @@ void ISCaratService::CoreStart(ISProcessCore *ProcessCore)
 
 	if (ProcessCore->GetRunning())
 	{
-		ISDebug::ShowInfoString(LANG("Core.Started").arg(ProcessCore->GetLocalName()).arg(CountingTime.GetElapsed()).arg(ProcessCore->processId()));
+		ISDebug::ShowInfoString("Core \"" + ProcessCore->GetLocalName() + "\" started: " + CountingTime.GetElapsed() + " msec, process " + ProcessCore->processId());
 	}
 	else
 	{
-		ISDebug::ShowInfoString(LANG("Core.NotStarted").arg(ProcessCore->GetLocalName()));
+		ISDebug::ShowInfoString("Not started core: " + ProcessCore->GetLocalName());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -191,8 +189,8 @@ void ISCaratService::NewConnection()
 	connect(TcpSocket, &QTcpSocket::disconnected, this, &ISCaratService::DisconnectedClient);
 	connect(TcpSocket, &QTcpSocket::readyRead, this, &ISCaratService::ReadyRead);	
 	
-	ISDebug::ShowString(LANG("Client.Connected").arg(ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString())).arg(VectorClients.count() + 1));
-	WriteSocket(TcpSocket, LANG("Greeting"));
+	//ISDebug::ShowString(LANG("Client.Connected").arg(ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString())).arg(VectorClients.count() + 1));
+	//WriteSocket(TcpSocket, LANG("Greeting"));
 	VectorClients.append(TcpSocket);
 }
 //-----------------------------------------------------------------------------
@@ -215,7 +213,7 @@ void ISCaratService::DisconnectedClient()
 		}
 	}
 
-	ISDebug::ShowString(LANG("Client.Disconnected").arg(ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString())).arg(VectorClients.count()));
+	//ISDebug::ShowString(LANG("Client.Disconnected").arg(ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString())).arg(VectorClients.count()));
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::AppendSocketMessage(const QString &Message)
@@ -267,7 +265,7 @@ void ISCaratService::ReadyRead()
 		}
 		else
 		{
-			WriteSocket(TcpSocket, LANG("CommandNotFound").arg(String));
+			//WriteSocket(TcpSocket, LANG("CommandNotFound").arg(String));
 		}
 	}
 }
@@ -313,22 +311,22 @@ void ISCaratService::Disconnect(QTcpSocket *TcpSocket)
 //-----------------------------------------------------------------------------
 void ISCaratService::Status(QTcpSocket *TcpSocket)
 {
-	WriteSocket(TcpSocket, LANG("StartedDateTime").arg(ISDatabase::GetInstance().GetAge(Uptime)));
+	//WriteSocket(TcpSocket, LANG("StartedDateTime").arg(ISDatabase::GetInstance().GetAge(Uptime)));
 	for (ISProcessCore *Core : Cores) //Статус ядер
 	{
 		QString StateString;
 		ISProcessCore::ProcessState CoreState = Core->state();
 		if (CoreState == ISProcessCore::NotRunning)
 		{
-			StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.NotRunning");
+			//StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.NotRunning");
 		}
 		else if (CoreState == ISProcessCore::Starting)
 		{
-			StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.Starting");
+			//StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.Starting");
 		}
 		else if (CoreState == ISProcessCore::Running)
 		{
-			StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.Running");
+			//StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.Running");
 		}
 
 		StateString.insert(0, "\r\n");

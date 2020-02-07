@@ -1,7 +1,6 @@
 #include "ISCoreMedTech.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
-#include "ISLocalization.h"
 #include "ISMetaData.h"
 #include "ISLicense.h"
 #include "ISSettingsDatabase.h"
@@ -77,7 +76,7 @@ void ISCoreMedTech::UserEvent(const QStringMap &StringMap)
 		qSelectBranch.BindValue(":RatingID", RatingID);
 		if (qSelectBranch.ExecuteFirst())
 		{
-			ISDebug::ShowString(LANG("Core.MedTech.NewRating").arg(Rating).arg(qSelectBranch.ReadColumn("brch_name").toString()));
+			ISDebug::ShowString("New raiting \"" + QString::number(Rating) + "\" for filial: " + qSelectBranch.ReadColumn("brch_name").toString());
 		}
 	}
 }

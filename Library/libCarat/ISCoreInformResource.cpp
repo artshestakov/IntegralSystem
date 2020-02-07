@@ -5,7 +5,6 @@
 #include "ISPhoneNumberParser.h"
 #include "ISQuery.h"
 #include "ISDebug.h"
-#include "ISLocalization.h"
 #include "ISMetaData.h"
 #include "ISLicense.h"
 #include "ISSettingsDatabase.h"
@@ -55,7 +54,7 @@ void ISCoreInformResource::SuccessfulAuth(const QStringMap &StringMap)
 void ISCoreInformResource::UserEvent(const QStringMap &StringMap)
 {
 	QString Number = ISPhoneNumberParser::PasteEvent(StringMap.value("CallerIDNum"));
-	ISDebug::ShowString(LANG("Core.InformResource.Search").arg(Number));
+	ISDebug::ShowString("Search organization with number: " + Number);
 
 	ISQuery qSelect(QS_ORGANIZATION);
 	qSelect.BindValue(":Phone", Number);
@@ -70,14 +69,14 @@ void ISCoreInformResource::UserEvent(const QStringMap &StringMap)
 			{
 				QString UserName = qSelect.ReadColumn("userfullname").toString();
 
-				ISDebug::ShowString(LANG("Core.InformResource.Founded").arg(Number).arg(UserName));
+				ISDebug::ShowString("Organization founded. Redirect to: " + UserName);
 				AsteriskSocket->Redirect(StringMap, Pattern);
 				ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, OrganizationID);
 			}
 		}
 		else
 		{
-			ISDebug::ShowString(LANG("Core.InformResource.NotFound").arg(Number));
+			ISDebug::ShowString("Organization not found");
 		}
 	}
 }
