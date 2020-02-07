@@ -184,12 +184,7 @@
     <ClCompile Include="ISComboTableSelectionBehavior.cpp" />
     <ClCompile Include="ISComboTimeEdit.cpp" />
     <ClCompile Include="ISConnectionForm.cpp" />
-    <ClCompile Include="ISContextMenuBase.cpp" />
-    <ClCompile Include="ISContextMenuDateTime.cpp" />
-    <ClCompile Include="ISContextMenuDouble.cpp" />
-    <ClCompile Include="ISContextMenuImage.cpp" />
-    <ClCompile Include="ISContextMenuInteger.cpp" />
-    <ClCompile Include="ISContextMenuText.cpp" />
+    <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControlDatabaseForm.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
@@ -646,12 +641,7 @@
     <QtMoc Include="ISCalendarWidget.h" />
     <QtMoc Include="ISInterfaceDialogForm.h" />
     <QtMoc Include="ISInterfaceForm.h" />
-    <QtMoc Include="ISContextMenuBase.h" />
-    <QtMoc Include="ISContextMenuDateTime.h" />
-    <QtMoc Include="ISContextMenuDouble.h" />
-    <QtMoc Include="ISContextMenuImage.h" />
-    <QtMoc Include="ISContextMenuInteger.h" />
-    <QtMoc Include="ISContextMenuText.h" />
+    <QtMoc Include="ISContextMenu.h" />
     <QtMoc Include="ISPopupDelegate.h" />
     <QtMoc Include="ISFileDialog.h" />
     <QtMoc Include="ISQComboBox.h" />

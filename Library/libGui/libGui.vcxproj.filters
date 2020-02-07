@@ -101,9 +101,6 @@
     <Filter Include="Calendar">
       <UniqueIdentifier>{8e1af1fb-d761-4b44-8b99-d3a99f5ad6ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Context Menu">
-      <UniqueIdentifier>{cd411627-407b-4127-a697-171fc4356b34}</UniqueIdentifier>
-    </Filter>
     <Filter Include="User Role">
       <UniqueIdentifier>{714b6641-8fd6-4116-bbd2-267e12caa4d8}</UniqueIdentifier>
     </Filter>
@@ -732,24 +729,6 @@
     </ClCompile>
     <ClCompile Include="ISInterfaceForm.cpp">
       <Filter>Common Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISContextMenuBase.cpp">
-      <Filter>Context Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="ISContextMenuDateTime.cpp">
-      <Filter>Context Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="ISContextMenuDouble.cpp">
-      <Filter>Context Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="ISContextMenuImage.cpp">
-      <Filter>Context Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="ISContextMenuInteger.cpp">
-      <Filter>Context Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="ISContextMenuText.cpp">
-      <Filter>Context Menu</Filter>
     </ClCompile>
     <ClCompile Include="ISPopupDelegate.cpp">
       <Filter>Delegates</Filter>
@@ -1444,6 +1423,9 @@
     <ClCompile Include="ISDefinesGui.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISContextMenu.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1802,24 +1784,6 @@
     </QtMoc>
     <QtMoc Include="ISInterfaceForm.h">
       <Filter>Common Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISContextMenuBase.h">
-      <Filter>Context Menu</Filter>
-    </QtMoc>
-    <QtMoc Include="ISContextMenuDateTime.h">
-      <Filter>Context Menu</Filter>
-    </QtMoc>
-    <QtMoc Include="ISContextMenuDouble.h">
-      <Filter>Context Menu</Filter>
-    </QtMoc>
-    <QtMoc Include="ISContextMenuImage.h">
-      <Filter>Context Menu</Filter>
-    </QtMoc>
-    <QtMoc Include="ISContextMenuInteger.h">
-      <Filter>Context Menu</Filter>
-    </QtMoc>
-    <QtMoc Include="ISContextMenuText.h">
-      <Filter>Context Menu</Filter>
     </QtMoc>
     <QtMoc Include="ISPopupDelegate.h">
       <Filter>Delegates</Filter>
@@ -2468,6 +2432,9 @@
     </QtMoc>
     <QtMoc Include="ISModelThreadWorker.h">
       <Filter>ModelThread</Filter>
+    </QtMoc>
+    <QtMoc Include="ISContextMenu.h">
+      <Filter>Controls</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

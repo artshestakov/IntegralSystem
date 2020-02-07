@@ -1,5 +1,5 @@
 #include "ISQDoubleSpinBox.h"
-#include "ISContextMenuDouble.h"
+#include "ISContextMenu.h"
 #include "ISQLineEdit.h"
 #include "ISGui.h"
 #include "ISConstants.h"

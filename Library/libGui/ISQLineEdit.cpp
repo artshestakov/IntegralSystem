@@ -2,7 +2,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "ISContextMenuText.h"
+#include "ISContextMenu.h"
 #include "ISControls.h"
 #include "ISProperty.h"
 #include "ISGui.h"

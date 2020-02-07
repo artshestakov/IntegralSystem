@@ -1,6 +1,6 @@
 #include "ISImageWidget.h"
 #include "ISDefinesGui.h"
-#include "ISContextMenuImage.h"
+#include "ISContextMenu.h"
 #include "ISStyleSheet.h"
 #include "ISFileDialog.h"
 #include "ISSystem.h"

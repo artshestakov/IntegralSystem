@@ -1,5 +1,5 @@
 #include "ISQTextEdit.h"
-#include "ISContextMenuText.h"
+#include "ISContextMenu.h"
 #include "ISStyleSheet.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
