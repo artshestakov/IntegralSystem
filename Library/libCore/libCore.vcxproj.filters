@@ -229,6 +229,9 @@
     <ClInclude Include="ISStructs.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISDatabaseHelper.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -458,6 +461,9 @@
     </ClCompile>
     <ClCompile Include="ISDefinesCore.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDatabaseHelper.cpp">
+      <Filter>Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

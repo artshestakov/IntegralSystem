@@ -131,6 +131,7 @@
     <ClInclude Include="ISDatabase.h" />
     <QtMoc Include="ISDaDataService.h" />
     <QtMoc Include="ISEMail.h" />
+    <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesCore.h" />
     <ClInclude Include="ISLicense.h" />
     <ClInclude Include="ISApplicationRunning.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
+    <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDefinesCore.cpp" />
     <ClCompile Include="ISEMail.cpp" />
     <ClCompile Include="ISEmailAddress.cpp" />
