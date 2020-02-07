@@ -965,9 +965,7 @@ void ISListBaseForm::Update()
 		ISSortingMetaTable *MetaSorting = ISSortingBuffer::GetInstance().GetSorting(MetaTable->GetName());
 		if (MetaSorting) //≈сли сортировка дл€ этой таблицы уже существует, использовать еЄ
 		{
-			int FieldIndex = SqlModel->GetFieldIndex(MetaSorting->GetFieldName());
-			Qt::SortOrder Sorting = static_cast<Qt::SortOrder>(MetaSorting->GetSortingType());
-			SortingChanged(FieldIndex, Sorting);
+			SortingChanged(SqlModel->GetFieldIndex(MetaSorting->FieldName), static_cast<Qt::SortOrder>(MetaSorting->Sorting));
 		}
 		else //—ортировка не существует, использовать стандартную по коду (от меньшего к большему)
 		{

@@ -65,7 +65,7 @@ ISMetaParagraph* ISParagraphEntity::GetParagraph(const QString &ParagraphUID)
 {
 	for (int i = 0; i < Paragraphs.count(); ++i)
 	{
-		if (Paragraphs.at(i)->GetUID() == ParagraphUID)
+		if (Paragraphs[i]->UID == ParagraphUID)
 		{
 			return Paragraphs.at(i);
 		}

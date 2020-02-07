@@ -152,7 +152,7 @@ void ISChatForm::Invoke()
 
 	CountMessage = 0;
 	GetButtonParagraph()->SetText(QString());
-	GetButtonParagraph()->SetToolTip(ISParagraphEntity::GetInstance().GetParagraph(CONST_UID_PARAGRAPH_CHAT)->GetToolTip());
+	GetButtonParagraph()->SetToolTip(ISParagraphEntity::GetInstance().GetParagraph(CONST_UID_PARAGRAPH_CHAT)->ToolTip);
 	GetButtonParagraph()->SetCursor(CURSOR_POINTING_HAND);
 
 	QTimer::singleShot(50, TextEdit, &ISTextEdit::SetFocus);

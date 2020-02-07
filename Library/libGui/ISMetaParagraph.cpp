@@ -17,38 +17,3 @@ ISMetaParagraph::~ISMetaParagraph()
 
 }
 //-----------------------------------------------------------------------------
-ISUuid ISMetaParagraph::GetUID() const
-{
-	return UID;
-}
-//-----------------------------------------------------------------------------
-QString ISMetaParagraph::GetName() const
-{
-	return Name;
-}
-//-----------------------------------------------------------------------------
-QString ISMetaParagraph::GetLocalName() const
-{
-	return LocalName;
-}
-//-----------------------------------------------------------------------------
-QString ISMetaParagraph::GetToolTip() const
-{
-	return ToolTip;
-}
-//-----------------------------------------------------------------------------
-QString ISMetaParagraph::GetIcon() const
-{
-	return Icon;
-}
-//-----------------------------------------------------------------------------
-QString ISMetaParagraph::GetClassName() const
-{
-	return ClassName;
-}
-//-----------------------------------------------------------------------------
-bool ISMetaParagraph::GetDefault() const
-{
-	return Default;
-}
-//-----------------------------------------------------------------------------

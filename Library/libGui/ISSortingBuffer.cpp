@@ -49,13 +49,13 @@ void ISSortingBuffer::AddSorting(const QString &TableName, const QString &FieldN
 	{
 		for (ISSortingMetaTable *MetaSorting : Sortings)
 		{
-			if (MetaSorting->GetTableName() == TableName)
+			if (MetaSorting->TableName == TableName)
 			{
-				if (MetaSorting->GetFieldName() != FieldName || MetaSorting->GetSortingType() != Sorting)
+				if (MetaSorting->FieldName != FieldName || MetaSorting->Sorting != Sorting)
 				{
-					MetaSorting->SetFieldName(FieldName);
-					MetaSorting->SetSortingType(static_cast<Qt::SortOrder>(Sorting));
-					MetaSorting->SetModificationFlag(true);
+					MetaSorting->FieldName = FieldName;
+					MetaSorting->Sorting = static_cast<Qt::SortOrder>(Sorting);
+					MetaSorting->ModificationFlag = true;
 					return;
 				}
 			}
@@ -72,7 +72,7 @@ void ISSortingBuffer::SaveSortings()
 {
 	for (ISSortingMetaTable *MetaSorting : Sortings)
 	{
-		if (MetaSorting->GetModificationFlag())
+		if (MetaSorting->ModificationFlag)
 		{
 			SaveSorting(MetaSorting);
 		}
@@ -84,7 +84,7 @@ ISSortingMetaTable* ISSortingBuffer::GetSorting(const QString &TableName)
 	for (int i = 0; i < Sortings.count(); ++i)
 	{
 		ISSortingMetaTable *MetaSorting = Sortings.at(i);
-		if (MetaSorting->GetTableName() == TableName)
+		if (MetaSorting->TableName == TableName)
 		{
 			return MetaSorting;
 		}
@@ -109,23 +109,23 @@ void ISSortingBuffer::Initialize()
 void ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
 {
 	ISQuery qSelectSorting(QS_SORTING_EXIST);
-	qSelectSorting.BindValue(":TableName", MetaSorting->GetTableName());
+	qSelectSorting.BindValue(":TableName", MetaSorting->TableName);
 	if (qSelectSorting.ExecuteFirst())
 	{
 		if (qSelectSorting.ReadColumn("count").toInt())
 		{
 			ISQuery qUpdateSorting(QU_SORTING);
-			qUpdateSorting.BindValue(":FieldName", MetaSorting->GetFieldName());
-			qUpdateSorting.BindValue(":Sorting", MetaSorting->GetSortingType());
-			qUpdateSorting.BindValue(":TableName", MetaSorting->GetTableName());
+			qUpdateSorting.BindValue(":FieldName", MetaSorting->FieldName);
+			qUpdateSorting.BindValue(":Sorting", MetaSorting->Sorting);
+			qUpdateSorting.BindValue(":TableName", MetaSorting->TableName);
 			qUpdateSorting.Execute();
 		}
 		else
 		{
 			ISQuery qInsertSorting(QI_SORTING);
-			qInsertSorting.BindValue(":TableName", MetaSorting->GetTableName());
-			qInsertSorting.BindValue(":FieldName", MetaSorting->GetFieldName());
-			qInsertSorting.BindValue(":Sorting", MetaSorting->GetSortingType());
+			qInsertSorting.BindValue(":TableName", MetaSorting->TableName);
+			qInsertSorting.BindValue(":FieldName", MetaSorting->FieldName);
+			qInsertSorting.BindValue(":Sorting", MetaSorting->Sorting);
 			qInsertSorting.Execute();
 		}
 	}
@@ -134,9 +134,9 @@ void ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
 ISSortingMetaTable* ISSortingBuffer::CreateSorting(const QString &TableName, const QString &FieldName, int Sorting)
 {
 	ISSortingMetaTable *MetaSorting = new ISSortingMetaTable();
-	MetaSorting->SetTableName(TableName);
-	MetaSorting->SetFieldName(FieldName);
-	MetaSorting->SetSortingType(static_cast<Qt::SortOrder>(Sorting));
+	MetaSorting->TableName = TableName;
+	MetaSorting->FieldName = FieldName;
+	MetaSorting->Sorting = static_cast<Qt::SortOrder>(Sorting);
 	return MetaSorting;
 }
 //-----------------------------------------------------------------------------

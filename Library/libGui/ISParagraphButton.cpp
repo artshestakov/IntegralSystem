@@ -12,11 +12,11 @@ ISParagraphButton::ISParagraphButton(ISMetaParagraph *MetaParagraph, QWidget *pa
 	Layout->setContentsMargins(0, 3, 0, 0);
 	setLayout(Layout);
 
-	QIcon Icon = BUFFER_ICONS(MetaParagraph->GetIcon());
-	Icon.addPixmap(BUFFER_ICONS(MetaParagraph->GetIcon() + ".Active").pixmap(DEFINES_GUI.SIZE_32_32), QIcon::Active);
+	QIcon Icon = BUFFER_ICONS(MetaParagraph->Icon);
+	Icon.addPixmap(BUFFER_ICONS(MetaParagraph->Icon + ".Active").pixmap(DEFINES_GUI.SIZE_32_32), QIcon::Active);
 
 	ToolButton = new QToolButton(this);
-	ToolButton->setToolTip(MetaParagraph->GetToolTip());
+	ToolButton->setToolTip(MetaParagraph->ToolTip);
 	ToolButton->setIcon(Icon);
 	ToolButton->setAutoRaise(true);
 	ToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

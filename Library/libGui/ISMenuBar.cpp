@@ -240,7 +240,7 @@ void ISMenuBar::CreateParagraphs()
 		ISParagraphButton *ParagraphButton = new ISParagraphButton(MetaParagraph, this);
 		connect(ParagraphButton, &ISParagraphButton::Clicked, this, static_cast<void(ISMenuBar::*)()>(&ISMenuBar::ButtonParagraphClicked));
 		LayoutParagraphs->addWidget(ParagraphButton);
-		ParagraphButtons.insert(MetaParagraph->GetUID(), ParagraphButton);
+		ParagraphButtons.insert(MetaParagraph->UID, ParagraphButton);
 	}
 }
 //-----------------------------------------------------------------------------

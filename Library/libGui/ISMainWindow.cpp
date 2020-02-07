@@ -311,24 +311,24 @@ void ISMainWindow::CreateStackWidget()
 	for (int i = 0; i < ISParagraphEntity::GetInstance().GetParagraphs().count(); ++i)
 	{
 		ISMetaParagraph *MetaParagraph = ISParagraphEntity::GetInstance().GetParagraphs().at(i);
-		ISUuid ParagraphUID = MetaParagraph->GetUID();
+		ISUuid ParagraphUID = MetaParagraph->UID;
 
-		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->GetLocalName()));
+		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->LocalName));
 		ISCountingTime CountingTime;
 
-		int ObjectType = QMetaType::type((MetaParagraph->GetClassName() + '*').toLocal8Bit().constData());
-		IS_ASSERT(ObjectType, QString("Invalid object type from paragraph: %1").arg(MetaParagraph->GetName()));
+		int ObjectType = QMetaType::type((MetaParagraph->ClassName + '*').toLocal8Bit().constData());
+		IS_ASSERT(ObjectType, QString("Invalid object type from paragraph: %1").arg(MetaParagraph->Name));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		IS_ASSERT(MetaObject, QString("Invalid meta object from paragraph: %1").arg(MetaParagraph->GetName()));
+		IS_ASSERT(MetaObject, QString("Invalid meta object from paragraph: %1").arg(MetaParagraph->Name));
 
 		ISParagraphBaseForm *ParagraphBaseForm = dynamic_cast<ISParagraphBaseForm*>(MetaObject->newInstance(Q_ARG(QWidget *, this)));
-		IS_ASSERT(ParagraphBaseForm, QString("Invalid class object from paragraph: %1").arg(MetaParagraph->GetName()));
+		IS_ASSERT(ParagraphBaseForm, QString("Invalid class object from paragraph: %1").arg(MetaParagraph->Name));
 		ParagraphBaseForm->SetButtonParagraph(MenuBar->GetParagraphButton(ParagraphUID));
 		int ParagraphIndex = StackedWidget->addWidget(ParagraphBaseForm);
 		Paragraphs.insert(ParagraphUID, ParagraphIndex);
 
-		ISDebug::ShowDebugString(QString("Initialized paragraph \"%1\" %2 msec").arg(MetaParagraph->GetName()).arg(CountingTime.GetElapsed()));
+		ISDebug::ShowDebugString(QString("Initialized paragraph \"%1\" %2 msec").arg(MetaParagraph->Name).arg(CountingTime.GetElapsed()));
 	}
 
 	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());
@@ -385,8 +385,7 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 	ParagraphWidget->setFocus();
 	SetCurrentParagraphUID(ParagraphUID);
 
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_PARAGRAPH, QString(), QString(), QVariant(), ISParagraphEntity::GetInstance().GetParagraph(ParagraphUID)->GetLocalName());
-
+	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_PARAGRAPH, QString(), QString(), QVariant(), ISParagraphEntity::GetInstance().GetParagraph(ParagraphUID)->LocalName);
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
