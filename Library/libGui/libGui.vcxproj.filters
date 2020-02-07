@@ -200,9 +200,6 @@
     <Filter Include="Printing\MetaData">
       <UniqueIdentifier>{ab67a40c-9531-4fca-9c06-98c69b2fb01f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Controls\Labels">
-      <UniqueIdentifier>{877e8bc8-6a0c-4df9-bdbc-726c688ab7b7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{fd190b60-95fc-4868-9bc4-a7ebef8f88e6}</UniqueIdentifier>
     </Filter>
@@ -741,12 +738,6 @@
     </ClCompile>
     <ClCompile Include="ISProcessForm.cpp">
       <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISLabelLink.cpp">
-      <Filter>Controls\Labels</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQLabel.cpp">
-      <Filter>Controls\Labels</Filter>
     </ClCompile>
     <ClCompile Include="ISFlowLayout.cpp">
       <Filter>Layouts</Filter>
@@ -1399,6 +1390,9 @@
     <ClCompile Include="ISButtons.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="ISLabels.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1772,12 +1766,6 @@
     </QtMoc>
     <QtMoc Include="ISProcessForm.h">
       <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISLabelLink.h">
-      <Filter>Controls\Labels</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQLabel.h">
-      <Filter>Controls\Labels</Filter>
     </QtMoc>
     <QtMoc Include="ISFlowLayout.h">
       <Filter>Layouts</Filter>
@@ -2383,6 +2371,9 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISButtons.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISLabels.h">
       <Filter>Controls</Filter>
     </QtMoc>
   </ItemGroup>

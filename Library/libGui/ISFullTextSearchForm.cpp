@@ -8,7 +8,7 @@
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
-#include "ISLabelLink.h"
+#include "ISLabels.h"
 #include "ISCore.h"
 #include "ISGui.h"
 #include "ISControls.h"

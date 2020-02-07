@@ -2,7 +2,7 @@
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
-#include "ISLabelLink.h"
+#include "ISLabels.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &UserName, const QString &FileName, const QString &Size, const QByteArray &Icon, const QString &Note, QWidget *parent) : QWidget(parent)

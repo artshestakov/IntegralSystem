@@ -272,7 +272,7 @@
     <ClCompile Include="ISIPAddressEdit.cpp" />
     <ClCompile Include="ISKnowledgeBaseSubSystem.cpp" />
     <ClCompile Include="ISKPPEdit.cpp" />
-    <ClCompile Include="ISLabelLink.cpp" />
+    <ClCompile Include="ISLabels.cpp" />
     <ClCompile Include="ISLicenseForm.cpp" />
     <ClCompile Include="ISLineEdit.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
@@ -373,7 +373,6 @@
     <ClCompile Include="ISQComboBox.cpp" />
     <ClCompile Include="ISQDateTimeEdit.cpp" />
     <ClCompile Include="ISQDoubleSpinBox.cpp" />
-    <ClCompile Include="ISQLabel.cpp" />
     <ClCompile Include="ISQLineEdit.cpp" />
     <ClCompile Include="ISQSpinBox.cpp" />
     <ClCompile Include="ISQTextEdit.cpp" />
@@ -485,6 +484,7 @@
     <QtMoc Include="ISPrintingWord.h" />
     <QtMoc Include="ISModelThreadQuery.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
+    <QtMoc Include="ISLabels.h" />
     <ClInclude Include="ISPassword.h" />
     <ClInclude Include="ISPrintMetaReport.h" />
     <ClInclude Include="ISPrintMetaReportField.h" />
@@ -640,8 +640,6 @@
     <QtMoc Include="ISQTextEdit.h" />
     <QtMoc Include="ISImageViewerForm.h" />
     <QtMoc Include="ISProcessForm.h" />
-    <QtMoc Include="ISLabelLink.h" />
-    <QtMoc Include="ISQLabel.h" />
     <QtMoc Include="ISFlowLayout.h" />
     <QtMoc Include="ISBaseTableView.h" />
     <QtMoc Include="ISPasswordWidthWidget.h" />
