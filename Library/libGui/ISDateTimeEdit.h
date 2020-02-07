@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISCalendarPopup.h"
-#include "ISQDateTimeEdit.h"
+#include "ISEdits.h"
 //-----------------------------------------------------------------------------
 class ISDateTimeEdit : public ISFieldEditBase
 {

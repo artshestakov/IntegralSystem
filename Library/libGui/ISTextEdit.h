@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
-#include "ISQTextEdit.h"
+#include "ISEdits.h"
 //-----------------------------------------------------------------------------
 class ISTextEdit : public ISFieldEditBase
 {

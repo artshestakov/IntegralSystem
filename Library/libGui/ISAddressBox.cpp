@@ -1,5 +1,5 @@
 #include "ISAddressBox.h"
-#include "ISQLineEdit.h"
+#include "ISEdits.h"
 #include "ISDelegates.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

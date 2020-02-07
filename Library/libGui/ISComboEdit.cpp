@@ -1,6 +1,6 @@
 #include "ISComboEdit.h"
 #include "ISDefinesGui.h"
-#include "ISQLineEdit.h"
+#include "ISEdits.h"
 #include "ISDelegates.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------

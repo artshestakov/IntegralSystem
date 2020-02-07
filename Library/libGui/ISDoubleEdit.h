@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
-#include "ISQDoubleSpinBox.h"
+#include "ISEdits.h"
 //-----------------------------------------------------------------------------
 class ISDoubleEdit : public ISFieldEditBase
 {

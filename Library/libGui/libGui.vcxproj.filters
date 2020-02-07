@@ -101,9 +101,6 @@
     <Filter Include="Dialogs">
       <UniqueIdentifier>{b4487417-5e3d-48d9-8d3b-044d44de87cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Edits">
-      <UniqueIdentifier>{3a317b4a-c489-4456-a2dd-db4f3d3927fe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Layouts">
       <UniqueIdentifier>{d3507f21-7dec-4a5e-82d9-0274fbc4d9df}</UniqueIdentifier>
     </Filter>
@@ -687,24 +684,6 @@
     </ClCompile>
     <ClCompile Include="ISFileDialog.cpp">
       <Filter>Dialogs</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQComboBox.cpp">
-      <Filter>Edits</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQDateTimeEdit.cpp">
-      <Filter>Edits</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQDoubleSpinBox.cpp">
-      <Filter>Edits</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQLineEdit.cpp">
-      <Filter>Edits</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQSpinBox.cpp">
-      <Filter>Edits</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQTextEdit.cpp">
-      <Filter>Edits</Filter>
     </ClCompile>
     <ClCompile Include="ISImageViewerForm.cpp">
       <Filter>Forms</Filter>
@@ -1369,6 +1348,9 @@
     <ClCompile Include="ISDelegates.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="ISEdits.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1697,24 +1679,6 @@
     </QtMoc>
     <QtMoc Include="ISFileDialog.h">
       <Filter>Dialogs</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQComboBox.h">
-      <Filter>Edits</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQDateTimeEdit.h">
-      <Filter>Edits</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQDoubleSpinBox.h">
-      <Filter>Edits</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQLineEdit.h">
-      <Filter>Edits</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQSpinBox.h">
-      <Filter>Edits</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQTextEdit.h">
-      <Filter>Edits</Filter>
     </QtMoc>
     <QtMoc Include="ISImageViewerForm.h">
       <Filter>Forms</Filter>
@@ -2332,6 +2296,9 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISDelegates.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEdits.h">
       <Filter>Controls</Filter>
     </QtMoc>
   </ItemGroup>

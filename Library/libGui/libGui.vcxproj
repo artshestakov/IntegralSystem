@@ -215,6 +215,7 @@
     <ClCompile Include="ISDivisionCodeEdit.cpp" />
     <ClCompile Include="ISDoubleEdit.cpp" />
     <ClCompile Include="ISEditObjectListForm.cpp" />
+    <ClCompile Include="ISEdits.cpp" />
     <ClCompile Include="ISEMailEdit.cpp" />
     <ClCompile Include="ISEMailSelectEdit.cpp" />
     <ClCompile Include="ISExecutorEdit.cpp" />
@@ -364,12 +365,6 @@
     <ClCompile Include="ISProgressForm.cpp" />
     <ClCompile Include="ISProtocolListForm.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
-    <ClCompile Include="ISQComboBox.cpp" />
-    <ClCompile Include="ISQDateTimeEdit.cpp" />
-    <ClCompile Include="ISQDoubleSpinBox.cpp" />
-    <ClCompile Include="ISQLineEdit.cpp" />
-    <ClCompile Include="ISQSpinBox.cpp" />
-    <ClCompile Include="ISQTextEdit.cpp" />
     <ClCompile Include="ISRadioEdit.cpp" />
     <ClCompile Include="ISRangeDateEdit.cpp" />
     <ClCompile Include="ISRangeDateTimeEdit.cpp" />
@@ -473,6 +468,7 @@
     <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesGui.h" />
     <QtMoc Include="ISDelegates.h" />
+    <QtMoc Include="ISEdits.h" />
     <ClInclude Include="ISHTML.h" />
     <ClInclude Include="ISHTMLHelper.h" />
     <ClInclude Include="ISHtmlQuery.h" />
@@ -620,12 +616,6 @@
     <QtMoc Include="ISInterfaceForm.h" />
     <QtMoc Include="ISContextMenu.h" />
     <QtMoc Include="ISFileDialog.h" />
-    <QtMoc Include="ISQComboBox.h" />
-    <QtMoc Include="ISQDateTimeEdit.h" />
-    <QtMoc Include="ISQDoubleSpinBox.h" />
-    <QtMoc Include="ISQLineEdit.h" />
-    <QtMoc Include="ISQSpinBox.h" />
-    <QtMoc Include="ISQTextEdit.h" />
     <QtMoc Include="ISImageViewerForm.h" />
     <QtMoc Include="ISProcessForm.h" />
     <QtMoc Include="ISFlowLayout.h" />

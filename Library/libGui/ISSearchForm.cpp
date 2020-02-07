@@ -7,7 +7,7 @@
 #include "ISGui.h"
 #include "ISListEdit.h"
 #include "ISButtons.h"
-#include "ISDelegateSearchField.h"
+#include "ISDelegates.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
-#include "ISQComboBox.h"
+#include "ISEdits.h"
 //-----------------------------------------------------------------------------
 class ISComboEdit : public ISFieldEditBase
 {
