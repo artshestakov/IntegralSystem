@@ -219,6 +219,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigTemplate", "ConfigTem
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ErrorViewer", "Projects\ErrorViewer\ErrorViewer.vcxproj", "{8C1C6DF9-CA03-426D-A1EB-6A573409CD17}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{138C35D8-DF06-4278-BC15-F6E3A48A4559}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "INIReader", "Tools\INIReader\INIReader.vcxproj", "{A2314264-C77D-4E8D-B775-97B7C676D4EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -341,6 +345,14 @@ Global
 		{8C1C6DF9-CA03-426D-A1EB-6A573409CD17}.Release|Win32.ActiveCfg = Release|Win32
 		{8C1C6DF9-CA03-426D-A1EB-6A573409CD17}.Release|Win32.Build.0 = Release|Win32
 		{8C1C6DF9-CA03-426D-A1EB-6A573409CD17}.Release|x64.ActiveCfg = Release|Win32
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE}.Debug|Win32.Build.0 = Debug|Win32
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE}.Debug|x64.ActiveCfg = Debug|x64
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE}.Debug|x64.Build.0 = Debug|x64
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE}.Release|Win32.ActiveCfg = Release|Win32
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE}.Release|Win32.Build.0 = Release|Win32
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE}.Release|x64.ActiveCfg = Release|x64
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -370,9 +382,10 @@ Global
 		{ADF90776-C5D8-44F7-B840-EA8008316E18} = {08698096-FA74-4437-85DA-7CDC9B1C17B6}
 		{0E0DF063-6722-4FD3-9334-A6AF7BBD2C14} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 		{8C1C6DF9-CA03-426D-A1EB-6A573409CD17} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
+		{A2314264-C77D-4E8D-B775-97B7C676D4EE} = {138C35D8-DF06-4278-BC15-F6E3A48A4559}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal
