@@ -54,21 +54,14 @@ void ISNotifySender::Initialize()
 	{
 		while (qSelect.Next())
 		{
-			ISUuid UID = qSelect.ReadColumn("ntfn_uid");
-			QString Name = qSelect.ReadColumn("ntfn_name").toString();
-			QString Message = qSelect.ReadColumn("ntfn_message").toString();
-			QString SoundFileName = qSelect.ReadColumn("ntfn_soundfilename").toString();
-			QString SignalName = qSelect.ReadColumn("ntfn_signalname").toString();
-			bool ShowPopup = qSelect.ReadColumn("ntfn_showpopup").toBool();
-
 			ISMetaNotify *MetaNotify = new ISMetaNotify();
-			MetaNotify->SetUID(UID);
-			MetaNotify->SetName(Name);
-			MetaNotify->SetMessageNotify(Message);
-			MetaNotify->SetSoundFileName(SoundFileName);
-			MetaNotify->SetSignalName(SignalName);
-			MetaNotify->SetShowPopup(ShowPopup);
-			Notifications.insert(UID, MetaNotify);
+			MetaNotify->UID = qSelect.ReadColumn("ntfn_uid");
+			MetaNotify->Name = qSelect.ReadColumn("ntfn_name").toString();
+			MetaNotify->MessageNotify = qSelect.ReadColumn("ntfn_message").toString();
+			MetaNotify->SoundFileName = qSelect.ReadColumn("ntfn_soundfilename").toString();
+			MetaNotify->SignalName = qSelect.ReadColumn("ntfn_signalname").toString();
+			MetaNotify->ShowPopup = qSelect.ReadColumn("ntfn_showpopup").toBool();
+			Notifications.insert(MetaNotify->UID, MetaNotify);
 		}
 	}
 

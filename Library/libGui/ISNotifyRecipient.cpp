@@ -34,22 +34,22 @@ void ISNotifyRecipient::Notification(const ISUuid &NotificationName, QSqlDriver:
 	QString String = VariantMap.value("String").toString();
 
 	ISMetaNotify *MetaNotify = ISNotifySender::GetInstance().GetMetaNotify(NotificationUID);
-	if (MetaNotify->GetSoundFileName().length()) //Если у нотификации указан звуковой сигнал
+	if (!MetaNotify->SoundFileName.isEmpty()) //Если у нотификации указан звуковой сигнал
 	{
-		ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO(MetaNotify->GetSoundFileName()));
+		ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO(MetaNotify->SoundFileName));
 	}
 
-	QString NotificationText = MetaNotify->GetMessageNotify();
+	QString NotificationText = MetaNotify->MessageNotify;
 	if (String.length())
 	{
 		NotificationText += ":\n\n" + String;
 	}
 
-	QString SignalName = MetaNotify->GetSignalName();
+	QString SignalName = MetaNotify->SignalName;
 	if (SignalName.length()) //Если указан персональный сигнал для нотификации
 	{
 		bool Invoked = QMetaObject::invokeMethod(this, SignalName.toUtf8().data(), Q_ARG(const QVariantMap &, VariantMap));
-		IS_ASSERT(Invoked, QString("Not invoke signal \"%1\" in notification \"%2\"").arg(SignalName).arg(MetaNotify->GetUID()));
+		IS_ASSERT(Invoked, QString("Not invoke signal \"%1\" in notification \"%2\"").arg(SignalName).arg(MetaNotify->UID));
 	}
 	else //Персональный сигнал для нотификации не указан - отправить общие сигналы
 	{
@@ -57,7 +57,7 @@ void ISNotifyRecipient::Notification(const ISUuid &NotificationName, QSqlDriver:
 		emit Notify();
 	}
 
-	if (MetaNotify->GetShowPopup())
+	if (MetaNotify->ShowPopup)
 	{
 		ISNotificationService::ShowNotification(ISGui::PrepareLongToolTip(NotificationText, 350));
 	}
