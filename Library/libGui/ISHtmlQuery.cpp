@@ -47,7 +47,7 @@ QString ISHtmlQuery::GetHtmlTableQuery() const
 	if (SqlQueryModel.columnCount())
 	{
 		TableHtml += "<tr>";
-		for (int Column = 0; Column < SqlQueryModel.columnCount(); Column++)
+		for (int Column = 0; Column < SqlQueryModel.columnCount(); ++Column)
 		{
 			QString HeaderData = SqlQueryModel.headerData(Column, Qt::Horizontal).toString();
 
@@ -55,10 +55,10 @@ QString ISHtmlQuery::GetHtmlTableQuery() const
 		}
 		TableHtml += "</tr>\n";
 
-		for (int Row = 0; Row < SqlQueryModel.rowCount(); Row++)
+		for (int Row = 0; Row < SqlQueryModel.rowCount(); ++Row)
 		{
 			TableHtml += "<tr>";
-			for (int Column = 0; Column < SqlQueryModel.columnCount(); Column++)
+			for (int Column = 0; Column < SqlQueryModel.columnCount(); ++Column)
 			{
 				QModelIndex ModelIndex = SqlQueryModel.index(Row, Column);
 				QString StringValue = ModelIndex.data().toString();

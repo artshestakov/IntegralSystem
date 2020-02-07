@@ -123,7 +123,7 @@ void ISDispatchListForm::Send()
 				}
 
 				SmtpClient.quit();
-				CountOrganizations--;
+				--CountOrganizations;
 			}
 		}
 	}

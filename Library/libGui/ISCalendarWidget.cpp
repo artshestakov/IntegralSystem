@@ -53,7 +53,7 @@ ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 			Action->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 		}
 
-		MonthID++;
+		++MonthID;
 	}
 
 	ButtonYear = findChild<QToolButton*>("qt_calendar_yearbutton");

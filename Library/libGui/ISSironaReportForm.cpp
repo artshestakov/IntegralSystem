@@ -91,7 +91,7 @@ void ISSironaReportForm::LoadData()
 				TreeWidgetItem->setText(1, LANG("Sirona.DoctorNotWorkBonus"));
 			}
 
-			RowID++;
+			++RowID;
 		}
 	}
 

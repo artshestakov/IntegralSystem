@@ -47,7 +47,7 @@ bool ISExportXML::Export()
 	QDomElement DomElement = DomDocument.createElement(TableName);
 	DomDocument.appendChild(DomElement);
 
-	for (int Row = 0; Row < Model->rowCount(); Row++) //Обход строк
+	for (int Row = 0; Row < Model->rowCount(); ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -73,7 +73,7 @@ bool ISExportXML::Export()
 
 		QDomElement TagRow = DomDocument.createElement(TableName);
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
-		for (int Column = 0; Column < Fields.count(); Column++) //Обход колонок
+		for (int Column = 0; Column < Fields.count(); ++Column) //Обход колонок
 		{
 			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
 			Value = PrepareValue(Value);

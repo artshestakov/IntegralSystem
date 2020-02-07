@@ -64,7 +64,7 @@ bool ISExportCSV::Export()
 		FileCSV->write(HeaderString.toLocal8Bit());
 	}
 
-	for (int Row = 0; Row < Model->rowCount(); Row++) //Обход строк
+	for (int Row = 0; Row < Model->rowCount(); ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -91,7 +91,7 @@ bool ISExportCSV::Export()
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		QString RowString;
 
-		for (int Column = 0; Column < Fields.count(); Column++) //Обход колонок
+		for (int Column = 0; Column < Fields.count(); ++Column) //Обход колонок
 		{
 			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
 			Value = PrepareValue(Value);

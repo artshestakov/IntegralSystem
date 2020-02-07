@@ -493,7 +493,7 @@ private:
 		while (keepGoing)
 		{
 			this->LoadModule(hProcess, me.szExePath, me.szModule, (DWORD64)me.modBaseAddr, me.modBaseSize);
-			cnt++;
+			++cnt;
 			keepGoing = !!pM32N(hSnap, &me);
 		}
 		CloseHandle(hSnap);
@@ -584,7 +584,7 @@ private:
 			DWORD dwRes = this->LoadModule(hProcess, tt, tt2, (DWORD64)mi.lpBaseOfDll, mi.SizeOfImage);
 			if (dwRes != ERROR_SUCCESS)
 				this->m_parent->OnDbgHelpErr("LoadModule", dwRes, 0);
-			cnt++;
+			++cnt;
 		}
 
 	cleanup:

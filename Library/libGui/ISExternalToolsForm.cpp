@@ -200,9 +200,7 @@ void ISExternalToolsForm::Up()
 {
 	int CurrentRow = ListWidget->currentRow();
 	QListWidgetItem *ListWidgetItem = ListWidget->takeItem(CurrentRow);
-
-	CurrentRow--;
-	
+	--CurrentRow;
 	ListWidget->insertItem(CurrentRow, ListWidgetItem);
 	ListWidget->setCurrentItem(ListWidgetItem);
 }
@@ -211,9 +209,7 @@ void ISExternalToolsForm::Down()
 {
 	int CurrentRow = ListWidget->currentRow();
 	QListWidgetItem *ListWidgetItem = ListWidget->takeItem(CurrentRow);
-	
-	CurrentRow++;
-	
+	++CurrentRow;
 	ListWidget->insertItem(CurrentRow, ListWidgetItem);
 	ListWidget->setCurrentItem(ListWidgetItem);
 }

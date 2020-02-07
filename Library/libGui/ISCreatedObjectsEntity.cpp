@@ -43,7 +43,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
 		QWidget *ObjectFormBase = Forms.at(i);
 		if (ObjectFormBase->property("ModificationFlag").toBool())
 		{
-			CountNotSaved++;
+			++CountNotSaved;
 			DetailedText += QString::number(i + 1) + ") " + ObjectFormBase->windowTitle().remove(DEFINES_CORE.SYMBOL_OBJECT_CHANGED) + ";\n";
 		}
 	}

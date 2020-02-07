@@ -14,11 +14,11 @@ QString ISHTMLHelper::GenerateTableFromQuerySelect(ISQuery Query)
 	QSqlQueryModel Model;
 	Model.setQuery(Query.GetSqlQuery());
 
-	for (int Row = 0; Row < Model.rowCount(); Row++)
+	for (int Row = 0; Row < Model.rowCount(); ++Row)
 	{
 		Table += "<tr>";
 
-		for (int Column = 0; Column < Model.columnCount(); Column++)
+		for (int Column = 0; Column < Model.columnCount(); ++Column)
 		{
 			QModelIndex ModelIndex = Model.index(Row, Column);
 			QString Value = ModelIndex.data().toString();

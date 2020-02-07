@@ -57,7 +57,7 @@ bool ISExportDBF::Export()
 		return false;
 	}
 	
-	for (int Row = 0; Row < Model->rowCount(); Row++) //Обход строк
+	for (int Row = 0; Row < Model->rowCount(); ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -84,7 +84,7 @@ bool ISExportDBF::Export()
 		QString InsertFields = "INSERT INTO " + TableName + '(';
 		QString ValuesField = "VALUES(";
 
-		for (int Column = 0; Column < Fields.count(); Column++) //Обход колонок
+		for (int Column = 0; Column < Fields.count(); ++Column) //Обход колонок
 		{
 			QString FieldName = Fields.at(Column);
 			QString FieldValue = SqlRecord.value(FieldName).toString();

@@ -78,7 +78,7 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 					}
 					else
 					{
-						Step++;
+						++Step;
 					}
 				}
 				ISDebug::ShowDebugString(QString("Loaded records %1, %2 msec.").arg(Records.count()).arg(Time.GetElapsed()));

@@ -157,7 +157,7 @@ void ISListEditPopup::Search(const QVariant &value)
 			QListWidgetItem *ListWidgetItem = ListWidget->item(i);
 			if (ListWidgetItem->text().toLower().contains(SearchValue))
 			{
-				Founded++;
+				++Founded;
 				ListWidget->setItemHidden(ListWidgetItem, false);
 			}
 			else

@@ -114,8 +114,7 @@ bool ISUpdate::LoadUpdate(int FileID, const QString &FileName)
 				FileUpdate.write(QByteArray::fromBase64(Data.toUtf8()));
 			}
 
-			Value++;
-			emit ProgressValue(Value);
+			emit ProgressValue(++Value);
 			ISGui::ProcessEvents();
 		}
 

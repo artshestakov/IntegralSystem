@@ -183,6 +183,7 @@
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
     <ClCompile Include="ISCurrentAffairsForm.cpp" />
+    <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDateEdit.cpp" />
     <ClCompile Include="ISDateTimeEdit.cpp" />
     <ClCompile Include="ISDefinesGui.cpp" />
@@ -276,6 +277,7 @@
     <ClCompile Include="ISListObjectForm.cpp" />
     <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
+    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLockForm.cpp" />
     <ClCompile Include="ISLoginEdit.cpp" />
     <ClCompile Include="ISMainMenu.cpp" />
@@ -454,6 +456,7 @@
     <QtMoc Include="ISScreenshot.h" />
     <ClInclude Include="ISBuffer.h" />
     <QtMoc Include="ISButtons.h" />
+    <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesGui.h" />
     <QtMoc Include="ISDelegates.h" />
     <QtMoc Include="ISEdits.h" />
@@ -464,6 +467,7 @@
     <QtMoc Include="ISModelThreadQuery.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISLabels.h" />
+    <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISPassword.h" />
     <QtMoc Include="ISPrintingBase.h" />
     <ClInclude Include="ISPrintingEntity.h" />

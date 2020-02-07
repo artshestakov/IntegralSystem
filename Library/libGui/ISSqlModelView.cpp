@@ -56,7 +56,7 @@ void ISSqlModelView::Clear()
 		}
 		else
 		{
-			Step++;
+			++Step;
 		}
 	}
 

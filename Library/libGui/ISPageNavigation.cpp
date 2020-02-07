@@ -78,7 +78,7 @@ void ISPageNavigation::SetRowCount(int row_count)
 		PageCount = RowCount / Limit;
 		if (row_count % Limit)
 		{
-			PageCount++;
+			++PageCount;
 		}
 
 		ButtonSelect->setText(LANG("Page.Select").arg(CurrentPage + 1).arg(PageCount));
@@ -110,8 +110,7 @@ void ISPageNavigation::BeginClicked()
 //-----------------------------------------------------------------------------
 void ISPageNavigation::PreviousClicked()
 {
-	CurrentPage--;
-
+	--CurrentPage;
 	int NewOffset = Offset - Limit;
 	Offset = NewOffset;
 	emit OffsetSignal(NewOffset);
@@ -134,7 +133,7 @@ void ISPageNavigation::Select()
 //-----------------------------------------------------------------------------
 void ISPageNavigation::NextClicked()
 {
-	CurrentPage++;
+	++CurrentPage;
 
 	int NewOffset = Offset + Limit;
 	Offset = NewOffset;
@@ -146,7 +145,7 @@ void ISPageNavigation::NextClicked()
 void ISPageNavigation::EndClicked()
 {
 	CurrentPage = PageCount;
-	CurrentPage--;
+	--CurrentPage;
 	Offset = CurrentPage * Limit;
 	emit OffsetSignal(Offset);
 

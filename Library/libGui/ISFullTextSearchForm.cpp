@@ -151,7 +151,7 @@ void ISFullTextSearchForm::Search()
 
 		for (int ObjectID : VectorInt) //Обход объектов
 		{
-			ResultCount++;
+			++ResultCount;
 
 			ISLabelLink *LabelLink = new ISLabelLink(ScrollArea);
 			LabelLink->setText(QString::number(ResultCount) + ". " + MetaTable->GetLocalName() + ": " + ISCore::GetObjectName(MetaTable, ObjectID));

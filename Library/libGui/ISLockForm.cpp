@@ -126,7 +126,7 @@ void ISLockForm::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISLockForm::NewNotify()
 {
-	NewNotifyCount++;
+	++NewNotifyCount;
 	LabelNotify->setText(LANG("NewNotifications").arg(NewNotifyCount));
 }
 //-----------------------------------------------------------------------------

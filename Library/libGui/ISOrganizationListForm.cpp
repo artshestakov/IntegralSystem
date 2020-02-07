@@ -171,7 +171,7 @@ void ISOrganizationListForm::Percentage()
 					QVariant Value = qSelectField.ReadColumn(FieldName);
 					if (!Value.isNull())
 					{
-						CountFill++;
+						++CountFill;
 					}
 				}
 			}

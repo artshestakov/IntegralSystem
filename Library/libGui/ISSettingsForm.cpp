@@ -175,10 +175,9 @@ void ISSettingsForm::Save()
 	ProgressForm.show();
 
 	int Iterator = 0;
-
 	for (const auto &MapItem : Fields.toStdMap())
 	{
-		Iterator++;
+		++Iterator;
 		ProgressForm.setValue(Iterator);
 		ProgressForm.SetText(LANG("SavedSetting").arg(Iterator).arg(Fields.count()));
 
@@ -213,11 +212,9 @@ void ISSettingsForm::DefaultSettings()
 			ProgressForm.show();
 			
 			int Iterator = 0;
-
 			while (qSelectSettings.Next())
 			{
-				Iterator++;
-
+				++Iterator;
 				QString SettingUID = qSelectSettings.ReadColumn("stgs_uid").toString();
 				QVariant SettingValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
 				QString SettingLocalName = qSelectSettings.ReadColumn("stgs_localname").toString();

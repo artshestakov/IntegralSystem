@@ -28,7 +28,7 @@ void ISTaskFavoriteListForm::Update()
 		while (qSelect.Next())
 		{
 			StringIN += qSelect.ReadColumn("fvts_objectid").toString() + ", ";
-			TaskFavorites++;
+			++TaskFavorites;
 		}
 	}
 

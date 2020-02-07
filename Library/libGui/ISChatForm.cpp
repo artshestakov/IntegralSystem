@@ -387,7 +387,7 @@ void ISChatForm::NewMessage(const QVariantMap &VariantMap)
 	ISMainWindow *MainWindow = dynamic_cast<ISMainWindow*>(ISMemoryObjects::GetInstance().GetMainWindow());
 	if (MainWindow->GetCurrentParagraphUID() != CONST_UID_PARAGRAPH_CHAT)
 	{
-		CountMessage++;
+		++CountMessage;
 		GetButtonParagraph()->SetText(QString("(+%1)").arg(CountMessage));
 		GetButtonParagraph()->SetToolTip(LANG("ChatForm.UnreadMessages"));
 		GetButtonParagraph()->SetCursor(CURSOR_WHATS_THIS);

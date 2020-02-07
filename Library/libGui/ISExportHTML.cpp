@@ -76,7 +76,7 @@ bool ISExportHTML::Export()
 		FileHTML->write("   </tr>\r\n");
 	}
 
-	for (int Row = 0; Row < Model->rowCount(); Row++) //Обход строк
+	for (int Row = 0; Row < Model->rowCount(); ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -104,7 +104,7 @@ bool ISExportHTML::Export()
 		QString RowString;
 
 		RowString.append("    <tr>");
-		for (int Column = 0; Column < Fields.count(); Column++) //Обход колонок
+		for (int Column = 0; Column < Fields.count(); ++Column) //Обход колонок
 		{
 			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
 			Value = PrepareValue(Value);

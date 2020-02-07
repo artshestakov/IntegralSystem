@@ -148,8 +148,7 @@ void ISReconnectForm::AddLabel(const QString &Text)
 //-----------------------------------------------------------------------------
 void ISReconnectForm::TimerTick()
 {
-	CurrentAttemp++;
-
+	++CurrentAttemp;
 	LabelCurrentStatus->setText(LANG("ReconnectText").arg(CurrentAttemp) + "...");
 
 	Connected = Connect();

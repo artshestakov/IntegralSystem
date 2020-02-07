@@ -98,7 +98,7 @@ void ISIncomingCallBaseForm::AfterShowEvent()
 //-----------------------------------------------------------------------------
 void ISIncomingCallBaseForm::Timeout()
 {
-	SettingTimeout--;
+	--SettingTimeout;
 	LabelTimeout->setText(LANG("AutoCloseIncomingForm").arg(SettingTimeout));
 	if (SettingTimeout < 1)
 	{

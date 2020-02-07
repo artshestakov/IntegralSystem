@@ -729,7 +729,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 		EditSearch->setAccessibleName(PreparedSearchValue); //Запомнить предыдущее поисковое значение
 		QString WhereText = "lower(concat(";
 
-		for (int Column = 0; Column < SqlModel->columnCount(); Column++) //Обход полей записи
+		for (int Column = 0; Column < SqlModel->columnCount(); ++Column) //Обход полей записи
 		{
 			PMetaClassField *MetaField = SqlModel->GetField(Column);
 			if (!ISMetaData::GetInstanse().GetAssociationTypes().GetSearch(MetaField->GetType()))

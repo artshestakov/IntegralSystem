@@ -40,7 +40,7 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
 		int Age = QDate::currentDate().year() - Date.year();
 		if (Date.month() > QDate::currentDate().month() || (Date.month() == QDate::currentDate().month() && Date.day() > QDate::currentDate().day()))
 		{
-			Age--;
+			--Age;
 		}
 
 		Label->setText(LANG("Age") + ": " + QString::number(Age));

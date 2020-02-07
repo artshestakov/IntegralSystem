@@ -263,6 +263,12 @@
     <ClInclude Include="ISDefinesGui.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISLocalization.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDatabaseHelper.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISIncomingCallBaseForm.cpp">
@@ -1278,6 +1284,12 @@
     </ClCompile>
     <ClCompile Include="ISEdits.cpp">
       <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDatabaseHelper.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLocalization.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

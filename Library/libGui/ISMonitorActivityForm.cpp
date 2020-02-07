@@ -315,8 +315,7 @@ void ISMonitorActivityForm::TerminateAll()
 			if (ISDatabase::GetInstance().IsUserOnline(MonitorUserWidget->GetUserID()))
 			{
 				ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TERMINATE_USER, MonitorUserWidget->GetUserID(), QVariant(), QString(), false);
-
-				TerminatedCount++;
+				++TerminatedCount;
 			}
 		}
 

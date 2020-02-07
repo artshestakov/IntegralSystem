@@ -42,7 +42,7 @@ void ISProgressForm::SetText(const QString &Text)
 //-----------------------------------------------------------------------------
 void ISProgressForm::AddOneValue()
 {
-	Value++;
+	++Value;
 	setValue(Value);
 }
 //-----------------------------------------------------------------------------

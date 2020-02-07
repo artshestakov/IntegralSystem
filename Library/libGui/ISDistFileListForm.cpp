@@ -175,7 +175,7 @@ void ISDistFileListForm::InsertFile(const QString &FilePath)
 
 			for (int i = 0; i < Base64.count(); i += 1000000)
 			{
-				CountBlocks++;
+				++CountBlocks;
 			}
 
 			ProgressForm.setMaximum(CountBlocks);
@@ -183,7 +183,6 @@ void ISDistFileListForm::InsertFile(const QString &FilePath)
 			for (int i = 0; i < Base64.count(); i += 1000000)
 			{
 				QString Temp = Base64.mid(i, 1000000);
-
 				ProgressForm.setValue(Part);
 				ProgressForm.SetText(LANG("AddingDataFile").arg(Part).arg(CountBlocks) + "...");
 
@@ -193,8 +192,7 @@ void ISDistFileListForm::InsertFile(const QString &FilePath)
 					ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertFileDataInstaller").arg(FilePath));
 					break;
 				}
-
-				Part++;
+				++Part;
 			}
 
 			ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_UPDATE_AVAILABLE, QVariant(), QString(), false);
