@@ -95,9 +95,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Buttons">
-      <UniqueIdentifier>{d31b6a5d-e1e1-4577-9ba6-d5ed4e2ceae3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Calendar">
       <UniqueIdentifier>{8e1af1fb-d761-4b44-8b99-d3a99f5ad6ac}</UniqueIdentifier>
     </Filter>
@@ -769,9 +766,6 @@
     <ClCompile Include="ISButtonDialog.cpp">
       <Filter>Other</Filter>
     </ClCompile>
-    <ClCompile Include="ISButtonFile.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
     <ClCompile Include="ISImageWidget.cpp">
       <Filter>Other</Filter>
     </ClCompile>
@@ -826,9 +820,6 @@
     <ClCompile Include="ISAutoLocking.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISCalculatorButton.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISChatMessageWidget.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -866,12 +857,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISUserGroupWidget.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISButtonMainMenu.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISButtonNotify.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISComboTimeEdit.cpp">
@@ -1412,7 +1397,7 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISButtons.cpp">
-      <Filter>Buttons</Filter>
+      <Filter>Controls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1812,9 +1797,6 @@
     <QtMoc Include="ISButtonDialog.h">
       <Filter>Other</Filter>
     </QtMoc>
-    <QtMoc Include="ISButtonFile.h">
-      <Filter>Other</Filter>
-    </QtMoc>
     <QtMoc Include="ISImageWidget.h">
       <Filter>Other</Filter>
     </QtMoc>
@@ -1860,9 +1842,6 @@
     <QtMoc Include="ISAutoLocking.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISCalculatorButton.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
     <QtMoc Include="ISChatMessageWidget.h">
       <Filter>Controls</Filter>
     </QtMoc>
@@ -1900,12 +1879,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISUserGroupWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISButtonMainMenu.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISButtonNotify.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISComboTimeEdit.h">
@@ -2410,7 +2383,7 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISButtons.h">
-      <Filter>Buttons</Filter>
+      <Filter>Controls</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

@@ -66,4 +66,83 @@ public:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+class ISButtonMainMenu : public QToolButton
+{
+	Q_OBJECT
+
+public:
+	ISButtonMainMenu(QWidget *parent = 0);
+	virtual ~ISButtonMainMenu();
+
+protected:
+	void enterEvent(QEvent *e);
+	void leaveEvent(QEvent *e);
+
+private:
+	QIcon IconDefault;
+	QIcon IconActive;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISCalculatorButton : public ISPushButton
+{
+	Q_OBJECT
+
+public:
+	ISCalculatorButton(QWidget *parent = 0);
+	virtual ~ISCalculatorButton();
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISButtonNotify : public QToolButton
+{
+	Q_OBJECT
+
+public:
+	ISButtonNotify(QWidget *parent = 0);
+	virtual ~ISButtonNotify();
+
+	void SetCountNotify(int Count);
+
+protected:
+	void enterEvent(QEvent *e);
+	void leaveEvent(QEvent *e);
+
+	void Clicked();
+	void NotifyEvent(const QVariantMap &VariantMap);
+	void Timeout();
+
+private:
+	int NotifyCount;
+	QIcon IconNull;
+	QIcon IconNullActive;
+	QIcon IconNew;
+	QIcon IconNewActive;
+	QTimer *Timer;
+	bool IsBlink;
+	QString StyleWhite;
+	QString StyleBlink;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISButtonFile : public ISPushButton
+{
+	Q_OBJECT
+
+signals:
+	void DragAndDropFile(const QString &);
+
+public:
+	ISButtonFile(QWidget *parent = 0);
+	virtual ~ISButtonFile();
+
+protected:
+	void dragEnterEvent(QDragEnterEvent *e);
+	void dropEvent(QDropEvent *e);
+	void dragMoveEvent(QDragMoveEvent *e);
+};
+//-----------------------------------------------------------------------------
 #endif

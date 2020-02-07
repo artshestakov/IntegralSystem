@@ -506,7 +506,7 @@
   <Local Name="ResetColor" Russian="Сбросить цвет"/>
   <Local Name="SaveFile" Russian="Сохранить файл"/>
   <Local Name="Notifications" Russian="Уведомления"/>
-  <Local Name="Notifications.ToolTip" Russian="Новых уведмолений"/>
+  <Local Name="Notifications.ToolTip" Russian="Новых уведмолений: %1"/>
   <Local Name="DeleteNotification" Russian="Удалить уведомление"/>
   <Local Name="ExpandList" Russian="Раскрыть список"/>
   <Local Name="Notify" Russian="Уведомление"/>

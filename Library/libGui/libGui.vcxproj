@@ -133,11 +133,7 @@
     <ClCompile Include="ISBirthdayEdit.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISButtonDialog.cpp" />
-    <ClCompile Include="ISButtonFile.cpp" />
-    <ClCompile Include="ISButtonMainMenu.cpp" />
-    <ClCompile Include="ISButtonNotify.cpp" />
     <ClCompile Include="ISButtons.cpp" />
-    <ClCompile Include="ISCalculatorButton.cpp" />
     <ClCompile Include="ISCalculatorForm.cpp" />
     <ClCompile Include="ISCalendarDayWidget.cpp" />
     <ClCompile Include="ISCalendarEventForm.cpp" />
@@ -652,7 +648,6 @@
     <QtMoc Include="ISScrollArea.h" />
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISButtonDialog.h" />
-    <QtMoc Include="ISButtonFile.h" />
     <QtMoc Include="ISImageWidget.h" />
     <QtMoc Include="ISListWidget.h" />
     <QtMoc Include="ISMessageBox.h" />
@@ -661,10 +656,7 @@
     <QtMoc Include="ISBannerProgressBar.h" />
     <QtMoc Include="ISAttachFileItem.h" />
     <QtMoc Include="ISAutoLocking.h" />
-    <QtMoc Include="ISCalculatorButton.h" />
     <QtMoc Include="ISChatMessageWidget.h" />
-    <QtMoc Include="ISButtonMainMenu.h" />
-    <QtMoc Include="ISButtonNotify.h" />
     <QtMoc Include="ISComboTimeEdit.h" />
     <QtMoc Include="ISCalendarDayWidget.h" />
     <QtMoc Include="ISCalendarEventItem.h" />

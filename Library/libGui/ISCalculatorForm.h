@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISCalculatorButton.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISCalculatorForm : public ISInterfaceForm
 {
