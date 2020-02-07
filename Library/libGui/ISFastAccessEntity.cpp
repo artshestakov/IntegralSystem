@@ -33,16 +33,11 @@ void ISFastAccessEntity::LoadExternalTools()
 	{
 		while (qSelect.Next())
 		{
-			ISUuid UID = qSelect.ReadColumn("extl_uid").toString();
-			QString LocalName = qSelect.ReadColumn("extl_localname").toString();
-			QString Command = qSelect.ReadColumn("extl_command").toString();
-			QIcon Icon = QIcon(ISGui::ByteArrayToPixmap(qSelect.ReadColumn("extl_icon").toByteArray()));
-
 			ISMetaExternalTool *MetaExternalTool = new ISMetaExternalTool();
-			MetaExternalTool->SetUID(UID);
-			MetaExternalTool->SetLocalName(LocalName);
-			MetaExternalTool->SetCommand(Command);
-			MetaExternalTool->SetIcon(Icon);
+			MetaExternalTool->UID = qSelect.ReadColumn("extl_uid").toString();
+			MetaExternalTool->LocalName = qSelect.ReadColumn("extl_localname").toString();
+			MetaExternalTool->Command = qSelect.ReadColumn("extl_command").toString();
+			MetaExternalTool->Icon = QIcon(ISGui::ByteArrayToPixmap(qSelect.ReadColumn("extl_icon").toByteArray()));
 			ExternalTools.append(MetaExternalTool);
 		}
 	}

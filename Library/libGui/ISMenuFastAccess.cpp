@@ -79,13 +79,13 @@ void ISMenuFastAccess::AboutToShow()
 
 	//Заполнение внешних инструментов
 	QVector<ISMetaExternalTool*> VectorTools = ISFastAccessEntity::GetInstance().GetExternalTools();
-	for (int i = 0; i < VectorTools.count(); ++i)
+	for (int i = 0, c = VectorTools.count(); i < c; ++i)
 	{
-		ISMetaExternalTool *MetaExternalTool = VectorTools.at(i);
+		ISMetaExternalTool *MetaExternalTool = VectorTools[i];
 
-		QAction *ActionExternalTool = new QAction(MetaExternalTool->GetIcon(), MetaExternalTool->GetLocalName(), this);
+		QAction *ActionExternalTool = new QAction(MetaExternalTool->Icon, MetaExternalTool->LocalName, this);
 		ActionExternalTool->setFont(DEFINES_GUI.FONT_TAHOMA_10);
-		ActionExternalTool->setData(MetaExternalTool->GetCommand());
+		ActionExternalTool->setData(MetaExternalTool->Command);
 		insertAction(ActionExternalTools, ActionExternalTool);
 		ActionGroupTools->addAction(ActionExternalTool);
 	}
