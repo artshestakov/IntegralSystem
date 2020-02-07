@@ -1,6 +1,6 @@
 #include "ISAddressBox.h"
 #include "ISQLineEdit.h"
-#include "ISPopupDelegate.h"
+#include "ISDelegates.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISConstants.h"

@@ -188,12 +188,7 @@
     <ClCompile Include="ISDateEdit.cpp" />
     <ClCompile Include="ISDateTimeEdit.cpp" />
     <ClCompile Include="ISDefinesGui.cpp" />
-    <ClCompile Include="ISDelegateBoolean.cpp" />
-    <ClCompile Include="ISDelegateCallDetails.cpp" />
-    <ClCompile Include="ISDelegateColor.cpp" />
-    <ClCompile Include="ISDelegateFile.cpp" />
-    <ClCompile Include="ISDelegateImage.cpp" />
-    <ClCompile Include="ISDelegateSearchField.cpp" />
+    <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDemo.cpp" />
     <ClCompile Include="ISDemoAccessesListForm.cpp" />
     <ClCompile Include="ISDemoAccessesMyCreatedListForm.cpp" />
@@ -355,7 +350,6 @@
     <ClCompile Include="ISPhoneForm.cpp" />
     <ClCompile Include="ISPhoneLineEdit.cpp" />
     <ClCompile Include="ISPlayerWidget.cpp" />
-    <ClCompile Include="ISPopupDelegate.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPriceListObjectForm.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
@@ -478,6 +472,7 @@
     <QtMoc Include="ISButtons.h" />
     <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesGui.h" />
+    <QtMoc Include="ISDelegates.h" />
     <ClInclude Include="ISHTML.h" />
     <ClInclude Include="ISHTMLHelper.h" />
     <ClInclude Include="ISHtmlQuery.h" />
@@ -562,12 +557,6 @@
     <QtMoc Include="ISMediaPlayer.h" />
     <QtMoc Include="ISNotificationService.h" />
     <QtMoc Include="ISNotifyRecipient.h" />
-    <QtMoc Include="ISDelegateBoolean.h" />
-    <QtMoc Include="ISDelegateCallDetails.h" />
-    <QtMoc Include="ISDelegateColor.h" />
-    <QtMoc Include="ISDelegateFile.h" />
-    <QtMoc Include="ISDelegateImage.h" />
-    <QtMoc Include="ISDelegateSearchField.h" />
     <QtMoc Include="ISAddressEdit.h" />
     <QtMoc Include="ISDivisionCodeEdit.h" />
     <QtMoc Include="ISFileEdit.h" />
@@ -630,7 +619,6 @@
     <QtMoc Include="ISInterfaceDialogForm.h" />
     <QtMoc Include="ISInterfaceForm.h" />
     <QtMoc Include="ISContextMenu.h" />
-    <QtMoc Include="ISPopupDelegate.h" />
     <QtMoc Include="ISFileDialog.h" />
     <QtMoc Include="ISQComboBox.h" />
     <QtMoc Include="ISQDateTimeEdit.h" />

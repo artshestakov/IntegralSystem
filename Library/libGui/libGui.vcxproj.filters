@@ -40,9 +40,6 @@
     <Filter Include="Controls">
       <UniqueIdentifier>{5b16b020-bb8c-444a-8875-7a0ad20d08bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Controls\Delegates">
-      <UniqueIdentifier>{73cca195-62ec-4459-ad06-869a9fc4397a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Controls\Fields">
       <UniqueIdentifier>{d67aeeb8-4545-4145-8099-aecc887eb505}</UniqueIdentifier>
     </Filter>
@@ -100,9 +97,6 @@
     </Filter>
     <Filter Include="User Role">
       <UniqueIdentifier>{714b6641-8fd6-4116-bbd2-267e12caa4d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Delegates">
-      <UniqueIdentifier>{c3ad7197-370f-4891-b15d-429fc20cc314}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dialogs">
       <UniqueIdentifier>{b4487417-5e3d-48d9-8d3b-044d44de87cc}</UniqueIdentifier>
@@ -508,24 +502,6 @@
     <ClCompile Include="ISNotifyRecipient.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISDelegateBoolean.cpp">
-      <Filter>Controls\Delegates</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDelegateCallDetails.cpp">
-      <Filter>Controls\Delegates</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDelegateColor.cpp">
-      <Filter>Controls\Delegates</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDelegateFile.cpp">
-      <Filter>Controls\Delegates</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDelegateImage.cpp">
-      <Filter>Controls\Delegates</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDelegateSearchField.cpp">
-      <Filter>Controls\Delegates</Filter>
-    </ClCompile>
     <ClCompile Include="ISAddressEdit.cpp">
       <Filter>Controls\Fields</Filter>
     </ClCompile>
@@ -708,9 +684,6 @@
     </ClCompile>
     <ClCompile Include="ISInterfaceForm.cpp">
       <Filter>Common Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPopupDelegate.cpp">
-      <Filter>Delegates</Filter>
     </ClCompile>
     <ClCompile Include="ISFileDialog.cpp">
       <Filter>Dialogs</Filter>
@@ -1393,6 +1366,9 @@
     <ClCompile Include="ISLabels.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="ISDelegates.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1535,24 +1511,6 @@
     </QtMoc>
     <QtMoc Include="ISNotifyRecipient.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDelegateBoolean.h">
-      <Filter>Controls\Delegates</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDelegateCallDetails.h">
-      <Filter>Controls\Delegates</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDelegateColor.h">
-      <Filter>Controls\Delegates</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDelegateFile.h">
-      <Filter>Controls\Delegates</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDelegateImage.h">
-      <Filter>Controls\Delegates</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDelegateSearchField.h">
-      <Filter>Controls\Delegates</Filter>
     </QtMoc>
     <QtMoc Include="ISAddressEdit.h">
       <Filter>Controls\Fields</Filter>
@@ -1736,9 +1694,6 @@
     </QtMoc>
     <QtMoc Include="ISInterfaceForm.h">
       <Filter>Common Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPopupDelegate.h">
-      <Filter>Delegates</Filter>
     </QtMoc>
     <QtMoc Include="ISFileDialog.h">
       <Filter>Dialogs</Filter>
@@ -2374,6 +2329,9 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISLabels.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDelegates.h">
       <Filter>Controls</Filter>
     </QtMoc>
   </ItemGroup>
