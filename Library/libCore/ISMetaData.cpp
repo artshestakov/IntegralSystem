@@ -50,7 +50,10 @@ ISMetaData::ISMetaData() : QObject()
 //-----------------------------------------------------------------------------
 ISMetaData::~ISMetaData()
 {
-
+	while (!Resources.isEmpty())
+	{
+		delete Resources.takeLast();
+	}
 }
 //-----------------------------------------------------------------------------
 ISMetaData& ISMetaData::GetInstanse()
@@ -684,7 +687,7 @@ void ISMetaData::InitializeXSR(const QString &Content)
 		QString TableName = DomNode.nodeName();
 		IS_ASSERT(TableName.length(), QString("Empty resource name. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber()));
 
-		PMetaClassResource *MetaResource = new PMetaClassResource(this);
+		PMetaClassResource *MetaResource = new PMetaClassResource();
 		MetaResource->SetTableName(TableName);
 
 		for (int i = 0; i < DomNodeMap.length(); ++i) //Обход полей ресурса

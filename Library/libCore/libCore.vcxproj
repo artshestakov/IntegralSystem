@@ -183,7 +183,7 @@
     <QtMoc Include="PMetaClassFunction.h" />
     <QtMoc Include="PMetaClassIndex.h" />
     <QtMoc Include="PMetaClassQuery.h" />
-    <QtMoc Include="PMetaClassResource.h" />
+    <ClInclude Include="PMetaClassResource.h" />
     <QtMoc Include="PMetaClassTable.h" />
     <ClInclude Include="libCore_global.h" />
     <ClInclude Include="StackWalker.h" />

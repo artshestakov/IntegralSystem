@@ -1,7 +1,7 @@
 #include "PMetaClassResource.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-PMetaClassResource::PMetaClassResource(QObject *parent) : QObject(parent)
+PMetaClassResource::PMetaClassResource()
 {
 	
 }

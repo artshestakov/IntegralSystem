@@ -232,6 +232,9 @@
     <ClInclude Include="ISDefinesCore.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="PMetaClassResource.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -498,9 +501,6 @@
       <Filter>MetaData</Filter>
     </QtMoc>
     <QtMoc Include="PMetaClassQuery.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClassResource.h">
       <Filter>MetaData</Filter>
     </QtMoc>
     <QtMoc Include="PMetaClassTable.h">

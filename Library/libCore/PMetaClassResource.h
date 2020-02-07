@@ -6,13 +6,11 @@
 #include "ISUuid.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT PMetaClassResource : public QObject
+class LIBCORE_EXPORT PMetaClassResource
 {
-	Q_OBJECT
-
 public:
-	PMetaClassResource(QObject *parent = 0);
-	virtual ~PMetaClassResource();
+	PMetaClassResource();
+	~PMetaClassResource();
 	
 	void AddField(const QString &FieldName, const QString &Value); //ƒобавить параметр и его значение в ресурс
 	QString GetParameterValue(const QString &ParameterName) const; //ѕолучить значение параметра по его имени
@@ -27,7 +25,6 @@ public:
 private:
 	QString TableName;
 	ISUuid UID;
-
 	QStringMap Parameters;
 };
 //-----------------------------------------------------------------------------
