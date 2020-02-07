@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "CGConfigurator.h"
 #include "ISNamespace.h"
-#include "ISLocalization.h"
 #include "ISDebug.h"
 #include "ISConfig.h"
 #include "ISMetaData.h"
@@ -49,9 +48,6 @@ int main(int argc, char *argv[])
 		printf("%s\n", ErrorString.toStdString().c_str());
 		return EXIT_FAILURE;
 	}
-
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 
 	Result = InitConfiguratorScheme(ErrorString);
 	if (!Result)

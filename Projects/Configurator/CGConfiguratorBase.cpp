@@ -1,5 +1,4 @@
 #include "CGConfiguratorBase.h"
-#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 CGConfiguratorBase::CGConfiguratorBase() : QObject()
 {

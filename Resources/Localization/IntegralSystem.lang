@@ -9,14 +9,6 @@
 
   <Local Name="AboutFrameworkDeveloped" Russian="О фреймворке разработки"/>
   
-  <!--System user-->
-  <Local Name="SystemUser.Surname" Russian="Главный"/>
-  <Local Name="SystemUser.Name" Russian="администратор"/>
-  <Local Name="SystemUser.Patronymic" Russian="postgres"/>
-
-  <!--System user-->
-  <Local Name="SettingDatabase.Name" Russian="Настройка базы данных"/>
-  
   <!--About Form-->
   <Local Name="AboutForm.AboutApplication" Russian="О программе"/>
   <Local Name="AboutForm.Tab.Common" Russian="Общие"/>

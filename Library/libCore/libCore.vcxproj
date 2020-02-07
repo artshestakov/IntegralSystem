@@ -131,7 +131,6 @@
     <ClInclude Include="ISDatabase.h" />
     <QtMoc Include="ISDaDataService.h" />
     <QtMoc Include="ISEMail.h" />
-    <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesCore.h" />
     <ClInclude Include="ISLicense.h" />
     <ClInclude Include="ISApplicationRunning.h" />
@@ -140,7 +139,6 @@
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISCountingTime.h" />
     <ClInclude Include="ISEmailAddress.h" />
-    <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISMemoryObjects.h" />
     <QtMoc Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />
@@ -213,7 +211,6 @@
     <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
-    <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDefinesCore.cpp" />
     <ClCompile Include="ISEMail.cpp" />
     <ClCompile Include="ISEmailAddress.cpp" />
@@ -226,7 +223,6 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />
     <ClCompile Include="ISExceptionBase.cpp" />
-    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMemoryObjects.cpp" />
     <ClCompile Include="ISMetaData.cpp" />

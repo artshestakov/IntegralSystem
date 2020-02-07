@@ -3,7 +3,6 @@
 #include "ISAssert.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"
-#include "ISLocalization.h"
 #include "CGResource.h"
 #include "ISMetaData.h"
 #include "ISConfig.h"
@@ -100,9 +99,9 @@ void CGConfiguratorCreate::systemuser()
 		{
 			ISQuery qUpdate(QU_SYSTEM_USER);
 			qUpdate.BindValue(":IsSystem", true);
-			qUpdate.BindValue(":Surname", LANG("SystemUser.Surname"));
-			qUpdate.BindValue(":Name", LANG("SystemUser.Name"));
-			qUpdate.BindValue(":Patronymic", LANG("SystemUser.Patronymic"));
+			qUpdate.BindValue(":Surname", SYSTEM_USER_SURNAME);
+			qUpdate.BindValue(":Name", SYSTEM_USER_NAME);
+			qUpdate.BindValue(":Patronymic", SYSTEM_USER_PATRONYMIC);
 			qUpdate.BindValue(":SexUID", CONST_UID_SEX_MALE);
 			qUpdate.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
 			qUpdate.BindValue(":AccessAllowed", true);
@@ -117,9 +116,9 @@ void CGConfiguratorCreate::systemuser()
 			ISQuery qInsert(QI_SYSTEM_USER);
 			qInsert.BindValue(":IsSystem", true);
 			qInsert.BindValue(":UID", CONST_UID_USER_POSTGRES);
-			qInsert.BindValue(":Surname", LANG("SystemUser.Surname"));
-			qInsert.BindValue(":Name", LANG("SystemUser.Name"));
-			qInsert.BindValue(":Patronymic", LANG("SystemUser.Patronymic"));
+			qInsert.BindValue(":Surname", SYSTEM_USER_SURNAME);
+			qInsert.BindValue(":Name", SYSTEM_USER_NAME);
+			qInsert.BindValue(":Patronymic", SYSTEM_USER_PATRONYMIC);
 			qInsert.BindValue(":SexUID", CONST_UID_SEX_MALE);
 			qInsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
 			qInsert.BindValue(":AccessAllowed", true);
@@ -141,7 +140,7 @@ void CGConfiguratorCreate::databasesettings()
 		{
 			ISQuery qUpdate(QU_SETTINGS_DATABASE);
 			qUpdate.BindValue(":IsSystem", true);
-			qUpdate.BindValue(":SettingName", LANG("SettingDatabase.Name"));
+			qUpdate.BindValue(":SettingName", SETTING_DATABASE_NAME);
 			qUpdate.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
 			qUpdate.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
 			if (qUpdate.Execute())
@@ -154,7 +153,7 @@ void CGConfiguratorCreate::databasesettings()
 			ISQuery qInsert(QI_SETTINGS_DATABASE);
 			qInsert.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
 			qInsert.BindValue(":IsSystem", true);
-			qInsert.BindValue(":SettingName", LANG("SettingDatabase.Name"));
+			qInsert.BindValue(":SettingName", SETTING_DATABASE_NAME);
 			qInsert.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
 			if (qInsert.Execute())
 			{
