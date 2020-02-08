@@ -3,36 +3,38 @@
 #include <stdbool.h>
 #include <string.h>
 //-----------------------------------------------------------------------------
-void ShowUsing();
+void ShowUsing(); //Показать инструкцию по использованию
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	bool Result = argc == 4 ? true : false;
-	if (Result)
+	if (Result) //Параметры указаны верно
 	{
-		const char *SectionName = argv[1];
-		const char *ParameterName = argv[2];
-		const char *FilePath = argv[3];
+		const char *SectionName = argv[1]; //Имя секции
+		const char *ParameterName = argv[2]; //Имя параметра
+		const char *FilePath = argv[3]; //Путь к конфигурационному файлу
 
 		FILE *File = fopen(FilePath, "r");
 		Result = File ? true : false;
-		if (Result)
+		if (Result) //Файл открыт
 		{
 			char Line[1024];
-			size_t LineSize = 0;
-			size_t Read = 0;
-			while (fgets(&Line, sizeof(Line), File) != NULL)
+			while (fgets(&Line, sizeof(Line), File) != NULL) //Обход каждой строки файла
 			{
-				printf("%s\n", Line);
+				size_t LineSize = strlen(Line); //Размер текущей строки
+				if (Line[LineSize - 1] == '\n') //
+				{
+
+				}
 			}
 			fclose(File);
 		}
-		else
+		else //При открытии файла произошла ошибка
 		{
 			printf("Error open file %s: %s\n", FilePath, strerror(errno));
 		}
 	}
-	else
+	else //Параметры указаны неверно
 	{
 		printf("Invalid arguments\n");
 		ShowUsing();
