@@ -35,9 +35,9 @@ const char EXTENSION_LIC[] = "lic";
 const char EXTENSION_XML[] = "xml";
 const char EXTENSION_INI[] = "ini";
 #ifdef WIN32
-const char EXTENSION_EXECUTE_BINARY[] = ".exe"; //Расширение исполняемого файла
+const char EXTENSION_BINARY[] = ".exe"; //Расширение исполняемого файла для текущей операционной системы
 #else
-const char EXTENSION_EXECUTE_BINARY[] = ""; //Расширение исполняемого файла
+const char EXTENSION_BINARY[] = ""; //Расширение исполняемого файла для текущей операционной системы
 #endif
 //OS_TYPES---------------------------------------------------------------------
 const char OS_NAME_WINDOWS[] = "Windows";

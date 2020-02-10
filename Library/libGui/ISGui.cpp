@@ -310,7 +310,6 @@ int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const 
 	{
 		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotifyNotInserted"));
 	}
-
 	return CalendarID;
 }
 //-----------------------------------------------------------------------------
@@ -326,10 +325,10 @@ ISFieldEditBase* ISGui::CreateColumnForField(QWidget *ParentWidget, ISNamespace:
 //-----------------------------------------------------------------------------
 ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, const QString &TableName, int ObjectID, QWidget *parent)
 {
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISObjectFormBase *ObjectForm = nullptr;
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
-	if (MetaTable->GetObjectForm().length()) //Если у мета-таблицы есть переопределенная форма объекта
+	if (!MetaTable->GetObjectForm().isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
 	{
 		int ObjectType = QMetaType::type((MetaTable->GetObjectForm() + '*').toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("ObjectForm for table \"%1\" is null.").arg(MetaTable->GetObjectForm()));
@@ -343,7 +342,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 		ObjectForm = new ISObjectFormBase(FormType, MetaTable, parent, ObjectID);
 	}
 
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 	return ObjectForm;
 }
 //-----------------------------------------------------------------------------
@@ -373,9 +372,9 @@ ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::Fie
 int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 {
 	int SelectedObjectID = 0;
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISSelectDialogForm SelectDialogForm(ISNamespace::SLM_Single, TableName, SelectObjectID);
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 	if (SelectDialogForm.Exec())
 	{
 		SelectedObjectID = SelectDialogForm.GetSelectedObject();
@@ -387,9 +386,9 @@ int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 QVectorInt ISGui::SelectObjects(const QString &TableName)
 {
 	QVectorInt VectorInt;
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISSelectDialogForm SelectDialogForm(ISNamespace::SLM_Multi, TableName, 0);
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 	if (SelectDialogForm.Exec())
 	{
 		VectorInt = SelectDialogForm.GetSelectedObjects();
@@ -400,58 +399,58 @@ QVectorInt ISGui::SelectObjects(const QString &TableName)
 //-----------------------------------------------------------------------------
 void ISGui::ShowSettingsForm(const QString &SettingGroupUID)
 {
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISSettingsForm SettingsForm(SettingGroupUID);
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 	SettingsForm.Exec();
 }
 //-----------------------------------------------------------------------------
 bool ISGui::ShowUserPasswordForm(int UserID)
 {
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISUserPasswordForm UserPasswordForm(UserID);
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 	return UserPasswordForm.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowSystemInfoRecord(PMetaClassTable *MetaTable, int ObjectID)
 {
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_SYSTEM_INFO_OBJECT, MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectID);
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISRecordInfoForm RecordInfoForm(MetaTable, ObjectID);
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 	RecordInfoForm.Exec();
 }
 //-----------------------------------------------------------------------------
 ISImageViewerForm* ISGui::ShowImageForm(const QPixmap &Pixmap)
 {
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISImageViewerForm *ImageViewerForm = new ISImageViewerForm(Pixmap);
 	ImageViewerForm->showMaximized();
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 	return ImageViewerForm;
 }
 //-----------------------------------------------------------------------------
 ISImageViewerForm* ISGui::ShowImageForm(const QString &FilePath)
 {
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISImageViewerForm *ImageViewerForm = new ISImageViewerForm(FilePath);
 	ImageViewerForm->showMaximized();
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 	return ImageViewerForm;
 }
 //-----------------------------------------------------------------------------
 ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 {
-	return ShowImageForm(ISGui::ByteArrayToPixmap(ByteArray));
+	return ShowImageForm(ByteArrayToPixmap(ByteArray));
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowTaskViewForm(int TaskID)
 {
-	ISGui::SetWaitGlobalCursor(true);
+	SetWaitGlobalCursor(true);
 	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(TaskID);
 	TaskViewForm->showMaximized();
-	ISGui::SetWaitGlobalCursor(false);
+	SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID)
@@ -464,7 +463,7 @@ void ISGui::ShowTaskObjectForm(QWidget *TaskObjectForm)
 {
 	TaskObjectForm->setParent(nullptr);
 	TaskObjectForm->resize(DEFINES_GUI.SIZE_TASK_OBJECT_FORM);
-	ISGui::MoveWidgetToDesktop(TaskObjectForm, ISNamespace::MWD_Center);
+	MoveWidgetToDesktop(TaskObjectForm, ISNamespace::MWD_Center);
 	TaskObjectForm->show();
 }
 //-----------------------------------------------------------------------------
@@ -473,17 +472,18 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaClassFie
 	ISFieldEditBase *FieldEditBase = nullptr;
 	QString Temp = ControlWidget;
 
-	if (Temp.length())
+	if (!Temp.isEmpty())
 	{
 		int ObjectType = QMetaType::type((Temp + '*').toLocal8Bit().constData());
-		IS_ASSERT(ObjectType, QString("ObjectType for field edit \"%1\" NULL.").arg(Temp));
-
-		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		QObject *Object = MetaObject->newInstance((Q_ARG(QWidget *, ParentWidget)));
-		IS_ASSERT(Object, QString("Not created QObject for ClassName: %1").arg(Temp));
-
-		FieldEditBase = dynamic_cast<ISFieldEditBase*>(Object);
-		IS_ASSERT(FieldEditBase, QString("Not created ISFieldEditBase for ClassName: %1").arg(Temp));
+		if (ObjectType)
+		{
+			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
+			QObject *Object = MetaObject->newInstance((Q_ARG(QWidget *, ParentWidget)));
+			if (Object)
+			{
+				FieldEditBase = dynamic_cast<ISFieldEditBase*>(Object);
+			}
+		}
 	}
 	else
 	{
@@ -506,10 +506,8 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaClassFie
 		{
 			Temp = ISMetaData::GetInstanse().GetAssociationTypes().GetControlWidgetFromType(DataType);
 		}
-
 		FieldEditBase = CreateFieldEditBase(ParentWidget, MetaField, DataType, Temp);
 	}
-
 	return FieldEditBase;
 }
 //-----------------------------------------------------------------------------

@@ -76,7 +76,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISSettingsForm::close);
 	LayoutBottom->addWidget(ButtonDialog, 0, Qt::AlignRight);
 
-	if (SettingGroupUID.length())
+	if (!SettingGroupUID.isEmpty())
 	{
 		for (int i = 0; i < ListWidget->count(); ++i)
 		{

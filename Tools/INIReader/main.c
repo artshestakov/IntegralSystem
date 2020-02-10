@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 		if (Result) //Файл открыт
 		{
 			char Line[1024];
-			while (fgets(&Line, sizeof(Line), File) != NULL) //Обход каждой строки файла
+			while (fgets(&Line, 1024, File) != NULL) //Обход каждой строки файла
 			{
 				size_t LineSize = strlen(Line); //Размер текущей строки
 				if (Line[LineSize - 1] == '\n') //

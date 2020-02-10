@@ -83,37 +83,22 @@ QString ISSystem::FormatQFuncInfo(const QString &QFuncInfo, ISNamespace::Functio
 //-----------------------------------------------------------------------------
 QString ISSystem::GetCurrentDayOfWeekName()
 {
-	QString DayOfWeekName = QDate::longDayName(QDate::currentDate().dayOfWeek());
-	BeginSymbolToUpper(DayOfWeekName);
-	return DayOfWeekName;
+	return GetDayOfWeekName(static_cast<Qt::DayOfWeek>(QDate::currentDate().dayOfWeek()));
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::GetDayOfWeekName(Qt::DayOfWeek Day)
 {
 	QString DayOfWeekName = QDate::longDayName(Day);
-	DayOfWeekName.replace(0, 1, DayOfWeekName.at(0).toUpper()); //Установка первой буквы в верхний регистр
+	BeginSymbolToUpper(DayOfWeekName);
 	return DayOfWeekName;
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::GetConfigurationName()
 {
-	QString Configuration;
-
 #ifdef QT_DEBUG
-	Configuration = "Debug";
+	return "Debug";
 #else
-	Configuration = "Release";
-#endif
-
-	return Configuration;
-}
-//-----------------------------------------------------------------------------
-bool ISSystem::IsConfigurationDebug()
-{
-#ifdef QT_DEBUG
-	return true;
-#else
-	return false;
+	return "Release";
 #endif
 }
 //-----------------------------------------------------------------------------
@@ -156,9 +141,9 @@ ISUuid ISSystem::GenerateUuid()
 //-----------------------------------------------------------------------------
 void ISSystem::BeginSymbolToUpper(QString &String)
 {
-	if (String.length())
+	if (!String.isEmpty())
 	{
-		String = String.replace(0, 1, String.at(0).toUpper());
+		String[0] = String[0].toUpper();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -188,17 +173,12 @@ ISNamespace::OSType ISSystem::GetCurrentOSType()
 //-----------------------------------------------------------------------------
 QString ISSystem::GetLibraryExtension()
 {
-	QString Extension;
-    if (GetCurrentOSType() == ISNamespace::OST_Windows)
+	switch (GetCurrentOSType())
 	{
-		Extension = EXTENSION_DLL;
+	case ISNamespace::OST_Windows: return EXTENSION_DLL; break;
+	case ISNamespace::OST_Linux: return EXTENSION_SO; break;
 	}
-    else if (GetCurrentOSType() == ISNamespace::OST_Linux)
-	{
-		Extension = EXTENSION_SO;
-	}
-
-	return Extension;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 bool ISSystem::CheckExistSlot(QObject *Object, const QString &SlotName)
@@ -385,15 +365,11 @@ QByteArray ISSystem::GetFileMD5(const QString &FilePath)
 //-----------------------------------------------------------------------------
 QDateTime ISSystem::GetCreatedDateFile(const QString &FilePath)
 {
-	QFileInfo FileInfo(FilePath);
-	QDateTime DateTime = FileInfo.created();
-	return DateTime;
+	return QFileInfo(FilePath).created();
 }
 //-----------------------------------------------------------------------------
 QDateTime ISSystem::GetLastModifiedFile(const QString &FilePath)
 {
-	QFileInfo FileInfo(FilePath);
-	QDateTime DateTime = FileInfo.lastModified();
-	return DateTime;
+	return QFileInfo(FilePath).lastModified();
 }
 //-----------------------------------------------------------------------------

@@ -60,7 +60,7 @@ public:
 	static void ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID = 0); //Показать форму объекта задачи
 	static void ShowTaskObjectForm(QWidget *TaskObjectForm); //Показать форму объекта задачи
 
-protected:
+private:
 	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaClassField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());
 };
 //-----------------------------------------------------------------------------

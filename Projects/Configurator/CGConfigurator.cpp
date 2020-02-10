@@ -19,8 +19,8 @@ CGConfigurator::~CGConfigurator()
 void CGConfigurator::help()
 {
 	ISDebug::ShowString("Configurator is a utility for configuring the IntegralSystem database");
-	ISDebug::ShowString(QString("Using: Configurator%1 [PARAMETER] [FUNCTION_NAME]").arg(EXTENSION_EXECUTE_BINARY));
-	ISDebug::ShowString(QString("Using: Configurator%1 [PARAMETER]").arg(EXTENSION_EXECUTE_BINARY));
+	ISDebug::ShowString(QString("Using: Configurator%1 [PARAMETER] [FUNCTION_NAME]").arg(EXTENSION_BINARY));
+	ISDebug::ShowString(QString("Using: Configurator%1 [PARAMETER]").arg(EXTENSION_BINARY));
 	ISDebug::ShowEmptyString();
 	for (CGSection *Section : Arguments)
 	{
