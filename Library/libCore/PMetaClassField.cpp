@@ -1,27 +1,48 @@
 #include "PMetaClassField.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
-PMetaClassField::PMetaClassField(QObject *parent) : PMetaClass(parent)
+PMetaClassField::PMetaClassField()
+	: PMetaClass("Field"),
+	Sequence(false),
+	Type(ISNamespace::FT_Unknown),
+	Size(0),
+	Upper(false),
+	Lower(false),
+	NotNull(false),
+	ReadOnly(false),
+	HideFromObject(false),
+	HideFromList(false),
+	NotSearch(false),
+	IsSystem(false),
+	Index(nullptr),
+	Foreign(nullptr)
 {
-	Sequence = false;
-	Type = ISNamespace::FT_Unknown;
-	Size = 0;
-	Upper = false;
-	Lower = false;
-	NotNull = false;
-	ReadOnly = false;
-	HideFromObject = false;
-	HideFromList = false;
-	NotSearch = false;
-	IsSystem = false;
 
-	Index = nullptr;
-	Foreign = nullptr;
 }
 //-----------------------------------------------------------------------------
 PMetaClassField::~PMetaClassField()
 {
 
+}
+//-----------------------------------------------------------------------------
+void PMetaClassField::SetUID(const ISUuid &uid)
+{
+	UID = uid;
+}
+//-----------------------------------------------------------------------------
+ISUuid PMetaClassField::GetUID() const
+{
+	return UID;
+}
+//-----------------------------------------------------------------------------
+void PMetaClassField::SetName(const QString &name)
+{
+	Name = name;
+}
+//-----------------------------------------------------------------------------
+QString PMetaClassField::GetName() const
+{
+	return Name;
 }
 //-----------------------------------------------------------------------------
 void PMetaClassField::SetType(const QString &type)

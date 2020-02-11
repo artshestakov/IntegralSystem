@@ -1,6 +1,6 @@
 #include "PMetaClassForeign.h"
 //-----------------------------------------------------------------------------
-PMetaClassForeign::PMetaClassForeign(QObject *parent) : PMetaClass(parent)
+PMetaClassForeign::PMetaClassForeign() : PMetaClass("Foreign")
 {
 	
 }

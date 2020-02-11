@@ -2,34 +2,22 @@
 #ifndef _PMETACLASSTABLE_H_INCLUDED
 #define _PMETACLASSTABLE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "libCore_global.h"
 #include "PMetaClass.h"
 #include "PMetaClassField.h"
 #include "PMetaClassEscort.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT PMetaClassTable : public PMetaClass
 {
-	Q_OBJECT
-
-	Q_PROPERTY(QString Alias READ GetAlias WRITE SetAlias)
-	Q_PROPERTY(QString LocalName READ GetLocalName WRITE SetLocalName)
-	Q_PROPERTY(QString LocalListName READ GetLocalListName WRITE SetLocalListName)
-	Q_PROPERTY(QString TitleName READ GetTitleName WRITE SetTitleName)
-	Q_PROPERTY(bool UseRoles READ GetUseRoles WRITE SetUseRoles)
-	Q_PROPERTY(QString ClassFilter READ GetClassFilter WRITE SetClassFilter)
-	Q_PROPERTY(QString ClassFilterField READ GetClassFilterField WRITE SetClassFilterField)
-	Q_PROPERTY(QString ObjectForm READ GetObjectForm WRITE SetObjectForm)
-	Q_PROPERTY(bool ShowOnly READ GetShowOnly WRITE SetShowOnly)
-	Q_PROPERTY(bool IsSystem READ GetIsSystem WRITE SetIsSystem)
-	Q_PROPERTY(QString SqlModel READ GetSqlModel WRITE SetSqlModel)
-	
-	Q_PROPERTY(QString Parent READ GetParent WRITE SetParent)
-	Q_PROPERTY(QString Where READ GetWhere WRITE SetWhere)
-	Q_PROPERTY(QString OrderField READ GetOrderField WRITE SetOrderField)
-
 public:
-	PMetaClassTable(QObject *parent = 0);
-	virtual ~PMetaClassTable();
+	PMetaClassTable();
+	PMetaClassTable(const QString &type_object);
+	~PMetaClassTable();
+
+	void SetName(const QString &name);
+	QString GetName() const;
+
+	void SetUID(const ISUuid &uid);
+	ISUuid GetUID() const;
 
 	void SetAlias(const QString &alias); //Изменить псевдоним
 	QString GetAlias() const; //Получить псевдоним
@@ -94,10 +82,12 @@ public:
 	int GetFieldIndex(const QString &FieldName) const; //Получить индекс поля по его имени
 
 private:
+	QString Name; //Название таблицы
+	ISUuid UID; //Идентификатор
 	QString Alias; //Псевдоним
 	QString LocalName; //Локальное имя (в единственном числе)
 	QString LocalListName; //Локальное имя (в множественном числе)
-	QString TitleName; //
+	QString TitleName;
 	bool UseRoles;
 	QString ClassFilter; //Фильтр таблицы
 	QString ClassFilterField;

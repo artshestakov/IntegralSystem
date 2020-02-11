@@ -2,22 +2,15 @@
 #ifndef _PMETACLASSINDEX_H_INCLUDED
 #define _PMETACLASSINDEX_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "libCore_global.h"
+#include "PMetaClass.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT PMetaClassIndex : public QObject
+class LIBCORE_EXPORT PMetaClassIndex : public PMetaClass
 {
-	Q_OBJECT
-
-	Q_PROPERTY(bool Unique READ GetUnique WRITE SetUnique)
-	Q_PROPERTY(QString Alias READ GetAlias WRITE SetAlias)
-	Q_PROPERTY(QString TableName READ GetTableName WRITE SetTableName)
-	Q_PROPERTY(QString FieldName READ GetFieldName WRITE SetFieldName)
-
 public:
-	PMetaClassIndex(QObject *parent = 0);
-	PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name, QObject *parent = 0);
-	virtual ~PMetaClassIndex();
+	PMetaClassIndex();
+	PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name);
+	~PMetaClassIndex();
 
 	void SetUnique(bool unique);
 	bool GetUnique() const;

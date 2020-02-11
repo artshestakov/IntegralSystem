@@ -2,22 +2,14 @@
 #ifndef _PMETACLASSQUERY_H_INCLUDED
 #define _PMETACLASSQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "PMetaClassTable.h"
 #include "PMetaClassField.h"
 //-----------------------------------------------------------------------------
 class PMetaClassQuery : public PMetaClassTable
 {
-	Q_OBJECT
-
-	Q_PROPERTY(QString From READ GetFrom WRITE SetFrom)
-	Q_PROPERTY(QString Where READ GetWhere WRITE SetWhere)
-	Q_PROPERTY(QString Order READ GetOrder WRITE SetOrder)
-	Q_PROPERTY(QString OrderType READ GetOrderType WRITE SetOrderType)
-
 public:
-	PMetaClassQuery(QObject *parent = 0);
-	virtual ~PMetaClassQuery();
+	PMetaClassQuery();
+	~PMetaClassQuery();
 
 	void SetFrom(const QString &from);
 	QString GetFrom() const;

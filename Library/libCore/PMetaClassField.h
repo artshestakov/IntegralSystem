@@ -2,43 +2,22 @@
 #ifndef _PMETACLASSFIELD_H_INCLUDED
 #define _PMETACLASSFIELD_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "libCore_global.h"
-#include "ISNamespace.h"
 #include "PMetaClass.h"
+#include "ISNamespace.h"
 #include "PMetaClassIndex.h"
 #include "PMetaClassForeign.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT PMetaClassField : public PMetaClass
 {
-	Q_OBJECT
-
-	Q_PROPERTY(QString Type READ GetType WRITE SetType)
-	Q_PROPERTY(int Size READ GetSize WRITE SetSize)
-	Q_PROPERTY(bool Upper READ GetUpper WRITE SetUpper)
-	Q_PROPERTY(bool Lower READ GetLower WRITE SetLower)
-	Q_PROPERTY(QVariant DefaultValue READ GetDefaultValue WRITE SetDefaultValue)
-	Q_PROPERTY(QVariant DefaultValueWidget READ GetDefaultValueWidget WRITE SetDefaultValueWidget)
-	Q_PROPERTY(QString LabelName READ GetLabelName WRITE SetLabelName)
-	Q_PROPERTY(QString LocalListName READ GetLocalListName WRITE SetLocalListName)
-	Q_PROPERTY(bool NotNull READ GetNotNull WRITE SetNotNull)
-	Q_PROPERTY(bool ReadOnly READ GetReadOnly WRITE SetReadOnly)
-	Q_PROPERTY(bool HideFromObject READ GetHideFromObject WRITE SetHideFromObject)
-	Q_PROPERTY(bool HideFromList READ GetHideFromList WRITE SetHideFromList)
-	Q_PROPERTY(bool NotSearch READ GetNotSearch WRITE SetNotSearch)
-	Q_PROPERTY(QString Hint READ GetHint WRITE SetHint)
-	Q_PROPERTY(QString PlaceholderText READ GetPlaceholderText WRITE SetPlaceholderText)
-	Q_PROPERTY(QString ControlWidget READ GetControlWidget WRITE SetControlWidget)
-	Q_PROPERTY(QString RegExp READ GetRegExp WRITE SetRegExp)
-	Q_PROPERTY(bool IsSystem READ GetIsSystem WRITE SetIsSystem)
-	Q_PROPERTY(QString QueryText READ GetQueryText WRITE SetQueryText)
-	Q_PROPERTY(PMetaClassForeign* Foreign READ GetForeign WRITE SetForeign)
-	Q_PROPERTY(bool Sequence READ GetSequence WRITE SetSequence)
-	Q_PROPERTY(QString LayoutName READ GetLayoutName WRITE SetLayoutName)
-	Q_PROPERTY(QString SeparatorName READ GetSeparatorName WRITE SetSeparatorName)
-
 public:
-	PMetaClassField(QObject *parent = 0);
-	virtual ~PMetaClassField();
+	PMetaClassField();
+	~PMetaClassField();
+
+	void SetUID(const ISUuid &uid);
+	ISUuid GetUID() const;
+
+	void SetName(const QString &name);
+	QString GetName() const;
 
 	void SetType(const QString &type);
 	ISNamespace::FieldType GetType();
@@ -116,7 +95,9 @@ public:
 	bool IsFieldUID() const;
 
 private:
+	ISUuid UID;
 	ISNamespace::FieldType Type; //Тип
+	QString Name; //Название
 	int Size; //Размер
 	bool Upper; //Только верхний регистр
 	bool Lower; //Только нижний регистр

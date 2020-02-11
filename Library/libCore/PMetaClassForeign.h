@@ -2,24 +2,13 @@
 #ifndef _PMETACLASSFOREIGN_H_INCLUDED
 #define _PMETACLASSFOREIGN_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "libCore_global.h"
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT PMetaClassForeign : public PMetaClass
 {
-	Q_OBJECT
-
-	Q_PROPERTY(QString Field READ GetFieldName WRITE SetFieldName)
-	Q_PROPERTY(QString ForeignClass READ GetForeignClass WRITE SetForeignClass)
-	Q_PROPERTY(QString ForeignField READ GetForeginField WRITE SetForeignField)
-	Q_PROPERTY(QString ForeignViewNameField READ GetForeignViewNameField WRITE SetForeignViewNameField)
-	Q_PROPERTY(QString OrderField READ GetOrderField WRITE SetOrderField)
-	Q_PROPERTY(QString TableName READ GetTableName WRITE SetTableName)
-	Q_PROPERTY(QString SqlQuery READ GetSqlQuery WRITE SetSqlQuery)
-
 public:
-	PMetaClassForeign(QObject *parent = 0);
-	virtual ~PMetaClassForeign();
+	PMetaClassForeign();
+	~PMetaClassForeign();
 
 	void SetFieldName(const QString &field);
 	QString GetFieldName() const;

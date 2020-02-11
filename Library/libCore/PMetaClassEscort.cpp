@@ -1,6 +1,6 @@
 #include "PMetaClassEscort.h"
 //-----------------------------------------------------------------------------
-PMetaClassEscort::PMetaClassEscort(QObject *parent) : PMetaClass(parent)
+PMetaClassEscort::PMetaClassEscort() : PMetaClass("Escort")
 {
 	
 }

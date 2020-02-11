@@ -70,7 +70,6 @@ private:
 	ISMetaData();
 	QString Configuration;
 
-	void SetPropertyObject(PMetaClass *MetaClass, const QString &PropertyName, const QVariant &PropertyValue);
     QDomNode GetChildDomNode(QDomNode &TableNode, const QString &TagName) const;
 
 	QMap<QString, PMetaClassFunction*> FunctionsMap; //Функции

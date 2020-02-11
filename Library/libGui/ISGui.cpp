@@ -346,7 +346,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 	return ObjectForm;
 }
 //-----------------------------------------------------------------------------
-ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, QObject *MetaForeign)
+ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaClassForeign *MetaForeign)
 {
 	QString SearchOperatorWidget;
 

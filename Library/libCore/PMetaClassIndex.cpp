@@ -1,16 +1,20 @@
 #include "PMetaClassIndex.h"
 //-----------------------------------------------------------------------------
-PMetaClassIndex::PMetaClassIndex(QObject *parent) : QObject(parent)
+PMetaClassIndex::PMetaClassIndex()
+	: PMetaClass("Index"),
+	Unique(false)
 {
-	Unique = false;
+	
 }
 //-----------------------------------------------------------------------------
-PMetaClassIndex::PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name, QObject *parent) : QObject(parent)
+PMetaClassIndex::PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name)
+	: PMetaClass("Index"),
+	Unique(unique),
+	Alias(alias),
+	TableName(table_name),
+	FieldName(field_name)
 {
-	Unique = unique;
-	Alias = alias;
-	TableName = table_name;
-	FieldName = field_name;
+	
 }
 //-----------------------------------------------------------------------------
 PMetaClassIndex::~PMetaClassIndex()

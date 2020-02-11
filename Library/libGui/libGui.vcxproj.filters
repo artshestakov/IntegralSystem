@@ -263,11 +263,11 @@
     <ClInclude Include="ISDefinesGui.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISLocalization.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISDatabaseHelper.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLocalization.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1289,7 +1289,7 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISLocalization.cpp">
-      <Filter>System</Filter>
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #include "PMetaClassFunction.h"
 //-----------------------------------------------------------------------------
-PMetaClassFunction::PMetaClassFunction(QObject *parent) : PMetaClass(parent)
+PMetaClassFunction::PMetaClassFunction() : PMetaClass("Function")
 {
 
 }

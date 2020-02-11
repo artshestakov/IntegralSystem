@@ -226,6 +226,30 @@
     <ClInclude Include="ISStructs.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="PMetaClass.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClassTable.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClassField.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClassIndex.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClassFunction.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClassEscort.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClassQuery.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClassForeign.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -459,30 +483,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISMetaData.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClass.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClassEscort.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClassField.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClassForeign.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClassFunction.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClassIndex.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClassQuery.h">
-      <Filter>MetaData</Filter>
-    </QtMoc>
-    <QtMoc Include="PMetaClassTable.h">
       <Filter>MetaData</Filter>
     </QtMoc>
     <QtMoc Include="ISEMail.h">

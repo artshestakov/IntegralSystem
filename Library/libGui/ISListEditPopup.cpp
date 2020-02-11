@@ -204,10 +204,10 @@ void ISListEditPopup::Add()
 //-----------------------------------------------------------------------------
 void ISListEditPopup::LoadDataFromQuery()
 {
-	QString QueryText = MetaForeign->property("SqlQuery").toString();
+	QString QueryText = MetaForeign->GetSqlQuery();
 	if (SqlFilter.length())
 	{
-		QueryText = ISMetaDataHelper::GenerateSqlQueryFromForeign(dynamic_cast<PMetaClassForeign*>(MetaForeign), SqlFilter);
+		QueryText = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign, SqlFilter);
 	}
 
 	ISQuery qSelect(QueryText);

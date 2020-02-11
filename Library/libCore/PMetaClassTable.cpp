@@ -1,11 +1,22 @@
 #include "PMetaClassTable.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-PMetaClassTable::PMetaClassTable(QObject *parent) : PMetaClass(parent)
+PMetaClassTable::PMetaClassTable()
+	: PMetaClass("Table"),
+	UseRoles(true),
+	ShowOnly(false),
+	IsSystem(false)
 {
-	UseRoles = true;
-	ShowOnly = false;
-	IsSystem = false;
+	
+}
+//-----------------------------------------------------------------------------
+PMetaClassTable::PMetaClassTable(const QString &type_object)
+	: PMetaClass(type_object),
+	UseRoles(true),
+	ShowOnly(false),
+	IsSystem(false)
+{
+
 }
 //-----------------------------------------------------------------------------
 PMetaClassTable::~PMetaClassTable()
@@ -13,9 +24,28 @@ PMetaClassTable::~PMetaClassTable()
 
 }
 //-----------------------------------------------------------------------------
+void PMetaClassTable::SetName(const QString &name)
+{
+	Name = name;
+}
+//-----------------------------------------------------------------------------
+QString PMetaClassTable::GetName() const
+{
+	return Name;
+}
+//-----------------------------------------------------------------------------
+void PMetaClassTable::SetUID(const ISUuid &uid)
+{
+	UID = uid;
+}
+//-----------------------------------------------------------------------------
+ISUuid PMetaClassTable::GetUID() const
+{
+	return UID;
+}
+//-----------------------------------------------------------------------------
 void PMetaClassTable::SetAlias(const QString &alias)
 {
-	IS_ASSERT(alias.length(), "Empty Alias in table");
 	Alias = alias;
 }
 //-----------------------------------------------------------------------------
@@ -26,7 +56,6 @@ QString PMetaClassTable::GetAlias() const
 //-----------------------------------------------------------------------------
 void PMetaClassTable::SetLocalName(const QString &local_name)
 {
-	IS_ASSERT(local_name.length(), "Empty LocalName in table");
 	LocalName = local_name;
 }
 //-----------------------------------------------------------------------------
@@ -37,7 +66,6 @@ QString PMetaClassTable::GetLocalName() const
 //-----------------------------------------------------------------------------
 void PMetaClassTable::SetLocalListName(const QString &local_list_name)
 {
-	IS_ASSERT(local_list_name.length(), "Empty LocalListName in table");
 	LocalListName = local_list_name;
 }
 //-----------------------------------------------------------------------------
@@ -236,12 +264,10 @@ PMetaClassField* PMetaClassTable::GetField(int Index)
 //-----------------------------------------------------------------------------
 PMetaClassField* PMetaClassTable::GetFieldID()
 {
-	if (SystemFields.at(0))
+	if (!SystemFields.isEmpty())
 	{
-		return SystemFields.at(0);
+		return SystemFields.front();
 	}
-
-	IS_ASSERT(false, QString("Not found ID field in meta table %1").arg(GetName()));
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
@@ -255,7 +281,6 @@ int PMetaClassTable::GetFieldIndex(const QString &FieldName) const
 			return i;
 		}
 	}
-
 	return -1;
 }
 //-----------------------------------------------------------------------------
