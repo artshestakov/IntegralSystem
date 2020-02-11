@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 bool GetSourceFiles()
 {
 	WIN32_FIND_DATA FindData;
-	HANDLE Handle = FindFirstFile(DirPath, &FindData); //Находим первый файл
+	HANDLE Handle = FindFirstFile(/*DirPath*/"", &FindData); //Находим первый файл
 	if (Handle != INVALID_HANDLE_VALUE) //Первый файл нашли
 	{
 		do
@@ -58,31 +58,31 @@ bool GetSourceFiles()
 				continue;
 			}
 
-			size_t FilePathSize = strlen(DirPath) + strlen(FindData.cFileName) - 5;
+			size_t FilePathSize = strlen(/*DirPath*/"") + strlen(FindData.cFileName) - 5;
 			char *FilePath = (char *)malloc(sizeof(char) * FilePathSize + 1);
 			if (FilePath)
 			{
 				memset(FilePath, 0, FilePathSize);
-				strncpy(FilePath, DirPath, strlen(DirPath) - 5);
+				//strncpy(FilePath, DirPath, strlen(DirPath) - 5);
 				strcat(FilePath, FindData.cFileName);
 			}
 
 			if (!(FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) //Файл
 			{
-				if (Files)
+				//if (Files)
 				{
-					Files = (char **)realloc(Files, ++FileCount * sizeof(char *));
+					//Files = (char **)realloc(Files, ++FileCount * sizeof(char *));
 				}
-				else
+				//else
 				{
-					Files = (char **)malloc(sizeof(char *) + ++FileCount);
+					//Files = (char **)malloc(sizeof(char *) + ++FileCount);
 				}
-				Files[FileCount - 1] = FilePath;
+				//Files[FileCount - 1] = FilePath;
 			}
 		} while (FindNextFile(Handle, &FindData));
 		FindClose(Handle);
 	}
-	return Files;
+	return true/*Files*/;
 }
 //-----------------------------------------------------------------------------
 void ReadResourceFile(const char *FilePath)
