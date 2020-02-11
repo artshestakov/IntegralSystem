@@ -59,9 +59,9 @@ MyLineEdit::MyLineEdit(QWidget *parent) : QLineEdit(parent)
 		{
 			if (Buffer[i] == '\n')
 			{
-				std::string Temp;
-				memcpy(&Temp[0], Buffer + LastPos, i - LastPos - 1);
-				Vector.emplace_back(Temp);
+				char *Word = (char *)malloc(i - LastPos + 1);
+				strncpy(Word, Buffer + LastPos, i - LastPos);
+				Word[i - LastPos] = '\0';
 				LastPos = i + 1;
 			}
 		}
