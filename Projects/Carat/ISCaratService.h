@@ -19,21 +19,12 @@ public:
 protected:
 	void CoreStart(ISProcessCore *ProcessCore); //Запуск ядра
 	void ReadyReadStandartOutput();
-	void CrashedCore(const QString &CoreName); //Падение ядра
 	
 	void NewConnection();
 	void DisconnectedClient();
 	void AppendSocketMessage(const QString &Message);
 	void ReadyRead();
 	void WriteSocket(QTcpSocket *TcpSocket, const QString &String); //Отправить данные в сокет
-
-private slots:
-	void Help(QTcpSocket *TcpSocket); //Помощь
-	void Exit(QTcpSocket *TcpSocket); //Отключение
-	void Quit(QTcpSocket *TcpSocket); //Отключение
-	void Close(QTcpSocket *TcpSocket); //Отключение
-	void Disconnect(QTcpSocket *TcpSocket); //Отключение
-	void Status(QTcpSocket *TcpSocket); //Статус ядер
 
 private:
 	QEventLoop *EventLoop;

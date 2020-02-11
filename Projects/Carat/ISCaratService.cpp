@@ -56,7 +56,6 @@ void ISCaratService::StartService()
 
 			ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
 			connect(ProcessCore, &ISProcessCore::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);
-			connect(ProcessCore, &ISProcessCore::Crash, this, &ISCaratService::CrashedCore);
 			Cores.append(ProcessCore);
 			
 			if (QFile::exists(CorePath)) //Если ядро существует
@@ -163,34 +162,11 @@ void ISCaratService::ReadyReadStandartOutput()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCaratService::CrashedCore(const QString &CoreName)
-{
-	if (SETTING_DATABASE_VALUE_DB(CONST_SETTING_DATABASE_CARAT_SEND_CRASH_REPORT).toBool()) //Если отправка отчёта включена в настройках базы данных
-	{
-		QString InformerPath = DEFINES_CORE.PATH_APPLICATION_DIR + "/Informer";
-		if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
-		{
-			InformerPath.append(".exe");
-		}
-
-		QStringList Arguments;
-		Arguments.append(CoreName);
-		Arguments.append(ISLicense::GetInstance().GetName());
-
-		ISDebug::ShowInfoString("Sending crash report...");
-		QProcess::execute(InformerPath, Arguments);
-		ISDebug::ShowInfoString("Crash report sended");
-	}
-}
-//-----------------------------------------------------------------------------
 void ISCaratService::NewConnection()
 {
 	QTcpSocket *TcpSocket = TcpServer->nextPendingConnection();
 	connect(TcpSocket, &QTcpSocket::disconnected, this, &ISCaratService::DisconnectedClient);
 	connect(TcpSocket, &QTcpSocket::readyRead, this, &ISCaratService::ReadyRead);	
-	
-	//ISDebug::ShowString(LANG("Client.Connected").arg(ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString())).arg(VectorClients.count() + 1));
-	//WriteSocket(TcpSocket, LANG("Greeting"));
 	VectorClients.append(TcpSocket);
 }
 //-----------------------------------------------------------------------------
@@ -212,8 +188,6 @@ void ISCaratService::DisconnectedClient()
 			break;
 		}
 	}
-
-	//ISDebug::ShowString(LANG("Client.Disconnected").arg(ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString())).arg(VectorClients.count()));
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::AppendSocketMessage(const QString &Message)
@@ -265,7 +239,7 @@ void ISCaratService::ReadyRead()
 		}
 		else
 		{
-			//WriteSocket(TcpSocket, LANG("CommandNotFound").arg(String));
+			
 		}
 	}
 }
@@ -281,56 +255,6 @@ void ISCaratService::WriteSocket(QTcpSocket *TcpSocket, const QString &String)
 	else if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Linux)
 	{
         TcpSocket->write(QString::fromLocal8Bit(String.toStdString().c_str()).toUtf8() + "\r\n");
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::Help(QTcpSocket *TcpSocket)
-{
-    Q_UNUSED(TcpSocket);
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::Exit(QTcpSocket *TcpSocket)
-{
-	TcpSocket->close();
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::Quit(QTcpSocket *TcpSocket)
-{
-	TcpSocket->close();
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::Close(QTcpSocket *TcpSocket)
-{
-	TcpSocket->close();
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::Disconnect(QTcpSocket *TcpSocket)
-{
-	TcpSocket->close();
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::Status(QTcpSocket *TcpSocket)
-{
-	//WriteSocket(TcpSocket, LANG("StartedDateTime").arg(ISDatabase::GetInstance().GetAge(Uptime)));
-	for (ISProcessCore *Core : Cores) //Статус ядер
-	{
-		QString StateString;
-		ISProcessCore::ProcessState CoreState = Core->state();
-		if (CoreState == ISProcessCore::NotRunning)
-		{
-			//StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.NotRunning");
-		}
-		else if (CoreState == ISProcessCore::Starting)
-		{
-			//StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.Starting");
-		}
-		else if (CoreState == ISProcessCore::Running)
-		{
-			//StateString = Core->GetName() + ":\t" + LANG("Process.ProcessState.Running");
-		}
-
-		StateString.insert(0, "\r\n");
-		WriteSocket(TcpSocket, StateString);
 	}
 }
 //-----------------------------------------------------------------------------
