@@ -6,6 +6,14 @@
 #include <QtWidgets/QWidget>
 #include <string>
 //-----------------------------------------------------------------------------
+struct ISPoint
+{
+	ISPoint() : Start(0), End(0) { }
+
+	size_t Start;
+	size_t End;
+};
+//-----------------------------------------------------------------------------
 class MyLineEdit : public QLineEdit
 {
 	Q_OBJECT
@@ -16,10 +24,12 @@ public:
 
 private:
 	void TextChanged(const QString &Text);
-	bool ExistDictionary(const std::string &String);
+	bool ExistDictionary(const char *String);
+	size_t CountSpace(const char *String, size_t Size);
 
 private:
-	std::vector<std::string> Vector;
+	char **StringList;
+	size_t StringListSize;
 };
 //-----------------------------------------------------------------------------
 #endif
