@@ -1,6 +1,7 @@
 #include "MyLineEdit.h"
-#include <QtGui/QTextLayout>
 #include <QtCore/QCoreApplication>
+#include <QtCore/QTime>
+#include <QtCore/QDebug>
 //-----------------------------------------------------------------------------
 static int comparisonFunc(const void *c1, const void *c2)
 {
@@ -32,23 +33,7 @@ MyLineEdit::MyLineEdit(QWidget *parent)
 	StringListSize(0)
 {
 	setFixedHeight(24);
-	//setText("Task Tracker - Entry");
 	connect(this, &MyLineEdit::textChanged, this, &MyLineEdit::TextChanged);
-
-	/*QList<QTextLayout::FormatRange> formats;
-
-	QTextCharFormat TextCharFormat;
-	TextCharFormat.setUnderlineColor(Qt::red);
-	TextCharFormat.setFontUnderline(true);
-
-	QTextLayout::FormatRange TextLayout;
-	TextLayout.start = 0;
-	TextLayout.length = 4;
-	TextLayout.format = TextCharFormat;
-
-	formats.append(TextLayout);
-
-	SetTextFormat(this, formats);*/
 
 	FILE *File = fopen("G:\\Github\\IntegralSystem\\Resources\\Dictionary\\russian.txt", "r");
 	if (File)
@@ -102,26 +87,23 @@ MyLineEdit::~MyLineEdit()
 //-----------------------------------------------------------------------------
 void MyLineEdit::TextChanged(const QString &Text)
 {
-	if (Text.isEmpty())
+	if (Text.isEmpty()) //Если текста нет - удаляем предыдущие форматы и выходим из функции
 	{
 		ClearTextFormat(this);
 		return;
 	}
 
-	char *String = (char *)malloc(Text.size() + 1); //Выделяем память под обрабатываемую строку
-	if (!String)
-	{
-		return;
-	}
+	//Выделяем память и копируем значение в память
+	char *String = (char *)malloc(Text.size() + 1);
+	strcpy(String, Text.toLocal8Bit().constData());
 
-	strcpy(String, Text.toLocal8Bit().constData()); //Копируем текущую строку в выделенную память
-
+	//Объявляем массив точек и его размер
 	ISPoint **Points = NULL;
 	size_t PointSize = 0;
 
-	if (CountSpace(String, strlen(String)) > 0)
+	if (CountSpace(String, strlen(String)) > 0) //Если в строке есть пробелы - обрабатываем основным алгоритмом
 	{
-		size_t PosStart = 0, CurrentWordSize = 0;
+		size_t CurrentWordSize = 0;
 		for (size_t i = 0, StringSize = strlen(String); i < StringSize; ++i) //Обходим обрабатываемую строку
 		{
 			if (String[i] != ' ')
@@ -135,59 +117,42 @@ void MyLineEdit::TextChanged(const QString &Text)
 				continue;
 			}
 
-			PosStart = i - CurrentWordSize;
 			if (String[i - 1] != ' ')
 			{
 				Points = Points ? (ISPoint **)realloc(Points, sizeof(struct ISPoint *) * ++PointSize) : (ISPoint **)malloc(sizeof(struct ISPoint *) * ++PointSize);
-				Points[PointSize - 1] = (ISPoint *)malloc(sizeof(struct ISPoint));
-				Points[PointSize - 1]->Start = PosStart;
-				Points[PointSize - 1]->End = i - 1;
+				Points[PointSize - 1] = CreatePoint(i - CurrentWordSize, i - 1);
 				CurrentWordSize = 0;
 			}
 		}
 	}
-	else
+	else //В строке нет пробелов - считаем что слово одно
 	{
 		Points = (ISPoint **)malloc(sizeof(struct ISPoint *) * ++PointSize);
-		Points[PointSize - 1] = (ISPoint *)malloc(sizeof(struct ISPoint));
-		Points[PointSize - 1]->Start = 0;
-		Points[PointSize - 1]->End = strlen(String);
+		Points[PointSize - 1] = CreatePoint(0, strlen(String));
 	}
 
 	QList<QTextLayout::FormatRange> Formats;
-	
-	QTextCharFormat TextCharFormat;
-	TextCharFormat.setUnderlineColor(Qt::red);
-	TextCharFormat.setFontUnderline(true);
-
-	for (size_t i = 0; i < PointSize; ++i)
+	for (size_t i = 0; i < PointSize; ++i) //Обходим все точки и проверяем орфографию
 	{
 		ISPoint *Point = Points[i];
 		size_t WordSize = Point->End - Point->Start + 1;
 		char *Word = (char *)malloc(WordSize + 1);
 		strncpy(Word, String + Point->Start, Point->End - Point->Start + 1);
+		WordSize = strlen(Word); //Обязательно
 		Word[WordSize] = '\0';
-
-		if (!ExistDictionary(Word))
+		ToLowerString(Word, WordSize); //Приведение к нижнему регистру
+		if (!IsDigit(Word, WordSize)) //Если слово действительно является словом
 		{
-			QTextLayout::FormatRange TextLayout;
-			TextLayout.start = Point->Start;
-			TextLayout.length = WordSize;
-			TextLayout.format = TextCharFormat;
-			Formats.append(TextLayout);
+			if (!ExistDictionary(Word)) //Если такое слово в словаре отсутствует - включаем подветку
+			{
+				Formats.append(CreateFormatRange(Point->Start, WordSize));
+			}
 		}
 		free(Word);
 	}
+	SetTextFormat(this, Formats); //Установка формата
 
-	if (Formats.isEmpty())
-	{
-		ClearTextFormat(this);
-	}
-	else
-	{
-		SetTextFormat(this, Formats);
-	}
-
+	//Обсвобождаем память
 	free(String);
 	for (size_t i = 0; i < PointSize; ++i)
 	{
@@ -199,10 +164,10 @@ void MyLineEdit::TextChanged(const QString &Text)
 bool MyLineEdit::ExistDictionary(const char *String)
 {
 	bool Result = false;
-	for (size_t i = 0; i < StringListSize; ++i)
+	for (size_t i = 0; i < StringListSize; ++i) //Обходим весь словарь
 	{
 		Result = strcmp(String, StringList[i]) == 0;
-		if (Result)
+		if (Result) //Если нашли такое слово - выходим
 		{
 			break;
 		}
@@ -213,13 +178,51 @@ bool MyLineEdit::ExistDictionary(const char *String)
 size_t MyLineEdit::CountSpace(const char *String, size_t Size)
 {
 	size_t Count = 0;
-	for (size_t i = 0; i < Size; ++i)
+	for (size_t i = 0; i < Size; ++i) //Обходим строку
 	{
-		if (String[i] == ' ')
+		if (String[i] == ' ') //Попался пробел - инкрементируем счётчик
 		{
 			++Count;
 		}
 	}
 	return Count;
+}
+//-----------------------------------------------------------------------------
+ISPoint* MyLineEdit::CreatePoint(size_t Start, size_t End)
+{
+	ISPoint *Point = (ISPoint *)malloc(sizeof(struct ISPoint));
+	Point->Start = Start;
+	Point->End = End;
+	return Point;
+}
+//-----------------------------------------------------------------------------
+QTextLayout::FormatRange MyLineEdit::CreateFormatRange(int Start, int Lenght)
+{
+	QTextCharFormat TextCharFormat;
+	TextCharFormat.setUnderlineColor(Qt::red);
+	TextCharFormat.setFontUnderline(true);
+	return QTextLayout::FormatRange{ Start, Lenght, TextCharFormat };
+}
+//-----------------------------------------------------------------------------
+void MyLineEdit::ToLowerString(char *String, size_t Size)
+{
+	for (size_t i = 0; i < Size; ++i)
+	{
+		String[i] = tolower(String[i]);
+	}
+}
+//-----------------------------------------------------------------------------
+bool MyLineEdit::IsDigit(const char *Word, size_t Size)
+{
+	bool Result = true;
+	for (size_t i = 0; i < Size; ++i)
+	{
+		Result = isdigit(Word[i]) != 0;
+		if (!Result)
+		{
+			break;
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
