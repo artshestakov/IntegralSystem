@@ -78,6 +78,7 @@ MyLineEdit::MyLineEdit(QWidget *parent)
 			}
 		}
 	}
+	setText("hello?");
 }
 //-----------------------------------------------------------------------------
 MyLineEdit::~MyLineEdit()
@@ -92,19 +93,20 @@ void MyLineEdit::TextChanged(const QString &Text)
 		ClearTextFormat(this);
 		return;
 	}
-
+	
 	//Выделяем память и копируем значение в память
 	char *String = (char *)malloc(Text.size() + 1);
 	strcpy(String, Text.toLocal8Bit().constData());
+	size_t StringSize = strlen(String);
 
 	//Объявляем массив точек и его размер
 	ISPoint **Points = NULL;
 	size_t PointSize = 0;
 
-	if (CountSpace(String, strlen(String)) > 0) //Если в строке есть пробелы - обрабатываем основным алгоритмом
+	if (CountSpace(String, StringSize) > 0) //Если в строке есть пробелы - обрабатываем основным алгоритмом
 	{
 		size_t CurrentWordSize = 0;
-		for (size_t i = 0, StringSize = strlen(String); i < StringSize; ++i) //Обходим обрабатываемую строку
+		for (size_t i = 0; i < StringSize; ++i) //Обходим обрабатываемую строку
 		{
 			if (String[i] != ' ')
 			{
@@ -128,7 +130,7 @@ void MyLineEdit::TextChanged(const QString &Text)
 	else //В строке нет пробелов - считаем что слово одно
 	{
 		Points = (ISPoint **)malloc(sizeof(struct ISPoint *) * ++PointSize);
-		Points[PointSize - 1] = CreatePoint(0, strlen(String));
+		Points[PointSize - 1] = CreatePoint(0, StringSize);
 	}
 
 	QList<QTextLayout::FormatRange> Formats;
@@ -217,6 +219,7 @@ bool MyLineEdit::IsDigit(const char *Word, size_t Size)
 	bool Result = true;
 	for (size_t i = 0; i < Size; ++i)
 	{
+		
 		Result = isdigit(Word[i]) != 0;
 		if (!Result)
 		{
