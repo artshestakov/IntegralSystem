@@ -2,6 +2,51 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTime>
 #include <QtCore/QDebug>
+#include <string.h>
+//-----------------------------------------------------------------------------
+const char SYMBOL_PUNCTS[] = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+const size_t SYMBOL_PUNCTS_SIZE = strlen(SYMBOL_PUNCTS);
+const char SYMBOL_DIGITS[] = "0123456789";
+const size_t SYMBOL_DIGITS_SIZE = strlen(SYMBOL_DIGITS);
+//-----------------------------------------------------------------------------
+const ISIntArrayItem INT_ARRAY[] = 
+{
+	{ -64, -32 }, //А
+	{ -63, -31 }, //Б
+	{ -62, -30 }, //В
+	{ -61, -29 }, //Г
+	{ -60, -28 }, //Д
+	{ -59, -27 }, //Е
+	{ -88, -72 }, //Ё
+	{ -58, -26 }, //Ж
+	{ -57, -25 }, //З
+	{ -56, -24 }, //И
+	{ -55, -23 }, //Й
+	{ -54, -22 }, //К
+	{ -53, -21 }, //Л
+	{ -52, -20 }, //М
+	{ -51, -19 }, //Н
+	{ -50, -18 }, //О
+	{ -49, -17 }, //П
+	{ -48, -16 }, //Р
+	{ -47, -15 }, //С
+	{ -46, -14 }, //Т
+	{ -45, -13 }, //У
+	{ -44, -12 }, //Ф
+	{ -43, -11 }, //Х
+	{ -42, -10 }, //Ц
+	{ -41, -9 }, //Ч
+	{ -40, -8 }, //Ш
+	{ -39, -7 }, //Щ
+	{ -38, -6 }, //Ъ
+	{ -37, -5 }, //Ы
+	{ -36, -4 }, //Ь
+	{ -35, -3 }, //Э
+	{ -34, -2 }, //Ю
+	{ -33, -1 }, //Я
+
+};
+const size_t INT_ARRAY_SIZE = 33;
 //-----------------------------------------------------------------------------
 static int comparisonFunc(const void *c1, const void *c2)
 {
@@ -13,14 +58,10 @@ static void SetTextFormat(QLineEdit* LineEdit, const QList<QTextLayout::FormatRa
 	QList<QInputMethodEvent::Attribute> Attributes;
 	for (const QTextLayout::FormatRange &Format : Formats)
 	{
-		QInputMethodEvent::AttributeType type = QInputMethodEvent::TextFormat;
-		int start = Format.start - LineEdit->cursorPosition();
-		int length = Format.length;
-		QVariant value = Format.format;
-		Attributes.append(QInputMethodEvent::Attribute(type, start, length, value));
+		Attributes.append(QInputMethodEvent::Attribute(QInputMethodEvent::TextFormat, Format.start - LineEdit->cursorPosition(), Format.length, Format.format));
 	}
-	QInputMethodEvent event(QString(), Attributes);
-	QCoreApplication::sendEvent(LineEdit, &event);
+	QInputMethodEvent InputMethodEvent(QString(), Attributes);
+	QCoreApplication::sendEvent(LineEdit, &InputMethodEvent);
 }
 //-----------------------------------------------------------------------------
 static void ClearTextFormat(QLineEdit* lineEdit)
@@ -78,7 +119,6 @@ MyLineEdit::MyLineEdit(QWidget *parent)
 			}
 		}
 	}
-	setText("hello?");
 }
 //-----------------------------------------------------------------------------
 MyLineEdit::~MyLineEdit()
@@ -103,33 +143,41 @@ void MyLineEdit::TextChanged(const QString &Text)
 	ISPoint **Points = NULL;
 	size_t PointSize = 0;
 
-	if (CountSpace(String, StringSize) > 0) //Если в строке есть пробелы - обрабатываем основным алгоритмом
+	if (CountPunct(String, StringSize) > 0) //Если в строке есть знаки препинания - обрабатываем основным алгоритмом
 	{
 		size_t CurrentWordSize = 0;
 		for (size_t i = 0; i < StringSize; ++i) //Обходим обрабатываемую строку
 		{
-			if (String[i] != ' ')
+			if (!IsPunct(String[i]))
 			{
 				++CurrentWordSize;
-				continue;
+				if (i != StringSize - 1) //Если текущая итерация не последняя - продолжаем поиск букв
+				{
+					continue;
+				}
 			}
 
-			if (!CurrentWordSize && String[i] == ' ')
+			if (!CurrentWordSize && IsPunct(String[i]))
 			{
 				continue;
 			}
 
-			if (String[i - 1] != ' ')
+			if (IsPunct(String[i - 1]))
 			{
-				Points = Points ? (ISPoint **)realloc(Points, sizeof(struct ISPoint *) * ++PointSize) : (ISPoint **)malloc(sizeof(struct ISPoint *) * ++PointSize);
-				Points[PointSize - 1] = CreatePoint(i - CurrentWordSize, i - 1);
+				Points = ReallocPoints(Points, PointSize);
+				Points[PointSize - 1] = CreatePoint(i, CurrentWordSize);
+			}
+			else
+			{
+				Points = ReallocPoints(Points, PointSize);
+				Points[PointSize - 1] = CreatePoint(i - CurrentWordSize, CurrentWordSize);
 				CurrentWordSize = 0;
 			}
 		}
 	}
-	else //В строке нет пробелов - считаем что слово одно
+	else //В строке нет знаков препинания - считаем что слово одно
 	{
-		Points = (ISPoint **)malloc(sizeof(struct ISPoint *) * ++PointSize);
+		Points = ReallocPoints(Points, PointSize);
 		Points[PointSize - 1] = CreatePoint(0, StringSize);
 	}
 
@@ -137,17 +185,22 @@ void MyLineEdit::TextChanged(const QString &Text)
 	for (size_t i = 0; i < PointSize; ++i) //Обходим все точки и проверяем орфографию
 	{
 		ISPoint *Point = Points[i];
-		size_t WordSize = Point->End - Point->Start + 1;
-		char *Word = (char *)malloc(WordSize + 1);
-		strncpy(Word, String + Point->Start, Point->End - Point->Start + 1);
-		WordSize = strlen(Word); //Обязательно
-		Word[WordSize] = '\0';
-		ToLowerString(Word, WordSize); //Приведение к нижнему регистру
-		if (!IsDigit(Word, WordSize)) //Если слово действительно является словом
+		char *Word = (char *)malloc(Point->Size + 1);
+		if (Point->Size == 1) //Если слово состоит из одной буквы
+		{
+			Word[0] = String[Point->Pos];
+		}
+		else //Слово состоит больше чем из одной буквы
+		{
+			strncpy(Word, String + Point->Pos, Point->Size);
+		}
+		Word[Point->Size] = '\0';
+		ToLowerString(Word, Point->Size); //Приведение к нижнему регистру
+		if (!IsDigit(Word, Point->Size)) //Если слово действительно является словом
 		{
 			if (!ExistDictionary(Word)) //Если такое слово в словаре отсутствует - включаем подветку
 			{
-				Formats.append(CreateFormatRange(Point->Start, WordSize));
+				Formats.append(CreateFormatRange(Point->Pos, Point->Size));
 			}
 		}
 		free(Word);
@@ -177,12 +230,12 @@ bool MyLineEdit::ExistDictionary(const char *String)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-size_t MyLineEdit::CountSpace(const char *String, size_t Size)
+size_t MyLineEdit::CountPunct(const char *String, size_t Size)
 {
 	size_t Count = 0;
 	for (size_t i = 0; i < Size; ++i) //Обходим строку
 	{
-		if (String[i] == ' ') //Попался пробел - инкрементируем счётчик
+		if (IsPunct(String[i])) //Попался знак препинания - инкрементируем счётчик
 		{
 			++Count;
 		}
@@ -190,11 +243,16 @@ size_t MyLineEdit::CountSpace(const char *String, size_t Size)
 	return Count;
 }
 //-----------------------------------------------------------------------------
+ISPoint** MyLineEdit::ReallocPoints(ISPoint **Points, size_t &PointSize)
+{
+	return Points ? (ISPoint **)realloc(Points, sizeof(struct ISPoint *) * ++PointSize) : (ISPoint **)malloc(sizeof(struct ISPoint *) * ++PointSize);
+}
+//-----------------------------------------------------------------------------
 ISPoint* MyLineEdit::CreatePoint(size_t Start, size_t End)
 {
 	ISPoint *Point = (ISPoint *)malloc(sizeof(struct ISPoint));
-	Point->Start = Start;
-	Point->End = End;
+	Point->Pos = Start;
+	Point->Size = End;
 	return Point;
 }
 //-----------------------------------------------------------------------------
@@ -210,7 +268,22 @@ void MyLineEdit::ToLowerString(char *String, size_t Size)
 {
 	for (size_t i = 0; i < Size; ++i)
 	{
-		String[i] = tolower(String[i]);
+		char Char = String[i];
+		if (Char >= -1 && Char <= 255) //Если текущий символ не принадлежит к русскому алфавиту
+		{
+			String[i] = tolower(String[i]);
+		}
+		else //Текущий символ принадлежит к русскому алфавиту
+		{
+			for (size_t j = 0; j < INT_ARRAY_SIZE; ++j)
+			{
+				if (INT_ARRAY[j].Key == Char)
+				{
+					String[i] = INT_ARRAY[j].Value;
+					break;
+				}
+			}
+		}
 	}
 }
 //-----------------------------------------------------------------------------
@@ -219,11 +292,56 @@ bool MyLineEdit::IsDigit(const char *Word, size_t Size)
 	bool Result = true;
 	for (size_t i = 0; i < Size; ++i)
 	{
-		
-		Result = isdigit(Word[i]) != 0;
+		Result = IsDigit(Word[i]);
 		if (!Result)
 		{
 			break;
+		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool MyLineEdit::IsDigit(int Char)
+{
+	bool Result = Char >= -1 && Char <= 255;
+	if (Result) //Если символ не принадлежит к русскому алфавиту
+	{
+		Result = isdigit(Char);
+	}
+	else //Символ принадлежит к русскому алфавиту
+	{
+		for (size_t i = 0; i < SYMBOL_DIGITS_SIZE; ++i) //Обходим массив чисел
+		{
+			Result = SYMBOL_DIGITS[i] == Char;
+			if (Result)
+			{
+				break;
+			}
+		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool MyLineEdit::IsPunct(int Char)
+{
+	bool Result = Char >= -1 && Char <= 255;
+	if (Result) //Если символ не принадлежит к русскому алфавиту
+	{
+		Result = Char == ' '; //Считаем, что пробел тоже знак препинания и выполняем проверку
+		if (!Result) //Если символ не пробел - проверяем на остальные
+		{
+			Result = ispunct(Char);
+		}
+	}
+	else //Символ принадлежит к русскому алфавиту
+	{
+		for (size_t i = 0; i < SYMBOL_PUNCTS_SIZE; ++i) //Обходим массив знаков препинания
+		{
+			Result = SYMBOL_PUNCTS[i] == Char;
+			if (Result)
+			{
+				break;
+			}
 		}
 	}
 	return Result;
