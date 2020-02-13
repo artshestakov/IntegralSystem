@@ -4,7 +4,7 @@
 #include <QtCore/QDebug>
 #include <string.h>
 //-----------------------------------------------------------------------------
-const char SYMBOL_PUNCTS[] = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+const char SYMBOL_PUNCTS[] = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~–0123456789";
 const size_t SYMBOL_PUNCTS_SIZE = strlen(SYMBOL_PUNCTS);
 const char SYMBOL_DIGITS[] = "0123456789";
 const size_t SYMBOL_DIGITS_SIZE = strlen(SYMBOL_DIGITS);
@@ -119,6 +119,7 @@ MyLineEdit::MyLineEdit(QWidget *parent)
 			}
 		}
 	}
+	setText("hel out");
 }
 //-----------------------------------------------------------------------------
 MyLineEdit::~MyLineEdit()
@@ -148,7 +149,8 @@ void MyLineEdit::TextChanged(const QString &Text)
 		size_t CurrentWordSize = 0;
 		for (size_t i = 0; i < StringSize; ++i) //Обходим обрабатываемую строку
 		{
-			if (!IsPunct(String[i]))
+			bool IsPunctCurrentChar = IsPunct(String[i]);
+			if (!IsPunctCurrentChar) //Если текущий символ не знак пунктуации - инкрементируем размер слова
 			{
 				++CurrentWordSize;
 				if (i != StringSize - 1) //Если текущая итерация не последняя - продолжаем поиск букв
@@ -157,20 +159,25 @@ void MyLineEdit::TextChanged(const QString &Text)
 				}
 			}
 
-			if (!CurrentWordSize && IsPunct(String[i]))
+			if (!CurrentWordSize && IsPunctCurrentChar) //Если размер слова равен нулю и текущий символ знак пунтуации - переходим к следующей итерации
 			{
 				continue;
 			}
 
-			if (IsPunct(String[i - 1]))
+			if (IsPunct(String[i - 1])) //Если предыдущий символ является знаком пунктуации
 			{
 				Points = ReallocPoints(Points, PointSize);
 				Points[PointSize - 1] = CreatePoint(i, CurrentWordSize);
 			}
-			else
+			else //Предыдущий символ не явлеяется знаком пунктуации
 			{
 				Points = ReallocPoints(Points, PointSize);
-				Points[PointSize - 1] = CreatePoint(i - CurrentWordSize, CurrentWordSize);
+				size_t StartPos = i - CurrentWordSize;
+				if (StartPos)
+				{
+					++StartPos;
+				}
+				Points[PointSize - 1] = CreatePoint(StartPos, CurrentWordSize);
 				CurrentWordSize = 0;
 			}
 		}
@@ -192,7 +199,7 @@ void MyLineEdit::TextChanged(const QString &Text)
 		}
 		else //Слово состоит больше чем из одной буквы
 		{
-			strncpy(Word, String + Point->Pos, Point->Size);
+			strncpy(Word, String + Point->Pos + 1, Point->Size);
 		}
 		Word[Point->Size] = '\0';
 		ToLowerString(Word, Point->Size); //Приведение к нижнему регистру
@@ -324,24 +331,20 @@ bool MyLineEdit::IsDigit(int Char)
 //-----------------------------------------------------------------------------
 bool MyLineEdit::IsPunct(int Char)
 {
-	bool Result = Char >= -1 && Char <= 255;
-	if (Result) //Если символ не принадлежит к русскому алфавиту
+	bool Result = true;
+	for (size_t i = 0; i < SYMBOL_PUNCTS_SIZE; ++i) //Обходим массив знаков препинания
 	{
-		Result = Char == ' '; //Считаем, что пробел тоже знак препинания и выполняем проверку
-		if (!Result) //Если символ не пробел - проверяем на остальные
+		Result = SYMBOL_PUNCTS[i] == Char;
+		if (Result)
 		{
-			Result = ispunct(Char);
+			break;
 		}
 	}
-	else //Символ принадлежит к русскому алфавиту
+	if (!Result)
 	{
-		for (size_t i = 0; i < SYMBOL_PUNCTS_SIZE; ++i) //Обходим массив знаков препинания
+		if (Char >= -1 && Char <= 255) //Если символ не принадлежит к русскому алфавиту - проверяем системной функцией
 		{
-			Result = SYMBOL_PUNCTS[i] == Char;
-			if (Result)
-			{
-				break;
-			}
+			Result = ispunct(Char);
 		}
 	}
 	return Result;
