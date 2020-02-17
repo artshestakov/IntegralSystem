@@ -194,6 +194,9 @@
     <Filter Include="ModelThread">
       <UniqueIdentifier>{8c2dfde7-a4f1-439f-b30d-b863e8e88e8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\OilSphere">
+      <UniqueIdentifier>{4fb78c6d-6486-45e6-99ef-705f3a5ec0f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -1291,6 +1294,9 @@
     <ClCompile Include="ISLocalization.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="ISOilSphere.cpp">
+      <Filter>Objects\OilSphere</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -2240,6 +2246,9 @@
     </QtMoc>
     <QtMoc Include="ISEdits.h">
       <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISOilSphere.h">
+      <Filter>Objects\OilSphere</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

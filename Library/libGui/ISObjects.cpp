@@ -8,6 +8,7 @@
 #include "ISHighway.h"
 #include "ISInformResource.h"
 #include "ISMedTech.h"
+#include "ISOilSphere.h"
 #include "ISPatriot.h"
 #include "ISSirona.h"
 //-----------------------------------------------------------------------------
@@ -21,6 +22,7 @@ ISObjects::ISObjects()
 	qRegisterMetaType<ISHighway*>("ISHighway");
 	qRegisterMetaType<ISInformResource*>("ISInformResource");
 	qRegisterMetaType<ISMedTech*>("ISMedTech");
+	qRegisterMetaType<ISOilSphere*>("ISOilSphere");
 	qRegisterMetaType<ISPatriot*>("ISPatriot");
 	qRegisterMetaType<ISSirona*>("ISSirona");
 }
