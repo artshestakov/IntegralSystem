@@ -4,7 +4,7 @@
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
-	: ErrorString("No error."),
+	: ErrorString(NO_ERROR_STRING),
 	Settings(nullptr),
 	PathConfigTemplate(":/ConfigTemplate/" + DEFINES_CORE.APPLICATION_NAME + SYMBOL_POINT + EXTENSION_INI)
 {

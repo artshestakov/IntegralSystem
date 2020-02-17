@@ -283,6 +283,9 @@
     <ClInclude Include="PMetaClassForeign.h">
       <Filter>MetaData</Filter>
     </ClInclude>
+    <ClInclude Include="ISMetaData.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -514,9 +517,6 @@
   <ItemGroup>
     <QtMoc Include="ISLogger.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMetaData.h">
-      <Filter>MetaData</Filter>
     </QtMoc>
     <QtMoc Include="ISEMail.h">
       <Filter>System</Filter>

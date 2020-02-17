@@ -5,7 +5,6 @@
 #include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
-#include "ISMetaData.h"
 #include "ISButtons.h"
 #include "ISButtons.h"
 #include "ISTextEdit.h"
@@ -110,11 +109,10 @@ void ISAboutForm::CreateContactsTab()
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateModuleTab()
 {
-	if (!ISMetaData::GetInstanse().GetInitialized())
+	/*if (!ISMetaData::GetInstanse().GetInitialized())
 	{
 		return;
-	}
-
+	}*/
 	QVBoxLayout *LayoutModule = new QVBoxLayout();
 
 	QWidget *TabModule = new QWidget(TabWidget);
@@ -163,10 +161,10 @@ void ISAboutForm::CreateLicenseTab()
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateShortcuts()
 {
-	if (!ISMetaData::GetInstanse().GetInitialized())
+	/*if (!ISMetaData::GetInstanse().GetInitialized())
 	{
 		return;
-	}
+	}*/
 
 	QFormLayout *FormLayout = new QFormLayout();
 

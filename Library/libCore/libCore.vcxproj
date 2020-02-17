@@ -140,7 +140,7 @@
     <ClInclude Include="ISCountingTime.h" />
     <ClInclude Include="ISEmailAddress.h" />
     <ClInclude Include="ISMemoryObjects.h" />
-    <QtMoc Include="ISMetaData.h" />
+    <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />
     <ClInclude Include="ISMetaUuidCheckeder.h" />
     <ClInclude Include="ISMetaViewQuery.h" />

@@ -9,10 +9,8 @@
 #include "PMetaClassResource.h"
 #include "ISAssociationTypes.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISMetaData : public QObject
+class LIBCORE_EXPORT ISMetaData
 {
-	Q_OBJECT
-
 public:
 	ISMetaData(const ISMetaData &) = delete;
 	ISMetaData(ISMetaData &&) = delete;
@@ -22,8 +20,8 @@ public:
 
 	static ISMetaData& GetInstanse();
 
-	bool GetInitialized() const;
-	void Initialize(const QString &configuration, bool InitXSR, bool InitXSF); //Инициализация
+	QString GetErrorString() const;
+	bool Initialize(const QString &configuration, bool InitXSR, bool InitXSF); //Инициализация
 
 	PMetaClassTable* GetMetaTable(const QString &TableName); //Получить мета-таблицу по имени
 	PMetaClassTable* GetMetaQuery(const QString &QueryName); //Получить мета-запрос по имени
@@ -48,10 +46,10 @@ protected:
 	void CheckUniqueAllAliases(); //Проверка уникальности всех псевдонимов таблиц
 	void GenerateSqlFromForeigns(); //Генерация SQL-запросов для внешних ключей
 
-	void InitializeXSN(); //Инициализация XSN
-	void InitializeXSN(const QString &Content); //Инициализация контента XSN
+	bool InitializeXSN(); //Инициализация XSN
+	bool InitializeXSN(const QString &Content); //Инициализация контента XSN
 	
-	void InitializeXSNTable(QDomNode &DomNode); //Инициализация таблицы
+	bool InitializeXSNTable(QDomNode &DomNode); //Инициализация таблицы
 	void InitializeXSNTableSystemFields(PMetaClassTable *MetaTable); //Инициализация системных полей для таблицы
     void InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация видимости системных полей
     void InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация полей таблицы
@@ -68,6 +66,9 @@ protected:
 
 private:
 	ISMetaData();
+
+private:
+	QString ErrorString;
 	QString Configuration;
 
     QDomNode GetChildDomNode(QDomNode &TableNode, const QString &TagName) const;
