@@ -82,19 +82,30 @@ bool ISMetaData::Initialize(const QString &configuration, bool InitXSR, bool Ini
 		{
 			if (InitXSR)
 			{
-				InitializeXSR();
+				Result = InitializeXSR();
 			}
 
-			if (InitXSF)
+			if (Result)
 			{
-				InitializeXSF();
+				if (InitXSF)
+				{
+					Result = InitializeXSF();
+				}
 			}
 		}
 
-		CheckUniqueAllIdentifiers(InitXSR);
-		CheckUniqueAllAliases();
-		GenerateSqlFromForeigns();
-		Initialized = true;
+		Result = CheckUniqueAllIdentifiers(InitXSR);
+		if (Result)
+		{
+			Result = CheckUniqueAllAliases();
+		}
+		
+		if (Result)
+		{
+			GenerateSqlFromForeigns();
+		}
+
+		Initialized = Result;
 	}
 	return Result;
 }
@@ -241,10 +252,8 @@ ISAssociationTypes& ISMetaData::GetAssociationTypes()
 	return AssociationTypes;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
+bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 {
-	ISMetaUuidCheckeder MetaUuidCheckeder;
-
 	QStringList FilterXsnXsr;
 	FilterXsnXsr.append("*.xsn");
 
@@ -261,25 +270,47 @@ void ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 		FileInfoList.append(QDir(":_" + Configuration).entryInfoList(FilterXsnXsr, QDir::Files));
 	}
 
+	ISMetaUuidCheckeder MetaUuidCheckeder;
+	bool Result = true;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех файлов мета-данных
 	{
-        MetaUuidCheckeder.Search(FileInfo);
+        Result = MetaUuidCheckeder.Search(FileInfo);
+		if (!Result)
+		{
+			ErrorString = MetaUuidCheckeder.GetErrorString();
+			break;
+		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::CheckUniqueAllAliases()
+bool ISMetaData::CheckUniqueAllAliases()
 {
 	QStringList StringList;
+	bool Result = true;
 	for (const auto &MapItem : TablesMap.toStdMap()) //Обход таблиц
 	{
 		PMetaClassTable *MetaTable = MapItem.second;
-		IS_ASSERT(MetaTable, "Error");
+		Result = MetaTable ? true : false;
+		if (!Result)
+		{
+			ErrorString = "Error";
+			break;
+		}
 
 		QString Alias = MetaTable->GetAlias().toLower();
-		IS_ASSERT(!StringList.contains(Alias), QString("Duplicate alias: %1. Table: %2.").arg(Alias).arg(MetaTable->GetName()));
-		StringList.append(Alias);
+		Result = !StringList.contains(Alias);
+		if (Result)
+		{
+			StringList.append(Alias);
+		}
+		else
+		{
+			ErrorString = QString("Duplicate alias: %1. Table: %2.").arg(Alias).arg(MetaTable->GetName());
+			break;
+		}
 	}
-	StringList.clear();
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISMetaData::GenerateSqlFromForeigns()
@@ -416,30 +447,104 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 					InitializeXSNTableSystemFields(MetaTable); //Инициализация системных полей
 				}
 
-				InitializeXSNTableSystemFieldsVisible(MetaTable, GetChildDomNode(DomNode, "IncludeSystemFields").firstChild()); //Инициализация видимости системных полей
-				InitializeXSNTableFields(MetaTable, GetChildDomNode(DomNode, "Fields").firstChild()); //Инициализация пользовательских полей
-				InitializeXSNTableIndexes(MetaTable, GetChildDomNode(DomNode, "Indexes").firstChild()); //Инициализация индексов
-				InitializeXSNTableForeigns(MetaTable, GetChildDomNode(DomNode, "Foreigns").firstChild()); //Инициализация внешних ключей
-				InitializeXSNTableEscorts(MetaTable, GetChildDomNode(DomNode, "Escorts").firstChild()); //Инициализация эскортов
-				InitializeXSNTableJoins(MetaTable, GetChildDomNode(DomNode, "Joins").firstChild()); //Инициализация JOIN'ов
+				Result = InitializeXSNTableSystemFieldsVisible(MetaTable, GetChildDomNode(DomNode, "IncludeSystemFields").firstChild()); //Инициализация видимости системных полей
+				if (Result)
+				{
+					Result = InitializeXSNTableFields(MetaTable, GetChildDomNode(DomNode, "Fields").firstChild()); //Инициализация пользовательских полей
+				}
+				
+				if (Result)
+				{
+					Result = InitializeXSNTableIndexes(MetaTable, GetChildDomNode(DomNode, "Indexes").firstChild()); //Инициализация индексов
+				}
+
+				if (Result)
+				{
+					Result = InitializeXSNTableForeigns(MetaTable, GetChildDomNode(DomNode, "Foreigns").firstChild()); //Инициализация внешних ключей
+				}
+
+				if (Result)
+				{
+					Result = InitializeXSNTableEscorts(MetaTable, GetChildDomNode(DomNode, "Escorts").firstChild()); //Инициализация эскортов
+				}
+
+				if (Result)
+				{
+					Result = InitializeXSNTableJoins(MetaTable, GetChildDomNode(DomNode, "Joins").firstChild()); //Инициализация JOIN'ов
+				}
 
 				if (Parent.length()) //Если у мета-таблицы есть родительская таблица - мета-таблица является запросом
 				{
-					IS_ASSERT(!QueriesMap.contains(TableName), QString("Query \"%1\" already exist in meta data").arg(TableName));
-					QueriesMap.insert(TableName, MetaTable);
+					Result = !QueriesMap.contains(TableName);
+					if (Result)
+					{
+						QueriesMap.insert(TableName, MetaTable);
+					}
+					else
+					{
+						ErrorString = QString("Query \"%1\" already exist in meta data").arg(TableName);
+					}
 				}
 				else //У мета-таблицы нет родительской таблицы
 				{
 					//Проверка на заполнение обязательных атрибутов
-					IS_ASSERT(!MetaTable->GetName().isEmpty(), "Empty table name.");
-					IS_ASSERT(!MetaTable->GetUID().isEmpty(), QString("Empty table \"%1\" uid.").arg(MetaTable->GetName()));
-					IS_ASSERT(!MetaTable->GetAlias().isEmpty(), QString("Empty table \"%1\" alias.").arg(MetaTable->GetName()));
-					IS_ASSERT(!MetaTable->GetLocalName().isEmpty(), QString("Empty table \"%1\" local name.").arg(MetaTable->GetName()));
-					IS_ASSERT(!MetaTable->GetLocalListName().isEmpty(), QString("Empty table \"%1\" local list name.").arg(MetaTable->GetName()));
-					IS_ASSERT(!MetaTable->GetTitleName().isEmpty(), QString("Empty table \"%1\" title name.").arg(MetaTable->GetName()));
-
-					IS_ASSERT(!TablesMap.contains(TableName), QString("Table \"%1\" already exist in meta data").arg(TableName));
-					TablesMap.insert(TableName, MetaTable);
+					Result = !MetaTable->GetName().isEmpty();
+					if (Result)
+					{
+						Result = !MetaTable->GetUID().isEmpty();
+						if (Result)
+						{
+							Result = !MetaTable->GetAlias().isEmpty();
+							if (Result)
+							{
+								Result = !MetaTable->GetLocalName().isEmpty();
+								if (Result)
+								{
+									Result = !MetaTable->GetLocalListName().isEmpty();
+									if (Result)
+									{
+										Result = !MetaTable->GetTitleName().isEmpty();
+										if (Result)
+										{
+											Result = !TablesMap.contains(TableName);
+											if (Result)
+											{
+												TablesMap.insert(TableName, MetaTable);
+											}
+											else
+											{
+												ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
+											}
+										}
+										else
+										{
+											ErrorString = QString("Empty table \"%1\" title name.").arg(MetaTable->GetName());
+										}
+									}
+									else
+									{
+										ErrorString = QString("Empty table \"%1\" local list name.").arg(MetaTable->GetName());
+									}
+								}
+								else
+								{
+									ErrorString = QString("Empty table \"%1\" local name.").arg(MetaTable->GetName());
+								}
+							}
+							else
+							{
+								ErrorString = QString("Empty table \"%1\" alias.").arg(MetaTable->GetName());
+							}
+						}
+						else
+						{
+							ErrorString = QString("Empty table \"%1\" uid.").arg(MetaTable->GetName());
+						}
+					}
+					else
+					{
+						ErrorString = "Empty table name.";
+					}
 				}
 			}
 			else
@@ -511,18 +616,34 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaClassTable *MetaTable)
 	FieldDeletionUser->SetIndex(new PMetaClassIndex(false, MetaTable->GetAlias(), MetaTable->GetName(), FieldDeletionUser->GetName()));
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTable, const QDomNode &DomNode)
 {
+	bool Result = true;
 	QDomNode Temp = DomNode;
 	while (!Temp.isNull()) //Обход полей
 	{
-		IS_ASSERT(Temp.attributes().length(), QString("Empty attributes system field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
+		Result = !Temp.attributes().isEmpty();
+		if (!Result)
+		{
+			ErrorString = QString("Empty attributes system field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+			break;
+		}
 		
 		QString FieldName = Temp.attributes().namedItem("Name").nodeValue();
-		IS_ASSERT(FieldName.length(), QString("Empty system field name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
+		Result = !FieldName.isEmpty();
+		if (!Result)
+		{
+			ErrorString = QString("Empty system field name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+			break;
+		}
 
 		PMetaClassField *MetaField = MetaTable->GetField(FieldName);
-		IS_ASSERT(MetaField, QString("Not found visible system field %1. File: %2. Line: %3").arg(FieldName).arg(CurrentXSN).arg(Temp.lineNumber()));
+		Result = MetaField ? true : false;
+		if (!Result)
+		{
+			ErrorString = QString("Not found visible system field %1. File: %2. Line: %3").arg(FieldName).arg(CurrentXSN).arg(Temp.lineNumber());
+			break;
+		}
 
 		QString LocalName = Temp.attributes().namedItem("LocalName").nodeValue();
 		if (LocalName.length())
@@ -534,127 +655,222 @@ void ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTabl
 		MetaTable->AddVisibleSystemField(MetaField);
 		Temp = Temp.nextSibling();
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDomNode &DomNode)
 {
+	bool Result = false;
 	QDomNode Temp = DomNode;
 	while (!Temp.isNull()) //Обход полей
 	{
-		if (Temp.isComment()) //Если обнаружен комментарий - переходить на следующий НОД
+		if (!Temp.isComment()) //Если поле не закоментировано - обрабатываем его
 		{
-			Temp = Temp.nextSibling();
-			continue;
-		}
-		else
-		{
-			IS_ASSERT(!Temp.attributes().isEmpty(), QString("Empty attributes field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
-		}
-		
-		PMetaClassField *MetaField = new PMetaClassField();
-		IS_ASSERT(Temp.nodeName() == "Field", QString("Invalid field tag name: %1").arg(Temp.nodeName()));
-		QString FieldName = Temp.attributes().namedItem("Name").nodeValue();
-		IS_ASSERT(FieldName.length(), QString("Empty field name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
-		IS_ASSERT(!FieldName.contains(SYMBOL_SPACE), QString("Forbidden symbol ' ' in field name: %1").arg(FieldName));
+			Result = !Temp.attributes().isEmpty();
+			if (!Result)
+			{
+				ErrorString = QString("Empty attributes field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+				break;
+			}
 
-		QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
-		MetaField->SetUID(DomNamedNodeMap.namedItem("UID").nodeValue());
-		MetaField->SetName(DomNamedNodeMap.namedItem("Name").nodeValue());
-		MetaField->SetType(DomNamedNodeMap.namedItem("Type").nodeValue());
-		MetaField->SetSize(DomNamedNodeMap.namedItem("LocalName").nodeValue().toInt());
-		MetaField->SetUpper(QVariant(DomNamedNodeMap.namedItem("LocalListName").nodeValue()).toBool());
-		MetaField->SetLower(QVariant(DomNamedNodeMap.namedItem("TitleName").nodeValue()).toBool());
-		MetaField->SetDefaultValue(DomNamedNodeMap.namedItem("DefaultValue").nodeValue());
-		MetaField->SetDefaultValueWidget(DomNamedNodeMap.namedItem("DefaultValueWidget").nodeValue());
-		MetaField->SetLabelName(DomNamedNodeMap.namedItem("LabelName").nodeValue());
-		MetaField->SetLocalListName(DomNamedNodeMap.namedItem("LocalListName").nodeValue());
-		MetaField->SetNotNull(QVariant(DomNamedNodeMap.namedItem("NotNull").nodeValue()).toBool());
-		MetaField->SetReadOnly(QVariant(DomNamedNodeMap.namedItem("ReadOnly").nodeValue()).toBool());
-		MetaField->SetHideFromObject(QVariant(DomNamedNodeMap.namedItem("HideFromObject").nodeValue()).toBool());
-		MetaField->SetHideFromList(QVariant(DomNamedNodeMap.namedItem("HideFromList").nodeValue()).toBool());
-		MetaField->SetNotSearch(QVariant(DomNamedNodeMap.namedItem("NotSearch").nodeValue()).toBool());
-		MetaField->SetHint(DomNamedNodeMap.namedItem("OrderField").nodeValue());
-		MetaField->SetPlaceholderText(DomNamedNodeMap.namedItem("PlaceholderText").nodeValue());
-		MetaField->SetControlWidget(DomNamedNodeMap.namedItem("ControlWidget").nodeValue());
-		MetaField->SetRegExp(DomNamedNodeMap.namedItem("RegExp").nodeValue());
-		MetaField->SetIsSystem(QVariant(DomNamedNodeMap.namedItem("IsSystem").nodeValue()).toBool());
-		MetaField->SetQueryText(DomNamedNodeMap.namedItem("QueryText").nodeValue());
-		MetaField->SetSequence(QVariant(DomNamedNodeMap.namedItem("Sequence").nodeValue()).toBool());
-		MetaField->SetLayoutName(DomNamedNodeMap.namedItem("LayoutName").nodeValue());
-		MetaField->SetSeparatorName(DomNamedNodeMap.namedItem("SeparatorName").nodeValue());
-		MetaField->GetIsSystem() ? MetaTable->AddSystemField(MetaField) : MetaTable->AddField(MetaField);
+			Result = Temp.nodeName() == "Field";
+			if (!Result)
+			{
+				ErrorString = QString("Invalid field tag name: %1").arg(Temp.nodeName());
+				break;
+			}
 
-		if (!MetaTable->GetParent().length() && !MetaField->GetQueryText().length())
-		{
-			//Проверка на заполнение обязательных атрибутов
-			IS_ASSERT(!MetaField->GetUID().isEmpty(), QString("Empty field uid."));
-			IS_ASSERT(!MetaField->GetName().isEmpty(), QString("Empty field name."));
-			IS_ASSERT(!MetaField->GetLabelName().isEmpty(), QString("Empty field \"%1\" label name.").arg(MetaField->GetUID()));
-			IS_ASSERT(!MetaField->GetLocalListName().isEmpty(), QString("Empty field \"%1\" local list name.").arg(MetaField->GetUID()));
+			QString FieldName = Temp.attributes().namedItem("Name").nodeValue();
+
+			Result = !FieldName.isEmpty();
+			if (!Result)
+			{
+				ErrorString = QString("Empty field name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+				break;
+			}
+			
+			Result = !FieldName.contains(SYMBOL_SPACE);
+			if (!Result)
+			{
+				ErrorString = QString("Forbidden symbol ' ' in field name: %1").arg(FieldName);
+				break;
+			}
+			
+			QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
+			PMetaClassField *MetaField = new PMetaClassField();
+			MetaField->SetUID(DomNamedNodeMap.namedItem("UID").nodeValue());
+			MetaField->SetName(FieldName);
+			MetaField->SetType(DomNamedNodeMap.namedItem("Type").nodeValue());
+			MetaField->SetSize(DomNamedNodeMap.namedItem("LocalName").nodeValue().toInt());
+			MetaField->SetUpper(QVariant(DomNamedNodeMap.namedItem("LocalListName").nodeValue()).toBool());
+			MetaField->SetLower(QVariant(DomNamedNodeMap.namedItem("TitleName").nodeValue()).toBool());
+			MetaField->SetDefaultValue(DomNamedNodeMap.namedItem("DefaultValue").nodeValue());
+			MetaField->SetDefaultValueWidget(DomNamedNodeMap.namedItem("DefaultValueWidget").nodeValue());
+			MetaField->SetLabelName(DomNamedNodeMap.namedItem("LabelName").nodeValue());
+			MetaField->SetLocalListName(DomNamedNodeMap.namedItem("LocalListName").nodeValue());
+			MetaField->SetNotNull(QVariant(DomNamedNodeMap.namedItem("NotNull").nodeValue()).toBool());
+			MetaField->SetReadOnly(QVariant(DomNamedNodeMap.namedItem("ReadOnly").nodeValue()).toBool());
+			MetaField->SetHideFromObject(QVariant(DomNamedNodeMap.namedItem("HideFromObject").nodeValue()).toBool());
+			MetaField->SetHideFromList(QVariant(DomNamedNodeMap.namedItem("HideFromList").nodeValue()).toBool());
+			MetaField->SetNotSearch(QVariant(DomNamedNodeMap.namedItem("NotSearch").nodeValue()).toBool());
+			MetaField->SetHint(DomNamedNodeMap.namedItem("OrderField").nodeValue());
+			MetaField->SetPlaceholderText(DomNamedNodeMap.namedItem("PlaceholderText").nodeValue());
+			MetaField->SetControlWidget(DomNamedNodeMap.namedItem("ControlWidget").nodeValue());
+			MetaField->SetRegExp(DomNamedNodeMap.namedItem("RegExp").nodeValue());
+			MetaField->SetIsSystem(QVariant(DomNamedNodeMap.namedItem("IsSystem").nodeValue()).toBool());
+			MetaField->SetQueryText(DomNamedNodeMap.namedItem("QueryText").nodeValue());
+			MetaField->SetSequence(QVariant(DomNamedNodeMap.namedItem("Sequence").nodeValue()).toBool());
+			MetaField->SetLayoutName(DomNamedNodeMap.namedItem("LayoutName").nodeValue());
+			MetaField->SetSeparatorName(DomNamedNodeMap.namedItem("SeparatorName").nodeValue());
+			MetaField->GetIsSystem() ? MetaTable->AddSystemField(MetaField) : MetaTable->AddField(MetaField);
+
+			if (!MetaTable->GetParent().length() && !MetaField->GetQueryText().length())
+			{
+				//Проверка на заполнение обязательных атрибутов
+				Result = !MetaField->GetUID().isEmpty();
+				if (!Result)
+				{
+					ErrorString = QString("Empty field uid.");
+					break;
+				}
+
+				Result = !MetaField->GetName().isEmpty();
+				if (!Result)
+				{
+					ErrorString = QString("Empty field name.");
+					break;
+				}
+				
+				Result = !MetaField->GetLabelName().isEmpty();
+				if (!Result)
+				{
+					ErrorString = QString("Empty field \"%1\" label name.").arg(MetaField->GetUID());
+					break;
+				}
+				
+				Result = !MetaField->GetLocalListName().isEmpty();
+				if (!Result)
+				{
+					ErrorString = QString("Empty field \"%1\" local list name.").arg(MetaField->GetUID());
+					break;
+				}
+			}
+
+			Result = !MetaTable->GetField(FieldName);
+			if (!Result)
+			{
+				ErrorString = QString("Field \"%1\" already exist. TableName: %2").arg(FieldName).arg(MetaTable->GetName());
+				break;
+			}
+			MetaTable->AddAllField(MetaField);
 		}
-
-		IS_ASSERT(!MetaTable->GetField(FieldName), QString("Field \"%1\" already exist. TableName: %2").arg(FieldName).arg(MetaTable->GetName())); //Проверка на уникальность поля в мета-таблице
-		MetaTable->AddAllField(MetaField);
 		Temp = Temp.nextSibling();
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDomNode &DomNode)
 {
+	bool Result = true;
 	QDomNode Temp = DomNode;
 	while (!Temp.isNull()) //Обход индексов
 	{
-		if (Temp.isComment()) //Если обнаружен комментарий - переходить на следующий НОД
+		if (!Temp.isComment()) //Если обнаружен комментарий - переходить на следующий НОД
 		{
-			Temp = Temp.nextSibling();
-			continue;
-		}
-		else
-		{
-			IS_ASSERT(Temp.attributes().length(), QString("Empty attributes index. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
-		}
-
-		IS_ASSERT(Temp.nodeName() == "Index", QString("Invalid index tag name: %1").arg(Temp.nodeName()));
-		QString FieldName = Temp.attributes().namedItem("Field").nodeValue();
-		IS_ASSERT(FieldName.length(), QString("Empty index name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
-
-		bool Unique = QVariant(Temp.attributes().namedItem("Unique").nodeValue()).toBool();
-		QStringList IndexList = FieldName.split(';');
-
-		if (IndexList.count() > 1) //Если индекс составной
-		{
-			PMetaClassIndex *Index = new PMetaClassIndex(Unique, MetaTable->GetAlias(), MetaTable->GetName(), QString());
-			for (const QString &IndexName : IndexList)
+			Result = !Temp.attributes().isEmpty();
+			if (!Result)
 			{
-				Index->AddField(IndexName);
+				ErrorString = QString("Empty attributes index. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+				break;
 			}
-			IndexesCompound.append(Index);
-		}
-		else //Индекс стандартный
-		{
-			PMetaClassField *MetaField = MetaTable->GetField(FieldName);
-			IS_ASSERT(MetaField, QString("Not found field from name: %1").arg(FieldName));
-			IS_ASSERT(!MetaField->GetIndex(), QString("Index already exist. TableName: %1. FieldName: %2.").arg(MetaTable->GetName()).arg(FieldName)); //Проверка индекса на уникальность
-			MetaField->SetIndex(new PMetaClassIndex(Unique, MetaTable->GetAlias(), MetaTable->GetName(), FieldName));
+
+			Result = Temp.nodeName() == "Index";
+			if (!Result)
+			{
+				ErrorString = QString("Invalid index tag name: %1").arg(Temp.nodeName());
+				break;
+			}
+			
+			QString FieldName = Temp.attributes().namedItem("Field").nodeValue();
+			Result = !FieldName.isEmpty();
+			if (!Result)
+			{
+				ErrorString = QString("Empty index name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+				break;
+			}
+			
+			bool Unique = QVariant(Temp.attributes().namedItem("Unique").nodeValue()).toBool();
+			QStringList IndexList = FieldName.split(';');
+			if (IndexList.count() > 1) //Если индекс составной
+			{
+				PMetaClassIndex *Index = new PMetaClassIndex(Unique, MetaTable->GetAlias(), MetaTable->GetName(), QString());
+				for (const QString &IndexName : IndexList)
+				{
+					Index->AddField(IndexName);
+				}
+				IndexesCompound.append(Index);
+			}
+			else //Индекс стандартный
+			{
+				PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+				Result = MetaField ? true : false;
+				if (!Result)
+				{
+					QString("Not found field from name: %1").arg(FieldName);
+					break;
+				}
+
+				Result = !MetaField->GetIndex();
+				if (!Result)
+				{
+					ErrorString = QString("Index already exist. TableName: %1. FieldName: %2.").arg(MetaTable->GetName()).arg(FieldName);
+					break;
+				}
+				MetaField->SetIndex(new PMetaClassIndex(Unique, MetaTable->GetAlias(), MetaTable->GetName(), FieldName));
+			}
 		}
 		Temp = Temp.nextSibling();
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QDomNode &DomNode)
 {
+	bool Result = true;
 	QDomNode Temp = DomNode;
 	while (!Temp.isNull())
 	{
-		IS_ASSERT(Temp.attributes().length(), QString("Empty attributes foreign. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
+		Result = !Temp.attributes().isEmpty();
+		if (!Result)
+		{
+			ErrorString = QString("Empty attributes foreign. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+			break;
+		}
+		
+		Result = Temp.nodeName() == "Foreign";
+		if (!Result)
+		{
+			ErrorString = QString("Invalid foreign tag name: %1").arg(Temp.nodeName());
+			break;
+		}
 
-		PMetaClassForeign *MetaForeign = new PMetaClassForeign();
-		IS_ASSERT(Temp.nodeName() == "Foreign", QString("Invalid foreign tag name: %1").arg(Temp.nodeName()));
 		QString FieldName = Temp.attributes().namedItem("Field").nodeValue();
-		IS_ASSERT(MetaTable->GetField(FieldName), QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->GetName()));
-		IS_ASSERT(FieldName.length(), QString("Empty foreign field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
+		Result = !FieldName.isEmpty();
+		if (!Result)
+		{
+			ErrorString = QString("Empty foreign field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+			break;
+		}
+
+		Result = MetaTable->GetField(FieldName) ? true : false;
+		if (!Result)
+		{
+			ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->GetName());
+			break;
+		}
 
 		QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
+		PMetaClassForeign *MetaForeign = new PMetaClassForeign();
 		MetaForeign->SetFieldName(DomNamedNodeMap.namedItem("Field").nodeValue());
 		MetaForeign->SetForeignClass(DomNamedNodeMap.namedItem("ForeignClass").nodeValue());
 		MetaForeign->SetForeignField(DomNamedNodeMap.namedItem("ForeignField").nodeValue());
@@ -663,50 +879,79 @@ void ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 		MetaForeign->SetTableName(MetaTable->GetName());
 
 		PMetaClassField *MetaField = MetaTable->GetField(FieldName);
-		IS_ASSERT(MetaField, QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->GetName())); //Проверка поля на существование
-		IS_ASSERT(!MetaField->GetForeign(), QString("Foreign already exist. TableName: %1. FieldName: %2.").arg(MetaTable->GetName()).arg(FieldName)); //Проверка внешнего ключа на уникальность
-		MetaField->SetForeign(MetaForeign);
+		Result = MetaTable ? true : false;
+		if (!Result)
+		{
+			ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->GetName());
+			break;
+		}
+		
+		Result = !MetaField->GetForeign();
+		if (!Result)
+		{
+			ErrorString = QString("Foreign already exist. TableName: %1. FieldName: %2.").arg(MetaTable->GetName()).arg(FieldName);
+			break;
+		}
 
+		MetaField->SetForeign(MetaForeign);
 		Temp = Temp.nextSibling();
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDomNode &DomNode)
 {
+	bool Result = true;
 	QDomNode Temp = DomNode;
 	while (!Temp.isNull())
 	{
 		IS_ASSERT(Temp.attributes().length(), QString("Empty attributes escort. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
-
-		PMetaClassEscort *MetaEscort = new PMetaClassEscort();
+		Result = !Temp.attributes().isEmpty();
+		if (!Result)
+		{
+			ErrorString = QString("Empty attributes escort. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+			break;
+		}
 
 		QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
+		PMetaClassEscort *MetaEscort = new PMetaClassEscort();
 		MetaEscort->SetLocalName(DomNamedNodeMap.namedItem("LocalName").nodeValue());
 		MetaEscort->SetTableName(DomNamedNodeMap.namedItem("TableName").nodeValue());
 		MetaEscort->SetClassName(DomNamedNodeMap.namedItem("ClassName").nodeValue());
 		MetaEscort->SetClassFilter(DomNamedNodeMap.namedItem("ClassFilter").nodeValue());
 		MetaTable->AddEscort(MetaEscort);
-
 		Temp = Temp.nextSibling();
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSNTableJoins(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableJoins(PMetaClassTable *MetaTable, const QDomNode &DomNode)
 {
+	bool Result = true;
 	QDomNode Temp = DomNode;
 	while (!Temp.isNull())
 	{
-		IS_ASSERT(Temp.attributes().length(), QString("Empty attributes field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
+		Result = !Temp.attributes().isEmpty();
+		if (!Result)
+		{
+			ErrorString = QString("Empty attributes field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+			break;
+		}
 
 		QString JoinText = Temp.attributes().namedItem("Text").nodeValue();
-		IS_ASSERT(JoinText.length(), QString("Empty join text. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
+		Result = !JoinText.isEmpty();
+		if (!Result)
+		{
+			ErrorString = QString("Empty join text. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+			break;
+		}
 		MetaTable->AddJoin(JoinText);
-
 		Temp = Temp.nextSibling();
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSR()
+bool ISMetaData::InitializeXSR()
 {
 	QStringList Filter("*.xsr");
 	QFileInfoList FileInfoList;
@@ -717,78 +962,137 @@ void ISMetaData::InitializeXSR()
 		FileInfoList.append(QDir(":_" + Configuration).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка ресурсов конфигурации
 	}
 
+	bool Result = true;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех XSR файлов
 	{
 		QFile FileXSR(FileInfo.filePath());
-		IS_ASSERT(FileXSR.open(QIODevice::ReadOnly), QString("Not opened xsr file: %1").arg(FileInfo.filePath()));
-
-		QString Content = FileXSR.readAll();
-		FileXSR.close();
-
-		InitializeXSR(Content);
+		Result = FileXSR.open(QIODevice::ReadOnly);
+		if (Result)
+		{
+			QString Content = FileXSR.readAll();
+			FileXSR.close();
+			Result = InitializeXSR(Content);
+		}
+		else
+		{
+			ErrorString = QString("Not opened xsr file: %1").arg(FileInfo.filePath());
+		}
+		
+		if (!Result)
+		{
+			break;
+		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSR(const QString &Content)
+bool ISMetaData::InitializeXSR(const QString &Content)
 {
-	ISCountingTime Time;
 	QDomElement DomElement = ISSystem::GetDomElement(Content);
-
 	QString TagName = DomElement.tagName();
-	IS_ASSERT(TagName.length(), "Empty tag name");
-	IS_ASSERT(TagName == "XSR", QString("Invalid tag name \"%1\" in XSR file").arg(TagName));
-	
-	QString SchemeName = DomElement.attributes().namedItem("Name").nodeValue();
-	IS_ASSERT(SchemeName.length(), "Empty schema name");
-
-	CurrentXSR = SchemeName;
-
-	QDomNode DomNode = DomElement.firstChild();
-	while (!DomNode.isNull()) //Обход ресурсов
+	bool Result = !TagName.isEmpty();
+	if (Result)
 	{
-		if (DomNode.isComment())
+		Result = TagName == "XSR";
+		if (Result)
 		{
-			DomNode = DomNode.nextSibling();
-			continue;
+			QString SchemeName = DomElement.attributes().namedItem("Name").nodeValue();
+			Result = !SchemeName.isEmpty();
+			if (Result)
+			{
+				CurrentXSR = SchemeName;
+				QDomNode DomNode = DomElement.firstChild();
+				while (!DomNode.isNull()) //Обход ресурсов
+				{
+					if (!DomNode.isComment())
+					{
+						QDomNamedNodeMap DomNamedNodeMap = DomNode.attributes();
+						Result = !DomNamedNodeMap.isEmpty();
+						if (!Result)
+						{
+							ErrorString = QString("Empty resource arguments. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber());
+							break;
+						}
+
+						QString TableName = DomNode.nodeName();
+						Result = !TableName.isEmpty();
+						if (!Result)
+						{
+							ErrorString = QString("Empty resource name. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber());
+							break;
+						}
+
+						PMetaClassResource *MetaResource = new PMetaClassResource();
+						MetaResource->SetTableName(TableName);
+
+						for (int i = 0, c = DomNamedNodeMap.size(); i < c; ++i) //Обход полей ресурса
+						{
+							QDomNode DomItem = DomNamedNodeMap.item(i); // Поле-значение
+							QString FieldName = DomItem.nodeName(); //Имя поля
+							QString Value = DomItem.nodeValue(); //Значение поля
+
+							PMetaClassTable *MetaTable = TablesMap.value(TableName);
+							Result = MetaTable ? true : false;
+							if (!Result)
+							{
+								ErrorString = QString("Invalid table name \"%1\" in resource. File: %2. Line: %3").arg(TableName).arg(CurrentXSR).arg(DomNode.lineNumber());
+								break;
+							}
+
+							PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+							Result = MetaField ? true : false;
+							if (Result)
+							{
+								MetaResource->AddField(FieldName, Value);
+							}
+							else
+							{
+								ErrorString = QString("Invalid field name \"%1\" in resource. File: %2. Line: %3").arg(FieldName).arg(CurrentXSR).arg(DomNode.lineNumber());
+								break;
+							}
+						}
+
+						if (Result)
+						{
+							Result = !MetaResource->GetUID().isEmpty();
+							if (Result)
+							{
+								MetaResource->SetUID(MetaResource->GetUID());
+								Resources.append(MetaResource);
+							}
+							else
+							{
+								ErrorString = QString("Empty UID in resource. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber());
+								break;
+							}
+						}
+						else
+						{
+							break;
+						}
+					}
+					DomNode = DomNode.nextSibling();
+				}
+				CurrentXSR.clear();
+			}
+			else
+			{
+				ErrorString = "Empty schema name";
+			}
 		}
-
-		QDomNamedNodeMap DomNodeMap = DomNode.attributes();
-		IS_ASSERT(DomNodeMap.length(), QString("Empty resource arguments. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber()));
-
-		QString TableName = DomNode.nodeName();
-		IS_ASSERT(TableName.length(), QString("Empty resource name. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber()));
-
-		PMetaClassResource *MetaResource = new PMetaClassResource();
-		MetaResource->SetTableName(TableName);
-
-		for (int i = 0; i < DomNodeMap.length(); ++i) //Обход полей ресурса
+		else
 		{
-			QDomNode DomItem = DomNodeMap.item(i); // Поле-значение
-
-			QString FieldName = DomItem.nodeName(); //Имя поля
-			QString Value = DomItem.nodeValue(); //Значение поля
-
-			PMetaClassTable *MetaTable = TablesMap.value(TableName);
-			IS_ASSERT(MetaTable, QString("Invalid table name \"%1\" in resource. File: %2. Line: %3").arg(TableName).arg(CurrentXSR).arg(DomNode.lineNumber()));
-
-			PMetaClassField *MetaField = MetaTable->GetField(FieldName);
-			IS_ASSERT(MetaField, QString("Invalid field name \"%1\" in resource. File: %2. Line: %3").arg(FieldName).arg(CurrentXSR).arg(DomNode.lineNumber()));
-
-			MetaResource->AddField(FieldName, Value);
+			ErrorString = QString("Invalid tag name \"%1\" in XSR file").arg(TagName);
 		}
-
-		MetaResource->SetUID(ISUuid(MetaResource->GetUID()));
-		IS_ASSERT(MetaResource->GetUID().length(), QString("Empty UID in resource. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber()));
-
-		Resources.append(MetaResource);
-		DomNode = DomNode.nextSibling();
 	}
-
-	CurrentXSR.clear();
-	ISDebug::ShowDebugString(QString("Init XSR %1: %2 msec").arg(SchemeName).arg(Time.GetElapsed()));
+	else
+	{
+		ErrorString = "Empty tag name";
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSF()
+bool ISMetaData::InitializeXSF()
 {
 	QStringList Filter("*.xsf");
 	QFileInfoList FileInfoList;
@@ -799,53 +1103,89 @@ void ISMetaData::InitializeXSF()
 		FileInfoList.append(QDir(":_" + Configuration).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка функций конфигурации
 	}
 
+	bool Result = true;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех XSF файлов
 	{
 		QFile FileXSF(FileInfo.filePath());
-		IS_ASSERT(FileXSF.open(QIODevice::ReadOnly), QString("Not opened xsf file: %1").arg(FileInfo.filePath()));
-
-		QString Content = FileXSF.readAll();
-		FileXSF.close();
-
-		InitializeXSF(Content);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSF(const QString &Content)
-{
-	ISCountingTime Time;
-	QDomElement DomElement = ISSystem::GetDomElement(Content);
-
-	QString TagName = DomElement.tagName();
-	IS_ASSERT(TagName.length(), "Empty tag name");
-	IS_ASSERT(TagName == "XSF", QString("Invalid tag name \"%1\" in XSF file.").arg(TagName));
-
-	QString SchemeName = DomElement.attributes().namedItem("Name").nodeValue();
-	IS_ASSERT(SchemeName.length(), "Empty schema name");
-
-	CurrentXSF = SchemeName;
-
-	QDomNode DomNode = DomElement.firstChild();
-	while (!DomNode.isNull()) //Обход элементов
-	{
-		QDomNamedNodeMap DomNodeMap = DomNode.attributes();
-		IS_ASSERT(DomNodeMap.length(), QString("Empty element arguments. File: %1. Line: %2").arg(CurrentXSF).arg(DomNode.lineNumber()));
-
-		QString ElementName = DomNode.nodeName();
-		IS_ASSERT(ElementName.length(), QString("Empty element name. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber()));
-
-		if (ElementName == "Function")
+		Result = FileXSF.open(QIODevice::ReadOnly);
+		if (Result)
 		{
-			PMetaClassFunction *MetaFunction = new PMetaClassFunction();
-			MetaFunction->SetText(DomNode.attributes().namedItem("Text").nodeValue());
-			FunctionsMap.insert(DomNode.attributes().namedItem("Name").nodeValue(), MetaFunction);
+			QString Content = FileXSF.readAll();
+			FileXSF.close();
+			Result = InitializeXSF(Content);
+		}
+		else
+		{
+			ErrorString = QString("Not opened xsf file: %1").arg(FileInfo.filePath());
 		}
 
-		DomNode = DomNode.nextSibling();
+		if (!Result)
+		{
+			break;
+		}
 	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::InitializeXSF(const QString &Content)
+{
+	QDomElement DomElement = ISSystem::GetDomElement(Content);
+	QString TagName = DomElement.tagName();
+	bool Result = !TagName.isEmpty();
+	if (Result)
+	{
+		Result = TagName == "XSF";
+		if (Result)
+		{
+			QString SchemeName = DomElement.attributes().namedItem("Name").nodeValue();
+			Result = !SchemeName.isEmpty();
+			if (Result)
+			{
+				CurrentXSF = SchemeName;
+				QDomNode DomNode = DomElement.firstChild();
+				while (!DomNode.isNull()) //Обход элементов
+				{
+					QDomNamedNodeMap DomNamedNodeMap = DomNode.attributes();
+					Result = !DomNamedNodeMap.isEmpty();
+					if (!Result)
+					{
+						ErrorString = QString("Empty element arguments. File: %1. Line: %2").arg(CurrentXSF).arg(DomNode.lineNumber());
+						break;
+					}
 
-	CurrentXSF.clear();
-	ISDebug::ShowDebugString(QString("Init XSF %1: %2 msec").arg(SchemeName).arg(Time.GetElapsed()));
+					QString ElementName = DomNode.nodeName();
+					Result = !ElementName.isEmpty();
+					if (!Result)
+					{
+						ErrorString = QString("Empty element name. File: %1. Line: %2").arg(CurrentXSR).arg(DomNode.lineNumber());
+						break;
+					}
+
+					if (ElementName == "Function")
+					{
+						PMetaClassFunction *MetaFunction = new PMetaClassFunction();
+						MetaFunction->SetText(DomNode.attributes().namedItem("Text").nodeValue());
+						FunctionsMap.insert(DomNode.attributes().namedItem("Name").nodeValue(), MetaFunction);
+					}
+					DomNode = DomNode.nextSibling();
+				}
+				CurrentXSF.clear();
+			}
+			else
+			{
+				ErrorString = "Empty schema name";
+			}
+		}
+		else
+		{
+			ErrorString = QString("Invalid tag name \"%1\" in XSF file.").arg(TagName);
+		}
+	}
+	else
+	{
+		ErrorString = "Empty tag name";
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QDomNode ISMetaData::GetChildDomNode(QDomNode &TableNode, const QString &TagName) const

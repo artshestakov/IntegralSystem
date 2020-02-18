@@ -8,10 +8,14 @@ public:
 	ISMetaUuidCheckeder();
 	virtual ~ISMetaUuidCheckeder();
 
-    void Search(const QFileInfo &FileInfo);
-	void Search(const QString &Content);
+	QString GetErrorString() const;
+    bool Search(const QFileInfo &FileInfo);
 
 private:
+	bool Search(const QString &Content);
+
+private:
+	QString ErrorString;
 	QStringList StringList;
 };
 //-----------------------------------------------------------------------------

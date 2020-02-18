@@ -42,8 +42,8 @@ public:
 	ISAssociationTypes& GetAssociationTypes(); //Получить ассоциации
 
 protected:
-	void CheckUniqueAllIdentifiers(bool InitXSR); //Проверка уникальности всех идентификаторов
-	void CheckUniqueAllAliases(); //Проверка уникальности всех псевдонимов таблиц
+	bool CheckUniqueAllIdentifiers(bool InitXSR); //Проверка уникальности всех идентификаторов
+	bool CheckUniqueAllAliases(); //Проверка уникальности всех псевдонимов таблиц
 	void GenerateSqlFromForeigns(); //Генерация SQL-запросов для внешних ключей
 
 	bool InitializeXSN(); //Инициализация XSN
@@ -51,18 +51,18 @@ protected:
 	
 	bool InitializeXSNTable(QDomNode &DomNode); //Инициализация таблицы
 	void InitializeXSNTableSystemFields(PMetaClassTable *MetaTable); //Инициализация системных полей для таблицы
-    void InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация видимости системных полей
-    void InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация полей таблицы
-    void InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация индексов полей таблицы
-    void InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация внешних ключей полей таблицы
-    void InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация эскортов таблицы
-    void InitializeXSNTableJoins(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация JOIN'ов
+    bool InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация видимости системных полей
+    bool InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация полей таблицы
+    bool InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация индексов полей таблицы
+    bool InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация внешних ключей полей таблицы
+    bool InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация эскортов таблицы
+    bool InitializeXSNTableJoins(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация JOIN'ов
 
-	void InitializeXSR(); //Инициализация XSR
-	void InitializeXSR(const QString &Content); //Инициализация файла XSR
+	bool InitializeXSR(); //Инициализация XSR
+	bool InitializeXSR(const QString &Content); //Инициализация файла XSR
 
-	void InitializeXSF(); //Иницилизация XSF
-	void InitializeXSF(const QString &Content); //Инициализация файла XSF
+	bool InitializeXSF(); //Иницилизация XSF
+	bool InitializeXSF(const QString &Content); //Инициализация файла XSF
 
 private:
 	ISMetaData();
