@@ -1,8 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "PMetaClassTable.h"
-#include "PMetaClassField.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISDatabaseHelper
 {

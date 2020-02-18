@@ -1,10 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISNamespace.h"
-#include "ISTypes.h"
-#include "PMetaClassTable.h"
-
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISQueryModel : public QObject
 {

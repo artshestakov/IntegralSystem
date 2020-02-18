@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISLineEdit.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
 class ISFullTextSearchForm : public ISInterfaceMetaForm

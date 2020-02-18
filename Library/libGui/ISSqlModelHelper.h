@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
-#include "PMetaClassForeign.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISSqlModelHelper
 {

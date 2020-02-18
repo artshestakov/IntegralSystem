@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISSqlModelCore : public QAbstractItemModel
 {

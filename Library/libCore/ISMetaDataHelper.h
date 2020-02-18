@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "PMetaClassForeign.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISMetaDataHelper
 {

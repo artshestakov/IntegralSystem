@@ -3,8 +3,7 @@
 #define _CGCONFIGURATORSHOW_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
-#include "PMetaClassTable.h"
-#include "PMetaClassField.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class CGConfiguratorShow : public CGConfiguratorBase
 {

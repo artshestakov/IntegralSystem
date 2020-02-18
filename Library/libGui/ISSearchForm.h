@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 #include "ISButtons.h"
 #include "ISButtons.h"
 #include "ISSearchModel.h"

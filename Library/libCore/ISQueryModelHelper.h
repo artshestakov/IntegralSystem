@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "PMetaClassForeign.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISQueryModelHelper
 {

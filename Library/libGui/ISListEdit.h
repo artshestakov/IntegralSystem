@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 #include "ISButtons.h"
 #include "ISListEditPopup.h"
 //-----------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 #include "ISParagraphBaseForm.h"
 #include "ISTabWidgetMain.h"
 #include "ISInterfaceMetaForm.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISWorkspaceForm : public ISParagraphBaseForm
 {

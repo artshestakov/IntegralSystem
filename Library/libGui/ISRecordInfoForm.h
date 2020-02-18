@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISRecordInfoForm : public ISInterfaceDialogForm
 {

@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISFavoritesForm : public ISInterfaceForm

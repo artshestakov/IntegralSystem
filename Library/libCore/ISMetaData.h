@@ -3,11 +3,8 @@
 #define _ISMETADATA_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "PMetaClassFunction.h"
-#include "PMetaClassTable.h"
-#include "PMetaClassQuery.h"
-#include "PMetaClassResource.h"
 #include "ISAssociationTypes.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISMetaData
 {

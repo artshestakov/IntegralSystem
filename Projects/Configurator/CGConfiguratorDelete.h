@@ -3,7 +3,7 @@
 #define _CGCONFIGURATORDELETE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class CGConfiguratorDelete : public CGConfiguratorBase
 {

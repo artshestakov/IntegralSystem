@@ -3,12 +3,222 @@
 #define _PMETACLASS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
+#include "ISUuid.h"
+#include "ISNamespace.h"
+#include "ISTypes.h"
 //-----------------------------------------------------------------------------
 struct PMetaClass
 {
 	PMetaClass(const QString &type_object) : TypeObject(type_object) { }
 
 	QString TypeObject; //Тип объекта
+};
+//-----------------------------------------------------------------------------
+struct PMetaClassIndex : public PMetaClass
+{
+	PMetaClassIndex() : PMetaClass("Index") { }
+	PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name) : PMetaClass("Index"), Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
+
+	bool Unique;
+	QString Alias;
+	QString TableName;
+	QString FieldName;
+	QVectorString Fields;
+};
+//-----------------------------------------------------------------------------
+struct PMetaClassForeign : public PMetaClass
+{
+	PMetaClassForeign() : PMetaClass("Foreign") { }
+
+	QString Field; //Поле, на которое устанавливается внешний ключ
+	QString ForeignClass; //На какую таблицу ссылкается внешний ключ
+	QString ForeignField; //На какое поле ссылкается внешний ключ
+	QString ForeignViewNameField; //Какое поле (поля) отображать в запросе на выборку
+	QString OrderField; //Поле по которому будет происходить сортировка
+
+	QString TableName; //Таблица, содержащая поле, на которое устанавливается внешний ключ
+	QString SqlQuery; //Запрос на выбору по внешнему ключу
+};
+//-----------------------------------------------------------------------------
+struct PMetaClassEscort : public PMetaClass
+{
+	PMetaClassEscort() : PMetaClass("Escort") { }
+
+	QString LocalName;
+	QString TableName;
+	QString ClassName;
+	QString ClassFilter;
+};
+//-----------------------------------------------------------------------------
+struct PMetaClassField : public PMetaClass
+{
+	PMetaClassField() : PMetaClass("Field"),
+		Sequence(false),
+		Type(ISNamespace::FT_Unknown),
+		Size(0),
+		Upper(false),
+		Lower(false),
+		NotNull(false),
+		ReadOnly(false),
+		HideFromObject(false),
+		HideFromList(false),
+		NotSearch(false),
+		IsSystem(false),
+		Index(nullptr),
+		Foreign(nullptr)
+	{
+
+	}
+
+	bool IsFieldID() const
+	{
+		return Name.toLower() == "id";
+	}
+
+	bool IsFieldUID() const
+	{
+		return Name.toLower() == "uid";
+	}
+
+	ISUuid UID;
+	ISNamespace::FieldType Type; //Тип
+	QString Name; //Название
+	int Size; //Размер
+	bool Upper; //Только верхний регистр
+	bool Lower; //Только нижний регистр
+	QVariant DefaultValue; //Значение по умолчанию для базы
+	QVariant DefaultValueWidget; //Значение по умолчанию
+	QString LabelName; //Имя поля на форме объекта
+	QString LocalListName; //Имя поля в списке
+	bool NotNull; //Поле не должно быть пустым
+	bool ReadOnly; //Редактирование поля запрещено
+	bool HideFromObject; //Поле должно быть скрыто в форме объекта
+	bool HideFromList; //Поле не должно учавствовать в запросе
+	bool NotSearch; //Участие поля в поиске
+	QString Hint; //Подсказка для поля
+	QString PlaceholderText;
+	QString ControlWidget; //Наименование виджета-редактора значения
+	QString RegExp; //Регулярное выражение для поля
+	bool IsSystem; //Статус системного поля
+
+	QString QueryText; //Текст подзапроса
+
+	PMetaClassIndex *Index; //Индекс
+	PMetaClassForeign *Foreign; //Внешний ключ
+
+	bool Sequence; //Последовательность поля
+	QString LayoutName; //Наименование компоновщика (для горизонтального размещения поля)
+	QString SeparatorName; //Наименование вкладки
+};
+//-----------------------------------------------------------------------------
+struct PMetaClassTable : public PMetaClass
+{
+	PMetaClassTable() : PMetaClass("Table"), UseRoles(true), ShowOnly(false), IsSystem(false) { }
+	PMetaClassTable(const QString &type_object) : PMetaClass(type_object), UseRoles(true), ShowOnly(false), IsSystem(false) { }
+
+	PMetaClassField* GetField(const QString &FieldName) //Получить поле по имени
+	{
+		for (PMetaClassField *MetaField : AllFields)
+		{
+			if (MetaField->Name.toLower() == FieldName.toLower())
+			{
+				return MetaField;
+			}
+		}
+		return nullptr;
+	}
+
+	PMetaClassField* GetField(int Index) //Получить поле по индексу
+	{
+		if (!AllFields.isEmpty())
+		{
+			return AllFields[Index];
+		}
+		return nullptr;
+	}
+
+	PMetaClassField* GetFieldID() //Получить поле "Код"
+	{
+		if (!SystemFields.isEmpty())
+		{
+			return SystemFields.front();
+		}
+		return nullptr;
+	}
+
+	int GetFieldIndex(const QString &FieldName) const //Получить индекс поля по его имени
+	{
+		for (int i = 0; i < AllFields.count(); ++i)
+		{
+			PMetaClassField *MetaField = AllFields.at(i);
+			if (MetaField->Name == FieldName)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	QString Name; //Название таблицы
+	ISUuid UID; //Идентификатор
+	QString Alias; //Псевдоним
+	QString LocalName; //Локальное имя (в единственном числе)
+	QString LocalListName; //Локальное имя (в множественном числе)
+	QString TitleName;
+	bool UseRoles;
+	QString ClassFilter; //Фильтр таблицы
+	QString ClassFilterField;
+	QString ObjectForm; //Наименование класса формы объекта
+	bool ShowOnly; //Только просмотр таблицы
+	bool IsSystem;
+
+	QString SqlModel; //Наименование класса модели
+
+	QString Parent;
+	QString Where;
+	QString OrderField;
+
+	QVector<PMetaClassEscort*> Escorts; //Эскортные таблицы
+	QVector<PMetaClassField*> Fields; //Поля
+	QVector<PMetaClassField*> SystemFields; //Системные поля
+	QVector<PMetaClassField*> AllFields; //Все поля
+
+	QVector<PMetaClassField*> SystemFieldsVisible; //Отображаемые системные поля
+	QVectorString Joins;
+};
+//-----------------------------------------------------------------------------
+struct PMetaClassFunction : public PMetaClass
+{
+	PMetaClassFunction() : PMetaClass("Function") { }
+
+	QString Text;
+};
+//-----------------------------------------------------------------------------
+struct PMetaClassQuery : public PMetaClassTable
+{
+public:
+	PMetaClassQuery() : PMetaClassTable("Query") { }
+
+	QString From;
+	QString Where;
+	QString Order;
+	QString OrderType;
+	QVectorString Joins;
+};
+//-----------------------------------------------------------------------------
+struct PMetaClassResource
+{
+	void AddField(const QString &FieldName, const QString &Value) //Добавить параметр и его значение в ресурс
+	{
+		if (FieldName.toLower() != "uid")
+		{
+			Parameters.insert(FieldName, Value);
+		}
+	}
+
+	QString TableName;
+	ISUuid UID;
+	QStringMap Parameters;
 };
 //-----------------------------------------------------------------------------
 #endif

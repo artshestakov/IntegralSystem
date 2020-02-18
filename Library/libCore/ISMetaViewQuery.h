@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISMetaViewQuery
 {

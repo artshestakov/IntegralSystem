@@ -3,8 +3,7 @@
 #define _CGCONFIGURATORFIAS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
-#include "ISTypes.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class CGConfiguratorFIAS : public CGConfiguratorBase
 {

@@ -1,8 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISUuid.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISCore
 {

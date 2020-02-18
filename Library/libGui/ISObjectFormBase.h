@@ -5,7 +5,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISNamespace.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 #include "ISToolBarObject.h"
 #include "ISFieldEditBase.h"
 #include "ISLineEdit.h"

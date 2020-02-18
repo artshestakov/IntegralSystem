@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISConfig.h"
 #include "ISMetaData.h"
-#include "PMetaClassTable.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------

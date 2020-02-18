@@ -1,7 +1,5 @@
 #include "ISMetaViewQuery.h"
 #include "ISMetaData.h"
-#include "PMetaClassTable.h"
-#include "PMetaClassField.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISMetaViewQuery::ISMetaViewQuery(const QString &QueryName)

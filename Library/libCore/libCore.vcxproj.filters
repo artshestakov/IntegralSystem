@@ -253,34 +253,10 @@
     <ClInclude Include="ISDefinesCore.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="PMetaClassResource.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
     <ClInclude Include="ISStructs.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="PMetaClass.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="PMetaClassTable.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="PMetaClassField.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="PMetaClassIndex.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="PMetaClassFunction.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="PMetaClassEscort.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="PMetaClassQuery.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="PMetaClassForeign.h">
       <Filter>MetaData</Filter>
     </ClInclude>
     <ClInclude Include="ISMetaData.h">

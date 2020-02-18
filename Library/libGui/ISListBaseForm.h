@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 #include "ISQueryModel.h"
 #include "ISSqlModelCore.h"
 #include "ISModelThreadQuery.h"

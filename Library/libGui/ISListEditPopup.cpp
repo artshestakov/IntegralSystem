@@ -6,7 +6,6 @@
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISMetaDataHelper.h"
-#include "PMetaClassForeign.h"
 #include "ISSystem.h"
 #include "ISButtons.h"
 #include "ISMetaData.h"

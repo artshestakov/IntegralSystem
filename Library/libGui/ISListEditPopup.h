@@ -4,8 +4,7 @@
 #include "ISInterfaceForm.h"
 #include "ISLineEdit.h"
 #include "ISListWidget.h"
-#include "PMetaClassForeign.h"
-#include "PMetaClassTable.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISListEditPopup : public ISInterfaceForm
 {

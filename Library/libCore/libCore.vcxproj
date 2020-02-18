@@ -173,15 +173,7 @@
     <ClInclude Include="ISStackWalker.h" />
     <QtMoc Include="ISStorageFileLoader.h" />
     <ClInclude Include="PMetaClass.h" />
-    <ClInclude Include="PMetaClassEscort.h" />
-    <ClInclude Include="PMetaClassField.h" />
-    <ClInclude Include="PMetaClassForeign.h" />
-    <ClInclude Include="PMetaClassFunction.h" />
-    <ClInclude Include="PMetaClassIndex.h" />
-    <ClInclude Include="PMetaClassQuery.h" />
     <ClInclude Include="ISStructs.h" />
-    <ClInclude Include="PMetaClassResource.h" />
-    <ClInclude Include="PMetaClassTable.h" />
     <ClInclude Include="libCore_global.h" />
     <ClInclude Include="StackWalker.h" />
     <ClInclude Include="StdAfx.h" />

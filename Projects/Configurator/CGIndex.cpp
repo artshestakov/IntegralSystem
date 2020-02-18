@@ -1,7 +1,6 @@
 #include "CGIndex.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
-#include "PMetaClassForeign.h"
 #include "ISMetaData.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
