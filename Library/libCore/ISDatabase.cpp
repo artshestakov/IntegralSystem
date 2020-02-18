@@ -268,12 +268,12 @@ QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName
 	QVariant Value;
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 	PMetaClassField *MetaField = MetaTable->GetField(FieldName);
-	QString SqlText = "SELECT " + MetaTable->GetAlias() + '_' + MetaField->GetName() + " FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_id = :ObjectID";
+	QString SqlText = "SELECT " + MetaTable->Alias + '_' + MetaField->Name + " FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id = :ObjectID";
 	ISQuery qSelect(SqlText);
 	qSelect.BindValue(":ObjectID", ObjectID);
 	if (qSelect.ExecuteFirst())
 	{
-		Value = qSelect.ReadColumn(MetaTable->GetAlias() + '_' + MetaField->GetName());
+		Value = qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name);
 	}
 	return Value;
 }

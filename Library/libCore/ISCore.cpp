@@ -196,9 +196,9 @@ void ISCore::ExitApplication()
 QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 {
 	QString ObjectName;
-	if (MetaTable->GetTitleName().length())
+	if (!MetaTable->TitleName.isEmpty())
 	{
-		QString TitleName = MetaTable->GetTitleName();
+		QString TitleName = MetaTable->TitleName;
 		QStringList StringList = TitleName.split(';');
 		QString QueryText = "SELECT ";
 
@@ -207,7 +207,7 @@ QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 			QueryText += "concat(";
 			for (int i = 0; i < StringList.count(); ++i)
 			{
-				QueryText += MetaTable->GetAlias() + '_' + StringList.at(i) + ", ' ', ";
+				QueryText += MetaTable->Alias + '_' + StringList[i] + ", ' ', ";
 			}
 
 			ISSystem::RemoveLastSymbolFromString(QueryText, 7);
@@ -215,11 +215,11 @@ QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 		}
 		else //Если указано только одно поле
 		{
-			QueryText += MetaTable->GetAlias() + '_' + TitleName + " \n";
+			QueryText += MetaTable->Alias + '_' + TitleName + " \n";
 		}
 
-		QueryText += "FROM " + MetaTable->GetName() + " \n";
-		QueryText += "WHERE " + MetaTable->GetAlias() + "_id = :ObjectID";
+		QueryText += "FROM " + MetaTable->Name + " \n";
+		QueryText += "WHERE " + MetaTable->Alias + "_id = :ObjectID";
 
 		ISQuery qSelectName(QueryText);
 		qSelectName.BindValue(":ObjectID", ObjectID);

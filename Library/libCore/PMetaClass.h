@@ -4,15 +4,10 @@
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class PMetaClass
+struct PMetaClass
 {
-public:
-	PMetaClass(const QString &type_object);
-	~PMetaClass();
+	PMetaClass(const QString &type_object) : TypeObject(type_object) { }
 
-	QString GetTypeObject() const; //Получить тип объекта
-
-private:
 	QString TypeObject; //Тип объекта
 };
 //-----------------------------------------------------------------------------

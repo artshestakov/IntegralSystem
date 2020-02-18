@@ -4,23 +4,22 @@
 //-----------------------------------------------------------------------------
 QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaForeign, const QString &SqlFilter, const QVariant &ObjectID)
 {
-	PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass()); //Таблица на которую ссылается внешний ключ
-	QString ForeignAlias = MetaTableForeign->GetAlias();
-	QStringList FieldList = MetaForeign->GetForeignViewNameField().split(';');
+	PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass); //Таблица на которую ссылается внешний ключ
+	QStringList FieldList = MetaForeign->ForeignViewNameField.split(';');
 
-	QString SqlQuery = "SELECT " + ForeignAlias + '_' + MetaForeign->GetForeginField().toLower() + " AS ID, concat(";
+	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField.toLower() + " AS ID, concat(";
 
 	for (int i = 0; i < FieldList.count(); ++i) //Обход полей (которые должны быть отображены)
 	{
-		SqlQuery += ForeignAlias + '_' + FieldList.at(i).toLower() + ", ' ', ";
+		SqlQuery += MetaTableForeign->Alias + '_' + FieldList.at(i).toLower() + ", ' ', ";
 	}
 
 	ISSystem::RemoveLastSymbolFromString(SqlQuery, 7);
 
 	SqlQuery += ") ";
 	SqlQuery += "AS Value \n";
-	SqlQuery += "FROM " + MetaTableForeign->GetName() + " \n";
-	SqlQuery += "WHERE NOT " + ForeignAlias + "_isdeleted \n";
+	SqlQuery += "FROM " + MetaTableForeign->Name + " \n";
+	SqlQuery += "WHERE NOT " + MetaTableForeign->Alias + "_isdeleted \n";
 
 	if (SqlFilter.length())
 	{
@@ -29,14 +28,14 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaFor
 
 	if (ObjectID.isValid())
 	{
-		SqlQuery += "AND " + ForeignAlias + '_' + MetaForeign->GetForeginField() + " = :ObjectID \n";
+		SqlQuery += "AND " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField + " = :ObjectID \n";
 	}
 
 	SqlQuery += "ORDER BY ";
 
-	if (MetaForeign->GetOrderField().length()) //Если указано поле для сортировки
+	if (!MetaForeign->OrderField.isEmpty()) //Если указано поле для сортировки
 	{
-		SqlQuery += MetaTableForeign->GetAlias() + '_' + MetaForeign->GetOrderField() + " ASC";
+		SqlQuery += MetaTableForeign->Alias + '_' + MetaForeign->OrderField + " ASC";
 	}
 	else
 	{

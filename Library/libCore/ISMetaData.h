@@ -73,9 +73,9 @@ private:
 
     QDomNode GetChildDomNode(QDomNode &TableNode, const QString &TagName) const;
 
-	QMap<QString, PMetaClassFunction*> FunctionsMap; //Функции
-	QMap<QString, PMetaClassTable*> TablesMap; //Таблицы
-	QMap<QString, PMetaClassTable*> QueriesMap; //Запросы
+	std::map<QString, PMetaClassFunction *> FunctionsMap; //Функции
+	std::map<QString, PMetaClassTable*> TablesMap; //Таблицы
+	std::map<QString, PMetaClassTable*> QueriesMap; //Запросы
 
 	QVector<PMetaClassResource*> Resources; //Реурсы
 	QVector<PMetaClassIndex*> IndexesCompound; //Составные индексы

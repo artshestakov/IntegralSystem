@@ -6,82 +6,54 @@
 #include "PMetaClassField.h"
 #include "PMetaClassEscort.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT PMetaClassTable : public PMetaClass
+struct LIBCORE_EXPORT PMetaClassTable : public PMetaClass
 {
-public:
-	PMetaClassTable();
-	PMetaClassTable(const QString &type_object);
-	~PMetaClassTable();
-
-	void SetName(const QString &name);
-	QString GetName() const;
-
-	void SetUID(const ISUuid &uid);
-	ISUuid GetUID() const;
-
-	void SetAlias(const QString &alias); //Изменить псевдоним
-	QString GetAlias() const; //Получить псевдоним
-
-	void SetLocalName(const QString &local_name); //Изменить локальное наименование в единственном числе
-	QString GetLocalName() const; //Получить локальное наименование в единственном числе
-
-	void SetLocalListName(const QString &local_list_name); //Изменить локальное наименование в множественном числе
-	QString GetLocalListName() const; //Получить локальное наименование в множественном числе
-
-	void SetTitleName(const QString &title_name);
-	QString GetTitleName() const;
-
-	void SetUseRoles(bool use_roles);
-	bool GetUseRoles() const;
-
-	void SetClassFilter(const QString &class_filter);
-	QString GetClassFilter() const;
-
-	void SetClassFilterField(const QString &class_filter_field);
-	QString GetClassFilterField() const;
-
-	void SetObjectForm(const QString &object_form);
-	QString GetObjectForm() const;
-
-	void SetShowOnly(bool show_only);
-	bool GetShowOnly() const;
-
-	void SetIsSystem(bool is_system);
-	bool GetIsSystem() const;
-
-	void SetSqlModel(const QString &sql_model);
-	QString GetSqlModel() const;
-
-	void SetParent(const QString &parent);
-	QString GetParent() const;
-
-	void SetWhere(const QString &where);
-	QString GetWhere() const;
-
-	void SetOrderField(const QString &order_field);
-	QString GetOrderField() const;
-
-	void AddField(PMetaClassField *Field); //Добавить поле в список пользовательских полей
-	void AddSystemField(PMetaClassField *SystemField); //Добавить поле в список системных полей
-	void AddAllField(PMetaClassField *Field); //Добавить поле в общий список всех полей
-	void AddEscort(PMetaClassEscort *EscortObject); //Добавить эскортную таблицу
-	void AddVisibleSystemField(PMetaClassField *MetaField); //Добавить отображаемое системное поле
-	void AddJoin(const QString &JoinText);
+	PMetaClassTable() : PMetaClass("Table"), UseRoles(true), ShowOnly(false), IsSystem(false) { }
+	PMetaClassTable(const QString &type_object) : PMetaClass(type_object), UseRoles(true), ShowOnly(false), IsSystem(false) { }
 	
-	QVector<PMetaClassField*> GetFields(); //Получить список пользовательских полей
-	QVector<PMetaClassField*> GetSystemFields(); //Получить список системных полей
-	QVector<PMetaClassField*> GetAllFields(); //Получить список всех полей
-	QVector<PMetaClassEscort*> GetEscorts(); //Получить список эскортных таблиц
-	QVector<PMetaClassField*> GetVisibleSystemFields(); //Получить список отображаемых системных полей
-	QVectorString GetJoins();
+	PMetaClassField* GetField(const QString &FieldName) //Получить поле по имени
+	{
+		for (PMetaClassField *MetaField : AllFields)
+		{
+			if (MetaField->Name.toLower() == FieldName.toLower())
+			{
+				return MetaField;
+			}
+		}
+		return nullptr;
+	}
 
-	PMetaClassField* GetField(const QString &FieldName); //Получить поле по имени
-	PMetaClassField* GetField(int Index); //Получить поле по индексу
-	PMetaClassField* GetFieldID(); //Получить поле "Код"
+	PMetaClassField* GetField(int Index) //Получить поле по индексу
+	{
+		if (!AllFields.isEmpty())
+		{
+			return AllFields[Index];
+		}
+		return nullptr;
+	}
 
-	int GetFieldIndex(const QString &FieldName) const; //Получить индекс поля по его имени
+	PMetaClassField* GetFieldID() //Получить поле "Код"
+	{
+		if (!SystemFields.isEmpty())
+		{
+			return SystemFields.front();
+		}
+		return nullptr;
+	}
 
-private:
+	int GetFieldIndex(const QString &FieldName) const //Получить индекс поля по его имени
+	{
+		for (int i = 0; i < AllFields.count(); ++i)
+		{
+			PMetaClassField *MetaField = AllFields.at(i);
+			if (MetaField->Name == FieldName)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	QString Name; //Название таблицы
 	ISUuid UID; //Идентификатор
 	QString Alias; //Псевдоним

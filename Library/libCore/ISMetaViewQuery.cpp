@@ -20,30 +20,30 @@ QString ISMetaViewQuery::GetQueryText()
 {
 	QString Result = "SELECT \n";
 
-	for (int i = 0; i < MetaQuery->GetFields().count(); ++i)
+	for (int i = 0; i < MetaQuery->Fields.count(); ++i)
 	{
-		PMetaClassField *MetaQueryField = MetaQuery->GetFields().at(i);
-		Result += MetaQueryField->GetQueryText() + " AS \"" + MetaQueryField->GetName() + "\", \n";
+		PMetaClassField *MetaQueryField = MetaQuery->Fields[i];
+		Result += MetaQueryField->QueryText + " AS \"" + MetaQueryField->Name + "\", \n";
 	}
 
 	ISSystem::RemoveLastSymbolFromString(Result, 3);
 	
 	Result += " \n";
-	Result += "FROM " + MetaQuery->GetParent() + " \n";
+	Result += "FROM " + MetaQuery->Parent + " \n";
 
-	for (int i = 0; i < MetaQuery->GetJoins().count(); ++i)
+	for (int i = 0; i < MetaQuery->Joins.count(); ++i)
 	{
-		Result += MetaQuery->GetJoins().at(i) + " \n";
+		Result += MetaQuery->Joins[i] + " \n";
 	}
 
-	if (MetaQuery->GetWhere().length())
+	if (!MetaQuery->Where.isEmpty())
 	{
-		Result += "WHERE " + MetaQuery->GetWhere() + " \n";
+		Result += "WHERE " + MetaQuery->Where + " \n";
 	}
 
-	if (ClassFilter.length())
+	if (!ClassFilter.isEmpty())
 	{
-		if (MetaQuery->GetWhere().length())
+		if (!MetaQuery->Where.isEmpty())
 		{
 			Result += "AND ";
 		}
@@ -55,7 +55,7 @@ QString ISMetaViewQuery::GetQueryText()
 		Result += ClassFilter + " \n";
 	}
 
-	if (OrderField.length())
+	if (!OrderField.isEmpty())
 	{
 		Result += "ORDER BY " + OrderField;
 

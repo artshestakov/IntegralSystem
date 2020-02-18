@@ -10,8 +10,8 @@ ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelT
 	: QObject(parent),
 	MetaTable(meta_table),
 	ModelType(model_type),
-	ClassAlias(meta_table->GetAlias()),
-	ClassFilter(meta_table->GetClassFilter()),
+	ClassAlias(meta_table->Alias),
+	ClassFilter(meta_table->ClassFilter),
 	Limit(0),
 	Offset(0),
 	VisibleIsDeleted(false),
@@ -22,8 +22,8 @@ ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelT
 	CreateQuerySelectFields();
 	CreateQuerySelectIsDeleted();
 
-	QuerySelectText = "SELECT \n" + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + MetaTable->GetSystemFields().at(0)->GetName().toLower() + " AS \"" + MetaTable->GetSystemFields().front()->GetName() + "\", \n";
-	QuerySelectFrom = "FROM " + MetaTable->GetName().toLower() + SYMBOL_SPACE + ClassAlias + " \n";
+	QuerySelectText = "SELECT \n" + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + MetaTable->GetFieldID()->Name.toLower() + " AS \"" + MetaTable->GetFieldID()->Name + "\", \n";
+	QuerySelectFrom = "FROM " + MetaTable->Name.toLower() + SYMBOL_SPACE + ClassAlias + " \n";
 	QueryWhereText = "WHERE \n";
 	QueryWhereText += QuerySelectIsDeleted;
 	OrderFieldDefault = ClassAlias + SYMBOL_POINT + ClassAlias + "_id";
@@ -209,15 +209,14 @@ void ISQueryModel::ClearSearchFilter()
 void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &FieldName)
 {
 	PMetaClassField *MetaField = MetaTable->GetField(FieldName);
-	QString FieldQueryText = MetaField->GetQueryText();
+	QString FieldQueryText = MetaField->QueryText;
 	if (FieldQueryText.length()) //Если сортируемое поле является виртуальным - сортировать по запросу поля
 	{
 		OrderField = '(' + FieldQueryText + ')';
 	}
 	else
 	{
-		PMetaClassForeign *MetaForeign = MetaField->GetForeign();
-		if (MetaForeign)
+		if (MetaField->Foreign)
 		{
 			OrderField = ForeignFields.value(FieldName);
 		}
@@ -245,64 +244,60 @@ void ISQueryModel::SetOffset(int offset)
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectSystemFields()
 {
-	for (int i = 1; i < MetaTable->GetSystemFields().count(); ++i) //Обход системных полей и включение их в запрос
+	for (int i = 1, c = MetaTable->SystemFields.count(); i < c; ++i) //Обход системных полей и включение их в запрос
 	{
-		PMetaClassField *SystemField = MetaTable->GetSystemFields().at(i);
-
-		if (!MetaTable->GetVisibleSystemFields().contains(SystemField))
+		PMetaClassField *SystemField = MetaTable->SystemFields[i];
+		if (!MetaTable->SystemFieldsVisible.contains(SystemField))
 		{
-			if (SystemField->GetHideFromList())
+			if (SystemField->HideFromList)
 			{
 				continue;
 			}
 		}
-
-		QuerySelectSystemFields += ClassAlias + SYMBOL_POINT + ClassAlias + '_' + SystemField->GetName().toLower() + " AS \"" + SystemField->GetName() + "\", \n";
+		QuerySelectSystemFields += ClassAlias + SYMBOL_POINT + ClassAlias + '_' + SystemField->Name.toLower() + " AS \"" + SystemField->Name + "\", \n";
 	}
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectFields()
 {
-	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
+	for (int i = 0, c = MetaTable->Fields.count(); i < c; ++i)
 	{
-		PMetaClassField *Field = MetaTable->GetFields().at(i);
+		PMetaClassField *Field = MetaTable->Fields[i];
 
 		if (ModelType == ISNamespace::QMT_Object)
 		{
-			if (Field->GetHideFromObject())
+			if (Field->HideFromObject)
 			{
 				continue;
 			}
 		}
 		else if (ModelType == ISNamespace::QMT_List)
 		{
-			if (Field->GetHideFromList())
+			if (Field->HideFromList)
 			{
 				continue;
 			}
 		}
 
-		if (Field->GetForeign()) //Если на поле установлен внешний ключ
+		if (Field->Foreign) //Если на поле установлен внешний ключ
 		{
-			PMetaClassForeign *MetaForeign = Field->GetForeign();
-			PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass());
+			PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(Field->Foreign->ForeignClass);
+			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->Name.toLower() + SYMBOL_SPACE + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + " ON " + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower() + " = " + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + SYMBOL_POINT + MetaTableForeign->Alias + '_' + Field->Foreign->ForeignField.toLower() + " \n";
 			
-			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->GetName().toLower() + SYMBOL_SPACE + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->GetAlias(), i) + " ON " + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->GetName().toLower() + " = " + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->GetAlias(), i) + SYMBOL_POINT + MetaTableForeign->GetAlias() + '_' + MetaForeign->GetForeginField().toLower() + " \n";
-			
-			QString Temp = ISQueryModelHelper::GetForeignViewNameField(MetaTableForeign->GetAlias(), MetaForeign, i).toLower();
-			ForeignFields.insert(Field->GetName(), Temp);
+			QString Temp = ISQueryModelHelper::GetForeignViewNameField(MetaTableForeign->Alias, Field->Foreign, i).toLower();
+			ForeignFields.insert(Field->Name, Temp);
 
-			QuerySelectFields += Temp + " AS \"" + Field->GetName() + "\", \n";
+			QuerySelectFields += Temp + " AS \"" + Field->Name + "\", \n";
 		}
 		else
 		{
-			if (Field->GetQueryText().length())
+			if (!Field->QueryText.isEmpty())
 			{
-				QuerySelectFields += '(' + Field->GetQueryText() + ") AS \"" + Field->GetName() + "\", \n";
+				QuerySelectFields += '(' + Field->QueryText + ") AS \"" + Field->Name + "\", \n";
 			}
 			else
 			{
-				QuerySelectFields += ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->GetName().toLower() + " AS \"" + Field->GetName() + "\", \n";
+				QuerySelectFields += ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower() + " AS \"" + Field->Name + "\", \n";
 			}
 		}
 	}

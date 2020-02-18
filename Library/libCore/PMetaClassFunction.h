@@ -4,16 +4,10 @@
 //-----------------------------------------------------------------------------
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT PMetaClassFunction : public PMetaClass
+struct LIBCORE_EXPORT PMetaClassFunction : public PMetaClass
 {
-public:
-	PMetaClassFunction();
-	~PMetaClassFunction();
+	PMetaClassFunction() : PMetaClass("Function") { }
 
-	void SetText(const QString &text);
-	QString GetText() const;
-
-private:
 	QString Text;
 };
 //-----------------------------------------------------------------------------

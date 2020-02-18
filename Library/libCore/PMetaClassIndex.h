@@ -5,29 +5,11 @@
 #include "PMetaClass.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT PMetaClassIndex : public PMetaClass
+struct LIBCORE_EXPORT PMetaClassIndex : public PMetaClass
 {
-public:
-	PMetaClassIndex();
-	PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name);
-	~PMetaClassIndex();
+	PMetaClassIndex() : PMetaClass("Index") { }
+	PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name) : PMetaClass("Index"), Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
 
-	void SetUnique(bool unique);
-	bool GetUnique() const;
-
-	void SetAlias(const QString &alias);
-	QString GetAlias() const;
-
-	void SetTableName(const QString &table_name);
-	QString GetTableName() const;
-
-	void SetFieldName(const QString &field_name);
-	QString GetFieldName() const;
-
-	void AddField(const QString &Field);
-	QVectorString GetFields();
-
-private:
 	bool Unique;
 	QString Alias;
 	QString TableName;

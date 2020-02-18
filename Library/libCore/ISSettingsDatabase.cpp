@@ -51,15 +51,15 @@ void ISSettingsDatabase::Initialize()
 
 	QString SqlText = "SELECT \n";
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable("_SettingsDatabase");
-	for (int i = 0; i < MetaTable->GetAllFields().count(); ++i)
+	for (int i = 0; i < MetaTable->AllFields.count(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->GetAllFields().at(i);
-		QString FieldName = MetaTable->GetAlias() + '_' + MetaField->GetName().toLower();
+		PMetaClassField *MetaField = MetaTable->AllFields[i];
+		QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();
 
 		if (VectorString.contains(FieldName))
 		{
-			SqlText += FieldName + " AS \"" + MetaField->GetName() + "\", \n";
-			VectorString[VectorString.indexOf(FieldName)] = MetaField->GetName();
+			SqlText += FieldName + " AS \"" + MetaField->Name + "\", \n";
+			VectorString[VectorString.indexOf(FieldName)] = MetaField->Name;
 		}
 		else
 		{

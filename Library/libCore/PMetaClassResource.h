@@ -6,23 +6,16 @@
 #include "ISUuid.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT PMetaClassResource
+struct LIBCORE_EXPORT PMetaClassResource
 {
-public:
-	PMetaClassResource();
-	~PMetaClassResource();
-	
-	void AddField(const QString &FieldName, const QString &Value); //Добавить параметр и его значение в ресурс
-	QString GetParameterValue(const QString &ParameterName) const; //Получить значение параметра по его имени
-	QStringMap GetParameters(); //Получить список всех параметров
+	void AddField(const QString &FieldName, const QString &Value) //Добавить параметр и его значение в ресурс
+	{
+		if (FieldName.toLower() != "uid")
+		{
+			Parameters.insert(FieldName, Value);
+		}
+	}
 
-	void SetTableName(const QString &table_name); //Изменить имя таблицы 
-	QString GetTableName() const; //Получить имя таблицы
-
-	void SetUID(const ISUuid &uid);
-	ISUuid GetUID() const;
-
-private:
 	QString TableName;
 	ISUuid UID;
 	QStringMap Parameters;

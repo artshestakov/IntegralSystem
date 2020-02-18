@@ -268,15 +268,6 @@
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="ISUuid.cpp" />
     <ClCompile Include="ISVersion.cpp" />
-    <ClCompile Include="PMetaClass.cpp" />
-    <ClCompile Include="PMetaClassEscort.cpp" />
-    <ClCompile Include="PMetaClassField.cpp" />
-    <ClCompile Include="PMetaClassForeign.cpp" />
-    <ClCompile Include="PMetaClassFunction.cpp" />
-    <ClCompile Include="PMetaClassIndex.cpp" />
-    <ClCompile Include="PMetaClassQuery.cpp" />
-    <ClCompile Include="PMetaClassResource.cpp" />
-    <ClCompile Include="PMetaClassTable.cpp" />
     <ClCompile Include="StackWalker.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

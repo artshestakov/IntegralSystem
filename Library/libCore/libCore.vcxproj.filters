@@ -372,33 +372,6 @@
     <ClCompile Include="ISMetaViewQuery.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="PMetaClass.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaClassEscort.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaClassField.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaClassForeign.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaClassFunction.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaClassIndex.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaClassQuery.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaClassResource.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="PMetaClassTable.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
     <ClCompile Include="ISEMail.cpp">
       <Filter>System</Filter>
     </ClCompile>
