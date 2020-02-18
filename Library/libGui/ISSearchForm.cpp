@@ -15,7 +15,7 @@ ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 {
 	MetaTable = meta_table;
 
-	setWindowTitle(LANG("Search.Advanced") + " - " + MetaTable->GetLocalListName());
+	setWindowTitle(LANG("Search.Advanced") + " - " + MetaTable->LocalListName);
 	setWindowIcon(BUFFER_ICONS("Search"));
 	resize(DEFINES_GUI.SIZE_550_300);
 
@@ -142,19 +142,19 @@ bool ISSearchForm::CheckExistField(const QString &FieldName) const
 //-----------------------------------------------------------------------------
 void ISSearchForm::LoadFields()
 {
-	AddFieldFromList(MetaTable->GetFieldID()->GetLabelName(), MetaTable->GetFieldID()->GetName());
+	AddFieldFromList(MetaTable->GetFieldID()->LabelName, MetaTable->GetFieldID()->Name);
 
-	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
+	for (int i = 0; i < MetaTable->Fields.count(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
-		if (MetaField->GetHideFromList() || MetaField->GetNotSearch() || MetaField->GetQueryText().length())
+		PMetaClassField *MetaField = MetaTable->Fields[i];
+		if (MetaField->HideFromList || MetaField->NotSearch || !MetaField->QueryText.isEmpty())
 		{
 			continue;
 		}
 
-		if (ISMetaData::GetInstanse().GetAssociationTypes().GetSearch(MetaField->GetType()))
+		if (ISMetaData::GetInstanse().GetAssociationTypes().GetSearch(MetaField->Type))
 		{
-			AddFieldFromList(MetaField->GetLabelName(), MetaField->GetName());
+			AddFieldFromList(MetaField->LabelName, MetaField->Name);
 		}
 	}
 }
@@ -193,11 +193,11 @@ void ISSearchForm::AddFilter()
 	}
 	else //Поле верхнего уровня
 	{
-		TreeWidgetItem->setText(0, MetaField->GetLabelName());
+		TreeWidgetItem->setText(0, MetaField->LabelName);
 		TreeWidget->addTopLevelItem(TreeWidgetItem);
 	}
 
-	ISComboSearchBase *ComboSearchBase = ISGui::CreateSearchOperator(TreeWidget, MetaField->GetType(), MetaField->GetForeign());
+	ISComboSearchBase *ComboSearchBase = ISGui::CreateSearchOperator(TreeWidget, MetaField->Type, MetaField->Foreign);
 	TreeWidget->setItemWidget(TreeWidgetItem, 1, ComboSearchBase);
 
 	ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(TreeWidget, MetaField);
@@ -206,7 +206,7 @@ void ISSearchForm::AddFilter()
 	ISListEdit *ListEdit = dynamic_cast<ISListEdit*>(FieldEditBase);
 	if (ListEdit)
 	{
-		ListEdit->InvokeList(MetaField->GetForeign());
+		ListEdit->InvokeList(MetaField->Foreign);
 	}
 
 	QHBoxLayout *LayoutWidget = new QHBoxLayout();
@@ -270,8 +270,8 @@ void ISSearchForm::Search()
 void ISSearchForm::SearchFromField(ISSearchModel &SearchModel, QTreeWidgetItem *TreeWidgetItem)
 {
 	PMetaClassField *MetaField = MetaTable->GetField(TreeWidgetItem->data(0, Qt::UserRole).toString());
-	QString FieldName = MetaTable->GetAlias() + '_' + MetaField->GetName();
-	QString Condition = ':' + MetaField->GetName();
+	QString FieldName = MetaTable->Alias + '_' + MetaField->Name;
+	QString Condition = ':' + MetaField->Name;
 
 	ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase*>(TreeWidget->itemWidget(TreeWidgetItem, 1));
 	ISNamespace::SearchOperatorType SearchOperator = ComboSearchBase->GetOperator();
@@ -281,11 +281,11 @@ void ISSearchForm::SearchFromField(ISSearchModel &SearchModel, QTreeWidgetItem *
 
 	if (Value.isValid())
 	{
-		SearchModel.AddField(FieldName, Value, SearchOperator, MetaField->GetType());
+		SearchModel.AddField(FieldName, Value, SearchOperator, MetaField->Type);
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SearchFieldNotValid").arg(MetaField->GetLabelName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SearchFieldNotValid").arg(MetaField->LabelName));
 		FieldEditBase->BlinkRed();
 	}
 }

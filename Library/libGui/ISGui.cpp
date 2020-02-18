@@ -328,10 +328,10 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 	SetWaitGlobalCursor(true);
 	ISObjectFormBase *ObjectForm = nullptr;
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
-	if (!MetaTable->GetObjectForm().isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
+	if (!MetaTable->ObjectForm.isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
 	{
-		int ObjectType = QMetaType::type((MetaTable->GetObjectForm() + '*').toLocal8Bit().constData());
-		IS_ASSERT(ObjectType, QString("ObjectForm for table \"%1\" is null.").arg(MetaTable->GetObjectForm()));
+		int ObjectType = QMetaType::type((MetaTable->ObjectForm + '*').toLocal8Bit().constData());
+		IS_ASSERT(ObjectType, QString("ObjectForm for table \"%1\" is null.").arg(MetaTable->ObjectForm));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 		ObjectForm = dynamic_cast<ISObjectFormBase*>(MetaObject->newInstance(Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaClassTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID)));
@@ -415,7 +415,7 @@ bool ISGui::ShowUserPasswordForm(int UserID)
 //-----------------------------------------------------------------------------
 void ISGui::ShowSystemInfoRecord(PMetaClassTable *MetaTable, int ObjectID)
 {
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_SYSTEM_INFO_OBJECT, MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectID);
+	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_SYSTEM_INFO_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID);
 	SetWaitGlobalCursor(true);
 	ISRecordInfoForm RecordInfoForm(MetaTable, ObjectID);
 	SetWaitGlobalCursor(false);
@@ -489,17 +489,17 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaClassFie
 	{
 		if (MetaField)
 		{
-			if (MetaField && MetaField->GetControlWidget().length())
+			if (MetaField && !MetaField->ControlWidget.isEmpty())
 			{
-				Temp = MetaField->GetControlWidget();
+				Temp = MetaField->ControlWidget;
 			}
-			else if (MetaField->GetForeign())
+			else if (MetaField->Foreign)
 			{
 				Temp = CLASS_IS_LIST_EDIT;
 			}
 			else
 			{
-				Temp = ISMetaData::GetInstanse().GetAssociationTypes().GetControlWidgetFromType(MetaField->GetType());
+				Temp = ISMetaData::GetInstanse().GetAssociationTypes().GetControlWidgetFromType(MetaField->Type);
 			}
 		}
 		else

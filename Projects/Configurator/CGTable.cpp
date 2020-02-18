@@ -19,8 +19,8 @@ static QString QS_COLUMNS = PREPARE_QUERY("SELECT column_name, column_default, i
 //-----------------------------------------------------------------------------
 void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 {
-	QString TableName = MetaTable->GetName().toLower();
-	QString TableAlias = MetaTable->GetAlias();
+	QString TableName = MetaTable->Name.toLower();
+	QString TableAlias = MetaTable->Alias;
 
 	//Проверка существования последовательности, если последовательность не существует - произвести её создание
 	if (!CGSequence::CheckExistSequence(TableName))
@@ -28,25 +28,25 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 		CGSequence::CreateSequence(TableName);
 	}
 
-	QString SqlText = "CREATE TABLE public." + MetaTable->GetName().toLower() + "(\n";
+	QString SqlText = "CREATE TABLE public." + MetaTable->Name.toLower() + "(\n";
 	SqlText += CGTemplateField::GetSqlTextForTemplateSystemFields(TableName, TableAlias);
 
 	//Формирование запроса на создание таблицы
-	int CountFields = MetaTable->GetFields().count();
+	int CountFields = MetaTable->Fields.count();
 	for (int i = 0; i < CountFields; ++i) //Обход полей таблицы
 	{
-		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
-		ISNamespace::FieldType FieldType = MetaField->GetType(); //Тип поля
+		PMetaClassField *MetaField = MetaTable->Fields[i];
+		ISNamespace::FieldType FieldType = MetaField->Type; //Тип поля
 		
-		if (MetaField->GetQueryText().length())
+		if (MetaField->QueryText.length())
 		{
 			continue;
 		}
 
-		QString FieldName = MetaField->GetName(); //Имя поля
-		int FieldSize = MetaField->GetSize(); //Размер поля
-		QString FieldDefalutValue = MetaField->GetDefaultValue().toString(); //Значение по умолчанию для поля
-		bool FieldNotNull = MetaField->GetNotNull(); //Статус обязательного заполнения поля
+		QString FieldName = MetaField->Name; //Имя поля
+		int FieldSize = MetaField->Size; //Размер поля
+		QString FieldDefalutValue = MetaField->DefaultValue.toString(); //Значение по умолчанию для поля
+		bool FieldNotNull = MetaField->NotNull; //Статус обязательного заполнения поля
 
 		SqlText += TableAlias + '_' + FieldName.toLower();
 		SqlText += SYMBOL_SPACE + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(FieldType);
@@ -91,15 +91,15 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 
 	if (Created)
 	{
-		for (int i = 0; i < MetaTable->GetAllFields().count(); ++i)
+		for (int i = 0; i < MetaTable->AllFields.count(); ++i)
 		{
-			PMetaClassField *MetaField = MetaTable->GetAllFields().at(i);
-			if (MetaField->GetQueryText().length())
+			PMetaClassField *MetaField = MetaTable->AllFields[i];
+			if (MetaField->QueryText.length())
 			{
 				continue;
 			}
 
-			CGHelper::CommentField(MetaTable->GetName().toLower(), MetaTable->GetAlias() + '_' + MetaField->GetName().toLower(), MetaField->GetLocalListName());
+			CGHelper::CommentField(MetaTable->Name.toLower(), MetaTable->Alias + '_' + MetaField->Name.toLower(), MetaField->LocalListName);
 		}
 	}
 	else
@@ -110,7 +110,7 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 //-----------------------------------------------------------------------------
 void CGTable::UpdateTable(PMetaClassTable *MetaTable)
 {
-	CGHelper::CommentTable(MetaTable->GetName().toLower(), MetaTable->GetLocalListName());
+	CGHelper::CommentTable(MetaTable->Name.toLower(), MetaTable->LocalListName);
 	AlterExistFields(MetaTable);
 	CreateNewFields(MetaTable);
 }
@@ -119,7 +119,7 @@ bool CGTable::CheckExistTable(PMetaClassTable *MetaTable)
 {
 	ISQuery qSelectTable(QS_TABLE);
 	qSelectTable.SetShowLongQuery(false);
-	qSelectTable.BindValue(":TableName", MetaTable->GetName().toLower());
+	qSelectTable.BindValue(":TableName", MetaTable->Name.toLower());
 	if (qSelectTable.ExecuteFirst())
 	{
 		if (qSelectTable.ReadColumn("count").toInt() == 1)
@@ -135,7 +135,7 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 {
 	ISQuery qSelectColumns(QS_COLUMNS);
 	qSelectColumns.SetShowLongQuery(false);
-	qSelectColumns.BindValue(":TableName", MetaTable->GetName().toLower());
+	qSelectColumns.BindValue(":TableName", MetaTable->Name.toLower());
 	if (qSelectColumns.Execute())
 	{
 		while (qSelectColumns.Next())
@@ -153,12 +153,12 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 			}
 
 			PMetaClassField *MetaField = ISMetaData::GetInstanse().GetMetaField(MetaTable, ColumnName);
-			QString MetaType = ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->GetType());
-			QString MetaDefaultValue = MetaField->GetDefaultValue().toString();
-			bool MetaNotNull = MetaField->GetNotNull();
-			int MetaSize = MetaField->GetSize();
+			QString MetaType = ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->Type);
+			QString MetaDefaultValue = MetaField->DefaultValue.toString();
+			bool MetaNotNull = MetaField->NotNull;
+			int MetaSize = MetaField->Size;
 
-			CGHelper::CommentField(MetaTable->GetName().toLower(), MetaTable->GetAlias() + '_' + MetaField->GetName().toLower(), MetaField->GetLocalListName());
+			CGHelper::CommentField(MetaTable->Name.toLower(), MetaTable->Alias + '_' + MetaField->Name.toLower(), MetaField->LocalListName);
 
 			if (ColumnName == "id")
 			{
@@ -169,8 +169,8 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 			if (ColumnType != MetaType)
 			{
 				QString QueryText;
-				QueryText += "ALTER TABLE public." + MetaTable->GetName().toLower() + " \n";
-				QueryText += "ALTER COLUMN " + MetaTable->GetAlias() + '_' + MetaField->GetName().toLower() + " TYPE " + MetaType;// +" \n";
+				QueryText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
+				QueryText += "ALTER COLUMN " + MetaTable->Alias + '_' + MetaField->Name.toLower() + " TYPE " + MetaType;// +" \n";
 
 				if (MetaSize)
 				{
@@ -181,7 +181,7 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 					QueryText += " \n";
 				}
 
-				QueryText += "USING " + MetaTable->GetAlias() + '_' + MetaField->GetName().toLower() + "::" + MetaType;
+				QueryText += "USING " + MetaTable->Alias + '_' + MetaField->Name.toLower() + "::" + MetaType;
 
 				ISQuery qAlterType;
 				qAlterType.SetShowLongQuery(false);
@@ -197,27 +197,27 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 				{
 					if (MetaDefaultValue.toLower() == "null") //Если значение по умолчанию указано НУЛЕВОЕ
 					{
-						QueryText = "ALTER TABLE public." + MetaTable->GetName() + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT NULL";
+						QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT NULL";
 					}
 					else
 					{
-						if (MetaField->GetType() == ISNamespace::FT_Int ||
-							MetaField->GetType() == ISNamespace::FT_DateTime ||
-							MetaField->GetType() == ISNamespace::FT_Date ||
-							MetaField->GetType() == ISNamespace::FT_Time ||
-							MetaField->GetType() == ISNamespace::FT_UID)
+						if (MetaField->Type == ISNamespace::FT_Int ||
+							MetaField->Type == ISNamespace::FT_DateTime ||
+							MetaField->Type == ISNamespace::FT_Date ||
+							MetaField->Type == ISNamespace::FT_Time ||
+							MetaField->Type == ISNamespace::FT_UID)
 						{
-							QueryText = "ALTER TABLE public." + MetaTable->GetName() + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT " + MetaDefaultValue;
+							QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT " + MetaDefaultValue;
 						}
 						else
 						{
-							QueryText = "ALTER TABLE public." + MetaTable->GetName() + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT '" + MetaDefaultValue + '\'';
+							QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT '" + MetaDefaultValue + '\'';
 						}
 					}
 				}
 				else //Удалить значение по умолчанию
 				{
-					QueryText = "ALTER TABLE public." + MetaTable->GetName() + " ALTER COLUMN " + ColumnNameFull + " DROP DEFAULT";
+					QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + ColumnNameFull + " DROP DEFAULT";
 				}
 
 				ISQuery qAlterColumn;
@@ -231,11 +231,11 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 				QString QueryText;
 				if (!ColumnNotNull && MetaNotNull)
 				{
-					QueryText = "ALTER TABLE public." + MetaTable->GetName() + " ALTER COLUMN " + MetaTable->GetAlias() + '_' + MetaField->GetName() + " SET NOT NULL";
+					QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + MetaTable->Alias + '_' + MetaField->Name + " SET NOT NULL";
 				}
 				else if (ColumnNotNull && !MetaNotNull)
 				{
-					QueryText = "ALTER TABLE public." + MetaTable->GetName() + " ALTER COLUMN " + MetaTable->GetAlias() + '_' + MetaField->GetName() + " DROP NOT NULL";
+					QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + MetaTable->Alias + '_' + MetaField->Name + " DROP NOT NULL";
 				}
 
 				ISQuery qAlterNotNull;
@@ -248,42 +248,42 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 //-----------------------------------------------------------------------------
 void CGTable::CreateNewFields(PMetaClassTable *MetaTable)
 {
-	for (int i = 0; i < MetaTable->GetFields().count(); ++i) //Обход полей
+	for (int i = 0; i < MetaTable->Fields.count(); ++i) //Обход полей
 	{
-		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
-		if (MetaField->GetQueryText().length())
+		PMetaClassField *MetaField = MetaTable->Fields[i];
+		if (MetaField->QueryText.length())
 		{
 			continue;
 		}
 
-		QString FieldName = MetaTable->GetAlias() + '_' + MetaField->GetName().toLower();
+		QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();
 
 		if (!CGHelper::CheckExistColumn(MetaTable, FieldName)) //Если поле не существует
 		{
-			QString AddColumn = "ALTER TABLE public." + MetaTable->GetName() + " \n" +
-				"ADD COLUMN \"" + FieldName + "\"" + SYMBOL_SPACE + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->GetType());
+			QString AddColumn = "ALTER TABLE public." + MetaTable->Name + " \n" +
+				"ADD COLUMN \"" + FieldName + "\"" + SYMBOL_SPACE + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->Type);
 
-			if (MetaField->GetSize()) //Если указан размер поля
+			if (MetaField->Size) //Если указан размер поля
 			{
-				AddColumn += '(' + QString::number(MetaField->GetSize()) + ')';
+				AddColumn += '(' + QString::number(MetaField->Size) + ')';
 			}
 
-			if (!MetaField->GetDefaultValue().toString().isEmpty()) //Если указано значение по умолчанию
+			if (!MetaField->DefaultValue.toString().isEmpty()) //Если указано значение по умолчанию
 			{
-				if (MetaField->GetType() == ISNamespace::FT_Int ||
-					MetaField->GetType() == ISNamespace::FT_Date ||
-					MetaField->GetType() == ISNamespace::FT_Time ||
-					MetaField->GetType() == ISNamespace::FT_DateTime)
+				if (MetaField->Type == ISNamespace::FT_Int ||
+					MetaField->Type == ISNamespace::FT_Date ||
+					MetaField->Type == ISNamespace::FT_Time ||
+					MetaField->Type == ISNamespace::FT_DateTime)
 				{
-					AddColumn += " DEFAULT " + MetaField->GetDefaultValue().toString(); //Указание NULL без кавычек
+					AddColumn += " DEFAULT " + MetaField->DefaultValue.toString(); //Указание NULL без кавычек
 				}
 				else
 				{
-					AddColumn += " DEFAULT '" + MetaField->GetDefaultValue().toString() + '\''; //Указание NULL с кавычек
+					AddColumn += " DEFAULT '" + MetaField->DefaultValue.toString() + '\''; //Указание NULL с кавычек
 				}
 			}
 
-			if (MetaField->GetNotNull())
+			if (MetaField->NotNull)
 			{
 				AddColumn += " NOT NULL";
 			}
@@ -292,7 +292,7 @@ void CGTable::CreateNewFields(PMetaClassTable *MetaTable)
 			qAddColumn.SetShowLongQuery(false);
 			if (qAddColumn.Execute(AddColumn))
 			{
-				CGHelper::CommentField(MetaTable->GetName().toLower(), MetaTable->GetAlias() + '_' + MetaField->GetName().toLower(), MetaField->GetLocalListName());
+				CGHelper::CommentField(MetaTable->Name.toLower(), MetaTable->Alias + '_' + MetaField->Name.toLower(), MetaField->LocalListName);
 			}
 		}
 	}

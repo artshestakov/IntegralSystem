@@ -19,13 +19,13 @@ static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT; 
 //-----------------------------------------------------------------------------
 bool CGForeign::CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorString)
 {
-	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetTableName());
-	PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass());
+	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
+	PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);
 
 	QString SqlText = QString();
-	SqlText += "ALTER TABLE public." + MetaTable->GetName().toLower() + " \n";
-	SqlText += "ADD CONSTRAINT " + OnGetForeignName(MetaForeign) + " FOREIGN KEY (" + MetaTable->GetAlias() + '_' + MetaForeign->GetFieldName().toLower() + ") \n";
-	SqlText += "REFERENCES public." + MetaTableForeign->GetName().toLower() + '(' + MetaTableForeign->GetAlias().toLower() + '_' + MetaForeign->GetForeginField().toLower() + ") \n";
+	SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
+	SqlText += "ADD CONSTRAINT " + OnGetForeignName(MetaForeign) + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + ") \n";
+	SqlText += "REFERENCES public." + MetaTableForeign->Name.toLower() + '(' + MetaTableForeign->Alias.toLower() + '_' + MetaForeign->ForeignField.toLower() + ") \n";
 	SqlText += "ON DELETE CASCADE \n";
 	SqlText += "ON UPDATE NO ACTION \n";
 	SqlText += "NOT DEFERRABLE;";
@@ -43,10 +43,10 @@ bool CGForeign::CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorStri
 //-----------------------------------------------------------------------------
 bool CGForeign::UpdateForeign(PMetaClassForeign *MetaForeign, QString &ErrorString)
 {
-	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetTableName());
+	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
 
 	QString QueryText = QD_FOREIGN;
-	QueryText = QueryText.arg(MetaTable->GetName().toLower());
+	QueryText = QueryText.arg(MetaTable->Name.toLower());
 	QueryText = QueryText.arg(OnGetForeignName(MetaForeign));
 
 	ISQuery qDeleteForeign;
@@ -84,9 +84,7 @@ bool CGForeign::CheckExistForeign(PMetaClassForeign *MetaForeign)
 //-----------------------------------------------------------------------------
 QString CGForeign::OnGetForeignName(PMetaClassForeign *MetaForeign)
 {
-	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetTableName());
-
-	QString ForeignName = MetaTable->GetName().toLower() + '_' + MetaTable->GetAlias() + '_' + MetaForeign->GetFieldName().toLower() + "_foreign";
-	return ForeignName;
+	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
+	return MetaTable->Name.toLower() + '_' + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + "_foreign";
 }
 //-----------------------------------------------------------------------------

@@ -64,21 +64,20 @@ void ISCoreScheduler::ClearFiles()
 	
 	for (PMetaClassTable *MetaTable : ISMetaData::GetInstanse().GetTables()) //Обход всех сущностей
 	{
-		for (PMetaClassField *MetaField : MetaTable->GetFields()) //Обход всех пользовательских полей текущей сущности
+		for (PMetaClassField *MetaField : MetaTable->Fields) //Обход всех пользовательских полей текущей сущности
 		{
-			if (MetaField->GetType() == ISNamespace::FT_File) //Если тип данных текущего поля является хранением файлов
+			if (MetaField->Type == ISNamespace::FT_File) //Если тип данных текущего поля является хранением файлов
 			{
-				QString SqlQuery = "SELECT " + MetaTable->GetAlias().toLower() + '_' + MetaField->GetName().toLower() + " \n";
-				SqlQuery += "FROM " + MetaTable->GetName().toLower() + " \n";
-				SqlQuery += "WHERE " + MetaTable->GetAlias().toLower() + '_' + MetaField->GetName().toLower() + " IS NOT NULL";
+				QString SqlQuery = "SELECT " + MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower() + " \n";
+				SqlQuery += "FROM " + MetaTable->Name.toLower() + " \n";
+				SqlQuery += "WHERE " + MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower() + " IS NOT NULL";
 				ISQuery qSelect(SqlQuery);
 				qSelect.SetShowLongQuery(false);
 				if (qSelect.Execute())
 				{
 					while (qSelect.Next())
 					{
-						int FileID = qSelect.ReadColumn(MetaTable->GetAlias() + '_' + MetaField->GetName()).toInt();
-						VectorInt.removeAll(FileID);
+						VectorInt.removeAll(qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name).toInt());
 					}
 				}
 			}

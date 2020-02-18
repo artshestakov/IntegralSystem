@@ -19,7 +19,7 @@ bool CGClass::CheckExistClass(PMetaClassTable *MetaTable)
 {
 	ISQuery qSelect(QS_CLASS);
 	qSelect.SetShowLongQuery(false);
-	qSelect.BindValue(":Name", MetaTable->GetName());
+	qSelect.BindValue(":Name", MetaTable->Name);
 	if (qSelect.ExecuteFirst())
 	{
 		if (qSelect.ReadColumn("count").toInt())
@@ -35,12 +35,12 @@ void CGClass::InsertClass(PMetaClassTable *MetaTable)
 {
 	ISQuery qInsert(QI_CLASS);
 	qInsert.SetShowLongQuery(false);
-	qInsert.BindValue(":UID", MetaTable->GetUID());
-	qInsert.BindValue(":IsSystem", MetaTable->GetIsSystem());
-	qInsert.BindValue(":Name", MetaTable->GetName());
-	qInsert.BindValue(":Alias", MetaTable->GetAlias());
-	qInsert.BindValue(":LocalName", MetaTable->GetLocalName());
-	qInsert.BindValue(":LocalListName", MetaTable->GetLocalListName());
+	qInsert.BindValue(":UID", MetaTable->UID);
+	qInsert.BindValue(":IsSystem", MetaTable->IsSystem);
+	qInsert.BindValue(":Name", MetaTable->Name);
+	qInsert.BindValue(":Alias", MetaTable->Alias);
+	qInsert.BindValue(":LocalName", MetaTable->LocalName);
+	qInsert.BindValue(":LocalListName", MetaTable->LocalListName);
 	qInsert.Execute();
 }
 //-----------------------------------------------------------------------------
@@ -48,12 +48,12 @@ void CGClass::UpdateClass(PMetaClassTable *MetaTable)
 {
 	ISQuery qUpdate(QU_CLASS);
 	qUpdate.SetShowLongQuery(false);
-	qUpdate.BindValue(":IsSystem", MetaTable->GetIsSystem());
-	qUpdate.BindValue(":Name", MetaTable->GetName());
-	qUpdate.BindValue(":Alias", MetaTable->GetAlias());
-	qUpdate.BindValue(":LocalName", MetaTable->GetLocalName());
-	qUpdate.BindValue(":LocalListName", MetaTable->GetLocalListName());
-	qUpdate.BindValue(":UID", MetaTable->GetUID());
+	qUpdate.BindValue(":IsSystem", MetaTable->IsSystem);
+	qUpdate.BindValue(":Name", MetaTable->Name);
+	qUpdate.BindValue(":Alias", MetaTable->Alias);
+	qUpdate.BindValue(":LocalName", MetaTable->LocalName);
+	qUpdate.BindValue(":LocalListName", MetaTable->LocalListName);
+	qUpdate.BindValue(":UID", MetaTable->UID);
 	qUpdate.Execute();
 }
 //-----------------------------------------------------------------------------

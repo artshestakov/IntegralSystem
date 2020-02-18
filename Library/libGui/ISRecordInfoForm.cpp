@@ -10,7 +10,7 @@
 ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowIcon(BUFFER_ICONS("RecordInformation"));
-	setWindowTitle(MetaTable->GetLocalName());
+	setWindowTitle(MetaTable->LocalName);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();
@@ -24,24 +24,24 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 	ISGui::SetFontWidgetUnderline(LabelTitle, true);
 	FormLayout->addRow(LabelTitle, new QWidget(this));
 
-	for (int i = 0; i < MetaTable->GetSystemFields().count(); ++i)
+	for (int i = 0; i < MetaTable->SystemFields.count(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->GetSystemFields().at(i);
+		PMetaClassField *MetaField = MetaTable->SystemFields[i];
 
 		QLabel *Label = new QLabel(this);
 		Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
-		Label->setText(MetaField->GetLabelName() + ':');
+		Label->setText(MetaField->LabelName + ':');
 
 		ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
 		FieldEditBase->SetReadOnly(true);
 		FieldEditBase->SetVisibleClear(false);
 		FormLayout->addRow(Label, FieldEditBase);
 
-		ISQuery qSelect("SELECT " + MetaTable->GetAlias() + '_' + MetaField->GetName() + " FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_id = :ObjectID");
+		ISQuery qSelect("SELECT " + MetaTable->Alias + '_' + MetaField->Name + " FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id = :ObjectID");
 		qSelect.BindValue(":ObjectID", ObjectID);
 		if (qSelect.ExecuteFirst())
 		{
-			QVariant Value = qSelect.ReadColumn(MetaTable->GetAlias() + '_' + MetaField->GetName());
+			QVariant Value = qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name);
 			FieldEditBase->SetValue(Value);
 		}
 	}

@@ -17,7 +17,7 @@ bool CGHelper::CheckExistColumn(PMetaClassTable *MetaTable, const QString &Colum
 {
 	ISQuery qSelectColumn(QS_COLUMN);
 	qSelectColumn.SetShowLongQuery(false);
-	qSelectColumn.BindValue(":TableName", MetaTable->GetName().toLower());
+	qSelectColumn.BindValue(":TableName", MetaTable->Name.toLower());
 	qSelectColumn.BindValue(":ColumnName", ColumnName);
 	qSelectColumn.ExecuteFirst();
 	if (qSelectColumn.ReadColumn("count").toInt() == 1)

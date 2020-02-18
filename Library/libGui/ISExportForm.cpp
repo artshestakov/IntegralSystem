@@ -125,10 +125,10 @@ void ISExportForm::CreateTabFields()
 
 	CreateFieldItem(MetaTable->GetFieldID());
 
-	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
+	for (int i = 0; i < MetaTable->Fields.count(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
-		if (!MetaField->GetHideFromList())
+		PMetaClassField *MetaField = MetaTable->Fields[i];
+		if (!MetaField->HideFromList)
 		{
 			CreateFieldItem(MetaField);
 		}
@@ -162,11 +162,11 @@ void ISExportForm::Select()
 void ISExportForm::CreateFieldItem(PMetaClassField *MetaField)
 {
 	QListWidgetItem *FieldItem = new QListWidgetItem(ListFields);
-	FieldItem->setText(MetaField->GetLabelName());
-	FieldItem->setData(Qt::UserRole, MetaField->GetName());
+	FieldItem->setText(MetaField->LabelName);
+	FieldItem->setData(Qt::UserRole, MetaField->Name);
 	FieldItem->setCheckState(Qt::Checked);
 	FieldItem->setSizeHint(QSize(FieldItem->sizeHint().width(), 30));
-	SelectedFields.append(MetaField->GetName());
+	SelectedFields.append(MetaField->Name);
 }
 //-----------------------------------------------------------------------------
 void ISExportForm::FieldsPositionChanged()

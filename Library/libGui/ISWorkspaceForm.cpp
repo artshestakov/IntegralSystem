@@ -124,7 +124,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 
 	if (!MetaSubSystem->TableName.isEmpty()) //Открытие таблицы
 	{
-		ISProtocol::OpenSubSystem(MetaSubSystem->TableName, ISMetaData::GetInstanse().GetMetaTable(MetaSubSystem->TableName)->GetLocalListName());
+		ISProtocol::OpenSubSystem(MetaSubSystem->TableName, ISMetaData::GetInstanse().GetMetaTable(MetaSubSystem->TableName)->LocalListName);
 
 		ISListBaseForm *ListBaseForm = new ISListBaseForm(MetaSubSystem->TableName, this);
 		CentralForm = ListBaseForm;
@@ -155,6 +155,6 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 //-----------------------------------------------------------------------------
 void ISWorkspaceForm::CreateDuplicate(PMetaClassTable *MetaTable)
 {
-	AddObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->GetName()));
+	AddObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name));
 }
 //-----------------------------------------------------------------------------

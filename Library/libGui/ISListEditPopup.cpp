@@ -17,7 +17,7 @@
 ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *ComboBox) : ISInterfaceForm(ComboBox)
 {
 	MetaForeign = meta_foreign;
-	MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass());
+	MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);
 
 	setWindowFlags(Qt::Popup);
 	setAttribute(Qt::WA_DeleteOnClose, false);
@@ -38,7 +38,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 	LayoutFrame->addWidget(LineEdit);
 
 	LabelName = new QLabel(this);
-	LabelName->setText(MetaTableForeign->GetLocalListName() + ':');
+	LabelName->setText(MetaTableForeign->LocalListName + ':');
 	LabelName->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutFrame->addWidget(LabelName);
@@ -58,7 +58,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 	LabelSearch->setVisible(false);
 	StatusBar->addWidget(LabelSearch);
 
-	if (!MetaTableForeign->GetShowOnly())
+	if (!MetaTableForeign->ShowOnly)
 	{
 		ISServiceButton *ButtonAdd = new ISServiceButton(this);
 		ButtonAdd->setFlat(true);
@@ -199,13 +199,13 @@ void ISListEditPopup::ItemClicked(QListWidgetItem *ListWidgetItem)
 void ISListEditPopup::Add()
 {
 	Hide();
-	ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTableForeign->GetName())->show();
+	ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTableForeign->Name)->show();
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::LoadDataFromQuery()
 {
-	QString QueryText = MetaForeign->GetSqlQuery();
-	if (SqlFilter.length())
+	QString QueryText = MetaForeign->SqlQuery;
+	if (!SqlFilter.isEmpty())
 	{
 		QueryText = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign, SqlFilter);
 	}

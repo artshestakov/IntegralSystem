@@ -113,8 +113,8 @@ void CGConfiguratorShow::obsoleteresources()
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
 
-		QString TableName = MetaResource->GetTableName();
-		QString ResourceUID = MetaResource->GetUID().toLower();
+		QString TableName = MetaResource->TableName;
+		QString ResourceUID = MetaResource->UID.toLower();
 
 		if (!Map.contains(TableName))
 		{
@@ -130,7 +130,7 @@ void CGConfiguratorShow::obsoleteresources()
 		QVectorString *Vector = MapItem.second;
 
 		QString SqlText = "SELECT %1_uid FROM %2 WHERE %1_uid NOT IN(%3)";
-		SqlText = SqlText.arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetAlias());
+		SqlText = SqlText.arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->Alias);
 		SqlText = SqlText.arg(TableName);
 
 		QString NotIN;
@@ -187,7 +187,7 @@ void CGConfiguratorShow::obsoletesequence()
 	QString Where;
 	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
 	{
-		QString TableName = ISMetaData::GetInstanse().GetTables().at(i)->GetName().toLower();
+		QString TableName = ISMetaData::GetInstanse().GetTables()[i]->Name.toLower();
 		QString SequnceName = TableName + "_sequence";
 		Where += '\'' + SequnceName + "', ";
 	}
@@ -237,7 +237,7 @@ PMetaClassTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-		if (MetaTable->GetName().toLower() == TableName)
+		if (MetaTable->Name.toLower() == TableName)
 		{
 			return MetaTable;
 		}
@@ -248,10 +248,10 @@ PMetaClassTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 //-----------------------------------------------------------------------------
 PMetaClassField* CGConfiguratorShow::FoundField(PMetaClassTable *MetaTable, const QString &ColumnName)
 {
-	for (int i = 0; i < MetaTable->GetAllFields().count(); ++i)
+	for (int i = 0; i < MetaTable->AllFields.count(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->GetAllFields().at(i);
-		if (QString(MetaTable->GetAlias() + '_' + MetaField->GetName()).toLower() == ColumnName)
+		PMetaClassField *MetaField = MetaTable->AllFields[i];
+		if (QString(MetaTable->Alias + '_' + MetaField->Name).toLower() == ColumnName)
 		{
 			return MetaField;
 		}

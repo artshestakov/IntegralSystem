@@ -145,7 +145,7 @@ void ISTabWidgetMain::DuplicateWindow(int Index)
 	ISObjectFormBase *ObjectFormBase = dynamic_cast<ISObjectFormBase*>(widget(Index));
 	if (ObjectFormBase)
 	{
-		ISObjectFormBase *DuplicateObjectForm = ISGui::CreateObjectForm(ObjectFormBase->GetFormType(), ObjectFormBase->GetMetaTable()->GetName(), ObjectFormBase->GetObjectID());
+		ISObjectFormBase *DuplicateObjectForm = ISGui::CreateObjectForm(ObjectFormBase->GetFormType(), ObjectFormBase->GetMetaTable()->Name, ObjectFormBase->GetObjectID());
 		emit Duplicate(DuplicateObjectForm);
 	}
 	else

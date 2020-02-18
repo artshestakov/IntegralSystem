@@ -136,7 +136,7 @@ void CGConfiguratorDelete::tables()
 	QList<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
 	for (PMetaClassTable *MetaTable : Tables)
 	{
-		VectorString.append(MetaTable->GetName().toLower());
+		VectorString.append(MetaTable->Name.toLower());
 	}
 
 	int Removed = 0;
@@ -185,13 +185,13 @@ void CGConfiguratorDelete::fields()
 	QList<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
 	for (PMetaClassTable *MetaTable : Tables)
 	{
-		QString TableName = MetaTable->GetName().toLower();
+		QString TableName = MetaTable->Name.toLower();
 		Map.insert(TableName, QVectorString());
 
-		QVector<PMetaClassField*> Fields = MetaTable->GetAllFields();
+		QVector<PMetaClassField*> Fields = MetaTable->AllFields;
 		for (PMetaClassField* MetaField : Fields)
 		{
-			Map[TableName].append(MetaTable->GetAlias().toLower() + '_' + MetaField->GetName().toLower());
+			Map[TableName].append(MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower());
 		}
 	}
 
@@ -246,15 +246,15 @@ void CGConfiguratorDelete::resources()
 	QMap<QString, QVectorString> Map;
 	for (PMetaClassResource *MetaResource : ISMetaData::GetInstanse().GetResources())
 	{
-		if (Map.contains(MetaResource->GetTableName()))
+		if (Map.contains(MetaResource->TableName))
 		{
-			Map[MetaResource->GetTableName()].append(MetaResource->GetUID());
+			Map[MetaResource->TableName].append(MetaResource->UID);
 		}
 		else
 		{
 			QVectorString VectorString;
-			VectorString.append(MetaResource->GetUID());
-			Map.insert(MetaResource->GetTableName(), VectorString);
+			VectorString.append(MetaResource->UID);
+			Map.insert(MetaResource->TableName, VectorString);
 		}
 	}
 
@@ -268,19 +268,19 @@ void CGConfiguratorDelete::resources()
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 
 		//«апрос к текущей таблице ресурсов
-		ISQuery qSelect("SELECT " + MetaTable->GetAlias() + "_uid FROM " + TableName);
+		ISQuery qSelect("SELECT " + MetaTable->Alias + "_uid FROM " + TableName);
 		qSelect.SetShowLongQuery(false);
 		if (qSelect.Execute())
 		{
 			while (qSelect.Next())
 			{
-				ISUuid ResourceUID = qSelect.ReadColumn(MetaTable->GetAlias() + "_uid");
+				ISUuid ResourceUID = qSelect.ReadColumn(MetaTable->Alias + "_uid");
 				if (!UIDs.contains(ResourceUID)) //≈сли ресурс из базы не найден в мета-данных
 				{
 					ShowResourceConsole(MetaTable, ResourceUID);
 					if (ISCommandLine::Question(QString("Remove resource \"%1\" in table \"%2\"?").arg(ResourceUID).arg(TableName)))
 					{
-						ISQuery qDeleteResources("DELETE FROM " + TableName + " WHERE " + MetaTable->GetAlias() + "_uid = :ResourceUID");
+						ISQuery qDeleteResources("DELETE FROM " + TableName + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 						qDeleteResources.SetShowLongQuery(false);
 						qDeleteResources.BindValue(":ResourceUID", ResourceUID);
 						if (qDeleteResources.Execute())
@@ -310,7 +310,7 @@ void CGConfiguratorDelete::resources()
 void CGConfiguratorDelete::ShowResourceConsole(PMetaClassTable *MetaTable, const ISUuid &ResourceUID)
 {
 	ISDebug::ShowEmptyString();
-	ISQuery qSelect("SELECT * FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_uid = :ResourceUID");
+	ISQuery qSelect("SELECT * FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 	qSelect.BindValue(":ResourceUID", ResourceUID);
 	if (qSelect.ExecuteFirst())
 	{

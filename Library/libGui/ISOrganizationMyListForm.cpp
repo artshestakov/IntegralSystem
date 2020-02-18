@@ -42,7 +42,7 @@ void ISOrganizationMyListForm::Return()
 				qReturn.BindValue(":ObjectID", ObjectID);
 				if (qReturn.Execute())
 				{
-					ISProtocol::Insert(true, "{34276F25-252F-4AF0-859F-D18AB94BF5FF}", GetMetaTable()->GetName(), GetMetaTable()->GetLocalListName(), GetObjectID(), OrganizationName);
+					ISProtocol::Insert(true, "{34276F25-252F-4AF0-859F-D18AB94BF5FF}", GetMetaTable()->Name, GetMetaTable()->LocalListName, GetObjectID(), OrganizationName);
 				}
 			}
 

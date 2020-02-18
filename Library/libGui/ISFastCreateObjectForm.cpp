@@ -41,9 +41,9 @@ ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceD
 	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-		if (!MetaTable->GetIsSystem())
+		if (!MetaTable->IsSystem)
 		{
-			ComboEdit->AddItem(MetaTable->GetLocalListName(), MetaTable->GetName());
+			ComboEdit->AddItem(MetaTable->LocalListName, MetaTable->Name);
 		}
 	}
 
@@ -86,7 +86,7 @@ void ISFastCreateRecordsForm::Load()
 			QString TableName = qSelect.ReadColumn("fcob_table").toString();
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-			ListWidgetItem->setText(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName());
+			ListWidgetItem->setText(ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName);
 			ListWidgetItem->setData(Qt::UserRole, TableName);
 		}
 	}
@@ -95,7 +95,7 @@ void ISFastCreateRecordsForm::Load()
 void ISFastCreateRecordsForm::Add()
 {
 	QString TableName = ComboEdit->GetValue().toString();
-	QString LocalListName = ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName();
+	QString LocalListName = ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName;
 
 	for (int i = 0; i < ListWidget->count(); ++i)
 	{

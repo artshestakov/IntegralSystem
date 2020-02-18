@@ -98,7 +98,7 @@ bool ISHighwayOrganizationObjectForm::Save()
 //-----------------------------------------------------------------------------
 void ISHighwayOrganizationObjectForm::BranchClicked()
 {
-	ISHighwayOrganizationObjectForm *HighwayOrganizationObjectForm = dynamic_cast<ISHighwayOrganizationObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, GetMetaTable()->GetName(), dynamic_cast<QAction*>(sender())->data().toInt()));
+	ISHighwayOrganizationObjectForm *HighwayOrganizationObjectForm = dynamic_cast<ISHighwayOrganizationObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, GetMetaTable()->Name, dynamic_cast<QAction*>(sender())->data().toInt()));
 	connect(HighwayOrganizationObjectForm, &ISHighwayOrganizationObjectForm::UpdateList, this, &ISHighwayOrganizationObjectForm::ReloadBranch);
 	HighwayOrganizationObjectForm->show();
 }

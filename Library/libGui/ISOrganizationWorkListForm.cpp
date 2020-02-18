@@ -41,7 +41,7 @@ void ISOrganizationWorkListForm::TakeToWork()
 				qTake.BindValue(":ObjectID", ObjectID);
 				if (qTake.Execute())
 				{
-					ISProtocol::Insert(true, "{075934CA-4E4F-47E6-966F-C3D4991F2B03}", GetMetaTable()->GetName(), GetMetaTable()->GetLocalListName(), GetObjectID(), OrganizationName);
+					ISProtocol::Insert(true, "{075934CA-4E4F-47E6-966F-C3D4991F2B03}", GetMetaTable()->Name, GetMetaTable()->LocalListName, GetObjectID(), OrganizationName);
 				}
 			}
 

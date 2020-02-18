@@ -26,9 +26,9 @@ QSqlRecord ISSqlModelView::GetRecord(int RowIndex) const
 //-----------------------------------------------------------------------------
 int ISSqlModelView::GetFieldIndex(const QString &FieldName) const
 {
-	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
+	for (int i = 0; i < MetaTable->Fields.count(); ++i)
 	{
-		if (MetaTable->GetFields().at(i)->GetName() == FieldName)
+		if (MetaTable->Fields[i]->Name == FieldName)
 		{
 			return i;
 		}
@@ -78,7 +78,7 @@ QVariant ISSqlModelView::data(const QModelIndex &ModelIndex, int Role) const
 	}
 
 	PMetaClassField *MetaField = MetaTable->GetField(headerData(ModelIndex.column(), Qt::Horizontal, Qt::UserRole).toString());
-	ISNamespace::FieldType FieldType = MetaField->GetType();
+	ISNamespace::FieldType FieldType = MetaField->Type;
 
 	if (Role == Qt::DisplayRole)
 	{
@@ -102,7 +102,7 @@ QVariant ISSqlModelView::headerData(int Section, Qt::Orientation Orientation, in
 	{
 		if (Role == Qt::DisplayRole) //Отображение локального наименование столбца
 		{
-			Value = MetaTable->GetFields().at(Section)->GetLocalListName();
+			Value = MetaTable->Fields.at(Section)->LocalListName;
 		}
 		else if (Role == Qt::DecorationRole) //Отображение иконки сортируемого столбца
 		{
@@ -110,11 +110,11 @@ QVariant ISSqlModelView::headerData(int Section, Qt::Orientation Orientation, in
 		}
 		else if (Role == Qt::UserRole) //Отображение наименования столбца
 		{
-			Value = MetaTable->GetFields().at(Section)->GetName();
+			Value = MetaTable->Fields.at(Section)->Name;
 		}
 		else if (Role == Qt::ToolTipRole) //Всплывающий текст заголовка поля
 		{
-			MetaTable->GetFields().at(Section)->GetLocalListName();
+			MetaTable->Fields.at(Section)->LocalListName;
 		}
 	}
 	else
@@ -137,7 +137,7 @@ int ISSqlModelView::rowCount(const QModelIndex &Parent) const
 int ISSqlModelView::columnCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return MetaTable->GetFields().count();
+	return MetaTable->Fields.count();
 }
 //-----------------------------------------------------------------------------
 QModelIndex ISSqlModelView::index(int Row, int Column, const QModelIndex &Parent) const

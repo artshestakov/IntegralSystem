@@ -8,9 +8,10 @@ static QString QS_DEVICE_EXIST = PREPARE_QUERY("SELECT COUNT(*) "
 											   "FROM _deviceuser "
 											   "WHERE dvus_user = currentuserid() "
 											   "AND dvus_type = :TypeID "
-											   "AND dvus_device = :DeviceID ");
+											   "AND dvus_device = :DeviceID");
 //-----------------------------------------------------------------------------
-ISDeviceUserObjectForm::ISDeviceUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISDeviceUserObjectForm::ISDeviceUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id)
+	: ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	SetVisibleDelete(false);
 	SetVisibleDeleteCascade(false);

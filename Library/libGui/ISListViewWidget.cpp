@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 ISListViewWidget::ISListViewWidget(PMetaClassTable *meta_query, QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	MetaViewQuery = new ISMetaViewQuery(meta_query->GetName());
+	MetaViewQuery = new ISMetaViewQuery(meta_query->Name);
 	MetaQuery = meta_query;
 
 	SqlModel = new ISSqlModelView(MetaQuery, this);
@@ -178,7 +178,7 @@ void ISListViewWidget::SortingChanged(int LogicalIndex, Qt::SortOrder SortOrder)
 {
 	SqlModel->SetCurrentSorting(LogicalIndex, SortOrder);
 
-	MetaViewQuery->SetOrderField(MetaQuery->GetFields().at(LogicalIndex)->GetQueryText());
+	MetaViewQuery->SetOrderField(MetaQuery->Fields[LogicalIndex]->QueryText);
 	MetaViewQuery->SetOrderSort(SortOrder);
 
 	Update();

@@ -16,7 +16,7 @@ static QString Q_REINDEX = "REINDEX INDEX %1";
 bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 {
 	QString IndexUnique = QString();
-	if (Index->GetUnique())
+	if (Index->Unique)
 	{
 		IndexUnique = "UNIQUE";
 	}
@@ -24,15 +24,15 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	QString SqlText = QC_INDEX;
 	SqlText = SqlText.arg(IndexUnique);
 	SqlText = SqlText.arg(GetIndexName(Index));
-	SqlText = SqlText.arg(Index->GetTableName());
+	SqlText = SqlText.arg(Index->TableName);
 
 	QString Fields = QString();
 
-	if (Index->GetFields().count())
+	if (Index->Fields.count())
 	{
-		for (int i = 0; i < Index->GetFields().count(); ++i)
+		for (int i = 0; i < Index->Fields.count(); ++i)
 		{
-			Fields += Index->GetAlias() + '_' + Index->GetFields().at(i) + ", ";
+			Fields += Index->Alias + '_' + Index->Fields.at(i) + ", ";
 		}
 
 		ISSystem::RemoveLastSymbolFromString(Fields, 2);
@@ -40,7 +40,7 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	}
 	else
 	{
-		SqlText = SqlText.arg(Index->GetAlias().toLower() + '_' + Index->GetFieldName().toLower());
+		SqlText = SqlText.arg(Index->Alias.toLower() + '_' + Index->FieldName.toLower());
 	}
 
 	ISQuery qCreateIndex;
@@ -70,7 +70,7 @@ bool CGIndex::CheckExistIndex(PMetaClassIndex *Index)
 {
 	ISQuery qSelectIndex(QS_INDEXES);
 	qSelectIndex.SetShowLongQuery(false);
-	qSelectIndex.BindValue(":TableName", Index->GetTableName().toLower());
+	qSelectIndex.BindValue(":TableName", Index->TableName.toLower());
 	qSelectIndex.BindValue(":IndexName", GetIndexName(Index));
 	if (qSelectIndex.ExecuteFirst())
 	{
@@ -91,9 +91,9 @@ bool CGIndex::CheckIndexForeign(PMetaClassIndex *Index)
 	for (int i = 0; i < Foreigns.count(); ++i)
 	{
 		PMetaClassForeign *MetaForeign = Foreigns.at(i);
-		if (Index->GetTableName().toLower() == MetaForeign->GetForeignClass().toLower())
+		if (Index->TableName.toLower() == MetaForeign->ForeignClass.toLower())
 		{
-			if (Index->GetFieldName().toLower() == MetaForeign->GetForeginField().toLower())
+			if (Index->FieldName.toLower() == MetaForeign->ForeignField.toLower())
 			{
 				return true;
 			}
@@ -121,23 +121,19 @@ bool CGIndex::ReindexIndex(PMetaClassIndex *Index, QString &ErrorString)
 QString CGIndex::GetIndexName(PMetaClassIndex *Index)
 {
 	QString IndexName;
-
-	if (Index->GetFields().count())
+	if (Index->Fields.count())
 	{
-		IndexName += Index->GetTableName() + '_';
-		for (int i = 0; i < Index->GetFields().count(); ++i)
+		IndexName += Index->TableName + '_';
+		for (int i = 0; i < Index->Fields.count(); ++i)
 		{
-			IndexName += Index->GetFields().at(i) + '_';
+			IndexName += Index->Fields.at(i) + '_';
 		}
-
 		ISSystem::RemoveLastSymbolFromString(IndexName);
 	}
 	else
 	{
-		IndexName = Index->GetTableName() + '_' + Index->GetAlias() + '_' + Index->GetFieldName() + "_index";
+		IndexName = Index->TableName + '_' + Index->Alias + '_' + Index->FieldName + "_index";
 	}
-
-	
 	return IndexName.toLower();
 }
 //-----------------------------------------------------------------------------

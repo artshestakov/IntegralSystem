@@ -5,7 +5,7 @@ void CGFunction::CreateOrReplaceFunction(PMetaClassFunction *MetaFunction, QStri
 {
 	ISQuery qCreateFunction;
 	qCreateFunction.SetShowLongQuery(false);
-	if (!qCreateFunction.Execute(MetaFunction->GetText()))
+	if (!qCreateFunction.Execute(MetaFunction->Text))
 	{
 		ErrorString = qCreateFunction.GetErrorText();
 	}

@@ -27,7 +27,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaClassTable *meta_table) :
 
 	if (MetaTable)
 	{
-		setWindowTitle(LANG("FavoritesForTable") + ": " + MetaTable->GetLocalListName());
+		setWindowTitle(LANG("FavoritesForTable") + ": " + MetaTable->LocalListName);
 	}
 	else
 	{
@@ -89,7 +89,7 @@ void ISFavoritesForm::LoadFavorites()
 	if (MetaTable)
 	{
 		qSelect = ISQuery(QS_FAVORITES_TABLE);
-		qSelect.BindValue(":TableName", MetaTable->GetName());
+		qSelect.BindValue(":TableName", MetaTable->Name);
 	}
 	else
 	{

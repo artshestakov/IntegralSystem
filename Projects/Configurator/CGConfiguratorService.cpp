@@ -36,7 +36,7 @@ void CGConfiguratorService::reindex()
 	{
 		Progress("Reindex", i, CountTables);
 
-		QString TableName = ISMetaData::GetInstanse().GetTables().at(i)->GetName();
+		QString TableName = ISMetaData::GetInstanse().GetTables()[i]->Name;
 
 		ISDebug::ShowString("Reindex table: " + TableName);
 
@@ -121,7 +121,7 @@ void CGConfiguratorService::cleartable()
 	QList<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
 	for (PMetaClassTable *meta_table : Tables) //Поиск таблицы по введенному имени
 	{
-		if (meta_table->GetName().toLower() == InputName)
+		if (meta_table->Name.toLower() == InputName)
 		{
 			MetaTable = meta_table;
 		}
@@ -134,7 +134,7 @@ void CGConfiguratorService::cleartable()
 	}
 
 	//Запрос списка идентификаторов таблицы
-	ISQuery qSelect("SELECT " + MetaTable->GetAlias() + "_id FROM " + MetaTable->GetName() + " ORDER BY " + MetaTable->GetAlias() + "_id");
+	ISQuery qSelect("SELECT " + MetaTable->Alias + "_id FROM " + MetaTable->Name + " ORDER BY " + MetaTable->Alias + "_id");
 	qSelect.SetShowLongQuery(false);
 	if (qSelect.Execute())
 	{
@@ -142,9 +142,9 @@ void CGConfiguratorService::cleartable()
 		int RecordCount = qSelect.GetCountResultRows();
 		while (qSelect.Next()) //Обход идентификаторов
 		{
-			int ObjectID = qSelect.ReadColumn(MetaTable->GetAlias() + "_id").toInt();
+			int ObjectID = qSelect.ReadColumn(MetaTable->Alias + "_id").toInt();
 			
-			ISQuery qDelete("DELETE FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_id = :ObjectID");
+			ISQuery qDelete("DELETE FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id = :ObjectID");
 			qDelete.SetShowLongQuery(false);
 			qDelete.BindValue(":ObjectID", ObjectID);
 			if (qDelete.Execute())

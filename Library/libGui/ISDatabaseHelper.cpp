@@ -51,19 +51,12 @@ QVariant ISDatabaseHelper::CheckValue(QVariant &Value)
 //-----------------------------------------------------------------------------
 QVariant ISDatabaseHelper::GetObjectIDToList(PMetaClassTable *MetaTable, PMetaClassField *MetaField, int ObjectID)
 {
-	QString SqlText;
-	QString TableAlias = MetaTable->GetAlias();
-
-	SqlText = "SELECT " + TableAlias + '_' + MetaField->GetName() + " FROM " + MetaTable->GetName() + " WHERE " + TableAlias + "_id = " + QString::number(ObjectID);
-
-	ISQuery qSelect(SqlText);
+	ISQuery qSelect("SELECT " + MetaTable->Alias + '_' + MetaField->Name + " FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id = " + QString::number(ObjectID));
 	if (qSelect.ExecuteFirst())
 	{
-		QVariant ID = qSelect.ReadColumn(TableAlias + '_' + MetaField->GetName());
-		return ID;
+		return qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name);
 	}
-
-	IS_ASSERT(false, "MetaTable: " + MetaTable->GetName() + ". MetaField: " + MetaField->GetName() + ". ObjectID = " + QString::number(ObjectID));
+	IS_ASSERT(false, "MetaTable: " + MetaTable->Name + ". MetaField: " + MetaField->Name + ". ObjectID = " + QString::number(ObjectID));
 	return QVariant();
 }
 //-----------------------------------------------------------------------------

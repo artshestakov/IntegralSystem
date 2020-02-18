@@ -106,7 +106,7 @@ void ISOrganizationListForm::Transfer()
 						qUpdateOrgUser.BindValue(":OrganizationID", ObjectID);
 						qUpdateOrgUser.Execute();
 
-						ISProtocol::Insert(true, "{BB6C46A0-C8E4-48F7-AC19-3A31D8FE7888}", GetMetaTable()->GetName(), GetMetaTable()->GetLocalListName(), ObjectID, LANG("Protocol.Transfer").arg(OrganizationName).arg(TransferOrganizationForm.GetSelectedUserName()));
+						ISProtocol::Insert(true, "{BB6C46A0-C8E4-48F7-AC19-3A31D8FE7888}", GetMetaTable()->Name, GetMetaTable()->LocalListName, ObjectID, LANG("Protocol.Transfer").arg(OrganizationName).arg(TransferOrganizationForm.GetSelectedUserName()));
 						ISNotifySender::GetInstance().SendToUser("{F436CA43-860B-4728-83E1-0F38A05A6282}", UserID, OrganizationName);
 					}
 				}
@@ -157,12 +157,11 @@ void ISOrganizationListForm::Percentage()
 			ProgressForm.setValue(i);
 
 			int CountFill = 0; //Количество заполненных полей
-			int CountFields = GetMetaTable()->GetFields().count(); //Количество полей
+			int CountFields = GetMetaTable()->Fields.count(); //Количество полей
 
 			for (int j = 0; j < CountFields; ++j) //Обход полей
 			{
-				PMetaClassField *MetaField = GetMetaTable()->GetFields().at(j);
-				QString FieldName = "orgz_" + MetaField->GetName();
+				QString FieldName = "orgz_" + GetMetaTable()->Fields[j]->Name;
 
 				ISQuery qSelectField(QString("SELECT %1 FROM organizations WHERE orgz_id = :OrganizationID").arg(FieldName));
 				qSelectField.BindValue(":OrganizationID", Objects.at(i));

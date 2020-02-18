@@ -155,7 +155,7 @@ void ISObjectFormBase::closeEvent(QCloseEvent *e)
 	{
 		emit CurrentObjectTab();
 
-		ISMessageBox MessageBox(QMessageBox::Warning, LANG("SavingProcess"), LANG("Message.Question.SaveObjectChanged").arg(MetaTable->GetLocalName()), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, this);
+		ISMessageBox MessageBox(QMessageBox::Warning, LANG("SavingProcess"), LANG("Message.Question.SaveObjectChanged").arg(MetaTable->LocalName), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, this);
 		MessageBox.setWindowIcon(BUFFER_ICONS("Save"));
 		MessageBox.setDefaultButton(QMessageBox::No);
         QMessageBox::StandardButtons ClickedButton = static_cast<QMessageBox::StandardButtons>(MessageBox.Exec());
@@ -227,7 +227,7 @@ void ISObjectFormBase::AfterShowEvent()
 
 	if (FormType == ISNamespace::OFT_Edit)
 	{
-		ISProtocol::ShowObject(MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectID, ObjectName);
+		ISProtocol::ShowObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	}
 
 	if (BeginFieldEdit)
@@ -235,7 +235,7 @@ void ISObjectFormBase::AfterShowEvent()
 		BeginFieldEdit->SetFocus();
 	}
 
-	ISFieldEditBase *FieldEditWidget = FieldsMap.value(MetaTable->GetClassFilterField());
+	ISFieldEditBase *FieldEditWidget = FieldsMap.value(MetaTable->ClassFilterField);
 	if (FieldEditWidget)
 	{
 		FieldEditWidget->SetValue(ParentObjectID);
@@ -262,7 +262,7 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	GetMainLayout()->addWidget(ToolBarNavigation);
 
 	//Действие объекта
-	QAction *ActionObject = ToolBarNavigation->CreateAction(BUFFER_ICONS("Document"), MetaTable->GetLocalName(), ISNamespace::OAT_Object);
+	QAction *ActionObject = ToolBarNavigation->CreateAction(BUFFER_ICONS("Document"), MetaTable->LocalName, ISNamespace::OAT_Object);
 	ActionObject->setChecked(true);
 	ToolBarNavigation->addAction(ActionObject);
 	ToolBarNavigation->actionTriggered(ActionObject);
@@ -279,12 +279,12 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"), ISNamespace::OAT_Service, QString(), "ISProtocolObjectListForm"));
 	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Discussion"), LANG("Discussion"), ISNamespace::OAT_Service, QString(), "ISDiscussionListForm"));
 
-	for (int i = 0; i < MetaTable->GetEscorts().count(); ++i) //Обход эскортных мета-таблиц
+	for (int i = 0; i < MetaTable->Escorts.count(); ++i) //Обход эскортных мета-таблиц
 	{
-		PMetaClassEscort *MetaEscort = MetaTable->GetEscorts().at(i);
+		PMetaClassEscort *MetaEscort = MetaTable->Escorts[i];
 		
-		QAction *ActionEscort = ToolBarNavigation->CreateAction(BUFFER_ICONS("Table"), MetaEscort->GetLocalName(), ISNamespace::OAT_Escort, MetaEscort->GetTableName(), MetaEscort->GetClassName());
-		ActionEscort->setProperty("ClassFilter", MetaEscort->GetClassFilter());
+		QAction *ActionEscort = ToolBarNavigation->CreateAction(BUFFER_ICONS("Table"), MetaEscort->LocalName, ISNamespace::OAT_Escort, MetaEscort->TableName, MetaEscort->ClassName);
+		ActionEscort->setProperty("ClassFilter", MetaEscort->ClassFilter);
 		ToolBarNavigation->addAction(ActionEscort);
 	}
 
@@ -427,34 +427,33 @@ void ISObjectFormBase::CreateFieldsWidget()
 	WidgetObjectLayout->addWidget(ScrollAreaMain);
 
 	CreateFieldID(FormLayout);
-	for (PMetaClassField *MetaField : MetaTable->GetFields()) //Обход полей
+	for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей
 	{
-		if (MetaField->GetQueryText().length()) //Если поле является запросом - пропускать его
+		if (!MetaField->QueryText.isEmpty()) //Если поле является запросом - пропускать его
 		{
 			continue;
 		}
 
 		//Если тип поля ByteArray и для него не предусмотрен виджет редактирования - пропускать его
-		if (MetaField->GetType() == ISNamespace::FT_ByteArray && !MetaField->GetControlWidget().length())
+		if (MetaField->Type == ISNamespace::FT_ByteArray && MetaField->ControlWidget.isEmpty())
 		{
 			continue;
 		}
 
-		QString LayoutName = MetaField->GetLayoutName();
-		if (LayoutName.length()) //Если поле должно быть в горизональном компоновщике
+		if (!MetaField->LayoutName.isEmpty()) //Если поле должно быть в горизональном компоновщике
 		{
-			if (!Layouts.contains(LayoutName))
+			if (!Layouts.contains(MetaField->LayoutName))
 			{
 				QHBoxLayout *LayoutHorizontal = new QHBoxLayout();
 				LayoutHorizontal->setProperty("Inserted", false);
-				Layouts.insert(LayoutName, LayoutHorizontal);
+				Layouts.insert(MetaField->LayoutName, LayoutHorizontal);
 			}
 		}
 
 		ISFieldEditBase *FieldEditBase = CreateColumnForField(MetaField);
 		if (dynamic_cast<ISListEdit*>(FieldEditBase))
 		{
-			dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->GetForeign());
+			dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
 		}
 		
 		AddColumnForField(MetaField, FieldEditBase, FormLayout);
@@ -469,16 +468,16 @@ void ISObjectFormBase::FillDataFields()
 
 		//Подготовка запроса
 		ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_Object);
-		QueryModel.SetClassFilter(MetaTable->GetAlias() + SYMBOL_POINT + MetaTable->GetAlias() + "_id = " + QString::number(ObjectID));
+		QueryModel.SetClassFilter(MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + "_id = " + QString::number(ObjectID));
 		QString QueryText = QueryModel.GetQueryText();
 
 		//Выполнение запроса
-		ISDebug::ShowDebugString(QString("Start select query from object %1 in table \"%2\"").arg(ObjectID).arg(MetaTable->GetName()));
+		ISDebug::ShowDebugString(QString("Start select query from object %1 in table \"%2\"").arg(ObjectID).arg(MetaTable->Name));
 		ISCountingTime Time;
 		ISQuery qSelect(QueryText);
 		IS_ASSERT(qSelect.ExecuteFirst(), QString("Not executed query:\n%1\n%2").arg(QueryText).arg(qSelect.GetErrorText()));
 		IS_ASSERT(qSelect.GetCountResultRows() == 1, "Error count result rows");
-		ISDebug::ShowDebugString(QString("Finished select query from object %1 in table \"%2\". %3 msec.").arg(ObjectID).arg(MetaTable->GetName()).arg(Time.GetElapsed()));
+		ISDebug::ShowDebugString(QString("Finished select query from object %1 in table \"%2\". %3 msec.").arg(ObjectID).arg(MetaTable->Name).arg(Time.GetElapsed()));
 		QSqlRecord SqlRecord = qSelect.GetRecord();
 		
 		RecordIsDeleted = SqlRecord.value("IsDeleted").toBool();
@@ -504,7 +503,7 @@ void ISObjectFormBase::FillDataFields()
 			{
 				disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 
-				if (MetaTable->GetField(FieldName)->GetForeign())
+				if (MetaTable->GetField(FieldName)->Foreign)
 				{
 					QVariant ListObjectID = ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID);
 					FieldEditWidget->SetValue(ListObjectID);
@@ -529,7 +528,7 @@ void ISObjectFormBase::FillDataFields()
 			}
 		}
 
-		ISCore::AddHistory(MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectName, ObjectID);
+		ISCore::AddHistory(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -556,7 +555,7 @@ void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
 ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaClassField *MetaField)
 {
 	ISFieldEditBase	*FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
-	FieldsMap.insert(MetaField->GetName(), FieldEditBase);
+	FieldsMap.insert(MetaField->Name, FieldEditBase);
 	connect(FieldEditBase, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 	return FieldEditBase;
 }
@@ -565,63 +564,62 @@ void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEdit
 {
 	QLabel *LabelField = new QLabel(this);
 	LabelField->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-	LabelsMap.insert(MetaField->GetName(), LabelField);
+	LabelsMap.insert(MetaField->Name, LabelField);
 
-	if (MetaField->GetDefaultValueWidget().isValid()) //Если в поле указано значение по умолчанию для виджета-редактора
+	if (MetaField->DefaultValueWidget.isValid()) //Если в поле указано значение по умолчанию для виджета-редактора
 	{
-		FieldEditBase->SetValue(MetaField->GetDefaultValueWidget());
+		FieldEditBase->SetValue(MetaField->DefaultValueWidget);
 		FieldEditBase->SetModificationFlag(true);
 	}
 
-	if (MetaField->GetNotNull()) //Если поле обязательно для заполнения
+	if (MetaField->NotNull) //Если поле обязательно для заполнения
 	{
 		LabelField->setTextFormat(Qt::RichText);
-		LabelField->setText(QString("<font>%1:</font><font color=#FF0000 size=4>*</font>").arg(MetaField->GetLabelName()));
+		LabelField->setText(QString("<font>%1:</font><font color=#FF0000 size=4>*</font>").arg(MetaField->LabelName));
 		LabelField->setToolTip(LANG("FieldNotNull"));
 		LabelField->setCursor(CURSOR_WHATS_THIS);
 		FieldEditBase->SetToolTip(LANG("FillThisField"));
 	}
 	else
 	{
-		LabelField->setText(MetaField->GetLabelName() + ':');
+		LabelField->setText(MetaField->LabelName + ':');
 	}
 
-	if (MetaField->GetReadOnly()) //Если доступно только для просмотра
+	if (MetaField->ReadOnly) //Если доступно только для просмотра
 	{
-		FieldEditBase->SetReadOnly(MetaField->GetReadOnly());
+		FieldEditBase->SetReadOnly(MetaField->ReadOnly);
 	}
 
-	if (MetaField->GetPlaceholderText().length()) //Если есть текст-заполнитель
+	if (!MetaField->PlaceholderText.isEmpty()) //Если есть текст-заполнитель
 	{
-		FieldEditBase->SetPlaceholderText(MetaField->GetPlaceholderText());
+		FieldEditBase->SetPlaceholderText(MetaField->PlaceholderText);
 	}
 
-	if (MetaField->GetHint().length()) //Если есть подсказка для поля
+	if (!MetaField->Hint.isEmpty()) //Если есть подсказка для поля
 	{
-		FieldEditBase->CreateHint(MetaField->GetHint());
+		FieldEditBase->CreateHint(MetaField->Hint);
 	}
 
-	if (MetaField->GetRegExp().length()) //Если у поля настроено регулярное выражение
+	if (!MetaField->RegExp.isEmpty()) //Если у поля настроено регулярное выражение
 	{
-		FieldEditBase->SetRegExp(MetaField->GetRegExp());
+		FieldEditBase->SetRegExp(MetaField->RegExp);
 	}
 
-	if (MetaField->GetHideFromObject()) //Если поле нужно скрыть - выходим из метода и просто его не добавляем на форму
+	if (MetaField->HideFromObject) //Если поле нужно скрыть - выходим из метода и просто его не добавляем на форму
 	{
-		SetVisibleField(MetaField->GetName(), false);
+		SetVisibleField(MetaField->Name, false);
 		return;
 	}
 	
-	if (!BeginFieldEdit && !MetaField->GetReadOnly())
+	if (!BeginFieldEdit && !MetaField->ReadOnly)
 	{
 		BeginFieldEdit = FieldEditBase;
 	}
 
-	QString Separator = MetaField->GetSeparatorName();
-	if (Separator.length())
+	if (!MetaField->SeparatorName.isEmpty())
 	{
 		QLabel *LabelTab = new QLabel(this);
-		LabelTab->setText(Separator);
+		LabelTab->setText(MetaField->SeparatorName);
 		LabelTab->setFont(DEFINES_GUI.FONT_TAHOMA_10_BOLD);
 
 		QHBoxLayout *LayoutLine = new QHBoxLayout();
@@ -634,7 +632,7 @@ void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEdit
 		FormLayout->addRow(LabelTab, WidgetLine);
 	}
 
-	QHBoxLayout *LayoutHorizontal = Layouts.value(MetaField->GetLayoutName());
+	QHBoxLayout *LayoutHorizontal = Layouts.value(MetaField->LayoutName);
 	if (LayoutHorizontal)
 	{
 		if (LayoutHorizontal->property("Inserted").toBool())
@@ -713,7 +711,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		else //Открытие таблицы
 		{
 			ISListObjectForm *ListForm = new ISListObjectForm(TableName, ObjectID, WidgetTabEscort);
-			ListForm->SetUID(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetUID());
+			ListForm->SetUID(ISMetaData::GetInstanse().GetMetaTable(TableName)->UID);
 			
 			if (ClassFilter.length())
 			{
@@ -727,7 +725,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		WidgetTabEscort->layout()->addWidget(WidgetEscort);
 
 		//Присвоения ниже должны быть перед вызовом LoadData()
-		WidgetEscort->SetParentTableName(MetaTable->GetName());
+		WidgetEscort->SetParentTableName(MetaTable->Name);
 		WidgetEscort->SetParentObjectID(ObjectID);
 
 		WidgetEscort->LoadData();
@@ -758,7 +756,7 @@ void ISObjectFormBase::SaveCreate()
 		}
 		else
 		{
-			ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->GetName());
+			ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
 			ObjectFormBase->show();
 		}
 
@@ -800,9 +798,9 @@ bool ISObjectFormBase::Save()
 		QVariant Value = FieldEditBase->GetValue();
 		if (Value.isNull()) //Если значение в поле отсутствует, проверить обязательно ли поле для заполнения
 		{
-			if (MetaField->GetNotNull() && !MetaField->GetHideFromObject()) //Если поле обязательно для заполнения
+			if (MetaField->NotNull && !MetaField->HideFromObject) //Если поле обязательно для заполнения
 			{
-				ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(MetaField->GetLabelName()));
+				ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(MetaField->LabelName));
 				FieldEditBase->BlinkRed();
 				return false;
 			}
@@ -810,7 +808,7 @@ bool ISObjectFormBase::Save()
 
 		if (!FieldEditBase->GetModificationFlag()) //Если значения поля редактированя не изменялось, переходить к следующему
 		{
-			if (MetaTable->GetClassFilterField() != FieldName) //Если текущее поле не является фильтруемым (текущая таблица не является эскортной)
+			if (MetaTable->ClassFilterField != FieldName) //Если текущее поле не является фильтруемым (текущая таблица не является эскортной)
 			{
 				continue;
 			}
@@ -818,7 +816,7 @@ bool ISObjectFormBase::Save()
 
 		if (!FieldEditBase->IsValid())
 		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.ValueFieldEditInvalid").arg(MetaField->GetLabelName()));
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.ValueFieldEditInvalid").arg(MetaField->LabelName));
 			FieldEditBase->BlinkRed();
 			return false;
 		}
@@ -831,12 +829,12 @@ bool ISObjectFormBase::Save()
 	//Формирование запроса на добавление/изменение/копирование
 	if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
 	{
-		QString InsertFields = "INSERT INTO " + MetaTable->GetName() + " (";
+		QString InsertFields = "INSERT INTO " + MetaTable->Name + " (";
 		QString InsertValues = "VALUES (";
 
 		for (int i = 0; i < FieldsVector.count(); ++i)
 		{
-			InsertFields += MetaTable->GetAlias() + '_' + FieldsVector.at(i) + ", ";
+			InsertFields += MetaTable->Alias + '_' + FieldsVector.at(i) + ", ";
 			InsertValues += ':' + FieldsVector.at(i) + ", ";
 		}
 
@@ -845,25 +843,25 @@ bool ISObjectFormBase::Save()
 
 		QueryText += InsertFields + ") \n";
 		QueryText += InsertValues + ") \n";
-		QueryText += "RETURNING " + MetaTable->GetAlias() + "_id";
+		QueryText += "RETURNING " + MetaTable->Alias + "_id";
 	}
 	else if (FormType == ISNamespace::OFT_Edit)
 	{
-		QueryText += "UPDATE " + MetaTable->GetName() + " SET \n";
+		QueryText += "UPDATE " + MetaTable->Name + " SET \n";
 
 		//Заполнение полей информацией о опользователе и текущей дате
-		QueryText += MetaTable->GetAlias() + "_updationdate = now(), \n";
-		QueryText += MetaTable->GetAlias() + "_updationuser = CURRENT_USER, \n";
+		QueryText += MetaTable->Alias + "_updationdate = now(), \n";
+		QueryText += MetaTable->Alias + "_updationuser = CURRENT_USER, \n";
 
 		for (int i = 0; i < FieldsVector.count(); ++i)
 		{
-			QueryText += MetaTable->GetAlias() + '_' + FieldsVector.at(i) + " = :" + FieldsVector.at(i) + ", \n";
+			QueryText += MetaTable->Alias + '_' + FieldsVector.at(i) + " = :" + FieldsVector.at(i) + ", \n";
 		}
 
 		ISSystem::RemoveLastSymbolFromString(QueryText, 3);
 
 		QueryText += " \n";
-		QueryText += "WHERE " + MetaTable->GetAlias() + "_id = " + QString::number(ObjectID);
+		QueryText += "WHERE " + MetaTable->Alias + "_id = " + QString::number(ObjectID);
 	}
 
 	ISDatabase::GetInstance().GetDefaultDB().transaction(); //Открытие транзакции
@@ -884,7 +882,7 @@ bool ISObjectFormBase::Save()
 		if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
 		{
 			IS_ASSERT(SqlQuery.First(), "Not first SqlQuery");
-			ObjectID = SqlQuery.ReadColumn(MetaTable->GetAlias() + "_id").toInt();
+			ObjectID = SqlQuery.ReadColumn(MetaTable->Alias + "_id").toInt();
 		}
 	}
 	catch (ISQueryException &e)
@@ -901,19 +899,19 @@ bool ISObjectFormBase::Save()
 		if (FormType == ISNamespace::OFT_New)
 		{
 			FormType = ISNamespace::OFT_Edit;
-			ISNotificationService::ShowNotification(ISNamespace::NFT_Create, MetaTable->GetLocalName(), ObjectName);
-			ISProtocol::CreateObject(MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectID, ObjectName);
+			ISNotificationService::ShowNotification(ISNamespace::NFT_Create, MetaTable->LocalName, ObjectName);
+			ISProtocol::CreateObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 		}
 		else if (FormType == ISNamespace::OFT_Copy)
 		{
 			FormType = ISNamespace::OFT_Edit;
-			ISNotificationService::ShowNotification(ISNamespace::NFT_CreateCopy, MetaTable->GetLocalName(), ObjectName);
-			ISProtocol::CreateCopyObject(MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectID, ObjectName);
+			ISNotificationService::ShowNotification(ISNamespace::NFT_CreateCopy, MetaTable->LocalName, ObjectName);
+			ISProtocol::CreateCopyObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 		}
 		else if (FormType == ISNamespace::OFT_Edit)
 		{
-			ISNotificationService::ShowNotification(ISNamespace::NFT_Edit, MetaTable->GetLocalName(), ObjectName);
-			ISProtocol::EditObject(MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectID, ObjectName);
+			ISNotificationService::ShowNotification(ISNamespace::NFT_Edit, MetaTable->LocalName, ObjectName);
+			ISProtocol::EditObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 		}
 
 		RenameReiconForm();
@@ -942,17 +940,17 @@ void ISObjectFormBase::RenameReiconForm()
 	switch (FormType)
 	{
 	case ISNamespace::OFT_New:
-		setWindowTitle(LANG("Creating") + " (" + MetaTable->GetLocalName() + ')');
+		setWindowTitle(LANG("Creating") + " (" + MetaTable->LocalName + ')');
 		setWindowIcon(BUFFER_ICONS("Add"));
 		break;
 
 	case ISNamespace::OFT_Edit:
-		setWindowTitle(MetaTable->GetLocalName() + ": " + ObjectName);
+		setWindowTitle(MetaTable->LocalName + ": " + ObjectName);
 		setWindowIcon(BUFFER_ICONS("Edit"));
 		break;
 
 	case ISNamespace::OFT_Copy:
-		setWindowTitle(LANG("Coping") + " (" + MetaTable->GetLocalName() + "): " + ObjectName);
+		setWindowTitle(LANG("Coping") + " (" + MetaTable->LocalName + "): " + ObjectName);
 		setWindowIcon(BUFFER_ICONS("AddCopy"));
 		break;
 	}
@@ -1022,7 +1020,7 @@ void ISObjectFormBase::UpdateObjectActions()
 		ActionSaveAndNew->setEnabled(false);
 		ActionSave->setEnabled(false);
 		ActionReRead->setEnabled(true);
-		ActionFavorites->setChecked(ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->GetName(), ObjectID));
+		ActionFavorites->setChecked(ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -1033,15 +1031,15 @@ void ISObjectFormBase::ShowSystemInfo()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddFavoite()
 {
-	if (ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->GetName(), ObjectID))
+	if (ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID))
 	{
-		ISFavorites::GetInstance().DeleteFavorite(MetaTable->GetName(), ObjectID);
+		ISFavorites::GetInstance().DeleteFavorite(MetaTable->Name, ObjectID);
 		ActionFavorites->setChecked(false);
 		ISNotificationService::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName));
 	}
 	else
 	{
-		ISFavorites::GetInstance().AddFavorite(MetaTable->GetName(), MetaTable->GetLocalListName(), ObjectName, ObjectID);
+		ISFavorites::GetInstance().AddFavorite(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
 		ActionFavorites->setChecked(true);
 		ISNotificationService::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
 	}
@@ -1049,9 +1047,9 @@ void ISObjectFormBase::AddFavoite()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::Delete()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
 	}
 
@@ -1059,7 +1057,7 @@ void ISObjectFormBase::Delete()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryThisRecord")))
 		{
-			if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->GetName(), MetaTable->GetAlias(), GetObjectID(), MetaTable->GetLocalListName()))
+			if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, GetObjectID(), MetaTable->LocalListName))
 			{
 				emit UpdateList();
 				close();
@@ -1070,7 +1068,7 @@ void ISObjectFormBase::Delete()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteThisRecord")))
 		{
-			if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->GetName(), MetaTable->GetAlias(), GetObjectID(), MetaTable->GetLocalListName()))
+			if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, GetObjectID(), MetaTable->LocalListName))
 			{
 				emit UpdateList();
 				close();
@@ -1081,18 +1079,18 @@ void ISObjectFormBase::Delete()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::DeleteCascade()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
 	}
 
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
 	{
-		if (ISCore::DeleteCascadeObject(MetaTable->GetName(), MetaTable->GetAlias(), GetObjectID()))
+		if (ISCore::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, GetObjectID()))
 		{
 			ISNotificationService::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
-			ISProtocol::DeleteCascadeObject(MetaTable->GetName(), MetaTable->GetLocalListName(), GetObjectID());
+			ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 			
 			emit UpdateList();
 			close();
@@ -1122,7 +1120,7 @@ void ISObjectFormBase::CancelChanged()
 		{
 			QString FieldName = FieldItem.first;
 			QVariant BeginValue = FieldItem.second;
-			if (MetaTable->GetField(FieldName)->GetQueryText().length()) //Если поле является мета-запросом
+			if (!MetaTable->GetField(FieldName)->QueryText.isEmpty()) //Если поле является мета-запросом
 			{
 				continue;
 			}
@@ -1150,11 +1148,11 @@ void ISObjectFormBase::ReRead()
 			QString FieldName = FieldItem.first;
 			ISFieldEditBase *FieldWidget = FieldItem.second;
 
-			ISQuery qSelect("SELECT " + MetaTable->GetAlias() + '_' + FieldName + " FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + "_id = :ObjectID");
+			ISQuery qSelect("SELECT " + MetaTable->Alias + '_' + FieldName + " FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id = :ObjectID");
 			qSelect.BindValue(":ObjectID", ObjectID);
 			if (qSelect.ExecuteFirst())
 			{
-				QVariant ValueDB = qSelect.ReadColumn(MetaTable->GetAlias() + '_' + FieldName);
+				QVariant ValueDB = qSelect.ReadColumn(MetaTable->Alias + '_' + FieldName);
 				disconnect(FieldWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 				FieldWidget->SetValue(ValueDB);
 				FieldWidget->SetModificationFlag(false);

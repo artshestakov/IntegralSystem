@@ -129,9 +129,9 @@ void ISFullTextSearchForm::Search()
 		}
 
 		ProgressBar->setValue(ProgressBar->value() + 1);
-		LabelSearch->setText(LANG("SearchIn") + ": " + MetaTable->GetLocalListName());
+		LabelSearch->setText(LANG("SearchIn") + ": " + MetaTable->LocalListName);
 
-		if (!MetaTable->GetIsSystem()) //Таблица не системная
+		if (!MetaTable->IsSystem) //Таблица не системная
 		{
 			QFuture<void> Future = QtConcurrent::run(this, &ISFullTextSearchForm::Execute, CreateQuery(MetaTable), LineEdit->GetValue());
 			FutureWatcher->setFuture(Future);
@@ -154,7 +154,7 @@ void ISFullTextSearchForm::Search()
 			++ResultCount;
 
 			ISLabelLink *LabelLink = new ISLabelLink(ScrollArea);
-			LabelLink->setText(QString::number(ResultCount) + ". " + MetaTable->GetLocalName() + ": " + ISCore::GetObjectName(MetaTable, ObjectID));
+			LabelLink->setText(QString::number(ResultCount) + ". " + MetaTable->LocalName + ": " + ISCore::GetObjectName(MetaTable, ObjectID));
 			LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
 			LabelLink->setProperty("TableName", TableName);
 			LabelLink->setProperty("ObjectID", ObjectID);
@@ -212,43 +212,42 @@ void ISFullTextSearchForm::Execute(const QString &QueryText, const QVariant &Que
 QString ISFullTextSearchForm::CreateQuery(PMetaClassTable *MetaTable) const
 {
 	QString QueryText = "WITH query AS \n(\n";
-	QueryText += "SELECT " + MetaTable->GetAlias() + "_id AS ID, concat(";
-	for (PMetaClassField *MetaField : MetaTable->GetFields())
+	QueryText += "SELECT " + MetaTable->Alias + "_id AS ID, concat(";
+	for (PMetaClassField *MetaField : MetaTable->Fields)
 	{
-		if (!ISMetaData::GetInstanse().GetAssociationTypes().GetSearch(MetaField->GetType())) //Если разрешение по поиск по типу поля есть
+		if (!ISMetaData::GetInstanse().GetAssociationTypes().GetSearch(MetaField->Type)) //Если разрешение по поиск по типу поля есть
 		{
 			continue;
 		}
 
-		if (MetaField->GetQueryText().length()) //Если поле является мета-запросом
+		if (!MetaField->QueryText.isEmpty()) //Если поле является мета-запросом
 		{
 			continue;
 		}
 
-		PMetaClassForeign *MetaForeign = MetaField->GetForeign();
-		if (MetaForeign)
+		if (MetaField->Foreign)
 		{
-			PMetaClassTable *MetaForeignTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass());
+			PMetaClassTable *MetaForeignTable = ISMetaData::GetInstanse().GetMetaTable(MetaField->Foreign->ForeignClass);
 			QueryText += "(SELECT concat(";
-			for (const QString &FieldName : MetaForeign->GetForeignViewNameField().split(';'))
+			for (const QString &FieldName : MetaField->Foreign->ForeignViewNameField.split(';'))
 			{
-				QueryText += MetaForeignTable->GetAlias() + '_' + FieldName + ", ";
+				QueryText += MetaForeignTable->Alias + '_' + FieldName + ", ";
 			}
 			ISSystem::RemoveLastSymbolFromString(QueryText, 2);
-			QueryText += ") FROM " + MetaForeignTable->GetName() + SYMBOL_SPACE;
-			QueryText += "WHERE " + MetaForeignTable->GetAlias() + '_' + MetaForeign->GetForeginField() + " = " + MetaTable->GetAlias() + '_' + MetaField->GetName() + ')';
+			QueryText += ") FROM " + MetaForeignTable->Name + SYMBOL_SPACE;
+			QueryText += "WHERE " + MetaForeignTable->Alias + '_' + MetaField->Foreign->ForeignField + " = " + MetaTable->Alias + '_' + MetaField->Name + ')';
 		}
 		else
 		{
-			QueryText += MetaTable->GetAlias() + '_' + MetaField->GetName();
+			QueryText += MetaTable->Alias + '_' + MetaField->Name;
 		}
 		QueryText += ", ";
 	}
 	
 	ISSystem::RemoveLastSymbolFromString(QueryText, 2);
-	QueryText += ") \nFROM " + MetaTable->GetName() + " \n";
-	QueryText += "ORDER BY " + MetaTable->GetAlias() + "_id \n)\n";
-	QueryText += "SELECT id, '" + MetaTable->GetName() + "' AS table_name \n";
+	QueryText += ") \nFROM " + MetaTable->Name + " \n";
+	QueryText += "ORDER BY " + MetaTable->Alias + "_id \n)\n";
+	QueryText += "SELECT id, '" + MetaTable->Name + "' AS table_name \n";
 	QueryText += "FROM query \n";
 	QueryText += "WHERE lower(concat) LIKE '%' || :Value || '%'";
 	return QueryText;

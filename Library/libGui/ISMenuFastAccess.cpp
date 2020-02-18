@@ -60,9 +60,9 @@ void ISMenuFastAccess::AboutToShow()
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(VectorRecords.at(i));
 
-		QAction *ActionRecord = new QAction(LANG("CreateRecord") + ": " + MetaTable->GetLocalName(), this);
+		QAction *ActionRecord = new QAction(LANG("CreateRecord") + ": " + MetaTable->LocalName, this);
 		ActionRecord->setFont(DEFINES_GUI.FONT_TAHOMA_10);
-		ActionRecord->setData(MetaTable->GetName());
+		ActionRecord->setData(MetaTable->Name);
 		insertAction(ActionCreateRecords, ActionRecord);
 		ActionGroupRecords->addAction(ActionRecord);
 	}

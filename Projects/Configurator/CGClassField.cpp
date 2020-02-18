@@ -21,7 +21,7 @@ bool CGClassField::CheckExistClassField(PMetaClassField *MetaField)
 {
 	ISQuery qSelect(QS_CLASS_FIELD);
 	qSelect.SetShowLongQuery(false);
-	qSelect.BindValue(":UID", MetaField->GetUID());
+	qSelect.BindValue(":UID", MetaField->UID);
 	if (qSelect.ExecuteFirst())
 	{
 		if (qSelect.ReadColumn("count").toInt())
@@ -37,13 +37,13 @@ void CGClassField::InsertClassField(const ISUuid &ClassUID, PMetaClassField *Met
 {
 	ISQuery qInsert(QI_CLASS_FIELD);
 	qInsert.SetShowLongQuery(false);
-	qInsert.BindValue(":UID", MetaField->GetUID());
+	qInsert.BindValue(":UID", MetaField->UID);
 	qInsert.BindValue(":ClassUID", ClassUID);
-	qInsert.BindValue(":Name", MetaField->GetName());
-	qInsert.BindValue(":Type", ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->GetType()));
-	qInsert.BindValue(":Size", MetaField->GetSize());
-	qInsert.BindValue(":LabelName", MetaField->GetLabelName());
-	qInsert.BindValue(":LocalListName", MetaField->GetLocalListName());
+	qInsert.BindValue(":Name", MetaField->Name);
+	qInsert.BindValue(":Type", ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->Type));
+	qInsert.BindValue(":Size", MetaField->Size);
+	qInsert.BindValue(":LabelName", MetaField->LabelName);
+	qInsert.BindValue(":LocalListName", MetaField->LocalListName);
 	qInsert.Execute();
 }
 //-----------------------------------------------------------------------------
@@ -52,12 +52,12 @@ void CGClassField::UpdateClassField(const ISUuid &ClassUID, PMetaClassField *Met
 	ISQuery qUpdate(QU_CLASS_FIELD);
 	qUpdate.SetShowLongQuery(false);
 	qUpdate.BindValue(":ClassUID", ClassUID);
-	qUpdate.BindValue(":Name", MetaField->GetName());
-	qUpdate.BindValue(":Type", ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->GetType()));
-	qUpdate.BindValue(":Size", MetaField->GetSize());
-	qUpdate.BindValue(":LabelName", MetaField->GetLabelName());
-	qUpdate.BindValue(":LocalListName", MetaField->GetLocalListName());
-	qUpdate.BindValue(":UID", MetaField->GetUID());
+	qUpdate.BindValue(":Name", MetaField->Name);
+	qUpdate.BindValue(":Type", ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->Type));
+	qUpdate.BindValue(":Size", MetaField->Size);
+	qUpdate.BindValue(":LabelName", MetaField->LabelName);
+	qUpdate.BindValue(":LocalListName", MetaField->LocalListName);
+	qUpdate.BindValue(":UID", MetaField->UID);
 	qUpdate.Execute();
 }
 //-----------------------------------------------------------------------------

@@ -49,7 +49,7 @@ void CGConfiguratorUpdate::tables()
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i) //Обход таблиц
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-		Progress(QString("Table: %1").arg(MetaTable->GetName()), i, CountTables);
+		Progress(QString("Table: %1").arg(MetaTable->Name), i, CountTables);
 
 		QString ErrorString;
 		CGTable::CheckExistTable(MetaTable) ? CGTable::UpdateTable(MetaTable) : CGTable::CreateTable(MetaTable, ErrorString);
@@ -62,12 +62,12 @@ void CGConfiguratorUpdate::systemindexes()
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().count(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes().at(i);
-		Progress(QString("System indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
+		Progress(QString("System indexes for: %1").arg(MetaIndex->TableName), i, CountIndexes);
 		
 		QString ErrorString;
 		if (CGIndex::CheckExistIndex(MetaIndex))
 		{
-			if (MetaIndex->GetFieldName().toLower() == "id") //Если поле primary_key - делать reindex
+			if (MetaIndex->FieldName.toLower() == "id") //Если поле primary_key - делать reindex
 			{
                 CGIndex::ReindexIndex(MetaIndex, ErrorString);
 			}
@@ -93,7 +93,7 @@ void CGConfiguratorUpdate::indexes()
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetIndexes().count(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes().at(i);
-		Progress(QString("Indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
+		Progress(QString("Indexes for: %1").arg(MetaIndex->TableName), i, CountIndexes);
 
 		QString ErrorString;
 		CGIndex::CheckExistIndex(MetaIndex) ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
@@ -106,7 +106,7 @@ void CGConfiguratorUpdate::compoundindexes()
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().count(); i < CountIndexes; ++i)
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes().at(i);
-		Progress(QString("Compound indexes for: %1").arg(MetaIndex->GetTableName()), i, CountIndexes);
+		Progress(QString("Compound indexes for: %1").arg(MetaIndex->TableName), i, CountIndexes);
 
 		QString ErrorString;
 		CGIndex::CheckExistIndex(MetaIndex) ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
@@ -131,7 +131,7 @@ void CGConfiguratorUpdate::resources()
 	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().count(); i < CountResources; ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
-		Progress(QString("Resources for: %1").arg(MetaResource->GetTableName()), i, CountResources);
+		Progress(QString("Resources for: %1").arg(MetaResource->TableName), i, CountResources);
 		
 		QString ErrorString;
 		CGResource::CheckExistResource(MetaResource) ? CGResource::UpdateResource(MetaResource) : CGResource::InsertResource(MetaResource, ErrorString);
@@ -156,10 +156,10 @@ void CGConfiguratorUpdate::classfields()
 	{
 		Progress("Class fields", i, CountTables);
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-		for (int j = 0, CountFields = MetaTable->GetFields().count(); j < CountFields; ++j)
+		for (int j = 0, CountFields = MetaTable->Fields.count(); j < CountFields; ++j)
 		{
-			PMetaClassField *MetaField = MetaTable->GetFields().at(j);
-			CGClassField::CheckExistClassField(MetaField) ? CGClassField::UpdateClassField(MetaTable->GetUID(), MetaField) : CGClassField::InsertClassField(MetaTable->GetUID(), MetaField);
+			PMetaClassField *MetaField = MetaTable->Fields.at(j);
+			CGClassField::CheckExistClassField(MetaField) ? CGClassField::UpdateClassField(MetaTable->UID, MetaField) : CGClassField::InsertClassField(MetaTable->UID, MetaField);
 		}
 	}
 }

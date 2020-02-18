@@ -169,7 +169,7 @@ void CGConfiguratorCreate::resources()
 	for (int i = 0; i < CountResources; ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
-		Progress("Resources for " + MetaResource->GetTableName(), i, CountResources);
+		Progress("Resources for " + MetaResource->TableName, i, CountResources);
 
 		QString ErrorString;
 		if (!CGResource::CheckExistResource(MetaResource))

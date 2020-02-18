@@ -72,7 +72,7 @@ void ISNoteObjectForm::Save()
 			qUpdate.BindValue(":ObjectID", ObjectID);
 			if (qUpdate.Execute())
 			{
-				ISProtocol::Insert(true, CONST_UID_PROTOCOL_EDIT_NOTE_RECORD, TableName, ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName(), ObjectID);
+				ISProtocol::Insert(true, CONST_UID_PROTOCOL_EDIT_NOTE_RECORD, TableName, ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName, ObjectID);
 				close();
 			}
 		}
@@ -84,7 +84,7 @@ void ISNoteObjectForm::Save()
 			qInsert.BindValue(":ObjectID", ObjectID);
 			if (qInsert.Execute())
 			{
-				ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_NOTE_RECORD, TableName, ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName(), ObjectID);
+				ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_NOTE_RECORD, TableName, ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName, ObjectID);
 				close();
 			}
 		}

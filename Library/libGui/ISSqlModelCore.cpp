@@ -29,7 +29,7 @@ ISSqlModelCore::~ISSqlModelCore()
 void ISSqlModelCore::FillColumns()
 {
 	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
-	QueryModel.SetClassFilter(MetaTable->GetAlias() + SYMBOL_POINT + MetaTable->GetAlias() + "_id = 0");
+	QueryModel.SetClassFilter(MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + "_id = 0");
 
 	ISQuery qSelectColumns(QueryModel.GetQueryText());
 	if (qSelectColumns.Execute())
@@ -109,7 +109,7 @@ int ISSqlModelCore::GetFieldIndex(const QString &FieldName) const
 {
 	for (int i = 0; i < Fields.count(); ++i)
 	{
-		if (Fields.at(i)->GetName() == FieldName)
+		if (Fields[i]->Name == FieldName)
 		{
 			return i;
 		}
@@ -149,7 +149,7 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 	}
 	
 	PMetaClassField *MetaField = MetaTable->GetField(headerData(ModelIndex.column(), Qt::Horizontal, Qt::UserRole).toString());
-	ISNamespace::FieldType FieldType = MetaField->GetType();
+	ISNamespace::FieldType FieldType = MetaField->Type;
 
 	if (Role == Qt::TextColorRole) //Роль цвета текста в ячейках
 	{
@@ -172,7 +172,7 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 	}
 	else if (Role == Qt::TextAlignmentRole) //Роль положения текста в ячейке
 	{
-		return ISSqlModelHelper::ValueFromTextAlignment(FieldType, MetaField->GetForeign());
+		return ISSqlModelHelper::ValueFromTextAlignment(FieldType, MetaField->Foreign);
 	}
 	else if (Role == Qt::DisplayRole)
 	{
@@ -204,7 +204,7 @@ QVariant ISSqlModelCore::headerData(int Section, Qt::Orientation Orientation, in
 	{
 		if (Role == Qt::DisplayRole) //Отображение локального наименование столбца
 		{
-			Value = Fields.at(Section)->GetLocalListName();
+			Value = Fields[Section]->LocalListName;
 		}
 		else if (Role == Qt::DecorationRole) //Отображение иконки сортируемого столбца
 		{
@@ -212,11 +212,11 @@ QVariant ISSqlModelCore::headerData(int Section, Qt::Orientation Orientation, in
 		}
 		else if (Role == Qt::UserRole) //Отображение наименования столбца
 		{
-			Value = Fields.at(Section)->GetName();
+			Value = Fields[Section]->Name;
 		}
 		else if (Role == Qt::ToolTipRole) //Всплывающий текст заголовка поля
 		{
-			Value = Fields.at(Section)->GetLocalListName();
+			Value = Fields[Section]->LocalListName;
 		}
 	}
 	else

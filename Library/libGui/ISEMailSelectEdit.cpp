@@ -6,12 +6,12 @@ ISEMailSelectEdit::ISEMailSelectEdit(QWidget *parent) : ISComboEdit(parent)
 	SetEditable(false);
 
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable("Organizations");
-	for (int i = 0; i < MetaTable->GetFields().count(); ++i)
+	for (int i = 0; i < MetaTable->Fields.count(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->GetFields().at(i);
-		if (MetaField->GetType() == ISNamespace::FT_EMail)
+		PMetaClassField *MetaField = MetaTable->Fields[i];
+		if (MetaField->Type == ISNamespace::FT_EMail)
 		{
-			AddItem(MetaField->GetLabelName(), MetaField->GetName());
+			AddItem(MetaField->LabelName, MetaField->Name);
 		}
 	}
 }

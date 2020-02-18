@@ -112,13 +112,13 @@ void ISListEdit::SetReadOnly(bool read_only)
 void ISListEdit::InvokeList(PMetaClassForeign *meta_foreign)
 {
 	MetaForeign = meta_foreign;
-	MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->GetForeignClass());
+	MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);
 
 	ListEditPopup = new ISListEditPopup(MetaForeign, this);
 	connect(ListEditPopup, &ISListEditPopup::Selected, this, &ISListEdit::SelectedValue);
 	connect(ListEditPopup, &ISListEditPopup::Hided, this, &ISListEdit::HidedPopup);
 
-	if (MetaTable->GetShowOnly())
+	if (MetaTable->ShowOnly)
 	{
 		ButtonList->setPopupMode(QToolButton::DelayedPopup);
 
@@ -213,7 +213,7 @@ void ISListEdit::HidedPopup()
 //-----------------------------------------------------------------------------
 void ISListEdit::ShowListForm()
 {
-	int SelectedID = ISGui::SelectObject(MetaTable->GetName(), GetValue().toInt());
+	int SelectedID = ISGui::SelectObject(MetaTable->Name, GetValue().toInt());
 	if (SelectedID)
 	{
 		SetValue(SelectedID);
@@ -222,25 +222,25 @@ void ISListEdit::ShowListForm()
 //-----------------------------------------------------------------------------
 void ISListEdit::CreateObject()
 {
-	if (ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+	if (ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
-		ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->GetName())->show();
+		ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name)->show();
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->LocalListName));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISListEdit::EditObject()
 {
-	if (ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->GetUID(), CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->GetName(), GetValue().toInt())->show();
+		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt())->show();
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->GetLocalListName()));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 	}
 	
 }

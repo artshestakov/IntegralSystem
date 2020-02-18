@@ -41,12 +41,12 @@ ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType f
 	DaDataService = new ISDaDataService(this);
 	connect(DaDataService, &ISDaDataService::Finished, this, &ISOrganizationObjectForm::SearchFinished);
 
-	for (int i = 0; i < meta_table->GetFields().count(); ++i)
+	for (int i = 0; i < meta_table->Fields.count(); ++i)
 	{
-		PMetaClassField *MetaField = meta_table->GetFields().at(i);
-		if (MetaField->GetType() == ISNamespace::FT_Phone)
+		PMetaClassField *MetaField = meta_table->Fields[i];
+		if (MetaField->Type == ISNamespace::FT_Phone)
 		{
-			ISPhoneEdit *PhoneEdit = dynamic_cast<ISPhoneEdit*>(GetFieldWidget(MetaField->GetName()));
+			ISPhoneEdit *PhoneEdit = dynamic_cast<ISPhoneEdit*>(GetFieldWidget(MetaField->Name));
 			connect(PhoneEdit, &ISPhoneEdit::Called, this, &ISOrganizationObjectForm::Called);
 		}
 	}
@@ -115,7 +115,7 @@ void ISOrganizationObjectForm::INNChanged(const QVariant &value)
 
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.FoundOrganizationCard").arg(value.toString())))
 			{
-				ISObjectFormBase *ObjectForm = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, GetMetaTable()->GetName(), OrganizationID);
+				ISObjectFormBase *ObjectForm = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, GetMetaTable()->Name, OrganizationID);
 				QMetaObject::invokeMethod(ISMemoryObjects::GetInstance().GetWorkspaceForm(), "AddObjectForm", Q_ARG(QWidget *, ObjectForm));
 			}
 		}
@@ -127,7 +127,7 @@ void ISOrganizationObjectForm::Notify()
 	QDateTime DateTime = ISInputDialog::GetDateTime(this, LANG("Reminder"), LANG("DateTime") + ':').toDateTime();
 	if (DateTime.isValid())
 	{
-		if (ISGui::CalendarInsert(DateTime, LANG("CallToOrganization").arg(GetFieldWidget("Name")->GetValue().toString()), QVariant(), GetMetaTable()->GetName(), GetObjectID()))
+		if (ISGui::CalendarInsert(DateTime, LANG("CallToOrganization").arg(GetFieldWidget("Name")->GetValue().toString()), QVariant(), GetMetaTable()->Name, GetObjectID()))
 		{
 			ISQuery qUpdate(QI_ORGANIZATION_WORK);
 			qUpdate.BindValue(":User", ISMetaUser::GetInstance().GetData()->ID);

@@ -152,7 +152,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	if (TableName.length() && ObjectID) //≈сли к сообщению прикреплена ссылка на запись
 	{
 		ISPushButton *ButtonLink = new ISPushButton(this);
-		ButtonLink->setText(LANG("LinkToRecordInTable").arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->GetLocalListName()));
+		ButtonLink->setText(LANG("LinkToRecordInTable").arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName));
 		ButtonLink->setToolTip(LANG("ClickFromOpenRecord"));
 		ButtonLink->setCursor(CURSOR_POINTING_HAND);
 		ButtonLink->setProperty("TableName", TableName);

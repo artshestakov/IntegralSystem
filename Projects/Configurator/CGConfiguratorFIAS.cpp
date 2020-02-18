@@ -280,8 +280,8 @@ quint64 CGConfiguratorFIAS::GetCountLine(const QString &FilePath) const
 //-----------------------------------------------------------------------------
 bool CGConfiguratorFIAS::Select(PMetaClassTable *MetaTable, const QStringMap &StringMap) const
 {
-	QString KeyField = MapKeys.value(MetaTable->GetName());
-	QString SqlText = "SELECT COUNT(*) FROM " + MetaTable->GetName() + " WHERE " + MetaTable->GetAlias() + '_' + KeyField + " = :Value";
+	QString KeyField = MapKeys.value(MetaTable->Name);
+	QString SqlText = "SELECT COUNT(*) FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + '_' + KeyField + " = :Value";
 
 	ISQuery qSelectFIAS(SqlText);
 	qSelectFIAS.SetShowLongQuery(false);
@@ -300,20 +300,20 @@ bool CGConfiguratorFIAS::Select(PMetaClassTable *MetaTable, const QStringMap &St
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const QStringMap &StringMap)
 {
-	QString UpdateText = "UPDATE " + MetaTable->GetName() + " SET \n";
+	QString UpdateText = "UPDATE " + MetaTable->Name + " SET \n";
 	QString WhereText = "WHERE ";
 	QStringMap Parameters;
 
 	for (const auto &MapItem : StringMap.toStdMap())
 	{
-		if (MapKeys.value(MetaTable->GetName()) == MapItem.first)
+		if (MapKeys.value(MetaTable->Name) == MapItem.first)
 		{
-			WhereText += MetaTable->GetAlias() + '_' + MapItem.first + " = :Value";
+			WhereText += MetaTable->Alias + '_' + MapItem.first + " = :Value";
 			Parameters.insert(":Value", MapItem.second);
 		}
 		else
 		{
-			UpdateText += MetaTable->GetAlias() + '_' + MapItem.first + " = :" + MapItem.first + ", \n";
+			UpdateText += MetaTable->Alias + '_' + MapItem.first + " = :" + MapItem.first + ", \n";
 			Parameters.insert(':' + MapItem.first, MapItem.second);
 		}
 	}
@@ -330,12 +330,12 @@ void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const QStringMap &St
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::Insert(PMetaClassTable *MetaTable, const QStringMap &StringMap)
 {
-	QString SqlInsert = "INSERT INTO " + MetaTable->GetName() + '(';
+	QString SqlInsert = "INSERT INTO " + MetaTable->Name + '(';
 	QString SqlValues = "VALUES(";
 
 	for (const QString &FieldName : StringMap.keys())
 	{
-		SqlInsert += MetaTable->GetAlias() + '_' + FieldName + ", ";
+		SqlInsert += MetaTable->Alias + '_' + FieldName + ", ";
 		SqlValues += ':' + FieldName + ", ";
 	}
 
