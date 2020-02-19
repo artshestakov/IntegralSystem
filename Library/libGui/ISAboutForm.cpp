@@ -122,6 +122,7 @@ void ISAboutForm::CreateModuleTab()
 
 	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISObjects::GetInstance().GetInfo().Name);
 	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISObjects::GetInstance().GetInfo().LocalName);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.UID"), ISObjects::GetInstance().GetInfo().UID);
 
 	LayoutModule->addStretch();
 }

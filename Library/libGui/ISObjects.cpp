@@ -113,6 +113,7 @@ bool ISObjects::Initialize()
 				if (ObjectInterface)
 				{
 					ObjectInterface->SetConfigurationName(ConfigurationName);
+					ObjectInterface->RegisterMetaTypes();
 				}
 				else
 				{

@@ -40,6 +40,7 @@
   <Local Name="AboutForm.Tab.Configuration" Russian="Конфигурация"/>
   <Local Name="AboutForm.Tab.Configuration.Name" Russian="Наименование модуля"/>
   <Local Name="AboutForm.Tab.Configuration.LocalName" Russian="Локальное название"/>
+  <Local Name="AboutForm.Tab.Configuration.UID" Russian="Идентификатор"/>
   <Local Name="AboutForm.Tab.Description" Russian="Описание"/>
   <Local Name="AboutForm.Tab.License" Russian="Лицензионное соглашение"/>
   <Local Name="AboutForm.Tab.Shortcuts" Russian="Сочетания клавиш"/>
@@ -162,7 +163,7 @@
   <Local Name="Message.Warning.CreateCopyMessageNotDrafts" Russian="Разрешено создавать копию сообщения только со статусом &quot;Черновик&quot;."/>
   <Local Name="Message.Warning.NotCreateLogFile" Russian="Не удалось сформировать лог-файл."/>
   <Local Name="Message.Warning.NotDeleteCascadeRecord" Russian="Не удалось каскадно удалить запись с кодом &quot;%1&quot;."/>
-  <Local Name="Message.Warning.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден, убедитесь что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
+  <Local Name="Message.Warning.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден. Убедитесь, что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
   <Local Name="Message.Warning.NotValidInputPasswordForChange" Russian="Вы ввели неверный текущий пароль!"/>
   <Local Name="Message.Warning.PasswordLenghtSmall" Russian="Пароль должен быть не короче %1 символов."/>
