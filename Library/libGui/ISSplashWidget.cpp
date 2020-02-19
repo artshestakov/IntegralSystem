@@ -13,11 +13,13 @@ ISSplashWidget::ISSplashWidget(QWidget *parent) : QFrame(parent)
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
-	LabelIcon->setPixmap(QIcon(":ImageIcons/Logo.png").pixmap(DEFINES_GUI.SIZE_32_32));
+	LabelIcon->setPixmap(QPixmap(PATH_SPLASH_WIDGET_LOGO));
 	Layout->addWidget(LabelIcon);
 
 	LabelText = new QLabel(this);
 	Layout->addWidget(LabelText);
+
+	SetText("IntegralSystem");
 }
 //-----------------------------------------------------------------------------
 ISSplashWidget::~ISSplashWidget()
@@ -29,7 +31,6 @@ void ISSplashWidget::SetText(const QString &Text)
 {
 	LabelText->setText(Text);
 	ISGui::RepaintWidget(LabelText);
-	adjustSize();
 	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
@@ -38,6 +39,7 @@ void ISSplashWidget::showEvent(QShowEvent *e)
 	Q_UNUSED(e);
 
 	QWidget::show();
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	update();
 	adjustSize();
 	ISGui::RepaintWidget(this);

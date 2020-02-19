@@ -41,7 +41,7 @@ void ISMimeMultiPart::prepare()
 {
     QList<ISMimePart*>::iterator it;
 
-    content = "";
+    content.clear();
     for (it = parts.begin(); it != parts.end(); it++) {
         content += "--" + cBoundary + "\r\n";
         (*it)->prepare();

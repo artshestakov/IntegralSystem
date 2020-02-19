@@ -77,16 +77,13 @@ void ISDeviceListForm::Issue()
 //-----------------------------------------------------------------------------
 QString ISDeviceListForm::GetPhoneNumber()
 {
-	QString PhoneNumber = QString();
-
 	ISQuery qSelectNumber(QS_PHONE_NUMBER);
 	qSelectNumber.BindValue(":DeviceID", GetObjectID());
 	if (qSelectNumber.ExecuteFirst())
 	{
-		PhoneNumber = qSelectNumber.ReadColumn("clts_phonemobile").toString();
+		return qSelectNumber.ReadColumn("clts_phonemobile").toString();
 	}
-
-	return PhoneNumber;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 int ISDeviceListForm::GetTotalSum()

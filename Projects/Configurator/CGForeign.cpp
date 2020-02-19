@@ -21,7 +21,7 @@ bool CGForeign::CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorStri
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
 	PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);
 
-	QString SqlText = QString();
+	QString SqlText;
 	SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
 	SqlText += "ADD CONSTRAINT " + GetForeignName(MetaForeign) + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
 	SqlText += "REFERENCES public." + MetaTableForeign->Name.toLower() + '(' + MetaTableForeign->Alias.toLower() + '_' + MetaForeign->ForeignField.toLower() + ") \n";

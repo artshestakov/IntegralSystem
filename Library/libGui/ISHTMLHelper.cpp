@@ -2,14 +2,14 @@
 //-----------------------------------------------------------------------------
 QString ISHTMLHelper::GenerateTableFromQuerySelect(const QString &QueryText)
 {
-	QString Table = QString();
+	QString Table;
 	ISQuery qSelect(QueryText);
 	return Table;
 }
 //-----------------------------------------------------------------------------
 QString ISHTMLHelper::GenerateTableFromQuerySelect(ISQuery Query)
 {
-	QString Table = QString();
+	QString Table;
 	
 	QSqlQueryModel Model;
 	Model.setQuery(Query.GetSqlQuery());

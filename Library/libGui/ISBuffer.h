@@ -2,10 +2,10 @@
 #ifndef _ISBUFFER_H_INCLUDED
 #define _ISBUFFER_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "libGui_global.h"
 #include "StdAfx.h"
-
 //-----------------------------------------------------------------------------
-class ISBuffer
+class LIBGUI_EXPORT ISBuffer
 {
 public:
 	ISBuffer(const ISBuffer &) = delete;

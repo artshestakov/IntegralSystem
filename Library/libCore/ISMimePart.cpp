@@ -2,10 +2,10 @@
 #include "ISQuotedPrintable.h"
 //-----------------------------------------------------------------------------
 ISMimePart::ISMimePart()
+	: cEncoding(_7Bit),
+	prepared(false)
 {
-	cEncoding = _7Bit;
-	prepared = false;
-	cBoundary = "";
+	
 }
 //-----------------------------------------------------------------------------
 ISMimePart::~ISMimePart()
@@ -103,7 +103,7 @@ QString ISMimePart::toString()
 //-----------------------------------------------------------------------------
 void ISMimePart::prepare()
 {
-	mimeString = QString();
+	mimeString.clear();
 
 	/* === Header Prepare === */
 

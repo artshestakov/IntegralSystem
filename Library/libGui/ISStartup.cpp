@@ -54,6 +54,8 @@ ISStartup::~ISStartup()
 //-----------------------------------------------------------------------------
 int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 {
+	ISObjects::GetInstance().Initialize();
+
 	//Проверка введенных данных пользователем
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CheckCurrentUser"));
 	ISQuery qSelectUser(QS_USER_CHECK);
@@ -213,7 +215,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.RegisterEnterProtocol"));
 	ISProtocol::EnterApplication();
 
-	ISObjects::GetInstance().Initialize();
 	ISObjects::GetInstance().GetInterface()->BeforeShowMainWindow();
 
 	//Создание главной формы

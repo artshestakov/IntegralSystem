@@ -1,41 +1,32 @@
 #include "StdAfx.h"
 #include "ISLocalization.h"
-#include "ISCore.h"
 #include "ISGui.h"
-#include "ISDebug.h"
 #include "ISSplashScreen.h"
 #include "ISAuthForm.h"
-#include "ISRegisterMetaType.h"
 #include "ISIntegralSystem.h"
 #include "ISStartup.h"
 #include "ISUpdateDownloadForm.h"
 #include "ISUpdate.h"
 #include "ISMessageBox.h"
-#include "ISObjects.h"
 //-----------------------------------------------------------------------------
 ISNamespace::UpdateResult CheckUpdate(); //Проверка обновлений
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-	ISIntegralSystem IntegralApplication(argc, argv);
-	if (!IntegralApplication.CheckAdminRole()) //Проверка наличия прав администратора
+	ISIntegralSystem Applicaton(argc, argv);
+
+	QString ErrorString;
+	bool Result = ISGui::Startup(ErrorString);
+	if (!Result)
 	{
-		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.NoAdministratorRights"));
+		ISMessageBox::ShowCritical(nullptr, ErrorString);
 		return EXIT_FAILURE;
 	}
 
-	//Баннер
-	ISSplashScreen::GetInstance().show();
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.System"));
-	ISRegisterMetaType::RegisterMetaType();
-
 	//Создание формы авторизации
 	ISAuthForm *AuthForm = new ISAuthForm(nullptr);
-	ISSplashScreen::GetInstance().hide();
-	ISSplashScreen::GetInstance().clearMessage();
-
-	bool Result = AuthForm->ExecAnimated();
-	if (!Result)
+	Result = AuthForm->ExecAnimated();
+	if (!Result) //Форма авторизации была закрыта
 	{
 		return EXIT_SUCCESS;
 	}
@@ -46,7 +37,7 @@ int main(int argc, char *argv[])
 	delete AuthForm;
 
 	//Проверка обновления
-	ISNamespace::UpdateResult ResultUpdate = CheckUpdate();
+	/*ISNamespace::UpdateResult ResultUpdate = CheckUpdate();
 	if (ResultUpdate == ISNamespace::UR_ExitApplication)
 	{
 		return EXIT_FAILURE;
@@ -54,17 +45,17 @@ int main(int argc, char *argv[])
 	else if (ResultUpdate == ISNamespace::UR_ErrorStartUpdate)
 	{
 		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.ErrorStartUpdate"));
-	}
+	}*/
 
 	int Startup = ISStartup::Startup(UserLogin, UserPassword);
-	if (Startup != 0) //Если при запуске произошла ошибка
+	if (Startup) //Если при запуске произошла ошибка
 	{
 		ISGui::ExitApplication();
 		return Startup;
 	}
 
 	ISSplashScreen::GetInstance().ResetPixmap();
-	return IntegralApplication.exec();
+	return Applicaton.exec();
 }
 //-----------------------------------------------------------------------------
 ISNamespace::UpdateResult CheckUpdate() //Проверка обновлений

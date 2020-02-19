@@ -2,10 +2,10 @@
 #ifndef _ISSTYLESHEET_H_INCLUDED
 #define _ISSTYLESHEET_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "libGui_global.h"
 #include "StdAfx.h"
-
 //-----------------------------------------------------------------------------
-class ISStyleSheet
+class LIBGUI_EXPORT ISStyleSheet
 {
 public:
 	ISStyleSheet(const ISStyleSheet &) = delete;

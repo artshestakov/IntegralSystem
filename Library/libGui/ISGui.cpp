@@ -16,11 +16,78 @@
 #include "ISSelectDialogForm.h"
 #include "ISTaskViewForm.h"
 #include "ISMemoryObjects.h"
+#include "ISSplashWidget.h"
+#include "ISConfig.h"
+#include "ISStyleSheet.h"
+#include "ISBuffer.h"
+#include "ISDebug.h"
+#include "ISRegisterMetaType.h"
+#include "ISVersion.h"
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
 	ISDefinesGui::Instance().Init();
-	return ISCore::Startup(true, ErrorString);
+	
+	bool Result = ISCore::Startup(true, ErrorString);
+	if (!Result)
+	{
+		return Result;
+	}
+
+	ISSplashWidget SplashWidget;
+	SplashWidget.show();
+
+	//Загрузка локализации
+	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
+	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
+	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);
+
+	//Загрузка стилей интерфейса
+	SplashWidget.SetText(LANG("SplashWidget.Styles"));
+	ISStyleSheet::GetInstance().Initialize();
+
+	//Загрузка буфера
+	SplashWidget.SetText(LANG("SplashWidget.Buffer"));
+	ISBuffer::GetInstance().Initialize();
+
+	//Проверка наличия прав администратора
+	SplashWidget.SetText(LANG("SplashWidget.AdminRoles"));
+	Result = CheckAdminRole();
+	if (!Result)
+	{
+		ErrorString = LANG("NoAdministratorRights");
+		return Result;
+	}
+
+	ISRegisterMetaType::RegisterMetaType();
+	
+	qApp->setStyleSheet(STYLE_SHEET("QToolTip"));
+	qApp->setWindowIcon(BUFFER_ICONS("Logo"));
+	qApp->setApplicationName("IntegralSystem");
+	qApp->setApplicationVersion(ISVersion::GetInstance().GetVersion());
+	qApp->setFont(DEFINES_GUI.FONT_APPLICATION);
+	QToolTip::setFont(DEFINES_GUI.FONT_APPLICATION);
+
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISGui::CheckAdminRole()
+{
+	QFile File(DEFINES_CORE.PATH_TEMP_DIR + "/CheckAdmin");
+	bool Result = File.open(QIODevice::WriteOnly);
+	if (Result)
+	{
+		File.close();
+		File.remove();
+	}
+	else
+	{
+		if (File.error() != QFileDevice::OpenError)
+		{
+			Result = true;
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISGui::CheckPressCapsLook()

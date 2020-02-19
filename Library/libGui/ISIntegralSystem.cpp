@@ -1,67 +1,21 @@
 #include "ISIntegralSystem.h"
-#include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISQueryExceptionSyntax.h"
 #include "ISQueryExceptionConnection.h"
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
 #include "ISReconnectForm.h"
-#include "ISStyleSheet.h"
-#include "ISBuffer.h"
 #include "ISAutoLocking.h"
 #include "ISGui.h"
-#include "ISSplashWidget.h"
-#include "ISConfig.h"
-#include "ISDebug.h"
-#include "ISVersion.h"
-#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
-	QString ErrorString;
-	ISGui::Startup(ErrorString);
-
-	ISDebug::ShowString("Starting system... Version: " + ISVersion::GetInstance().GetVersion());
-
-	ISSplashWidget SplashWidget;
-	SplashWidget.SetText("Starting system...");
-	SplashWidget.show();
-	ISGui::ProcessEvents();
-
-	//Загрузка конфигурационного файла
-	ISConfig::GetInstance().Initialize();
-
-	//Загрузка локализации
-	SplashWidget.SetText("Loading localization...");
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);
-
-	//Загрузка стилей интерфейса
-	SplashWidget.SetText("Loading styles...");
-	ISStyleSheet::GetInstance().Initialize();
-
-	//Загрузка буфера
-	SplashWidget.SetText("Loading buffer...");
-	ISBuffer::GetInstance().Initialize();
-
-	setEffectEnabled(Qt::UIEffect::UI_General);
-	setEffectEnabled(Qt::UIEffect::UI_AnimateMenu);
-	setEffectEnabled(Qt::UIEffect::UI_FadeMenu);
-	setEffectEnabled(Qt::UIEffect::UI_AnimateCombo);
-	setEffectEnabled(Qt::UIEffect::UI_AnimateTooltip);
-	setEffectEnabled(Qt::UIEffect::UI_FadeTooltip);
-	setEffectEnabled(Qt::UIEffect::UI_AnimateToolBox);
-
-	setStyleSheet(STYLE_SHEET("QToolTip"));
-	setWindowIcon(BUFFER_ICONS("Logo"));
-	setApplicationName("IntegralSystem");
-	setApplicationVersion(ISVersion::GetInstance().GetVersion());
-	setFont(DEFINES_GUI.FONT_APPLICATION);
-
-	QToolTip::setFont(DEFINES_GUI.FONT_APPLICATION);
-
-	SplashWidget.close();
+	setEffectEnabled(Qt::UI_General);
+	setEffectEnabled(Qt::UI_AnimateMenu);
+	setEffectEnabled(Qt::UI_FadeMenu);
+	setEffectEnabled(Qt::UI_AnimateCombo);
+	setEffectEnabled(Qt::UI_AnimateTooltip);
+	setEffectEnabled(Qt::UI_FadeTooltip);
+	setEffectEnabled(Qt::UI_AnimateToolBox);
 }
 //-----------------------------------------------------------------------------
 ISIntegralSystem::~ISIntegralSystem()
@@ -69,42 +23,9 @@ ISIntegralSystem::~ISIntegralSystem()
 	
 }
 //-----------------------------------------------------------------------------
-bool ISIntegralSystem::CheckAdminRole()
-{
-	ISDebug::ShowDebugString("Check administrator role...");
-
-	QFile File(DEFINES_CORE.PATH_TEMP_DIR + "/CheckAdmin");
-	bool Opened = File.open(QIODevice::WriteOnly);
-
-	if (Opened)
-	{
-		File.close();
-		File.remove();
-	}
-	else
-	{
-		if (File.error() != QFileDevice::OpenError)
-		{
-			Opened = true;
-		}
-	}
-
-	if (Opened)
-	{
-		ISDebug::ShowDebugString("Administrator role exist");
-	}
-	else
-	{
-		ISDebug::ShowDebugString("Administrator role not exist");
-	}
-
-	return Opened;
-}
-//-----------------------------------------------------------------------------
 bool ISIntegralSystem::notify(QObject *Object, QEvent *e)
 {
 	bool Result = false;
-
 	try
 	{
 		Result = QApplication::notify(Object, e);
@@ -144,7 +65,6 @@ bool ISIntegralSystem::notify(QObject *Object, QEvent *e)
 			}
 		}
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

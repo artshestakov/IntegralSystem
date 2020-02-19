@@ -93,6 +93,7 @@ const char IS_PROPERTY_LINE_EDIT_SELECTED_MENU[] = "LineEditSelectedMenu";
 const char PATH_SCHEMA_TEMPLATE_FIELDS[] = ":Other/ClassTemplateFields.xml";
 const char PATH_CONFIGURATOR_SCHEME[] = ":Other/Configurator.xml";
 const char PATH_CONFIGURATION_SCHEME[] = ":Other/Configuration.xml";
+const char PATH_SPLASH_WIDGET_LOGO[] = ":Images/SplashWidgetLogo.png";
 //REPORT_TYPE------------------------------------------------------------------
 const char REPORT_TYPE_HTML[] = "Html";
 const char REPORT_TYPE_WORD[] = "Word";

@@ -11,7 +11,6 @@ public:
 	ISIntegralSystem(int &argc, char **argv);
 	virtual ~ISIntegralSystem();
 
-	bool CheckAdminRole(); //Проверка наличия прав администратора
 	bool notify(QObject *Object, QEvent *e);
 };
 //-----------------------------------------------------------------------------

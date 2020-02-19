@@ -8,6 +8,10 @@
   <Local Name="Form.Authorization.About" Russian="О программе"/>
 
   <Local Name="AboutFrameworkDeveloped" Russian="О фреймворке разработки"/>
+
+  <Local Name="SplashWidget.Styles" Russian="Загрузка стилей..."/>
+  <Local Name="SplashWidget.Buffer" Russian="Загрузка буфера..."/>
+  <Local Name="SplashWidget.AdminRoles" Russian="Проверка прав..."/>
   
   <!--About Form-->
   <Local Name="AboutForm.AboutApplication" Russian="О программе"/>
@@ -105,7 +109,6 @@
   <Local Name="Message.Error.CallVirtualKeyboard" Russian="Не удалось запустить виртуальную клавиатуру."/>
   <Local Name="Message.Error.ConnectionLoadingData" Russian="Ошибка при подключении к базе данных."/>
   <Local Name="Message.Error.LoadingData" Russian="Ошибка загрузки данных."/>
-  <Local Name="Message.Error.NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -271,7 +274,6 @@
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
   
   <!--Banner Startup User-->
-  <Local Name="Banner.Initialize.System" Russian="Запуск системы..."/>
   <Local Name="Banner.Initialize.SettingsUser" Russian="Инициализация настроек пользователя..."/>
   <Local Name="Banner.Initialize.SystemsAndSubSystems" Russian="Инициализация систем и подсистем..."/>
   <Local Name="Banner.Initialize.Paragraphs" Russian="Инициализация параграфов..."/>
@@ -749,6 +751,7 @@
   <Local Name="OpeningUrl" Russian="Открытие ссылки"/>
   <Local Name="NotifyUserMessage" Russian="Отправитель: %1. Сообщение: %2"/>
   <Local Name="ClickFromShowUserList" Russian="Нажмите, чтобы показать список пользователей"/>
+  <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
   
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>
