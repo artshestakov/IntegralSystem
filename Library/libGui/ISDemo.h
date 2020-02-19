@@ -8,7 +8,7 @@ class ISDemo : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDemo(QObject *parent);
+	Q_INVOKABLE ISDemo();
 	virtual ~ISDemo();
 
 	void RegisterMetaTypes() const override;

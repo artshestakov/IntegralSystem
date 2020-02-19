@@ -8,7 +8,7 @@
 #include "ISSironaCostListForm.h"
 #include "ISSironaCostObjectForm.h"
 //-----------------------------------------------------------------------------
-ISSirona::ISSirona(QObject *parent) : ISObjectInterface(parent)
+ISSirona::ISSirona() : ISObjectInterface()
 {
 
 }

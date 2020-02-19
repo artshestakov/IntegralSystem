@@ -19,7 +19,7 @@
 #include "ISScoreObjectForm.h"
 #include "ISOrganizationScoreObjectForm.h"
 //-----------------------------------------------------------------------------
-ISInformResource::ISInformResource(QObject *parent) : ISObjectInterface(parent)
+ISInformResource::ISInformResource() : ISObjectInterface()
 {
 
 }

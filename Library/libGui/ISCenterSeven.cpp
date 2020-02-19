@@ -9,7 +9,7 @@
 #include "ISCenterSevenPatientsListForm.h"
 #include "ISCenterSevenWaitAdmissionListForm.h"
 //-----------------------------------------------------------------------------
-ISCenterSeven::ISCenterSeven(QObject *parent) : ISObjectInterface(parent)
+ISCenterSeven::ISCenterSeven() : ISObjectInterface()
 {
 
 }

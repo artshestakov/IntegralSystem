@@ -8,6 +8,7 @@
 #include "ISMetaData.h"
 #include "ISSettingsDatabase.h"
 #include "ISQueryText.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_id, orgz_user, aspt_pattern, userfullname(orgz_user) "
 											   "FROM organizations "
@@ -31,7 +32,7 @@ bool ISCoreInformResource::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
+		ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), false, false);
 		ISSettingsDatabase::GetInstance().Initialize();
 
 		AsteriskSocket = new ISAsteriskSocket(this);

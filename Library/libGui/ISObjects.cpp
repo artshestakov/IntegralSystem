@@ -20,8 +20,7 @@ static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT vbls_value "
 												"ORDER BY vbls_name");
 //-----------------------------------------------------------------------------
 ISObjects::ISObjects()
-	: QObject(),
-	ErrorString(NO_ERROR_STRING),
+	: ErrorString(NO_ERROR_STRING),
 	ObjectInterface(nullptr)
 {
 	qRegisterMetaType<ISCenterSeven*>("ISCenterSeven");
@@ -37,7 +36,10 @@ ISObjects::ISObjects()
 //-----------------------------------------------------------------------------
 ISObjects::~ISObjects()
 {
-
+	if (ObjectInterface)
+	{
+		delete ObjectInterface;
+	}
 }
 //-----------------------------------------------------------------------------
 ISObjects& ISObjects::GetInstance()
@@ -49,6 +51,11 @@ ISObjects& ISObjects::GetInstance()
 QString ISObjects::GetErrorString() const
 {
 	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISObjects::IsInitialized() const
+{
+	return Info.IsValid;
 }
 //-----------------------------------------------------------------------------
 bool ISObjects::Initialize()
@@ -102,8 +109,12 @@ bool ISObjects::Initialize()
 			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 			if (MetaObject)
 			{
-				ObjectInterface = dynamic_cast<ISObjectInterface*>(MetaObject->newInstance(Q_ARG(QObject *, this)));
-				if (!ObjectInterface)
+				ObjectInterface = dynamic_cast<ISObjectInterface*>(MetaObject->newInstance());
+				if (ObjectInterface)
+				{
+					ObjectInterface->SetConfigurationName(ConfigurationName);
+				}
+				else
 				{
 					ErrorString = QString("Error instance configuration. ClassName: %1.").arg(Info.ClassName);
 				}

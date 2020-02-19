@@ -5,6 +5,7 @@
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QI_RATING = PREPARE_QUERY("INSERT INTO rating(rtng_uniqueid, rtng_datetimecall, rtng_branch, rtng_rating) "
 										 "VALUES(:UniqueID, now(), (SELECT brnm_branch FROM branchesnumber WHERE brnm_number = :InteriorNumber), :Rating) "
@@ -27,7 +28,7 @@ bool ISCoreMedTech::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
+		ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), false, false);
 		ISSettingsDatabase::GetInstance().Initialize();
 
 		AsteriskSocket = new ISAsteriskSocket(this);

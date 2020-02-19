@@ -3,7 +3,7 @@
 #include "ISMedTechRatingSubSystem.h"
 #include "ISMedTechRatingListForm.h"
 //-----------------------------------------------------------------------------
-ISMedTech::ISMedTech(QObject *parent) : ISObjectInterface(parent)
+ISMedTech::ISMedTech() : ISObjectInterface()
 {
 
 }

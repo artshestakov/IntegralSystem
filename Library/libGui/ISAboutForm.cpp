@@ -13,6 +13,7 @@
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
+#include "ISObjects.h"
 //-----------------------------------------------------------------------------
 static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_description "
 											"FROM _keyboardshortcuts "
@@ -108,19 +109,19 @@ void ISAboutForm::CreateContactsTab()
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateModuleTab()
 {
-	/*if (!ISMetaData::GetInstanse().GetInitialized())
+	if (!ISObjects::GetInstance().IsInitialized())
 	{
 		return;
-	}*/
+	}
+
 	QVBoxLayout *LayoutModule = new QVBoxLayout();
 
 	QWidget *TabModule = new QWidget(TabWidget);
 	TabModule->setLayout(LayoutModule);
 	TabWidget->addTab(TabModule, LANG("AboutForm.Tab.Configuration"));
 
-	//???
-	//AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISLicense::GetInstance().GetName());
-	//AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISLicense::GetInstance().GetLocalName());
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISObjects::GetInstance().GetInfo().Name);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISObjects::GetInstance().GetInfo().LocalName);
 
 	LayoutModule->addStretch();
 }
@@ -161,11 +162,10 @@ void ISAboutForm::CreateLicenseTab()
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateShortcuts()
 {
-	//???
-	/*if (!ISMetaData::GetInstanse().GetInitialized())
+	if (!ISObjects::GetInstance().IsInitialized())
 	{
 		return;
-	}*/
+	}
 
 	QFormLayout *FormLayout = new QFormLayout();
 

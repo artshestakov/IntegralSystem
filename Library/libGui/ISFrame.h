@@ -8,7 +8,7 @@ class ISFrame : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISFrame(QObject *parent);
+	Q_INVOKABLE ISFrame();
 	virtual ~ISFrame();
 
 	void RegisterMetaTypes() const override;

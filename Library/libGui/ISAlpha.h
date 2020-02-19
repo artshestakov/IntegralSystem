@@ -8,7 +8,7 @@ class ISAlpha : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISAlpha(QObject *parent);
+	Q_INVOKABLE ISAlpha();
 	virtual ~ISAlpha();
 
 	void RegisterMetaTypes() const override;

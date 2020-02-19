@@ -4,10 +4,8 @@
 #include "ISObjectInterface.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT	ISObjects : public QObject
+class LIBGUI_EXPORT	ISObjects
 {
-	Q_OBJECT
-
 public:
 	ISObjects(const ISObjects &) = delete;
 	ISObjects(ISObjects &&) = delete;
@@ -18,6 +16,7 @@ public:
 	static ISObjects& GetInstance();
 
 	QString GetErrorString() const;
+	bool IsInitialized() const;
 	bool Initialize(); //Инициализация
 
 	ISObjectInterface* GetInterface(); //Получить указатель на ядро конфигурации

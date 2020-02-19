@@ -8,7 +8,7 @@ class ISHighway : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISHighway(QObject *parent);
+	Q_INVOKABLE ISHighway();
 	virtual ~ISHighway();
 
 	void RegisterMetaTypes() const override;

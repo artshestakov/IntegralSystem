@@ -36,8 +36,6 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 	//Правый компоновщик
 	LayoutRight = new QHBoxLayout();
 	MainLayout->addLayout(LayoutRight);
-
-	//CreateHint(MetaField->property("Hint").toString());//???
 }
 //-----------------------------------------------------------------------------
 ISFieldEditBase::~ISFieldEditBase()

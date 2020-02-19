@@ -43,7 +43,7 @@ static QString QS_SUBSCRIPTION = PREPARE_QUERY("SELECT sbsr_id "
 											   "AND sbsr_leftcount != 0 "
 											   "AND sbsr_client = :ClientID");
 //-----------------------------------------------------------------------------
-ISPatriot::ISPatriot(QObject *parent) : ISObjectInterface(parent)
+ISPatriot::ISPatriot() : ISObjectInterface()
 {
 
 }

@@ -10,7 +10,7 @@ class ISOilSphere : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISOilSphere(QObject *parent);
+	Q_INVOKABLE ISOilSphere();
 	virtual ~ISOilSphere();
 
 	void RegisterMetaTypes() const override;

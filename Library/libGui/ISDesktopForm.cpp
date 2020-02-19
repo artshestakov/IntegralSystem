@@ -7,6 +7,7 @@
 #include "ISStyleSheet.h"
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
+#include "ISObjects.h"
 //-----------------------------------------------------------------------------
 ISDesktopForm::ISDesktopForm(QWidget *parent)
 	: ISParagraphBaseForm(parent),
@@ -15,7 +16,7 @@ ISDesktopForm::ISDesktopForm(QWidget *parent)
 	MainLayout = new QVBoxLayout();
 	setLayout(MainLayout);
 	
-	QString DesktopFormName;// = ISLicense::GetInstance().GetDesktopForm(); //???
+	QString DesktopFormName = ISObjects::GetInstance().GetInfo().DesktopForm;
 	if (DesktopFormName.isEmpty())
 	{
 		MainLayout->addStretch();
@@ -25,7 +26,7 @@ ISDesktopForm::ISDesktopForm(QWidget *parent)
 		MainLayout->addWidget(LabelLogo, 0, Qt::AlignCenter);
 
 		QLabel *LabelLocalName = new QLabel(this);
-		//LabelLocalName->setText(ISLicense::GetInstance().GetLocalName()); //???
+		LabelLocalName->setText(ISObjects::GetInstance().GetInfo().LocalName);
 		LabelLocalName->setFont(DEFINES_GUI.FONT_TAHOMA_15_BOLD);
 		LabelLocalName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 		MainLayout->addWidget(LabelLocalName, 0, Qt::AlignCenter);

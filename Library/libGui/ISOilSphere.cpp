@@ -1,6 +1,6 @@
 #include "ISOilSphere.h"
 //-----------------------------------------------------------------------------
-ISOilSphere::ISOilSphere(QObject *parent) : ISObjectInterface(parent)
+ISOilSphere::ISOilSphere() : ISObjectInterface()
 {
 
 }

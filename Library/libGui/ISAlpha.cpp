@@ -5,7 +5,7 @@
 #include "ISDeviceSubSystem.h"
 #include "ISClientsSqlModel.h"
 //-----------------------------------------------------------------------------
-ISAlpha::ISAlpha(QObject *parent) : ISObjectInterface(parent)
+ISAlpha::ISAlpha() : ISObjectInterface()
 {
 
 }

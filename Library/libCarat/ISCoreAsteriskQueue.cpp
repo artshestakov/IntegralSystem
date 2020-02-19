@@ -6,6 +6,7 @@
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_QUEUE = PREPARE_QUERY("SELECT astq_id, astq_creationdate, asqt_uid, asqt_name, astq_initiated, userfullname(astq_initiated), astq_parameters "
 												 "FROM _asteriskqueue "
@@ -35,7 +36,7 @@ bool ISCoreAsteriskQueue::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
+		ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), false, false);
 		ISSettingsDatabase::GetInstance().Initialize();
 
 		Timer = new QTimer(this);

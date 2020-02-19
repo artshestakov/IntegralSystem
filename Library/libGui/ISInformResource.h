@@ -8,7 +8,7 @@ class ISInformResource : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISInformResource(QObject *parent);
+	Q_INVOKABLE ISInformResource();
 	virtual ~ISInformResource();
 
 	void RegisterMetaTypes() const override;

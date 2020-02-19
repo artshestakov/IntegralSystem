@@ -3,7 +3,7 @@
 #include "ISFrameClientsListForm.h"
 #include "ISCurrentAffairsForm.h"
 //-----------------------------------------------------------------------------
-ISFrame::ISFrame(QObject *parent) : ISObjectInterface(parent)
+ISFrame::ISFrame() : ISObjectInterface()
 {
 
 }

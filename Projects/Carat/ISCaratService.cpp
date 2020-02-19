@@ -81,7 +81,6 @@ void ISCaratService::StartService()
 	if (TcpServer->listen(QHostAddress::Any, CARAT_PORT)) //≈сли прослушивание порта запущено успешно
 	{
 		ISDebug::ShowInfoString("Started and listen port: " + QString::number(CARAT_PORT));
-		//connect(&ISDebug::GetInstance(), &ISDebug::Output, this, &ISCaratService::AppendSocketMessage); //???
 	}
 	else //ѕрослушивание порта не запущено
 	{

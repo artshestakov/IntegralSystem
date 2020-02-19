@@ -273,13 +273,13 @@ struct LIBCORE_EXPORT ISConfigurationItem
 {
 	ISConfigurationItem() : IsValid(false) { }
 
-	bool IsValid;
-	ISUuid UID;
-	QString Name;
-	QString LocalName;
-	QString ClassName;
-	QString DesktopForm;
-	QString IncomingCallForm;
+	bool IsValid; //Валидность конфигурации
+	ISUuid UID; //Идентификатор
+	QString Name; //Наименование
+	QString LocalName; //Локальное наименование
+	QString ClassName; //Имя класса ядра конфигурации
+	QString DesktopForm; //Имя класса рабочего стола
+	QString IncomingCallForm; //Имя класса формы входящего звонка
 };
 //-----------------------------------------------------------------------------
 #endif

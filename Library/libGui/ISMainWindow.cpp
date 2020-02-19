@@ -58,7 +58,7 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 	connect(&ISCreatedObjectsEntity::GetInstance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	setWindowIcon(BUFFER_PIXMAPS("Logo"));
-	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(/*ISLicense::GetInstance().GetLocalName()*/"").arg(ISMetaUser::GetInstance().GetData()->FullName)); //???
+	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::GetInstance().GetInfo().LocalName).arg(ISMetaUser::GetInstance().GetData()->FullName));
 	resize(DEFINES_GUI.SIZE_MAIN_WINDOW);
 	setMinimumSize(DEFINES_GUI.SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setSpacing(0);
@@ -411,8 +411,7 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISIncomingCallBaseForm *IncomingCallForm = nullptr;
-	QString ClassName;// = ISLicense::GetInstance().GetIncomingCallForm(); //???
-	int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
+	int ObjectType = QMetaType::type((ISObjects::GetInstance().GetInfo().IncomingCallForm + '*').toLocal8Bit().constData());
 	if (ObjectType)
 	{
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

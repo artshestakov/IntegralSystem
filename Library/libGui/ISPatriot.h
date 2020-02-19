@@ -8,7 +8,7 @@ class ISPatriot : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISPatriot(QObject *parent);
+	Q_INVOKABLE ISPatriot();
 	virtual ~ISPatriot();
 
 	void RegisterMetaTypes() const override;

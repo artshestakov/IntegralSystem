@@ -8,7 +8,7 @@ class ISCenterSeven : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISCenterSeven(QObject *parent);
+	Q_INVOKABLE ISCenterSeven();
 	virtual ~ISCenterSeven();
 
 	void RegisterMetaTypes() const override;

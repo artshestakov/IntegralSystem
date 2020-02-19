@@ -6,7 +6,7 @@
 #include "ISHighwayOrganizationObjectForm.h"
 #include "ISHighwayBillsListForm.h"
 //-----------------------------------------------------------------------------
-ISHighway::ISHighway(QObject *parent) : ISObjectInterface(parent)
+ISHighway::ISHighway() : ISObjectInterface()
 {
 
 }

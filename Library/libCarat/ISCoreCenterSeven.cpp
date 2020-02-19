@@ -8,6 +8,7 @@
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_BRANCH = PREPARE_QUERY("SELECT (SELECT ptnt_id FROM patients WHERE concat(ptnt_phonemain, ptnt_phoneother) LIKE '%' || :Phone || '%' ), brch_name, brch_administrator "
 										 "FROM branches "
@@ -29,7 +30,7 @@ bool ISCoreCenterSeven::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
+		ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), false, false);
 		ISSettingsDatabase::GetInstance().Initialize();
 
 		AsteriskSocket = new ISAsteriskSocket(this);

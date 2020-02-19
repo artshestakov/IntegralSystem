@@ -17,17 +17,7 @@ ISCaratCoreApplication::~ISCaratCoreApplication()
 bool ISCaratCoreApplication::Invoke()
 {
 	QString ErrorString;
-	bool Result = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
-	if (Result)
-	{
-		//???
-		/*if (!ISLicense::GetInstance().Initialize())
-		{
-			ISDebug::ShowWarningString(ISLicense::GetInstance().GetErrorString());
-		}*/
-	}
-
-	return Result;
+	return ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
 }
 //-----------------------------------------------------------------------------
 int ISCaratCoreApplication::Exec() const

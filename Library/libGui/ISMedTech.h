@@ -8,7 +8,7 @@ class ISMedTech : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISMedTech(QObject *parent);
+	Q_INVOKABLE ISMedTech();
 	virtual ~ISMedTech();
 
 	void RegisterMetaTypes() const override;

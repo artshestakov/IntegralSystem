@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	delete AuthForm;
 
 	//Проверка обновления
-	/*ISNamespace::UpdateResult ResultUpdate = CheckUpdate();
+	ISNamespace::UpdateResult ResultUpdate = CheckUpdate();
 	if (ResultUpdate == ISNamespace::UR_ExitApplication)
 	{
 		return EXIT_FAILURE;
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	else if (ResultUpdate == ISNamespace::UR_ErrorStartUpdate)
 	{
 		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.ErrorStartUpdate"));
-	}*/
+	}
 
 	int Startup = ISStartup::Startup(UserLogin, UserPassword);
 	if (Startup) //Если при запуске произошла ошибка

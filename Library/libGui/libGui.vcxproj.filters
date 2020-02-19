@@ -272,6 +272,9 @@
     <ClInclude Include="ISLocalization.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="ISObjects.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISIncomingCallBaseForm.cpp">
@@ -2150,9 +2153,6 @@
     </QtMoc>
     <QtMoc Include="ISCenterSevenStatusAdmissionForm.h">
       <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISObjects.h">
-      <Filter>Objects</Filter>
     </QtMoc>
     <QtMoc Include="ISSqlModelCore.h">
       <Filter>Model</Filter>

@@ -4,6 +4,7 @@
 #include "ISMetaData.h"
 #include "ISDebug.h"
 #include "ISQueryText.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT file_id "
 									   "FROM _file "
@@ -27,7 +28,7 @@ bool ISCoreScheduler::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
+		ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), false, false);
 
 		Timer = new QTimer(this);
 		Timer->setInterval(1000 * 60 * 60); //1 час

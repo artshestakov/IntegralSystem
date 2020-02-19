@@ -1,8 +1,6 @@
 #include "ISObjectInterface.h"
 //-----------------------------------------------------------------------------
-ISObjectInterface::ISObjectInterface(QObject *parent)
-	: QObject(parent),
-	LicenseName(""/*ISLicense::GetInstance().GetName()*/) //???
+ISObjectInterface::ISObjectInterface() : QObject()
 {
 
 }
@@ -12,8 +10,13 @@ ISObjectInterface::~ISObjectInterface()
 
 }
 //-----------------------------------------------------------------------------
+void ISObjectInterface::SetConfigurationName(const QString &configuration_name)
+{
+	ConfigurationName = configuration_name;
+}
+//-----------------------------------------------------------------------------
 QIcon ISObjectInterface::GetIcon(const QString &IconName) const
 {
-	return QIcon(":_" + LicenseName + '/' + IconName + ".png");
+	return QIcon(":_" + ConfigurationName + '/' + IconName + ".png");
 }
 //-----------------------------------------------------------------------------

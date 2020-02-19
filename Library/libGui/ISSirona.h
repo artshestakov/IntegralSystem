@@ -8,7 +8,7 @@ class ISSirona : public ISObjectInterface
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISSirona(QObject *parent);
+	Q_INVOKABLE ISSirona();
 	virtual ~ISSirona();
 
 	void RegisterMetaTypes() const override;

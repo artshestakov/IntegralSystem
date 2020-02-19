@@ -685,7 +685,7 @@
     <QtMoc Include="ISNoteForm.h" />
     <QtMoc Include="ISNotificationsForm.h" />
     <QtMoc Include="ISObjectInterface.h" />
-    <QtMoc Include="ISObjects.h" />
+    <ClInclude Include="ISObjects.h" />
     <QtMoc Include="ISDeviceListForm.h" />
     <QtMoc Include="ISDeviceObjectForm.h" />
     <QtMoc Include="ISDeviceSubSystem.h" />

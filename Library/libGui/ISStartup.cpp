@@ -78,7 +78,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	//Инициализация мета-данных
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.MetaData"));
-	ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
+	ISMetaData::GetInstanse().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false);
 
 	//Инициализация настроек базы данных
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.SettingsDatabase"));

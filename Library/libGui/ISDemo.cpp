@@ -1,6 +1,6 @@
 #include "ISDemo.h"
 //-----------------------------------------------------------------------------
-ISDemo::ISDemo(QObject *parent) : ISObjectInterface(parent)
+ISDemo::ISDemo() : ISObjectInterface()
 {
 
 }
