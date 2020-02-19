@@ -123,7 +123,6 @@
   <ItemGroup>
     <ClInclude Include="call_stack.hpp" />
     <ClInclude Include="ISCrashDumper.h" />
-    <ClInclude Include="EXLicense.h" />
     <ClInclude Include="ISAssociationTypes.h" />
     <QtMoc Include="ISAuthConnector.h" />
     <ClInclude Include="ISConstants.h" />
@@ -132,7 +131,6 @@
     <QtMoc Include="ISDaDataService.h" />
     <QtMoc Include="ISEMail.h" />
     <ClInclude Include="ISDefinesCore.h" />
-    <ClInclude Include="ISLicense.h" />
     <ClInclude Include="ISApplicationRunning.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISCommandLine.h" />
@@ -197,7 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISCrashDumper.cpp" />
-    <ClCompile Include="EXLicense.cpp" />
     <ClCompile Include="ISAssociationTypes.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
     <ClCompile Include="ISCore.cpp" />
@@ -206,7 +203,6 @@
     <ClCompile Include="ISDefinesCore.cpp" />
     <ClCompile Include="ISEMail.cpp" />
     <ClCompile Include="ISEmailAddress.cpp" />
-    <ClCompile Include="ISLicense.cpp" />
     <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISCommandLine.cpp" />

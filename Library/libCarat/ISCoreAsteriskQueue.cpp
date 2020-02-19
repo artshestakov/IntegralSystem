@@ -3,7 +3,6 @@
 #include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
-#include "ISLicense.h"
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
@@ -36,7 +35,7 @@ bool ISCoreAsteriskQueue::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(ISLicense::GetInstance().GetName(), false, false);
+		ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
 		ISSettingsDatabase::GetInstance().Initialize();
 
 		Timer = new QTimer(this);

@@ -2,7 +2,6 @@
 #include "ISDebug.h"
 #include "ISConfig.h"
 #include "ISDatabase.h"
-#include "ISLicense.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISCaratCoreApplication::ISCaratCoreApplication(int &argc, char **argv) : QCoreApplication(argc, argv)
@@ -21,10 +20,11 @@ bool ISCaratCoreApplication::Invoke()
 	bool Result = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
 	if (Result)
 	{
-		if (!ISLicense::GetInstance().Initialize())
+		//???
+		/*if (!ISLicense::GetInstance().Initialize())
 		{
 			ISDebug::ShowWarningString(ISLicense::GetInstance().GetErrorString());
-		}
+		}*/
 	}
 
 	return Result;

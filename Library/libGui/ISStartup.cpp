@@ -28,7 +28,6 @@
 #include "ISMediaPlayer.h"
 #include "ISDeviceEntity.h"
 #include "ISObjects.h"
-#include "ISLicense.h"
 #include "ISVersion.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
@@ -76,7 +75,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	//Инициализация мета-данных
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.MetaData"));
-	ISMetaData::GetInstanse().Initialize(ISLicense::GetInstance().GetName(), false, false);
+	ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
 
 	//Инициализация настроек базы данных
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.SettingsDatabase"));

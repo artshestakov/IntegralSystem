@@ -176,7 +176,6 @@
   <Local Name="Message.Warning.TaskExecutorEmpty" Russian="У задачи не назначен исполнитель."/>
   <Local Name="Message.Warning.AlienTask" Russian="Вы не можете взять в работу чужую задачу!"/>
   <Local Name="Message.Warning.TaskAlreadyCheckDuplicate" Russian="Задача #%1 уже отмечена как дубликат задачи #%2."/>
-  <Local Name="Message.Warning.LicenseNotInitialized" Russian="Не удалось загрузить лицензию: %1"/>
   <Local Name="Message.Warning.SslConnectionDBFailed" Russian="Ошибка подключения к серверу базы данных: %1"/>
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
@@ -297,7 +296,6 @@
   <Local Name="Banner.Initialize.OpeningMainWindow" Russian="Открытие главного окна..."/>
   <Local Name="Banner.Initialize.OpeningMainWindow.CreateParagparh" Russian="Открытие главного окна: %1..."/>
   <Local Name="Banner.Initialize.CheckUpdate" Russian="Проверка наличия обновлений..."/>
-  <Local Name="Banner.Initialize.CheckLicense" Russian="Проверка лицензии..."/>
   <Local Name="Banner.Initialize.DownloadUpdate" Russian="Обновление загружено."/>
   
   <!--Banner Closing-->
@@ -565,7 +563,6 @@
   <Local Name="ListIsEmpty" Russian="Справочник пуст"/>
   <Local Name="NoteToRecord" Russian="Примечание к записи"/>
   <Local Name="Comment" Russian="Комментарий"/>
-  <Local Name="License" Russian="Лицензия"/>
   <Local Name="OpenUrlLink" Russian="Посетить ссылку"/>
   <Local Name="FileNotSelected" Russian="Файл не выбран"/>
   <Local Name="Rename" Russian="Переименовать"/>

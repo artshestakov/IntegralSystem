@@ -1,9 +1,8 @@
 #include "ISObjectInterface.h"
-#include "ISLicense.h"
 //-----------------------------------------------------------------------------
 ISObjectInterface::ISObjectInterface(QObject *parent)
 	: QObject(parent),
-	LicenseName(ISLicense::GetInstance().GetName())
+	LicenseName(""/*ISLicense::GetInstance().GetName()*/) //???
 {
 
 }

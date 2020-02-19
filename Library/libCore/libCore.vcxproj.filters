@@ -34,9 +34,6 @@
     <Filter Include="Database">
       <UniqueIdentifier>{11485b97-b62a-4434-80d0-911d9619a00b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="License">
-      <UniqueIdentifier>{d6ddf5cf-e9c2-4736-9b99-ccbf7829dd11}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{6f751243-38a1-499c-aacd-d094d88ce358}</UniqueIdentifier>
     </Filter>
@@ -171,9 +168,6 @@
     <ClInclude Include="ISMimeInlineFile.h">
       <Filter>Network\SMTP</Filter>
     </ClInclude>
-    <ClInclude Include="EXLicense.h">
-      <Filter>License</Filter>
-    </ClInclude>
     <ClInclude Include="ISDatabase.h">
       <Filter>Database</Filter>
     </ClInclude>
@@ -185,9 +179,6 @@
     </ClInclude>
     <ClInclude Include="ISSearchModel.h">
       <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="ISLicense.h">
-      <Filter>License</Filter>
     </ClInclude>
     <ClInclude Include="ISMetaUuidCheckeder.h">
       <Filter>MetaData</Filter>
@@ -399,9 +390,6 @@
     <ClCompile Include="ISSearchModel.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="ISLicense.cpp">
-      <Filter>License</Filter>
-    </ClCompile>
     <ClCompile Include="ISAuthConnector.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -449,9 +437,6 @@
     </ClCompile>
     <ClCompile Include="ISRestWorker.cpp">
       <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="EXLicense.cpp">
-      <Filter>License</Filter>
     </ClCompile>
     <ClCompile Include="ISQueryPool.cpp">
       <Filter>Database</Filter>

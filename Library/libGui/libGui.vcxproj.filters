@@ -904,9 +904,6 @@
     <ClCompile Include="ISKnowledgeBaseSubSystem.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISLicenseForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISLockForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -1888,9 +1885,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISKnowledgeBaseSubSystem.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISLicenseForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISLockForm.h">

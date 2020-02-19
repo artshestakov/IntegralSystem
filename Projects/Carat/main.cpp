@@ -6,7 +6,6 @@
 #include "ISConfig.h"
 #include "ISExceptionBase.h"
 #include "ISApplicationRunning.h"
-#include "ISLicense.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
@@ -35,12 +34,13 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	if (!ISLicense::GetInstance().Initialize()) //Если лицензия не инициализировалась
+	//???
+	/*if (!ISLicense::GetInstance().Initialize()) //Если лицензия не инициализировалась
 	{
 		ISDebug::ShowWarningString("License failed");
 		ISCommandLine::Pause();
 		return EXIT_SUCCESS;
-	}
+	}*/
 
 	try
 	{

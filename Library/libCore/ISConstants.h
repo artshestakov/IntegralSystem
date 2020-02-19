@@ -54,7 +54,6 @@ const char LOCALIZATION_FILE_OBJECTS[] = "Objects";
 const char REG_EXP_IP_ADDRESS[] = "([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?"; //IP-адресс
 const char REG_EXP_UID[] = "UID=\"\\{\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}\\}\""; //”никальный идентфикатор из мета-данных
 const char REG_EXP_DEBUG[] = "[0-9]{2}.[0-9]{2}.[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3} \\[[A-Za-z]+\\]: ";
-const char REG_EXP_LICENSE[] = "^[a-f0-9]{32}$";
 const char REG_EXP_LOGIN[] = "^([a-z]+)$";
 const char REG_EXP_BACKUP_FILE_DATE[] = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}";
 const char REG_EXP_PASSWORD_ALT_SYMBOL[] = "^[^а-€ј-яЄ®a-zA-Z0-9_]+$";

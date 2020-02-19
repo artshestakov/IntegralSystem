@@ -26,16 +26,6 @@ struct StructModelItem
 	ISNamespace::FieldType FieldType;
 };
 //-----------------------------------------------------------------------------
-struct ISLicenseItem
-{
-	ISUuid UID;
-	QString Name;
-	QString LocalName;
-	QString ClassName;
-	QString DesktopForm;
-	QString IncomingCallForm;
-};
-//-----------------------------------------------------------------------------
 struct ISMetaUserData
 {
 	ISMetaUserData() : System(false), ID(0), GroupID(0), AccessAllowed(false), FixedInactive(false), InactiveTimeout(0), GroupFullAccess(false) { }

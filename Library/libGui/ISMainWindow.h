@@ -72,7 +72,6 @@ protected:
 	void ShowHelpSystem(); //Открыть справочную систему
 	void ShowAboutForm(); //Открыть форму "О программе"
 	void ShowAboutQt(); //Открыть форму "О Qt"
-	void ShowLicenseForm(); //Открыть форму "Лицензия"
 
 	void MakeCall();
 	void TrayClicked();

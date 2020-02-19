@@ -10,7 +10,6 @@
 #include "ISUpdateDownloadForm.h"
 #include "ISUpdate.h"
 #include "ISMessageBox.h"
-#include "ISLicense.h"
 #include "ISObjects.h"
 //-----------------------------------------------------------------------------
 ISNamespace::UpdateResult CheckUpdate(); //Проверка обновлений
@@ -56,7 +55,8 @@ int main(int argc, char *argv[])
 		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.ErrorStartUpdate"));
 	}
 
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CheckLicense"));
+	//???
+	/*ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CheckLicense"));
 	if (ISLicense::GetInstance().Initialize())
 	{
 		ISObjects::GetInstance().Initialize();
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 		ISSplashScreen::GetInstance().close();
 		ISMessageBox::ShowWarning(nullptr, LANG("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
 		return EXIT_SUCCESS;
-	}
+	}*/
 
 	int Startup = ISStartup::Startup(UserLogin, UserPassword);
 	if (Startup != 0) //Если при запуске произошла ошибка

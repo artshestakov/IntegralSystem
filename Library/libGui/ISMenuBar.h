@@ -31,7 +31,6 @@ signals:
 	void HelpSystem();
 	void AboutApplication();
 	void AboutQt();
-	void License();
 
 public:
 	ISMenuBar(QWidget *parent = 0);

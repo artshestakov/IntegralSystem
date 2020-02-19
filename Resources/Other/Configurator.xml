@@ -40,12 +40,6 @@
     <Function FunctionName="ClearTable" LocalName="Очистка таблицы" Description="Очистка таблицы от данных"/>
   </Section>
 
-  <Section Name="License" ClassName="CGConfiguratorLicense">
-    <Function FunctionName="Create" LocalName="Создание лицензии" Description="Создание лицензии"/>
-    <Function FunctionName="Show" LocalName="Просмотр серийного номера лицензии" Description="Просмотр серийного номера лицензии"/>
-    <Function FunctionName="Update" LocalName="Обновление лицензии" Description="Обновление лицензии"/>
-  </Section>
-
   <Section Name="Show" ClassName="CGConfiguratorShow">
     <Function FunctionName="ObsoleteTables" LocalName="Показать устаревшие таблицы" Description="Вывести список таблиц, которые существуют в базе данных, но не существуют в схемах мета-данных."/>
     <Function FunctionName="ObsoleteFields" LocalName="Показать устаревшие поля" Description="Вывести список полей, которые существуют в базе данных, но не существуют в схемах мета-данных."/>

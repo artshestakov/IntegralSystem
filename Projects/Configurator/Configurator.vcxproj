@@ -21,7 +21,6 @@
     <ClCompile Include="CGConfiguratorCreate.cpp" />
     <ClCompile Include="CGConfiguratorDelete.cpp" />
     <ClCompile Include="CGConfiguratorFIAS.cpp" />
-    <ClCompile Include="CGConfiguratorLicense.cpp" />
     <ClCompile Include="CGConfiguratorService.cpp" />
     <ClCompile Include="CGConfiguratorShow.cpp" />
     <ClCompile Include="CGConfiguratorUpdate.cpp" />
@@ -57,9 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CGConfiguratorFIAS.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="CGConfiguratorLicense.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CGConfiguratorService.h" />

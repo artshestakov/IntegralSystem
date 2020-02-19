@@ -1,5 +1,4 @@
 #include "ISObjects.h"
-#include "ISLicense.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
 #include "ISCenterSeven.h"
@@ -40,7 +39,7 @@ ISObjects& ISObjects::GetInstance()
 //-----------------------------------------------------------------------------
 void ISObjects::Initialize()
 {
-	QString ClassName = ISLicense::GetInstance().GetClassName();
+	QString ClassName;// = ISLicense::GetInstance().GetClassName(); //???
 
 	int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
 	IS_ASSERT(ObjectType, QString("Class for configuration is null. ClassName: %1.").arg(ClassName));

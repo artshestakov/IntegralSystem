@@ -268,7 +268,6 @@
     <ClCompile Include="ISKnowledgeBaseSubSystem.cpp" />
     <ClCompile Include="ISKPPEdit.cpp" />
     <ClCompile Include="ISLabels.cpp" />
-    <ClCompile Include="ISLicenseForm.cpp" />
     <ClCompile Include="ISLineEdit.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
     <ClCompile Include="ISListEdit.cpp" />
@@ -680,7 +679,6 @@
     <QtMoc Include="ISHistoryForm.h" />
     <QtMoc Include="ISInternalDirectoriesForm.h" />
     <QtMoc Include="ISKnowledgeBaseSubSystem.h" />
-    <QtMoc Include="ISLicenseForm.h" />
     <QtMoc Include="ISLockForm.h" />
     <QtMoc Include="ISMainWindow.h" />
     <QtMoc Include="ISMonitorActivityForm.h" />

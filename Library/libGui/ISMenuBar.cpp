@@ -157,8 +157,6 @@ void ISMenuBar::CreateMenuHelp()
 	//Qt
 	MenuHelp->addAction(BUFFER_ICONS("Qt"), LANG("AboutFrameworkDeveloped"), this, &ISMenuBar::AboutQt);
 	MenuHelp->addSeparator();
-
-	MenuHelp->addAction(BUFFER_ICONS("License"), LANG("License"), this, &ISMenuBar::License);
 }
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateButtonsPanel()

@@ -5,7 +5,6 @@
 #include "ISQuery.h"
 #include "ISDebug.h"
 #include "ISMetaData.h"
-#include "ISLicense.h"
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
@@ -30,7 +29,7 @@ bool ISCoreCenterSeven::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(ISLicense::GetInstance().GetName(), false, false);
+		ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
 		ISSettingsDatabase::GetInstance().Initialize();
 
 		AsteriskSocket = new ISAsteriskSocket(this);

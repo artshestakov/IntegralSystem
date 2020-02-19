@@ -42,11 +42,9 @@
 #include "ISUserStatusForm.h"
 #include "ISDeviceSettingsForm.h"
 #include "ISTelephony.h"
-#include "ISLicense.h"
 #include "ISObjects.h"
 #include "ISDebug.h"
 #include "ISOnline.h"
-#include "ISLicenseForm.h"
 #include "ISScreenshot.h"
 #include "ISAddressBookListForm.h"
 #include "ISCountingTime.h"
@@ -60,7 +58,7 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 	connect(&ISCreatedObjectsEntity::GetInstance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	setWindowIcon(BUFFER_PIXMAPS("Logo"));
-	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISLicense::GetInstance().GetLocalName()).arg(ISMetaUser::GetInstance().GetData()->FullName));
+	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(/*ISLicense::GetInstance().GetLocalName()*/"").arg(ISMetaUser::GetInstance().GetData()->FullName)); //???
 	resize(DEFINES_GUI.SIZE_MAIN_WINDOW);
 	setMinimumSize(DEFINES_GUI.SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setSpacing(0);
@@ -279,7 +277,6 @@ void ISMainWindow::CreateMenuBar()
 	connect(MenuBar, &ISMenuBar::AddressBook, this, &ISMainWindow::ShowAddressBook);
 	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
 	connect(MenuBar, &ISMenuBar::AboutQt, this, &ISMainWindow::ShowAboutQt);
-	connect(MenuBar, &ISMenuBar::License, this, &ISMainWindow::ShowLicenseForm);
 	GetMainLayout()->addWidget(MenuBar);
 }
 //-----------------------------------------------------------------------------
@@ -413,12 +410,23 @@ void ISMainWindow::UpdateAviable(const QVariantMap &VariantMap)
 void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	QString ClassName = ISLicense::GetInstance().GetIncomingCallForm();
+	ISIncomingCallBaseForm *IncomingCallForm = nullptr;
+	QString ClassName;// = ISLicense::GetInstance().GetIncomingCallForm(); //???
 	int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
-	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-	ISIncomingCallBaseForm *IncomingCallForm = dynamic_cast<ISIncomingCallBaseForm*>(MetaObject->newInstance(Q_ARG(const QVariantMap &, VariantMap)));
+	if (ObjectType)
+	{
+		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
+		if (MetaObject)
+		{
+			IncomingCallForm = dynamic_cast<ISIncomingCallBaseForm*>(MetaObject->newInstance(Q_ARG(const QVariantMap &, VariantMap)));
+		}
+	}
+
 	ISGui::SetWaitGlobalCursor(false);
-	IncomingCallForm->ExecAnimated();
+	if (IncomingCallForm)
+	{
+		IncomingCallForm->ExecAnimated();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::AlreadyConnected(const QVariantMap &VariantMap)
@@ -653,12 +661,6 @@ void ISMainWindow::ShowAboutForm()
 void ISMainWindow::ShowAboutQt()
 {
 	QApplication::aboutQt();
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowLicenseForm()
-{
-	ISLicenseForm LicenseForm;
-	LicenseForm.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::MakeCall()

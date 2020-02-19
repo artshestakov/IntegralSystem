@@ -6,7 +6,6 @@
 #include "ISMetaData.h"
 #include "ISCommandLine.h"
 #include "ISDatabase.h"
-#include "ISLicense.h"
 #include "ISCore.h"
 #include "ISSystem.h"
 #include "ISCountingTime.h"
@@ -19,7 +18,6 @@
 #include "CGConfiguratorUpdate.h"
 #include "CGConfiguratorDelete.h"
 #include "CGConfiguratorService.h"
-#include "CGConfiguratorLicense.h"
 #include "CGConfiguratorShow.h"
 #include "CGConfiguratorFIAS.h"
 //-----------------------------------------------------------------------------
@@ -85,9 +83,10 @@ int main(int argc, char *argv[])
         QString ErrorString;
         if (ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString))
 		{
-			if (!ISLicense::GetInstance().Initialize())
+			//???
+			//if (!ISLicense::GetInstance().Initialize())
 			{
-				ISDebug::ShowWarningString(ISLicense::GetInstance().GetErrorString());
+				//ISDebug::ShowWarningString(ISLicense::GetInstance().GetErrorString());
 			}
 		}
 		else
@@ -102,7 +101,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-	ISMetaData::GetInstanse().Initialize(ISLicense::GetInstance().GetName(), true, true);
+	ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", true, true); //???
 
 	bool Executed = false;
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
@@ -148,7 +147,6 @@ void RegisterMetatype()
 	qRegisterMetaType<CGConfiguratorUpdate*>("CGConfiguratorUpdate");
 	qRegisterMetaType<CGConfiguratorDelete*>("CGConfiguratorDelete");
 	qRegisterMetaType<CGConfiguratorService*>("CGConfiguratorService");
-	qRegisterMetaType<CGConfiguratorLicense*>("CGConfiguratorLicense");
 	qRegisterMetaType<CGConfiguratorShow*>("CGConfiguratorShow");
 	qRegisterMetaType<CGConfiguratorFIAS*>("CGConfiguratorFIAS");
 }

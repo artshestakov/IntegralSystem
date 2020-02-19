@@ -2,7 +2,6 @@
 #include "ISTypes.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "ISLicense.h"
 #include "ISDebug.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
@@ -28,7 +27,7 @@ bool ISCoreScheduler::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(ISLicense::GetInstance().GetName(), false, false);
+		ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", false, false); //???
 
 		Timer = new QTimer(this);
 		Timer->setInterval(1000 * 60 * 60); //1 час

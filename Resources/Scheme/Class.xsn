@@ -83,15 +83,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_ConfigurationLicense" UID="{13C20340-92A2-4782-813B-E2969F59F1F2}" Alias="clcn" LocalName="Лицензия" LocalListName="Лицензия" TitleName="License" IsSystem="true">
-    <Fields>
-      <Field UID="{F8DF2BE2-DDC7-4080-825E-72F3E606FA08}" Name="License" Type="ByteArray" LabelName="Лицензия" LocalListName="Лицензия"/>
-    </Fields>
-    <Indexes>
-      <Index Field="License" Unique="true"/>
-    </Indexes>
-  </Table>
-  
   <Table Name="_Paragraphs" UID="{BDA4D218-D79C-445B-ABCD-7913A9FF2CAE}" Alias="prhs" LocalName="Параграф" LocalListName="Параграфы" TitleName="LocalName" IsSystem="true">
     <Fields>
       <Field UID="{08DD8ACD-D09F-47ED-98B4-7D9760732C5F}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>

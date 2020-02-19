@@ -9,7 +9,6 @@
 #include "ISButtons.h"
 #include "ISTextEdit.h"
 #include "ISQuery.h"
-#include "ISLicense.h"
 #include "ISVersion.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
@@ -119,8 +118,9 @@ void ISAboutForm::CreateModuleTab()
 	TabModule->setLayout(LayoutModule);
 	TabWidget->addTab(TabModule, LANG("AboutForm.Tab.Configuration"));
 
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISLicense::GetInstance().GetName());
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISLicense::GetInstance().GetLocalName());
+	//???
+	//AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISLicense::GetInstance().GetName());
+	//AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISLicense::GetInstance().GetLocalName());
 
 	LayoutModule->addStretch();
 }
@@ -161,6 +161,7 @@ void ISAboutForm::CreateLicenseTab()
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateShortcuts()
 {
+	//???
 	/*if (!ISMetaData::GetInstanse().GetInitialized())
 	{
 		return;

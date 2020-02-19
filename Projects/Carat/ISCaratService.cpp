@@ -5,7 +5,6 @@
 #include "ISQuery.h"
 #include "ISCountingTime.h"
 #include "ISSystem.h"
-#include "ISLicense.h"
 #include "ISNetwork.h"
 #include "ISDatabase.h"
 #include "ISSettingsDatabase.h"
