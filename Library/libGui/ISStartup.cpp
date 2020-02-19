@@ -18,6 +18,7 @@
 #include "ISSettings.h"
 #include "ISProtocol.h"
 #include "ISCore.h"
+#include "ISGui.h"
 #include "ISParagraphEntity.h"
 #include "ISPrintingEntity.h"
 #include "ISSortingBuffer.h"
@@ -212,6 +213,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.RegisterEnterProtocol"));
 	ISProtocol::EnterApplication();
 
+	ISObjects::GetInstance().Initialize();
 	ISObjects::GetInstance().GetInterface()->BeforeShowMainWindow();
 
 	//Создание главной формы
@@ -263,13 +265,13 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 //-----------------------------------------------------------------------------
 int ISStartup::ExitNormal()
 {
-	ISCore::ExitApplication();
+	ISGui::ExitApplication();
 	return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
 int ISStartup::ExitError()
 {
-	ISCore::ExitApplication();
+	ISGui::ExitApplication();
 	return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------

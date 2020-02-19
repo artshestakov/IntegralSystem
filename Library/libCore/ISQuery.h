@@ -3,6 +3,7 @@
 #define _ISQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
+#include "ISQueryText.h"
 #include "ISQueryException.h"
 #include "ISQueryExceptionSyntax.h"
 //-----------------------------------------------------------------------------

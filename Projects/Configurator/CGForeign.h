@@ -10,6 +10,6 @@ public:
 	static bool CheckExistForeign(PMetaClassForeign *MetaForeign); //Проверка существования внешнего ключа
 
 private:
-	static QString OnGetForeignName(PMetaClassForeign *MetaForeign); //Получение имени внешнего ключа
+	static QString GetForeignName(PMetaClassForeign *MetaForeign); //Получение имени внешнего ключа
 };
 //-----------------------------------------------------------------------------

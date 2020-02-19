@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "ISLocalization.h"
 #include "ISCore.h"
+#include "ISGui.h"
 #include "ISDebug.h"
 #include "ISSplashScreen.h"
 #include "ISAuthForm.h"
@@ -55,24 +56,10 @@ int main(int argc, char *argv[])
 		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.ErrorStartUpdate"));
 	}
 
-	//???
-	/*ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CheckLicense"));
-	if (ISLicense::GetInstance().Initialize())
-	{
-		ISObjects::GetInstance().Initialize();
-		ISObjects::GetInstance().GetInterface()->RegisterMetaTypes();
-	}
-	else
-	{
-		ISSplashScreen::GetInstance().close();
-		ISMessageBox::ShowWarning(nullptr, LANG("License.Failed").arg(ISLicense::GetInstance().GetErrorString()));
-		return EXIT_SUCCESS;
-	}*/
-
 	int Startup = ISStartup::Startup(UserLogin, UserPassword);
 	if (Startup != 0) //Если при запуске произошла ошибка
 	{
-		ISCore::ExitApplication();
+		ISGui::ExitApplication();
 		return Startup;
 	}
 

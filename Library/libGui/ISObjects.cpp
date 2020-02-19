@@ -1,5 +1,8 @@
 #include "ISObjects.h"
 #include "ISAssert.h"
+#include "ISSystem.h"
+#include "ISConstants.h"
+#include "ISQuery.h"
 //-----------------------------------------------------------------------------
 #include "ISCenterSeven.h"
 #include "ISDemo.h"
@@ -11,8 +14,14 @@
 #include "ISPatriot.h"
 #include "ISSirona.h"
 //-----------------------------------------------------------------------------
+static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT vbls_value "
+												"FROM _variables "
+												"WHERE vbls_name = 'Configuration' "
+												"ORDER BY vbls_name");
+//-----------------------------------------------------------------------------
 ISObjects::ISObjects()
 	: QObject(),
+	ErrorString(NO_ERROR_STRING),
 	ObjectInterface(nullptr)
 {
 	qRegisterMetaType<ISCenterSeven*>("ISCenterSeven");
@@ -37,22 +46,88 @@ ISObjects& ISObjects::GetInstance()
 	return Objects;
 }
 //-----------------------------------------------------------------------------
-void ISObjects::Initialize()
+QString ISObjects::GetErrorString() const
 {
-	QString ClassName;// = ISLicense::GetInstance().GetClassName(); //???
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISObjects::Initialize()
+{
+	ISQuery qSelect(QS_CONFIGURATION);
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
+	{
+		ConfigurationName = qSelect.ReadColumn("vbls_value").toString();
+	}
 
-	int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
-	IS_ASSERT(ObjectType, QString("Class for configuration is null. ClassName: %1.").arg(ClassName));
+	QFile File(PATH_CONFIGURATION_SCHEME);
+	Result = File.open(QIODevice::ReadOnly);
+	if (Result)
+	{
+		QString Content = File.readAll();
+		File.close();
 
-	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-	IS_ASSERT(MetaObject, "Error opening subsystem widget.");
+		QDomElement DomElement = ISSystem::GetDomElement(Content);
+		QDomNode DomNode = DomElement.firstChild();
+		while (!DomNode.isNull())
+		{
+			QDomNamedNodeMap DomNamedNodeMap = DomNode.attributes();
+			QString configuration_name = DomNamedNodeMap.namedItem("Name").nodeValue();
+			if (configuration_name == ConfigurationName)
+			{
+				Info.IsValid = true;
+				Info.UID = DomNamedNodeMap.namedItem("UID").nodeValue();
+				Info.Name = configuration_name;
+				Info.LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
+				Info.ClassName = DomNamedNodeMap.namedItem("ClassName").nodeValue();
+				Info.DesktopForm = DomNamedNodeMap.namedItem("DesktopForm").nodeValue();
+				Info.IncomingCallForm = DomNamedNodeMap.namedItem("IncomingCallForm").nodeValue();
+				break;
+			}
+			DomNode = DomNode.nextSibling();
+		}
 
-	ObjectInterface = dynamic_cast<ISObjectInterface*>(MetaObject->newInstance(Q_ARG(QObject *, this)));
-	IS_ASSERT(ObjectInterface, QString("Error instance configuration. ClassName: %1.").arg(ClassName));
+		Result = Info.IsValid;
+		if (!Result)
+		{
+			ErrorString = "Not found configuration";
+		}
+	}
+
+	if (Result)
+	{
+		int ObjectType = QMetaType::type((Info.ClassName + '*').toLocal8Bit().constData());
+		if (ObjectType)
+		{
+			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
+			if (MetaObject)
+			{
+				ObjectInterface = dynamic_cast<ISObjectInterface*>(MetaObject->newInstance(Q_ARG(QObject *, this)));
+				if (!ObjectInterface)
+				{
+					ErrorString = QString("Error instance configuration. ClassName: %1.").arg(Info.ClassName);
+				}
+			}
+			else
+			{
+				ErrorString = "Error opening subsystem widget.";
+			}
+		}
+		else
+		{
+			ErrorString = QString("Class for configuration is null. ClassName: %1.").arg(Info.ClassName);
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 ISObjectInterface* ISObjects::GetInterface()
 {
 	return ObjectInterface;
+}
+//-----------------------------------------------------------------------------
+ISConfigurationItem ISObjects::GetInfo()
+{
+	return Info;
 }
 //-----------------------------------------------------------------------------

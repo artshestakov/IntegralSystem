@@ -8,6 +8,15 @@
 #include "CGResource.h"
 #include "CGClass.h"
 #include "CGClassField.h"
+#include "ISQuery.h"
+#include "ISConfig.h"
+//-----------------------------------------------------------------------------
+static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT COUNT(*) "
+												"FROM _variables "
+												"WHERE vbls_name = 'Configuration'");
+//-----------------------------------------------------------------------------
+static QString QI_CONFIGURATION = PREPARE_QUERY("INSERT INTO _variables(vbls_name, vbls_value) "
+												"VALUES('Configuration', :Value)");
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
@@ -30,6 +39,7 @@ void CGConfiguratorUpdate::database()
 	resources();
 	classes();
 	classfields();
+	configuration();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::functions()
@@ -160,6 +170,25 @@ void CGConfiguratorUpdate::classfields()
 		{
 			PMetaClassField *MetaField = MetaTable->Fields.at(j);
 			CGClassField::CheckExistClassField(MetaField) ? CGClassField::UpdateClassField(MetaTable->UID, MetaField) : CGClassField::InsertClassField(MetaTable->UID, MetaField);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void CGConfiguratorUpdate::configuration()
+{
+	ISDebug::ShowDebugString("Updation configuration...");
+	ISQuery qSelect(QS_CONFIGURATION);
+	if (qSelect.ExecuteFirst())
+	{
+		if (qSelect.ReadColumn("count").toInt())
+		{
+			ISDebug::ShowDebugString("Configuration already exist");
+		}
+		else
+		{
+			ISQuery qInsert(QI_CONFIGURATION);
+			qInsert.BindValue(":Value", CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION));
+			qInsert.Execute();
 		}
 	}
 }

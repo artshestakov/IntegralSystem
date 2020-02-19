@@ -1,4 +1,5 @@
 #include "ISGui.h"
+#include "ISDefinesCore.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
@@ -14,6 +15,7 @@
 #include "ISProtocol.h"
 #include "ISSelectDialogForm.h"
 #include "ISTaskViewForm.h"
+#include "ISMemoryObjects.h"
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
@@ -297,6 +299,28 @@ QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 		Result = Date.toString(DateFormat);
 	}
 	return Result;
+}
+//-----------------------------------------------------------------------------
+void ISGui::ChangeUser()
+{
+	RestartApplication();
+}
+//-----------------------------------------------------------------------------
+void ISGui::RestartApplication()
+{
+	ExitApplication();
+	ISSystem::SleepSeconds(1);
+	QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_FILE);
+}
+//-----------------------------------------------------------------------------
+void ISGui::ExitApplication()
+{
+	if (ISMemoryObjects::GetInstance().GetMainWindow())
+	{
+		ISMemoryObjects::GetInstance().GetMainWindow()->setProperty("CloseEvent", false);
+	}
+	qApp->closeAllWindows();
+	ISCore::ExitApplication();
 }
 //-----------------------------------------------------------------------------
 int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName, int ObjectID)

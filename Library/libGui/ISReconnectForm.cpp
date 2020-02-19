@@ -1,6 +1,6 @@
 #include "ISReconnectForm.h"
 #include "ISDefinesGui.h"
-#include "ISCore.h"
+#include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISMetaUser.h"
 #include "ISBuffer.h"
@@ -122,13 +122,13 @@ bool ISReconnectForm::Connect()
 //-----------------------------------------------------------------------------
 void ISReconnectForm::Restart()
 {
-	ISCore::RestartApplication();
+	ISGui::RestartApplication();
 }
 //-----------------------------------------------------------------------------
 void ISReconnectForm::Exit()
 {
 	Timer->stop();
-	ISCore::ExitApplication();
+	ISGui::ExitApplication();
 }
 //-----------------------------------------------------------------------------
 void ISReconnectForm::Hide()

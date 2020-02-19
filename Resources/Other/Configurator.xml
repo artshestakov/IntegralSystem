@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Scheme>
-  
+
   <Section Name="Create" ClassName="CGConfiguratorCreate">
     <Function FunctionName="Database" LocalName="Создание базы данных" Description="Создание пустой базы данных указанной в конфигурационном файле."/>
     <Function FunctionName="SystemUser" LocalName="Создание пользователя postgres" Description="Создание системного пользователя postgres на уровне IntegralSystem."/>
@@ -19,7 +19,6 @@
     <Function FunctionName="Resources" LocalName="Ресурсы" Description="Обновление ресурсов и справочников базы данных."/>
     <Function FunctionName="Classes" LocalName="Классы" Description="Обновление классов."/>
     <Function FunctionName="ClassFields" LocalName="Поля классов" Description="Обновление полей классов."/>
-    <Function FunctionName="VersionDatabase" LocalName="Версия базы данных" Description="Обновление версии базы данных."/>
   </Section>
 
   <Section Name="Delete" ClassName="CGConfiguratorDelete">
@@ -38,6 +37,7 @@
     <Function FunctionName="VacuumAnalyze" LocalName="Вакуум с анализом" Description="Обновление статистики, которую использует планировщик для выбора наиболее эффективного способа выполнения запросов."/>
     <Function FunctionName="VacuumFull" LocalName="Полный вакуум" Description="Выбирает режим полной очистки, который может освободить больше пространства."/>
     <Function FunctionName="ClearTable" LocalName="Очистка таблицы" Description="Очистка таблицы от данных"/>
+    <Function FunctionName="Configuration" LocalName="Очистка таблицы" Description="Очистка таблицы от данных"/>
   </Section>
 
   <Section Name="Show" ClassName="CGConfiguratorShow">
@@ -53,5 +53,5 @@
     <Function FunctionName="Prepare" LocalName="Подготовка" Description="Подготовка ФИАС"/>
     <Function FunctionName="Update" LocalName="Обновление" Description="Обновление ФИАС"/>
   </Section>
-  
+
 </Scheme>

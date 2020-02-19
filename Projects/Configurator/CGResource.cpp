@@ -33,9 +33,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 	ISSystem::RemoveLastSymbolFromString(ValuesText, 2);
 	ValuesText += ");";
 
-	QString InsertResourceQuery = InsertText + ValuesText;
-
-	ISQuery qInsertResource(InsertResourceQuery);
+	ISQuery qInsertResource(InsertText + ValuesText);
 	qInsertResource.SetShowLongQuery(false);
 
 	bool BindValueUID = qInsertResource.BindValue(":UID", MetaResource->UID);

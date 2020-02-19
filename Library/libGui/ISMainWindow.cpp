@@ -190,12 +190,12 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 					case ISNamespace::EFA_ChangeUser:
 						e->ignore();
 						BeforeClose();
-						ISCore::ChangeUser();
+						ISGui::ChangeUser();
 						break;
 
 					case ISNamespace::EFA_Exit:
 						BeforeClose();
-						ISCore::ExitApplication();
+						ISGui::ExitApplication();
 						break;
 
 					case ISNamespace::EFT_Close:
@@ -213,7 +213,7 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 			else
 			{
 				BeforeClose();
-				ISCore::ExitApplication();
+				ISGui::ExitApplication();
 			}
 		}
 		else
@@ -393,7 +393,7 @@ void ISMainWindow::TerminateMe(const QVariantMap &VariantMap)
 	ISGui::ProcessEvents();
 	ISMessageBox::ShowInformation(this, LANG("Message.Information.TerminateMe"));
 	BeforeClose();
-	ISCore::ExitApplication();
+	ISGui::ExitApplication();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::UpdateAviable(const QVariantMap &VariantMap)
@@ -402,7 +402,7 @@ void ISMainWindow::UpdateAviable(const QVariantMap &VariantMap)
 	{
 		if (ISCreatedObjectsEntity::GetInstance().CheckExistForms())
 		{
-			ISCore::ChangeUser();
+			ISGui::ChangeUser();
 		}
 	}
 }
@@ -509,7 +509,7 @@ void ISMainWindow::ChangeUser()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser")))
 	{
 		BeforeClose();
-		ISCore::ChangeUser();
+		ISGui::ChangeUser();
 	}
 }
 //-----------------------------------------------------------------------------

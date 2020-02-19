@@ -23,7 +23,7 @@ bool CGForeign::CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorStri
 
 	QString SqlText = QString();
 	SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
-	SqlText += "ADD CONSTRAINT " + OnGetForeignName(MetaForeign) + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + ") \n";
+	SqlText += "ADD CONSTRAINT " + GetForeignName(MetaForeign) + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
 	SqlText += "REFERENCES public." + MetaTableForeign->Name.toLower() + '(' + MetaTableForeign->Alias.toLower() + '_' + MetaForeign->ForeignField.toLower() + ") \n";
 	SqlText += "ON DELETE CASCADE \n";
 	SqlText += "ON UPDATE NO ACTION \n";
@@ -46,7 +46,7 @@ bool CGForeign::UpdateForeign(PMetaClassForeign *MetaForeign, QString &ErrorStri
 
 	QString QueryText = QD_FOREIGN;
 	QueryText = QueryText.arg(MetaTable->Name.toLower());
-	QueryText = QueryText.arg(OnGetForeignName(MetaForeign));
+	QueryText = QueryText.arg(GetForeignName(MetaForeign));
 
 	ISQuery qDeleteForeign;
 	qDeleteForeign.SetShowLongQuery(false);
@@ -68,7 +68,7 @@ bool CGForeign::CheckExistForeign(PMetaClassForeign *MetaForeign)
 	ISQuery qSelect(QS_FOREIGN);
 	qSelect.SetShowLongQuery(false);
 	qSelect.BindValue(":DatabaseName", CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
-	qSelect.BindValue(":ForeignName", OnGetForeignName(MetaForeign));
+	qSelect.BindValue(":ForeignName", GetForeignName(MetaForeign));
 	if (qSelect.ExecuteFirst())
 	{
 		int Count = qSelect.ReadColumn("count").toInt();
@@ -81,7 +81,7 @@ bool CGForeign::CheckExistForeign(PMetaClassForeign *MetaForeign)
 	return false;
 }
 //-----------------------------------------------------------------------------
-QString CGForeign::OnGetForeignName(PMetaClassForeign *MetaForeign)
+QString CGForeign::GetForeignName(PMetaClassForeign *MetaForeign)
 {
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
 	return MetaTable->Name.toLower() + '_' + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + "_foreign";

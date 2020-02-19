@@ -27,12 +27,12 @@ void RegisterMetatype(); //Регистрация мета-типов
 bool InitConfiguratorScheme(QString &ErrorString); //Инициализация схемы конфигуратора
 ISNamespace::ConsoleArgumentType CheckArguments(); //Проверка аргументов
 bool CheckExistDatabase(const QString &DBName, bool &Connected); //Проверка существования БД
-void InterpreterMode(bool &IsRunning);
-bool Execute(const QString &Argument);
-bool Execute(const QString &Argument, const QString &SubArgument);
-QString GetClassName(const QString &Argument);
+void InterpreterMode(bool &IsRunning); //Режим интерпретатора
+bool Execute(const QString &Argument); //Выполнить одиночную команду
+bool Execute(const QString &Argument, const QString &SubArgument); //Выполнить двойную команду
+QString GetClassName(const QString &Argument); //Получить имя класса
 void ProgressMessage(const QString &Message);
-QStringList ParseInputCommand(const QString &Command);
+QStringList ParseInputCommand(const QString &Command); //Парсинг введенной команды
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -44,6 +44,13 @@ int main(int argc, char *argv[])
 	if (!Result)
 	{
 		printf("%s\n", ErrorString.toStdString().c_str());
+		return EXIT_FAILURE;
+	}
+
+	Result = !CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION).isEmpty();
+	if (!Result)
+	{
+		printf("Not specified configuration in config file\n");
 		return EXIT_FAILURE;
 	}
 
@@ -71,7 +78,7 @@ int main(int argc, char *argv[])
 
 	if (DBLogin.isEmpty() || DBPassword.isEmpty())
 	{
-		ISDebug::ShowString("Not specified Server or Password in config file");
+		ISDebug::ShowString("Not specified server or password in config file");
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
@@ -81,18 +88,7 @@ int main(int argc, char *argv[])
 	if (ExistDB)
 	{
         QString ErrorString;
-        if (ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString))
-		{
-			//???
-			//if (!ISLicense::GetInstance().Initialize())
-			{
-				//ISDebug::ShowWarningString(ISLicense::GetInstance().GetErrorString());
-			}
-		}
-		else
-		{
-			Connected = false;
-		}
+		Connected = ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString);
 	}
 
     if (!Connected)
@@ -101,7 +97,12 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-	ISMetaData::GetInstanse().Initialize(/*ISLicense::GetInstance().GetName()*/"", true, true); //???
+	Result = ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), true, true);
+	if (!Result)
+	{
+		printf("Error initialize meta data: %s\n", ISMetaData::GetInstanse().GetErrorString().toStdString().c_str());
+		return EXIT_FAILURE;
+	}
 
 	bool Executed = false;
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
@@ -113,7 +114,7 @@ int main(int argc, char *argv[])
 		
 		if (!ExistDB)
 		{
-			ISDebug::ShowString("ATTENTION! Database \"" + DBName + "\" not exist. Run the 'create database' command");
+			ISDebug::ShowString("ATTENTION! Database \"" + DBName + "\" not exist. Run the 'create database' command.");
 		}
 
 		bool IsRunning = true;
@@ -220,7 +221,7 @@ bool CheckExistDatabase(const QString &DBName, bool &Connected)
 void InterpreterMode(bool &IsRunning)
 {
 	ISDebug::ShowEmptyString();
-	ISDebug::ShowString("Enter command: ");
+	printf("Enter command: ");
 
 	std::string InputCommand;
 	std::getline(std::cin, InputCommand);

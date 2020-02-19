@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISNotifySender.h"
 #include "ISMessageBox.h"
-#include "ISCore.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISSettingsDatabaseObjectForm::ISSettingsDatabaseObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id)
 	: ISObjectFormBase(form_type, meta_table, parent, object_id)
@@ -24,7 +24,7 @@ bool ISSettingsDatabaseObjectForm::Save()
 		ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_SETTINGS_DATABASE_CHANGED, QVariant(), QString(), false);
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SettingsDatabaseSaved")))
 		{
-			ISCore::ChangeUser();
+			ISGui::ChangeUser();
 		}
 	}
 

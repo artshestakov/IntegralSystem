@@ -163,5 +163,15 @@
       <Field UID="{377267DE-7A85-425A-B156-2B64ACCF1CE9}" Name="Screenshot" Type="Image" LabelName="Скриншот" LocalListName="Скриншот" NotNull="true"/>
     </Fields>
   </Table>
+
+  <Table Name="_Variables" UID="{BA52A6D4-A9D5-4D3C-8486-71EB0CB0719A}" Alias="vbls" LocalName="Переменная" LocalListName="Переменные" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{D64B931F-A708-40A7-B63C-A500556E593B}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{3E9D8B8C-68B9-4A8E-9155-4D9130061DBD}" Name="Value" Type="String" LabelName="Значение" LocalListName="Значение" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
   
 </XSN>

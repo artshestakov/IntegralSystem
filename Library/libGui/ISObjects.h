@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "libGui_global.h"
 #include "ISObjectInterface.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class LIBGUI_EXPORT	ISObjects : public QObject
 {
@@ -15,12 +16,19 @@ public:
 	~ISObjects();
 
 	static ISObjects& GetInstance();
-	void Initialize(); //Инициализация
+
+	QString GetErrorString() const;
+	bool Initialize(); //Инициализация
+
 	ISObjectInterface* GetInterface(); //Получить указатель на ядро конфигурации
+	ISConfigurationItem GetInfo(); //Получить информацию о конфигурации
 
 private:
 	ISObjects();
 
+	QString ErrorString;
+	QString ConfigurationName;
 	ISObjectInterface *ObjectInterface;
+	ISConfigurationItem Info;
 };
 //-----------------------------------------------------------------------------

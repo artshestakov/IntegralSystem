@@ -269,4 +269,17 @@ public:
 	bool TableNavigation;
 };
 //-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISConfigurationItem
+{
+	ISConfigurationItem() : IsValid(false) { }
+
+	bool IsValid;
+	ISUuid UID;
+	QString Name;
+	QString LocalName;
+	QString ClassName;
+	QString DesktopForm;
+	QString IncomingCallForm;
+};
+//-----------------------------------------------------------------------------
 #endif

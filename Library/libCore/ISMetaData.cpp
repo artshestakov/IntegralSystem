@@ -68,13 +68,12 @@ QString ISMetaData::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::Initialize(const QString &configuration, bool InitXSR, bool InitXSF)
+bool ISMetaData::Initialize(const QString &configuration_name, bool InitXSR, bool InitXSF)
 {
 	bool Result = Initialized;
 	if (!Result)
 	{
-		Configuration = configuration;
-
+		ConfigurationName = configuration_name;
 		ISDebug::ShowDebugString("Initialize MetaData...");
 
 		Result = InitializeXSN();
@@ -94,15 +93,18 @@ bool ISMetaData::Initialize(const QString &configuration, bool InitXSR, bool Ini
 			}
 		}
 
-		Result = CheckUniqueAllIdentifiers(InitXSR);
 		if (Result)
 		{
-			Result = CheckUniqueAllAliases();
-		}
-		
-		if (Result)
-		{
-			GenerateSqlFromForeigns();
+			Result = CheckUniqueAllIdentifiers(InitXSR);
+			if (Result)
+			{
+				Result = CheckUniqueAllAliases();
+			}
+
+			if (Result)
+			{
+				GenerateSqlFromForeigns();
+			}
 		}
 
 		Initialized = Result;
@@ -268,13 +270,13 @@ bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 	QFileInfoList FileInfoList;
 	FileInfoList.append(QDir(":Scheme/").entryInfoList(FilterXsnXsr, QDir::Files));
 
-	if (Configuration.length())
+	bool Result = !ConfigurationName.isEmpty();
+	if (Result)
 	{
-		FileInfoList.append(QDir(":_" + Configuration).entryInfoList(FilterXsnXsr, QDir::Files));
+		FileInfoList.append(QDir(":_" + ConfigurationName).entryInfoList(FilterXsnXsr, QDir::Files));
 	}
 
 	ISMetaUuidCheckeder MetaUuidCheckeder;
-	bool Result = true;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех файлов мета-данных
 	{
         Result = MetaUuidCheckeder.Search(FileInfo);
@@ -330,10 +332,10 @@ bool ISMetaData::InitializeXSN()
 	QStringList Filter("*.xsn");
 	QFileInfoList FileInfoList = QDir(":Scheme").entryInfoList(Filter, QDir::NoFilter, QDir::Name); //Загрузка мета-данных движка
 
-	bool Result = !Configuration.isEmpty();
+	bool Result = !ConfigurationName.isEmpty();
 	if (Result)
 	{
-		FileInfoList.append(QDir(":_" + Configuration).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка мета-данных конфигурации
+		FileInfoList.append(QDir(":_" + ConfigurationName).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка мета-данных конфигурации
 	}
 
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех XSN файлов
@@ -874,7 +876,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 
 		QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
 		PMetaClassForeign *MetaForeign = new PMetaClassForeign();
-		MetaForeign->ForeignField = DomNamedNodeMap.namedItem("Field").nodeValue();
+		MetaForeign->Field = DomNamedNodeMap.namedItem("Field").nodeValue();
 		MetaForeign->ForeignClass = DomNamedNodeMap.namedItem("ForeignClass").nodeValue();
 		MetaForeign->ForeignField = DomNamedNodeMap.namedItem("ForeignField").nodeValue();
 		MetaForeign->ForeignViewNameField = DomNamedNodeMap.namedItem("ForeignViewNameField").nodeValue();
@@ -957,15 +959,14 @@ bool ISMetaData::InitializeXSNTableJoins(PMetaClassTable *MetaTable, const QDomN
 bool ISMetaData::InitializeXSR()
 {
 	QStringList Filter("*.xsr");
-	QFileInfoList FileInfoList;
-	FileInfoList.append(QDir(":Scheme").entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка ресурсов движка
+	QFileInfoList FileInfoList = QDir(":Scheme").entryInfoList(Filter, QDir::NoFilter, QDir::Name); //Загрузка ресурсов движка
 
-	if (Configuration.length())
+	bool Result = !ConfigurationName.isEmpty();
+	if (Result)
 	{
-		FileInfoList.append(QDir(":_" + Configuration).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка ресурсов конфигурации
+		FileInfoList.append(QDir(":_" + ConfigurationName).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка ресурсов конфигурации
 	}
 
-	bool Result = true;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех XSR файлов
 	{
 		QFile FileXSR(FileInfo.filePath());
@@ -1027,6 +1028,8 @@ bool ISMetaData::InitializeXSR(const QString &Content)
 
 						PMetaClassResource *MetaResource = new PMetaClassResource();
 						MetaResource->TableName = TableName;
+						MetaResource->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
+						DomNamedNodeMap.removeNamedItem("UID");
 
 						for (int i = 0, c = DomNamedNodeMap.size(); i < c; ++i) //Обход полей ресурса
 						{
@@ -1100,12 +1103,12 @@ bool ISMetaData::InitializeXSF()
 	QFileInfoList FileInfoList;
 	FileInfoList.append(QDir(":Scheme").entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка функций движка
 
-	if (Configuration.length())
+	bool Result = !ConfigurationName.isEmpty();
+	if (Result)
 	{
-		FileInfoList.append(QDir(":_" + Configuration).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка функций конфигурации
+		FileInfoList.append(QDir(":_" + ConfigurationName).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка функций конфигурации
 	}
 
-	bool Result = true;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех XSF файлов
 	{
 		QFile FileXSF(FileInfo.filePath());

@@ -8,7 +8,7 @@
 #include "ISComboSearchBase.h"
 #include "ISImageViewerForm.h"
 //-----------------------------------------------------------------------------
-class ISGui
+class LIBGUI_EXPORT ISGui
 {
 public:
 	static bool Startup(QString &ErrorString);
@@ -36,6 +36,10 @@ public:
 	static bool OpenFolder(const QString &FolderPath); //Открыть дикекторию
 	static QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	static QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
+
+	static void ChangeUser(); //Смена пользователя
+	static void RestartApplication(); //Перезапуск программы
+	static void ExitApplication(); //Выход из программы
 
 	//Календарь
 	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName = QString(), int ObjectID = 0);

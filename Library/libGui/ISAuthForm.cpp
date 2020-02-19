@@ -110,6 +110,11 @@ ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	ActionClearFields->setShortcut(Qt::Key_F12);
 	connect(ActionClearFields, &QAction::triggered, this, &ISAuthForm::ClearFields);
 	addAction(ActionClearFields);
+
+#ifdef DEBUG
+	EditLogin->SetValue("postgres");
+	EditPassword->SetValue("adm777");
+#endif
 }
 //-----------------------------------------------------------------------------
 ISAuthForm::~ISAuthForm()

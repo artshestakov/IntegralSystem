@@ -99,7 +99,7 @@ void ISCrashDumper::OnSystemSignal(int Signum)
         FileCrash.close();
     }
 
-    ISCore::ExitApplication();
+    //ISCore::ExitApplication(); //???
 }
 //-----------------------------------------------------------------------------
 #endif

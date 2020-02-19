@@ -18,7 +18,7 @@ public:
 	static ISMetaData& GetInstanse();
 
 	QString GetErrorString() const;
-	bool Initialize(const QString &configuration, bool InitXSR, bool InitXSF); //Инициализация
+	bool Initialize(const QString &configuration_name, bool InitXSR, bool InitXSF); //Инициализация
 
 	PMetaClassTable* GetMetaTable(const QString &TableName); //Получить мета-таблицу по имени
 	PMetaClassTable* GetMetaQuery(const QString &QueryName); //Получить мета-запрос по имени
@@ -66,7 +66,7 @@ private:
 
 private:
 	QString ErrorString;
-	QString Configuration;
+	QString ConfigurationName;
 
     QDomNode GetChildDomNode(QDomNode &TableNode, const QString &TagName) const;
 

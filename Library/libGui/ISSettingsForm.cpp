@@ -308,7 +308,7 @@ void ISSettingsForm::Import()
 //-----------------------------------------------------------------------------
 void ISSettingsForm::Restart()
 {
-	ISCore::ChangeUser();
+	ISGui::ChangeUser();
 }
 //-----------------------------------------------------------------------------
 QListWidgetItem* ISSettingsForm::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)

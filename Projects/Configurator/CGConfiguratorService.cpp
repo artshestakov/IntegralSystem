@@ -111,7 +111,7 @@ void CGConfiguratorService::cleartable()
 {
 	ISDebug::ShowString("Input table name:");
 	QString InputName = ISCommandLine::GetText(); //Запрос на ввод имени таблицы
-	if (!InputName.length())
+	if (InputName.isEmpty())
 	{
 		ISDebug::ShowString("Table name is empty");
 		return;

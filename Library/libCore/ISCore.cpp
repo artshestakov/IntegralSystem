@@ -167,30 +167,9 @@ bool ISCore::DeleteCascadeObject(const QString &TableName, const QString &TableA
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISCore::ChangeUser()
-{
-	RestartApplication();
-}
-//-----------------------------------------------------------------------------
-void ISCore::RestartApplication()
-{
-	ExitApplication();
-	ISSystem::SleepSeconds(1);
-	QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_FILE);
-}
-//-----------------------------------------------------------------------------
 void ISCore::ExitApplication()
 {
-	//???
-	/*if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
-	{
-		if (ISMemoryObjects::GetInstance().GetMainWindow())
-		{
-			ISMemoryObjects::GetInstance().GetMainWindow()->setProperty("CloseEvent", false);
-		}
-		qApp->closeAllWindows();
-	}
-	qApp->quit();*/
+	QCoreApplication::quit();
 }
 //-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)

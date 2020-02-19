@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Configuration>
+<Configurations>
 
   <Configuration UID="{E41E739C-2F5A-4A24-A18C-67F257BAA122}" Name="Alpha" LocalName="Сервисный центр «Альфа»" ClassName="ISAlpha"/>
   <Configuration UID="{45662D03-7680-4C07-965E-B7D6CD93668A}" Name="CenterSeven" LocalName="ООО «Центр 7»" ClassName="ISCenterSeven" DesktopForm="ISCenterSevenDesktop" IncomingCallForm="ISCenterSevenIncomingCallForm"/>
@@ -14,4 +14,4 @@
   <Configuration UID="{0B082B32-7DC3-49F4-A988-17BBC035C694}" Name="ShakShak" LocalName="Стоматологическая клиника «Шакшак»" ClassName="ISShakShak"/>
   <Configuration UID="{B6FB8EC8-0770-443F-A2A9-2FD6D662748F}" Name="Sirona" LocalName="Независимый рентгенологический центр «Sirona+»" ClassName="ISSirona"/>
 
-</Configuration>
+</Configurations>

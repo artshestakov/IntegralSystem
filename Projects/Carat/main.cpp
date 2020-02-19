@@ -34,14 +34,6 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	//???
-	/*if (!ISLicense::GetInstance().Initialize()) //Если лицензия не инициализировалась
-	{
-		ISDebug::ShowWarningString("License failed");
-		ISCommandLine::Pause();
-		return EXIT_SUCCESS;
-	}*/
-
 	try
 	{
 		return CaratService.exec();
