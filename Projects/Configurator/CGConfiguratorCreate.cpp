@@ -54,6 +54,15 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
 //-----------------------------------------------------------------------------
 void CGConfiguratorCreate::database()
 {
+	ISDebug::ShowString("Input configuration name: ");
+	std::string ConfigurationName;
+	std::getline(std::cin, ConfigurationName);
+	if (ConfigurationName.empty())
+	{
+		ISDebug::ShowWarningString("Configuration name is empty.");
+		return;
+	}
+
 	QString ErrorString;
 	if (ISDatabase::GetInstance().ConnectToSystemDB(ErrorString))
 	{
@@ -76,12 +85,24 @@ void CGConfiguratorCreate::database()
 		if (Exist) //Если база данных создана
 		{
 			QString ErrorString;
-			if (!ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString))
+			Exist = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
+		}
+
+		//Отключаемся от системной БД
+		ISDatabase::GetInstance().DisconnectFromSystemDB();
+
+		if (Exist) //Если коннект был создан к только что созданной БД - создаем функцию
+		{
+			ISQuery qCreateFunction;
+			if (qCreateFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + QString::fromStdString(ConfigurationName) + "'; END; $$ LANGUAGE plpgsql IMMUTABLE"))
 			{
-				Exist = false;
+				ISDebug::ShowInfoString("Function getting configuration name created");
+			}
+			else
+			{
+				ISDebug::ShowWarningString("Function getting configuration name not created: " + qCreateFunction.GetErrorText());
 			}
 		}
-		ISDatabase::GetInstance().DisconnectFromSystemDB();
 	}
 	else
 	{

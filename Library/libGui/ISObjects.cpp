@@ -14,10 +14,7 @@
 #include "ISPatriot.h"
 #include "ISSirona.h"
 //-----------------------------------------------------------------------------
-static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT vbls_value "
-												"FROM _variables "
-												"WHERE vbls_name = 'Configuration' "
-												"ORDER BY vbls_name");
+static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT get_configuration_name()");
 //-----------------------------------------------------------------------------
 ISObjects::ISObjects()
 	: ErrorString(NO_ERROR_STRING),
@@ -64,7 +61,7 @@ bool ISObjects::Initialize()
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
-		ConfigurationName = qSelect.ReadColumn("vbls_value").toString();
+		ConfigurationName = qSelect.ReadColumn("get_configuration_name").toString();
 	}
 
 	QFile File(PATH_CONFIGURATION_SCHEME);
