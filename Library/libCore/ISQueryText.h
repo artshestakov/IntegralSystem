@@ -3,7 +3,7 @@
 #define _ISQUERYTEXT_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISTypes.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISQueryText
 {
@@ -15,17 +15,18 @@ public:
 	~ISQueryText();
 
 	static ISQueryText& GetInstance();
-	
+	QString GetErrorString() const;
 	QString InsertQuery(const char *QueryText, const char *FileName, int Line); //Добавить запрос в список
-	void CheckAllQueries(); //Проверка всех запросов
+	bool CheckAllQueries(); //Проверка всех запросов
 
 protected:
-	void ErrorQuery(const QString &About, const QString &SqlText, const QString &ErrorText);
+	void ErrorQuery(ISSqlQuery SqlQuery, const QString &ErrorText);
 
 private:
 	ISQueryText();
 
-	QStringMap Queries;
+	QString ErrorString;
+	std::vector<ISSqlQuery> Vector;
 };
 //-----------------------------------------------------------------------------
 #define PREPARE_QUERY(SqlText) ISQueryText::GetInstance().InsertQuery(SqlText, __FILE__, __LINE__);

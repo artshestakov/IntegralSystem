@@ -6,8 +6,10 @@
 #include "ISMetaData.h"
 #include "ISMetaViewQuery.h"
 #include "ISDatabase.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISQueryText::ISQueryText()
+	: ErrorString(NO_ERROR_STRING)
 {
 
 }
@@ -23,65 +25,89 @@ ISQueryText& ISQueryText::GetInstance()
 	return QueryText;
 }
 //-----------------------------------------------------------------------------
+QString ISQueryText::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
 QString ISQueryText::InsertQuery(const char *QueryText, const char *FileName, int Line)
 {
-	Queries.insert(QString("File: %1\nLine: %2").arg(QFileInfo(FileName).fileName()).arg(Line), QueryText);
+	Vector.emplace_back(ISSqlQuery{ FileName, Line, QueryText });
 	return QueryText;
 }
 //-----------------------------------------------------------------------------
-void ISQueryText::CheckAllQueries()
+bool ISQueryText::CheckAllQueries()
 {
-	return;
-	ISDebug::ShowDebugString("Checking queries");
-
-	if (!Queries.count())
+	return true;
+	bool Result = !Vector.empty();
+	if (Result)
 	{
-		return;
-	}
-
-	IS_ASSERT(ISDatabase::GetInstance().GetDefaultDB().isOpen(), "Database not connected!");
-	ISCountingTime Time;
-
-    for (const auto &MapItem : Queries.toStdMap())
-	{
-		QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
-		SqlQuery.prepare(MapItem.second);
-		if (SqlQuery.lastError().type() != QSqlError::NoError)
+		Result = ISDatabase::GetInstance().GetDefaultDB().isOpen();
+		if (Result)
 		{
-			ErrorQuery(MapItem.first, MapItem.second, SqlQuery.lastError().text());
+			QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
+
+			for (const ISSqlQuery &Item : Vector)
+			{
+				Result = SqlQuery.prepare(Item.SqlText);
+				if (Result)
+				{
+					Result = SqlQuery.lastError().type() == QSqlError::NoError;
+				}
+				
+				if (!Result)
+				{
+					ErrorQuery(Item, SqlQuery.lastError().text());
+					break;
+				}
+			}
+
+			if (Result)
+			{
+				for (int i = 0; i < ISMetaData::GetInstanse().GetMetaQueries().count(); ++i)
+				{
+					QString QueryName = ISMetaData::GetInstanse().GetMetaQueries().at(i);
+					ISMetaViewQuery MetaViewQuery(QueryName);
+					QString SqlText = MetaViewQuery.GetQueryText();
+
+					QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
+					SqlQuery.prepare(SqlText);
+					if (SqlQuery.lastError().type() != QSqlError::NoError)
+					{
+						//ErrorQuery("Meta query: " + QueryName, SqlText, SqlQuery.lastError().text());
+					}
+				}
+			}
+			Vector.clear();
+		}
+		else
+		{
+			ErrorString = "Database not open connection";
 		}
 	}
-
-	for (int i = 0; i < ISMetaData::GetInstanse().GetMetaQueries().count(); ++i)
-	{
-		QString QueryName = ISMetaData::GetInstanse().GetMetaQueries().at(i);
-		ISMetaViewQuery MetaViewQuery(QueryName);
-		QString SqlText = MetaViewQuery.GetQueryText();
-
-		QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
-		SqlQuery.prepare(SqlText);
-		if (SqlQuery.lastError().type() != QSqlError::NoError)
-		{
-			ErrorQuery("Meta query: " + QueryName, SqlText, SqlQuery.lastError().text());
-		}
-	}
-
-	ISDebug::ShowDebugString(QString("Check %1 queries time: %2").arg(Queries.count()).arg(ISSystem::MillisecondsToString(Time.GetElapsed())));
-	Queries.clear();
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISQueryText::ErrorQuery(const QString &About, const QString &SqlText, const QString &ErrorText)
+void ISQueryText::ErrorQuery(ISSqlQuery SqlQuery, const QString &ErrorText)
 {
-	//???
-	/*if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
+	QFile File(DEFINES_CORE.PATH_TEMP_DIR + ISSystem::GenerateUuid());
+	if (File.open(QIODevice::WriteOnly))
 	{
-		QMessageBox MessageBox;
-		MessageBox.setWindowTitle(LANG("Error"));
-		MessageBox.setIcon(QMessageBox::Critical);
-		MessageBox.setText(LANG("Message.Warning.SqlQueryError"));
-		MessageBox.setInformativeText(About + "\r\n\r\n" + ErrorText);
-		MessageBox.setDetailedText(SqlText);
-		MessageBox.exec();
-	}*/
+		QString Content;
+		Content += "File: " + SqlQuery.FileName.toUtf8() + "\n";
+		Content += "Line: " + QString::number(SqlQuery.Line).toUtf8() + "\n\n";
+		Content += ErrorText;
+		File.write(Content.toUtf8());
+		File.close();
+
+		if (DEFINES_CORE.IS_GUI)
+		{
+			QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << File.fileName());
+		}
+		else
+		{
+			printf("%s\n", Content.toStdString().c_str());
+		}
+	}
 }
 //-----------------------------------------------------------------------------

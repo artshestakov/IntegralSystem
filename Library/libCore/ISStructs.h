@@ -282,4 +282,11 @@ struct LIBCORE_EXPORT ISConfigurationItem
 	QString IncomingCallForm; //Имя класса формы входящего звонка
 };
 //-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISSqlQuery
+{
+	QString FileName; //Имя файла
+	int Line; //Номер строки
+	QString SqlText; //SQL-запрос
+};
+//-----------------------------------------------------------------------------
 #endif
