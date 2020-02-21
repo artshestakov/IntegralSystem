@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ResourceActual", "Tools\Res
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LineEditHighlighter", "Tools\LineEditHighlighter\LineEditHighlighter.vcxproj", "{D69AF4B8-C27E-412D-95C5-E4E3195FA7ED}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUILogger", "GUILogger\GUILogger.vcxproj", "{22FCB2A6-AF9A-41F5-9500-59CAB401B408}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUILogger", "Tools\GUILogger\GUILogger.vcxproj", "{22FCB2A6-AF9A-41F5-9500-59CAB401B408}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
