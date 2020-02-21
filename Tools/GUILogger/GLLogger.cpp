@@ -5,22 +5,19 @@ GLLogger::GLLogger()
 	Array(NULL),
 	LastPosition(0),
 	Running(false),
-	File(NULL)
+	PathDirectory(NULL),
+	PathFile(NULL),
+	File(NULL),
+	CurrentYear(0),
+	CurrentMonth(0),
+	CurrentDay(0)
 {
 	
 }
 //-----------------------------------------------------------------------------
 GLLogger::~GLLogger()
 {
-	while (Running)
-	{
-		Mutex.lock();
-		//bool IsEmpty = Queue.empty();
-		Mutex.unlock();
-	}
-	
-	//Running = false;
-	//fclose(File);
+
 }
 //-----------------------------------------------------------------------------
 GLLogger& GLLogger::Instance()
@@ -36,22 +33,38 @@ std::string GLLogger::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool GLLogger::Initialize()
 {
+	PathDirectory = (char *)malloc(MAX_PATH + 1);
+	Running = PathDirectory ? true : false;
+	if (!Running) //Ошибка выделения памяти
+	{
+		ErrorString = "Error malloc path directory.";
+		return Running;
+	}
+
+	//Получаем путь к исполняемому файлу
+	Running = GetModuleFileNameA(NULL, PathDirectory, MAX_PATH) > 0 ? true : false;
+	if (!Running) //Не удалось получить путь
+	{
+		ErrorString = "Not getting current module file path.";
+		return Running;
+	}
+
+	//Обрезаем его до родительской папки. Считаем, что путь к текущей директории у нас есть.
+	*(strrchr(PathDirectory, '\\') + 1) = 0;
+
+	Running = CreateDirs();
+
 	Array = (char **)malloc(sizeof(char *) * ARRAY_MAX_SIZE + 1);
 	Running = Array ? true : false;
-	if (Running)
+	if (Running) //Если память выделена успешно
 	{
 		memset(Array, 0, ARRAY_MAX_SIZE);
 
 		Running = CreateDirs();
 		if (Running)
 		{
-			SYSTEMTIME ST;
-			GetLocalTime(&ST);
-
-			char FileName[MAX_PATH];
-			sprintf(FileName, "G:\\%02d.log", ST.wDay);
-
-			File = fopen(FileName, "a");
+			UpdateFilePath();
+			File = fopen(PathFile, "a");
 			Running = File ? true : false;
 			if (Running)
 			{
@@ -63,7 +76,7 @@ bool GLLogger::Initialize()
 			}
 		}
 	}
-	else
+	else //Ошибка выделения памяти
 	{
 		ErrorString = "Error malloc";
 	}
@@ -122,11 +135,72 @@ void GLLogger::Worker()
 			fflush(File);
 		}
 		Mutex.unlock(); //Разблокируем мьютекс
+
+		//Получаем текущие дату и время
+		SYSTEMTIME ST;
+		GetLocalTime(&ST);
+		
+		if (CurrentYear != ST.wYear || CurrentMonth != ST.wMonth || CurrentDay != ST.wDay)
+		{
+
+		}
 	}
 }
 //-----------------------------------------------------------------------------
 bool GLLogger::CreateDirs()
 {
-	return true;
+	//Формируем путь к папке Logs
+	char PathLogs[MAX_PATH];
+	strcpy(PathLogs, PathDirectory);
+	strcat(PathLogs, "Logs\\");
+
+	bool Result = CreateDirectoryA(PathLogs, NULL) == TRUE ? true : false;
+	if (Result) //Если папка успешно создана
+	{
+		char PathYear[MAX_PATH];
+		strcpy(PathYear, PathDirectory);
+		strcat(PathYear, "");
+	}
+	else
+	{
+
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool GLLogger::UpdateFilePath()
+{
+	if (PathFile)
+	{
+		free(PathFile);
+	}
+
+	PathFile = (char *)malloc(sizeof(char) * MAX_PATH + 1);
+	bool Result = PathFile ? true : false;
+	if (Result)
+	{
+		
+
+
+
+		//Получаем текущую дату и время
+		SYSTEMTIME ST;
+		GetLocalTime(&ST);
+
+		//Запоминаем
+		CurrentYear = ST.wYear;
+		CurrentMonth = ST.wMonth;
+		CurrentDay = ST.wDay;
+
+		//Добавляем папку "год"
+		char YearString[6];
+		itoa(CurrentYear, YearString, 10);
+		YearString[4] = '\\';
+		YearString[5] = '\0';
+		strcat(PathFile, YearString);
+
+
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

@@ -39,6 +39,7 @@ public:
 private:
 	void Worker(); //Обработчик очереди сообщений
 	bool CreateDirs(); //Создание необходимых директорий
+	bool UpdateFilePath(); //Обновить путь к файлу
 
 private:
 	GLLogger();
@@ -52,7 +53,12 @@ private:
 	char **Array;
 	size_t LastPosition;
 	bool Running;
+	char *PathDirectory;
+	char *PathFile;
 	FILE *File;
+	size_t CurrentYear;
+	size_t CurrentMonth;
+	size_t CurrentDay;
 };
 //-----------------------------------------------------------------------------
 #define LG_INFO(MESSAGE) GLLogger::Instance().Append(GLLogger::MT_Info, MESSAGE, __FILE__, __LINE__)
