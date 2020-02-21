@@ -2,10 +2,12 @@
 //-----------------------------------------------------------------------------
 GLLogger::GLLogger()
 	: ErrorString("No error."),
+	Array(NULL),
+	LastPosition(0),
 	Running(false),
 	File(NULL)
 {
-	List.resize(1000);
+	
 }
 //-----------------------------------------------------------------------------
 GLLogger::~GLLogger()
@@ -13,7 +15,7 @@ GLLogger::~GLLogger()
 	while (Running)
 	{
 		Mutex.lock();
-		bool IsEmpty = Queue.empty();
+		//bool IsEmpty = Queue.empty();
 		Mutex.unlock();
 	}
 	
@@ -34,37 +36,51 @@ std::string GLLogger::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool GLLogger::Initialize()
 {
-	Running = CreateDirs();
+	Array = (char **)malloc(sizeof(char *) * ARRAY_MAX_SIZE + 1);
+	Running = Array ? true : false;
 	if (Running)
 	{
-		SYSTEMTIME ST;
-		GetLocalTime(&ST);
+		memset(Array, 0, ARRAY_MAX_SIZE);
 
-		char FileName[MAX_PATH];
-		sprintf(FileName, "G:\\%02d.log", ST.wDay);
-
-		File = fopen(FileName, "a");
-		Running = File ? true : false;
+		Running = CreateDirs();
 		if (Running)
 		{
-			std::thread(&GLLogger::Worker, this).detach();
+			SYSTEMTIME ST;
+			GetLocalTime(&ST);
+
+			char FileName[MAX_PATH];
+			sprintf(FileName, "G:\\%02d.log", ST.wDay);
+
+			File = fopen(FileName, "a");
+			Running = File ? true : false;
+			if (Running)
+			{
+				std::thread(&GLLogger::Worker, this).detach();
+			}
+			else
+			{
+				ErrorString = strerror(errno);
+			}
 		}
-		else
-		{
-			ErrorString = strerror(errno);
-		}
+	}
+	else
+	{
+		ErrorString = "Error malloc";
 	}
 	return Running;
 }
 //-----------------------------------------------------------------------------
 void GLLogger::Append(MessageType Type, const std::string &String, const char *SourceName, int Line)
 {
+	//Получаем текущую дату и время
 	SYSTEMTIME ST;
 	GetLocalTime(&ST);
 
+	//Формируем начало строки лога (дата, время, идентификатор текущего потока)
 	char Char[MAX_PATH];
-	sprintf(Char, "%02d.%02d.%02d %02d:%02d:%02d.%03d", ST.wDay, ST.wMonth, ST.wYear, ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds);
+	sprintf(Char, "%02d.%02d.%02d %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, ST.wYear, ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
 
+	//Формируем остальную часть (тип сообщения, имя файла с исходным кодом, номер строки)
 	std::stringstream StringStream;
 	StringStream << Char << " [";
 	switch (Type)
@@ -75,35 +91,36 @@ void GLLogger::Append(MessageType Type, const std::string &String, const char *S
 	case MessageType::MT_Warning: StringStream << "WARNING"; break;
 	case MessageType::MT_Error: StringStream << "ERROR"; break;
 	}
-	StringStream << "] [" << SourceName << "(" << Line << ")] " << String;
+	StringStream << "] [" << SourceName << ":" << Line << "] " << String << std::endl;
+	std::string Message = StringStream.str();
 	
-	Mutex.lock();
-	Queue.push(StringStream.str());
-	Mutex.unlock();
+	Mutex.lock(); //Блокируем
+	Array[LastPosition] = (char *)malloc(sizeof(char) * Message.size() + 1);
+	if (Array[LastPosition]) //Если выделение памяти прошло успешно - записываем сообщение в массив
+	{
+		strcpy(Array[LastPosition++], Message.c_str());
+	}
+	Mutex.unlock(); //Разблокируем
 }
 //-----------------------------------------------------------------------------
 void GLLogger::Worker()
 {
 	while (Running) //Работа потока
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(LOGGER_TIMEOUT));
-		bool Writed = false; //Флаг записи
-
+		std::this_thread::sleep_for(std::chrono::seconds(LOGGER_TIMEOUT)); //Ждём 2 секунды
 		Mutex.lock(); //Блокируем мьютекс
-		while (!Queue.empty()) //Если очередь не пустая
+		while (LastPosition) //Если очередь не пустая
 		{
-			std::string String = Queue.front() + "\n";
-			Queue.pop();
-
-			fwrite(String.c_str(), sizeof(char), String.size(), File);
-			Writed = true;
-		}
-
-		if (Writed) //Если на текущей итерации была произведена запись в файл - flush'им данные
-		{
+			for (size_t i = 0; i < LastPosition; ++i)
+			{
+				size_t StringSize = strlen(Array[i]);
+				fwrite(Array[i], sizeof(char), StringSize, File);
+				free(Array[i]);
+				memset(Array[i], 0, StringSize);
+			}
+			LastPosition = 0;
 			fflush(File);
 		}
-		
 		Mutex.unlock(); //Разблокируем мьютекс
 	}
 }

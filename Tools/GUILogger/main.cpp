@@ -18,7 +18,9 @@ int main(int argc, char *argv[])
 	Widget.layout()->addWidget(&Button);
 	QObject::connect(&Button, &QPushButton::clicked, [=]
 	{
-		for (int i = 0; i < 10000; ++i)
+		//LG_INFO("testing");
+		//return;
+		for (int i = 0; i < 500; ++i)
 		{
 			LG_INFO(std::to_string(i));;
 		}

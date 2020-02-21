@@ -14,6 +14,7 @@
 #include <sysinfoapi.h>
 //-----------------------------------------------------------------------------
 #define LOGGER_TIMEOUT 2
+#define ARRAY_MAX_SIZE 1000
 //-----------------------------------------------------------------------------
 class GLLogger
 {
@@ -48,8 +49,8 @@ private:
 private:
 	std::string ErrorString;
 	std::mutex Mutex;
-	std::queue<std::string> Queue;
-	std::list<std::string> List;
+	char **Array;
+	size_t LastPosition;
 	bool Running;
 	FILE *File;
 };
