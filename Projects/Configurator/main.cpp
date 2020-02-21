@@ -47,13 +47,6 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	Result = !CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION).isEmpty();
-	if (!Result)
-	{
-		printf("Not specified configuration in config file\n");
-		return EXIT_FAILURE;
-	}
-
 	Result = InitConfiguratorScheme(ErrorString);
 	if (!Result)
 	{
