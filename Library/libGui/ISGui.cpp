@@ -293,7 +293,6 @@ QString ISGui::PrepareLongToolTip(QString ToolTipText, int MaxWidth)
 {
 	QFontMetrics FontMetrics(QToolTip::font());
 	QString Result;
-
 	for (;;)
 	{
 		int i = 0;
@@ -319,7 +318,6 @@ QString ISGui::PrepareLongToolTip(QString ToolTipText, int MaxWidth)
 			break;
 		}
 	}
-
 	return Result + ToolTipText;
 }
 //-----------------------------------------------------------------------------
@@ -330,7 +328,6 @@ QColor ISGui::StringToColor(const QString &String)
 //-----------------------------------------------------------------------------
 bool ISGui::IsStringUrl(const QString &Url)
 {
-	bool Result = false;
 	int Pos = 0;
 	QString Temp = Url;
 	return QRegExpValidator(QRegExp(REG_EXP_URL)).validate(Temp, Pos) == QValidator::Acceptable;
@@ -432,7 +429,6 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 	{
 		ObjectForm = new ISObjectFormBase(FormType, MetaTable, parent, ObjectID);
 	}
-
 	SetWaitGlobalCursor(false);
 	return ObjectForm;
 }
@@ -456,7 +452,6 @@ ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::Fie
 	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 	ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase*>(MetaObject->newInstance(Q_ARG(QWidget *, parent)));
 	IS_ASSERT(ComboSearchBase, "Widget search operator not dynamic cast.");
-
 	return ComboSearchBase;
 }
 //-----------------------------------------------------------------------------
@@ -470,7 +465,6 @@ int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 	{
 		SelectedObjectID = SelectDialogForm.GetSelectedObject();
 	}
-
 	return SelectedObjectID;
 }
 //-----------------------------------------------------------------------------
@@ -484,7 +478,6 @@ QVectorInt ISGui::SelectObjects(const QString &TableName)
 	{
 		VectorInt = SelectDialogForm.GetSelectedObjects();
 	}
-
 	return VectorInt;
 }
 //-----------------------------------------------------------------------------

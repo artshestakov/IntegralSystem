@@ -112,59 +112,31 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 //-----------------------------------------------------------------------------
 bool ISCore::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName)
 {
-	bool Result = false;
-
 	QString QueryText = Q_DELETE_OR_RECOVERY_OBJECT.arg(TableName).arg(TableAlias);
 
 	ISQuery qDeleteOrRecovery(QueryText);
 	qDeleteOrRecovery.BindValue(":ObjectID", ID);
-
-	if (DeleteOrRecovery == ISNamespace::DeleteRecoveryObject::DRO_Delete)
-	{
-		qDeleteOrRecovery.BindValue(":IsDeleted", true);
-	}
-	else if (ISNamespace::DeleteRecoveryObject::DRO_Recovery)
-	{
-		qDeleteOrRecovery.BindValue(":IsDeleted", false);
-	}
-
-	Result = qDeleteOrRecovery.Execute();
-
+	qDeleteOrRecovery.BindValue(":IsDeleted", DeleteOrRecovery == ISNamespace::DRO_Delete ? true : false);
+	bool Result = qDeleteOrRecovery.Execute();
 	if (Result && DeleteOrRecovery == ISNamespace::DRO_Delete)
 	{
 		QString UpdateQuery = QU_OBJECT;
 		UpdateQuery = UpdateQuery.arg(TableName);
 		UpdateQuery = UpdateQuery.arg(TableAlias);
 		UpdateQuery = UpdateQuery.arg(ID);
-
 		ISQueryPool::GetInstance().AddQuery(UpdateQuery);
-	}
 
-	if (DeleteOrRecovery == ISNamespace::DRO_Delete)
-	{
-		ISProtocol::DeleteObject(TableName, LocalListName, ID);
+		DeleteOrRecovery == ISNamespace::DRO_Delete ? ISProtocol::DeleteObject(TableName, LocalListName, ID) : ISProtocol::RecoveryObject(TableName, LocalListName, ID);
 	}
-	else if (DeleteOrRecovery == ISNamespace::DRO_Recovery)
-	{
-		ISProtocol::RecoveryObject(TableName, LocalListName, ID);
-	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISCore::DeleteCascadeObject(const QString &TableName, const QString &TableAlias, int ObjectID)
 {
-	bool Result = false;
-
 	QString QueryText = QD_OBJECT_CASCADE.arg(TableName).arg(TableAlias);
 	ISQuery qDeleteCascade(QueryText);
 	qDeleteCascade.BindValue(":ObjectID", ObjectID);
-	if (qDeleteCascade.Execute())
-	{
-		Result = true;
-	}
-
-	return Result;
+	return qDeleteCascade.Execute();
 }
 //-----------------------------------------------------------------------------
 void ISCore::ExitApplication()
@@ -175,7 +147,11 @@ void ISCore::ExitApplication()
 QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 {
 	QString ObjectName;
-	if (!MetaTable->TitleName.isEmpty())
+	if (MetaTable->TitleName.isEmpty())
+	{
+		ObjectName = QString::number(ObjectID);
+	}
+	else
 	{
 		QString TitleName = MetaTable->TitleName;
 		QStringList StringList = TitleName.split(';');
@@ -206,10 +182,6 @@ QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
 		{
 			ObjectName = qSelectName.ReadColumn(0).toString();
 		}
-	}
-	else
-	{
-		ObjectName = QString::number(ObjectID);
 	}
 	return ObjectName;
 }
@@ -299,17 +271,16 @@ int ISCore::CalendarInsert(const QDateTime &DateTime, const QString &Name, const
 	qInsertCalendar.BindValue(":Name", Name);
 	qInsertCalendar.BindValue(":Text", Text);
 
-	if (TableName.length())
-	{
-		IS_ASSERT(ObjectID, "Invalid object id");
-
-		qInsertCalendar.BindValue(":TableName", TableName);
-		qInsertCalendar.BindValue(":ObjectID", ObjectID);
-	}
-	else
+	if (TableName.isEmpty())
 	{
 		qInsertCalendar.BindValue(":TableName", QVariant());
 		qInsertCalendar.BindValue(":ObjectID", QVariant());
+	}
+	else
+	{
+		IS_ASSERT(ObjectID, "Invalid object id");
+		qInsertCalendar.BindValue(":TableName", TableName);
+		qInsertCalendar.BindValue(":ObjectID", ObjectID);
 	}
 
 	if (qInsertCalendar.ExecuteFirst())
@@ -387,7 +358,6 @@ ISUuid ISCore::TaskGetStatusUID(int TaskID)
 	{
 		StatusUID = qSelectStatus.ReadColumn("tsst_uid");
 	}
-
 	return StatusUID;
 }
 //-----------------------------------------------------------------------------
@@ -439,14 +409,7 @@ void ISCore::TaskInsertHistory(int TaskID, int UserID, const ISUuid &HistoryUID,
 	VariantMap.insert(":TaskID", TaskID);
 	VariantMap.insert(":UserID", UserID);
 	VariantMap.insert(":ActionUID", HistoryUID);
-	if (Information.length())
-	{
-		VariantMap.insert(":Information", Information);
-	}
-	else
-	{
-		VariantMap.insert(":Information", QVariant());
-	}
+	VariantMap.insert(":Information", Information.isEmpty() ? QVariant() : Information);
 	ISQueryPool::GetInstance().AddQuery(QI_TASK_HISTORY, VariantMap);
 }
 //-----------------------------------------------------------------------------
