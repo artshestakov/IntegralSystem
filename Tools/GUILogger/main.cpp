@@ -18,11 +18,10 @@ int main(int argc, char *argv[])
 	Widget.layout()->addWidget(&Button);
 	QObject::connect(&Button, &QPushButton::clicked, [=]
 	{
-		//LG_INFO("testing");
-		//return;
 		for (int i = 0; i < 500; ++i)
 		{
-			LG_INFO(std::to_string(i));;
+			LG_INFO(std::to_string(i));
+			Sleep(1000);
 		}
 	});
 	
