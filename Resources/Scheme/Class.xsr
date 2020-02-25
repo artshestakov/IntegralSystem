@@ -31,11 +31,6 @@
   <_InternalDirectories UID="{484906E2-8F17-4388-9E88-0B26511F1212}" TableName="_Currency" Order="2"/>
   <_InternalDirectories UID="{8B09C989-EF47-40C3-8EA6-21ADB3D17019}" TableName="_Units" Order="3"/>
   
-  <_FeedbackType UID="{A44D08BF-46E5-4724-9C25-85E31A6488DD}" Name="Идея" Order="1" Icon="Feedback.Idea"/>
-  <_FeedbackType UID="{3808FC23-6E00-450D-B3AC-D6477CEB0873}" Name="Проблема" Order="2" Icon="Feedback.Problem"/>
-  <_FeedbackType UID="{830C3A9C-A55C-48A7-9AAC-35B63C37B9BF}" Name="Вопрос" Order="3" Icon="Feedback.Question"/>
-  <_FeedbackType UID="{50A18BC1-67AF-4A35-9FCF-EE9D22232D54}" Name="Спасибо" Order="4" Icon="Feedback.ThankYou"/>
-
   <_Months ID="1" IsSystem="true" UID="{C0C3D83C-B381-465E-B544-967AE9396E04}" Name="Январь" Number="1"/>
   <_Months ID="2" IsSystem="true" UID="{8965BE84-9BD4-4111-9520-9777FDF7835F}" Name="Февраль" Number="2"/>
   <_Months ID="3" IsSystem="true" UID="{80F6C7CB-B198-4619-AF66-063F2AEFA712}" Name="Март" Number="3"/>

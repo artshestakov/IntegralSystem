@@ -1,4 +1,5 @@
 /Bin
+/Deploy
 /Library/**/*-*
 /Projects/**/*-*
 /Tools/**/*-*

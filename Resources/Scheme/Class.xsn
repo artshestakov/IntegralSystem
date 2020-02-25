@@ -435,19 +435,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_FeedbackType" UID="{4F633188-8CC1-4828-ABAE-677A10C0A976}" Alias="fbtp" LocalName="Тип запроса обратной связи" LocalListName="Типы запросов обратной связи" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{1C331E77-59E3-4CAB-8DA8-EFA5C4D9576D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{591E5C30-F691-4796-9649-76E51B59D3F3}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
-      <Field UID="{D1CAC05B-2979-49F6-9EDF-E2CE5C7D644F}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Order" Unique="true"/>
-      <Index Field="Icon" Unique="true"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_KeyboardShortcuts" UID="{F43A1F9C-3497-44C6-9A64-85C95CD94AAD}" Alias="kbsc" ShowOnly="true" LocalName="Сочетание клавиш" LocalListName="Сочетания клавиш" TitleName="Shortcut" IsSystem="true">
     <Fields>
       <Field UID="{448BE945-C1A4-47DE-83F9-AB5F8448D01B}" Name="Shortcut" Type="String" LabelName="Сочетание клавиш" LocalListName="Сочетание клавиш" NotNull="true"/>
