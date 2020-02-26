@@ -97,8 +97,9 @@ void GLLogger::Log(MessageType Type, const std::string &String, const char *Sour
 	GetLocalTime(&ST);
 
 	//Формируем начало строки лога (дата, время, идентификатор текущего потока)
-	char Temp[MAX_PATH];
-	sprintf(Temp, "%02d.%02d.%02d %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, ST.wYear, ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
+	char Temp[MAX_PATH], YearString[5];
+	itoa(ST.wYear, YearString, 10);
+	sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, YearString[2], YearString[3], ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
 	
 	//Формируем остальную часть (тип сообщения, имя файла с исходным кодом, номер строки)
 	std::stringstream Stream;

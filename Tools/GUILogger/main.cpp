@@ -2,7 +2,9 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QInputDialog>
 #include "GLLogger.h"
+#include <windows.h>
 
 int main(int argc, char *argv[])
 {
@@ -18,12 +20,14 @@ int main(int argc, char *argv[])
 	Widget.layout()->addWidget(&Button);
 	QObject::connect(&Button, &QPushButton::clicked, [=]
 	{
-		for (int i = 0; i < 500; ++i)
+		int Size = QInputDialog::getInt(nullptr, QString(), QString());
+		for (int i = 0; i < Size; ++i)
 		{
 			LG_INFO(std::to_string(i));
-			Sleep(1000);
+			//Sleep(10);
 		}
 	});
 	
+	//LG_INFO(std::to_string(1));
 	return Application.exec();
 }
