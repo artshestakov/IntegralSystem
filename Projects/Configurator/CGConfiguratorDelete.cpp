@@ -309,7 +309,7 @@ void CGConfiguratorDelete::resources()
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::ShowResourceConsole(PMetaClassTable *MetaTable, const ISUuid &ResourceUID)
 {
-	ISDebug::ShowEmptyString();
+	ISDebug::ShowString();
 	ISQuery qSelect("SELECT * FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 	qSelect.BindValue(":ResourceUID", ResourceUID);
 	if (qSelect.ExecuteFirst())

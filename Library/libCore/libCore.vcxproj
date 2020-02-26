@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="call_stack.hpp" />
+    <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISCrashDumper.h" />
     <ClInclude Include="ISAssociationTypes.h" />
     <QtMoc Include="ISAuthConnector.h" />
@@ -178,7 +179,6 @@
     <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISExceptionAssert.h" />
     <ClInclude Include="ISExceptionBase.h" />
-    <QtMoc Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISPhoneNumberParser.h" />
     <ClInclude Include="ISProperty.h" />
@@ -194,6 +194,7 @@
     <ClInclude Include="ISVersion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
     <ClCompile Include="ISAssociationTypes.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
@@ -211,7 +212,6 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />
     <ClCompile Include="ISExceptionBase.cpp" />
-    <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMemoryObjects.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISMetaDataHelper.cpp" />

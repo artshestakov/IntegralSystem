@@ -242,13 +242,11 @@ public:
 
 	enum DebugMessageType //Тип отладочоного сообщения
 	{
-		DMT_Crash, //Падение
+		DMT_Unknown, //Неизвестное
 		DMT_Debug, //Отладочное
 		DMT_Info, //Информационное
 		DMT_Warning, //Предупреждение
-		DMT_Critical, //Критическое сообщение
-		DMT_Assert, //Ошибка
-		DMT_Exception, //Исключение
+		DMT_Error, //Ошибка
 	};
 
 	enum RangeDatePeriod //Тип периода дат

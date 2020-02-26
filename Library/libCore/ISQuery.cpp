@@ -297,7 +297,7 @@ void ISQuery::Raise() /*throw(ISQueryException)*/
 {
 	if (SqlQuery.lastError().type() != QSqlError::NoError)
 	{
-		ISDebug::ShowCriticalString(GetErrorText());
+		ISDebug::ShowErrorString(GetErrorText());
 	}
 
 	if (!DB.isOpen())

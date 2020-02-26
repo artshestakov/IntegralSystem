@@ -82,7 +82,7 @@ void ISCrashDumper::OnSystemSignal(int Signum)
         FileName = LOG_FILE_CRASH;
     }
 
-    ISDebug::ShowCriticalString(QString("%1 Received signal: %2").arg(FileName).arg(Signum));
+    ISDebug::ShowErrorString(QString("%1 Received signal: %2").arg(FileName).arg(Signum));
 
     QFile FileCrash(GetLogPath(FileName));
     if (FileCrash.open(QIODevice::WriteOnly))

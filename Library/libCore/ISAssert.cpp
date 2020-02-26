@@ -43,9 +43,9 @@ void ISASSERT::ShowAssert(const QString &FalseMessage, const QString &QFuncInfo,
 	QString Function = QString("Function: %1").arg(ISSystem::FormatQFuncInfo(QFuncInfo, ISNamespace::FNF_TypeAndFunction));
 
 	QString AssertMessage = QString("%1\r\n%2\r\n%3\r\n%4").arg(Message).arg(SourceFile).arg(SourceLine).arg(Function);
-	ISDebug::ShowAssertString(AssertMessage);
+	//ISDebug::ShowAssertString(AssertMessage);
 
-	ISDebug::GetInstance().SetAssertMessage(AssertMessage);
+	//ISDebug::GetInstance().SetAssertMessage(AssertMessage);
     throw std::runtime_error(AssertMessage.toStdString().c_str());
 }
 //-----------------------------------------------------------------------------

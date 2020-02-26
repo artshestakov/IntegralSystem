@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 ISQueryException::ISQueryException(const QString& ExceptionString) : ISExceptionBase(ExceptionString)
 {
-	ISDebug::ShowExceptionString(QString("SQL-EXCEPTION. %1").arg(ExceptionString));
+	ISDebug::ShowErrorString(ExceptionString);
 }
 //-----------------------------------------------------------------------------
 ISQueryException::~ISQueryException()

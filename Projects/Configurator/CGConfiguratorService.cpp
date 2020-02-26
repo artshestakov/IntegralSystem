@@ -53,7 +53,7 @@ void CGConfiguratorService::reindex()
 	}
 
 	ISDebug::ShowString("Reindex done");
-	ISDebug::ShowEmptyString(true);
+	ISDebug::ShowString();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorService::vacuum()

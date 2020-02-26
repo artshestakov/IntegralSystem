@@ -61,7 +61,7 @@ void CGConfiguratorShow::obsoletetables()
 	}
 
 	ISDebug::ShowString(QString("Founded tables: %1").arg(FoundedTables));
-	ISDebug::ShowEmptyString(true);
+	ISDebug::ShowString();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::obsoletefields()
@@ -98,8 +98,7 @@ void CGConfiguratorShow::obsoletefields()
 			}
 		}
 	}
-
-	ISDebug::ShowEmptyString(true);
+	ISDebug::ShowString();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::obsoleteresources()
@@ -160,7 +159,7 @@ void CGConfiguratorShow::obsoleteresources()
 		}
 	}
 
-	ISDebug::ShowEmptyString(true);
+	ISDebug::ShowString();
 
 	for (const auto &OutputItem : MapOutput.toStdMap())
 	{
@@ -173,11 +172,9 @@ void CGConfiguratorShow::obsoleteresources()
 		{
 			ISDebug::ShowString(Vector->at(i));
 		}
-
-		ISDebug::ShowEmptyString(true);
+		ISDebug::ShowString();
 	}
-
-	ISDebug::ShowEmptyString(true);
+	ISDebug::ShowString();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::obsoletesequence()

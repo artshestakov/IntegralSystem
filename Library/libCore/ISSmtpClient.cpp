@@ -485,7 +485,7 @@ void ISSmtpClient::socketStateChanged(QAbstractSocket::SocketState state)
 //-----------------------------------------------------------------------------
 void ISSmtpClient::socketError(QAbstractSocket::SocketError socketError)
 {
-	ISDebug::ShowCriticalString(socket->errorString());
+	ISDebug::ShowErrorString(socket->errorString());
 }
 //-----------------------------------------------------------------------------
 void ISSmtpClient::socketReadyRead()

@@ -3,6 +3,7 @@
 #include "ISProperty.h"
 #include "ISLogger.h"
 #include "ISSystem.h"
+#include <sstream>
 //-----------------------------------------------------------------------------
 ISDebug::ISDebug()
 {
@@ -20,60 +21,60 @@ ISDebug& ISDebug::GetInstance()
 	return Debug;
 }
 //-----------------------------------------------------------------------------
-void ISDebug::ShowCaratString(const QString &CoreName, const QString &String)
+void ISDebug::ShowString(const QString &Message)
 {
-	GetInstance().CaratString(CoreName, String);
+	GetInstance().OutputString(ISNamespace::DMT_Unknown, Message);
 }
 //-----------------------------------------------------------------------------
-void ISDebug::ShowString(const QString &String)
+void ISDebug::ShowDebugString(const QString &Message)
 {
-	GetInstance().OutputString(String);
+	GetInstance().OutputString(ISNamespace::DMT_Debug, Message);
 }
 //-----------------------------------------------------------------------------
-void ISDebug::ShowEmptyString(bool AddInLog)
+void ISDebug::ShowInfoString(const QString &Message)
 {
-	GetInstance().EmptyString(AddInLog);
+	GetInstance().OutputString(ISNamespace::DMT_Info, Message);
 }
 //-----------------------------------------------------------------------------
-void ISDebug::ShowCrashString(const QString &String)
+void ISDebug::ShowWarningString(const QString &Message)
 {
-	GetInstance().CrashString(String);
+	GetInstance().OutputString(ISNamespace::DMT_Warning, Message);
 }
 //-----------------------------------------------------------------------------
-void ISDebug::ShowDebugString(const QString &String)
+void ISDebug::ShowErrorString(const QString &Message)
 {
-	GetInstance().DebugString(String);
+	GetInstance().OutputString(ISNamespace::DMT_Error, Message);
 }
 //-----------------------------------------------------------------------------
-void ISDebug::ShowInfoString(const QString &String)
+void ISDebug::OutputString(ISNamespace::DebugMessageType MessageType, const QString &Message, bool AddInLog)
 {
-	GetInstance().InfoString(String);
-}
-//-----------------------------------------------------------------------------
-void ISDebug::ShowWarningString(const QString &String)
-{
-	GetInstance().WarningString(String);
-}
-//-----------------------------------------------------------------------------
-void ISDebug::ShowCriticalString(const QString &String)
-{
-	GetInstance().CriticalString(String);
-}
-//-----------------------------------------------------------------------------
-void ISDebug::ShowAssertString(const QString &String)
-{
-	GetInstance().AssertString(String);
-}
-//-----------------------------------------------------------------------------
-void ISDebug::ShowExceptionString(const QString &String)
-{
-	GetInstance().ExceptionString(String);
-}
-//-----------------------------------------------------------------------------
-void ISDebug::OutputString(const QString &String, bool AddInLog)
-{
-	QString NewString = String.simplified();
-	std::cout << NewString.toStdString() << std::endl;
+	if (MessageType == ISNamespace::DMT_Unknown) //Вывод неформатированной строки
+	{
+		printf("%s\n", Message.toStdString().c_str());
+	}
+	else
+	{
+		//Получаем текущую дату и время
+		SYSTEMTIME ST;
+		GetLocalTime(&ST);
+
+		//Формируем начало строки лога (дата, время, идентификатор текущего потока)
+		char Temp[MAX_PATH], YearString[5];
+		itoa(ST.wYear, YearString, 10); //Преобразование года в строку
+		sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, YearString[2], YearString[3], ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
+		// printf()?
+
+		std::stringstream Stream;
+		Stream << Temp;
+
+		switch (MessageType)
+		{
+		case ISNamespace::DMT_Unknown:
+		}
+	}
+
+	//QString NewString = String.simplified();
+	//std::cout << NewString.toStdString() << std::endl;
 	/*if (ISSystem::GetApplicationType() == ISNamespace::AT_CONSOLE)
 	{
 		QTextStream TextStream(stdout);
@@ -92,83 +93,7 @@ void ISDebug::OutputString(const QString &String, bool AddInLog)
 
 	if (AddInLog)
 	{
-		IS_LOGGER(NewString);
+		//IS_LOGGER(NewString);
 	}
-}
-//-----------------------------------------------------------------------------
-void ISDebug::EmptyString(bool AddInLog)
-{
-	OutputString(QString(), AddInLog);
-}
-//-----------------------------------------------------------------------------
-void ISDebug::CaratString(const QString &CoreName, const QString &String)
-{
-	OutputString(QString("%1 [%2]: %3").arg(QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V4)).arg(CoreName).arg(String));
-}
-//-----------------------------------------------------------------------------
-void ISDebug::CrashString(const QString &String)
-{
-	OutputString(GetCompleteString(ISNamespace::DMT_Crash, String));
-}
-//-----------------------------------------------------------------------------
-void ISDebug::DebugString(const QString &String)
-{
-	OutputString(GetCompleteString(ISNamespace::DMT_Debug, String));
-}
-//-----------------------------------------------------------------------------
-void ISDebug::InfoString(const QString &String)
-{
-	OutputString(GetCompleteString(ISNamespace::DMT_Info, String));
-}
-//-----------------------------------------------------------------------------
-void ISDebug::WarningString(const QString &String)
-{
-	OutputString(GetCompleteString(ISNamespace::DMT_Warning, String));
-}
-//-----------------------------------------------------------------------------
-void ISDebug::CriticalString(const QString &String)
-{
-	OutputString(GetCompleteString(ISNamespace::DMT_Critical, String));
-}
-//-----------------------------------------------------------------------------
-void ISDebug::AssertString(const QString &String)
-{
-	OutputString(GetCompleteString(ISNamespace::DMT_Assert, String));
-}
-//-----------------------------------------------------------------------------
-void ISDebug::ExceptionString(const QString &String)
-{
-	OutputString(GetCompleteString(ISNamespace::DMT_Exception, String));
-}
-//-----------------------------------------------------------------------------
-void ISDebug::SetAssertMessage(const QString &assert_message)
-{
-	AssertMessage = assert_message;
-}
-//-----------------------------------------------------------------------------
-QString ISDebug::GetAssertMessage() const
-{
-	return AssertMessage;
-}
-//-----------------------------------------------------------------------------
-QStringList ISDebug::GetDebugMessages() const
-{
-	return Messages;
-}
-//-----------------------------------------------------------------------------
-QString ISDebug::GetCompleteString(ISNamespace::DebugMessageType MessageType, const QString &String) const
-{
-	QString MessageTypeString;
-	switch (MessageType)
-	{
-	case ISNamespace::DMT_Crash: MessageTypeString = "[Crash]"; break;
-	case ISNamespace::DMT_Debug: MessageTypeString = "[Debug]"; break;
-	case ISNamespace::DMT_Info: MessageTypeString = "[Info]"; break;
-	case ISNamespace::DMT_Warning: MessageTypeString = "[Warning]"; break;
-	case ISNamespace::DMT_Critical: MessageTypeString = "[Critical]"; break;
-	case ISNamespace::DMT_Assert: MessageTypeString = "[Assert]"; break;
-	case ISNamespace::DMT_Exception: MessageTypeString = "[Exception]"; break;
-	}
-	return QString("%1 %2: %3").arg(QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V4)).arg(MessageTypeString).arg(String);
 }
 //-----------------------------------------------------------------------------

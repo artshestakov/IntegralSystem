@@ -253,6 +253,9 @@
     <ClInclude Include="ISMetaData.h">
       <Filter>MetaData</Filter>
     </ClInclude>
+    <ClInclude Include="ISLogger.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -277,9 +280,6 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISExceptionBase.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISLogger.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISPhoneNumberParser.cpp">
@@ -447,11 +447,11 @@
     <ClCompile Include="ISDefinesCore.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISLogger.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISLogger.h">
-      <Filter>System</Filter>
-    </QtMoc>
     <QtMoc Include="ISEMail.h">
       <Filter>System</Filter>
     </QtMoc>

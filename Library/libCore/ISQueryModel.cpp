@@ -320,7 +320,7 @@ void ISQueryModel::CheckQuery(const QString &QueryText)
 	}
 	else
 	{
-		ISDebug::ShowCriticalString("Prepare Query - ERROR");
+		ISDebug::ShowErrorString("Prepare Query - ERROR");
 	}
 }
 //-----------------------------------------------------------------------------

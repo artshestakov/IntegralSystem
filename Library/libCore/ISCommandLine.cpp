@@ -4,7 +4,7 @@
 bool ISCommandLine::Question(const QString &QuestionText)
 {
 	bool Result = true;
-	ISDebug::ShowEmptyString(true);
+	ISDebug::ShowString();
 	ISDebug::ShowString(QuestionText);
 
 	std::string Answer;

@@ -93,7 +93,7 @@ void CGConfiguratorFIAS::update()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &ResultPath)
 {
-	ISDebug::ShowEmptyString();
+	ISDebug::ShowString();
 	ISDebug::ShowInfoString("File processing started: " + FileInfo.baseName());
 	QFile FileOriginal(FileInfo.absoluteFilePath());
 	if (!FileOriginal.open(QIODevice::ReadOnly))
@@ -173,7 +173,7 @@ void CGConfiguratorFIAS::InitializeKeys()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 {
-	ISDebug::ShowEmptyString();
+	ISDebug::ShowString();
 	ISDebug::ShowInfoString("File processing started: " + FileInfo.baseName());
 
 	QString TableName = "_FIAS_" + GetTableName(FileInfo.absoluteFilePath());

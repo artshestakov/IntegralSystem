@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 	bool Executed = false;
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
 	{
-		ISDebug::ShowEmptyString();
+		ISDebug::ShowString();
 		ISDebug::ShowString("Welcome to the IntegralSystem database. DBName: " + DBName + " DBHost: " + DBServer);
 		ISDebug::ShowString("Enter the 'help' command to get help");
 		ISDebug::ShowString("Press Enter or Return to exit");
@@ -213,7 +213,7 @@ bool CheckExistDatabase(const QString &DBName, bool &Connected)
 //-----------------------------------------------------------------------------
 void InterpreterMode(bool &IsRunning)
 {
-	ISDebug::ShowEmptyString();
+	ISDebug::ShowString();
 	printf("Enter command: ");
 
 	std::string InputCommand;
