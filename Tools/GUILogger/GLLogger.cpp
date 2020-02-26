@@ -45,6 +45,11 @@ std::string GLLogger::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool GLLogger::Initialize()
 {
+	if (Running) //Если логгер уже работает, возвращаем true
+	{
+		return Running;
+	}
+
 	//Получаем путь к исполняемому файлу
 	char Temp[MAX_PATH];
 	Running = GetModuleFileNameA(NULL, Temp, MAX_PATH) > 0 ? true : false;
@@ -80,7 +85,7 @@ bool GLLogger::Initialize()
 	return Running;
 }
 //-----------------------------------------------------------------------------
-void GLLogger::Append(MessageType Type, const std::string &String, const char *SourceName, int Line)
+void GLLogger::Log(MessageType Type, const std::string &String, const char *SourceName, int Line)
 {
 	if (LastPosition == ARRAY_MAX_SIZE && !Running) //Если превышен допустимый предел размера очереди или обработчик очереди уже остановился - выходим из функции
 	{
