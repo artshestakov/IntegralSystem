@@ -2,26 +2,19 @@
 #ifndef _GLLOGGER_H_INCLUDED
 #define _GLLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include <iostream>
 #include <string>
 #include <mutex>
-#include <queue>
-#include <sstream>
-#include <thread>
-#include <chrono>
-#include <list>
-#include <windows.h>
-#include <sysinfoapi.h>
+#include <fstream>
+#include <array>
 //-----------------------------------------------------------------------------
-#define LOGGER_TIMEOUT 2
-#define ARRAY_MAX_SIZE 1000
+#define LOGGER_TIMEOUT 2000
+#define ARRAY_MAX_SIZE 10000000
 //-----------------------------------------------------------------------------
 class GLLogger
 {
 public:
 	enum MessageType
 	{
-		MT_Unknown,
 		MT_Info,
 		MT_Debug,
 		MT_Warning,
@@ -34,12 +27,12 @@ public:
 	std::string GetErrorString() const; //Получить описание ошибки
 	bool Initialize(); //Инициализировать логгер
 
-	void Append(MessageType Type, const std::string &String, const char *SourceName, int Line); //Добавить сообщение в очередь
+	void Append(MessageType Type, const std::string &String, const char *SourceName, int Line); //Добавить сообщение в лог
 
 private:
 	void Worker(); //Обработчик очереди сообщений
-	bool CreateDirs(); //Создание необходимых директорий
-	bool UpdateFilePath(); //Обновить путь к файлу
+	bool CreateDir(); //Создание необходимых директорий
+	void UpdateFilePath(); //Обновить путь к файлу
 
 private:
 	GLLogger();
@@ -50,12 +43,13 @@ private:
 private:
 	std::string ErrorString;
 	std::mutex Mutex;
-	char **Array;
+	std::array<std::string, ARRAY_MAX_SIZE> Array;
 	size_t LastPosition;
 	bool Running;
-	char *PathDirectory;
-	char *PathFile;
-	FILE *File;
+	std::string PathDirectory;
+	std::string PathLogs;
+	std::string PathFile;
+	std::ofstream File;
 	size_t CurrentYear;
 	size_t CurrentMonth;
 	size_t CurrentDay;
