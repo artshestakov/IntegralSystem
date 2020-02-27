@@ -1,13 +1,13 @@
-[Setup]
+﻿[Setup]
 AppId={{757D746C-0676-404E-BC4C-40246AB5E38}
 AppName=IntegralSystem
 AppVerName=IntegralSystem
-AppVersion=%Version%
-VersionInfoVersion=%Version%
+AppVersion=.Version.
+VersionInfoVersion=.Version.
 DefaultDirName={sd}\IntegralSystem
 DefaultGroupName=IntegralSystem
 OutputDir=..\Output
-OutputBaseFilename=IntegralSystem_%Configuration%_%Platform%_%Version%
+OutputBaseFilename=IntegralSystem_.Configuration._.Platform._.Version.
 AlwaysShowDirOnReadyPage=yes
 ShowLanguageDialog=yes
 DisableProgramGroupPage=no
@@ -58,8 +58,8 @@ Filename: "{app}\Carat.exe"; Description: "Запустить сервер по�
 Filename: "{app}\IntegralSystem.exe"; Description: "Запустить программу после выхода из установщика"; Flags: postinstall shellexec skipifsilent; Components: Server Client;
 
 [Files]
-;Source: ..\Components\%Configuration%-%Platform%\*; DestDir: {app}; Flags: ignoreversion;
-Source: ..\Deploy\%Configuration%-%Platform%\*; Excludes: "*.exp, *.ilk, *.lib"; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+;Source: ..\Components\.Configuration.-.Platform.\*; DestDir: {app}; Flags: ignoreversion;
+Source: ..\Deploy\.Configuration.-.Platform.\*; Excludes: "*.exp, *.ilk, *.lib, *.pdb"; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
 Source: ..\InstallResources\Update.cmd; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
 
@@ -67,7 +67,7 @@ Source: ..\InstallResources\Update.cmd; DestDir: {app}; Flags: ignoreversion; Co
 procedure InitializeWizard();
 begin
   WizardForm.WelcomeLabel2.Caption := WizardForm.WelcomeLabel2.Caption + #13#10#13#10 + 
-  'Конфигурация: %Configuration%' + #13#10 +
-  'Платформа: %Platform%' + #13#10 +
-  'Версия устанавливаемой программы: %Version%';
+  'Конфигурация: .Configuration.' + #13#10 +
+  'Платформа: .Platform.' + #13#10 +
+  'Версия устанавливаемой программы: .Version.';
 end;

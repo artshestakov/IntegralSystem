@@ -8,6 +8,7 @@
 		<SolutionDir>$(MSBuildProjectDirectory)\..\</SolutionDir>
 		<IssScript>$(SolutionDir)InstallWindows\IntegralSystem.iss</IssScript>
 		<IssScriptTmp>$(SolutionDir)InstallWindows\IntegralSystem.iss.tmp</IssScriptTmp>
+		<ReplacerPath>$(SolutionDir)Components\Replacer\Release-Win32\Replacer.exe</ReplacerPath>
 		<CurrentDate>$([System.DateTime]::Now.ToString(dd.MM.yyyy))</CurrentDate>
 	</PropertyGroup>
 	
@@ -45,9 +46,9 @@
 	<!-- Подготовка скрипта -->
 	<Target Name="InstallScript">
 		<Copy SourceFiles="$(IssScript)" DestinationFiles="$(IssScriptTmp)"/>
-		<!-- <FileUpdate Files="$(IssScriptTmp)" Regex="%Configuration%" ReplacementText="$(Configuration)" Encoding="windows-1251"/> -->
-		<!-- <FileUpdate Files="$(IssScriptTmp)" Regex="%Platform%" ReplacementText="$(Platform)" Encoding="windows-1251"/> -->
-		<!-- <FileUpdate Files="$(IssScriptTmp)" Regex="%Version%" ReplacementText="$(Version)" Encoding="windows-1251"/> -->
+		<Exec Command="$(ReplacerPath) $(IssScriptTmp) .Configuration. $(Configuration)"/>
+		<Exec Command="$(ReplacerPath) $(IssScriptTmp) .Platform. $(Platform)"/>
+		<Exec Command="$(ReplacerPath) $(IssScriptTmp) .Version. $(Version)"/>
 	</Target>
 	
 	<!-- Запуск сборки дистрибутива -->
