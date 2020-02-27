@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <Project DefaultTargets="Installer" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<!-- <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/> -->
 	<PropertyGroup>
 		<Configuration></Configuration>
 		<Platform></Platform>
@@ -9,50 +8,23 @@
 		<SolutionDir>$(MSBuildProjectDirectory)\..\</SolutionDir>
 		<IssScript>$(SolutionDir)InstallWindows\IntegralSystem.iss</IssScript>
 		<IssScriptTmp>$(SolutionDir)InstallWindows\IntegralSystem.iss.tmp</IssScriptTmp>
-		<DeployFolder>$(SolutionDir)Deploy\$(Configuration)-$(Platform)\</DeployFolder>
-		<YandexDisk>D:\YandexDisk\IntegralSystem\</YandexDisk> <!--Путь к папке с дистрибутивами программы -->
 		<CurrentDate>$([System.DateTime]::Now.ToString(dd.MM.yyyy))</CurrentDate>
-		
-		<IntegralSystemProject>$(SolutionDir)Projects\IntegralSystem\IntegralSystem.vcxproj</IntegralSystemProject>
-		<CaratProject>$(SolutionDir)Projects\Carat\Carat.vcxproj</CaratProject>
-		<ConfiguratorProject>$(SolutionDir)Projects\Configurator\Configurator.vcxproj</ConfiguratorProject>
-		<DatabaseServiceProject>$(SolutionDir)Projects\DatabaseService\DatabaseService.vcxproj</DatabaseServiceProject>
-		<EMailSenderProject>$(SolutionDir)Projects\EMailSender\EMailSender.vcxproj</EMailSenderProject>
-		
-		<CaratAsteriskQueue>$(SolutionDir)Projects\CaratAsteriskQueue\CaratAsteriskQueue.vcxproj</CaratAsteriskQueue>
-		<CaratAsteriskRecord>$(SolutionDir)Projects\CaratAsteriskRecord\CaratAsteriskRecord.vcxproj</CaratAsteriskRecord>
-		<CaratCalendar>$(SolutionDir)Projects\CaratCalendar\CaratCalendar.vcxproj</CaratCalendar>
-		<CaratMail>$(SolutionDir)Projects\CaratMail\CaratMail.vcxproj</CaratMail>
-		<CaratNotification>$(SolutionDir)Projects\CaratNotification\CaratNotification.vcxproj</CaratNotification>
-		<CaratScheduler>$(SolutionDir)Projects\CaratScheduler\CaratScheduler.vcxproj</CaratScheduler>
-		<CaratSMS>$(SolutionDir)Projects\CaratSMS\CaratSMS.vcxproj</CaratSMS>
-		<CaratTelephony>$(SolutionDir)Projects\CaratTelephony\CaratTelephony.vcxproj</CaratTelephony>
-		
-		<CaratCenterSeven>$(SolutionDir)Projects\CaratCenterSeven\CaratCenterSeven.vcxproj</CaratCenterSeven>
-		<CaratHighway>$(SolutionDir)Projects\CaratHighway\CaratHighway.vcxproj</CaratHighway>
-		<CaratInformResource>$(SolutionDir)Projects\CaratInformResource\CaratInformResource.vcxproj</CaratInformResource>
-		<CaratMedTech>$(SolutionDir)Projects\CaratMedTech\CaratMedTech.vcxproj</CaratMedTech>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(PlatformToolset)'=='v140'">
-		<PlatformName>$(Platform)</PlatformName>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(PlatformToolset)'=='v140_xp'">
-		<PlatformName>XP</PlatformName>
 	</PropertyGroup>
 	
 	<!-- Сборка проектов решения -->
 	<Target Name="Build">
+		<!-- Сборка библиотек -->
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libCore $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libGui $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libCarat $(Configuration) $(Platform) $(PlatformToolset)"/>
 		
+		<!-- Сборка проектов -->
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd Carat $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd Configurator $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd ErrorViewer $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd IntegralSystem $(Configuration) $(Platform) $(PlatformToolset)"/>
 		
+		<!-- Сборка ядер -->
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratAsteriskQueue $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratAsteriskRecord $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratCalendar $(Configuration) $(Platform) $(PlatformToolset)"/>
@@ -67,24 +39,20 @@
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratTelephony $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratSMS $(Configuration) $(Platform) $(PlatformToolset)"/>
 		
-		<!-- <Exec Command="$(SolutionDir)InstallWindows\WinDeploy_$(Configuration)-$(Platform).cmd"/> -->
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy_$(Configuration)-$(Platform).cmd"/>
 	</Target>
 	
 	<!-- Подготовка скрипта -->
 	<Target Name="InstallScript">
-		<!-- <Copy SourceFiles="$(IssScript)" DestinationFiles="$(IssScriptTmp)"/> -->
+		<Copy SourceFiles="$(IssScript)" DestinationFiles="$(IssScriptTmp)"/>
 		<!-- <FileUpdate Files="$(IssScriptTmp)" Regex="%Configuration%" ReplacementText="$(Configuration)" Encoding="windows-1251"/> -->
 		<!-- <FileUpdate Files="$(IssScriptTmp)" Regex="%Platform%" ReplacementText="$(Platform)" Encoding="windows-1251"/> -->
-		<!-- <FileUpdate Files="$(IssScriptTmp)" Regex="%PlatformName%" ReplacementText="$(PlatformName)" Encoding="windows-1251"/> -->
 		<!-- <FileUpdate Files="$(IssScriptTmp)" Regex="%Version%" ReplacementText="$(Version)" Encoding="windows-1251"/> -->
 	</Target>
 	
 	<!-- Запуск сборки дистрибутива -->
 	<Target Name="Installer" DependsOnTargets="Build;InstallScript">
-		<!-- <Exec Command="ISCC.exe $(IssScriptTmp)"/> -->
-		<!-- <Exec Command="IF NOT EXIST $(YandexDisk)$(CurrentDate) (MKDIR $(YandexDisk)$(CurrentDate))"/> -->
-		<!-- <Message Text="COPYING BUILDED VERSION TO CLOUD..."/> -->
-		<!-- <Exec Command="COPY ..\Output\IntegralSystem_$(Configuration)_$(PlatformName)_$(Version).exe $(YandexDisk)$(CurrentDate)"/> -->
+		<!-- <Exec Command="$(ISDIR)\ISCC.exe $(IssScriptTmp)"/> -->
 		<!-- <Message Text="INSTALLING NEW VERSION..."/> -->
 		<!-- <Exec Command="START /wait $(YandexDisk)$(CurrentDate)\IntegralSystem_$(Configuration)_$(PlatformName)_$(Version).exe /SILENT /COMPONENTS=Server"/> -->
 	</Target>
