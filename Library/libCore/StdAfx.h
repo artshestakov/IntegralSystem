@@ -8,9 +8,13 @@
 #include <limits>
 #include <string>
 #include <map>
+#include <sstream>
+#include <array>
+#include <fstream>
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>
+#include <ShlObj.h>
 #else
 #include <float.h>
 #endif

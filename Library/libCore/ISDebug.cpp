@@ -1,9 +1,6 @@
 #include "ISDebug.h"
-#include "ISConstants.h"
-#include "ISProperty.h"
 #include "ISLogger.h"
-#include "ISSystem.h"
-#include <sstream>
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISDebug::ISDebug()
 {
@@ -48,6 +45,7 @@ void ISDebug::ShowErrorString(const QString &Message)
 //-----------------------------------------------------------------------------
 void ISDebug::OutputString(ISNamespace::DebugMessageType MessageType, const QString &Message, bool AddInLog)
 {
+	bool b = DEFINES_CORE.IS_GUI;
 	if (MessageType == ISNamespace::DMT_Unknown) //Вывод неформатированной строки
 	{
 		printf("%s\n", Message.toStdString().c_str());

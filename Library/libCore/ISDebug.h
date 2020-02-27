@@ -24,9 +24,6 @@ private:
 	~ISDebug();
 	ISDebug(ISDebug const &) {};
 	ISDebug& operator=(ISDebug const&) { return *this; };
-
-private:
-	QStringList Messages;
 };
 //-----------------------------------------------------------------------------
 #endif

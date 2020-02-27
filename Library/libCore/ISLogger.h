@@ -1,36 +1,10 @@
 //-----------------------------------------------------------------------------
-//Класс для логирования сообщений.
-//
-//Для использования выполните следующие действия:
-//1. Инициализация класса с помощью вызова метода GLLogger::Instance().Initialize()
-//   Обязательно удостоверьтесь что метод вернул true, в случае возникновения ошибки
-//   инициализации метод вернет false. Получить описание ошибки можно с помощью метода GLLogger::Instance().GetErrorString()
-//2. Добавить строку в лог-файл Вы можете вызвав метод GLLogger::Instance().Log()
-//
-//Пример использования:
-// if (GLLogger::Instance().Initialize())
-// {
-//		std::cout << "OK" << std::endl;
-// }
-// else
-// {
-//		std::cerr << GLLogger::Instance().GetErrorString();
-// }
-//
-//Для удобства вызовы обернуты в defines: LG_INFO(const std::string &), LG_DEBUG(const std::string &),
-//LG_WARNING(const std::string &) и LG_ERROR(const std::string &)
-//-----------------------------------------------------------------------------
 #pragma once
 #ifndef _ISLOGGER_H_INCLUDED
 #define _ISLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include <string>
-#include <array>
-#include <mutex>
-#include <fstream>
-//-----------------------------------------------------------------------------
-#define LOGGER_TIMEOUT 2000
-#define ARRAY_MAX_SIZE 10000000
+#include "StdAfx.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 class ISLogger
 {

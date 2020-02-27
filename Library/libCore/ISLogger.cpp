@@ -1,12 +1,7 @@
 #include "ISLogger.h"
-#include <iostream>
-#include <sstream>
-#include <thread>
-#include <windows.h>
-#include <ShlObj.h>
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
-	: ErrorString("No error."),
+	: ErrorString(NO_ERROR_STRING),
 	LastPosition(0),
 	Running(false),
 	CurrentYear(0),
@@ -121,6 +116,7 @@ void ISLogger::Worker()
 {
 	while (Running) //Работа потока
 	{
+		DWORD
 		Sleep(LOGGER_TIMEOUT); //Ждём 2 секунды
 
 		Mutex.lock(); //Блокируем мьютекс

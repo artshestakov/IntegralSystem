@@ -174,6 +174,8 @@ const int PLAYER_WINDING = 10000;
 const char COLOR_STANDART[] = "#000000";
 const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 const char NO_ERROR_STRING[] = "No error.";
+const unsigned long LOGGER_TIMEOUT = 2000;
+const size_t ARRAY_MAX_SIZE = 10000;
 //-----------------------------------------------------------------------------
 const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
