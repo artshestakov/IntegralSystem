@@ -698,7 +698,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 
 		if (ClassName.length()) //Открытие виджета
 		{
-			int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
+			int ObjectType = QMetaType::type((ClassName + SYMBOL_STAR).toLocal8Bit().constData());
 			IS_ASSERT(ObjectType, "Class for SybSystem is NULL. ClassName: " + ClassName);
 
 			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

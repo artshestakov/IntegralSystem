@@ -312,7 +312,7 @@ void ISMainWindow::CreateStackWidget()
 		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->LocalName));
 		ISCountingTime CountingTime;
 
-		int ObjectType = QMetaType::type((MetaParagraph->ClassName + '*').toLocal8Bit().constData());
+		int ObjectType = QMetaType::type((MetaParagraph->ClassName + SYMBOL_STAR).toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("Invalid object type from paragraph: %1").arg(MetaParagraph->Name));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
@@ -410,7 +410,7 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISIncomingCallBaseForm *IncomingCallForm = nullptr;
-	int ObjectType = QMetaType::type((ISObjects::GetInstance().GetInfo().IncomingCallForm + '*').toLocal8Bit().constData());
+	int ObjectType = QMetaType::type((ISObjects::GetInstance().GetInfo().IncomingCallForm + SYMBOL_STAR).toLocal8Bit().constData());
 	if (ObjectType)
 	{
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

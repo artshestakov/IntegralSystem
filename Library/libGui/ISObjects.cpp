@@ -94,7 +94,7 @@ bool ISObjects::Initialize()
 
 	if (Result)
 	{
-		int ObjectType = QMetaType::type((Info.ClassName + '*').toLocal8Bit().constData());
+		int ObjectType = QMetaType::type((Info.ClassName + SYMBOL_STAR).toLocal8Bit().constData());
 		if (ObjectType)
 		{
 			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

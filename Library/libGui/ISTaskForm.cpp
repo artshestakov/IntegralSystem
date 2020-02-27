@@ -131,7 +131,7 @@ void ISTaskForm::FilterClicked()
 		TaskListForm = nullptr;
 	}
 
-	int ObjectType = QMetaType::type((ListFormName + '*').toLocal8Bit().constData());
+	int ObjectType = QMetaType::type((ListFormName + SYMBOL_STAR).toLocal8Bit().constData());
 	IS_ASSERT(ObjectType, QString("Class for task list form is NULL. ClassName: %1").arg(ListFormName));
 
 	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

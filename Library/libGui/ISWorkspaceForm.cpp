@@ -133,7 +133,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 	{
 		ISProtocol::OpenSubSystem(QString(), MetaSubSystem->LocalName);
 
-		int ObjectType = QMetaType::type((MetaSubSystem->ClassName + '*').toLocal8Bit().constData());
+		int ObjectType = QMetaType::type((MetaSubSystem->ClassName + SYMBOL_STAR).toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("Class for SybSystem is NULL. ClassName: %1").arg(MetaSubSystem->ClassName));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);

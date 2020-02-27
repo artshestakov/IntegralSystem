@@ -41,11 +41,13 @@ EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWid
 
 	QPushButton *ButtonClipboard = new QPushButton(this);
 	ButtonClipboard->setText("Copy to clipboard");
+	ButtonClipboard->setEnabled(!PathCrashFile.isEmpty());
 	connect(ButtonClipboard, &QPushButton::clicked, this, &EVMainWindow::CopyToClipboard);
 	LayoutBottom->addWidget(ButtonClipboard);
 
 	QPushButton *ButtonSave = new QPushButton(this);
 	ButtonSave->setText("Save...");
+	ButtonSave->setEnabled(!PathCrashFile.isEmpty());
 	connect(ButtonSave, &QPushButton::clicked, this, &EVMainWindow::Save);
 	LayoutBottom->addWidget(ButtonSave);
 
