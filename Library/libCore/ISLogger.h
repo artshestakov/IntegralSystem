@@ -7,6 +7,13 @@
 #include "ISNamespace.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
+#define ISLOGGER_EMPTY() ISLogger::Instance().Log(ISNamespace::DMT_Unknown, QString(), __FILE__, __LINE__) //Логирование неизвестного сообщения (в консоль)
+#define ISLOGGER_UNKNOWN(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Unknown, MESSAGE, __FILE__, __LINE__) //Логирование неизвестного сообщения
+#define ISLOGGER_INFO(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
+#define ISLOGGER_DEBUG(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
+#define ISLOGGER_WARNING(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Warning, MESSAGE, __FILE__, __LINE__) //Логирование предупреждения
+#define ISLOGGER_ERROR(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Error, MESSAGE, __FILE__, __LINE__) //Логирование ошибки
+//-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISLogger
 {
 public:
@@ -49,12 +56,5 @@ private:
 	bool EnableOutFile; //Флаг вывода в файл
 	std::string FilePrefix; //Префикс имени файла
 };
-//-----------------------------------------------------------------------------
-#define ISLOGGER_EMPTY() ISLogger::Instance().Log(ISNamespace::DMT_Unknown, QString(), __FILE__, __LINE__) //Логирование неизвестного сообщения (в консоль)
-#define ISLOGGER_UNKNOWN(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Unknown, MESSAGE, __FILE__, __LINE__) //Логирование неизвестного сообщения
-#define ISLOGGER_INFO(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
-#define ISLOGGER_DEBUG(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
-#define ISLOGGER_WARNING(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Warning, MESSAGE, __FILE__, __LINE__) //Логирование предупреждения
-#define ISLOGGER_ERROR(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Error, MESSAGE, __FILE__, __LINE__) //Логирование ошибки
 //-----------------------------------------------------------------------------
 #endif
