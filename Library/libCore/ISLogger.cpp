@@ -15,18 +15,20 @@ ISLogger::ISLogger()
 //-----------------------------------------------------------------------------
 ISLogger::~ISLogger()
 {
-	//Останавливаем обработчик очереди
-	Mutex.lock();
-	Running = false;
-	Mutex.unlock();
-
-	//Ждём пока текущая очередь не будет записана в файл
-	while (LastPosition)
+	if (EnableOutFile)
 	{
-		Sleep(100);
-	}
+		//Останавливаем обработчик очереди
+		Mutex.lock();
+		Running = false;
+		Mutex.unlock();
 
-	File.close(); //Закрываем файл
+		//Ждём пока текущая очередь не будет записана в файл
+		while (LastPosition)
+		{
+			Sleep(100);
+		}
+		File.close(); //Закрываем файл
+	}
 }
 //-----------------------------------------------------------------------------
 ISLogger& ISLogger::Instance()
@@ -107,11 +109,16 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 	if (Type == ISNamespace::DMT_Unknown)
 	{
 		printf("%s\n", String.toStdString().c_str());
+
+#ifdef DEBUG
+		OutputDebugString(String.toStdString().c_str());
+		OutputDebugString("\n");
+#endif
 	}
 	else
 	{
 		//Формируем начало строки лога (дата, время, идентификатор текущего потока)
-		char Temp[MAX_PATH], Year[5];
+		char Temp[MAX_PATH];
 		itoa(ST.wYear, Year, 10); //Преобразование года в строку
 		sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, Year[2], Year[3], ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
 
@@ -130,6 +137,13 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 		if (EnableOutPrintf) //Если включена опция вывода в консоль - выводим, пока поток не дополнен именем файла с исходным кодом и номером строки
 		{
 			printf("%s %s\n", Stream.str().c_str(), String.toStdString().c_str());
+
+#ifdef DEBUG
+			OutputDebugString(Stream.str().c_str());
+			OutputDebugString(" ");
+			OutputDebugString(String.toStdString().c_str());
+			OutputDebugString("\n");
+#endif
 		}
 
 		if (EnableOutFile) //Если включена опция записи в файл - дополняем именем файла с исходным кодом, номером строки и добавляем в очередь

@@ -34,6 +34,7 @@ private:
 	std::array<std::string, ARRAY_MAX_SIZE> Array; //Массив сообщений
 	size_t LastPosition; //Посденяя позиция
 	bool Running; //Флаг работы логгера
+	char Year[5];
 	
 	std::ofstream File; //Текущий лог-файл
 	std::string PathDirectory; //Путь к папке с исполняемым файлом приложения
@@ -49,7 +50,7 @@ private:
 	std::string FilePrefix; //Префикс имени файла
 };
 //-----------------------------------------------------------------------------
-#define ISLOGGER_EMPTY() ISLogger::Instance().Log(ISNamespace::DMT_Unknown, QString(), __FILE__, __LINE__) //Логирование неизвестного сообщения
+#define ISLOGGER_EMPTY() ISLogger::Instance().Log(ISNamespace::DMT_Unknown, QString(), __FILE__, __LINE__) //Логирование неизвестного сообщения (в консоль)
 #define ISLOGGER_UNKNOWN(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Unknown, MESSAGE, __FILE__, __LINE__) //Логирование неизвестного сообщения
 #define ISLOGGER_INFO(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
 #define ISLOGGER_DEBUG(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
