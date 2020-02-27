@@ -16,7 +16,7 @@
     <file>Audio/</file>
     <file>ConfigTemplate/</file>
     <file>CSS/</file>
-    <file>Dictionary/</file>
+    <!--<file>Dictionary/</file>-->
     <file>ImageIcons/</file>
     <file>Images/</file>
     <file>ImageSpecial/</file>
