@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 			{
 				fwrite(StringResult, sizeof(char), strlen(StringResult), File);
 				fclose(File);
-				printf("Replacement was successful\n");
+				printf("Replacement was successful: %s -> %s\n", StringTemplate, StringReplace);
 			}
 			else
 			{
