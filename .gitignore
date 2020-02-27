@@ -4,6 +4,7 @@
 /Components/Replacer/**/*.iobj
 /Components/Replacer/**/*.ipdb
 /Library/**/*-*
+/Output
 /Projects/**/*-*
 /Tools/**/*-*
 
@@ -19,3 +20,4 @@
 *.props
 *moc_*.cpp
 *qrc_*.cpp
+*.iss.tmp
