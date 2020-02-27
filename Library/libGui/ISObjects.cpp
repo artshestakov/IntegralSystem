@@ -3,6 +3,7 @@
 #include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
+#include "ISMetaDataHelper.h"
 //-----------------------------------------------------------------------------
 #include "ISCenterSeven.h"
 #include "ISDemo.h"
@@ -13,8 +14,6 @@
 #include "ISOilSphere.h"
 #include "ISPatriot.h"
 #include "ISSirona.h"
-//-----------------------------------------------------------------------------
-static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT get_configuration_name()");
 //-----------------------------------------------------------------------------
 ISObjects::ISObjects()
 	: ErrorString(NO_ERROR_STRING),
@@ -57,15 +56,10 @@ bool ISObjects::IsInitialized() const
 //-----------------------------------------------------------------------------
 bool ISObjects::Initialize()
 {
-	ISQuery qSelect(QS_CONFIGURATION);
-	bool Result = qSelect.ExecuteFirst();
-	if (Result)
-	{
-		ConfigurationName = qSelect.ReadColumn("get_configuration_name").toString();
-	}
+	ConfigurationName = ISMetaDataHelper::GetConfigurationName();
 
 	QFile File(PATH_CONFIGURATION_SCHEME);
-	Result = File.open(QIODevice::ReadOnly);
+	bool Result = File.open(QIODevice::ReadOnly);
 	if (Result)
 	{
 		QString Content = File.readAll();

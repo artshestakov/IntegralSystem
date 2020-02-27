@@ -8,6 +8,8 @@
 #include "ISConfig.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
+#include "ISMetaData.h"
+#include "ISMetaDataHelper.h"
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------
@@ -74,7 +76,7 @@ void CGConfiguratorCreate::database()
 		}
 		else //Если база данных не существует - создать её
 		{
-			ISLOGGER_UNKNOWN("Configurator.Creating database: " + DatabaseName);
+			ISLOGGER_UNKNOWN("Creating database " + DatabaseName + "...");
 			QSqlQuery SqlQuery = ISDatabase::GetInstance().GetSystemDB().exec(QC_DATABASE.arg(DatabaseName).arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN))); //Исполнение запроса на создание базы данных
 			QSqlError SqlError = SqlQuery.lastError();
 			Exist = SqlError.type() == QSqlError::NoError;
@@ -96,7 +98,10 @@ void CGConfiguratorCreate::database()
 			ISQuery qCreateFunction;
 			if (qCreateFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + QString::fromStdString(ConfigurationName) + "'; END; $$ LANGUAGE plpgsql IMMUTABLE"))
 			{
-				ISLOGGER_INFO("Function getting configuration name created");
+				if (!ISMetaData::GetInstanse().Initialize(ISMetaDataHelper::GetConfigurationName(), true, true))
+				{
+					ISLOGGER_ERROR(ISMetaData::GetInstanse().GetErrorString());
+				}
 			}
 			else
 			{

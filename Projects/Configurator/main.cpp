@@ -13,6 +13,7 @@
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
 #include "ISLogger.h"
+#include "ISMetaDataHelper.h"
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorCreate.h"
 #include "CGConfiguratorUpdate.h"
@@ -26,7 +27,7 @@ QVector<CGSection*> Arguments;
 void RegisterMetatype(); //Регистрация мета-типов
 bool InitConfiguratorScheme(QString &ErrorString); //Инициализация схемы конфигуратора
 ISNamespace::ConsoleArgumentType CheckArguments(); //Проверка аргументов
-bool CheckExistDatabase(const QString &DBName, bool &Connected); //Проверка существования БД
+std::pair<bool, bool> CheckExistDatabase(const QString &DBName); //Проверка существования БД
 void InterpreterMode(bool &IsRunning); //Режим интерпретатора
 bool Execute(const QString &Argument); //Выполнить одиночную команду
 bool Execute(const QString &Argument, const QString &SubArgument); //Выполнить двойную команду
@@ -39,15 +40,8 @@ int main(int argc, char *argv[])
 	RegisterMetatype();
 	QCoreApplication CoreArralication(argc, argv);
 
-	bool Result = ISLogger::Instance().Initialize(true, false, "Configurator");
-	if (!Result)
-	{
-		ISLOGGER_ERROR(ISLogger::Instance().GetErrorString());
-		return EXIT_FAILURE;
-	}
-
 	QString ErrorString;
-	Result = ISCore::Startup(false, ErrorString);
+	bool Result = ISCore::Startup(false, ErrorString);
 	if (!Result)
 	{
 		ISLOGGER_ERROR(ErrorString);
@@ -64,7 +58,7 @@ int main(int argc, char *argv[])
 	ISNamespace::ConsoleArgumentType ArgumentType = CheckArguments();
 	if (ArgumentType == ISNamespace::CAT_Unknown)
 	{
-		ISLOGGER_WARNING("invalid arguments");
+		ISLOGGER_WARNING("Invalid arguments");
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
@@ -78,62 +72,59 @@ int main(int argc, char *argv[])
 
 	if (DBLogin.isEmpty() || DBPassword.isEmpty())
 	{
-		ISLOGGER_ERROR("not specified server or password in config file");
+		ISLOGGER_ERROR("Not specified server or password in config file");
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
 
-    bool Connected = true;
-    bool ExistDB = CheckExistDatabase(DBName, Connected);
-	if (ExistDB)
+    std::pair<bool, bool> ResultExist = CheckExistDatabase(DBName);
+	if (ResultExist.second) //Если БД существует - подключаемся к ней и инициализируем мета-данные
 	{
         QString ErrorString;
-		Connected = ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString);
+		ResultExist.first = ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString);
+		if (ResultExist.first)
+		{
+			if (!ISMetaData::GetInstanse().Initialize(ISMetaDataHelper::GetConfigurationName(), true, true))
+			{
+				ISLOGGER_ERROR("Initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
+			}
+		}
 	}
 
-    if (!Connected)
+    if (!ResultExist.first)
     {
         ISCommandLine::Pause();
         return EXIT_FAILURE;
     }
 
-	Result = ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), true, true);
-	if (!Result)
-	{
-		ISLOGGER_ERROR("initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
-		return EXIT_FAILURE;
-	}
-
-	bool Executed = false;
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
 	{
 		ISLOGGER_EMPTY();
 		ISLOGGER_UNKNOWN("Welcome to the IntegralSystem database. DBName: " + DBName + " DBHost: " + DBServer);
-		ISLOGGER_UNKNOWN("Enter the 'help' command to get help");
+		ISLOGGER_UNKNOWN("Enter the \"help\" command to get help");
 		ISLOGGER_UNKNOWN("Press Enter or Return to exit");
 		
-		if (!ExistDB)
+		if (!ResultExist.second)
 		{
-			ISLOGGER_WARNING("Database \"" + DBName + "\" not exist. Run the 'create database' command.");
+			ISLOGGER_WARNING("Database \"" + DBName + "\" not exist. Run the \"create database\" command.");
 		}
 
-		bool IsRunning = true;
-		while (IsRunning)
+		while (Result)
 		{
-			InterpreterMode(IsRunning);
+			InterpreterMode(Result);
 		}
 		return EXIT_SUCCESS;
 	}
 	else if (ArgumentType == ISNamespace::CAT_OneArgument)
 	{
-		Executed = Execute(CoreArralication.arguments().at(1).toLower());
+		Result = Execute(CoreArralication.arguments().at(1).toLower());
 	}
 	else if (ArgumentType == ISNamespace::CAT_Standart)
 	{
-		Executed = Execute(CoreArralication.arguments().at(1).toLower(), CoreArralication.arguments().at(2).toLower());
+		Result = Execute(CoreArralication.arguments().at(1).toLower(), CoreArralication.arguments().at(2).toLower());
 	}
 	
-	if (Executed)
+	if (Result)
 	{
 		return EXIT_SUCCESS;
 	}
@@ -201,10 +192,10 @@ ISNamespace::ConsoleArgumentType CheckArguments()
 	return ISNamespace::CAT_Unknown;
 }
 //-----------------------------------------------------------------------------
-bool CheckExistDatabase(const QString &DBName, bool &Connected)
+std::pair<bool, bool> CheckExistDatabase(const QString &DBName)
 {
 	QString ErrorString;
-	bool Exist = false;
+	bool Connected = false, Exist = false;
 	Connected = ISDatabase::GetInstance().ConnectToSystemDB(ErrorString);
 	if (Connected)
 	{
@@ -215,7 +206,7 @@ bool CheckExistDatabase(const QString &DBName, bool &Connected)
 	{
 		ISLOGGER_ERROR(ErrorString);
 	}
-	return Exist;
+	return std::make_pair(Connected, Exist);
 }
 //-----------------------------------------------------------------------------
 void InterpreterMode(bool &IsRunning)
@@ -251,7 +242,7 @@ void InterpreterMode(bool &IsRunning)
 		}
 		else
 		{
-			ISLOGGER_ERROR("command not found");
+			ISLOGGER_UNKNOWN("command not found");
 		}
 	}
 }
@@ -266,13 +257,13 @@ bool Execute(const QString &Argument)
 		{
 			ISCountingTime CountingTime;
 			Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data());
-			ISLOGGER_INFO("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
+			ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
 		}
 		catch (const ISQueryException &QueryException) {}
 	}
 	else
 	{
-		ISLOGGER_ERROR("Command \"" + Argument + "\" not found");
+		ISLOGGER_UNKNOWN("Command \"" + Argument + "\" not found");
 	}
 	return Result;
 }
@@ -306,23 +297,23 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 				}
 				else
 				{
-					ISLOGGER_ERROR("Command \"" + SubArgument + "\" not found");
+					ISLOGGER_UNKNOWN("Command \"" + SubArgument + "\" not found");
 				}
 				delete CommandBase;
 			}
 			else
 			{
-				ISLOGGER_ERROR("Class \"" + Argument + "\" not found");
+				ISLOGGER_UNKNOWN("Class \"" + Argument + "\" not found");
 			}
 		}
 		else
 		{
-			ISLOGGER_ERROR("Class \"" + Argument + "\" not found");
+			ISLOGGER_UNKNOWN("Class \"" + Argument + "\" not found");
 		}
 	}
 	else
 	{
-		ISLOGGER_ERROR("Class \"" + Argument + "\" not found");
+		ISLOGGER_UNKNOWN("Class \"" + Argument + "\" not found");
 	}
 	return Result;
 }

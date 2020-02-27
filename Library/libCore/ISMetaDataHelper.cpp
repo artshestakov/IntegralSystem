@@ -1,6 +1,9 @@
 #include "ISMetaDataHelper.h"
 #include "ISMetaData.h"
 #include "ISSystem.h"
+#include "ISQuery.h"
+//-----------------------------------------------------------------------------
+static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT get_configuration_name()");
 //-----------------------------------------------------------------------------
 QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaForeign, const QString &SqlFilter, const QVariant &ObjectID)
 {
@@ -43,5 +46,15 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaClassForeign *MetaFor
 	}
 
 	return SqlQuery;
+}
+//-----------------------------------------------------------------------------
+QString ISMetaDataHelper::GetConfigurationName()
+{
+	ISQuery qSelect(QS_CONFIGURATION);
+	if (qSelect.ExecuteFirst())
+	{
+		return qSelect.ReadColumn("get_configuration_name").toString();
+	}
+	return QString();
 }
 //-----------------------------------------------------------------------------

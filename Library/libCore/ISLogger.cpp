@@ -134,7 +134,7 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 		}
 		Stream << "]";
 
-		if (EnableOutPrintf) //Если включена опция вывода в консоль - выводим, пока поток не дополнен именем файла с исходным кодом и номером строки
+		if (EnableOutPrintf) //Если включена опция вывода в консоль - выводим
 		{
 			printf("%s %s\n", Stream.str().c_str(), String.toStdString().c_str());
 

@@ -74,8 +74,6 @@ bool ISMetaData::Initialize(const QString &configuration_name, bool InitXSR, boo
 	if (!Result)
 	{
 		ConfigurationName = configuration_name;
-		ISLOGGER_DEBUG("Initialize MetaData...");
-
 		Result = InitializeXSN();
 		if (Result)
 		{
