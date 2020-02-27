@@ -1,5 +1,8 @@
 /Bin
 /Deploy
+/Components/Replacer/**/*.ilk
+/Components/Replacer/**/*.iobj
+/Components/Replacer/**/*.ipdb
 /Library/**/*-*
 /Projects/**/*-*
 /Tools/**/*-*
