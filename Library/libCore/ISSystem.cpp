@@ -1,7 +1,6 @@
 #include "ISSystem.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
-#include "ISDebug.h"
 //-----------------------------------------------------------------------------
 void ISSystem::SetObjectProperty(QObject *Object, const char *PropertyName, const QVariant &PropertyValue)
 {

@@ -43,7 +43,6 @@
 #include "ISDeviceSettingsForm.h"
 #include "ISTelephony.h"
 #include "ISObjects.h"
-#include "ISDebug.h"
 #include "ISOnline.h"
 #include "ISScreenshot.h"
 #include "ISAddressBookListForm.h"
@@ -325,7 +324,7 @@ void ISMainWindow::CreateStackWidget()
 		int ParagraphIndex = StackedWidget->addWidget(ParagraphBaseForm);
 		Paragraphs.insert(ParagraphUID, ParagraphIndex);
 
-		ISDebug::ShowDebugString(QString("Initialized paragraph \"%1\" %2 msec").arg(MetaParagraph->Name).arg(CountingTime.GetElapsed()));
+		ISLOGGER_DEBUG(QString("Initialized paragraph \"%1\" %2 msec").arg(MetaParagraph->Name).arg(CountingTime.GetElapsed()));
 	}
 
 	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());

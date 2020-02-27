@@ -1,11 +1,11 @@
 #include "ISCommandLine.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 bool ISCommandLine::Question(const QString &QuestionText)
 {
 	bool Result = true;
-	ISDebug::ShowString();
-	ISDebug::ShowString(QuestionText);
+	ISLOGGER_EMPTY();
+	ISLOGGER_UNKNOWN(QuestionText);
 
 	std::string Answer;
 	std::getline(std::cin, Answer);
@@ -21,7 +21,7 @@ bool ISCommandLine::Question(const QString &QuestionText)
 	}
 	else
 	{
-		ISDebug::ShowString("Invalid answer!");
+		ISLOGGER_UNKNOWN("Invalid answer!");
 		Question(QuestionText);
 	}
 
@@ -30,7 +30,7 @@ bool ISCommandLine::Question(const QString &QuestionText)
 //-----------------------------------------------------------------------------
 void ISCommandLine::Pause()
 {
-	ISDebug::ShowString("To continue, press \"Enter\" button...");
+	ISLOGGER_UNKNOWN("To continue, press \"Enter\" button...");
 	getchar();
 }
 //-----------------------------------------------------------------------------

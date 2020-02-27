@@ -1,8 +1,8 @@
 #include "ISDatabase.h"
 #include "ISConfig.h"
-#include "ISDebug.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
+#include "ISLogger.h"
 #include "ISCountingTime.h"
 #include "ISMetaData.h"
 #include "ISQueryText.h"
@@ -301,7 +301,7 @@ void ISDatabase::DisconnectFromSystemDB()
 void ISDatabase::DisconnectFromDatabase(QSqlDatabase &SqlDatabase)
 {
 	QString DatabaseName = SqlDatabase.databaseName();
-	ISDebug::ShowDebugString(QString("Disconnect from database %1...").arg(DatabaseName));
+	ISLOGGER_DEBUG(QString("Disconnect from database %1...").arg(DatabaseName));
 
 	ISCountingTime CountingTime;
 	SqlDatabase.close();
@@ -312,7 +312,7 @@ void ISDatabase::DisconnectFromDatabase(QSqlDatabase &SqlDatabase)
 	SqlDatabase.setUserName(QString());
 	SqlDatabase.setPassword(QString());
 
-	ISDebug::ShowInfoString(QString("Disconnect from database \"%1\" done. %2 msec").arg(DatabaseName).arg(CountingTime.GetElapsed()));
+	ISLOGGER_INFO(QString("Disconnect from database \"%1\" done. %2 msec").arg(DatabaseName).arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Login, const QString &Password, const QString &Database, QString &ErrorConnection)
@@ -331,17 +331,17 @@ bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Log
 		SqlDatabase.setPassword(Password);
 
 		ISCountingTime CountingTime;
-		ISDebug::ShowInfoString(QString("Connecting to database %1...").arg(Database));
+		ISLOGGER_INFO(QString("Connecting to database %1...").arg(Database));
 
 		Result = SqlDatabase.open();
 		if (Result)
 		{
-			ISDebug::ShowInfoString(QString("Connection to database \"%1\" done. %2 msec").arg(Database).arg(CountingTime.GetElapsed()));
+			ISLOGGER_INFO(QString("Connection to database \"%1\" done. %2 msec").arg(Database).arg(CountingTime.GetElapsed()));
 		}
 		else
 		{
 			ErrorConnection = SqlDatabase.lastError().text();
-			ISDebug::ShowWarningString(QString("Connection to database \"%1\" failed. Error: %2").arg(Database).arg(ErrorConnection));
+			ISLOGGER_WARNING(QString("Connection to database \"%1\" failed. Error: %2").arg(Database).arg(ErrorConnection));
 		}
 	}
 

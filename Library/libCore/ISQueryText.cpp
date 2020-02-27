@@ -1,6 +1,5 @@
 #include "ISQueryText.h"
 #include "ISAssert.h"
-#include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISCountingTime.h"
 #include "ISMetaData.h"

@@ -3,8 +3,8 @@
 #include "ISMetaData.h"
 #include "ISAssert.h"
 #include "ISCountingTime.h"
-#include "ISDebug.h"
 #include "ISSystem.h"
+#include "ISLogger.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
@@ -151,7 +151,7 @@ void ISSettings::Initialize()
 		}
 	}
 
-	ISDebug::ShowDebugString(QString("Initialized Settings time %1 msec").arg(Time.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized Settings time %1 msec").arg(Time.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
 ISMetaSettingsGroup* ISSettings::CheckExistGroup(const ISUuid &GroupUID)

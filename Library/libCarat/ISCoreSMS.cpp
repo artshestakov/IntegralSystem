@@ -1,9 +1,9 @@
 #include "ISCoreSMS.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
 #include "ISSMS.h"
 #include "ISQueryText.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_SMS_QUEUE = PREPARE_QUERY("SELECT smsq_id, smsq_login, smsq_password, smsq_phone, smsq_message, smsq_charset "
 											"FROM _smsqueue "
@@ -76,17 +76,17 @@ void ISCoreSMS::Timeout()
 
 		UpdateStatus(ID, CONST_UID_SMS_STATUS_SENDING);
 
-		ISDebug::ShowInfoString("Sending message - start");
+		ISLOGGER_INFO("Sending message - start");
 		ISSMS SMS(Login, Password, Phone, Message, Charset, this);
 		if (SMS.SendMessage())
 		{
 			SendDone(ID, SMS.GetMessageID());
-			ISDebug::ShowInfoString("Sending message - done");
+			ISLOGGER_INFO("Sending message - done");
 		}
 		else
 		{
 			SendFailed(ID, SMS.GetMessageID(), SMS.GetErrorString());
-			ISDebug::ShowWarningString(QString("Sending message - failed: %1").arg(SMS.GetErrorString()));
+			ISLOGGER_WARNING(QString("Sending message - failed: %1").arg(SMS.GetErrorString()));
 		}
 	}
 

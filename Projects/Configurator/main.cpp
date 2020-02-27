@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "CGConfigurator.h"
 #include "ISNamespace.h"
-#include "ISDebug.h"
 #include "ISConfig.h"
 #include "ISMetaData.h"
 #include "ISCommandLine.h"
@@ -13,6 +12,7 @@
 #include "CGSection.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorCreate.h"
 #include "CGConfiguratorUpdate.h"
@@ -39,25 +39,32 @@ int main(int argc, char *argv[])
 	RegisterMetatype();
 	QCoreApplication CoreArralication(argc, argv);
 
-	QString ErrorString;
-	bool Result = ISCore::Startup(false, ErrorString);
+	bool Result = ISLogger::Instance().Initialize(true, false, "Configurator");
 	if (!Result)
 	{
-		ISDebug::ShowErrorString(ErrorString);
+		ISLOGGER_ERROR(ISLogger::Instance().GetErrorString());
+		return EXIT_FAILURE;
+	}
+
+	QString ErrorString;
+	Result = ISCore::Startup(false, ErrorString);
+	if (!Result)
+	{
+		ISLOGGER_ERROR(ErrorString);
 		return EXIT_FAILURE;
 	}
 
 	Result = InitConfiguratorScheme(ErrorString);
 	if (!Result)
 	{
-		ISDebug::ShowErrorString(ErrorString);
+		ISLOGGER_ERROR(ErrorString);
 		return EXIT_FAILURE;
 	}
 
 	ISNamespace::ConsoleArgumentType ArgumentType = CheckArguments();
 	if (ArgumentType == ISNamespace::CAT_Unknown)
 	{
-		ISDebug::ShowWarningString("invalid arguments");
+		ISLOGGER_WARNING("invalid arguments");
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
@@ -71,7 +78,7 @@ int main(int argc, char *argv[])
 
 	if (DBLogin.isEmpty() || DBPassword.isEmpty())
 	{
-		ISDebug::ShowErrorString("not specified server or password in config file");
+		ISLOGGER_ERROR("not specified server or password in config file");
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
@@ -93,21 +100,21 @@ int main(int argc, char *argv[])
 	Result = ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), true, true);
 	if (!Result)
 	{
-		ISDebug::ShowErrorString("initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
+		ISLOGGER_ERROR("initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
 		return EXIT_FAILURE;
 	}
 
 	bool Executed = false;
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
 	{
-		ISDebug::ShowString();
-		ISDebug::ShowString("Welcome to the IntegralSystem database. DBName: " + DBName + " DBHost: " + DBServer);
-		ISDebug::ShowString("Enter the 'help' command to get help");
-		ISDebug::ShowString("Press Enter or Return to exit");
+		ISLOGGER_EMPTY();
+		ISLOGGER_UNKNOWN("Welcome to the IntegralSystem database. DBName: " + DBName + " DBHost: " + DBServer);
+		ISLOGGER_UNKNOWN("Enter the 'help' command to get help");
+		ISLOGGER_UNKNOWN("Press Enter or Return to exit");
 		
 		if (!ExistDB)
 		{
-			ISDebug::ShowWarningString("Database \"" + DBName + "\" not exist. Run the 'create database' command.");
+			ISLOGGER_WARNING("Database \"" + DBName + "\" not exist. Run the 'create database' command.");
 		}
 
 		bool IsRunning = true;
@@ -206,15 +213,15 @@ bool CheckExistDatabase(const QString &DBName, bool &Connected)
 	}
 	else
 	{
-		ISDebug::ShowErrorString(ErrorString);
+		ISLOGGER_ERROR(ErrorString);
 	}
 	return Exist;
 }
 //-----------------------------------------------------------------------------
 void InterpreterMode(bool &IsRunning)
 {
-	ISDebug::ShowString();
-	ISDebug::ShowString("Enter command: ");
+	ISLOGGER_EMPTY();
+	ISLOGGER_UNKNOWN("Enter command: ");
 
 	std::string InputCommand;
 	std::getline(std::cin, InputCommand);
@@ -244,7 +251,7 @@ void InterpreterMode(bool &IsRunning)
 		}
 		else
 		{
-			ISDebug::ShowErrorString("command not found");
+			ISLOGGER_ERROR("command not found");
 		}
 	}
 }
@@ -259,13 +266,13 @@ bool Execute(const QString &Argument)
 		{
 			ISCountingTime CountingTime;
 			Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data());
-			ISDebug::ShowInfoString("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
+			ISLOGGER_INFO("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
 		}
 		catch (const ISQueryException &QueryException) {}
 	}
 	else
 	{
-		ISDebug::ShowErrorString("Command \"" + Argument + "\" not found");
+		ISLOGGER_ERROR("Command \"" + Argument + "\" not found");
 	}
 	return Result;
 }
@@ -293,29 +300,29 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 					{
 						ISCountingTime CountingTime;
 						Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
-						ISDebug::ShowInfoString("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
+						ISLOGGER_INFO("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
 					}
 					catch (const ISQueryException &QueryException) {}
 				}
 				else
 				{
-					ISDebug::ShowErrorString("Command \"" + SubArgument + "\" not found");
+					ISLOGGER_ERROR("Command \"" + SubArgument + "\" not found");
 				}
 				delete CommandBase;
 			}
 			else
 			{
-				ISDebug::ShowErrorString("Class \"" + Argument + "\" not found");
+				ISLOGGER_ERROR("Class \"" + Argument + "\" not found");
 			}
 		}
 		else
 		{
-			ISDebug::ShowErrorString("Class \"" + Argument + "\" not found");
+			ISLOGGER_ERROR("Class \"" + Argument + "\" not found");
 		}
 	}
 	else
 	{
-		ISDebug::ShowErrorString("Class \"" + Argument + "\" not found");
+		ISLOGGER_ERROR("Class \"" + Argument + "\" not found");
 	}
 	return Result;
 }
@@ -334,7 +341,7 @@ QString GetClassName(const QString &Argument)
 //-----------------------------------------------------------------------------
 void ProgressMessage(const QString &Message)
 {
-	ISDebug::ShowString(Message);
+	ISLOGGER_UNKNOWN(Message);
 }
 //-----------------------------------------------------------------------------
 QStringList ParseInputCommand(const QString &Command)

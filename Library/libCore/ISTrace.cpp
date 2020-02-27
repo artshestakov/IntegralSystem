@@ -1,6 +1,6 @@
 #include "ISTrace.h"
-#include "ISDebug.h"
 #include "ISSystem.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISTrace::ISTrace(const QString &q_func_info, const QString &message_text)
 {
@@ -12,13 +12,13 @@ ISTrace::ISTrace(const QString &q_func_info, const QString &message_text)
 		MessageText += " | " + message_text;
 	}
 
-	ISDebug::ShowDebugString(MessageText);
+	ISLOGGER_DEBUG(MessageText);
 	Time = new ISCountingTime();
 }
 //-----------------------------------------------------------------------------
 ISTrace::~ISTrace()
 {
-	ISDebug::ShowDebugString("END TRACE (" + QString::number(Time->GetElapsed()) + " msec): " + Q_FUNC_INFO_STRING);
+	ISLOGGER_DEBUG("END TRACE (" + QString::number(Time->GetElapsed()) + " msec): " + Q_FUNC_INFO_STRING);
 	delete Time;
 }
 //-----------------------------------------------------------------------------

@@ -9,6 +9,7 @@
 #include "ISNotificationService.h"
 #include "ISExportForm.h"
 #include "ISProgressForm.h"
+#include "ISLogger.h"
 #include "ISProcessForm.h"
 #include "ISFavoritesForm.h"
 #include "ISBuffer.h"
@@ -28,7 +29,6 @@
 #include "ISMetaData.h"
 #include "ISConstants.h"
 #include "ISMetaUser.h"
-#include "ISDebug.h"
 #include "ISColumnSizer.h"
 #include "ISInputDialog.h"
 #include "ISExportWorker.h"
@@ -594,7 +594,7 @@ void ISListBaseForm::HideField(const QString &FieldName)
 		}
 	}
 
-	ISDebug::ShowWarningString(QString("Not found field \"%1\" from HideField").arg(FieldName));
+	ISLOGGER_WARNING(QString("Not found field \"%1\" from HideField").arg(FieldName));
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowField(const QString &FieldName)
@@ -609,7 +609,7 @@ void ISListBaseForm::ShowField(const QString &FieldName)
 		}
 	}
 
-	ISDebug::ShowWarningString(QString("Not found field \"%1\" from ShowField").arg(FieldName));
+	ISLOGGER_WARNING(QString("Not found field \"%1\" from ShowField").arg(FieldName));
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SetShowOnly(bool show_only)
@@ -871,7 +871,7 @@ void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
 	}
 	else
 	{
-		ISDebug::ShowWarningString(SqlError.text());
+		ISLOGGER_WARNING(SqlError.text());
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text());
 	}
 }
@@ -889,7 +889,7 @@ void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QStr
 	}
 	else
 	{
-		ISDebug::ShowWarningString(SqlError.text());
+		ISLOGGER_WARNING(SqlError.text());
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text(), QueryText);
 	}
 }

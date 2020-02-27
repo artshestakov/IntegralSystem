@@ -1,5 +1,5 @@
 #include "CGConfiguratorFIAS.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISCommandLine.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
@@ -23,39 +23,39 @@ CGConfiguratorFIAS::~CGConfiguratorFIAS()
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::prepare()
 {
-	ISDebug::ShowString("Enter path to unloading FIAS dir:");
+	ISLOGGER_UNKNOWN("Enter path to unloading FIAS dir:");
 	QString UnloadPath = ISCommandLine::GetText(); //Путь к файлам ФИАС
 	if (!UnloadPath.length()) //Если путь не введен
 	{
-		ISDebug::ShowWarningString("Entered path is empty");
+		ISLOGGER_WARNING("Entered path is empty");
 		return;
 	}
 
 	QDir UnloadDir(UnloadPath);
 	if (!UnloadDir.exists()) //Если папка по введенному пути не существует
 	{
-		ISDebug::ShowWarningString("Dir \"" + UnloadPath + "\" not exist");
+		ISLOGGER_WARNING("Dir \"" + UnloadPath + "\" not exist");
 		return;
 	}
 
-	ISDebug::ShowString("Enter the path to the folder with the FIAS processing result:");
+	ISLOGGER_UNKNOWN("Enter the path to the folder with the FIAS processing result:");
 	QString ResultPath = ISCommandLine::GetText();
 	if (!ResultPath.length())
 	{
-		ISDebug::ShowWarningString("Entered path is empty");
+		ISLOGGER_WARNING("Entered path is empty");
 		return;
 	}
 
 	QDir ResultDir(ResultPath);
 	if (!ResultDir.exists())
 	{
-		ISDebug::ShowWarningString("Dir \"" + UnloadPath + "\" not exist");
+		ISLOGGER_WARNING("Dir \"" + UnloadPath + "\" not exist");
 		return;
 	}
 
 	if (ResultDir.entryInfoList(QDir::Files).count())
 	{
-		ISDebug::ShowWarningString("The folder \"" + ResultPath + "\" already contains data. Choose another folder");
+		ISLOGGER_WARNING("The folder \"" + ResultPath + "\" already contains data. Choose another folder");
 		return;
 	}
 
@@ -68,18 +68,18 @@ void CGConfiguratorFIAS::prepare()
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::update()
 {
-	ISDebug::ShowString("Enter the path to the folder with prepared FIAS files");
+	ISLOGGER_UNKNOWN("Enter the path to the folder with prepared FIAS files");
 	QString DirPath = ISCommandLine::GetText();
 	if (!DirPath.length()) //Если путь не введен
 	{
-		ISDebug::ShowWarningString("Entered path is empty");
+		ISLOGGER_WARNING("Entered path is empty");
 		return;
 	}
 
 	QDir Dir(DirPath);
 	if (!Dir.exists()) //Если папка по введенному пути не существует
 	{
-		ISDebug::ShowWarningString("Dir \"" + DirPath + "\" not exist");
+		ISLOGGER_WARNING("Dir \"" + DirPath + "\" not exist");
 		return;
 	}
 
@@ -93,12 +93,12 @@ void CGConfiguratorFIAS::update()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &ResultPath)
 {
-	ISDebug::ShowString();
-	ISDebug::ShowInfoString("File processing started: " + FileInfo.baseName());
+	ISLOGGER_EMPTY();
+	ISLOGGER_INFO("File processing started: " + FileInfo.baseName());
 	QFile FileOriginal(FileInfo.absoluteFilePath());
 	if (!FileOriginal.open(QIODevice::ReadOnly))
 	{
-		ISDebug::ShowWarningString("Could not open file: " + FileOriginal.fileName() + ". Reason: " + FileOriginal.errorString());
+		ISLOGGER_WARNING("Could not open file: " + FileOriginal.fileName() + ". Reason: " + FileOriginal.errorString());
 		return false;
 	}
 
@@ -106,7 +106,7 @@ bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &
 	if (!FileResult.open(QIODevice::Append))
 	{
 		FileOriginal.close();
-		ISDebug::ShowWarningString("Could not open file: " + FileResult.fileName() + ". Reason: " + FileResult.errorString());
+		ISLOGGER_WARNING("Could not open file: " + FileResult.fileName() + ". Reason: " + FileResult.errorString());
 		return false;
 	}
 
@@ -118,7 +118,7 @@ bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &
 		if (FileSize > MaxLen) //Если размер файла меньше макисмального размера блока - один проход
 		{
 			ProcessedSize += MaxLen;
-			ISDebug::ShowInfoString(QString("Write to file %1: %2MB of %3MB").arg(GetFileResultName(FileInfo.baseName())).arg(ProcessedSize / (1000 * 1024)).arg(FileSize / (1000 * 1024)));
+			ISLOGGER_INFO(QString("Write to file %1: %2MB of %3MB").arg(GetFileResultName(FileInfo.baseName())).arg(ProcessedSize / (1000 * 1024)).arg(FileSize / (1000 * 1024)));
 		}
 
 		QString Content = FileOriginal.read(MaxLen);
@@ -147,7 +147,7 @@ bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &
 		FileResult.flush();
 	}
 
-	ISDebug::ShowInfoString("File processing completed: " + FileInfo.baseName());
+	ISLOGGER_INFO("File processing completed: " + FileInfo.baseName());
 	FileResult.close();
 	FileOriginal.close();
 	return true;
@@ -173,13 +173,13 @@ void CGConfiguratorFIAS::InitializeKeys()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 {
-	ISDebug::ShowString();
-	ISDebug::ShowInfoString("File processing started: " + FileInfo.baseName());
+	ISLOGGER_EMPTY();
+	ISLOGGER_INFO("File processing started: " + FileInfo.baseName());
 
 	QString TableName = "_FIAS_" + GetTableName(FileInfo.absoluteFilePath());
 	if (!ISMetaData::GetInstanse().CheckExistTable(TableName))
 	{
-		ISDebug::ShowWarningString("Table \"" + TableName + "\" not exist");
+		ISLOGGER_WARNING("Table \"" + TableName + "\" not exist");
 		return false;
 	}
 
@@ -199,7 +199,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 		Percent = round(Percent * 100) / 100;
 		if (!fmod((double)Inserted, 1000))
 		{
-			ISDebug::ShowInfoString(QString("Record processing in: %1 %2 of %3. Progress: %4%").arg(TableName).arg(Inserted).arg(CountLine).arg(Percent));
+			ISLOGGER_INFO(QString("Record processing in: %1 %2 of %3. Progress: %4%").arg(TableName).arg(Inserted).arg(CountLine).arg(Percent));
 		}
 
 		QString StringXML = File.readLine();
@@ -216,7 +216,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 	}
 
 	File.close();
-	ISDebug::ShowInfoString("File processing completed: " + FileInfo.baseName());
+	ISLOGGER_INFO("File processing completed: " + FileInfo.baseName());
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -263,7 +263,7 @@ QStringMap CGConfiguratorFIAS::ParseLine(const QString &Content) const
 //-----------------------------------------------------------------------------
 quint64 CGConfiguratorFIAS::GetCountLine(const QString &FilePath) const
 {
-	ISDebug::ShowInfoString("Calculate rows...");
+	ISLOGGER_INFO("Calculate rows...");
 	quint64 CountLine = 0;
 	QFile File(FilePath);
 	if (File.open(QIODevice::ReadOnly))

@@ -1,5 +1,4 @@
 #include "CGConfiguratorUpdate.h"
-#include "ISDebug.h"
 #include "ISMetaData.h"
 #include "CGFunction.h"
 #include "CGTable.h"
@@ -10,6 +9,7 @@
 #include "CGClassField.h"
 #include "ISQuery.h"
 #include "ISConfig.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
@@ -36,7 +36,7 @@ void CGConfiguratorUpdate::database()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::functions()
 {
-	ISDebug::ShowDebugString("Updating functions...");
+	ISLOGGER_DEBUG("Updating functions...");
 	for (int i = 0, CountFunctions = ISMetaData::GetInstanse().GetFunctions().count(); i < CountFunctions; ++i)
 	{
 		Progress("Functions", i, CountFunctions);
@@ -47,7 +47,7 @@ void CGConfiguratorUpdate::functions()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::tables()
 {
-	ISDebug::ShowDebugString("Updating tables...");
+	ISLOGGER_DEBUG("Updating tables...");
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i) //Обход таблиц
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
@@ -60,7 +60,7 @@ void CGConfiguratorUpdate::tables()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::systemindexes()
 {
-	ISDebug::ShowDebugString("Updating system indexes...");
+	ISLOGGER_DEBUG("Updating system indexes...");
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().count(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes().at(i);
@@ -91,7 +91,7 @@ void CGConfiguratorUpdate::systemindexes()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::indexes()
 {
-	ISDebug::ShowDebugString("Updating indexes...");
+	ISLOGGER_DEBUG("Updating indexes...");
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetIndexes().count(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes().at(i);
@@ -104,7 +104,7 @@ void CGConfiguratorUpdate::indexes()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::compoundindexes()
 {
-	ISDebug::ShowDebugString("Updating compound indexes...");
+	ISLOGGER_DEBUG("Updating compound indexes...");
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().count(); i < CountIndexes; ++i)
 	{
 		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes().at(i);
@@ -117,7 +117,7 @@ void CGConfiguratorUpdate::compoundindexes()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::foreigns()
 {
-	ISDebug::ShowDebugString("Updating foreigns...");
+	ISLOGGER_DEBUG("Updating foreigns...");
 	for (int i = 0, CountForeigns = ISMetaData::GetInstanse().GetForeigns().count(); i < CountForeigns; ++i)
 	{
 		Progress("Foreigns", i, CountForeigns);
@@ -129,7 +129,7 @@ void CGConfiguratorUpdate::foreigns()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::resources()
 {
-	ISDebug::ShowDebugString("Updating resources...");
+	ISLOGGER_DEBUG("Updating resources...");
 	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().count(); i < CountResources; ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
@@ -142,7 +142,7 @@ void CGConfiguratorUpdate::resources()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::classes()
 {
-	ISDebug::ShowDebugString("Updating class...");
+	ISLOGGER_DEBUG("Updating class...");
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i)
 	{
 		Progress("Classes", i, CountTables);
@@ -153,7 +153,7 @@ void CGConfiguratorUpdate::classes()
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::classfields()
 {
-	ISDebug::ShowDebugString("Updation class fields...");
+	ISLOGGER_DEBUG("Updation class fields...");
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i)
 	{
 		Progress("Class fields", i, CountTables);

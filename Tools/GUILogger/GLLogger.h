@@ -30,12 +30,12 @@
 #include <fstream>
 //-----------------------------------------------------------------------------
 #define LOGGER_TIMEOUT 2000
-#define ARRAY_MAX_SIZE 10000000
+#define ARRAY_MAX_SIZE 20000
 //-----------------------------------------------------------------------------
 class GLLogger
 {
 public:
-	enum MessageType //Тип сообщения
+	enum MessageType //Тип логируемого сообщения
 	{
 		MT_Info,
 		MT_Debug,

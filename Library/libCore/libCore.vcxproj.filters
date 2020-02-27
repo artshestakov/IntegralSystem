@@ -228,9 +228,6 @@
     <ClInclude Include="ISMemoryObjects.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISDebug.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISSettings.h">
       <Filter>Settings</Filter>
     </ClInclude>
@@ -271,9 +268,6 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISCountingTime.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDebug.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISExceptionAssert.cpp">

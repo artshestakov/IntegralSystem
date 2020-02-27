@@ -2,9 +2,9 @@
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
-#include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISCountingTime.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 {
@@ -18,21 +18,21 @@ ISLocalization::ISLocalization()
 		{
 			if (qApp->installTranslator(Translator))
 			{
-				ISDebug::ShowInfoString(QString("Translator \"%1\" installing done").arg(TranslatorFileName));
+				ISLOGGER_INFO(QString("Translator \"%1\" installing done").arg(TranslatorFileName));
 			}
 			else
 			{
-				ISDebug::ShowWarningString(QString("Translator \"%1\" not installing").arg(TranslatorFileName));
+				ISLOGGER_WARNING(QString("Translator \"%1\" not installing").arg(TranslatorFileName));
 			}
 		}
 		else
 		{
-			ISDebug::ShowWarningString("Not load translator file " + TranslatorFilePath);
+			ISLOGGER_WARNING("Not load translator file " + TranslatorFilePath);
 		}
 	}
 	else
 	{
-		ISDebug::ShowWarningString(QString("Not found translator file: %1").arg(TranslatorFilePath));
+		ISLOGGER_WARNING(QString("Not found translator file: %1").arg(TranslatorFilePath));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ void ISLocalization::InitializeContent(const QString &Content)
 		}
 
 		int Msec = Time.GetElapsed();
-		ISDebug::ShowInfoString(QString("Localization \"%1\" Initialized. msec: %2. Items: %3").arg(LocalizationName).arg(Msec).arg(CountItems));
+		ISLOGGER_INFO(QString("Localization \"%1\" Initialized. msec: %2. Items: %3").arg(LocalizationName).arg(Msec).arg(CountItems));
 
 		LoadedFiles.append(LocalizationName);
 	}

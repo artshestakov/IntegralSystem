@@ -6,7 +6,9 @@ ISLogger::ISLogger()
 	Running(false),
 	CurrentYear(0),
 	CurrentMonth(0),
-	CurrentDay(0)
+	CurrentDay(0),
+	EnableOutPrintf(false),
+	EnableOutFile(false)
 {
 	
 }
@@ -33,56 +35,67 @@ ISLogger& ISLogger::Instance()
 	return Logger;
 }
 //-----------------------------------------------------------------------------
-std::string ISLogger::GetErrorString() const
+QString ISLogger::GetErrorString() const
 {
-	return ErrorString;
+	return QString::fromStdString(ErrorString);
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::Initialize()
+bool ISLogger::Initialize(bool OutPrintf, bool OutFile, const std::string &file_prefix)
 {
 	if (Running) //Если логгер уже работает, возвращаем true
 	{
 		return Running;
 	}
 
-	//Получаем путь к исполняемому файлу
-	char Temp[MAX_PATH];
-	Running = GetModuleFileNameA(NULL, Temp, MAX_PATH) > 0 ? true : false;
-	if (Running) //Путь к исполняемому файлу успешно получен
-	{
-		PathDirectory = &Temp[0];
-		size_t Pos = PathDirectory.rfind('\\');
-		PathDirectory.erase(Pos + 1, PathDirectory.size() - Pos - 1);
-	}
-	else //Не удалось получить путь
-	{
-		ErrorString = "Error getting current module file path.";
-		return Running;
-	}
+	EnableOutPrintf = OutPrintf;
+	EnableOutFile = OutFile;
+	FilePrefix = file_prefix;
 
-	Running = CreateDir();
-	if (!Running) //При создании директории произошла ошибка
+	if (EnableOutFile) //Если включен вывод в файл - выполняем соответствующие подготовки
 	{
-		return Running;
-	}
+		//Получаем путь к исполняемому файлу
+		char Temp[MAX_PATH];
+		Running = GetModuleFileNameA(NULL, Temp, MAX_PATH) > 0 ? true : false;
+		if (Running) //Путь к исполняемому файлу успешно получен
+		{
+			PathDirectory = &Temp[0];
+			size_t Pos = PathDirectory.rfind('\\');
+			PathDirectory.erase(Pos + 1, PathDirectory.size() - Pos - 1);
+		}
+		else //Не удалось получить путь
+		{
+			ErrorString = "Error getting current module file path.";
+			return Running;
+		}
 
-	UpdateFilePath();
-	File.open(PathFile, std::ios::app);
-	Running = File.is_open();
-	if (Running)
-	{
-		std::thread(&ISLogger::Worker, this).detach();
+		Running = CreateDir();
+		if (!Running) //При создании директории произошла ошибка
+		{
+			return Running;
+		}
+
+		UpdateFilePath();
+		File.open(PathFile, std::ios::app);
+		Running = File.is_open();
+		if (Running)
+		{
+			std::thread(&ISLogger::Worker, this).detach();
+		}
+		else
+		{
+			ErrorString = strerror(errno);
+		}
 	}
 	else
 	{
-		ErrorString = strerror(errno);
+		Running = true;
 	}
 	return Running;
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(MessageType Type, const std::string &String, const char *SourceName, int Line)
+void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, const char *SourceName, int Line)
 {
-	if (LastPosition == ARRAY_MAX_SIZE && !Running) //Если превышен допустимый предел размера очереди или обработчик очереди уже остановился - выходим из функции
+	if (LastPosition == ARRAY_MAX_SIZE || !Running) //Если превышен допустимый предел размера очереди или обработчик очереди уже остановился - выходим из функции
 	{
 		return;
 	}
@@ -91,32 +104,49 @@ void ISLogger::Log(MessageType Type, const std::string &String, const char *Sour
 	SYSTEMTIME ST;
 	GetLocalTime(&ST);
 
-	//Формируем начало строки лога (дата, время, идентификатор текущего потока)
-	char Temp[MAX_PATH];
-	sprintf(Temp, "%02d.%02d.%02d %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, ST.wYear, ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
-	
-	//Формируем остальную часть (тип сообщения, имя файла с исходным кодом, номер строки)
-	std::stringstream Stream;
-	Stream << Temp << " [";
-	switch (Type)
+	if (Type == ISNamespace::DMT_Unknown)
 	{
-	case MessageType::MT_Info: Stream << "INFO"; break;
-	case MessageType::MT_Debug: Stream << "DEBUG"; break;
-	case MessageType::MT_Warning: Stream << "WARNING"; break;
-	case MessageType::MT_Error: Stream << "ERROR"; break;
+		printf("%s\n", String.toStdString().c_str());
 	}
-	Stream << "] [" << SourceName << ":" << Line << "] " << String << std::endl;
-	
-	Mutex.lock();
-	Array[LastPosition++] = Stream.str();
-	Mutex.unlock();
+	else
+	{
+		//Формируем начало строки лога (дата, время, идентификатор текущего потока)
+		char Temp[MAX_PATH], Year[5];
+		itoa(ST.wYear, Year, 10); //Преобразование года в строку
+		sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, Year[2], Year[3], ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
+
+		//Формируем остальную часть (тип сообщения, имя файла с исходным кодом, номер строки)
+		std::stringstream Stream;
+		Stream << Temp << " [";
+		switch (Type)
+		{
+		case ISNamespace::DMT_Info: Stream << "Info"; break;
+		case ISNamespace::DMT_Debug: Stream << "Debug"; break;
+		case ISNamespace::DMT_Warning: Stream << "Warning"; break;
+		case ISNamespace::DMT_Error: Stream << "Error"; break;
+		}
+		Stream << "]";
+
+		if (EnableOutPrintf) //Если включена опция вывода в консоль - выводим, пока поток не дополнен именем файла с исходным кодом и номером строки
+		{
+			printf("%s %s\n", Stream.str().c_str(), String.toStdString().c_str());
+		}
+
+		if (EnableOutFile) //Если включена опция записи в файл - дополняем именем файла с исходным кодом, номером строки и добавляем в очередь
+		{
+			Stream << " [" << SourceName << ":" << Line << "] " << String.toStdString() << std::endl;
+
+			Mutex.lock();
+			Array[LastPosition++] = Stream.str();
+			Mutex.unlock();
+		}
+	}
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Worker()
 {
 	while (Running) //Работа потока
 	{
-		DWORD
 		Sleep(LOGGER_TIMEOUT); //Ждём 2 секунды
 
 		Mutex.lock(); //Блокируем мьютекс
@@ -192,7 +222,7 @@ void ISLogger::UpdateFilePath()
 
 	//Формируем путь к лог-файлу
 	std::stringstream Stream;
-	Stream << PathLogs << "AuthServer_" << CurrentYear <<
+	Stream << PathLogs << FilePrefix << "_" << CurrentYear <<
 		(CurrentMonth < 10 ? '0' + std::to_string(CurrentMonth) : std::to_string(CurrentMonth)) <<
 		(CurrentDay < 10 ? '0' + std::to_string(CurrentDay) : std::to_string(CurrentDay)) <<
 		".log";

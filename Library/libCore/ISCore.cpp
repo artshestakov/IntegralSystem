@@ -5,10 +5,10 @@
 #include "ISQuery.h"
 #include "ISConfig.h"
 #include "ISQueryPool.h"
+#include "ISLogger.h"
 #include "ISProtocol.h"
 #include "ISSystem.h"
 #include "ISSettings.h"
-#include "ISDebug.h"
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
 #include "ISCrashDumper.h"
@@ -86,13 +86,7 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 {
 	ISDefinesCore::Instance().Init(IsGui);
 
-	bool Result = ISSystem::CreateDir(DEFINES_CORE.PATH_LOGS_DIR, ErrorString); //Создание папки для логов
-	if (!Result)
-	{
-		return Result;
-	}
-
-	Result = ISSystem::CreateDir(DEFINES_CORE.PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
+	bool Result = ISSystem::CreateDir(DEFINES_CORE.PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
 	if (!Result)
 	{
 		return Result;
@@ -210,15 +204,15 @@ void ISCore::ExecuteStartCommand()
 		QString CommandText = SETTING_STRING(CONST_UID_SETTING_EVENTS_STARTUP_COMMAND);
 		if (CommandText.length())
 		{
-			ISDebug::ShowDebugString(QString("Executing command: %1").arg(CommandText));
+			ISLOGGER_DEBUG(QString("Executing command: %1").arg(CommandText));
 			int ExitCode = QProcess::execute("cmd.exe", QStringList() << "/C" << CommandText);
 			if (ExitCode)
 			{
-				ISDebug::ShowDebugString("Executed command error.");
+				ISLOGGER_DEBUG("Executed command error.");
 			}
 			else
 			{
-				ISDebug::ShowDebugString("Executed command done.");
+				ISLOGGER_DEBUG("Executed command done.");
 			}
 		}
 	}
@@ -231,15 +225,15 @@ void ISCore::ExecuteExitComamnd()
 		QString CommandText = SETTING_STRING(CONST_UID_SETTING_EVENTS_EXIT_COMMAND);
 		if (CommandText.length())
 		{
-			ISDebug::ShowDebugString(QString("Executing command: %1").arg(CommandText));
+			ISLOGGER_DEBUG(QString("Executing command: %1").arg(CommandText));
 			int ExitCode = QProcess::execute("cmd.exe", QStringList() << "/C" << CommandText);
 			if (ExitCode)
 			{
-				ISDebug::ShowDebugString("Executed command error.");
+				ISLOGGER_DEBUG("Executed command error.");
 			}
 			else
 			{
-				ISDebug::ShowDebugString("Executed command done.");
+				ISLOGGER_DEBUG("Executed command done.");
 			}
 		}
 	}

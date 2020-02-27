@@ -1,9 +1,9 @@
 #include "ISQueryException.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISQueryException::ISQueryException(const QString& ExceptionString) : ISExceptionBase(ExceptionString)
 {
-	ISDebug::ShowErrorString(ExceptionString);
+	ISLOGGER_ERROR(ExceptionString);
 }
 //-----------------------------------------------------------------------------
 ISQueryException::~ISQueryException()

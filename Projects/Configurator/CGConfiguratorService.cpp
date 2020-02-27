@@ -1,6 +1,6 @@
 #include "CGConfiguratorService.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISCommandLine.h"
@@ -29,7 +29,7 @@ CGConfiguratorService::~CGConfiguratorService()
 //-----------------------------------------------------------------------------
 void CGConfiguratorService::reindex()
 {
-	ISDebug::ShowString("Reindex...");
+	ISLOGGER_UNKNOWN("Reindex...");
 
 	int CountTables = ISMetaData::GetInstanse().GetTables().count();
 	for (int i = 0; i < CountTables; ++i)
@@ -38,82 +38,82 @@ void CGConfiguratorService::reindex()
 
 		QString TableName = ISMetaData::GetInstanse().GetTables()[i]->Name;
 
-		ISDebug::ShowString("Reindex table: " + TableName);
+		ISLOGGER_UNKNOWN("Reindex table: " + TableName);
 
 		ISQuery qReindexTable;
 		qReindexTable.SetShowLongQuery(false);
 		if (qReindexTable.Execute(QString("REINDEX TABLE %1").arg(TableName)))
 		{
-			ISDebug::ShowString(QString("Reindex table %1 done").arg(TableName));
+			ISLOGGER_UNKNOWN(QString("Reindex table %1 done").arg(TableName));
 		}
 		else
 		{
-			ISDebug::ShowString(QString("Reindex table %1 error").arg(TableName));
+			ISLOGGER_UNKNOWN(QString("Reindex table %1 error").arg(TableName));
 		}
 	}
 
-	ISDebug::ShowString("Reindex done");
-	ISDebug::ShowString();
+	ISLOGGER_UNKNOWN("Reindex done");
+	ISLOGGER_EMPTY();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorService::vacuum()
 {
-	ISDebug::ShowDebugString("Vacuum...");
+	ISLOGGER_DEBUG("Vacuum...");
 	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qVacuum;
 	qVacuum.SetShowLongQuery(false);
 	if (qVacuum.Execute(Q_VACUUM))
 	{
-		ISDebug::ShowInfoString("Vacuum done");
+		ISLOGGER_INFO("Vacuum done");
 	}
 	else
 	{
-		ISDebug::ShowWarningString("Vacuum error: " + qVacuum.GetErrorText());
+		ISLOGGER_WARNING("Vacuum error: " + qVacuum.GetErrorText());
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorService::vacuumanalyze()
 {
-	ISDebug::ShowDebugString("Vacuum analyze...");
+	ISLOGGER_DEBUG("Vacuum analyze...");
 	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qVacuumAnalyze;
 	qVacuumAnalyze.SetShowLongQuery(false);
 	if (qVacuumAnalyze.Execute(Q_VACUUM_ANALYZE))
 	{
-		ISDebug::ShowInfoString("Vacuum analyze done");
+		ISLOGGER_INFO("Vacuum analyze done");
 	}
 	else
 	{
-		ISDebug::ShowWarningString("Vacuum analyze error: " + qVacuumAnalyze.GetErrorText());
+		ISLOGGER_WARNING("Vacuum analyze error: " + qVacuumAnalyze.GetErrorText());
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorService::vacuumfull()
 {
-	ISDebug::ShowDebugString("Vacuum full...");
+	ISLOGGER_DEBUG("Vacuum full...");
 	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qVacuumFull;
 	qVacuumFull.SetShowLongQuery(false);
 	if (qVacuumFull.Execute(Q_VACUUM_FULL))
 	{
-		ISDebug::ShowInfoString("Vacuum full done");
+		ISLOGGER_INFO("Vacuum full done");
 	}
 	else
 	{
-		ISDebug::ShowWarningString("Vacuum full error: " + qVacuumFull.GetErrorText());
+		ISLOGGER_WARNING("Vacuum full error: " + qVacuumFull.GetErrorText());
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorService::cleartable()
 {
-	ISDebug::ShowString("Input table name:");
+	ISLOGGER_UNKNOWN("Input table name:");
 	QString InputName = ISCommandLine::GetText(); //Запрос на ввод имени таблицы
 	if (InputName.isEmpty())
 	{
-		ISDebug::ShowString("Table name is empty");
+		ISLOGGER_UNKNOWN("Table name is empty");
 		return;
 	}
 
@@ -129,7 +129,7 @@ void CGConfiguratorService::cleartable()
 
 	if (!MetaTable) //Если таблица не найдена
 	{
-		ISDebug::ShowString(QString("Table \"%1\" not found").arg(InputName));
+		ISLOGGER_UNKNOWN(QString("Table \"%1\" not found").arg(InputName));
 		return;
 	}
 
@@ -149,7 +149,7 @@ void CGConfiguratorService::cleartable()
 			qDelete.BindValue(":ObjectID", ObjectID);
 			if (qDelete.Execute())
 			{
-				ISDebug::ShowString(QString("Delete record %1 of %2").arg(Removed).arg(RecordCount));
+				ISLOGGER_UNKNOWN(QString("Delete record %1 of %2").arg(Removed).arg(RecordCount));
 				++Removed;
 			}
 		}

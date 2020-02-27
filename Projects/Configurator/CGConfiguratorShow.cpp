@@ -1,6 +1,6 @@
 #include "CGConfiguratorShow.h"
 #include "ISConfig.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISSystem.h"
@@ -38,7 +38,7 @@ CGConfiguratorShow::~CGConfiguratorShow()
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::obsoletetables()
 {
-	ISDebug::ShowString("Searching not needed tables...");
+	ISLOGGER_UNKNOWN("Searching not needed tables...");
 
 	int FoundedTables = 0;
 
@@ -46,7 +46,7 @@ void CGConfiguratorShow::obsoletetables()
 	qSelectTables.SetShowLongQuery(false);
 	if (qSelectTables.Execute())
 	{
-		ISDebug::ShowString("Tables:");
+		ISLOGGER_UNKNOWN("Tables:");
 		while (qSelectTables.Next()) //Обход таблиц базы
 		{
 			QString TableName = qSelectTables.ReadColumn("tablename").toString().toLower();
@@ -54,19 +54,19 @@ void CGConfiguratorShow::obsoletetables()
 			PMetaClassTable *MetaTable = FoundTable(TableName);
 			if (!MetaTable)
 			{
-				ISDebug::ShowString(TableName);
+				ISLOGGER_UNKNOWN(TableName);
 				++FoundedTables;
 			}
 		}
 	}
 
-	ISDebug::ShowString(QString("Founded tables: %1").arg(FoundedTables));
-	ISDebug::ShowString();
+	ISLOGGER_UNKNOWN(QString("Founded tables: %1").arg(FoundedTables));
+	ISLOGGER_EMPTY();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::obsoletefields()
 {
-	ISDebug::ShowString("Searching not needed fields...");
+	ISLOGGER_UNKNOWN("Searching not needed fields...");
 
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
@@ -91,19 +91,19 @@ void CGConfiguratorShow::obsoletefields()
 						PMetaClassField *MetaField = FoundField(MetaTable, ColumnName);
 						if (!MetaField)
 						{
-							ISDebug::ShowString(TableName + ": " + ColumnName);
+							ISLOGGER_UNKNOWN(TableName + ": " + ColumnName);
 						}
 					}
 				}
 			}
 		}
 	}
-	ISDebug::ShowString();
+	ISLOGGER_EMPTY();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::obsoleteresources()
 {
-	ISDebug::ShowString("Searching not needed resources...");
+	ISLOGGER_UNKNOWN("Searching not needed resources...");
 
 	QMap<QString, QVectorString*> Map;
 	QMap <QString, QVectorString*> MapOutput;
@@ -159,27 +159,27 @@ void CGConfiguratorShow::obsoleteresources()
 		}
 	}
 
-	ISDebug::ShowString();
+	ISLOGGER_EMPTY();
 
 	for (const auto &OutputItem : MapOutput.toStdMap())
 	{
 		QString TableName = OutputItem.first;
 		QVectorString *Vector = OutputItem.second;
 
-		ISDebug::ShowString(TableName + ':');
+		ISLOGGER_UNKNOWN(TableName + ':');
 
 		for (int i = 0; i < Vector->count(); ++i)
 		{
-			ISDebug::ShowString(Vector->at(i));
+			ISLOGGER_UNKNOWN(Vector->at(i));
 		}
-		ISDebug::ShowString();
+		ISLOGGER_EMPTY();
 	}
-	ISDebug::ShowString();
+	ISLOGGER_EMPTY();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::obsoletesequence()
 {
-	ISDebug::ShowString("Searching not needed sequences...");
+	ISLOGGER_UNKNOWN("Searching not needed sequences...");
 
 	QString Where;
 	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
@@ -198,7 +198,7 @@ void CGConfiguratorShow::obsoletesequence()
 		while (qSelectSequences.Next())
 		{
 			QString SequenceName = qSelectSequences.ReadColumn("sequence_name").toString();
-			ISDebug::ShowString(SequenceName);
+			ISLOGGER_UNKNOWN(SequenceName);
 		}
 	}
 }
@@ -213,19 +213,19 @@ void CGConfiguratorShow::config()
 			QStringList StringList = QString(FileConfig.readAll()).split("\n");
 			for (const QString &String : StringList)
 			{
-				ISDebug::ShowString(String);
+				ISLOGGER_UNKNOWN(String);
 			}
 
 			FileConfig.close();
 		}
 		else
 		{
-			ISDebug::ShowString(QString("Not open file config: %1").arg(FileConfig.errorString()));
+			ISLOGGER_UNKNOWN(QString("Not open file config: %1").arg(FileConfig.errorString()));
 		}
 	}
 	else
 	{
-		ISDebug::ShowString(QString("Not exist file config: %1").arg(FileConfig.fileName()));
+		ISLOGGER_UNKNOWN(QString("Not exist file config: %1").arg(FileConfig.fileName()));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -259,6 +259,6 @@ PMetaClassField* CGConfiguratorShow::FoundField(PMetaClassTable *MetaTable, cons
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::databasesize()
 {
-	ISDebug::ShowString(ISDatabase::GetInstance().GetCurrentDatabaseSize());
+	ISLOGGER_UNKNOWN(ISDatabase::GetInstance().GetCurrentDatabaseSize());
 }
 //-----------------------------------------------------------------------------

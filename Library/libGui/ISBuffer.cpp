@@ -1,7 +1,7 @@
 #include "ISBuffer.h"
-#include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISCountingTime.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISBuffer::ISBuffer()
 {
@@ -70,7 +70,7 @@ void ISBuffer::InitializeAnimations()
 	{
 		AddAnimations(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISDebug::ShowDebugString(QString("Buffer animation initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Animations.size()));
+	ISLOGGER_DEBUG(QString("Buffer animation initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Animations.size()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializeIcons()
@@ -81,7 +81,7 @@ void ISBuffer::InitializeIcons()
 	{
 		AddImageIcon(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISDebug::ShowDebugString(QString("Buffer icons initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Icons.size()));
+	ISLOGGER_DEBUG(QString("Buffer icons initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Icons.size()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializePixmaps()
@@ -92,7 +92,7 @@ void ISBuffer::InitializePixmaps()
 	{
 		AddImage(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISDebug::ShowDebugString(QString("Buffer images initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Pixmaps.size()));
+	ISLOGGER_DEBUG(QString("Buffer images initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Pixmaps.size()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializeAudios()
@@ -103,7 +103,7 @@ void ISBuffer::InitializeAudios()
 	{
 		AddAudio(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISDebug::ShowDebugString(QString("Buffer audio initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Audios.size()));
+	ISLOGGER_DEBUG(QString("Buffer audio initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Audios.size()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::AddAnimations(const QString &AnimationName, const QString &AnimationPath)

@@ -3,8 +3,8 @@
 #include "ISMetaUser.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISCountingTime.h"
-#include "ISDebug.h"
 #include "ISQueryText.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SUBSYSTEM_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 															   "FROM _groupaccesssubsystem "
@@ -176,7 +176,7 @@ void ISUserRoleEntity::Initialize()
 	InitializeSubSystem();
 	InitializeTables();
 	InitializeSpecial();
-	ISDebug::ShowDebugString(QString("Initialized UserRole %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized UserRole %1 msec").arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)

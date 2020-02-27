@@ -1,10 +1,10 @@
 #include "ISQueryModel.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISQueryModelHelper.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent)
 	: QObject(parent),
@@ -316,11 +316,11 @@ void ISQueryModel::CheckQuery(const QString &QueryText)
 	ISQuery qQuery;
 	if (qQuery.Prepare(QueryText))
 	{
-		ISDebug::ShowDebugString("Prepare Query - OK");
+		ISLOGGER_DEBUG("Prepare Query - OK");
 	}
 	else
 	{
-		ISDebug::ShowErrorString("Prepare Query - ERROR");
+		ISLOGGER_ERROR("Prepare Query - ERROR");
 	}
 }
 //-----------------------------------------------------------------------------

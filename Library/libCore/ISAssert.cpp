@@ -1,5 +1,4 @@
 #include "ISAssert.h"
-#include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISExceptionAssert.h"
 //-----------------------------------------------------------------------------

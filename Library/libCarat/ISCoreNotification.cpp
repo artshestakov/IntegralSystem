@@ -2,7 +2,7 @@
 #include "ISDatabase.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id "
@@ -112,7 +112,7 @@ void ISCoreNotification::SendNotification(const QString &NotificationUID, const 
 	qNotify.BindValue(":Payload", ISSystem::VariantMapToJsonString(VariantMap));
 	if (qNotify.ExecuteFirst()) //Если нотификация отправлена успешно
 	{
-		ISDebug::ShowString("Sended notification \"" + NotificationName + "\" for: " + qNotify.ReadColumn("userfullname").toString());
+		ISLOGGER_UNKNOWN("Sended notification \"" + NotificationName + "\" for: " + qNotify.ReadColumn("userfullname").toString());
 	}
 }
 //-----------------------------------------------------------------------------

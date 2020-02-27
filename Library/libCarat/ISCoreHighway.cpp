@@ -1,5 +1,5 @@
 #include "ISCoreHighway.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISQuery.h"
 #include "ISPhoneNumberParser.h"
 #include "ISNotifySender.h"
@@ -53,7 +53,7 @@ void ISCoreHighway::UserEvent(const QStringMap &StringMap)
 	if (EventType == "call") //Событие входящего звонка
 	{
 		QString Number = StringMap.value("CallerIDNum");
-		ISDebug::ShowInfoString("Incoming call from number \"" + Number + "\", search organization...");
+		ISLOGGER_INFO("Incoming call from number \"" + Number + "\", search organization...");
 
 		ISQuery qSelect(QS_ORGANIZATION_USER);
 		qSelect.BindValue(":Phone", ISPhoneNumberParser::PasteEvent(StringList.at(1)));
@@ -64,13 +64,13 @@ void ISCoreHighway::UserEvent(const QStringMap &StringMap)
 			int UserID = qSelect.ReadColumn("orgz_user").toInt();
 			QString Pattern = qSelect.ReadColumn("aspt_pattern").toString();
 
-			ISDebug::ShowInfoString("Organization founded. Redirect call to number: " + Pattern);
+			ISLOGGER_INFO("Organization founded. Redirect call to number: " + Pattern);
 			AsteriskSocket->Redirect(StringMap, Pattern);
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, OrganizationID);
 		}
 		else
 		{
-			ISDebug::ShowInfoString("Organization not found");
+			ISLOGGER_INFO("Organization not found");
 		}
 	}
 	else if (EventType == "rating") //Событие оценки качества
@@ -83,7 +83,7 @@ void ISCoreHighway::UserEvent(const QStringMap &StringMap)
 		qInsertRaiting.BindValue(":Pattern", Pattern);
 		if (qInsertRaiting.ExecuteFirst())
 		{
-			ISDebug::ShowString("New rating \"" + QString::number(Rating) + "\" for user: " + qInsertRaiting.ReadColumn("userfullname").toString());
+			ISLOGGER_UNKNOWN("New rating \"" + QString::number(Rating) + "\" for user: " + qInsertRaiting.ReadColumn("userfullname").toString());
 		}
 	}
 }

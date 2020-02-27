@@ -1,5 +1,5 @@
 #include "ISCaratCoreApplication.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISConfig.h"
 #include "ISDatabase.h"
 #include "ISConstants.h"
@@ -27,6 +27,6 @@ int ISCaratCoreApplication::Exec() const
 //-----------------------------------------------------------------------------
 void ISCaratCoreApplication::Started()
 {
-	ISDebug::ShowString("exec");
+	ISLOGGER_UNKNOWN("exec");
 }
 //-----------------------------------------------------------------------------

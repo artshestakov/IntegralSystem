@@ -1,7 +1,7 @@
 #include "ISEMail.h"
 #include "ISDefinesCore.h"
 #include "ISSystem.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISEMail::ISEMail(const QString &server, int port, const ISUuid &connection_type, const QString &sender_login, const QString &sender_password, const QString &sender_name, const QString &recipient_login, const QString &subject, const QString &message, QObject *parent)
 	: QObject(parent),
@@ -117,7 +117,7 @@ void ISEMail::ReadyReadStandardOutput()
 
 	for (const QString &String : StringList)
 	{
-		ISDebug::ShowInfoString(String);
+		ISLOGGER_INFO(String);
 	}
 }
 //-----------------------------------------------------------------------------

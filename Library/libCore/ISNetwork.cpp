@@ -1,6 +1,6 @@
 #include "ISNetwork.h"
-#include "ISDebug.h"
 #include "ISConstants.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISNetwork::ISNetwork(QObject *parent) : QObject(parent)
 {
@@ -28,7 +28,7 @@ bool ISNetwork::CheckAccessInternet(QString &ErrorString) const
 		if (NetworkReply->error() != QNetworkReply::NoError)
 		{
 			ErrorString = NetworkReply->errorString();
-			ISDebug::ShowWarningString(NetworkReply->errorString());
+			ISLOGGER_WARNING(NetworkReply->errorString());
 		}
 
 		delete NetworkReply;

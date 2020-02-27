@@ -1,11 +1,11 @@
 #include "ISSplashScreen.h"
 #include "ISDefinesGui.h"
-#include "ISDebug.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"
 #include "ISConstants.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)
 {
@@ -60,7 +60,7 @@ void ISSplashScreen::SetMessage(const QString &Message)
 	}
 	ProgressBar->setValue(Value);
 
-	ISDebug::ShowInfoString(Message);
+	ISLOGGER_INFO(Message);
 	showMessage(Message, Qt::AlignHCenter | Qt::AlignBottom, DEFINES_GUI.COLOR_SPLASH_SCREEN_TEXT);
 	activateWindow();
 

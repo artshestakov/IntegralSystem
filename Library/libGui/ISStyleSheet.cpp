@@ -1,7 +1,7 @@
 #include "ISStyleSheet.h"
-#include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISCountingTime.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISStyleSheet::ISStyleSheet()
 {
@@ -37,7 +37,7 @@ void ISStyleSheet::Initialize()
 	{
 		AddStyle(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISDebug::ShowDebugString(QString("StyleSheet Initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(StyleSheets.size()));
+	ISLOGGER_DEBUG(QString("StyleSheet Initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(StyleSheets.size()));
 }
 //-----------------------------------------------------------------------------
 void ISStyleSheet::AddStyle(const QString &FileName, const QString &FilePath)

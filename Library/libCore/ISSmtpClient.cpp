@@ -1,5 +1,5 @@
 #include "ISSmtpClient.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISSmtpClient::ISSmtpClient(const QString & host, int port, ConnectionType connectionType) :
 	socket(nullptr),
@@ -229,7 +229,7 @@ bool ISSmtpClient::connectToHost()
 
             if (!((QSslSocket*) socket)->waitForEncrypted(connectionTimeout)) 
 			{
-                ISDebug::ShowDebugString(((QSslSocket*) socket)->errorString());
+                ISLOGGER_DEBUG(((QSslSocket*) socket)->errorString());
                 emit smtpError(ConnectionTimeoutError);
                 return false;
             }
@@ -485,7 +485,7 @@ void ISSmtpClient::socketStateChanged(QAbstractSocket::SocketState state)
 //-----------------------------------------------------------------------------
 void ISSmtpClient::socketError(QAbstractSocket::SocketError socketError)
 {
-	ISDebug::ShowErrorString(socket->errorString());
+	ISLOGGER_ERROR(socket->errorString());
 }
 //-----------------------------------------------------------------------------
 void ISSmtpClient::socketReadyRead()

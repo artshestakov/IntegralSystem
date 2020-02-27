@@ -1,6 +1,6 @@
 #include "ISCoreAsteriskQueue.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISSettingsDatabase.h"
@@ -77,7 +77,7 @@ void ISCoreAsteriskQueue::Timeout()
 			QString UserFullName = qSelectQueue.ReadColumn("userfullname").toString();
 			QString Parameters = qSelectQueue.ReadColumn("astq_parameters").toString();
 
-			ISDebug::ShowString("Event in queue from \"" + UserFullName + "\": " + TypeName);
+			ISLOGGER_UNKNOWN("Event in queue from \"" + UserFullName + "\": " + TypeName);
 			QueueEvent(TypeUID, UserID, Parameters);
 
 			ISQuery qDelete(QD_ASTERISK_QUEUE);
@@ -122,13 +122,13 @@ void ISCoreAsteriskQueue::Originate(int UserID, const QVariantMap &Parameters)
 //-----------------------------------------------------------------------------
 void ISCoreAsteriskQueue::ClearQueue()
 {
-	ISDebug::ShowString("Clear asterisk task queue...");
+	ISLOGGER_UNKNOWN("Clear asterisk task queue...");
 	ISQuery qDeleteQueue(QD_ASTERISK_QUEUES);
 	qDeleteQueue.SetShowLongQuery(false);
 	if (qDeleteQueue.Execute())
 	{
 		int CountAffected = qDeleteQueue.GetCountAffected();
-		CountAffected ? ISDebug::ShowString("Clear finished. Deleted event count:" + QString::number(CountAffected)) : ISDebug::ShowString("Clear not required");
+		CountAffected ? ISLOGGER_UNKNOWN("Clear finished. Deleted event count:" + QString::number(CountAffected)) : ISLOGGER_UNKNOWN("Clear not required");
 	}
 }
 //-----------------------------------------------------------------------------

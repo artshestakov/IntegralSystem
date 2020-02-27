@@ -3,7 +3,7 @@
 #include "ISSystem.h"
 #include "ISPhoneNumberParser.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISMetaData.h"
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
@@ -62,7 +62,7 @@ void ISCoreCenterSeven::UserEvent(const QStringMap &StringMap)
 		QString BranchName = qSelect.ReadColumn("brch_name").toString();
 		int UserID = qSelect.ReadColumn("brch_administrator").toInt();
 
-		ISDebug::ShowString("Incoming call from \"" + StringMap.value("CallerIDNum") + "\" to filial: " + BranchName);
+		ISLOGGER_UNKNOWN("Incoming call from \"" + StringMap.value("CallerIDNum") + "\" to filial: " + BranchName);
 		ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, PatientID + '_' + Phone);
 	}
 }

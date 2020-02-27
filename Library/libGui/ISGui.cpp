@@ -20,7 +20,6 @@
 #include "ISConfig.h"
 #include "ISStyleSheet.h"
 #include "ISBuffer.h"
-#include "ISDebug.h"
 #include "ISRegisterMetaType.h"
 #include "ISVersion.h"
 //-----------------------------------------------------------------------------

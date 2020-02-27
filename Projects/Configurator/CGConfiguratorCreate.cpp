@@ -1,5 +1,5 @@
 #include "CGConfiguratorCreate.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISAssert.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"
@@ -54,12 +54,12 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
 //-----------------------------------------------------------------------------
 void CGConfiguratorCreate::database()
 {
-	ISDebug::ShowString("Input configuration name: ");
+	ISLOGGER_UNKNOWN("Input configuration name: ");
 	std::string ConfigurationName;
 	std::getline(std::cin, ConfigurationName);
 	if (ConfigurationName.empty())
 	{
-		ISDebug::ShowWarningString("Configuration name is empty.");
+		ISLOGGER_WARNING("Configuration name is empty.");
 		return;
 	}
 
@@ -70,16 +70,16 @@ void CGConfiguratorCreate::database()
 		bool Exist = ISDatabase::GetInstance().CheckExistDatabase(DatabaseName);
 		if (Exist)
 		{
-			ISDebug::ShowString("Database \"" + DatabaseName + "\" already exist");
+			ISLOGGER_UNKNOWN("Database \"" + DatabaseName + "\" already exist");
 		}
 		else //Если база данных не существует - создать её
 		{
-			ISDebug::ShowString("Configurator.Creating database: " + DatabaseName);
+			ISLOGGER_UNKNOWN("Configurator.Creating database: " + DatabaseName);
 			QSqlQuery SqlQuery = ISDatabase::GetInstance().GetSystemDB().exec(QC_DATABASE.arg(DatabaseName).arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN))); //Исполнение запроса на создание базы данных
 			QSqlError SqlError = SqlQuery.lastError();
 			Exist = SqlError.type() == QSqlError::NoError;
-			Exist ? ISDebug::ShowString("The \"" + DatabaseName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
-				: ISDebug::ShowString("Error creating database \"" + DatabaseName + "\": " + SqlError.text());
+			Exist ? ISLOGGER_UNKNOWN("The \"" + DatabaseName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
+				: ISLOGGER_UNKNOWN("Error creating database \"" + DatabaseName + "\": " + SqlError.text());
 		}
 
 		if (Exist) //Если база данных создана
@@ -96,17 +96,17 @@ void CGConfiguratorCreate::database()
 			ISQuery qCreateFunction;
 			if (qCreateFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + QString::fromStdString(ConfigurationName) + "'; END; $$ LANGUAGE plpgsql IMMUTABLE"))
 			{
-				ISDebug::ShowInfoString("Function getting configuration name created");
+				ISLOGGER_INFO("Function getting configuration name created");
 			}
 			else
 			{
-				ISDebug::ShowWarningString("Function getting configuration name not created: " + qCreateFunction.GetErrorText());
+				ISLOGGER_WARNING("Function getting configuration name not created: " + qCreateFunction.GetErrorText());
 			}
 		}
 	}
 	else
 	{
-		ISDebug::ShowString(ErrorString);
+		ISLOGGER_UNKNOWN(ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ void CGConfiguratorCreate::systemuser()
 			qUpdate.BindValue(":UID", CONST_UID_USER_POSTGRES);
 			if (qUpdate.Execute())
 			{
-				ISDebug::ShowString("System user updated");
+				ISLOGGER_UNKNOWN("System user updated");
 			}
 		}
 		else
@@ -145,7 +145,7 @@ void CGConfiguratorCreate::systemuser()
 			qInsert.BindValue(":AccessAllowed", true);
 			if (qInsert.Execute())
 			{
-				ISDebug::ShowString("System user created");
+				ISLOGGER_UNKNOWN("System user created");
 			}
 		}
 	}
@@ -166,7 +166,7 @@ void CGConfiguratorCreate::databasesettings()
 			qUpdate.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
 			if (qUpdate.Execute())
 			{
-				ISDebug::ShowString("Database settings updated");
+				ISLOGGER_UNKNOWN("Database settings updated");
 			}
 		}
 		else
@@ -178,7 +178,7 @@ void CGConfiguratorCreate::databasesettings()
 			qInsert.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
 			if (qInsert.Execute())
 			{
-				ISDebug::ShowString("Database settings created");
+				ISLOGGER_UNKNOWN("Database settings created");
 			}
 		}
 	}

@@ -1,10 +1,10 @@
 #include "ISModelThreadWorker.h"
 #include "ISDatabase.h"
 #include "ISCountingTime.h"
-#include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISModelThreadWorker::ISModelThreadWorker(QObject *parent) : QObject(parent)
 {
@@ -28,17 +28,17 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 	int Step = 0;
 	ISCountingTime Time;
 
-	ISDebug::ShowDebugString("Connecting to DB...");
+	ISLOGGER_DEBUG("Connecting to DB...");
 	if (DB.open())
 	{
-		ISDebug::ShowDebugString(QString("Connecting to DB %1 msec.").arg(Time.GetElapsed()));
+		ISLOGGER_DEBUG(QString("Connecting to DB %1 msec.").arg(Time.GetElapsed()));
 		Time.Restart();
 
 		QSqlQuery *SqlQuery = new QSqlQuery(DB);
-		ISDebug::ShowDebugString("Preparing query...");
+		ISLOGGER_DEBUG("Preparing query...");
 		if (SqlQuery->prepare(SqlQueryText))
 		{
-			ISDebug::ShowDebugString(QString("Prepared query %1 msec.").arg(Time.GetElapsed()));
+			ISLOGGER_DEBUG(QString("Prepared query %1 msec.").arg(Time.GetElapsed()));
 			Time.Restart();
 
 			for (const auto &Condition : Conditions.toStdMap()) //Обход параметров запроса
@@ -53,20 +53,20 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 				}
 			}
 
-			ISDebug::ShowDebugString("Executing query...");
+			ISLOGGER_DEBUG("Executing query...");
 			if (SqlQuery->exec())
 			{
-				ISDebug::ShowDebugString(QString("Executed query %1 msec.").arg(Time.GetElapsed()));
+				ISLOGGER_DEBUG(QString("Executed query %1 msec.").arg(Time.GetElapsed()));
 
 				if (Time.GetElapsed() > MAX_QUERY_TIME)
 				{
-					ISDebug::ShowDebugString(QString("Long query %1 msec: %2").arg(Time.GetElapsed()).arg(SqlQuery->lastQuery().simplified()));
+					ISLOGGER_DEBUG(QString("Long query %1 msec: %2").arg(Time.GetElapsed()).arg(SqlQuery->lastQuery().simplified()));
 				}
 
 				emit ExecutedQuery();
 
 				Time.Restart();
-				ISDebug::ShowDebugString("Loading records...");
+				ISLOGGER_DEBUG("Loading records...");
 				while (SqlQuery->next()) //Зарузка записей
 				{
 					Records.push_back(SqlQuery->record());
@@ -81,7 +81,7 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 						++Step;
 					}
 				}
-				ISDebug::ShowDebugString(QString("Loaded records %1, %2 msec.").arg(Records.count()).arg(Time.GetElapsed()));
+				ISLOGGER_DEBUG(QString("Loaded records %1, %2 msec.").arg(Records.count()).arg(Time.GetElapsed()));
 
 				emit Results(Records);
 				emit Finished();

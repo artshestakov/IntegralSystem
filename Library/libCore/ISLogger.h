@@ -3,27 +3,19 @@
 #ifndef _ISLOGGER_H_INCLUDED
 #define _ISLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
+#include "ISNamespace.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-class ISLogger
+class LIBCORE_EXPORT ISLogger
 {
-public:
-	enum MessageType //Тип сообщения
-	{
-		MT_Info,
-		MT_Debug,
-		MT_Warning,
-		MT_Error
-	};
-
 public:
 	static ISLogger& Instance(); //Получить ссылку на объект логгера
 
-	std::string GetErrorString() const; //Получить описание ошибки
-	bool Initialize(); //Инициализировать логгер
+	QString GetErrorString() const; //Получить описание ошибки
+	bool Initialize(bool OutPrintf, bool OutFile, const std::string &file_prefix = std::string()); //Инициализировать логгер
 
-	void Log(MessageType Type, const std::string &String, const char *SourceName, int Line); //Добавить сообщение в лог
+	void Log(ISNamespace::DebugMessageType Type, const QString &String, const char *SourceName, int Line); //Добавить сообщение в лог
 
 private:
 	void Worker(); //Обработчик очереди сообщений
@@ -42,18 +34,26 @@ private:
 	std::array<std::string, ARRAY_MAX_SIZE> Array; //Массив сообщений
 	size_t LastPosition; //Посденяя позиция
 	bool Running; //Флаг работы логгера
+	
+	std::ofstream File; //Текущий лог-файл
 	std::string PathDirectory; //Путь к папке с исполняемым файлом приложения
 	std::string PathLogs; //Путь к папке с логами
 	std::string PathFile; //Путь к текущему лог-файлу
-	std::ofstream File; //Текущий лог-файл
+
 	size_t CurrentYear; //Текущий год
 	size_t CurrentMonth; //Текущий месяц
 	size_t CurrentDay; //Текущий день
+
+	bool EnableOutPrintf; //Флаг вывода в консоль
+	bool EnableOutFile; //Флаг вывода в файл
+	std::string FilePrefix; //Префикс имени файла
 };
 //-----------------------------------------------------------------------------
-#define LG_INFO(MESSAGE) GLLogger::Instance().Log(GLLogger::MT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
-#define LG_DEBUG(MESSAGE) GLLogger::Instance().Log(GLLogger::MT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
-#define LG_WARNING(MESSAGE) GLLogger::Instance().Log(GLLogger::MT_Warning, MESSAGE, __FILE__, __LINE__) //Логирование предупреждения
-#define LG_ERROR(MESSAGE) GLLogger::Instance().Log(GLLogger::MT_Error, MESSAGE, __FILE__, __LINE__) //Логирование ошибки
+#define ISLOGGER_EMPTY() ISLogger::Instance().Log(ISNamespace::DMT_Unknown, QString(), __FILE__, __LINE__) //Логирование неизвестного сообщения
+#define ISLOGGER_UNKNOWN(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Unknown, MESSAGE, __FILE__, __LINE__) //Логирование неизвестного сообщения
+#define ISLOGGER_INFO(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
+#define ISLOGGER_DEBUG(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
+#define ISLOGGER_WARNING(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Warning, MESSAGE, __FILE__, __LINE__) //Логирование предупреждения
+#define ISLOGGER_ERROR(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Error, MESSAGE, __FILE__, __LINE__) //Логирование ошибки
 //-----------------------------------------------------------------------------
 #endif

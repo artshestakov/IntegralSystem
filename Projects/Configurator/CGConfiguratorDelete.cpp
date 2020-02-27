@@ -1,6 +1,6 @@
 #include "CGConfiguratorDelete.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISCommandLine.h"
@@ -44,7 +44,7 @@ CGConfiguratorDelete::~CGConfiguratorDelete()
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::indexes()
 {
-	ISDebug::ShowDebugString("Deleting indexes...");
+	ISLOGGER_DEBUG("Deleting indexes...");
 	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qSelectIndexes(QS_INDEXES);
@@ -64,13 +64,13 @@ void CGConfiguratorDelete::indexes()
 			}
 		}
 
-		ISDebug::ShowInfoString("Deleted " + QString::number(Deleted) + " of " + QString::number(CountIndexes) + " indexes");
+		ISLOGGER_INFO("Deleted " + QString::number(Deleted) + " of " + QString::number(CountIndexes) + " indexes");
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::foreigns()
 {
-	ISDebug::ShowDebugString("Deleting foreigns...");
+	ISLOGGER_DEBUG("Deleting foreigns...");
 	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qSelectForeigns(QS_FOREIGNS);
@@ -102,31 +102,31 @@ void CGConfiguratorDelete::foreigns()
 			}
 		}
 
-		ISDebug::ShowInfoString("Deleted " + QString::number(Deleted) + " of " + QString::number(CountForeigns) + " foreigns");
+		ISLOGGER_INFO("Deleted " + QString::number(Deleted) + " of " + QString::number(CountForeigns) + " foreigns");
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::systems()
 {
-	ISDebug::ShowDebugString("Deleting systems...");
+	ISLOGGER_DEBUG("Deleting systems...");
 	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qDelete(QD_SYSTEMS);
 	if (qDelete.Execute())
 	{
-		ISDebug::ShowInfoString("Deleting all systems done");
+		ISLOGGER_INFO("Deleting all systems done");
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::subsystems()
 {
-	ISDebug::ShowDebugString("Deleting subsystems...");
+	ISLOGGER_DEBUG("Deleting subsystems...");
 	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qDelete(QD_SUB_SYSTEMS);
 	if (qDelete.Execute())
 	{
-		ISDebug::ShowInfoString("Deleting all subsystems done");
+		ISLOGGER_INFO("Deleting all subsystems done");
 	}
 }
 //-----------------------------------------------------------------------------
@@ -153,12 +153,12 @@ void CGConfiguratorDelete::tables()
 				if (ISCommandLine::Question(QString("Remove table \"%1\"?").arg(TableName))) //Удаление таблицы
 				{
 					ISQuery qDeleteTable;
-					ISDebug::ShowString(QString("Removing table \"%1\"...").arg(TableName));
+					ISLOGGER_UNKNOWN(QString("Removing table \"%1\"...").arg(TableName));
 					bool Executed = qDeleteTable.Execute("DROP TABLE public." + TableName);
 					if (Executed)
 					{
 						++Removed;
-						ISDebug::ShowString("Removed table");
+						ISLOGGER_UNKNOWN("Removed table");
 					}
 				}
 				else //Пропустить удаление таблицы
@@ -171,11 +171,11 @@ void CGConfiguratorDelete::tables()
 
 	if (Removed == Skipped) //Таблицы для удаления не найдены
 	{
-		ISDebug::ShowString("Not found obsolete tables");
+		ISLOGGER_UNKNOWN("Not found obsolete tables");
 	}
 	else
 	{
-		ISDebug::ShowString(QString("Removed tables: %1. Skipped tables: %2").arg(Removed).arg(Skipped));
+		ISLOGGER_UNKNOWN(QString("Removed tables: %1. Skipped tables: %2").arg(Removed).arg(Skipped));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -214,12 +214,12 @@ void CGConfiguratorDelete::fields()
 					if (ISCommandLine::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName))) //Удаление поля
 					{
 						ISQuery qDeleteField;
-						ISDebug::ShowString(QString("Removing column \"%1\"...").arg(ColumnName));
+						ISLOGGER_UNKNOWN(QString("Removing column \"%1\"...").arg(ColumnName));
 						bool Executed = qDeleteField.Execute("ALTER TABLE public." + TableName + " DROP COLUMN " + ColumnName);
 						if (Executed)
 						{
 							++Removed;
-							ISDebug::ShowString("Removed column");
+							ISLOGGER_UNKNOWN("Removed column");
 						}
 					}
 					else //Пропустить удаление поля
@@ -233,11 +233,11 @@ void CGConfiguratorDelete::fields()
 
 	if (Removed == Skipped) //Поля для удаления не найдены
 	{
-		ISDebug::ShowString("Not found obsolete fields");
+		ISLOGGER_UNKNOWN("Not found obsolete fields");
 	}
 	else
 	{
-		ISDebug::ShowString(QString("Removed columns: %1. Skipped columns: %2").arg(Removed).arg(Skipped));
+		ISLOGGER_UNKNOWN(QString("Removed columns: %1. Skipped columns: %2").arg(Removed).arg(Skipped));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -299,17 +299,17 @@ void CGConfiguratorDelete::resources()
 
 	if (Removed == Skipped) //Ресурсы для удаления не найдены
 	{
-		ISDebug::ShowString("Not found obsolete resources");
+		ISLOGGER_UNKNOWN("Not found obsolete resources");
 	}
 	else
 	{
-		ISDebug::ShowString(QString("Removed resources: %1. Skipped resources: %2").arg(Removed).arg(Skipped));
+		ISLOGGER_UNKNOWN(QString("Removed resources: %1. Skipped resources: %2").arg(Removed).arg(Skipped));
 	}
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::ShowResourceConsole(PMetaClassTable *MetaTable, const ISUuid &ResourceUID)
 {
-	ISDebug::ShowString();
+	ISLOGGER_EMPTY();
 	ISQuery qSelect("SELECT * FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 	qSelect.BindValue(":ResourceUID", ResourceUID);
 	if (qSelect.ExecuteFirst())
@@ -317,7 +317,7 @@ void CGConfiguratorDelete::ShowResourceConsole(PMetaClassTable *MetaTable, const
 		QSqlRecord SqlRecord = qSelect.GetRecord();
 		for (int i = 0; i < SqlRecord.count(); ++i)
 		{
-			ISDebug::ShowString(QString("%1: %2").arg(SqlRecord.field(i).name()).arg(SqlRecord.value(i).toString()));
+			ISLOGGER_UNKNOWN(QString("%1: %2").arg(SqlRecord.field(i).name()).arg(SqlRecord.value(i).toString()));
 		}
 	}
 }

@@ -1,10 +1,10 @@
 #include "ISMetaSystemsEntity.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"
-#include "ISDebug.h"
 #include "ISMetaUser.h"
 #include "ISUserRoleEntity.h"
 #include "ISQueryText.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 										  "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "
@@ -84,7 +84,7 @@ void ISMetaSystemsEntity::Initialize()
 		}
 	}
 
-	ISDebug::ShowDebugString(QString("Initialized MetaSystems %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized MetaSystems %1 msec").arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
 QVector<ISMetaSystem*> ISMetaSystemsEntity::GetSystems()

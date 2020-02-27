@@ -1,6 +1,6 @@
 #include "ISCoreMedTech.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISMetaData.h"
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
@@ -76,7 +76,7 @@ void ISCoreMedTech::UserEvent(const QStringMap &StringMap)
 		qSelectBranch.BindValue(":RatingID", RatingID);
 		if (qSelectBranch.ExecuteFirst())
 		{
-			ISDebug::ShowString("New raiting \"" + QString::number(Rating) + "\" for filial: " + qSelectBranch.ReadColumn("brch_name").toString());
+			ISLOGGER_UNKNOWN("New raiting \"" + QString::number(Rating) + "\" for filial: " + qSelectBranch.ReadColumn("brch_name").toString());
 		}
 	}
 }

@@ -1,10 +1,10 @@
 #include "ISFavorites.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"
-#include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISMetaUser.h"
 #include "ISQueryText.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
 											"FROM _favorites "
@@ -61,7 +61,7 @@ void ISFavorites::Initialize()
 		}
 	}
 
-	ISDebug::ShowDebugString(QString("Initialized Favorites %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized Favorites %1 msec").arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
 void ISFavorites::AddFavorite(const QString &TableName, const QString &TableLocalName, const QString &ObjectName, int ObjectID)

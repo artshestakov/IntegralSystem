@@ -1,8 +1,8 @@
 #include "ISCoreMail.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
 #include "ISEMail.h"
+#include "ISLogger.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_MAIL_QUEUE = PREPARE_QUERY("SELECT mail_id, mail_server, mail_port, ectp_uid, mail_senderlogin, mail_senderpassword, mail_sendername, mail_recipientlogin, mail_subject, mail_message "
@@ -71,17 +71,17 @@ void ISCoreMail::Timeout()
 		QString Subject = qSelectMailQueue.ReadColumn("mail_subject").toString();
 		QString Message = qSelectMailQueue.ReadColumn("mail_message").toString();
 
-		ISDebug::ShowInfoString("Sending message - start");
+		ISLOGGER_INFO("Sending message - start");
 		ISEMail EMail(Server, Port, ConnectionType, SenderLogin, SenderPassword, SenderName, RecipientLogin, Subject, Message, this);
 		if (EMail.SendMessage())
 		{
 			SendDone(ID);
-			ISDebug::ShowInfoString("Sending message - done");
+			ISLOGGER_INFO("Sending message - done");
 		}
 		else
 		{
 			SendFailed(ID, EMail.GetErrorString());
-			ISDebug::ShowWarningString(QString("Sending message - failed: %1").arg(EMail.GetErrorString()));
+			ISLOGGER_WARNING(QString("Sending message - failed: %1").arg(EMail.GetErrorString()));
 		}
 	}
 

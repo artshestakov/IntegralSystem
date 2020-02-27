@@ -19,12 +19,12 @@
 #include "ISProtocol.h"
 #include "ISListObjectForm.h"
 #include "ISCountingTime.h"
-#include "ISDebug.h"
 #include "ISDatabaseHelper.h"
 #include "ISStyleSheet.h"
 #include "ISFavorites.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISInterfaceForm(parent)
 {
@@ -472,12 +472,12 @@ void ISObjectFormBase::FillDataFields()
 		QString QueryText = QueryModel.GetQueryText();
 
 		//Выполнение запроса
-		ISDebug::ShowDebugString(QString("Start select query from object %1 in table \"%2\"").arg(ObjectID).arg(MetaTable->Name));
+		ISLOGGER_DEBUG(QString("Start select query from object %1 in table \"%2\"").arg(ObjectID).arg(MetaTable->Name));
 		ISCountingTime Time;
 		ISQuery qSelect(QueryText);
 		IS_ASSERT(qSelect.ExecuteFirst(), QString("Not executed query:\n%1\n%2").arg(QueryText).arg(qSelect.GetErrorText()));
 		IS_ASSERT(qSelect.GetCountResultRows() == 1, "Error count result rows");
-		ISDebug::ShowDebugString(QString("Finished select query from object %1 in table \"%2\". %3 msec.").arg(ObjectID).arg(MetaTable->Name).arg(Time.GetElapsed()));
+		ISLOGGER_DEBUG(QString("Finished select query from object %1 in table \"%2\". %3 msec.").arg(ObjectID).arg(MetaTable->Name).arg(Time.GetElapsed()));
 		QSqlRecord SqlRecord = qSelect.GetRecord();
 		
 		RecordIsDeleted = SqlRecord.value("IsDeleted").toBool();

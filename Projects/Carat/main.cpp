@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ISCaratApplication.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISCommandLine.h"
 #include "ISSystem.h"
 #include "ISConfig.h"
@@ -17,14 +17,14 @@ int main(int argc, char *argv[])
 	ISApplicationRunning ApplicationRunning(CARAT_UID);
 	if (!ApplicationRunning.TryToRun()) //Если приложение уже запущено
 	{
-		ISDebug::ShowString("Application already started");
+		ISLOGGER_UNKNOWN("Application already started");
 		ISSystem::SleepSeconds(3);
 		return EXIT_SUCCESS;
 	}
 
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).isEmpty() || CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).isEmpty())
 	{
-		ISDebug::ShowString("Not found login or password in config");
+		ISLOGGER_UNKNOWN("Not found login or password in config");
 		return EXIT_FAILURE;
 	}
 

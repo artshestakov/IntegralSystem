@@ -176,7 +176,6 @@
     <ClInclude Include="libCore_global.h" />
     <ClInclude Include="StackWalker.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISExceptionAssert.h" />
     <ClInclude Include="ISExceptionBase.h" />
     <ClInclude Include="ISNamespace.h" />
@@ -209,7 +208,6 @@
     <ClCompile Include="ISCommandLine.cpp" />
     <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISCountingTime.cpp" />
-    <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />
     <ClCompile Include="ISExceptionBase.cpp" />
     <ClCompile Include="ISMemoryObjects.cpp" />

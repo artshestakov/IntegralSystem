@@ -1,11 +1,11 @@
 #include "ISDeviceEntity.h"
-#include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISCountingTime.h"
 #include "ISSystem.h"
 #include "ISQueryText.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEVICE_USER = PREPARE_QUERY("SELECT dvus_id, dvus_uid, concat(dvtp_name, '/', dvce_name), dvce_class "
 											  "FROM _deviceuser "
@@ -42,7 +42,7 @@ void ISDeviceEntity::Initialize()
 			QString DeviceUserName = qSelectDevice.ReadColumn("concat").toString();
 			QString ClassName = qSelectDevice.ReadColumn("dvce_class").toString();
 
-			ISDebug::ShowInfoString(LANG("Device.Initialize.Process").arg(DeviceUserName));
+			ISLOGGER_INFO(LANG("Device.Initialize.Process").arg(DeviceUserName));
 			ISCountingTime Time;
 
 			int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
@@ -59,11 +59,11 @@ void ISDeviceEntity::Initialize()
 
 			if (DeviceObjectBase->Initialize())
 			{
-				ISDebug::ShowInfoString(LANG("Device.Initialize.Done").arg(DeviceUserName).arg(ISSystem::MillisecondsToString(Time.GetElapsed())));
+				ISLOGGER_INFO(LANG("Device.Initialize.Done").arg(DeviceUserName).arg(ISSystem::MillisecondsToString(Time.GetElapsed())));
 			}
 			else
 			{
-				ISDebug::ShowInfoString(LANG("Device.Initialize.Error").arg(DeviceUserName) + ": " + DeviceObjectBase->GetErrorText());
+				ISLOGGER_INFO(LANG("Device.Initialize.Error").arg(DeviceUserName) + ": " + DeviceObjectBase->GetErrorText());
 			}
 		}
 	}

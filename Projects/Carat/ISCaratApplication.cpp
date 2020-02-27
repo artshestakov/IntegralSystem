@@ -1,6 +1,5 @@
 #include "ISCaratApplication.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
 #include "ISDatabase.h"
 #include "ISAssert.h"
 #include "ISConfig.h"

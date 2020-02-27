@@ -1,9 +1,9 @@
 #include "ISMetaData.h"
-#include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISCountingTime.h"
+#include "ISLogger.h"
 #include "ISMetaDataHelper.h"
 #include "ISUuid.h"
 #include "ISMetaUuidCheckeder.h"
@@ -74,7 +74,7 @@ bool ISMetaData::Initialize(const QString &configuration_name, bool InitXSR, boo
 	if (!Result)
 	{
 		ConfigurationName = configuration_name;
-		ISDebug::ShowDebugString("Initialize MetaData...");
+		ISLOGGER_DEBUG("Initialize MetaData...");
 
 		Result = InitializeXSN();
 		if (Result)

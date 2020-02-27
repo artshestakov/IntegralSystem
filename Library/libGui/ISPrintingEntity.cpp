@@ -1,9 +1,9 @@
 #include "ISPrintingEntity.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"
-#include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISQueryText.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_system, rprt_type, rprt_tablename, rprt_name, rprt_localname, rprt_filetemplate "
 										 "FROM _report "
@@ -81,6 +81,6 @@ void ISPrintingEntity::Initialize()
 		}
 	}
 
-	ISDebug::ShowDebugString(QString("Initialized Printing %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized Printing %1 msec").arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------

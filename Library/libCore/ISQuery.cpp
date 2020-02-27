@@ -1,9 +1,9 @@
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
-#include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISDatabase.h"
+#include "ISLogger.h"
 #include "ISCountingTime.h"
 #include "ISQueryExceptionConnection.h"
 #include "ISQueryExceptionSyntax.h"
@@ -79,7 +79,7 @@ bool ISQuery::Execute() /*throw(ISQueryException)*/
 	{
 		if (ShowLongQuery)
 		{
-			ISDebug::ShowWarningString(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+			ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
 		}
 	}
 
@@ -103,7 +103,7 @@ bool ISQuery::Execute(const QString& query_text) /*throw(ISQueryException)*/
 	{
 		if (ShowLongQuery)
 		{
-			ISDebug::ShowWarningString(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+			ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
 		}
 	}
 
@@ -127,7 +127,7 @@ bool ISQuery::Execute(QSqlDatabase& db, const QString& query_text) /*throw(ISQue
 	{
 		if (ShowLongQuery)
 		{
-			ISDebug::ShowWarningString(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+			ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
 		}
 	}
 
@@ -297,7 +297,7 @@ void ISQuery::Raise() /*throw(ISQueryException)*/
 {
 	if (SqlQuery.lastError().type() != QSqlError::NoError)
 	{
-		ISDebug::ShowErrorString(GetErrorText());
+		ISLOGGER_ERROR(GetErrorText());
 	}
 
 	if (!DB.isOpen())

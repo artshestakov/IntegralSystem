@@ -1,7 +1,7 @@
 #include "ISCaratService.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"
 #include "ISSystem.h"
@@ -49,8 +49,8 @@ void ISCaratService::StartService()
 				 FileName += ".exe";
 			}
 
-			ISDebug::ShowString();
-			ISDebug::ShowInfoString("Core \"" + LocalName + "\": starting...");
+			ISLOGGER_EMPTY();
+			ISLOGGER_INFO("Core \"" + LocalName + "\": starting...");
 			QString CorePath = DEFINES_CORE.PATH_APPLICATION_DIR + '/' + FileName;
 
 			ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
@@ -63,7 +63,7 @@ void ISCaratService::StartService()
 			}
 			else //ядро не существует
 			{
-				ISDebug::ShowWarningString("Core \"" + LocalName + "\" not found. Path: " + CorePath);
+				ISLOGGER_WARNING("Core \"" + LocalName + "\" not found. Path: " + CorePath);
 				ISSystem::SleepSeconds(3);
 			}
 		}
@@ -71,20 +71,20 @@ void ISCaratService::StartService()
 
 	if (Cores.count())
 	{
-		ISDebug::ShowString();
+		ISLOGGER_EMPTY();
 	}
 	else //≈сли активных €дер нет
 	{
-		ISDebug::ShowInfoString("Not found active cores");
+		ISLOGGER_INFO("Not found active cores");
 	}
 
 	if (TcpServer->listen(QHostAddress::Any, CARAT_PORT)) //≈сли прослушивание порта запущено успешно
 	{
-		ISDebug::ShowInfoString("Started and listen port: " + QString::number(CARAT_PORT));
+		ISLOGGER_INFO("Started and listen port: " + QString::number(CARAT_PORT));
 	}
 	else //ѕрослушивание порта не запущено
 	{
-		ISDebug::ShowErrorString("Not listen port: " + QString::number(CARAT_PORT) + ". Error: " + TcpServer->errorString());
+		ISLOGGER_ERROR("Not listen port: " + QString::number(CARAT_PORT) + ". Error: " + TcpServer->errorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -109,11 +109,11 @@ void ISCaratService::CoreStart(ISProcessCore *ProcessCore)
 
 	if (ProcessCore->GetRunning())
 	{
-		ISDebug::ShowInfoString("Core \"" + ProcessCore->GetLocalName() + "\" started: " + CountingTime.GetElapsed() + " msec, process " + ProcessCore->processId());
+		ISLOGGER_INFO("Core \"" + ProcessCore->GetLocalName() + "\" started: " + CountingTime.GetElapsed() + " msec, process " + ProcessCore->processId());
 	}
 	else
 	{
-		ISDebug::ShowInfoString("Not started core: " + ProcessCore->GetLocalName());
+		ISLOGGER_INFO("Not started core: " + ProcessCore->GetLocalName());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void ISCaratService::ReadyReadStandartOutput()
 				break;
 			}
 		}
-		ISDebug::ShowString(String);
+		ISLOGGER_UNKNOWN(String);
 	}
 }
 //-----------------------------------------------------------------------------

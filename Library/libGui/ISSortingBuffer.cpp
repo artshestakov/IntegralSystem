@@ -1,8 +1,8 @@
 #include "ISSortingBuffer.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"
-#include "ISDebug.h"
 #include "ISQueryText.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_SORTINGS = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
 										   "FROM _sortingtables "
@@ -103,7 +103,7 @@ void ISSortingBuffer::Initialize()
 			Sortings.append(CreateSorting(qSelect.ReadColumn("sgts_tablename").toString(), qSelect.ReadColumn("sgts_fieldname").toString(), qSelect.ReadColumn("sgts_sorting").toInt()));
 		}
 	}
-	ISDebug::ShowDebugString(QString("Initialized SortingBuffer %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized SortingBuffer %1 msec").arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
 void ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
