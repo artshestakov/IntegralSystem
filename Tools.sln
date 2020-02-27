@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LineEditHighlighter", "Tool
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUILogger", "Tools\GUILogger\GUILogger.vcxproj", "{22FCB2A6-AF9A-41F5-9500-59CAB401B408}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Replacer", "Tools\Replacer\Replacer.vcxproj", "{B760C2AC-98D8-40F6-A672-FB42B61C8374}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -47,6 +49,14 @@ Global
 		{22FCB2A6-AF9A-41F5-9500-59CAB401B408}.Release|x64.ActiveCfg = Release|Win32
 		{22FCB2A6-AF9A-41F5-9500-59CAB401B408}.Release|x86.ActiveCfg = Release|Win32
 		{22FCB2A6-AF9A-41F5-9500-59CAB401B408}.Release|x86.Build.0 = Release|Win32
+		{B760C2AC-98D8-40F6-A672-FB42B61C8374}.Debug|x64.ActiveCfg = Debug|x64
+		{B760C2AC-98D8-40F6-A672-FB42B61C8374}.Debug|x64.Build.0 = Debug|x64
+		{B760C2AC-98D8-40F6-A672-FB42B61C8374}.Debug|x86.ActiveCfg = Debug|Win32
+		{B760C2AC-98D8-40F6-A672-FB42B61C8374}.Debug|x86.Build.0 = Debug|Win32
+		{B760C2AC-98D8-40F6-A672-FB42B61C8374}.Release|x64.ActiveCfg = Release|x64
+		{B760C2AC-98D8-40F6-A672-FB42B61C8374}.Release|x64.Build.0 = Release|x64
+		{B760C2AC-98D8-40F6-A672-FB42B61C8374}.Release|x86.ActiveCfg = Release|Win32
+		{B760C2AC-98D8-40F6-A672-FB42B61C8374}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
