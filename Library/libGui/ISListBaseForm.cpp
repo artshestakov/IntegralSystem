@@ -107,7 +107,6 @@ ISListBaseForm::~ISListBaseForm()
 	{
 		delete SearchForm;
 	}
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -118,7 +117,6 @@ int ISListBaseForm::GetCurrentRowIndex()
 	{
 		return 0;
 	}
-	
 	return CurrentRow;
 }
 //-----------------------------------------------------------------------------
@@ -134,8 +132,7 @@ int ISListBaseForm::GetObjectID()
 //-----------------------------------------------------------------------------
 int ISListBaseForm::GetObjectID(int RowIndex)
 {
-	int ObjectID = SqlModel->index(RowIndex, 0).data().toInt();
-	return ObjectID;
+	return SqlModel->index(RowIndex, 0).data().toInt();
 }
 //-----------------------------------------------------------------------------
 int ISListBaseForm::GetRowIndex(int object_id)
@@ -148,20 +145,17 @@ int ISListBaseForm::GetRowIndex(int object_id)
 			return i;
 		}
 	}
-
 	return -1;
 }
 //-----------------------------------------------------------------------------
 QSqlRecord ISListBaseForm::GetCurrentRecord()
 {
-	QSqlRecord Record = SqlModel->GetRecord(GetCurrentRowIndex());
-	return Record;
+	return SqlModel->GetRecord(GetCurrentRowIndex());
 }
 //-----------------------------------------------------------------------------
 QVariant ISListBaseForm::GetCurrentRecordValue(const QString &FieldName)
 {
-	QVariant Value = GetCurrentRecord().value(FieldName);
-	return Value;
+	return GetCurrentRecord().value(FieldName);
 }
 //-----------------------------------------------------------------------------
 QVariant ISListBaseForm::GetCurrentRecordValueDB(const QString &FieldName)
@@ -173,20 +167,17 @@ QVariant ISListBaseForm::GetCurrentRecordValueDB(const QString &FieldName)
 	{
 		Value = qSelect.ReadColumn(0);
 	}
-
 	return Value;
 }
 //-----------------------------------------------------------------------------
 QVariant ISListBaseForm::GetRecordValue(const QString &FieldName, int RowIndex)
 {
-	QVariant Value = SqlModel->GetRecord(RowIndex).value(FieldName);
-	return Value;
+	return SqlModel->GetRecord(RowIndex).value(FieldName);
 }
 //-----------------------------------------------------------------------------
 QVectorInt ISListBaseForm::GetSelectedIDs()
 {
 	QVectorInt VectorInt;
-
 	QModelIndexList ModelIndexList = GetTableView()->selectionModel()->selectedRows();
 	if (ModelIndexList.count())
 	{
@@ -202,7 +193,6 @@ QVectorInt ISListBaseForm::GetSelectedIDs()
 	{
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.SelectAtLeastOneRecord"));
 	}
-
 	return VectorInt;
 }
 //-----------------------------------------------------------------------------
@@ -225,7 +215,6 @@ QVectorInt ISListBaseForm::GetIDs() const
 QVectorInt ISListBaseForm::GetSelectedRowIndexes()
 {
 	QVectorInt VectorInt;
-
 	QModelIndexList ModelIndexList = GetTableView()->selectionModel()->selectedRows();
 	if (ModelIndexList.count())
 	{
@@ -235,7 +224,6 @@ QVectorInt ISListBaseForm::GetSelectedRowIndexes()
 			VectorInt.append(ModelIndex.row());
 		}
 	}
-
 	return VectorInt;
 }
 //-----------------------------------------------------------------------------
@@ -346,7 +334,6 @@ void ISListBaseForm::HideSystemFields()
 	{
 		HideField("ID");
 	}
-
 	HideField("IsDeleted");
 	HideField("IsSystem");
 }
@@ -451,7 +438,6 @@ void ISListBaseForm::LoadDataAfterEvent()
 void ISListBaseForm::AfterShowEvent()
 {
 	ISInterfaceMetaForm::AfterShowEvent();
-	
 	if (ShowOnly)
 	{
 		ActionSetVisible(ISNamespace::AT_Create, false);
@@ -492,7 +478,6 @@ void ISListBaseForm::InsertAction(QAction *ActionBefore, QAction *ActionAfter, b
 void ISListBaseForm::paintEvent(QPaintEvent *e)
 {
 	ISInterfaceMetaForm::paintEvent(e);
-
 	if (ListIndicatorWidget->isVisible())
 	{
 		QRect Rect = TableView->frameGeometry();
@@ -593,7 +578,6 @@ void ISListBaseForm::HideField(const QString &FieldName)
 			return;
 		}
 	}
-
 	ISLOGGER_WARNING(QString("Not found field \"%1\" from HideField").arg(FieldName));
 }
 //-----------------------------------------------------------------------------
@@ -608,7 +592,6 @@ void ISListBaseForm::ShowField(const QString &FieldName)
 			return;
 		}
 	}
-
 	ISLOGGER_WARNING(QString("Not found field \"%1\" from ShowField").arg(FieldName));
 }
 //-----------------------------------------------------------------------------
@@ -651,7 +634,6 @@ void ISListBaseForm::PeriodClear()
 void ISListBaseForm::ResizeColumnsToContents()
 {
 	disconnect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, &ISListBaseForm::HeaderResized);
-
 	for (int i = 0; i < SqlModel->columnCount(); ++i)
 	{
 		QString FieldName = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
@@ -661,7 +643,6 @@ void ISListBaseForm::ResizeColumnsToContents()
 			TableView->setColumnWidth(i, ColumnSize);
 		}
 	}
-
 	connect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, &ISListBaseForm::HeaderResized);
 }
 //-----------------------------------------------------------------------------
@@ -779,12 +760,10 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 void ISListBaseForm::SearchFastClear()
 {
 	disconnect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
-
 	SearchFlag = false;
 	QueryModel->ClearSearchFilter();
 	QueryModel->ClearConditions();
 	Update();
-
 	connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
 }
 //-----------------------------------------------------------------------------
@@ -1165,10 +1144,7 @@ void ISListBaseForm::Search()
 			ActionSetEnabled(ISNamespace::AT_SearchClear, true);
 			ISProtocol::Insert(true, CONST_UID_PROTOCOL_SEARCH, MetaTable->Name, MetaTable->LocalListName, QVariant());
 		});
-
-		
 	}
-	
 	SearchForm->ShowAnimated(false, DURATION_SHOW_HIDE_SEARCH_FORM);
 }
 //-----------------------------------------------------------------------------
@@ -1426,49 +1402,41 @@ void ISListBaseForm::ShowFavorites()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowReference()
 {
-
+	//???
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectBeginRecord()
 {
-	if (!SqlModel->rowCount())
+	if (SqlModel->rowCount())
 	{
-		return;
+		TableView->selectRow(0);
+		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->minimum());
 	}
-
-	TableView->selectRow(0);
-	TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->minimum());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectPreviousRecord()
 {
-    if (!SqlModel->rowCount() || !GetCurrentRowIndex())
+    if (SqlModel->rowCount() || GetCurrentRowIndex())
 	{
-		return;
+		TableView->selectRow(GetCurrentRowIndex() - 1);
 	}
-
-	TableView->selectRow(GetCurrentRowIndex() - 1);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectNextRecord()
 {
-	if (!SqlModel->rowCount() || GetCurrentRowIndex() == SqlModel->rowCount() - 1)
+	if (SqlModel->rowCount() || GetCurrentRowIndex() == SqlModel->rowCount() - 1)
 	{
-		return;
+		TableView->selectRow(GetCurrentRowIndex() + 1);
 	}
-
-	TableView->selectRow(GetCurrentRowIndex() + 1);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectLastRecord()
 {
-	if (!SqlModel->rowCount())
+	if (SqlModel->rowCount())
 	{
-		return;
+		TableView->selectRow(SqlModel->rowCount() - 1);
+		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->maximum());
 	}
-
-	TableView->selectRow(SqlModel->rowCount() - 1);
-	TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->maximum());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NoteObject()
@@ -1497,12 +1465,10 @@ void ISListBaseForm::ResetWidthColumn()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ResetWidthColumn")))
 	{
 		ISGui::SetWaitGlobalCursor(true);
-
 		for (int i = 0; i < SqlModel->columnCount(); ++i)
 		{
 			TableView->setColumnWidth(i, 100);
 		}
-
 		ISGui::SetWaitGlobalCursor(false);
 	}
 }
@@ -1798,7 +1764,6 @@ void ISListBaseForm::CreateContextMenu()
 	if (GetAction(ISNamespace::AT_SystemInfo)) ContextMenu->addAction(GetAction(ISNamespace::AT_SystemInfo));
 	if (GetAction(ISNamespace::AT_Share)) ContextMenu->addAction(GetAction(ISNamespace::AT_Share));
 	if (GetAction(ISNamespace::AT_AttachTask)) ContextMenu->addAction(GetAction(ISNamespace::AT_AttachTask));
-
 	ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
 }
 //-----------------------------------------------------------------------------

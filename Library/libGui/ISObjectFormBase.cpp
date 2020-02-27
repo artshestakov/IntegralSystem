@@ -547,7 +547,6 @@ void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
 		EditObjectID->SetCursor(CURSOR_WHATS_THIS); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
 		EditObjectID->SetVisibleClear(false);
 		EditObjectID->setSizePolicy(QSizePolicy::Maximum, EditObjectID->sizePolicy().verticalPolicy());
-
 		FormLayout->addRow(LabelSystemInfoObject, EditObjectID);
 	}
 }
@@ -778,7 +777,6 @@ void ISObjectFormBase::SaveClose()
 	{
 		close();
 	}
-
 	emit CloseTab(CurrentIndexTab);
 }
 //-----------------------------------------------------------------------------
@@ -932,7 +930,7 @@ bool ISObjectFormBase::Save()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SaveEvent()
 {
-
+	//???
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::RenameReiconForm()
@@ -983,7 +981,6 @@ void ISObjectFormBase::SetModificationFlag(bool modification)
 			WindowTitle.remove(DEFINES_CORE.SYMBOL_OBJECT_CHANGED);
 		}
 	}
-
 	setWindowTitle(WindowTitle);
 }
 //-----------------------------------------------------------------------------
@@ -1031,18 +1028,10 @@ void ISObjectFormBase::ShowSystemInfo()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddFavoite()
 {
-	if (ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID))
-	{
-		ISFavorites::GetInstance().DeleteFavorite(MetaTable->Name, ObjectID);
-		ActionFavorites->setChecked(false);
-		ISNotificationService::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName));
-	}
-	else
-	{
-		ISFavorites::GetInstance().AddFavorite(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
-		ActionFavorites->setChecked(true);
-		ISNotificationService::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
-	}
+	bool IsExist = ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
+	IsExist ? ISFavorites::GetInstance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::GetInstance().AddFavorite(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
+	ActionFavorites->setCheckable(!IsExist);
+	IsExist ? ISNotificationService::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISNotificationService::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::Delete()
@@ -1174,7 +1163,6 @@ void ISObjectFormBase::ShowSettingsForm()
 void ISObjectFormBase::AddActionToolBar(QAction *Action, bool AddingToActionGroup)
 {
 	ToolBar->addAction(Action);
-
 	if (AddingToActionGroup)
 	{
 		ActionGroup->addAction(Action);
@@ -1184,7 +1172,6 @@ void ISObjectFormBase::AddActionToolBar(QAction *Action, bool AddingToActionGrou
 void ISObjectFormBase::AddActionMenu(QAction *Action, bool AddingToActionGroup)
 {
 	ActionAdditionally->menu()->addAction(Action);
-
 	if (AddingToActionGroup)
 	{
 		ActionGroup->addAction(Action);
