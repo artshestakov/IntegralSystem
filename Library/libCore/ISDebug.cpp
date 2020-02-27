@@ -52,44 +52,26 @@ void ISDebug::OutputString(ISNamespace::DebugMessageType MessageType, const QStr
 	{
 		printf("%s\n", Message.toStdString().c_str());
 	}
-	else
+	else //Вывод форматированной строки
 	{
 		//Получаем текущую дату и время
 		SYSTEMTIME ST;
 		GetLocalTime(&ST);
 
-		//Формируем начало строки лога (дата, время, идентификатор текущего потока)
 		char Temp[MAX_PATH], YearString[5];
 		itoa(ST.wYear, YearString, 10); //Преобразование года в строку
-		sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, YearString[2], YearString[3], ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
-		// printf()?
 
-		std::stringstream Stream;
-		Stream << Temp;
-
+		std::string MessageTypeString;
 		switch (MessageType)
 		{
-		case ISNamespace::DMT_Unknown:
+		case ISNamespace::DMT_Debug: MessageTypeString = "Info"; break;
+		case ISNamespace::DMT_Info: MessageTypeString = "Debug"; break;
+		case ISNamespace::DMT_Warning: MessageTypeString = "Warning"; break;
+		case ISNamespace::DMT_Error: MessageTypeString = "Error"; break;
 		}
+
+		printf("%02d.%02d.%c%c %02d:%02d:%02d.%03d %d [%s] %s\n", ST.wDay, ST.wMonth, YearString[2], YearString[3], ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId(), MessageTypeString.c_str(), Message.toStdString().c_str());
 	}
-
-	//QString NewString = String.simplified();
-	//std::cout << NewString.toStdString() << std::endl;
-	/*if (ISSystem::GetApplicationType() == ISNamespace::AT_CONSOLE)
-	{
-		QTextStream TextStream(stdout);
-
-        if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
-        {
-            TextStream.setCodec(TEXT_CODEC_IBM866);
-        }
-
-        TextStream << NewString << endl;
-	}
-	else if (ISSystem::GetApplicationType() == ISNamespace::AT_GUI)
-	{
-		qDebug().noquote() << NewString;
-	}*/
 
 	if (AddInLog)
 	{

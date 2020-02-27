@@ -43,21 +43,21 @@ int main(int argc, char *argv[])
 	bool Result = ISCore::Startup(false, ErrorString);
 	if (!Result)
 	{
-		printf("%s\n", ErrorString.toStdString().c_str());
+		ISDebug::ShowErrorString(ErrorString);
 		return EXIT_FAILURE;
 	}
 
 	Result = InitConfiguratorScheme(ErrorString);
 	if (!Result)
 	{
-		printf("%s\n", ErrorString.toStdString().c_str());
+		ISDebug::ShowErrorString(ErrorString);
 		return EXIT_FAILURE;
 	}
 
 	ISNamespace::ConsoleArgumentType ArgumentType = CheckArguments();
 	if (ArgumentType == ISNamespace::CAT_Unknown)
 	{
-		ISDebug::ShowString("Invalid arguments");
+		ISDebug::ShowWarningString("invalid arguments");
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 
 	if (DBLogin.isEmpty() || DBPassword.isEmpty())
 	{
-		ISDebug::ShowString("Not specified server or password in config file");
+		ISDebug::ShowErrorString("not specified server or password in config file");
 		ISCommandLine::Pause();
 		return EXIT_FAILURE;
 	}
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 	Result = ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), true, true);
 	if (!Result)
 	{
-		printf("Error initialize meta data: %s\n", ISMetaData::GetInstanse().GetErrorString().toStdString().c_str());
+		ISDebug::ShowErrorString("initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
 		return EXIT_FAILURE;
 	}
 
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 		
 		if (!ExistDB)
 		{
-			ISDebug::ShowString("ATTENTION! Database \"" + DBName + "\" not exist. Run the 'create database' command.");
+			ISDebug::ShowWarningString("Database \"" + DBName + "\" not exist. Run the 'create database' command.");
 		}
 
 		bool IsRunning = true;
@@ -206,7 +206,7 @@ bool CheckExistDatabase(const QString &DBName, bool &Connected)
 	}
 	else
 	{
-		ISDebug::ShowString(ErrorString);
+		ISDebug::ShowErrorString(ErrorString);
 	}
 	return Exist;
 }
@@ -214,7 +214,7 @@ bool CheckExistDatabase(const QString &DBName, bool &Connected)
 void InterpreterMode(bool &IsRunning)
 {
 	ISDebug::ShowString();
-	printf("Enter command: ");
+	ISDebug::ShowString("Enter command: ");
 
 	std::string InputCommand;
 	std::getline(std::cin, InputCommand);
@@ -244,7 +244,7 @@ void InterpreterMode(bool &IsRunning)
 		}
 		else
 		{
-			ISDebug::ShowString("Command not found");
+			ISDebug::ShowErrorString("command not found");
 		}
 	}
 }
@@ -259,13 +259,13 @@ bool Execute(const QString &Argument)
 		{
 			ISCountingTime CountingTime;
 			Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data());
-			ISDebug::ShowString("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
+			ISDebug::ShowInfoString("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
 		}
 		catch (const ISQueryException &QueryException) {}
 	}
 	else
 	{
-		ISDebug::ShowString("Command \"" + Argument + "\" not found");
+		ISDebug::ShowErrorString("Command \"" + Argument + "\" not found");
 	}
 	return Result;
 }
@@ -293,29 +293,29 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 					{
 						ISCountingTime CountingTime;
 						Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
-						ISDebug::ShowString("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
+						ISDebug::ShowInfoString("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
 					}
 					catch (const ISQueryException &QueryException) {}
 				}
 				else
 				{
-					ISDebug::ShowString("Command \"" + SubArgument + "\" not found");
+					ISDebug::ShowErrorString("Command \"" + SubArgument + "\" not found");
 				}
 				delete CommandBase;
 			}
 			else
 			{
-				ISDebug::ShowString("Class \"" + Argument + "\" not found");
+				ISDebug::ShowErrorString("Class \"" + Argument + "\" not found");
 			}
 		}
 		else
 		{
-			ISDebug::ShowString("Class \"" + Argument + "\" not found");
+			ISDebug::ShowErrorString("Class \"" + Argument + "\" not found");
 		}
 	}
 	else
 	{
-		ISDebug::ShowString("Class \"" + Argument + "\" not found");
+		ISDebug::ShowErrorString("Class \"" + Argument + "\" not found");
 	}
 	return Result;
 }

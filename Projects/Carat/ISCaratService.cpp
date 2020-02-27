@@ -49,7 +49,7 @@ void ISCaratService::StartService()
 				 FileName += ".exe";
 			}
 
-			ISDebug::ShowEmptyString();
+			ISDebug::ShowString();
 			ISDebug::ShowInfoString("Core \"" + LocalName + "\": starting...");
 			QString CorePath = DEFINES_CORE.PATH_APPLICATION_DIR + '/' + FileName;
 
@@ -71,7 +71,7 @@ void ISCaratService::StartService()
 
 	if (Cores.count())
 	{
-		ISDebug::ShowEmptyString();
+		ISDebug::ShowString();
 	}
 	else //Если активных ядер нет
 	{
@@ -84,7 +84,7 @@ void ISCaratService::StartService()
 	}
 	else //Прослушивание порта не запущено
 	{
-		ISDebug::ShowCriticalString("Not listen port: " + QString::number(CARAT_PORT) + ". Error: " + TcpServer->errorString());
+		ISDebug::ShowErrorString("Not listen port: " + QString::number(CARAT_PORT) + ". Error: " + TcpServer->errorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -154,9 +154,7 @@ void ISCaratService::ReadyReadStandartOutput()
 				break;
 			}
 		}
-		
-		QString NewString = QString(String).replace(QRegExp(REG_EXP_DEBUG), QString());
-		ISDebug::ShowCaratString(ProcessCore->GetName(), NewString);
+		ISDebug::ShowString(String);
 	}
 }
 //-----------------------------------------------------------------------------

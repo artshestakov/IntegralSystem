@@ -567,7 +567,8 @@ void ISMainWindow::ShowChangePasswordForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::CreateLogToday()
 {
-	QString LogPath = ISLogger::GetInstance().GetLogFileName();
+	//???
+	/*QString LogPath = ISLogger::GetInstance().GetLogFileName();
 	QString FileName = ISSystem::GetFileName(LogPath);
 	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.Log"), FileName);
 	if (FilePath.length())
@@ -577,7 +578,7 @@ void ISMainWindow::CreateLogToday()
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCreateLogFile"), FileLog.errorString());
 		}
-	}
+	}*/
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowNoteForm()
