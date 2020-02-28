@@ -1,13 +1,13 @@
 /Bin
 /Deploy
-/Components/Replacer/**/*.ilk
-/Components/Replacer/**/*.iobj
-/Components/Replacer/**/*.ipdb
 /Library/**/*-*
 /Output
 /Projects/**/*-*
 /Tools/**/*-*
 
+*.ilk
+*.iobj
+*.ipdb
 *.obj
 *.pdb
 *.user
