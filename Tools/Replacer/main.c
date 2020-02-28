@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			FILE *File = fopen(FilePath, "w");
+			FILE *File = fopen(FilePath, "w+b");
 			Result = File ? true : false;
 			if (Result) //Файл успешно открылся
 			{
