@@ -78,5 +78,8 @@
 		
 		<!-- Сборка инсталлятора -->
 		<Exec Command="$(INNO_SETUP) $(IssScriptTmp)"/>
+		
+		<!-- Копирование в облако -->
+		<Exec Command="$(SolutionDir)InstallWindows\iCloudDrive.cmd $(Configuration) $(Platform) $(Version)"/>
 	</Target>
 </Project>

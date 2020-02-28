@@ -49,8 +49,8 @@ Name: "{group}\Удалить Integral System"; Filename: "{app}\unins000.exe"; 
 
 [Tasks]
 Name: "DesktopIconServer"; Description: "Создать значок «Carat» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server;
+Name: "DesktopIconConfigurator"; Description: "Создать значок «Configurator» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server;
 Name: "DesktopIconClient"; Description: "Создать значок «IntegralSystem» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server Client;
-Name: "DesktopIconConfigurator"; Description: "Создать значок «Configurator» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server Client;
 
 [Run]
 Filename: "{app}\Carat.exe"; Description: "Запустить сервер после выхода из установщика"; Flags: postinstall shellexec skipifsilent; Components: Server;
@@ -58,9 +58,35 @@ Filename: "{app}\IntegralSystem.exe"; Description: "Запустить прог�
 
 [Files]
 Source: ..\Deploy\.Configuration.-.Platform.\*; Excludes: "*.exp, *.ilk, *.lib, *.pdb"; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+
+Source: ..\Deploy\.Configuration.-.Platform.\libCarat.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\libCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
+Source: ..\Deploy\.Configuration.-.Platform.\libGui.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Client;
+
+Source: ..\Deploy\.Configuration.-.Platform.\Carat.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\Configurator.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\ErrorViewer.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
+Source: ..\Deploy\.Configuration.-.Platform.\IntegralSystem.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
+
+Source: ..\Deploy\.Configuration.-.Platform.\CaratAsteriskQueue.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratAsteriskRecord.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratCalendar.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratCenterSeven.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratHighway.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratInformResource.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratMail.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratMedTech.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratNotification.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratScheduler.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratSMS.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratTelephony.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+
 Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
 Source: ..\InstallResources\Update.cmd; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
 Source: ..\Components\Redistributable\Redistributable_2015_.Platform..exe; DestDir: {app}; Flags: ignoreversion; Components: Server Client
+
+[Run]
+Filename: {app}\Redistributable_2015_.Platform..exe; Description: "Установка VC++ Redistributable"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable...";
 
 [Code]
 procedure InitializeWizard();

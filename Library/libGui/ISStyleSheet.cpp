@@ -1,7 +1,5 @@
 #include "ISStyleSheet.h"
 #include "ISAssert.h"
-#include "ISCountingTime.h"
-#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISStyleSheet::ISStyleSheet()
 {
@@ -31,13 +29,11 @@ QString ISStyleSheet::GetStyle(const QString &StyleName, const QString &SourceFi
 //-----------------------------------------------------------------------------
 void ISStyleSheet::Initialize()
 {
-	ISCountingTime Time;
 	QFileInfoList FileInfoList = QDir(":CSS").entryInfoList(QDir::NoFilter);
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
 		AddStyle(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISLOGGER_DEBUG(QString("StyleSheet Initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(StyleSheets.size()));
 }
 //-----------------------------------------------------------------------------
 void ISStyleSheet::AddStyle(const QString &FileName, const QString &FilePath)

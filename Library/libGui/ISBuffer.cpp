@@ -1,7 +1,5 @@
 #include "ISBuffer.h"
 #include "ISAssert.h"
-#include "ISCountingTime.h"
-#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISBuffer::ISBuffer()
 {
@@ -64,46 +62,38 @@ QString ISBuffer::GetAudio(const QString &AudioName)
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializeAnimations()
 {
-	ISCountingTime Time;
 	QFileInfoList FileInfoList = QDir(":Animation").entryInfoList(QDir::NoFilter);
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
 		AddAnimations(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISLOGGER_DEBUG(QString("Buffer animation initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Animations.size()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializeIcons()
 {
-	ISCountingTime Time;
 	QFileInfoList FileInfoList = QDir(":ImageIcons").entryInfoList(QDir::NoFilter);
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
 		AddImageIcon(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISLOGGER_DEBUG(QString("Buffer icons initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Icons.size()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializePixmaps()
 {
-	ISCountingTime Time;	
 	QFileInfoList FileInfoList = QDir(":Images").entryInfoList(QDir::NoFilter);
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
 		AddImage(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISLOGGER_DEBUG(QString("Buffer images initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Pixmaps.size()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::InitializeAudios()
 {
-	ISCountingTime Time;
 	QFileInfoList FileInfoList = QDir(":Audio").entryInfoList(QDir::NoFilter);
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
 		AddAudio(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
-	ISLOGGER_DEBUG(QString("Buffer audio initialized. msec: %1. Items: %2").arg(Time.GetElapsed()).arg(Audios.size()));
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::AddAnimations(const QString &AnimationName, const QString &AnimationPath)
