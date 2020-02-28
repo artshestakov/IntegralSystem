@@ -71,13 +71,13 @@ void ISAboutForm::CreateCommonTab()
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), LANG("IntegralSystem"));
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISSystem::GetConfigurationName());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.OS"), ISSystem::GetCurrentOSName());
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersion::GetInstance().GetPlatform());
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersion::GetInstance().GetVersion());
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersion::GetInstance().GetRevision()));
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionBuild"), QString::number(ISVersion::GetInstance().GetBuild()));
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersion::GetInstance().GetDate().toString(DATE_FORMAT_V2));
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersion::GetInstance().GetTime().toString(TIME_FORMAT_V1));
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionHash"), ISVersion::GetInstance().GetHash());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersion::Instance().Info.Platform);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersion::Instance().ToString());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersion::Instance().Info.Revision));
+	//AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionBuild"), QString::number(ISVersion::GetInstance().GetBuild())); //???
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersion::Instance().Info.Date);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersion::Instance().Info.Time);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionHash"), ISVersion::Instance().Info.Hash);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
 
 	LayoutCommon->addStretch();

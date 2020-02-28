@@ -289,4 +289,19 @@ struct LIBCORE_EXPORT ISSqlQuery
 	QString SqlText; //SQL-запрос
 };
 //-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISVersionStruct
+{
+	ISVersionStruct() : Major(0), Minor(0), Revision(0) { }
+
+	int Major;
+	int Minor;
+	int Revision;
+
+	QString Date;
+	QString Time;
+	QString Hash;
+	QString Configuration;
+	QString Platform;
+};
+//-----------------------------------------------------------------------------
 #endif

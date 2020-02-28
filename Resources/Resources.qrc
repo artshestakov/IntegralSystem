@@ -14,6 +14,7 @@
 
     <file>Animation/</file>
     <file>Audio/</file>
+    <file>Build/</file>
     <file>ConfigTemplate/</file>
     <file>CSS/</file>
     <!--<file>Dictionary/</file>-->
@@ -25,7 +26,6 @@
     <file>Other/</file>
     <file>PrintingTemplates/</file>
     <file>Scheme/</file>
-	  <file>Version/</file>
 
   </qresource>
 </RCC>

@@ -55,7 +55,7 @@ bool ISUpdate::CheckUpdate(int &FileID, QString &FileName, QString &Version)
 	if (qSelect.ExecuteFirst())
 	{
 		int Version_4 = qSelect.ReadColumn("dsfs_version_4").toInt();
-		if (Version_4 > ISVersion::GetInstance().GetBuild())
+		if (Version_4 > /*ISVersion::GetInstance().GetBuild()*/0) //???
 		{
 			FileID = qSelect.ReadColumn("dsfs_id").toInt();
 			FileName = qSelect.ReadColumn("dsfs_filename").toString();

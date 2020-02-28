@@ -32,7 +32,7 @@ ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name
 
 	QLabel *LabelInformation = new QLabel(this);
 	LabelInformation->setWordWrap(true);
-	LabelInformation->setText(LANG("LoadingUpdateText") + "\n\n" + LANG("CurrentVersion") + ": " + ISVersion::GetInstance().GetVersion() + "\n" + LANG("NewVersion") + ": " + version);
+	LabelInformation->setText(LANG("LoadingUpdateText") + "\n\n" + LANG("CurrentVersion") + ": " + ISVersion::Instance().ToString() + "\n" + LANG("NewVersion") + ": " + version);
 	GetMainLayout()->addWidget(LabelInformation);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();

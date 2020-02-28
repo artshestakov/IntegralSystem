@@ -279,7 +279,7 @@ int ISStartup::ExitError()
 void ISStartup::SetApplicationNameQuery()
 {
 	ISQuery qSetApplicationName;
-	if (!qSetApplicationName.Execute(QString(Q_SET_APPLICATION_NAME).arg(ISVersion::GetInstance().GetVersion())))
+	if (!qSetApplicationName.Execute(QString(Q_SET_APPLICATION_NAME).arg(ISVersion::Instance().ToString())))
 	{
 		ISMessageBox::ShowCritical(nullptr, qSetApplicationName.GetErrorText());
 	}
