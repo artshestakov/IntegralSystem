@@ -1,1 +1,0 @@
-call WinDeploy.cmd debug Win32

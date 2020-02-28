@@ -2,7 +2,7 @@
 SetLocal
 
 call vcvars32.bat
-call WinDeployClear.cmd
+call WinDeployClear.cmd %1 %2
 
 git rev-list HEAD --count > ..\Resources\Version\Revision.txt
 git rev-parse HEAD > ..\Resources\Version\Hash.txt

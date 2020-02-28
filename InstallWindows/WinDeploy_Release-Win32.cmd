@@ -1,1 +1,0 @@
-call WinDeploy.cmd release Win32

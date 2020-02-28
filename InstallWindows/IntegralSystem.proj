@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="windows-1251"?>
-<Project DefaultTargets="Installer" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="InstallScript" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 		<Configuration></Configuration>
 		<Platform></Platform>
 		<PlatformToolset></PlatformToolset>
 		<Version></Version>
 		<SolutionDir>$(MSBuildProjectDirectory)\..\</SolutionDir>
-		<IssScript>$(SolutionDir)InstallWindows\IntegralSystem.iss</IssScript>
 		<IssScriptTmp>$(SolutionDir)InstallWindows\IntegralSystem.iss.tmp</IssScriptTmp>
 		<ReplacerPath>$(SolutionDir)Components\Replacer\Release-Win32\Replacer.exe</ReplacerPath>
 		<CurrentDate>$([System.DateTime]::Now.ToString(dd.MM.yyyy))</CurrentDate>
@@ -14,6 +13,7 @@
 	
 	<!-- Сборка проектов решения -->
 	<Target Name="Build">
+	
 		<!-- Сборка библиотек -->
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libCore $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libGui $(Configuration) $(Platform) $(PlatformToolset)"/>
@@ -38,23 +38,45 @@
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratScheduler $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratSMS $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratTelephony $(Configuration) $(Platform) $(PlatformToolset)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratSMS $(Configuration) $(Platform) $(PlatformToolset)"/>
+	</Target>
+	
+	<!-- Сборка зависимостей -->
+	<Target Name="Deploy">
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libCore.dll $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libGui.dll $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libCarat.dll $(Configuration) $(Platform)"/>
 		
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy_$(Configuration)-$(Platform).cmd"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd Carat.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd Configurator.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ErrorViewer.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd IntegralSystem.exe $(Configuration) $(Platform)"/>
+		
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratAsteriskQueue.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratAsteriskRecord.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratCalendar.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratCenterSeven.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratHighway.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratInformResource.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratMail.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratMedTech.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratNotification.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratScheduler.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratSMS.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratTelephony.exe $(Configuration) $(Platform)"/>
 	</Target>
 	
 	<!-- Подготовка скрипта -->
-	<Target Name="InstallScript">
-		<Copy SourceFiles="$(IssScript)" DestinationFiles="$(IssScriptTmp)"/>
+	<Target Name="InstallScript" DependsOnTargets="Build;Deploy">
+	
+		<!-- Копирование эталонного скрипта во временный -->
+		<Copy SourceFiles="$(SolutionDir)InstallWindows\IntegralSystem.iss" DestinationFiles="$(IssScriptTmp)"/>
+		
+		<!-- Замена переменных -->
 		<Exec Command="$(ReplacerPath) $(IssScriptTmp) .Configuration. $(Configuration)"/>
 		<Exec Command="$(ReplacerPath) $(IssScriptTmp) .Platform. $(Platform)"/>
 		<Exec Command="$(ReplacerPath) $(IssScriptTmp) .Version. $(Version)"/>
-	</Target>
-	
-	<!-- Запуск сборки дистрибутива -->
-	<Target Name="Installer" DependsOnTargets="Build;InstallScript">
-		<!-- <Exec Command="$(ISDIR)\ISCC.exe $(IssScriptTmp)"/> -->
-		<!-- <Message Text="INSTALLING NEW VERSION..."/> -->
-		<!-- <Exec Command="START /wait $(YandexDisk)$(CurrentDate)\IntegralSystem_$(Configuration)_$(PlatformName)_$(Version).exe /SILENT /COMPONENTS=Server"/> -->
+		
+		<!-- Сборка инсталлятора -->
+		<Exec Command="$(INNO_SETUP) $(IssScriptTmp)"/>
 	</Target>
 </Project>

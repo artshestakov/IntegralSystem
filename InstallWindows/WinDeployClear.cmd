@@ -1,1 +1,1 @@
-IF EXIST ..\Deploy RMDIR /S /Q ..\Deploy
+IF EXIST ..\Deploy\%1-%2 RMDIR /S /Q ..\Deploy\%1-%2

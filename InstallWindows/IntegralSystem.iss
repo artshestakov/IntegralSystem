@@ -30,7 +30,6 @@ DisableWelcomePage=no
 
 [Languages]
 Name: "Russian"; MessagesFile: "compiler:Languages\Russian.isl";
-Name: "Ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl";
 
 [Types]
 Name: Installation; Description: "Тип установки"; Flags: iscustom;
@@ -42,26 +41,26 @@ Name: Client; Description: "Клиент"; Types: Installation; Flags: exclusive
 [Icons]
 Name: "{userdesktop}\Carat"; Filename: "{app}\Carat.exe"; WorkingDir: "{app}"; Tasks: DesktopIconServer; Comment: "Серверный процесс Carat";
 Name: "{userdesktop}\Integral System"; Filename: "{app}\IntegralSystem.exe"; WorkingDir: "{app}"; Tasks: DesktopIconClient; Comment: "Система управления данными «IntegralSystem»";
+Name: "{userdesktop}\Configurator"; Filename: "{app}\Configurator.exe"; WorkingDir: "{app}"; Tasks: DesktopIconConfigurator; Comment: "Утилита управления базой данных «IntegralSystem»";
 Name: "{group}\Carat"; Filename: "{app}\Carat.exe"; WorkingDir: "{app}"; Tasks: DesktopIconServer; Comment: "Серверный процесс Carat";
 Name: "{group}\Integral System"; Filename: "{app}\IntegralSystem.exe"; WorkingDir: "{app}"; Comment: "Система управления данными IntegralSystem";
 Name: "{group}\Конфигуратор"; Filename: "{app}\Configurator.exe"; WorkingDir: "{app}"; Tasks: DesktopIconServer; Comment: "Интерпретатор базы данных IntegralSystem";
-Name: "{group}\DebugView"; Filename: "{app}\DebugView.exe"; WorkingDir: "{app}\Utility";
-Name: "{group}\Документация"; Filename: "{app}\IntegralSystem.doc"; WorkingDir: "{app}"; Comment: "Документация";
 Name: "{group}\Удалить Integral System"; Filename: "{app}\unins000.exe"; WorkingDir: "{app}"; Comment: "Удаление Integral System";
 
 [Tasks]
 Name: "DesktopIconServer"; Description: "Создать значок «Carat» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server;
 Name: "DesktopIconClient"; Description: "Создать значок «IntegralSystem» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server Client;
+Name: "DesktopIconConfigurator"; Description: "Создать значок «Configurator» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server Client;
 
 [Run]
 Filename: "{app}\Carat.exe"; Description: "Запустить сервер после выхода из установщика"; Flags: postinstall shellexec skipifsilent; Components: Server;
 Filename: "{app}\IntegralSystem.exe"; Description: "Запустить программу после выхода из установщика"; Flags: postinstall shellexec skipifsilent; Components: Server Client;
 
 [Files]
-;Source: ..\Components\.Configuration.-.Platform.\*; DestDir: {app}; Flags: ignoreversion;
 Source: ..\Deploy\.Configuration.-.Platform.\*; Excludes: "*.exp, *.ilk, *.lib, *.pdb"; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
 Source: ..\InstallResources\Update.cmd; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
+Source: ..\Components\Redistributable\Redistributable_2015_.Platform..exe; DestDir: {app}; Flags: ignoreversion; Components: Server Client
 
 [Code]
 procedure InitializeWizard();
