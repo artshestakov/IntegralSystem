@@ -6,11 +6,6 @@ SET FilePath=..\Resources\Build\Build.ini.tmp
 REM Если такой файл уже существует - удаляем его
 IF EXIST %FilePath% (DEL %FilePath%)
 
-REM Получаем номер ревизии (количество комитов)
-git rev-list --all --count > temp.tmp
-SET /p REVISION=< temp.tmp
-DEL temp.tmp
-
 REM Получаем текущую дату
 ..\Components\GET\Release-Win32\GET.exe --getdate > temp.tmp
 SET /p CURRENT_DATE=<temp.tmp
@@ -28,9 +23,9 @@ DEL temp.tmp
 
 REM Пишем информацию в файл
 ECHO [Version]>> %FilePath%
-ECHO Major="4">> %FilePath%
-ECHO Minor="9">> %FilePath%
-ECHO Revision="%REVISION%">> %FilePath%
+ECHO Major="%3">> %FilePath%
+ECHO Minor="%4">> %FilePath%
+ECHO Revision="%5">> %FilePath%
 ECHO.>> %FilePath%
 ECHO [Build]>> %FilePath%
 ECHO Date="%CURRENT_DATE%">> %FilePath%
