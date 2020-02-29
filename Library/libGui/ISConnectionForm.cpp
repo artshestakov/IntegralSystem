@@ -69,9 +69,9 @@ void ISConnectionForm::SaveSettings()
 {
 	if (CheckFields())
 	{
-		ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
-		ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
-		ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
+		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
+		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
+		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
 		close();
 	}
 }

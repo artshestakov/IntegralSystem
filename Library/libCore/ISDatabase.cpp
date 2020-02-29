@@ -314,11 +314,8 @@ bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Log
 
 	if (!Result)
 	{
-		QString Server = ISConfig::GetInstance().GetValue(CONST_CONFIG_CONNECTION_SERVER).toString();
-		int Port = ISConfig::GetInstance().GetValue(CONST_CONFIG_CONNECTION_PORT).toInt();
-
-		SqlDatabase.setHostName(Server);
-		SqlDatabase.setPort(Port);
+		SqlDatabase.setHostName(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
+		SqlDatabase.setPort(CONFIG_INT(CONST_CONFIG_CONNECTION_PORT));
 		SqlDatabase.setDatabaseName(Database);
 		SqlDatabase.setUserName(Login);
 		SqlDatabase.setPassword(Password);

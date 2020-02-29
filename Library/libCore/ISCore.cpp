@@ -107,10 +107,10 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 		return EXIT_FAILURE;
 	}
 
-	Result = ISConfig::GetInstance().Initialize();
+	Result = ISConfig::Instance().Initialize();
 	if (!Result)
 	{
-		ErrorString = ISConfig::GetInstance().GetErrorString();
+		ErrorString = ISConfig::Instance().GetErrorString();
 		return Result;
 	}
 
