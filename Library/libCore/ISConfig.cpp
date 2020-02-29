@@ -19,7 +19,7 @@ ISConfig::~ISConfig()
 	}
 }
 //-----------------------------------------------------------------------------
-ISConfig& ISConfig::GetInstance()
+ISConfig& ISConfig::Instance()
 {
 	static ISConfig Config;
 	return Config;
@@ -92,11 +92,18 @@ void ISConfig::SetValue(const QString &ParameterName, const QVariant &Value)
 	if (Settings->contains(ParameterName))
 	{
 		Settings->setValue(ParameterName, Value);
-		Settings->sync();
 	}
 	else
 	{
 		ISLOGGER_WARNING(QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
+	}
+}
+//-----------------------------------------------------------------------------
+void ISConfig::SaveForce()
+{
+	if (Settings)
+	{
+		Settings->sync();
 	}
 }
 //-----------------------------------------------------------------------------

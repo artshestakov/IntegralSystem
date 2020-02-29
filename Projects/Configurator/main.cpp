@@ -436,10 +436,11 @@ void FillConfig()
 		}
 	}
 
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_SERVER, DBServer);
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_PORT, DBPort);
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, DBName);
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_LOGIN, DBLogin);
-	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_PASSWORD, DBPassword);
+	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, DBServer);
+	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, DBPort);
+	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, DBName);
+	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_LOGIN, DBLogin);
+	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PASSWORD, DBPassword);
+	ISConfig::Instance().SaveForce();
 }
 //-----------------------------------------------------------------------------
