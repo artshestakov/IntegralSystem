@@ -4,6 +4,7 @@ ISLogger::ISLogger()
 	: ErrorString(NO_ERROR_STRING),
 	LastPosition(0),
 	Running(false),
+	Finished(false),
 	CurrentYear(0),
 	CurrentMonth(0),
 	CurrentDay(0),
@@ -18,16 +19,24 @@ ISLogger::~ISLogger()
 	if (EnableOutFile)
 	{
 		//Останавливаем обработчик очереди
-		Mutex.lock();
+		//Mutex.lock();
 		Running = false;
-		Mutex.unlock();
+		//Mutex.unlock();
 
-		//Ждём пока текущая очередь не будет записана в файл
-		while (LastPosition)
+		//Ждём пока логгер не остановится
+		while (/*true*/!Finished)
 		{
-			Sleep(100);
+			//Mutex.lock();
+			//bool finished = Finished;
+			//Mutex.unlock();
+			Sleep(500);
+
+			//if (finished) //Если логгер остановился - выходим
+			{
+				//break;
+			}
 		}
-		File.close(); //Закрываем файл
+		//File.close(); //Закрываем файл
 	}
 }
 //-----------------------------------------------------------------------------
@@ -159,22 +168,20 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 //-----------------------------------------------------------------------------
 void ISLogger::Worker()
 {
-	while (Running) //Работа потока
+	while (/*Running || LastPosition > 0*/true) //Работа потока
 	{
-		Sleep(LOGGER_TIMEOUT); //Ждём 2 секунды
-
-		Mutex.lock(); //Блокируем мьютекс
 		if (LastPosition) //Если очередь не пустая
 		{
+			Mutex.lock(); //Блокируем мьютекс
 			for (size_t i = 0; i < LastPosition; ++i) //Обходим очередь
 			{
 				File << Array[i];
 				Array[i].clear();
 			}
+			Mutex.unlock(); //Разблокируем мьютекс
 			File.flush();
 			LastPosition = 0;
 		}
-		Mutex.unlock(); //Разблокируем мьютекс
 
 		//Получаем текущие дату и время
 		SYSTEMTIME ST;
@@ -200,7 +207,13 @@ void ISLogger::Worker()
 				File.open(PathFile, std::ios::app); //Обрабатывать (File.is_open() == false)?
 			}
 		}
+		Sleep(LOGGER_TIMEOUT); //Ждём 2 секунды
+		if (!Running)
+		{
+			break;
+		}
 	}
+	Finished = true;
 }
 //-----------------------------------------------------------------------------
 bool ISLogger::CreateDir()

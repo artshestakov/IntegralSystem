@@ -54,6 +54,7 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	MainLayout->addStretch();
 
 	LayoutButtons = new QHBoxLayout();
+	LayoutButtons->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_4_PX);
 	MainLayout->addLayout(LayoutButtons);
 
 	CreateButtonsPanel();

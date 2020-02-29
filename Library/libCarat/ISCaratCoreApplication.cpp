@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 ISCaratCoreApplication::ISCaratCoreApplication(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
-	ISConfig::GetInstance().Initialize();
+	ISConfig::Instance().Initialize();
 }
 //-----------------------------------------------------------------------------
 ISCaratCoreApplication::~ISCaratCoreApplication()
