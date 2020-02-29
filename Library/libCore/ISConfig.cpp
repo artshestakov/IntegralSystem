@@ -92,6 +92,7 @@ void ISConfig::SetValue(const QString &ParameterName, const QVariant &Value)
 	if (Settings->contains(ParameterName))
 	{
 		Settings->setValue(ParameterName, Value);
+		Settings->sync();
 	}
 	else
 	{

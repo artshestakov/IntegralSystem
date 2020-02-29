@@ -12,6 +12,10 @@
 #include <array>
 #include <fstream>
 //-----------------------------------------------------------------------------
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+//-----------------------------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>
 #include <ShlObj.h>
