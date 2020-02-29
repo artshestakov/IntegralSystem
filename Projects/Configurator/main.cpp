@@ -3,7 +3,7 @@
 #include "ISNamespace.h"
 #include "ISConfig.h"
 #include "ISMetaData.h"
-#include "ISCommandLine.h"
+#include "ISConsole.h"
 #include "ISDatabase.h"
 #include "ISCore.h"
 #include "ISSystem.h"
@@ -14,6 +14,9 @@
 #include "ISDefinesCore.h"
 #include "ISLogger.h"
 #include "ISMetaDataHelper.h"
+#include "ISConsole.h"
+#include "ISVersion.h"
+#include "ISQuery.h"
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorCreate.h"
 #include "CGConfiguratorUpdate.h"
@@ -22,18 +25,26 @@
 #include "CGConfiguratorShow.h"
 #include "CGConfiguratorFIAS.h"
 //-----------------------------------------------------------------------------
+static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
+//-----------------------------------------------------------------------------
 QVector<CGSection*> Arguments;
+QString DBServer;
+int DBPort = 0;
+QString DBName;
+QString DBLogin;
+QString DBPassword;
 //-----------------------------------------------------------------------------
 void RegisterMetatype(); //Регистрация мета-типов
 bool InitConfiguratorScheme(QString &ErrorString); //Инициализация схемы конфигуратора
 ISNamespace::ConsoleArgumentType CheckArguments(); //Проверка аргументов
-std::pair<bool, bool> CheckExistDatabase(const QString &DBName); //Проверка существования БД
+bool CreateDatabase(const QString &DBName); //Проверка существования БД
 void InterpreterMode(bool &IsRunning); //Режим интерпретатора
 bool Execute(const QString &Argument); //Выполнить одиночную команду
 bool Execute(const QString &Argument, const QString &SubArgument); //Выполнить двойную команду
 QString GetClassName(const QString &Argument); //Получить имя класса
 void ProgressMessage(const QString &Message);
 QStringList ParseInputCommand(const QString &Command); //Парсинг введенной команды
+void FillConfig(); //Заполнение конфигурационного файла
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -45,6 +56,7 @@ int main(int argc, char *argv[])
 	if (!Result)
 	{
 		ISLOGGER_ERROR(ErrorString);
+		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
 
@@ -52,6 +64,7 @@ int main(int argc, char *argv[])
 	if (!Result)
 	{
 		ISLOGGER_ERROR(ErrorString);
+		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
 
@@ -59,56 +72,39 @@ int main(int argc, char *argv[])
 	if (ArgumentType == ISNamespace::CAT_Unknown)
 	{
 		ISLOGGER_WARNING("Invalid arguments");
-		ISCommandLine::Pause();
+		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
 
-	//Параметры подключения
-	QString DBServer = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
-	int DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
-	QString DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
-	QString DBLogin = CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN);
-	QString DBPassword = CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD);
-
+	FillConfig();
 	if (DBLogin.isEmpty() || DBPassword.isEmpty())
 	{
 		ISLOGGER_ERROR("Not specified server or password in config file");
-		ISCommandLine::Pause();
+		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
 
-    std::pair<bool, bool> ResultExist = CheckExistDatabase(DBName);
-	if (ResultExist.second) //Если БД существует - подключаемся к ней и инициализируем мета-данные
+    Result = CreateDatabase(DBName);
+	if (!Result)
 	{
-        QString ErrorString;
-		ResultExist.first = ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString);
-		if (ResultExist.first)
-		{
-			if (!ISMetaData::GetInstanse().Initialize(ISMetaDataHelper::GetConfigurationName(), true, true))
-			{
-				ISLOGGER_ERROR("Initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
-			}
-		}
+		ISConsole::Pause();
+		return EXIT_FAILURE;
 	}
 
-    if (!ResultExist.first)
-    {
-        ISCommandLine::Pause();
-        return EXIT_FAILURE;
-    }
+	Result = ISMetaData::GetInstanse().Initialize(ISMetaDataHelper::GetConfigurationName(), true, true);
+	if (!Result)
+	{
+		ISLOGGER_ERROR("Initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
+		ISConsole::Pause();
+		return EXIT_FAILURE;
+	}
 
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
 	{
-		ISLOGGER_EMPTY();
-		ISLOGGER_UNKNOWN("Welcome to the IntegralSystem database. DBName: " + DBName + " DBHost: " + DBServer);
+		ISLOGGER_UNKNOWN(QString("Configurator [Version %1]").arg(ISVersion::Instance().ToString()));
+		ISLOGGER_UNKNOWN("Welcome to the Configurator. DBName: " + DBName + " DBHost: " + DBServer);
 		ISLOGGER_UNKNOWN("Enter the \"help\" command to get help");
-		ISLOGGER_UNKNOWN("Press Enter or Return to exit");
 		
-		if (!ResultExist.second)
-		{
-			ISLOGGER_WARNING("Database \"" + DBName + "\" not exist. Run the \"create database\" command.");
-		}
-
 		while (Result)
 		{
 			InterpreterMode(Result);
@@ -129,7 +125,7 @@ int main(int argc, char *argv[])
 		return EXIT_SUCCESS;
 	}
 	
-	ISCommandLine::Pause();
+	ISConsole::Pause();
 	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------
@@ -192,31 +188,66 @@ ISNamespace::ConsoleArgumentType CheckArguments()
 	return ISNamespace::CAT_Unknown;
 }
 //-----------------------------------------------------------------------------
-std::pair<bool, bool> CheckExistDatabase(const QString &DBName)
+bool CreateDatabase(const QString &DBName)
 {
 	QString ErrorString;
-	bool Connected = false, Exist = false;
-	Connected = ISDatabase::GetInstance().ConnectToSystemDB(ErrorString);
-	if (Connected)
+	bool Result = ISDatabase::GetInstance().ConnectToSystemDB(ErrorString);
+	if (Result) //Если подключились к системной БД - проверяем наличие той, что указана в конфигурационном файле
 	{
-		Exist = ISDatabase::GetInstance().CheckExistDatabase(DBName);
+		if (ISDatabase::GetInstance().CheckExistDatabase(DBName)) //БД существует - подключаемся к ней
+		{
+			Result = ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString);
+		}
+		else //БД не существует - создаём её
+		{
+			//Спрашиваем у пользоваеля, создавать БД?
+			Result = ISConsole::Question("Database \"" + DBName + "\" not exist! Create?");
+			if (Result) //Создаем БД
+			{
+				//Запрашиваем название конфигурации
+				QString ConfigurationName = ISConsole::GetString("Input configuration name (from file Configuration.xml): ");
+				Result = !ConfigurationName.isEmpty();
+				if (!Result) //Если название не ввели - выходим с ошибкой
+				{
+					ISLOGGER_UNKNOWN("Configuration name is empty.");
+				}
+
+				if (Result)
+				{
+					QSqlQuery SqlQuery = ISDatabase::GetInstance().GetSystemDB().exec(QC_DATABASE.arg(DBName).arg(DBLogin)); //Исполнение запроса на создание базы данных
+					QSqlError SqlError = SqlQuery.lastError();
+					Result = SqlError.type() == QSqlError::NoError;
+					Result ? ISLOGGER_UNKNOWN("The \"" + DBName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
+						: ISLOGGER_UNKNOWN("Error creating database \"" + DBName + "\": " + SqlError.text());
+				}
+				if (Result) //Если БД была создана - подключаемся к ней
+				{
+					Result = ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString);
+				}
+				if (Result) //Если подключение прошло успешно - создаём функцию
+				{
+					ISQuery qCreateFunction;
+					Result = qCreateFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + ConfigurationName + "'; END; $$ LANGUAGE plpgsql IMMUTABLE");
+					if (!Result)
+					{
+						ErrorString = qCreateFunction.GetErrorText();
+					}
+				}
+			}
+		}
 		ISDatabase::GetInstance().DisconnectFromSystemDB();
 	}
-	else
+	else //Ошибка подключения к системной БД
 	{
 		ISLOGGER_ERROR(ErrorString);
 	}
-	return std::make_pair(Connected, Exist);
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void InterpreterMode(bool &IsRunning)
 {
 	ISLOGGER_EMPTY();
-	ISLOGGER_UNKNOWN("Enter command: ");
-
-	std::string InputCommand;
-	std::getline(std::cin, InputCommand);
-	QString Command = QString::fromStdString(InputCommand);
+	QString Command = ISConsole::GetString("Enter command (press Enter or Return to exit): ");
 	IsRunning = !Command.isEmpty();
 	if (IsRunning)
 	{
@@ -346,5 +377,69 @@ QStringList ParseInputCommand(const QString &Command)
 		}
 	}
 	return StringList;
+}
+//-----------------------------------------------------------------------------
+void FillConfig()
+{
+	//Получаем сервер
+	DBServer = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
+	while (DBServer.isEmpty())
+	{
+		DBServer = ISConsole::GetString("Enter the host: ");
+		if (DBServer.isEmpty())
+		{
+			ISLOGGER_UNKNOWN("Host is empty!");
+		}
+	}
+
+	//Получаем порт
+	DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
+	while (!DBPort)
+	{
+		DBPort = ISConsole::GetInt("Enter the port: ");
+		if (!DBPort)
+		{
+			ISLOGGER_UNKNOWN("Port is empty or null!");
+		}
+	}
+
+	//Получаем имя БД
+	DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
+	while (DBName.isEmpty())
+	{
+		DBName = ISConsole::GetString("Enter the database name: ");
+		if (DBName.isEmpty())
+		{
+			ISLOGGER_UNKNOWN("Database name is empty!");
+		}
+	}
+
+	//Получаем логин
+	DBLogin = CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN);
+	while (DBLogin.isEmpty())
+	{
+		DBLogin = ISConsole::GetString("Enter the login: ");
+		if (DBLogin.isEmpty())
+		{
+			ISLOGGER_UNKNOWN("Login is empty!");
+		}
+	}
+
+	//Получаем пароль
+	DBPassword = CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD);
+	while (DBPassword.isEmpty())
+	{
+		DBPassword = ISConsole::GetString("Enter the password: ");
+		if (DBPassword.isEmpty())
+		{
+			ISLOGGER_UNKNOWN("Password is empty!");
+		}
+	}
+
+	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_SERVER, DBServer);
+	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_PORT, DBPort);
+	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, DBName);
+	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_LOGIN, DBLogin);
+	ISConfig::GetInstance().SetValue(CONST_CONFIG_CONNECTION_PASSWORD, DBPassword);
 }
 //-----------------------------------------------------------------------------

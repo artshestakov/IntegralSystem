@@ -3,9 +3,9 @@
 #include "ISLogger.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
-#include "ISCommandLine.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 static QString Q_VACUUM = "VACUUM";
 //-----------------------------------------------------------------------------
@@ -109,8 +109,7 @@ void CGConfiguratorService::vacuumfull()
 //-----------------------------------------------------------------------------
 void CGConfiguratorService::cleartable()
 {
-	ISLOGGER_UNKNOWN("Input table name:");
-	QString InputName = ISCommandLine::GetText(); //Запрос на ввод имени таблицы
+	QString InputName = ISConsole::GetString("Input table name: "); //Запрос на ввод имени таблицы
 	if (InputName.isEmpty())
 	{
 		ISLOGGER_UNKNOWN("Table name is empty");

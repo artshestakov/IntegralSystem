@@ -300,19 +300,12 @@ void ISDatabase::DisconnectFromSystemDB()
 //-----------------------------------------------------------------------------
 void ISDatabase::DisconnectFromDatabase(QSqlDatabase &SqlDatabase)
 {
-	QString DatabaseName = SqlDatabase.databaseName();
-	ISLOGGER_DEBUG(QString("Disconnect from database %1...").arg(DatabaseName));
-
-	ISCountingTime CountingTime;
 	SqlDatabase.close();
-
 	SqlDatabase.setHostName(QString());
 	SqlDatabase.setPort(-1);
 	SqlDatabase.setDatabaseName(QString());
 	SqlDatabase.setUserName(QString());
 	SqlDatabase.setPassword(QString());
-
-	ISLOGGER_INFO(QString("Disconnect from database \"%1\" done. %2 msec").arg(DatabaseName).arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Login, const QString &Password, const QString &Database, QString &ErrorConnection)
@@ -329,16 +322,8 @@ bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Log
 		SqlDatabase.setDatabaseName(Database);
 		SqlDatabase.setUserName(Login);
 		SqlDatabase.setPassword(Password);
-
-		ISCountingTime CountingTime;
-		ISLOGGER_INFO(QString("Connecting to database %1...").arg(Database));
-
 		Result = SqlDatabase.open();
-		if (Result)
-		{
-			ISLOGGER_INFO(QString("Connection to database \"%1\" done. %2 msec").arg(Database).arg(CountingTime.GetElapsed()));
-		}
-		else
+		if (!Result)
 		{
 			ErrorConnection = SqlDatabase.lastError().text();
 			ISLOGGER_WARNING(QString("Connection to database \"%1\" failed. Error: %2").arg(Database).arg(ErrorConnection));

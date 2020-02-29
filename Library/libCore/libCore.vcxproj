@@ -134,7 +134,7 @@
     <ClInclude Include="ISDefinesCore.h" />
     <ClInclude Include="ISApplicationRunning.h" />
     <ClInclude Include="ISAssert.h" />
-    <ClInclude Include="ISCommandLine.h" />
+    <ClInclude Include="ISConsole.h" />
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISCountingTime.h" />
     <ClInclude Include="ISEmailAddress.h" />
@@ -205,7 +205,7 @@
     <ClCompile Include="ISEmailAddress.cpp" />
     <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
-    <ClCompile Include="ISCommandLine.cpp" />
+    <ClCompile Include="ISConsole.cpp" />
     <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISCountingTime.cpp" />
     <ClCompile Include="ISExceptionAssert.cpp" />

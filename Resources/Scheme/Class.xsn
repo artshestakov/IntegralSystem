@@ -1,40 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSN Name="Class.xsn">
 
-  <Table Name="_TestFields" UID="{E744C8DD-8408-4376-A3DB-9E41F9D7CDA1}" Alias="test" LocalName="Тест" LocalListName="Тесты" TitleName="String" IsSystem="true">
-    <Fields>
-      <Field UID="{EB0BCC7A-A4C4-4534-82F2-112EF0D802C3}" Name="Int" Type="Int" LabelName="Целое число" LocalListName="Целое число"/>
-      <Field UID="{86632726-0E58-4ED0-A992-E61E9A8FF52B}" Name="Year" Type="Year" LabelName="Год" LocalListName="Год"/>
-      <Field UID="{FE9EB84F-7A38-4B61-8D94-836067B13F14}" Name="Double" Type="Double" LabelName="Дробное число" LocalListName="Дробное число"/>
-      <Field UID="{43200413-6C60-4EDD-BAEC-4D4752DACB9E}" Name="Percent" Type="Percent" LabelName="Процент" LocalListName="Процент"/>
-      <Field UID="{B89AA506-F4CB-4BE1-8F7A-D4A452DD3D85}" Name="String" Type="String" LabelName="Строка" LocalListName="Строка"/>
-      <Field UID="{C9BCEF7A-E4E5-42F9-8F60-79E2EDDD2C44}" Name="Text" Type="Text" LabelName="Текст" LocalListName="Текст"/>
-      <Field UID="{E23DF583-C906-4BFB-9E59-21500759B716}" Name="UUID" Type="UID" LabelName="Идентификатор" LocalListName="Идентификатор"/>
-      <Field UID="{996D07B6-0239-402E-B5F0-001D078A4D36}" Name="Bool" Type="Bool" LabelName="Булево" LocalListName="Булево"/>
-      <Field UID="{EA290D1C-F73A-4AD9-8A3F-D529024F438A}" Name="DateTime" Type="DateTime" LabelName="Дата и время" LocalListName="Дата и время"/>
-      <Field UID="{923382E6-78FC-45D0-8BDC-17720227E29D}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
-      <Field UID="{4B4461D9-BD6C-4DBC-8C04-7E00CD531548}" Name="Time" Type="Time" LabelName="Время" LocalListName="Время"/>
-      <Field UID="{C7A04066-4381-4D64-8FF2-8DBB4252FB06}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения"/>
-      <Field UID="{5651A401-1C1F-4612-89BE-DD5C286A077E}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН"/>
-      <Field UID="{2948A231-B523-4DD2-8C10-F5AD4EDAE52A}" Name="Kpp" Type="Kpp" LabelName="КПП" LocalListName="КПП"/>
-      <Field UID="{CA123783-3F7F-4A15-8703-FFBF1B1CBCFE}" Name="Ogrn" Type="Ogrn" LabelName="ОГРН" LocalListName="ОГРН"/>
-      <Field UID="{77119134-EA38-4E0A-85CD-64BA6493F362}" Name="Okpo" Type="Okpo" LabelName="ОКПО" LocalListName="ОКПО"/>
-      <Field UID="{EFF98290-D8E7-4E06-9B7B-A91124C98F0C}" Name="Bik" Type="Bik" LabelName="БИК" LocalListName="БИК"/>
-      <Field UID="{1059B803-632F-44D5-BE2D-C41E31B9B404}" Name="Icq" Type="Icq" LabelName="ICQ" LocalListName="ICQ"/>
-      <Field UID="{04B7ECED-B236-478A-8FF9-18F932916E27}" Name="PhoneBase" Type="PhoneBase" LabelName="Телефон" LocalListName="Телефон"/>
-      <Field UID="{201DA22F-5C75-4708-940D-0626AF856B14}" Name="Phone" Type="Phone" LabelName="Телефон" LocalListName="Телефон"/>
-      <Field UID="{BE3B2878-71A8-42CC-9317-F42C8FDDF94A}" Name="IPAddress" Type="IPAddress" LabelName="IP-адресс" LocalListName="IP-адресс"/>
-      <Field UID="{78A42C2A-B628-4536-84DE-CBE8333D5295}" Name="Password" Type="Password" LabelName="Пароль" LocalListName="Пароль"/>
-      <Field UID="{4EE2F545-F5B2-4C67-9D92-B62D08F03003}" Name="Color" Type="Color" LabelName="Цвет" LocalListName="Цвет"/>
-      <Field UID="{9A59EE91-501B-40CE-97DD-C803B534D130}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
-      <Field UID="{6340940C-C0A6-4B0A-9AFC-8012E54EB6FC}" Name="Passport" Type="Passport" LabelName="Паспорт" LocalListName="Паспорт"/>
-      <Field UID="{2B03EACD-679D-43A1-8F02-653A970465E5}" Name="Volume" Type="Volume" LabelName="Громкость" LocalListName="Громкость"/>
-      <Field UID="{BE9AE6B1-F6A9-4CDF-B82C-6C881CB657C3}" Name="Month" Type="Month" LabelName="Месяц" LocalListName="Месяц"/>
-      <Field UID="{5E91BC8B-6292-4683-8DF7-322E3482F771}" Name="Image" Type="Image" LabelName="Изображение" LocalListName="Изображение"/>
-      <Field UID="{0BB950ED-9BEC-4DB5-8262-E5CFF205A3ED}" Name="Image64" Type="Image64" LabelName="Изображение 64" LocalListName="Изображение 64"/>
-    </Fields>
-  </Table>
-
   <Table Name="_Database" UID="{E8BA8296-883A-459D-950A-C16CC4680DA3}" Alias="dtbs" LocalName="Банк данных" LocalListName="Банки данных" TitleName="Name">
     <Fields>
       <Field UID="{E93DA1A0-B0AE-44B1-825A-9FC232253BC7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>

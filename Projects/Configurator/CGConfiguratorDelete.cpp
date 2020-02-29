@@ -3,9 +3,9 @@
 #include "ISLogger.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
-#include "ISCommandLine.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname FROM pg_indexes WHERE schemaname = current_schema()");
 //-----------------------------------------------------------------------------
@@ -150,7 +150,7 @@ void CGConfiguratorDelete::tables()
 			QString TableName = qSelectTables.ReadColumn("table_name").toString();
 			if (!VectorString.contains(TableName)) //Если таблица из базы данных отсутствует в мета-данных
 			{
-				if (ISCommandLine::Question(QString("Remove table \"%1\"?").arg(TableName))) //Удаление таблицы
+				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName))) //Удаление таблицы
 				{
 					ISQuery qDeleteTable;
 					ISLOGGER_UNKNOWN(QString("Removing table \"%1\"...").arg(TableName));
@@ -211,7 +211,7 @@ void CGConfiguratorDelete::fields()
 			{
 				if (!Map.value(TableName).contains(ColumnName)) //Если поле из базы данных отсутствует в мета-данных
 				{
-					if (ISCommandLine::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName))) //Удаление поля
+					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName))) //Удаление поля
 					{
 						ISQuery qDeleteField;
 						ISLOGGER_UNKNOWN(QString("Removing column \"%1\"...").arg(ColumnName));
@@ -278,7 +278,7 @@ void CGConfiguratorDelete::resources()
 				if (!UIDs.contains(ResourceUID)) //Если ресурс из базы не найден в мета-данных
 				{
 					ShowResourceConsole(MetaTable, ResourceUID);
-					if (ISCommandLine::Question(QString("Remove resource \"%1\" in table \"%2\"?").arg(ResourceUID).arg(TableName)))
+					if (ISConsole::Question(QString("Remove resource \"%1\" in table \"%2\"?").arg(ResourceUID).arg(TableName)))
 					{
 						ISQuery qDeleteResources("DELETE FROM " + TableName + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 						qDeleteResources.SetShowLongQuery(false);

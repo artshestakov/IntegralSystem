@@ -86,20 +86,26 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 {
 	ISDefinesCore::Instance().Init(IsGui);
 
-	bool Result = ISLogger::Instance().Initialize(true, false, "Configurator");
+	bool Result = ISSystem::CreateDir(DEFINES_CORE.PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
 	if (!Result)
 	{
-		ISLOGGER_ERROR(ISLogger::Instance().GetErrorString());
-		return EXIT_FAILURE;
+		return Result;
 	}
 
-	Result = ISSystem::CreateDir(DEFINES_CORE.PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
+	Result = ISSystem::CreateDir(DEFINES_CORE.PATH_CRASH_DIR, ErrorString); //Создание папки для crash-файлов
 	if (!Result)
 	{
 		return Result;
 	}
 
 	ISCrashDumper::Init();
+
+	Result = ISLogger::Instance().Initialize(true, false, "Configurator");
+	if (!Result)
+	{
+		ISLOGGER_ERROR(ISLogger::Instance().GetErrorString());
+		return EXIT_FAILURE;
+	}
 
 	Result = ISConfig::GetInstance().Initialize();
 	if (!Result)

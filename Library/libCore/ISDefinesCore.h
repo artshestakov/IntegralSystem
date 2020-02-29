@@ -23,6 +23,7 @@ public:
 	QString PATH_APPLICATION_FILE;
 	QString PATH_LOGS_DIR;
 	QString PATH_TEMP_DIR;
+	QString PATH_CRASH_DIR;
 	QString PATH_TRANSLATIONS_DIR;
 	QString PATH_CONFIG_FILE;
 	QString SYMBOL_CIRCLE; //Символ "Круг"

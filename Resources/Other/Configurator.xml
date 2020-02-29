@@ -2,7 +2,6 @@
 <Scheme>
 
   <Section Name="Create" ClassName="CGConfiguratorCreate">
-    <Function FunctionName="Database" LocalName="Создание базы данных" Description="Создание пустой базы данных указанной в конфигурационном файле."/>
     <Function FunctionName="SystemUser" LocalName="Создание пользователя postgres" Description="Создание системного пользователя postgres на уровне IntegralSystem."/>
     <Function FunctionName="DatabaseSettings" LocalName="Создание стандартных настроек базы" Description="Создание стандартных настроек базы данных IntegralSystem."/>
     <Function FunctionName="Resources" LocalName="Ресурсы" Description="Добавление новых ресурсов и заполнение существующих справочников."/>

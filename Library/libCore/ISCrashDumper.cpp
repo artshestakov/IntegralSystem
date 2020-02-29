@@ -21,26 +21,36 @@ void ISCrashDumper::Init()
 #include "ISStackWalker.h"
 int ISCrashDumper::ReportHook(int ReportType, char *Message, int *ReturnValue)
 {
-	printf("ReportHook()\n");
-    CreateReport(NULL);
+    CreateReport(NULL, Message ? std::string(Message) : std::string());
 	return 0;
 }
 LONG ISCrashDumper::ExceptionHandling(_EXCEPTION_POINTERS *ExceptionInfo)
 {
-	printf("ExceptionHandling()\n");
-    CreateReport(ExceptionInfo);
+	CreateReport(ExceptionInfo, "ExceptionHandling()");
 	return EXCEPTION_EXECUTE_HANDLER;
 }
-void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo)
+void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::string &Message)
 {
+	if (!Message.empty())
+	{
+		printf("Crash: %s", Message.c_str());
+	}
+
     ISStackWalker stack_walker;
 	stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
 
-	std::string FilePath = QString(DEFINES_CORE.PATH_LOGS_DIR + "/Crash_" + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_LOG).toStdString();
+	std::string FilePath = QString(DEFINES_CORE.PATH_CRASH_DIR + "/" + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_LOG).toStdString();
 	FILE *File = fopen(FilePath.c_str(), "w");
 	if (File)
 	{
 		std::string Content = stack_walker.GetCallStack();
+		if (!Message.empty())
+		{
+			Content.insert(0, "\n");
+			Content.insert(0, "====================================================================");
+			Content.insert(0, Message);
+		}
+
 		if (fwrite(Content.c_str(), sizeof(char), Content.size(), File) == Content.size())
 		{
 			printf("Write crash file (%s) - done\n", FilePath.c_str());

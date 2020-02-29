@@ -1,12 +1,12 @@
 #include "StdAfx.h"
 #include "ISCaratApplication.h"
 #include "ISLogger.h"
-#include "ISCommandLine.h"
 #include "ISSystem.h"
 #include "ISConfig.h"
 #include "ISExceptionBase.h"
 #include "ISApplicationRunning.h"
 #include "ISConstants.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
 	if (!CaratService.ConnectToDB()) //Если подключение к базе данных не произошло
 	{
-		ISCommandLine::Pause();
+		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
 

@@ -1,11 +1,11 @@
 #include "CGConfiguratorFIAS.h"
 #include "ISLogger.h"
-#include "ISCommandLine.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
 #include "ISQueryText.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 static QString QS_FIAS_KEYS = PREPARE_QUERY("SELECT fkey_tablename, fkey_fieldname "
 											"FROM _FIAS_Key "
@@ -23,8 +23,7 @@ CGConfiguratorFIAS::~CGConfiguratorFIAS()
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::prepare()
 {
-	ISLOGGER_UNKNOWN("Enter path to unloading FIAS dir:");
-	QString UnloadPath = ISCommandLine::GetText(); //Путь к файлам ФИАС
+	QString UnloadPath = ISConsole::GetString("Enter path to unloading FIAS dir: "); //Путь к файлам ФИАС
 	if (!UnloadPath.length()) //Если путь не введен
 	{
 		ISLOGGER_WARNING("Entered path is empty");
@@ -38,8 +37,7 @@ void CGConfiguratorFIAS::prepare()
 		return;
 	}
 
-	ISLOGGER_UNKNOWN("Enter the path to the folder with the FIAS processing result:");
-	QString ResultPath = ISCommandLine::GetText();
+	QString ResultPath = ISConsole::GetString("Enter the path to the folder with the FIAS processing result: ");
 	if (!ResultPath.length())
 	{
 		ISLOGGER_WARNING("Entered path is empty");
@@ -68,8 +66,7 @@ void CGConfiguratorFIAS::prepare()
 //-----------------------------------------------------------------------------
 void CGConfiguratorFIAS::update()
 {
-	ISLOGGER_UNKNOWN("Enter the path to the folder with prepared FIAS files");
-	QString DirPath = ISCommandLine::GetText();
+	QString DirPath = ISConsole::GetString("Enter the path to the folder with prepared FIAS files: ");
 	if (!DirPath.length()) //Если путь не введен
 	{
 		ISLOGGER_WARNING("Entered path is empty");
