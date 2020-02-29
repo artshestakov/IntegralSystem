@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="OilSphere.xsr">
 
-  
+  <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Тест" Icon="Lists"/>
+  <_SubSystems UID="{BF03E395-A77F-40F5-9CC0-2C0A5FDA78CD}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Тест" Icon="Lists" TableName="Test"/>
 
 </XSR>

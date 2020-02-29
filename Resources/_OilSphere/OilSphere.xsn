@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="OilSphere.xsn">
 
-  
+  <Table Name="Test" UID="{E953E594-EA4E-4F46-A96B-E5B8D8E8692C}" Alias="test" LocalName="Тест" LocalListName="Тесты" TitleName="Name">
+    <Fields>
+      <Field UID="{D69DEE93-C1AD-42A5-B148-B82BB6F925F7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{1207C608-6874-4997-B906-93E3A5924453}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+      <Field UID="{34C4BD11-0ADC-4A86-81C1-13429475C26A}" Name="Time" Type="Time" LabelName="Время" LocalListName="Время" NotNull="true"/>
+      <Field UID="{4044B24E-C9A6-4A4B-B3BE-574217136B4E}" Name="Owner" Type="Int" LabelName="Владелец" LocalListName="Владелец" NotNull="true"/>
+      <Field UID="{AFC1DA1B-6054-4C2E-B425-F77BCF680FB9}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Date"/>
+      <Index Field="Time"/>
+      <Index Field="Owner"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname"/>
+    </Foreigns>
+  </Table>
 
 </XSN>
