@@ -56,6 +56,7 @@ public:
 	static void ShowSettingsForm(const QString &SettingGroupUID = QString()); //Открыть форму настроек
 	static bool ShowUserPasswordForm(int UserID); //Открыть форму изменения пароля для пользователя
 	static void ShowSystemInfoRecord(PMetaClassTable *MetaTable, int ObjectID); //Просмотр системной информации о записи
+	static void ShowDatabaseSettings(); //Показать настройки базы данных
 	
 	static ISImageViewerForm* ShowImageForm(const QPixmap &Pixmap); //Показать изображение
 	static ISImageViewerForm* ShowImageForm(const QString &FilePath); //Показать изображение

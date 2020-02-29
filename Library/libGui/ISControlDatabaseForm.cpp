@@ -13,14 +13,12 @@
 #include "ISDistFileListForm.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _settingsdatabase WHERE sgdb_uid = :UID");
-//-----------------------------------------------------------------------------
 ISControlDatabaseForm::ISControlDatabaseForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	ISPushButton *ButtonSettings = new ISPushButton(this);
 	ButtonSettings->setText(LANG("SettingsDatabase"));
 	ButtonSettings->setIcon(BUFFER_ICONS("DatabaseSettings"));
-	connect(ButtonSettings, &ISPushButton::clicked, this, &ISControlDatabaseForm::ShowDatabaseSettings);
+	connect(ButtonSettings, &ISPushButton::clicked, &ISGui::ShowDatabaseSettings);
 	GetMainLayout()->addWidget(ButtonSettings, 0, Qt::AlignRight);
 
 	TabWidget = new QTabWidget(this);
@@ -101,17 +99,5 @@ void ISControlDatabaseForm::CreateDistFilesForm()
 	ISDistFileListForm *DistFileListForm = new ISDistFileListForm(TabWidget);
 	DistFileListForm->LoadData();
 	TabWidget->addTab(DistFileListForm, BUFFER_ICONS("Updates"), LANG("Updates"));
-}
-//-----------------------------------------------------------------------------
-void ISControlDatabaseForm::ShowDatabaseSettings()
-{
-	ISGui::SetWaitGlobalCursor(true);
-	ISQuery qSelectID(QS_SETTING_DATABASE_ID);
-	qSelectID.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-	if (qSelectID.ExecuteFirst())
-	{
-		ISGui::SetWaitGlobalCursor(false);
-		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_SettingsDatabase", qSelectID.ReadColumn("sgdb_id").toInt())->showMaximized();
-	}
 }
 //-----------------------------------------------------------------------------

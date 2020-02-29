@@ -22,6 +22,9 @@
 #include "ISBuffer.h"
 #include "ISRegisterMetaType.h"
 #include "ISVersion.h"
+#include "ISQuery.h"
+//-----------------------------------------------------------------------------
+static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _settingsdatabase WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
@@ -503,6 +506,23 @@ void ISGui::ShowSystemInfoRecord(PMetaClassTable *MetaTable, int ObjectID)
 	ISRecordInfoForm RecordInfoForm(MetaTable, ObjectID);
 	SetWaitGlobalCursor(false);
 	RecordInfoForm.Exec();
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowDatabaseSettings()
+{
+	ISGui::SetWaitGlobalCursor(true);
+	ISQuery qSelectID(QS_SETTING_DATABASE_ID);
+	qSelectID.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
+	bool Result = qSelectID.ExecuteFirst();
+	if (Result)
+	{
+		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_SettingsDatabase", qSelectID.ReadColumn("sgdb_id").toInt())->showMaximized();
+	}
+	ISGui::SetWaitGlobalCursor(false);
+	if (!Result)
+	{
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.SettingsDatabaseNotExist"));
+	}
 }
 //-----------------------------------------------------------------------------
 ISImageViewerForm* ISGui::ShowImageForm(const QPixmap &Pixmap)

@@ -19,8 +19,6 @@ protected:
 	void CreateStatisticTablesForm();
 	void CreateDistFilesForm();
 
-	void ShowDatabaseSettings();
-
 private:
 	QTabWidget *TabWidget;
 };

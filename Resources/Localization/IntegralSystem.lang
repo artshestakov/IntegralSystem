@@ -185,7 +185,6 @@
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
   <Local Name="Message.Warning.FileSizeExceedsLimit" Russian="Размер выбранного файла превышает установленное ограничение в %1 мегабайт"/>
   <Local Name="Message.Warning.QueryExceptionSyntax" Russian="ВНИМАНИЕ! Произошла неожиданная ошибка SQL-запроса. Нажмите кнопку &quot;Показать подробности...&quot; и отправьте текст ниже разработчику программы."/>
-  <Local Name="Message.Warning.NotSettingAdministratorInSettingDatabase" Russian="ВНИМАНИЕ! В настроках базы данных не выставлен администратор системы."/>
   <Local Name="Message.Warning.EMailIsEmpty" Russian="Адрес электронной почты не указан, отправка невозможна."/>
   <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Такая связь уже существует."/>
   <Local Name="Message.Warning.NotAccess.Create" Russian="У Вас нет прав на добавление данных в таблицу &quot;%1&quot;."/>
@@ -212,6 +211,7 @@
   <Local Name="Message.Warning.NotGetScreenshotCurrentUser" Russian="Получать изображение своего рабочего стола запрещено."/>
   <Local Name="Message.Warning.AlreadyConnected" Russian="ВНИМАНИЕ! Логин &quot;%1&quot; уже авторизован в системе!"/>
   <Local Name="Message.Warning.AlreadyConnected.MessageBox" Russian="Неизвестное лицо с пытается подключиться к базе данных с адреса %1 под Вашим логином. Рекомендуется срочно сменить Ваш пароль."/>
+  <Local Name="Message.Warning.SettingsDatabaseNotExist" Russian="ВНИМАНИЕ! Настройки базы данных не созданы. Обратитесь к системному администратору."/>
   <Local Name="Message.Question.Reconnect" Russian="Соединение к базе данных потеряно. Произвести переподключение?"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
@@ -273,6 +273,7 @@
   <Local Name="Message.Question.TerminateAllUser" Russian="Отключить всех пользователей?"/>
   <Local Name="Message.Question.StopFullTextSearch" Russian="Остановить поиск?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
+  <Local Name="Message.Question.NotSettingAdministratorInSettingDatabase" Russian="ВНИМАНИЕ! В настроках базы данных не настроен администратор системы. Сделать настройку сейчас?"/>
   
   <!--Banner Startup User-->
   <Local Name="Banner.Initialize.SettingsUser" Russian="Инициализация настроек пользователя..."/>

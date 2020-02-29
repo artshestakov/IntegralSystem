@@ -486,11 +486,14 @@ void ISMainWindow::EscapeClicked()
 //-----------------------------------------------------------------------------
 void ISMainWindow::InitializePlugin()
 {
-	if (!SETTING_DATABASE_VALUE(CONST_UID_DATABASE_SETTING_GENERAL_ADMINISTRATOR).isValid()) //Если не настроен администратор - вывести предупреждение
+	//Если не настроен администратор - предложить настроить
+	if (!SETTING_DATABASE_VALUE(CONST_UID_DATABASE_SETTING_GENERAL_ADMINISTRATOR).isValid())
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotSettingAdministratorInSettingDatabase"));
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.NotSettingAdministratorInSettingDatabase")))
+		{
+			ISGui::ShowDatabaseSettings();
+		}
 	}
-
 	ISObjects::GetInstance().GetInterface()->InitializePlugin();
 }
 //-----------------------------------------------------------------------------
