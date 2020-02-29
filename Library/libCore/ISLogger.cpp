@@ -16,28 +16,7 @@ ISLogger::ISLogger()
 //-----------------------------------------------------------------------------
 ISLogger::~ISLogger()
 {
-	if (EnableOutFile)
-	{
-		//Останавливаем обработчик очереди
-		//Mutex.lock();
-		Running = false;
-		//Mutex.unlock();
-
-		//Ждём пока логгер не остановится
-		while (/*true*/!Finished)
-		{
-			//Mutex.lock();
-			//bool finished = Finished;
-			//Mutex.unlock();
-			Sleep(500);
-
-			//if (finished) //Если логгер остановился - выходим
-			{
-				//break;
-			}
-		}
-		//File.close(); //Закрываем файл
-	}
+	Shutdown();
 }
 //-----------------------------------------------------------------------------
 ISLogger& ISLogger::Instance()
@@ -60,7 +39,9 @@ bool ISLogger::Initialize(bool OutPrintf, bool OutFile, const std::string &file_
 
 	EnableOutPrintf = OutPrintf;
 	EnableOutFile = OutFile;
-	FilePrefix = file_prefix;
+
+	//Если префикс не задан - используем префикс по умолчанию, иначе - тот что был задан
+	FilePrefix = file_prefix.empty() ? LOG_NAME_DEFAULT : file_prefix;
 
 	if (EnableOutFile) //Если включен вывод в файл - выполняем соответствующие подготовки
 	{
@@ -158,7 +139,6 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 		if (EnableOutFile) //Если включена опция записи в файл - дополняем именем файла с исходным кодом, номером строки и добавляем в очередь
 		{
 			Stream << " [" << SourceName << ":" << Line << "] " << String.toStdString() << std::endl;
-
 			Mutex.lock();
 			Array[LastPosition++] = Stream.str();
 			Mutex.unlock();
@@ -166,22 +146,41 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 	}
 }
 //-----------------------------------------------------------------------------
+void ISLogger::Shutdown()
+{
+	if (EnableOutFile) //Если включен вывод в файл
+	{
+		//Останавливаем обработчик очереди
+		Mutex.lock();
+		Running = false;
+		Mutex.unlock();
+
+		//Ждём пока логгер не остановится
+		while (!Finished)
+		{
+			Sleep(100);
+		}
+		File.close(); //Закрываем файл
+	}
+}
+//-----------------------------------------------------------------------------
 void ISLogger::Worker()
 {
-	while (/*Running || LastPosition > 0*/true) //Работа потока
+	while (true) //Работа потока
 	{
+		Mutex.lock(); //Блокируем мьютекс
+		bool running = Running;
 		if (LastPosition) //Если очередь не пустая
 		{
-			Mutex.lock(); //Блокируем мьютекс
 			for (size_t i = 0; i < LastPosition; ++i) //Обходим очередь
 			{
 				File << Array[i];
 				Array[i].clear();
 			}
-			Mutex.unlock(); //Разблокируем мьютекс
 			File.flush();
 			LastPosition = 0;
 		}
+		Mutex.unlock(); //Разблокируем мьютекс
 
 		//Получаем текущие дату и время
 		SYSTEMTIME ST;
@@ -207,11 +206,13 @@ void ISLogger::Worker()
 				File.open(PathFile, std::ios::app); //Обрабатывать (File.is_open() == false)?
 			}
 		}
-		Sleep(LOGGER_TIMEOUT); //Ждём 2 секунды
-		if (!Running)
+
+		if (!running)
 		{
 			break;
 		}
+
+		Sleep(LOGGER_TIMEOUT); //Ждём 2 секунды
 	}
 	Finished = true;
 }
@@ -252,7 +253,7 @@ void ISLogger::UpdateFilePath()
 	Stream << PathLogs << FilePrefix << "_" << CurrentYear <<
 		(CurrentMonth < 10 ? '0' + std::to_string(CurrentMonth) : std::to_string(CurrentMonth)) <<
 		(CurrentDay < 10 ? '0' + std::to_string(CurrentDay) : std::to_string(CurrentDay)) <<
-		".log";
+		SYMBOL_POINT << EXTENSION_LOG;
 	PathFile = Stream.str();
 }
 //-----------------------------------------------------------------------------
