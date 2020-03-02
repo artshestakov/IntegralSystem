@@ -84,14 +84,7 @@
 #include "ISComboSearchString.h"
 #include "ISComboSearchNumber.h"
 //-----------------------------------------------------------------------------
-#include "ISComboTableSelectionBehavior.h"
-#include "ISComboTableDateFormat.h"
-#include "ISComboTableDoubleClickEvent.h"
-#include "ISComboCalendarNoteType.h"
-#include "ISComboStartedParagraph.h"
-#include "ISComboTabBarSelectionBehavior.h"
-#include "ISComboIncomingFormPosition.h"
-#include "ISCheckViewParagraph.h"
+#include "ISSettingFIeldWidgets.h"
 //-----------------------------------------------------------------------------
 #include "ISDevice_Atol1101.h"
 #include "ISDevice_Atol1101Plus.h"

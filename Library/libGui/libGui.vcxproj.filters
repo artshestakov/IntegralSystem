@@ -805,33 +805,6 @@
     <ClCompile Include="ISTaskTabBase.cpp">
       <Filter>Controls\Task</Filter>
     </ClCompile>
-    <ClCompile Include="ISCheckViewParagraph.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboCalendarNoteType.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboIncomingFormPosition.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboSettingEdit.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboStartedParagraph.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboTabBarSelectionBehavior.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboTableDateFormat.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboTableDoubleClickEvent.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboTableSelectionBehavior.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
     <ClCompile Include="ISAboutForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -1293,6 +1266,9 @@
     </ClCompile>
     <ClCompile Include="ISOilSphere.cpp">
       <Filter>Objects\OilSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingFIeldWidgets.cpp">
+      <Filter>Fields\Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1785,33 +1761,6 @@
     <QtMoc Include="ISTaskTabBase.h">
       <Filter>Controls\Task</Filter>
     </QtMoc>
-    <QtMoc Include="ISCheckViewParagraph.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboCalendarNoteType.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboIncomingFormPosition.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboSettingEdit.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboStartedParagraph.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboTabBarSelectionBehavior.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboTableDateFormat.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboTableDoubleClickEvent.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboTableSelectionBehavior.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
     <QtMoc Include="ISAboutForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -2237,6 +2186,9 @@
     </QtMoc>
     <QtMoc Include="ISOilSphere.h">
       <Filter>Objects\OilSphere</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingFIeldWidgets.h">
+      <Filter>Fields\Settings</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
