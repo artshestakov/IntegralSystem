@@ -109,6 +109,7 @@ int main(int argc, char *argv[])
 		{
 			InterpreterMode(Result);
 		}
+		ISLogger::Instance().Shutdown();
 		return EXIT_SUCCESS;
 	}
 	else if (ArgumentType == ISNamespace::CAT_OneArgument)

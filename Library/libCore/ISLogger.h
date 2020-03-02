@@ -23,7 +23,7 @@ public:
 	bool Initialize(bool OutPrintf, bool OutFile, const std::string &file_prefix = std::string()); //Инициализировать логгер
 
 	void Log(ISNamespace::DebugMessageType Type, const QString &String, const char *SourceName, int Line); //Добавить сообщение в лог
-	void Shutdown();
+	void Shutdown(); //Остановка логгера
 
 private:
 	void Worker(); //Обработчик очереди сообщений
