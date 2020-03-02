@@ -84,7 +84,7 @@
 #include "ISComboSearchString.h"
 #include "ISComboSearchNumber.h"
 //-----------------------------------------------------------------------------
-#include "ISSettingFIeldWidgets.h"
+#include "ISSettingFieldWidgets.h"
 //-----------------------------------------------------------------------------
 #include "ISDevice_Atol1101.h"
 #include "ISDevice_Atol1101Plus.h"

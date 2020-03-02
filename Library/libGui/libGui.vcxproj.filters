@@ -1267,7 +1267,7 @@
     <ClCompile Include="ISOilSphere.cpp">
       <Filter>Objects\OilSphere</Filter>
     </ClCompile>
-    <ClCompile Include="ISSettingFIeldWidgets.cpp">
+    <ClCompile Include="ISSettingFieldWidgets.cpp">
       <Filter>Fields\Settings</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2187,7 +2187,7 @@
     <QtMoc Include="ISOilSphere.h">
       <Filter>Objects\OilSphere</Filter>
     </QtMoc>
-    <QtMoc Include="ISSettingFIeldWidgets.h">
+    <QtMoc Include="ISSettingFieldWidgets.h">
       <Filter>Fields\Settings</Filter>
     </QtMoc>
   </ItemGroup>

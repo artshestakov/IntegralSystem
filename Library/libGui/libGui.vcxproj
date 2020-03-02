@@ -362,7 +362,7 @@
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSelectDialogForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
-    <ClCompile Include="ISSettingFIeldWidgets.cpp" />
+    <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
     <ClCompile Include="ISSirona.cpp" />
@@ -464,7 +464,7 @@
     <QtMoc Include="ISPrintingBase.h" />
     <ClInclude Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
-    <QtMoc Include="ISSettingFIeldWidgets.h" />
+    <QtMoc Include="ISSettingFieldWidgets.h" />
     <ClInclude Include="ISSqlModelHelper.h" />
     <QtMoc Include="ISSqlModelView.h" />
     <QtMoc Include="ISSqlModelCore.h" />
