@@ -100,7 +100,7 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 
 	ISCrashDumper::Init();
 
-	Result = ISLogger::Instance().Initialize(true, false, "Configurator");
+	Result = ISLogger::Instance().Initialize(true, false, ISDefines::Core::APPLICATION_NAME.toStdString());
 	if (!Result)
 	{
 		ISLOGGER_ERROR(ISLogger::Instance().GetErrorString());

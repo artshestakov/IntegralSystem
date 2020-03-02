@@ -7,10 +7,20 @@
 #include "ISApplicationRunning.h"
 #include "ISConstants.h"
 #include "ISConsole.h"
+#include "ISCore.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
 	ISCaratApplication CaratService(argc, argv);
+
+	QString ErrorString;
+	bool Result = ISCore::Startup(false, ErrorString);
+	if (!Result)
+	{
+		ISLOGGER_ERROR(ErrorString);
+		ISConsole::Pause();
+		return EXIT_FAILURE;
+	}
 
 	if (!ISLogger::Instance().Initialize(true, true, "Carat"))
 	{
@@ -22,7 +32,7 @@ int main(int argc, char *argv[])
 	if (!ApplicationRunning.TryToRun()) //Если приложение уже запущено
 	{
 		ISLOGGER_UNKNOWN("Application already started");
-		ISSystem::SleepSeconds(3);
+		ISConsole::Pause();
 		return EXIT_SUCCESS;
 	}
 
