@@ -5,8 +5,8 @@
 //-----------------------------------------------------------------------------
 ISDelegateBoolean::ISDelegateBoolean(QObject *parent)
 	: QStyledItemDelegate(parent),
-	ImageNotSelected(BUFFER_ICONS("Delegate.Boolean.NotSelected").pixmap(DEFINES_GUI.SIZE_16_16).toImage()),
-	ImageSelected(BUFFER_ICONS("Delegate.Boolean.Selected").pixmap(DEFINES_GUI.SIZE_16_16).toImage())
+	ImageNotSelected(BUFFER_ICONS("Delegate.Boolean.NotSelected").pixmap(ISDefines::Gui::SIZE_16_16).toImage()),
+	ImageSelected(BUFFER_ICONS("Delegate.Boolean.Selected").pixmap(ISDefines::Gui::SIZE_16_16).toImage())
 {
 	
 }
@@ -68,7 +68,7 @@ void ISDelegateCallDetails::paint(QPainter *Painter, const QStyleOptionViewItem 
 	Style->drawControl(QStyle::CE_ItemViewItem, &OptionViewItem, Painter, Widget);
 
 	QIcon IconDetails = Index.data().toBool() ? IconDetailsNotNull : IconDetailsNull;
-	QImage Image = IconDetails.pixmap(DEFINES_GUI.SIZE_18_18).toImage();
+	QImage Image = IconDetails.pixmap(ISDefines::Gui::SIZE_18_18).toImage();
 	if (Image.isNull())
 	{
 		return;
@@ -128,8 +128,8 @@ void ISDelegateColor::paint(QPainter *Painter, const QStyleOptionViewItem &Optio
 //-----------------------------------------------------------------------------
 ISDelegateFile::ISDelegateFile(QWidget *parent)
 	: QStyledItemDelegate(parent),
-	ImageNotSelected(BUFFER_ICONS("Delegate.File.NotSelected").pixmap(DEFINES_GUI.SIZE_16_16).toImage()),
-	ImageSelected(BUFFER_ICONS("Delegate.File.Selected").pixmap(DEFINES_GUI.SIZE_16_16).toImage())
+	ImageNotSelected(BUFFER_ICONS("Delegate.File.NotSelected").pixmap(ISDefines::Gui::SIZE_16_16).toImage()),
+	ImageSelected(BUFFER_ICONS("Delegate.File.Selected").pixmap(ISDefines::Gui::SIZE_16_16).toImage())
 {
 	
 }
@@ -213,7 +213,7 @@ void ISDelegateImage::paint(QPainter *Painter, const QStyleOptionViewItem &Optio
 		}
 	}
 
-	Image = Image.scaled(DEFINES_GUI.SIZE_100_100, Qt::KeepAspectRatio);
+	Image = Image.scaled(ISDefines::Gui::SIZE_100_100, Qt::KeepAspectRatio);
 	const int x = Option.rect.center().x() - Image.rect().width() / 2;
 	const int y = Option.rect.center().y() - Image.rect().height() / 2;
 	Painter->drawImage(QRect(x, y, Image.rect().width(), Image.rect().height()), Image);

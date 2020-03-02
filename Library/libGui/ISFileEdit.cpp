@@ -187,7 +187,7 @@ void ISFileEdit::Open()
 	{
 		QString Extension = qSelect.ReadColumn("file_extension").toString();
 		QByteArray Data = qSelect.ReadColumn("file_data").toByteArray();
-		QString FilePathTemp = DEFINES_CORE.PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + Extension;
+		QString FilePathTemp = ISDefines::Core::PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + Extension;
 		QFile FileTemp(FilePathTemp);
 		if (FileTemp.open(QIODevice::WriteOnly))
 		{

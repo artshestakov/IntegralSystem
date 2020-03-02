@@ -9,7 +9,7 @@ ISUserGroupListForm::ISUserGroupListForm(QWidget *parent) : ISListBaseForm("_Use
 	Label = new QLabel(this);
 	Label->setWordWrap(true);
 	Label->setText(LANG("SelectedUserGroupLeftFromAccessSetting"));
-	Label->setFont(DEFINES_GUI.FONT_TAHOMA_12);
+	Label->setFont(ISDefines::Gui::FONT_TAHOMA_12);
 	Label->setSizePolicy(QSizePolicy::Minimum, Label->sizePolicy().verticalPolicy());
 	GetLayoutTableView()->addWidget(Label, 0, Qt::AlignCenter);
 

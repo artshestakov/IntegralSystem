@@ -10,12 +10,12 @@ ISRangeEditBase::ISRangeEditBase(QWidget *parent, const QString &FieldName) : QW
 	EndFieldEdit = nullptr;
 
 	QHBoxLayout *MainLayout = new QHBoxLayout();
-	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	MainLayout->setSpacing(EDIT_FIELD_SPACING);
 	setLayout(MainLayout);
 
 	QLabel *LabelFieldName = new QLabel(this);
-	LabelFieldName->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelFieldName->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	MainLayout->addWidget(LabelFieldName);
 
 	if (FieldName.length())

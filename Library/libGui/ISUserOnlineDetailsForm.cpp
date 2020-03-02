@@ -28,7 +28,7 @@ ISUserOnlineDetailsForm::ISUserOnlineDetailsForm(int user_id, QWidget *parent) :
 {
 	setWindowTitle(LANG("MonitorActivity.DetailsSession"));
 	setWindowIcon(BUFFER_ICONS("Information"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);

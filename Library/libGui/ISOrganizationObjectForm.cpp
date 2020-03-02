@@ -82,7 +82,7 @@ ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType f
 			QString UserName = qSelect.ReadColumn("usrs_surname").toString() + SYMBOL_SPACE + qSelect.ReadColumn("usrs_name").toString() + SYMBOL_SPACE + qSelect.ReadColumn("usrs_patronymic").toString();
 
 			QLabel *LabelWorkIn = new QLabel(GetToolBar());
-			LabelWorkIn->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+			LabelWorkIn->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 			LabelWorkIn->setText(LANG("OrganizationInWorkFromUser").arg(UserName));
 			LabelWorkIn->setContentsMargins(10, 0, 0, 0);
 			GetToolBar()->addWidget(LabelWorkIn);
@@ -193,7 +193,7 @@ void ISOrganizationObjectForm::UpdateDemo()
 			int CountDemo = qSelectDemo.ReadColumn("count").toInt();
 			if (CountDemo)
 			{
-				ActionDemo->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+				ActionDemo->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 				ActionDemo->setText(LANG("DemoAccess") + " (" + QString::number(CountDemo) + ')');
 			}
 		}

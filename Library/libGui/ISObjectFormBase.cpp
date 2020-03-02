@@ -258,7 +258,7 @@ void ISObjectFormBase::AfterShowEvent()
 void ISObjectFormBase::CreateToolBarEscorts()
 {
 	ToolBarNavigation = new ISToolBarObject(this);
-	ToolBarNavigation->setIconSize(DEFINES_GUI.SIZE_20_20);
+	ToolBarNavigation->setIconSize(ISDefines::Gui::SIZE_20_20);
 	GetMainLayout()->addWidget(ToolBarNavigation);
 
 	//Действие объекта
@@ -300,7 +300,7 @@ void ISObjectFormBase::CreateMainTabWidget()
 	TabWidgetMain->addTab(StackedWidget, LANG("Card"));
 
 	WidgetObjectLayout = new QVBoxLayout();
-	WidgetObjectLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	WidgetObjectLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
 	WidgetObject = new QWidget(TabWidgetMain);
 	WidgetObject->setLayout(WidgetObjectLayout);
@@ -321,7 +321,7 @@ void ISObjectFormBase::CreateToolBar()
 	LabelIsDeleted->setVisible(false);
 	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
 	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
-	LabelIsDeleted->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
+	LabelIsDeleted->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
 	WidgetObjectLayout->addWidget(LabelIsDeleted, 0, Qt::AlignHCenter);
 
@@ -538,7 +538,7 @@ void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
 	{
 		QLabel *LabelSystemInfoObject = new QLabel(this);
 		LabelSystemInfoObject->setText(LANG("SystemField.ID") + ':');
-		LabelSystemInfoObject->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+		LabelSystemInfoObject->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 		EditObjectID = new ISLineEdit(this);
 		EditObjectID->SetValue(LANG("SystemField.ID.NotAssigned"));
@@ -619,10 +619,10 @@ void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEdit
 	{
 		QLabel *LabelTab = new QLabel(this);
 		LabelTab->setText(MetaField->SeparatorName);
-		LabelTab->setFont(DEFINES_GUI.FONT_TAHOMA_10_BOLD);
+		LabelTab->setFont(ISDefines::Gui::FONT_TAHOMA_10_BOLD);
 
 		QHBoxLayout *LayoutLine = new QHBoxLayout();
-		LayoutLine->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+		LayoutLine->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
 		QWidget *WidgetLine = new QWidget(this);
 		WidgetLine->setLayout(LayoutLine);
@@ -969,16 +969,16 @@ void ISObjectFormBase::SetModificationFlag(bool modification)
 	QString WindowTitle = windowTitle();
 	if (ModificationFlag)
 	{
-		if (!WindowTitle.contains(DEFINES_CORE.SYMBOL_OBJECT_CHANGED))
+		if (!WindowTitle.contains(ISDefines::Core::SYMBOL_OBJECT_CHANGED))
 		{
-			WindowTitle += DEFINES_CORE.SYMBOL_OBJECT_CHANGED;
+			WindowTitle += ISDefines::Core::SYMBOL_OBJECT_CHANGED;
 		}
 	}
 	else
 	{
-		if (WindowTitle.contains(DEFINES_CORE.SYMBOL_OBJECT_CHANGED))
+		if (WindowTitle.contains(ISDefines::Core::SYMBOL_OBJECT_CHANGED))
 		{
-			WindowTitle.remove(DEFINES_CORE.SYMBOL_OBJECT_CHANGED);
+			WindowTitle.remove(ISDefines::Core::SYMBOL_OBJECT_CHANGED);
 		}
 	}
 	setWindowTitle(WindowTitle);

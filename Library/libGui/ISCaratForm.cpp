@@ -26,7 +26,7 @@ static QString QU_CARAT_CORE_ACTIVE = PREPARE_QUERY("UPDATE _caratcoreactive SET
 //-----------------------------------------------------------------------------
 ISCaratForm::ISCaratForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);

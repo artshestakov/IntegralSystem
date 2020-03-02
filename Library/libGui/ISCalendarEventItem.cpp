@@ -18,7 +18,7 @@ ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, c
 	setLayout(MainLayout);
 
 	QLabel *LabelImage = new QLabel(this);
-	LabelImage->setPixmap(BUFFER_ICONS("CalendarMain.Indicator").pixmap(DEFINES_GUI.SIZE_32_32));
+	LabelImage->setPixmap(BUFFER_ICONS("CalendarMain.Indicator").pixmap(ISDefines::Gui::SIZE_32_32));
 	MainLayout->addWidget(LabelImage, 0, Qt::AlignTop);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
@@ -36,7 +36,7 @@ ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, c
 
 	QLabel *LabelTime = new QLabel(this);
 	LabelTime->setText(Time.toString(TIME_FORMAT_V1));
-	LabelTime->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelTime->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LabelTime->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	Layout->addWidget(LabelTime);
 

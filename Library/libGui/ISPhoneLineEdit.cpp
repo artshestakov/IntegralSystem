@@ -43,9 +43,9 @@ void ISPhoneLineEdit::SetIcon(ISNamespace::PhoneIconType IconType)
 {
 	switch (IconType)
 	{
-	case ISNamespace::PIT_Standart: Icon = BUFFER_ICONS("Phone.Correcting.Standart").pixmap(DEFINES_GUI.SIZE_16_16); break;
-	case ISNamespace::PIT_TRUE: Icon = BUFFER_ICONS("Phone.Correcting.True").pixmap(DEFINES_GUI.SIZE_16_16); break;
-	case ISNamespace::PIT_FALSE: Icon = BUFFER_ICONS("Phone.Correcting.False").pixmap(DEFINES_GUI.SIZE_16_16); break;
+	case ISNamespace::PIT_Standart: Icon = BUFFER_ICONS("Phone.Correcting.Standart").pixmap(ISDefines::Gui::SIZE_16_16); break;
+	case ISNamespace::PIT_TRUE: Icon = BUFFER_ICONS("Phone.Correcting.True").pixmap(ISDefines::Gui::SIZE_16_16); break;
+	case ISNamespace::PIT_FALSE: Icon = BUFFER_ICONS("Phone.Correcting.False").pixmap(ISDefines::Gui::SIZE_16_16); break;
 	}
 }
 //-----------------------------------------------------------------------------

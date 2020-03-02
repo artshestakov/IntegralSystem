@@ -19,7 +19,7 @@ ISImageWidget::ISImageWidget(QWidget *parent) : QLabel(parent)
 	setMouseTracking(true);
 	setAutoFillBackground(true);
 	setAcceptDrops(true);
-	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(DEFINES_GUI.SIZE_64_64));
+	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(ISDefines::Gui::SIZE_64_64));
 }
 //-----------------------------------------------------------------------------
 ISImageWidget::~ISImageWidget()
@@ -53,7 +53,7 @@ void ISImageWidget::dragEnterEvent(QDragEnterEvent *e)
 		}
 
 		QString FilePath = MimeData->urls()[0].toString();
-		if (!QStringList(DEFINES_GUI.AVIABLE_IMAGE_EXTENSION).contains(QFileInfo(FilePath).suffix().toLower())) //≈сли происходит перетаскивание не изображени€
+		if (!QStringList(ISDefines::Gui::AVIABLE_IMAGE_EXTENSION).contains(QFileInfo(FilePath).suffix().toLower())) //≈сли происходит перетаскивание не изображени€
 		{
 			return;
 		}
@@ -113,7 +113,7 @@ void ISImageWidget::SetPixmap(const QPixmap &Pixmap)
 
 	Clear();
 	CurrentPixmap = Pixmap;
-	QPixmap CompletePixmap = Pixmap.scaled(DEFINES_GUI.SIZE_200_200, Qt::KeepAspectRatio);
+	QPixmap CompletePixmap = Pixmap.scaled(ISDefines::Gui::SIZE_200_200, Qt::KeepAspectRatio);
 	setPixmap(CompletePixmap);
 	emit ImageChanged();
 
@@ -140,7 +140,7 @@ void ISImageWidget::Clear()
 	CurrentPixmap = QPixmap();
 	setPixmap(QPixmap());
 	emit ImageChanged();
-	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(DEFINES_GUI.SIZE_64_64));
+	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(ISDefines::Gui::SIZE_64_64));
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

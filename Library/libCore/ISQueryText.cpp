@@ -89,7 +89,7 @@ bool ISQueryText::CheckAllQueries()
 //-----------------------------------------------------------------------------
 void ISQueryText::ErrorQuery(ISSqlQuery SqlQuery, const QString &ErrorText)
 {
-	QFile File(DEFINES_CORE.PATH_TEMP_DIR + ISSystem::GenerateUuid());
+	QFile File(ISDefines::Core::PATH_TEMP_DIR + ISSystem::GenerateUuid());
 	if (File.open(QIODevice::WriteOnly))
 	{
 		QString Content;
@@ -99,9 +99,9 @@ void ISQueryText::ErrorQuery(ISSqlQuery SqlQuery, const QString &ErrorText)
 		File.write(Content.toUtf8());
 		File.close();
 
-		if (DEFINES_CORE.IS_GUI)
+		if (ISDefines::Core::IS_GUI)
 		{
-			QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << File.fileName());
+			QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << File.fileName());
 		}
 		else
 		{

@@ -7,9 +7,9 @@ ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : I
 {
 	setWindowTitle(LANG("AddingFiles"));
 	setMinimumWidth(500);
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
-
+	
 	connect(this, &ISAttachFileForm::UpdateList, this, &ISAttachFileForm::close);
 
 	QHBoxLayout *LayoutFile = new QHBoxLayout();

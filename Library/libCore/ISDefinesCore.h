@@ -4,36 +4,29 @@
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISDefinesCore
+namespace ISDefines
 {
-public:
-	static ISDefinesCore& Instance();
-	void Init(bool IsGui); //Инициализация
+	class LIBCORE_EXPORT Core
+	{
+	public:
+		static void Init(bool IsGui); //Инициализация
 
-private:
-	ISDefinesCore();
-	~ISDefinesCore();
-	ISDefinesCore(const ISDefinesCore &);
-	ISDefinesCore& operator=(const ISDefinesCore &);
-
-public:
-	bool IS_GUI; //Флаг наличия графического интерфейса
-	QString APPLICATION_NAME;
-	QString PATH_APPLICATION_DIR;
-	QString PATH_APPLICATION_FILE;
-	QString PATH_LOGS_DIR;
-	QString PATH_TEMP_DIR;
-	QString PATH_CRASH_DIR;
-	QString PATH_TRANSLATIONS_DIR;
-	QString PATH_CONFIG_FILE;
-	QString SYMBOL_CIRCLE; //Символ "Круг"
-	QString SYMBOL_MULTIPLY; //Символ "Умножение"
-	QString SYMBOL_DIVIDE; //Символ "Деление"
-	QString SYMBOL_OBJECT_CHANGED;
-	QString SYMBOL_SPACE_HIDE; //Невидмый символ (НЕ ЯВЛЯЕТСЯ СТАНДАРТНЫМ СИМВОЛОМ ПРОБЕЛА)
-	QString SYMBOL_FIAS_SPLIT;
-};
-//-----------------------------------------------------------------------------
-#define DEFINES_CORE ISDefinesCore::Instance()
+		static bool IS_GUI; //Флаг наличия графического интерфейса
+		static QString APPLICATION_NAME;
+		static QString PATH_APPLICATION_DIR;
+		static QString PATH_APPLICATION_FILE;
+		static QString PATH_LOGS_DIR;
+		static QString PATH_TEMP_DIR;
+		static QString PATH_CRASH_DIR;
+		static QString PATH_TRANSLATIONS_DIR;
+		static QString PATH_CONFIG_FILE;
+		static QString SYMBOL_CIRCLE; //Символ "Круг"
+		static QString SYMBOL_MULTIPLY; //Символ "Умножение"
+		static QString SYMBOL_DIVIDE; //Символ "Деление"
+		static QString SYMBOL_OBJECT_CHANGED;
+		static QString SYMBOL_SPACE_HIDE; //Невидмый символ (НЕ ЯВЛЯЕТСЯ СТАНДАРТНЫМ СИМВОЛОМ ПРОБЕЛА)
+		static QString SYMBOL_FIAS_SPLIT;
+	};
+}
 //-----------------------------------------------------------------------------
 #endif

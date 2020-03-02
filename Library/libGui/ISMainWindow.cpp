@@ -58,8 +58,8 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 
 	setWindowIcon(BUFFER_PIXMAPS("Logo"));
 	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::GetInstance().GetInfo().LocalName).arg(ISMetaUser::GetInstance().GetData()->FullName));
-	resize(DEFINES_GUI.SIZE_MAIN_WINDOW);
-	setMinimumSize(DEFINES_GUI.SIZE_MAIN_WINDOW_MINIMUM);
+	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
+	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setSpacing(0);
 
 	CreateMenuBar();
@@ -285,7 +285,7 @@ void ISMainWindow::CreateInformationMessage()
 	if (InformationMessage.length())
 	{
 		QLabel *Label = new QLabel(this);
-		Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+		Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		Label->setText(InformationMessage);
 		Label->setWordWrap(true);
 		Label->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
@@ -338,7 +338,7 @@ void ISMainWindow::CreateStatusBar()
 		GetMainLayout()->addWidget(Frame);
 
 		QPalette Palette = Frame->palette();
-		Palette.setColor(QPalette::Dark, DEFINES_GUI.COLOR_MAIN_MENU_BAR);
+		Palette.setColor(QPalette::Dark, ISDefines::Gui::COLOR_MAIN_MENU_BAR);
 		Frame->setPalette(Palette);
 
 		StatusBar = new ISStatusBar(this);

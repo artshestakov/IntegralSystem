@@ -28,7 +28,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	setUsesScrollButtons(SETTING_BOOL(CONST_UID_SETTING_TABS_VIEWUSESSCROLLBUTTONS));
 
 	QVBoxLayout *LayoutMainTab = new QVBoxLayout();
-	LayoutMainTab->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	LayoutMainTab->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	LayoutMainTab->setSpacing(0);
 
 	MainTab = new QWidget(this);
@@ -84,7 +84,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 		ButtonClose->setAutoRaise(true);
 		ButtonClose->setProperty("ID", ID);
 		ButtonClose->setCursor(CURSOR_POINTING_HAND);
-		ButtonClose->setFixedSize(DEFINES_GUI.SIZE_18_18);
+		ButtonClose->setFixedSize(ISDefines::Gui::SIZE_18_18);
 		connect(ButtonClose, &QToolButton::clicked, this, &ISTabWidgetMain::CloseCliciked);
 		TabBar->setTabButton(Index, QTabBar::RightSide, ButtonClose);
 
@@ -105,7 +105,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 		ButtonMenu->setAutoRaise(true);
 		ButtonMenu->setToolTip(LANG("AllTabs"));
 		ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
-		ButtonMenu->setFixedSize(DEFINES_GUI.SIZE_18_18);
+		ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_18_18);
 		ButtonMenu->setPopupMode(QToolButton::InstantPopup);
 		ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
 		TabBar->setTabButton(Index, QTabBar::RightSide, ButtonMenu);
@@ -128,7 +128,7 @@ void ISTabWidgetMain::FixedTab(int Index)
 	if (TabBar->CheckFixedTab(TabUID)) //Если вкладка уже закреплена
 	{
 		TabBar->RemoveFixedTab(TabUID);
-		TabBar->setTabTextColor(Index, DEFINES_GUI.COLOR_NULL);
+		TabBar->setTabTextColor(Index, ISDefines::Gui::COLOR_NULL);
 		TabBar->tabButton(Index, QTabBar::RightSide)->setEnabled(true);
 	}
 	else //Если вкладка не закреплена - закрепить

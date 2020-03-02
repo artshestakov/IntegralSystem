@@ -15,7 +15,7 @@ ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload, QWidg
 	Payload = payload;
 
 	setWindowTitle(LANG("IncomingCall"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
@@ -93,7 +93,7 @@ void ISIncomingCallBaseForm::AfterShowEvent()
 		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	}
 
-	FlashingStart(700, DEFINES_GUI.COLOR_FLASH_INCOMING_FORM);
+	FlashingStart(700, ISDefines::Gui::COLOR_FLASH_INCOMING_FORM);
 }
 //-----------------------------------------------------------------------------
 void ISIncomingCallBaseForm::Timeout()

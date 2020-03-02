@@ -1,23 +1,23 @@
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISDefinesCore::ISDefinesCore()
-{
-
-}
+bool ISDefines::Core::IS_GUI;
+QString ISDefines::Core::APPLICATION_NAME;
+QString ISDefines::Core::PATH_APPLICATION_DIR;
+QString ISDefines::Core::PATH_APPLICATION_FILE;
+QString ISDefines::Core::PATH_LOGS_DIR;
+QString ISDefines::Core::PATH_TEMP_DIR;
+QString ISDefines::Core::PATH_CRASH_DIR;
+QString ISDefines::Core::PATH_TRANSLATIONS_DIR;
+QString ISDefines::Core::PATH_CONFIG_FILE;
+QString ISDefines::Core::SYMBOL_CIRCLE;
+QString ISDefines::Core::SYMBOL_MULTIPLY;
+QString ISDefines::Core::SYMBOL_DIVIDE;
+QString ISDefines::Core::SYMBOL_OBJECT_CHANGED;
+QString ISDefines::Core::SYMBOL_SPACE_HIDE;
+QString ISDefines::Core::SYMBOL_FIAS_SPLIT;
 //-----------------------------------------------------------------------------
-ISDefinesCore::~ISDefinesCore()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISDefinesCore& ISDefinesCore::Instance()
-{
-	static ISDefinesCore Defines;
-	return Defines;
-}
-//-----------------------------------------------------------------------------
-void ISDefinesCore::Init(bool IsGui)
+void ISDefines::Core::Init(bool IsGui)
 {
 	IS_GUI = IsGui;
 	APPLICATION_NAME = QCoreApplication::applicationName();

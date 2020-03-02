@@ -84,15 +84,15 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 bool ISCore::Startup(bool IsGui, QString &ErrorString)
 {
-	ISDefinesCore::Instance().Init(IsGui);
+	ISDefines::Core::Init(IsGui);
 
-	bool Result = ISSystem::CreateDir(DEFINES_CORE.PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
+	bool Result = ISSystem::CreateDir(ISDefines::Core::PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
 	if (!Result)
 	{
 		return Result;
 	}
 
-	Result = ISSystem::CreateDir(DEFINES_CORE.PATH_CRASH_DIR, ErrorString); //Создание папки для crash-файлов
+	Result = ISSystem::CreateDir(ISDefines::Core::PATH_CRASH_DIR, ErrorString); //Создание папки для crash-файлов
 	if (!Result)
 	{
 		return Result;

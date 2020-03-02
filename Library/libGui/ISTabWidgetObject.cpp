@@ -24,7 +24,7 @@ void ISTabWidgetObject::tabInserted(int Index)
 		ButtonClose->setToolTip(LANG("CloseTab"));
 		ButtonClose->setIcon(BUFFER_ICONS("Exit"));
 		ButtonClose->setAutoRaise(true);
-		ButtonClose->setFixedSize(DEFINES_GUI.SIZE_16_16);
+		ButtonClose->setFixedSize(ISDefines::Gui::SIZE_16_16);
 		ButtonClose->setProperty("Index", Index);
 		connect(ButtonClose, &QToolButton::clicked, this, &ISTabWidgetObject::CloseTab);
 		tabBar()->setTabButton(Index, QTabBar::RightSide, ButtonClose);

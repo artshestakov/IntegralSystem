@@ -25,7 +25,7 @@ ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceD
 {
 	setWindowTitle(LANG("CreateRecords"));
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);

@@ -21,7 +21,7 @@ ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &Repor
 	}
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	QToolBar *ToolBar = new QToolBar(this);
@@ -49,7 +49,7 @@ ISPrintPreviewDialog::ISPrintPreviewDialog(QWidget *parent, const QString &Repor
 	MainLayout->addWidget(PageTextEdit);
 
 	TextDocument = new QTextDocument(this);
-	TextDocument->setDefaultFont(DEFINES_GUI.FONT_COURIER_12);
+	TextDocument->setDefaultFont(ISDefines::Gui::FONT_COURIER_12);
 	PageTextEdit->setDocument(TextDocument);
 
 	QStatusBar *StatusBar = new QStatusBar(this);

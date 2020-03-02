@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *Label = new QLabel(LANG("SelectUserFromOrganizationWork").arg(OrganizationCount), this);

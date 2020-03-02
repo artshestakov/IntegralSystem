@@ -8,7 +8,7 @@ ISFileDialog::ISFileDialog(QWidget *parent) : QFileDialog(parent)
 //-----------------------------------------------------------------------------
 ISFileDialog::~ISFileDialog()
 {
-
+	
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetOpenFileNameImage(QWidget *parent)

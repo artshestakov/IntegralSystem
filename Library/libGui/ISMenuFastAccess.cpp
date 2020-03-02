@@ -61,7 +61,7 @@ void ISMenuFastAccess::AboutToShow()
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(VectorRecords.at(i));
 
 		QAction *ActionRecord = new QAction(LANG("CreateRecord") + ": " + MetaTable->LocalName, this);
-		ActionRecord->setFont(DEFINES_GUI.FONT_TAHOMA_10);
+		ActionRecord->setFont(ISDefines::Gui::FONT_TAHOMA_10);
 		ActionRecord->setData(MetaTable->Name);
 		insertAction(ActionCreateRecords, ActionRecord);
 		ActionGroupRecords->addAction(ActionRecord);
@@ -84,7 +84,7 @@ void ISMenuFastAccess::AboutToShow()
 		ISMetaExternalTool *MetaExternalTool = VectorTools[i];
 
 		QAction *ActionExternalTool = new QAction(MetaExternalTool->Icon, MetaExternalTool->LocalName, this);
-		ActionExternalTool->setFont(DEFINES_GUI.FONT_TAHOMA_10);
+		ActionExternalTool->setFont(ISDefines::Gui::FONT_TAHOMA_10);
 		ActionExternalTool->setData(MetaExternalTool->Command);
 		insertAction(ActionExternalTools, ActionExternalTool);
 		ActionGroupTools->addAction(ActionExternalTool);

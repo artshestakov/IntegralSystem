@@ -147,7 +147,7 @@ void ISPlayerWidget::CreateInterface()
 	LayoutVolume->addWidget(SliderVolume);
 
 	LabelErrorIcon = new QLabel(this);
-	LabelErrorIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(DEFINES_GUI.SIZE_16_16));
+	LabelErrorIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(ISDefines::Gui::SIZE_16_16));
 	LabelErrorIcon->setVisible(false);
 	LayoutVolume->addWidget(LabelErrorIcon);
 

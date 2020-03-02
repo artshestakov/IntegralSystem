@@ -27,7 +27,7 @@ ISDiscussionObjectForm::ISDiscussionObjectForm(const QString &table_name, int pa
 
 	ForbidResize();
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

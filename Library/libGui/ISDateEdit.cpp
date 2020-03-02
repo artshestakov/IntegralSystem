@@ -29,7 +29,7 @@ ISDateEdit::ISDateEdit(QWidget *parent) : ISDateTimeEdit(parent)
 	ActionToday = new QAction(Menu);
 	ActionToday->setText(LANG("Today"));
 	ActionToday->setToolTip(LANG("Today"));
-	ActionToday->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ActionToday->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	ActionToday->setIcon(BUFFER_ICONS("Apply.Blue"));
 	connect(ActionToday, &QAction::triggered, this, &ISDateEdit::Today);
 	Menu->addAction(ActionToday);

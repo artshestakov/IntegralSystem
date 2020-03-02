@@ -20,7 +20,7 @@ ISTaskFileInsertForm::ISTaskFileInsertForm(int task_id, QWidget *parent) : ISInt
 
 	setWindowTitle(LANG("Task.AttachingFile"));
 	setMinimumWidth(500);
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();

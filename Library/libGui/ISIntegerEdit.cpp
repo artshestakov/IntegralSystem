@@ -8,7 +8,7 @@ ISIntegerEdit::ISIntegerEdit(QWidget *parent) : ISFieldEditBase(parent)
 	SpinBox = new ISQSpinBox(this);
 	SpinBox->setStyleSheet(STYLE_SHEET("ISIntegerEdit"));
 	SpinBox->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
-	SpinBox->setSpecialValueText(DEFINES_CORE.SYMBOL_SPACE_HIDE);
+	SpinBox->setSpecialValueText(ISDefines::Core::SYMBOL_SPACE_HIDE);
 	SpinBox->setAccelerated(true);
 	connect(SpinBox, static_cast<void(ISQSpinBox::*)(const QString &)>(&ISQSpinBox::valueChanged), this, &ISIntegerEdit::OnValueChanged);
 	connect(SpinBox, &ISQSpinBox::ClearClicked, this, &ISIntegerEdit::Clear);
@@ -41,7 +41,7 @@ QVariant ISIntegerEdit::GetValue() const
 void ISIntegerEdit::Clear()
 {
 	SpinBox->clear();
-	SpinBox->setSpecialValueText(DEFINES_CORE.SYMBOL_SPACE_HIDE);
+	SpinBox->setSpecialValueText(ISDefines::Core::SYMBOL_SPACE_HIDE);
 	SpinBox->clearFocus();
 	SpinBox->setFocus();
 }

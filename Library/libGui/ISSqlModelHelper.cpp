@@ -46,7 +46,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 		QString ValueString = Result.toString();
 		for (int i = 0; i < ValueString.count(); ++i)
 		{
-			ValueString.replace(i, 1, DEFINES_CORE.SYMBOL_CIRCLE);
+			ValueString.replace(i, 1, ISDefines::Core::SYMBOL_CIRCLE);
 		}
 		Result = ValueString;
 	}

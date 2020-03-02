@@ -44,7 +44,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
 		if (ObjectFormBase->property("ModificationFlag").toBool())
 		{
 			++CountNotSaved;
-			DetailedText += QString::number(i + 1) + ") " + ObjectFormBase->windowTitle().remove(DEFINES_CORE.SYMBOL_OBJECT_CHANGED) + ";\n";
+			DetailedText += QString::number(i + 1) + ") " + ObjectFormBase->windowTitle().remove(ISDefines::Core::SYMBOL_OBJECT_CHANGED) + ";\n";
 		}
 	}
 

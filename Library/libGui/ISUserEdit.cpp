@@ -23,7 +23,7 @@ ISUserEdit::ISUserEdit(QWidget *parent) : ISComboEdit(parent)
 	{
 		if (qSelect.GetCountResultRows())
 		{
-			AddItem(QIcon(BUFFER_ICONS("Arrow.Down").pixmap(DEFINES_GUI.SIZE_16_16)), LANG("SelectUser"), QVariant());
+			AddItem(QIcon(BUFFER_ICONS("Arrow.Down").pixmap(ISDefines::Gui::SIZE_16_16)), LANG("SelectUser"), QVariant());
 			while (qSelect.Next())
 			{
 				QString UserFullName = qSelect.ReadColumn("userfullname").toString();

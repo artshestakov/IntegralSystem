@@ -17,14 +17,14 @@ ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 
 	setWindowTitle(LANG("Search.Advanced") + " - " + MetaTable->LocalListName);
 	setWindowIcon(BUFFER_ICONS("Search"));
-	resize(DEFINES_GUI.SIZE_550_300);
+	resize(ISDefines::Gui::SIZE_550_300);
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelTitle = new QLabel(this);
 	LabelTitle->setText(LANG("Search.Advanced"));
 	LabelTitle->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	LabelTitle->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
+	LabelTitle->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	GetMainLayout()->addWidget(LabelTitle);
 
 	QStringList HeaderLabels;

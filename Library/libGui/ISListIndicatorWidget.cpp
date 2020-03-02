@@ -27,7 +27,7 @@ ISListIndicatorWidget::ISListIndicatorWidget(QWidget *parent) : QWidget(parent)
 
 	LabelText = new QLabel(this);
 	LabelText->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	LabelText->setFont(DEFINES_GUI.FONT_TAHOMA_14_BOLD);
+	LabelText->setFont(ISDefines::Gui::FONT_TAHOMA_14_BOLD);
 	Layout->addWidget(LabelText);
 }
 //-----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void ISListIndicatorWidget::SetPixmap(const QPixmap &Pixmap)
 	}
 	else
 	{
-		LabelImage->setPixmap(Pixmap.scaled(DEFINES_GUI.SIZE_32_32, Qt::KeepAspectRatio));
+		LabelImage->setPixmap(Pixmap.scaled(ISDefines::Gui::SIZE_32_32, Qt::KeepAspectRatio));
 	}
 	
 	adjustSize();

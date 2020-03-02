@@ -15,7 +15,7 @@ ISCenterSevenSelectBranchForm::ISCenterSevenSelectBranchForm(QWidget *parent) : 
 	SelectedBranchID = 0;
 
 	setWindowTitle(LANG("CenterSeven.SelectBranch"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *Label = new QLabel(this);

@@ -31,7 +31,7 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 
 	Layout = new QVBoxLayout();
-	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
 	ProgressBar = new QProgressBar(this);
@@ -41,24 +41,24 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	Layout->addWidget(ProgressBar);
 
 	QLabel *LabelConnectionLost = new QLabel(this);
-	LabelConnectionLost->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelConnectionLost->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LabelConnectionLost->setText(LANG("ConnectionDatabaseLost"));
 	Layout->addWidget(LabelConnectionLost, 0, Qt::AlignLeft);
 
 	AddLabel(LANG("CausesReconnect") + ':');
-	AddLabel(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotLocalNet") + ';');
-	AddLabel(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotEntered") + ';');
-	AddLabel(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.PatchCord.NotConnected") + ';');
-	AddLabel(DEFINES_CORE.SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Service.NotEntered") + ';');
+	AddLabel(ISDefines::Core::SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotLocalNet") + ';');
+	AddLabel(ISDefines::Core::SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Server.NotEntered") + ';');
+	AddLabel(ISDefines::Core::SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.PatchCord.NotConnected") + ';');
+	AddLabel(ISDefines::Core::SYMBOL_CIRCLE + SYMBOL_SPACE + LANG("Causes.Service.NotEntered") + ';');
 
 	Layout->addWidget(ISControls::CreateHorizontalLine(this));
 
 	QHBoxLayout *LayoutReconnect = new QHBoxLayout();
-	LayoutReconnect->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	LayoutReconnect->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	Layout->addLayout(LayoutReconnect);
 
 	QLabel *LabelStatus = new QLabel(this);
-	LabelStatus->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelStatus->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LabelStatus->setText(LANG("Status.Current") + ':');
 	LayoutReconnect->addWidget(LabelStatus);
 

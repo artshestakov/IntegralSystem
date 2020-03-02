@@ -15,7 +15,7 @@ static QString QS_ADMISSION_STATUS = PREPARE_QUERY("SELECT adst_uid, adst_name "
 ISCenterSevenStatusAdmissionForm::ISCenterSevenStatusAdmissionForm(const ISUuid &CurrentStatusUID, const QString &Comment, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("CenterSeven.ChangeStatusAdmission"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	ButtonGroup = new QButtonGroup(this);
 

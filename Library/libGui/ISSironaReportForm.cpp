@@ -21,7 +21,7 @@ static QString QS_DOCTOR_BONUS = PREPARE_QUERY("SELECT SUM(resr_moneydoctor) "
 //-----------------------------------------------------------------------------
 ISSironaReportForm::ISSironaReportForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
@@ -80,7 +80,7 @@ void ISSironaReportForm::LoadData()
 			QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(TreeWidget);
 			TreeWidgetItem->setText(0, QString::number(RowID) + ") " + DoctorFIO);
 			TreeWidgetItem->setSizeHint(0, QSize(TreeWidgetItem->sizeHint(0).width(), 30));
-			TreeWidgetItem->setFont(1, DEFINES_GUI.FONT_APPLICATION_BOLD);
+			TreeWidgetItem->setFont(1, ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 			if (DoctorBonus)
 			{

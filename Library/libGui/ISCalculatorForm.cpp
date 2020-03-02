@@ -11,7 +11,7 @@ ISCalculatorForm::ISCalculatorForm(QWidget *parent) : ISInterfaceForm(parent)
 	setWindowIcon(BUFFER_ICONS("Calculator"));
 
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
     SumInMemory = 0.0;
     SumSoFar = 0.0;
@@ -56,8 +56,8 @@ ISCalculatorForm::ISCalculatorForm(QWidget *parent) : ISInterfaceForm(parent)
     ISCalculatorButton *SetMemoryButton = CreateButton("MS", &ISCalculatorForm::SetMemory);
     ISCalculatorButton *AddToMemoryButton = CreateButton("M+", &ISCalculatorForm::AddToMemory);
 
-	ISCalculatorButton *DivisionButton = CreateButton(DEFINES_CORE.SYMBOL_DIVIDE, &ISCalculatorForm::MultiplicativeOperatorClicked);
-	ISCalculatorButton *TimesButton = CreateButton(DEFINES_CORE.SYMBOL_MULTIPLY, &ISCalculatorForm::MultiplicativeOperatorClicked);
+	ISCalculatorButton *DivisionButton = CreateButton(ISDefines::Core::SYMBOL_DIVIDE, &ISCalculatorForm::MultiplicativeOperatorClicked);
+	ISCalculatorButton *TimesButton = CreateButton(ISDefines::Core::SYMBOL_MULTIPLY, &ISCalculatorForm::MultiplicativeOperatorClicked);
     ISCalculatorButton *MinusButton = CreateButton("-", &ISCalculatorForm::AdditiveOperatorClicked);
     ISCalculatorButton *PlusButton = CreateButton("+", &ISCalculatorForm::AdditiveOperatorClicked);
 

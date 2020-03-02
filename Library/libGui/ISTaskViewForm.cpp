@@ -54,7 +54,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent) : ISInterfaceForm(p
 	SelectTask();
 	setWindowTitle(LANG("Task.CardTask") + ": " + TaskName);
 	setWindowIcon(BUFFER_ICONS("Task"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	CreateTitle();
 
@@ -109,7 +109,7 @@ void ISTaskViewForm::CreateTitle()
 	if (TaskImportant)
 	{
 		QLabel *LabelImportant = new QLabel(this);
-		LabelImportant->setPixmap(BUFFER_ICONS("Task.Important.Checked").pixmap(DEFINES_GUI.SIZE_32_32));
+		LabelImportant->setPixmap(BUFFER_ICONS("Task.Important.Checked").pixmap(ISDefines::Gui::SIZE_32_32));
 		LabelImportant->setToolTip(LANG("Task.Important.ToolTip"));
 		LabelImportant->setCursor(CURSOR_WHATS_THIS);
 		LayoutTitle->addWidget(LabelImportant);
@@ -117,7 +117,7 @@ void ISTaskViewForm::CreateTitle()
 
 	LabelName = new QLabel(this);
 	LabelName->setText('#' + QString::number(TaskID) + SYMBOL_SPACE + TaskName);
-	LabelName->setFont(DEFINES_GUI.FONT_TAHOMA_15_BOLD);
+	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_15_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutTitle->addWidget(LabelName);
 
@@ -126,20 +126,20 @@ void ISTaskViewForm::CreateTitle()
 	ISPushButton *ButtonRename = new ISPushButton(this);
 	ButtonRename->setText(LANG("Task.Rename"));
 	ButtonRename->setIcon(BUFFER_ICONS("Edit"));
-	ButtonRename->setIconSize(DEFINES_GUI.SIZE_24_24);
+	ButtonRename->setIconSize(ISDefines::Gui::SIZE_24_24);
 	ButtonRename->setFlat(true);
 	ButtonRename->setFixedHeight(30);
-	ButtonRename->setFont(DEFINES_GUI.FONT_TAHOMA_10);
+	ButtonRename->setFont(ISDefines::Gui::FONT_TAHOMA_10);
 	connect(ButtonRename, &ISPushButton::clicked, this, &ISTaskViewForm::Rename);
 	LayoutTitle->addWidget(ButtonRename);
 
 	ISPushButton *ButtonCreate = new ISPushButton(this);
 	ButtonCreate->setText(LANG("Task.CreateTask"));
 	ButtonCreate->setIcon(BUFFER_ICONS("Add"));
-	ButtonCreate->setIconSize(DEFINES_GUI.SIZE_24_24);
+	ButtonCreate->setIconSize(ISDefines::Gui::SIZE_24_24);
 	ButtonCreate->setFlat(true);
 	ButtonCreate->setFixedHeight(30);
-	ButtonCreate->setFont(DEFINES_GUI.FONT_TAHOMA_10);
+	ButtonCreate->setFont(ISDefines::Gui::FONT_TAHOMA_10);
 	connect(ButtonCreate, &ISPushButton::clicked, this, &ISTaskViewForm::CreateTask);
 	LayoutTitle->addWidget(ButtonCreate);
 }
@@ -222,7 +222,7 @@ void ISTaskViewForm::CreateLeft()
 	QGroupBox *GroupBoxDescription = new QGroupBox(this);
 	GroupBoxDescription->setTitle(LANG("Task.Description"));
 	GroupBoxDescription->setLayout(new QVBoxLayout());
-	GroupBoxDescription->layout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_2_PX);
+	GroupBoxDescription->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_2_PX);
 	GroupBoxDescription->setSizePolicy(GroupBoxDescription->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	Layout->addWidget(GroupBoxDescription);
 

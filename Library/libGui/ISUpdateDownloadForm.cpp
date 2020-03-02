@@ -26,8 +26,8 @@ ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name
 
 	setWindowTitle(LANG("UpdateApplication"));
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-	resize(DEFINES_GUI.SIZE_500_90);
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	resize(ISDefines::Gui::SIZE_500_90);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *LabelInformation = new QLabel(this);

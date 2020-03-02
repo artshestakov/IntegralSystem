@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)
 {
-	setFont(DEFINES_GUI.FONT_TAHOMA_12);
+	setFont(ISDefines::Gui::FONT_TAHOMA_12);
 	setCursor(CURSOR_WAIT);
 	DefaultPixmap();
 
@@ -19,7 +19,7 @@ ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)
 	setLayout(MainLayout);
 
 	QLabel *LabelCopyright = new QLabel(this);
-	LabelCopyright->setFont(DEFINES_GUI.FONT_TAHOMA_8);
+	LabelCopyright->setFont(ISDefines::Gui::FONT_TAHOMA_8);
 	LabelCopyright->setText(LANG("SplashSceen.Copyright"));
 	MainLayout->addWidget(LabelCopyright, 0, Qt::AlignRight);
 
@@ -61,7 +61,7 @@ void ISSplashScreen::SetMessage(const QString &Message)
 	ProgressBar->setValue(Value);
 
 	ISLOGGER_INFO(Message);
-	showMessage(Message, Qt::AlignHCenter | Qt::AlignBottom, DEFINES_GUI.COLOR_SPLASH_SCREEN_TEXT);
+	showMessage(Message, Qt::AlignHCenter | Qt::AlignBottom, ISDefines::Gui::COLOR_SPLASH_SCREEN_TEXT);
 	activateWindow();
 
 	ISGui::RepaintWidget(ProgressBar, false);

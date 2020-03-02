@@ -136,7 +136,7 @@ void ISUserGroupWidget::CreateSpecial()
 			QLabel *LabelSpecialGroup = new QLabel(ScrollArea);
 			LabelSpecialGroup->setText(SpecialGroupName + ':');
 			LabelSpecialGroup->setSizePolicy(QSizePolicy::Maximum, LabelSpecialGroup->sizePolicy().verticalPolicy());
-			LabelSpecialGroup->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+			LabelSpecialGroup->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 			
 			QHBoxLayout *Layout = new QHBoxLayout();
 			Layout->addWidget(LabelSpecialGroup);

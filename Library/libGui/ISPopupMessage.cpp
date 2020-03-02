@@ -97,7 +97,7 @@ void ISPopupMessage::paintEvent(QPaintEvent *e)
 	Painter.setRenderHint(QPainter::Antialiasing); // Включаем сглаживание
 
 	
-	Painter.setBrush(QBrush(DEFINES_GUI.COLOR_POPUP_BRUSH));
+	Painter.setBrush(QBrush(ISDefines::Gui::COLOR_POPUP_BRUSH));
 	Painter.setPen(Qt::NoPen); // Край уведомления не будет выделен
 
 	QRect RoundedRect;

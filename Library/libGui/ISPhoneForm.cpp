@@ -21,7 +21,7 @@ ISPhoneForm::ISPhoneForm(QWidget *parent) : ISInterfaceForm(parent)
 	setAttribute(Qt::WA_DeleteOnClose, false);
 
 	QVBoxLayout *LayoutFrame = new QVBoxLayout();
-	LayoutFrame->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	LayoutFrame->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
 	QFrame *Frame = new QFrame(this);
 	Frame->setFrameShape(QFrame::Box);
@@ -46,7 +46,7 @@ ISPhoneForm::ISPhoneForm(QWidget *parent) : ISInterfaceForm(parent)
 
 	GridLayout = new QGridLayout();
 	GridLayout->setSpacing(5);
-	GridLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	GridLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	LayoutFrame->addLayout(GridLayout);
 
 	ButtonGroup = new QButtonGroup(this);
@@ -122,7 +122,7 @@ void ISPhoneForm::CreateButton(int ID, int RowIndex, int ColumnIndex, const QStr
 {
 	ISPushButton *Button = new ISPushButton(this);
 	Button->setText(Text);
-	Button->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	Button->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	Button->setCursor(CURSOR_POINTING_HAND);
 	Button->setFixedSize(QSize(40, 30));
 	Button->setObjectName(AudioResuourceName);

@@ -12,7 +12,7 @@ ISPatternWidget::ISPatternWidget(QWidget *parent) : QFrame(parent)
 	setAutoFillBackground(true);
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	setLayout(MainLayout);
 
 	LabelIcon = new QLabel(this);
@@ -20,7 +20,7 @@ ISPatternWidget::ISPatternWidget(QWidget *parent) : QFrame(parent)
 	MainLayout->addWidget(LabelIcon, 0, Qt::AlignCenter);
 
 	LabelPattern = new QLabel(this);
-	LabelPattern->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
+	LabelPattern->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelPattern->setAlignment(Qt::AlignCenter);
 	LabelPattern->setStyleSheet(STYLE_SHEET("QLabel.Color.White"));
 	MainLayout->addWidget(LabelPattern, 0, Qt::AlignCenter);
@@ -36,7 +36,7 @@ ISPatternWidget::~ISPatternWidget()
 //-----------------------------------------------------------------------------
 void ISPatternWidget::SetIcon(const QIcon &Icon)
 {
-	LabelIcon->setPixmap(Icon.pixmap(DEFINES_GUI.SIZE_32_32));
+	LabelIcon->setPixmap(Icon.pixmap(ISDefines::Gui::SIZE_32_32));
 }
 //-----------------------------------------------------------------------------
 void ISPatternWidget::SetPattern(const QString &Pattern)

@@ -13,7 +13,7 @@ ISTaskDoneForm::ISTaskDoneForm(int task_id, QWidget *parent) : ISInterfaceDialog
 	setWindowTitle(LANG("Task.ResolutionTask"));
 	setWindowIcon(BUFFER_ICONS("Task"));
 	setFixedWidth(550);
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QVBoxLayout *LayoutGroupBox = new QVBoxLayout();

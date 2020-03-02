@@ -28,13 +28,13 @@ static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _sett
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
-	ISDefinesGui::Instance().Init();
-	
 	bool Result = ISCore::Startup(true, ErrorString);
 	if (!Result)
 	{
 		return Result;
 	}
+
+	ISDefines::Gui::Init();
 
 	ISSplashWidget SplashWidget;
 	SplashWidget.show();
@@ -67,15 +67,15 @@ bool ISGui::Startup(QString &ErrorString)
 	qApp->setWindowIcon(BUFFER_ICONS("Logo"));
 	qApp->setApplicationName("IntegralSystem");
 	qApp->setApplicationVersion(ISVersion::Instance().ToString());
-	qApp->setFont(DEFINES_GUI.FONT_APPLICATION);
-	QToolTip::setFont(DEFINES_GUI.FONT_APPLICATION);
+	qApp->setFont(ISDefines::Gui::FONT_APPLICATION);
+	QToolTip::setFont(ISDefines::Gui::FONT_APPLICATION);
 
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISGui::CheckAdminRole()
 {
-	QFile File(DEFINES_CORE.PATH_TEMP_DIR + "/CheckAdmin");
+	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/CheckAdmin");
 	bool Result = File.open(QIODevice::WriteOnly);
 	if (Result)
 	{
@@ -230,7 +230,7 @@ QFont ISGui::StringToFont(const QString &FontText)
 //-----------------------------------------------------------------------------
 QByteArray ISGui::IconToByteArray(const QIcon &Icon)
 {
-	QPixmap PixmapIcon = Icon.pixmap(DEFINES_GUI.SIZE_16_16);
+	QPixmap PixmapIcon = Icon.pixmap(ISDefines::Gui::SIZE_16_16);
 	QByteArray ByteArray;
 	QBuffer Buffer(&ByteArray);
 	if (Buffer.open(QIODevice::WriteOnly))
@@ -376,7 +376,7 @@ void ISGui::RestartApplication()
 {
 	ExitApplication();
 	ISSystem::SleepSeconds(1);
-	QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_FILE);
+	QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
 }
 //-----------------------------------------------------------------------------
 void ISGui::ExitApplication()
@@ -565,7 +565,7 @@ void ISGui::ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID)
 void ISGui::ShowTaskObjectForm(QWidget *TaskObjectForm)
 {
 	TaskObjectForm->setParent(nullptr);
-	TaskObjectForm->resize(DEFINES_GUI.SIZE_TASK_OBJECT_FORM);
+	TaskObjectForm->resize(ISDefines::Gui::SIZE_TASK_OBJECT_FORM);
 	MoveWidgetToDesktop(TaskObjectForm, ISNamespace::MWD_Center);
 	TaskObjectForm->show();
 }

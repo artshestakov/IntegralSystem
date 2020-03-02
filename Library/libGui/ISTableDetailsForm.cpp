@@ -6,7 +6,7 @@
 ISTableDetailsForm::ISTableDetailsForm(const QString &TableName, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("TableDetails") + ": " + TableName);
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QFormLayout *FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);

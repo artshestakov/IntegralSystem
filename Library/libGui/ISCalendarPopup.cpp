@@ -15,7 +15,7 @@ ISCalendarPopup::ISCalendarPopup(QWidget *parent) : ISCalendarWidget(parent)
 	ButtonToday->setToolTip(LANG("ClickFromSelectCurrentDay"));
 	ButtonToday->setIcon(BUFFER_ICONS("Today"));
 	ButtonToday->setCursor(CURSOR_POINTING_HAND);
-	ButtonToday->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ButtonToday->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	connect(ButtonToday, &QToolButton::clicked, this, &ISCalendarWidget::Today);
 	GetLayout()->addWidget(ButtonToday, 0, Qt::AlignHCenter);
 

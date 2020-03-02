@@ -17,11 +17,11 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	setContextMenuPolicy(Qt::ActionsContextMenu);
 
 	QPalette Palette(palette());
-	Palette.setColor(QPalette::Background, DEFINES_GUI.COLOR_MONITOR_USER);
+	Palette.setColor(QPalette::Background, ISDefines::Gui::COLOR_MONITOR_USER);
 	setPalette(Palette);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
@@ -36,7 +36,7 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	QAction *ActionUser = new QAction(this);
 	ActionUser->setText(UserName);
 	ActionUser->setIcon(BUFFER_ICONS("User"));
-	ActionUser->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ActionUser->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	connect(ActionUser, &QAction::triggered, this, &ISMonitorUserWidget::ShowUserCard);
 	addAction(ActionUser);
 
@@ -81,12 +81,12 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 
 	if (is_online)
 	{
-		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Online").pixmap(DEFINES_GUI.SIZE_32_32));
+		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Online").pixmap(ISDefines::Gui::SIZE_32_32));
 		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Online") + ')');
 	}
 	else
 	{
-		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Offline").pixmap(DEFINES_GUI.SIZE_32_32));
+		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Offline").pixmap(ISDefines::Gui::SIZE_32_32));
 		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Offline") + ')');
 	}
 }

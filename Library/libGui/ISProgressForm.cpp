@@ -11,11 +11,11 @@ ISProgressForm::ISProgressForm(int Minimum, int Maximum, QWidget *parent) : QPro
 	Value = 0;
 	setWindowTitle(LANG("PleaseWait"));
 	setWindowModality(Qt::WindowModal);
-	setFixedSize(DEFINES_GUI.SIZE_PROGRESS_FORM);
+	setFixedSize(ISDefines::Gui::SIZE_PROGRESS_FORM);
 	setMinimum(Minimum);
 	setMaximum(Maximum);
 
-	ISControls::SetBackgroundColorWidget(this, DEFINES_GUI.COLOR_WHITE);
+	ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
 
 	LabelStatus = new QLabel(this);
 	LabelStatus->setAlignment(Qt::AlignLeft);

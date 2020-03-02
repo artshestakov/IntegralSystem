@@ -203,7 +203,7 @@ void ISSystem::ExecLoop(unsigned long Milliseconds)
 //-----------------------------------------------------------------------------
 bool ISSystem::AddressIsList(const QString &AddressString)
 {
-	return AddressString.contains(DEFINES_CORE.SYMBOL_FIAS_SPLIT);
+	return AddressString.contains(ISDefines::Core::SYMBOL_FIAS_SPLIT);
 }
 //-----------------------------------------------------------------------------
 bool ISSystem::CreateDir(const QString &DirPath)

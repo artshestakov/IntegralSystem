@@ -12,7 +12,7 @@ ISTaskPriorityEdit::ISTaskPriorityEdit(QWidget *parent) : ISRadioEdit(parent)
 	ButtonLow->setToolTip(LANG("Task.Priority.Low.ToolTip"));
 	ButtonLow->setStyleSheet(STYLE_SHEET("Task.Priority.Low"));
 	ButtonLow->setIcon(BUFFER_ICONS("Task.Priority.Low"));
-	ButtonLow->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ButtonLow->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	AddButton(ButtonLow, 1);
 
 	QRadioButton *ButtonAverage = new QRadioButton(this);
@@ -20,7 +20,7 @@ ISTaskPriorityEdit::ISTaskPriorityEdit(QWidget *parent) : ISRadioEdit(parent)
 	ButtonAverage->setToolTip(LANG("Task.Priority.Average.ToolTip"));
 	ButtonAverage->setStyleSheet(STYLE_SHEET("Task.Priority.Average"));
 	ButtonAverage->setIcon(BUFFER_ICONS("Task.Priority.Average"));
-	ButtonAverage->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ButtonAverage->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	AddButton(ButtonAverage, 2);
 
 	QRadioButton *ButtonTall = new QRadioButton(this);
@@ -28,7 +28,7 @@ ISTaskPriorityEdit::ISTaskPriorityEdit(QWidget *parent) : ISRadioEdit(parent)
 	ButtonTall->setToolTip(LANG("Task.Priority.Tall.ToolTip"));
 	ButtonTall->setStyleSheet(STYLE_SHEET("Task.Priority.Tall"));
 	ButtonTall->setIcon(BUFFER_ICONS("Task.Priority.Tall"));
-	ButtonTall->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ButtonTall->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	AddButton(ButtonTall, 3);
 
 	//Установка низкого приоритета задачи по умолчанию

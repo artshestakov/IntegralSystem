@@ -20,7 +20,7 @@ static QString QS_SUBSCRIPTION = PREPARE_QUERY("SELECT sbsr_id, sbtp_name, sbtp_
 ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &Barcode, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowTitle(LANG("Patriot.SubscriptionSelect"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
 	GetMainLayout()->addWidget(new QLabel(LANG("Patriot.SelectSebscriptionClientForVisit") + ':', this));
 
@@ -50,7 +50,7 @@ ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &
 			
 			if (NowExist)
 			{
-				Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+				Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 				PushButton->setText(LANG("Patriot.CloseVisit"));
 				connect(PushButton, &ISPushButton::clicked, this, &ISPatriotSubscriptionSelectForm::CloseVisit);
 			}

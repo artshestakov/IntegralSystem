@@ -43,7 +43,7 @@ void ISTaskObjectForm::AfterShowEvent()
 		CheckFavorite = new ISCheckEdit(this);
 		CheckFavorite->SetText(LANG("Task.Favorite"));
 		CheckFavorite->SetToolTip(LANG("Task.Favorite.ToolTip"));
-		CheckFavorite->SetFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+		CheckFavorite->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		CheckFavorite->setContentsMargins(5, 0, 0, 0);
 		GetLayoutWidgetObject()->insertWidget(GetLayoutWidgetObject()->indexOf(GetToolBar()) + 2, CheckFavorite, 0, Qt::AlignLeft);
 

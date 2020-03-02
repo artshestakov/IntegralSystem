@@ -7,7 +7,7 @@ ISTaskTabBase::ISTaskTabBase(int task_id, QTabWidget *parent) : QWidget(parent)
 	Count = 0;
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	setLayout(Layout);
 }
 //-----------------------------------------------------------------------------

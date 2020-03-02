@@ -28,7 +28,7 @@ ISNoteForm::ISNoteForm(QWidget *parent) : ISInterfaceForm(parent)
 	setWindowTitle(LANG("Notebook"));
 	setWindowIcon(BUFFER_ICONS("NoteObject"));
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

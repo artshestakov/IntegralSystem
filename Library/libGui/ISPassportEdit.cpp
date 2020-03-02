@@ -73,7 +73,7 @@ QString ISPassportEdit::PreparePassport(const QString &passport_string)
 
 	if (passport_string.length())
 	{
-		QStringList StringList = passport_string.split(DEFINES_CORE.SYMBOL_SPACE_HIDE);
+		QStringList StringList = passport_string.split(ISDefines::Core::SYMBOL_SPACE_HIDE);
 		QString Seria = StringList.at(0);
 		QString Number = StringList.at(1);
 		QString DateOfIssue = StringList.at(2);

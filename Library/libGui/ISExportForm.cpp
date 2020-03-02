@@ -13,7 +13,7 @@ ISExportForm::ISExportForm(PMetaClassTable *meta_table, QWidget *parent) : ISInt
 	setWindowIcon(BUFFER_ICONS("ExportTable"));
 	setWindowTitle(LANG("Export.Table"));
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelText = new QLabel(this);
 	LabelText->setText(LANG("SelectExportType") + ':');

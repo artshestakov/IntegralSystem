@@ -34,10 +34,10 @@ ISUserStatusForm::ISUserStatusForm(QWidget *parent) : ISInterfaceDialogForm(pare
 {
 	setWindowTitle(LANG("StatusUser"));
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
 	QLabel *LabelCurrentStatus = new QLabel(this);
-	LabelCurrentStatus->setFont(DEFINES_GUI.FONT_TAHOMA_10_BOLD);
+	LabelCurrentStatus->setFont(ISDefines::Gui::FONT_TAHOMA_10_BOLD);
 	LabelCurrentStatus->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	GetMainLayout()->addWidget(LabelCurrentStatus);
 

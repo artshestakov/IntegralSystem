@@ -45,7 +45,7 @@ ISPushButton::~ISPushButton()
 //-----------------------------------------------------------------------------
 ISButtonClear::ISButtonClear(QWidget *parent) : ISPushButton(parent)
 {
-	setFixedSize(DEFINES_GUI.SIZE_22_22);
+	setFixedSize(ISDefines::Gui::SIZE_22_22);
 	setCursor(CURSOR_POINTING_HAND);
 	setToolTip(LANG("Clear.Field"));
 	setFocusPolicy(Qt::NoFocus);
@@ -75,7 +75,7 @@ ISButtonClose::~ISButtonClose()
 //-----------------------------------------------------------------------------
 ISServiceButton::ISServiceButton(const QIcon &Icon, const QString &Text, const QString &ToolTip, QWidget *parent) : ISPushButton(Icon, Text, ToolTip, parent)
 {
-	setFixedSize(DEFINES_GUI.SIZE_22_22);
+	setFixedSize(ISDefines::Gui::SIZE_22_22);
 	setCursor(CURSOR_POINTING_HAND);
 }
 //-----------------------------------------------------------------------------
@@ -121,11 +121,11 @@ ISButtonMainMenu::ISButtonMainMenu(QWidget *parent)
 	IconActive(BUFFER_ICONS("MainPanel.Menu.Active"))
 {
 	setText(LANG("MainMenu"));
-	setFont(DEFINES_GUI.FONT_TAHOMA_10);
+	setFont(ISDefines::Gui::FONT_TAHOMA_10);
 	setAutoRaise(true);
 	setCheckable(true);
 	setIcon(IconDefault);
-	setIconSize(DEFINES_GUI.SIZE_24_24);
+	setIconSize(ISDefines::Gui::SIZE_24_24);
 	setCursor(CURSOR_POINTING_HAND);
 	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	setStyleSheet(STYLE_SHEET("QToolButtonMainMenu"));
@@ -180,8 +180,8 @@ ISButtonNotify::ISButtonNotify(QWidget *parent)
 	setAutoRaise(true);
 	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	setCursor(CURSOR_POINTING_HAND);
-	setIconSize(DEFINES_GUI.SIZE_24_24);
-	setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	setIconSize(ISDefines::Gui::SIZE_24_24);
+	setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	setStyleSheet(STYLE_SHEET("ISButtonNotify.White"));
 	connect(this, &ISButtonNotify::clicked, this, &ISButtonNotify::Clicked);
 

@@ -20,7 +20,7 @@ ISTaskMyListForm::ISTaskMyListForm(QWidget *parent) : ISTaskBaseListForm(parent)
 	ActionFilter = new QAction(this);
 	ActionFilter->setText(LANG("All"));
 	ActionFilter->setIcon(BUFFER_ICONS("Filter"));
-	ActionFilter->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ActionFilter->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	ActionFilter->setMenu(new QMenu(this));
 	AddAction(ActionFilter, false);
 
@@ -34,7 +34,7 @@ ISTaskMyListForm::ISTaskMyListForm(QWidget *parent) : ISTaskBaseListForm(parent)
 	if (qSelectStatus.Execute())
 	{
 		QAction *ActionAll = CreateActionFilter(LANG("All"), ISUuid());
-		ActionAll->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+		ActionAll->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		ActionAll->setChecked(true);
 
 		while (qSelectStatus.Next())
@@ -68,12 +68,12 @@ void ISTaskMyListForm::FilterChanged()
 
 	for (QAction *Action : ActionFilter->menu()->actions())
 	{
-		Action->setFont(DEFINES_GUI.FONT_APPLICATION);
+		Action->setFont(ISDefines::Gui::FONT_APPLICATION);
 		Action->setChecked(false);
 
 		if (Action == ActionSender)
 		{
-			Action->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+			Action->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 			Action->setChecked(true);
 		}
 	}

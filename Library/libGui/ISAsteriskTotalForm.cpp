@@ -48,7 +48,7 @@ ISAsteriskTotalForm::ISAsteriskTotalForm(QWidget *parent) : ISInterfaceForm(pare
 	GetMainLayout()->addWidget(new QLabel(LANG("ClickDoneFromFilter"), this));
 
 	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
 	QWidget *Widget = new QWidget(this);
 	Widget->setLayout(Layout);

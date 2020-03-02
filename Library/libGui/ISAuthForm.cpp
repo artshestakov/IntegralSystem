@@ -18,7 +18,7 @@ ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 
 	setWindowTitle(LANG("InputInSystem"));
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
 	QLabel *LableImage = new QLabel(this);
 	LableImage->setScaledContents(true);
@@ -26,7 +26,7 @@ ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	GetMainLayout()->addWidget(LableImage);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(Layout);
 
 	Layout->addWidget(new QLabel(LANG("InputLoginAndPassword") + ':', this));
@@ -47,11 +47,11 @@ ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	Layout->addWidget(EditPassword);
 
 	QHBoxLayout *LayoutLabels = new QHBoxLayout();
-	LayoutLabels->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	LayoutLabels->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	Layout->addLayout(LayoutLabels);
 
 	LabelCapsLook = new QLabel(this);
-	LabelCapsLook->setFont(DEFINES_GUI.FONT_TAHOMA_8);
+	LabelCapsLook->setFont(ISDefines::Gui::FONT_TAHOMA_8);
 	LayoutLabels->addWidget(LabelCapsLook);
 
 	LayoutLabels->addStretch();

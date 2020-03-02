@@ -7,7 +7,7 @@
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 {
-	QString TranslatorFilePath = DEFINES_CORE.PATH_TRANSLATIONS_DIR + '/' + "qt_ru.qm";
+	QString TranslatorFilePath = ISDefines::Core::PATH_TRANSLATIONS_DIR + '/' + "qt_ru.qm";
 	if (QFile::exists(TranslatorFilePath))
 	{
 		QTranslator *Translator = new QTranslator(qApp);

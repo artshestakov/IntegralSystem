@@ -20,7 +20,7 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	ISMemoryObjects::GetInstance().SetWorkspaceForm(this);
 
 	Layout = new QVBoxLayout();
-	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	Layout->setSpacing(0);
 	setLayout(Layout);
 
@@ -91,7 +91,7 @@ void ISWorkspaceForm::CreateTabWidget()
 	{
 		QLabel *Label = new QLabel(TabWidget);
 		Label->setText(LANG("NotAccessSystems"));
-		Label->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
+		Label->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 		dynamic_cast<QVBoxLayout*>(TabWidget->GetMainTab()->layout())->addWidget(Label, 0, Qt::AlignCenter);
 	}
 }

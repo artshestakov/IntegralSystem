@@ -11,7 +11,7 @@ ISPassportForm::ISPassportForm(const QString &PassportString, QWidget *parent) :
 	setWindowTitle(LANG("Passport.EditingPassport"));
 	setWindowIcon(BUFFER_ICONS("Passport"));
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();
@@ -55,13 +55,13 @@ QString ISPassportForm::GetPassportString()
 {
 	QString Result;
 	Result += EditSeria->GetValue().toString();
-	Result += DEFINES_CORE.SYMBOL_SPACE_HIDE;
+	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
 	Result += EditNumber->GetValue().toString();
-	Result += DEFINES_CORE.SYMBOL_SPACE_HIDE;
+	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
 	Result += EditDateOfIssue->GetValue().toDateTime().toString(DATE_FORMAT_V2);
-	Result += DEFINES_CORE.SYMBOL_SPACE_HIDE;
+	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
 	Result += EditIssuedBy->GetValue().toString();
-	Result += DEFINES_CORE.SYMBOL_SPACE_HIDE;
+	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
 
 	if (EditDivisionCode->GetValue() != "-")
 	{
@@ -91,7 +91,7 @@ void ISPassportForm::ParsePassportString(const QString &PassportString)
 {
 	if (PassportString.length())
 	{
-		QStringList StringList = PassportString.split(DEFINES_CORE.SYMBOL_SPACE_HIDE);
+		QStringList StringList = PassportString.split(ISDefines::Core::SYMBOL_SPACE_HIDE);
 		QString Seria = StringList.at(0);
 		QString Number = StringList.at(1);
 		QString DateOfIssue = StringList.at(2);

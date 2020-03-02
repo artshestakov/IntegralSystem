@@ -14,12 +14,12 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 	ForbidResize();
 
 	QFormLayout *FormLayout = new QFormLayout();
-	FormLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	FormLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(FormLayout);
 
 	QLabel *LabelTitle = new QLabel(this);
 	LabelTitle->setText(LANG("SystemInformation") + ':');
-	LabelTitle->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
+	LabelTitle->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelTitle->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	ISGui::SetFontWidgetUnderline(LabelTitle, true);
 	FormLayout->addRow(LabelTitle, new QWidget(this));
@@ -29,7 +29,7 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 		PMetaClassField *MetaField = MetaTable->SystemFields[i];
 
 		QLabel *Label = new QLabel(this);
-		Label->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+		Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		Label->setText(MetaField->LabelName + ':');
 
 		ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, MetaField);

@@ -114,22 +114,22 @@ void ISAsteriskCallsListForm::CreateDetailsPanel()
 	LayoutInfo->addWidget(GroupBox);
 
 	LabelDateTime = new QLabel(GroupBox);
-	LabelDateTime->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelDateTime->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	LabelDirection = new QLabel(GroupBox);
-	LabelDirection->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelDirection->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	LabelSubscriber = new QLabel(GroupBox);
-	LabelSubscriber->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelSubscriber->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	LabelNumber = new QLabel(GroupBox);
-	LabelNumber->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelNumber->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	LabelDuration = new QLabel(GroupBox);
-	LabelDuration->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelDuration->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	LabelStatus = new QLabel(GroupBox);
-	LabelStatus->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelStatus->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	QFormLayout *FormLayoutLeft = new QFormLayout();
 	FormLayoutLeft->addRow(LANG("Call.DateTime") + ':', LabelDateTime);
@@ -313,7 +313,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 
 	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
 	{
-		QString FilePath = DEFINES_CORE.PATH_TEMP_DIR + '/' + GetCurrentRecordValueDB("UID").toString() + SYMBOL_POINT + EXTENSION_WAV;
+		QString FilePath = ISDefines::Core::PATH_TEMP_DIR + '/' + GetCurrentRecordValueDB("UID").toString() + SYMBOL_POINT + EXTENSION_WAV;
 		if (QFile::exists(FilePath))
 		{
 			Play(FilePath);
@@ -336,7 +336,7 @@ void ISAsteriskCallsListForm::PlayRecord()
 void ISAsteriskCallsListForm::SaveToStorage()
 {
 	ISUuid UID = GetCurrentRecordValueDB("UID");
-	QString FilePath = DEFINES_CORE.PATH_TEMP_DIR + '/' + UID + SYMBOL_POINT + EXTENSION_WAV;
+	QString FilePath = ISDefines::Core::PATH_TEMP_DIR + '/' + UID + SYMBOL_POINT + EXTENSION_WAV;
 
 	if (!QFile::exists(FilePath))
 	{

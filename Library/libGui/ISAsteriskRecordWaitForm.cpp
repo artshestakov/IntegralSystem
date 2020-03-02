@@ -14,7 +14,7 @@ ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id, QWi
 	UniqueID = unique_id;
 
 	setWindowTitle(LANG("AsteriskRecord.Interface.Title"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	TcpSocket = new QTcpSocket(this);
@@ -108,7 +108,7 @@ void ISAsteriskRecordWaitForm::ReadyRead()
 		TcpSocket->close();
 		Label->setText(LANG("AsteriskRecord.Interface.Label.Downloaded"));
 
-		QFile FileRecord(DEFINES_CORE.PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + EXTENSION_WAV);
+		QFile FileRecord(ISDefines::Core::PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + EXTENSION_WAV);
 		if (FileRecord.open(QIODevice::WriteOnly))
 		{
 			FileRecord.write(Buffer);

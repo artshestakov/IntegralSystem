@@ -22,7 +22,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 	setAttribute(Qt::WA_DeleteOnClose, false);
 
 	QVBoxLayout *LayoutFrame = new QVBoxLayout();
-	LayoutFrame->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	LayoutFrame->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
 	QFrame *Frame = new QFrame(this);
 	Frame->setFrameShape(QFrame::Box);
@@ -38,7 +38,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 
 	LabelName = new QLabel(this);
 	LabelName->setText(MetaTableForeign->LocalListName + ':');
-	LabelName->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelName->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutFrame->addWidget(LabelName);
 
@@ -76,7 +76,7 @@ ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *Combo
 
 	LabelEmpty = new QLabel(this);
 	LabelEmpty->setText(LANG("ListIsEmpty"));
-	LabelEmpty->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
+	LabelEmpty->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelEmpty->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LabelEmpty->setVisible(false);
 }
@@ -234,7 +234,7 @@ void ISListEditPopup::LoadDataFromQuery()
 		{
 			ListWidget->setItemSelected(CurrentItem, true);
 			ListWidget->scrollToItem(CurrentItem, QAbstractItemView::ScrollHint::PositionAtCenter);
-			CurrentItem->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+			CurrentItem->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 			CurrentItem->setSelected(true);
 		}
 

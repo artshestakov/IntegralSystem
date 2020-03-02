@@ -205,7 +205,7 @@ void CGConfiguratorShow::obsoletesequence()
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::config()
 {
-	QFile FileConfig(DEFINES_CORE.PATH_CONFIG_FILE);
+	QFile FileConfig(ISDefines::Core::PATH_CONFIG_FILE);
 	if (FileConfig.exists())
 	{
 		if (FileConfig.open(QIODevice::ReadOnly))

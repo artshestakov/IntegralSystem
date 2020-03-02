@@ -19,7 +19,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	setWindowTitle(LANG("History"));
 	setWindowIcon(BUFFER_ICONS("History"));
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setCursor(CURSOR_POINTING_HAND);

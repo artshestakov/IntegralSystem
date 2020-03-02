@@ -15,12 +15,12 @@ ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 {
 	setAttribute(Qt::WA_DeleteOnClose, true);
 	setAutoFillBackground(true);
-
+	
 	MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
-	ISControls::SetBackgroundColorWidget(this, DEFINES_GUI.COLOR_WHITE);
+	ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
 
 	QAction *ActionWindowState = new QAction(this);
 	ActionWindowState->setShortcut(Qt::Key_F11);
@@ -196,7 +196,7 @@ void ISInterfaceForm::FlashingStart(int Interval, const QColor &Color)
 void ISInterfaceForm::FlashingTimeout()
 {
 	bool AltColor = FlashingTimer->property("AltColor").toBool();
-	ISControls::SetBackgroundColorWidget(this, AltColor ? DEFINES_GUI.COLOR_WHITE : qvariant_cast<QColor>(FlashingTimer->property("Color")));
+	ISControls::SetBackgroundColorWidget(this, AltColor ? ISDefines::Gui::COLOR_WHITE : qvariant_cast<QColor>(FlashingTimer->property("Color")));
 	FlashingTimer->setProperty("AliColor", !AltColor);
 }
 //-----------------------------------------------------------------------------
@@ -204,7 +204,7 @@ void ISInterfaceForm::FlashingStop()
 {
 	if (FlashingTimer)
 	{
-		ISControls::SetBackgroundColorWidget(this, DEFINES_GUI.COLOR_WHITE);
+		ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
 		FlashingTimer->stop();
 		
 		ISSystem::ExecLoop(100);

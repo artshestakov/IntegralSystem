@@ -262,7 +262,7 @@ void InterpreterMode(bool &IsRunning)
 			}
 			else if (StringList.at(0) == "restart") //Перезапуск
 			{
-				QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_FILE);
+				QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
 				IsRunning = false;
 				return;
 			}

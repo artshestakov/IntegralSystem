@@ -22,7 +22,7 @@ ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidge
 {
 	setWindowTitle(LANG("MonitorActivity.ActivityUser") + ": " + user_name);
 	setWindowIcon(BUFFER_ICONS("User"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);

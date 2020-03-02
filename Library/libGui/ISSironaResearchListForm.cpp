@@ -13,7 +13,7 @@ static QString QS_RESEARCH = PREPARE_QUERY("SELECT pmtp_uid, resr_money "
 ISSironaResearchListForm::ISSironaResearchListForm(QWidget *parent) : ISListBaseForm("Research", parent)
 {
 	LabelSummary = new QLabel(this);
-	LabelSummary->setFont(DEFINES_GUI.FONT_TAHOMA_11);
+	LabelSummary->setFont(ISDefines::Gui::FONT_TAHOMA_11);
 	LabelSummary->setText(LANG("Sirona.TotalMoney.Research").arg(0).arg(0).arg(0));
 	GetStatusBar()->addWidget(LabelSummary);
 }

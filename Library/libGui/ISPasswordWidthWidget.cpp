@@ -6,7 +6,7 @@
 ISPasswordWidthWidget::ISPasswordWidthWidget(QWidget *parent) : QWidget(parent)
 {
 	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	setLayout(Layout);
 
 	LabelWidth = new QLabel(this);

@@ -27,7 +27,7 @@ ISBaseTableView::ISBaseTableView(QWidget *parent) : QTableView(parent)
 	ButtonCorner = new ISPushButton(this);
 	ButtonCorner->setCursor(CURSOR_POINTING_HAND);
 	ButtonCorner->setFlat(true);
-	ButtonCorner->setFont(DEFINES_GUI.FONT_TAHOMA_8);
+	ButtonCorner->setFont(ISDefines::Gui::FONT_TAHOMA_8);
 	connect(ButtonCorner, &QPushButton::clicked, this, &ISBaseTableView::CornerClicked);
 }
 //-----------------------------------------------------------------------------

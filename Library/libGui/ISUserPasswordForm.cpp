@@ -37,7 +37,7 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id, QWidget *parent) : ISInterfa
 
 	setWindowTitle(LANG("ChangePassword"));
 	ForbidResize();
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	GetMainLayout()->addWidget(new QLabel(LANG("User") + ": " + UserFullName, this));
 
@@ -45,7 +45,7 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id, QWidget *parent) : ISInterfa
 	GetMainLayout()->addLayout(Layout);
 
 	LabelIcon = new QLabel(this);
-	LabelIcon->setPixmap(BUFFER_ICONS("Keyboard").pixmap(DEFINES_GUI.SIZE_25_25));
+	LabelIcon->setPixmap(BUFFER_ICONS("Keyboard").pixmap(ISDefines::Gui::SIZE_25_25));
 	Layout->addWidget(LabelIcon);
 
 	LabelText = new QLabel(LANG("EnterThePassword"), this);
@@ -177,7 +177,7 @@ void ISUserPasswordForm::PasswordChecked()
 //-----------------------------------------------------------------------------
 void ISUserPasswordForm::SetIconAndTextHeader(const QIcon &Icon, const QString &Text)
 {
-	LabelIcon->setPixmap(Icon.pixmap(DEFINES_GUI.SIZE_25_25));
+	LabelIcon->setPixmap(Icon.pixmap(ISDefines::Gui::SIZE_25_25));
 	LabelText->setText(Text);
 }
 //-----------------------------------------------------------------------------

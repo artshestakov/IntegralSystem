@@ -155,11 +155,11 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 	{
 		if (GetIsSystem(ModelIndex.row())) //Если запись системная
 		{
-			return qVariantFromValue(DEFINES_GUI.COLOR_BLUE); //Пометить её синим цветом
+			return qVariantFromValue(ISDefines::Gui::COLOR_BLUE); //Пометить её синим цветом
 		}
 		else if (GetIsDeleted(ModelIndex.row())) //Если запись удаленная
 		{
-			return qVariantFromValue(DEFINES_GUI.COLOR_RED); //Пометить её красным цветом
+			return qVariantFromValue(ISDefines::Gui::COLOR_RED); //Пометить её красным цветом
 		}
 	}
 	else if (Role == Qt::ToolTipRole) //Роль отображения подсказки для ячейки (ToolTip)

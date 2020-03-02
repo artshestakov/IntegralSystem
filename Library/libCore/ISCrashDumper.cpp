@@ -39,7 +39,7 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
     ISStackWalker stack_walker;
 	stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
 
-	std::string FilePath = QString(DEFINES_CORE.PATH_CRASH_DIR + "/" + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_CRASH).toStdString();
+	std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_CRASH).toStdString();
 	FILE *File = fopen(FilePath.c_str(), "w");
 	if (File)
 	{
@@ -66,9 +66,9 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
 		printf("Error open crash file (%s): %s\n", FilePath.c_str(), strerror(errno));
 	}
 
-	if (DEFINES_CORE.IS_GUI)
+	if (ISDefines::Core::IS_GUI)
 	{
-		QProcess::startDetached(DEFINES_CORE.PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << QString::fromStdString(FilePath));
+		QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << QString::fromStdString(FilePath));
 	}
 	else
 	{

@@ -14,7 +14,7 @@ static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, gatt
 ISToolBarAccessTable::ISToolBarAccessTable(int GroupID, const ISUuid &TableUID, const QString &TableName, QWidget *parent) : QToolBar(parent)
 {
 	setToolButtonStyle(Qt::ToolButtonIconOnly);
-	setIconSize(DEFINES_GUI.SIZE_20_20);
+	setIconSize(ISDefines::Gui::SIZE_20_20);
 
 	ISQuery qSelectAccess(QS_GROUP_ACCESS_TABLE_TYPE);
 	if (qSelectAccess.Execute())

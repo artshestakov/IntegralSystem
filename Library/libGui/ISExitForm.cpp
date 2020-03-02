@@ -13,7 +13,7 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	setWindowTitle(LANG("Exit"));
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();
 
 	QLabel *Label = new QLabel(this);
@@ -21,7 +21,7 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	GetMainLayout()->addWidget(Label);
 
 	QVBoxLayout *LayoutButtons = new QVBoxLayout();
-	LayoutButtons->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	LayoutButtons->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	LayoutButtons->setSpacing(0);
 	GetMainLayout()->addLayout(LayoutButtons);
 

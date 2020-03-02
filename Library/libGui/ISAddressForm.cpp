@@ -54,7 +54,7 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 {
 	setWindowTitle(LANG("Address"));
 	setWindowIcon(BUFFER_ICONS("Address"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	setFixedSize(530, 230);
 
 	QFormLayout *FormLayout = new QFormLayout();
@@ -82,7 +82,7 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	FormLayout->addRow(LANG("Address.House") + ':', ComboHouse);
 
 	QHBoxLayout *LayoutGroupBox = new QHBoxLayout();
-	LayoutGroupBox->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_2_PX);
+	LayoutGroupBox->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_2_PX);
 
 	GroupBox = new QGroupBox(this);
 	GroupBox->setTitle(LANG("Address.PerformanceAddress"));
@@ -99,7 +99,7 @@ ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : IS
 	GroupBox->layout()->addWidget(LineEdit);
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	LayoutBottom->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	LayoutBottom->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	QLabel *LabelInput = new QLabel(this);
@@ -206,7 +206,7 @@ void ISAddressForm::ModeFree()
 //-----------------------------------------------------------------------------
 void ISAddressForm::SetValue(const QString &AddressText)
 {
-	QStringList StringList = AddressText.split(DEFINES_CORE.SYMBOL_FIAS_SPLIT);
+	QStringList StringList = AddressText.split(ISDefines::Core::SYMBOL_FIAS_SPLIT);
 	StringList.removeOne(QString());
 	if (0 < StringList.count())
 	{
@@ -421,21 +421,21 @@ void ISAddressForm::FieldEnabled(ISAddressBox *AddressBox, bool Enabled)
 //-----------------------------------------------------------------------------
 void ISAddressForm::UpdatePerfomance()
 {
-	QString String = ComboRegion->currentText() + DEFINES_CORE.SYMBOL_FIAS_SPLIT;
+	QString String = ComboRegion->currentText() + ISDefines::Core::SYMBOL_FIAS_SPLIT;
 
 	if (ComboCity->currentText().length())
 	{
-		String += ComboCity->currentText() + DEFINES_CORE.SYMBOL_FIAS_SPLIT;
+		String += ComboCity->currentText() + ISDefines::Core::SYMBOL_FIAS_SPLIT;
 	}
 
 	if (ComboStreet->currentText().length())
 	{
-		String += ComboStreet->currentText() + DEFINES_CORE.SYMBOL_FIAS_SPLIT;
+		String += ComboStreet->currentText() + ISDefines::Core::SYMBOL_FIAS_SPLIT;
 	}
 
 	if (ComboHouse->currentText().length())
 	{
-		String += ComboHouse->currentText() + DEFINES_CORE.SYMBOL_FIAS_SPLIT;
+		String += ComboHouse->currentText() + ISDefines::Core::SYMBOL_FIAS_SPLIT;
 	}
 
 	ISSystem::RemoveLastSymbolFromString(String, 2);

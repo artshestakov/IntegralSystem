@@ -29,7 +29,7 @@ ISNoteObjectForm::ISNoteObjectForm(const QString &table_name, int object_id, QWi
 
 	ForbidResize();
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	TextEdit = new ISTextEdit(this);
 	GetMainLayout()->addWidget(TextEdit);

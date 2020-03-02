@@ -6,12 +6,12 @@
 //-----------------------------------------------------------------------------
 ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	resize(DEFINES_GUI.SIZE_640_480);
+	resize(ISDefines::Gui::SIZE_640_480);
 	setWindowTitle(ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName);
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelInfo = new QLabel(this);
-	LabelInfo->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelInfo->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	ISGui::SetFontWidgetUnderline(LabelInfo, true);
 	GetMainLayout()->addWidget(LabelInfo);
 

@@ -26,7 +26,7 @@ static QString QD_GROUP = PREPARE_QUERY("DELETE FROM _questionanswergroup "
 //-----------------------------------------------------------------------------
 ISKnowledgeBaseSubSystem::ISKnowledgeBaseSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);

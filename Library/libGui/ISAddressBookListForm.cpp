@@ -8,7 +8,7 @@ ISAddressBookListForm::ISAddressBookListForm(QWidget *parent) : ISListBaseForm("
 {
 	setWindowTitle(LANG("AddressBook"));
 	setWindowIcon(BUFFER_ICONS("AddressBook"));
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	connect(this, &ISAddressBookListForm::AddFormFromTab, this, &ISAddressBookListForm::CreateObjectForm);
 	GetQueryModel()->SetClassFilter("abok_user = currentuserid()");
 }

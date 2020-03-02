@@ -46,13 +46,13 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	//setWindowFlags(Qt::WindowStaysOnTopHint);
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutInfo = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutInfo, 0);
 
 	QLabel *LabelImage = new QLabel(this);
-	LabelImage->setPixmap(BUFFER_ICONS("Calendar").pixmap(DEFINES_GUI.SIZE_32_32));
+	LabelImage->setPixmap(BUFFER_ICONS("Calendar").pixmap(ISDefines::Gui::SIZE_32_32));
 	LayoutInfo->addWidget(LabelImage);
 
 	QVBoxLayout *Layout = new QVBoxLayout();
@@ -60,7 +60,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 
 	QLabel *LabelName = new QLabel(this);
 	LabelName->setText(EventName);
-	LabelName->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
+	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setWordWrap(true);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	Layout->addWidget(LabelName);
@@ -82,12 +82,12 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	}
 	else if (EventDate < QDate::currentDate()) //Событие просрочено
 	{
-		LabelOverdueIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(DEFINES_GUI.SIZE_16_16));
+		LabelOverdueIcon->setPixmap(BUFFER_ICONS("Importance.High").pixmap(ISDefines::Gui::SIZE_16_16));
 		LabelOverdueIcon->setVisible(true);
 
 		LabelDate->setText(LabelDate->text() + " (" + LANG("OverdueEvent") + ')');
 		LabelDate->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
-		LabelDate->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+		LabelDate->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	}
 
 	QLabel *LabelTime = new QLabel(this);
@@ -158,7 +158,7 @@ ISCalendarEventForm::~ISCalendarEventForm()
 void ISCalendarEventForm::AfterShowEvent()
 {
 	ISInterfaceForm::AfterShowEvent();
-	FlashingStart(1000, DEFINES_GUI.COLOR_CALENDAR_EVENT_FORM_FLASH);
+	FlashingStart(1000, ISDefines::Gui::COLOR_CALENDAR_EVENT_FORM_FLASH);
 }
 //-----------------------------------------------------------------------------
 void ISCalendarEventForm::closeEvent(QCloseEvent *e)

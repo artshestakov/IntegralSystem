@@ -51,7 +51,7 @@ void ISCaratService::StartService()
 
 			ISLOGGER_EMPTY();
 			ISLOGGER_INFO("Core \"" + LocalName + "\": starting...");
-			QString CorePath = DEFINES_CORE.PATH_APPLICATION_DIR + '/' + FileName;
+			QString CorePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
 
 			ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
 			connect(ProcessCore, &ISProcessCore::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);

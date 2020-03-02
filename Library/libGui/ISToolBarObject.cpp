@@ -53,12 +53,12 @@ void ISToolBarObject::ActionTriggered(QAction *ActionTriggered)
 {
 	for (int i = 0; i < actions().count(); ++i)
 	{
-		actions().at(i)->setFont(DEFINES_GUI.FONT_APPLICATION);
+		actions().at(i)->setFont(ISDefines::Gui::FONT_APPLICATION);
 	}
 
 	if (qvariant_cast<ISNamespace::ObjectActionType>(ActionTriggered->property("Type")) != ISNamespace::OAT_Service)
 	{
-		ActionTriggered->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+		ActionTriggered->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	}
 
 	if (CurrentAction != ActionTriggered)

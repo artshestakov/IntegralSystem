@@ -29,11 +29,11 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	CurrentDoctorID = 0;
 
 	MainLayout = new QVBoxLayout();
-	MainLayout->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
-	LayoutTitle->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_NULL);
+	LayoutTitle->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
 	QWidget *WidgetTitle = new QWidget(this);
 	WidgetTitle->setLayout(LayoutTitle);
@@ -42,7 +42,7 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 
 	LabelDayWeek = new QLabel(WidgetTitle);
 	LabelDayWeek->setText(LANG("Today") + ": " + ISSystem::GetCurrentDayOfWeekName());
-	LabelDayWeek->setFont(DEFINES_GUI.FONT_TAHOMA_12_BOLD);
+	LabelDayWeek->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	ISGui::SetFontWidgetUnderline(LabelDayWeek, true);
 	LayoutTitle->addWidget(LabelDayWeek);
 
@@ -206,11 +206,11 @@ void ISCenterSevenDesktop::BranchChanged()
 void ISCenterSevenDesktop::AllDoctorClicked()
 {
 	ActionDoctors->setChecked(true);
-	ActionDoctors->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ActionDoctors->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	for (QAction *ActionDoctor : ActionGroup->actions())
 	{
 		ActionDoctor->setChecked(false);
-		ActionDoctor->setFont(DEFINES_GUI.FONT_APPLICATION);
+		ActionDoctor->setFont(ISDefines::Gui::FONT_APPLICATION);
 	}
 
 	AdmissionListForm->SetDoctor(0);
@@ -220,15 +220,15 @@ void ISCenterSevenDesktop::AllDoctorClicked()
 void ISCenterSevenDesktop::DoctorClicked()
 {
 	ActionDoctors->setChecked(false);
-	ActionDoctors->setFont(DEFINES_GUI.FONT_APPLICATION);
+	ActionDoctors->setFont(ISDefines::Gui::FONT_APPLICATION);
 
 	for (QAction *ActionDoctor : ActionGroup->actions())
 	{
-		ActionDoctor->setFont(DEFINES_GUI.FONT_APPLICATION);
+		ActionDoctor->setFont(ISDefines::Gui::FONT_APPLICATION);
 	}
 
 	QAction *ActionSender = dynamic_cast<QAction*>(sender());
-	ActionSender->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	ActionSender->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	CurrentDoctorID = ActionSender->data().toInt();
 	AdmissionListForm->SetDoctor(CurrentDoctorID);
@@ -241,7 +241,7 @@ void ISCenterSevenDesktop::CreateAdmissionObjectForm(QWidget *ObjectFormBase)
 	AdmissionObjectForm->SetDate(DateEdit->GetValue().toDate());
 	AdmissionObjectForm->SetDoctor(CurrentDoctorID);
 	AdmissionObjectForm->setParent(nullptr);
-	AdmissionObjectForm->resize(DEFINES_GUI.SIZE_TASK_OBJECT_FORM);
+	AdmissionObjectForm->resize(ISDefines::Gui::SIZE_TASK_OBJECT_FORM);
 	AdmissionObjectForm->show();
 }
 //-----------------------------------------------------------------------------

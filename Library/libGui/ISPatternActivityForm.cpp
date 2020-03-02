@@ -73,7 +73,7 @@ void ISPatternActivityForm::CreateMainPanel()
 	{
 		QLabel *Label = new QLabel(Widget);
 		Label->setText(LANG("TelephonyForm.Activity.EmptyPatterns"));
-		Label->setFont(DEFINES_GUI.FONT_TAHOMA_12);
+		Label->setFont(ISDefines::Gui::FONT_TAHOMA_12);
 		Widget->layout()->addWidget(Label);
 	}
 }
@@ -89,33 +89,33 @@ void ISPatternActivityForm::CreateSignPanel()
 	GetMainLayout()->addWidget(GroupBox);
 
 	QWidget *WidgetFree = new QWidget(GroupBox);
-	WidgetFree->setFixedSize(DEFINES_GUI.SIZE_22_22);
+	WidgetFree->setFixedSize(ISDefines::Gui::SIZE_22_22);
 	WidgetFree->setStyleSheet(STYLE_SHEET("Pattern.Color.Free"));
 	LayoutGroupBox->addWidget(WidgetFree);
 
 	QLabel *LabelFree = new QLabel(GroupBox);
 	LabelFree->setText("- " + LANG("TelephonyForm.Activity.Sign.Free"));
-	LabelFree->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelFree->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelFree);
 
 	QWidget *WidgetBusy = new QWidget(GroupBox);
-	WidgetBusy->setFixedSize(DEFINES_GUI.SIZE_22_22);
+	WidgetBusy->setFixedSize(ISDefines::Gui::SIZE_22_22);
 	WidgetBusy->setStyleSheet(STYLE_SHEET("Pattern.Color.Busy"));
 	LayoutGroupBox->addWidget(WidgetBusy);
 
 	QLabel *LabelBusy = new QLabel(GroupBox);
 	LabelBusy->setText("- " + LANG("TelephonyForm.Activity.Sign.Busy"));
-	LabelBusy->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelBusy->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelBusy);
 
 	QWidget *WidgetNotRegistered = new QWidget(GroupBox);
-	WidgetNotRegistered->setFixedSize(DEFINES_GUI.SIZE_22_22);
+	WidgetNotRegistered->setFixedSize(ISDefines::Gui::SIZE_22_22);
 	WidgetNotRegistered->setStyleSheet(STYLE_SHEET("Pattern.Color.NotRegistered"));
 	LayoutGroupBox->addWidget(WidgetNotRegistered);
 
 	QLabel *LabelNotRegistered = new QLabel(GroupBox);
 	LabelNotRegistered->setText("- " + LANG("TelephonyForm.Activity.Sign.NotRegistered"));
-	LabelNotRegistered->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelNotRegistered->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LayoutGroupBox->addWidget(LabelNotRegistered);
 
 	LayoutGroupBox->addStretch();

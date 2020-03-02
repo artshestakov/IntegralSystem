@@ -36,7 +36,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaClassTable *meta_table) :
 
 	setWindowIcon(BUFFER_ICONS("Favorites"));
 
-	GetMainLayout()->setContentsMargins(DEFINES_GUI.MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

@@ -12,7 +12,7 @@ ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &Use
 
 	QLabel *LabelUser = new QLabel(this);
 	LabelUser->setText(UserName);
-	LabelUser->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelUser->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	MainLayout->addWidget(LabelUser);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
@@ -26,16 +26,16 @@ ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &Use
 		QPixmap Pixmap;
 		if (Pixmap.loadFromData(Icon))
 		{		
-			LabelImage->setPixmap(Pixmap.scaled(DEFINES_GUI.SIZE_18_18));
+			LabelImage->setPixmap(Pixmap.scaled(ISDefines::Gui::SIZE_18_18));
 		}
 		else
 		{
-			LabelImage->setPixmap(BUFFER_ICONS("Task.AttachFileItem").pixmap(DEFINES_GUI.SIZE_18_18));
+			LabelImage->setPixmap(BUFFER_ICONS("Task.AttachFileItem").pixmap(ISDefines::Gui::SIZE_18_18));
 		}
 	}
 	else
 	{
-		LabelImage->setPixmap(BUFFER_ICONS("Task.AttachFileItem").pixmap(DEFINES_GUI.SIZE_18_18));
+		LabelImage->setPixmap(BUFFER_ICONS("Task.AttachFileItem").pixmap(ISDefines::Gui::SIZE_18_18));
 	}
 
 	ISLabelLink *LabelFile = new ISLabelLink(this);

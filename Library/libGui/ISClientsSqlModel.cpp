@@ -20,11 +20,11 @@ QVariant ISClientsSqlModel::data(const QModelIndex &ModelIndex, int Role) const
 		int CountInWork = GetRecord(ModelIndex.row()).value("CountInWork").toInt();
 		if (CountInWork)
 		{
-			Value = qVariantFromValue(DEFINES_GUI.COLOR_RED);
+			Value = qVariantFromValue(ISDefines::Gui::COLOR_RED);
 		}
 		else
 		{
-			Value = qVariantFromValue(DEFINES_GUI.COLOR_DARK_GREEN);
+			Value = qVariantFromValue(ISDefines::Gui::COLOR_DARK_GREEN);
 		}
 	}
 

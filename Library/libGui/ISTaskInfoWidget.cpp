@@ -29,7 +29,7 @@ ISTaskInfoWidget::ISTaskInfoWidget(int task_id, QWidget *parent) : QWidget(paren
 	setLayout(FormLayout);
 
 	LabelStatus = AddLabel(LANG("Task.Status") + ':');
-	LabelStatus->setFont(DEFINES_GUI.FONT_TAHOMA_10);
+	LabelStatus->setFont(ISDefines::Gui::FONT_TAHOMA_10);
 	LabelStatus->setSizePolicy(QSizePolicy::Maximum, LabelStatus->sizePolicy().verticalPolicy());
 
 	LabelNumber = AddLabel(LANG("Task.Number") + ':');
@@ -103,7 +103,7 @@ QLabel* ISTaskInfoWidget::AddLabel(const QString &RowText)
 {
 	QLabel *LabelRow = new QLabel(this);
 	LabelRow->setText(RowText);
-	LabelRow->setFont(DEFINES_GUI.FONT_APPLICATION_BOLD);
+	LabelRow->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	QLabel *Label = new QLabel(this);
 
