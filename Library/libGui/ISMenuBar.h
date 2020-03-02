@@ -3,7 +3,6 @@
 #include "StdAfx.h"
 #include "ISMainMenu.h"
 #include "ISButtons.h"
-#include "ISParagraphButton.h"
 #include "ISUuid.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------

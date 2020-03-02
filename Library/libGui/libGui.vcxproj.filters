@@ -730,9 +730,6 @@
     <ClCompile Include="ISNotifyWidgetItem.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="ISParagraphButton.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISSplashScreen.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -1711,9 +1708,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISNotifyWidgetItem.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISParagraphButton.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISSplashScreen.h">

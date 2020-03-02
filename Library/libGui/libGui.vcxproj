@@ -318,7 +318,6 @@
     <ClCompile Include="ISPageNavigation.cpp" />
     <ClCompile Include="ISPagesTextEdit.cpp" />
     <ClCompile Include="ISParagraphBaseForm.cpp" />
-    <ClCompile Include="ISParagraphButton.cpp" />
     <ClCompile Include="ISParagraphEntity.cpp" />
     <ClCompile Include="ISPassportEdit.cpp" />
     <ClCompile Include="ISPassportForm.cpp" />
@@ -737,7 +736,6 @@
     <QtMoc Include="ISTaskOverdueListForm.h" />
     <QtMoc Include="ISTaskTodayListForm.h" />
     <QtMoc Include="ISTaskViewForm.h" />
-    <QtMoc Include="ISParagraphButton.h" />
     <QtMoc Include="ISSplashScreen.h" />
     <QtMoc Include="ISStackedWidget.h" />
     <QtMoc Include="ISStatusBar.h" />

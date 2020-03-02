@@ -3,6 +3,7 @@
 #define _ISBUTTONS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISPushButton : public QPushButton
 {
@@ -143,6 +144,32 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *e);
 	void dropEvent(QDropEvent *e);
 	void dragMoveEvent(QDragMoveEvent *e);
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISParagraphButton : public QWidget
+{
+	Q_OBJECT
+
+		signals :
+	void Clicked();
+
+public:
+	ISParagraphButton(ISMetaParagraph *MetaParagraph, QWidget *parent = 0);
+	virtual ~ISParagraphButton();
+
+	void SetText(const QString &Text);
+	void SetToolTip(const QString &ToolTip);
+	void SetCursor(const QCursor &Cursor);
+	void SetVisibleLine(bool Visible);
+
+private:
+	QToolButton *ToolButton;
+
+	QWidget *LineLeft;
+	QLabel *LineCenter;
+	QWidget *LineRight;
 };
 //-----------------------------------------------------------------------------
 #endif
