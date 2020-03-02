@@ -164,9 +164,7 @@
     <ClCompile Include="ISColorEdit.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboEdit.cpp" />
-    <ClCompile Include="ISComboSearchBase.cpp" />
-    <ClCompile Include="ISComboSearchNumber.cpp" />
-    <ClCompile Include="ISComboSearchString.cpp" />
+    <ClCompile Include="ISComboSearchWidgets.cpp" />
     <ClCompile Include="ISComboTimeEdit.cpp" />
     <ClCompile Include="ISConnectionForm.cpp" />
     <ClCompile Include="ISContextMenu.cpp" />
@@ -543,9 +541,7 @@
     <QtMoc Include="ISToolBarObject.h" />
     <QtMoc Include="ISPlayerWidget.h" />
     <QtMoc Include="ISSliderDuration.h" />
-    <QtMoc Include="ISComboSearchBase.h" />
-    <QtMoc Include="ISComboSearchNumber.h" />
-    <QtMoc Include="ISComboSearchString.h" />
+    <QtMoc Include="ISComboSearchWidgets.h" />
     <QtMoc Include="ISTabBarMain.h" />
     <QtMoc Include="ISTabWidgetMain.h" />
     <QtMoc Include="ISFieldEditBase.h" />

@@ -493,15 +493,6 @@
     <ClCompile Include="ISSliderDuration.cpp">
       <Filter>Controls\Player</Filter>
     </ClCompile>
-    <ClCompile Include="ISComboSearchBase.cpp">
-      <Filter>Controls\SearchCondition</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboSearchNumber.cpp">
-      <Filter>Controls\SearchCondition</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboSearchString.cpp">
-      <Filter>Controls\SearchCondition</Filter>
-    </ClCompile>
     <ClCompile Include="ISTabBarMain.cpp">
       <Filter>Controls\TabNavigation</Filter>
     </ClCompile>
@@ -1270,6 +1261,9 @@
     <ClCompile Include="ISSettingFieldWidgets.cpp">
       <Filter>Fields\Settings</Filter>
     </ClCompile>
+    <ClCompile Include="ISComboSearchWidgets.cpp">
+      <Filter>Controls\SearchCondition</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1457,15 +1451,6 @@
     </QtMoc>
     <QtMoc Include="ISSliderDuration.h">
       <Filter>Controls\Player</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboSearchBase.h">
-      <Filter>Controls\SearchCondition</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboSearchNumber.h">
-      <Filter>Controls\SearchCondition</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboSearchString.h">
-      <Filter>Controls\SearchCondition</Filter>
     </QtMoc>
     <QtMoc Include="ISTabBarMain.h">
       <Filter>Controls\TabNavigation</Filter>
@@ -2189,6 +2174,9 @@
     </QtMoc>
     <QtMoc Include="ISSettingFieldWidgets.h">
       <Filter>Fields\Settings</Filter>
+    </QtMoc>
+    <QtMoc Include="ISComboSearchWidgets.h">
+      <Filter>Controls\SearchCondition</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
 #include "ISObjectFormBase.h"
-#include "ISComboSearchBase.h"
+#include "ISComboSearchWidgets.h"
 #include "ISImageViewerForm.h"
 //-----------------------------------------------------------------------------
 class LIBGUI_EXPORT ISGui

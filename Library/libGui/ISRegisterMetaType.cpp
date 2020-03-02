@@ -79,11 +79,7 @@
 #include "ISAddressEdit.h"
 #include "ISUrlEdit.h"
 #include "ISFileEdit.h"
-//-----------------------------------------------------------------------------
-#include "ISComboSearchBase.h"
-#include "ISComboSearchString.h"
-#include "ISComboSearchNumber.h"
-//-----------------------------------------------------------------------------
+#include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
 //-----------------------------------------------------------------------------
 #include "ISDevice_Atol1101.h"
