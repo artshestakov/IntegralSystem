@@ -74,14 +74,9 @@ void ISFileEdit::SetValue(const QVariant &value)
 		qSelectFile.BindValue(":FileID", FileID);
 		if (qSelectFile.ExecuteFirst())
 		{
-			QString FileName = qSelectFile.ReadColumn("file_name").toString();
-			QString FileExtension = qSelectFile.ReadColumn("file_extension").toString();
-			QIcon FileIcon = ISGui::ByteArrayToIcon(qSelectFile.ReadColumn("file_icon").toByteArray());
-
-			ButtonFile->setMenu(MenuFile);
-			ButtonFile->setText(FileName + SYMBOL_POINT + FileExtension);
+			ButtonFile->setText(qSelectFile.ReadColumn("file_name").toString() + SYMBOL_POINT + qSelectFile.ReadColumn("file_extension").toString());
 			ButtonFile->setToolTip(QString());
-			ButtonFile->setIcon(FileIcon);
+			ButtonFile->setIcon(ISGui::ByteArrayToIcon(qSelectFile.ReadColumn("file_icon").toByteArray()));
 		}
 	}
 }
