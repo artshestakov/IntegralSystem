@@ -1,6 +1,5 @@
 #include "ISDeviceComObject.h"
 #include "ISQuery.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEVICE_USER = PREPARE_QUERY("SELECT cptp_name "
 											  "FROM _deviceuser "

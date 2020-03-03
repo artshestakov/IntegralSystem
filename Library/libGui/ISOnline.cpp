@@ -2,7 +2,6 @@
 #include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISQueryPool.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_ONLINE = PREPARE_QUERY("INSERT INTO _useronline(uonl_type) "
 										 "SELECT uotp_id FROM _useronlinetype WHERE uotp_uid = :TypeUID");

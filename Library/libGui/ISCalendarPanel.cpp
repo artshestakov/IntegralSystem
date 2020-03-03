@@ -3,7 +3,6 @@
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISGui.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT COUNT(*) "
 										   "FROM _calendar "

@@ -1,7 +1,6 @@
 #include "ISDemoAccessesObjectForm.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_RESULT_DATE = PREPARE_QUERY2("UPDATE demoaccesses SET dacc_resultdatetime = now() WHERE dacc_id = :ObjectID");
 //-----------------------------------------------------------------------------

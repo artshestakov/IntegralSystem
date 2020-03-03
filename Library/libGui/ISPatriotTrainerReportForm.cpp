@@ -4,7 +4,6 @@
 #include "ISButtons.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TRAINERS = PREPARE_QUERY2("SELECT trnr_id, trnr_fio FROM trainer WHERE NOT trnr_isdeleted ORDER BY trnr_fio");
 //-----------------------------------------------------------------------------

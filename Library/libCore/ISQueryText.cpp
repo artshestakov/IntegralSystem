@@ -65,21 +65,28 @@ bool ISQueryText::CheckAllQueries()
 				for (int i = 0; i < ISMetaData::GetInstanse().GetMetaQueries().count(); ++i)
 				{
 					QString QueryName = ISMetaData::GetInstanse().GetMetaQueries().at(i);
-					ISMetaViewQuery MetaViewQuery(QueryName);
-					QString SqlText = MetaViewQuery.GetQueryText();
+					QString SqlText = ISMetaViewQuery(QueryName).GetQueryText();
 
 					QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
-					SqlQuery.prepare(SqlText);
-					if (SqlQuery.lastError().type() != QSqlError::NoError)
+					Result = SqlQuery.prepare(SqlText);
+					if (Result)
 					{
+						Result = SqlQuery.lastError().type() != QSqlError::NoError;
+					}
+
+					if (!Result)
+					{
+						//???
+						ErrorString = SqlQuery.lastError().text();
 						//ErrorQuery("Meta query: " + QueryName, SqlText, SqlQuery.lastError().text());
 					}
 				}
 			}
+			
 		}
 		else
 		{
-			ErrorString = "Database not open connection";
+			ErrorString = "Database is not open";
 		}
 	}
 	return Result;
@@ -87,6 +94,7 @@ bool ISQueryText::CheckAllQueries()
 //-----------------------------------------------------------------------------
 void ISQueryText::ErrorQuery(ISSqlQuery SqlQuery, const QString &ErrorText)
 {
+	ErrorString = ErrorText;
 	QFile File(ISDefines::Core::PATH_TEMP_DIR + ISSystem::GenerateUuid());
 	if (File.open(QIODevice::WriteOnly))
 	{

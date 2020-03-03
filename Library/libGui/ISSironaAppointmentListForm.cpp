@@ -4,7 +4,6 @@
 #include "ISMessageBox.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_ADMISSION_FINISHED = PREPARE_QUERY2("UPDATE appointment SET "
 													 "apnm_finished = true "

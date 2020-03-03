@@ -11,7 +11,6 @@
 #include "ISPGSettingsForm.h"
 #include "ISStatisticTablesForm.h"
 #include "ISDistFileListForm.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 ISControlDatabaseForm::ISControlDatabaseForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {

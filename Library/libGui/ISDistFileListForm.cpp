@@ -11,7 +11,6 @@
 #include "ISControls.h"
 #include "ISNotifySender.h"
 #include "ISCore.h"
-#include "ISQueryText.h"
 #include "ISProgressForm.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE = PREPARE_QUERY("INSERT INTO _distfiles(dsfs_filename, dsfs_size, dsfs_createddatefile, dsfs_lastmodifiedfile, dsfs_version, dsfs_actual, dsfs_version_1, dsfs_version_2, dsfs_version_3, dsfs_version_4) "

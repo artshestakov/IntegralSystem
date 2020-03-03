@@ -3,7 +3,6 @@
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISLogger.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id "
 										"FROM _users "

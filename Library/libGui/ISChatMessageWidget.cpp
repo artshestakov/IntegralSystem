@@ -15,7 +15,6 @@
 #include "ISNotificationService.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHAT_MESSAGE = PREPARE_QUERY("SELECT "
 											   "chat_creationdate, "

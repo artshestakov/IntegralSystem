@@ -2,7 +2,6 @@
 #include "ISTypes.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "ISQueryText.h"
 #include "ISConfig.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------

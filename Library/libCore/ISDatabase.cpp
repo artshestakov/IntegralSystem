@@ -5,7 +5,6 @@
 #include "ISLogger.h"
 #include "ISCountingTime.h"
 #include "ISMetaData.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) FROM pg_database WHERE datname = :DatabaseName");
 //-----------------------------------------------------------------------------

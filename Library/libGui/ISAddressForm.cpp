@@ -8,7 +8,6 @@
 #include "ISGui.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_REGION = PREPARE_QUERY("SELECT fobj_offname, fobj_aoguid, "
 										 "(SELECT fscb_socrname FROM _fias_addressobjecttype WHERE fscb_level = fobj_aolevel AND fscb_scname = fobj_shortname) "

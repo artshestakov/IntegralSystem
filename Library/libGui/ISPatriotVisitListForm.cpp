@@ -4,7 +4,6 @@
 #include "ISMessageBox.h"
 #include "ISQuery.h"
 #include "ISObjects.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QD_CANCEL_VISIT = PREPARE_QUERY2("DELETE FROM visit "
 											   "WHERE vist_id = :ObjectID");

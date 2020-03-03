@@ -10,7 +10,6 @@
 #include "ISSystem.h"
 #include "ISProtocol.h"
 #include "ISGui.h"
-#include "ISQueryText.h"
 #include "ISPasswordWidthWidget.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER = PREPARE_QUERY("SELECT usrs_login, userfullname(:UserID) FROM _users WHERE usrs_id = :UserID");

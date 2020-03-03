@@ -5,7 +5,6 @@
 #include "ISCountingTime.h"
 #include "ISSystem.h"
 #include "ISLogger.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
 										   "stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "

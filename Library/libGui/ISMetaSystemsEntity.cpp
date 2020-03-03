@@ -3,7 +3,6 @@
 #include "ISCountingTime.h"
 #include "ISMetaUser.h"
 #include "ISUserRoleEntity.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "

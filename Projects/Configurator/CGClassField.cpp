@@ -1,7 +1,6 @@
 #include "CGClassField.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CLASS_FIELD = PREPARE_QUERY("SELECT COUNT(*) FROM _classfield WHERE clsf_uid = :UID");
 //-----------------------------------------------------------------------------

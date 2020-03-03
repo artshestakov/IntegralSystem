@@ -11,7 +11,6 @@
 #include "ISObjects.h"
 #include "ISGui.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_BRANCHES = PREPARE_QUERY2("SELECT brch_id, brch_name "
 										   "FROM branches "

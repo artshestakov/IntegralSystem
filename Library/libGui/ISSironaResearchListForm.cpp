@@ -3,7 +3,6 @@
 #include "ISSystem.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_RESEARCH = PREPARE_QUERY2("SELECT pmtp_uid, resr_money "
 										   "FROM research "

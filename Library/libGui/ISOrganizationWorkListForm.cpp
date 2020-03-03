@@ -4,7 +4,6 @@
 #include "ISMessageBox.h"
 #include "ISProtocol.h"
 #include "ISObjects.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_ORGANIZATION_USER = PREPARE_QUERY2("UPDATE organizations SET orgz_user = currentuserid() WHERE orgz_id = :ObjectID");
 //-----------------------------------------------------------------------------

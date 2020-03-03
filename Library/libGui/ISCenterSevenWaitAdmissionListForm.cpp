@@ -3,7 +3,6 @@
 #include "ISObjects.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_CLOSE_WAIT = PREPARE_QUERY2("UPDATE waitadmission SET "
 											 "wadm_closed = true "

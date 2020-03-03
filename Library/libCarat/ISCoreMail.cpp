@@ -3,7 +3,6 @@
 #include "ISQuery.h"
 #include "ISEMail.h"
 #include "ISLogger.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_MAIL_QUEUE = PREPARE_QUERY("SELECT mail_id, mail_server, mail_port, ectp_uid, mail_senderlogin, mail_senderpassword, mail_sendername, mail_recipientlogin, mail_subject, mail_message "
 											 "FROM _emailqueue "

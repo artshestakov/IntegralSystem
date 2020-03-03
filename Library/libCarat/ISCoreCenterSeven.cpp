@@ -7,7 +7,6 @@
 #include "ISMetaData.h"
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_BRANCH = PREPARE_QUERY("SELECT (SELECT ptnt_id FROM patients WHERE concat(ptnt_phonemain, ptnt_phoneother) LIKE '%' || :Phone || '%' ), brch_name, brch_administrator "

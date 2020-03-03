@@ -7,23 +7,12 @@
 #include "ISMessageBox.h"
 #include "ISUpdate.h"
 #include "ISVersion.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_DATA_ID = PREPARE_QUERY("SELECT dfdt_id "
-										  "FROM _distfilesdata "
-										  "WHERE dfdt_file = :FileID "
-										  "ORDER BY dfdt_id");
-//-----------------------------------------------------------------------------
-static QString QS_DATA = PREPARE_QUERY("SELECT dfdt_data "
-									   "FROM _distfilesdata "
-									   "WHERE dfdt_id = :DataID "
-									   "ORDER BY dfdt_id");
-//-----------------------------------------------------------------------------
-ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name, const QString &version, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISUpdateDownloadForm::ISUpdateDownloadForm(int file_id, const QString &file_name, const QString &version, QWidget *parent)
+	: ISInterfaceDialogForm(parent),
+	FileID(file_id),
+	FileName(file_name)
 {
-	FileID = file_id;
-	FileName = file_name;
-
 	setWindowTitle(LANG("UpdateApplication"));
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 	resize(ISDefines::Gui::SIZE_500_90);

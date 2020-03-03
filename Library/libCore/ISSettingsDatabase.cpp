@@ -5,7 +5,6 @@
 #include "ISAssert.h"
 #include "ISMetaData.h"
 #include "ISCountingTime.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SETTING = PREPARE_QUERY("SELECT column_name "

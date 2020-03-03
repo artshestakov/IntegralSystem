@@ -5,7 +5,6 @@
 #include "ISBuffer.h"
 #include "ISMetaUser.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, userfullname(usrs_id) "
 										"FROM _users "

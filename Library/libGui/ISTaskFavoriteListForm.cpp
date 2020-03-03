@@ -1,11 +1,10 @@
 #include "ISTaskFavoriteListForm.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_objectid "
+/*static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_objectid "
 											"FROM _favorites "
 											"WHERE NOT fvts_isdeleted "
 											"AND fvts_user = currentuserid() "
-											"AND fvts_tablename = '_Task'");
+											"AND fvts_tablename = '_Task'");*/
 //-----------------------------------------------------------------------------
 ISTaskFavoriteListForm::ISTaskFavoriteListForm(QWidget *parent) : ISTaskBaseListForm(parent)
 {

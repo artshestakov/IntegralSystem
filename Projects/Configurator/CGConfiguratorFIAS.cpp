@@ -4,7 +4,6 @@
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 #include "ISConsole.h"
 //-----------------------------------------------------------------------------
 static QString QS_FIAS_KEYS = PREPARE_QUERY("SELECT fkey_tablename, fkey_fieldname "

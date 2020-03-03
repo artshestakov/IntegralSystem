@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISCountingTime.h"
 #include "ISSystem.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_system, rprt_type, rprt_tablename, rprt_name, rprt_localname, rprt_filetemplate "

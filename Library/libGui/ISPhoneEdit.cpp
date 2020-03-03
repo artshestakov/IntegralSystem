@@ -7,7 +7,6 @@
 #include "ISTelephony.h"
 #include "ISNotificationService.h"
 #include "ISGui.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_ASTERISK_QUEUE = PREPARE_QUERY("INSERT INTO _asteriskqueue(astq_type, astq_initiated, astq_parameters) "
 												 "VALUES((SELECT asqt_id FROM _asteriskqueuetype WHERE asqt_uid = :TypeUID), currentuserid(), :Parameters)");

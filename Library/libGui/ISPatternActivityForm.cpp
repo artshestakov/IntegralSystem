@@ -8,7 +8,6 @@
 #include "ISMetaUser.h"
 #include "ISFlowLayout.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PATTERN = PREPARE_QUERY("SELECT aspt_uid, aspt_pattern "
 										  "FROM _asteriskpattern "

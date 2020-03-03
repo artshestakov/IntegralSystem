@@ -5,7 +5,6 @@
 #include "ISGui.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_ADMISSION_STATUS = PREPARE_QUERY2("UPDATE admission SET "
 												   "adms_status = (SELECT adst_id FROM admissionstatus WHERE adst_uid = :StatusUID), "

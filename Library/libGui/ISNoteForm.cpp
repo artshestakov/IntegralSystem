@@ -8,7 +8,6 @@
 #include "ISControls.h"
 #include "ISButtons.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_NOTE = PREPARE_QUERY("SELECT note_id, note_name, note_text FROM _note WHERE NOT note_isdeleted AND note_user = currentuserid() ORDER BY note_id");
 //-----------------------------------------------------------------------------

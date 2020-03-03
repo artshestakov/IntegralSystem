@@ -17,7 +17,6 @@
 #include "ISLabels.h"
 #include "ISNotifySender.h"
 #include "ISMetaUser.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT task_name, task_important, task_description, task_executor "
 									   "FROM _task "

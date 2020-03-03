@@ -5,7 +5,6 @@
 #include "ISInputDialog.h"
 #include "ISMessageBox.h"
 #include "ISObjects.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PHONE_NUMBER = PREPARE_QUERY2("SELECT c.clts_phonemobile FROM clients c WHERE c.clts_id = (SELECT d.dvce_client FROM device d WHERE NOT d.dvce_isdeleted AND d.dvce_id = :DeviceID)");
 //-----------------------------------------------------------------------------

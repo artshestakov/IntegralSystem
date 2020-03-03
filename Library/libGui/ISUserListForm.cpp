@@ -7,7 +7,6 @@
 #include "ISGui.h"
 #include "ISQuery.h"
 #include "ISDatabase.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_ONLINE = PREPARE_QUERY("SELECT COUNT(*) "
 											   "FROM _users "

@@ -4,7 +4,6 @@
 #include "ISQuery.h"
 #include "ISUserRoleEntity.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, gatt_name, gatt_icon "
 														  "FROM _groupaccesstabletype "

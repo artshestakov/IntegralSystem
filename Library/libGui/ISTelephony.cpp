@@ -1,6 +1,5 @@
 #include "ISTelephony.h"
 #include "ISQuery.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TELEPHONY = PREPARE_QUERY("SELECT COUNT(*) "
                                             "FROM _asteriskpattern "

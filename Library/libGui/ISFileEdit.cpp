@@ -8,7 +8,6 @@
 #include "ISInputDialog.h"
 #include "ISQuery.h"
 #include "ISGui.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT file_name, file_extension, file_icon "
 									   "FROM _file "

@@ -16,7 +16,6 @@
 #include "ISMainWindow.h"
 #include "ISUserRoleEntity.h"
 #include "ISGui.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHAT_MESSAGES = PREPARE_QUERY("SELECT chat_id "
 												"FROM _chatmessages "

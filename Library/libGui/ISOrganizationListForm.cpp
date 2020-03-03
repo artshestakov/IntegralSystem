@@ -9,7 +9,6 @@
 #include "ISNotifySender.h"
 #include "ISObjects.h"
 #include "ISInputDialog.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_ORGANIZATION_WORK = PREPARE_QUERY2("INSERT INTO organizationwork(orgw_user, orgw_organization, orgw_date) "
 													"VALUES(:User, :Organization, :Date)");

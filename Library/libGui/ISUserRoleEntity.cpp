@@ -3,7 +3,6 @@
 #include "ISMetaUser.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISCountingTime.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SUBSYSTEM_CHECK = PREPARE_QUERY("SELECT COUNT(*) "

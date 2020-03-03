@@ -6,7 +6,6 @@
 #include "ISQuery.h"
 #include "ISConstants.h"
 #include "ISDefinesGui.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_uid, tsst_name "
 											  "FROM _taskstatus "

@@ -8,7 +8,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISBuffer.h"
 #include "ISButtons.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEMO_ORGANIZATION = PREPARE_QUERY2("SELECT dacc_organization FROM demoaccesses WHERE dacc_id = :DemoID");
 //-----------------------------------------------------------------------------

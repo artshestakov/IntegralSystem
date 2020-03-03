@@ -4,7 +4,6 @@
 #include "ISScrollArea.h"
 #include "ISButtons.h"
 #include "ISTableDetailsForm.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLES = PREPARE_QUERY("SELECT tablename "
 										 "FROM pg_tables "

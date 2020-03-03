@@ -6,9 +6,8 @@
 #include "ISQuery.h"
 #include "ISSettings.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_HISTORY = PREPARE_QUERY("SELECT1 htry_creationdate, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid "
+static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid "
 										  "FROM _history "
 										  "WHERE htry_user = currentuserid() "
 										  "ORDER BY htry_id DESC "

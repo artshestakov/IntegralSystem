@@ -5,7 +5,6 @@
 #include "ISGui.h"
 #include "ISQuery.h"
 #include "ISSettings.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
 											  "FROM _searchfast "

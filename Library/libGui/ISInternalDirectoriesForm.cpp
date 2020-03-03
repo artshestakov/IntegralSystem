@@ -7,7 +7,6 @@
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISGui.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_INTERNAL_DIRECTORIES = PREPARE_QUERY("SELECT intd_tablename "
 													   "FROM _internaldirectories "

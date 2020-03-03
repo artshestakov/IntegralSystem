@@ -13,7 +13,6 @@
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISDefinesCore.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size) "
 											"SELECT sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size "

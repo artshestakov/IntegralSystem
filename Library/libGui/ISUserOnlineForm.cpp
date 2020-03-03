@@ -7,7 +7,6 @@
 #include "ISQuery.h"
 #include "ISGui.h"
 #include "ISDatabase.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_ONLINE = PREPARE_QUERY("SELECT uotp_uid, uotp_name, uonl_time "
 											  "FROM _useronline "

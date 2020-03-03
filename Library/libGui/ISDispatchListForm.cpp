@@ -7,7 +7,6 @@
 #include "ISMimeHtml.h"
 #include "ISQuery.h"
 #include "ISProgressForm.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DISPATCH_ORGANIZATIONS = PREPARE_QUERY2("SELECT dorg_id, orgz_id, orgz_name, dspc_email "
 														 "FROM dispatchorganizations "

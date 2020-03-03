@@ -3,7 +3,6 @@
 #include "ISQuery.h"
 #include "ISMetaUser.h"
 #include "ISSystem.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size, sgfs_note) "
 									   "VALUES(:OwnerUser, :Name, :Expansion, :Size, :Note) "

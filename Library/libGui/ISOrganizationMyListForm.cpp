@@ -5,7 +5,6 @@
 #include "ISLocalization.h"
 #include "ISProtocol.h"
 #include "ISObjects.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QU_RETURN_ORGANIZATION = PREPARE_QUERY2("UPDATE organizations SET orgz_user = NULL WHERE orgz_id = :ObjectID");
 //-----------------------------------------------------------------------------

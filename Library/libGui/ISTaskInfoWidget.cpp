@@ -5,7 +5,6 @@
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "tsst_name, "

@@ -13,7 +13,6 @@
 #include "ISDemoAccessesObjectForm.h"
 #include "ISOrganizationScoreObjectForm.h"
 #include "ISMetaUser.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ORGANIZATION = PREPARE_QUERY2("SELECT orgz_id FROM organizations WHERE orgz_inn = :INN");
 //-----------------------------------------------------------------------------

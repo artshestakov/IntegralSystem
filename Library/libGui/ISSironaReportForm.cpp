@@ -6,7 +6,6 @@
 #include "ISGui.h"
 #include "ISFileDialog.h"
 #include "ISMessageBox.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DOCTORS = PREPARE_QUERY2("SELECT dctr_id, dctr_fio, dctr_bonus "
 										  "FROM doctors "

@@ -8,7 +8,6 @@
 #include "ISQuery.h"
 #include "ISMessageBox.h"
 #include "ISDeviceEntity.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEVICE_USER = PREPARE_QUERY("SELECT dvus_id, dvus_uid, dvus_name "
 											  "FROM _deviceuser "

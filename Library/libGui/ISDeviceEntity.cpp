@@ -4,7 +4,6 @@
 #include "ISLocalization.h"
 #include "ISCountingTime.h"
 #include "ISSystem.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEVICE_USER = PREPARE_QUERY("SELECT dvus_id, dvus_uid, concat(dvtp_name, '/', dvce_name), dvce_class "

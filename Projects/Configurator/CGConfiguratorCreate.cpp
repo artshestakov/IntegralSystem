@@ -7,7 +7,6 @@
 #include "ISMetaData.h"
 #include "ISConfig.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 #include "ISMetaData.h"
 #include "ISMetaDataHelper.h"
 #include "ISConsole.h"

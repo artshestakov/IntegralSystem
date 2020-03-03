@@ -2,7 +2,6 @@
 #include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISSMS.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_SMS_QUEUE = PREPARE_QUERY("SELECT smsq_id, smsq_login, smsq_password, smsq_phone, smsq_message, smsq_charset "

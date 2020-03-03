@@ -3,7 +3,6 @@
 #include "ISSettingsDatabase.h"
 #include "ISQuery.h"
 #include "ISPhoneNumberParser.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_CDR_ID = PREPARE_QUERY("SELECT id "

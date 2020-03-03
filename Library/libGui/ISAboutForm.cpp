@@ -12,7 +12,6 @@
 #include "ISVersion.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 #include "ISObjects.h"
 //-----------------------------------------------------------------------------
 static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_description "

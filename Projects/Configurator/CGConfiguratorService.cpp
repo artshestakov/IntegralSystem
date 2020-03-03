@@ -4,7 +4,6 @@
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 #include "ISConsole.h"
 //-----------------------------------------------------------------------------
 static QString Q_VACUUM = "VACUUM";

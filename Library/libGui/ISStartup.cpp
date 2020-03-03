@@ -7,7 +7,6 @@
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
-#include "ISQueryText.h"
 #include "ISNotifySender.h"
 #include "ISFavorites.h"
 #include "ISColumnSizer.h"

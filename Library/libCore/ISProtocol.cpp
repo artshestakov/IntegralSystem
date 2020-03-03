@@ -4,7 +4,6 @@
 #include "ISMetaUser.h"
 #include "ISConstants.h"
 #include "ISQueryPool.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
 										   "VALUES(:TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information) "

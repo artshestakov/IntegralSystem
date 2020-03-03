@@ -1,7 +1,6 @@
 #include "ISSortingBuffer.h"
 #include "ISQuery.h"
 #include "ISCountingTime.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_SORTINGS = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "

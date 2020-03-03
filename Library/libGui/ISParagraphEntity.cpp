@@ -3,7 +3,6 @@
 #include "ISQuery.h"
 #include "ISSettings.h"
 #include "ISAssert.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname, prhs_default "
 											 "FROM _paragraphs "

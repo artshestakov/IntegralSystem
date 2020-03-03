@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISMetaData.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT COUNT(*) FROM pg_indexes WHERE schemaname = current_schema() AND tablename = :TableName AND indexname = :IndexName;");
 //-----------------------------------------------------------------------------

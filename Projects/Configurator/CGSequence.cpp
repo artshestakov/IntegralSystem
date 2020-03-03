@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISConfig.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_SEQUENCES = PREPARE_QUERY("SELECT COUNT(*) "
 											"FROM information_schema.sequences t "

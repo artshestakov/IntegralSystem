@@ -7,7 +7,6 @@
 #include "ISCore.h"
 #include "ISObjects.h"
 #include "ISGui.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_PATIENT = PREPARE_QUERY2("SELECT ptnt_phonemain, ptnt_email "
 										  "FROM patients "

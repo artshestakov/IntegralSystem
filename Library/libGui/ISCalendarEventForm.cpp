@@ -13,7 +13,6 @@
 #include "ISGui.h"
 #include "ISAssert.h"
 #include "ISCore.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_tablename, cldr_objectid "
 										   "FROM _calendar "

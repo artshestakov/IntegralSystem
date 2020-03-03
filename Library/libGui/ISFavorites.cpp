@@ -3,7 +3,6 @@
 #include "ISCountingTime.h"
 #include "ISSystem.h"
 #include "ISMetaUser.h"
-#include "ISQueryText.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "

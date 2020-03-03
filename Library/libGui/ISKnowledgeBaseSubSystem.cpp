@@ -7,7 +7,6 @@
 #include "ISGui.h"
 #include "ISSystem.h"
 #include "ISMessageBox.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_TOP = PREPARE_QUERY("SELECT qagr_id, qagr_name "
 											"FROM _questionanswergroup "

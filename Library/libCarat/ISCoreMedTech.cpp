@@ -4,7 +4,6 @@
 #include "ISMetaData.h"
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QI_RATING = PREPARE_QUERY("INSERT INTO rating(rtng_uniqueid, rtng_datetimecall, rtng_branch, rtng_rating) "

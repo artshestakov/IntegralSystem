@@ -6,7 +6,6 @@
 #include "ISButtons.h"
 #include "ISGui.h"
 #include "ISTelephonySummary.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_PATTER = PREPARE_QUERY("SELECT userfullname(aspt_user), aspt_pattern "
 												  "FROM _asteriskpattern "

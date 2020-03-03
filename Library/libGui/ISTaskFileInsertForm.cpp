@@ -5,7 +5,6 @@
 #include "ISQuery.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_user, tfls_filename, tfls_size, tfls_icon, tfls_note) "
 									   "VALUES(:TaskID, currentuserid(), :FileName, :Size, :Icon, :Note) "

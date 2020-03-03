@@ -1,7 +1,6 @@
 #include "ISDispatchOrganizationListForm.h"
 #include "ISControls.h"
 #include "ISQuery.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_ORGANIZATION = PREPARE_QUERY2("SELECT COUNT(*) FROM dispatchorganizations WHERE dorg_dispatch = :DispatchID AND dorg_organization = :OrganizationID");
 //-----------------------------------------------------------------------------

@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_BRANCH = PREPARE_QUERY2("SELECT brch_id, brch_name, brch_address "
 										 "FROM branches "

@@ -13,7 +13,6 @@
 #include "ISSettingsDatabase.h"
 #include "ISCrashDumper.h"
 #include "ISDefinesCore.h"
-#include "ISQueryText.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
