@@ -21,4 +21,96 @@
     </Foreigns>
   </Table>
 
+  <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name">
+    <Fields>
+      <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="Int" LabelName="Тип" LocalListName="Тип"/>
+      <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус"/>
+      <Field UID="{4514E2E7-18C5-4B1B-8052-AEFCBF4626E8}" Name="Director" Type="String" LabelName="Директор" LocalListName="Директор"/>
+      <Field UID="{3CB172A8-590C-462B-AB70-F6A4BABF3A24}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН"/>
+      <Field UID="{6A63EE11-4F3E-4C72-BBE6-454AF87E2BD6}" Name="Phone" Type="PhoneBase" LabelName="Телефон" LocalListName="Телефон"/>
+      <Field UID="{AB52855E-A2E9-4DA8-BFBE-1885CCCA13EF}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Type"/>
+      <Index Field="Status"/>
+      <Index Field="Director"/>
+      <Index Field="Inn"/>
+      <Index Field="Phone"/>
+      <Index Field="EMail"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Type" ForeignClass="CounterpartyType" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Status" ForeignClass="CounterpartyStatus" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Sales" UID="{134C26BD-E852-4B35-B661-E6921620784B}" Alias="sals" LocalName="Продажа" LocalListName="Продажи" TitleName="Counterparty">
+    <Fields>
+      <Field UID="{4C4DDF85-60FF-405F-9A85-34DB074715F3}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true"/>
+      <Field UID="{54FCE071-6AE0-41BC-B74E-46CBFBA45299}" Name="WeightUpper" Type="Double" LabelName="Вес (верхний)" LocalListName="Вес (верхний)" NotNull="true"/>
+      <Field UID="{EA0D24A1-6277-46DA-A56E-9E1CDABB1A08}" Name="WeightLower" Type="Double" LabelName="Вес (нижний)" LocalListName="Вес (нижний)" NotNull="true"/>
+      <Field UID="{73082426-DAAA-435E-8582-F02E49F10B58}" Name="Price" Type="Double" LabelName="Цена продажи (кг.)" LocalListName="Цена продажи (кг.)" NotNull="true"/>
+      <Field UID="{DB4BF33B-9204-4E80-A232-5255F21E0CB1}" Name="SaleAmount" Type="Double" LabelName="Сумма продажи" LocalListName="Сумма продажи" NotNull="true"/>
+      <Field UID="{7E2F3E72-43DD-4D28-9438-64BD571F9184}" Name="PaymentType" Type="Int" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Counterparty"/>
+      <Index Field="WeightUpper"/>
+      <Index Field="WeightLower"/>
+      <Index Field="Price"/>
+      <Index Field="SaleAmount"/>
+      <Index Field="PaymentType"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Suppliers" UID="{5F3622DA-2B6D-497B-8E50-8A05BD509D2E}" Alias="splr" LocalName="Поставщик" LocalListName="Поставщики" TitleName="Name">
+    <Fields>
+      <Field UID="{ECABE54C-BE04-4F95-BDB7-E227340D3252}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{2BB1FFB2-961D-4C90-AECF-B7DA48B5BE0A}" Name="Director" Type="String" LabelName="Директор" LocalListName="Директор"/>
+      <Field UID="{E9843B9D-7972-4A1D-BD38-1FD417236FE5}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН"/>
+      <Field UID="{D38C6E6D-16A5-4823-9AB4-152D3F6C350D}" Name="Phone" Type="PhoneBase" LabelName="Телефон" LocalListName="Телефон"/>
+      <Field UID="{DA2A2535-78DF-4A5E-83F7-1257356006BE}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Director"/>
+      <Index Field="Inn"/>
+      <Index Field="Phone"/>
+      <Index Field="EMail"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="CounterpartyType" UID="{838409C1-063F-4595-AD0C-0D9499CA4E5C}" Alias="cntp" LocalName="Тип контрагента" LocalListName="Типы контрагентов" TitleName="Name">
+    <Fields>
+      <Field UID="{3C15FF5D-3C52-4F62-9E34-CFD4FCC2D80E}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="CounterpartyStatus" UID="{A6ECB0F6-E730-4B75-970A-17691865BE26}" Alias="cnst" LocalName="Статус контрагента" LocalListName="Статусы контрагентов" TitleName="Name">
+    <Fields>
+      <Field UID="{9B314A7F-15A0-4C50-9A93-F4310C5B56AA}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="PaymentType" UID="{0A1A27E0-3CDD-47B2-900D-C0CC82ED159B}" Alias="pmtp" LocalName="Тип оплаты" LocalListName="Типы оплаты" TitleName="Name">
+    <Fields>
+      <Field UID="{01CEBE1A-99DE-496A-9405-979AD71379C0}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
 </XSN>

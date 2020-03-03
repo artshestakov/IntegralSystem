@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="OilSphere.xsr">
 
-  <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Тест" Icon="Lists"/>
-  <_SubSystems UID="{BF03E395-A77F-40F5-9CC0-2C0A5FDA78CD}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Тест" Icon="Lists" TableName="Test"/>
+  <_Systems IsSystem="false" UID="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="3" LocalName="Справочники" Icon="Lists"/>
+  <_SubSystems UID="{B1F0AD53-DACE-4908-B6BE-C4A0E2E7AB1D}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="1" LocalName="Типы контрагентов" Icon="Lists" TableName="CounterpartyType"/>
+  <_SubSystems UID="{C5335057-8068-4C2B-BDAA-E6337991FD03}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="2" LocalName="Статусы контрагентов" Icon="Lists" TableName="CounterpartyStatus"/>
+  <_SubSystems UID="{6C93589E-AAC2-4891-82EA-4AA47C3A52BC}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="3" LocalName="Типы оплаты" Icon="Lists" TableName="PaymentType"/>
+  
+  <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
+  <_SubSystems IsDeleted="true" UID="{BF03E395-A77F-40F5-9CC0-2C0A5FDA78CD}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Тест" Icon="Lists" TableName="Test"/>
+  <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Контрагенты" Icon="Lists" TableName="Counterparty"/>
+  <_SubSystems UID="{CA4CDA5C-34CD-445A-9B32-2E715D3CC85D}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Продажи" Icon="Lists" TableName="Sales"/>
+  <_SubSystems UID="{EDF8F5FF-F776-4D65-A72D-3149644D74C8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Поставщики" Icon="Lists" TableName="Suppliers"/>
 
 </XSR>
