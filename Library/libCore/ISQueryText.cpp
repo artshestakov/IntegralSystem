@@ -95,7 +95,7 @@ bool ISQueryText::CheckAllQueries()
 void ISQueryText::ErrorQuery(ISSqlQuery SqlQuery, const QString &ErrorText)
 {
 	ErrorString = ErrorText;
-	QFile File(ISDefines::Core::PATH_TEMP_DIR + ISSystem::GenerateUuid());
+	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/" + ISSystem::GenerateUuid());
 	if (File.open(QIODevice::WriteOnly))
 	{
 		QString Content;
