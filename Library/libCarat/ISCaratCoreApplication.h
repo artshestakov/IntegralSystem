@@ -10,9 +10,13 @@ public:
 	ISCaratCoreApplication(int &argc, char **argv);
 	virtual ~ISCaratCoreApplication();
 
+	QString GetErrorString() const;
 	virtual bool Invoke() = 0;
 
-	int Exec() const;
+protected:
 	void Started(); //Уведомление о запуске
+
+private:
+	QString ErrorString;
 };
 //-----------------------------------------------------------------------------

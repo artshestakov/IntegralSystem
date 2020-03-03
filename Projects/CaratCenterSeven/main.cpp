@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 	ISCoreCenterSeven CoreCenterSeven(argc, argv);
 	if (CoreCenterSeven.Invoke())
 	{
-		return CoreCenterSeven.Exec();
+		return CoreCenterSeven.exec();
 	}
 }
 //-----------------------------------------------------------------------------

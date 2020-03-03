@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 	ISCoreHighway CaratCoreHighway(argc, argv);
 	if (CaratCoreHighway.Invoke())
 	{
-		return CaratCoreHighway.Exec();
+		return CaratCoreHighway.exec();
 	}
 }
 //-----------------------------------------------------------------------------

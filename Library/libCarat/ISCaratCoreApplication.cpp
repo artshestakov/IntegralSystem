@@ -1,12 +1,15 @@
 #include "ISCaratCoreApplication.h"
 #include "ISLogger.h"
-#include "ISConfig.h"
 #include "ISDatabase.h"
 #include "ISConstants.h"
+#include "ISCore.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
-ISCaratCoreApplication::ISCaratCoreApplication(int &argc, char **argv) : QCoreApplication(argc, argv)
+ISCaratCoreApplication::ISCaratCoreApplication(int &argc, char **argv)
+	: QCoreApplication(argc, argv),
+	ErrorString(NO_ERROR_STRING)
 {
-	ISConfig::Instance().Initialize();
+	
 }
 //-----------------------------------------------------------------------------
 ISCaratCoreApplication::~ISCaratCoreApplication()
@@ -14,19 +17,23 @@ ISCaratCoreApplication::~ISCaratCoreApplication()
 
 }
 //-----------------------------------------------------------------------------
-bool ISCaratCoreApplication::Invoke()
+QString ISCaratCoreApplication::GetErrorString() const
 {
-	QString ErrorString;
-	return ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-int ISCaratCoreApplication::Exec() const
+bool ISCaratCoreApplication::Invoke()
 {
-	return exec();
+	bool Result = ISCore::Startup(false, ErrorString);
+	if (Result)
+	{
+		Result = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISCaratCoreApplication::Started()
 {
-	ISLOGGER_UNKNOWN("exec");
+	ISLOGGER_UNKNOWN(CARAT_CORE_START_FLAG);
 }
 //-----------------------------------------------------------------------------
