@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
 	if (!Result)
 	{
 		ISLOGGER_ERROR(ErrorString);
-		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
 
@@ -26,7 +25,6 @@ int main(int argc, char *argv[])
 	if (!ApplicationRunning.TryToRun()) //Если приложение уже запущено
 	{
 		ISLOGGER_UNKNOWN("Application already started");
-		ISConsole::Pause();
 		return EXIT_SUCCESS;
 	}
 
@@ -38,7 +36,6 @@ int main(int argc, char *argv[])
 
 	if (!CaratService.ConnectToDB()) //Если подключение к базе данных не произошло
 	{
-		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
 
