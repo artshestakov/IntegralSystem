@@ -4,7 +4,6 @@
 #include "ISHighwayOrganizationMyListForm.h"
 #include "ISHighwayOrganizationListForm.h"
 #include "ISHighwayOrganizationObjectForm.h"
-#include "ISHighwayBillsListForm.h"
 //-----------------------------------------------------------------------------
 ISHighway::ISHighway() : ISObjectInterface()
 {
@@ -22,7 +21,6 @@ void ISHighway::RegisterMetaTypes() const
 	qRegisterMetaType<ISHighwayOrganizationMyListForm*>("ISHighwayOrganizationMyListForm");
 	qRegisterMetaType<ISHighwayOrganizationListForm*>("ISHighwayOrganizationListForm");
 	qRegisterMetaType<ISHighwayOrganizationObjectForm*>("ISHighwayOrganizationObjectForm");
-	qRegisterMetaType<ISHighwayBillsListForm*>("ISHighwayBillsListForm");
 }
 //-----------------------------------------------------------------------------
 void ISHighway::BeforeShowMainWindow() const

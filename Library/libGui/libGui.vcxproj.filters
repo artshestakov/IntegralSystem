@@ -292,9 +292,6 @@
     <ClCompile Include="ISListViewWidget.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISObjectEscortForm.cpp">
-      <Filter>Common Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISObjectFormBase.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
@@ -997,9 +994,6 @@
     <ClCompile Include="ISHighway.cpp">
       <Filter>Objects\Highway</Filter>
     </ClCompile>
-    <ClCompile Include="ISHighwayBillsListForm.cpp">
-      <Filter>Objects\Highway\Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISHighwayIncomingCallForm.cpp">
       <Filter>Objects\Highway\Forms</Filter>
     </ClCompile>
@@ -1279,9 +1273,6 @@
       <Filter>Common Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISListViewWidget.h">
-      <Filter>Common Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISObjectEscortForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISObjectFormBase.h">
@@ -1943,9 +1934,6 @@
     </QtMoc>
     <QtMoc Include="ISHighway.h">
       <Filter>Objects\Highway</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHighwayBillsListForm.h">
-      <Filter>Objects\Highway\Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISHighwayIncomingCallForm.h">
       <Filter>Objects\Highway\Forms</Filter>

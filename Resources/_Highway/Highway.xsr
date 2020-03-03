@@ -11,7 +11,7 @@
   <_SubSystems UID="{44859DC4-D878-483B-99B1-5A47A74A9368}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="2" LocalName="Мои организации" Icon="Lists" ClassName="ISHighwayOrganizationMyListForm"/>
   <_SubSystems UID="{D45CC32C-14BF-45AA-B809-2D2E5F526C4F}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="3" LocalName="Оценка качества" Icon="Lists" TableName="Raiting"/>
   <_SubSystems UID="{863E52D9-50FA-46D8-B45C-D72E35FFD347}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="4" LocalName="Подрядчики" Icon="Lists" TableName="Contractor"/>
-  <_SubSystems IsDeleted="true" UID="{223039AA-FA0B-407E-AF96-F367A38F2D2C}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="5" LocalName="Счета" Icon="Lists" ClassName="ISHighwayBillsListForm"/>
+  <_SubSystems IsDeleted="true" UID="{223039AA-FA0B-407E-AF96-F367A38F2D2C}" System="{7B5F6F83-FC74-4518-A548-8935EC48915F}" OrderID="5" LocalName="Счета" Icon="Lists" TableName="Bills"/>
   
   <_CaratCore UID="{C8BD41EF-04F6-4A2B-A231-805FD0665AF1}" Name="Highway" FileName="CaratHighway" LocalName="ООО Магистраль"/>
   

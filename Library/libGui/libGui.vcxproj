@@ -228,7 +228,6 @@
     <ClCompile Include="ISFullTextSearchForm.cpp" />
     <ClCompile Include="ISGui.cpp" />
     <ClCompile Include="ISHighway.cpp" />
-    <ClCompile Include="ISHighwayBillsListForm.cpp" />
     <ClCompile Include="ISHighwayIncomingCallForm.cpp" />
     <ClCompile Include="ISHighwayOrganizationListForm.cpp" />
     <ClCompile Include="ISHighwayOrganizationMyListForm.cpp" />
@@ -289,7 +288,6 @@
     <ClCompile Include="ISNotificationsForm.cpp" />
     <ClCompile Include="ISNotifyRecipient.cpp" />
     <ClCompile Include="ISNotifyWidgetItem.cpp" />
-    <ClCompile Include="ISObjectEscortForm.cpp" />
     <ClCompile Include="ISObjectFormBase.cpp" />
     <ClCompile Include="ISObjectInterface.cpp" />
     <ClCompile Include="ISObjectModel.cpp" />
@@ -474,7 +472,6 @@
     <QtMoc Include="ISListBaseForm.h" />
     <QtMoc Include="ISListObjectForm.h" />
     <QtMoc Include="ISListViewWidget.h" />
-    <QtMoc Include="ISObjectEscortForm.h" />
     <QtMoc Include="ISObjectFormBase.h" />
     <QtMoc Include="ISProtocolListForm.h" />
     <QtMoc Include="ISSelectDialogForm.h" />
@@ -673,7 +670,6 @@
     <QtMoc Include="ISFrame.h" />
     <QtMoc Include="ISFrameClientsListForm.h" />
     <QtMoc Include="ISHighway.h" />
-    <QtMoc Include="ISHighwayBillsListForm.h" />
     <QtMoc Include="ISHighwayIncomingCallForm.h" />
     <QtMoc Include="ISHighwayOrganizationListForm.h" />
     <QtMoc Include="ISHighwayOrganizationMyListForm.h" />
