@@ -1,41 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSN Name="System.xsn">
 
-  <Table Name="_Class" UID="{B847C4AF-CF1A-4EE4-AD38-E946DA6CECEE}" Alias="clss" LocalName="Класс" LocalListName="Классы" TitleName="LocalListName" IsSystem="true">
-    <Fields>
-      <Field UID="{03D7C79C-2D93-4565-9E93-422A381C1395}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование"/>
-      <Field UID="{EC828C5A-2512-40FA-BAE1-E7D8D4E2832B}" Name="Alias" Type="String" LabelName="Псевдоним" LocalListName="Псевдоним"/>
-      <Field UID="{80104B55-93E4-44E2-8F46-55A91BF071F4}" Name="LocalName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование"/>
-      <Field UID="{087D0206-E1F3-4DFF-9B5B-015FE3674942}" Name="LocalListName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name"/>
-      <Index Field="Alias"/>
-      <Index Field="LocalName"/>
-      <Index Field="LocalListName"/>
-    </Indexes>
-  </Table>
-
-  <Table Name="_ClassField" UID="{C1956158-771E-4924-ADE0-E9CA20AB63CF}" Alias="clsf" LocalName="Поле" LocalListName="Поля" TitleName="LabelName" IsSystem="true">
-    <Fields>
-      <Field UID="{B0C7C430-E72F-46A3-8841-1EEFEFE63719}" Name="Class" Type="Int" LabelName="Класс" LocalListName="Класс" NotNull="true"/>
-      <Field UID="{8DAA71C6-FE0F-4614-B4D7-ABE6B8380F89}" Name="Name" Type="String" LabelName="Наименовние" LocalListName="Наименовние" NotNull="true"/>
-      <Field UID="{61FB4CD6-EB63-414E-B1FD-6DE09F167E32}" Name="Type" Type="String" LabelName="Тип данных" LocalListName="Тип данных" NotNull="true"/>
-      <Field UID="{B147B920-F11A-4692-B853-1627C14FD874}" Name="Size" Type="Int" LabelName="Размерность поля" LocalListName="Размерность поля"/>
-      <Field UID="{D5D9705B-E6A6-4D95-A3ED-D6A4D8486EBB}" Name="LabelName" Type="String" LabelName="Локальное наименование в форме объекта" LocalListName="Локальное наименование в форме объекта"/>
-      <Field UID="{D5D8935D-4EC5-43A5-98E6-D2BDD72F5298}" Name="LocalListName" Type="String" LabelName="Локальное наименование в форме списка" LocalListName="Локальное наименование в форме списка"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Class"/>
-      <Index Field="Name"/>
-      <Index Field="Type"/>
-      <Index Field="Size"/>
-      <Index Field="LabelName"/>
-      <Index Field="LocalListName"/>
-      <Index Field="Class;Name"/>
-    </Indexes>
-  </Table>
-  
   <Table Name="_SortingTables" UID="{FDE07704-8804-4950-A4A8-8220F0C54B5F}" Alias="sgts" LocalName="Сортировка таблицы" LocalListName="Сортировки таблиц" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{207AC648-13DF-46A1-9DDA-84C0AAB794EF}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>

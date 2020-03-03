@@ -16,8 +16,6 @@
     <Function FunctionName="CompoundIndexes" LocalName="Составные индексы" Description="Обновление составных индексов базы данных."/>
     <Function FunctionName="Foreigns" LocalName="Внешние ключи" Description="Обновление внешних ключе базы данных."/>
     <Function FunctionName="Resources" LocalName="Ресурсы" Description="Обновление ресурсов и справочников базы данных."/>
-    <Function FunctionName="Classes" LocalName="Классы" Description="Обновление классов."/>
-    <Function FunctionName="ClassFields" LocalName="Поля классов" Description="Обновление полей классов."/>
   </Section>
 
   <Section Name="Delete" ClassName="CGConfiguratorDelete">

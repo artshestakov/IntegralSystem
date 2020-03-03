@@ -5,8 +5,6 @@
 #include "CGIndex.h"
 #include "CGForeign.h"
 #include "CGResource.h"
-#include "CGClass.h"
-#include "CGClassField.h"
 #include "ISQuery.h"
 #include "ISConfig.h"
 #include "ISLogger.h"
@@ -30,8 +28,6 @@ void CGConfiguratorUpdate::database()
 	compoundindexes();
 	foreigns();
 	resources();
-	classes();
-	classfields();
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::functions()
@@ -137,32 +133,6 @@ void CGConfiguratorUpdate::resources()
 		
 		QString ErrorString;
 		CGResource::CheckExistResource(MetaResource) ? CGResource::UpdateResource(MetaResource) : CGResource::InsertResource(MetaResource, ErrorString);
-	}
-}
-//-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::classes()
-{
-	ISLOGGER_DEBUG("Updating class...");
-	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i)
-	{
-		Progress("Classes", i, CountTables);
-		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-		CGClass::CheckExistClass(MetaTable) ? CGClass::UpdateClass(MetaTable) : CGClass::InsertClass(MetaTable);
-	}
-}
-//-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::classfields()
-{
-	ISLOGGER_DEBUG("Updation class fields...");
-	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().count(); i < CountTables; ++i)
-	{
-		Progress("Class fields", i, CountTables);
-		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-		for (int j = 0, CountFields = MetaTable->Fields.count(); j < CountFields; ++j)
-		{
-			PMetaClassField *MetaField = MetaTable->Fields.at(j);
-			CGClassField::CheckExistClassField(MetaField) ? CGClassField::UpdateClassField(MetaTable->UID, MetaField) : CGClassField::InsertClassField(MetaTable->UID, MetaField);
-		}
 	}
 }
 //-----------------------------------------------------------------------------

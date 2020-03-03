@@ -58,12 +58,6 @@
     <ClCompile Include="CGConfiguratorUpdate.cpp">
       <Filter>Command</Filter>
     </ClCompile>
-    <ClCompile Include="CGClass.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
-    <ClCompile Include="CGClassField.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
     <ClCompile Include="CGForeign.cpp">
       <Filter>Configurator</Filter>
     </ClCompile>
@@ -147,12 +141,6 @@
       <Filter>Configurator</Filter>
     </ClInclude>
     <ClInclude Include="CGFunction.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGClassField.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGClass.h">
       <Filter>Configurator</Filter>
     </ClInclude>
   </ItemGroup>

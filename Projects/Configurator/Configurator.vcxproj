@@ -14,8 +14,6 @@
     <ResourceCompile Include="Configurator.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CGClass.cpp" />
-    <ClCompile Include="CGClassField.cpp" />
     <ClCompile Include="CGConfigurator.cpp" />
     <ClCompile Include="CGConfiguratorBase.cpp" />
     <ClCompile Include="CGConfiguratorCreate.cpp" />
@@ -65,12 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CGConfiguratorUpdate.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGClass.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGClassField.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGForeign.h" />
