@@ -6,14 +6,14 @@
 #include "ISQuery.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_TRAINERS = PREPARE_QUERY("SELECT trnr_id, trnr_fio FROM trainer WHERE NOT trnr_isdeleted ORDER BY trnr_fio");
+static QString QS_TRAINERS = PREPARE_QUERY2("SELECT trnr_id, trnr_fio FROM trainer WHERE NOT trnr_isdeleted ORDER BY trnr_fio");
 //-----------------------------------------------------------------------------
-static QString QS_SUBSCRIPTIONS = PREPARE_QUERY("SELECT SUM(sbsr_price) "
+static QString QS_SUBSCRIPTIONS = PREPARE_QUERY2("SELECT SUM(sbsr_price) "
 												"FROM subscriptions "
 												"WHERE NOT sbsr_isdeleted "
 												"AND sbsr_date BETWEEN :DateBegin AND :DateEnd");
 //-----------------------------------------------------------------------------
-static QString QS_COST = PREPARE_QUERY("SELECT SUM(cost_sum) "
+static QString QS_COST = PREPARE_QUERY2("SELECT SUM(cost_sum) "
 									   "FROM cost "
 									   "WHERE NOT cost_isdeleted "
 									   "AND cost_date BETWEEN :DateBegin AND :DateEnd");

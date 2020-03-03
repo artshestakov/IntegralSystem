@@ -6,7 +6,7 @@
 #include "ISQuery.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_CLIENT = PREPARE_QUERY("SELECT clts_fio, cltp_name, EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM clts_birthday) as YearCount "
+static QString QS_CLIENT = PREPARE_QUERY2("SELECT clts_fio, cltp_name, EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM clts_birthday) as YearCount "
 										 "FROM clients "
 										 "LEFT JOIN clienttype ON cltp_id = clts_type "
 										 "WHERE clts_id = :ClientID");

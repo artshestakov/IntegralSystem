@@ -5,7 +5,7 @@
 #include "ISMessageBox.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QU_CLOSE_WAIT = PREPARE_QUERY("UPDATE waitadmission SET "
+static QString QU_CLOSE_WAIT = PREPARE_QUERY2("UPDATE waitadmission SET "
 											 "wadm_closed = true "
 											 "WHERE wadm_id = :ObjectID");
 //-----------------------------------------------------------------------------

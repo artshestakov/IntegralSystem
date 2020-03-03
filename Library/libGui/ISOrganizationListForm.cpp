@@ -11,18 +11,18 @@
 #include "ISInputDialog.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QI_ORGANIZATION_WORK = PREPARE_QUERY("INSERT INTO organizationwork(orgw_user, orgw_organization, orgw_date) "
+static QString QI_ORGANIZATION_WORK = PREPARE_QUERY2("INSERT INTO organizationwork(orgw_user, orgw_organization, orgw_date) "
 													"VALUES(:User, :Organization, :Date)");
 //-----------------------------------------------------------------------------
-static QString QU_ORGANIZATION_USER = PREPARE_QUERY("UPDATE organizations SET "
-													"orgz_user = :UserID "
-													"WHERE orgz_id = :OrganizationID")
+static QString QU_ORGANIZATION_USER = PREPARE_QUERY2("UPDATE organizations SET "
+													 "orgz_user = :UserID "
+													 "WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-static QString QU_RESET_EXECUTOR = PREPARE_QUERY("UPDATE organizations SET orgz_user = NULL WHERE orgz_id = :OrganizationID");
+static QString QU_RESET_EXECUTOR = PREPARE_QUERY2("UPDATE organizations SET orgz_user = NULL WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-static QString QU_PERCENTAGE = PREPARE_QUERY("UPDATE organizations SET orgz_percentage = :Percentage WHERE orgz_id = :OrganizationID");
+static QString QU_PERCENTAGE = PREPARE_QUERY2("UPDATE organizations SET orgz_percentage = :Percentage WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-static QString QS_CALL_HISTORY = PREPARE_QUERY("SELECT DISTINCT clhs_organization "
+static QString QS_CALL_HISTORY = PREPARE_QUERY2("SELECT DISTINCT clhs_organization "
 											   "FROM callhistory "
 											   "WHERE clhs_creationdate < :Date");
 //-----------------------------------------------------------------------------

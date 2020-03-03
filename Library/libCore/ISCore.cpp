@@ -132,7 +132,6 @@ bool ISCore::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRe
 		UpdateQuery = UpdateQuery.arg(TableAlias);
 		UpdateQuery = UpdateQuery.arg(ID);
 		ISQueryPool::GetInstance().AddQuery(UpdateQuery);
-
 		DeleteOrRecovery == ISNamespace::DRO_Delete ? ISProtocol::DeleteObject(TableName, LocalListName, ID) : ISProtocol::RecoveryObject(TableName, LocalListName, ID);
 	}
 	return Result;
@@ -219,13 +218,13 @@ void ISCore::ExecuteStartCommand()
 		{
 			ISLOGGER_DEBUG(QString("Executing command: %1").arg(CommandText));
 			int ExitCode = QProcess::execute("cmd.exe", QStringList() << "/C" << CommandText);
-			if (ExitCode)
+			if (ExitCode == 0)
 			{
-				ISLOGGER_DEBUG("Executed command error.");
+				ISLOGGER_DEBUG("Executed command done.");
 			}
 			else
 			{
-				ISLOGGER_DEBUG("Executed command done.");
+				ISLOGGER_DEBUG("Executed command error.");
 			}
 		}
 	}
@@ -240,13 +239,13 @@ void ISCore::ExecuteExitComamnd()
 		{
 			ISLOGGER_DEBUG(QString("Executing command: %1").arg(CommandText));
 			int ExitCode = QProcess::execute("cmd.exe", QStringList() << "/C" << CommandText);
-			if (ExitCode)
+			if (ExitCode == 0)
 			{
-				ISLOGGER_DEBUG("Executed command error.");
+				ISLOGGER_DEBUG("Executed command done.");
 			}
 			else
 			{
-				ISLOGGER_DEBUG("Executed command done.");
+				ISLOGGER_DEBUG("Executed command error.");
 			}
 		}
 	}
@@ -357,15 +356,13 @@ void ISCore::SMSSend(const QString &Phone, const QString &Message)
 //-----------------------------------------------------------------------------
 ISUuid ISCore::TaskGetStatusUID(int TaskID)
 {
-	ISUuid StatusUID;
-
 	ISQuery qSelectStatus(QS_TASK_STATUS);
 	qSelectStatus.BindValue(":TaskID", TaskID);
 	if (qSelectStatus.ExecuteFirst())
 	{
-		StatusUID = qSelectStatus.ReadColumn("tsst_uid");
+		return qSelectStatus.ReadColumn("tsst_uid");
 	}
-	return StatusUID;
+	return ISUuid();
 }
 //-----------------------------------------------------------------------------
 void ISCore::TaskSetStatus(int TaskID, const ISUuid &StatusUID, const QVariant &Resolution)
@@ -431,12 +428,11 @@ bool ISCore::TaskIsAttachedObject(int TaskID, const QString &TableName, int Obje
 	qSelect.BindValue(":TaskID", TaskID);
 	qSelect.BindValue(":TableName", TableName);
 	qSelect.BindValue(":ObjectID", ObjectID);
-	bool Result = qSelect.ExecuteFirst();
-	if (Result)
+	if (qSelect.ExecuteFirst())
 	{
-		Result = qSelect.ReadColumn("count").toInt() > 0;
+		return qSelect.ReadColumn("count").toInt() > 0;
 	}
-	return Result;
+	return false;
 }
 //-----------------------------------------------------------------------------
 bool ISCore::TaskAttachObject(int TaskID, const QString &TableName, int ObjectID)

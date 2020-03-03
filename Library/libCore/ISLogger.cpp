@@ -148,6 +148,11 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 //-----------------------------------------------------------------------------
 void ISLogger::Shutdown()
 {
+	if (!Running) //Попытка остановить не запущенный логгер
+	{
+		return;
+	}
+
 	if (EnableOutFile) //Если включен вывод в файл
 	{
 		//Останавливаем обработчик очереди

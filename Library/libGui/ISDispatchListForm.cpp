@@ -9,7 +9,7 @@
 #include "ISProgressForm.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_DISPATCH_ORGANIZATIONS = PREPARE_QUERY("SELECT dorg_id, orgz_id, orgz_name, dspc_email "
+static QString QS_DISPATCH_ORGANIZATIONS = PREPARE_QUERY2("SELECT dorg_id, orgz_id, orgz_name, dspc_email "
 														 "FROM dispatchorganizations "
 														 "LEFT JOIN dispatch ON dspc_id = :DispatchID "
 														 "LEFT JOIN organizations ON dorg_organization = orgz_id "
@@ -17,7 +17,7 @@ static QString QS_DISPATCH_ORGANIZATIONS = PREPARE_QUERY("SELECT dorg_id, orgz_i
 														 "AND dorg_dispatch = :DispatchID "
 														 "ORDER BY dorg_id");
 //-----------------------------------------------------------------------------
-static QString QU_DISPATCH_ORGANIZATION = PREPARE_QUERY("UPDATE dispatchorganizations SET "
+static QString QU_DISPATCH_ORGANIZATION = PREPARE_QUERY2("UPDATE dispatchorganizations SET "
 														"dorg_sended = :Sended "
 														"WHERE dorg_id = :DispatchOrganizationID");
 //-----------------------------------------------------------------------------

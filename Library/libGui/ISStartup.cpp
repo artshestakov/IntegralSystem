@@ -87,17 +87,17 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	if (!CheckAccessDatabase(UserLogin)) //Проверка разрешения доступа к базе пользователям
 	{
-		return ExitError();
+		return EXIT_FAILURE;
 	}
 
 	if (!CheckAccessAllowed()) //Проверка разрешения доступа пользователя
 	{
-		return ExitError();
+		return EXIT_FAILURE;
 	}
 
 	if (!CheckExistUserGroup()) //Проверка наличия привязки пользователя к группе
 	{
-		return ExitError();
+		return EXIT_FAILURE;
 	}
 
 	//Инициализация прав доступа
@@ -118,7 +118,10 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	//Проверка всех запросов
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.PrepareQueries"));
-	ISQueryText::GetInstance().CheckAllQueries();
+	if (!ISQueryText::Instance().CheckAllQueries())
+	{
+		return EXIT_FAILURE;
+	}
 
 	//Команда перед запуском
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CommandAtStartup"));
@@ -261,18 +264,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	MainWindow->raise();
 	MainWindow->activateWindow();
 
-	return EXIT_SUCCESS;
-}
-//-----------------------------------------------------------------------------
-int ISStartup::ExitNormal()
-{
-	ISGui::ExitApplication();
-	return EXIT_SUCCESS;
-}
-//-----------------------------------------------------------------------------
-int ISStartup::ExitError()
-{
-	ISGui::ExitApplication();
 	return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------

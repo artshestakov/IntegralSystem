@@ -7,7 +7,7 @@
 #include "ISConstants.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_ADMISSION_STATUS = PREPARE_QUERY("SELECT adst_uid, adst_name "
+static QString QS_ADMISSION_STATUS = PREPARE_QUERY2("SELECT adst_uid, adst_name "
 												   "FROM admissionstatus "
 												   "WHERE NOT adst_isdeleted "
 												   "ORDER BY adst_order");

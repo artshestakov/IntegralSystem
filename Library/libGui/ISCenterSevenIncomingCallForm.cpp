@@ -5,7 +5,7 @@
 #include "ISCenterSevenPatientsObjectForm.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_PATIENTS = PREPARE_QUERY("SELECT ptnt_fio FROM patients WHERE ptnt_id = :PatientID");
+static QString QS_PATIENTS = PREPARE_QUERY2("SELECT ptnt_fio FROM patients WHERE ptnt_id = :PatientID");
 //-----------------------------------------------------------------------------
 ISCenterSevenIncomingCallForm::ISCenterSevenIncomingCallForm(const QVariantMap &payload, QWidget *parent) : ISIncomingCallBaseForm(payload, parent)
 {

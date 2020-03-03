@@ -9,12 +9,12 @@
 #include "ISGui.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_PATIENT = PREPARE_QUERY("SELECT ptnt_phonemain, ptnt_email "
+static QString QS_PATIENT = PREPARE_QUERY2("SELECT ptnt_phonemain, ptnt_email "
 										  "FROM patients "
 										  "WHERE ptnt_id = :PatientID "
 										  "AND NOT ptnt_refusemailings");
 //-----------------------------------------------------------------------------
-static QString QS_TEMPLATE = PREPARE_QUERY("SELECT stmp_text FROM smstemplate WHERE stmp_id = :TemplateID");
+static QString QS_TEMPLATE = PREPARE_QUERY2("SELECT stmp_text FROM smstemplate WHERE stmp_id = :TemplateID");
 //-----------------------------------------------------------------------------
 ISCenterSevenPatientsListForm::ISCenterSevenPatientsListForm(QWidget *parent) : ISListBaseForm("Patients", parent)
 {

@@ -4,7 +4,7 @@
 #include "ISDatabase.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QU_RESEARCH = PREPARE_QUERY("UPDATE research SET "
+static QString QU_RESEARCH = PREPARE_QUERY2("UPDATE research SET "
 										   "resr_money = (SELECT rstp_value FROM researchtype WHERE rstp_id = :ResearchTypeID), "
 										   "resr_moneydoctor = :MoneyDoctor "
 										   "WHERE resr_id = :ResearchID "

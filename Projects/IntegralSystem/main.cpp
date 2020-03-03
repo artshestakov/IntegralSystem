@@ -58,10 +58,14 @@ int main(int argc, char *argv[])
 	if (Startup) //Если при запуске произошла ошибка
 	{
 		ISGui::ExitApplication();
+		ISLogger::Instance().Shutdown();
 		return Startup;
 	}
+	else //Запуск прошёл успешно
+	{
+		ISSplashScreen::GetInstance().ResetPixmap();
+	}
 
-	ISSplashScreen::GetInstance().ResetPixmap();
 	return Applicaton.exec();
 }
 //-----------------------------------------------------------------------------

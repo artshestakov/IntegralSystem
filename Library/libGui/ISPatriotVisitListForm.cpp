@@ -6,7 +6,7 @@
 #include "ISObjects.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QD_CANCEL_VISIT = PREPARE_QUERY("DELETE FROM visit "
+static QString QD_CANCEL_VISIT = PREPARE_QUERY2("DELETE FROM visit "
 											   "WHERE vist_id = :ObjectID");
 //-----------------------------------------------------------------------------
 ISPatriotVisitListForm::ISPatriotVisitListForm(QWidget *parent) : ISListBaseForm("Visit", parent)

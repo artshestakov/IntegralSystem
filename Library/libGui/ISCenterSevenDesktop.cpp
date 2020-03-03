@@ -13,12 +13,12 @@
 #include "ISConstants.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_BRANCHES = PREPARE_QUERY("SELECT brch_id, brch_name "
+static QString QS_BRANCHES = PREPARE_QUERY2("SELECT brch_id, brch_name "
 										   "FROM branches "
 										   "WHERE NOT brch_isdeleted "
 										   "ORDER BY brch_name");
 //-----------------------------------------------------------------------------
-static QString QS_DOCTORS = PREPARE_QUERY("SELECT dctr_id, dctr_fio "
+static QString QS_DOCTORS = PREPARE_QUERY2("SELECT dctr_id, dctr_fio "
 										  "FROM doctor "
 										  "WHERE NOT dctr_isdeleted "
 										  "ORDER BY dctr_fio");

@@ -5,7 +5,7 @@
 #include "ISLocalization.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_RESEARCH = PREPARE_QUERY("SELECT pmtp_uid, resr_money "
+static QString QS_RESEARCH = PREPARE_QUERY2("SELECT pmtp_uid, resr_money "
 										   "FROM research "
 										   "LEFT JOIN paymenttype ON pmtp_id = resr_payment "
 										   "WHERE resr_id IN(:IN)");

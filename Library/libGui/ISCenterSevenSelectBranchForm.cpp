@@ -5,7 +5,7 @@
 #include "ISConstants.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_BRANCH = PREPARE_QUERY("SELECT brch_id, brch_name, brch_address "
+static QString QS_BRANCH = PREPARE_QUERY2("SELECT brch_id, brch_name, brch_address "
 										 "FROM branches "
 										 "WHERE NOT brch_isdeleted "
 										 "ORDER BY brch_name");

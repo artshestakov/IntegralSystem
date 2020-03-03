@@ -12,6 +12,7 @@
 EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWidget(parent)
 {
 	setWindowFlags(Qt::WindowStaysOnTopHint);
+	setMinimumSize(QSize(700, 500));
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
 	setLayout(MainLayout);
@@ -88,6 +89,12 @@ EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWid
 EVMainWindow::~EVMainWindow()
 {
 
+}
+//-----------------------------------------------------------------------------
+void EVMainWindow::showEvent(QShowEvent *e)
+{
+	QWidget::showEvent(e);
+	QApplication::beep();
 }
 //-----------------------------------------------------------------------------
 void EVMainWindow::CopyToClipboard()

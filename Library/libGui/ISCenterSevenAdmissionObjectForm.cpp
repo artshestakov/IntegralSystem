@@ -6,7 +6,7 @@
 #include "ISListEdit.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_ADMISSION_STATUS = PREPARE_QUERY("SELECT adst_id "
+static QString QS_ADMISSION_STATUS = PREPARE_QUERY2("SELECT adst_id "
 												   "FROM admissionstatus "
 												   "WHERE adst_uid = :StatusUID");
 //-----------------------------------------------------------------------------

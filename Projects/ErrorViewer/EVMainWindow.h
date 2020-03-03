@@ -12,6 +12,9 @@ public:
 	EVMainWindow(const QString &PathCrashFile, QWidget *parent = 0);
 	virtual ~EVMainWindow();
 
+protected:
+	void showEvent(QShowEvent *e);
+
 private:
 	void CopyToClipboard();
 	void Save();

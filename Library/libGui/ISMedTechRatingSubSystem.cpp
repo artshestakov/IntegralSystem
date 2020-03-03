@@ -2,7 +2,7 @@
 #include "ISQuery.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_RATING = PREPARE_QUERY("SELECT rtng_uniqueid FROM rating WHERE rtng_id = :RatingID")
+static QString QS_RATING = PREPARE_QUERY2("SELECT rtng_uniqueid FROM rating WHERE rtng_id = :RatingID");
 //-----------------------------------------------------------------------------
 ISMedTechRatingSubSystem::ISMedTechRatingSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {

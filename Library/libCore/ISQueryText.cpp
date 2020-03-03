@@ -18,7 +18,7 @@ ISQueryText::~ISQueryText()
 
 }
 //-----------------------------------------------------------------------------
-ISQueryText& ISQueryText::GetInstance()
+ISQueryText& ISQueryText::Instance()
 {
 	static ISQueryText QueryText;
 	return QueryText;
@@ -37,7 +37,6 @@ QString ISQueryText::InsertQuery(const char *QueryText, const char *FileName, in
 //-----------------------------------------------------------------------------
 bool ISQueryText::CheckAllQueries()
 {
-	return true;
 	bool Result = !Vector.empty();
 	if (Result)
 	{
@@ -45,7 +44,6 @@ bool ISQueryText::CheckAllQueries()
 		if (Result)
 		{
 			QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
-
 			for (const ISSqlQuery &Item : Vector)
 			{
 				Result = SqlQuery.prepare(Item.SqlText);
@@ -60,6 +58,7 @@ bool ISQueryText::CheckAllQueries()
 					break;
 				}
 			}
+			Vector.clear();
 
 			if (Result)
 			{
@@ -77,7 +76,6 @@ bool ISQueryText::CheckAllQueries()
 					}
 				}
 			}
-			Vector.clear();
 		}
 		else
 		{

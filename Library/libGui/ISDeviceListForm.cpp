@@ -7,13 +7,13 @@
 #include "ISObjects.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_PHONE_NUMBER = PREPARE_QUERY("SELECT c.clts_phonemobile FROM clients c WHERE c.clts_id = (SELECT d.dvce_client FROM device d WHERE NOT d.dvce_isdeleted AND d.dvce_id = :DeviceID)");
+static QString QS_PHONE_NUMBER = PREPARE_QUERY2("SELECT c.clts_phonemobile FROM clients c WHERE c.clts_id = (SELECT d.dvce_client FROM device d WHERE NOT d.dvce_isdeleted AND d.dvce_id = :DeviceID)");
 //-----------------------------------------------------------------------------
-static QString QS_TOTAL_SUM_SERVICES = PREPARE_QUERY("SELECT sum(s.srcs_cost * s.srcs_count) FROM services s WHERE NOT s.srcs_isdeleted AND s.srcs_device = :DeviceID");
+static QString QS_TOTAL_SUM_SERVICES = PREPARE_QUERY2("SELECT sum(s.srcs_cost * s.srcs_count) FROM services s WHERE NOT s.srcs_isdeleted AND s.srcs_device = :DeviceID");
 //-----------------------------------------------------------------------------
-static QString QS_TOTAL_SUM_USED_PARTS = PREPARE_QUERY("SELECT sum(up.uacs_cost * up.uacs_count) FROM usedparts up WHERE NOT up.uacs_isdeleted AND up.uacs_device = :DeviceID");
+static QString QS_TOTAL_SUM_USED_PARTS = PREPARE_QUERY2("SELECT sum(up.uacs_cost * up.uacs_count) FROM usedparts up WHERE NOT up.uacs_isdeleted AND up.uacs_device = :DeviceID");
 //-----------------------------------------------------------------------------
-static QString QU_ISSUE = PREPARE_QUERY("UPDATE device SET dvce_DateIssue = now(), dvce_StageRepair = (SELECT sgrp_id FROM StageRepairs WHERE sgrp_uid = :StageRepairUID), dvce_DiscoveredDefect = :Defect WHERE dvce_id = :DeviceID");
+static QString QU_ISSUE = PREPARE_QUERY2("UPDATE device SET dvce_DateIssue = now(), dvce_StageRepair = (SELECT sgrp_id FROM StageRepairs WHERE sgrp_uid = :StageRepairUID), dvce_DiscoveredDefect = :Defect WHERE dvce_id = :DeviceID");
 //-----------------------------------------------------------------------------
 ISDeviceListForm::ISDeviceListForm(QWidget *parent) : ISListBaseForm("Device", parent)
 {

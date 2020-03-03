@@ -4,7 +4,7 @@
 #include "ISLocalization.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_name FROM organization WHERE orgz_id = :OrganizationID");
+static QString QS_ORGANIZATION = PREPARE_QUERY2("SELECT orgz_name FROM organization WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
 ISHighwayIncomingCallForm::ISHighwayIncomingCallForm(const QVariantMap &payload, QWidget *parent) : ISIncomingCallBaseForm(payload, parent)
 {

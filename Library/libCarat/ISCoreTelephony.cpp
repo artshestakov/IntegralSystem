@@ -29,7 +29,7 @@ static QString QS_USER = PREPARE_QUERY("SELECT aspt_user FROM _asteriskpattern W
 //-----------------------------------------------------------------------------
 static QString QS_DIRECTION = PREPARE_QUERY("SELECT asdr_id FROM _asteriskdirection WHERE asdr_uid = :DirectionUID");
 //-----------------------------------------------------------------------------
-static QString QS_DIAS_STATUS = PREPARE_QUERY("SELECT asds_id FROM _asteriskcallstatus WHERE asds_asteriskname = :AsteriskName")
+static QString QS_DIAS_STATUS = PREPARE_QUERY("SELECT asds_id FROM _asteriskcallstatus WHERE asds_asteriskname = :AsteriskName");
 //-----------------------------------------------------------------------------
 static QString QS_CALL_EXIST = PREPARE_QUERY("SELECT COUNT(*) FROM _asteriskcalls WHERE ascl_uniqueid = :UniqueID");
 //-----------------------------------------------------------------------------

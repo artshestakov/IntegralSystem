@@ -10,17 +10,17 @@
 #include "ISButtons.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_DEMO_ORGANIZATION = PREPARE_QUERY("SELECT dacc_organization FROM demoaccesses WHERE dacc_id = :DemoID");
+static QString QS_DEMO_ORGANIZATION = PREPARE_QUERY2("SELECT dacc_organization FROM demoaccesses WHERE dacc_id = :DemoID");
 //-----------------------------------------------------------------------------
-static QString QS_DESKTOP_DAY_NOTE = PREPARE_QUERY("SELECT ddnt_note "
+static QString QS_DESKTOP_DAY_NOTE = PREPARE_QUERY2("SELECT ddnt_note "
 												   "FROM desktopdaynote "
 												   "WHERE ddnt_user = :UserID "
 												   "AND ddnt_date = :Date");
 //-----------------------------------------------------------------------------
-static QString QI_DESKTOP_DAY_NOTE = PREPARE_QUERY("INSERT INTO desktopdaynote(ddnt_date, ddnt_note) "
+static QString QI_DESKTOP_DAY_NOTE = PREPARE_QUERY2("INSERT INTO desktopdaynote(ddnt_date, ddnt_note) "
 												   "VALUES(:Date, :Note)");
 //-----------------------------------------------------------------------------
-static QString QU_DESKTOP_DAY_NOTE = PREPARE_QUERY("UPDATE desktopdaynote SET "
+static QString QU_DESKTOP_DAY_NOTE = PREPARE_QUERY2("UPDATE desktopdaynote SET "
 												   "ddnt_note = :Note "
 												   "WHERE ddnt_user = :UserID "
 												   "AND ddnt_date = :Date");

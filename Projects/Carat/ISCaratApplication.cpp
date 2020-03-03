@@ -40,7 +40,7 @@ bool ISCaratApplication::ConnectToDB() const
 
 	if (Result)
 	{
-		ISQueryText::GetInstance().CheckAllQueries();
+		ISQueryText::Instance().CheckAllQueries();
 	}
 
 	return Result;

@@ -3,9 +3,9 @@
 #include "ISQuery.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT COUNT(*) FROM dispatchorganizations WHERE dorg_dispatch = :DispatchID AND dorg_organization = :OrganizationID");
+static QString QS_ORGANIZATION = PREPARE_QUERY2("SELECT COUNT(*) FROM dispatchorganizations WHERE dorg_dispatch = :DispatchID AND dorg_organization = :OrganizationID");
 //-----------------------------------------------------------------------------
-static QString QI_ORGANIZATION = PREPARE_QUERY("INSERT INTO dispatchorganizations(dorg_dispatch, dorg_organization) "
+static QString QI_ORGANIZATION = PREPARE_QUERY2("INSERT INTO dispatchorganizations(dorg_dispatch, dorg_organization) "
 											   "VALUES(:DispatchID, :OrganizationID)");
 //-----------------------------------------------------------------------------
 ISDispatchOrganizationListForm::ISDispatchOrganizationListForm(QWidget *parent) : ISListBaseForm("DispatchOrganizations", parent)

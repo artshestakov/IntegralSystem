@@ -6,7 +6,7 @@
 #include "ISObjects.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QU_DEACTIVATE = PREPARE_QUERY("UPDATE card SET "
+static QString QU_DEACTIVATE = PREPARE_QUERY2("UPDATE card SET "
 											 "card_active = false, "
 											 "card_reason = :Reason "
 											 "WHERE card_id = :ObjectID");

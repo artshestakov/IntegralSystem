@@ -9,7 +9,7 @@
 #include "ISConstants.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_SUBSCRIPTION = PREPARE_QUERY("SELECT sbsr_id, sbtp_name, sbtp_count, sbsr_leftcount, sbsr_nowexist "
+static QString QS_SUBSCRIPTION = PREPARE_QUERY2("SELECT sbsr_id, sbtp_name, sbtp_count, sbsr_leftcount, sbsr_nowexist "
 											   "FROM subscriptions "
 											   "LEFT JOIN subscriptiontype ON sbtp_id = sbsr_type "
 											   "WHERE NOT sbsr_isdeleted "

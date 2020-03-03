@@ -7,7 +7,7 @@
 #include "ISObjects.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QU_RETURN_ORGANIZATION = PREPARE_QUERY("UPDATE organizations SET orgz_user = NULL WHERE orgz_id = :ObjectID");
+static QString QU_RETURN_ORGANIZATION = PREPARE_QUERY2("UPDATE organizations SET orgz_user = NULL WHERE orgz_id = :ObjectID");
 //-----------------------------------------------------------------------------
 ISOrganizationMyListForm::ISOrganizationMyListForm(QWidget *parent) : ISListBaseForm("Organizations", parent)
 {

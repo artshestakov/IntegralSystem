@@ -8,12 +8,12 @@
 #include "ISMessageBox.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_DOCTORS = PREPARE_QUERY("SELECT dctr_id, dctr_fio, dctr_bonus "
+static QString QS_DOCTORS = PREPARE_QUERY2("SELECT dctr_id, dctr_fio, dctr_bonus "
 										  "FROM doctors "
 										  "WHERE NOT dctr_isdeleted "
 										  "ORDER BY dctr_fio");
 //-----------------------------------------------------------------------------
-static QString QS_DOCTOR_BONUS = PREPARE_QUERY("SELECT SUM(resr_moneydoctor) "
+static QString QS_DOCTOR_BONUS = PREPARE_QUERY2("SELECT SUM(resr_moneydoctor) "
 											   "FROM research "
 											   "WHERE NOT resr_isdeleted "
 											   "AND resr_doctor = :DoctorID "

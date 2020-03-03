@@ -15,26 +15,26 @@
 #include "ISMetaUser.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_id FROM organizations WHERE orgz_inn = :INN");
+static QString QS_ORGANIZATION = PREPARE_QUERY2("SELECT orgz_id FROM organizations WHERE orgz_inn = :INN");
 //-----------------------------------------------------------------------------
-static QString QS_ORGANIZATION_USER = PREPARE_QUERY("SELECT usrs_surname, usrs_name, usrs_patronymic FROM _users WHERE usrs_id = :UserID");
+static QString QS_ORGANIZATION_USER = PREPARE_QUERY2("SELECT usrs_surname, usrs_name, usrs_patronymic FROM _users WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-static QString QI_CALL_HISTORY = PREPARE_QUERY("INSERT INTO callhistory(clhs_organization, clhs_phone, clhs_result) "
+static QString QI_CALL_HISTORY = PREPARE_QUERY2("INSERT INTO callhistory(clhs_organization, clhs_phone, clhs_result) "
 											   "VALUES(:Organization, :Phone, (SELECT clrs_id FROM callresult WHERE clrs_uid = :ResultUID)) "
 											   "RETURNING clhs_id");
 //-----------------------------------------------------------------------------
-static QString QS_OVED_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM okved WHERE okvd_code = :Code");
+static QString QS_OVED_COUNT = PREPARE_QUERY2("SELECT COUNT(*) FROM okved WHERE okvd_code = :Code");
 //-----------------------------------------------------------------------------
-static QString QS_OKVED = PREPARE_QUERY("SELECT okvd_id FROM okved WHERE okvd_code = :Code");
+static QString QS_OKVED = PREPARE_QUERY2("SELECT okvd_id FROM okved WHERE okvd_code = :Code");
 //-----------------------------------------------------------------------------
-static QString QS_DEMO_EXIST = PREPARE_QUERY("SELECT COUNT(*) FROM demoaccesses WHERE NOT dacc_isdeleted AND dacc_organization = :ObjectID");
+static QString QS_DEMO_EXIST = PREPARE_QUERY2("SELECT COUNT(*) FROM demoaccesses WHERE NOT dacc_isdeleted AND dacc_organization = :ObjectID");
 //-----------------------------------------------------------------------------
-static QString QI_ORGANIZATION_WORK = PREPARE_QUERY("INSERT INTO organizationwork(orgw_user, orgw_organization, orgw_date) "
+static QString QI_ORGANIZATION_WORK = PREPARE_QUERY2("INSERT INTO organizationwork(orgw_user, orgw_organization, orgw_date) "
 													"VALUES(:User, :Organization, :Date)");
 //-----------------------------------------------------------------------------
-static QString QU_ORGANIZATION_USER = PREPARE_QUERY("UPDATE organizations SET "
+static QString QU_ORGANIZATION_USER = PREPARE_QUERY2("UPDATE organizations SET "
 													"orgz_user = :UserID "
-													"WHERE orgz_id = :OrganizationID")
+													"WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
 ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {

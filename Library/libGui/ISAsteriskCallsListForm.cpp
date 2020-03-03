@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_CHILD_COUNT = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _asteriskcalls "
-											  "WHERE ascl_uniqueid = :UniqueID")
+											  "WHERE ascl_uniqueid = :UniqueID");
 //-----------------------------------------------------------------------------
 static QString QS_CALL = PREPARE_QUERY("SELECT ascl_dialbegin, asdr_name, ascl_subscriber, ascl_number, ascl_duration, asds_localname "
 									   "FROM _asteriskcalls "

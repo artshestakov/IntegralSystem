@@ -2,19 +2,19 @@
 #include "ISQuery.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_DISCOUNT = PREPARE_QUERY("SELECT (SELECT dcnt_percent FROM discount WHERE dcnt_id = clts_discount) "
+static QString QS_DISCOUNT = PREPARE_QUERY2("SELECT (SELECT dcnt_percent FROM discount WHERE dcnt_id = clts_discount) "
 										   "FROM subscriptions "
 										   "LEFT JOIN clients ON clts_id = sbsr_client "
 										   "WHERE sbsr_id = :ID");
 //-----------------------------------------------------------------------------
-static QString QS_LEFT_COUNT = PREPARE_QUERY("SELECT sbtp_count, sbtp_cost, (sbtp_cost - (sbtp_cost * dcnt_percent / 100)) AS price "
+static QString QS_LEFT_COUNT = PREPARE_QUERY2("SELECT sbtp_count, sbtp_cost, (sbtp_cost - (sbtp_cost * dcnt_percent / 100)) AS price "
 											 "FROM subscriptions "
 											 "LEFT JOIN subscriptiontype ON sbtp_id = sbsr_type "
 											 "LEFT JOIN clients ON clts_id = sbsr_client "
 											 "LEFT JOIN discount ON dcnt_id = clts_discount "
 											 "WHERE sbsr_id = :SubscriptionID");
 //-----------------------------------------------------------------------------
-static QString QU_SUBSCRIBER = PREPARE_QUERY("UPDATE subscriptions SET "
+static QString QU_SUBSCRIBER = PREPARE_QUERY2("UPDATE subscriptions SET "
 											 "sbsr_leftcount = :LeftCount, "
 											 "sbsr_price = :Price "
 											 "WHERE sbsr_id = :SubscriptionID");

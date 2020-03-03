@@ -10,16 +10,16 @@
 #include "ISMessageBox.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_PARENT = PREPARE_QUERY("SELECT o.orgz_parent, (SELECT orgz_name FROM organization WHERE orgz_id = o.orgz_parent) "
+static QString QS_PARENT = PREPARE_QUERY2("SELECT o.orgz_parent, (SELECT orgz_name FROM organization WHERE orgz_id = o.orgz_parent) "
 										 "FROM organization o "
 										 "WHERE o.orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-static QString QS_PARENTS = PREPARE_QUERY("SELECT orgz_id, orgz_name "
+static QString QS_PARENTS = PREPARE_QUERY2("SELECT orgz_id, orgz_name "
 										  "FROM organization "
 										  "WHERE NOT orgz_isdeleted "
 										  "AND orgz_parent = :ParentID");
 //-----------------------------------------------------------------------------
-static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_id, orgz_name "
+static QString QS_ORGANIZATION = PREPARE_QUERY2("SELECT orgz_id, orgz_name "
 											   "FROM organization "
 											   "WHERE NOT orgz_isdeleted "
 											   "AND orgz_parent IS NULL "
@@ -27,11 +27,11 @@ static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_id, orgz_name "
 											   "AND orgz_parent IS NULL "
 											   "ORDER BY orgz_name");
 //-----------------------------------------------------------------------------
-static QString QU_ORGANIZATION_BRANCH = PREPARE_QUERY("UPDATE organization SET "
+static QString QU_ORGANIZATION_BRANCH = PREPARE_QUERY2("UPDATE organization SET "
 													  "orgz_parent = :Parent "
 													  "WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-static QString QU_REBIND = PREPARE_QUERY("UPDATE organization SET orgz_parent = NULL WHERE orgz_id = :OrganizationID");
+static QString QU_REBIND = PREPARE_QUERY2("UPDATE organization SET orgz_parent = NULL WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
 ISHighwayOrganizationObjectForm::ISHighwayOrganizationObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id)
 	: ISObjectFormBase(form_type, meta_table, parent, object_id)

@@ -3,11 +3,11 @@
 #include "ISMetaUser.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QU_RESULT_DATE = PREPARE_QUERY("UPDATE demoaccesses SET dacc_resultdatetime = now() WHERE dacc_id = :ObjectID");
+static QString QU_RESULT_DATE = PREPARE_QUERY2("UPDATE demoaccesses SET dacc_resultdatetime = now() WHERE dacc_id = :ObjectID");
 //-----------------------------------------------------------------------------
-static QString QU_ORGANIZATION_USER = PREPARE_QUERY("UPDATE organizations SET orgz_user = :Executor WHERE orgz_id = :OrganizationID");
+static QString QU_ORGANIZATION_USER = PREPARE_QUERY2("UPDATE organizations SET orgz_user = :Executor WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-static QString QU_EDIT_USER = PREPARE_QUERY("UPDATE demoaccesses SET dacc_edituser = :EditUserID WHERE dacc_id = :ObjectID");
+static QString QU_EDIT_USER = PREPARE_QUERY2("UPDATE demoaccesses SET dacc_edituser = :EditUserID WHERE dacc_id = :ObjectID");
 //-----------------------------------------------------------------------------
 ISDemoAccessesObjectForm::ISDemoAccessesObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {

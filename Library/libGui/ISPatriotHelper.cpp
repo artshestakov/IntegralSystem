@@ -5,11 +5,11 @@
 #include "ISMessageBox.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QS_VISIT = PREPARE_QUERY("SELECT sbsr_nowexist "
+static QString QS_VISIT = PREPARE_QUERY2("SELECT sbsr_nowexist "
 										"FROM subscriptions "
 										"WHERE sbsr_id = :SubscriptionID");
 //-----------------------------------------------------------------------------
-static QString QI_VISIT = PREPARE_QUERY("INSERT INTO visit(vist_subscription) "
+static QString QI_VISIT = PREPARE_QUERY2("INSERT INTO visit(vist_subscription) "
 										"VALUES(:SubscriptionID) "
 										"RETURNING "
 										"(SELECT (sbsr_leftcount - 1) as sbsr_leftcount FROM subscriptions WHERE sbsr_id = :SubscriptionID), "
@@ -22,7 +22,7 @@ static QString QI_VISIT = PREPARE_QUERY("INSERT INTO visit(vist_subscription) "
 										"LEFT JOIN subscriptiontype ON sbtp_id = sbsr_type "
 										"WHERE sbsr_id = :SubscriptionID)");
 //-----------------------------------------------------------------------------
-static QString QU_VISIT = PREPARE_QUERY("UPDATE visit SET "
+static QString QU_VISIT = PREPARE_QUERY2("UPDATE visit SET "
 										"vist_end = CURRENT_TIME, "
 										"vist_duration = CURRENT_TIME - vist_begin "
 										"WHERE vist_subscription = :SubscriptionID "
@@ -31,11 +31,11 @@ static QString QU_VISIT = PREPARE_QUERY("UPDATE visit SET "
 										"LEFT JOIN clients ON clts_id = sbsr_client "
 										"WHERE sbsr_id = :SubscriptionID)");
 //-----------------------------------------------------------------------------
-static QString QU_LEFTCOUNT = PREPARE_QUERY("UPDATE subscriptions SET "
+static QString QU_LEFTCOUNT = PREPARE_QUERY2("UPDATE subscriptions SET "
 											"sbsr_leftcount = (SELECT sbsr_leftcount -1 FROM subscriptions WHERE sbsr_id = :SubscriptionID) "
 											"WHERE sbsr_id = :SubscriptionID");
 //-----------------------------------------------------------------------------
-static QString QU_NOWEXIST = PREPARE_QUERY("UPDATE subscriptions SET "
+static QString QU_NOWEXIST = PREPARE_QUERY2("UPDATE subscriptions SET "
 										   "sbsr_nowexist = :NowExist "
 										   "WHERE sbsr_id = :SubscriptionID");
 //-----------------------------------------------------------------------------

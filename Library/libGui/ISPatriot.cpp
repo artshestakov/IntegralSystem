@@ -15,29 +15,29 @@
 #include "ISPatriotTrainerReportForm.h"
 #include "ISPatriotVisitListForm.h"
 //-----------------------------------------------------------------------------
-static QString QS_CLIENT_BIRTHDAY = PREPARE_QUERY("SELECT clts_id "
+static QString QS_CLIENT_BIRTHDAY = PREPARE_QUERY2("SELECT clts_id "
 												  "FROM clients "
 												  "WHERE NOT clts_isdeleted "
 												  "AND EXTRACT(DAY FROM clts_birthday) = EXTRACT(DAY FROM CURRENT_DATE) "
 												  "AND EXTRACT(MONTH FROM clts_birthday) = EXTRACT(MONTH FROM CURRENT_DATE) "
 												  "ORDER BY clts_fio");
 //-----------------------------------------------------------------------------
-static QString QS_CARD_ACTIVE = PREPARE_QUERY("SELECT card_active "
+static QString QS_CARD_ACTIVE = PREPARE_QUERY2("SELECT card_active "
 											  "FROM card "
 											  "WHERE NOT card_isdeleted "
 											  "AND card_barcode = :Barcode");
 //-----------------------------------------------------------------------------
-static QString QS_CARD = PREPARE_QUERY("SELECT COUNT(*) "
+static QString QS_CARD = PREPARE_QUERY2("SELECT COUNT(*) "
 									   "FROM card "
 									   "WHERE NOT card_isdeleted "
 									   "AND card_barcode = :Barcode "
 									   "AND card_active");
 //-----------------------------------------------------------------------------
-static QString QS_CLIENT = PREPARE_QUERY("SELECT clts_id, clts_fio, (SELECT COUNT(*) FROM subscriptions WHERE NOT sbsr_isdeleted AND sbsr_leftcount != 0 AND sbsr_client = clts_id) "
+static QString QS_CLIENT = PREPARE_QUERY2("SELECT clts_id, clts_fio, (SELECT COUNT(*) FROM subscriptions WHERE NOT sbsr_isdeleted AND sbsr_leftcount != 0 AND sbsr_client = clts_id) "
 										 "FROM clients "
 										 "WHERE clts_id = (SELECT card_client FROM card WHERE card_barcode = :Barcode)");
 //-----------------------------------------------------------------------------
-static QString QS_SUBSCRIPTION = PREPARE_QUERY("SELECT sbsr_id "
+static QString QS_SUBSCRIPTION = PREPARE_QUERY2("SELECT sbsr_id "
 											   "FROM subscriptions "
 											   "WHERE NOT sbsr_isdeleted "
 											   "AND sbsr_leftcount != 0 "

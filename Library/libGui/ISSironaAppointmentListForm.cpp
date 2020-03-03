@@ -6,7 +6,7 @@
 #include "ISConstants.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
-static QString QU_ADMISSION_FINISHED = PREPARE_QUERY("UPDATE appointment SET "
+static QString QU_ADMISSION_FINISHED = PREPARE_QUERY2("UPDATE appointment SET "
 													 "apnm_finished = true "
 													 "WHERE apnm_id = :ObjectID");
 //-----------------------------------------------------------------------------
