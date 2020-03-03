@@ -11,7 +11,6 @@ QString ISPhoneNumberParser::RemoveNotDigits(const QString &String)
 			ResultString.append(Symbol);
 		}
 	}
-
 	return ResultString;
 }
 //-----------------------------------------------------------------------------
@@ -21,10 +20,9 @@ QString ISPhoneNumberParser::PasteEvent(const QString &PastedString)
 	QString ResultString;
 	for (int i = Temp.count() - 1; i >= 0; i--)
 	{
-		QChar CurrentSymbol = Temp.at(i);
-		if (CurrentSymbol.isDigit())
+		if (Temp[i].isDigit())
 		{
-			ResultString.insert(0, CurrentSymbol);
+			ResultString.insert(0, Temp[i]);
 		}
 
 		if (ResultString.length() == 10)
@@ -32,7 +30,6 @@ QString ISPhoneNumberParser::PasteEvent(const QString &PastedString)
 			break;
 		}
 	}
-
 	return ResultString;
 }
 //-----------------------------------------------------------------------------

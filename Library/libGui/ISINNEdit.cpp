@@ -27,12 +27,7 @@ ISINNEdit::~ISINNEdit()
 //-----------------------------------------------------------------------------
 bool ISINNEdit::IsValid() const
 {
-	int CountSymbols = GetValue().toString().length();
-	if (CountSymbols == 10 || CountSymbols == 12)
-	{
-		return true;
-	}
-
-	return false;
+	int Count = GetValue().toString().length();
+	return !Count || Count == 10 || Count == 12;
 }
 //-----------------------------------------------------------------------------

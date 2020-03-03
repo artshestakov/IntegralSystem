@@ -1,7 +1,5 @@
 #include "ISAssert.h"
-//#include "ISSystem.h"
 #include "ISExceptionAssert.h"
-//#include "ISLogger.h"
 #include "ISCrashDumper.h"
 //-----------------------------------------------------------------------------
 void ISASSERT::Assert(QObject *Object, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)

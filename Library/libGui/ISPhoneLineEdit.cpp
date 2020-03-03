@@ -8,12 +8,12 @@
 #include "ISGui.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISPhoneLineEdit::ISPhoneLineEdit(QWidget *parent) : QLineEdit(parent)
+ISPhoneLineEdit::ISPhoneLineEdit(QWidget *parent)
+	: QLineEdit(parent),
+	LastPosition(0)
 {
-	LastPosition = 0;
-
 	setInputMask("(000) 000-00-00;_");
-	setTextMargins(40, 0, 0, 0);
+	setTextMargins(45, 0, 0, 0);
 	setStyleSheet(STYLE_SHEET("ISLineEdit"));
 	setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	connect(this, &ISPhoneLineEdit::cursorPositionChanged, this, &ISPhoneLineEdit::CursorPositionChanged);

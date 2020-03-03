@@ -8,7 +8,7 @@ ISPhoneBaseEdit::ISPhoneBaseEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	PhoneLineEdit = new ISPhoneLineEdit(this);
 	PhoneLineEdit->SetIcon(ISNamespace::PIT_Standart);
-	PhoneLineEdit->setFixedWidth(170);
+	PhoneLineEdit->setFixedWidth(200);
 	connect(PhoneLineEdit, &ISPhoneLineEdit::ClearClicked, this, &ISPhoneBaseEdit::Clear);
 	connect(PhoneLineEdit, &ISPhoneLineEdit::textChanged, this, &ISPhoneBaseEdit::ValueChanged);
 	connect(PhoneLineEdit, &ISPhoneLineEdit::Pasted, this, &ISPhoneBaseEdit::Paste);
