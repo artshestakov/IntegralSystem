@@ -8,7 +8,6 @@
 #include "ISNetwork.h"
 #include "ISDatabase.h"
 #include "ISSettingsDatabase.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_filename, core_localname "
 											 "FROM _caratcore "
@@ -78,11 +77,7 @@ void ISCaratService::StartService()
 		ISLOGGER_INFO("Not found active cores");
 	}
 
-	if (TcpServer->listen(QHostAddress::Any, CARAT_PORT)) //≈сли прослушивание порта запущено успешно
-	{
-		ISLOGGER_INFO("Started and listen port: " + QString::number(CARAT_PORT));
-	}
-	else //ѕрослушивание порта не запущено
+	if (!TcpServer->listen(QHostAddress::Any, CARAT_PORT)) //≈сли прослушивание порта не запущено
 	{
 		ISLOGGER_ERROR("Not listen port: " + QString::number(CARAT_PORT) + ". Error: " + TcpServer->errorString());
 	}

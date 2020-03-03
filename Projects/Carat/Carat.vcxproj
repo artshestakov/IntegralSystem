@@ -11,13 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISCaratService.cpp" />
     <ClCompile Include="ISProcessCore.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISCaratApplication.h" />
     <QtMoc Include="ISProcessCore.h" />
     <QtMoc Include="ISCaratService.h" />
   </ItemGroup>

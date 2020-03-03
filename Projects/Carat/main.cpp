@@ -1,51 +1,53 @@
 #include "StdAfx.h"
-#include "ISCaratApplication.h"
 #include "ISLogger.h"
-#include "ISSystem.h"
 #include "ISConfig.h"
-#include "ISExceptionBase.h"
 #include "ISApplicationRunning.h"
-#include "ISConstants.h"
-#include "ISConsole.h"
 #include "ISCore.h"
+#include "ISDatabase.h"
+#include "ISCaratService.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-	ISCaratApplication CaratService(argc, argv);
+	QCoreApplication CoreApplication(argc, argv);
 
 	QString ErrorString;
 	bool Result = ISCore::Startup(false, ErrorString);
-	if (!Result)
+	if (Result)
+	{
+		ISApplicationRunning ApplicationRunning(CARAT_UID);
+		Result = ApplicationRunning.TryToRun();
+		if (Result) //Если приложение уже запущено
+		{
+			Result = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
+			if (Result)
+			{
+				QSqlQuery SqlQuery = ISDatabase::GetInstance().GetDefaultDB().exec("SET application_name = 'Carat'");
+				Result = SqlQuery.isActive();
+				if (Result)
+				{
+					Result = ISQueryText::Instance().CheckAllQueries();
+					if (Result)
+					{
+						(new ISCaratService(&CoreApplication))->StartService();
+						CoreApplication.exec();
+					}
+				}
+				else
+				{
+					ErrorString = QString("Set change application name failed. Error: %1").arg(SqlQuery.lastError().text());
+				}
+			}
+		}
+		else
+		{
+			ISLOGGER_UNKNOWN("Application already started");
+		}
+	}
+	else
 	{
 		ISLOGGER_ERROR(ErrorString);
-		return EXIT_FAILURE;
 	}
-
-	ISApplicationRunning ApplicationRunning(CARAT_UID);
-	if (!ApplicationRunning.TryToRun()) //Если приложение уже запущено
-	{
-		ISLOGGER_UNKNOWN("Application already started");
-		return EXIT_SUCCESS;
-	}
-
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).isEmpty() || CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).isEmpty())
-	{
-		ISLOGGER_UNKNOWN("Not found login or password in config");
-		return EXIT_FAILURE;
-	}
-
-	if (!CaratService.ConnectToDB()) //Если подключение к базе данных не произошло
-	{
-		return EXIT_FAILURE;
-	}
-
-	try
-	{
-		return CaratService.exec();
-	}
-	catch (ISExceptionBase &e)
-	{
-		return EXIT_FAILURE;
-	}
+	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

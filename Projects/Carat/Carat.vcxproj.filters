@@ -10,9 +10,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ISCaratApplication.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISCaratService.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -22,11 +19,6 @@
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ISCaratApplication.h">
-      <Filter>System</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCaratService.h">
