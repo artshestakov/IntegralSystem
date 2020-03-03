@@ -7,5 +7,6 @@ int main(int argc, char *argv[])
 	{
 		return CoreScheduler.exec();
 	}
+	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

@@ -33,7 +33,7 @@ bool ISCoreCalendar::Invoke()
 		Timer->start();
 		Started();
 	}
-	return false;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISCoreCalendar::Timeout()

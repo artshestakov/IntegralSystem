@@ -7,5 +7,6 @@ int main(int argc, char *argv[])
 	{
 		return CaratCoreHighway.exec();
 	}
+	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

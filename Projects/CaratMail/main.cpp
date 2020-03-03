@@ -7,5 +7,6 @@ int main(int argc, char *argv[])
 	{
 		return CoreMail.exec();
 	}
+	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

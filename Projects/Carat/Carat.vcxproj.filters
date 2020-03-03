@@ -13,18 +13,12 @@
     <ClCompile Include="ISCaratService.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISProcessCore.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCaratService.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISProcessCore.h">
       <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>

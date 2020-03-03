@@ -17,15 +17,9 @@ static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_filename, c
 //-----------------------------------------------------------------------------
 ISCaratService::ISCaratService(QObject *parent)
 	: QObject(parent),
-	CoreCount(0)
+	EventLoop(new QEventLoop(this))
 {
-	EventLoop = new QEventLoop(this);
-	connect(this, &ISCaratService::QuitLoop, EventLoop, &QEventLoop::quit);
-
-	Uptime = QDateTime::currentDateTime();
-
-	TcpServer = new QTcpServer(this);
-	connect(TcpServer, &QTcpServer::newConnection, this, &ISCaratService::NewConnection);
+	
 }
 //-----------------------------------------------------------------------------
 ISCaratService::~ISCaratService()
@@ -50,27 +44,16 @@ void ISCaratService::StartService()
 			if (QFile::exists(CoreFilePath)) //Если ядро существует
 			{
 				QProcess *Process = new QProcess(this);
+				Process->setObjectName(Name);
 				Process->setProgram(CoreFilePath);
-				connect(Process, &QProcess::started, this, &ISCaratService::Started);
+				Process->setReadChannel(QProcess::StandardOutput);
 				connect(Process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ISCaratService::Finished);
 				connect(Process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ISCaratService::Error);
-				connect(Process, &QProcess::stateChanged, this, &ISCaratService::StateChanged);
-				connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);
-				connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput);
-				//QTimer::singleShot(100, Process, [Process] { Process->start(); });
+				connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
+				connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
 				Process->start();
 				EventLoop->exec();
-				QProcess::ProcessState s = Process->state();
-				if (s != QProcess::ProcessState::NotRunning)
-				{
-					ISLOGGER_UNKNOWN(Process->errorString());
-				}
-
-				//ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
-				//connect(ProcessCore, &ISProcessCore::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);
-				//++CoreCount;
-
-				//CoreStart(ProcessCore);
+				QString s = "";
 			}
 			else //Ядро не существует
 			{
@@ -78,20 +61,6 @@ void ISCaratService::StartService()
 				ISSystem::SleepSeconds(3);
 			}
 		}
-	}
-
-	if (CoreCount)
-	{
-		ISLOGGER_EMPTY();
-	}
-	else //Если активных ядер нет
-	{
-		ISLOGGER_INFO("Not found active cores");
-	}
-
-	if (!TcpServer->listen(QHostAddress::Any, CARAT_PORT)) //Если прослушивание порта не запущено
-	{
-		ISLOGGER_ERROR("Not listen port: " + QString::number(CARAT_PORT) + ". Error: " + TcpServer->errorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -110,154 +79,23 @@ void ISCaratService::Error(QProcess::ProcessError ErrorType)
 	EventLoop->quit();
 }
 //-----------------------------------------------------------------------------
-void ISCaratService::StateChanged(QProcess::ProcessState State)
-{
-	if (State == QProcess::ProcessState::NotRunning)
-	{
-		EventLoop->quit();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::CoreStart(ISProcessCore *ProcessCore)
-{
-	/*QTimer TimerTimeout;
-	TimerTimeout.start(30000);
-	connect(&TimerTimeout, &QTimer::timeout, [=] //Ожидание запуска ядра
-	{
-		if (!ProcessCore->GetRunning())
-		{
-			EventLoop->quit();
-		}
-	});*/
-
-	//Запуск ядра
-	QTimer::singleShot(100, ProcessCore, [ProcessCore] { ProcessCore->start(); });
-	EventLoop->exec();
-	//TimerTimeout.stop();
-
-	ProcessCore->GetRunning() ?
-		ISLOGGER_INFO(QString("Core \"%1\" started. ProcessID: %2").arg(ProcessCore->GetName()).arg(ProcessCore->processId())) :
-		ISLOGGER_INFO(QString("Core \"%1\" not started. Error: %2").arg(ProcessCore->GetName()).arg(ProcessCore->errorString()));
-}
-//-----------------------------------------------------------------------------
 void ISCaratService::ReadyReadStandartOutput()
 {
-	QProcess *ProcessCore = dynamic_cast<QProcess*>(sender());
-    QString CoreOutput;
+	QProcess *Process = dynamic_cast<QProcess*>(sender());
+	QByteArray ByteArray = Process->readAllStandardOutput();
 
-    if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
-    {
-        QTextCodec *TextCodec = QTextCodec::codecForName(TEXT_CODEC_IBM866);
-        CoreOutput = TextCodec->toUnicode(QString::fromLocal8Bit(ProcessCore->readAllStandardOutput()).toLocal8Bit());
-    }
-    else if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Linux)
-    {
-        CoreOutput = QString::fromLocal8Bit(ProcessCore->readAllStandardOutput());
-    }
-
-	if (EventLoop->isRunning()) //Если ядро в процессе запуска
+	if (EventLoop->isRunning()) //Если ядро в процессе запуска - проверяем содержимое вывода
 	{
-		if (CoreOutput.contains(CARAT_CORE_START_FLAG)) //Если ядро запустилось
+		if (ByteArray.contains(CARAT_CORE_START_FLAG)) //Если ядро запустилось - останавливаем паузу потока событий
 		{
 			EventLoop->quit();
 		}
 	}
-	//ISLOGGER_UNKNOWN(String);
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::NewConnection()
-{
-	QTcpSocket *TcpSocket = TcpServer->nextPendingConnection();
-	connect(TcpSocket, &QTcpSocket::disconnected, this, &ISCaratService::DisconnectedClient);
-	connect(TcpSocket, &QTcpSocket::readyRead, this, &ISCaratService::ReadyRead);	
-	VectorClients.append(TcpSocket);
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::DisconnectedClient()
-{
-	QTcpSocket *TcpSocket = dynamic_cast<QTcpSocket*>(sender());
-	int SocketDescriptor = TcpSocket->socketDescriptor();
-
-	for (int i = 0; i < VectorClients.count(); ++i)
+	else //Ядро не в процессе запуска - выводим в консоль вывод
 	{
-		if (VectorClients.at(i) == TcpSocket)
-		{
-			VectorClients.removeAt(i);
-
-			if (Buffer.contains(SocketDescriptor))
-			{
-				Buffer.remove(SocketDescriptor);
-			}
-			break;
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::AppendSocketMessage(const QString &Message)
-{
-	for (QTcpSocket *TcpSocket : VectorClients)
-	{
-		WriteSocket(TcpSocket, Message);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::ReadyRead()
-{
-	QTcpSocket *TcpSocket = dynamic_cast<QTcpSocket*>(sender());
-	int SocketDescriptor = TcpSocket->socketDescriptor();
-	QString String = TcpSocket->readAll();
-
-	if (String == "\r\n") //Запрос новой строки от клиента
-	{
-		return;
-	}
-
-	if (!Buffer.contains(SocketDescriptor))
-	{
-		Buffer.insert(SocketDescriptor, String);
-	}
-	else
-	{
-		Buffer[SocketDescriptor].append(String);
-	}
-
-	if (String.contains("\r\n"))
-	{
-		String = Buffer.take(SocketDescriptor);
-		String.replace("\r\n", QString());
-		
-		QStringList StringList = String.split(SYMBOL_SPACE);
-		QString CompleteCommand;
-
-		for (const QString &String : StringList)
-		{
-			QString Temp = String.toLower();
-			Temp.replace(0, 1, Temp[0].toUpper());
-			CompleteCommand.append(Temp);
-		}
-
-		if (ISSystem::CheckExistSlot(this, CompleteCommand))
-		{
-			QMetaObject::invokeMethod(this, CompleteCommand.toStdString().c_str(), Q_ARG(QTcpSocket *, TcpSocket));
-		}
-		else
-		{
-			
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::WriteSocket(QTcpSocket *TcpSocket, const QString &String)
-{
-	if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
-	{
-		QTextStream TextStream(TcpSocket);
-		TextStream.setCodec(TEXT_CODEC_IBM866);
-		TextStream << String << "\r\n";
-	}
-	else if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Linux)
-	{
-        TcpSocket->write(QString::fromLocal8Bit(String.toStdString().c_str()).toUtf8() + "\r\n");
+		char *Char = ByteArray.data();
+		size_t Size = strlen(Char);
+		printf("[%s] %s", Process->objectName().toStdString().c_str(), Char);
 	}
 }
 //-----------------------------------------------------------------------------

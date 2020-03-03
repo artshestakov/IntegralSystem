@@ -22,26 +22,17 @@ int main(int argc, char *argv[])
 			Result = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
 			if (Result)
 			{
-				QSqlQuery SqlQuery = ISDatabase::GetInstance().GetDefaultDB().exec("SET application_name = 'Carat'");
-				Result = SqlQuery.isActive();
+				Result = ISQueryText::Instance().CheckAllQueries();
 				if (Result)
 				{
-					Result = ISQueryText::Instance().CheckAllQueries();
-					if (Result)
-					{
-						(new ISCaratService(&CoreApplication))->StartService();
-						CoreApplication.exec();
-					}
-				}
-				else
-				{
-					ErrorString = QString("Set change application name failed. Error: %1").arg(SqlQuery.lastError().text());
+					(new ISCaratService(&CoreApplication))->StartService();
+					CoreApplication.exec();
 				}
 			}
 		}
 		else
 		{
-			ISLOGGER_UNKNOWN("Application already started");
+			ISLOGGER_UNKNOWN("Carat already started");
 		}
 	}
 	else

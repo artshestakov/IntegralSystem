@@ -7,5 +7,6 @@ int main(int argc, char *argv[])
 	{
 		return CoreAsteriskRecord.exec();
 	}
+	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

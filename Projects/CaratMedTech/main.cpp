@@ -7,5 +7,6 @@ int main(int argc, char *argv[])
 	{
 		return CoreMedTech.exec();
 	}
+	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

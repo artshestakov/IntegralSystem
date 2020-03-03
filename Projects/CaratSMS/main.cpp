@@ -7,5 +7,6 @@ int main(int argc, char *argv[])
 	{
 		return CoreSMS.exec();
 	}
+	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

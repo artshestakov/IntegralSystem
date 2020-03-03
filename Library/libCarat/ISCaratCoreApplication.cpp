@@ -34,6 +34,7 @@ bool ISCaratCoreApplication::Invoke()
 //-----------------------------------------------------------------------------
 void ISCaratCoreApplication::Started()
 {
-	ISLOGGER_UNKNOWN(CARAT_CORE_START_FLAG);
+	//Использовать именно такую конструкцию, иначе QProcess::readyReadAllStandartOutput почему-то не срабатывает
+	qDebug() << CARAT_CORE_START_FLAG;
 }
 //-----------------------------------------------------------------------------
