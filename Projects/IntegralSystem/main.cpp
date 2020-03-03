@@ -15,12 +15,6 @@ ISNamespace::UpdateResult CheckUpdate(); //Проверка обновлений
 int main(int argc, char *argv[])
 {
 	ISIntegralSystem Applicaton(argc, argv);
-	
-	if (!ISLogger::Instance().Initialize(true, true, "IntegralSystem"))
-	{
-		ISLOGGER_UNKNOWN(ISLogger::Instance().GetErrorString());
-		return EXIT_FAILURE;
-	}
 
 	QString ErrorString;
 	bool Result = ISGui::Startup(ErrorString);

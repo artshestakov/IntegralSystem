@@ -22,12 +22,6 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	if (!ISLogger::Instance().Initialize(true, true, "Carat"))
-	{
-		ISLOGGER_UNKNOWN(ISLogger::Instance().GetErrorString());
-		return EXIT_FAILURE;
-	}
-
 	ISApplicationRunning ApplicationRunning(CARAT_UID);
 	if (!ApplicationRunning.TryToRun()) //Если приложение уже запущено
 	{
