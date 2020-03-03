@@ -35,8 +35,6 @@ static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 											 "WHERE NOT usrs_isdeleted "
 											 "AND usrs_login = :Login");
 //-----------------------------------------------------------------------------
-static QString Q_SET_APPLICATION_NAME = "SET application_name = 'IntegralSystem %1'";
-//-----------------------------------------------------------------------------
 static QString QS_ALREADY_ONLINE = PREPARE_QUERY("SELECT COUNT(*) "
 												 "FROM pg_stat_activity "
 												 "WHERE usename = :Login");
@@ -67,9 +65,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 			return EXIT_FAILURE;
 		}
 	}
-
-	//»зменение имени приложени€ в базе данных
-	SetApplicationNameQuery();
 
 	//«агрузка мета-данных о пользователе
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.MetaDataCurrentUser"));
@@ -264,15 +259,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	MainWindow->activateWindow();
 
 	return EXIT_SUCCESS;
-}
-//-----------------------------------------------------------------------------
-void ISStartup::SetApplicationNameQuery()
-{
-	ISQuery qSetApplicationName;
-	if (!qSetApplicationName.Execute(QString(Q_SET_APPLICATION_NAME).arg(ISVersion::Instance().ToString())))
-	{
-		ISMessageBox::ShowCritical(nullptr, qSetApplicationName.GetErrorText());
-	}
 }
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAlreadyConnected()

@@ -216,7 +216,6 @@ void ISLogger::Worker()
 		{
 			break;
 		}
-
 		Sleep(LOGGER_TIMEOUT); //∆дЄм 2 секунды
 	}
 	Finished = true;

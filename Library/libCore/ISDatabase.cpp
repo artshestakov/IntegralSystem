@@ -5,6 +5,7 @@
 #include "ISLogger.h"
 #include "ISCountingTime.h"
 #include "ISMetaData.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) FROM pg_database WHERE datname = :DatabaseName");
 //-----------------------------------------------------------------------------
@@ -279,7 +280,17 @@ QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName
 //-----------------------------------------------------------------------------
 bool ISDatabase::ConnectToDefaultDB(const QString &Login, const QString &Password, QString &ErrorConnection)
 {
-	return ConnectToDatabase(DefaultDB, Login, Password, CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), ErrorConnection);
+	bool Result = ConnectToDatabase(DefaultDB, Login, Password, CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), ErrorConnection);
+	if (Result)
+	{
+		QSqlQuery SqlQuery = DefaultDB.exec("SET application_name = '" + ISDefines::Core::APPLICATION_NAME + "'");
+		Result = SqlQuery.lastError().type() == QSqlError::NoError;
+		if (!Result)
+		{
+			ErrorConnection = SqlQuery.lastError().text();
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::ConnectToSystemDB(QString &ErrorConnection)
