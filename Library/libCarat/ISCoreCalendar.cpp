@@ -28,13 +28,12 @@ bool ISCoreCalendar::Invoke()
 	{
 		Timer = new QTimer(this);
 		Timer->setInterval(60000);
+		Timer->setSingleShot(true);
 		connect(Timer, &QTimer::timeout, this, &ISCoreCalendar::Timeout);
 		Timer->start();
-
 		Started();
 	}
-
-	return Result;
+	return false;
 }
 //-----------------------------------------------------------------------------
 void ISCoreCalendar::Timeout()
@@ -54,5 +53,6 @@ void ISCoreCalendar::Timeout()
 			ISLOGGER_UNKNOWN("Sended reminder \"" + QString::number(EventID) + "\" for: " + UserName);
 		}
 	}
+	Timer->start();
 }
 //-----------------------------------------------------------------------------

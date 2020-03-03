@@ -15,7 +15,9 @@ static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_filename, c
 											 "AND core_active "
 											 "ORDER BY core_priority");
 //-----------------------------------------------------------------------------
-ISCaratService::ISCaratService(QObject *parent) : QObject(parent)
+ISCaratService::ISCaratService(QObject *parent)
+	: QObject(parent),
+	CoreCount(0)
 {
 	EventLoop = new QEventLoop(this);
 	connect(this, &ISCaratService::QuitLoop, EventLoop, &QEventLoop::quit);
@@ -43,27 +45,42 @@ void ISCaratService::StartService()
 			QString LocalName = qSelectCore.ReadColumn("core_localname").toString();
 			QString FileName = qSelectCore.ReadColumn("core_filename").toString() + (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows ? QString().append(".").append(EXTENSION_EXE) : QString());
 
-			ISLOGGER_EMPTY();
-			ISLOGGER_INFO("Core \"" + LocalName + "\": starting...");
-			QString CorePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
-
-			ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
-			connect(ProcessCore, &ISProcessCore::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);
-			Cores.append(ProcessCore);
-			
-			if (QFile::exists(CorePath)) //Если ядро существует
+			ISLOGGER_INFO("Core \"" + Name + "\": starting...");
+			QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
+			if (QFile::exists(CoreFilePath)) //Если ядро существует
 			{
-				CoreStart(ProcessCore);
+				QProcess *Process = new QProcess(this);
+				Process->setProgram(CoreFilePath);
+				connect(Process, &QProcess::started, this, &ISCaratService::Started);
+				connect(Process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ISCaratService::Finished);
+				connect(Process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ISCaratService::Error);
+				connect(Process, &QProcess::stateChanged, this, &ISCaratService::StateChanged);
+				connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);
+				connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput);
+				//QTimer::singleShot(100, Process, [Process] { Process->start(); });
+				Process->start();
+				EventLoop->exec();
+				QProcess::ProcessState s = Process->state();
+				if (s != QProcess::ProcessState::NotRunning)
+				{
+					ISLOGGER_UNKNOWN(Process->errorString());
+				}
+
+				//ISProcessCore *ProcessCore = new ISProcessCore(Name, LocalName, CorePath, this);
+				//connect(ProcessCore, &ISProcessCore::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput);
+				//++CoreCount;
+
+				//CoreStart(ProcessCore);
 			}
 			else //Ядро не существует
 			{
-				ISLOGGER_WARNING("Core \"" + LocalName + "\" not found. Path: " + CorePath);
+				ISLOGGER_ERROR("Core \"" + Name + "\" not found. Path: " + CoreFilePath);
 				ISSystem::SleepSeconds(3);
 			}
 		}
 	}
 
-	if (Cores.count())
+	if (CoreCount)
 	{
 		ISLOGGER_EMPTY();
 	}
@@ -78,11 +95,32 @@ void ISCaratService::StartService()
 	}
 }
 //-----------------------------------------------------------------------------
+void ISCaratService::Started()
+{
+	EventLoop->quit();
+}
+//-----------------------------------------------------------------------------
+void ISCaratService::Finished(int ExitCode, QProcess::ExitStatus Status)
+{
+	EventLoop->quit();
+}
+//-----------------------------------------------------------------------------
+void ISCaratService::Error(QProcess::ProcessError ErrorType)
+{
+	EventLoop->quit();
+}
+//-----------------------------------------------------------------------------
+void ISCaratService::StateChanged(QProcess::ProcessState State)
+{
+	if (State == QProcess::ProcessState::NotRunning)
+	{
+		EventLoop->quit();
+	}
+}
+//-----------------------------------------------------------------------------
 void ISCaratService::CoreStart(ISProcessCore *ProcessCore)
 {
-	ISCountingTime CountingTime;
-
-	QTimer TimerTimeout;
+	/*QTimer TimerTimeout;
 	TimerTimeout.start(30000);
 	connect(&TimerTimeout, &QTimer::timeout, [=] //Ожидание запуска ядра
 	{
@@ -90,26 +128,21 @@ void ISCaratService::CoreStart(ISProcessCore *ProcessCore)
 		{
 			EventLoop->quit();
 		}
-	});
+	});*/
 
 	//Запуск ядра
 	QTimer::singleShot(100, ProcessCore, [ProcessCore] { ProcessCore->start(); });
 	EventLoop->exec();
-	TimerTimeout.stop();
+	//TimerTimeout.stop();
 
-	if (ProcessCore->GetRunning())
-	{
-		ISLOGGER_INFO("Core \"" + ProcessCore->GetLocalName() + "\" started: " + CountingTime.GetElapsed() + " msec, process " + ProcessCore->processId());
-	}
-	else
-	{
-		ISLOGGER_INFO("Not started core: " + ProcessCore->GetLocalName());
-	}
+	ProcessCore->GetRunning() ?
+		ISLOGGER_INFO(QString("Core \"%1\" started. ProcessID: %2").arg(ProcessCore->GetName()).arg(ProcessCore->processId())) :
+		ISLOGGER_INFO(QString("Core \"%1\" not started. Error: %2").arg(ProcessCore->GetName()).arg(ProcessCore->errorString()));
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::ReadyReadStandartOutput()
 {
-	ISProcessCore *ProcessCore = dynamic_cast<ISProcessCore*>(sender());
+	QProcess *ProcessCore = dynamic_cast<QProcess*>(sender());
     QString CoreOutput;
 
     if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
@@ -122,30 +155,14 @@ void ISCaratService::ReadyReadStandartOutput()
         CoreOutput = QString::fromLocal8Bit(ProcessCore->readAllStandardOutput());
     }
 
-    QStringList StringList = CoreOutput.split("\n");
-	for (QString &String : StringList) //Обход сообщений ядра
+	if (EventLoop->isRunning()) //Если ядро в процессе запуска
 	{
-		if (!String.length())
+		if (CoreOutput.contains(CARAT_CORE_START_FLAG)) //Если ядро запустилось
 		{
-			continue;
+			EventLoop->quit();
 		}
-
-		if (String.contains("\r"))
-		{
-			String.replace("\r", QString());
-		}
-
-		if (EventLoop->isRunning()) //Если ядро в процессе запуска
-		{
-			if (String == "exec") //Если ядро запустилось
-			{
-				ProcessCore->SetRunning(true);
-				EventLoop->quit();
-				break;
-			}
-		}
-		ISLOGGER_UNKNOWN(String);
 	}
+	//ISLOGGER_UNKNOWN(String);
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::NewConnection()

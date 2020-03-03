@@ -310,7 +310,6 @@ void ISDatabase::DisconnectFromDatabase(QSqlDatabase &SqlDatabase)
 bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Login, const QString &Password, const QString &Database, QString &ErrorConnection)
 {
 	bool Result = SqlDatabase.isOpen();
-
 	if (!Result)
 	{
 		SqlDatabase.setHostName(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
@@ -325,7 +324,6 @@ bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Log
 			ISLOGGER_WARNING(QString("Connection to database \"%1\" failed. Error: %2").arg(Database).arg(ErrorConnection));
 		}
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

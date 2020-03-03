@@ -17,6 +17,11 @@ public:
 	void StartService(); //Запуск сервера
 
 protected:
+	void Started();
+	void Finished(int ExitCode, QProcess::ExitStatus Status);
+	void Error(QProcess::ProcessError ErrorType);
+	void StateChanged(QProcess::ProcessState State);
+
 	void CoreStart(ISProcessCore *ProcessCore); //Запуск ядра
 	void ReadyReadStandartOutput();
 	
@@ -29,7 +34,7 @@ protected:
 private:
 	QEventLoop *EventLoop;
 	QDateTime Uptime;
-	QVector<ISProcessCore*> Cores;
+	int CoreCount;
 	
 	QTcpServer *TcpServer;
 	QVector<QTcpSocket*> VectorClients;
