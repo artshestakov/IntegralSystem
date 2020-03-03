@@ -9,7 +9,7 @@
       <Field UID="{339B7F6D-6194-49A1-A538-2C4A8B7BB4EF}" Name="LocalName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование" NotNull="true"/>
       <Field UID="{879651EB-C9EA-49A0-959A-95004DFEF946}" Name="Priority" Type="Int" LabelName="Приоритет запуска" LocalListName="Приоритет запуска"/>
       <Field UID="{602EEDF8-2E39-41F5-889B-E412ED38BEE5}" Name="ClassName" Type="String" LabelName="Наименование класса" LocalListName="Наименование класса"/>
-      <Field UID="{F3B866ED-46D7-4B29-BD22-F7932FD827F6}" Name="Active" Type="Bool" DefaultValue="true" LabelName="Активно" LocalListName="Активно"/>
+      <Field UID="{F3B866ED-46D7-4B29-BD22-F7932FD827F6}" Name="Active" Type="Bool" DefaultValue="false" LabelName="Активно" LocalListName="Активно"/>
     </Fields>
     <Indexes>
       <Index Field="Parent" Unique="true"/>

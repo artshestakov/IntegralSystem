@@ -6,7 +6,7 @@
 ISConfig::ISConfig()
 	: ErrorString(NO_ERROR_STRING),
 	Settings(nullptr),
-	PathConfigTemplate(":/ConfigTemplate/" + ISDefines::Core::APPLICATION_NAME + SYMBOL_POINT + EXTENSION_INI)
+	PathConfigTemplate(QString(":/ConfigTemplate/%1").arg(ISDefines::Core::IS_GUI ? "Client" : "Server") + SYMBOL_POINT + EXTENSION_INI)
 {
 	
 }
@@ -32,38 +32,35 @@ QString ISConfig::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISConfig::Initialize()
 {
+	if (Settings)
+	{
+		return true;
+	}
+
 	bool Result = QFile::exists(PathConfigTemplate);
 	if (Result)
 	{
-		Result = !Settings;
+		Settings = new QSettings(ISDefines::Core::PATH_CONFIG_FILE, QSettings::IniFormat);
+		QSettings::Status SettingsStatus = Settings->status();
+		Result = SettingsStatus == QSettings::NoError;
 		if (Result)
 		{
-			Settings = new QSettings(ISDefines::Core::PATH_CONFIG_FILE, QSettings::IniFormat);
-			QSettings::Status SettingsStatus = Settings->status();
-			Result = SettingsStatus == QSettings::NoError;
-			if (Result)
+			if (QFile::exists(ISDefines::Core::PATH_CONFIG_FILE)) //Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления
 			{
-				if (QFile::exists(ISDefines::Core::PATH_CONFIG_FILE)) //Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления
-				{
-					Result = Update();
-				}
-				else //Конфигурационный файл не существует - создаём его из шаблона
-				{
-					Result = Create();
-				}
+				Result = Update();
 			}
-			else
+			else //Конфигурационный файл не существует - создаём его из шаблона
 			{
-				switch (SettingsStatus)
-				{
-				case QSettings::AccessError: ErrorString = "access error with path " + ISDefines::Core::PATH_CONFIG_FILE; break;
-				case QSettings::FormatError: ErrorString = "format error"; break;
-				}
+				Result = Create();
 			}
 		}
 		else
 		{
-			ErrorString = "config already initialized";
+			switch (SettingsStatus)
+			{
+			case QSettings::AccessError: ErrorString = "access error with path " + ISDefines::Core::PATH_CONFIG_FILE; break;
+			case QSettings::FormatError: ErrorString = "format error"; break;
+			}
 		}
 	}
 	else
