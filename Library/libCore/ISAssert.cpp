@@ -1,50 +1,50 @@
 #include "ISAssert.h"
-#include "ISSystem.h"
+//#include "ISSystem.h"
 #include "ISExceptionAssert.h"
+//#include "ISLogger.h"
+#include "ISCrashDumper.h"
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(QObject *Object, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName)
+void ISASSERT::Assert(QObject *Object, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
 {
 	if (!Object)
 	{
-		ShowAssert(FalseMessage, QFuncInfo, Line, SourceFileName);
+		ShowAssert(FalseMessage, FunctionName, Line, FileName);
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(bool Boolean, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName)
+void ISASSERT::Assert(bool Boolean, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
 {
 	if (!Boolean)
 	{
-		ShowAssert(FalseMessage, QFuncInfo, Line, SourceFileName);
+		ShowAssert(FalseMessage, FunctionName, Line, FileName);
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(int Integer, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName)
+void ISASSERT::Assert(int Integer, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
 {
 	if (!Integer)
 	{
-		ShowAssert(FalseMessage, QFuncInfo, Line, SourceFileName);
+		ShowAssert(FalseMessage, FunctionName, Line, FileName);
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(QString String, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName)
+void ISASSERT::Assert(QString String, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
 {
 	if (!String.length())
 	{
-		ShowAssert(FalseMessage, QFuncInfo, Line, SourceFileName);
+		ShowAssert(FalseMessage, FunctionName, Line, FileName);
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::ShowAssert(const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName)
+void ISASSERT::ShowAssert(const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
 {
-	QString Message = QString("Message: %1").arg(FalseMessage);
-	QString SourceFile = QString("Source file: %1").arg(QFileInfo(SourceFileName).fileName());
-	QString SourceLine = QString("Source line: %1").arg(Line);
-	QString Function = QString("Function: %1").arg(ISSystem::FormatQFuncInfo(QFuncInfo, ISNamespace::FNF_TypeAndFunction));
+	std::stringstream StringStream;
+	StringStream << "Assert: " << FalseMessage.toStdString() << std::endl;
+	StringStream << "Source file: " << FileName << std::endl;
+	StringStream << "Line: " << Line << std::endl;
+	StringStream << "Function: " << FunctionName;
 
-	QString AssertMessage = QString("%1\r\n%2\r\n%3\r\n%4").arg(Message).arg(SourceFile).arg(SourceLine).arg(Function);
-	//ISDebug::ShowAssertString(AssertMessage);
-
-	//ISDebug::GetInstance().SetAssertMessage(AssertMessage);
-    throw std::runtime_error(AssertMessage.toStdString().c_str());
+	ISCrashDumper::SetAssertMessage(StringStream.str().c_str());
+    throw std::runtime_error(StringStream.str());
 }
 //-----------------------------------------------------------------------------

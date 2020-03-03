@@ -7,6 +7,7 @@ class LIBCORE_EXPORT ISCrashDumper
 {
 public:
 	static void Init();
+	static void SetAssertMessage(const char *assert_message);
 
 private:
 #ifdef WIN32

@@ -9,13 +9,13 @@
 class LIBCORE_EXPORT ISASSERT
 {
 public:
-	static void Assert(QObject *Object, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);
-	static void Assert(bool Boolean, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);
-	static void Assert(int Integer, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);
-	static void Assert(QString String, const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &SourceFileName);
+	static void Assert(QObject *Object, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
+	static void Assert(bool Boolean, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
+	static void Assert(int Integer, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
+	static void Assert(QString String, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
 
 protected:
-	static void ShowAssert(const QString &FalseMessage, const QString &QFuncInfo, int Line, const QString &File);
+	static void ShowAssert(const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
 };
 //-----------------------------------------------------------------------------
 #endif

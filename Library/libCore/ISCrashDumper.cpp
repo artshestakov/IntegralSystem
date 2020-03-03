@@ -2,6 +2,8 @@
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
+char *AssertMessage = NULL;
+//-----------------------------------------------------------------------------
 void ISCrashDumper::Init()
 {
 #ifdef WIN32
@@ -13,6 +15,15 @@ void ISCrashDumper::Init()
 	signal(SIGABRT, OnSystemSignal);
 	signal(SIGINT, OnSystemSignal);
 #endif
+}
+//-----------------------------------------------------------------------------
+void ISCrashDumper::SetAssertMessage(const char *assert_message)
+{
+	AssertMessage = (char *)malloc(strlen(assert_message) + 1);
+	if (AssertMessage)
+	{
+		strcpy(AssertMessage, assert_message);
+	}
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -31,24 +42,24 @@ LONG ISCrashDumper::ExceptionHandling(_EXCEPTION_POINTERS *ExceptionInfo)
 }
 void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::string &Message)
 {
-	if (!Message.empty())
-	{
-		printf("Crash: %s", Message.c_str());
-	}
-
     ISStackWalker stack_walker;
 	stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
 
-	std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_CRASH).toStdString();
+	std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + SYMBOL_MINUS + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_CRASH).toStdString();
 	FILE *File = fopen(FilePath.c_str(), "w");
 	if (File)
 	{
 		std::string Content = stack_walker.GetCallStack();
 		if (!Message.empty())
 		{
-			Content.insert(0, "\n");
-			Content.insert(0, "====================================================================");
+			Content.insert(0, "\n================================\n");
 			Content.insert(0, Message);
+		}
+
+		if (AssertMessage)
+		{
+			Content.insert(0, "\n================================\n");
+			Content.insert(0, AssertMessage);
 		}
 
 		if (fwrite(Content.c_str(), sizeof(char), Content.size(), File) == Content.size())
@@ -72,7 +83,11 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
 	}
 	else
 	{
-		printf("Crash\n");
+		printf("Crash: %s\n", Message.empty() ? "Unknown reason" : Message.c_str());
+		if (AssertMessage)
+		{
+			printf("%s", AssertMessage);
+		}
 	}
 }
 //-----------------------------------------------------------------------------

@@ -95,6 +95,7 @@ void EVMainWindow::showEvent(QShowEvent *e)
 {
 	QWidget::showEvent(e);
 	QApplication::beep();
+	setFocus(Qt::ActiveWindowFocusReason);
 }
 //-----------------------------------------------------------------------------
 void EVMainWindow::CopyToClipboard()
