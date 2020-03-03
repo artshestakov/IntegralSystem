@@ -75,9 +75,9 @@ bool ISQuery::Execute() /*throw(ISQueryException)*/
 	bool Result = SqlQuery.exec();
 	int Msec = Time.GetElapsed();
 
-	if (Msec > MAX_QUERY_TIME)
+	if (ShowLongQuery)
 	{
-		if (ShowLongQuery)
+		if (Msec > MAX_QUERY_TIME)
 		{
 			ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
 		}
@@ -99,9 +99,9 @@ bool ISQuery::Execute(const QString& query_text) /*throw(ISQueryException)*/
 	bool Result = SqlQuery.exec(query_text);
 	int Msec = Time.GetElapsed();
 
-	if (Msec > MAX_QUERY_TIME)
+	if (ShowLongQuery)
 	{
-		if (ShowLongQuery)
+		if (Msec > MAX_QUERY_TIME)
 		{
 			ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
 		}
@@ -123,9 +123,9 @@ bool ISQuery::Execute(QSqlDatabase& db, const QString& query_text) /*throw(ISQue
 	SqlQuery = db.exec(query_text);
 	int Msec = Time.GetElapsed();
 
-	if (Msec > MAX_QUERY_TIME)
+	if (ShowLongQuery)
 	{
-		if (ShowLongQuery)
+		if (Msec > MAX_QUERY_TIME)
 		{
 			ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
 		}

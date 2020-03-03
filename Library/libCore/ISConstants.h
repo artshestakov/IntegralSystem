@@ -35,6 +35,7 @@ const char EXTENSION_LIC[] = "lic";
 const char EXTENSION_XML[] = "xml";
 const char EXTENSION_INI[] = "ini";
 const char EXTENSION_CRASH[] = "crash";
+const char EXTENSION_EXE[] = "exe";
 #ifdef WIN32
 const char EXTENSION_BINARY[] = ".exe"; //Расширение исполняемого файла для текущей операционной системы
 #else

@@ -12,7 +12,7 @@
 static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_filename, core_localname "
 											 "FROM _caratcore "
 											 "WHERE NOT core_isdeleted "
-											 "AND core_uid IN(SELECT crca_core FROM _caratcoreactive WHERE crca_active) "
+											 "AND core_active "
 											 "ORDER BY core_priority");
 //-----------------------------------------------------------------------------
 ISCaratService::ISCaratService(QObject *parent) : QObject(parent)
@@ -41,12 +41,7 @@ void ISCaratService::StartService()
 		{
 			QString Name = qSelectCore.ReadColumn("core_name").toString();
 			QString LocalName = qSelectCore.ReadColumn("core_localname").toString();
-			QString FileName = qSelectCore.ReadColumn("core_filename").toString();
-
-			if (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows)
-			{
-				 FileName += ".exe";
-			}
+			QString FileName = qSelectCore.ReadColumn("core_filename").toString() + (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows ? QString().append(".").append(EXTENSION_EXE) : QString());
 
 			ISLOGGER_EMPTY();
 			ISLOGGER_INFO("Core \"" + LocalName + "\": starting...");

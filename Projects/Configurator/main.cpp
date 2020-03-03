@@ -323,7 +323,7 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 					{
 						ISCountingTime CountingTime;
 						Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
-						ISLOGGER_INFO("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
+						ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
 					}
 					catch (const ISQueryException &QueryException) {}
 				}

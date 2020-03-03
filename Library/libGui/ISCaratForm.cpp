@@ -1,27 +1,19 @@
 #include "ISCaratForm.h"
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
-#include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISCheckEdit.h"
 #include "ISGui.h"
+#include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_uid, core_localname, crca_active "
+static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_uid, core_localname, core_active "
 											 "FROM _caratcore "
-											 "LEFT JOIN _caratcoreactive ON crca_core = core_uid "
 											 "WHERE NOT core_isdeleted "
 											 "ORDER BY core_priority");
 //-----------------------------------------------------------------------------
-static QString QS_CARAT_ACTIVE_COUNT = PREPARE_QUERY("SELECT COUNT(*) "
-													 "FROM _caratcoreactive "
-													 "WHERE crca_core = :CoreUID");
-//-----------------------------------------------------------------------------
-static QString QI_CARAT_CORE_ACTIVE = PREPARE_QUERY("INSERT INTO _caratcoreactive(crca_core, crca_active) "
-													"VALUES(:CoreUID, :Active)");
-//-----------------------------------------------------------------------------
-static QString QU_CARAT_CORE_ACTIVE = PREPARE_QUERY("UPDATE _caratcoreactive SET "
-													"crca_active = :Active "
-													"WHERE crca_core = :CoreUID");
+static QString QU_CARAT_ACTIVE = PREPARE_QUERY("UPDATE _caratcore SET "
+											   "core_active = :Active "
+											   "WHERE core_uid = :UID");
 //-----------------------------------------------------------------------------
 ISCaratForm::ISCaratForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
@@ -44,7 +36,7 @@ ISCaratForm::ISCaratForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 		{
 			ISUuid CoreUID = qSelect.ReadColumn("core_uid");
 			QString CoreName = qSelect.ReadColumn("core_localname").toString();
-			bool CoreActive = qSelect.ReadColumn("crca_active").toBool();
+			bool CoreActive = qSelect.ReadColumn("core_active").toBool();
 
 			ISCheckEdit *CheckBox = new ISCheckEdit(GroupBoxCores);
 			CheckBox->SetValue(CoreActive);
@@ -69,30 +61,15 @@ void ISCaratForm::LoadData()
 void ISCaratForm::CoreChecked(const QVariant &value	)
 {
 	ISGui::SetWaitGlobalCursor(true);
-
-	ISUuid CoreUID = sender()->objectName();
-
-	ISQuery qSelectCount(QS_CARAT_ACTIVE_COUNT);
-	qSelectCount.BindValue(":CoreUID", CoreUID);
-	if (qSelectCount.ExecuteFirst())
-	{
-		int Count = qSelectCount.ReadColumn("count").toInt();
-		if (Count)
-		{
-			ISQuery qUpdate(QU_CARAT_CORE_ACTIVE);
-			qUpdate.BindValue(":Active", value);
-			qUpdate.BindValue(":CoreUID", CoreUID);
-			qUpdate.Execute();
-		}
-		else
-		{
-			ISQuery qInsert(QI_CARAT_CORE_ACTIVE);
-			qInsert.BindValue(":CoreUID", CoreUID);
-			qInsert.BindValue(":Active", value);
-			qInsert.Execute();
-		}
-	}
-
+	ISQuery qUpdate(QU_CARAT_ACTIVE);
+	qUpdate.BindValue(":Active", dynamic_cast<ISCheckEdit*>(sender())->GetValue().toBool());
+	qUpdate.BindValue(":UID", sender()->objectName());
+	bool Result = qUpdate.Execute();
 	ISGui::SetWaitGlobalCursor(false);
+
+	if (!Result)
+	{
+		ISMessageBox::ShowCritical(this, qUpdate.GetErrorText());
+	}
 }
 //-----------------------------------------------------------------------------
