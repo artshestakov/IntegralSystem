@@ -27,6 +27,7 @@
   <Local Name="AboutForm.Tab.Common.ReleaseDate" Russian="Дата релиза"/>
   <Local Name="AboutForm.Tab.Common.ReleaseTime" Russian="Время сборки"/>
   <Local Name="AboutForm.Tab.Common.ProductVersionHash" Russian="Хеш"/>
+  <Local Name="AboutForm.Tab.Common.Branch" Russian="Ветка"/>
   <Local Name="AboutForm.Tab.Contacts" Russian="Контакты"/>
   <Local Name="AboutForm.Tab.Contacts.ProductAuthor" Russian="Разработчик"/>
   <Local Name="AboutForm.Tab.Contacts.ProductAuthor.FullName" Russian="Шестаков Артём Андреевич"/>
@@ -161,7 +162,6 @@
   <Local Name="Message.Warning.RecipientIsNull" Russian="Заполните поле &quot;Отправитель&quot;!"/>
   <Local Name="Message.Warning.TypeDispatchIsNull" Russian="Выберите тип отправки письма!"/>
   <Local Name="Message.Warning.CreateCopyMessageNotDrafts" Russian="Разрешено создавать копию сообщения только со статусом &quot;Черновик&quot;."/>
-  <Local Name="Message.Warning.NotCreateLogFile" Russian="Не удалось сформировать лог-файл."/>
   <Local Name="Message.Warning.NotDeleteCascadeRecord" Russian="Не удалось каскадно удалить запись с кодом &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден. Убедитесь, что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
@@ -393,7 +393,6 @@
   <Local Name="CurrentUser" Russian="Текущий пользователь"/>
   <Local Name="SelectType" Russian="Выберите тип"/>
   <Local Name="NotSelected" Russian="Не выбрано"/>
-  <Local Name="HelpSystem" Russian="Справочная система"/>
   <Local Name="Discussion" Russian="Обсуждение"/>
   <Local Name="Favorites" Russian="Избранное"/>
   <Local Name="FavoritesForTable" Russian="Избранные записи для таблицы"/>
@@ -513,7 +512,6 @@
   <Local Name="InputNumberPage" Russian="Введите номер страницы"/>
   <Local Name="ReReadCard" Russian="Перечитать карточку"/>
   <Local Name="Filter" Russian="Фильтр"/>
-  <Local Name="CreateLogToday" Russian="Сформировать лог за сегодня"/>
   <Local Name="Send" Russian="Отправить"/>
   <Local Name="Reply" Russian="Ответить"/>
   <Local Name="NotificationEmpty" Russian="Уведомлений нет."/>
@@ -664,9 +662,6 @@
   <Local Name="Export.Setting.Header" Russian="Заголовки колонок"/>
   <Local Name="Export.Process.Prepare" Russian="Подготовка"/>
   <Local Name="Export.Process.Process" Russian="Экспортировано %1 из %2"/>
-  
-  <!--Reference-->
-  <Local Name="Reference" Russian="Справка"/>
   
   <Local Name="ThisActionCanNotUndone" Russian="Это действие нельзя отменить."/>
   <Local Name="ClickToViewHelp" Russian="Нажмите, чтобы просмотреть дополнительную информацию."/>

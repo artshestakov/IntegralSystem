@@ -59,7 +59,6 @@ public:
 	virtual void Share(); //Поделиться
 	virtual void AttachTask(); //Прикрепить запись к задаче
 	virtual void ShowFavorites(); //Показать форму с избранными объектами
-	virtual void ShowReference(); //Справка
 	virtual void NavigationSelectBeginRecord(); //Выделение первой записи в списке
 	virtual void NavigationSelectPreviousRecord(); //Выделение предыдущей записи
 	virtual void NavigationSelectNextRecord(); //Выделение следующей записи

@@ -125,9 +125,6 @@ void ISMenuBar::CreateMenuService()
 
 	//Смена пароля
 	MenuService->addAction(LANG("ChangePassword") + "...", this, &ISMenuBar::ChangePassword);
-
-	//Формирование лога
-	MenuService->addAction(BUFFER_ICONS("Log"), LANG("CreateLogToday"), this, &ISMenuBar::CreateLogToday);
 }
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateMenuAddition()
@@ -147,10 +144,6 @@ void ISMenuBar::CreateMenuAddition()
 void ISMenuBar::CreateMenuHelp()
 {
 	QMenu *MenuHelp = MainMenu->addMenu(BUFFER_ICONS("MainMenuItem"), LANG("Help"));
-
-	//Справочная система
-	//Menu->addAction(BUFFER_ICONS("Reference"), LANG("HelpSystem"), this, &ISMenuBar::HelpSystem);
-	//Menu->addSeparator();
 
 	//О программе
 	MenuHelp->addAction(BUFFER_ICONS("About"), LANG("AboutForm.AboutApplication"), this, &ISMenuBar::AboutApplication);

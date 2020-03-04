@@ -422,15 +422,6 @@ QAction* ISControls::CreateActionDetachTask(QObject *ParentObject)
 	return ActionDetachTask;
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionReference(QObject *ParentObject)
-{
-	QAction *ActionReference = new QAction(ParentObject);
-	ActionReference->setText(LANG("Reference"));
-	ActionReference->setToolTip(LANG("Reference"));
-	ActionReference->setIcon(BUFFER_ICONS("Reference"));
-	return ActionReference;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionNavigationBegin(QObject *ParentObject)
 {
 	QAction *ActionTableNavigationBegin = new QAction(ParentObject);

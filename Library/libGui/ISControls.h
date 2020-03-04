@@ -61,7 +61,6 @@ public:
 	static QAction* CreateActionDetachTask(QObject *ParentObject);
 	static QAction* CreateActionShare(QObject *ParentObject);
 	static QAction* CreateActionAttachTask(QObject *ParentObject);
-	static QAction* CreateActionReference(QObject *ParentObject);
 	static QAction* CreateActionNavigationBegin(QObject *ParentObject);
 	static QAction* CreateActionNavigationPrevious(QObject *ParentObject);
 	static QAction* CreateActionNavigationNext(QObject *ParentObject);

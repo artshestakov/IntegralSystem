@@ -58,12 +58,10 @@ protected:
 	void LockClicked(); //Блокировка программы
 	void ChangeUser(); //Смена пользователя
 	void ActivateWorkspace(); //Активация рабочей области
-	void ShowStyleFactoryForm(); //Показать форму выбора фактики стиля
 	void ShowFavoritesForm(); //Открыть форму избранного
 	void ShowHistoryForm(); //Открыть форму истории
 	void ShowDeviceSettings(); //Открыть форму настройки устройств
 	void ShowChangePasswordForm(); //Открыть форму смены пароля
-	void CreateLogToday(); //Формирование лог файла за текущий день
 	void ShowNoteForm(); //Открыть форму "Блокнот"
 	void ShowCalculator(); //Открыть калькулятор
 	void ShowAddressBook(); //Открыть адресную книгу

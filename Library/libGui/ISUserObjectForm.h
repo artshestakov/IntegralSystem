@@ -14,7 +14,7 @@ public:
 protected:
 	void AfterShowEvent() override;
 	bool Save() override;
-	void SaveEvent() override;
+	void SavedEvent() override;
 	void PasswordChange();
 	void AccountLifeTimeChanged();
 

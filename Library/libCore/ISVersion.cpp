@@ -11,6 +11,7 @@ ISVersion::ISVersion()
 	Info.Date = Settings.value("Build/Date").toString();
 	Info.Time = Settings.value("Build/Time").toString();
 	Info.Hash = Settings.value("Build/Hash").toString();
+	Info.Branch = Settings.value("Build/Branch").toString();
 	Info.Configuration = Settings.value("Build/Configuration").toString();
 	Info.Platform = Settings.value("Build/Platform").toString();
 }

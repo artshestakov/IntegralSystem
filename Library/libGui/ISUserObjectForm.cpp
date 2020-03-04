@@ -80,7 +80,7 @@ bool ISUserObjectForm::Save()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISUserObjectForm::SaveEvent()
+void ISUserObjectForm::SavedEvent()
 {
 	if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy) //Если происходит создание или создание копии пользователя
 	{

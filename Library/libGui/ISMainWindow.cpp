@@ -268,7 +268,6 @@ void ISMainWindow::CreateMenuBar()
 	connect(MenuBar, &ISMenuBar::History, this, &ISMainWindow::ShowHistoryForm);
 	connect(MenuBar, &ISMenuBar::DeviceSettings, this, &ISMainWindow::ShowDeviceSettings);
 	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
-	connect(MenuBar, &ISMenuBar::CreateLogToday, this, &ISMainWindow::CreateLogToday);
 	connect(MenuBar, &ISMenuBar::UserStatus, this, &ISMainWindow::UserStatusChange);
 	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
 	connect(MenuBar, &ISMenuBar::Notebook, this, &ISMainWindow::ShowNoteForm);
@@ -565,22 +564,6 @@ void ISMainWindow::ShowChangePasswordForm()
 	{
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.YouPasswordDoneChanged"));
 	}
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::CreateLogToday()
-{
-	//???
-	/*QString LogPath = ISLogger::GetInstance().GetLogFileName();
-	QString FileName = ISSystem::GetFileName(LogPath);
-	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.Log"), FileName);
-	if (FilePath.length())
-	{
-		QFile FileLog(LogPath);
-		if (!FileLog.copy(FilePath))
-		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCreateLogFile"), FileLog.errorString());
-		}
-	}*/
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowNoteForm()

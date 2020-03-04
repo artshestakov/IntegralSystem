@@ -78,7 +78,7 @@ protected:
 	void SaveCreate(); //Сохранить и создать новую запись
 	void SaveClose(); //Сохранить и закрыть
 	virtual bool Save(); //Сохранить
-	virtual void SaveEvent(); //Событие при сохранении объекта
+	virtual void SavedEvent(); //Событие при сохранении объекта
 	void RenameReiconForm(); //Переименование формы
 	void DataChanged(); //Собыие при изменении значения одного из полей
 	void SetModificationFlag(bool modification); //Изменить флаг модицикации данных

@@ -863,7 +863,7 @@ bool ISObjectFormBase::Save()
 	}
 
 	ISDatabase::GetInstance().GetDefaultDB().transaction(); //Открытие транзакции
-	SaveEvent();
+	SavedEvent();
 
 	//Заполнение запроса значениями
 	ISQuery SqlQuery(QueryText);
@@ -928,9 +928,9 @@ bool ISObjectFormBase::Save()
 	return false;
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::SaveEvent()
+void ISObjectFormBase::SavedEvent()
 {
-	//???
+	
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::RenameReiconForm()

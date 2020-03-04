@@ -1382,11 +1382,6 @@ void ISListBaseForm::ShowFavorites()
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::ShowReference()
-{
-	//???
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectBeginRecord()
 {
 	if (SqlModel->rowCount())
@@ -1546,11 +1541,6 @@ void ISListBaseForm::CreateActions()
 	QAction *ActionAttachTask = ISControls::CreateActionAttachTask(this);
 	connect(ActionAttachTask, &QAction::triggered, this, &ISListBaseForm::AttachTask);
 	Actions.insert(ISNamespace::AT_AttachTask, ActionAttachTask);
-
-	//Справка
-	QAction *ActionReference = ISControls::CreateActionReference(this);
-	connect(ActionReference, &QAction::triggered, this, &ISListBaseForm::ShowReference);
-	Actions.insert(ISNamespace::AT_Reference, ActionReference);
 
 	//Первая запись
 	QAction *ActionNavigationBegin = ISControls::CreateActionNavigationBegin(this);

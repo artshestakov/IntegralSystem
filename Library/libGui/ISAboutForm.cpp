@@ -73,10 +73,10 @@ void ISAboutForm::CreateCommonTab()
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersion::Instance().Info.Platform);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersion::Instance().ToString());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersion::Instance().Info.Revision));
-	//AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionBuild"), QString::number(ISVersion::GetInstance().GetBuild())); //???
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersion::Instance().Info.Date);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersion::Instance().Info.Time);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionHash"), ISVersion::Instance().Info.Hash);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), ISVersion::Instance().Info.Branch);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
 
 	LayoutCommon->addStretch();

@@ -300,6 +300,7 @@ struct LIBCORE_EXPORT ISVersionStruct
 	QString Date;
 	QString Time;
 	QString Hash;
+	QString Branch;
 	QString Configuration;
 	QString Platform;
 };
