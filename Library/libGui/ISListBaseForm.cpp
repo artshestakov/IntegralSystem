@@ -53,7 +53,9 @@ static QString QI_SHARE_RECORD = PREPARE_QUERY("INSERT INTO _chatmessages(chat_m
 static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_user, srfs_value) "
 											  "VALUES(:UserID, :Value)");
 //-----------------------------------------------------------------------------
-ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent) : ISInterfaceMetaForm(parent)
+ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
+	: ISInterfaceMetaForm(parent),
+	ActionObjectGroup(new QActionGroup(this)) //Группа действий, остосящихся только к одному объекту
 {
 	MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 	SqlModel = nullptr;
@@ -66,12 +68,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent) : ISIn
 	ShowOnly = MetaTable->ShowOnly;
 	IsLoadingData = false;
 	SearchFlag = false;
-
-	//Запоминать размер колонок
-	RememberColumnSize = SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE);
-
-	//Группа действий, остосящихся только к одному объекту
-	ActionObjectGroup = new QActionGroup(this);
 
 	//Создание действий
 	CreateActions();
@@ -99,6 +95,18 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent) : ISIn
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
 {
+	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE)) //Если нужно запоминать размер колонок
+	{
+		for (int i = 0, c = SqlModel->columnCount(); i < c; ++i)
+		{
+			QString FieldName = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
+			if (!MetaTable->GetField(FieldName)->IsSystem) //Если поле не системное - запомнить размер поля
+			{
+				ISColumnSizer::Instance().SetColumnSize(MetaTable->Name, FieldName, TableView->columnWidth(i));
+			}
+		}
+	}
+
 	ModelThreadQuery->quit();
 	IS_ASSERT(ModelThreadQuery->wait(), "Not wait() thread");
 
@@ -273,28 +281,6 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::HeaderResized(int Column, int OldSize, int NewSize)
-{
-    Q_UNUSED(OldSize);
-	if (RememberColumnSize)
-	{
-		QString FieldName;
-		for (int i = 0; i < SqlModel->columnCount(); ++i)
-		{
-			if (Column == i)
-			{
-				FieldName = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-				break;
-			}
-		}
-
-		if (!MetaTable->GetField(FieldName)->IsSystem) //Если поле не системное - запомнить размер поля
-		{
-			ISColumnSizer::GetInstance().SetColumnSize(MetaTable->Name, FieldName, NewSize);
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortOrder)
 {
 	QString FieldName = SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString();
@@ -411,8 +397,7 @@ void ISListBaseForm::CornerButtonClicked()
 void ISListBaseForm::LoadDataAfterEvent()
 {
 	ResizeColumnsToContents();
-	
-	LabelRowCount->setText(QString("%1: %2").arg(LANG("RecordsCount")).arg(SqlModel->rowCount())); //Изменение значения в надписе "Записей"
+	LabelRowCount->setText(QString("%1: %2").arg(LANG("RecordsCount")).arg(SqlModel->rowCount()));
 
 	SetEnabledActionObject(false);
 	SelectRowObject(SelectObjectAfterUpdate);
@@ -632,17 +617,15 @@ void ISListBaseForm::PeriodClear()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ResizeColumnsToContents()
 {
-	disconnect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, &ISListBaseForm::HeaderResized);
-	for (int i = 0; i < SqlModel->columnCount(); ++i)
+	for (int i = 0, c = SqlModel->columnCount(); i < c; ++i)
 	{
 		QString FieldName = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-		int ColumnSize = ISColumnSizer::GetInstance().GetColumnSize(MetaTable->Name, FieldName);
+		int ColumnSize = ISColumnSizer::Instance().GetColumnSize(MetaTable->Name, FieldName);
 		if (ColumnSize) //Если есть размер столбца в памяти, использовать его
 		{
 			TableView->setColumnWidth(i, ColumnSize);
 		}
 	}
-	connect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, &ISListBaseForm::HeaderResized);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AddWidgetToBottom(QWidget *Widget)
@@ -1720,7 +1703,6 @@ void ISListBaseForm::CreateTableView()
 	TableView->SetCornerText(LANG("Reduction.SerialNumber"));
 	TableView->SetCornerToolTip(LANG("OrdinalNumber"));
 	
-	connect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, &ISListBaseForm::HeaderResized);
 	connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
 	connect(TableView, &ISBaseTableView::CornerClicked, this, &ISListBaseForm::CornerButtonClicked);
 	LayoutTableView->addWidget(TableView);

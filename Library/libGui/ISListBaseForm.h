@@ -122,7 +122,6 @@ protected:
 
 	virtual void DoubleClickedTable(const QModelIndex &ModelIndex); //Обработчик события двойного нажатия на строку таблицы
 
-	void HeaderResized(int Column, int OldSize, int NewSize);
 	void SortingChanged(int LogicalIndex, Qt::SortOrder SortOrder);
 	void SortingDefault(); //Установка сортировки по умолчанию
 	void HideSystemFields(); //Скрытие системных полей
@@ -159,7 +158,6 @@ private:
 	bool BeginInstallSorting; //Индикатор первичной установки сортировки
 	int SelectObjectAfterUpdate;
 	bool DelegatesCreated; //Индикатор указания созданы делегаты или нет
-	bool RememberColumnSize;
 	bool ShowOnly;
 	bool IsLoadingData; //Флаг загрузки данных
 	bool SearchFlag;

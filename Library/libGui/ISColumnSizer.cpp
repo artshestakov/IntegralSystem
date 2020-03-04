@@ -30,22 +30,23 @@ ISColumnSizer::ISColumnSizer()
 //-----------------------------------------------------------------------------
 ISColumnSizer::~ISColumnSizer()
 {
-	while (!Tables.isEmpty())
+	while (!Tables.empty())
 	{
 		delete Tables.take(Tables.keys().back());
 	}
 }
 //-----------------------------------------------------------------------------
-ISColumnSizer& ISColumnSizer::GetInstance()
+ISColumnSizer& ISColumnSizer::Instance()
 {
 	static ISColumnSizer ColumnSizer;
 	return ColumnSizer;
 }
 //-----------------------------------------------------------------------------
-void ISColumnSizer::Initialize()
+bool ISColumnSizer::Initialize()
 {
 	ISQuery qSelect(QS_COLUMN_SIZE);
-	if (qSelect.Execute())
+	bool Result = qSelect.Execute();
+	if (Result)
 	{
 		while (qSelect.Next())
 		{
@@ -65,21 +66,19 @@ void ISColumnSizer::Initialize()
 			}
 		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISColumnSizer::Save()
 {
 	for (const auto &TableItem : Tables.toStdMap())
 	{
-		QString TableName = TableItem.first;
-		ISColumnSizeItem *ColumnSizeItem = TableItem.second;
-
-		if (ColumnSizeItem->ModificationFlag)
+		if (TableItem.second->ModificationFlag)
 		{
-			for (const auto &FieldItem : ColumnSizeItem->Fields.toStdMap())
+			for (const auto &FieldItem : TableItem.second->Fields.toStdMap())
 			{
 				ISQuery qSelect(QS_COLUMN_SIZE_COUNT);
-				qSelect.BindValue(":TableName", TableName);
+				qSelect.BindValue(":TableName", TableItem.first);
 				qSelect.BindValue(":FieldName", FieldItem.first);
 				if (qSelect.ExecuteFirst())
 				{
@@ -87,14 +86,14 @@ void ISColumnSizer::Save()
 					{
 						ISQuery qUpdate(QU_COLUMN_SIZE);
 						qUpdate.BindValue(":Size", FieldItem.second);
-						qUpdate.BindValue(":TableName", TableName);
+						qUpdate.BindValue(":TableName", TableItem.first);
 						qUpdate.BindValue(":FieldName", FieldItem.first);
 						qUpdate.Execute();
 					}
 					else
 					{
 						ISQuery qInsert(QI_COLUMN_SIZE);
-						qInsert.BindValue(":TableName", TableName);
+						qInsert.BindValue(":TableName", TableItem.first);
 						qInsert.BindValue(":FieldName", FieldItem.first);
 						qInsert.BindValue(":Size", FieldItem.second);
 						qInsert.Execute();
@@ -113,15 +112,12 @@ void ISColumnSizer::Clear()
 void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &FieldName, int Size)
 {
 	ISColumnSizeItem *ColumnSizeItem = Tables.value(TableName);
-	if (ColumnSizeItem)
-	{
-		ColumnSizeItem->Fields.insert(FieldName, Size);
-	}
-	else
+	if (!ColumnSizeItem)
 	{
 		ColumnSizeItem = new ISColumnSizeItem();
-		ColumnSizeItem->Fields.insert(FieldName, Size);
+		Tables.insert(TableName, ColumnSizeItem);
 	}
+	ColumnSizeItem->Fields.insert(FieldName, Size);
 	ColumnSizeItem->ModificationFlag = true;
 }
 //-----------------------------------------------------------------------------

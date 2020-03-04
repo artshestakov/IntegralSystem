@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISCOLUMNSIZER_H_INCLUDED
+#define _ISCOLUMNSIZER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISStructs.h"
@@ -6,15 +8,9 @@
 class ISColumnSizer
 {
 public:
-	ISColumnSizer(const ISColumnSizer &) = delete;
-	ISColumnSizer(ISColumnSizer &&) = delete;
-	ISColumnSizer &operator=(const ISColumnSizer &) = delete;
-	ISColumnSizer &operator=(ISColumnSizer &&) = delete;
-	~ISColumnSizer();
+	static ISColumnSizer& Instance();
 
-	static ISColumnSizer& GetInstance();
-
-	void Initialize();
+	bool Initialize();
 	void Save(); //Сохранить размеры в базу данных
 	void Clear(); //Очистить размеры
 
@@ -23,7 +19,12 @@ public:
 
 private:
 	ISColumnSizer();
+	~ISColumnSizer();
+	ISColumnSizer(ISColumnSizer const &) {};
+	ISColumnSizer& operator=(ISColumnSizer const&) { return *this; };
 
+private:
 	QMap<QString, ISColumnSizeItem*> Tables;
 };
 //-----------------------------------------------------------------------------
+#endif

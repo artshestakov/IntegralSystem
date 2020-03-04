@@ -173,7 +173,10 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	//Инициализация размеров колонок
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.ColumnSizer"));
-	ISColumnSizer::GetInstance().Initialize();
+	if (!ISColumnSizer::Instance().Initialize())
+	{
+		return EXIT_FAILURE;
+	}
 
 	//Инициализация внешних инструментов
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.ExternalTools"));

@@ -455,12 +455,12 @@ void ISMainWindow::BeforeClose()
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
 	{
 		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ColumnSize.Save"));
-		ISColumnSizer::GetInstance().Save();
+		ISColumnSizer::Instance().Save();
 	}
 	else
 	{
 		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ColumnSize.Clear"));
-		ISColumnSizer::GetInstance().Clear();
+		ISColumnSizer::Instance().Clear();
 	}
 
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.DisconnectFromDatabase"));
