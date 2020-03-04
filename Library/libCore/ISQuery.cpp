@@ -8,6 +8,7 @@
 #include "ISQueryExceptionConnection.h"
 #include "ISQueryExceptionSyntax.h"
 #include "ISQueryExceptionTransaction.h"
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(const QString& text, bool prepare)
 	: SqlQuery(ISDatabase::GetInstance().GetDefaultDB()),
@@ -47,7 +48,7 @@ ISQuery::~ISQuery()
 	
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Prepare(const QString& text) /*throw(ISQueryException)*/
+bool ISQuery::Prepare(const QString& text)
 {
 	SqlText = text;
 	Prepared = SqlQuery.prepare(text);
@@ -59,7 +60,7 @@ bool ISQuery::Prepare(const QString& text) /*throw(ISQueryException)*/
 	return Prepared;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Prepare(QSqlDatabase& db, const QString& text) /*throw(ISQueryException)*/
+bool ISQuery::Prepare(QSqlDatabase& db, const QString& text)
 {
 	SqlText = text;
 	SqlQuery = QSqlQuery(db);
@@ -68,7 +69,7 @@ bool ISQuery::Prepare(QSqlDatabase& db, const QString& text) /*throw(ISQueryExce
 	return Prepare(text);
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute() /*throw(ISQueryException)*/
+bool ISQuery::Execute()
 {
 	ColumnIndices.clear();
 	ISCountingTime Time;
@@ -91,7 +92,7 @@ bool ISQuery::Execute() /*throw(ISQueryException)*/
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute(const QString& query_text) /*throw(ISQueryException)*/
+bool ISQuery::Execute(const QString& query_text)
 {
 	SqlText = query_text;
 	ColumnIndices.clear();
@@ -115,7 +116,7 @@ bool ISQuery::Execute(const QString& query_text) /*throw(ISQueryException)*/
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute(QSqlDatabase& db, const QString& query_text) /*throw(ISQueryException)*/
+bool ISQuery::Execute(QSqlDatabase& db, const QString& query_text)
 {
 	SqlText = query_text;
 	ColumnIndices.clear();
@@ -130,95 +131,85 @@ bool ISQuery::Execute(QSqlDatabase& db, const QString& query_text) /*throw(ISQue
 			ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
 		}
 	}
-
 	Raise();
-
 	return SqlQuery.lastError().type() == QSqlError::NoError;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::ExecuteFirst() /*throw(ISQueryException)*/
+bool ISQuery::ExecuteFirst()
 {
-	bool ok = Execute();
-	ok = ok && First();
-	return ok;
+	bool Result = Execute();
+	Result = Result && First();
+	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::ExecuteFirst(QSqlDatabase& db, const QString& query_text) /*throw(ISQueryException)*/
+bool ISQuery::ExecuteFirst(QSqlDatabase& db, const QString& query_text)
 {
-	bool ok = Execute(db, query_text);
-	ok == ok && First();
-	return ok;
+	bool Result = Execute(db, query_text);
+	Result == Result && First();
+	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::BindValue(const QString& name, const QVariant& value) /*throw(ISQueryException)*/
+bool ISQuery::BindValue(const QString& name, const QVariant& value)
 {
 	if (!SqlQuery.boundValues().contains(name))
 	{
-		throw ISQueryExceptionSyntax(QString("Parameter \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
-		return false;
+		IS_ASSERT(false, QString("Parameter \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
 	}
-
 	SqlQuery.bindValue(name, value);
-	ParametersQuery.insert(name, value);
 	return true;
 }
 //-----------------------------------------------------------------------------
-QVariant ISQuery::ReadColumn(const QString &name) /*throw(ISQueryException)*/
+QVariant ISQuery::ReadColumn(const QString &name)
 {
 	if (ColumnIndices.empty())
 	{
 		PrepareColumnIndices();
 	}
 
-	QMap<QString, int>::iterator i = ColumnIndices.find(name.toLower());
-	if (i != ColumnIndices.end())
+	std::map<QString, int>::const_iterator i = ColumnIndices.find(name.toLower());
+	if (i == ColumnIndices.end())
 	{
-		return ReadColumn(*i);
+		IS_ASSERT(false, QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
 	}
-
-	throw(ISQueryExceptionSyntax(QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText)));
-	return QVariant();
+	return ReadColumn(i->second);
 }
 //-----------------------------------------------------------------------------
-QVariant ISQuery::ReadColumn(int index) /*throw(ISQueryException)*/
+QVariant ISQuery::ReadColumn(int index)
 {
 	return SqlQuery.value(index);
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Next() /*throw(ISQueryException)*/
+bool ISQuery::Next()
 {
 	bool Result = SqlQuery.next();
 	if (!Result)
 	{
 		Raise();
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::First() /*throw(ISQueryException)*/
+bool ISQuery::First()
 {
 	bool Result = SqlQuery.first();
 	if (!Result)
 	{
 		Raise();
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Previous() /*throw(ISQueryException)*/
+bool ISQuery::Previous()
 {
 	bool Result = SqlQuery.previous();
 	if (!Result)
 	{
 		Raise();
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QSqlRecord ISQuery::GetRecord() /*throw(ISQueryException)*/
+QSqlRecord ISQuery::GetRecord()
 {
 	if (SqlQuery.lastError().type() == QSqlError::NoError)
 	{
@@ -228,7 +219,6 @@ QSqlRecord ISQuery::GetRecord() /*throw(ISQueryException)*/
 	{
 		Raise();
 	}
-
 	return QSqlRecord();
 }
 //-----------------------------------------------------------------------------
@@ -267,13 +257,12 @@ int ISQuery::GetErrorNumber() const
 	return SqlQuery.lastError().number();
 }
 //-----------------------------------------------------------------------------
-const QMap<QString, int>& ISQuery::GetColumnIndices()
+const std::map<QString, int>& ISQuery::GetColumnIndices()
 {
 	if (ColumnIndices.empty())
 	{
 		PrepareColumnIndices();
 	}
-
 	return ColumnIndices;
 }
 //-----------------------------------------------------------------------------
@@ -293,7 +282,7 @@ void ISQuery::SetShowLongQuery(bool show)
 	ShowLongQuery = show;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::Raise() /*throw(ISQueryException)*/
+void ISQuery::Raise()
 {
 	if (SqlQuery.lastError().type() != QSqlError::NoError)
 	{
@@ -314,13 +303,13 @@ void ISQuery::Raise() /*throw(ISQueryException)*/
 	}
 }
 //-----------------------------------------------------------------------------
-void ISQuery::PrepareColumnIndices() throw()
+void ISQuery::PrepareColumnIndices()
 {
 	ColumnIndices.clear();
 	QSqlRecord SqlRecord = SqlQuery.record();
-	for (int i = 0; i < SqlRecord.count(); ++i)
+	for (int i = 0, c = SqlRecord.count(); i < c; ++i)
 	{
-		ColumnIndices.insert(SqlRecord.fieldName(i).toLower(), i);
+		ColumnIndices.emplace(SqlRecord.fieldName(i).toLower(), i);
 	}
 }
 //-----------------------------------------------------------------------------

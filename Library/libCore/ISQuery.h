@@ -14,26 +14,26 @@ public:
 	ISQuery(QSqlDatabase& db, const QString &text = QString(), bool prepare = true);
 	~ISQuery();
 
-	bool Prepare(const QString& text) /*throw(ISQueryException)*/;
-	bool Prepare(QSqlDatabase& db, const QString& text) /*throw(ISQueryException)*/;
+	bool Prepare(const QString& text);
+	bool Prepare(QSqlDatabase& db, const QString& text);
 
-	bool Execute() /*throw(ISQueryException)*/;
-	bool Execute(const QString& query_text) /*throw(ISQueryException)*/;
-	bool Execute(QSqlDatabase& db, const QString& query_text) /*throw(ISQueryException)*/;
+	bool Execute();
+	bool Execute(const QString& query_text);
+	bool Execute(QSqlDatabase& db, const QString& query_text);
 
-	bool ExecuteFirst() /*throw(ISQueryException)*/;
-	bool ExecuteFirst(QSqlDatabase& db, const QString& query_text) /*throw(ISQueryException)*/;
+	bool ExecuteFirst();
+	bool ExecuteFirst(QSqlDatabase& db, const QString& query_text);
 
-	bool BindValue(const QString& name, const QVariant& value) /*throw(ISQueryException)*/;
+	bool BindValue(const QString& name, const QVariant& value);
 
-	QVariant ReadColumn(const QString& name) /*throw(ISQueryException)*/;
-	QVariant ReadColumn(int index) /*throw(ISQueryException)*/;
+	QVariant ReadColumn(const QString& name);
+	QVariant ReadColumn(int index);
 	
-	bool Next() /*throw(ISQueryException)*/;
-	bool First() /*throw(ISQueryException)*/;
-	bool Previous() /*throw(ISQueryException)*/;
+	bool Next();
+	bool First();
+	bool Previous();
 
-	QSqlRecord GetRecord() /*throw(ISQueryException)*/;
+	QSqlRecord GetRecord();
 	QSqlQuery GetSqlQuery() const;
 
 	bool IsValid() const;
@@ -42,22 +42,21 @@ public:
 	QString GetSqlText() const; //Получить текст запроса
 	QString GetErrorText(); //Получить текст ошибки
 	int GetErrorNumber() const; //Получить номер ошибки
-	const QMap<QString, int>& GetColumnIndices();
+	const std::map<QString, int>& GetColumnIndices();
 	int GetCountResultRows() const; //Получить количество строк из результата запроса (только для SELECT)
 	int GetCountAffected() const; //Получить количество затронутых запросом строк
 	void SetShowLongQuery(bool show);
 
-protected:
-	void Raise() /*throw(ISQueryException)*/;
+private:
+	void Raise();
 	void PrepareColumnIndices() throw();
 
 private:
 	QSqlQuery SqlQuery;
-	QMap<QString, int> ColumnIndices;
+	std::map<QString, int> ColumnIndices;
 	QSqlDatabase DB;
 	QString SqlText;
 	bool Prepared;
-	QVariantMap ParametersQuery;
 	bool ShowLongQuery;
 };
 //-----------------------------------------------------------------------------
