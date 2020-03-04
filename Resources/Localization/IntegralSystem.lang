@@ -312,6 +312,8 @@
   <Local Name="Banner.CloseApplication.ExitApplication" Russian="Завершение работы..."/>
 
   <!--DaData-->
+  <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
+  <Local Name="DaData.NotFound.Bank" Russian="Банк по такому БИК не найден"/>
   <Local Name="DaData.Organization.BranchType.MAIN" Russian="Головная огранизация"/>
   <Local Name="DaData.Organization.BranchType.BRANCH" Russian="Филиал"/>
   <Local Name="DaData.Organization.State.ACTIVE" Russian="Действующая"/>

@@ -13,6 +13,7 @@ class LIBGUI_EXPORT ISDaDataService : public QObject
 signals:
 	void OgranizationFounded(const ISDaDataOrganization &);
 	void BankFounded(const ISDaDataBank &);
+	void Error(const QString &);
 
 public:
 	ISDaDataService(QObject *parent = 0);
