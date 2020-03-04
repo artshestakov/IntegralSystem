@@ -41,30 +41,29 @@ void ISCaratService::StartService()
 
 			ISLOGGER_INFO("Core \"" + CoreName + "\": starting...");
 			QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
-			if (QFile::exists(CoreFilePath)) //Если ядро существует
-			{
-				QProcess *Process = new QProcess(this);
-				Process->setObjectName(CoreName);
-				connect(Process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ISCaratService::Finished);
-				connect(Process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ISCaratService::Error);
-				connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
-				connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
-				Process->start(CoreFilePath);
-
-				//Если дождались первого сообщения от ядра и оно валидное - считаем, что ядро успешно запустилось - иначе ошибка в любом случае
-				if (Process->waitForReadyRead(CARAT_CORE_START_TIMEOUT) && Process->readAll().contains(CARAT_CORE_START_FLAG))
-				{
-					ISLOGGER_INFO("Core \"" + CoreName + "\" started. PID: " + QString::number(Process->processId()));
-					++CoreCountStarted;
-				}
-				else
-				{
-					ISLOGGER_ERROR("Core \"" + CoreName + "\" not started");
-				}
-			}
-			else //Ядро не существует
+			if (!QFile::exists(CoreFilePath)) //Если ядро не существует - переходим к следующему
 			{
 				ISLOGGER_ERROR("Core \"" + CoreName + "\" not found. Path: " + CoreFilePath);
+				continue;
+			}
+
+			QProcess *Process = new QProcess(this);
+			Process->setObjectName(CoreName);
+			connect(Process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ISCaratService::Finished);
+			connect(Process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ISCaratService::Error);
+			connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
+			connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
+			Process->start(CoreFilePath);
+
+			//Если дождались первого сообщения от ядра и оно валидное - считаем, что ядро успешно запустилось - иначе ошибка в любом случае
+			if (Process->waitForReadyRead(CARAT_CORE_START_TIMEOUT) && Process->readAll().contains(CARAT_CORE_START_FLAG))
+			{
+				ISLOGGER_INFO("Core \"" + CoreName + "\" started. PID: " + QString::number(Process->processId()));
+				++CoreCountStarted;
+			}
+			else
+			{
+				ISLOGGER_ERROR("Core \"" + CoreName + "\" not started");
 			}
 		}
 
