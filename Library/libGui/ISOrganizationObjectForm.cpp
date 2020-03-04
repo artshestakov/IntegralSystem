@@ -38,7 +38,7 @@ static QString QU_ORGANIZATION_USER = PREPARE_QUERY2("UPDATE organizations SET "
 ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	DaDataService = new ISDaDataService(this);
-	connect(DaDataService, &ISDaDataService::OgranizationFounded, this, &ISOrganizationObjectForm::SearchFinished);
+	connect(DaDataService, &ISDaDataService::FoundedOgranization, this, &ISOrganizationObjectForm::SearchFinished);
 
 	for (int i = 0; i < meta_table->Fields.count(); ++i)
 	{
