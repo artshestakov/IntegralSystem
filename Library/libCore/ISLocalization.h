@@ -2,19 +2,13 @@
 #ifndef _ISLOCALIZATION_H_INCLUDED
 #define _ISLOCALIZATION_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "libGui_global.h"
+#include "libCore_global.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT ISLocalization
+class LIBCORE_EXPORT ISLocalization
 {
 public:
-	ISLocalization(const ISLocalization &) = delete;
-	ISLocalization(ISLocalization &&) = delete;
-	ISLocalization &operator=(const ISLocalization &) = delete;
-	ISLocalization &operator=(ISLocalization &&) = delete;
-	~ISLocalization();
-
-	static ISLocalization& GetInstance();
+	static ISLocalization& Instance();
 
 	QString GetString(const QString &ParameterName) const; //Получить локализованную строку
 	void LoadResourceFile(const QString &FileName); //Инициализация файла из ресурсов
@@ -22,11 +16,15 @@ public:
 
 private:
 	ISLocalization();
+	~ISLocalization();
+	ISLocalization(ISLocalization const &) {};
+	ISLocalization& operator=(ISLocalization const&) { return *this; };
 
+private:
 	std::map<QString, QString> Dictionary;
 	QVectorString LoadedFiles;
 };
 //-----------------------------------------------------------------------------
-#define LANG(PARAMETER) ISLocalization::GetInstance().GetString(PARAMETER)
+#define LANG(PARAMETER) ISLocalization::Instance().GetString(PARAMETER)
 //-----------------------------------------------------------------------------
 #endif

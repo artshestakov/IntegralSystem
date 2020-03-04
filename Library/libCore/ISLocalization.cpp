@@ -34,7 +34,7 @@ ISLocalization::~ISLocalization()
 	
 }
 //-----------------------------------------------------------------------------
-ISLocalization& ISLocalization::GetInstance()
+ISLocalization& ISLocalization::Instance()
 {
 	static ISLocalization Localization;
 	return Localization;

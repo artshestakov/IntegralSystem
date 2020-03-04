@@ -253,6 +253,9 @@
     <ClInclude Include="ISConsole.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISLocalization.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -442,6 +445,9 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISConsole.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLocalization.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>

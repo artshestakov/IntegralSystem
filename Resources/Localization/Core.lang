@@ -9,6 +9,14 @@
   <Local Name="FileDialog.File.Save.Title" Russian="Сохранение файла"/>
   <Local Name="FileDialog.Directory.Title" Russian="Выбор директории"/>
   <Local Name="FileDialog.Files.Open.Title" Russian="Выбор файлов"/>
+  
+  <!--System user-->
+  <Local Name="SystemUser.Surname" Russian="Главный"/>
+  <Local Name="SystemUser.Name" Russian="администратор"/>
+  <Local Name="SystemUser.Patronymic" Russian="postgres"/>
+  
+  <!--Database settings-->
+  <Local Name="DatabaseSettings.Name" Russian="Настройка базы данных"/>
 
   <!--FileFilters-->
   <Local Name="File.Filter.Images" Russian="Файлы изображений (*.png *.jpeg *.jpg *.dds *.gif *.icns *.ico *.svg *.tga *.tiff *.wbmp *.bmp *.webp)"/>

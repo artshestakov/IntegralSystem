@@ -13,8 +13,6 @@ public:
 	virtual ~CGConfiguratorCreate();
 
 public slots:
-	void systemuser();
-	void databasesettings();
 	void resources();
 };
 //-----------------------------------------------------------------------------

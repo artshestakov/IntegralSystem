@@ -47,9 +47,7 @@ const char OS_NAME_LINUX[] = "Linux";
 const char OS_NAME_MACOS[] = "Mac OS";
 const char OS_NAME_UNKNOWN[] = "Unknown";
 //LOCALIZATION-----------------------------------------------------------------
-const char LOCALIZATION_FILE_CARAT[] = "Carat";
 const char LOCALIZATION_FILE_CORE[] = "Core";
-const char LOCALIZATION_FILE_DATABASE_SERVICE[] = "DatabaseService";
 const char LOCALIZATION_FILE_INTEGRAL_SYSTEM[] = "IntegralSystem";
 const char LOCALIZATION_FILE_OBJECTS[] = "Objects";
 //REG_EXP----------------------------------------------------------------------
@@ -147,12 +145,7 @@ const char AMI_BLIND_TRANSFER[] = "BlindTransfer";
 const char AMI_ORIGINATE_RESPONSE[] = "OriginateResponse";
 const char AMI_EXTENSION_STATUS[] = "ExtensionStatus";
 //-----------------------------------------------------------------------------
-const char SYSTEM_USER_SURNAME[] = "Main";
-const char SYSTEM_USER_NAME[] = "admin";
-const char SYSTEM_USER_PATRONYMIC[] = "postgres";
-//-----------------------------------------------------------------------------
 const char SYSTEM_DATABASE_NAME[] = "postgres";
-const char SETTING_DATABASE_NAME[] = "Setting";
 const char FIGURES_STRING[] = "0123456789";
 const char SQL_DRIVER_QPSQL[] = "QPSQL";
 const int MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)

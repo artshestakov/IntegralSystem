@@ -17,6 +17,7 @@
 #include "ISConsole.h"
 #include "ISVersion.h"
 #include "ISQuery.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorCreate.h"
 #include "CGConfiguratorUpdate.h"
@@ -28,11 +29,8 @@
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------
 QVector<CGSection*> Arguments;
-QString DBServer;
+QString DBServer, DBName, DBLogin, DBPassword;
 int DBPort = 0;
-QString DBName;
-QString DBLogin;
-QString DBPassword;
 //-----------------------------------------------------------------------------
 void RegisterMetatype(); //Регистрация мета-типов
 bool InitConfiguratorScheme(QString &ErrorString); //Инициализация схемы конфигуратора
@@ -98,6 +96,8 @@ int main(int argc, char *argv[])
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
+
+	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
 	{

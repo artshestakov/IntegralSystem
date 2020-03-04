@@ -40,9 +40,9 @@ bool ISGui::Startup(QString &ErrorString)
 	SplashWidget.show();
 
 	//Загрузка локализации
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_CORE);
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
-	ISLocalization::GetInstance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);
+	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
+	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
+	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);
 
 	//Загрузка стилей интерфейса
 	SplashWidget.SetText(LANG("SplashWidget.Styles"));

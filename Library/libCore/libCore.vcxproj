@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="call_stack.hpp" />
+    <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISCrashDumper.h" />
     <ClInclude Include="ISAssociationTypes.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="ISVersion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
     <ClCompile Include="ISAssociationTypes.cpp" />

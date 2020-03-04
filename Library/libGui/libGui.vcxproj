@@ -264,7 +264,6 @@
     <ClCompile Include="ISListObjectForm.cpp" />
     <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
-    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLockForm.cpp" />
     <ClCompile Include="ISLoginEdit.cpp" />
     <ClCompile Include="ISMainMenu.cpp" />
@@ -454,7 +453,6 @@
     <QtMoc Include="ISModelThreadQuery.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISLabels.h" />
-    <ClInclude Include="ISLocalization.h" />
     <QtMoc Include="ISOilSphere.h" />
     <ClInclude Include="ISPassword.h" />
     <QtMoc Include="ISPrintingBase.h" />
