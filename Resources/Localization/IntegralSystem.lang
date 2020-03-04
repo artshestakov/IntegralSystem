@@ -311,6 +311,16 @@
   <Local Name="Banner.CloseApplication.DisconnectFromDatabase" Russian="Завершение работы: отключение от базы данных..."/>
   <Local Name="Banner.CloseApplication.ExitApplication" Russian="Завершение работы..."/>
 
+  <!--DaData-->
+  <Local Name="DaData.BranchType.MAIN" Russian="Головная огранизация"/>
+  <Local Name="DaData.BranchType.BRANCH" Russian="Филиал"/>
+  <Local Name="DaData.State.Status.ACTIVE" Russian="Действующая"/>
+  <Local Name="DaData.State.Status.LIQUIDATING" Russian="Ликвидируется"/>
+  <Local Name="DaData.State.Status.LIQUIDATED" Russian="Ликвидирована"/>
+  <Local Name="DaData.State.Status.REORGANIZING" Russian="В процессе присоединения к другому юрлицу, с последующей ликвидацией"/>
+  <Local Name="DaData.Type.LEGAL" Russian="Юридическое лицо"/>
+  <Local Name="DaData.Type.INDIVIDUAL" Russian="Индивидуальный предприниматель"/>
+  
   <!--System Fields-->
   <Local Name="SystemField.ID" Russian="Код"/>
   <Local Name="SystemField.ID.NotAssigned" Russian="Не присвоен"/>

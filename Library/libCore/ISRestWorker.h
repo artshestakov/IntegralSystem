@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libCore_global.h"
 //-----------------------------------------------------------------------------
-class ISRestWorker : public QObject
+class LIBCORE_EXPORT ISRestWorker : public QObject
 {
     Q_OBJECT
 

@@ -172,6 +172,7 @@
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
     <ClCompile Include="ISCurrentAffairsForm.cpp" />
+    <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDateEdit.cpp" />
     <ClCompile Include="ISDateTimeEdit.cpp" />
@@ -442,6 +443,7 @@
     <QtMoc Include="ISScreenshot.h" />
     <ClInclude Include="ISBuffer.h" />
     <QtMoc Include="ISButtons.h" />
+    <QtMoc Include="ISDaDataService.h" />
     <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesGui.h" />
     <QtMoc Include="ISDelegates.h" />

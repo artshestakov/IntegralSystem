@@ -37,9 +37,6 @@
     <Filter Include="Network">
       <UniqueIdentifier>{6f751243-38a1-499c-aacd-d094d88ce358}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Network\DaData">
-      <UniqueIdentifier>{41a1e551-654b-4cc3-afd9-36d243506f5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network\SMTP">
       <UniqueIdentifier>{75e363fa-0d60-4bfa-bef9-be5089080fc3}</UniqueIdentifier>
     </Filter>
@@ -426,9 +423,6 @@
     <ClCompile Include="ISSmtpClient.cpp">
       <Filter>Network\SMTP</Filter>
     </ClCompile>
-    <ClCompile Include="ISDaDataService.cpp">
-      <Filter>Network\DaData</Filter>
-    </ClCompile>
     <ClCompile Include="ISRestWorker.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -472,9 +466,6 @@
     </QtMoc>
     <QtMoc Include="ISSmtpClient.h">
       <Filter>Network\SMTP</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDaDataService.h">
-      <Filter>Network\DaData</Filter>
     </QtMoc>
     <QtMoc Include="ISRestWorker.h">
       <Filter>Network</Filter>

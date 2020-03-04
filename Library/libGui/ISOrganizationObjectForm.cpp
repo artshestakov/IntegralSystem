@@ -211,44 +211,43 @@ void ISOrganizationObjectForm::SearchFromINN()
 	DaDataService->SearchFromINN(INNEdit->GetValue().toString());
 }
 //-----------------------------------------------------------------------------
-void ISOrganizationObjectForm::SearchFinished()
+void ISOrganizationObjectForm::SearchFinished(const ISOrganizationStruct &OrganizationStruct)
 {
 	if (!GetFieldWidget("Name")->GetValue().isValid())
 	{
-		GetFieldWidget("Name")->SetValue(DaDataService->GetData().value("name"));
+		GetFieldWidget("Name")->SetValue(OrganizationStruct.Name.ShortWithOPF);
 	}
 
 	if (!GetFieldWidget("KPP")->GetValue().isValid())
 	{
-		GetFieldWidget("KPP")->SetValue(DaDataService->GetData().value("kpp"));
+		GetFieldWidget("KPP")->SetValue(OrganizationStruct.Kpp);
 	}
 
 	if (!GetFieldWidget("AddressPhysical")->GetValue().isValid())
 	{
-		GetFieldWidget("AddressPhysical")->SetValue(DaDataService->GetData().value("address"));
+		GetFieldWidget("AddressPhysical")->SetValue(OrganizationStruct.Address);
 	}
 
 	if (!GetFieldWidget("AddressLegal")->GetValue().isValid())
 	{
-		GetFieldWidget("AddressLegal")->SetValue(DaDataService->GetData().value("address"));
+		GetFieldWidget("AddressLegal")->SetValue(OrganizationStruct.Address);
 	}
 
 	if (!GetFieldWidget("Principal")->GetValue().isValid())
 	{
-		GetFieldWidget("Principal")->SetValue(DaDataService->GetData().value("management"));
+		GetFieldWidget("Principal")->SetValue(OrganizationStruct.Management.Name);
 	}
 
-	QVariant Okved = DaDataService->GetData().value("okved");
-	if (Okved.isValid())
+	if (!OrganizationStruct.Okved.Okved.isEmpty())
 	{
 		ISQuery qSelectCount(QS_OVED_COUNT);
-		qSelectCount.BindValue(":Code", Okved.toString());
+		qSelectCount.BindValue(":Code", OrganizationStruct.Okved.Okved);
 		if (qSelectCount.ExecuteFirst())
 		{
 			if (qSelectCount.ReadColumn("count").toInt())
 			{
 				ISQuery qSelectOkved(QS_OKVED);
-				qSelectOkved.BindValue(":Code", Okved);
+				qSelectOkved.BindValue(":Code", OrganizationStruct.Okved.Okved);
 				if (qSelectOkved.ExecuteFirst())
 				{
 					QVariant OkvedID = qSelectOkved.ReadColumn("okvd_id").toInt();

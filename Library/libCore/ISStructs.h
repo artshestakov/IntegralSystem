@@ -305,4 +305,73 @@ struct LIBCORE_EXPORT ISVersionStruct
 	QString Platform;
 };
 //-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataBranch
+{
+	ISDaDataBranch() : Count(0) { }
+
+	int Count; //Количество филиалов
+	QString BranchType; //Тип филиала
+	QString BranchTypeLocalName; //Локальное наименование типа филиала
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataManagement
+{
+	QString Name; //ФИО руководителя
+	QString Post; //Должность руководителя
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataName
+{
+	QString FullWithOPF; //Полное наименование с ОПФ
+	QString ShortWithOPF; //Краткое наименование с ОПФ
+	QString Full; //Полное наименование
+	QString Short; //Краткое наименование
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataOkved
+{
+	ISDaDataOkved() : Version(0) { }
+
+	QString Okved; //Код ОКВЭД
+	int Version; //Тип справочника (2001 или 2014)
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataOPF
+{
+	ISDaDataOPF() : Type(0) { }
+
+	QString Code; //Код ОКОПФ
+	QString FullName; //Полное название ОПФ
+	QString ShortName; //Сокращенное название ОПФ
+	int Type; //Версия справочника ОКОПФ (1999, 2012 или 2014)
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataState
+{
+	QString ActualityDate; //Дата актуальности сведений
+	QString RegistrationDate; //Дата регистрации
+	QString LiquidationDate; //Дата ликвидации
+	QString StatusName; //Статус организации
+	QString StatusLocalName; //Локальное наименование статуса организации
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISOrganizationStruct
+{
+	QString Value; //Наименование организации
+	QString Address; //Адрес
+	ISDaDataBranch Branch; //Филиал
+	QString Inn; //ИНН
+	QString Kpp; //КПП
+	QString Ogrn; //ОГРН
+	QString OrgnDate; //Дата выдачи ОГРН
+	QString HID; //Уникальный идентификатор в DaData
+	ISDaDataManagement Management; //Руководитель
+	ISDaDataName Name; //Наименование организации
+	ISDaDataOkved Okved; //ОКВЭД
+	ISDaDataOPF OPF; //Организационно-правовая форма
+	ISDaDataState State; //Статус огранизации
+	QString Type; //Тип организации
+	QString TypeLocalName; //Локальное наименование типа огранизации
+};
+//-----------------------------------------------------------------------------
 #endif

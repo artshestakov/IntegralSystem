@@ -1,20 +1,22 @@
 #pragma once
+#ifndef _ISDADATASERVICE_H_INCLUDED
+#define _ISDADATASERVICE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "libCore_global.h"
+#include "libGui_global.h"
+#include "ISStructs.h"
 #include "ISRestWorker.h"
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISDaDataService : public QObject
+class LIBGUI_EXPORT ISDaDataService : public QObject
 {
 	Q_OBJECT
 
 signals:
-	void Finished();
+	void Finished(const ISOrganizationStruct &OrganizationStruct);
 
 public:
 	ISDaDataService(QObject *parent = 0);
 	virtual ~ISDaDataService();
 
-	const QVariantMap& GetData() const;
 	void SearchFromINN(const QString &INN);
 
 protected:
@@ -23,6 +25,6 @@ protected:
 
 private:
 	ISRestWorker *RestWorker;
-	QVariantMap DataMap;
 };
 //-----------------------------------------------------------------------------
+#endif

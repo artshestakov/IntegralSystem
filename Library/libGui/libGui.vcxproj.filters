@@ -1252,6 +1252,9 @@
     <ClCompile Include="ISComboSearchWidgets.cpp">
       <Filter>Controls\SearchCondition</Filter>
     </ClCompile>
+    <ClCompile Include="ISDaDataService.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -2159,6 +2162,9 @@
     </QtMoc>
     <QtMoc Include="ISComboSearchWidgets.h">
       <Filter>Controls\SearchCondition</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDaDataService.h">
+      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
