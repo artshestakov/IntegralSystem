@@ -40,22 +40,21 @@ void ISCaratService::StartService()
 			QString FileName = qSelectCore.ReadColumn("core_filename").toString() + (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows ? QString().append(".").append(EXTENSION_EXE) : QString());
 
 			ISLOGGER_INFO("Core \"" + CoreName + "\": starting...");
-			QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName + "1";
+			QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
 			if (QFile::exists(CoreFilePath)) //≈сли €дро существует
 			{
 				QProcess *Process = new QProcess(this);
 				Process->setObjectName(CoreName);
-				Process->setProgram(CoreFilePath);
 				connect(Process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ISCaratService::Finished);
 				connect(Process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ISCaratService::Error);
 				connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
 				connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
-				Process->start();
+				Process->start(CoreFilePath);
 
 				//≈сли дождались первого сообщени€ от €дра и оно валидное - считаем, что €дро успешно запустилось - иначе ошибка в любом случае
 				if (Process->waitForReadyRead(CARAT_CORE_START_TIMEOUT) && Process->readAll().contains(CARAT_CORE_START_FLAG))
 				{
-					ISLOGGER_INFO("Core \"" + CoreName + "\" started");
+					ISLOGGER_INFO("Core \"" + CoreName + "\" started. PID: " + QString::number(Process->processId()));
 					++CoreCountStarted;
 				}
 				else
@@ -69,21 +68,22 @@ void ISCaratService::StartService()
 			}
 		}
 
-		if (CoreCountTotal)
-		{
-			ISLOGGER_WARNING("Not starting " + QString::number(CoreCountTotal) + " of " + QString::number(qSelectCore.GetCountResultRows()));
-		}
+		CoreCountStarted == CoreCountTotal ?
+			ISLOGGER_INFO("Started all cores") : //≈сли €дра были успешно запущены
+			ISLOGGER_WARNING("Started " + QString::number(CoreCountStarted) + " of " + QString::number(CoreCountTotal));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::Finished(int ExitCode, QProcess::ExitStatus Status)
 {
-	
+	QProcess *Process = dynamic_cast<QProcess*>(sender());
+	OutputString(Process->objectName(), QString("Core finished with code %1 and %2 status").arg(ExitCode).arg(Status == QProcess::NormalExit ? "normal" : "crash"));
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::Error(QProcess::ProcessError ErrorType)
 {
-	
+	QProcess *Process = dynamic_cast<QProcess*>(sender());
+	OutputString(Process->objectName(), Process->errorString());
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::ReadyReadStandartOutput()
@@ -92,7 +92,12 @@ void ISCaratService::ReadyReadStandartOutput()
 	QByteArray ByteArray = Process->readAllStandardOutput();
 	if (!ByteArray.isEmpty())
 	{
-		ISLOGGER_UNKNOWN("[" + Process->objectName() + "] " + ByteArray);
+		OutputString(Process->objectName(), ByteArray);
 	}
+}
+//-----------------------------------------------------------------------------
+void ISCaratService::OutputString(const QString &CoreObjectName, const QString &String)
+{
+	ISLOGGER_UNKNOWN(QString("[%1] %2").arg(CoreObjectName).arg(String));
 }
 //-----------------------------------------------------------------------------

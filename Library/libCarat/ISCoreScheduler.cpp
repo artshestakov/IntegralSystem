@@ -27,15 +27,12 @@ bool ISCoreScheduler::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), false, false);
-
 		Timer = new QTimer(this);
 		Timer->setInterval(1000 * 60 * 60); //1 час
 		connect(Timer, &QTimer::timeout, this, &ISCoreScheduler::Timeout);
 		Timeout();
 		Started();
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

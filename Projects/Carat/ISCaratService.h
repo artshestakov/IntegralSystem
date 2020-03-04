@@ -16,5 +16,6 @@ private:
 	void Finished(int ExitCode, QProcess::ExitStatus Status);
 	void Error(QProcess::ProcessError ErrorType);
 	void ReadyReadStandartOutput();
+	void OutputString(const QString &CoreObjectName, const QString &String);
 };
 //-----------------------------------------------------------------------------
