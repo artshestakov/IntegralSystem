@@ -95,9 +95,9 @@ void ISDateTimeEdit::SetVisibleCheck(bool Visible)
 	CheckEnable->setVisible(Visible);
 }
 //-----------------------------------------------------------------------------
-void ISDateTimeEdit::SetCheckEnable(Qt::CheckState Check)
+void ISDateTimeEdit::SetChecked(bool Check)
 {
-	CheckEnable->setCheckState(Check);
+	CheckEnable->setChecked(Check);
 }
 //-----------------------------------------------------------------------------
 void ISDateTimeEdit::SetMinimumDate(const QDate &Date)

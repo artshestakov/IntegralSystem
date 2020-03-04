@@ -52,7 +52,7 @@ ISCenterSevenDesktop::ISCenterSevenDesktop(QWidget *parent) : QWidget(parent)
 	LayoutTitle->addWidget(ButtonPreviousDay);
 
 	DateEdit = new ISDateEdit(WidgetTitle);
-	DateEdit->SetCheckEnable(Qt::Checked);
+	DateEdit->SetChecked(true);
 	DateEdit->SetVisibleCheck(false);
 	connect(DateEdit, &ISDateEdit::ValueChange, this, &ISCenterSevenDesktop::DateChanged);
 	LayoutTitle->addWidget(DateEdit);

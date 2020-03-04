@@ -20,7 +20,7 @@ public:
 
 	void SetDisplayFormat(const QString &DisplayFormat);
 	void SetVisibleCheck(bool Visible);
-	void SetCheckEnable(Qt::CheckState Check);
+	void SetChecked(bool Check);
 	void SetMinimumDate(const QDate &Date);
 	void SetMaximumDate(const QDate &Date);
 	void SetMinimumDateTime(const QDateTime &DateTime);

@@ -18,11 +18,11 @@ ISRangeDateEdit::ISRangeDateEdit(QWidget *parent, const QString &FieldName) : IS
 	AddWidgetToLeft(ComboEdit);
 
 	BeginDateEdit = new ISDateEdit(this);
-	BeginDateEdit->SetCheckEnable(Qt::Checked);
+	BeginDateEdit->SetChecked(true);
 	BeginDateEdit->SetVisibleCheck(false);
 
 	EndDateEdit = new ISDateEdit(this);
-	EndDateEdit->SetCheckEnable(Qt::Checked);
+	EndDateEdit->SetChecked(true);
 	EndDateEdit->SetVisibleCheck(false);
 
 	AddFields(LANG("FieldRange.DateTime.Begin"), BeginDateEdit, LANG("FieldRange.DateTime.End"), EndDateEdit);

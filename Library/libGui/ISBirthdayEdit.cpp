@@ -6,6 +6,7 @@ ISBirthdayEdit::ISBirthdayEdit(QWidget *parent) : ISDateEdit(parent)
 {
 	SetMinimumDate(QDate(1900, 1, 1));
 	SetMaximumDate(QDate::currentDate());
+	SetChecked(false);
 
 	Label = new QLabel(this);
 	Label->setFrameShape(QFrame::Shape::Panel);

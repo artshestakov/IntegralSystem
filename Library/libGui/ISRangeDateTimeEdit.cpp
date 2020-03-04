@@ -4,11 +4,11 @@
 ISRangeDateTimeEdit::ISRangeDateTimeEdit(QWidget *parent, const QString &FieldName) : ISRangeEditBase(parent, FieldName)
 {
 	BeginDateTimeEdit = new ISDateTimeEdit(this);
-	BeginDateTimeEdit->SetCheckEnable(Qt::Checked);
+	BeginDateTimeEdit->SetChecked(true);
 	BeginDateTimeEdit->SetVisibleCheck(false);
 
 	EndDateTimeEdit = new ISDateTimeEdit(this);
-	EndDateTimeEdit->SetCheckEnable(Qt::Checked);
+	EndDateTimeEdit->SetChecked(true);
 	EndDateTimeEdit->SetVisibleCheck(false);
 
 	AddFields(LANG("FieldRange.DateTime.Begin"), BeginDateTimeEdit, LANG("FieldRange.DateTime.End"), EndDateTimeEdit);
