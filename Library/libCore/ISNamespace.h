@@ -117,13 +117,6 @@ public:
 		EFT_Close,
 	};
 
-	enum UpdateResult
-	{
-		UR_ExitApplication,
-		UR_ContinueWork,
-		UR_ErrorStartUpdate,
-	};
-
 	enum ActionType
 	{
 		AT_Create,
@@ -284,7 +277,6 @@ Q_DECLARE_METATYPE(ISNamespace::ExportType);
 Q_DECLARE_METATYPE(ISNamespace::MessageBoxButton);
 Q_DECLARE_METATYPE(ISNamespace::DeleteRecoveryObject);
 Q_DECLARE_METATYPE(ISNamespace::ExitFormAction);
-Q_DECLARE_METATYPE(ISNamespace::UpdateResult);
 Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
 Q_DECLARE_METATYPE(ISNamespace::ObjectActionType);

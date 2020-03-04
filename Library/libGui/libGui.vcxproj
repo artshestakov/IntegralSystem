@@ -419,8 +419,6 @@
     <ClCompile Include="ISToolBarAccessTable.cpp" />
     <ClCompile Include="ISToolBarObject.cpp" />
     <ClCompile Include="ISTransferOrganizationForm.cpp" />
-    <ClCompile Include="ISUpdate.cpp" />
-    <ClCompile Include="ISUpdateDownloadForm.cpp" />
     <ClCompile Include="ISUrlEdit.cpp" />
     <ClCompile Include="ISUserEdit.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
@@ -699,7 +697,6 @@
     <QtMoc Include="ISPatternWidget.h" />
     <ClInclude Include="ISRegisterMetaType.h" />
     <QtMoc Include="ISStartup.h" />
-    <QtMoc Include="ISUpdate.h" />
     <QtMoc Include="ISTaskAllListForm.h" />
     <QtMoc Include="ISTaskBaseListForm.h" />
     <QtMoc Include="ISTaskDoneForm.h" />
@@ -740,7 +737,6 @@
     <QtMoc Include="ISStorageFilesListForm.h" />
     <QtMoc Include="ISTableDetailsForm.h" />
     <QtMoc Include="ISTelephonyForm.h" />
-    <QtMoc Include="ISUpdateDownloadForm.h" />
     <QtMoc Include="ISUserGroupListForm.h" />
     <QtMoc Include="ISUserListForm.h" />
     <QtMoc Include="ISUserObjectForm.h" />

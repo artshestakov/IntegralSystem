@@ -82,7 +82,6 @@ Source: ..\Deploy\.Configuration.-.Platform.\CaratSMS.exe; DestDir: {app}; Flags
 Source: ..\Deploy\.Configuration.-.Platform.\CaratTelephony.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 
 Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
-Source: ..\InstallResources\Update.cmd; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
 Source: ..\Components\Redistributable\Redistributable_2015_.Platform..exe; DestDir: {app}; Flags: ignoreversion; Components: Server Client
 
 [Run]

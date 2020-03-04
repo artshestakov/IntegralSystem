@@ -127,7 +127,6 @@
   <Local Name="Message.Warning.NotCreateCopyThisUser" Russian="Запрещено создавать копию пользователя под которым Вы авторизованны."/>
   <Local Name="Message.Warning.NotEditThisUser" Russian="Запрещено редактировать пользователя под которым Вы авторизованны."/>
   <Local Name="Message.Warning.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, сейчас программа будет перезапущена в обязательном порядке. Нажмите ОК для продолжения..."/>
-  <Local Name="Message.Warning.NotCloseUpdating" Russian="Не закрывайте окно обновления программы. Закрытие окна может привести к ошибкам обновления и последующей некорректной работе программы. Для продожления нажмите ОК."/>
   <Local Name="Message.Warning.NotImageInBuffer" Russian="Изображение в буфере обмена не найдено."/>
   <Local Name="Message.Warning.ImageISNull" Russian="Изображение отсутствует."/>
   <Local Name="Message.Warning.ConnectionError" Russian="Ошибка подключения к базе данных."/>
@@ -140,8 +139,6 @@
   <Local Name="Message.Warning.LoaderAlreadyRunning" Russian="Сейчас происходит загрузка данных в таблицу &quot;%1&quot;. Пожалуйста, подождите."/>
   <Local Name="Message.Warning.NotLoadLibrary" Russian="Не удалось загрузить библиотеку %1."/>
   <Local Name="Message.Warning.SelectedModuleInvalid" Russian="Выбранный файл не является модулем!"/>
-  <Local Name="Message.Warning.DownloadUpdateError" Russian="При загрузке обновления произошла ошибка или пользователь отменил загрузку. Корректная работа старой версии программы не гарантируется."/>
-  <Local Name="Message.Warning.ErrorStartUpdate" Russian="Не удалось запустить процесс обновления системы!"/>
   <Local Name="Message.Warning.FileNameIsNull" Russian="Вы не ввели имя файла."/>
   <Local Name="Message.Warning.UserGroupIsNull" Russian="Ваша учетная запись не привязанна к группе. Обратитесь к системному администратору."/>
   <Local Name="Message.Warning.ChatImageSizeConstraint" Russian="Ограничение на размер загружаемого изображения - 5 мегабайт."/>
@@ -240,7 +237,6 @@
   <Local Name="Message.Question.Lock" Russian="Заблокировать программу?"/>
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
   <Local Name="Message.Question.ReReadCard" Russian="Перечитать информацию?"/>
-  <Local Name="Message.Question.UpdatingStop" Russian="Вы действительно хотите остановить обновление?"/>
   <Local Name="Message.Question.ResetWidthColumn" Russian="Сбросить ширину всех колонок?"/>
   <Local Name="Message.Question.DeleteCalendarEvent" Russian="Удалить это событие?"/>
   <Local Name="Message.Question.CreatePasswordUser" Russian="Вы желаете присвоить пароль пользователю %1?"/>
@@ -299,7 +295,6 @@
   <Local Name="Banner.Initialize.RegisterEnterProtocol" Russian="Фиксация входа в систему..."/>
   <Local Name="Banner.Initialize.OpeningMainWindow" Russian="Открытие главного окна..."/>
   <Local Name="Banner.Initialize.OpeningMainWindow.CreateParagparh" Russian="Открытие главного окна: %1..."/>
-  <Local Name="Banner.Initialize.CheckUpdate" Russian="Проверка наличия обновлений..."/>
   <Local Name="Banner.Initialize.DownloadUpdate" Russian="Обновление загружено."/>
   
   <!--Banner Closing-->
@@ -439,8 +434,6 @@
   <Local Name="ActualInstall" Russian="Актуальный дистрибутив"/>
   <Local Name="TerminateAllUsers" Russian="Отключить всех пользователей"/>
   <Local Name="RestartApplication" Russian="Перезапуск программы"/>
-  <Local Name="CurrentVersion" Russian="Текущая версия"/>
-  <Local Name="NewVersion" Russian="Новая версия"/>
   <Local Name="AutoFitColumnWidth" Russian="Автоподбор ширины колонок"/>
   <Local Name="ResetWidthColumn" Russian="Сброс ширины колонок"/>
   <Local Name="CopyRecord" Russian="Копирование записи"/>
@@ -485,9 +478,6 @@
   <Local Name="Defer" Russian="Отложить"/>
   <Local Name="SelectDate" Russian="Выберите дату"/>
   <Local Name="Group" Russian="Группа"/>
-  <Local Name="UpdateApplication" Russian="Обновление программы"/>
-  <Local Name="Annulment" Russian="Отмена"/>
-  <Local Name="DeletingExistFileUpdate" Russian="Удаление существующего файла обновления"/>
   <Local Name="Chat" Russian="Чат"/>
   <Local Name="ChangePassword" Russian="Смена пароля"/>
   <Local Name="PasswordCheck" Russian="Проверка пароля"/>

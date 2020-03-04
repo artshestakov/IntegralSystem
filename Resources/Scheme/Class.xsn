@@ -246,44 +246,6 @@
     </Indexes>
   </Table>
   
-  <Table Name="_DistFiles" UID="{175DD376-32CE-45AA-907B-22FC27F7C97F}" Alias="dsfs" LocalName="Обновление" LocalListName="Обновления" TitleName="FileName">
-    <Fields>
-      <Field UID="{33B00F2E-3388-4054-892F-C1047BAAC0DB}" Name="FileName" Type="String" LabelName="Наименование файла" LocalListName="Наименование файла" NotNull="true"/>
-      <Field UID="{30894B8E-2576-4C12-B081-C990B0CCCF60}" Name="Size" Type="String" LabelName="Размер файла" LocalListName="Размер файла" HideFromObject="true" NotNull="true"/>
-      <Field UID="{95D9506D-4F3A-4C2E-9BD4-07F6744FC5E6}" Name="CreatedDateFile" Type="DateTime" LabelName="Файл создан" LocalListName="Файл создан" HideFromObject="true" NotNull="true"/>
-      <Field UID="{872299B0-49FA-4EF9-A9BC-AA5521EEEC36}" Name="LastModifiedFile" Type="DateTime" LabelName="Последнее изменение" LocalListName="Последнее изменение" HideFromObject="true" NotNull="true"/>
-      <Field UID="{4249AD9E-5E3B-4816-A3A8-137EED2E0792}" Name="Version" Type="String" LabelName="Версия" LocalListName="Версия" HideFromObject="true" NotNull="true"/>
-      <Field UID="{02649174-6201-4CD6-9A44-F9DC1AF3CC30}" Name="Actual" Type="Bool" LabelName="Актуальный дистрибутив" LocalListName="Актуальный дистрибутив" HideFromObject="true" NotNull="true"/>
-      <Field UID="{99A55FEA-C56A-4E29-9A2B-D0E787BDFC19}" Name="Version_1" Type="Int" LabelName="Версия 1" LocalListName="Версия 1" HideFromObject="true" HideFromList="true" NotNull="true"/>
-      <Field UID="{4F340725-62F1-4C65-AB32-E2BBC51E4CD6}" Name="Version_2" Type="Int" LabelName="Версия 2" LocalListName="Версия 2" HideFromObject="true" HideFromList="true" NotNull="true"/>
-      <Field UID="{D86A6D79-17F1-43BF-88E9-166F728CE6C9}" Name="Version_3" Type="Int" LabelName="Версия 3" LocalListName="Версия 3" HideFromObject="true" HideFromList="true" NotNull="true"/>
-      <Field UID="{95F25D68-41F5-4028-96C0-A4541E31DE90}" Name="Version_4" Type="Int" LabelName="Версия 4" LocalListName="Версия 4" HideFromObject="true" HideFromList="true" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="FileName" Unique="true"/>
-      <Index Field="Size"/>
-      <Index Field="Version" Unique="true"/>
-      <Index Field="Actual"/>
-      <Index Field="Version_1"/>
-      <Index Field="Version_2"/>
-      <Index Field="Version_3"/>
-      <Index Field="Version_4" Unique="true"/>
-    </Indexes>
-  </Table>
-
-  <Table Name="_DistFilesData" UID="{DAB24E31-4756-4A5A-A054-632DD7B27FE1}" Alias="dfdt" LocalName="Данные обновления" LocalListName="Данные обновлений" TitleName="File" IsSystem="true">
-    <Fields>
-      <Field UID="{8F696249-E572-4E26-8D39-3EF760C82A87}" Name="File" Type="Int" LabelName="Файл" LocalListName="Файл" NotNull="true"/>
-      <Field UID="{BD3751A4-6779-4278-B6D9-897C87C3085B}" Name="Data" Type="String" LabelName="Данные" LocalListName="Данные" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="File"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="File" ForeignClass="_DistFiles" ForeignField="ID" ForeignViewNameField="FileName"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_Calendar" UID="{D5E4684A-569B-4567-B94A-0C94E5656AFF}" Alias="cldr" LocalName="Событие календаря" LocalListName="События календаря" ObjectForm="ISCalendarObjectForm" TitleName="Name" IsSystem="true">
     <Fields>
       <Field UID="{BBB0B75D-FFB8-4A73-B8D0-B90F9A946A87}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" HideFromObject="true"/>

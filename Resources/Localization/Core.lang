@@ -390,7 +390,6 @@
   <Local Name="GeneratePassword" Russian="Сгенерировать пароль"/>
   <Local Name="Open" Russian="Открыть"/>
   <Local Name="Export" Russian="Экспорт"/>
-  <Local Name="Action" Russian="Действие"/>
   <Local Name="SelectFont" Russian="Выбор шрифта"/>
   <Local Name="OtherActions" Russian="Другие действия"/>
   <Local Name="ViewImage" Russian="Просмотр изображения"/>
@@ -421,10 +420,6 @@
   <Local Name="Image" Russian="Изображение"/>
   <Local Name="Calculated" Russian="Вычисляется"/>
   <Local Name="Unlock" Russian="Разблокировать"/>
-  <Local Name="Downloading" Russian="Скачивание"/>
-  <Local Name="DownloadingDone" Russian="Скачивание завершено"/>
-  <Local Name="StartDownloading" Russian="Начать загрузку"/>
-  <Local Name="Preparation" Russian="Подготовка"/>
   <Local Name="OrdinalNumber" Russian="Порядковый номер"/>
   <Local Name="Stop" Russian="Стоп"/>
   <Local Name="FilesCount" Russian="Количество файлов"/>

@@ -691,9 +691,6 @@
     <ClCompile Include="ISStartup.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISUpdate.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISAutoLocking.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -905,9 +902,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISTelephonyForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISUpdateDownloadForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISUserGroupListForm.cpp">
@@ -1635,9 +1629,6 @@
     <QtMoc Include="ISStartup.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISUpdate.h">
-      <Filter>System</Filter>
-    </QtMoc>
     <QtMoc Include="ISAutoLocking.h">
       <Filter>System</Filter>
     </QtMoc>
@@ -1849,9 +1840,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTelephonyForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUpdateDownloadForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISUserGroupListForm.h">
