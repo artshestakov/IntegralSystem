@@ -11,16 +11,20 @@ class LIBGUI_EXPORT ISDaDataService : public QObject
 	Q_OBJECT
 
 signals:
-	void Finished(const ISOrganizationStruct &OrganizationStruct);
+	void OgranizationFounded(const ISDaDataOrganization &);
+	void BankFounded(const ISDaDataBank &);
 
 public:
 	ISDaDataService(QObject *parent = 0);
 	virtual ~ISDaDataService();
 
-	void SearchFromINN(const QString &INN);
+	void OrganizationFromINN(const QString &INN); //Поиск организации по ИНН
+	void BankFromBIK(const QString &BIK); //Поиск банка по БИК
 
-protected:
-	void SuccessWorker(const QJsonObject &JsonObject);
+private:
+	void SuccessOrganization(const QJsonObject &JsonObject);
+	void SuccessBank(const QJsonObject &JsonObject);
+
 	void ErrorWorker(const QJsonObject &JsonObject);
 
 private:

@@ -38,7 +38,7 @@ static QString QU_ORGANIZATION_USER = PREPARE_QUERY2("UPDATE organizations SET "
 ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	DaDataService = new ISDaDataService(this);
-	connect(DaDataService, &ISDaDataService::Finished, this, &ISOrganizationObjectForm::SearchFinished);
+	connect(DaDataService, &ISDaDataService::OgranizationFounded, this, &ISOrganizationObjectForm::SearchFinished);
 
 	for (int i = 0; i < meta_table->Fields.count(); ++i)
 	{
@@ -208,10 +208,10 @@ void ISOrganizationObjectForm::SearchFromINN()
 		return;
 	}
 
-	DaDataService->SearchFromINN(INNEdit->GetValue().toString());
+	DaDataService->OrganizationFromINN(INNEdit->GetValue().toString());
 }
 //-----------------------------------------------------------------------------
-void ISOrganizationObjectForm::SearchFinished(const ISOrganizationStruct &OrganizationStruct)
+void ISOrganizationObjectForm::SearchFinished(const ISDaDataOrganization &OrganizationStruct)
 {
 	if (!GetFieldWidget("Name")->GetValue().isValid())
 	{

@@ -22,7 +22,7 @@ protected:
 	void UpdateDemo();
 
 	void SearchFromINN();
-	void SearchFinished(const ISOrganizationStruct &OrganizationStruct);
+	void SearchFinished(const ISDaDataOrganization &OrganizationStruct);
 
 private:
 	QAction *ActionDemo;

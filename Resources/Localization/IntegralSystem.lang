@@ -312,14 +312,23 @@
   <Local Name="Banner.CloseApplication.ExitApplication" Russian="Завершение работы..."/>
 
   <!--DaData-->
-  <Local Name="DaData.BranchType.MAIN" Russian="Головная огранизация"/>
-  <Local Name="DaData.BranchType.BRANCH" Russian="Филиал"/>
-  <Local Name="DaData.State.Status.ACTIVE" Russian="Действующая"/>
-  <Local Name="DaData.State.Status.LIQUIDATING" Russian="Ликвидируется"/>
-  <Local Name="DaData.State.Status.LIQUIDATED" Russian="Ликвидирована"/>
-  <Local Name="DaData.State.Status.REORGANIZING" Russian="В процессе присоединения к другому юрлицу, с последующей ликвидацией"/>
-  <Local Name="DaData.Type.LEGAL" Russian="Юридическое лицо"/>
-  <Local Name="DaData.Type.INDIVIDUAL" Russian="Индивидуальный предприниматель"/>
+  <Local Name="DaData.Organization.BranchType.MAIN" Russian="Головная огранизация"/>
+  <Local Name="DaData.Organization.BranchType.BRANCH" Russian="Филиал"/>
+  <Local Name="DaData.Organization.State.ACTIVE" Russian="Действующая"/>
+  <Local Name="DaData.Organization.State.LIQUIDATING" Russian="Ликвидируется"/>
+  <Local Name="DaData.Organization.State.LIQUIDATED" Russian="Ликвидирована"/>
+  <Local Name="DaData.Organization.State.REORGANIZING" Russian="В процессе присоединения к другому юрлицу, с последующей ликвидацией"/>
+  <Local Name="DaData.Organization.Type.LEGAL" Russian="Юридическое лицо"/>
+  <Local Name="DaData.Organization.Type.INDIVIDUAL" Russian="Индивидуальный предприниматель"/>
+  <Local Name="DaData.Bank.OPF.Type.BANK" Russian="Банк"/>
+  <Local Name="DaData.Bank.OPF.Type.BANK_BRANCH" Russian="Филиал банка"/>
+  <Local Name="DaData.Bank.OPF.Type.NKO" Russian="Небанковская кредитная организация (НКО)"/>
+  <Local Name="DaData.Bank.OPF.Type.NKO_BRANCH" Russian="Филиал НКО"/>
+  <Local Name="DaData.Bank.OPF.Type.RKC" Russian="Расчётно-кассовый центр"/>
+  <Local Name="DaData.Bank.OPF.Type.OTHER" Russian="Другой"/>
+  <Local Name="DaData.Bank.State.ACTIVE" Russian="Действующая"/>
+  <Local Name="DaData.Bank.State.LIQUIDATING" Russian="Ликвидируется"/>
+  <Local Name="DaData.Bank.State.LIQUIDATED" Russian="Ликвидирована"/>
   
   <!--System Fields-->
   <Local Name="SystemField.ID" Russian="Код"/>

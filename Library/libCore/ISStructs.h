@@ -305,22 +305,22 @@ struct LIBCORE_EXPORT ISVersionStruct
 	QString Platform;
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISDaDataBranch
+struct LIBCORE_EXPORT ISDaDataOrganizationBranch
 {
-	ISDaDataBranch() : Count(0) { }
+	ISDaDataOrganizationBranch() : Count(0) { }
 
 	int Count; //Количество филиалов
 	QString BranchType; //Тип филиала
 	QString BranchTypeLocalName; //Локальное наименование типа филиала
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISDaDataManagement
+struct LIBCORE_EXPORT ISDaDataOrganizationManagement
 {
 	QString Name; //ФИО руководителя
 	QString Post; //Должность руководителя
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISDaDataName
+struct LIBCORE_EXPORT ISDaDataOrganizationName
 {
 	QString FullWithOPF; //Полное наименование с ОПФ
 	QString ShortWithOPF; //Краткое наименование с ОПФ
@@ -328,17 +328,17 @@ struct LIBCORE_EXPORT ISDaDataName
 	QString Short; //Краткое наименование
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISDaDataOkved
+struct LIBCORE_EXPORT ISDaDataOrganizationOkved
 {
-	ISDaDataOkved() : Version(0) { }
+	ISDaDataOrganizationOkved() : Version(0) { }
 
 	QString Okved; //Код ОКВЭД
 	int Version; //Тип справочника (2001 или 2014)
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISDaDataOPF
+struct LIBCORE_EXPORT ISDaDataOrganizationOPF
 {
-	ISDaDataOPF() : Type(0) { }
+	ISDaDataOrganizationOPF() : Type(0) { }
 
 	QString Code; //Код ОКОПФ
 	QString FullName; //Полное название ОПФ
@@ -346,7 +346,7 @@ struct LIBCORE_EXPORT ISDaDataOPF
 	int Type; //Версия справочника ОКОПФ (1999, 2012 или 2014)
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISDaDataState
+struct LIBCORE_EXPORT ISDaDataOrganizationState
 {
 	QString ActualityDate; //Дата актуальности сведений
 	QString RegistrationDate; //Дата регистрации
@@ -355,23 +355,53 @@ struct LIBCORE_EXPORT ISDaDataState
 	QString StatusLocalName; //Локальное наименование статуса организации
 };
 //-----------------------------------------------------------------------------
-struct LIBCORE_EXPORT ISOrganizationStruct
+struct LIBCORE_EXPORT ISDaDataOrganization
 {
 	QString Value; //Наименование организации
 	QString Address; //Адрес
-	ISDaDataBranch Branch; //Филиал
+	ISDaDataOrganizationBranch Branch; //Филиал
 	QString Inn; //ИНН
 	QString Kpp; //КПП
 	QString Ogrn; //ОГРН
 	QString OrgnDate; //Дата выдачи ОГРН
 	QString HID; //Уникальный идентификатор в DaData
-	ISDaDataManagement Management; //Руководитель
-	ISDaDataName Name; //Наименование организации
-	ISDaDataOkved Okved; //ОКВЭД
-	ISDaDataOPF OPF; //Организационно-правовая форма
-	ISDaDataState State; //Статус огранизации
+	ISDaDataOrganizationManagement Management; //Руководитель
+	ISDaDataOrganizationName Name; //Наименование организации
+	ISDaDataOrganizationOkved Okved; //ОКВЭД
+	ISDaDataOrganizationOPF OPF; //Организационно-правовая форма
+	ISDaDataOrganizationState State; //Статус огранизации
 	QString Type; //Тип организации
 	QString TypeLocalName; //Локальное наименование типа огранизации
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataBankName
+{
+	QString Payment; //Платежное наименование
+	QString Short; //Краткое наименование
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataBankState
+{
+	QString ActualityDate; //Дата актуальности сведений
+	QString RegistrationDate; //Дата регистрации
+	QString LiquidationDate; //Дата ликвидации
+	QString StatusName; //Статус организации
+	QString StatusLocalName; //Локальное наименование статуса организации
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISDaDataBank
+{
+	QString Value; //Наименование банка
+	QString Address; //Адрес
+	QString BIK; //Банковский идентификационный код
+	QString Swift; //Банковский идентификационный код в системе SWIFT
+	QString RegistrationNumber; //Регистрационный номер в ЦБ РФ
+	QString CorrespondentAccount; //Корреспондентский счётв ЦБ РФ
+	ISDaDataBankName Name; //Наименование
+	QString PaymentCity; //Город для платежного поручения
+	QString OPF; //Тип кредитной организации
+	QString OPFLocalName; //Локальное наименование типа кредитной организации
+	ISDaDataBankState State; //Состояние
 };
 //-----------------------------------------------------------------------------
 #endif
