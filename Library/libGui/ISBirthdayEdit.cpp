@@ -43,7 +43,6 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
 		{
 			--Age;
 		}
-
 		Label->setText(LANG("Age") + ": " + QString::number(Age));
 	}
 	else
@@ -55,14 +54,6 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
 void ISBirthdayEdit::DateEnableChanged(int State)
 {
 	ISDateEdit::DateEnableChanged(State);
-
-	if (State == Qt::Checked)
-	{
-		UpdateLabel(GetValue().toDate());
-	}
-	else
-	{
-		UpdateLabel(QDate());
-	}
+	State == Qt::Checked ? UpdateLabel(GetValue().toDate()) : UpdateLabel(QDate());
 }
 //-----------------------------------------------------------------------------

@@ -39,7 +39,7 @@ private:
 private:
 	std::string ErrorString; //Описание ошибки
 	std::mutex Mutex; //Мьютекс для массива
-	std::array<std::string, ARRAY_MAX_SIZE> Array; //Массив сообщений
+	std::array<std::string, LOGGER_ARRAY_SIZE> Array; //Массив сообщений
 	size_t LastPosition; //Посденяя позиция
 	bool Running; //Флаг работы логгера
 	bool Finished; //Флаг остановки логгера

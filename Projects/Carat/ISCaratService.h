@@ -12,13 +12,9 @@ public:
 
 	void StartService(); //Запуск сервера
 
-protected:
-	void Started();
+private:
 	void Finished(int ExitCode, QProcess::ExitStatus Status);
 	void Error(QProcess::ProcessError ErrorType);
 	void ReadyReadStandartOutput();
-
-private:
-	QEventLoop *EventLoop;
 };
 //-----------------------------------------------------------------------------

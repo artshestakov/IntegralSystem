@@ -41,7 +41,7 @@ bool ISLogger::Initialize(bool OutPrintf, bool OutFile, const std::string &file_
 	EnableOutFile = OutFile;
 
 	//Если префикс не задан - используем префикс по умолчанию, иначе - тот что был задан
-	FilePrefix = file_prefix.empty() ? LOG_NAME_DEFAULT : file_prefix;
+	FilePrefix = file_prefix.empty() ? LOGGER_NAME_DEFAULT : file_prefix;
 
 	if (EnableOutFile) //Если включен вывод в файл - выполняем соответствующие подготовки
 	{
@@ -87,7 +87,7 @@ bool ISLogger::Initialize(bool OutPrintf, bool OutFile, const std::string &file_
 //-----------------------------------------------------------------------------
 void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, const char *SourceName, int Line)
 {
-	if (LastPosition == ARRAY_MAX_SIZE || !Running) //Если превышен допустимый предел размера очереди или обработчик очереди уже остановился - выходим из функции
+	if (LastPosition == LOGGER_ARRAY_SIZE || !Running) //Если превышен допустимый предел размера очереди или обработчик очереди уже остановился - выходим из функции
 	{
 		return;
 	}
@@ -98,7 +98,8 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 
 	if (Type == ISNamespace::DMT_Unknown)
 	{
-		printf("%s\n", String.toStdString().c_str());
+		fprintf(stdout, "%s\n", String.toStdString().c_str());
+		fflush(stdout);
 
 #ifdef DEBUG
 		OutputDebugString(String.toStdString().c_str());
@@ -126,7 +127,8 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 
 		if (EnableOutPrintf) //Если включена опция вывода в консоль - выводим
 		{
-			printf("%s %s\n", Stream.str().c_str(), String.toStdString().c_str());
+			fprintf(stdout, "%s %s\n", Stream.str().c_str(), String.toStdString().c_str());
+			fflush(stdout);
 
 #ifdef DEBUG
 			OutputDebugString(Stream.str().c_str());

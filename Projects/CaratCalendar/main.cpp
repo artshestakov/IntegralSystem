@@ -1,4 +1,6 @@
 #include "ISCoreCalendar.h"
+#include "ISLogger.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

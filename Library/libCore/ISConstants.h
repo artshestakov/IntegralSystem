@@ -156,25 +156,26 @@ const int DURATION_SHOW_HIDE_ANIMATION = 700;
 const int DURATION_SHOW_HIDE_SEARCH_FORM = 300;
 const char CLASS_IS_LIST_EDIT[] = "ISListEdit";
 const int MINIMUM_PASSWORD_LENGHT = 8;
-const int CARAT_PORT = 23071;
 const int WAIT_LOAD_DATA_LIST_FORM = 400;
 const int ASTERISK_RECONNECT_TIMEOUT = 10000;
-const char LOG_FILE_ASSERT[] = "ASSERT";
-const char LOG_FILE_CRASH[] = "CRASH";
 const char DATABASE_CONNECTON_THREAD_QUERY[] = "ThreadQuery";
 const char DATABASE_CONNECTON_PATTERN_ACITIVITY[] = "PatternActivity";
 const int YEAR_MINIMUM = 1752;
 const int YEAR_MAXIMUM = 8000;
-const char CARAT_UID[] = "{88DD90C4-2DFF-4515-8C32-7371C39C598A}";
 const int MAX_FILE_SIZE_FIELD = ((1000 * 1024) * 10); //Максимальный размер файла в поле редактирования файла (10 мегабайт)
 const int PLAYER_WINDING = 10000;
 const char COLOR_STANDART[] = "#000000";
 const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 const char NO_ERROR_STRING[] = "No error.";
-const unsigned long LOGGER_TIMEOUT = 2000;
-const size_t ARRAY_MAX_SIZE = 10000;
-const char LOG_NAME_DEFAULT[] = "Log";
-const char CARAT_CORE_START_FLAG[] = "exec";
+//LOGGER-----------------------------------------------------------------------
+const char		LOGGER_NAME_DEFAULT[] = "Log";
+const int		LOGGER_TIMEOUT = 2000;
+const size_t	LOGGER_ARRAY_SIZE = 10000;
+//CARAT------------------------------------------------------------------------
+const int	CARAT_DEFAULT_PORT = 23071;
+const char	CARAT_UID[] = "{88DD90C4-2DFF-4515-8C32-7371C39C598A}";
+const char	CARAT_CORE_START_FLAG[] = "exec";
+const int	CARAT_CORE_START_TIMEOUT = 5000;
 //-----------------------------------------------------------------------------
 const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
