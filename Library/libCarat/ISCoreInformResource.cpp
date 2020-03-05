@@ -31,7 +31,7 @@ bool ISCoreInformResource::Invoke()
 	bool Result = ISCaratCoreApplication::Invoke();
 	if (Result)
 	{
-		ISMetaData::GetInstanse().Initialize(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), false, false);
+		ISMetaData::GetInstanse().Initialize(/*CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION)*/"", false, false); //???
 		ISSettingsDatabase::GetInstance().Initialize();
 
 		AsteriskSocket = new ISAsteriskSocket(this);
