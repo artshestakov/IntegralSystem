@@ -35,9 +35,8 @@ int main(int argc, char *argv[])
 	}
 	else //јргументы не указаны - стартуем в обычном режиме
 	{
-		ISApplicationRunning ApplicationRunning(CARAT_UID);
-		Result = ApplicationRunning.TryToRun();
-		if (Result) //≈сли приложение уже запущено
+		Result = ISApplicationRunning(CARAT_UID).IsRunning();
+		if (Result) //≈сли приложение можно запускать
 		{
 			Result = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
 			if (Result)
@@ -51,9 +50,14 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			ISLOGGER_UNKNOWN("Carat already started");
+			ISLOGGER_WARNING("Carat already started");
 		}
 	}
-	return CoreApplication.exec();
+
+	if (Result)
+	{
+		return CoreApplication.exec();
+	}
+	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

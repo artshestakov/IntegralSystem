@@ -81,8 +81,6 @@
 #include <QtCore/QItemSelectionModel>
 #include <QtCore/QPropertyAnimation>
 #include <QtCore/QStandardPaths>
-#include <QtCore/QSharedMemory>
-#include <QtCore/QSystemSemaphore>
 //-----------------------------------------------------------------------------
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQueryModel>
