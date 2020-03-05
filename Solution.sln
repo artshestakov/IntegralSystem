@@ -210,9 +210,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratTelephony", "Projects\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigTemplate", "ConfigTemplate", "{0E0DF063-6722-4FD3-9334-A6AF7BBD2C14}"
 	ProjectSection(SolutionItems) = preProject
-		Resources\ConfigTemplate\Carat.ini = Resources\ConfigTemplate\Carat.ini
-		Resources\ConfigTemplate\Configurator.ini = Resources\ConfigTemplate\Configurator.ini
-		Resources\ConfigTemplate\IntegralSystem.ini = Resources\ConfigTemplate\IntegralSystem.ini
+		Resources\ConfigTemplate\Client.ini = Resources\ConfigTemplate\Client.ini
+		Resources\ConfigTemplate\Server.ini = Resources\ConfigTemplate\Server.ini
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ErrorViewer", "Projects\ErrorViewer\ErrorViewer.vcxproj", "{8C1C6DF9-CA03-426D-A1EB-6A573409CD17}"
@@ -370,7 +369,7 @@ Global
 		{8C1C6DF9-CA03-426D-A1EB-6A573409CD17} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal
