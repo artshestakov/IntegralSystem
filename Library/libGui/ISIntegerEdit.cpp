@@ -3,18 +3,13 @@
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISIntegerEdit::ISIntegerEdit(QWidget *parent) : ISFieldEditBase(parent)
+ISIntegerEdit::ISIntegerEdit(QWidget *parent)
+	: ISLineEdit(parent),
+	IntValidator(new QIntValidator(this))
 {
-	SpinBox = new ISQSpinBox(this);
-	SpinBox->setStyleSheet(STYLE_SHEET("ISIntegerEdit"));
-	SpinBox->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
-	SpinBox->setSpecialValueText(ISDefines::Core::SYMBOL_SPACE_HIDE);
-	SpinBox->setAccelerated(true);
-	connect(SpinBox, static_cast<void(ISQSpinBox::*)(const QString &)>(&ISQSpinBox::valueChanged), this, &ISIntegerEdit::OnValueChanged);
-	connect(SpinBox, &ISQSpinBox::ClearClicked, this, &ISIntegerEdit::Clear);
-	AddWidgetEdit(SpinBox, this);
-
+	SetValidator(IntValidator);
 	SetFixedWidth(150);
+	AddMainLayoutStretch();
 }
 //-----------------------------------------------------------------------------
 ISIntegerEdit::~ISIntegerEdit()
@@ -24,65 +19,38 @@ ISIntegerEdit::~ISIntegerEdit()
 //-----------------------------------------------------------------------------
 void ISIntegerEdit::SetValue(const QVariant &value)
 {
-	SpinBox->setValue(value.toInt());
-	OnValueChanged(value.toString());
+	ISLineEdit::SetValue(value.toString().isEmpty() ? QVariant() : value.toInt());
 }
 //-----------------------------------------------------------------------------
 QVariant ISIntegerEdit::GetValue() const
 {
-	if (IntValue.length())
-	{
-		return SpinBox->value();
-	}
-
-	return QVariant();
-}
-//-----------------------------------------------------------------------------
-void ISIntegerEdit::Clear()
-{
-	SpinBox->clear();
-	SpinBox->setSpecialValueText(ISDefines::Core::SYMBOL_SPACE_HIDE);
-	SpinBox->clearFocus();
-	SpinBox->setFocus();
-}
-//-----------------------------------------------------------------------------
-void ISIntegerEdit::SetVisibleClear(bool Visible)
-{
-	SpinBox->SetVisibleClear(Visible);
+	QString Value = ISLineEdit::GetValue().toString();
+	return Value.isEmpty() ? QVariant() : QVariant(Value.toInt());
 }
 //-----------------------------------------------------------------------------
 void ISIntegerEdit::SetMinimum(int Minimum)
 {
-	SpinBox->setMinimum(Minimum);
+	SetRange(Minimum, INT_MAX);
 }
 //-----------------------------------------------------------------------------
 void ISIntegerEdit::SetMaximum(int Maximum)
 {
-	SpinBox->setMaximum(Maximum);
+	SetRange(INT_MIN, Maximum);
 }
 //-----------------------------------------------------------------------------
-void ISIntegerEdit::SetReadOnly(bool ReadOnly)
+void ISIntegerEdit::SetRange(int Minimum, int Maximum)
 {
-	SpinBox->setReadOnly(ReadOnly);
-	SpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
-}
-//-----------------------------------------------------------------------------
-void ISIntegerEdit::OnValueChanged(const QString &Text)
-{
-	if (Text.length()) //Если значение введено (любое)
+	if (IntValidator)
 	{
-		if (Text == SYMBOL_0) //Если ввели ноль, убрать спец. значение чтобы ноль отображался
-		{
-			SpinBox->setSpecialValueText(QString());
-		}
-	}
-	else //Значение отсутствует (удалили все символы)
-	{
-		Clear();
+		delete IntValidator;
 	}
 
-	IntValue = Text;
-	SpinBox->SetCursorPosition(Text.length());
-	ValueChanged();
+	IntValidator = new QIntValidator(Minimum, Maximum, this);
+	SetValidator(IntValidator);
+}
+//-----------------------------------------------------------------------------
+void ISIntegerEdit::ResetRange()
+{
+	SetRange(INT_MIN, INT_MAX);
 }
 //-----------------------------------------------------------------------------

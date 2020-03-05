@@ -1,10 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
-#include "ISFieldEditBase.h"
-#include "ISEdits.h"
+#include "ISLineEdit.h"
 //-----------------------------------------------------------------------------
-class ISIntegerEdit : public ISFieldEditBase
+class ISIntegerEdit : public ISLineEdit
 {
 	Q_OBJECT
 
@@ -14,20 +12,13 @@ public:
 
 	void SetValue(const QVariant &value) override;
 	QVariant GetValue() const override;
-	void Clear() override;
-	void SetVisibleClear(bool Visible) override;
 
 	void SetMinimum(int Minimum);
 	void SetMaximum(int Maximum);
-
-public slots:
-	void SetReadOnly(bool ReadOnly);
-
-protected:
-	void OnValueChanged(const QString &Text);
+	void SetRange(int Minimum, int Maximum);
+	void ResetRange();
 
 private:
-	ISQSpinBox *SpinBox;
-	QString IntValue;
+	QIntValidator *IntValidator;
 };
 //-----------------------------------------------------------------------------

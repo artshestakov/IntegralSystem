@@ -211,6 +211,7 @@
 #include <QtGui/QTextFrame>
 #include <QtGui/QBitmap>
 #include <QtGui/QDoubleValidator>
+#include <QtGui/QIntValidator>
 //-----------------------------------------------------------------------------
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintPreviewDialog>
