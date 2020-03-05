@@ -3,11 +3,8 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 #include "ISQuery.h"
-#include "ISCountingTime.h"
 #include "ISSystem.h"
-#include "ISNetwork.h"
-#include "ISDatabase.h"
-#include "ISSettingsDatabase.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_filename "
 											 "FROM _caratcore "
@@ -15,7 +12,10 @@ static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_filename "
 											 "AND core_active "
 											 "ORDER BY core_priority");
 //-----------------------------------------------------------------------------
-ISCaratService::ISCaratService(QObject *parent) : QObject(parent)
+ISCaratService::ISCaratService(QObject *parent)
+	: QObject(parent),
+	LocalSocket(new QLocalSocket(this)),
+	IsConnectedDebugger(false)
 {
 	
 }
@@ -71,6 +71,17 @@ void ISCaratService::StartService()
 			ISLOGGER_INFO("Started all cores") : //Если ядра были успешно запущены
 			ISLOGGER_WARNING("Started " + QString::number(CoreCountStarted) + " of " + QString::number(CoreCountTotal));
 	}
+
+	LocalServer = new QLocalServer(this);
+	LocalServer->setMaxPendingConnections(CARAT_DEBUGGER_MAX_CLIENTS);
+	if (LocalServer->listen(CARAT_DEBUGGER_PORT))
+	{
+		connect(LocalServer, &QLocalServer::newConnection, this, &ISCaratService::NewConnection);
+	}
+	else
+	{
+		ISLOGGER_WARNING("Not listen port for local server");
+	}
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::Finished(int ExitCode, QProcess::ExitStatus Status)
@@ -97,6 +108,28 @@ void ISCaratService::ReadyReadStandartOutput()
 //-----------------------------------------------------------------------------
 void ISCaratService::OutputString(const QString &CoreObjectName, const QString &String)
 {
-	ISLOGGER_UNKNOWN(QString("[%1] %2").arg(CoreObjectName).arg(String));
+	QString CompleteString = "[" + CoreObjectName + "] " + String;
+	ISLOGGER_UNKNOWN(CompleteString);
+	if (IsConnectedDebugger)
+	{
+		if (LocalSocket->isOpen() && LocalSocket->isValid())
+		{
+			LocalSocket->write(CompleteString.toStdString().c_str(), CompleteString.size());
+			LocalSocket->flush();
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISCaratService::NewConnection()
+{
+	LocalSocket = LocalServer->nextPendingConnection();
+	connect(LocalSocket, &QLocalSocket::disconnected, this, &ISCaratService::Disconnected);
+	IsConnectedDebugger = true;
+}
+//-----------------------------------------------------------------------------
+void ISCaratService::Disconnected()
+{
+	LocalSocket->deleteLater();
+	IsConnectedDebugger = false;
 }
 //-----------------------------------------------------------------------------

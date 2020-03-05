@@ -104,6 +104,8 @@
 #include <QtNetwork/QTcpSocket>
 #include <QtNetwork/QSslSocket>
 #include <QtNetwork/QHostAddress>
+#include <QtNetwork/QLocalServer>
+#include <QtNetwork/QLocalSocket>
 //-----------------------------------------------------------------------------
 #include <QtConcurrent/QtConcurrent>
 //-----------------------------------------------------------------------------

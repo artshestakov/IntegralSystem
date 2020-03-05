@@ -172,10 +172,12 @@ const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 2000;
 const size_t	LOGGER_ARRAY_SIZE = 10000;
 //CARAT------------------------------------------------------------------------
-const int	CARAT_DEFAULT_PORT = 23071;
-const char	CARAT_UID[] = "{88DD90C4-2DFF-4515-8C32-7371C39C598A}";
-const char	CARAT_CORE_START_FLAG[] = "exec";
-const int	CARAT_CORE_START_TIMEOUT = 5000;
+const char	CARAT_UID[] = "{88DD90C4-2DFF-4515-8C32-7371C39C598A}"; //Уникальный идентификатор для контроля единого запущенного экземпляра
+const char	CARAT_CORE_START_FLAG[] = "exec"; //Посылаемое сообщение от ядра означающее успешный запуск ядра
+const int	CARAT_CORE_START_TIMEOUT = 5000; //Таймаут ожидания первого собщения от ядра
+const char	CARAT_DEBUGGER_PORT[] = "{381A6F7D-1E01-438E-B7B4-3B0F9881EB8F}"; //Условный порт для отладчика
+const int	CARAT_DEBUGGER_MAX_CLIENTS = 1; //Максимальное количество клиентов для режима отладчика
+const int	CARAT_DEBUGGER_CONNECT_TIMEOUT = 2000; //Таймаут попытки подключения к карату в режиме отладчика
 //-----------------------------------------------------------------------------
 const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
@@ -451,6 +453,5 @@ const char CONST_CONFIG_CONNECTION_PORT[] = "Connection/Port";
 const char CONST_CONFIG_CONNECTION_DATABASE[] = "Connection/Database";
 const char CONST_CONFIG_CONNECTION_LOGIN[] = "Connection/Login";
 const char CONST_CONFIG_CONNECTION_PASSWORD[] = "Connection/Password";
-const char CONST_CONFIG_OTHER_CONFIGURATION[] = "Other/Configuration";
 //-----------------------------------------------------------------------------
 #endif
