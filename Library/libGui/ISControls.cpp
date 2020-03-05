@@ -259,22 +259,6 @@ QAction* ISControls::GetActionContextYahoo(QObject *ParentObject)
 	return ContextActionYahoo;
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextStepUp(QObject *ParentObject)
-{
-	QAction *ActionStepUp = new QAction(ParentObject);
-	ActionStepUp->setText(LANG("ContextMenu.StepUp"));
-	ActionStepUp->setIcon(BUFFER_ICONS("ContextMenu.StepUp"));
-	return ActionStepUp;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextStepDown(QObject *ParentObject)
-{
-	QAction *ActionStepDown = new QAction(ParentObject);
-	ActionStepDown->setText(LANG("ContextMenu.StepDown"));
-	ActionStepDown->setIcon(BUFFER_ICONS("ContextMenu.StepDown"));
-	return ActionStepDown;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionCreate(QObject *ParentObject)
 {
 	QAction *ActionCreate = new QAction(ParentObject);

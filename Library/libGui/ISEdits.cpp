@@ -257,7 +257,7 @@ ISQDateEdit::ISQDateEdit(QWidget *parent)
 	SetVisibleClear(false);
 
 	ButtonCalendar = new ISServiceButton(this);
-	ButtonCalendar->setToolTip(LANG("ShowCalendar") + "...");
+	ButtonCalendar->setToolTip(LANG("ShowCalendar") );
 	ButtonCalendar->setIcon(BUFFER_ICONS("Calendar"));
 	ButtonCalendar->setFocusPolicy(Qt::NoFocus);
 	ButtonCalendar->setFlat(true);
@@ -334,7 +334,7 @@ void ISQDateEdit::showEvent(QShowEvent *ShowEvent)
 void ISQDateEdit::resizeEvent(QResizeEvent *ResizeEvent)
 {
 	ISQLineEdit::resizeEvent(ResizeEvent);
-	ButtonCalendar->move(QPoint(width() - ButtonCalendar->width() - 1, 2));
+	ButtonCalendar->move(QPoint(width() - ButtonCalendar->width() - 2, 2));
 }
 //-----------------------------------------------------------------------------
 void ISQDateEdit::ShowCalendar()
@@ -579,75 +579,6 @@ void ISQTimeEdit::Clear()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISQDateTimeEdit::ISQDateTimeEdit(QWidget *parent) : QDateTimeEdit(parent)
-{
-	setStyleSheet(STYLE_SHEET("ISDateTimeEdit"));
-	setReadOnly(true);
-
-	ISQLineEdit *LineEdit = new ISQLineEdit(this);
-	LineEdit->SetVisibleClear(false);
-	setLineEdit(LineEdit);
-}
-//-----------------------------------------------------------------------------
-ISQDateTimeEdit::~ISQDateTimeEdit()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISQDateTimeEdit::contextMenuEvent(QContextMenuEvent *e)
-{
-	ISGui::SetWaitGlobalCursor(true);
-	ISContextMenuDateTime ContextMenu(lineEdit(), lineEdit()->isReadOnly(), lineEdit()->isUndoAvailable(), lineEdit()->isRedoAvailable(), lineEdit()->hasSelectedText(), lineEdit()->echoMode(), lineEdit()->text().isEmpty());
-	connect(&ContextMenu, &ISContextMenuDateTime::Delete, lineEdit(), &QLineEdit::del);
-	connect(&ContextMenu, &ISContextMenuDateTime::StepUp, this, &ISQDateTimeEdit::stepUp);
-	connect(&ContextMenu, &ISContextMenuDateTime::StepDown, this, &ISQDateTimeEdit::stepDown);
-	ISGui::SetWaitGlobalCursor(false);
-	ContextMenu.exec(e->globalPos());
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISQDoubleSpinBox::ISQDoubleSpinBox(QWidget *parent) : QDoubleSpinBox(parent)
-{
-	setMaximum(MAXIMUM_DOUBLE);
-
-	ISQLineEdit *LineEdit = new ISQLineEdit(this);
-	connect(LineEdit, &ISQLineEdit::ClearClicked, this, &ISQDoubleSpinBox::ClearClicked);
-	setLineEdit(LineEdit);
-}
-//-----------------------------------------------------------------------------
-ISQDoubleSpinBox::~ISQDoubleSpinBox()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISQDoubleSpinBox::SetVisibleClear(bool Visible)
-{
-	dynamic_cast<ISQLineEdit*>(lineEdit())->SetVisibleClear(Visible);
-}
-//-----------------------------------------------------------------------------
-QValidator::State ISQDoubleSpinBox::validate(QString &Input, int &Pos) const
-{
-	if (Input.contains(SYMBOL_POINT))
-	{
-		Input.replace(SYMBOL_POINT, SYMBOL_COMMA);
-	}
-	return QDoubleSpinBox::validate(Input, Pos);
-}
-//-----------------------------------------------------------------------------
-void ISQDoubleSpinBox::contextMenuEvent(QContextMenuEvent *e)
-{
-	ISGui::SetWaitGlobalCursor(true);
-	ISContextMenuDouble ContextMenu(lineEdit(), lineEdit()->isReadOnly(), lineEdit()->isUndoAvailable(), lineEdit()->isRedoAvailable(), lineEdit()->hasSelectedText(), lineEdit()->echoMode(), lineEdit()->text().isEmpty(), value(), minimum(), maximum());
-	connect(&ContextMenu, &ISContextMenuDouble::Delete, lineEdit(), &QLineEdit::del);
-	connect(&ContextMenu, &ISContextMenuDouble::StepUp, this, &ISQDoubleSpinBox::stepUp);
-	connect(&ContextMenu, &ISContextMenuDouble::StepDown, this, &ISQDoubleSpinBox::stepDown);
-	ISGui::SetWaitGlobalCursor(false);
-	ContextMenu.exec(e->globalPos());
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISQSpinBox::ISQSpinBox(QWidget *parent) : QSpinBox(parent)
 {
 	setMaximum(MAXIMUM_INTEGER);
@@ -674,13 +605,13 @@ void ISQSpinBox::SetVisibleClear(bool Visible)
 //-----------------------------------------------------------------------------
 void ISQSpinBox::contextMenuEvent(QContextMenuEvent *e)
 {
-	ISGui::SetWaitGlobalCursor(true);
+	/*ISGui::SetWaitGlobalCursor(true);
 	ISContextMenuInteger ContextMenu(lineEdit(), lineEdit()->isReadOnly(), lineEdit()->isUndoAvailable(), lineEdit()->isRedoAvailable(), lineEdit()->hasSelectedText(), lineEdit()->echoMode(), lineEdit()->text().isEmpty(), value(), minimum(), maximum());
 	connect(&ContextMenu, &ISContextMenuInteger::Delete, lineEdit(), &QLineEdit::del);
 	connect(&ContextMenu, &ISContextMenuInteger::StepUp, this, &ISQSpinBox::stepUp);
 	connect(&ContextMenu, &ISContextMenuInteger::StepDown, this, &ISQSpinBox::stepDown);
 	ISGui::SetWaitGlobalCursor(false);
-	ContextMenu.exec(e->globalPos());
+	ContextMenu.exec(e->globalPos());*/
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

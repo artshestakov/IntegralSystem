@@ -27,36 +27,6 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISContextMenuDateTime : public ISContextMenuBase
-{
-	Q_OBJECT
-
-signals:
-	void StepUp();
-	void StepDown();
-
-public:
-	ISContextMenuDateTime(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty);
-	virtual ~ISContextMenuDateTime();
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISContextMenuDouble : public ISContextMenuBase
-{
-	Q_OBJECT
-
-signals:
-	void StepUp();
-	void StepDown();
-
-public:
-	ISContextMenuDouble(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty, double Value, double Minimum, double Maximum);
-	virtual ~ISContextMenuDouble();
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 class ISContextMenuImage : public QMenu
 {
 	Q_OBJECT
@@ -73,21 +43,6 @@ signals:
 public:
 	ISContextMenuImage(QWidget *parent, bool PixmapIsNull);
 	virtual ~ISContextMenuImage();
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISContextMenuInteger : public ISContextMenuBase
-{
-	Q_OBJECT
-
-signals:
-	void StepUp();
-	void StepDown();
-
-public:
-	ISContextMenuInteger(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty, int Value, int Minimum, int Maximum);
-	virtual ~ISContextMenuInteger();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

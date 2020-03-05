@@ -42,8 +42,6 @@ public:
 	static QAction* GetActionContextMail(QObject *ParentObject); //Действие поиск в Mail.ru
 	static QAction* GetActionContextBing(QObject *ParentObject); //Действие поиск в Bing
 	static QAction* GetActionContextYahoo(QObject *ParentObject); //Действие поиск в Yahoo
-	static QAction* GetActionContextStepUp(QObject *ParentObject); //Действие шаг вверх
-	static QAction* GetActionContextStepDown(QObject *ParentObject); //Действие шаг вниз
 
 //БАЗОВАЯ ФОРМА СПИСКА
 	static QAction* CreateActionCreate(QObject *ParentObject);

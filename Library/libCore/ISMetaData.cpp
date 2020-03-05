@@ -116,6 +116,7 @@ PMetaClassTable* ISMetaData::GetMetaTable(const QString &TableName)
 	{
 		return TablesMap[TableName];
 	}
+	IS_ASSERT(false, QString("Not found meta table \"" + TableName + "\""));
 	return nullptr;
 }
 //-----------------------------------------------------------------------------

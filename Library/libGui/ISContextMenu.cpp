@@ -125,46 +125,6 @@ void ISContextMenuBase::CallVirtualKeyboard()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISContextMenuDateTime::ISContextMenuDateTime(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty)
-	: ISContextMenuBase(ParentEdit, ReadOnly, UndoAvailable, RedoAvailable, HasSelectedText, EchoMode, Empty)
-{
-	QAction *ActionStepUp = ISControls::GetActionContextStepUp(this);
-	connect(ActionStepUp, &QAction::triggered, this, &ISContextMenuDateTime::StepUp);
-	addAction(ActionStepUp);
-
-	QAction *ActionStepDown = ISControls::GetActionContextStepDown(this);
-	connect(ActionStepDown, &QAction::triggered, this, &ISContextMenuDateTime::StepDown);
-	addAction(ActionStepDown);
-}
-//-----------------------------------------------------------------------------
-ISContextMenuDateTime::~ISContextMenuDateTime()
-{
-
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISContextMenuDouble::ISContextMenuDouble(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty, double Value, double Minimum, double Maximum)
-	: ISContextMenuBase(ParentEdit, ReadOnly, UndoAvailable, RedoAvailable, HasSelectedText, EchoMode, Empty)
-{
-	QAction *ActionStepUp = ISControls::GetActionContextStepUp(this);
-	ActionStepUp->setEnabled(Value != Maximum);
-	connect(ActionStepUp, &QAction::triggered, this, &ISContextMenuDouble::StepUp);
-	addAction(ActionStepUp);
-
-	QAction *ActionStepDown = ISControls::GetActionContextStepDown(this);
-	ActionStepDown->setEnabled(Value != Minimum);
-	connect(ActionStepDown, &QAction::triggered, this, &ISContextMenuDouble::StepDown);
-	addAction(ActionStepDown);
-}
-//-----------------------------------------------------------------------------
-ISContextMenuDouble::~ISContextMenuDouble()
-{
-
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISContextMenuImage::ISContextMenuImage(QWidget *parent, bool PixmapIsNull) : QMenu(parent)
 {
 	setToolTipsVisible(true);
@@ -235,27 +195,6 @@ ISContextMenuImage::ISContextMenuImage(QWidget *parent, bool PixmapIsNull) : QMe
 }
 //-----------------------------------------------------------------------------
 ISContextMenuImage::~ISContextMenuImage()
-{
-
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISContextMenuInteger::ISContextMenuInteger(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty, int Value, int Minimum, int Maximum)
-	: ISContextMenuBase(ParentEdit, ReadOnly, UndoAvailable, RedoAvailable, HasSelectedText, EchoMode, Empty)
-{
-	QAction *ActionStepUp = ISControls::GetActionContextStepUp(this);
-	ActionStepUp->setEnabled(Value != Maximum);
-	connect(ActionStepUp, &QAction::triggered, this, &ISContextMenuInteger::StepUp);
-	addAction(ActionStepUp);
-
-	QAction *ActionStepDown = ISControls::GetActionContextStepDown(this);
-	ActionStepDown->setEnabled(Value != Minimum);
-	connect(ActionStepDown, &QAction::triggered, this, &ISContextMenuInteger::StepDown);
-	addAction(ActionStepDown);
-}
-//-----------------------------------------------------------------------------
-ISContextMenuInteger::~ISContextMenuInteger()
 {
 
 }

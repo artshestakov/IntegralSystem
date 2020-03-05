@@ -144,8 +144,6 @@
   <Local Name="ContextMenu.Yahoo" Russian="Yahoo"/>
   <Local Name="ContextMenu.ToLower" Russian="строчные"/>
   <Local Name="ContextMenu.ToLower.ToolTip" Russian="Перевод выделенного текста в нижний регистр"/>
-  <Local Name="ContextMenu.StepUp" Russian="Шаг вверх"/>
-  <Local Name="ContextMenu.StepDown" Russian="Шаг вниз"/>
   <Local Name="ContextMenu.Image.SelectFile" Russian="Выбрать файл"/>
   <Local Name="ContextMenu.Image.SelectFile.ToolTip" Russian="Выбрать файл из файловой системы"/>
   <Local Name="ContextMenu.Image.Cut" Russian="Вырезать"/>

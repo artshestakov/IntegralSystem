@@ -29,7 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{33F902D5-EB7
 		Resources\CSS\ISBaseTableView.css = Resources\CSS\ISBaseTableView.css
 		Resources\CSS\ISButtonNotify.Blink.css = Resources\CSS\ISButtonNotify.Blink.css
 		Resources\CSS\ISButtonNotify.White.css = Resources\CSS\ISButtonNotify.White.css
-		Resources\CSS\ISDoubleEdit.css = Resources\CSS\ISDoubleEdit.css
 		Resources\CSS\ISIntegerEdit.css = Resources\CSS\ISIntegerEdit.css
 		Resources\CSS\ISLabelImage.css = Resources\CSS\ISLabelImage.css
 		Resources\CSS\ISLabelLink.css = Resources\CSS\ISLabelLink.css

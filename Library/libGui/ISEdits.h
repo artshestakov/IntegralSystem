@@ -135,39 +135,6 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISQDateTimeEdit : public QDateTimeEdit
-{
-	Q_OBJECT
-
-public:
-	ISQDateTimeEdit(QWidget *parent = 0);
-	virtual ~ISQDateTimeEdit();
-
-	void contextMenuEvent(QContextMenuEvent *e);
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISQDoubleSpinBox : public QDoubleSpinBox
-{
-	Q_OBJECT
-
-signals:
-	void ClearClicked();
-
-public:
-	ISQDoubleSpinBox(QWidget *parent = 0);
-	virtual ~ISQDoubleSpinBox();
-
-	void SetVisibleClear(bool Visible);
-	QValidator::State validate(QString &Input, int &Pos) const;
-
-protected:
-	void contextMenuEvent(QContextMenuEvent *e);
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 class ISQSpinBox : public QSpinBox
 {
 	Q_OBJECT
