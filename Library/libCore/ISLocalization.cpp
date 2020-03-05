@@ -78,16 +78,19 @@ void ISLocalization::InitializeContent(const QString &Content)
 			{
 				while (!NodeLocalization.isNull())
 				{
-					QString LocalKey = NodeLocalization.attributes().namedItem("Name").nodeValue();
-					QString Value = NodeLocalization.attributes().namedItem("Russian").nodeValue();
-					if (!LocalKey.isEmpty())
+					if (!NodeLocalization.isComment())
 					{
-						IS_ASSERT(Dictionary.find(LocalKey) == Dictionary.end(), QString("Key \"%1\" already exist in localization map. File: %2. Line: %3").arg(LocalKey).arg(LocalizationName).arg(NodeLocalization.lineNumber()))
-							Dictionary.emplace(LocalKey, Value);
-					}
-					else
-					{
-						ISLOGGER_WARNING("Localization key is empty. Line: " + QString::number(NodeLocalization.lineNumber()));
+						QString LocalKey = NodeLocalization.attributes().namedItem("Name").nodeValue();
+						QString Value = NodeLocalization.attributes().namedItem("Russian").nodeValue();
+						if (!LocalKey.isEmpty())
+						{
+							IS_ASSERT(Dictionary.find(LocalKey) == Dictionary.end(), QString("Key \"%1\" already exist in localization map. File: %2. Line: %3").arg(LocalKey).arg(LocalizationName).arg(NodeLocalization.lineNumber()))
+								Dictionary.emplace(LocalKey, Value);
+						}
+						else
+						{
+							ISLOGGER_WARNING(QString("Localization key is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber()));
+						}
 					}
 					NodeLocalization = NodeLocalization.nextSibling();
 				}
