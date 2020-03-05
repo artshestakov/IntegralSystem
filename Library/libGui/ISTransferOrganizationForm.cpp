@@ -20,8 +20,6 @@ ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount, QW
 
 	DateEdit = new ISDateEdit(this);
 	DateEdit->SetMinimumDate(QDate::currentDate());
-	DateEdit->SetChecked(true);
-	DateEdit->SetVisibleCheck(false);
 	FormLayout->addRow(LANG("Date") + ':', DateEdit);
 
 	ISButtonDialog *ButtonDialog = new ISButtonDialog(this);

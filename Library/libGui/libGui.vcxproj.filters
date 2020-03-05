@@ -197,9 +197,6 @@
     <Filter Include="Objects\OilSphere">
       <UniqueIdentifier>{4fb78c6d-6486-45e6-99ef-705f3a5ec0f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Test">
-      <UniqueIdentifier>{22f5466a-0bb0-4e47-b4c2-d9ba2a1be8c8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -506,9 +503,6 @@
       <Filter>Fields\Boolean</Filter>
     </ClCompile>
     <ClCompile Include="ISDateEdit.cpp">
-      <Filter>Fields\DateTime</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDateTimeEdit.cpp">
       <Filter>Fields\DateTime</Filter>
     </ClCompile>
     <ClCompile Include="ISMonthEdit.cpp">
@@ -1252,14 +1246,8 @@
     <ClCompile Include="ISDaDataService.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="CLDateEdit.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
-    <ClCompile Include="CLDateTimeEdit.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
-    <ClCompile Include="CLTimeEdit.cpp">
-      <Filter>Test</Filter>
+    <ClCompile Include="ISDateTimeEdit.cpp">
+      <Filter>Fields\DateTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1462,9 +1450,6 @@
       <Filter>Fields\Boolean</Filter>
     </QtMoc>
     <QtMoc Include="ISDateEdit.h">
-      <Filter>Fields\DateTime</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDateTimeEdit.h">
       <Filter>Fields\DateTime</Filter>
     </QtMoc>
     <QtMoc Include="ISMonthEdit.h">
@@ -2166,14 +2151,8 @@
     <QtMoc Include="ISDaDataService.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="CLDateEdit.h">
-      <Filter>Test</Filter>
-    </QtMoc>
-    <QtMoc Include="CLDateTimeEdit.h">
-      <Filter>Test</Filter>
-    </QtMoc>
-    <QtMoc Include="CLTimeEdit.h">
-      <Filter>Test</Filter>
+    <QtMoc Include="ISDateTimeEdit.h">
+      <Filter>Fields\DateTime</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

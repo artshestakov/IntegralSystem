@@ -116,6 +116,7 @@ const int SIZE_MINIMUM_HEIGHT_EDIT_FIELD = 24; //Минимальная высота поля ввода в
 const int EDIT_FIELD_SPACING = 4;
 const int ISPUSHBUTTON_MINIMUM_WIDTH = 75;
 const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
+const int CALENDAR_POPUP_ANIMATION_DURATION = 500; //Таймаут анимации виджета календаря
 //SYMBOLS----------------------------------------------------------------------
 const char SYMBOL_SPACE = ' '; //Символ пробела
 const char SYMBOL_NUMBER = '№'; //Символ "Номер"

@@ -7,9 +7,6 @@
 #include "ISStartup.h"
 #include "ISMessageBox.h"
 #include "ISLogger.h"
-
-#include "CLDateEdit.h"
-//#include "ISDateEdit.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -22,18 +19,6 @@ int main(int argc, char *argv[])
 		ISMessageBox::ShowCritical(nullptr, ErrorString);
 		return EXIT_FAILURE;
 	}
-
-	QWidget Widget;
-	Widget.setLayout(new QVBoxLayout());
-
-	CLDateEdit DateEdit(&Widget);
-	Widget.layout()->addWidget(&DateEdit);
-
-	//ISDateEdit DateEdit2(&Widget);
-	//Widget.layout()->addWidget(&DateEdit2);
-
-	Widget.show();
-	Applicaton.exec();
 
 	//Создание формы авторизации
 	ISAuthForm *AuthForm = new ISAuthForm(nullptr);

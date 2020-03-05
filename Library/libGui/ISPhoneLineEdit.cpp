@@ -15,7 +15,7 @@ ISPhoneLineEdit::ISPhoneLineEdit(QWidget *parent)
 	setInputMask("(000) 000-00-00;_");
 	setTextMargins(45, 0, 0, 0);
 	setStyleSheet(STYLE_SHEET("ISLineEdit"));
-	setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	connect(this, &ISPhoneLineEdit::cursorPositionChanged, this, &ISPhoneLineEdit::CursorPositionChanged);
 
 	ActionCut = ISControls::GetActionContextCut(this);

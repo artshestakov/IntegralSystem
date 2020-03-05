@@ -4,14 +4,12 @@
 //-----------------------------------------------------------------------------
 ISBirthdayEdit::ISBirthdayEdit(QWidget *parent) : ISDateEdit(parent)
 {
-	SetMinimumDate(QDate(1900, 1, 1));
-	SetMaximumDate(QDate::currentDate());
-	SetChecked(false);
+	SetRangeDate(QDate(1900, 1, 1), QDate::currentDate());
 
 	Label = new QLabel(this);
 	Label->setFrameShape(QFrame::Shape::Panel);
 	Label->setFrameShadow(QFrame::Plain);
-	Label->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	Label->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	Label->setSizePolicy(QSizePolicy::Maximum, Label->sizePolicy().verticalPolicy());
 	AddWidgetToRight(Label);
 
@@ -51,9 +49,10 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISBirthdayEdit::DateEnableChanged(int State)
+/*void ISBirthdayEdit::DateEnableChanged(int State)
 {
+	//???
 	ISDateEdit::DateEnableChanged(State);
 	State == Qt::Checked ? UpdateLabel(GetValue().toDate()) : UpdateLabel(QDate());
-}
+}*/
 //-----------------------------------------------------------------------------

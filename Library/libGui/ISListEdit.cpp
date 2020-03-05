@@ -21,7 +21,7 @@ ISListEdit::ISListEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ButtonMain->setText(LANG("NotSelected"));
 	ButtonMain->setToolTip(LANG("ClickFromShowList"));
 	ButtonMain->setIcon(BUFFER_ICONS("ArrowDown"));
-	ButtonMain->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	ButtonMain->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	ButtonMain->setCursor(CURSOR_POINTING_HAND);
 	ButtonMain->setStyleSheet(ButtonMain->styleSheet() + STYLE_SHEET("QPushButtonListEdit"));
 	ButtonMain->setCheckable(true);
@@ -29,7 +29,7 @@ ISListEdit::ISListEdit(QWidget *parent) : ISFieldEditBase(parent)
 	AddWidgetEdit(ButtonMain, this);
 
 	ButtonList = new QToolButton(this);
-	ButtonList->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	ButtonList->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	ButtonList->setIcon(BUFFER_ICONS("Search"));
 	ButtonList->setToolTip(LANG("OpenList"));
 	ButtonList->setCursor(CURSOR_POINTING_HAND);

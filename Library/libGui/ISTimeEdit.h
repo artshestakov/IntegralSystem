@@ -1,8 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 #include "ISDateTimeEdit.h"
-#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISTimeEdit : public ISDateTimeEdit
 {
@@ -14,12 +13,5 @@ public:
 
 	void SetValue(const QVariant &value) override;
 	QVariant GetValue() const override;
-
-protected:
-	void DateEnableChanged(int State) override;
-	void SelectTime();
-
-private:
-	ISServiceButton *ButtonTime;
 };
 //-----------------------------------------------------------------------------

@@ -48,7 +48,6 @@ bool ISCalendarObjectForm::Save()
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("Date")));
 		GetFieldWidget("Date")->BlinkRed();
-		dynamic_cast<ISDateEdit*>(GetFieldWidget("Date"))->SetChecked(true);
 		return false;
 	}
 
@@ -56,7 +55,6 @@ bool ISCalendarObjectForm::Save()
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("TimeAlert")));
 		GetFieldWidget("TimeAlert")->BlinkRed();
-		dynamic_cast<ISTimeEdit*>(GetFieldWidget("TimeAlert"))->SetChecked(true);
 		return false;
 	}
 

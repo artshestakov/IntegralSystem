@@ -3,14 +3,7 @@
 //-----------------------------------------------------------------------------
 ISRangeDateTimeEdit::ISRangeDateTimeEdit(QWidget *parent, const QString &FieldName) : ISRangeEditBase(parent, FieldName)
 {
-	BeginDateTimeEdit = new ISDateTimeEdit(this);
-	BeginDateTimeEdit->SetChecked(true);
-	BeginDateTimeEdit->SetVisibleCheck(false);
-
-	EndDateTimeEdit = new ISDateTimeEdit(this);
-	EndDateTimeEdit->SetChecked(true);
-	EndDateTimeEdit->SetVisibleCheck(false);
-
+	BeginDateTimeEdit = new ISDateTimeEdit(this), EndDateTimeEdit = new ISDateTimeEdit(this);
 	AddFields(LANG("FieldRange.DateTime.Begin"), BeginDateTimeEdit, LANG("FieldRange.DateTime.End"), EndDateTimeEdit);
 }
 //-----------------------------------------------------------------------------
@@ -27,9 +20,6 @@ void ISRangeDateTimeEdit::SetValue(const ISRangeStruct &range)
 //-----------------------------------------------------------------------------
 ISRangeStruct ISRangeDateTimeEdit::GetValue() const
 {
-	ISRangeStruct Range;
-	Range.BeginValue = BeginDateTimeEdit->GetValue();
-	Range.EndValue = EndDateTimeEdit->GetValue();
-	return Range;
+	return ISRangeStruct{ BeginDateTimeEdit->GetValue(),EndDateTimeEdit->GetValue() };
 }
 //-----------------------------------------------------------------------------

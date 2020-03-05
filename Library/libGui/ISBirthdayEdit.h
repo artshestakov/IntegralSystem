@@ -15,7 +15,7 @@ public:
 
 protected:
 	void UpdateLabel(const QDate &Date);
-	void DateEnableChanged(int State) override;
+	//void DateEnableChanged(int State) override; //???
 
 private:
 	QLabel *Label;

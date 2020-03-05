@@ -111,9 +111,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CLDateEdit.cpp" />
-    <ClCompile Include="CLDateTimeEdit.cpp" />
-    <ClCompile Include="CLTimeEdit.cpp" />
     <ClCompile Include="ISAboutForm.cpp" />
     <ClCompile Include="ISAddressBookListForm.cpp" />
     <ClCompile Include="ISAddressBox.cpp" />
@@ -442,13 +439,11 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISScreenshot.h" />
-    <QtMoc Include="CLDateEdit.h" />
-    <QtMoc Include="CLDateTimeEdit.h" />
-    <QtMoc Include="CLTimeEdit.h" />
     <ClInclude Include="ISBuffer.h" />
     <QtMoc Include="ISButtons.h" />
     <QtMoc Include="ISDaDataService.h" />
     <ClInclude Include="ISDatabaseHelper.h" />
+    <QtMoc Include="ISDateTimeEdit.h" />
     <ClInclude Include="ISDefinesGui.h" />
     <QtMoc Include="ISDelegates.h" />
     <QtMoc Include="ISEdits.h" />
@@ -549,7 +544,6 @@
     <QtMoc Include="ISRangeEditBase.h" />
     <QtMoc Include="ISCheckEdit.h" />
     <QtMoc Include="ISDateEdit.h" />
-    <QtMoc Include="ISDateTimeEdit.h" />
     <QtMoc Include="ISMonthEdit.h" />
     <QtMoc Include="ISTimeEdit.h" />
     <QtMoc Include="ISYearEdit.h" />

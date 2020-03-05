@@ -14,7 +14,7 @@ ISComboEdit::ISComboEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ComboBox = new ISQComboBox(this);
 	ComboBox->setLineEdit(LineEdit);
 	ComboBox->setItemDelegate(new ISPopupDelegate(ComboBox));
-	ComboBox->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	ComboBox->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	ComboBox->setIconSize(ISDefines::Gui::SIZE_22_22);
 	connect(ComboBox, static_cast<void(ISQComboBox::*)(int Index)>(&ISQComboBox::currentIndexChanged), this, &ISComboEdit::ValueChanged);
 	AddWidgetEdit(ComboBox, this);

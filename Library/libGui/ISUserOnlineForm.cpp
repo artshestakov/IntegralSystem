@@ -29,8 +29,6 @@ ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidge
 	LayoutTitle->addWidget(new QLabel(LANG("Date") + ':', this));
 
 	DateEdit = new ISDateEdit(this);
-	DateEdit->SetChecked(true);
-	DateEdit->SetVisibleCheck(false);
 	connect(DateEdit, &ISDateEdit::DataChanged, this, &ISUserOnlineForm::Update);
 	LayoutTitle->addWidget(DateEdit);
 

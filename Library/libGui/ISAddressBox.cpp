@@ -8,7 +8,7 @@
 ISAddressBox::ISAddressBox(QWidget *parent) : QComboBox(parent)
 {
 	setEditable(true);
-	setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	setItemDelegate(new ISPopupDelegate(this));
 	completer()->setMaxVisibleItems(20);
 	completer()->setFilterMode(Qt::MatchContains);

@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 #include "ISDateTimeEdit.h"
 //-----------------------------------------------------------------------------
-class ISDateEdit : public ISDateTimeEdit
+class LIBGUI_EXPORT ISDateEdit : public ISDateTimeEdit
 {
 	Q_OBJECT
 
@@ -14,22 +14,7 @@ public:
 	void SetValue(const QVariant &value) override;
 	QVariant GetValue() const override;
 
-protected:
-	void DateEnableChanged(int State) override;
-
-	void BeforeYesterday(); //Позавчера
-	void Yesterday(); //Вчера
-	void Today(); //Сегодня
-	void Tomorrow(); //Завтра
-	void AfterTomorrow(); //Послезавтра
-
-	void SetActionsIcon(const QDate &Date);
-
-private:
-	QAction *ActionBeforeYesterday;
-	QAction *ActionYesterday;
-	QAction *ActionToday;
-	QAction *ActionTomorrow;
-	QAction *ActionAfterTomorrow;
+	void SetMinimumDate(const QDate &Date);
+	void SetMaximumDate(const QDate &Date);
 };
 //-----------------------------------------------------------------------------

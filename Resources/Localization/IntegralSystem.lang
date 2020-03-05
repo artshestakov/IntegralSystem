@@ -740,7 +740,6 @@
   <Local Name="InputNoteFileStorage" Russian="Введите примечание к файлу (не обязательно)"/>
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickDoneFromFilter" Russian="Нажмите кнопку &quot;Применить&quot; для получения сводных данных за период."/>
-  <Local Name="ClickFromSelectDoneTime" Russian="Нажмите, чтобы выбрать время"/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
   <Local Name="OutcomingCall" Russian="Исходщяий вызов на номер: %1"/>
   <Local Name="ClickOverviewFromSelectFile" Russian="Нажмите &quot;Обзор&quot; чтобы выбрать файл"/>

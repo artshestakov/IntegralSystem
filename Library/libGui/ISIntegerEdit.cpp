@@ -7,7 +7,7 @@ ISIntegerEdit::ISIntegerEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	SpinBox = new ISQSpinBox(this);
 	SpinBox->setStyleSheet(STYLE_SHEET("ISIntegerEdit"));
-	SpinBox->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	SpinBox->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	SpinBox->setSpecialValueText(ISDefines::Core::SYMBOL_SPACE_HIDE);
 	SpinBox->setAccelerated(true);
 	connect(SpinBox, static_cast<void(ISQSpinBox::*)(const QString &)>(&ISQSpinBox::valueChanged), this, &ISIntegerEdit::OnValueChanged);

@@ -9,7 +9,7 @@ ISDoubleEdit::ISDoubleEdit(QWidget *parent) : ISFieldEditBase(parent)
 
 	DoubleSpinBox = new ISQDoubleSpinBox(this);
 	DoubleSpinBox->setStyleSheet(STYLE_SHEET("ISDoubleEdit"));
-	DoubleSpinBox->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	DoubleSpinBox->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	DoubleSpinBox->setSpecialValueText(ISDefines::Core::SYMBOL_SPACE_HIDE);
 	DoubleSpinBox->setAccelerated(true);
 	connect(DoubleSpinBox, static_cast<void(ISQDoubleSpinBox::*)(const QString &)>(&ISQDoubleSpinBox::valueChanged), this, &ISDoubleEdit::OnValueChanged);

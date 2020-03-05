@@ -277,11 +277,6 @@
   <Local Name="NextMouth" Russian="Следующий месяц"/>
   <Local Name="PrevMouth" Russian="Предыдущий месяц"/>
   <Local Name="ToCurrentTime" Russian="К текущему времени"/>
-  <Local Name="BeforeYesterday" Russian="Позавчера"/>
-  <Local Name="Yesterday" Russian="Вчера"/>
-  <Local Name="Today" Russian="Сегодня"/>
-  <Local Name="Tomorrow" Russian="Завтра"/>
-  <Local Name="AfterTomorrow" Russian="Послезавтра"/>
   <Local Name="SelectedDate" Russian="Выбранная дата"/>
   <Local Name="DateTime" Russian="Дата и время"/>
   <Local Name="CurrentYear" Russian="Текущий год"/>
@@ -332,6 +327,7 @@
   <Local Name="SmtpClient.Error.AuthenticationFailedError" Russian="Ошибка аутентификации"/>
   
   <!--Other-->
+  <Local Name="Today" Russian="Сегодня"/>
   <Local Name="SaveAndCreate" Russian="Сохранить и создать новую запись"/>
   <Local Name="SaveClose" Russian="Сохранить и закрыть"/>
   <Local Name="Save" Russian="Сохранить"/>
@@ -414,8 +410,6 @@
   <Local Name="ClosePreview" Russian="Закрыть предпросмотр"/>
   <Local Name="Blocked" Russian="Заблокировано"/>
   <Local Name="SelectAction" Russian="Выберите действие"/>
-  <Local Name="NotIndicated" Russian="Не указано"/>
-  <Local Name="ActivateDeactivateField" Russian="Активировать/деактивировать поле"/>
   <Local Name="CancelChanged" Russian="Отменить изменения"/>
   <Local Name="Image" Russian="Изображение"/>
   <Local Name="Calculated" Russian="Вычисляется"/>

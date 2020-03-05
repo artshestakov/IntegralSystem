@@ -1,57 +1,40 @@
 #pragma once
+#ifndef _CLDATETIMEEDIT_H_INCLUDED
+#define _CLDATETIMEEDIT_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 #include "ISFieldEditBase.h"
-#include "ISCalendarPopup.h"
 #include "ISEdits.h"
 //-----------------------------------------------------------------------------
-class ISDateTimeEdit : public ISFieldEditBase
+class LIBGUI_EXPORT ISDateTimeEdit : public ISFieldEditBase
 {
-	Q_OBJECT
+    Q_OBJECT
+
+signals:
+	void DateTimeChanged();
 
 public:
-	Q_INVOKABLE ISDateTimeEdit(QWidget *parent);
-	virtual ~ISDateTimeEdit();
+    Q_INVOKABLE ISDateTimeEdit(QWidget *parent = 0);
+    virtual ~ISDateTimeEdit();
 
 	virtual void SetValue(const QVariant &value) override;
 	virtual QVariant GetValue() const override;
 	virtual void Clear() override;
 	virtual void SetVisibleClear(bool Visible) override;
 
-	void SetDisplayFormat(const QString &DisplayFormat);
-	void SetVisibleCheck(bool Visible);
-	void SetChecked(bool Check);
+    void SetDate(const QDate &Date);
+    void SetTime(const QTime &Time);
+	void SetRangeDate(const QDate &Minimum, const QDate &Maximum);
 	void SetMinimumDate(const QDate &Date);
 	void SetMaximumDate(const QDate &Date);
-	void SetMinimumDateTime(const QDateTime &DateTime);
-	void SetMaximumDateTime(const QDateTime &DateTime);
-
-public slots:
-	void SetReadOnly(bool ReadOnly);
 
 protected:
-	QCheckBox* GetCheckEnable();
-	QToolButton* GetButtonCalendar();
-
-	void SetDate(const QDate &Date);
-	void SetTime(const QTime &Time);
-
-	virtual void DateEnableChanged(int State);
-	void ShowCalendar();
-	void HideCalendar();
-
-	void SetVisibleCalendar(bool visible);
-	void SetSelectSection(ISQDateTimeEdit::Section select_section);
+	void SetVisibleDateEdit(bool Visible);
+	void SetVisibleTimeEdit(bool Visible);
 
 private:
-	QCheckBox *CheckEnable;
-	ISQDateTimeEdit *DateTimeEdit;
-	
-	QToolButton *ButtonCalendar;
-	ISCalendarPopup *CalendarWidget;
-	QPropertyAnimation *AnimationCalendar;
-
-	ISQDateTimeEdit::Section SelectSection;
-	bool VisibleCalendar;
+    ISQDateEdit *DateEdit;
+    ISQTimeEdit *TimeEdit;
 };
 //-----------------------------------------------------------------------------
+#endif

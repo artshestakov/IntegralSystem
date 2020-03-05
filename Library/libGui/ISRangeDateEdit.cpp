@@ -17,14 +17,7 @@ ISRangeDateEdit::ISRangeDateEdit(QWidget *parent, const QString &FieldName) : IS
 	connect(ComboEdit, &ISComboEdit::ValueChange, this, &ISRangeDateEdit::PeriodChanged);
 	AddWidgetToLeft(ComboEdit);
 
-	BeginDateEdit = new ISDateEdit(this);
-	BeginDateEdit->SetChecked(true);
-	BeginDateEdit->SetVisibleCheck(false);
-
-	EndDateEdit = new ISDateEdit(this);
-	EndDateEdit->SetChecked(true);
-	EndDateEdit->SetVisibleCheck(false);
-
+	BeginDateEdit = new ISDateEdit(this), EndDateEdit = new ISDateEdit(this);
 	AddFields(LANG("FieldRange.DateTime.Begin"), BeginDateEdit, LANG("FieldRange.DateTime.End"), EndDateEdit);
 }
 //-----------------------------------------------------------------------------

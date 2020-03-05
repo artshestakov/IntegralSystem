@@ -3,6 +3,8 @@
 #define _ISEDITS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISCalendarPopup.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISQComboBox : public QComboBox
 {
@@ -29,44 +31,11 @@ protected:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISQDateTimeEdit : public QDateTimeEdit
-{
-	Q_OBJECT
-
-public:
-	ISQDateTimeEdit(QWidget *parent = 0);
-	virtual ~ISQDateTimeEdit();
-
-	void contextMenuEvent(QContextMenuEvent *e);
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISQDoubleSpinBox : public QDoubleSpinBox
-{
-	Q_OBJECT
-
-signals:
-	void ClearClicked();
-
-public:
-	ISQDoubleSpinBox(QWidget *parent = 0);
-	virtual ~ISQDoubleSpinBox();
-
-	void SetVisibleClear(bool Visible);
-	QValidator::State validate(QString &Input, int &Pos) const;
-
-protected:
-	void contextMenuEvent(QContextMenuEvent *e);
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 class ISQLineEdit : public QLineEdit
 {
 	Q_OBJECT
 
-signals:
+		signals :
 	void FocusInSignal();
 	void FocusOutSignal();
 	void MouseDoubleClicked();
@@ -100,6 +69,101 @@ private:
 	QIcon Icon;
 	QMenu *MenuCopy;
 	QAction *ActionClear;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISQDateEdit : public ISQLineEdit
+{
+	Q_OBJECT
+
+signals:
+	void DateChanged();
+
+public:
+	ISQDateEdit(QWidget *parent = 0);
+	virtual ~ISQDateEdit();
+
+	void contextMenuEvent(QContextMenuEvent *e);
+
+	QDate GetDate() const;
+	void SetDate(const QDate &Date);
+	void Clear();
+
+	void SetRange(const QDate &Minimum, const QDate &Maximum);
+	void SetMinimumDate(const QDate &Date);
+	void SetMaximumDate(const QDate &Date);
+
+protected:
+	void showEvent(QShowEvent *ShowEvent);
+	void resizeEvent(QResizeEvent *ResizeEvent);
+
+private:
+	void ShowCalendar();
+	void HideCalendar();
+	void SelectionChanged();
+
+private:
+	ISServiceButton *ButtonCalendar;
+	ISCalendarPopup *CalendarWidget;
+	QPropertyAnimation *AnimationCalendar;
+	bool IsShow;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISQTimeEdit : public QWidget
+{
+	Q_OBJECT
+
+signals:
+	void TimeChanged();
+
+public:
+	ISQTimeEdit(QWidget *parent = 0);
+	virtual ~ISQTimeEdit();
+
+	QTime GetTime() const;
+	void SetTime(const QTime &Time);
+	void Clear();
+
+private:
+	ISQComboBox *ComboBoxHour;
+	ISQComboBox *ComboBoxMinute;
+	ISQComboBox *ComboBoxSecond;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISQDateTimeEdit : public QDateTimeEdit
+{
+	Q_OBJECT
+
+public:
+	ISQDateTimeEdit(QWidget *parent = 0);
+	virtual ~ISQDateTimeEdit();
+
+	void contextMenuEvent(QContextMenuEvent *e);
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISQDoubleSpinBox : public QDoubleSpinBox
+{
+	Q_OBJECT
+
+signals:
+	void ClearClicked();
+
+public:
+	ISQDoubleSpinBox(QWidget *parent = 0);
+	virtual ~ISQDoubleSpinBox();
+
+	void SetVisibleClear(bool Visible);
+	QValidator::State validate(QString &Input, int &Pos) const;
+
+protected:
+	void contextMenuEvent(QContextMenuEvent *e);
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

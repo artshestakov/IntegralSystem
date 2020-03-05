@@ -29,8 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{33F902D5-EB7
 		Resources\CSS\ISBaseTableView.css = Resources\CSS\ISBaseTableView.css
 		Resources\CSS\ISButtonNotify.Blink.css = Resources\CSS\ISButtonNotify.Blink.css
 		Resources\CSS\ISButtonNotify.White.css = Resources\CSS\ISButtonNotify.White.css
-		Resources\CSS\ISDateEdit.css = Resources\CSS\ISDateEdit.css
-		Resources\CSS\ISDateTimeEdit.css = Resources\CSS\ISDateTimeEdit.css
 		Resources\CSS\ISDoubleEdit.css = Resources\CSS\ISDoubleEdit.css
 		Resources\CSS\ISIntegerEdit.css = Resources\CSS\ISIntegerEdit.css
 		Resources\CSS\ISLabelImage.css = Resources\CSS\ISLabelImage.css
@@ -369,7 +367,7 @@ Global
 		{8C1C6DF9-CA03-426D-A1EB-6A573409CD17} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 		Qt5Version = 58_msvc2015
+		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 	EndGlobalSection
 EndGlobal
