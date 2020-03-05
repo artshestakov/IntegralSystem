@@ -6,6 +6,7 @@ ISDateTimeEdit::ISDateTimeEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
     setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
+	CreateButtonClear();
 
     QHBoxLayout *Layout = new QHBoxLayout();
     Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
