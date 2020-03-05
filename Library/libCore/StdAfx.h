@@ -210,6 +210,7 @@
 #include <QtGui/QScreen>
 #include <QtGui/QTextFrame>
 #include <QtGui/QBitmap>
+#include <QtGui/QDoubleValidator>
 //-----------------------------------------------------------------------------
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintPreviewDialog>

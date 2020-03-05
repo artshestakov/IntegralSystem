@@ -168,6 +168,7 @@ const int PLAYER_WINDING = 10000;
 const char COLOR_STANDART[] = "#000000";
 const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 const char NO_ERROR_STRING[] = "No error.";
+const int DOUBLE_DECIMALS = 3;
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 2000;

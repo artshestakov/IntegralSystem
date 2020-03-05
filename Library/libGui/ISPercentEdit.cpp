@@ -2,9 +2,7 @@
 //-----------------------------------------------------------------------------
 ISPercentEdit::ISPercentEdit(QWidget *parent) : ISDoubleEdit(parent)
 {
-	SetMinimum(0);
-	SetMaximum(100);
-	SetSuffix("%");
+	SetRange(0, 100);
 }
 //-----------------------------------------------------------------------------
 ISPercentEdit::~ISPercentEdit()
