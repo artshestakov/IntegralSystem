@@ -33,43 +33,48 @@ void ISCaratService::StartService()
 	{
 		//ќбщее количество €дер и количество запущенных
 		int CoreCountTotal = qSelectCore.GetCountResultRows(), CoreCountStarted = 0;
-
-		while (qSelectCore.Next()) //ќбход €дер
+		if (CoreCountTotal) //≈сли активные €дра существуют - запускаем
 		{
-			QString CoreName = qSelectCore.ReadColumn("core_name").toString();
-			QString FileName = qSelectCore.ReadColumn("core_filename").toString() + (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows ? QString().append(".").append(EXTENSION_EXE) : QString());
-
-			ISLOGGER_INFO("Core \"" + CoreName + "\": starting...");
-			QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
-			if (!QFile::exists(CoreFilePath)) //≈сли €дро не существует - переходим к следующему
+			while (qSelectCore.Next()) //ќбход €дер
 			{
-				ISLOGGER_ERROR("Core \"" + CoreName + "\" not found. Path: " + CoreFilePath);
-				continue;
-			}
+				QString CoreName = qSelectCore.ReadColumn("core_name").toString();
+				QString FileName = qSelectCore.ReadColumn("core_filename").toString() + (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows ? QString().append(".").append(EXTENSION_EXE) : QString());
 
-			QProcess *Process = new QProcess(this);
-			Process->setObjectName(CoreName);
-			connect(Process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ISCaratService::Finished);
-			connect(Process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ISCaratService::Error);
-			connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
-			connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
-			Process->start(CoreFilePath);
+				ISLOGGER_INFO("Core \"" + CoreName + "\": starting...");
+				QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
+				if (!QFile::exists(CoreFilePath)) //≈сли €дро не существует - переходим к следующему
+				{
+					ISLOGGER_ERROR("Core \"" + CoreName + "\" not found. Path: " + CoreFilePath);
+					continue;
+				}
 
-			//≈сли дождались первого сообщени€ от €дра и оно валидное - считаем, что €дро успешно запустилось - иначе ошибка в любом случае
-			if (Process->waitForReadyRead(CARAT_CORE_START_TIMEOUT) && Process->readAll().contains(CARAT_CORE_START_FLAG))
-			{
-				ISLOGGER_INFO("Core \"" + CoreName + "\" started. PID: " + QString::number(Process->processId()));
-				++CoreCountStarted;
+				QProcess *Process = new QProcess(this);
+				Process->setObjectName(CoreName);
+				connect(Process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ISCaratService::Finished);
+				connect(Process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ISCaratService::Error);
+				connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
+				connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
+				Process->start(CoreFilePath);
+
+				//≈сли дождались первого сообщени€ от €дра и оно валидное - считаем, что €дро успешно запустилось - иначе ошибка в любом случае
+				if (Process->waitForReadyRead(CARAT_CORE_START_TIMEOUT) && Process->readAll().contains(CARAT_CORE_START_FLAG))
+				{
+					ISLOGGER_INFO("Core \"" + CoreName + "\" started. PID: " + QString::number(Process->processId()));
+					++CoreCountStarted;
+				}
+				else
+				{
+					ISLOGGER_ERROR("Core \"" + CoreName + "\" not started");
+				}
 			}
-			else
-			{
-				ISLOGGER_ERROR("Core \"" + CoreName + "\" not started");
-			}
+			CoreCountStarted == CoreCountTotal ?
+				ISLOGGER_INFO("Started all cores") : //≈сли €дра были успешно запущены
+				ISLOGGER_WARNING("Started " + QString::number(CoreCountStarted) + " of " + QString::number(CoreCountTotal));
 		}
-
-		CoreCountStarted == CoreCountTotal ?
-			ISLOGGER_INFO("Started all cores") : //≈сли €дра были успешно запущены
-			ISLOGGER_WARNING("Started " + QString::number(CoreCountStarted) + " of " + QString::number(CoreCountTotal));
+		else
+		{
+			ISLOGGER_WARNING("Active core not exist");
+		}
 	}
 
 	LocalServer = new QLocalServer(this);
