@@ -20,8 +20,5 @@ public:
 	virtual ~ISModelThreadWorker();
 
 	void Execute(const QString &SqlQueryText, const QVariantMap &Conditions);
-
-private:
-	QSqlDatabase DB;
 };
 //-----------------------------------------------------------------------------
