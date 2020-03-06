@@ -650,7 +650,7 @@ bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTabl
 			MetaField->LocalListName = LocalName;
 		}
 
-		MetaTable->SystemFieldsVisible.append(MetaField);
+		MetaTable->SystemFieldsVisible.emplace_back(MetaField);
 		Temp = Temp.nextSibling();
 	}
 	return Result;
@@ -720,7 +720,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 			MetaField->Sequence = QVariant(DomNamedNodeMap.namedItem("Sequence").nodeValue()).toBool();
 			MetaField->LayoutName = DomNamedNodeMap.namedItem("LayoutName").nodeValue();
 			MetaField->SeparatorName = DomNamedNodeMap.namedItem("SeparatorName").nodeValue();
-			MetaField->IsSystem ? MetaTable->SystemFields.append(MetaField) : MetaTable->Fields.append(MetaField);
+			MetaField->IsSystem ? MetaTable->SystemFields.emplace_back(MetaField) : MetaTable->Fields.emplace_back(MetaField);
 
 			if (MetaTable->Parent.isEmpty() && MetaField->QueryText.isEmpty())
 			{
@@ -760,7 +760,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 				ErrorString = QString("Field \"%1\" already exist. TableName: %2").arg(FieldName).arg(MetaTable->Name);
 				break;
 			}
-			MetaTable->AllFields.append(MetaField);
+			MetaTable->AllFields.emplace_back(MetaField);
 		}
 		Temp = Temp.nextSibling();
 	}
@@ -917,7 +917,7 @@ bool ISMetaData::InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDo
 		MetaEscort->TableName = DomNamedNodeMap.namedItem("TableName").nodeValue();
 		MetaEscort->ClassName = DomNamedNodeMap.namedItem("ClassName").nodeValue();
 		MetaEscort->ClassFilter = DomNamedNodeMap.namedItem("ClassFilter").nodeValue();
-		MetaTable->Escorts.append(MetaEscort);
+		MetaTable->Escorts.emplace_back(MetaEscort);
 		Temp = Temp.nextSibling();
 	}
 	return Result;

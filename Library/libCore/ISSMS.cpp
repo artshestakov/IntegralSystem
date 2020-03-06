@@ -92,7 +92,6 @@ bool ISSMS::SendMessage()
 			ErrorString = NetworkReply->errorString();
 			Result = false;
 		}
-
 		delete NetworkReply;
 	}
 	else
@@ -100,7 +99,6 @@ bool ISSMS::SendMessage()
 		ErrorString = "Unknown error";
 		Result = false;
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

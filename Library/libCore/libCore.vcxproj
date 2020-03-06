@@ -173,6 +173,7 @@
     <QtMoc Include="ISRestWorker.h" />
     <ClInclude Include="ISStackWalker.h" />
     <QtMoc Include="ISStorageFileLoader.h" />
+    <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="PMetaClass.h" />
     <ClInclude Include="ISStructs.h" />
     <ClInclude Include="libCore_global.h" />

@@ -5,6 +5,7 @@
 #include "ISConstants.h"
 #include "ISQueryModelHelper.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent)
 	: QObject(parent),
@@ -244,10 +245,10 @@ void ISQueryModel::SetOffset(int offset)
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectSystemFields()
 {
-	for (int i = 1, c = MetaTable->SystemFields.count(); i < c; ++i) //Обход системных полей и включение их в запрос
+	for (int i = 1, c = MetaTable->SystemFields.size(); i < c; ++i) //Обход системных полей и включение их в запрос
 	{
 		PMetaClassField *SystemField = MetaTable->SystemFields[i];
-		if (!MetaTable->SystemFieldsVisible.contains(SystemField))
+		if (!VectorContains(MetaTable->SystemFieldsVisible, SystemField))
 		{
 			if (SystemField->HideFromList)
 			{
@@ -260,7 +261,7 @@ void ISQueryModel::CreateQuerySelectSystemFields()
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectFields()
 {
-	for (int i = 0, c = MetaTable->Fields.count(); i < c; ++i)
+	for (int i = 0, c = MetaTable->Fields.size(); i < c; ++i)
 	{
 		PMetaClassField *Field = MetaTable->Fields[i];
 

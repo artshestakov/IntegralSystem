@@ -5,7 +5,7 @@
 #include "libCore_global.h"
 #include "ISNamespace.h"
 #include "ISUuid.h"
-#include "ISTypes.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISSystem
 {

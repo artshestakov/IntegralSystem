@@ -26,7 +26,7 @@ QSqlRecord ISSqlModelView::GetRecord(int RowIndex) const
 //-----------------------------------------------------------------------------
 int ISSqlModelView::GetFieldIndex(const QString &FieldName) const
 {
-	for (int i = 0; i < MetaTable->Fields.count(); ++i)
+	for (int i = 0; i < MetaTable->Fields.size(); ++i)
 	{
 		if (MetaTable->Fields[i]->Name == FieldName)
 		{
@@ -134,7 +134,7 @@ int ISSqlModelView::rowCount(const QModelIndex &Parent) const
 int ISSqlModelView::columnCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return MetaTable->Fields.count();
+	return MetaTable->Fields.size();
 }
 //-----------------------------------------------------------------------------
 QModelIndex ISSqlModelView::index(int Row, int Column, const QModelIndex &Parent) const

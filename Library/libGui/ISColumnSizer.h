@@ -24,7 +24,7 @@ private:
 	ISColumnSizer& operator=(ISColumnSizer const&) { return *this; };
 
 private:
-	QMap<QString, ISColumnSizeItem*> Tables;
+	QMap<QString, ISColumnSizeItem *> Tables;
 };
 //-----------------------------------------------------------------------------
 #endif

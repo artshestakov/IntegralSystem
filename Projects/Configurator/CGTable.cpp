@@ -31,7 +31,7 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 	SqlText += CGTemplateField::GetSqlTextForTemplateSystemFields(TableName, TableAlias);
 
 	//Формирование запроса на создание таблицы
-	int CountFields = MetaTable->Fields.count();
+	int CountFields = MetaTable->Fields.size();
 	for (int i = 0; i < CountFields; ++i) //Обход полей таблицы
 	{
 		PMetaClassField *MetaField = MetaTable->Fields[i];
@@ -90,7 +90,7 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 
 	if (Created)
 	{
-		for (int i = 0; i < MetaTable->AllFields.count(); ++i)
+		for (int i = 0; i < MetaTable->AllFields.size(); ++i)
 		{
 			PMetaClassField *MetaField = MetaTable->AllFields[i];
 			if (MetaField->QueryText.length())
@@ -247,10 +247,10 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 //-----------------------------------------------------------------------------
 void CGTable::CreateNewFields(PMetaClassTable *MetaTable)
 {
-	for (int i = 0; i < MetaTable->Fields.count(); ++i) //Обход полей
+	for (int i = 0; i < MetaTable->Fields.size(); ++i) //Обход полей
 	{
 		PMetaClassField *MetaField = MetaTable->Fields[i];
-		if (MetaField->QueryText.length())
+		if (!MetaField->QueryText.isEmpty())
 		{
 			continue;
 		}

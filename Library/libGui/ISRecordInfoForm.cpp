@@ -24,7 +24,7 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 	ISGui::SetFontWidgetUnderline(LabelTitle, true);
 	FormLayout->addRow(LabelTitle, new QWidget(this));
 
-	for (int i = 0; i < MetaTable->SystemFields.count(); ++i)
+	for (int i = 0; i < MetaTable->SystemFields.size(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->SystemFields[i];
 

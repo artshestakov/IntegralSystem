@@ -279,7 +279,7 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"), ISNamespace::OAT_Service, QString(), "ISProtocolObjectListForm"));
 	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Discussion"), LANG("Discussion"), ISNamespace::OAT_Service, QString(), "ISDiscussionListForm"));
 
-	for (int i = 0; i < MetaTable->Escorts.count(); ++i) //Обход эскортных мета-таблиц
+	for (int i = 0; i < MetaTable->Escorts.size(); ++i) //Обход эскортных мета-таблиц
 	{
 		PMetaClassEscort *MetaEscort = MetaTable->Escorts[i];
 		

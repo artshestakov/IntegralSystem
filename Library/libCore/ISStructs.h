@@ -7,6 +7,7 @@
 #include "ISUuid.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 struct ISMetaDataType
 {
@@ -21,7 +22,7 @@ struct ISMetaDataType
 struct StructModelItem
 {
 	QString FieldName;
-	QVector<QVariant> Values;
+	ISVectorVariant Values;
 	ISNamespace::SearchOperatorType Operator;
 	ISNamespace::FieldType FieldType;
 };
@@ -140,7 +141,7 @@ struct ISColumnSizeItem
 public:
 	ISColumnSizeItem() : ModificationFlag(false) { }
 
-	QMap<QString, int> Fields;
+	ISStringToIntMap Fields;
 	bool ModificationFlag;
 };
 //-----------------------------------------------------------------------------

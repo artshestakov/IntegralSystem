@@ -188,8 +188,7 @@ void CGConfiguratorDelete::fields()
 		QString TableName = MetaTable->Name.toLower();
 		Map.insert(TableName, ISVectorString());
 
-		QVector<PMetaClassField*> Fields = MetaTable->AllFields;
-		for (PMetaClassField* MetaField : Fields)
+		for (PMetaClassField* MetaField : MetaTable->AllFields)
 		{
 			Map[TableName].emplace_back(MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower());
 		}

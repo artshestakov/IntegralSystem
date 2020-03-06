@@ -1,23 +1,14 @@
 #pragma once
+#ifndef _ISTYPES_H_INCLUDED
+#define _ISTYPES_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISNamespace.h"
-#include "ISUuid.h"
 //-----------------------------------------------------------------------------
 struct ISRangeStruct
 {
 public:
-	ISRangeStruct()
-	{
-
-	}
-
-	ISRangeStruct(const QVariant &begin_value, const QVariant &end_value)
-		: BeginValue(begin_value),
-		EndValue(end_value)
-	{
-
-	}
+	ISRangeStruct() { }
+	ISRangeStruct(const QVariant &begin_value, const QVariant &end_value) : BeginValue(begin_value), EndValue(end_value) { }
 
 	void Clear()
 	{
@@ -34,8 +25,4 @@ public:
 	QVariant EndValue;
 };
 //-----------------------------------------------------------------------------
-typedef std::map<QString, QString> ISStringMap;
-typedef std::vector<int> ISVectorInt;
-typedef std::vector<QString> ISVectorString;
-typedef std::vector<ISUuid> ISVectorUID;
-//-----------------------------------------------------------------------------
+#endif

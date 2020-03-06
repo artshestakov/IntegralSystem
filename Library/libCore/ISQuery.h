@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
 #include "ISQueryText.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISQuery
 {

@@ -5,7 +5,7 @@
 #include "libCore_global.h"
 #include "ISUuid.h"
 #include "ISNamespace.h"
-#include "ISTypes.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 struct PMetaClass
 {
@@ -123,7 +123,7 @@ struct PMetaClassTable : public PMetaClass
 
 	PMetaClassField* GetField(int Index) //Получить поле по индексу
 	{
-		if (!AllFields.isEmpty())
+		if (!AllFields.empty())
 		{
 			return AllFields[Index];
 		}
@@ -132,7 +132,7 @@ struct PMetaClassTable : public PMetaClass
 
 	PMetaClassField* GetFieldID() //Получить поле "Код"
 	{
-		if (!SystemFields.isEmpty())
+		if (!SystemFields.empty())
 		{
 			return SystemFields.front();
 		}
@@ -141,7 +141,7 @@ struct PMetaClassTable : public PMetaClass
 
 	int GetFieldIndex(const QString &FieldName) const //Получить индекс поля по его имени
 	{
-		for (int i = 0; i < AllFields.count(); ++i)
+		for (int i = 0; i < AllFields.size(); ++i)
 		{
 			PMetaClassField *MetaField = AllFields.at(i);
 			if (MetaField->Name == FieldName)
@@ -171,12 +171,12 @@ struct PMetaClassTable : public PMetaClass
 	QString Where;
 	QString OrderField;
 
-	QVector<PMetaClassEscort*> Escorts; //Эскортные таблицы
-	QVector<PMetaClassField*> Fields; //Поля
-	QVector<PMetaClassField*> SystemFields; //Системные поля
-	QVector<PMetaClassField*> AllFields; //Все поля
+	std::vector<PMetaClassEscort*> Escorts; //Эскортные таблицы
+	std::vector<PMetaClassField*> Fields; //Поля
+	std::vector<PMetaClassField*> SystemFields; //Системные поля
+	std::vector<PMetaClassField*> AllFields; //Все поля
 
-	QVector<PMetaClassField*> SystemFieldsVisible; //Отображаемые системные поля
+	std::vector<PMetaClassField*> SystemFieldsVisible; //Отображаемые системные поля
 	ISVectorString Joins;
 };
 //-----------------------------------------------------------------------------

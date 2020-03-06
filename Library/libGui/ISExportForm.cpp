@@ -125,7 +125,7 @@ void ISExportForm::CreateTabFields()
 
 	CreateFieldItem(MetaTable->GetFieldID());
 
-	for (int i = 0; i < MetaTable->Fields.count(); ++i)
+	for (int i = 0; i < MetaTable->Fields.size(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->Fields[i];
 		if (!MetaField->HideFromList)

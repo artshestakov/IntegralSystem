@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "ISCaratCoreApplication.h"
-#include "ISTypes.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class LIBCARAT_EXPORT ISCoreNotification : public ISCaratCoreApplication
 {

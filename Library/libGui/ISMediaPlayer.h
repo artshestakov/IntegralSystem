@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISTypes.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISMediaPlayer : public QMediaPlayer
 {

@@ -156,7 +156,7 @@ void ISOrganizationListForm::Percentage()
 			ProgressForm.setValue(i);
 
 			int CountFill = 0; //Количество заполненных полей
-			int CountFields = GetMetaTable()->Fields.count(); //Количество полей
+			int CountFields = GetMetaTable()->Fields.size(); //Количество полей
 
 			for (int j = 0; j < CountFields; ++j) //Обход полей
 			{

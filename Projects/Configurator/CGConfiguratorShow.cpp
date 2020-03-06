@@ -227,7 +227,7 @@ PMetaClassTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 //-----------------------------------------------------------------------------
 PMetaClassField* CGConfiguratorShow::FoundField(PMetaClassTable *MetaTable, const QString &ColumnName)
 {
-	for (int i = 0; i < MetaTable->AllFields.count(); ++i)
+	for (int i = 0; i < MetaTable->AllFields.size(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->AllFields[i];
 		if (QString(MetaTable->Alias + '_' + MetaField->Name).toLower() == ColumnName)

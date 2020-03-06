@@ -1,5 +1,4 @@
 #include "ISCoreScheduler.h"
-#include "ISTypes.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISConfig.h"

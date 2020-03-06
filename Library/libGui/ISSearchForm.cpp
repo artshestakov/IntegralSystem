@@ -144,7 +144,7 @@ void ISSearchForm::LoadFields()
 {
 	AddFieldFromList(MetaTable->GetFieldID()->LabelName, MetaTable->GetFieldID()->Name);
 
-	for (int i = 0; i < MetaTable->Fields.count(); ++i)
+	for (int i = 0; i < MetaTable->Fields.size(); ++i)
 	{
 		PMetaClassField *MetaField = MetaTable->Fields[i];
 		if (MetaField->HideFromList || MetaField->NotSearch || !MetaField->QueryText.isEmpty())

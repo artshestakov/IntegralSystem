@@ -88,7 +88,7 @@ void CGResource::UpdateResource(PMetaClassResource *MetaResource)
 	}
 
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
-	for (int i = 0; i < MetaTable->Fields.count(); ++i) //Обход пользовательских полей таблицы и их очистка
+	for (int i = 0; i < MetaTable->Fields.size(); ++i) //Обход пользовательских полей таблицы и их очистка
 	{
 		PMetaClassField *MetaField = MetaTable->Fields[i];
 

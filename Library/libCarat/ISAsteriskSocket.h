@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libCarat_global.h"
-#include "ISTypes.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class LIBCARAT_EXPORT ISAsteriskSocket : public QTcpSocket
 {

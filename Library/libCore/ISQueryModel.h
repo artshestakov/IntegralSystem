@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
 #include "PMetaClass.h"
+#include "ISTypes.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISQueryModel : public QObject
 {

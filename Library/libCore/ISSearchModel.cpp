@@ -17,7 +17,7 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 	for (int i = 0; i < Vector.count(); ++i)
 	{
 		StructModelItem ModelItem = Vector.at(i);
-		if (ModelItem.Values.count() > 1) //Поиск нескольких значений по одному полю
+		if (ModelItem.Values.size() > 1) //Поиск нескольких значений по одному полю
 		{
 			for (const QVariant &Value : ModelItem.Values)
 			{
@@ -39,7 +39,6 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 		else //Поиск одного значения
 		{
 			QString Condition = ':' + ModelItem.FieldName + '_' + ISRandom::String();
-
 			if (ModelItem.FieldType == ISNamespace::FT_String)
 			{
 				SearchString += CreateSubString(ModelItem.Operator, "lower(" + ModelItem.FieldName + ')', Condition, true);
@@ -48,8 +47,7 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 			{
 				SearchString += CreateSubString(ModelItem.Operator, ModelItem.FieldName, Condition, true);
 			}
-			
-			Conditions.insert(Condition, ModelItem.Values.first());
+			Conditions.insert(Condition, ModelItem.Values.front());
 		}
 
 		SearchString += " \nAND ";
@@ -67,7 +65,7 @@ void ISSearchModel::AddField(const QString &FieldName, const QVariant &Value, IS
 
 			if (Vector.at(i).FieldName == FieldName && Vector.at(i).Operator == Operator)
 			{
-				Vector[i].Values.append(Value); //Доступ обязательно должен быть по индексу в квадратных скобках
+				Vector[i].Values.emplace_back(Value); //Доступ обязательно должен быть по индексу в квадратных скобках
 				return;
 			}
 		}
@@ -75,7 +73,7 @@ void ISSearchModel::AddField(const QString &FieldName, const QVariant &Value, IS
 
 	StructModelItem Item;
 	Item.FieldName = FieldName;
-	Item.Values.append(Value);
+	Item.Values.emplace_back(Value);
 	Item.Operator = Operator;
 	Item.FieldType = FieldType;
 	Vector.append(Item);
