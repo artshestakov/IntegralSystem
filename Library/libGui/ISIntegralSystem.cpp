@@ -1,11 +1,10 @@
 #include "ISIntegralSystem.h"
-#include "ISQueryExceptionSyntax.h"
-#include "ISQueryExceptionConnection.h"
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
 #include "ISReconnectForm.h"
 #include "ISAutoLocking.h"
 #include "ISGui.h"
+#include "ISException.h"
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
 {
@@ -46,12 +45,12 @@ bool ISIntegralSystem::notify(QObject *Object, QEvent *e)
 			}
 		}
 	}
-	catch (ISQueryExceptionSyntax &QueryExceptionSyntax)
+	catch (const ISExceptionSqlSyntax &ExceptionSyntax)
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.QueryExceptionSyntax"), QueryExceptionSyntax.GetWhat());
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.QueryExceptionSyntax"), ExceptionSyntax.what());
 	}
-	catch (ISQueryExceptionConnection &QueryExceptionConnection)
+	catch (const ISExceptionConnectionDB &QueryExceptionConnection)
 	{
 		ISGui::SetWaitGlobalCursor(false);
 

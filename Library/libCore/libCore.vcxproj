@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClInclude Include="call_stack.hpp" />
     <ClInclude Include="ISAlgorithm.h" />
+    <ClInclude Include="ISException.h" />
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISCrashDumper.h" />
@@ -177,15 +178,9 @@
     <ClInclude Include="libCore_global.h" />
     <ClInclude Include="StackWalker.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="ISExceptionAssert.h" />
-    <ClInclude Include="ISExceptionBase.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISPhoneNumberParser.h" />
     <ClInclude Include="ISProperty.h" />
-    <ClInclude Include="ISQueryException.h" />
-    <ClInclude Include="ISQueryExceptionConnection.h" />
-    <ClInclude Include="ISQueryExceptionSyntax.h" />
-    <ClInclude Include="ISQueryExceptionTransaction.h" />
     <ClInclude Include="ISRandom.h" />
     <ClInclude Include="ISSystem.h" />
     <ClInclude Include="ISTrace.h" />
@@ -194,6 +189,7 @@
     <ClInclude Include="ISVersion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISException.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
@@ -209,8 +205,6 @@
     <ClCompile Include="ISConsole.cpp" />
     <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISCountingTime.cpp" />
-    <ClCompile Include="ISExceptionAssert.cpp" />
-    <ClCompile Include="ISExceptionBase.cpp" />
     <ClCompile Include="ISMemoryObjects.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISMetaDataHelper.cpp" />
@@ -232,10 +226,6 @@
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocol.cpp" />
     <ClCompile Include="ISQuery.cpp" />
-    <ClCompile Include="ISQueryException.cpp" />
-    <ClCompile Include="ISQueryExceptionConnection.cpp" />
-    <ClCompile Include="ISQueryExceptionSyntax.cpp" />
-    <ClCompile Include="ISQueryExceptionTransaction.cpp" />
     <ClCompile Include="ISQueryModel.cpp" />
     <ClCompile Include="ISQueryModelHelper.cpp" />
     <ClCompile Include="ISQueryPool.cpp" />

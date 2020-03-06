@@ -87,12 +87,6 @@
     <ClInclude Include="ISCountingTime.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISExceptionAssert.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISExceptionBase.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISNamespace.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -100,18 +94,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISProperty.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISQueryException.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISQueryExceptionConnection.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISQueryExceptionSyntax.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISQueryExceptionTransaction.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISRandom.h">
@@ -256,6 +238,9 @@
     <ClInclude Include="ISAlgorithm.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISException.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -270,28 +255,10 @@
     <ClCompile Include="ISCountingTime.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISExceptionAssert.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISExceptionBase.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISPhoneNumberParser.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISProperty.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQueryException.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQueryExceptionConnection.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQueryExceptionSyntax.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQueryExceptionTransaction.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISRandom.cpp">
@@ -445,6 +412,9 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISLocalization.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISException.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>

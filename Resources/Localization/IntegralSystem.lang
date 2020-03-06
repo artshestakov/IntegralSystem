@@ -181,7 +181,7 @@
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
   <Local Name="Message.Warning.FileSizeExceedsLimit" Russian="Размер выбранного файла превышает установленное ограничение в %1 мегабайт"/>
-  <Local Name="Message.Warning.QueryExceptionSyntax" Russian="ВНИМАНИЕ! Произошла неожиданная ошибка SQL-запроса. Нажмите кнопку &quot;Показать подробности...&quot; и отправьте текст ниже разработчику программы."/>
+  <Local Name="Message.Warning.QueryExceptionSyntax" Russian="ВНИМАНИЕ! Произошла ошибка SQL-запроса. Нажмите кнопку &quot;Показать подробности...&quot; и отправьте текст разработчику программы. Программа будет закрыта."/>
   <Local Name="Message.Warning.EMailIsEmpty" Russian="Адрес электронной почты не указан, отправка невозможна."/>
   <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Такая связь уже существует."/>
   <Local Name="Message.Warning.NotAccess.Create" Russian="У Вас нет прав на добавление данных в таблицу &quot;%1&quot;."/>

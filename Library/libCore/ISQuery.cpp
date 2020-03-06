@@ -5,10 +5,8 @@
 #include "ISDatabase.h"
 #include "ISLogger.h"
 #include "ISCountingTime.h"
-#include "ISQueryExceptionConnection.h"
-#include "ISQueryExceptionSyntax.h"
-#include "ISQueryExceptionTransaction.h"
 #include "ISAssert.h"
+#include "ISException.h"
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(const QString &sql_text, bool prepare)
 	: ErrorString(NO_ERROR_STRING),
@@ -267,16 +265,16 @@ void ISQuery::Raise()
 
 	if (!SqlDatabase.isOpen())
 	{
-		throw ISQueryExceptionConnection(SqlQuery.lastError().text());
+		throw ISExceptionConnectionDB();
 	}
 
-	switch (SqlQuery.lastError().type())
+	/*switch (SqlQuery.lastError().type())
 	{
 	case QSqlError::NoError: return; break;
 	case QSqlError::StatementError: throw ISQueryExceptionSyntax(SqlQuery.lastError().text()); break;
-	case QSqlError::ConnectionError: throw ISQueryExceptionConnection(SqlQuery.lastError().text()); break;
+	case QSqlError::ConnectionError: throw ISExceptionConnectionDB(SqlQuery.lastError().text()); break;
 	case QSqlError::TransactionError: throw ISQueryExceptionTransaction(SqlQuery.lastError().text()); break;
-	}
+	}*/
 }
 //-----------------------------------------------------------------------------
 void ISQuery::PrepareColumnIndices()

@@ -8,7 +8,6 @@
 #include "ISCore.h"
 #include "ISSystem.h"
 #include "ISCountingTime.h"
-#include "ISQueryException.h"
 #include "CGSection.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
@@ -285,13 +284,9 @@ bool Execute(const QString &Argument)
 	bool Result = ISSystem::CheckExistSlot(&Configurator, Argument);
 	if (Result)
 	{
-		try
-		{
-			ISCountingTime CountingTime;
-			Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data());
-			ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
-		}
-		catch (const ISQueryException &QueryException) {}
+		ISCountingTime CountingTime;
+		Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data());
+		ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
 	}
 	else
 	{
@@ -319,13 +314,9 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 				if (Result)
 				{
 					QObject::connect(CommandBase, &CGConfiguratorBase::ProgressMessage, &ProgressMessage);
-					try
-					{
-						ISCountingTime CountingTime;
-						Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
-						ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
-					}
-					catch (const ISQueryException &QueryException) {}
+					ISCountingTime CountingTime;
+					Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
+					ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
 				}
 				else
 				{

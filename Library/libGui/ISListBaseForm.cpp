@@ -40,7 +40,7 @@
 #include "ISPeriodForm.h"
 #include "ISQueryPool.h"
 #include "ISGui.h"
-#include "ISQueryExceptionConnection.h"
+#include "ISExceptionConnectionDB.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include "ISPrintingWord.h"
@@ -823,7 +823,7 @@ void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
 
 	if (SqlError.type() == QSqlError::ConnectionError)
 	{
-		throw ISQueryExceptionConnection(SqlError.text());
+		throw ISExceptionConnectionDB(SqlError.text());
 	}
 	else
 	{
@@ -841,7 +841,7 @@ void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QStr
 
 	if (SqlError.type() == QSqlError::ConnectionError)
 	{
-		throw ISQueryExceptionConnection(SqlError.text());
+		throw ISExceptionConnectionDB(SqlError.text());
 	}
 	else
 	{
