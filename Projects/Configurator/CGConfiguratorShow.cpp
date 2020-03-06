@@ -104,39 +104,28 @@ void CGConfiguratorShow::obsoleteresources()
 {
 	ISLOGGER_UNKNOWN("Searching not needed resources...");
 
-	QMap<QString, ISVectorString*> Map;
-	QMap <QString, ISVectorString*> MapOutput;
-
-	for (int i = 0; i < ISMetaData::GetInstanse().GetResources().size(); ++i)
+	std::map<QString, ISVectorString> Map, MapOutput;
+	for (PMetaClassResource *MetaResource : ISMetaData::GetInstanse().GetResources())
 	{
-		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
-
 		QString TableName = MetaResource->TableName;
 		QString ResourceUID = MetaResource->UID.toLower();
-
-		if (!Map.contains(TableName))
+		if (!Map.count(TableName))
 		{
-			Map.insert(TableName, new ISVectorString());
+			Map.emplace(TableName, ISVectorString());
 		}
-
-		Map.value(TableName)->emplace_back(ResourceUID);
+		Map[TableName].emplace_back(ResourceUID);
 	}
-
-	for (const auto &MapItem : Map.toStdMap())
+	for (const auto &MapItem : Map)
 	{
 		QString TableName = MapItem.first;
-		ISVectorString *Vector = MapItem.second;
+		ISVectorString Vector = MapItem.second;
 
-		QString SqlText = "SELECT %1_uid FROM %2 WHERE %1_uid NOT IN(%3)";
-		SqlText = SqlText.arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->Alias);
-		SqlText = SqlText.arg(TableName);
-
+		QString SqlText = QString("SELECT %1_uid FROM %2 WHERE %1_uid NOT IN(%3)").arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->Alias).arg(TableName);
 		QString NotIN;
-		for (int i = 0; i < Vector->size(); ++i)
+		for (const QString &String : Vector)
 		{
-			NotIN += '\'' + Vector->at(i) + "', ";
+			NotIN += '\'' + String + "', ";
 		}
-
 		ISSystem::RemoveLastSymbolFromString(NotIN, 2);
 		SqlText = SqlText.arg(NotIN);
 
@@ -146,30 +135,24 @@ void CGConfiguratorShow::obsoleteresources()
 		{
 			while (qSelect.Next())
 			{
-				ISUuid UID = qSelect.ReadColumn(0).toString();
-
-				if (!MapOutput.contains(TableName))
+				if (!MapOutput.count(TableName))
 				{
-					MapOutput.insert(TableName, new ISVectorString());
+					MapOutput.emplace(TableName, ISVectorString());
 				}
-
-				MapOutput.value(TableName)->emplace_back(UID);
+				MapOutput[TableName].emplace_back(qSelect.ReadColumn(0).toString());
 			}
 		}
 	}
-
 	ISLOGGER_EMPTY();
-
-	for (const auto &OutputItem : MapOutput.toStdMap())
+	for (const auto &OutputItem : MapOutput)
 	{
 		QString TableName = OutputItem.first;
-		ISVectorString *Vector = OutputItem.second;
+		ISVectorString Vector = OutputItem.second;
 
 		ISLOGGER_UNKNOWN(TableName + ':');
-
-		for (int i = 0; i < Vector->size(); ++i)
+		for (const QString &String : Vector)
 		{
-			ISLOGGER_UNKNOWN(Vector->at(i));
+			ISLOGGER_UNKNOWN(String);
 		}
 		ISLOGGER_EMPTY();
 	}
