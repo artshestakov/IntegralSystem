@@ -165,7 +165,7 @@ QVariant ISQuery::ReadColumn(const QString &name)
 	}
 
 	std::map<QString, int>::const_iterator Iterator = ColumnIndices.find(name.toLower());
-	IS_ASSERT(Iterator == ColumnIndices.end(), QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
+	IS_ASSERT(Iterator != ColumnIndices.end(), QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
 	return ReadColumn(Iterator->second);
 }
 //-----------------------------------------------------------------------------

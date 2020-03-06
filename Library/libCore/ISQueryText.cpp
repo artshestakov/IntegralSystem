@@ -62,27 +62,22 @@ bool ISQueryText::CheckAllQueries()
 
 			if (Result)
 			{
-				for (int i = 0; i < ISMetaData::GetInstanse().GetMetaQueries().count(); ++i)
+				for (const QString &SqlText : ISMetaData::GetInstanse().GetMetaQueries())
 				{
-					QString QueryName = ISMetaData::GetInstanse().GetMetaQueries().at(i);
-					QString SqlText = ISMetaViewQuery(QueryName).GetQueryText();
-
 					QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
 					Result = SqlQuery.prepare(SqlText);
 					if (Result)
 					{
-						Result = SqlQuery.lastError().type() != QSqlError::NoError;
+						Result = SqlQuery.lastError().type() == QSqlError::NoError;
 					}
 
 					if (!Result)
 					{
-						//???
-						ErrorString = SqlQuery.lastError().text();
-						//ErrorQuery("Meta query: " + QueryName, SqlText, SqlQuery.lastError().text());
+						ErrorQuery(ISSqlQuery{ QString(), 0, SqlText }, "Error prepare meta query: " + SqlQuery.lastError().text());
+						break;
 					}
 				}
 			}
-			
 		}
 		else
 		{

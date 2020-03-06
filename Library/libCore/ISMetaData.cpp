@@ -7,6 +7,7 @@
 #include "ISMetaDataHelper.h"
 #include "ISUuid.h"
 #include "ISMetaUuidCheckeder.h"
+#include "ISMetaViewQuery.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING)
@@ -166,14 +167,16 @@ QList<PMetaClassTable*> ISMetaData::GetTables()
 	return List;
 }
 //-----------------------------------------------------------------------------
-QVectorString ISMetaData::GetMetaQueries()
+std::vector<QString> ISMetaData::GetMetaQueries()
 {
-	QVectorString VectorString;
+	std::vector<QString> Vector(QueriesMap.size());
+	size_t Index = 0;
 	for (const auto &MapItem : QueriesMap)
 	{
-		VectorString.append(MapItem.second->Name);
+		Vector[Index] = ISMetaViewQuery(MapItem.first).GetQueryText();
+		++Index;
 	}
-	return VectorString;
+	return Vector;
 }
 //-----------------------------------------------------------------------------
 QVector<PMetaClassIndex*> ISMetaData::GetSystemIndexes()

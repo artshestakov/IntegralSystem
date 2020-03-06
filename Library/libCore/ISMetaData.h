@@ -27,7 +27,7 @@ public:
 
 	QList<PMetaClassFunction*> GetFunctions(); //Получить список всех функций
 	QList<PMetaClassTable*> GetTables(); //Получить список всех таблиц
-	QVectorString GetMetaQueries(); //Получить вектор всех мета-запросов
+	std::vector<QString> GetMetaQueries(); //Получить вектор всех мета-запросов
 	QVector<PMetaClassIndex*> GetSystemIndexes(); //Получить список системных индексов
 	QVector<PMetaClassIndex*> GetIndexes(); //Получить список индексов для пользовательских полей
 	QVector<PMetaClassIndex*> GetCompoundIndexes(); //Получить список составных индексов
