@@ -1,9 +1,9 @@
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
 ISCountingTime::ISCountingTime()
+	: StartClock(clock())
 {
-	Elapsed = 0;
-	Time.start();
+
 }
 //-----------------------------------------------------------------------------
 ISCountingTime::~ISCountingTime()
@@ -11,21 +11,8 @@ ISCountingTime::~ISCountingTime()
 
 }
 //-----------------------------------------------------------------------------
-int ISCountingTime::GetElapsed()
+unsigned int ISCountingTime::Elapsed()
 {
-	Elapsed = Time.elapsed();
-	return Elapsed;
-}
-//-----------------------------------------------------------------------------
-int ISCountingTime::GetElapsedRestart()
-{
-	Elapsed = Time.elapsed();
-	Restart();
-	return Elapsed;
-}
-//-----------------------------------------------------------------------------
-void ISCountingTime::Restart()
-{
-	Time.restart();
+	return clock() - StartClock;
 }
 //-----------------------------------------------------------------------------

@@ -150,7 +150,7 @@ void ISSettings::Initialize()
 		}
 	}
 
-	ISLOGGER_DEBUG(QString("Initialized Settings time %1 msec").arg(Time.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized Settings time %1 msec").arg(Time.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 ISMetaSettingsGroup* ISSettings::CheckExistGroup(const ISUuid &GroupUID)

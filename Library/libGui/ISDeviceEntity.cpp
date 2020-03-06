@@ -58,7 +58,7 @@ void ISDeviceEntity::Initialize()
 
 			if (DeviceObjectBase->Initialize())
 			{
-				ISLOGGER_INFO(LANG("Device.Initialize.Done").arg(DeviceUserName).arg(ISSystem::MillisecondsToString(Time.GetElapsed())));
+				ISLOGGER_INFO(LANG("Device.Initialize.Done").arg(DeviceUserName).arg(ISSystem::MillisecondsToString(Time.Elapsed())));
 			}
 			else
 			{

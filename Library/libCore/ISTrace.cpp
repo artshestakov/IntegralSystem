@@ -18,7 +18,7 @@ ISTrace::ISTrace(const QString &q_func_info, const QString &message_text)
 //-----------------------------------------------------------------------------
 ISTrace::~ISTrace()
 {
-	ISLOGGER_DEBUG("END TRACE (" + QString::number(Time->GetElapsed()) + " msec): " + Q_FUNC_INFO_STRING);
+	ISLOGGER_DEBUG("END TRACE (" + QString::number(Time->Elapsed()) + " msec): " + Q_FUNC_INFO_STRING);
 	delete Time;
 }
 //-----------------------------------------------------------------------------

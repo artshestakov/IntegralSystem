@@ -102,7 +102,7 @@ void ISSortingBuffer::Initialize()
 			Sortings.append(CreateSorting(qSelect.ReadColumn("sgts_tablename").toString(), qSelect.ReadColumn("sgts_fieldname").toString(), qSelect.ReadColumn("sgts_sorting").toInt()));
 		}
 	}
-	ISLOGGER_DEBUG(QString("Initialized SortingBuffer %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized SortingBuffer %1 msec").arg(CountingTime.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 void ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)

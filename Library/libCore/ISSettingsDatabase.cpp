@@ -92,7 +92,7 @@ void ISSettingsDatabase::Initialize()
 		}
 	}
 
-	ISLOGGER_DEBUG(QString("Initilize SettingsDatabase %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initilize SettingsDatabase %1 msec").arg(CountingTime.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 void ISSettingsDatabase::InitializedSystemParameters()

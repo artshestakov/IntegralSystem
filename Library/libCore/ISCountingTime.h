@@ -8,12 +8,9 @@ public:
 	ISCountingTime();
 	~ISCountingTime();
 
-	int GetElapsed(); //Получить результат замера в милисекундах
-	int GetElapsedRestart(); //Получить результат замера в милисекундах и сбросить таймер
-	void Restart(); //Обнуление счётчика времени
+	unsigned int Elapsed(); //Получить результат замера в милисекундах
 
 private:
-	QTime Time;
-	int Elapsed;
+	clock_t StartClock;
 };
 //-----------------------------------------------------------------------------

@@ -286,7 +286,7 @@ bool Execute(const QString &Argument)
 	{
 		ISCountingTime CountingTime;
 		Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data());
-		ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
+		ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
 	}
 	else
 	{
@@ -316,7 +316,7 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 					QObject::connect(CommandBase, &CGConfiguratorBase::ProgressMessage, &ProgressMessage);
 					ISCountingTime CountingTime;
 					Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
-					ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.GetElapsed()) + " msec");
+					ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
 				}
 				else
 				{

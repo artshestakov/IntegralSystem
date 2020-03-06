@@ -323,7 +323,7 @@ void ISMainWindow::CreateStackWidget()
 		int ParagraphIndex = StackedWidget->addWidget(ParagraphBaseForm);
 		Paragraphs.insert(ParagraphUID, ParagraphIndex);
 
-		ISLOGGER_DEBUG(QString("Initialized paragraph \"%1\" %2 msec").arg(MetaParagraph->Name).arg(CountingTime.GetElapsed()));
+		ISLOGGER_DEBUG(QString("Initialized paragraph \"%1\" %2 msec").arg(MetaParagraph->Name).arg(CountingTime.Elapsed()));
 	}
 
 	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());

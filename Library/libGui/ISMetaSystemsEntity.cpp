@@ -83,7 +83,7 @@ void ISMetaSystemsEntity::Initialize()
 		}
 	}
 
-	ISLOGGER_DEBUG(QString("Initialized MetaSystems %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized MetaSystems %1 msec").arg(CountingTime.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 QVector<ISMetaSystem*> ISMetaSystemsEntity::GetSystems()

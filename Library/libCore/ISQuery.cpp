@@ -72,7 +72,7 @@ bool ISQuery::Execute()
 	ColumnIndices.clear();
 	ISCountingTime Time;
 	bool Result = SqlQuery.exec();
-	int Msec = Time.GetElapsed();
+	unsigned int Msec = Time.Elapsed();
 	if (ShowLongQuery)
 	{
 		if (Msec > MAX_QUERY_TIME)
@@ -94,7 +94,7 @@ bool ISQuery::Execute(const QString &sql_text)
 	ColumnIndices.clear();
 	ISCountingTime Time;
 	bool Result = SqlQuery.exec(sql_text);
-	int Msec = Time.GetElapsed();
+	unsigned int Msec = Time.Elapsed();
 	if (ShowLongQuery)
 	{
 		if (Msec > MAX_QUERY_TIME)
@@ -116,7 +116,7 @@ bool ISQuery::Execute(QSqlDatabase &sql_database, const QString &sql_text)
 	ColumnIndices.clear();
 	ISCountingTime Time;
 	SqlQuery = sql_database.exec(sql_text);
-	int Msec = Time.GetElapsed();
+	unsigned int Msec = Time.Elapsed();
 	if (ShowLongQuery)
 	{
 		if (Msec > MAX_QUERY_TIME)

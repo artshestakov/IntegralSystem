@@ -80,6 +80,6 @@ void ISPrintingEntity::Initialize()
 		}
 	}
 
-	ISLOGGER_DEBUG(QString("Initialized Printing %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized Printing %1 msec").arg(CountingTime.Elapsed()));
 }
 //-----------------------------------------------------------------------------

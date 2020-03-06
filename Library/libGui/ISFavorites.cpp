@@ -59,7 +59,7 @@ void ISFavorites::Initialize()
 		}
 	}
 
-	ISLOGGER_DEBUG(QString("Initialized Favorites %1 msec").arg(CountingTime.GetElapsed()));
+	ISLOGGER_DEBUG(QString("Initialized Favorites %1 msec").arg(CountingTime.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 void ISFavorites::AddFavorite(const QString &TableName, const QString &TableLocalName, const QString &ObjectName, int ObjectID)
