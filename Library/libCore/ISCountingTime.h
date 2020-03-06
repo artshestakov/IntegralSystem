@@ -8,7 +8,7 @@ public:
 	ISCountingTime();
 	~ISCountingTime();
 
-	unsigned int Elapsed(); //Получить результат замера в милисекундах
+	clock_t Elapsed(); //Получить результат замера в милисекундах
 
 private:
 	clock_t StartClock;

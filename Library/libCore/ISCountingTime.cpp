@@ -11,7 +11,7 @@ ISCountingTime::~ISCountingTime()
 
 }
 //-----------------------------------------------------------------------------
-unsigned int ISCountingTime::Elapsed()
+clock_t ISCountingTime::Elapsed()
 {
 	return clock() - StartClock;
 }
