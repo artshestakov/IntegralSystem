@@ -56,8 +56,6 @@
   <Local Name="Message.Information.UpdateDownloaded" Russian="Обновление загружено!"/>
   <Local Name="Message.Information.CreatedPasswordUser" Russian="Пароль пользователя успешно изменен!"/>
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
-  <Local Name="Message.Information.SelectedUpdateAlreadyActual" Russian="Выбранное обновление уже является актуальным."/>
-  <Local Name="Message.Information.SaveDistFile" Russian="Дистрибутив успешно сохранен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.TerminateMe" Russian="ВНИМАНИЕ! Вашу учётную запись отключили. Нажмите кнопку ОК для выхода из программы."/>
   <Local Name="Message.Information.SharedRecord" Russian="Ссылка на запись успешно отправлена в общий чат."/>
@@ -104,7 +102,6 @@
   <Local Name="Message.Error.FunctionPrintNotExecuted" Russian="Функция печати не была исполнена."/>
   <Local Name="Message.Error.UserAlterLoginError" Russian="Не удалось изменить логин пользователя!"/>
   <Local Name="Message.Error.UserAlterPasswordError" Russian="Не удалось изменить логин пользователя!"/>
-  <Local Name="Message.Error.InsertFileDataInstaller" Russian="Не удалось один из блоков данных файла %1"/>
   <Local Name="Message.Error.ApplicationDemoEnd" Russian="Демо версия закончилась! Чтобы продолжить работу в программе, активируйте лицензию. За дополнительной информацией обратитесь к разработчику программы."/>
   <Local Name="Message.Error.NotStartedAssistant" Russian="Не удалось запустить систему справки!"/>
   <Local Name="Message.Error.User.Activate" Russian="При создании пользователя в базе произошла ошибка."/>
@@ -169,7 +166,6 @@
   <Local Name="Message.Warning.FileRecordNotSaved" Russian="Не удалось сохранить запись разговора!"/>
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
   <Local Name="Message.Warning.SelectCorrectTimeCalendarEvent" Russian="Укажите корректное время."/>
-  <Local Name="Message.Warning.VersionAlreadyExist" Russian="Версия &quot;%1&quot; уже есть в базе данных."/>
   <Local Name="Message.Warning.SqlQueryError" Russian="Ошибка SQL-запроса. Некоторые функции программы могут работать некорректно."/>
   <Local Name="Message.Warning.DeviceAlreadyExist" Russian="Такое устройство уже существует."/>
   <Local Name="Message.Warning.TaskDeadlineOverdue" Russian="Создавать задачи задним числом запрещено!"/>
@@ -245,7 +241,6 @@
   <Local Name="Message.Question.DeleteThisRecord" Russian="Удалить эту запись?"/>
   <Local Name="Message.Question.RecoveryThisRecord" Russian="Восстановить эту запись?"/>
   <Local Name="Message.Question.CalendarEventFormClose" Russian="Закрытие окна привезет к автомтическому завернею события. Закрыть окно?"/>
-  <Local Name="Message.Question.VacuumDistTable" Russian="Выполнить вакуум таблицы с файлами обновления?"/>
   <Local Name="Message.Question.SaveDist" Russian="Сохранить этот дистрибутив на диск?"/>
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его программой по умолчанию?"/>
   <Local Name="Message.Question.ImportedSettings" Russian="Настройки успешно импортированы! Для того чтобы все импортированные настройки вступили в силу, рекомендуется перезапустить программу. Сделать это сейчас?"/>
@@ -430,8 +425,6 @@
   <Local Name="Notebook" Russian="Блокнот"/>
   <Local Name="NewRecord" Russian="Новая запись"/>
   <Local Name="EditRecord" Russian="Изменение записи"/>
-  <Local Name="AddingDataFile" Russian="Добавление данных файла %1 из %2"/>
-  <Local Name="ActualInstall" Russian="Актуальный дистрибутив"/>
   <Local Name="TerminateAllUsers" Russian="Отключить всех пользователей"/>
   <Local Name="RestartApplication" Russian="Перезапуск программы"/>
   <Local Name="AutoFitColumnWidth" Russian="Автоподбор ширины колонок"/>
@@ -589,7 +582,6 @@
   <Local Name="YesterdayAt" Russian="Вчера в %1"/>
   <Local Name="GeneralInformation" Russian="Общая информация"/>
   <Local Name="StatisticTables" Russian="Статистика таблиц"/>
-  <Local Name="Updates" Russian="Обновления"/>
   <Local Name="SettingsDatabase" Russian="Настройки базы данных"/>
   <Local Name="SelectDialog.Title.Single" Russian="Выберите одну запись из списка ниже"/>
   <Local Name="SelectDialog.Title.Multi" Russian="Выберите несколько записей из списка ниже"/>
@@ -706,7 +698,6 @@
   <Local Name="VacuumTableDist" Russian="Пожалуйста подождите, выполняется вакуум"/>
   <Local Name="SelectColorFont" Russian="Выберите цвет шрифта"/>
   <Local Name="ClickFromSelectNumberPage" Russian="Нажмите, чтобы выбрать номер страницы и перейти на неё."/>
-  <Local Name="SavingDistFile" Russian="Сохранение дистрибутива"/>
   <Local Name="AutoLocking" Russian="Блокировка программы..."/>
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>

@@ -17,7 +17,6 @@ protected:
 	void CreateGeneralTab();
 	void CreatePGSettings();
 	void CreateStatisticTablesForm();
-	void CreateDistFilesForm();
 
 private:
 	QTabWidget *TabWidget;

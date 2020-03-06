@@ -200,7 +200,6 @@
     <ClCompile Include="ISDiscussionObjectForm.cpp" />
     <ClCompile Include="ISDispatchListForm.cpp" />
     <ClCompile Include="ISDispatchOrganizationListForm.cpp" />
-    <ClCompile Include="ISDistFileListForm.cpp" />
     <ClCompile Include="ISDivisionCodeEdit.cpp" />
     <ClCompile Include="ISDoubleEdit.cpp" />
     <ClCompile Include="ISEditObjectListForm.cpp" />
@@ -644,7 +643,6 @@
     <QtMoc Include="ISDeviceUserObjectForm.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISDiscussionObjectForm.h" />
-    <QtMoc Include="ISDistFileListForm.h" />
     <QtMoc Include="ISEditObjectListForm.h" />
     <QtMoc Include="ISExitForm.h" />
     <QtMoc Include="ISExternalToolsForm.h" />

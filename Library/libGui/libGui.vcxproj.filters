@@ -829,9 +829,6 @@
     <ClCompile Include="ISDiscussionObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISDistFileListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISEditObjectListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -1765,9 +1762,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISDiscussionObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDistFileListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISEditObjectListForm.h">

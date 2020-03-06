@@ -10,7 +10,6 @@
 #include "ISQuery.h"
 #include "ISPGSettingsForm.h"
 #include "ISStatisticTablesForm.h"
-#include "ISDistFileListForm.h"
 //-----------------------------------------------------------------------------
 ISControlDatabaseForm::ISControlDatabaseForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
@@ -35,7 +34,6 @@ void ISControlDatabaseForm::LoadData()
 	CreateGeneralTab();
 	CreatePGSettings();
 	CreateStatisticTablesForm();
-	CreateDistFilesForm();
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -91,12 +89,5 @@ void ISControlDatabaseForm::CreateStatisticTablesForm()
 {
 	ISStatisticTablesForm *StatisticTablesForm = new ISStatisticTablesForm(TabWidget);
 	TabWidget->addTab(StatisticTablesForm, BUFFER_ICONS("TablesStatistics"), LANG("StatisticTables"));
-}
-//-----------------------------------------------------------------------------
-void ISControlDatabaseForm::CreateDistFilesForm()
-{
-	ISDistFileListForm *DistFileListForm = new ISDistFileListForm(TabWidget);
-	DistFileListForm->LoadData();
-	TabWidget->addTab(DistFileListForm, BUFFER_ICONS("Updates"), LANG("Updates"));
 }
 //-----------------------------------------------------------------------------
