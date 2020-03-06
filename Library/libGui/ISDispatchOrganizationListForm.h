@@ -15,6 +15,6 @@ public:
 
 protected:
 	void Picking();
-	void Matched(const QVectorInt &Vector);
+	void Matched(const ISVectorInt &Vector);
 };
 //-----------------------------------------------------------------------------

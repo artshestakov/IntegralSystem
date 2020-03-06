@@ -55,8 +55,8 @@ void ISMenuFastAccess::AboutToShow()
 	}
 
 	//«аполнение быстрого создани€ записей
-	QVectorString VectorRecords = ISFastAccessEntity::GetInstance().GetCreateRecords();
-	for (int i = 0; i < VectorRecords.count(); ++i)
+	ISVectorString VectorRecords = ISFastAccessEntity::GetInstance().GetCreateRecords();
+	for (int i = 0; i < VectorRecords.size(); ++i)
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(VectorRecords.at(i));
 

@@ -4,6 +4,7 @@
 #include "ISSystem.h"
 #include "ISMetaUser.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
 											"FROM _favorites "
@@ -49,13 +50,11 @@ void ISFavorites::Initialize()
 
 			if (Favorites.contains(TableName))
 			{
-				Favorites[TableName].append(ObjectID);
+				Favorites[TableName].emplace_back(ObjectID);
 			}
 			else
 			{
-				QVectorInt VectorInt;
-				VectorInt.append(ObjectID);
-				Favorites.insert(TableName, VectorInt);
+				Favorites.insert(TableName, ISVectorInt{ ObjectID });
 			}
 		}
 	}
@@ -75,13 +74,11 @@ void ISFavorites::AddFavorite(const QString &TableName, const QString &TableLoca
 	{
 		if (Favorites.contains(TableName))
 		{
-			Favorites[TableName].append(ObjectID);
+			Favorites[TableName].emplace_back(ObjectID);
 		}
 		else
 		{
-			QVectorInt VectorInt;
-			VectorInt.append(ObjectID);
-			Favorites.insert(TableName, VectorInt);
+			Favorites.insert(TableName, ISVectorInt{ ObjectID });
 		}
 	}
 }
@@ -94,8 +91,8 @@ bool ISFavorites::DeleteFavorite(const QString &TableName, int ObjectID)
 	bool Executed = qDeleteFavorite.Execute();
 	if (Executed)
 	{
-		Favorites[TableName].remove(Favorites[TableName].indexOf(ObjectID));
-		if (!Favorites[TableName].count())
+		Favorites[TableName].erase(Favorites[TableName].begin() + VectorIndexOf(Favorites[TableName], ObjectID));
+		if (Favorites[TableName].empty())
 		{
 			Favorites.take(TableName);
 		}
@@ -110,7 +107,7 @@ void ISFavorites::DeleteAllFavorites()
 	{
 		while (Favorites.count())
 		{
-			QVectorInt VectorInt = Favorites.take(Favorites.begin().key());
+			ISVectorInt VectorInt = Favorites.take(Favorites.begin().key());
 			VectorInt.clear();
 		}
 	}
@@ -121,7 +118,7 @@ bool ISFavorites::CheckExistFavoriteObject(const QString &TableName, int ObjectI
 	bool Result = Favorites.contains(TableName);
 	if (Result)
 	{
-		Result = Favorites[TableName].contains(ObjectID);
+		Result = VectorContains(Favorites[TableName], ObjectID);
 	}
 	return Result;
 }

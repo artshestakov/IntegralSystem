@@ -34,7 +34,7 @@ void ISHtmlQuery::Replace(const QString &AsField, const QString &ReplaceText)
 {
 	bool Contains = SqlQueryText.contains(AsField);
 	IS_ASSERT(Contains, "");
-	ReplaceFields.insert(AsField, ReplaceText);
+	ReplaceFields.emplace(AsField, ReplaceText);
 }
 //-----------------------------------------------------------------------------
 QString ISHtmlQuery::GetHtmlTableQuery() const

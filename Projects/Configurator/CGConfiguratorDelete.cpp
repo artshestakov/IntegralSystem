@@ -5,6 +5,7 @@
 #include "ISMetaData.h"
 #include "ISConstants.h"
 #include "ISConsole.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname FROM pg_indexes WHERE schemaname = current_schema()");
 //-----------------------------------------------------------------------------
@@ -131,11 +132,11 @@ void CGConfiguratorDelete::subsystems()
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::tables()
 {
-	QVectorString VectorString;
-	QList<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
+	ISVectorString VectorString;
+	std::vector<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
 	for (PMetaClassTable *MetaTable : Tables)
 	{
-		VectorString.append(MetaTable->Name.toLower());
+		VectorString.emplace_back(MetaTable->Name.toLower());
 	}
 
 	int Removed = 0;
@@ -147,7 +148,7 @@ void CGConfiguratorDelete::tables()
 		while (qSelectTables.Next()) //Обход таблиц базы данных
 		{
 			QString TableName = qSelectTables.ReadColumn("table_name").toString();
-			if (!VectorString.contains(TableName)) //Если таблица из базы данных отсутствует в мета-данных
+			if (!VectorContains(VectorString, TableName)) //Если таблица из базы данных отсутствует в мета-данных
 			{
 				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName))) //Удаление таблицы
 				{
@@ -180,22 +181,21 @@ void CGConfiguratorDelete::tables()
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::fields()
 {
-	QMap<QString, QVectorString> Map;
-	QList<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
+	QMap<QString, ISVectorString> Map;
+	std::vector<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
 	for (PMetaClassTable *MetaTable : Tables)
 	{
 		QString TableName = MetaTable->Name.toLower();
-		Map.insert(TableName, QVectorString());
+		Map.insert(TableName, ISVectorString());
 
 		QVector<PMetaClassField*> Fields = MetaTable->AllFields;
 		for (PMetaClassField* MetaField : Fields)
 		{
-			Map[TableName].append(MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower());
+			Map[TableName].emplace_back(MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower());
 		}
 	}
 
-	int Removed = 0;
-	int Skipped = 0;
+	int Removed = 0, Skipped = 0;
 
 	ISQuery qSelectColumns(QS_COLUMNS);
 	qSelectColumns.SetShowLongQuery(false);
@@ -208,7 +208,7 @@ void CGConfiguratorDelete::fields()
 
 			if (Map.contains(TableName))
 			{
-				if (!Map.value(TableName).contains(ColumnName)) //Если поле из базы данных отсутствует в мета-данных
+				if (!VectorContains(Map.value(TableName), ColumnName)) //Если поле из базы данных отсутствует в мета-данных
 				{
 					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName))) //Удаление поля
 					{
@@ -242,17 +242,17 @@ void CGConfiguratorDelete::fields()
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::resources()
 {
-	QMap<QString, QVectorString> Map;
+	QMap<QString, ISVectorString> Map;
 	for (PMetaClassResource *MetaResource : ISMetaData::GetInstanse().GetResources())
 	{
 		if (Map.contains(MetaResource->TableName))
 		{
-			Map[MetaResource->TableName].append(MetaResource->UID);
+			Map[MetaResource->TableName].emplace_back(MetaResource->UID);
 		}
 		else
 		{
-			QVectorString VectorString;
-			VectorString.append(MetaResource->UID);
+			ISVectorString VectorString;
+			VectorString.emplace_back(MetaResource->UID);
 			Map.insert(MetaResource->TableName, VectorString);
 		}
 	}
@@ -263,7 +263,7 @@ void CGConfiguratorDelete::resources()
 	for (const auto &MapItem : Map.toStdMap()) //Обход всех ресурсов
 	{
 		QString TableName = MapItem.first;
-		QVectorString UIDs = MapItem.second;
+		ISVectorString UIDs = MapItem.second;
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 
 		//Запрос к текущей таблице ресурсов
@@ -274,7 +274,7 @@ void CGConfiguratorDelete::resources()
 			while (qSelect.Next())
 			{
 				ISUuid ResourceUID = qSelect.ReadColumn(MetaTable->Alias + "_uid");
-				if (!UIDs.contains(ResourceUID)) //Если ресурс из базы не найден в мета-данных
+				if (!VectorContains<QString>(UIDs, ResourceUID)) //Если ресурс из базы не найден в мета-данных
 				{
 					ShowResourceConsole(MetaTable, ResourceUID);
 					if (ISConsole::Question(QString("Remove resource \"%1\" in table \"%2\"?").arg(ResourceUID).arg(TableName)))

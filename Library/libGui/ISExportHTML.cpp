@@ -2,6 +2,7 @@
 #include "ISLocalization.h"
 #include "ISFileDialog.h"
 #include "ISMessageBox.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISExportHTML::ISExportHTML(QObject *parent) : ISExportWorker(parent)
 {
@@ -63,10 +64,10 @@ bool ISExportHTML::Export()
 	{
 		FileHTML->write("   <tr>\r\n");
 
-		for (int i = 0; i < Fields.count(); ++i) //Обход выбранных для экспорта полей
+		for (int i = 0; i < Fields.size(); ++i) //Обход выбранных для экспорта полей
 		{
 			QString FieldName = Fields.at(i);
-			if (Fields.contains(FieldName))
+			if (VectorContains(Fields, FieldName))
 			{
 				QString LocalName = Model->GetFieldLocalName(FieldName);
 				FileHTML->write("    <th>" + LocalName.toUtf8() + "</th>\r\n");
@@ -92,9 +93,9 @@ bool ISExportHTML::Export()
 			}
 		}
 
-		if (SelectedRows.count()) //Если есть выделенные строки
+		if (!SelectedRows.empty()) //Если есть выделенные строки
 		{
-			if (!SelectedRows.contains(Row))
+			if (!VectorContains(SelectedRows, Row))
 			{
 				continue;
 			}
@@ -104,7 +105,7 @@ bool ISExportHTML::Export()
 		QString RowString;
 
 		RowString.append("    <tr>");
-		for (int Column = 0; Column < Fields.count(); ++Column) //Обход колонок
+		for (int Column = 0; Column < Fields.size(); ++Column) //Обход колонок
 		{
 			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
 			Value = PrepareValue(Value);

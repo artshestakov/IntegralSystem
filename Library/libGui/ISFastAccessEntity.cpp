@@ -67,7 +67,7 @@ void ISFastAccessEntity::LoadCreateRecords()
 	{
 		while (qSelect.Next())
 		{
-			CreateRecords.append(qSelect.ReadColumn("fcob_table").toString());
+			CreateRecords.emplace_back(qSelect.ReadColumn("fcob_table").toString());
 		}
 	}
 }
@@ -78,7 +78,7 @@ void ISFastAccessEntity::ReloadCreateRecords()
 	LoadCreateRecords();
 }
 //-----------------------------------------------------------------------------
-QVectorString ISFastAccessEntity::GetCreateRecords()
+ISVectorString ISFastAccessEntity::GetCreateRecords()
 {
 	return CreateRecords;
 }

@@ -154,8 +154,8 @@ void ISCoreTelephony::HandlingCDR(int ID)
 			qUpdateCDR.BindValue(":ID", ID);
 			qUpdateCDR.Execute();
 		}
-	}
-	catch (ISQueryException &QueryException) //Если запрос на вставку данных не прошел - обновить запись как ошибочкую для дальнейшего анализа
+	} //???
+	catch (/*ISQueryException &QueryException*/std::exception &e) //Если запрос на вставку данных не прошел - обновить запись как ошибочкую для дальнейшего анализа
 	{
 		ISQuery qUpdateError(QU_CDR_ERROR);
 		qUpdateError.SetShowLongQuery(false);

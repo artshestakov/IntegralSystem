@@ -29,7 +29,7 @@ QString ISMetaViewQuery::GetQueryText()
 	Result += " \n";
 	Result += "FROM " + MetaQuery->Parent + " \n";
 
-	for (int i = 0; i < MetaQuery->Joins.count(); ++i)
+	for (int i = 0; i < MetaQuery->Joins.size(); ++i)
 	{
 		Result += MetaQuery->Joins[i] + " \n";
 	}

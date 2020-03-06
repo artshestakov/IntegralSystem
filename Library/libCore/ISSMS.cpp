@@ -74,17 +74,17 @@ bool ISSMS::SendMessage()
 		if (NetworkReply->error() == QNetworkReply::NoError) //Если ошибок в hhtps запрос нет
 		{
 			QByteArray ByteArray = NetworkReply->readAll();
-			QStringMap StringMap = ISSystem::JsonStringToStringMap(ByteArray);
-			if (StringMap.contains("error_code")) //При отправке произошка ошибка
+			ISStringMap StringMap = ISSystem::JsonStringToStringMap(ByteArray);
+			if (StringMap.count("error_code")) //При отправке произошка ошибка
 			{
-				ErrorString = StringMap.value("error"); //Описание ошибки от сервиса
-				ErrorType = qvariant_cast<ISNamespace::SMSErrorType>(StringMap.value("error_code")); //Код ошибки сервиса
+				ErrorString = StringMap["error"]; //Описание ошибки от сервиса
+				ErrorType = qvariant_cast<ISNamespace::SMSErrorType>(StringMap["error_code"]); //Код ошибки сервиса
 				Result = false;
 			}
 
-			if (StringMap.contains("id"))
+			if (StringMap.count("id"))
 			{
-				MessageID = StringMap.value("id").toInt(); //Идентификатор отправленного сообщения
+				MessageID = StringMap["id"].toInt(); //Идентификатор отправленного сообщения
 			}
 		}
 		else //Ошибка в отправке https запроса

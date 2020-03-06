@@ -51,7 +51,7 @@ public:
 	static ISComboSearchBase* CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaClassForeign *MetaForeign);
 
 	static int SelectObject(const QString &TableName, int SelectObjectID = 0); //Выбор одной записи из таблицы
-	static QVectorInt SelectObjects(const QString &TableName); //Выбор нескольких записей из таблицы
+	static ISVectorInt SelectObjects(const QString &TableName); //Выбор нескольких записей из таблицы
 
 	static void ShowSettingsForm(const QString &SettingGroupUID = QString()); //Открыть форму настроек
 	static bool ShowUserPasswordForm(int UserID); //Открыть форму изменения пароля для пользователя

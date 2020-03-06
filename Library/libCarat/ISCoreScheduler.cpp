@@ -4,6 +4,7 @@
 #include "ISMetaData.h"
 #include "ISConfig.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT file_id "
 									   "FROM _file "
@@ -45,7 +46,7 @@ void ISCoreScheduler::Timeout()
 //-----------------------------------------------------------------------------
 void ISCoreScheduler::ClearFiles()
 {
-	QVectorInt VectorInt;
+	ISVectorInt VectorInt;
 
 	//Запрос всех идентификаторов файлов
 	ISQuery qSelectFile(QS_FILE);
@@ -54,7 +55,7 @@ void ISCoreScheduler::ClearFiles()
 	{
 		while (qSelectFile.Next())
 		{
-			VectorInt.append(qSelectFile.ReadColumn("file_id").toInt());
+			VectorInt.emplace_back(qSelectFile.ReadColumn("file_id").toInt());
 		}
 	}
 	
@@ -73,7 +74,7 @@ void ISCoreScheduler::ClearFiles()
 				{
 					while (qSelect.Next())
 					{
-						VectorInt.removeAll(qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name).toInt());
+						VectorRemoveAll(VectorInt, qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name).toInt());
 					}
 				}
 			}
@@ -84,7 +85,7 @@ void ISCoreScheduler::ClearFiles()
 	for (int FileID : VectorInt) //Обход и удаление не привязанных файлов
 	{
 		++Index;
-		ISLOGGER_INFO("Deleting file " + QString::number(Index) + " of " + QString::number(VectorInt.count()));
+		ISLOGGER_INFO(QString("Deleting file %1 of %2").arg(Index).arg(VectorInt.size()));
 
 		ISQuery qDeleteFile(QD_FILE);
 		qDeleteFile.SetShowLongQuery(false);

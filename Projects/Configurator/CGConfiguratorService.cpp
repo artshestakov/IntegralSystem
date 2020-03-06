@@ -30,7 +30,7 @@ void CGConfiguratorService::reindex()
 {
 	ISLOGGER_UNKNOWN("Reindex...");
 
-	int CountTables = ISMetaData::GetInstanse().GetTables().count();
+	int CountTables = ISMetaData::GetInstanse().GetTables().size();
 	for (int i = 0; i < CountTables; ++i)
 	{
 		Progress("Reindex", i, CountTables);
@@ -116,7 +116,7 @@ void CGConfiguratorService::cleartable()
 	}
 
 	PMetaClassTable *MetaTable = nullptr;
-	QList<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
+	std::vector<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
 	for (PMetaClassTable *meta_table : Tables) //Поиск таблицы по введенному имени
 	{
 		if (meta_table->Name.toLower() == InputName)

@@ -1,6 +1,7 @@
 #include "ISMediaPlayer.h"
 #include "ISConstants.h"
 #include "ISSettings.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISMediaPlayer::ISMediaPlayer() : QMediaPlayer()
 {
@@ -32,15 +33,15 @@ void ISMediaPlayer::Play(const QString &BufferAudio)
 	}
 	else
 	{
-		Queue.append(BufferAudio);
+		Queue.emplace_back(BufferAudio);
 	}
 }
 //-----------------------------------------------------------------------------
 void ISMediaPlayer::StateChanged(QMediaPlayer::State NewState)
 {
-	if (Queue.count())
+	if (!Queue.empty())
 	{
-		Play(Queue.takeAt(0));
+		Play(VectorTakeFront(Queue));
 	}
 }
 //-----------------------------------------------------------------------------

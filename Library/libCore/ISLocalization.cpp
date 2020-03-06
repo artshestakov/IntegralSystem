@@ -4,6 +4,7 @@
 #include "ISSystem.h"
 #include "ISAssert.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 {
@@ -74,7 +75,7 @@ void ISLocalization::InitializeContent(const QString &Content)
 		QString LocalizationName = DomElement.attributes().namedItem("Name").nodeValue();
 		if (!LocalizationName.isEmpty())
 		{
-			if (!LoadedFiles.contains(LocalizationName))
+			if (!VectorContains(LoadedFiles, LocalizationName))
 			{
 				while (!NodeLocalization.isNull())
 				{
@@ -94,7 +95,7 @@ void ISLocalization::InitializeContent(const QString &Content)
 					}
 					NodeLocalization = NodeLocalization.nextSibling();
 				}
-				LoadedFiles.append(LocalizationName);
+				LoadedFiles.emplace_back(LocalizationName);
 			}
 			else
 			{

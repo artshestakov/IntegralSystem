@@ -38,20 +38,20 @@ bool ISCoreHighway::Invoke()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISCoreHighway::SuccessfulAuth(const QStringMap &StringMap)
+void ISCoreHighway::SuccessfulAuth(const ISStringMap &StringMap)
 {
 	Q_UNUSED(StringMap);
 	AsteriskSocket->AddFilter(AMI_USER_EVENT);
 	Started();
 }
 //-----------------------------------------------------------------------------
-void ISCoreHighway::UserEvent(const QStringMap &StringMap)
+void ISCoreHighway::UserEvent(const ISStringMap &StringMap)
 {
-	QStringList StringList = StringMap.value("UserEvent").split(SYMBOL_SPACE);
+	QStringList StringList = StringMap.at("UserEvent").split(SYMBOL_SPACE);
 	QString EventType = StringList.at(0);
 	if (EventType == "call") //Событие входящего звонка
 	{
-		QString Number = StringMap.value("CallerIDNum");
+		QString Number = StringMap.at("CallerIDNum");
 		ISLOGGER_INFO("Incoming call from number \"" + Number + "\", search organization...");
 
 		ISQuery qSelect(QS_ORGANIZATION_USER);

@@ -23,7 +23,7 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
 //-----------------------------------------------------------------------------
 void CGConfiguratorCreate::resources()
 {
-	int CountResources = ISMetaData::GetInstanse().GetResources().count();
+	int CountResources = ISMetaData::GetInstanse().GetResources().size();
 	for (int i = 0; i < CountResources; ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);

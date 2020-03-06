@@ -41,19 +41,19 @@ bool ISCoreCenterSeven::Invoke()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISCoreCenterSeven::SuccessfulAuth(const QStringMap &StringMap)
+void ISCoreCenterSeven::SuccessfulAuth(const ISStringMap &StringMap)
 {
 	Q_UNUSED(StringMap);
 	AsteriskSocket->AddFilter(AMI_USER_EVENT);
 	Started();
 }
 //-----------------------------------------------------------------------------
-void ISCoreCenterSeven::UserEvent(const QStringMap &StringMap)
+void ISCoreCenterSeven::UserEvent(const ISStringMap &StringMap)
 {
-	QString Phone = ISPhoneNumberParser::PasteEvent(StringMap.value("CallerIDNum"));
+	QString Phone = ISPhoneNumberParser::PasteEvent(StringMap.at("CallerIDNum"));
 
 	ISQuery qSelect(QS_BRANCH);
-	qSelect.BindValue(":Alias", StringMap.value("BRANCH"));
+	qSelect.BindValue(":Alias", StringMap.at("BRANCH"));
 	qSelect.BindValue(":Phone", Phone);
 	if (qSelect.ExecuteFirst())
 	{
@@ -61,7 +61,7 @@ void ISCoreCenterSeven::UserEvent(const QStringMap &StringMap)
 		QString BranchName = qSelect.ReadColumn("brch_name").toString();
 		int UserID = qSelect.ReadColumn("brch_administrator").toInt();
 
-		ISLOGGER_UNKNOWN("Incoming call from \"" + StringMap.value("CallerIDNum") + "\" to filial: " + BranchName);
+		ISLOGGER_UNKNOWN("Incoming call from \"" + StringMap.at("CallerIDNum") + "\" to filial: " + BranchName);
 		ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, PatientID + '_' + Phone);
 	}
 }

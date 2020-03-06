@@ -3,6 +3,7 @@
 #include "ISFileDialog.h"
 #include "ISSystem.h"
 #include "ISMessageBox.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISExportCSV::ISExportCSV(QObject *parent) : ISExportWorker(parent)
 {
@@ -48,10 +49,10 @@ bool ISExportCSV::Export()
 	{
 		QString HeaderString;
 
-		for (int i = 0; i < Fields.count(); ++i) //Обход выбранных для экспорта полей
+		for (int i = 0; i < Fields.size(); ++i) //Обход выбранных для экспорта полей
 		{
 			QString FieldName = Fields.at(i);
-			if (Fields.contains(FieldName))
+			if (VectorContains(Fields, FieldName))
 			{
 				QString LocalName = Model->GetFieldLocalName(FieldName);
 				HeaderString.append(LocalName);
@@ -80,9 +81,9 @@ bool ISExportCSV::Export()
 			}
 		}
 
-		if (SelectedRows.count()) //Если есть выделенные строки
+		if (!SelectedRows.empty()) //Если есть выделенные строки
 		{
-			if (!SelectedRows.contains(Row))
+			if (!VectorContains(SelectedRows, Row))
 			{
 				continue;
 			}
@@ -91,7 +92,7 @@ bool ISExportCSV::Export()
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		QString RowString;
 
-		for (int Column = 0; Column < Fields.count(); ++Column) //Обход колонок
+		for (int Column = 0; Column < Fields.size(); ++Column) //Обход колонок
 		{
 			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
 			Value = PrepareValue(Value);

@@ -2,6 +2,7 @@
 #include "ISFileDialog.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISExportXML::ISExportXML(QObject *parent) : ISExportWorker(parent)
 {
@@ -63,9 +64,9 @@ bool ISExportXML::Export()
 			}
 		}
 
-		if (SelectedRows.count()) //Если есть выделенные строки
+		if (!SelectedRows.empty()) //Если есть выделенные строки
 		{
-			if (!SelectedRows.contains(Row))
+			if (!VectorContains(SelectedRows, Row))
 			{
 				continue;
 			}
@@ -73,7 +74,7 @@ bool ISExportXML::Export()
 
 		QDomElement TagRow = DomDocument.createElement(TableName);
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
-		for (int Column = 0; Column < Fields.count(); ++Column) //Обход колонок
+		for (int Column = 0; Column < Fields.size(); ++Column) //Обход колонок
 		{
 			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
 			Value = PrepareValue(Value);

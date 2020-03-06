@@ -55,7 +55,7 @@ QString ISExportForm::GetSelectTypeName() const
 	return ComboBoxType->GetCurrentText();
 }
 //-----------------------------------------------------------------------------
-QList<QString> ISExportForm::GetSelectedFields() const
+ISVectorString ISExportForm::GetSelectedFields() const
 {
 	return SelectedFields;
 }
@@ -149,7 +149,7 @@ void ISExportForm::Select()
 		return;
 	}
 
-	if (!SelectedFields.count())
+	if (SelectedFields.empty())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Export.NotSelectedFields"));
 		return;
@@ -166,13 +166,12 @@ void ISExportForm::CreateFieldItem(PMetaClassField *MetaField)
 	FieldItem->setData(Qt::UserRole, MetaField->Name);
 	FieldItem->setCheckState(Qt::Checked);
 	FieldItem->setSizeHint(QSize(FieldItem->sizeHint().width(), 30));
-	SelectedFields.append(MetaField->Name);
+	SelectedFields.emplace_back(MetaField->Name);
 }
 //-----------------------------------------------------------------------------
 void ISExportForm::FieldsPositionChanged()
 {
 	SelectedFields.clear();
-
 	for (int i = 0; i < ListFields->count(); ++i)
 	{
 		QListWidgetItem *Item = ListFields->item(i);
@@ -180,7 +179,7 @@ void ISExportForm::FieldsPositionChanged()
 		{
 			if (Item->checkState() == Qt::Checked)
 			{
-				SelectedFields.append(Item->data(Qt::UserRole).toString());
+				SelectedFields.emplace_back(Item->data(Qt::UserRole).toString());
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISUuid.h"
+#include "ISTypes.h"
 //-----------------------------------------------------------------------------
 class ISUserRoleEntity
 {
@@ -41,8 +41,8 @@ protected:
 private:
 	ISUserRoleEntity();
 
-	QVector<ISUuid> SubSystems;
-	QMap<ISUuid, QVector<ISUuid>> Tables;
-	QVector<ISUuid> Specials;
+	ISVectorUID SubSystems;
+	QMap<ISUuid, ISVectorUID> Tables;
+	ISVectorUID Specials;
 };
 //-----------------------------------------------------------------------------

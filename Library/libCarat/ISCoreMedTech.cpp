@@ -39,16 +39,16 @@ bool ISCoreMedTech::Invoke()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISCoreMedTech::SuccessfulAuth(const QStringMap &StringMap)
+void ISCoreMedTech::SuccessfulAuth(const ISStringMap &StringMap)
 {
 	Q_UNUSED(StringMap);
 	AsteriskSocket->AddFilter(AMI_USER_EVENT);
 	Started();
 }
 //-----------------------------------------------------------------------------
-void ISCoreMedTech::UserEvent(const QStringMap &StringMap)
+void ISCoreMedTech::UserEvent(const ISStringMap &StringMap)
 {
-	QString StringUserEvent = StringMap.value("UserEvent");
+	QString StringUserEvent = StringMap.at("UserEvent");
 	QStringList StringList = StringUserEvent.split(SYMBOL_SPACE);
 	int InteriorNumber = 0;
 	
@@ -64,7 +64,7 @@ void ISCoreMedTech::UserEvent(const QStringMap &StringMap)
 	}
 
 	ISQuery qInsert(QI_RATING);
-	qInsert.BindValue(":UniqueID", StringMap.value("Uniqueid"));
+	qInsert.BindValue(":UniqueID", StringMap.at("Uniqueid"));
 	qInsert.BindValue(":InteriorNumber", InteriorNumber);
 	qInsert.BindValue(":Rating", Rating);
 	if (qInsert.ExecuteFirst())

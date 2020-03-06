@@ -783,7 +783,7 @@ void ISObjectFormBase::SaveClose()
 bool ISObjectFormBase::Save()
 {
 	QVariantMap ValuesMap;
-	QVectorString FieldsVector;
+	ISVectorString FieldsVector;
 	QString QueryText;
 	bool Executed = false;
 
@@ -821,7 +821,7 @@ bool ISObjectFormBase::Save()
 
 		FieldEditBase->Invoke();
 		ValuesMap.insert(FieldName, Value);
-		FieldsVector.append(FieldName);
+		FieldsVector.emplace_back(FieldName);
 	}
 
 	//Формирование запроса на добавление/изменение/копирование
@@ -830,7 +830,7 @@ bool ISObjectFormBase::Save()
 		QString InsertFields = "INSERT INTO " + MetaTable->Name + " (";
 		QString InsertValues = "VALUES (";
 
-		for (int i = 0; i < FieldsVector.count(); ++i)
+		for (int i = 0; i < FieldsVector.size(); ++i)
 		{
 			InsertFields += MetaTable->Alias + '_' + FieldsVector.at(i) + ", ";
 			InsertValues += ':' + FieldsVector.at(i) + ", ";
@@ -851,7 +851,7 @@ bool ISObjectFormBase::Save()
 		QueryText += MetaTable->Alias + "_updationdate = now(), \n";
 		QueryText += MetaTable->Alias + "_updationuser = CURRENT_USER, \n";
 
-		for (int i = 0; i < FieldsVector.count(); ++i)
+		for (int i = 0; i < FieldsVector.size(); ++i)
 		{
 			QueryText += MetaTable->Alias + '_' + FieldsVector.at(i) + " = :" + FieldsVector.at(i) + ", \n";
 		}
@@ -882,11 +882,11 @@ bool ISObjectFormBase::Save()
 			IS_ASSERT(SqlQuery.First(), "Not first SqlQuery");
 			ObjectID = SqlQuery.ReadColumn(MetaTable->Alias + "_id").toInt();
 		}
-	}
-	catch (ISQueryException &e)
+	} //???
+	catch (/*ISQueryException &e*/std::exception &e)
 	{
 		ISDatabase::GetInstance().GetDefaultDB().rollback(); //Откат транзакции
-		ISMessageBox::ShowWarning(this, LANG(QString("PostgreSQL.Error.%1").arg(SqlQuery.GetErrorNumber())), e.GetWhat());
+		//ISMessageBox::ShowWarning(this, LANG(QString("PostgreSQL.Error.%1").arg(SqlQuery.GetErrorNumber())), e.GetWhat());
 	}
 
 	if (Executed) //Запрос выполнен успешно

@@ -470,9 +470,9 @@ int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 	return SelectedObjectID;
 }
 //-----------------------------------------------------------------------------
-QVectorInt ISGui::SelectObjects(const QString &TableName)
+ISVectorInt ISGui::SelectObjects(const QString &TableName)
 {
-	QVectorInt VectorInt;
+	ISVectorInt VectorInt;
 	SetWaitGlobalCursor(true);
 	ISSelectDialogForm SelectDialogForm(ISNamespace::SLM_Multi, TableName, 0);
 	SetWaitGlobalCursor(false);

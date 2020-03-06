@@ -50,7 +50,7 @@ int ISSelectDialogForm::GetSelectedObject() const
 	return SelectListForm->GetObjectID();
 }
 //-----------------------------------------------------------------------------
-QVectorInt ISSelectDialogForm::GetSelectedObjects() const
+ISVectorInt ISSelectDialogForm::GetSelectedObjects() const
 {
 	return SelectListForm->GetSelectedIDs();
 }

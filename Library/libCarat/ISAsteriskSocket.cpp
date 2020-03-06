@@ -46,7 +46,7 @@ void ISAsteriskSocket::AddFilter(const QString &EventName)
 	ISLOGGER_INFO("Append filter for event: " + EventName);
 }
 //-----------------------------------------------------------------------------
-void ISAsteriskSocket::Redirect(const QStringMap &StringMap, const QString &Pattern)
+void ISAsteriskSocket::Redirect(const ISStringMap &StringMap, const QString &Pattern)
 {
 	ISQuery qSelectContext(QS_USER_CONTEXT);
 	qSelectContext.SetShowLongQuery(false);
@@ -54,7 +54,7 @@ void ISAsteriskSocket::Redirect(const QStringMap &StringMap, const QString &Patt
 	if (qSelectContext.ExecuteFirst())
 	{
 		QString Context = qSelectContext.ReadColumn("aspt_context").toString();
-		QString Channel = StringMap.value("Channel");
+		QString Channel = StringMap.at("Channel");
 
 		ISLOGGER_UNKNOWN("Redirect to number \"" + Pattern + "\". Channel: " + Channel);
 		write(QString("Action: Redirect\r\n").toUtf8().data());
@@ -112,11 +112,11 @@ void ISAsteriskSocket::ErrorHost(QAbstractSocket::SocketError ErrorHost)
 //-----------------------------------------------------------------------------
 void ISAsteriskSocket::ReadyRead()
 {
-	QVector<QStringMap> VectorEvent = ParseReadyRead(readAll());
+	QVector<ISStringMap> VectorEvent = ParseReadyRead(readAll());
 	while (!VectorEvent.isEmpty()) //Обход всех событий происходящих в данный момент (если список событие не пустой)
 	{
-		QStringMap VariantMapEvent = VectorEvent.takeFirst(); //Забираем событие из списка событий
-		QString EventName = VariantMapEvent.value("Event"); //Наименование события
+		ISStringMap VariantMapEvent = VectorEvent.takeFirst(); //Забираем событие из списка событий
+		QString EventName = VariantMapEvent["Event"]; //Наименование события
 		if (EventName == AMI_SUCCESSFUL_AUTH)
 		{
 			ISLOGGER_UNKNOWN("Connected to Asterisk Manager Interface");
@@ -151,9 +151,9 @@ void ISAsteriskSocket::ReadyRead()
 	}
 }
 //-----------------------------------------------------------------------------
-QVector<QStringMap> ISAsteriskSocket::ParseReadyRead(const QString &String)
+QVector<ISStringMap> ISAsteriskSocket::ParseReadyRead(const QString &String)
 {
-	QVector<QStringMap> VectorEvent;
+	QVector<ISStringMap> VectorEvent;
 
 	QStringList MessageList = String.split("\r\n\r\n");
 	for (int i = 0; i < MessageList.count(); ++i) //Обход всех сообщений
@@ -164,7 +164,7 @@ QVector<QStringMap> ISAsteriskSocket::ParseReadyRead(const QString &String)
 			continue;
 		}
 
-		QStringMap StringMap;
+		ISStringMap StringMap;
 		QStringList StringList = Message.split("\n"); //Список строк сообщения
 
 		while (StringList.count()) //Обход сообщения
@@ -173,11 +173,11 @@ QVector<QStringMap> ISAsteriskSocket::ParseReadyRead(const QString &String)
 			QStringList LineList = LineString.split(": ");
 			if (LineList.count() == 2)
 			{
-				StringMap.insert(LineList.at(0), LineList.at(1));
+				StringMap.emplace(LineList.at(0), LineList.at(1));
 			}
 		}
 
-		if (StringMap.contains("Event")) //Если сообщение является событием
+		if (StringMap.count("Event")) //Если сообщение является событием
 		{
 			VectorEvent.append(StringMap);
 		}

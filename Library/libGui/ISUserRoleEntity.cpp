@@ -2,8 +2,8 @@
 #include "ISQuery.h"
 #include "ISMetaUser.h"
 #include "ISMetaSystemsEntity.h"
-#include "ISCountingTime.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SUBSYSTEM_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 															   "FROM _groupaccesssubsystem "
@@ -166,16 +166,12 @@ void ISUserRoleEntity::DeleteSpecialAccess(int GroupID, const ISUuid &SpecialAcc
 //-----------------------------------------------------------------------------
 void ISUserRoleEntity::Initialize()
 {
-	if (ISMetaUser::GetInstance().GetData()->System) //Если текущий пользователь является системным
+	if (!ISMetaUser::GetInstance().GetData()->System) //Если текущий пользователь не является системным - инициализируем
 	{
-		return;
+		InitializeSubSystem();
+		InitializeTables();
+		InitializeSpecial();
 	}
-
-	ISCountingTime CountingTime;
-	InitializeSubSystem();
-	InitializeTables();
-	InitializeSpecial();
-	ISLOGGER_DEBUG(QString("Initialized UserRole %1 msec").arg(CountingTime.GetElapsed()));
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
@@ -187,9 +183,8 @@ bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 	}
 	else
 	{
-		Result = SubSystems.contains(SubSystemUID);
+		Result = VectorContains(SubSystems, SubSystemUID);
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -202,9 +197,8 @@ bool ISUserRoleEntity::CheckAccessTable(const ISUuid &TableUID, const ISUuid &Ac
 	}
 	else
 	{
-		Result = Tables.value(TableUID).contains(AccessUID);
+		Result = VectorContains(Tables.value(TableUID), AccessUID);
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -217,9 +211,8 @@ bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
 	}
 	else
 	{
-		Result = Specials.contains(SpecialAccessUID);
+		Result = VectorContains(Specials, SpecialAccessUID);
 	}
-	
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -232,9 +225,8 @@ bool ISUserRoleEntity::CheckExistAccesses() const
 	}
 	else
 	{
-		Result = SubSystems.count() + Tables.count() + Specials.count();
+		Result = SubSystems.size() + Tables.count() + Specials.size();
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -246,7 +238,7 @@ void ISUserRoleEntity::InitializeSubSystem()
 	{
 		while (qSelect.Next())
 		{
-			SubSystems.append(ISUuid(qSelect.ReadColumn("gass_subsystem")));
+			SubSystems.emplace_back(ISUuid(qSelect.ReadColumn("gass_subsystem")));
 		}
 	}
 }
@@ -261,17 +253,7 @@ void ISUserRoleEntity::InitializeTables()
 		{
 			ISUuid TableUID = qSelect.ReadColumn("gatb_table");
 			ISUuid AccessUID = qSelect.ReadColumn("gatb_accesstype");
-
-			if (Tables.contains(TableUID))
-			{
-				Tables[TableUID].append(AccessUID);
-			}
-			else
-			{
-				QVector<ISUuid> Vector;
-				Vector.append(AccessUID);
-				Tables.insert(TableUID, Vector);
-			}
+			Tables.contains(TableUID) ? Tables[TableUID].emplace_back(AccessUID) : Tables.insert(TableUID, { AccessUID });
 		}
 	}
 }
@@ -284,7 +266,7 @@ void ISUserRoleEntity::InitializeSpecial()
 	{
 		while (qSelect.Next())
 		{
-			Specials.append(ISUuid(qSelect.ReadColumn("gasp_specialaccess")));
+			Specials.emplace_back(ISUuid(qSelect.ReadColumn("gasp_specialaccess")));
 		}
 	}
 }

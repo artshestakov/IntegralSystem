@@ -33,7 +33,7 @@ void ISMedTechRatingSubSystem::LoadData()
 //-----------------------------------------------------------------------------
 void ISMedTechRatingSubSystem::SelectedRating()
 {
-	if (RatingListForm->GetSelectedIDs().count() == 1)
+	if (RatingListForm->GetSelectedIDs().size() == 1)
 	{
 		ISQuery qSelect(QS_RATING);
 		qSelect.BindValue(":RatingID", RatingListForm->GetObjectID());

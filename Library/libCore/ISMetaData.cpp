@@ -8,6 +8,7 @@
 #include "ISUuid.h"
 #include "ISMetaUuidCheckeder.h"
 #include "ISMetaViewQuery.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING)
@@ -52,9 +53,9 @@ ISMetaData::ISMetaData()
 //-----------------------------------------------------------------------------
 ISMetaData::~ISMetaData()
 {
-	while (!Resources.isEmpty())
+	while (!Resources.empty())
 	{
-		delete Resources.takeLast();
+		delete VectorTakeBack(Resources);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -147,29 +148,19 @@ PMetaClassField* ISMetaData::GetMetaField(const QString &TableName, const QStrin
 	return GetMetaField(TablesMap[TableName], FieldName);
 }
 //-----------------------------------------------------------------------------
-QList<PMetaClassFunction*> ISMetaData::GetFunctions()
+std::vector<PMetaClassFunction*> ISMetaData::GetFunctions()
 {
-	QList<PMetaClassFunction*> List;
-	for (const auto &MapItem : FunctionsMap)
-	{
-		List.push_back(MapItem.second);
-	}
-	return List;
+	return ConvertMapToValues<QString, PMetaClassFunction *>(FunctionsMap);
 }
 //-----------------------------------------------------------------------------
-QList<PMetaClassTable*> ISMetaData::GetTables()
+std::vector<PMetaClassTable*> ISMetaData::GetTables()
 {
-	QList<PMetaClassTable*> List;
-	for (const auto &MapItem : TablesMap)
-	{
-		List.push_back(MapItem.second);
-	}
-	return List;
+	return ConvertMapToValues<QString, PMetaClassTable *>(TablesMap);
 }
 //-----------------------------------------------------------------------------
-std::vector<QString> ISMetaData::GetMetaQueries()
+ISVectorString ISMetaData::GetMetaQueries()
 {
-	std::vector<QString> Vector(QueriesMap.size());
+	ISVectorString Vector(QueriesMap.size());
 	size_t Index = 0;
 	for (const auto &MapItem : QueriesMap)
 	{
@@ -179,60 +170,60 @@ std::vector<QString> ISMetaData::GetMetaQueries()
 	return Vector;
 }
 //-----------------------------------------------------------------------------
-QVector<PMetaClassIndex*> ISMetaData::GetSystemIndexes()
+std::vector<PMetaClassIndex*> ISMetaData::GetSystemIndexes()
 {
-	QVector<PMetaClassIndex*> SystemIndexes;
+	std::vector<PMetaClassIndex*> SystemIndexes;
 	for (PMetaClassTable *MetaTable : GetTables()) //Обход таблиц
 	{
 		for (PMetaClassField *MetaField : MetaTable->SystemFields) //Обход полей
 		{
 			if (MetaField->Index)
 			{
-				SystemIndexes.append(MetaField->Index);
+				SystemIndexes.emplace_back(MetaField->Index);
 			}
 		}
 	}
 	return SystemIndexes;
 }
 //-----------------------------------------------------------------------------
-QVector<PMetaClassIndex*> ISMetaData::GetIndexes()
+std::vector<PMetaClassIndex*> ISMetaData::GetIndexes()
 {
-	QVector<PMetaClassIndex*> Indexes;
+	std::vector<PMetaClassIndex*> Indexes;
 	for (PMetaClassTable *MetaTable : GetTables()) //Обход таблиц
 	{
 		for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей
 		{
 			if (MetaField->Index)
 			{
-				Indexes.append(MetaField->Index);
+				Indexes.emplace_back(MetaField->Index);
 			}
 		}
 	}
 	return Indexes;
 }
 //-----------------------------------------------------------------------------
-QVector<PMetaClassIndex*> ISMetaData::GetCompoundIndexes()
+std::vector<PMetaClassIndex*> ISMetaData::GetCompoundIndexes()
 {
 	return IndexesCompound;
 }
 //-----------------------------------------------------------------------------
-QVector<PMetaClassForeign*> ISMetaData::GetForeigns()
+std::vector<PMetaClassForeign*> ISMetaData::GetForeigns()
 {
-	QVector<PMetaClassForeign*> Foreigns;
+	std::vector<PMetaClassForeign*> Foreigns;
 	for (PMetaClassTable *MetaTable : GetTables()) //Обход таблиц
 	{
 		for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей
 		{
 			if (MetaField->Foreign)
 			{
-				Foreigns.append(MetaField->Foreign);
+				Foreigns.emplace_back(MetaField->Foreign);
 			}
 		}
 	}
 	return Foreigns;
 }
 //-----------------------------------------------------------------------------
-QVector<PMetaClassResource*> ISMetaData::GetResources()
+std::vector<PMetaClassResource*> ISMetaData::GetResources()
 {
 	return Resources;
 }
@@ -322,7 +313,7 @@ bool ISMetaData::CheckUniqueAllAliases()
 //-----------------------------------------------------------------------------
 void ISMetaData::GenerateSqlFromForeigns()
 {
-	QVector<PMetaClassForeign*> Foreigns = GetForeigns();
+	std::vector<PMetaClassForeign*> Foreigns = GetForeigns();
 	for (PMetaClassForeign *MetaForeign : Foreigns)
 	{
 		MetaForeign->SqlQuery = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign); //Генерация SQL-запроса для внешнего ключа
@@ -813,9 +804,9 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDo
 				PMetaClassIndex *Index = new PMetaClassIndex(Unique, MetaTable->Alias, MetaTable->Name, QString());
 				for (const QString &IndexName : IndexList)
 				{
-					Index->Fields.append(IndexName);
+					Index->Fields.emplace_back(IndexName);
 				}
-				IndexesCompound.append(Index);
+				IndexesCompound.emplace_back(Index);
 			}
 			else //Индекс стандартный
 			{
@@ -952,7 +943,7 @@ bool ISMetaData::InitializeXSNTableJoins(PMetaClassTable *MetaTable, const QDomN
 			ErrorString = QString("Empty join text. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
 			break;
 		}
-		MetaTable->Joins.append(JoinText);
+		MetaTable->Joins.emplace_back(JoinText);
 		Temp = Temp.nextSibling();
 	}
 	return Result;
@@ -1065,7 +1056,7 @@ bool ISMetaData::InitializeXSR(const QString &Content)
 							Result = !MetaResource->UID.isEmpty();
 							if (Result)
 							{
-								Resources.append(MetaResource);
+								Resources.emplace_back(MetaResource);
 							}
 							else
 							{

@@ -279,13 +279,13 @@ QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString)
 	return QJsonDocument::fromJson(JsonString.toUtf8()).object().toVariantMap();
 }
 //-----------------------------------------------------------------------------
-QStringMap ISSystem::JsonStringToStringMap(const QString &JsonString)
+ISStringMap ISSystem::JsonStringToStringMap(const QString &JsonString)
 {
 	QVariantMap VariantMap = JsonStringToVariantMap(JsonString);
-	QStringMap StringMap;
+	ISStringMap StringMap;
 	for (const auto &MapItem : VariantMap.toStdMap())
 	{
-		StringMap.insert(MapItem.first, MapItem.second.toString());
+		StringMap.emplace(MapItem.first, MapItem.second.toString());
 	}
 	return StringMap;
 }

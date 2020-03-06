@@ -25,14 +25,14 @@ public:
 	PMetaClassField* GetMetaField(PMetaClassTable *MetaTable, const QString &FieldName); //Получить мета-поле из указанной таблицы
 	PMetaClassField* GetMetaField(const QString &TableName, const QString &FieldName); //Получить мета-поле из указанной таблицы
 
-	QList<PMetaClassFunction*> GetFunctions(); //Получить список всех функций
-	QList<PMetaClassTable*> GetTables(); //Получить список всех таблиц
-	std::vector<QString> GetMetaQueries(); //Получить вектор всех мета-запросов
-	QVector<PMetaClassIndex*> GetSystemIndexes(); //Получить список системных индексов
-	QVector<PMetaClassIndex*> GetIndexes(); //Получить список индексов для пользовательских полей
-	QVector<PMetaClassIndex*> GetCompoundIndexes(); //Получить список составных индексов
-	QVector<PMetaClassForeign*> GetForeigns(); //Получить список внешних ключей
-	QVector<PMetaClassResource*> GetResources(); //Получить ресурсы
+	std::vector<PMetaClassFunction*> GetFunctions(); //Получить список всех функций
+	std::vector<PMetaClassTable*> GetTables(); //Получить список всех таблиц
+	ISVectorString GetMetaQueries(); //Получить вектор всех мета-запросов
+	std::vector<PMetaClassIndex*> GetSystemIndexes(); //Получить список системных индексов
+	std::vector<PMetaClassIndex*> GetIndexes(); //Получить список индексов для пользовательских полей
+	std::vector<PMetaClassIndex*> GetCompoundIndexes(); //Получить список составных индексов
+	std::vector<PMetaClassForeign*> GetForeigns(); //Получить список внешних ключей
+	std::vector<PMetaClassResource*> GetResources(); //Получить ресурсы
 
 	bool CheckExistTable(const QString &TableName) const; //Проверить наличие указанной таблицы в базе
 	bool CheckExitField(PMetaClassTable *MetaTable, const QString &FieldName) const; //Проверить наличие указанного поля в указанной таблице
@@ -71,11 +71,11 @@ private:
     QDomNode GetChildDomNode(QDomNode &TableNode, const QString &TagName) const;
 
 	std::map<QString, PMetaClassFunction *> FunctionsMap; //Функции
-	std::map<QString, PMetaClassTable*> TablesMap; //Таблицы
-	std::map<QString, PMetaClassTable*> QueriesMap; //Запросы
+	std::map<QString, PMetaClassTable *> TablesMap; //Таблицы
+	std::map<QString, PMetaClassTable *> QueriesMap; //Запросы
 
-	QVector<PMetaClassResource*> Resources; //Реурсы
-	QVector<PMetaClassIndex*> IndexesCompound; //Составные индексы
+	std::vector<PMetaClassResource *> Resources; //Реурсы
+	std::vector<PMetaClassIndex*> IndexesCompound; //Составные индексы
 
 	QString CurrentXSN; //Текущий обрабатываемый XSN
 	QString CurrentXSR; //Текущий обрабатываемый XSR

@@ -72,7 +72,7 @@ void ISCoreNotification::Timeout()
 			}
 			else //Нотфикация отправлена всем пользователям
 			{
-				QVectorInt Users = GetUsers();
+				ISVectorInt Users = GetUsers();
 				for (int UserID : Users) //Обход пользователей и отправка каждому нотификации
 				{
 					SendNotification(NotificationUID, NotificationName, UserTo, Payload, String, Save);
@@ -115,15 +115,15 @@ void ISCoreNotification::SendNotification(const QString &NotificationUID, const 
 	}
 }
 //-----------------------------------------------------------------------------
-QVectorInt ISCoreNotification::GetUsers() const
+ISVectorInt ISCoreNotification::GetUsers() const
 {
-	QVectorInt VectorInt;
+	ISVectorInt VectorInt;
 	ISQuery qSelectUsers(QS_USERS);
 	if (qSelectUsers.Execute())
 	{
 		while (qSelectUsers.Next())
 		{
-			VectorInt.append(qSelectUsers.ReadColumn("usrs_id").toInt());
+			VectorInt.emplace_back(qSelectUsers.ReadColumn("usrs_id").toInt());
 		}
 	}
 

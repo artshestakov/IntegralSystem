@@ -21,12 +21,12 @@ public:
 
 	void LoadCreateRecords();
 	void ReloadCreateRecords();
-	QVectorString GetCreateRecords();
+	ISVectorString GetCreateRecords();
 
 private:
 	ISFastAccessEntity();
 
 	QVector<ISMetaExternalTool*> ExternalTools;
-	QVectorString CreateRecords;
+	ISVectorString CreateRecords;
 };
 //-----------------------------------------------------------------------------

@@ -34,7 +34,7 @@ void ISExportWorker::SetModel(ISSqlModelCore *model)
 	Model = model;
 }
 //-----------------------------------------------------------------------------
-void ISExportWorker::SetFields(const QList<QString> &fields)
+void ISExportWorker::SetFields(const ISVectorString &fields)
 {
 	Fields = fields;
 }
@@ -44,7 +44,7 @@ void ISExportWorker::SetHeader(bool header)
 	Header = header;
 }
 //-----------------------------------------------------------------------------
-void ISExportWorker::SetSelectedRows(const QVectorInt &selected_rows)
+void ISExportWorker::SetSelectedRows(const ISVectorInt &selected_rows)
 {
 	SelectedRows = selected_rows;
 }

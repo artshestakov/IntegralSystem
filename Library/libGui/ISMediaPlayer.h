@@ -24,6 +24,6 @@ protected:
 private:
 	ISMediaPlayer();
 
-	QVectorString Queue;
+	ISVectorString Queue;
 };
 //-----------------------------------------------------------------------------

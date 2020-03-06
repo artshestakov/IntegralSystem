@@ -16,7 +16,7 @@ public:
 protected:
 	void Timeout();
 	void SendNotification(const QString &NotificationUID, const QString &NotificationName, int UserTo, const QVariant &Payload, const QString &String, bool Save); //Отпрвка нотификации пользователю
-	QVectorInt GetUsers() const; //Получить список пользователей для отправки нотификации
+	ISVectorInt GetUsers() const; //Получить список пользователей для отправки нотификации
 
 private:
 	QTimer *Timer;

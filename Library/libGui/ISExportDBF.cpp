@@ -3,6 +3,7 @@
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISConstants.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISExportDBF::ISExportDBF(QObject *parent) : ISExportWorker(parent)
 {
@@ -32,10 +33,10 @@ bool ISExportDBF::Export()
 {
 	QString CreateTableSql = "CREATE TABLE " + TableName + " (";
 	
-	for (int i = 0; i < Fields.count(); ++i) //Обход выбранных для экспорта полей
+	for (int i = 0; i < Fields.size(); ++i) //Обход выбранных для экспорта полей
 	{
 		QString FieldName = Fields.at(i);
-		if (Fields.contains(FieldName))
+		if (VectorContains(Fields, FieldName))
 		{
 			CreateTableSql += FieldName + " VARCHAR, ";
 		}
@@ -71,20 +72,20 @@ bool ISExportDBF::Export()
 			}
 		}
 
-		if (SelectedRows.count()) //Если есть выделенные строки
+		if (!SelectedRows.empty()) //Если есть выделенные строки
 		{
-			if (!SelectedRows.contains(Row))
+			if (!VectorContains(SelectedRows, Row))
 			{
 				continue;
 			}
 		}
 
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
-		QStringMap Bind;
+		ISStringMap Bind;
 		QString InsertFields = "INSERT INTO " + TableName + '(';
 		QString ValuesField = "VALUES(";
 
-		for (int Column = 0; Column < Fields.count(); ++Column) //Обход колонок
+		for (int Column = 0; Column < Fields.size(); ++Column) //Обход колонок
 		{
 			QString FieldName = Fields.at(Column);
 			QString FieldValue = SqlRecord.value(FieldName).toString();
@@ -92,7 +93,7 @@ bool ISExportDBF::Export()
 			InsertFields += FieldName + ", ";
 			ValuesField += ':' + FieldName + ", ";
 
-			Bind.insert(':' + FieldName, FieldValue);
+			Bind.emplace(':' + FieldName, FieldValue);
 		}
 
 		ISSystem::RemoveLastSymbolFromString(InsertFields, 2);
@@ -107,7 +108,7 @@ bool ISExportDBF::Export()
 			return false;
 		}
 
-		for (const auto &Item : Bind.toStdMap())
+		for (const auto &Item : Bind)
 		{
 			SqlQuery.bindValue(Item.first, Item.second);
 		}

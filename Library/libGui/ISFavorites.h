@@ -23,6 +23,6 @@ public:
 private:
 	ISFavorites();
 
-	QMap<QString, QVectorInt> Favorites;
+	QMap<QString, ISVectorInt> Favorites;
 };
 //-----------------------------------------------------------------------------

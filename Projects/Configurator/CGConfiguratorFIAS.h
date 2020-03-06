@@ -28,13 +28,13 @@ private:
 	bool FileUpload(const QFileInfo &FileInfo); //Загрузка файла в базу
 	quint64 GetCountLine(const QString &FilePath) const; //Получить количество строк в файле
 	QString GetTableName(const QString &FilePath) const; //Получить наименование таблицы
-	QStringMap ParseLine(const QString &Content) const; //Парсинг строки
-	bool Select(PMetaClassTable *MetaTable, const QStringMap &StringMap) const;
-	void Update(PMetaClassTable *MetaTable, const QStringMap &StringMap);
-	void Insert(PMetaClassTable *MetaTable, const QStringMap &StringMap);
+	ISStringMap ParseLine(const QString &Content) const; //Парсинг строки
+	bool Select(PMetaClassTable *MetaTable, const ISStringMap &StringMap) const;
+	void Update(PMetaClassTable *MetaTable, const ISStringMap &StringMap);
+	void Insert(PMetaClassTable *MetaTable, const ISStringMap &StringMap);
 
 private:
-	QStringMap MapKeys;
+	ISStringMap MapKeys;
 };
 //-----------------------------------------------------------------------------
 #endif

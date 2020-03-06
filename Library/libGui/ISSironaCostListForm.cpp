@@ -23,7 +23,7 @@ void ISSironaCostListForm::LoadDataAfterEvent()
 
 	if (GetSqlModel()->rowCount())
 	{
-		QVectorInt VectorInt = GetIDs();
+		ISVectorInt VectorInt = GetIDs();
 		QString SqlIN;
 		for (int ID : VectorInt)
 		{

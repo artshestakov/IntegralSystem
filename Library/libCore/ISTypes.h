@@ -34,7 +34,8 @@ public:
 	QVariant EndValue;
 };
 //-----------------------------------------------------------------------------
-typedef QMap<QString, QString> QStringMap;
-typedef QVector<int> QVectorInt;
-typedef QVector<QString> QVectorString;
+typedef std::map<QString, QString> ISStringMap;
+typedef std::vector<int> ISVectorInt;
+typedef std::vector<QString> ISVectorString;
+typedef std::vector<ISUuid> ISVectorUID;
 //-----------------------------------------------------------------------------

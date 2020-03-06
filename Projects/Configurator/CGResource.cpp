@@ -3,6 +3,7 @@
 #include "ISMetaData.h"
 #include "ISAssert.h"
 #include "ISSystem.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_RESOURCE = "SELECT COUNT(*) FROM %1 WHERE %2_uid = :ResourceUID";
 //-----------------------------------------------------------------------------
@@ -17,10 +18,10 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 	QString InsertText = "INSERT INTO " + MetaResource->TableName.toLower() + '(' + TableAlias + "_uid, ";
 	QString ValuesText = "VALUES(:UID, ";
 
-	int CountParameters = MetaResource->Parameters.count(); //Количество параметров
+	int CountParameters = MetaResource->Parameters.size(); //Количество параметров
 	for (int i = 0; i < CountParameters; ++i) //Обход параметров ресурса
 	{
-		QString FieldName = TableAlias + '_' + MetaResource->Parameters.keys().at(i).toLower();
+		QString FieldName = TableAlias + '_' + ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
 
 		InsertText += FieldName + ", ";
 		ValuesText += ':' + FieldName + ", ";
@@ -41,8 +42,8 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 
 	for (int i = 0; i < CountParameters; ++i)
 	{
-		QString FieldName = TableAlias + '_' + MetaResource->Parameters.keys().at(i).toLower();
-		QString FieldValue = MetaResource->Parameters.values().at(i);
+		QString FieldName = TableAlias + '_' + ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
+		QString FieldValue = ConvertMapToValues(MetaResource->Parameters)[i];
 		bool BindValue = qInsertResource.BindValue(':' + FieldName, FieldValue);
 		IS_ASSERT(BindValue, QString("Not BindValue. TableName: %1. FieldName: %2").arg(MetaResource->TableName).arg(FieldName));
 	}
@@ -66,8 +67,8 @@ void CGResource::UpdateResource(PMetaClassResource *MetaResource)
     UpdateResourceField(TableName, TableAlias, TableAlias + "_isdeleted", false, ResourceUID, ErrorString);
     UpdateResourceField(TableName, TableAlias, TableAlias + "_issystem", false, ResourceUID, ErrorString);
 
-	QStringMap Parameters = MetaResource->Parameters;
-	for (const auto &Resource : Parameters.toStdMap()) //Обход параметров ресурса
+	ISStringMap Parameters = MetaResource->Parameters;
+	for (const auto &Resource : Parameters) //Обход параметров ресурса
 	{
 		QString FieldName = Resource.first;
 		QString FieldNameComplete = QString(TableAlias + '_' + Resource.first).toLower();
@@ -96,7 +97,7 @@ void CGResource::UpdateResource(PMetaClassResource *MetaResource)
 			continue;
 		}
 
-		if (!Parameters.keys().contains(MetaField->Name))
+		if (!VectorContains(ConvertMapToKeys(Parameters), MetaField->Name))
 		{
 			QString ErrorString;
 			bool ResetUserField = ResetResourceField(TableName, TableAlias, TableAlias + '_' + MetaField->Name, ResourceUID, ErrorString);

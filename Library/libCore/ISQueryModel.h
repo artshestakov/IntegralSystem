@@ -76,6 +76,6 @@ private:
 	QString SearchFilter;
 
 	QVariantMap Conditions;
-	QStringMap ForeignFields;
+	ISStringMap ForeignFields;
 };
 //-----------------------------------------------------------------------------

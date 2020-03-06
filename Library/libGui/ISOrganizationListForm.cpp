@@ -80,13 +80,13 @@ void ISOrganizationListForm::UserChanged(const QVariant &value)
 //-----------------------------------------------------------------------------
 void ISOrganizationListForm::Transfer()
 {
-	QVectorInt Objects = GetSelectedIDs();
-	if (Objects.count())
+	ISVectorInt Objects = GetSelectedIDs();
+	if (!Objects.empty())
 	{
-		ISTransferOrganizationForm TransferOrganizationForm(Objects.count());
+		ISTransferOrganizationForm TransferOrganizationForm(Objects.size());
 		if (TransferOrganizationForm.Exec())
 		{
-			for (int i = 0; i < Objects.count(); ++i)
+			for (int i = 0; i < Objects.size(); ++i)
 			{
 				int ObjectID = Objects.at(i);
 				QString OrganizationName = GetRecordValue("Name", GetRowIndex(ObjectID)).toString();
@@ -116,7 +116,7 @@ void ISOrganizationListForm::Transfer()
 				}
 			}
 
-			ISMessageBox::ShowInformation(this, LANG("Message.Information.TrasferOrganizationUserDone").arg(Objects.count()).arg(TransferOrganizationForm.GetSelectedUserName()));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.TrasferOrganizationUserDone").arg(Objects.size()).arg(TransferOrganizationForm.GetSelectedUserName()));
 			Update();
 		}
 	}
@@ -124,19 +124,19 @@ void ISOrganizationListForm::Transfer()
 //-----------------------------------------------------------------------------
 void ISOrganizationListForm::ResetExecutor()
 {
-	QVectorInt Objects = GetSelectedIDs();
-	if (Objects.count())
+	ISVectorInt Objects = GetSelectedIDs();
+	if (!Objects.empty())
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ResetOrganizationExecutor").arg(Objects.count())))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ResetOrganizationExecutor").arg(Objects.size())))
 		{
-			for (int i = 0; i < Objects.count(); ++i)
+			for (int i = 0; i < Objects.size(); ++i)
 			{
 				ISQuery qUpdate(QU_RESET_EXECUTOR);
 				qUpdate.BindValue(":OrganizationID", Objects.at(i));
 				qUpdate.Execute();
 			}
 
-			ISMessageBox::ShowInformation(this, LANG("Message.Information.ResetOrganizationExecutor").arg(Objects.count()));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.ResetOrganizationExecutor").arg(Objects.size()));
 			Update();
 		}
 	}
@@ -144,15 +144,15 @@ void ISOrganizationListForm::ResetExecutor()
 //-----------------------------------------------------------------------------
 void ISOrganizationListForm::Percentage()
 {
-	QVectorInt Objects = GetSelectedIDs();
-	if (Objects.count())
+	ISVectorInt Objects = GetSelectedIDs();
+	if (Objects.size())
 	{
-		ISProgressForm ProgressForm(0, Objects.count(), this);
+		ISProgressForm ProgressForm(0, Objects.size(), this);
 		ProgressForm.show();
 
-		for (int i = 0; i < Objects.count(); ++i) //Обход всех организаций
+		for (int i = 0; i < Objects.size(); ++i) //Обход всех организаций
 		{
-			ProgressForm.SetText(LANG("CalculatePercentage").arg(i).arg(Objects.count()));
+			ProgressForm.SetText(LANG("CalculatePercentage").arg(i).arg(Objects.size()));
 			ProgressForm.setValue(i);
 
 			int CountFill = 0; //Количество заполненных полей

@@ -182,18 +182,15 @@ QVariant ISListBaseForm::GetRecordValue(const QString &FieldName, int RowIndex)
 	return SqlModel->GetRecord(RowIndex).value(FieldName);
 }
 //-----------------------------------------------------------------------------
-QVectorInt ISListBaseForm::GetSelectedIDs()
+ISVectorInt ISListBaseForm::GetSelectedIDs()
 {
-	QVectorInt VectorInt;
+	ISVectorInt VectorInt;
 	QModelIndexList ModelIndexList = GetTableView()->selectionModel()->selectedRows();
 	if (ModelIndexList.count())
 	{
-		for (int i = 0; i < ModelIndexList.count(); ++i)
+		for(const QModelIndex &ModelIndex : ModelIndexList)
 		{
-			QModelIndex ModelIndex = ModelIndexList.at(i);
-			int RowIndex = ModelIndex.row();
-			int ObjectID = GetObjectID(RowIndex);
-			VectorInt.append(ObjectID);
+			VectorInt.emplace_back(GetObjectID(ModelIndex.row()));
 		}
 	}
 	else
@@ -208,27 +205,25 @@ int ISListBaseForm::GetCountSelected()
 	return GetTableView()->selectionModel()->selectedRows().count();
 }
 //-----------------------------------------------------------------------------
-QVectorInt ISListBaseForm::GetIDs() const
+ISVectorInt ISListBaseForm::GetIDs() const
 {
-	QVectorInt VectorInt;
+	ISVectorInt VectorInt;
 	for (int i = 0; i < SqlModel->rowCount(); ++i)
 	{
-		int ObjectID = SqlModel->data(SqlModel->index(i, SqlModel->GetFieldIndex("ID"))).toInt();
-		VectorInt.append(ObjectID);
+		VectorInt.emplace_back(SqlModel->data(SqlModel->index(i, SqlModel->GetFieldIndex("ID"))).toInt());
 	}
 	return VectorInt;
 }
 //-----------------------------------------------------------------------------
-QVectorInt ISListBaseForm::GetSelectedRowIndexes()
+ISVectorInt ISListBaseForm::GetSelectedRowIndexes()
 {
-	QVectorInt VectorInt;
+	ISVectorInt VectorInt;
 	QModelIndexList ModelIndexList = GetTableView()->selectionModel()->selectedRows();
 	if (ModelIndexList.count())
 	{
-		for (int i = 0; i < ModelIndexList.count(); ++i)
+		for (const QModelIndex &ModelIndex : ModelIndexList)
 		{
-			QModelIndex ModelIndex = ModelIndexList.at(i);
-			VectorInt.append(ModelIndex.row());
+			VectorInt.emplace_back(ModelIndex.row());
 		}
 	}
 	return VectorInt;
@@ -957,8 +952,8 @@ void ISListBaseForm::Delete()
 		return;
 	}
 
-	QVectorInt VectorInt = GetSelectedIDs();
-	if (VectorInt.count() == 1) //Если помечается на удаление одна запись
+	ISVectorInt VectorInt = GetSelectedIDs();
+	if (VectorInt.size() == 1) //Если помечается на удаление одна запись
 	{
 		if (CheckIsSystemObject())
 		{
@@ -1005,15 +1000,15 @@ void ISListBaseForm::Delete()
 	}
 	else //Помечается на удаление несколько записей
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.count())))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size())))
 		{
-			ISProgressForm ProgressForm(0, VectorInt.count(), this);
+			ISProgressForm ProgressForm(0, VectorInt.size(), this);
 			ProgressForm.show();
-			ProgressForm.SetText(LANG("DeletingObjects").arg(0).arg(VectorInt.count()) + "...");
+			ProgressForm.SetText(LANG("DeletingObjects").arg(0).arg(VectorInt.size()) + "...");
 
-			for (int i = 0; i < VectorInt.count(); ++i)
+			for (int i = 0; i < VectorInt.size(); ++i)
 			{
-				ProgressForm.SetText(LANG("DeletingObjects").arg(i + 1).arg(VectorInt.count()) + "...");
+				ProgressForm.SetText(LANG("DeletingObjects").arg(i + 1).arg(VectorInt.size()) + "...");
 				if (ProgressForm.wasCanceled())
 				{
 					break;
@@ -1038,8 +1033,8 @@ bool ISListBaseForm::DeleteCascade()
 		return false;
 	}
 
-	QVectorInt VectorInt = GetSelectedIDs();
-	if (VectorInt.count() == 1) //Если удаляется одна запись
+	ISVectorInt VectorInt = GetSelectedIDs();
+	if (VectorInt.size() == 1) //Если удаляется одна запись
 	{
 		if (CheckIsSystemObject())
 		{
@@ -1062,15 +1057,15 @@ bool ISListBaseForm::DeleteCascade()
 	}
 	else //Удаляется несколько записей
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete.Cascade").arg(VectorInt.count()), LANG("Message.Object.Delete.Cascade.Help")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete.Cascade").arg(VectorInt.size()), LANG("Message.Object.Delete.Cascade.Help")))
 		{
-			ISProgressForm ProgressForm(0, VectorInt.count(), this);
+			ISProgressForm ProgressForm(0, VectorInt.size(), this);
 			ProgressForm.show();
-			ProgressForm.SetText(LANG("DeletingCascadeObjects").arg(0).arg(VectorInt.count()) + "...");
+			ProgressForm.SetText(LANG("DeletingCascadeObjects").arg(0).arg(VectorInt.size()) + "...");
 
-			for (int i = 0; i < VectorInt.count(); ++i)
+			for (int i = 0; i < VectorInt.size(); ++i)
 			{
-				ProgressForm.SetText(LANG("DeletingCascadeObjects").arg(i + 1).arg(VectorInt.count()) + "...");
+				ProgressForm.SetText(LANG("DeletingCascadeObjects").arg(i + 1).arg(VectorInt.size()) + "...");
 				ProgressForm.AddOneValue();
 
 				int ObjectID = VectorInt.at(i);

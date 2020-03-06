@@ -14,8 +14,8 @@ public:
 	bool Invoke() override;
 
 protected:
-	void SuccessfulAuth(const QStringMap &StringMap);
-	void UserEvent(const QStringMap &StringMap);
+	void SuccessfulAuth(const ISStringMap &StringMap);
+	void UserEvent(const ISStringMap &StringMap);
 
 private:
 	ISAsteriskSocket *AsteriskSocket;

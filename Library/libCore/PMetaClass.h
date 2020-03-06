@@ -23,7 +23,7 @@ struct PMetaClassIndex : public PMetaClass
 	QString Alias;
 	QString TableName;
 	QString FieldName;
-	QVectorString Fields;
+	ISVectorString Fields;
 };
 //-----------------------------------------------------------------------------
 struct PMetaClassForeign : public PMetaClass
@@ -177,7 +177,7 @@ struct PMetaClassTable : public PMetaClass
 	QVector<PMetaClassField*> AllFields; //Все поля
 
 	QVector<PMetaClassField*> SystemFieldsVisible; //Отображаемые системные поля
-	QVectorString Joins;
+	ISVectorString Joins;
 };
 //-----------------------------------------------------------------------------
 struct PMetaClassFunction : public PMetaClass
@@ -196,7 +196,7 @@ public:
 	QString Where;
 	QString Order;
 	QString OrderType;
-	QVectorString Joins;
+	ISVectorString Joins;
 };
 //-----------------------------------------------------------------------------
 struct PMetaClassResource
@@ -205,13 +205,13 @@ struct PMetaClassResource
 	{
 		if (FieldName.toLower() != "uid")
 		{
-			Parameters.insert(FieldName, Value);
+			Parameters.emplace(FieldName, Value);
 		}
 	}
 
 	QString TableName;
 	ISUuid UID;
-	QStringMap Parameters;
+	ISStringMap Parameters;
 };
 //-----------------------------------------------------------------------------
 #endif

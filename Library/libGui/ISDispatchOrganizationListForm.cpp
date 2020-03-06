@@ -28,7 +28,7 @@ void ISDispatchOrganizationListForm::Picking()
 	
 }
 //-----------------------------------------------------------------------------
-void ISDispatchOrganizationListForm::Matched(const QVectorInt &Vector)
+void ISDispatchOrganizationListForm::Matched(const ISVectorInt &Vector)
 {
 	for (int OrganizationID : Vector)
 	{
@@ -48,7 +48,7 @@ void ISDispatchOrganizationListForm::Matched(const QVectorInt &Vector)
 		}
 	}
 
-	if (Vector.count())
+	if (!Vector.empty())
 	{
 		Update();
 	}

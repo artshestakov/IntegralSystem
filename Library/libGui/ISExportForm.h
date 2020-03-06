@@ -19,7 +19,7 @@ public:
 
 	ISNamespace::ExportType GetSelectedType();
 	QString GetSelectTypeName() const;
-	QList<QString> GetSelectedFields() const;
+	ISVectorString GetSelectedFields() const;
 	bool GetHeader() const;
 
 protected:
@@ -36,7 +36,7 @@ protected:
 private:
 	ISNamespace::ExportType SelectedType;
 	PMetaClassTable *MetaTable;
-	QList<QString> SelectedFields;
+	ISVectorString SelectedFields;
 	ISComboEdit *ComboBoxType;
 	QTabWidget *TabWidget;
 	ISButtonDialog *ButtonPanel;

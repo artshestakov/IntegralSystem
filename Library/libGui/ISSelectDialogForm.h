@@ -14,7 +14,7 @@ public:
 
 	bool Exec() override;
 	int GetSelectedObject() const;
-	QVectorInt GetSelectedObjects() const;
+	ISVectorInt GetSelectedObjects() const;
 
 protected:
 	void Selected();

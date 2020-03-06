@@ -36,10 +36,10 @@ public:
 	QVariant GetCurrentRecordValue(const QString &FieldName); //Получить значение из столбца по текущей строке
 	QVariant GetCurrentRecordValueDB(const QString &FieldName); //Получить значение из столбца по текущей строке (значение будет взято из базы)
 	QVariant GetRecordValue(const QString &FieldName, int RowIndex); //Получить значение из столбца по индексу строки
-	QVectorInt GetSelectedIDs(); //Получить список идентификаторов выделенных строк
+	ISVectorInt GetSelectedIDs(); //Получить список идентификаторов выделенных строк
 	int GetCountSelected(); //Получить количество выделенных записей
-	QVectorInt GetIDs() const; //Получить список идентификатор отображаемых строк в данный момент
-	QVectorInt GetSelectedRowIndexes(); //Получить список индексов выделенных строк
+	ISVectorInt GetIDs() const; //Получить список идентификатор отображаемых строк в данный момент
+	ISVectorInt GetSelectedRowIndexes(); //Получить список индексов выделенных строк
 	ISQueryModel* GetQueryModel(); //Получить указатель на модель запроса
 	void SetSelectObjectAfterUpdate(int object_id); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	PMetaClassTable* GetMetaTable(); //Получить указатель на мета-таблицу

@@ -78,8 +78,8 @@ bool ISStorageFileLoader::Load()
 
 			emit LoadingFile();
 		}
-	}
-	catch (ISQueryException &QueryException)
+	} //???
+	catch (/*ISQueryException &QueryException*/std::exception &e)
 	{
 		ISDatabase::GetInstance().GetDefaultDB().rollback(); //Откат транзакции
 		return false;

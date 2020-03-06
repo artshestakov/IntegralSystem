@@ -10,15 +10,15 @@ class LIBCARAT_EXPORT ISAsteriskSocket : public QTcpSocket
 signals:
 	void Disconnected();
 
-	void SuccessfulAuth(const QStringMap &StringMap);
-	void UserEvent(const QStringMap &StringMap);
-	void BeforeDialBegin(const QStringMap &StringMap);
-	void DialBegin(const QStringMap &StringMap);
-	void AfterDialBegin(const QStringMap &StringMap);
-	void DialEnd(const QStringMap &StringMap);
-	void BlindTransfer(const QStringMap &StringMap);
-	void Hangup(const QStringMap &StringMap);
-	void ExtensionStatus(const QStringMap &StringMap);
+	void SuccessfulAuth(const ISStringMap &StringMap);
+	void UserEvent(const ISStringMap &StringMap);
+	void BeforeDialBegin(const ISStringMap &StringMap);
+	void DialBegin(const ISStringMap &StringMap);
+	void AfterDialBegin(const ISStringMap &StringMap);
+	void DialEnd(const ISStringMap &StringMap);
+	void BlindTransfer(const ISStringMap &StringMap);
+	void Hangup(const ISStringMap &StringMap);
+	void ExtensionStatus(const ISStringMap &StringMap);
 
 public:
 	ISAsteriskSocket(QObject *parent = 0);
@@ -26,7 +26,7 @@ public:
 
 	void Connect(); //Подключиться к серверу телефонии
 	void AddFilter(const QString &EventName); //Добавить фильтрацию события
-	void Redirect(const QStringMap &StringMap, const QString &Pattern); //Перенаправление вызова
+	void Redirect(const ISStringMap &StringMap, const QString &Pattern); //Перенаправление вызова
 
 protected:
 	void ConnectedHost(); //Событие подключения к серверу телефонии
@@ -35,7 +35,7 @@ protected:
 	void ErrorHost(QAbstractSocket::SocketError ErrorHost);
 	
 	void ReadyRead(); //Входящее сообщение от AMI
-	QVector<QStringMap> ParseReadyRead(const QString &String); //Парсинг входящих сообщений от AMI
+	QVector<ISStringMap> ParseReadyRead(const QString &String); //Парсинг входящих сообщений от AMI
 
 	void Timeout();
 

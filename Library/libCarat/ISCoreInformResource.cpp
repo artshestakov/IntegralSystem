@@ -43,16 +43,16 @@ bool ISCoreInformResource::Invoke()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISCoreInformResource::SuccessfulAuth(const QStringMap &StringMap)
+void ISCoreInformResource::SuccessfulAuth(const ISStringMap &StringMap)
 {
 	Q_UNUSED(StringMap);
 	AsteriskSocket->AddFilter(AMI_USER_EVENT);
 	Started();
 }
 //-----------------------------------------------------------------------------
-void ISCoreInformResource::UserEvent(const QStringMap &StringMap)
+void ISCoreInformResource::UserEvent(const ISStringMap &StringMap)
 {
-	QString Number = ISPhoneNumberParser::PasteEvent(StringMap.value("CallerIDNum"));
+	QString Number = ISPhoneNumberParser::PasteEvent(StringMap.at("CallerIDNum"));
 	ISLOGGER_UNKNOWN("Search organization with number: " + Number);
 
 	ISQuery qSelect(QS_ORGANIZATION);

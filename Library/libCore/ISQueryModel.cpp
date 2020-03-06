@@ -218,7 +218,7 @@ void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &Fi
 	{
 		if (MetaField->Foreign)
 		{
-			OrderField = ForeignFields.value(FieldName);
+			OrderField = ForeignFields[FieldName];
 		}
 		else
 		{
@@ -285,7 +285,7 @@ void ISQueryModel::CreateQuerySelectFields()
 			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->Name.toLower() + SYMBOL_SPACE + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + " ON " + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower() + " = " + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + SYMBOL_POINT + MetaTableForeign->Alias + '_' + Field->Foreign->ForeignField.toLower() + " \n";
 			
 			QString Temp = ISQueryModelHelper::GetForeignViewNameField(MetaTableForeign->Alias, Field->Foreign, i).toLower();
-			ForeignFields.insert(Field->Name, Temp);
+			ForeignFields.emplace(Field->Name, Temp);
 
 			QuerySelectFields += Temp + " AS \"" + Field->Name + "\", \n";
 		}

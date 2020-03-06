@@ -31,7 +31,7 @@ private:
 	QEventLoop *EventLoop;
 	QFutureWatcher<void> *FutureWatcher;
 	QWidgetList WidgetList;
-	QMap<QString, QVectorInt> Map;
+	QMap<QString, ISVectorInt> Map;
 	bool Stopped;
 
 	ISLineEdit *LineEdit;

@@ -22,7 +22,7 @@ private:
 
 private:
 	std::map<QString, QString> Dictionary;
-	QVectorString LoadedFiles;
+	ISVectorString LoadedFiles;
 };
 //-----------------------------------------------------------------------------
 #define LANG(PARAMETER) ISLocalization::Instance().GetString(PARAMETER)

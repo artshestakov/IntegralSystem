@@ -26,12 +26,12 @@ ISOrganizationWorkListForm::~ISOrganizationWorkListForm()
 //-----------------------------------------------------------------------------
 void ISOrganizationWorkListForm::TakeToWork()
 {
-	QVectorInt Objects = GetSelectedIDs();
-	if (Objects.count())
+	ISVectorInt Objects = GetSelectedIDs();
+	if (!Objects.empty())
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.OrganizationTakeToWork").arg(Objects.count())))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.OrganizationTakeToWork").arg(Objects.size())))
 		{
-			for (int i = 0; i < Objects.count(); ++i)
+			for (int i = 0; i < Objects.size(); ++i)
 			{
 				int ObjectID = Objects.at(i);
 				QString OrganizationName = GetRecordValue("Name", GetRowIndex(ObjectID)).toString();
@@ -44,7 +44,7 @@ void ISOrganizationWorkListForm::TakeToWork()
 				}
 			}
 
-			ISMessageBox::ShowInformation(this, LANG("Message.Information.OrganizationTakeToWorkDone").arg(Objects.count()));
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.OrganizationTakeToWorkDone").arg(Objects.size()));
 			Update();
 		}
 	}

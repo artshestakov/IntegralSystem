@@ -37,7 +37,7 @@ ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceD
 	connect(ComboEdit, &ISComboEdit::ValueChange, this, &ISFastCreateRecordsForm::TableChanged);
 	Layout->addWidget(ComboEdit);
 
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().size(); ++i)
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		if (!MetaTable->IsSystem)

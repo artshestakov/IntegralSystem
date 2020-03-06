@@ -21,6 +21,6 @@ private:
 	QString TableHtmlName;
 	QString SqlQueryText;
 	ISQuery qSelect;
-	QStringMap ReplaceFields;
+	ISStringMap ReplaceFields;
 };
 //-----------------------------------------------------------------------------

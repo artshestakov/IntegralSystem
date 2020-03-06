@@ -105,8 +105,8 @@ void ISFullTextSearchForm::Search()
 {
 	BeforeSearch();
 	
-	QList<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
-	ProgressBar->setMaximum(Tables.count());
+	std::vector<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
+	ProgressBar->setMaximum(Tables.size());
 
 	for (PMetaClassTable *MetaTable : Tables) //Обход таблиц
 	{
@@ -146,7 +146,7 @@ void ISFullTextSearchForm::Search()
 	for (const auto &MapItem : Map.toStdMap()) //Обход таблиц
 	{
 		QString TableName = MapItem.first;
-		QVectorInt VectorInt = MapItem.second;
+		ISVectorInt VectorInt = MapItem.second;
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 
 		for (int ObjectID : VectorInt) //Обход объектов
@@ -194,13 +194,11 @@ void ISFullTextSearchForm::Execute(const QString &QueryText, const QVariant &Que
 
 					if (Map.contains(TableName))
 					{
-						Map[TableName].append(ObjectID);
+						Map[TableName].emplace_back(ObjectID);
 					}
 					else
 					{
-						QVectorInt VectorInt;
-						VectorInt.append(ObjectID);
-						Map.insert(TableName, VectorInt);
+						Map.insert(TableName, ISVectorInt{ ObjectID });
 					}
 				}
 			}

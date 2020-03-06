@@ -5,6 +5,7 @@
 #include "ISQuery.h"
 #include "ISConstants.h"
 #include "ISConsole.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_FIAS_KEYS = PREPARE_QUERY("SELECT fkey_tablename, fkey_fieldname "
 											"FROM _FIAS_Key "
@@ -162,7 +163,7 @@ void CGConfiguratorFIAS::InitializeKeys()
 	{
 		while (qSelect.Next())
 		{
-			MapKeys.insert(qSelect.ReadColumn("fkey_tablename").toString(), qSelect.ReadColumn("fkey_fieldname").toString());
+			MapKeys.emplace(qSelect.ReadColumn("fkey_tablename").toString(), qSelect.ReadColumn("fkey_fieldname").toString());
 		}
 	}
 }
@@ -199,7 +200,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 		}
 
 		QString StringXML = File.readLine();
-		QStringMap StringMap = ParseLine(StringXML);
+		ISStringMap StringMap = ParseLine(StringXML);
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 		if (Select(MetaTable, StringMap))
 		{
@@ -240,9 +241,9 @@ QString CGConfiguratorFIAS::GetTableName(const QString &FilePath) const
 	return TableName;
 }
 //-----------------------------------------------------------------------------
-QStringMap CGConfiguratorFIAS::ParseLine(const QString &Content) const
+ISStringMap CGConfiguratorFIAS::ParseLine(const QString &Content) const
 {
-	QStringMap StringMap;
+	ISStringMap StringMap;
 	QDomDocument DomDocument;
 	if (DomDocument.setContent(Content))
 	{
@@ -251,7 +252,7 @@ QStringMap CGConfiguratorFIAS::ParseLine(const QString &Content) const
 		for (int i = 0; i < DomNamedNodeMap.count(); ++i)
 		{
 			QDomNode NodeItem = DomNamedNodeMap.item(i);
-			StringMap.insert(NodeItem.nodeName(), NodeItem.nodeValue());
+			StringMap.emplace(NodeItem.nodeName(), NodeItem.nodeValue());
 		}
 	}
 	return StringMap;
@@ -274,14 +275,12 @@ quint64 CGConfiguratorFIAS::GetCountLine(const QString &FilePath) const
 	return CountLine;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorFIAS::Select(PMetaClassTable *MetaTable, const QStringMap &StringMap) const
+bool CGConfiguratorFIAS::Select(PMetaClassTable *MetaTable, const ISStringMap &StringMap) const
 {
-	QString KeyField = MapKeys.value(MetaTable->Name);
-	QString SqlText = "SELECT COUNT(*) FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + '_' + KeyField + " = :Value";
-
-	ISQuery qSelectFIAS(SqlText);
+	QString KeyField = MapKeys.at(MetaTable->Name);
+	ISQuery qSelectFIAS("SELECT COUNT(*) FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + '_' + KeyField + " = :Value");
 	qSelectFIAS.SetShowLongQuery(false);
-	qSelectFIAS.BindValue(":Value", StringMap.value(KeyField));
+	qSelectFIAS.BindValue(":Value", StringMap.at(KeyField));
 	if (qSelectFIAS.ExecuteFirst())
 	{
 		int Count = qSelectFIAS.ReadColumn("count").toInt();
@@ -294,42 +293,42 @@ bool CGConfiguratorFIAS::Select(PMetaClassTable *MetaTable, const QStringMap &St
 	return false;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const QStringMap &StringMap)
+void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const ISStringMap &StringMap)
 {
 	QString UpdateText = "UPDATE " + MetaTable->Name + " SET \n";
 	QString WhereText = "WHERE ";
-	QStringMap Parameters;
+	ISStringMap Parameters;
 
-	for (const auto &MapItem : StringMap.toStdMap())
+	for (const auto &MapItem : StringMap)
 	{
-		if (MapKeys.value(MetaTable->Name) == MapItem.first)
+		if (MapKeys[MetaTable->Name] == MapItem.first)
 		{
 			WhereText += MetaTable->Alias + '_' + MapItem.first + " = :Value";
-			Parameters.insert(":Value", MapItem.second);
+			Parameters.emplace(":Value", MapItem.second);
 		}
 		else
 		{
 			UpdateText += MetaTable->Alias + '_' + MapItem.first + " = :" + MapItem.first + ", \n";
-			Parameters.insert(':' + MapItem.first, MapItem.second);
+			Parameters.emplace(':' + MapItem.first, MapItem.second);
 		}
 	}
 
 	ISSystem::RemoveLastSymbolFromString(UpdateText, 3);
 	ISQuery qUpdateFIAS(UpdateText + " \n" + WhereText);
 	qUpdateFIAS.SetShowLongQuery(false);
-	for (const auto &Parameter : Parameters.toStdMap())
+	for (const auto &Parameter : Parameters)
 	{
 		qUpdateFIAS.BindValue(Parameter.first, Parameter.second);
 	}
 	qUpdateFIAS.Execute();
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorFIAS::Insert(PMetaClassTable *MetaTable, const QStringMap &StringMap)
+void CGConfiguratorFIAS::Insert(PMetaClassTable *MetaTable, const ISStringMap &StringMap)
 {
 	QString SqlInsert = "INSERT INTO " + MetaTable->Name + '(';
 	QString SqlValues = "VALUES(";
 
-	for (const QString &FieldName : StringMap.keys())
+	for (const QString &FieldName : ConvertMapToKeys<QString>(StringMap))
 	{
 		SqlInsert += MetaTable->Alias + '_' + FieldName + ", ";
 		SqlValues += ':' + FieldName + ", ";
@@ -342,7 +341,7 @@ void CGConfiguratorFIAS::Insert(PMetaClassTable *MetaTable, const QStringMap &St
 
 	ISQuery qInsertFIAS(SqlInsert + " \n" + SqlValues);
 	qInsertFIAS.SetShowLongQuery(false);
-	for (const auto &MapItem : StringMap.toStdMap())
+	for (const auto &MapItem : StringMap)
 	{
 		qInsertFIAS.BindValue(':' + MapItem.first, MapItem.second);
 	}

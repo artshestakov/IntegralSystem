@@ -23,9 +23,9 @@ public:
 	void SetLocalName(const QString &local_name);
 	void SetTableName(const QString &table_name);
 	void SetModel(ISSqlModelCore *model);
-	void SetFields(const QList<QString> &fields);
+	void SetFields(const ISVectorString &fields);
 	void SetHeader(bool header);
-	void SetSelectedRows(const QVectorInt &selected_rows);
+	void SetSelectedRows(const ISVectorInt &selected_rows);
 
 	QString GetErrorString() const;
 
@@ -37,9 +37,9 @@ protected:
 	QString LocalName;
 	QString TableName;
 	ISSqlModelCore *Model;
-	QList<QString> Fields;
+	ISVectorString Fields;
 	bool Header;
-	QVector<int> SelectedRows;
+	ISVectorInt SelectedRows;
 	bool Canceled;
 };
 //-----------------------------------------------------------------------------

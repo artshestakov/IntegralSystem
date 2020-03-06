@@ -25,9 +25,9 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	SqlText = SqlText.arg(Index->TableName);
 
 	QString Fields;
-	if (Index->Fields.count())
+	if (Index->Fields.size())
 	{
-		for (int i = 0; i < Index->Fields.count(); ++i)
+		for (int i = 0; i < Index->Fields.size(); ++i)
 		{
 			Fields += Index->Alias + '_' + Index->Fields.at(i) + ", ";
 		}
@@ -83,9 +83,9 @@ bool CGIndex::CheckExistIndex(PMetaClassIndex *Index)
 //-----------------------------------------------------------------------------
 bool CGIndex::CheckIndexForeign(PMetaClassIndex *Index)
 {
-	QVector<PMetaClassForeign*> Foreigns = ISMetaData::GetInstanse().GetForeigns();
+	std::vector<PMetaClassForeign*> Foreigns = ISMetaData::GetInstanse().GetForeigns();
 
-	for (int i = 0; i < Foreigns.count(); ++i)
+	for (int i = 0; i < Foreigns.size(); ++i)
 	{
 		PMetaClassForeign *MetaForeign = Foreigns.at(i);
 		if (Index->TableName.toLower() == MetaForeign->ForeignClass.toLower())
@@ -118,10 +118,10 @@ bool CGIndex::ReindexIndex(PMetaClassIndex *Index, QString &ErrorString)
 QString CGIndex::GetIndexName(PMetaClassIndex *Index)
 {
 	QString IndexName;
-	if (Index->Fields.count())
+	if (Index->Fields.size())
 	{
 		IndexName += Index->TableName + '_';
-		for (int i = 0; i < Index->Fields.count(); ++i)
+		for (int i = 0; i < Index->Fields.size(); ++i)
 		{
 			IndexName += Index->Fields.at(i) + '_';
 		}

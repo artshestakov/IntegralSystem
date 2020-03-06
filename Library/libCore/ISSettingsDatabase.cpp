@@ -6,6 +6,7 @@
 #include "ISMetaData.h"
 #include "ISCountingTime.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SETTING = PREPARE_QUERY("SELECT column_name "
 												 "FROM information_schema.columns "
@@ -37,14 +38,14 @@ ISSettingsDatabase& ISSettingsDatabase::GetInstance()
 void ISSettingsDatabase::Initialize()
 {
 	ISCountingTime CountingTime;
-	QVectorString VectorString;
+	ISVectorString VectorString;
 	ISQuery qSelectColumn(QS_COLUMN_SETTING);
 	qSelectColumn.SetShowLongQuery(false);
 	if (qSelectColumn.Execute())
 	{
 		while (qSelectColumn.Next())
 		{
-			VectorString.append(qSelectColumn.ReadColumn("column_name").toString());
+			VectorString.emplace_back(qSelectColumn.ReadColumn("column_name").toString());
 		}
 	}
 
@@ -55,15 +56,15 @@ void ISSettingsDatabase::Initialize()
 		PMetaClassField *MetaField = MetaTable->AllFields[i];
 		QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();
 
-		if (VectorString.contains(FieldName))
+		if (VectorContains(VectorString, FieldName))
 		{
 			SqlText += FieldName + " AS \"" + MetaField->Name + "\", \n";
-			VectorString[VectorString.indexOf(FieldName)] = MetaField->Name;
+			VectorString[VectorIndexOf(VectorString, FieldName)] = MetaField->Name;
 		}
 		else
 		{
 			ISLOGGER_WARNING(QString("Not found column '%1' in table _SettingsDatabase").arg(FieldName));
-			VectorString.removeOne(FieldName);
+			VectorRemoveAll(VectorString, FieldName);
 		}
 	}
 
@@ -86,8 +87,8 @@ void ISSettingsDatabase::Initialize()
 					SettingValue.clear();
 				}
 				Settings.insert(String, SettingValue);
-			}
-			catch (ISQueryException &QueryException) { }
+			} //???
+			catch (/*ISQueryException &QueryException*/std::exception &e) { }
 		}
 	}
 

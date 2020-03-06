@@ -104,10 +104,10 @@ void CGConfiguratorShow::obsoleteresources()
 {
 	ISLOGGER_UNKNOWN("Searching not needed resources...");
 
-	QMap<QString, QVectorString*> Map;
-	QMap <QString, QVectorString*> MapOutput;
+	QMap<QString, ISVectorString*> Map;
+	QMap <QString, ISVectorString*> MapOutput;
 
-	for (int i = 0; i < ISMetaData::GetInstanse().GetResources().count(); ++i)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetResources().size(); ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
 
@@ -116,23 +116,23 @@ void CGConfiguratorShow::obsoleteresources()
 
 		if (!Map.contains(TableName))
 		{
-			Map.insert(TableName, new QVectorString());
+			Map.insert(TableName, new ISVectorString());
 		}
 
-		Map.value(TableName)->append(ResourceUID);
+		Map.value(TableName)->emplace_back(ResourceUID);
 	}
 
 	for (const auto &MapItem : Map.toStdMap())
 	{
 		QString TableName = MapItem.first;
-		QVectorString *Vector = MapItem.second;
+		ISVectorString *Vector = MapItem.second;
 
 		QString SqlText = "SELECT %1_uid FROM %2 WHERE %1_uid NOT IN(%3)";
 		SqlText = SqlText.arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->Alias);
 		SqlText = SqlText.arg(TableName);
 
 		QString NotIN;
-		for (int i = 0; i < Vector->count(); ++i)
+		for (int i = 0; i < Vector->size(); ++i)
 		{
 			NotIN += '\'' + Vector->at(i) + "', ";
 		}
@@ -150,10 +150,10 @@ void CGConfiguratorShow::obsoleteresources()
 
 				if (!MapOutput.contains(TableName))
 				{
-					MapOutput.insert(TableName, new QVectorString());
+					MapOutput.insert(TableName, new ISVectorString());
 				}
 
-				MapOutput.value(TableName)->append(UID);
+				MapOutput.value(TableName)->emplace_back(UID);
 			}
 		}
 	}
@@ -163,11 +163,11 @@ void CGConfiguratorShow::obsoleteresources()
 	for (const auto &OutputItem : MapOutput.toStdMap())
 	{
 		QString TableName = OutputItem.first;
-		QVectorString *Vector = OutputItem.second;
+		ISVectorString *Vector = OutputItem.second;
 
 		ISLOGGER_UNKNOWN(TableName + ':');
 
-		for (int i = 0; i < Vector->count(); ++i)
+		for (int i = 0; i < Vector->size(); ++i)
 		{
 			ISLOGGER_UNKNOWN(Vector->at(i));
 		}
@@ -181,7 +181,7 @@ void CGConfiguratorShow::obsoletesequence()
 	ISLOGGER_UNKNOWN("Searching not needed sequences...");
 
 	QString Where;
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().size(); ++i)
 	{
 		QString TableName = ISMetaData::GetInstanse().GetTables()[i]->Name.toLower();
 		QString SequnceName = TableName + "_sequence";
@@ -230,7 +230,7 @@ void CGConfiguratorShow::config()
 //-----------------------------------------------------------------------------
 PMetaClassTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 {
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().count(); ++i)
+	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().size(); ++i)
 	{
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		if (MetaTable->Name.toLower() == TableName)
