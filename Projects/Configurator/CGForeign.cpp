@@ -33,7 +33,7 @@ bool CGForeign::CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorStri
 	bool Created = qCreateForeign.Execute(SqlText);
 	if (!Created)
 	{
-		ErrorString = qCreateForeign.GetErrorText();
+		ErrorString = qCreateForeign.GetErrorString();
 	}
 
 	return Created;
@@ -56,7 +56,7 @@ bool CGForeign::UpdateForeign(PMetaClassForeign *MetaForeign, QString &ErrorStri
 	}
 	else
 	{
-		ErrorString = qDeleteForeign.GetErrorText();
+		ErrorString = qDeleteForeign.GetErrorString();
 	}
 	
 	return false;

@@ -475,7 +475,7 @@ void ISObjectFormBase::FillDataFields()
 		ISLOGGER_DEBUG(QString("Start select query from object %1 in table \"%2\"").arg(ObjectID).arg(MetaTable->Name));
 		ISCountingTime Time;
 		ISQuery qSelect(QueryText);
-		IS_ASSERT(qSelect.ExecuteFirst(), QString("Not executed query:\n%1\n%2").arg(QueryText).arg(qSelect.GetErrorText()));
+		IS_ASSERT(qSelect.ExecuteFirst(), QString("Not executed query:\n%1\n%2").arg(QueryText).arg(qSelect.GetErrorString()));
 		IS_ASSERT(qSelect.GetCountResultRows() == 1, "Error count result rows");
 		ISLOGGER_DEBUG(QString("Finished select query from object %1 in table \"%2\". %3 msec.").arg(ObjectID).arg(MetaTable->Name).arg(Time.GetElapsed()));
 		QSqlRecord SqlRecord = qSelect.GetRecord();

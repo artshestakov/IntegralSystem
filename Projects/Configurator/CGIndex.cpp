@@ -45,7 +45,7 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	bool Created = qCreateIndex.Execute(SqlText);
 	if (!Created)
 	{
-		ErrorString = qCreateIndex.GetErrorText();
+		ErrorString = qCreateIndex.GetErrorString();
 	}
 
 	return Created;
@@ -109,7 +109,7 @@ bool CGIndex::ReindexIndex(PMetaClassIndex *Index, QString &ErrorString)
 
 	if (!Executed)
 	{
-		ErrorString = qReindex.GetErrorText();
+		ErrorString = qReindex.GetErrorString();
 	}
 
 	return Executed;

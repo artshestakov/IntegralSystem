@@ -103,7 +103,7 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 	}
 	else
 	{
-		ErrorString = qCreateTable.GetErrorText();
+		ErrorString = qCreateTable.GetErrorString();
 	}
 }
 //-----------------------------------------------------------------------------

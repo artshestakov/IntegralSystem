@@ -68,7 +68,7 @@ void CGConfiguratorService::vacuum()
 	}
 	else
 	{
-		ISLOGGER_WARNING("Vacuum error: " + qVacuum.GetErrorText());
+		ISLOGGER_WARNING("Vacuum error: " + qVacuum.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void CGConfiguratorService::vacuumanalyze()
 	}
 	else
 	{
-		ISLOGGER_WARNING("Vacuum analyze error: " + qVacuumAnalyze.GetErrorText());
+		ISLOGGER_WARNING("Vacuum analyze error: " + qVacuumAnalyze.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ void CGConfiguratorService::vacuumfull()
 	}
 	else
 	{
-		ISLOGGER_WARNING("Vacuum full error: " + qVacuumFull.GetErrorText());
+		ISLOGGER_WARNING("Vacuum full error: " + qVacuumFull.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

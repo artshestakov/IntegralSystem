@@ -69,7 +69,7 @@ void ISCaratForm::CoreChecked(const QVariant &value	)
 
 	if (!Result)
 	{
-		ISMessageBox::ShowCritical(this, qUpdate.GetErrorText());
+		ISMessageBox::ShowCritical(this, qUpdate.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

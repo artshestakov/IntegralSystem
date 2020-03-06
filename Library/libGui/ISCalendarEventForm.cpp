@@ -31,7 +31,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 
 	ISQuery qSelectEvent(QS_CALENDAR);
 	qSelectEvent.BindValue(":CalendarID", calendar_id);
-	IS_ASSERT(qSelectEvent.ExecuteFirst(), qSelectEvent.GetErrorText());
+	IS_ASSERT(qSelectEvent.ExecuteFirst(), qSelectEvent.GetErrorString());
 
 	QDate EventDate = qSelectEvent.ReadColumn("cldr_date").toDate();
 	QTime EventTimeAlert = qSelectEvent.ReadColumn("cldr_timealert").toTime();

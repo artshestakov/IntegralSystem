@@ -233,7 +233,7 @@ void ISAsteriskCallsListForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 
 	ISQuery qSelect(QS_CHILD_COUNT);
 	qSelect.BindValue(":UniqueID", UniqueID);
-	IS_ASSERT(qSelect.ExecuteFirst(), qSelect.GetErrorText());
+	IS_ASSERT(qSelect.ExecuteFirst(), qSelect.GetErrorString());
 	int ChildCount = qSelect.ReadColumn("count").toInt();
 
 	if (ChildCount > 1)

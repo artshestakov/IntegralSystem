@@ -50,7 +50,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 	bool Inserting = qInsertResource.Execute();
 	if (!Inserting)
 	{
-		ErrorString = qInsertResource.GetErrorText();
+		ErrorString = qInsertResource.GetErrorString();
 	}
 
 	return Inserting;
@@ -136,7 +136,7 @@ bool CGResource::ResetResourceField(const QString &TableName, const QString &Tab
 	bool Reset = qReset.Execute();
 	if (!Reset)
 	{
-		ErrorString = qReset.GetErrorText();
+		ErrorString = qReset.GetErrorString();
 	}
 
 	return Reset;
@@ -153,7 +153,7 @@ bool CGResource::UpdateResourceField(const QString &TableName, const QString &Ta
 	bool Updated = qUpdate.Execute();
 	if (!Updated)
 	{
-		ErrorString = qUpdate.GetErrorText();
+		ErrorString = qUpdate.GetErrorString();
 	}
 
 	return Updated;

@@ -231,7 +231,7 @@ bool CreateDatabase(const QString &DBName)
 					Result = qCreateFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + ConfigurationName + "'; END; $$ LANGUAGE plpgsql IMMUTABLE");
 					if (!Result)
 					{
-						ErrorString = qCreateFunction.GetErrorText();
+						ErrorString = qCreateFunction.GetErrorString();
 					}
 				}
 			}

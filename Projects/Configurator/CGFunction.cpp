@@ -7,7 +7,7 @@ void CGFunction::CreateOrReplaceFunction(PMetaClassFunction *MetaFunction, QStri
 	qCreateFunction.SetShowLongQuery(false);
 	if (!qCreateFunction.Execute(MetaFunction->Text))
 	{
-		ErrorString = qCreateFunction.GetErrorText();
+		ErrorString = qCreateFunction.GetErrorString();
 	}
 }
 //-----------------------------------------------------------------------------
