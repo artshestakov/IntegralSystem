@@ -708,7 +708,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 			MetaField->Size = DomNamedNodeMap.namedItem("LocalName").nodeValue().toInt();
 			MetaField->Upper = QVariant(DomNamedNodeMap.namedItem("LocalListName").nodeValue()).toBool();
 			MetaField->Lower = QVariant(DomNamedNodeMap.namedItem("TitleName").nodeValue()).toBool();
-			MetaField->DefaultValue = DomNamedNodeMap.namedItem("DefaultValue").nodeValue();
+			MetaField->DefaultValue = DomNamedNodeMap.namedItem("DefaultValue").nodeValue().isEmpty() ? QVariant() : DomNamedNodeMap.namedItem("DefaultValue").nodeValue();
 			MetaField->DefaultValueWidget = DomNamedNodeMap.namedItem("DefaultValueWidget").nodeValue().isEmpty() ? QVariant() : DomNamedNodeMap.namedItem("DefaultValueWidget").nodeValue();
 			MetaField->LabelName = DomNamedNodeMap.namedItem("LabelName").nodeValue();
 			MetaField->LocalListName = DomNamedNodeMap.namedItem("LocalListName").nodeValue();

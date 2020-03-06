@@ -70,15 +70,8 @@ struct PMetaClassField : public PMetaClass
 
 	}
 
-	bool IsFieldID() const
-	{
-		return Name.toLower() == "id";
-	}
-
-	bool IsFieldUID() const
-	{
-		return Name.toLower() == "uid";
-	}
+	bool IsFieldID() const { return Name.toLower() == "id"; }
+	bool IsFieldUID() const { return Name.toLower() == "uid"; }
 
 	ISUuid UID;
 	ISNamespace::FieldType Type; //Тип
@@ -87,7 +80,7 @@ struct PMetaClassField : public PMetaClass
 	bool Upper; //Только верхний регистр
 	bool Lower; //Только нижний регистр
 	QVariant DefaultValue; //Значение по умолчанию для базы
-	QVariant DefaultValueWidget; //Значение по умолчанию
+	QVariant DefaultValueWidget; //Значение по умолчанию для виджета
 	QString LabelName; //Имя поля на форме объекта
 	QString LocalListName; //Имя поля в списке
 	bool NotNull; //Поле не должно быть пустым
@@ -96,7 +89,7 @@ struct PMetaClassField : public PMetaClass
 	bool HideFromList; //Поле не должно учавствовать в запросе
 	bool NotSearch; //Участие поля в поиске
 	QString Hint; //Подсказка для поля
-	QString PlaceholderText;
+	QString PlaceholderText; //Placeholder текст для виджета
 	QString ControlWidget; //Наименование виджета-редактора значения
 	QString RegExp; //Регулярное выражение для поля
 	bool IsSystem; //Статус системного поля
