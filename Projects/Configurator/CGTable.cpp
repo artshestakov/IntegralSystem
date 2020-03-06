@@ -159,11 +159,6 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 
 			CGHelper::CommentField(MetaTable->Name.toLower(), MetaTable->Alias + '_' + MetaField->Name.toLower(), MetaField->LocalListName);
 
-			if (ColumnName == "id")
-			{
-				continue;
-			}
-
 			//ѕроверка соответстви€ типов
 			if (ColumnType != MetaType)
 			{
@@ -185,6 +180,11 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 				ISQuery qAlterType;
 				qAlterType.SetShowLongQuery(false);
 				qAlterType.Execute(QueryText);
+			}
+
+			if (ColumnName == "id")
+			{
+				continue;
 			}
 
 			//ѕроверка соответстви€ значени€ по умолчанию

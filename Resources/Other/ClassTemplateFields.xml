@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TemplateFields>
-  <Field UID="{6E43F4C2-EBEE-443E-84A1-B3A60A635583}" Name="ID" Type="Int" LabelName="Код" LocalListName="Код" NotNull="true" Sequence="true" IsSystem="true"/>
+  <Field UID="{6E43F4C2-EBEE-443E-84A1-B3A60A635583}" Name="ID" Type="BigInt" LabelName="Код" LocalListName="Код" NotNull="true" Sequence="true" IsSystem="true"/>
   <Field UID="{862F9461-19A3-428C-94E0-2E25A28E6194}" Name="UID" Type="UID" LabelName="Идентификатор" LocalListName="Идентификатор" DefaultValue="uuid_generate_v4()" HideFromList="true" NotNull="true" IsSystem="true"/>
   <Field UID="{60B1DCC0-AED3-4B16-A706-DDB4DDF55BE4}" Name="IsDeleted" Type="Bool" LabelName="Пометка удаления" LocalListName="Пометка удаления" DefaultValue="false" IsSystem="true"/>
   <Field UID="{3945F262-C682-420A-A845-32A827B10424}" Name="IsSystem" Type="Bool" LabelName="Системный" LocalListName="Системный" DefaultValue="false" IsSystem="true"/>

@@ -14,6 +14,7 @@ ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING)
 {
 	AssociationTypes.Insert("Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true);
+	AssociationTypes.Insert("BigInt", ISNamespace::FT_BigInt, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true);
 	AssociationTypes.Insert("String", ISNamespace::FT_String, "CHARACTER VARYING", "ISLineEdit", "ISComboSearchString", true);
 	AssociationTypes.Insert("Text", ISNamespace::FT_Text, "TEXT", "ISTextEdit", "ISComboSearchString", true);
 	AssociationTypes.Insert("UID", ISNamespace::FT_UID, "UUID", "ISUuidEdit", "ISComboSearchString", true);
