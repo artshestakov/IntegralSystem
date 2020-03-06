@@ -272,6 +272,9 @@
     <ClInclude Include="ISObjects.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="ISDictionaryWord.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISIncomingCallBaseForm.cpp">
@@ -1242,6 +1245,9 @@
     </ClCompile>
     <ClCompile Include="ISDateTimeEdit.cpp">
       <Filter>Fields\DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDictionaryWord.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
