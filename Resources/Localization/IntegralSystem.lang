@@ -632,8 +632,6 @@
   <Local Name="ExitForm.Lock.ToolTip" Russian="Блокировка программы закроет доступ в Вашим данным пока Вас нет на месте."/>
   <Local Name="ExitForm.ChangeUser" Russian="Сменить пользователя"/>
   <Local Name="ExitForm.ChangeUser.ToolTip" Russian="Смена текущего пользователя для повторной авторизации в программе."/>
-  <Local Name="ExitForm.Tray" Russian="Свернуть в трей"/>
-  <Local Name="ExitForm.Tray.ToolTip" Russian="Сворачивание программы в трей операционной системы."/>
   <Local Name="ExitForm.Exit" Russian="Выход из программы"/>
   <Local Name="ExitForm.Exit.ToolTip" Russian="Завершение всех процессов и закрытие программы."/>
   <Local Name="ExitForm.Close" Russian="Закрыть это окно"/>
@@ -706,9 +704,6 @@
   <Local Name="ClickFromOpenFile" Russian="Нажмите, чтобы открыть файл"/>
   <Local Name="ClickFromCheckLevelVolume" Russian="Нажмите, чтобы проверить уровень громкости"/>
   <Local Name="LoadDataPleceWait" Russian="Загрузка данных. Пожалуйста, подождите"/>
-  <Local Name="ClickedFromCurtailApplicationTray" Russian="Нажмите, чтобы свернуть программу в трей"/>
-  <Local Name="ClickedFromExpandApplicationTray" Russian="Нажмите, чтобы развернуть главное окно программы"/>
-  <Local Name="TrayMessage" Russian="Программа свернута в трей. Для того чтобы, развернуть окно программы, нажмите по иконке программы в трее."/>
   <Local Name="RecordMarkerIsDeleted" Russian="Запись помечена на удаление"/>
   <Local Name="NotSettingTelephonyForCurrentUser" Russian="Телефония для Вашей учётной записи не настроена, обратитесь к системному администратору."/>
   <Local Name="ClickFromViewList" Russian="Чтобы просмотреть справочник, нажмите на соответствующий пункт слева."/>

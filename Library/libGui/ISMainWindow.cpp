@@ -47,12 +47,11 @@
 #include "ISAddressBookListForm.h"
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
-ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
+ISMainWindow::ISMainWindow(QWidget *parent)
+	: ISInterfaceForm(parent),
+	CloseEvent(true)
 {
-	CloseEvent = true;
-
 	ISMemoryObjects::GetInstance().SetMainWindow(this);
-
 	connect(&ISCreatedObjectsEntity::GetInstance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	setWindowIcon(BUFFER_PIXMAPS("Logo"));
@@ -65,11 +64,6 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 	CreateInformationMessage();
 	CreateStackWidget();
 	CreateStatusBar();
-
-	SystemTrayIcon = new QSystemTrayIcon(this);
-	SystemTrayIcon->setIcon(BUFFER_ICONS("Logo"));
-	SystemTrayIcon->setToolTip(LANG("ClickedFromExpandApplicationTray"));
-	connect(SystemTrayIcon, &QSystemTrayIcon::activated, this, &ISMainWindow::SystemTrayActivated);
 
 	PhoneForm = new ISPhoneForm();
 
@@ -175,11 +169,6 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 					case ISNamespace::EFA_Lock:
 						e->ignore();
 						LockApplication();
-						break;
-
-					case ISNamespace::EFA_Tray:
-						e->ignore();
-						TrayClicked();
 						break;
 
 					case ISNamespace::EFA_ChangeUser:
@@ -343,7 +332,6 @@ void ISMainWindow::CreateStatusBar()
 			MenuBar->ButtonParagraphClicked(CONST_UID_PARAGRAPH_CALENDAR);
 		});
 		connect(StatusBar, &ISStatusBar::MakeCall, this, &ISMainWindow::MakeCall);
-		connect(StatusBar, &ISStatusBar::TrayClicked, this, &ISMainWindow::TrayClicked);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -665,27 +653,5 @@ void ISMainWindow::MakeCall()
 	{
 		ISMessageBox::ShowInformation(this, LANG("NotSettingTelephonyForCurrentUser"));
 	}
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::TrayClicked()
-{
-	hide();
-
-	SystemTrayIcon->show();
-	SystemTrayIcon->showMessage(LANG("Information"), LANG("TrayMessage"), QSystemTrayIcon::Information, 4000);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::SystemTrayActivated(QSystemTrayIcon::ActivationReason Reason)
-{
-	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_STARTMAINWINDOWANIMATED))
-	{
-		ShowAnimated();
-	}
-	else
-	{
-		show();
-	}
-
-	SystemTrayIcon->hide();
 }
 //-----------------------------------------------------------------------------

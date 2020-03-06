@@ -113,7 +113,6 @@ public:
 		EFA_Exit,
 		EFA_ChangeUser,
 		EFA_Lock,
-		EFA_Tray,
 		EFT_Close,
 	};
 

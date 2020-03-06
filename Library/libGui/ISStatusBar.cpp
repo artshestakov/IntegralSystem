@@ -26,12 +26,6 @@ ISStatusBar::ISStatusBar(QWidget *parent) : QStatusBar(parent)
 	ButtonCall->setIcon(BUFFER_ICONS("CallPhone"));
 	connect(ButtonCall, &ISServiceButton::clicked, this, &ISStatusBar::MakeCall);
 	addPermanentWidget(ButtonCall);
-
-	ISServiceButton *ButtonTray = new ISServiceButton(this);
-	ButtonTray->setToolTip(LANG("ClickedFromCurtailApplicationTray"));
-	ButtonTray->setIcon(BUFFER_ICONS("CurtailTray"));
-	connect(ButtonTray, &ISServiceButton::clicked, this, &ISStatusBar::TrayClicked);
-	addPermanentWidget(ButtonTray);
 }
 //-----------------------------------------------------------------------------
 ISStatusBar::~ISStatusBar()

@@ -32,13 +32,6 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	ButtonLock->setCursor(CURSOR_POINTING_HAND);
 	LayoutButtons->addWidget(ButtonLock);
 
-	QCommandLinkButton *ButtonTray = new QCommandLinkButton(this);
-	ButtonTray->setText(LANG("ExitForm.Tray"));
-	ButtonTray->setToolTip(LANG("ExitForm.Tray.ToolTip"));
-	ButtonTray->setIcon(BUFFER_ICONS("CurtailTray"));
-	ButtonTray->setCursor(CURSOR_POINTING_HAND);
-	LayoutButtons->addWidget(ButtonTray);
-
 	QCommandLinkButton *ButtonChangeUser = new QCommandLinkButton(this);
 	ButtonChangeUser->setText(LANG("ExitForm.ChangeUser"));
 	ButtonChangeUser->setToolTip(LANG("ExitForm.ChangeUser.ToolTip"));
@@ -61,7 +54,6 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 
 	ButtonGroup = new QButtonGroup(this);
 	ButtonGroup->addButton(ButtonLock, ISNamespace::EFA_Lock);
-	ButtonGroup->addButton(ButtonTray, ISNamespace::EFA_Tray);
 	ButtonGroup->addButton(ButtonChangeUser, ISNamespace::EFA_ChangeUser);
 	ButtonGroup->addButton(ButtonExit, ISNamespace::EFA_Exit);
 	ButtonGroup->addButton(ButtonClose, ISNamespace::EFT_Close);

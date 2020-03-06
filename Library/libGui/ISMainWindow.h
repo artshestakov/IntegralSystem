@@ -72,8 +72,6 @@ protected:
 	void ShowAboutQt(); //Открыть форму "О Qt"
 
 	void MakeCall();
-	void TrayClicked();
-	void SystemTrayActivated(QSystemTrayIcon::ActivationReason Reason);
 
 private:
 	ISMenuBar *MenuBar;
@@ -86,7 +84,6 @@ private:
 	ISChatForm *ChatForm; //Виджет чата
 	ISPhoneForm *PhoneForm;
 	ISStatusBar *StatusBar;
-	QSystemTrayIcon *SystemTrayIcon;
 	
 	QString CurrentParagraphUID;
 	bool CloseEvent;

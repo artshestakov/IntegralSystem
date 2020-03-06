@@ -156,7 +156,6 @@
 #include <QtWidgets/QTabBar>
 #include <QtWidgets/QProgressDialog>
 #include <QtWidgets/QFileIconProvider>
-#include <QtWidgets/QSystemTrayIcon>
 #include <QtWidgets/QToolTip>
 #include <QtWidgets/QColorDialog>
 #include <QtWidgets/QRadioButton>
