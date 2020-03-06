@@ -11,7 +11,7 @@ public:
 	ISExceptionBase(const QString &ExceptionString = QString());
 	virtual ~ISExceptionBase();
 
-	virtual const char *what() const noexcept;
+	QString What() const;
 
 private:
 	QString Description;

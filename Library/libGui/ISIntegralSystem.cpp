@@ -48,7 +48,7 @@ bool ISIntegralSystem::notify(QObject *Object, QEvent *e)
 	catch (const ISExceptionSqlSyntax &ExceptionSyntax)
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.QueryExceptionSyntax"), ExceptionSyntax.what());
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.QueryExceptionSyntax"), ExceptionSyntax.What());
 	}
 	catch (const ISExceptionConnectionDB &QueryExceptionConnection)
 	{

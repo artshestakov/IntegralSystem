@@ -51,7 +51,7 @@ private:
 	QString ErrorString;
 	QSqlQuery SqlQuery;
 	QString SqlText;
-	std::map<QString, int> ColumnIndices;
+	ISStringToIntMap ColumnIndices;
 	QSqlDatabase SqlDatabase;
 	bool Prepared;
 	bool ShowLongQuery;

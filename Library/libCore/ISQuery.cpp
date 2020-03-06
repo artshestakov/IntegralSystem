@@ -162,7 +162,7 @@ QVariant ISQuery::ReadColumn(const QString &name)
 		PrepareColumnIndices();
 	}
 
-	std::map<QString, int>::const_iterator Iterator = ColumnIndices.find(name.toLower());
+	ISStringToIntMap::const_iterator Iterator = ColumnIndices.find(name.toLower());
 	IS_ASSERT(Iterator != ColumnIndices.end(), QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
 	return ReadColumn(Iterator->second);
 }
@@ -261,20 +261,15 @@ void ISQuery::Raise()
 	if (SqlQuery.lastError().type() != QSqlError::NoError)
 	{
 		ISLOGGER_ERROR(GetErrorString());
+		if (SqlDatabase.isOpen())
+		{
+			throw ISExceptionSqlSyntax(GetErrorString());
+		}
+		else
+		{
+			throw ISExceptionConnectionDB();
+		}
 	}
-
-	if (!SqlDatabase.isOpen())
-	{
-		throw ISExceptionConnectionDB();
-	}
-
-	/*switch (SqlQuery.lastError().type())
-	{
-	case QSqlError::NoError: return; break;
-	case QSqlError::StatementError: throw ISQueryExceptionSyntax(SqlQuery.lastError().text()); break;
-	case QSqlError::ConnectionError: throw ISExceptionConnectionDB(SqlQuery.lastError().text()); break;
-	case QSqlError::TransactionError: throw ISQueryExceptionTransaction(SqlQuery.lastError().text()); break;
-	}*/
 }
 //-----------------------------------------------------------------------------
 void ISQuery::PrepareColumnIndices()

@@ -1,9 +1,10 @@
 #include "ISException.h"
 //-----------------------------------------------------------------------------
 ISExceptionBase::ISExceptionBase(const QString &ExceptionString)
-	: std::exception(ExceptionString.toStdString().c_str())
+	: std::exception(ExceptionString.toStdString().c_str()),
+	Description(ExceptionString)
 {
-	Description = ExceptionString;
+	
 }
 //-----------------------------------------------------------------------------
 ISExceptionBase::~ISExceptionBase()
@@ -11,9 +12,9 @@ ISExceptionBase::~ISExceptionBase()
 
 }
 //-----------------------------------------------------------------------------
-const char* ISExceptionBase::what() const noexcept
+QString ISExceptionBase::What() const
 {
-	return Description.toStdString().c_str();
+	return Description;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
