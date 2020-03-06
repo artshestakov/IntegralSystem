@@ -25,10 +25,11 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
+	LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor." + is_online ? "Online" : "Offline").pixmap(ISDefines::Gui::SIZE_32_32));
 	Layout->addWidget(LabelIcon, 0, Qt::AlignHCenter);
 
 	QLabel *LabelUserName = new QLabel(this);
-	LabelUserName->setText(QString(user_name).replace(SYMBOL_SPACE, "\n"));
+	LabelUserName->setText(QString(user_name).replace(SYMBOL_SPACE, "\n") + "\n" + LANG("MonitorActivity.MonitorUser." + is_online ? "Online" : "Offline") + ')');
 	LabelUserName->setAlignment(Qt::AlignHCenter);
 	LabelUserName->setWordWrap(true);
 	Layout->addWidget(LabelUserName, 0, Qt::AlignHCenter);
@@ -65,30 +66,12 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	connect(ActionTerminate, &QAction::triggered, this, &ISMonitorUserWidget::EndSession);
 	addAction(ActionTerminate);
 
-	QAction *ActionGetScreenshot = new QAction(this);
-	ActionGetScreenshot->setText(LANG("MonitorActivity.GetScreenshot"));
-	ActionGetScreenshot->setIcon(BUFFER_ICONS("GetScreenshot"));
-	ActionGetScreenshot->setEnabled(is_online);
-	connect(ActionGetScreenshot, &QAction::triggered, this, &ISMonitorUserWidget::GetScreenshot);
-	addAction(ActionGetScreenshot);
-
 	QAction *ActionSendNotify = new QAction(this);
 	ActionSendNotify->setText(LANG("SendNotify"));
 	ActionSendNotify->setIcon(BUFFER_ICONS("SendNotify"));
 	ActionSendNotify->setEnabled(is_online);
 	connect(ActionSendNotify, &QAction::triggered, this, &ISMonitorUserWidget::SendNotify);
 	addAction(ActionSendNotify);
-
-	if (is_online)
-	{
-		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Online").pixmap(ISDefines::Gui::SIZE_32_32));
-		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Online") + ')');
-	}
-	else
-	{
-		LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor.Offline").pixmap(ISDefines::Gui::SIZE_32_32));
-		LabelUserName->setText(LabelUserName->text() + "\n(" + LANG("MonitorActivity.MonitorUser.Offline") + ')');
-	}
 }
 //-----------------------------------------------------------------------------
 ISMonitorUserWidget::~ISMonitorUserWidget()

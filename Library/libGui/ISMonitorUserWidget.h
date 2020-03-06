@@ -13,7 +13,6 @@ signals:
 	void ShowProtocol();
 	void ShowDetails();
 	void EndSession();
-	void GetScreenshot();
 	void SendNotify();
 
 public:

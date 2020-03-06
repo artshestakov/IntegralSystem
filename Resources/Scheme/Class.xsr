@@ -64,8 +64,6 @@
   <_Notification IsSystem="true" UID="{410AE8B0-A9EC-42DB-9E32-F9FFA9BF068B}" Name="UserStatus" Message="Пользователь сменил статус" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{E5D25227-E5E1-49AB-9034-2EEC5784DA14}" Name="UserOnline" Message="Пользователь в сети" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{366E23D9-800C-4C52-9302-F4E1AB68B372}" Name="UserOffline" Message="Пользователь не в сети" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{51154CA5-1D62-4F34-91FB-7DDCC5344227}" Name="Screenshot.Create" Message="Запрос скриншота" SignalName="GetScreenshot" ShowPopup="false"/>
-  <_Notification IsSystem="true" UID="{4AC0FD55-DA99-43FD-B215-2E9CBB0129E4}" Name="Screenshot.Created" Message="Скриншот создан" SignalName="ScreenshotCreated" ShowPopup="false"/>
   <_Notification IsSystem="true" UID="{3C0EAFD8-1FC0-48F7-9BF2-D8E8E5875390}" Name="UserMessage" Message="Уведомление" SoundFileName="Information" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{D11C249C-9B4E-482D-9DF6-CD4B59BAA3D8}" Name="AlreadyConnected" Message="Обнаружен несанкционированный вход Вашей учётной записи" SignalName="AlreadyConnected" SoundFileName="Critical" ShowPopup="true"/>
 

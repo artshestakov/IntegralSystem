@@ -201,7 +201,6 @@
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>
   <Local Name="Message.Warning.NotExistLinkInBuffer" Russian="Ссылка в буфере обмена отсутствует."/>
-  <Local Name="Message.Warning.NotGetScreenshotCurrentUser" Russian="Получать изображение своего рабочего стола запрещено."/>
   <Local Name="Message.Warning.AlreadyConnected" Russian="ВНИМАНИЕ! Логин &quot;%1&quot; уже авторизован в системе!"/>
   <Local Name="Message.Warning.AlreadyConnected.MessageBox" Russian="Неизвестное лицо с пытается подключиться к базе данных с адреса %1 под Вашим логином. Рекомендуется срочно сменить Ваш пароль."/>
   <Local Name="Message.Warning.SettingsDatabaseNotExist" Russian="ВНИМАНИЕ! Настройки базы данных не созданы. Обратитесь к системному администратору."/>
@@ -260,7 +259,6 @@
   <Local Name="Message.Question.DetachObjectTask" Russian="Эта запись уже привязанна к выбранной задаче, открепить её?"/>
   <Local Name="Message.Question.OpenFileInChat" Russian="Открыть файл?"/>
   <Local Name="Message.Question.TerminateUser" Russian="Завершить сеанс пользователя %1?"/>
-  <Local Name="Message.Question.GetScreenshot" Russian="Получить рабочий стол пользователя?"/>
   <Local Name="Message.Question.TerminateAllUser" Russian="Отключить всех пользователей?"/>
   <Local Name="Message.Question.StopFullTextSearch" Russian="Остановить поиск?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
@@ -605,7 +603,6 @@
   <Local Name="MonitorActivity.TerminateAll" Russian="Отключить всех"/>
   <Local Name="MonitorActivity.ActivityUser" Russian="Активность пользователя"/>
   <Local Name="MonitorActivity.EndSession" Russian="Завершить сеанс"/>
-  <Local Name="MonitorActivity.GetScreenshot" Russian="Получить рабочий стол"/>
   <Local Name="MonitorActivity.MonitorUser.Online" Russian="в сети"/>
   <Local Name="MonitorActivity.MonitorUser.Offline" Russian="не в сети"/>
   <Local Name="MonitorActivity.ActivityUserCount" Russian="Активность: %1. Бездействие: %2"/>

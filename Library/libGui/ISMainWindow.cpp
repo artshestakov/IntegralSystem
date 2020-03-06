@@ -44,7 +44,6 @@
 #include "ISTelephony.h"
 #include "ISObjects.h"
 #include "ISOnline.h"
-#include "ISScreenshot.h"
 #include "ISAddressBookListForm.h"
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
@@ -85,9 +84,6 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 
 	//Сообщение о аналогичном подключении
 	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::AlreadyConnected, this, &ISMainWindow::AlreadyConnected);
-
-	//Получение рабочего стола
-	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::GetScreenshot, &ISScreenshot::GetInstance(), &ISScreenshot::Create);
 }
 //-----------------------------------------------------------------------------
 ISMainWindow::~ISMainWindow()

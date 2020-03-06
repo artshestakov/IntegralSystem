@@ -123,10 +123,4 @@
     </Indexes>
   </Table>
 
-  <Table Name="_Screenshots" UID="{08571D5F-3BED-4BC9-965A-8C6E94F936DA}" Alias="scrn" ShowOnly="true" LocalName="Запрос на скриншот" LocalListName="Запросы на скриншоты" TitleName="DateTime" IsSystem="true">
-    <Fields>
-      <Field UID="{377267DE-7A85-425A-B156-2B64ACCF1CE9}" Name="Screenshot" Type="Image" LabelName="Скриншот" LocalListName="Скриншот" NotNull="true"/>
-    </Fields>
-  </Table>
-
 </XSN>

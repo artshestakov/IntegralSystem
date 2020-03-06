@@ -1126,9 +1126,6 @@
     <ClCompile Include="ISSqlModelView.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="ISScreenshot.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISHTML.cpp">
       <Filter>Printing\HTML</Filter>
     </ClCompile>
@@ -2053,9 +2050,6 @@
       <Filter>Model</Filter>
     </QtMoc>
     <QtMoc Include="ISCreatedObjectsEntity.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISScreenshot.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISPrintingWord.h">

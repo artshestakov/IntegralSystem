@@ -29,8 +29,6 @@ static QString QS_USERS = PREPARE_QUERY("SELECT useronline(usrs_login), usrs_id,
 										"AND useronline(usrs_login) IN(:Online) "
 										"ORDER BY userfullname(usrs_id)");
 //-----------------------------------------------------------------------------
-static QString QD_SCREENSHOT = PREPARE_QUERY("DELETE FROM _screenshots WHERE scrn_id = :ScreenshotID");
-//-----------------------------------------------------------------------------
 ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
@@ -76,8 +74,6 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 	ActionUpdate->setShortcut(Qt::Key_F5);
 	connect(ActionUpdate, &QAction::triggered, this, &ISMonitorActivityForm::LoadData);
 	addAction(ActionUpdate);
-
-	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::ScreenshotCreated, this, &ISMonitorActivityForm::ScreenshotCreated);
 }
 //-----------------------------------------------------------------------------
 ISMonitorActivityForm::~ISMonitorActivityForm()
@@ -121,7 +117,6 @@ void ISMonitorActivityForm::LoadData()
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowDetails, this, &ISMonitorActivityForm::ShowDetails);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::EndSession, this, &ISMonitorActivityForm::TerminateUser);
-			connect(MonitorUserWidget, &ISMonitorUserWidget::GetScreenshot, this, &ISMonitorActivityForm::GetScreenshot);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::SendNotify, this, &ISMonitorActivityForm::SendNotify);
 			ScrollArea->widget()->layout()->addWidget(MonitorUserWidget);
 			MonitorUserWidget->adjustSize();
@@ -261,25 +256,6 @@ void ISMonitorActivityForm::TerminateUser()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISMonitorActivityForm::GetScreenshot()
-{
-	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
-	if (MonitorUserWidget)
-	{
-		if (MonitorUserWidget->GetUserID() == ISMetaUser::GetInstance().GetData()->ID)
-		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotGetScreenshotCurrentUser"));
-			return;
-		}
-
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.GetScreenshot")))
-		{
-			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_SCREENSHOT_CREATE, MonitorUserWidget->GetUserID(), ISMetaUser::GetInstance().GetData()->ID, QString(), false);
-			ISGui::SetWaitGlobalCursor(true);
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISMonitorActivityForm::SendNotify()
 {
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
@@ -324,25 +300,5 @@ void ISMonitorActivityForm::TerminateAll()
 			ISMessageBox::ShowInformation(this, LANG("Message.Information.TermiantedUsers").arg(TerminatedCount));
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-void ISMonitorActivityForm::ScreenshotCreated(const QVariantMap &VariantMap)
-{
-	int ScreenshotID = VariantMap.value("Payload").toInt();
-	QVariant ValueDB = ISDatabase::GetInstance().GetValue("_Screenshots", "Screenshot", ScreenshotID);
-	ISGui::SetWaitGlobalCursor(false);
-	if (ValueDB.isValid())
-	{
-		ISImageViewerForm *ImageViewerForm = ISGui::ShowImageForm(ValueDB.toByteArray());
-		ImageViewerForm->setProperty("ScreenshotID", ScreenshotID);
-		connect(ImageViewerForm, &ISImageViewerForm::destroyed, this, &ISMonitorActivityForm::CloseScreenshot);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISMonitorActivityForm::CloseScreenshot(QObject *Object)
-{
-	QVariantMap VariantMap;
-	VariantMap.insert(":ScreenshotID", Object->property("ScreenshotID"));
-	ISQueryPool::GetInstance().AddQuery(QD_SCREENSHOT, VariantMap);
 }
 //-----------------------------------------------------------------------------

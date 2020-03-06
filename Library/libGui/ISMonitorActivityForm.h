@@ -24,12 +24,9 @@ protected:
 	void ShowProtocol(); //Просмотр протокола
 	void ShowDetails(); //Просмотр подробностей
 	void TerminateUser(); //Завершить сеанс
-	void GetScreenshot(); //Получить рабочий стол
 	void SendNotify(); //Отправить уведомление
 
 	void TerminateAll(); //Отключить всех
-	void ScreenshotCreated(const QVariantMap &VariantMap);
-	void CloseScreenshot(QObject *Object);
 
 private:
 	ISCheckEdit *CheckEdit;

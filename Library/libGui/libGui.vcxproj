@@ -351,7 +351,6 @@
     <ClCompile Include="ISRecordInfoForm.cpp" />
     <ClCompile Include="ISRegisterMetaType.cpp" />
     <ClCompile Include="ISScoreObjectForm.cpp" />
-    <ClCompile Include="ISScreenshot.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchEdit.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
@@ -437,7 +436,6 @@
     <ClCompile Include="ISYearEdit.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISScreenshot.h" />
     <ClInclude Include="ISBuffer.h" />
     <QtMoc Include="ISButtons.h" />
     <QtMoc Include="ISDaDataService.h" />
