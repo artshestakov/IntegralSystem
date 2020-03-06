@@ -22,7 +22,6 @@ public:
 	void Execute(const QString &SqlQueryText, const QVariantMap &Conditions);
 
 private:
-	ISUuid ConnectionName;
 	QSqlDatabase DB;
 };
 //-----------------------------------------------------------------------------

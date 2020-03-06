@@ -1,20 +1,13 @@
 #include "ISModelThreadWorker.h"
 #include "ISDatabase.h"
-#include "ISCountingTime.h"
 #include "ISAssert.h"
-#include "ISSystem.h"
 #include "ISConstants.h"
-#include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISModelThreadWorker::ISModelThreadWorker(QObject *parent) : QObject(parent)
+ISModelThreadWorker::ISModelThreadWorker(QObject *parent)
+	: QObject(parent),
+	DB(QSqlDatabase::cloneDatabase(ISDatabase::GetInstance().GetDefaultDB(), CONNECTION_MODEL_THREAD))
 {
-	ConnectionName = ISSystem::GenerateUuid();
-	DB = QSqlDatabase::database(ConnectionName);
-
-	if (!DB.isValid())
-	{
-		DB = QSqlDatabase::cloneDatabase(ISDatabase::GetInstance().GetDefaultDB(), ConnectionName);
-	}
+	
 }
 //-----------------------------------------------------------------------------
 ISModelThreadWorker::~ISModelThreadWorker()

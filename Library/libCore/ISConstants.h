@@ -145,6 +145,10 @@ const char AMI_HANGUP[] = "Hangup";
 const char AMI_BLIND_TRANSFER[] = "BlindTransfer";
 const char AMI_ORIGINATE_RESPONSE[] = "OriginateResponse";
 const char AMI_EXTENSION_STATUS[] = "ExtensionStatus";
+//DATABASE_CONNECTIONS---------------------------------------------------------
+const char CONNECTION_DEFAULT[] = "DefaultDB";
+const char CONNECTION_SYSTEM[] = "SystemDB";
+const char CONNECTION_MODEL_THREAD[] = "ModelThreadDB";
 //-----------------------------------------------------------------------------
 const char SYSTEM_DATABASE_NAME[] = "postgres";
 const char FIGURES_STRING[] = "0123456789";
