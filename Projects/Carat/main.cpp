@@ -8,6 +8,8 @@
 #include "ISCaratDebugger.h"
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
+void Usage(); //Вывод инструкции по запуску
+//-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
 	QCoreApplication CoreApplication(argc, argv);
@@ -28,9 +30,16 @@ int main(int argc, char *argv[])
 		{
 			new ISCaratDebugger(&CoreApplication);
 		}
+		else if (Argument == "-h" || Argument == "--help")
+		{
+			Usage();
+			return EXIT_SUCCESS;
+		}
 		else
 		{
 			ISLOGGER_WARNING("Invalid argument \"" + Argument + "\"");
+			Usage();
+			return EXIT_SUCCESS;
 		}
 	}
 	else //Аргументы не указаны - стартуем в обычном режиме
@@ -59,5 +68,27 @@ int main(int argc, char *argv[])
 		return CoreApplication.exec();
 	}
 	return EXIT_FAILURE;
+}
+//-----------------------------------------------------------------------------
+void Usage()
+{
+#ifdef WIN32
+	ISLOGGER_UNKNOWN("Usage: Carat [argument]");
+#else
+	ISLOGGER_UNKNOWN("Usage: ./Carat [argument]");
+#endif
+	ISLOGGER_UNKNOWN(QString());
+	ISLOGGER_UNKNOWN("Arguments:");
+	ISLOGGER_UNKNOWN("  -d, --debug\t\tdebug mode");
+	ISLOGGER_UNKNOWN("  -h, --help\t\tshow this help");
+	ISLOGGER_UNKNOWN(QString());
+#ifdef WIN32
+	ISLOGGER_UNKNOWN("Example: Carat.exe -d (debug mode)");
+	ISLOGGER_UNKNOWN("Example: Carat.exe (service mode)");
+#else
+	ISLOGGER_UNKNOWN("Example: ./Carat -d (debug mode)");
+	ISLOGGER_UNKNOWN("Example: ./Carat (service mode)");
+#endif
+	ISLOGGER_UNKNOWN("* No arguments needed to start in service mode");
 }
 //-----------------------------------------------------------------------------
