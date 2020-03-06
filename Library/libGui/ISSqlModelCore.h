@@ -12,7 +12,7 @@ public:
 	virtual ~ISSqlModelCore();
 
 	virtual void FillColumns(); //Заполнение полей
-	void SetRecords(const QList<QSqlRecord> &records); //Изменить данные модели
+	void SetRecords(const std::vector<QSqlRecord> &records); //Изменить данные модели
 	void Clear(); //Очистить модель
 	QSqlRecord GetRecord(int RowIndex) const; //Получить запись по идентификатору строки
 	void RemoveRecord(int Index); //Удалить запись из модели
@@ -44,8 +44,8 @@ protected:
 
 private:
 	PMetaClassTable *MetaTable; //Мета-таблица
-	QList<QSqlRecord> Records; //Данные модели
-	QVector<PMetaClassField*> Fields; //Список полей таблицы
+	std::vector<QSqlRecord> Records; //Данные модели
+	std::vector<PMetaClassField*> Fields; //Список полей таблицы
 
 	int CurrentSortingColumn;
 	Qt::SortOrder CurrentColumnSortOrder;

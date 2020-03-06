@@ -40,7 +40,7 @@
 #include "ISPeriodForm.h"
 #include "ISQueryPool.h"
 #include "ISGui.h"
-#include "ISExceptionConnectionDB.h"
+#include "ISException.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include "ISPrintingWord.h"

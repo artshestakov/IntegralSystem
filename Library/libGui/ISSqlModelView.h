@@ -15,7 +15,7 @@ public:
 	int GetFieldIndex(const QString &FieldName) const; //Получить индекс поля по его имени
 
 	void Clear(); //Очистка модели
-	void SetRecords(const QList<QSqlRecord> &records); //Изменить данные модели
+	void SetRecords(const std::vector<QSqlRecord> &records); //Изменить данные модели
 
 	virtual QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;
 	virtual QVariant headerData(int Section, Qt::Orientation Orientation, int Role = Qt::DisplayRole) const override;
@@ -31,7 +31,7 @@ protected:
 
 private:
 	PMetaClassTable *MetaTable;
-	QList<QSqlRecord> Records; //Данные модели
+	std::vector<QSqlRecord> Records; //Данные модели
 
 	int CurrentSortingColumn;
 	Qt::SortOrder CurrentColumnSortOrder;

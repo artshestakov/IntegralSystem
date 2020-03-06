@@ -10,7 +10,7 @@ class ISModelThreadWorker : public QObject
 signals:
 	void Started();
 	void Finished();
-	void Results(const QList<QSqlRecord> &Records); //Передача данных
+	void Results(const std::vector<QSqlRecord> &Records); //Передача данных
 	void ExecutedQuery(); //Сигнал о выполнении запроса
 	void ErrorConnection(const QSqlError &SqlError); //Сигнал об ошибке соединения к БД
 	void ErrorQuery(const QSqlError &SqlError, const QString &QueryText); //Сигнал об ошибке в запросе

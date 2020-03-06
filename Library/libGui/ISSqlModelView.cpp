@@ -40,15 +40,12 @@ int ISSqlModelView::GetFieldIndex(const QString &FieldName) const
 //-----------------------------------------------------------------------------
 void ISSqlModelView::Clear()
 {
-	IS_TRACE();
-
 	beginResetModel();
 
 	int Step = 0;
-	while (!Records.isEmpty())
+	while (!Records.empty())
 	{
-		Records.removeFirst();
-
+		Records.erase(--Records.end());
 		if (Step == 1000) //Пауза при удалении участка записей
 		{
 			QThread::currentThread()->msleep(1);
@@ -63,7 +60,7 @@ void ISSqlModelView::Clear()
 	endResetModel();
 }
 //-----------------------------------------------------------------------------
-void ISSqlModelView::SetRecords(const QList<QSqlRecord> &records)
+void ISSqlModelView::SetRecords(const std::vector<QSqlRecord> &records)
 {
 	beginResetModel();
 	Records = records;
@@ -131,7 +128,7 @@ QVariant ISSqlModelView::headerData(int Section, Qt::Orientation Orientation, in
 int ISSqlModelView::rowCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return Records.count();
+	return Records.size();
 }
 //-----------------------------------------------------------------------------
 int ISSqlModelView::columnCount(const QModelIndex &Parent) const

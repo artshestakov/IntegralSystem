@@ -7,6 +7,7 @@
 #include "ISAssert.h"
 #include "ISSqlModelHelper.h"
 #include "ISConstants.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISSqlModelCore::ISSqlModelCore(PMetaClassTable *meta_table, QObject *parent) : QAbstractItemModel(parent)
 {
@@ -43,7 +44,7 @@ void ISSqlModelCore::FillColumns()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISSqlModelCore::SetRecords(const QList<QSqlRecord> &records)
+void ISSqlModelCore::SetRecords(const std::vector<QSqlRecord> &records)
 {
 	beginResetModel();
 	Records = records;
@@ -52,18 +53,16 @@ void ISSqlModelCore::SetRecords(const QList<QSqlRecord> &records)
 //-----------------------------------------------------------------------------
 void ISSqlModelCore::Clear()
 {
-	if (Records.count())
+	if (!Records.empty())
 	{
 		beginResetModel();
-		
 		int Step = 0;
-		while (!Records.isEmpty())
+		while (!Records.empty())
 		{
-			Records.removeFirst();
-
-			if (Step == 1000) //Пауза при удалении участка записей
+			Records.erase(--Records.end());
+			if (Step == 500) //Пауза при удалении участка записей
 			{
-				QThread::currentThread()->msleep(1);
+				QThread::currentThread()->msleep(10);
 				Step = 0;
 			}
 			else
@@ -71,7 +70,6 @@ void ISSqlModelCore::Clear()
 				++Step;
 			}
 		}
-		
 		endResetModel();
 	}
 }
@@ -84,7 +82,7 @@ QSqlRecord ISSqlModelCore::GetRecord(int RowIndex) const
 void ISSqlModelCore::RemoveRecord(int Index)
 {
 	beginResetModel();
-	Records.removeAt(Index);
+	Records.erase(Records.begin() + Index);
 	endResetModel();
 }
 //-----------------------------------------------------------------------------
@@ -92,14 +90,14 @@ void ISSqlModelCore::RemoveColumn(PMetaClassField *MetaField)
 {
 	beginResetModel();
 	
-	int Index = Fields.indexOf(MetaField);
-	Fields.remove(Index);
+	int Index = VectorIndexOf(Fields, MetaField);
+	Fields.erase(Fields.begin() + Index);
 
-	for (int i = 0; i < Records.count(); ++i)
+	for (int i = 0; i < Records.size(); ++i)
 	{
-		QSqlRecord SqlRecord = Records.at(i);
+		QSqlRecord SqlRecord = Records[i];
 		SqlRecord.remove(Index);
-		Records.replace(i, SqlRecord);
+		Records[i] = SqlRecord;
 	}
 
 	endResetModel();
@@ -107,14 +105,13 @@ void ISSqlModelCore::RemoveColumn(PMetaClassField *MetaField)
 //-----------------------------------------------------------------------------
 int ISSqlModelCore::GetFieldIndex(const QString &FieldName) const
 {
-	for (int i = 0; i < Fields.count(); ++i)
+	for (int i = 0; i < Fields.size(); ++i)
 	{
 		if (Fields[i]->Name == FieldName)
 		{
 			return i;
 		}
 	}
-
 	IS_ASSERT(false, QString("Not found field index from field name: %1.").arg(FieldName));
 	return -1;
 }
@@ -131,14 +128,13 @@ QString ISSqlModelCore::GetFieldLocalName(const QString &FieldName) const
 			break;
 		}
 	}
-
 	IS_ASSERT(LocalName.length(), "Not found local name from field: " + FieldName);
 	return LocalName;
 }
 //-----------------------------------------------------------------------------
 PMetaClassField* ISSqlModelCore::GetField(int Index)
 {
-	return Fields.at(Index);
+	return Fields[Index];
 }
 //-----------------------------------------------------------------------------
 QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
@@ -176,7 +172,7 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 	}
 	else if (Role == Qt::DisplayRole)
 	{
-		QVariant Value = Records.at(ModelIndex.row()).value(ModelIndex.column());
+		QVariant Value = Records[ModelIndex.row()].value(ModelIndex.column());
 		if (Value.isNull())
 		{
 			return QVariant();
@@ -191,9 +187,9 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 bool ISSqlModelCore::setData(const QModelIndex &ModelIndex, const QVariant &Value, int Role)
 {
     Q_UNUSED(Role);
-	QSqlRecord SqlRecord = Records.at(ModelIndex.row());
+	QSqlRecord SqlRecord = Records[ModelIndex.row()];
 	SqlRecord.setValue(ModelIndex.column(), Value);
-	Records.replace(ModelIndex.row(), SqlRecord);
+	Records[ModelIndex.row()] = SqlRecord;
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -232,13 +228,13 @@ QVariant ISSqlModelCore::headerData(int Section, Qt::Orientation Orientation, in
 int ISSqlModelCore::rowCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return Records.count();
+	return Records.size();
 }
 //-----------------------------------------------------------------------------
 int ISSqlModelCore::columnCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return Fields.count();
+	return Fields.size();
 }
 //-----------------------------------------------------------------------------
 QModelIndex ISSqlModelCore::index(int Row, int Column, const QModelIndex &Parent) const
@@ -281,17 +277,17 @@ PMetaClassTable* ISSqlModelCore::GetMetaTable()
 //-----------------------------------------------------------------------------
 void ISSqlModelCore::AppendField(PMetaClassField *MetaField)
 {
-	Fields.append(MetaField);
+	Fields.emplace_back(MetaField);
 }
 //-----------------------------------------------------------------------------
 bool ISSqlModelCore::GetIsSystem(int RowIndex) const
 {
-	return Records.at(RowIndex).value("IsSystem").toBool();
+	return Records[RowIndex].value("IsSystem").toBool();
 }
 //-----------------------------------------------------------------------------
 bool ISSqlModelCore::GetIsDeleted(int RowIndex) const
 {
-	return Records.at(RowIndex).value("IsDeleted").toBool();
+	return Records[RowIndex].value("IsDeleted").toBool();
 }
 //-----------------------------------------------------------------------------
 QIcon ISSqlModelCore::GetSortingIcon(int Section) const

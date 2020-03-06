@@ -88,7 +88,7 @@
 //-----------------------------------------------------------------------------
 void ISRegisterMetaType::RegisterMetaType()
 {
-	qRegisterMetaType<QList<QSqlRecord>>("QList<QSqlRecord>");
+	//qRegisterMetaType<QList<QSqlRecord>>("QList<QSqlRecord>"); //???
 	qRegisterMetaType<QSqlError>("QSqlError");
 	qRegisterMetaType<ISUuid>("ISUuid");
 	qRegisterMetaType<QVector<int>>("QVector<int>");
