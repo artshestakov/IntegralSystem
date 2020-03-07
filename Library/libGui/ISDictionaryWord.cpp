@@ -1,5 +1,9 @@
 #include "ISDictionaryWord.h"
 #include "ISConstants.h"
+#include "ISQuery.h"
+//-----------------------------------------------------------------------------
+static QString QI_WORD = PREPARE_QUERY("INSERT INTO _dictionaryword (dicw_user, dicw_word) "
+									   "VALUES (currentuserid(), :Word)");
 //-----------------------------------------------------------------------------
 ISDictionaryWord::ISDictionaryWord()
 	: ErrorString(NO_ERROR_STRING),
@@ -16,6 +20,11 @@ ISDictionaryWord::~ISDictionaryWord()
 		free(Array[i]);
 	}
 	free(Array);
+}
+//-----------------------------------------------------------------------------
+QString ISDictionaryWord::GetErrorString() const
+{
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 ISDictionaryWord& ISDictionaryWord::Instance()
@@ -99,7 +108,8 @@ bool ISDictionaryWord::Initialize()
 //-----------------------------------------------------------------------------
 bool ISDictionaryWord::Search(const char *String)
 {
-	for (size_t i = 0; i < ArraySize; ++i) //Обходим весь массив
+	//Обходим весь массив
+	for (size_t i = 0; i < ArraySize; ++i)
 	{
 		if (strcmp(String, Array[i]) == 0) //Если нашли слово в массиве - выходим с положительным результатом
 		{
@@ -107,7 +117,26 @@ bool ISDictionaryWord::Search(const char *String)
 		}
 	}
 
-	//Слово в массиве не найдено - выходим с отрицательным результатом
+	//Обходим пользовательский массив
+	for (size_t i = 0, c = ArrayUser.size(); i < c; ++i)
+	{
+		if (strcmp(String, ArrayUser[i]) == 0) //Если нашли слово в пользовательском массиве - выходим с положительным результатом
+		{
+			return true;
+		}
+	}
+
+	//Слово не найдено ни в одном из массивов - выходим с отрицательным результатом
 	return false;
+}
+//-----------------------------------------------------------------------------
+void ISDictionaryWord::AddWord(const QString &Word)
+{
+	ISQuery qInsert(QI_WORD);
+	qInsert.BindValue(":Word", Word);
+	if (qInsert.Execute())
+	{
+		ArrayUser.emplace_back(Word.toStdString().c_str());
+	}
 }
 //-----------------------------------------------------------------------------

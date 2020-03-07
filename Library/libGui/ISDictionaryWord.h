@@ -12,6 +12,7 @@ public:
 	QString GetErrorString() const;
 	bool Initialize();
 	bool Search(const char *String);
+	void AddWord(const QString &Word);
 
 private:
 	ISDictionaryWord();
@@ -23,6 +24,7 @@ private:
 	QString ErrorString;
 	char **Array;
 	size_t ArraySize;
+	std::vector<const char *> ArrayUser;
 };
 //-----------------------------------------------------------------------------
 #endif
