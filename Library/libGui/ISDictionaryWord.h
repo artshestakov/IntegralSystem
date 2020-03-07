@@ -3,6 +3,7 @@
 #define _ISDICTIONARYWORD_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libGui_global.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class LIBGUI_EXPORT ISDictionaryWord
 {
@@ -15,6 +16,10 @@ public:
 	void AddWord(const QString &Word);
 
 private:
+	bool ReadFromLocal(); //Чтение локального словаря
+	bool ReadFromDB(); //Чтение пользовательского словаря из БД
+
+private:
 	ISDictionaryWord();
 	~ISDictionaryWord();
 	ISDictionaryWord(ISDictionaryWord const &) {};
@@ -24,7 +29,7 @@ private:
 	QString ErrorString;
 	char **Array;
 	size_t ArraySize;
-	std::vector<const char *> ArrayUser;
+	ISVectorString ArrayUser;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -2,6 +2,11 @@
 #include "ISConstants.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
+static QString QS_WORD = PREPARE_QUERY("SELECT dicw_word "
+									   "FROM _dictionaryword "
+									   "WHERE NOT dicw_isdeleted "
+									   "AND dicw_user = currentuserid()");
+//-----------------------------------------------------------------------------
 static QString QI_WORD = PREPARE_QUERY("INSERT INTO _dictionaryword (dicw_user, dicw_word) "
 									   "VALUES (currentuserid(), :Word)");
 //-----------------------------------------------------------------------------
@@ -35,13 +40,57 @@ ISDictionaryWord& ISDictionaryWord::Instance()
 //-----------------------------------------------------------------------------
 bool ISDictionaryWord::Initialize()
 {
+	bool Result = ReadFromLocal();
+	if (Result)
+	{
+		Result = ReadFromDB();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISDictionaryWord::Search(const char *String)
+{
+	//Обходим весь массив
+	for (size_t i = 0; i < ArraySize; ++i)
+	{
+		if (strcmp(String, Array[i]) == 0) //Если нашли слово в массиве - выходим с положительным результатом
+		{
+			return true;
+		}
+	}
+
+	//Обходим пользовательский массив
+	for (const QString &Word : ArrayUser)
+	{
+		if (Word == QString::fromLocal8Bit(String)) //Если нашли слово в пользовательском массиве - выходим с положительным результатом
+		{
+			return true;
+		}
+	}
+
+	//Слово не найдено ни в одном из массивов - выходим с отрицательным результатом
+	return false;
+}
+//-----------------------------------------------------------------------------
+void ISDictionaryWord::AddWord(const QString &Word)
+{
+	ISQuery qInsert(QI_WORD);
+	qInsert.BindValue(":Word", Word);
+	if (qInsert.Execute())
+	{
+		ArrayUser.emplace_back(Word.toStdString().c_str());
+	}
+}
+//-----------------------------------------------------------------------------
+bool ISDictionaryWord::ReadFromLocal()
+{
 	FILE *File = fopen("C:\\Github\\IntegralSystem\\Resources\\Dictionary\\Russian.txt", "r");
 	if (!File)
 	{
 		ErrorString = strerror(errno);
 		return false;
 	}
-	
+
 	//Количество слов, текущий символ, прочитано, размер текущей строки
 	size_t Strings = 0, Char = 0;
 
@@ -69,7 +118,7 @@ bool ISDictionaryWord::Initialize()
 		ErrorString = "Error malloc";
 		return false;
 	}
-	
+
 	//Временная переменная куда будет читать очередное слово
 	char *String = (char *)malloc(WORD_SIZE + 1);
 	if (String)
@@ -106,37 +155,21 @@ bool ISDictionaryWord::Initialize()
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISDictionaryWord::Search(const char *String)
+bool ISDictionaryWord::ReadFromDB()
 {
-	//Обходим весь массив
-	for (size_t i = 0; i < ArraySize; ++i)
+	ISQuery qSelect(QS_WORD);
+	bool Result = qSelect.Execute();
+	if (Result)
 	{
-		if (strcmp(String, Array[i]) == 0) //Если нашли слово в массиве - выходим с положительным результатом
+		while (qSelect.Next())
 		{
-			return true;
+			ArrayUser.emplace_back(qSelect.ReadColumn("dicw_word").toString());
 		}
 	}
-
-	//Обходим пользовательский массив
-	for (size_t i = 0, c = ArrayUser.size(); i < c; ++i)
+	else
 	{
-		if (strcmp(String, ArrayUser[i]) == 0) //Если нашли слово в пользовательском массиве - выходим с положительным результатом
-		{
-			return true;
-		}
+		ErrorString = qSelect.GetErrorString();
 	}
-
-	//Слово не найдено ни в одном из массивов - выходим с отрицательным результатом
-	return false;
-}
-//-----------------------------------------------------------------------------
-void ISDictionaryWord::AddWord(const QString &Word)
-{
-	ISQuery qInsert(QI_WORD);
-	qInsert.BindValue(":Word", Word);
-	if (qInsert.Execute())
-	{
-		ArrayUser.emplace_back(Word.toStdString().c_str());
-	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
