@@ -13,7 +13,6 @@ public:
 	static int Startup(const QString &UserLogin, const QString &UserPassword);
 
 protected:
-	static bool CheckAlreadyConnected(); //Проверить не онлайн ли уже текущий пользователь
 	static bool CheckAccessDatabase(const QString &Login); //Проверка доступа к базе
 	static bool CheckAccessAllowed(); //Проверка разрешения доступа пользователя
 	static bool CheckExistUserGroup(); //Проверка наличия привязки пользователя к группе

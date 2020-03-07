@@ -1,8 +1,6 @@
 #include "ISDictionaryWord.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-#define WORD_SIZE 40
-//-----------------------------------------------------------------------------
 ISDictionaryWord::ISDictionaryWord()
 	: ErrorString(NO_ERROR_STRING),
 	Array(NULL),

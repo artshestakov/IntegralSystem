@@ -65,7 +65,6 @@
   <_Notification IsSystem="true" UID="{E5D25227-E5E1-49AB-9034-2EEC5784DA14}" Name="UserOnline" Message="Пользователь в сети" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{366E23D9-800C-4C52-9302-F4E1AB68B372}" Name="UserOffline" Message="Пользователь не в сети" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{3C0EAFD8-1FC0-48F7-9BF2-D8E8E5875390}" Name="UserMessage" Message="Уведомление" SoundFileName="Information" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{D11C249C-9B4E-482D-9DF6-CD4B59BAA3D8}" Name="AlreadyConnected" Message="Обнаружен несанкционированный вход Вашей учётной записи" SignalName="AlreadyConnected" SoundFileName="Critical" ShowPopup="true"/>
 
   <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
   <_ProtocolType IsSystem="true" UID="{E9461667-E1CA-4C22-907B-FDC350A931C4}" Name="Выход из программы"/>

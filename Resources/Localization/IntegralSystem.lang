@@ -201,8 +201,6 @@
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>
   <Local Name="Message.Warning.NotExistLinkInBuffer" Russian="Ссылка в буфере обмена отсутствует."/>
-  <Local Name="Message.Warning.AlreadyConnected" Russian="ВНИМАНИЕ! Логин &quot;%1&quot; уже авторизован в системе!"/>
-  <Local Name="Message.Warning.AlreadyConnected.MessageBox" Russian="Неизвестное лицо с пытается подключиться к базе данных с адреса %1 под Вашим логином. Рекомендуется срочно сменить Ваш пароль."/>
   <Local Name="Message.Warning.SettingsDatabaseNotExist" Russian="ВНИМАНИЕ! Настройки базы данных не созданы. Обратитесь к системному администратору."/>
   <Local Name="Message.Question.Reconnect" Russian="Соединение к базе данных потеряно. Произвести переподключение?"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>

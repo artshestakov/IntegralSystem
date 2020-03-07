@@ -48,7 +48,6 @@ protected:
 	void TerminateMe(const QVariantMap &VariantMap); //Сигнал об отключении пользователя
 	void UpdateAviable(const QVariantMap &VariantMap); //Сигнал о наличии обновления
 	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
-	void AlreadyConnected(const QVariantMap &VariantMap); //Сигнал об аналогичном подключении
 
 	void BeforeClose(); //Действие перед завершением программы
 	void OpenHistoryObject(const QString &TableName, int ObjectID);

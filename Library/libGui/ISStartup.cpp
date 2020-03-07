@@ -35,10 +35,6 @@ static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 											 "WHERE NOT usrs_isdeleted "
 											 "AND usrs_login = :Login");
 //-----------------------------------------------------------------------------
-static QString QS_ALREADY_ONLINE = PREPARE_QUERY("SELECT COUNT(*) "
-												 "FROM pg_stat_activity "
-												 "WHERE usename = :Login");
-//-----------------------------------------------------------------------------
 ISStartup::ISStartup() : QObject()
 {
 
@@ -192,14 +188,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	if (!ISMetaUser::GetInstance().GetData()->System)
 	{
-		if (CheckAlreadyConnected())
-		{
-			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_ALREADY_CONNECTED, ISMetaUser::GetInstance().GetData()->ID, ISMetaUser::GetInstance().GetData()->IPAddress, QString(), false);
-			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AlreadyConnected").arg(ISMetaUser::GetInstance().GetData()->Login));
-			ISSystem::ExecLoop(1500);
-			return EXIT_FAILURE;
-		}
-
 		if (!ISMetaUser::GetInstance().GetData()->Birthday.isNull())
 		{
 			if (ISMetaUser::GetInstance().GetData()->Birthday == QDate::currentDate())
@@ -262,23 +250,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	MainWindow->activateWindow();
 
 	return EXIT_SUCCESS;
-}
-//-----------------------------------------------------------------------------
-bool ISStartup::CheckAlreadyConnected()
-{
-	bool Result = false;
-	ISQuery qSelectConnected(QS_ALREADY_ONLINE);
-	qSelectConnected.BindValue(":Login", ISMetaUser::GetInstance().GetData()->Login);
-	if (qSelectConnected.ExecuteFirst())
-	{
-		int Count = qSelectConnected.ReadColumn("count").toInt();
-		if (Count > 1)
-		{
-			Result = true;
-		}
-	}
-
-	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(const QString &Login)

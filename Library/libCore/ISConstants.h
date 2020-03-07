@@ -173,6 +173,7 @@ const char COLOR_STANDART[] = "#000000";
 const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 const char NO_ERROR_STRING[] = "No error.";
 const int DOUBLE_DECIMALS = 3;
+const size_t WORD_SIZE = 40; //Максимальный размер слова в словаре
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 2000;
@@ -305,7 +306,6 @@ const char CONST_UID_NOTIFY_USER_STATUS[] = "{410AE8B0-A9EC-42DB-9E32-F9FFA9BF06
 const char CONST_UID_NOTIFY_USER_ONLINE[] = "{E5D25227-E5E1-49AB-9034-2EEC5784DA14}";
 const char CONST_UID_NOTIFY_USER_OFFLINE[] = "{366E23D9-800C-4C52-9302-F4E1AB68B372}";
 const char CONST_UID_NOTIFY_USER_MESSAGE[] = "{3C0EAFD8-1FC0-48F7-9BF2-D8E8E5875390}";
-const char CONST_UID_NOTIFY_ALREADY_CONNECTED[] = "{D11C249C-9B4E-482D-9DF6-CD4B59BAA3D8}";
 //-----------------------------------------------------------------------------
 const char CONST_UID_ASTERISK_DIRECTION_INCOMING[] = "{EB1D0FC1-6F56-406F-9819-9C71990998EC}"; //Входящий
 const char CONST_UID_ASTERISK_DIRECTION_OUTGOING[] = "{3E1A44EB-74FD-48A2-A472-FB5B0225DAE9}"; //Исходящий

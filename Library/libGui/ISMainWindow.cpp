@@ -75,9 +75,6 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 
 	//Входящий звонок
 	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::IncomingCall, this, &ISMainWindow::IncomingCall);
-
-	//Сообщение о аналогичном подключении
-	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::AlreadyConnected, this, &ISMainWindow::AlreadyConnected);
 }
 //-----------------------------------------------------------------------------
 ISMainWindow::~ISMainWindow()
@@ -408,11 +405,6 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 	{
 		IncomingCallForm->ExecAnimated();
 	}
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::AlreadyConnected(const QVariantMap &VariantMap)
-{
-	ISMessageBox::ShowCritical(this, LANG("Message.Warning.AlreadyConnected.MessageBox").arg(VariantMap.value("Payload").toString()));
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::BeforeClose()

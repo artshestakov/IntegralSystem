@@ -15,7 +15,6 @@ signals:
 	void UpdateAviable(const QVariantMap &VariantMap); //Сигнал о наличии обновления
 	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
 	void CalendarEvent(const QVariantMap &VariantMap); //Сигнал о событии календаря
-	void AlreadyConnected(const QVariantMap &VariantMap); //Сигнал о том, что кто-то пытается авторизоваться под тем же логином
 
 	//Базовые сигналы
 	void Notify(const QVariantMap &VariantMap);
