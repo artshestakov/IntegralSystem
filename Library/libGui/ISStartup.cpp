@@ -209,7 +209,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().show();
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow"));
 
-	ISProperty::GetInstance().SetValue(IS_PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
+	ISProperty::Instance().SetValue(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
 
 	ISMainWindow *MainWindow = new ISMainWindow();
 	ISSplashScreen::GetInstance().hide();

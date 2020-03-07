@@ -10,7 +10,7 @@ ISProperty::~ISProperty()
 
 }
 //-----------------------------------------------------------------------------
-ISProperty& ISProperty::GetInstance()
+ISProperty& ISProperty::Instance()
 {
 	static ISProperty Properties;
 	return Properties;
@@ -18,34 +18,16 @@ ISProperty& ISProperty::GetInstance()
 //-----------------------------------------------------------------------------
 void ISProperty::SetValue(const QString &PropertyName, const QVariant &Value)
 {
-	if (Properties.contains(PropertyName))
-	{
-		Properties[PropertyName] = Value;
-	}
-	else
-	{
-		AddProperty(PropertyName, Value);
-	}
+	Map[PropertyName] = Value;
 }
 //-----------------------------------------------------------------------------
 QVariant ISProperty::GetValue(const QString &PropertyName) const
 {
-	QVariant Result;
-	if (Properties.contains(PropertyName))
+	QVariant Value;
+	if (Map.count(PropertyName))
 	{
-		Result = Properties.value(PropertyName);
+		Value = Map.at(PropertyName);
 	}
-
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISProperty::GetValueBool(const QString &PropertyName) const
-{
-	return GetValue(PropertyName).toBool();
-}
-//-----------------------------------------------------------------------------
-void ISProperty::AddProperty(const QString &PropertyName, const QVariant &Value)
-{
-	Properties.insert(PropertyName, Value);
+	return Value;
 }
 //-----------------------------------------------------------------------------

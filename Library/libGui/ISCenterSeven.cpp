@@ -34,7 +34,7 @@ void ISCenterSeven::BeforeShowMainWindow() const
 	ISCenterSevenSelectBranchForm CenterSevenSelectBranchForm;
 	if (CenterSevenSelectBranchForm.Exec())
 	{
-		ISProperty::GetInstance().AddProperty("BranchID", CenterSevenSelectBranchForm.GetSelectedBranchID());
+		ISProperty::Instance().SetValue("BranchID", CenterSevenSelectBranchForm.GetSelectedBranchID());
 	}
 }
 //-----------------------------------------------------------------------------

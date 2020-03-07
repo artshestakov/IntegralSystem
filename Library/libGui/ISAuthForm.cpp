@@ -11,6 +11,7 @@
 #include "ISConnectionForm.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -137,6 +138,7 @@ QString ISAuthForm::GetEnteredPassword() const
 void ISAuthForm::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
+	ISProperty::Instance().SetValue("Timeout", QDateTime::currentDateTime());
 
 	QTimer *TimerCapsLook = new QTimer(this);
 	connect(TimerCapsLook, &QTimer::timeout, this, &ISAuthForm::TimeoutCapsLook);

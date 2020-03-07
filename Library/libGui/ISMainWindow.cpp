@@ -1,7 +1,6 @@
 #include "ISMainWindow.h"
 #include "ISDefinesGui.h"
 #include "ISDefinesCore.h"
-#include "ISSystem.h"
 #include "ISCore.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
@@ -27,14 +26,12 @@
 #include "ISColumnSizer.h"
 #include "ISHistoryForm.h"
 #include "ISCalculatorForm.h"
-#include "ISListBaseForm.h"
 #include "ISFastCreateObjectForm.h"
 #include "ISExternalToolsForm.h"
 #include "ISInputDialog.h"
 #include "ISParagraphEntity.h"
 #include "ISNotifyRecipient.h"
 #include "ISNotifySender.h"
-#include "ISFileDialog.h"
 #include "ISNotificationService.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISLogger.h"
@@ -45,7 +42,6 @@
 #include "ISObjects.h"
 #include "ISOnline.h"
 #include "ISAddressBookListForm.h"
-#include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
 	: ISInterfaceForm(parent),
@@ -291,7 +287,6 @@ void ISMainWindow::CreateStackWidget()
 		ISUuid ParagraphUID = MetaParagraph->UID;
 
 		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->LocalName));
-		ISCountingTime CountingTime;
 
 		int ObjectType = QMetaType::type((MetaParagraph->ClassName + SYMBOL_STAR).toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("Invalid object type from paragraph: %1").arg(MetaParagraph->Name));
@@ -305,7 +300,7 @@ void ISMainWindow::CreateStackWidget()
 		int ParagraphIndex = StackedWidget->addWidget(ParagraphBaseForm);
 		Paragraphs.insert(ParagraphUID, ParagraphIndex);
 
-		ISLOGGER_DEBUG(QString("Initialized paragraph \"%1\" %2 msec").arg(MetaParagraph->Name).arg(CountingTime.Elapsed()));
+		ISLOGGER_DEBUG(QString("Initialized paragraph \"%1\"").arg(MetaParagraph->Name));
 	}
 
 	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());

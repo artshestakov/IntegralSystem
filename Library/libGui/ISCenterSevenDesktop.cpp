@@ -151,7 +151,7 @@ void ISCenterSevenDesktop::AddWaitAdmission()
 //-----------------------------------------------------------------------------
 void ISCenterSevenDesktop::LoadBranches()
 {
-	int CurrentBranchID = ISProperty::GetInstance().GetValue("BranchID").toInt();
+	int CurrentBranchID = ISProperty::Instance().GetValue("BranchID").toInt();
 	ISQuery qSelect(QS_BRANCHES);
 	if (qSelect.Execute())
 	{
@@ -186,15 +186,9 @@ void ISCenterSevenDesktop::BranchChanged()
 	if (AdmissionListForm)
 	{
 		int SelectedBranchID = ComboBranch->GetValue().toInt();
-		if (SelectedBranchID == ISProperty::GetInstance().GetValue("BranchID").toInt()) //Если выбран текущий филиал
-		{
-			AdmissionListForm->SetEnabledActions(true);
-		}
-		else
-		{
-			AdmissionListForm->SetEnabledActions(false);
-		}
 
+		//Если выбран текущий филиал
+		AdmissionListForm->SetEnabledActions(SelectedBranchID == ISProperty::Instance().GetValue("BranchID").toInt() ? true : false);
 		AdmissionListForm->SetBranch(SelectedBranchID);
 		AdmissionListForm->Update();
 	}

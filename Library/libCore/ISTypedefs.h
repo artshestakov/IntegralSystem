@@ -7,6 +7,7 @@
 //-----------------------------------------------------------------------------
 typedef std::map<QString, QString> ISStringMap;
 typedef std::map<QString, int> ISStringToIntMap;
+typedef std::map<QString, QVariant> ISStringToVariantMap;
 typedef std::vector<int> ISVectorInt;
 typedef std::vector<QString> ISVectorString;
 typedef std::vector<ISUuid> ISVectorUID;

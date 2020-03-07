@@ -17,7 +17,7 @@ ISCenterSevenAdmissionObjectForm::ISCenterSevenAdmissionObjectForm(ISNamespace::
 	StatusID = qSelectStatus.ReadColumn("adst_id").toInt();
 
 	ISListEdit *ListEdit = dynamic_cast<ISListEdit*>(GetFieldWidget("Place"));
-	ListEdit->SetSqlFilter("arch_Branch = " + ISProperty::GetInstance().GetValue("BranchID").toString());
+	ListEdit->SetSqlFilter("arch_Branch = " + ISProperty::Instance().GetValue("BranchID").toString());
 }
 //-----------------------------------------------------------------------------
 ISCenterSevenAdmissionObjectForm::~ISCenterSevenAdmissionObjectForm()
@@ -43,7 +43,7 @@ bool ISCenterSevenAdmissionObjectForm::Save()
 	{
 		if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
 		{
-			GetFieldWidget("Branch")->SetValue(ISProperty::GetInstance().GetValue("BranchID"));
+			GetFieldWidget("Branch")->SetValue(ISProperty::Instance().GetValue("BranchID"));
 			GetFieldWidget("Date")->SetValue(Date);
 			GetFieldWidget("Status")->SetValue(StatusID);
 		}
