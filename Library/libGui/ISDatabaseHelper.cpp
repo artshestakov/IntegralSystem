@@ -27,7 +27,7 @@ QVariant ISDatabaseHelper::CheckValue(QVariant &Value)
 		}
 		else
 		{
-			Value = Value.toDate().toString(DATE_FORMAT_V1);
+			Value = Value.toDate().toString(FORMAT_DATE_V1);
 		}
 	}
 	else if (ValueType == QVariant::DateTime)
@@ -38,7 +38,7 @@ QVariant ISDatabaseHelper::CheckValue(QVariant &Value)
 		}
 		else
 		{
-			Value = Value.toDateTime().toString(DATE_TIME_FORMAT_V3);
+			Value = Value.toDateTime().toString(FORMAT_DATE_TIME_V3);
 		}
 	}
 	else if (!Value.isValid())

@@ -43,7 +43,7 @@ void ISTaskHistoryTab::Update()
 	{
 		while (qSelect.Next())
 		{
-			QString CreationDate = qSelect.ReadColumn("thst_creationdate").toDateTime().toString(DATE_TIME_FORMAT_V2);
+			QString CreationDate = qSelect.ReadColumn("thst_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
 			QString UserFullName = qSelect.ReadColumn("userfullname").toString();
 			QString ActionName = qSelect.ReadColumn("thac_name").toString();
 			QString Information = qSelect.ReadColumn("thst_information").toString();

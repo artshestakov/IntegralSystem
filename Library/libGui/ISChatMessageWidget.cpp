@@ -90,7 +90,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	LayoutTop->addStretch();
 
 	QLabel *LabelDateTime = new QLabel(this);
-	LabelDateTime->setText(ISGui::ConvertDateTimeToString(DateTime, DATE_FORMAT_V1, TIME_FORMAT_V3));
+	LabelDateTime->setText(ISGui::ConvertDateTimeToString(DateTime, FORMAT_DATE_V1, FORMAT_TIME_V3));
 	LayoutTop->addWidget(LabelDateTime);
 	
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();

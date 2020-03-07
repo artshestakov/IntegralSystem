@@ -145,7 +145,7 @@ QString ISDatabase::GetStartTimeServer() const
 	ISQuery qSelect(QS_START_TIME_SERVER);
 	if (qSelect.ExecuteFirst())
 	{
-		StartTime = qSelect.ReadColumn("pg_postmaster_start_time").toDateTime().toString(DATE_TIME_FORMAT_V3);
+		StartTime = qSelect.ReadColumn("pg_postmaster_start_time").toDateTime().toString(FORMAT_DATE_TIME_V3);
 	}
 	return StartTime;
 }
@@ -156,7 +156,7 @@ QString ISDatabase::GetLoadConfigurationTime()
 	ISQuery qSelect(QS_LOAD_CONFIGURATION_TIME);
 	if (qSelect.ExecuteFirst())
 	{
-		LoadConfiguration = qSelect.ReadColumn("pg_conf_load_time").toDateTime().toString(DATE_TIME_FORMAT_V3);
+		LoadConfiguration = qSelect.ReadColumn("pg_conf_load_time").toDateTime().toString(FORMAT_DATE_TIME_V3);
 	}
 	return LoadConfiguration;
 }
@@ -230,7 +230,7 @@ QString ISDatabase::GetDatabaseDataDirectory()
 QString ISDatabase::GetAge(const QDateTime &DateTime) const
 {
 	QString Age;
-	ISQuery qAge(QString("SELECT age(to_timestamp('%1', 'DD.MM.YYYY hh24:mi:ss'))").arg(DateTime.toString(DATE_TIME_FORMAT_V4)));
+	ISQuery qAge(QString("SELECT age(to_timestamp('%1', 'DD.MM.YYYY hh24:mi:ss'))").arg(DateTime.toString(FORMAT_DATE_TIME_V4)));
 	qAge.SetShowLongQuery(false);
 	if (qAge.ExecuteFirst())
 	{

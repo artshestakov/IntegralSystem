@@ -14,31 +14,31 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 		QString DateFormat = SETTING_STRING(CONST_UID_SETTING_TABLE_DATE_FORMAT);
 		if (DateFormat == "Default")
 		{
-			Result = Value.toDate().toString(DATE_FORMAT_V1);
+			Result = Value.toDate().toString(FORMAT_DATE_V1);
 		}
 		else if (DateFormat == "Extended")
 		{
-			Result = ISGui::ConvertDateToString(Value.toDate(), DATE_FORMAT_V1);
+			Result = ISGui::ConvertDateToString(Value.toDate(), FORMAT_DATE_V1);
 		}
 	}
 	else if (Type == ISNamespace::FT_Birthday)
 	{
-		Result = Value.toDate().toString(DATE_FORMAT_V1);
+		Result = Value.toDate().toString(FORMAT_DATE_V1);
 	}
 	else if (Type == ISNamespace::FT_Time)
 	{
-		Result = Value.toTime().toString(TIME_FORMAT_V3);
+		Result = Value.toTime().toString(FORMAT_TIME_V3);
 	}
 	else if (Type == ISNamespace::FT_DateTime)
 	{
 		QString DateFormat = SETTING_STRING(CONST_UID_SETTING_TABLE_DATE_FORMAT);
 		if (DateFormat == "Default")
 		{
-			Result = Value.toDateTime().toString(DATE_TIME_FORMAT_V1);
+			Result = Value.toDateTime().toString(FORMAT_DATE_TIME_V1);
 		}
 		else if (DateFormat == "Extended")
 		{
-			Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), DATE_FORMAT_V1, TIME_FORMAT_V1);
+			Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), FORMAT_DATE_V1, FORMAT_TIME_V1);
 		}
 	}
 	else if (Type == ISNamespace::FT_Password)
@@ -56,7 +56,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_Seconds)
 	{
-		Result = QTime(0, 0).addSecs(Value.toInt()).toString(TIME_FORMAT_V3);
+		Result = QTime(0, 0).addSecs(Value.toInt()).toString(FORMAT_TIME_V3);
 	}
 	else if (Type == ISNamespace::FT_Percent)
 	{

@@ -34,7 +34,7 @@ void ISCallUserStatisticsForm::FilterChanged()
 			FilterString += " AND ";
 		}
 
-		FilterString += QString("clhs_creationdate::DATE = '%1'").arg(DateEdit->GetValue().toDate().toString(DATE_FORMAT_V2));
+		FilterString += QString("clhs_creationdate::DATE = '%1'").arg(DateEdit->GetValue().toDate().toString(FORMAT_DATE_V2));
 	}
 
 	SetClassFilter(FilterString);

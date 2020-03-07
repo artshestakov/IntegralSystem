@@ -58,7 +58,7 @@ QString ISPassportForm::GetPassportString()
 	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
 	Result += EditNumber->GetValue().toString();
 	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
-	Result += EditDateOfIssue->GetValue().toDateTime().toString(DATE_FORMAT_V2);
+	Result += EditDateOfIssue->GetValue().toDateTime().toString(FORMAT_DATE_V2);
 	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
 	Result += EditIssuedBy->GetValue().toString();
 	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
@@ -110,7 +110,7 @@ void ISPassportForm::ParsePassportString(const QString &PassportString)
 
 		if (DateOfIssue.length())
 		{
-			EditDateOfIssue->SetValue(QDate::fromString(DateOfIssue, DATE_FORMAT_V2));
+			EditDateOfIssue->SetValue(QDate::fromString(DateOfIssue, FORMAT_DATE_V2));
 		}
 
 		if (IssuedBy.length())

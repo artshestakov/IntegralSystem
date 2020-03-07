@@ -90,7 +90,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	}
 
 	QLabel *LabelTime = new QLabel(this);
-	LabelTime->setText(LANG("Time") + ": " + EventTimeAlert.toString(TIME_FORMAT_V1));
+	LabelTime->setText(LANG("Time") + ": " + EventTimeAlert.toString(FORMAT_TIME_V1));
 	Layout->addWidget(LabelTime);
 
 	LayoutInfo->addStretch();

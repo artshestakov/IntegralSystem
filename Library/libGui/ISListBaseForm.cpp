@@ -590,8 +590,8 @@ void ISListBaseForm::Period()
 
 		switch (PeriodForm.GetPeriodType())
 		{
-		case ISNamespace::PT_CreationDate: LabelPeriod->setText(LANG("PeriodLabelCreate").arg(StartDate.toString(DATE_FORMAT_V2)).arg(EndDate.toString(DATE_FORMAT_V2))); break;
-		case ISNamespace::PT_UpdationDate: LabelPeriod->setText(LANG("PeriodLabelUpdate").arg(StartDate.toString(DATE_FORMAT_V2)).arg(EndDate.toString(DATE_FORMAT_V2))); break;
+		case ISNamespace::PT_CreationDate: LabelPeriod->setText(LANG("PeriodLabelCreate").arg(StartDate.toString(FORMAT_DATE_V2)).arg(EndDate.toString(FORMAT_DATE_V2))); break;
+		case ISNamespace::PT_UpdationDate: LabelPeriod->setText(LANG("PeriodLabelUpdate").arg(StartDate.toString(FORMAT_DATE_V2)).arg(EndDate.toString(FORMAT_DATE_V2))); break;
 		}
 		
 		LabelPeriod->setVisible(true);

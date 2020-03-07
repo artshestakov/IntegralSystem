@@ -57,10 +57,10 @@ void ISTaskInfoWidget::Update()
 		QString TaskStatus = qSelectTask.ReadColumn("tsst_name").toString();
 		QString TaskStatusStyleSheet = qSelectTask.ReadColumn("tsst_stylesheet").toString();
 		QString TaskPriority = qSelectTask.ReadColumn("tspr_name").toString();
-		QString TaskDeadline = qSelectTask.ReadColumn("task_deadline").toDate().toString(DATE_FORMAT_V2);
+		QString TaskDeadline = qSelectTask.ReadColumn("task_deadline").toDate().toString(FORMAT_DATE_V2);
 		QString TaskOwner = qSelectTask.ReadColumn("owner").toString();
 		QString TaskExecutor = qSelectTask.ReadColumn("executor").toString();
-		QString TaskDateTime = qSelectTask.ReadColumn("task_datetime").toDateTime().toString(DATE_TIME_FORMAT_V2);
+		QString TaskDateTime = qSelectTask.ReadColumn("task_datetime").toDateTime().toString(FORMAT_DATE_TIME_V2);
 		QString TaskResolution = qSelectTask.ReadColumn("task_resolution").toString();
 
 		LabelNumber->setText(TaskNumber);

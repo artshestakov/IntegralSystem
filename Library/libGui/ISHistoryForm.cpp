@@ -31,7 +31,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	{
 		while (qSelectHistory.Next())
 		{
-			QString DateTimeOpened = qSelectHistory.ReadColumn("htry_creationdate").toDateTime().toString(DATE_TIME_FORMAT_V3);
+			QString DateTimeOpened = qSelectHistory.ReadColumn("htry_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V3);
 			QString TableName = qSelectHistory.ReadColumn("htry_tablename").toString();
 			QString TableLocalName = qSelectHistory.ReadColumn("htry_tablelocalname").toString();
 			QString ObjectName = qSelectHistory.ReadColumn("htry_objectname").toString();

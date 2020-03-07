@@ -45,7 +45,7 @@ ISTaskFileWidget::ISTaskFileWidget(const QDateTime &DateTime, const QString &Use
 
 	Layout->addWidget(new QLabel('(' + Size + ')', this));
 	Layout->addStretch();
-	Layout->addWidget(new QLabel(DateTime.toString(DATE_TIME_FORMAT_V2), this));
+	Layout->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V2), this));
 
 	if (Note.length())
 	{

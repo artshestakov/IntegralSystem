@@ -20,7 +20,7 @@ ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id
 	Layout->addLayout(LayoutLeft);
 
 	QLabel *LabelDateTime = new QLabel(this);
-	LabelDateTime->setText(ISGui::ConvertDateTimeToString(DateTime, DATE_FORMAT_V2, TIME_FORMAT_V1));
+	LabelDateTime->setText(ISGui::ConvertDateTimeToString(DateTime, FORMAT_DATE_V2, FORMAT_TIME_V1));
 	LabelDateTime->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LayoutLeft->addWidget(LabelDateTime, 0, Qt::AlignLeft);
 	

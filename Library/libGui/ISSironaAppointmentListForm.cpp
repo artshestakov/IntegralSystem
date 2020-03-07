@@ -53,7 +53,7 @@ void ISSironaAppointmentListForm::AdmissionFinished()
 		return;
 	}
 
-	if (ISMessageBox::ShowQuestion(this, LANG("Sirona.Message.Question.AdmissionFinished").arg(PatientName).arg(GetCurrentRecordValue("DateTime").toDate().toString(DATE_FORMAT_V2))))
+	if (ISMessageBox::ShowQuestion(this, LANG("Sirona.Message.Question.AdmissionFinished").arg(PatientName).arg(GetCurrentRecordValue("DateTime").toDate().toString(FORMAT_DATE_V2))))
 	{
 		ISQuery qUpdate(QU_ADMISSION_FINISHED);
 		qUpdate.BindValue(":ObjectID", GetObjectID());

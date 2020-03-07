@@ -71,7 +71,7 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	Layout->addWidget(ISControls::CreateHorizontalLine(this));
 
 	QLabel *LabelReconnectStartDate = new QLabel(this);
-	LabelReconnectStartDate->setText(LANG("ReconnectWaitFor") + ": " + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V3));
+	LabelReconnectStartDate->setText(LANG("ReconnectWaitFor") + ": " + QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V3));
 	Layout->addWidget(LabelReconnectStartDate);
 
 	QHBoxLayout *LayoutButtons = new QHBoxLayout();

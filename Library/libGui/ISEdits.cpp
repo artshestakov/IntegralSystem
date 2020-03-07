@@ -283,14 +283,14 @@ void ISQDateEdit::contextMenuEvent(QContextMenuEvent *e)
 //-----------------------------------------------------------------------------
 QDate ISQDateEdit::GetDate() const
 {
-	return text().isEmpty() ? QDate() : QDate::fromString(text(), DATE_FORMAT_V2);
+	return text().isEmpty() ? QDate() : QDate::fromString(text(), FORMAT_DATE_V2);
 }
 //-----------------------------------------------------------------------------
 void ISQDateEdit::SetDate(const QDate &Date)
 {
 	if (Date.isValid())
 	{
-		setText(Date.toString(DATE_FORMAT_V2));
+		setText(Date.toString(FORMAT_DATE_V2));
 		emit DateChanged();
 		HideCalendar();
 	}

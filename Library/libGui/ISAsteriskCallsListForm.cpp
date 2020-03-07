@@ -192,7 +192,7 @@ void ISAsteriskCallsListForm::SaveRecord()
 
 	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
 	{
-		QString AsteriskFileRecordName = LANG("AsteriskFileRecordName").arg(GetCurrentRecordValue("Subscriber").toString()).arg(GetCurrentRecordValue("DialBegin").toDateTime().toString(DATE_TIME_FORMAT_V6));
+		QString AsteriskFileRecordName = LANG("AsteriskFileRecordName").arg(GetCurrentRecordValue("Subscriber").toString()).arg(GetCurrentRecordValue("DialBegin").toDateTime().toString(FORMAT_DATE_TIME_V6));
 		QString SavedPath = ISFileDialog::GetSaveFileNameAsteriskRecord(this, AsteriskFileRecordName);
 		if (SavedPath.length())
 		{
@@ -293,11 +293,11 @@ void ISAsteriskCallsListForm::FillLabels()
 	qSelect.BindValue(":ObjectID", ObjectID);
 	if (qSelect.ExecuteFirst())
 	{
-		LabelDateTime->setText(qSelect.ReadColumn("ascl_dialbegin").toDateTime().toString(DATE_TIME_FORMAT_V3));
+		LabelDateTime->setText(qSelect.ReadColumn("ascl_dialbegin").toDateTime().toString(FORMAT_DATE_TIME_V3));
 		LabelDirection->setText(qSelect.ReadColumn("asdr_name").toString());
 		LabelSubscriber->setText(qSelect.ReadColumn("ascl_subscriber").toString());
 		LabelNumber->setText(qSelect.ReadColumn("ascl_number").toString());
-		LabelDuration->setText(QTime(0, 0).addSecs(qSelect.ReadColumn("ascl_duration").toInt()).toString(TIME_FORMAT_V3));
+		LabelDuration->setText(QTime(0, 0).addSecs(qSelect.ReadColumn("ascl_duration").toInt()).toString(FORMAT_TIME_V3));
 		LabelStatus->setText(qSelect.ReadColumn("asds_localname").toString());
 	}
 }
@@ -340,7 +340,7 @@ void ISAsteriskCallsListForm::SaveToStorage()
 	if (!QFile::exists(FilePath))
 	{
 		QString HangupString = GetSqlModel()->data(GetSqlModel()->index(GetCurrentRowIndex(), GetSqlModel()->GetFieldIndex("Hangup"))).toString();
-		QTime HangupTime = QTime::fromString(HangupString, TIME_FORMAT_V3);
+		QTime HangupTime = QTime::fromString(HangupString, FORMAT_TIME_V3);
 		if (HangupTime.second())
 		{
 			/*ISAsteriskRecordWaitForm AsteriskRecordWaitForm(UID, GetCurrentRecordValueDB("UniqueID").toString());
@@ -368,14 +368,14 @@ void ISAsteriskCallsListForm::SaveToStorage()
 		qSelect.BindValue(":CallID", GetObjectID());
 		if (qSelect.ExecuteFirst())
 		{
-			QString CallDateTime = qSelect.ReadColumn("ascl_dialbegin").toDateTime().toString(DATE_TIME_FORMAT_V6);
+			QString CallDateTime = qSelect.ReadColumn("ascl_dialbegin").toDateTime().toString(FORMAT_DATE_TIME_V6);
 			QString CallDirection = qSelect.ReadColumn("asdr_name").toString();
 			QString CallSubscriber = qSelect.ReadColumn("ascl_subscriber").toString();
 			QString CallNumber = qSelect.ReadColumn("ascl_number").toString();
 			int CallDuration = qSelect.ReadColumn("ascl_duration").toInt();
 			
 			ISQuery qUpdateFile(QU_FILE);
-			qUpdateFile.BindValue(":FileName", CallDateTime + '_' + CallDirection + '_' + CallSubscriber + '_' + CallNumber + '_' + QTime(0, 0).addSecs(CallDuration).toString(TIME_FORMAT_V5));
+			qUpdateFile.BindValue(":FileName", CallDateTime + '_' + CallDirection + '_' + CallSubscriber + '_' + CallNumber + '_' + QTime(0, 0).addSecs(CallDuration).toString(FORMAT_TIME_V5));
 			qUpdateFile.BindValue(":Expansion", EXTENSION_WAV);
 			qUpdateFile.BindValue(":FileID", FileID);
 			qUpdateFile.Execute();

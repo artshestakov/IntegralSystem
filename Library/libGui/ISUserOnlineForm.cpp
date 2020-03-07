@@ -45,7 +45,7 @@ ISUserOnlineForm::ISUserOnlineForm(int user_id, const QString &user_name, QWidge
 
 	LabelNotRegistered = new QLabel(this);
 	LabelNotRegistered->setVisible(false);
-	LabelNotRegistered->setText(LANG("ActivityUserNotRegisteredFromDate").arg(DateEdit->GetValue().toDate().toString(DATE_FORMAT_V2)));
+	LabelNotRegistered->setText(LANG("ActivityUserNotRegisteredFromDate").arg(DateEdit->GetValue().toDate().toString(FORMAT_DATE_V2)));
 	ISGui::SetFontWidgetBold(LabelNotRegistered, true);
 	LayoutTitle->addWidget(LabelNotRegistered);
 
@@ -94,7 +94,7 @@ void ISUserOnlineForm::Update()
 				QString OnlineType = qSelect.ReadColumn("uotp_name").toString();
 
 				QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-				ListWidgetItem->setText(Time.toString(TIME_FORMAT_V3) + ": " + OnlineType);
+				ListWidgetItem->setText(Time.toString(FORMAT_TIME_V3) + ": " + OnlineType);
 				ListWidgetItem->setData(Qt::UserRole, Time);
 				ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 
@@ -113,7 +113,7 @@ void ISUserOnlineForm::Update()
 
 			QTime TimeActive = QTime(0, 0).addSecs(SecondsActive);
 			QTime TimeInactive = QTime(0, 0).addSecs(SecondsInactive);
-			LabelCountTime->setText(LANG("MonitorActivity.ActivityUserCount").arg(TimeActive.toString(TIME_FORMAT_V3)).arg(TimeInactive.toString(TIME_FORMAT_V3)));
+			LabelCountTime->setText(LANG("MonitorActivity.ActivityUserCount").arg(TimeActive.toString(FORMAT_TIME_V3)).arg(TimeInactive.toString(FORMAT_TIME_V3)));
 		}
 		else
 		{

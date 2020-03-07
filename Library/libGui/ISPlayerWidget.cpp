@@ -181,7 +181,7 @@ void ISPlayerWidget::VolumeClicked()
 //-----------------------------------------------------------------------------
 void ISPlayerWidget::SliderValueChanged(int Value)
 {
-	LabelCurrentDuration->setText(QTime(0, 0).addMSecs(Value).toString(TIME_FORMAT_V4));
+	LabelCurrentDuration->setText(QTime(0, 0).addMSecs(Value).toString(FORMAT_TIME_V4));
 }
 //-----------------------------------------------------------------------------
 void ISPlayerWidget::SliderPress()
@@ -218,7 +218,7 @@ void ISPlayerWidget::SliderRelease()
 void ISPlayerWidget::MediaDurationChanged(qint64 Duration)
 {
 	SliderDuration->setMaximum(Duration);
-	LabelDuration->setText(QTime(0, 0).addMSecs(Duration).toString(TIME_FORMAT_V4));
+	LabelDuration->setText(QTime(0, 0).addMSecs(Duration).toString(FORMAT_TIME_V4));
 	
 	PropertyAnimation->setEndValue(Duration);
 	PropertyAnimation->setDuration(Duration);

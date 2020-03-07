@@ -45,7 +45,7 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
     ISStackWalker stack_walker;
 	stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
 
-	std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + SYMBOL_MINUS + QDateTime::currentDateTime().toString(DATE_TIME_FORMAT_V8) + "." + EXTENSION_CRASH).toStdString();
+	std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + SYMBOL_MINUS + QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V8) + "." + EXTENSION_CRASH).toStdString();
 	FILE *File = fopen(FilePath.c_str(), "w");
 	if (File)
 	{

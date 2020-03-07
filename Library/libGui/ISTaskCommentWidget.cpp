@@ -24,7 +24,7 @@ ISTaskCommentWidget::ISTaskCommentWidget(const QDateTime &CreationDate, const QS
 	Layout->addWidget(LabelComment);
 
 	QLabel *LabelDateTime = new QLabel(this);
-	LabelDateTime->setText(CreationDate.toString(DATE_TIME_FORMAT_V2));
+	LabelDateTime->setText(CreationDate.toString(FORMAT_DATE_TIME_V2));
 	LabelDateTime->setSizePolicy(QSizePolicy::Maximum, LabelDateTime->sizePolicy().verticalPolicy());
 	MainLayout->addWidget(LabelDateTime);
 }

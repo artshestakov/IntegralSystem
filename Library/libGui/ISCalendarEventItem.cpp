@@ -35,7 +35,7 @@ ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, c
 	Layout->addWidget(LabelDate);
 
 	QLabel *LabelTime = new QLabel(this);
-	LabelTime->setText(Time.toString(TIME_FORMAT_V1));
+	LabelTime->setText(Time.toString(FORMAT_TIME_V1));
 	LabelTime->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LabelTime->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	Layout->addWidget(LabelTime);
@@ -79,7 +79,7 @@ bool ISCalendarEventItem::GetClosed() const
 //-----------------------------------------------------------------------------
 void ISCalendarEventItem::SetVisibleDate(const QDate &Date)
 {
-	LabelDate->setText(Date.toString(DATE_FORMAT_V1));
+	LabelDate->setText(Date.toString(FORMAT_DATE_V1));
 	LabelDate->setVisible(true);
 
 	adjustSize();
