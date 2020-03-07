@@ -13,48 +13,46 @@
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING)
 {
-	std::vector<ISMetaDataType> VectorTypes =
+	VectorTypes = std::vector<ISMetaDataType>
 	{
-		{ "Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true }
+		{ "Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true },
+		{ "BigInt", ISNamespace::FT_BigInt, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true },
+		{ "String", ISNamespace::FT_String, "CHARACTER VARYING", "ISLineEdit", "ISComboSearchString", true },
+		{ "Text", ISNamespace::FT_Text, "TEXT", "ISTextEdit", "ISComboSearchString", true },
+		{ "UID", ISNamespace::FT_UID, "UUID", "ISUuidEdit", "ISComboSearchString", true },
+		{ "Bool", ISNamespace::FT_Bool, "BOOLEAN", "ISCheckEdit", "ISComboSearchBase", true },
+		{ "Double", ISNamespace::FT_Double, "NUMERIC", "ISDoubleEdit", "ISComboSearchNumber", true },
+		{ "ByteArray", ISNamespace::FT_ByteArray, "BYTEA", QString(), QString(), false },
+		{ "Date", ISNamespace::FT_Date, "DATE", "ISDateEdit", "ISComboSearchNumber", true },
+		{ "Time", ISNamespace::FT_Time, "TIME WITHOUT TIME ZONE", "ISTimeEdit", "ISComboSearchNumber", true },
+		{ "DateTime", ISNamespace::FT_DateTime, "TIMESTAMP WITHOUT TIME ZONE", "ISDateTimeEdit", "ISComboSearchNumber", true },
+		{ "Inn", ISNamespace::FT_Inn, "CHARACTER VARYING", "ISINNEdit", "ISComboSearchString", true },
+		{ "Kpp", ISNamespace::FT_Kpp, "CHARACTER VARYING", "ISKPPEdit", "ISComboSearchString", true },
+		{ "Ogrn", ISNamespace::FT_Ogrn, "CHARACTER VARYING", "ISOGRNEdit", "ISComboSearchString", true },
+		{ "Okpo", ISNamespace::FT_Okpo, "CHARACTER VARYING", "ISOKPOEdit", "ISComboSearchString", true },
+		{ "Bik", ISNamespace::FT_Bik, "CHARACTER VARYING", "ISBIKEdit", "ISComboSearchString", true },
+		{ "Icq", ISNamespace::FT_Icq, "CHARACTER VARYING", "ISICQEdit", "ISComboSearchString", true },
+		{ "Year", ISNamespace::FT_Year, "INTEGER", "ISYearEdit", "ISComboSearchNumber", true },
+		{ "PhoneBase", ISNamespace::FT_PhoneBase, "CHARACTER VARYING", "ISPhoneBaseEdit", "ISComboSearchString", true },
+		{ "Phone", ISNamespace::FT_Phone, "CHARACTER VARYING", "ISPhoneEdit", "ISComboSearchString", true },
+		{ "IPAddress", ISNamespace::FT_IPAddress, "CHARACTER VARYING", "ISIPAddressEdit", "ISComboSearchString", true },
+		{ "Password", ISNamespace::FT_Password, "CHARACTER VARYING", "ISPasswordEdit", "ISComboSearchString", false },
+		{ "Image", ISNamespace::FT_Image, "BYTEA", "ISImageEdit", QString(), false },
+		{ "Image64", ISNamespace::FT_Image64, "CHARACTER VARYING", "ISImageEdit64", QString(), false },
+		{ "Color", ISNamespace::FT_Color, "CHARACTER VARYING", "ISColorEdit", QString(), false },
+		{ "EMail", ISNamespace::FT_EMail, "CHARACTER VARYING", "ISEMailEdit", "ISComboSearchString", true },
+		{ "Passport", ISNamespace::FT_Passport, "CHARACTER VARYING", "ISPassportEdit", "ISComboSearchString", true },
+		{ "Volume", ISNamespace::FT_Volume, "INTEGER", "ISVolumeEdit", QString(), false },
+		{ "Birthday", ISNamespace::FT_Birthday, "DATE", "ISBirthdayEdit", "ISComboSearchNumber", true },
+		{ "Seconds", ISNamespace::FT_Seconds, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", false },
+		{ "CallDetails", ISNamespace::FT_CallDetails, "BOOLEAN", QString(), QString(), false },
+		{ "Month", ISNamespace::FT_Month, "INTEGER", "ISMonthEdit", "ISComboSearchNumber", false },
+		{ "Login", ISNamespace::FT_Login, "CHARACTER VARYING", "ISLoginEdit", "ISComboSearchNumber", true },
+		{ "Percent", ISNamespace::FT_Percent, "NUMERIC", "ISPercentEdit", "ISComboSearchNumber", true },
+		{ "Address", ISNamespace::FT_Address, "CHARACTER VARYING", "ISAddressEdit", "ISComboSearchString", true },
+		{ "Url", ISNamespace::FT_Url, "CHARACTER VARYING", "ISUrlEdit", "ISComboSearchString", true },
+		{ "File", ISNamespace::FT_File, "INTEGER", "ISFileEdit", QString(), false }
 	};
-
-	AssociationTypes.Insert("Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("BigInt", ISNamespace::FT_BigInt, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("String", ISNamespace::FT_String, "CHARACTER VARYING", "ISLineEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Text", ISNamespace::FT_Text, "TEXT", "ISTextEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("UID", ISNamespace::FT_UID, "UUID", "ISUuidEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Bool", ISNamespace::FT_Bool, "BOOLEAN", "ISCheckEdit", "ISComboSearchBase", true);
-	AssociationTypes.Insert("Double", ISNamespace::FT_Double, "NUMERIC", "ISDoubleEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("ByteArray", ISNamespace::FT_ByteArray, "BYTEA", QString(), QString(), false);
-	AssociationTypes.Insert("Date", ISNamespace::FT_Date, "DATE", "ISDateEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("Time", ISNamespace::FT_Time, "TIME WITHOUT TIME ZONE", "ISTimeEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("DateTime", ISNamespace::FT_DateTime, "TIMESTAMP WITHOUT TIME ZONE", "ISDateTimeEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("Inn", ISNamespace::FT_Inn, "CHARACTER VARYING", "ISINNEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Kpp", ISNamespace::FT_Kpp, "CHARACTER VARYING", "ISKPPEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Ogrn", ISNamespace::FT_Ogrn, "CHARACTER VARYING", "ISOGRNEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Okpo", ISNamespace::FT_Okpo, "CHARACTER VARYING", "ISOKPOEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Bik", ISNamespace::FT_Bik, "CHARACTER VARYING", "ISBIKEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Icq", ISNamespace::FT_Icq, "CHARACTER VARYING", "ISICQEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Year", ISNamespace::FT_Year, "INTEGER", "ISYearEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("PhoneBase", ISNamespace::FT_PhoneBase, "CHARACTER VARYING", "ISPhoneBaseEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Phone", ISNamespace::FT_Phone, "CHARACTER VARYING", "ISPhoneEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("IPAddress", ISNamespace::FT_IPAddress, "CHARACTER VARYING", "ISIPAddressEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Password", ISNamespace::FT_Password, "CHARACTER VARYING", "ISPasswordEdit", "ISComboSearchString", false);
-	AssociationTypes.Insert("Image", ISNamespace::FT_Image, "BYTEA", "ISImageEdit", QString(), false);
-	AssociationTypes.Insert("Image64", ISNamespace::FT_Image64, "CHARACTER VARYING", "ISImageEdit64", QString(), false);
-	AssociationTypes.Insert("Color", ISNamespace::FT_Color, "CHARACTER VARYING", "ISColorEdit", QString(), false);
-	AssociationTypes.Insert("EMail", ISNamespace::FT_EMail, "CHARACTER VARYING", "ISEMailEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Passport", ISNamespace::FT_Passport, "CHARACTER VARYING", "ISPassportEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Volume", ISNamespace::FT_Volume, "INTEGER", "ISVolumeEdit", QString(), false);
-	AssociationTypes.Insert("Birthday", ISNamespace::FT_Birthday, "DATE", "ISBirthdayEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("Seconds", ISNamespace::FT_Seconds, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", false);
-	AssociationTypes.Insert("CallDetails", ISNamespace::FT_CallDetails, "BOOLEAN", QString(), QString(), false);
-	AssociationTypes.Insert("Month", ISNamespace::FT_Month, "INTEGER", "ISMonthEdit", "ISComboSearchNumber", false);
-	AssociationTypes.Insert("Login", ISNamespace::FT_Login, "CHARACTER VARYING", "ISLoginEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("Percent", ISNamespace::FT_Percent, "NUMERIC", "ISPercentEdit", "ISComboSearchNumber", true);
-	AssociationTypes.Insert("Address", ISNamespace::FT_Address, "CHARACTER VARYING", "ISAddressEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("Url", ISNamespace::FT_Url, "CHARACTER VARYING", "ISUrlEdit", "ISComboSearchString", true);
-	AssociationTypes.Insert("File", ISNamespace::FT_File, "INTEGER", "ISFileEdit", QString(), false);
 }
 //-----------------------------------------------------------------------------
 ISMetaData::~ISMetaData()
@@ -251,9 +249,82 @@ bool ISMetaData::CheckExitField(PMetaClassTable *MetaTable, const QString &Field
 	return false;
 }
 //-----------------------------------------------------------------------------
-ISAssociationTypes& ISMetaData::GetAssociationTypes()
+ISNamespace::FieldType ISMetaData::GetTypeField(const QString &type_name)
 {
-	return AssociationTypes;
+	for (const ISMetaDataType &Type : VectorTypes)
+	{
+		if (Type.TypeName == type_name)
+		{
+			return Type.TypeField;
+		}
+	}
+	IS_ASSERT(false, "Not found field type from string: " + type_name);
+	return ISNamespace::FT_Unknown;
+}
+//-----------------------------------------------------------------------------
+QString ISMetaData::GetTypeDB(ISNamespace::FieldType field_type) const
+{
+	for (const ISMetaDataType &Type : VectorTypes)
+	{
+		if (Type.TypeField == field_type)
+		{
+			return Type.TypeDB;
+		}
+	}
+	IS_ASSERT(false, "Not found type db.");
+	return QString();
+}
+//-----------------------------------------------------------------------------
+QString ISMetaData::GetTypeDB(const QString &type_name) const
+{
+	for (const ISMetaDataType &Type : VectorTypes)
+	{
+		if (Type.TypeName == type_name)
+		{
+			return Type.TypeDB;
+		}
+	}
+	IS_ASSERT(false, "Not found type db: " + type_name);
+	return QString();
+}
+//-----------------------------------------------------------------------------
+QString ISMetaData::GetNameFieldEdit(ISNamespace::FieldType field_type) const
+{
+	for (const ISMetaDataType &Type : VectorTypes)
+	{
+		if (Type.TypeField == field_type)
+		{
+			return Type.ControlWidget;
+		}
+	}
+	IS_ASSERT(false, "Not found control widget from field type.");
+	return QString();
+}
+//-----------------------------------------------------------------------------
+QString ISMetaData::GetSearchWidget(ISNamespace::FieldType field_type) const
+{
+	for (const ISMetaDataType &Type : VectorTypes)
+	{
+		if (Type.TypeField == field_type)
+		{
+			return Type.SearchOperatorWidget;
+		}
+	}
+	IS_ASSERT(false, "Not found search operator widget from field type.");
+	return QString();
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::GetSearch(ISNamespace::FieldType field_type) const
+{
+	for (const ISMetaDataType &Type : VectorTypes)
+	{
+		if (Type.TypeField == field_type)
+		{
+			return Type.Search;
+		}
+	}
+	IS_ASSERT(false, "Not found search permission from field type.");
+	return false;
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
@@ -278,7 +349,7 @@ bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 	ISMetaUuidCheckeder MetaUuidCheckeder;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех файлов мета-данных
 	{
-        Result = MetaUuidCheckeder.Search(FileInfo);
+		Result = MetaUuidCheckeder.Search(FileInfo);
 		if (!Result)
 		{
 			ErrorString = MetaUuidCheckeder.GetErrorString();
@@ -456,7 +527,7 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 				{
 					Result = InitializeXSNTableFields(MetaTable, GetChildDomNode(DomNode, "Fields").firstChild()); //Инициализация пользовательских полей
 				}
-				
+
 				if (Result)
 				{
 					Result = InitializeXSNTableIndexes(MetaTable, GetChildDomNode(DomNode, "Indexes").firstChild()); //Инициализация индексов
@@ -570,12 +641,12 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 //-----------------------------------------------------------------------------
 void ISMetaData::InitializeXSNTableSystemFields(PMetaClassTable *MetaTable)
 {
-    QFile File(PATH_SCHEMA_TEMPLATE_FIELDS);
-    IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
-    QString Content = File.readAll();
-    File.close();
+	QFile File(PATH_SCHEMA_TEMPLATE_FIELDS);
+	IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
+	QString Content = File.readAll();
+	File.close();
 
-    QDomElement DomElement = ISSystem::GetDomElement(Content);
+	QDomElement DomElement = ISSystem::GetDomElement(Content);
 	QDomNode DomNode = DomElement.firstChild();
 	InitializeXSNTableFields(MetaTable, DomNode);
 
@@ -586,7 +657,7 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaClassTable *MetaTable)
 	PMetaClassField *FieldUID = MetaTable->GetField("UID");
 	IS_ASSERT(FieldUID, "Null field object");
 	FieldUID->Index = new PMetaClassIndex(true, MetaTable->Alias, MetaTable->Name, FieldUID->Name);
-	
+
 	PMetaClassField *FieldIsDeleted = MetaTable->GetField("IsDeleted");
 	IS_ASSERT(FieldIsDeleted, "Null field object");
 	FieldIsDeleted->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsDeleted->Name);
@@ -632,7 +703,7 @@ bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTabl
 			ErrorString = QString("Empty attributes system field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
 			break;
 		}
-		
+
 		QString FieldName = Temp.attributes().namedItem("Name").nodeValue();
 		Result = !FieldName.isEmpty();
 		if (!Result)
@@ -692,19 +763,19 @@ bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 				ErrorString = QString("Empty field name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
 				break;
 			}
-			
+
 			Result = !FieldName.contains(SYMBOL_SPACE);
 			if (!Result)
 			{
 				ErrorString = QString("Forbidden symbol ' ' in field name: %1").arg(FieldName);
 				break;
 			}
-			
+
 			QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
 			PMetaClassField *MetaField = new PMetaClassField();
 			MetaField->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
 			MetaField->Name = FieldName;
-			MetaField->Type = ISMetaData::GetInstanse().GetAssociationTypes().GetTypeField(DomNamedNodeMap.namedItem("Type").nodeValue());
+			MetaField->Type = ISMetaData::GetInstanse().GetTypeField(DomNamedNodeMap.namedItem("Type").nodeValue());
 			MetaField->Size = DomNamedNodeMap.namedItem("LocalName").nodeValue().toInt();
 			MetaField->Upper = QVariant(DomNamedNodeMap.namedItem("LocalListName").nodeValue()).toBool();
 			MetaField->Lower = QVariant(DomNamedNodeMap.namedItem("TitleName").nodeValue()).toBool();
@@ -744,14 +815,14 @@ bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 					ErrorString = QString("Empty field name.");
 					break;
 				}
-				
+
 				Result = !MetaField->LabelName.isEmpty();
 				if (!Result)
 				{
 					ErrorString = QString("Empty field \"%1\" label name.").arg(MetaField->UID);
 					break;
 				}
-				
+
 				Result = !MetaField->LocalListName.isEmpty();
 				if (!Result)
 				{
@@ -794,7 +865,7 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDo
 				ErrorString = QString("Invalid index tag name: %1").arg(Temp.nodeName());
 				break;
 			}
-			
+
 			QString FieldName = Temp.attributes().namedItem("Field").nodeValue();
 			Result = !FieldName.isEmpty();
 			if (!Result)
@@ -802,7 +873,7 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDo
 				ErrorString = QString("Empty index name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
 				break;
 			}
-			
+
 			bool Unique = QVariant(Temp.attributes().namedItem("Unique").nodeValue()).toBool();
 			QStringList IndexList = FieldName.split(';');
 			if (IndexList.count() > 1) //Если индекс составной
@@ -850,7 +921,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 			ErrorString = QString("Empty attributes foreign. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
 			break;
 		}
-		
+
 		Result = Temp.nodeName() == "Foreign";
 		if (!Result)
 		{
@@ -889,7 +960,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 			ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->Name);
 			break;
 		}
-		
+
 		Result = !MetaField->Foreign;
 		if (!Result)
 		{
@@ -980,7 +1051,7 @@ bool ISMetaData::InitializeXSR()
 		{
 			ErrorString = QString("Not opened xsr file: %1").arg(FileInfo.filePath());
 		}
-		
+
 		if (!Result)
 		{
 			break;
@@ -1203,6 +1274,6 @@ QDomNode ISMetaData::GetChildDomNode(QDomNode &TableNode, const QString &TagName
 		}
 		DomNode = DomNode.nextSibling();
 	}
-    return QDomNode();
+	return QDomNode();
 }
 //-----------------------------------------------------------------------------

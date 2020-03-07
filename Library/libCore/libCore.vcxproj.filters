@@ -123,9 +123,6 @@
     <ClInclude Include="ISCore.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISAssociationTypes.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
     <ClInclude Include="call_stack.hpp">
       <Filter>StackTrace</Filter>
     </ClInclude>
@@ -287,9 +284,6 @@
     </ClCompile>
     <ClCompile Include="ISMemoryObjects.cpp">
       <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAssociationTypes.cpp">
-      <Filter>MetaData</Filter>
     </ClCompile>
     <ClCompile Include="ISMetaData.cpp">
       <Filter>MetaData</Filter>

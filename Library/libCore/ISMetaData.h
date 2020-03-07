@@ -3,8 +3,8 @@
 #define _ISMETADATA_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
-#include "ISAssociationTypes.h"
 #include "PMetaClass.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISMetaData
 {
@@ -36,7 +36,13 @@ public:
 
 	bool CheckExistTable(const QString &TableName) const; //Проверить наличие указанной таблицы в базе
 	bool CheckExitField(PMetaClassTable *MetaTable, const QString &FieldName) const; //Проверить наличие указанного поля в указанной таблице
-	ISAssociationTypes& GetAssociationTypes(); //Получить ассоциации
+
+	ISNamespace::FieldType GetTypeField(const QString &type_name); //Получить тип данных по мета-имени
+	QString GetTypeDB(ISNamespace::FieldType field_type) const; //Получить наименование типа в базе данных
+	QString GetTypeDB(const QString &type_name) const; //Получить наименование типа в базе данных по имени типа в системе
+	QString GetNameFieldEdit(ISNamespace::FieldType field_type) const; //Получить наименование класса для типа данных
+	QString GetSearchWidget(ISNamespace::FieldType field_type) const; //Получить имя поискового виджета
+	bool GetSearch(ISNamespace::FieldType field_type) const; //Получить факт разрешение на поиск для типа данных
 
 protected:
 	bool CheckUniqueAllIdentifiers(bool InitXSR); //Проверка уникальности всех идентификаторов
@@ -80,9 +86,8 @@ private:
 	QString CurrentXSN; //Текущий обрабатываемый XSN
 	QString CurrentXSR; //Текущий обрабатываемый XSR
 	QString CurrentXSF; //Текущий обрабатываемый XSF
-	bool Initialized;
-
-	ISAssociationTypes AssociationTypes;
+	bool Initialized; //Флан инициализации
+	std::vector<ISMetaDataType> VectorTypes; //Перечисление типов системы
 };
 //-----------------------------------------------------------------------------
 #endif

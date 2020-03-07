@@ -213,7 +213,7 @@ QString ISFullTextSearchForm::CreateQuery(PMetaClassTable *MetaTable) const
 	QueryText += "SELECT " + MetaTable->Alias + "_id AS ID, concat(";
 	for (PMetaClassField *MetaField : MetaTable->Fields)
 	{
-		if (!ISMetaData::GetInstanse().GetAssociationTypes().GetSearch(MetaField->Type)) //≈сли разрешение по поиск по типу пол€ есть
+		if (!ISMetaData::GetInstanse().GetSearch(MetaField->Type)) //≈сли разрешение по поиск по типу пол€ есть
 		{
 			continue;
 		}

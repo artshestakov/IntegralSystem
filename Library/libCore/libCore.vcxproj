@@ -127,7 +127,6 @@
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISCrashDumper.h" />
-    <ClInclude Include="ISAssociationTypes.h" />
     <QtMoc Include="ISAuthConnector.h" />
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="ISCore.h" />
@@ -194,7 +193,6 @@
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
-    <ClCompile Include="ISAssociationTypes.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
     <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISDatabase.cpp" />

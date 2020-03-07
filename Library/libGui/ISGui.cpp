@@ -445,7 +445,7 @@ ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::Fie
 	}
 	else
 	{
-		SearchOperatorWidget = ISMetaData::GetInstanse().GetAssociationTypes().GetSearchOperatorWidget(DataType);
+		SearchOperatorWidget = ISMetaData::GetInstanse().GetSearch(DataType);
 	}
 
 	int ObjectType = QMetaType::type((SearchOperatorWidget + SYMBOL_STAR).toLocal8Bit().constData());
@@ -601,12 +601,12 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaClassFie
 			}
 			else
 			{
-				Temp = ISMetaData::GetInstanse().GetAssociationTypes().GetControlWidgetFromType(MetaField->Type);
+				Temp = ISMetaData::GetInstanse().GetNameFieldEdit(MetaField->Type);
 			}
 		}
 		else
 		{
-			Temp = ISMetaData::GetInstanse().GetAssociationTypes().GetControlWidgetFromType(DataType);
+			Temp = ISMetaData::GetInstanse().GetNameFieldEdit(DataType);
 		}
 		FieldEditBase = CreateFieldEditBase(ParentWidget, MetaField, DataType, Temp);
 	}

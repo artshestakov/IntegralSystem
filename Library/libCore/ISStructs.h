@@ -11,12 +11,12 @@
 //-----------------------------------------------------------------------------
 struct ISMetaDataType
 {
-	QString TypeName;
-	ISNamespace::FieldType TypeField;
-	QString TypeDB;
-	QString ControlWidget;
-	QString SearchOperatorWidget;
-	bool Search;
+	QString TypeName; //Наименование типа
+	ISNamespace::FieldType TypeField; //Тип даннных в системе
+	QString TypeDB; //Тип данных в базе
+	QString ControlWidget; //Имя поля редактирования
+	QString SearchOperatorWidget; //Имя поискового виджета
+	bool Search; //Возможность поиска по полю
 };
 //-----------------------------------------------------------------------------
 struct StructModelItem

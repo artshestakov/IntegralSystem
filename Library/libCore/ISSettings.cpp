@@ -130,7 +130,7 @@ void ISSettings::Initialize()
 			ISMetaSetting *Setting = new ISMetaSetting();
 			Setting->UID = SettingUID;
 			Setting->Name = qSelectSettings.ReadColumn("stgs_name").toString();
-			Setting->SettingType = ISMetaData::GetInstanse().GetAssociationTypes().GetTypeField(qSelectSettings.ReadColumn("stgs_type").toString());
+			Setting->SettingType = ISMetaData::GetInstanse().GetTypeField(qSelectSettings.ReadColumn("stgs_type").toString());
 			Setting->WidgetEditName = qSelectSettings.ReadColumn("stgs_widgeteditname").toString();
 			Setting->LocalName = qSelectSettings.ReadColumn("stgs_localname").toString();
 			Setting->Hint = qSelectSettings.ReadColumn("stgs_hint").toString();

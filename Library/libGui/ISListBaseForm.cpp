@@ -690,7 +690,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 		for (int Column = 0; Column < SqlModel->columnCount(); ++Column) //Обход полей записи
 		{
 			PMetaClassField *MetaField = SqlModel->GetField(Column);
-			if (!ISMetaData::GetInstanse().GetAssociationTypes().GetSearch(MetaField->Type))
+			if (!ISMetaData::GetInstanse().GetSearch(MetaField->Type))
 			{
 				continue;
 			}

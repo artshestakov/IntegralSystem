@@ -48,7 +48,7 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 		bool FieldNotNull = MetaField->NotNull; //Статус обязательного заполнения поля
 
 		SqlText += TableAlias + '_' + FieldName.toLower();
-		SqlText += SYMBOL_SPACE + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(FieldType);
+		SqlText += SYMBOL_SPACE + ISMetaData::GetInstanse().GetTypeDB(FieldType);
 
 		if (FieldSize) //Если указан размер поля
 		{
@@ -152,7 +152,7 @@ void CGTable::AlterExistFields(PMetaClassTable *MetaTable)
 			}
 
 			PMetaClassField *MetaField = ISMetaData::GetInstanse().GetMetaField(MetaTable, ColumnName);
-			QString MetaType = ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->Type);
+			QString MetaType = ISMetaData::GetInstanse().GetTypeDB(MetaField->Type);
 			QString MetaDefaultValue = MetaField->DefaultValue.toString();
 			bool MetaNotNull = MetaField->NotNull;
 			int MetaSize = MetaField->Size;
@@ -260,7 +260,7 @@ void CGTable::CreateNewFields(PMetaClassTable *MetaTable)
 		if (!CGHelper::CheckExistColumn(MetaTable, FieldName)) //Если поле не существует
 		{
 			QString AddColumn = "ALTER TABLE public." + MetaTable->Name + " \n" +
-				"ADD COLUMN \"" + FieldName + "\"" + SYMBOL_SPACE + ISMetaData::GetInstanse().GetAssociationTypes().GetTypeDB(MetaField->Type);
+				"ADD COLUMN \"" + FieldName + "\"" + SYMBOL_SPACE + ISMetaData::GetInstanse().GetTypeDB(MetaField->Type);
 
 			if (MetaField->Size) //Если указан размер поля
 			{

@@ -152,7 +152,7 @@ void ISSearchForm::LoadFields()
 			continue;
 		}
 
-		if (ISMetaData::GetInstanse().GetAssociationTypes().GetSearch(MetaField->Type))
+		if (ISMetaData::GetInstanse().GetSearch(MetaField->Type))
 		{
 			AddFieldFromList(MetaField->LabelName, MetaField->Name);
 		}
