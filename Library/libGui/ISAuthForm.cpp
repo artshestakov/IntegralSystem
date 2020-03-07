@@ -14,8 +14,6 @@
 //-----------------------------------------------------------------------------
 ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
-	AuthConnector = nullptr;
-
 	setWindowTitle(LANG("InputInSystem"));
 	ForbidResize();
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
@@ -111,6 +109,10 @@ ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	connect(ActionClearFields, &QAction::triggered, this, &ISAuthForm::ClearFields);
 	addAction(ActionClearFields);
 
+	AuthConnector = new ISAuthConnector(this);
+	connect(AuthConnector, &ISAuthConnector::ConnectedToHost, this, &ISAuthForm::ConnectedDone);
+	connect(AuthConnector, &ISAuthConnector::ConnectedFailed, this, &ISAuthForm::ConnectedFailed);
+
 #ifdef DEBUG
 	EditLogin->SetValue("postgres");
 	EditPassword->SetValue("adm777");
@@ -195,12 +197,6 @@ void ISAuthForm::Input()
 	if (Check())
 	{
 		SetConnecting(true);
-		if (!AuthConnector)
-		{
-			AuthConnector = new ISAuthConnector(this);
-			connect(AuthConnector, &ISAuthConnector::ConnectedToHost, this, &ISAuthForm::ConnectedDone);
-			connect(AuthConnector, &ISAuthConnector::ConnectedFailed, this, &ISAuthForm::ConnectedFailed);
-		}
 		AuthConnector->Connect();
 	}
 }
@@ -246,7 +242,7 @@ void ISAuthForm::ConnectedDone()
 void ISAuthForm::ConnectedFailed()
 {
 	SetConnecting(false);
-	ISMessageBox::ShowWarning(this, LANG("Message.Warning.SslConnectionDBFailed").arg(AuthConnector->errorString().toLower()));
+	ISMessageBox::ShowWarning(this, LANG("Message.Warning.FailedConnectionToPostgreSQL").arg(AuthConnector->errorString().toLower()));
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::SetConnecting(bool Connecting)

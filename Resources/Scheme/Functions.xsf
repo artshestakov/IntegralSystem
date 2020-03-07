@@ -27,9 +27,7 @@ SECURITY INVOKER
 COST 100;            
 "/>
 
-  <Function Name="userfullname" Text="CREATE OR REPLACE FUNCTION public.userfullname (
-  id integer
-)
+  <Function Name="userfullname" Text="CREATE OR REPLACE FUNCTION public.userfullname (id bigint)
 RETURNS varchar AS
 $body$
 BEGIN
@@ -121,7 +119,7 @@ SECURITY INVOKER
 COST 100;"/>
 
   <Function Name="userlogin" Text="CREATE OR REPLACE FUNCTION public.userlogin (
-  id integer
+  id bigint
 )
 RETURNS varchar AS
 $body$

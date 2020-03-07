@@ -28,7 +28,6 @@ EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWid
 
 	TextEdit = new QTextEdit(GroupBox);
 	TextEdit->setReadOnly(true);
-	TextEdit->setContextMenuPolicy(Qt::NoContextMenu);
 	GroupBox->layout()->addWidget(TextEdit);
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();

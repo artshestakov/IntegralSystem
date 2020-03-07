@@ -79,8 +79,8 @@
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
   <Local Name="Message.Error.ConnectionSetting.Input.DatabaseNameEmpty" Russian="В настройках подключения к базе данных не указано имя базы данных."/>
-  <Local Name="Message.Error.Input.LoginEmpty" Russian="Введите логин."/>
-  <Local Name="Message.Error.Input.PasswordEmpty" Russian="Введите пароль."/>
+  <Local Name="Message.Error.Input.LoginEmpty" Russian="Введите логин!"/>
+  <Local Name="Message.Error.Input.PasswordEmpty" Russian="Введите пароль!"/>
   <Local Name="Message.Error.Field.NullValue" Russian="Поле &quot;%1&quot; обязательно для заполнения."/>
   <Local Name="Message.Error.User.NotAccessAllowed" Russian="Для Вашей учетной записи доступ закрыт, обратитесь к системному администратору."/>
   <Local Name="Message.Error.User.NotLinkWithGroup" Russian="Ваша учётная запись не привязана ни к одной из групп. Обратитесь к системному администратору."/>
@@ -173,7 +173,7 @@
   <Local Name="Message.Warning.TaskExecutorEmpty" Russian="У задачи не назначен исполнитель."/>
   <Local Name="Message.Warning.AlienTask" Russian="Вы не можете взять в работу чужую задачу!"/>
   <Local Name="Message.Warning.TaskAlreadyCheckDuplicate" Russian="Задача #%1 уже отмечена как дубликат задачи #%2."/>
-  <Local Name="Message.Warning.SslConnectionDBFailed" Russian="Ошибка подключения к серверу базы данных: %1"/>
+  <Local Name="Message.Warning.FailedConnectionToPostgreSQL" Russian="Ошибка подключения к серверу базы данных: %1"/>
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
   <Local Name="Message.Warning.FileSizeExceedsLimit" Russian="Размер выбранного файла превышает установленное ограничение в %1 мегабайт"/>

@@ -44,14 +44,10 @@ void ISFastAccessEntity::LoadExternalTools()
 //-----------------------------------------------------------------------------
 void ISFastAccessEntity::ReloadExternalTools()
 {
-	while (ExternalTools.count())
+	while (!ExternalTools.isEmpty())
 	{
-		ISMetaExternalTool *MetaExternalTool = ExternalTools.takeFirst();
-
-		delete MetaExternalTool;
-		MetaExternalTool = nullptr;
+		delete ExternalTools.takeFirst();
 	}
-
 	LoadExternalTools();
 }
 //-----------------------------------------------------------------------------
