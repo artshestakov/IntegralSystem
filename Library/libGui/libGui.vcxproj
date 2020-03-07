@@ -134,7 +134,6 @@
     <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISButtonDialog.cpp" />
     <ClCompile Include="ISButtons.cpp" />
-    <ClCompile Include="ISCalculatorForm.cpp" />
     <ClCompile Include="ISCalendarDayWidget.cpp" />
     <ClCompile Include="ISCalendarEventForm.cpp" />
     <ClCompile Include="ISCalendarEventItem.cpp" />
@@ -606,7 +605,6 @@
     <QtMoc Include="ISAboutForm.h" />
     <QtMoc Include="ISAddressBookListForm.h" />
     <QtMoc Include="ISAuthForm.h" />
-    <QtMoc Include="ISCalculatorForm.h" />
     <QtMoc Include="ISCalendarEventForm.h" />
     <QtMoc Include="ISCalendarForm.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />

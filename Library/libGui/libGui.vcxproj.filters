@@ -793,9 +793,6 @@
     <ClCompile Include="ISAddressBookListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISCalculatorForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalendarEventForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -1726,9 +1723,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISAddressBookListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCalculatorForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarEventForm.h">

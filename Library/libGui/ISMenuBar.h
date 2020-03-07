@@ -24,7 +24,6 @@ signals:
 	void UserStatus();
 	void Settings();
 	void Notebook();
-	void Calculator();
 	void AddressBook();
 	void HelpSystem();
 	void AboutApplication();

@@ -25,7 +25,6 @@
 #include "ISMemoryObjects.h"
 #include "ISColumnSizer.h"
 #include "ISHistoryForm.h"
-#include "ISCalculatorForm.h"
 #include "ISFastCreateObjectForm.h"
 #include "ISExternalToolsForm.h"
 #include "ISInputDialog.h"
@@ -249,7 +248,6 @@ void ISMainWindow::CreateMenuBar()
 	connect(MenuBar, &ISMenuBar::UserStatus, this, &ISMainWindow::UserStatusChange);
 	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
 	connect(MenuBar, &ISMenuBar::Notebook, this, &ISMainWindow::ShowNoteForm);
-	connect(MenuBar, &ISMenuBar::Calculator, this, &ISMainWindow::ShowCalculator);
 	connect(MenuBar, &ISMenuBar::AddressBook, this, &ISMainWindow::ShowAddressBook);
 	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
 	connect(MenuBar, &ISMenuBar::AboutQt, this, &ISMainWindow::ShowAboutQt);
@@ -545,12 +543,6 @@ void ISMainWindow::ShowNoteForm()
 	NoteListForm->show();
 
 	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowCalculator()
-{
-	ISCalculatorForm *CalculatorForm = new ISCalculatorForm();
-	CalculatorForm->show();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAddressBook()

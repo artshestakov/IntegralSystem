@@ -62,7 +62,6 @@ protected:
 	void ShowDeviceSettings(); //Открыть форму настройки устройств
 	void ShowChangePasswordForm(); //Открыть форму смены пароля
 	void ShowNoteForm(); //Открыть форму "Блокнот"
-	void ShowCalculator(); //Открыть калькулятор
 	void ShowAddressBook(); //Открыть адресную книгу
 	void UserStatusChange(); //Изменение текущего статуса пользователя
 	void ShowSettingsForm(); //Открыть форму "Настройки"

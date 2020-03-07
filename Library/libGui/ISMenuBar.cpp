@@ -134,9 +134,6 @@ void ISMenuBar::CreateMenuAddition()
 	//Блокнот
 	MenuAddition->addAction(BUFFER_ICONS("Note"), LANG("Notebook"), this, &ISMenuBar::Notebook);
 
-	//Калькулятор
-	MenuAddition->addAction(BUFFER_ICONS("Calculator"), LANG("Calculator"), this, &ISMenuBar::Calculator);
-
 	//Адресная книга
 	MenuAddition->addAction(BUFFER_ICONS("AddressBook"), LANG("AddressBook"), this, &ISMenuBar::AddressBook);
 }

@@ -13,6 +13,11 @@
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING)
 {
+	std::vector<ISMetaDataType> VectorTypes =
+	{
+		{ "Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true }
+	};
+
 	AssociationTypes.Insert("Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true);
 	AssociationTypes.Insert("BigInt", ISNamespace::FT_BigInt, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true);
 	AssociationTypes.Insert("String", ISNamespace::FT_String, "CHARACTER VARYING", "ISLineEdit", "ISComboSearchString", true);

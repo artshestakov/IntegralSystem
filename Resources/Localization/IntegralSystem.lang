@@ -459,7 +459,6 @@
   <Local Name="ObjectOther" Russian="Другое"/>
   <Local Name="Searching" Russian="Идет поиск"/>
   <Local Name="Founded" Russian="Найдено"/>
-  <Local Name="Calculator" Russian="Калькулятор"/>
   <Local Name="AddressBook" Russian="Адресная книга"/>
   <Local Name="WithoutIcon" Russian="Без значка"/>
   <Local Name="Reminder" Russian="Напоминание"/>

@@ -127,16 +127,6 @@ const char SYMBOL_PERCENT = '%'; //Символ "Процент"
 const char SYMBOL_COMMA = ','; //Символ "Запятая"
 const char SYMBOL_POINT = '.'; //Символ "Точка"
 const char SYMBOL_STAR = '*'; //Символ звездочка
-const char SYMBOL_1 = '1';
-const char SYMBOL_2 = '2';
-const char SYMBOL_3 = '3';
-const char SYMBOL_4 = '4';
-const char SYMBOL_5 = '5';
-const char SYMBOL_6 = '6';
-const char SYMBOL_7 = '7';
-const char SYMBOL_8 = '8';
-const char SYMBOL_9 = '9';
-const char SYMBOL_0 = '0';
 //ASTERISK_MANAGER_API---------------------------------------------------------
 const char AMI_SUCCESSFUL_AUTH[] = "SuccessfulAuth";
 const char AMI_USER_EVENT[] = "UserEvent";
