@@ -56,6 +56,36 @@ RETURNS NULL ON NULL INPUT
 SECURITY INVOKER
 COST 100;"/>
 
+  <Function Name="tablesize" Text="CREATE OR REPLACE FUNCTION public.tablesize (
+  table_name varchar
+)
+RETURNS varchar AS
+$body$
+BEGIN
+	RETURN pg_size_pretty(pg_relation_size(table_name));
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100;"/>
+
+  <Function Name="tablesizefull" Text="CREATE OR REPLACE FUNCTION public.tablesizefull (
+  table_name varchar
+)
+RETURNS varchar AS
+$body$
+BEGIN
+	RETURN pg_size_pretty(pg_total_relation_size(table_name));
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100;"/>
+
   <Function Name="today_birthday" Text="CREATE OR REPLACE FUNCTION public.today_birthday (
   dateofbirth date
 )
