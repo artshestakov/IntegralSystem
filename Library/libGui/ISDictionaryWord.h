@@ -1,17 +1,17 @@
-//-----------------------------------------------------------------------------
 #pragma once
 #ifndef _ISDICTIONARYWORD_H_INCLUDED
 #define _ISDICTIONARYWORD_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "libGui_global.h"
 //-----------------------------------------------------------------------------
-class ISDictionaryWord
+class LIBGUI_EXPORT ISDictionaryWord
 {
 public:
 	static ISDictionaryWord& Instance();
 
 	QString GetErrorString() const;
 	bool Initialize();
+	bool Search(const char *String);
 
 private:
 	ISDictionaryWord();
@@ -21,6 +21,8 @@ private:
 
 private:
 	QString ErrorString;
+	char **Array;
+	size_t ArraySize;
 };
 //-----------------------------------------------------------------------------
 #endif
