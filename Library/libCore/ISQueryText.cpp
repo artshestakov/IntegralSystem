@@ -73,7 +73,7 @@ bool ISQueryText::CheckAllQueries()
 
 					if (!Result)
 					{
-						ErrorQuery(ISSqlQuery{ QString(), 0, SqlText }, "Error prepare meta query: " + SqlQuery.lastError().text());
+						ErrorQuery(ISSqlQuery{ "NULL", 0, SqlText }, "Error prepare meta query: " + SqlQuery.lastError().text());
 						break;
 					}
 				}
@@ -87,16 +87,17 @@ bool ISQueryText::CheckAllQueries()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISQueryText::ErrorQuery(ISSqlQuery SqlQuery, const QString &ErrorText)
+void ISQueryText::ErrorQuery(const ISSqlQuery &SqlQuery, const QString &ErrorQuery)
 {
-	ErrorString = ErrorText;
+	ErrorString = ErrorQuery;
 	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/" + ISSystem::GenerateUuid());
 	if (File.open(QIODevice::WriteOnly))
 	{
 		QString Content;
 		Content += "File: " + SqlQuery.FileName.toUtf8() + "\n";
-		Content += "Line: " + QString::number(SqlQuery.Line).toUtf8() + "\n\n";
-		Content += ErrorText;
+		Content += "Line: " + QString::number(SqlQuery.Line).toUtf8() + "\n";
+		Content += "SqlQuery: " + SqlQuery.SqlText + "\n\n";
+		Content += ErrorQuery;
 		File.write(Content.toUtf8());
 		File.close();
 
