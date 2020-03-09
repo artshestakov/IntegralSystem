@@ -9,15 +9,15 @@
 //-----------------------------------------------------------------------------
 struct PMetaClass
 {
-	PMetaClass(const QString &type_object) : TypeObject(type_object) { }
+	PMetaClass(const QString &type_object) : TypeObject(type_object.isEmpty() ? "Unknown" : type_object) { }
 
 	QString TypeObject; //Тип объекта
 };
 //-----------------------------------------------------------------------------
 struct PMetaClassIndex : public PMetaClass
 {
-	PMetaClassIndex() : PMetaClass("Index") { }
-	PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name) : PMetaClass("Index"), Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
+	PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name) 
+		: PMetaClass("Index"), Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
 
 	bool Unique;
 	QString Alias;
@@ -190,7 +190,6 @@ struct PMetaClassFunction : public PMetaClass
 //-----------------------------------------------------------------------------
 struct PMetaClassQuery : public PMetaClassTable
 {
-public:
 	PMetaClassQuery() : PMetaClassTable("Query") { }
 
 	QString From;
@@ -200,8 +199,10 @@ public:
 	ISVectorString Joins;
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassResource
+struct PMetaClassResource : public PMetaClass
 {
+	PMetaClassResource() : PMetaClass("Resource") { }
+
 	void AddField(const QString &FieldName, const QString &Value) //Добавить параметр и его значение в ресурс
 	{
 		if (FieldName.toLower() != "uid")

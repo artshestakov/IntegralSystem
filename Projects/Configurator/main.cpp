@@ -39,7 +39,6 @@ void InterpreterMode(bool &IsRunning); //Режим интерпретатора
 bool Execute(const QString &Argument); //Выполнить одиночную команду
 bool Execute(const QString &Argument, const QString &SubArgument); //Выполнить двойную команду
 QString GetClassName(const QString &Argument); //Получить имя класса
-void ProgressMessage(const QString &Message);
 QStringList ParseInputCommand(const QString &Command); //Парсинг введенной команды
 void FillConfig(); //Заполнение конфигурационного файла
 //-----------------------------------------------------------------------------
@@ -313,7 +312,6 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 				Result = ISSystem::CheckExistSlot(CommandBase, SubArgument);
 				if (Result)
 				{
-					QObject::connect(CommandBase, &CGConfiguratorBase::ProgressMessage, &ProgressMessage);
 					ISCountingTime CountingTime;
 					Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
 					ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
@@ -351,11 +349,6 @@ QString GetClassName(const QString &Argument)
 		}
 	}
 	return QString();
-}
-//-----------------------------------------------------------------------------
-void ProgressMessage(const QString &Message)
-{
-	ISLOGGER_UNKNOWN(Message);
 }
 //-----------------------------------------------------------------------------
 QStringList ParseInputCommand(const QString &Command)

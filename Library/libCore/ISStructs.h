@@ -55,7 +55,6 @@ struct ISMetaUserData
 //-----------------------------------------------------------------------------
 struct LIBCORE_EXPORT ISMetaNotify
 {
-public:
 	ISMetaNotify() : ShowPopup(true) { }
 
 	ISUuid UID;
@@ -68,7 +67,6 @@ public:
 //-----------------------------------------------------------------------------
 struct LIBCORE_EXPORT ISMetaSetting
 {
-public:
 	ISMetaSetting() : SettingType(ISNamespace::FT_Unknown) { }
 
 	ISUuid UID;
@@ -83,7 +81,6 @@ public:
 //-----------------------------------------------------------------------------
 struct LIBCORE_EXPORT ISMetaSettingsGroup
 {
-public:
 	ISMetaSettingsGroup() : System(true) { }
 	~ISMetaSettingsGroup()
 	{
@@ -112,7 +109,6 @@ struct ISMetaExternalTool
 //-----------------------------------------------------------------------------
 struct ISMetaParagraph
 {
-public:
 	ISMetaParagraph(const ISUuid &uid, const QString &name, const QString &local_name, const QString &tool_tip, const QString &icon, const QString &class_name, bool default)
 		: UID(uid), Name(name), LocalName(local_name), ToolTip(tool_tip), Icon(icon), ClassName(class_name), Default(default) { }
 
@@ -127,7 +123,6 @@ public:
 //-----------------------------------------------------------------------------
 struct ISSortingMetaTable
 {
-public:
 	ISSortingMetaTable() : ModificationFlag(false) { }
 
 	QString TableName;
@@ -138,7 +133,6 @@ public:
 //-----------------------------------------------------------------------------
 struct ISColumnSizeItem
 {
-public:
 	ISColumnSizeItem() : ModificationFlag(false) { }
 
 	ISStringToIntMap Fields;
@@ -147,7 +141,6 @@ public:
 //-----------------------------------------------------------------------------
 struct ISMetaSubSystem
 {
-public:
 	ISMetaSubSystem() : ID(0), OrderID(0), SystemID(0) { }
 
 	int ID; //Идентификатор подсистемы
@@ -166,7 +159,6 @@ public:
 //-----------------------------------------------------------------------------
 struct ISMetaSystem
 {
-public:
 	ISMetaSystem() : IsSystem(false), ID(0), OrderID(0) { }
 
 	~ISMetaSystem()
@@ -191,14 +183,12 @@ public:
 //-----------------------------------------------------------------------------
 struct ISObjectModelItem
 {
-public:
 	QVariant OldValue;
 	QVariant NewValue;
 };
 //-----------------------------------------------------------------------------
 struct ISPrintMetaReportField
 {
-public:
 	QString ReplaceValue;
 	QString FieldQuery;
 	QString QueryName;
@@ -207,7 +197,6 @@ public:
 //-----------------------------------------------------------------------------
 struct ISPrintMetaReport
 {
-public:
 	ISPrintMetaReport() : Type(ISNamespace::RT_Unknown) { }
 
 	~ISPrintMetaReport()
@@ -246,7 +235,6 @@ public:
 //-----------------------------------------------------------------------------
 struct PMetaUserPermission
 {
-public:
 	PMetaUserPermission() : Show(false), CreateCopy(false), Edit(false), Delete(false), DeleteCascade(false), UpdateList(false), ShowDeleted(false),
 		ShowAll(false), Search(false), Export(false), Print(false), SystemInformation(false), AttachTask(false), TableNavigation(false) { }
 

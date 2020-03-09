@@ -2,21 +2,18 @@
 #ifndef _CGCONFIGURATORBASE_H_INCLUDED
 #define _CGCONFIGURATORBASE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class CGConfiguratorBase : public QObject
 {
 	Q_OBJECT
-
-signals:
-	void ProgressMessage(const QString &Message);
 
 public:
 	CGConfiguratorBase();
 	virtual ~CGConfiguratorBase();
 
 protected:
-	void Progress(const QString &ProgressName, int Step, int Steps);
+	void Progress(const QString &ObjectTypeName, int Step, int Steps);
 };
 //-----------------------------------------------------------------------------
 #endif
