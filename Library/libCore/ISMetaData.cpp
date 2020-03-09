@@ -1239,8 +1239,9 @@ bool ISMetaData::InitializeXSF(const QString &Content)
 					if (ElementName == "Function")
 					{
 						PMetaClassFunction *MetaFunction = new PMetaClassFunction();
-						MetaFunction->Text = DomNode.attributes().namedItem("Text").nodeValue();
-						FunctionsMap.emplace(DomNode.attributes().namedItem("Name").nodeValue(), MetaFunction);
+						MetaFunction->Name = DomNode.attributes().namedItem("Name").nodeValue();
+						MetaFunction->Text = DomNode.toElement().text();
+						FunctionsMap.emplace(MetaFunction->Name, MetaFunction);
 					}
 					DomNode = DomNode.nextSibling();
 				}

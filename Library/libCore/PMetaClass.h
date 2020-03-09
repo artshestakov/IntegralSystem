@@ -184,7 +184,8 @@ struct PMetaClassFunction : public PMetaClass
 {
 	PMetaClassFunction() : PMetaClass("Function") { }
 
-	QString Text;
+	QString Name; //Имя функции
+	QString Text; //Текст функции
 };
 //-----------------------------------------------------------------------------
 struct PMetaClassQuery : public PMetaClassTable

@@ -70,7 +70,15 @@ void CGConfiguratorUpdate::functions()
 	{
 		Progress("Functions", i, CountFunctions);
 		QString ErrorString;
-		CGFunction::CreateOrReplaceFunction(ISMetaData::GetInstanse().GetFunctions()[i], ErrorString);
+		PMetaClassFunction *MetaFunction = ISMetaData::GetInstanse().GetFunctions()[i];
+		/*if (!CGFunction::CheckDependencies(MetaFunction))
+		{
+			if (CGFunction::CheckExist(MetaFunction, ErrorString))
+			{
+				CGFunction::Delete(MetaFunction);
+			}
+		}*/
+		CGFunction::CreateOrReplaceFunction(MetaFunction, ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------
