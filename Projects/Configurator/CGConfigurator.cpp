@@ -16,7 +16,7 @@ CGConfigurator::~CGConfigurator()
 
 }
 //-----------------------------------------------------------------------------
-void CGConfigurator::help()
+bool CGConfigurator::help()
 {
 	ISLOGGER_UNKNOWN("Configurator is a utility for configuring the IntegralSystem database");
 	ISLOGGER_UNKNOWN(QString("Using: Configurator%1 [PARAMETER] [FUNCTION_NAME]").arg(EXTENSION_BINARY));
@@ -29,5 +29,6 @@ void CGConfigurator::help()
 			ISLOGGER_UNKNOWN(Section->GetName() + SYMBOL_SPACE + SectionItem->GetFunction() + " - " + SectionItem->GetDescription());
 		}
 	}
+	return true;
 }
 //-----------------------------------------------------------------------------

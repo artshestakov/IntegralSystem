@@ -5,8 +5,8 @@
 class CGTable
 {
 public:
-	static void CreateTable(PMetaClassTable *MetaTable, QString &ErrorString);
-	static void UpdateTable(PMetaClassTable *MetaTable);
+	static bool CreateTable(PMetaClassTable *MetaTable, QString &ErrorString);
+	static bool UpdateTable(PMetaClassTable *MetaTable);
 	static bool CheckExistTable(PMetaClassTable *MetaTable);
 
 protected:

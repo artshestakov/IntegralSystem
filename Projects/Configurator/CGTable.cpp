@@ -16,23 +16,30 @@ static QString QS_COLUMNS = PREPARE_QUERY("SELECT column_name, column_default, i
 										  "AND table_name = :TableName "
 										  "ORDER BY ordinal_position");
 //-----------------------------------------------------------------------------
-void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
+bool CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 {
-	QString TableName = MetaTable->Name.toLower();
-	QString TableAlias = MetaTable->Alias;
+	QString TableName = MetaTable->Name.toLower(), TableAlias = MetaTable->Alias.toLower();
 
 	//Проверка существования последовательности, если последовательность не существует - произвести её создание
-	if (!CGSequence::CheckExistSequence(TableName))
+	bool Exist = true;
+	bool Result = CGSequence::CheckExistSequence(TableName, Exist, ErrorString);
+	if (Result)
 	{
-		CGSequence::CreateSequence(TableName);
+		if (!Exist) //Последовательность не существует
+		{
+			Result = CGSequence::CreateSequence(TableName);
+		}
+	}
+	else //Ошибка проверки наличия последовательности
+	{
+		return Result;
 	}
 
 	QString SqlText = "CREATE TABLE public." + MetaTable->Name.toLower() + "(\n";
 	SqlText += CGTemplateField::GetSqlTextForTemplateSystemFields(TableName, TableAlias);
 
 	//Формирование запроса на создание таблицы
-	int CountFields = MetaTable->Fields.size();
-	for (int i = 0; i < CountFields; ++i) //Обход полей таблицы
+	for (int i = 0, CountFields = MetaTable->Fields.size(); i < CountFields; ++i) //Обход полей таблицы
 	{
 		PMetaClassField *MetaField = MetaTable->Fields[i];
 		ISNamespace::FieldType FieldType = MetaField->Type; //Тип поля
@@ -86,30 +93,16 @@ void CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 	//Исполнение запроса
 	ISQuery qCreateTable;
 	qCreateTable.SetShowLongQuery(false);
-	bool Created = qCreateTable.Execute(SqlText);
-
-	if (Created)
-	{
-		for (int i = 0; i < MetaTable->AllFields.size(); ++i)
-		{
-			PMetaClassField *MetaField = MetaTable->AllFields[i];
-			if (MetaField->QueryText.length())
-			{
-				continue;
-			}
-
-			CGHelper::CommentField(MetaTable->Name.toLower(), MetaTable->Alias + '_' + MetaField->Name.toLower(), MetaField->LocalListName);
-		}
-	}
-	else
+	Result = qCreateTable.Execute(SqlText);
+	if (!Result)
 	{
 		ErrorString = qCreateTable.GetErrorString();
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGTable::UpdateTable(PMetaClassTable *MetaTable)
+bool CGTable::UpdateTable(PMetaClassTable *MetaTable)
 {
-	CGHelper::CommentTable(MetaTable->Name.toLower(), MetaTable->LocalListName);
 	AlterExistFields(MetaTable);
 	CreateNewFields(MetaTable);
 }

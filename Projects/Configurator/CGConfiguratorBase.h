@@ -12,8 +12,13 @@ public:
 	CGConfiguratorBase();
 	virtual ~CGConfiguratorBase();
 
+	QString GetErrorString() const;
+
 protected:
 	void Progress(const QString &ObjectTypeName, int Step, int Steps);
+
+protected:
+	QString ErrorString;
 };
 //-----------------------------------------------------------------------------
 #endif

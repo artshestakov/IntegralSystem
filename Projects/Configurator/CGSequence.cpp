@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_SEQUENCES = PREPARE_QUERY("SELECT COUNT(*) "
 											"FROM information_schema.sequences t "
-											"WHERE t.sequence_catalog = :DatabaseName "
+											"WHERE t.sequence_catalog = current_database() "
 											"AND t.sequence_name = :SequenceName");
 //-----------------------------------------------------------------------------
 static QString QC_SEQUENCE = "CREATE SEQUENCE public.%1 "
@@ -21,19 +21,21 @@ bool CGSequence::CreateSequence(const QString &ClassName)
 	return qCreateSequence.Execute(Query);
 }
 //-----------------------------------------------------------------------------
-bool CGSequence::CheckExistSequence(const QString &ClassName)
+bool CGSequence::CheckExistSequence(const QString &ClassName, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectSequences(QS_SEQUENCES);
 	qSelectSequences.SetShowLongQuery(false);
-	qSelectSequences.BindValue(":DatabaseName", CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 	qSelectSequences.BindValue(":SequenceName", GetSequenceNameForClass(ClassName));
-	qSelectSequences.ExecuteFirst();
-	if (qSelectSequences.ReadColumn("count").toInt() == 1)
+	bool Result = qSelectSequences.ExecuteFirst();
+	if (Result)
 	{
-		return true;
+		Exist = qSelectSequences.ReadColumn("count").toInt() > 0;
 	}
-
-	return false;
+	else
+	{
+		ErrorString = qSelectSequences.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QString CGSequence::GetSequenceNameForClass(const QString &ClassName)

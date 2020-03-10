@@ -14,7 +14,7 @@ public:
 	virtual ~CGConfigurator();
 
 public slots:
-	void help(); //Показать помощь
+	bool help(); //Показать помощь
 
 private:
 	QVector<CGSection*> Arguments;

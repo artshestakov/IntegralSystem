@@ -13,7 +13,7 @@ public:
 	virtual ~CGConfiguratorCreate();
 
 public slots:
-	void resources();
+	bool resources();
 };
 //-----------------------------------------------------------------------------
 #endif

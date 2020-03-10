@@ -51,7 +51,7 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
 
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::database()
+bool CGConfiguratorUpdate::database()
 {
 	functions();
 	tables();
@@ -61,41 +61,78 @@ void CGConfiguratorUpdate::database()
 	foreigns();
 	resources();
 	systemuser();
+	return true;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::functions()
+bool CGConfiguratorUpdate::functions()
 {
-	ISLOGGER_DEBUG("Updating functions...");
+	bool Result = true;
 	for (int i = 0, CountFunctions = ISMetaData::GetInstanse().GetFunctions().size(); i < CountFunctions; ++i)
 	{
 		Progress("Function", i, CountFunctions);
 		PMetaClassFunction *MetaFunction = ISMetaData::GetInstanse().GetFunctions()[i];
-		QString ErrorString;
-		/*if (!CGFunction::CheckDependencies(MetaFunction))
+		Result = CGFunction::CreateOrReplaceFunction(MetaFunction, ErrorString);
+		if (!Result)
 		{
-			if (CGFunction::CheckExist(MetaFunction, ErrorString))
-			{
-				CGFunction::Delete(MetaFunction);
-			}
-		}*/
-		CGFunction::CreateOrReplaceFunction(MetaFunction, ErrorString);
+			break;
+		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::tables()
+bool CGConfiguratorUpdate::tables()
 {
-	ISLOGGER_DEBUG("Updating tables...");
+	bool Result = true;
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().size(); i < CountTables; ++i) //Обход таблиц
 	{
 		Progress("Table", i, CountTables);
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
+		Result = CGTable::CheckExistTable(MetaTable) ? CGTable::UpdateTable(MetaTable) : CGTable::CreateTable(MetaTable, ErrorString);
+		if (Result) //Создание/обновление таблицы прошло успешно - комментируем таблицу
+		{
+			Result = CGHelper::CommentTable(MetaTable->Name.toLower(), MetaTable->LocalListName);
+		}
 
-		QString ErrorString;
-		CGTable::CheckExistTable(MetaTable) ? CGTable::UpdateTable(MetaTable) : CGTable::CreateTable(MetaTable, ErrorString);
+		if (Result)
+		{
+			for (int i = 0; i < MetaTable->AllFields.size(); ++i)
+			{
+				PMetaClassField *MetaField = MetaTable->AllFields[i];
+				if (MetaField->QueryText.isEmpty()) //Если поле является обычным полем - комментируем его
+				{
+					Result = CGHelper::CommentField(MetaTable->Name.toLower(), MetaTable->Alias + '_' + MetaField->Name.toLower(), MetaField->LocalListName, ErrorString);
+				}
+
+				if (!Result)
+				{
+					break;
+				}
+			}
+		}
+		
+		if (!Result)
+		{
+			break;
+		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::systemindexes()
+bool CGConfiguratorUpdate::indexesall()
+{
+	bool Result = systemindexes();
+	if (Result)
+	{
+		Result = indexes();
+		if (Result)
+		{
+			Result = compoundindexes();
+		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorUpdate::systemindexes()
 {
 	ISLOGGER_DEBUG("Updating system indexes...");
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
@@ -124,9 +161,10 @@ void CGConfiguratorUpdate::systemindexes()
             CGIndex::CreateIndex(MetaIndex, ErrorString);
 		}
 	}
+	return true;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::indexes()
+bool CGConfiguratorUpdate::indexes()
 {
 	ISLOGGER_DEBUG("Updating indexes...");
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetIndexes().size(); i < CountIndexes; ++i) //Обход индексов
@@ -137,9 +175,10 @@ void CGConfiguratorUpdate::indexes()
 		QString ErrorString;
 		CGIndex::CheckExistIndex(MetaIndex) ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
 	}
+	return true;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::compoundindexes()
+bool CGConfiguratorUpdate::compoundindexes()
 {
 	ISLOGGER_DEBUG("Updating compound indexes...");
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().size(); i < CountIndexes; ++i)
@@ -150,6 +189,7 @@ void CGConfiguratorUpdate::compoundindexes()
 		QString ErrorString;
 		CGIndex::CheckExistIndex(MetaIndex) ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
 	}
+	return true;
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorUpdate::foreigns()

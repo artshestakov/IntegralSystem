@@ -13,12 +13,13 @@ public:
 	virtual ~CGConfiguratorUpdate();
 
 public slots:
-	void database(); //Обновление базы данных
-	void functions(); //Обновление функций
-	void tables(); //Обновление таблиц
-	void systemindexes(); //Обновление системных индексов
-	void indexes(); //Обновление индексов
-	void compoundindexes(); //Обновление составных индексов
+	bool database(); //Обновление базы данных
+	bool functions(); //Обновление функций
+	bool tables(); //Обновление таблиц
+	bool indexesall(); //Обновление всех индексов
+	bool systemindexes(); //Обновление системных индексов
+	bool indexes(); //Обновление индексов
+	bool compoundindexes(); //Обновление составных индексов
 	void foreigns(); //Обновление внешних ключей
 	void resources(); //Обновление ресурсов
 	void systemuser(); //Обновление системного пользователя

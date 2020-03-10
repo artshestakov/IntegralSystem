@@ -4,7 +4,11 @@
 #include "ISMetaData.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-static QString QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) FROM information_schema.constraint_table_usage WHERE table_catalog = :DatabaseName AND table_schema = current_schema() AND constraint_name = :ForeignName");
+static QString QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) "
+										  "FROM information_schema.constraint_table_usage "
+										  "WHERE table_catalog = current_database() "
+										  "AND table_schema = current_schema() "
+										  "AND constraint_name = :ForeignName");
 //-----------------------------------------------------------------------------
 static QString QC_FOREIGN = "ALTER TABLE public.%1 "
 							"ADD CONSTRAINT %2 FOREIGN KEY (%3) "
@@ -66,7 +70,6 @@ bool CGForeign::CheckExistForeign(PMetaClassForeign *MetaForeign)
 {
 	ISQuery qSelect(QS_FOREIGN);
 	qSelect.SetShowLongQuery(false);
-	qSelect.BindValue(":DatabaseName", CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 	qSelect.BindValue(":ForeignName", GetForeignName(MetaForeign));
 	if (qSelect.ExecuteFirst())
 	{

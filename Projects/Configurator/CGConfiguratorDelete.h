@@ -14,7 +14,7 @@ public:
 	virtual ~CGConfiguratorDelete();
 
 public slots:
-	void indexes();
+	bool indexes();
 	void foreigns();
 	void systems();
 	void subsystems();

@@ -284,8 +284,24 @@ bool Execute(const QString &Argument)
 	if (Result)
 	{
 		ISCountingTime CountingTime;
-		Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data());
-		ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
+		bool ReturnValue = true;
+		Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data(), Q_RETURN_ARG(bool, ReturnValue));
+		if (Result)
+		{
+			if (ReturnValue)
+			{
+				ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
+			}
+			else
+			{
+				ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with error " + Configurator.GetErrorString());
+			}
+		}
+		else
+		{
+			ISLOGGER_ERROR("Command \"" + Argument + "\" not executed.");
+		}
+		Result = ReturnValue;
 	}
 	else
 	{
@@ -313,8 +329,24 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 				if (Result)
 				{
 					ISCountingTime CountingTime;
-					Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData());
-					ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
+					bool ReturnValue = true;
+					Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData(), Q_RETURN_ARG(bool, ReturnValue));
+					if (Result)
+					{
+						if (ReturnValue)
+						{
+							ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
+						}
+						else
+						{
+							ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with error " + CommandBase->GetErrorString());
+						}
+					}
+					else
+					{
+						ISLOGGER_ERROR("Command \"" + Argument + " " + SubArgument + "\" not executed.");
+					}
+					Result = ReturnValue;
 				}
 				else
 				{

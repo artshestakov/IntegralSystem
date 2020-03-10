@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname FROM pg_indexes WHERE schemaname = current_schema()");
 //-----------------------------------------------------------------------------
-static QString QD_INDEX = "DROP INDEX public.%1";
+static QString QD_INDEX = "DROP INDEX public.%1 CASCADE";
 //-----------------------------------------------------------------------------
 static QString QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name FROM information_schema.constraint_table_usage WHERE table_catalog = current_database() AND table_schema = current_schema()");
 //-----------------------------------------------------------------------------
@@ -42,30 +42,34 @@ CGConfiguratorDelete::~CGConfiguratorDelete()
 
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::indexes()
+bool CGConfiguratorDelete::indexes()
 {
-	ISLOGGER_DEBUG("Deleting indexes...");
-	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
-
 	ISQuery qSelectIndexes(QS_INDEXES);
-	if (qSelectIndexes.Execute())
+	bool Result = qSelectIndexes.Execute();
+	if (Result)
 	{
-		int Deleted = 0;
-		int CountIndexes = qSelectIndexes.GetCountResultRows();
-
+		int Deleted = 0, CountIndexes = qSelectIndexes.GetCountResultRows();
 		while (qSelectIndexes.Next())
 		{
-			QString IndexName = qSelectIndexes.ReadColumn("indexname").toString();
-
 			ISQuery qDeleteIndex;
-			if (qDeleteIndex.Execute(QD_INDEX.arg(IndexName)))
+			Result = qDeleteIndex.Execute(QD_INDEX.arg(qSelectIndexes.ReadColumn("indexname").toString()));
+			if (Result)
 			{
 				++Deleted;
 			}
+			else
+			{
+				ErrorString = qDeleteIndex.GetErrorString();
+				break;
+			}
 		}
-
-		ISLOGGER_INFO("Deleted " + QString::number(Deleted) + " of " + QString::number(CountIndexes) + " indexes");
+		ISLOGGER_INFO(QString("Deleted %1 of %2 indexes").arg(Deleted).arg(CountIndexes));
 	}
+	else
+	{
+		ErrorString = qSelectIndexes.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::foreigns()

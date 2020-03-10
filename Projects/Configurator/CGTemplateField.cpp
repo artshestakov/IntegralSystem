@@ -16,7 +16,6 @@ QString CGTemplateField::GetSqlTextForTemplateSystemFields(const QString &ClassN
 
     QDomElement Root = ISSystem::GetDomElement(Content);
 	QDomNode NodeTemplateFields = Root.firstChild();
-
 	while (!NodeTemplateFields.isNull())
 	{
 		QString FieldName = NodeTemplateFields.attributes().namedItem("Name").nodeValue();
@@ -44,10 +43,8 @@ QString CGTemplateField::GetSqlTextForTemplateSystemFields(const QString &ClassN
 		}
 
 		SqlText += ",\n";
-
 		NodeTemplateFields = NodeTemplateFields.nextSibling();
 	}
-
 	return SqlText;
 }
 //-----------------------------------------------------------------------------
