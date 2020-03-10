@@ -7,11 +7,16 @@
 #include "ISConsole.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname FROM pg_indexes WHERE schemaname = current_schema()");
+static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname "
+										  "FROM pg_indexes "
+										  "WHERE schemaname = current_schema()");
 //-----------------------------------------------------------------------------
 static QString QD_INDEX = "DROP INDEX public.%1 CASCADE";
 //-----------------------------------------------------------------------------
-static QString QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name FROM information_schema.constraint_table_usage WHERE table_catalog = current_database() AND table_schema = current_schema()");
+static QString QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name "
+										   "FROM information_schema.constraint_table_usage "
+										   "WHERE table_catalog = current_database() "
+										   "AND table_schema = current_schema()");
 //-----------------------------------------------------------------------------
 static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
 //-----------------------------------------------------------------------------

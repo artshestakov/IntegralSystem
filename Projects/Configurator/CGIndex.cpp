@@ -19,19 +19,13 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 		IndexUnique = "UNIQUE";
 	}
 
-	QString SqlText = QC_INDEX;
-	SqlText = SqlText.arg(IndexUnique);
-	SqlText = SqlText.arg(GetIndexName(Index));
-	SqlText = SqlText.arg(Index->TableName);
-
-	QString Fields;
-	if (Index->Fields.size())
+	QString Fields, SqlText = QC_INDEX.arg(IndexUnique).arg(GetIndexName(Index)).arg(Index->TableName);
+	if (!Index->Fields.empty())
 	{
 		for (int i = 0; i < Index->Fields.size(); ++i)
 		{
 			Fields += Index->Alias + '_' + Index->Fields.at(i) + ", ";
 		}
-
 		ISSystem::RemoveLastSymbolFromString(Fields, 2);
 		SqlText = SqlText.arg(Fields);
 	}
@@ -42,83 +36,80 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 
 	ISQuery qCreateIndex;
 	qCreateIndex.SetShowLongQuery(false);
-	bool Created = qCreateIndex.Execute(SqlText);
-	if (!Created)
+	bool Result = qCreateIndex.Execute(SqlText);
+	if (!Result)
 	{
 		ErrorString = qCreateIndex.GetErrorString();
 	}
-
-	return Created;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGIndex::UpdateIndex(PMetaClassIndex *Index, QString &ErrorString)
 {
 	ISQuery qDelete;
 	qDelete.SetShowLongQuery(false);
-	if (qDelete.Execute(QD_INDEX.arg(GetIndexName(Index))))
+	bool Result = qDelete.Execute(QD_INDEX.arg(GetIndexName(Index)));
+	if (Result)
 	{
-		return CreateIndex(Index, ErrorString);
+		Result = CreateIndex(Index, ErrorString);
 	}
-
-	return false;
+	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGIndex::CheckExistIndex(PMetaClassIndex *Index)
+bool CGIndex::CheckExistIndex(PMetaClassIndex *Index, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectIndex(QS_INDEXES);
 	qSelectIndex.SetShowLongQuery(false);
 	qSelectIndex.BindValue(":TableName", Index->TableName.toLower());
 	qSelectIndex.BindValue(":IndexName", GetIndexName(Index));
-	if (qSelectIndex.ExecuteFirst())
+	bool Result = qSelectIndex.ExecuteFirst();
+	if (Result)
 	{
-		int Count = qSelectIndex.ReadColumn("count").toInt();
-		if (Count)
-		{
-			return true;
-		}
+		Exist = qSelectIndex.ReadColumn("count").toInt() > 0;
 	}
-
-	return false;
+	else
+	{
+		ErrorString = qSelectIndex.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGIndex::CheckIndexForeign(PMetaClassIndex *Index)
 {
+	bool Result = true;
 	std::vector<PMetaClassForeign*> Foreigns = ISMetaData::GetInstanse().GetForeigns();
-
 	for (int i = 0; i < Foreigns.size(); ++i)
 	{
 		PMetaClassForeign *MetaForeign = Foreigns.at(i);
-		if (Index->TableName.toLower() == MetaForeign->ForeignClass.toLower())
+		Result = Index->TableName.toLower() == MetaForeign->ForeignClass.toLower();
+		if (Result)
 		{
-			if (Index->FieldName.toLower() == MetaForeign->ForeignField.toLower())
+			Result = Index->FieldName.toLower() == MetaForeign->ForeignField.toLower();
+			if (Result)
 			{
-				return true;
+				break;
 			}
 		}
 	}
-
-	return false;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGIndex::ReindexIndex(PMetaClassIndex *Index, QString &ErrorString)
 {
-	QString QueryText = Q_REINDEX.arg(GetIndexName(Index));
 	ISQuery qReindex;
 	qReindex.SetShowLongQuery(false);
-	bool Executed = qReindex.Execute(QueryText);
-
-	if (!Executed)
+	bool Result = qReindex.Execute(Q_REINDEX.arg(GetIndexName(Index)));
+	if (!Result)
 	{
 		ErrorString = qReindex.GetErrorString();
 	}
-
-	return Executed;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QString CGIndex::GetIndexName(PMetaClassIndex *Index)
 {
 	QString IndexName;
-	if (Index->Fields.size())
+	if (!Index->Fields.empty())
 	{
 		IndexName += Index->TableName + '_';
 		for (int i = 0; i < Index->Fields.size(); ++i)

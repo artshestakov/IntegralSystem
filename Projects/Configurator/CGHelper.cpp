@@ -8,32 +8,34 @@ static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 										 "AND table_name = :TableName "
 										 "AND column_name = :ColumnName");
 //-----------------------------------------------------------------------------
-static QString QU_COMMENT_TABLE = "COMMENT ON TABLE public.%1 IS '%2'";
-//-----------------------------------------------------------------------------
-bool CGHelper::CheckExistColumn(PMetaClassTable *MetaTable, const QString &ColumnName)
+bool CGHelper::CheckExistColumn(PMetaClassTable *MetaTable, const QString &ColumnName, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectColumn(QS_COLUMN);
 	qSelectColumn.SetShowLongQuery(false);
 	qSelectColumn.BindValue(":TableName", MetaTable->Name.toLower());
 	qSelectColumn.BindValue(":ColumnName", ColumnName);
-	qSelectColumn.ExecuteFirst();
-	if (qSelectColumn.ReadColumn("count").toInt() == 1)
+	bool Result = qSelectColumn.ExecuteFirst();
+	if (Result)
 	{
-		return true;
+		Exist = qSelectColumn.ReadColumn("count").toInt() > 1;
 	}
-
-	return false;
+	else
+	{
+		ErrorString = qSelectColumn.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGHelper::CommentTable(const QString &TableName, const QString &Description)
+bool CGHelper::CommentTable(const QString &TableName, const QString &Description, QString &ErrorString)
 {
-	QString QueryText = QU_COMMENT_TABLE;
-	QueryText = QueryText.arg(TableName);
-	QueryText = QueryText.arg(Description);
-
 	ISQuery qComment;
 	qComment.SetShowLongQuery(false);
-	qComment.Execute(QueryText);
+	bool Result = qComment.Execute(QString("COMMENT ON TABLE public.%1 IS '%2'").arg(TableName).arg(Description));
+	if (!Result)
+	{
+		ErrorString = qComment.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGHelper::CommentField(const QString &TableName, const QString &FieldName, const QString &Description, QString &ErrorString)

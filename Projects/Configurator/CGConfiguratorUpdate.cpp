@@ -9,6 +9,7 @@
 #include "ISConfig.h"
 #include "ISLogger.h"
 #include "ISLocalization.h"
+#include "CGHelper.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEM_USER = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _users "
@@ -53,15 +54,33 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::database()
 {
-	functions();
-	tables();
-	systemindexes();
-	indexes();
-	compoundindexes();
-	foreigns();
-	resources();
-	systemuser();
-	return true;
+	bool Result = functions();
+	if (Result)
+	{
+		Result = tables();
+	}
+
+	if (Result)
+	{
+		Result = indexesall();
+	}
+
+	if (Result)
+	{
+		Result = foreigns();
+	}
+	
+	if (Result)
+	{
+		Result = resources();
+	}
+	
+	if (Result)
+	{
+		Result = systemuser();
+	}
+
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::functions()
@@ -82,20 +101,25 @@ bool CGConfiguratorUpdate::functions()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::tables()
 {
-	bool Result = true;
+	bool Result = true, Exist = true;
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().size(); i < CountTables; ++i) //Обход таблиц
 	{
 		Progress("Table", i, CountTables);
-		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
-		Result = CGTable::CheckExistTable(MetaTable) ? CGTable::UpdateTable(MetaTable) : CGTable::CreateTable(MetaTable, ErrorString);
-		if (Result) //Создание/обновление таблицы прошло успешно - комментируем таблицу
-		{
-			Result = CGHelper::CommentTable(MetaTable->Name.toLower(), MetaTable->LocalListName);
-		}
-
+		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables()[i];
+		Result = CGTable::CheckExistTable(MetaTable, Exist, ErrorString);
 		if (Result)
 		{
-			for (int i = 0; i < MetaTable->AllFields.size(); ++i)
+			Result = Exist ? CGTable::UpdateTable(MetaTable, ErrorString) : CGTable::CreateTable(MetaTable, ErrorString);
+		}
+
+		if (Result) //Создание/обновление таблицы прошло успешно - комментируем таблицу
+		{
+			Result = CGHelper::CommentTable(MetaTable->Name.toLower(), MetaTable->LocalListName, ErrorString);
+		}
+
+		if (Result) //Комментируем поля таблицы
+		{
+			for (int i = 0, c = MetaTable->AllFields.size(); i < c; ++i)
 			{
 				PMetaClassField *MetaField = MetaTable->AllFields[i];
 				if (MetaField->QueryText.isEmpty()) //Если поле является обычным полем - комментируем его
@@ -124,106 +148,145 @@ bool CGConfiguratorUpdate::indexesall()
 	if (Result)
 	{
 		Result = indexes();
-		if (Result)
-		{
-			Result = compoundindexes();
-		}
+	}
+
+	if (Result)
+	{
+		Result = compoundindexes();
 	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::systemindexes()
 {
-	ISLOGGER_DEBUG("Updating system indexes...");
+	bool Result = true, Exist = true;
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
 		Progress("System index", i, CountIndexes);
-		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes().at(i);
-		
-		QString ErrorString;
-		if (CGIndex::CheckExistIndex(MetaIndex))
+		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes()[i];
+		if (CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString))
 		{
-			if (MetaIndex->FieldName.toLower() == "id") //Если поле primary_key - делать reindex
+			if (Exist)
 			{
-                CGIndex::ReindexIndex(MetaIndex, ErrorString);
-			}
-			else if (CGIndex::CheckIndexForeign(MetaIndex)) //Если на поле, где установлен текущий индекс ссылается внешний ключ - делать reindex
-			{
-                CGIndex::ReindexIndex(MetaIndex, ErrorString);
+				if (MetaIndex->FieldName.toLower() == "id") //Если поле primary_key - делать reindex
+				{
+					Result = CGIndex::ReindexIndex(MetaIndex, ErrorString);
+				}
+				else if (CGIndex::CheckIndexForeign(MetaIndex)) //Если на поле, где установлен текущий индекс ссылается внешний ключ - делать reindex
+				{
+					Result = CGIndex::ReindexIndex(MetaIndex, ErrorString);
+				}
+				else
+				{
+					Result = CGIndex::UpdateIndex(MetaIndex, ErrorString);
+				}
 			}
 			else
 			{
-                CGIndex::UpdateIndex(MetaIndex, ErrorString);
+				Result = CGIndex::CreateIndex(MetaIndex, ErrorString);
 			}
 		}
-		else
+
+		if (!Result)
 		{
-            CGIndex::CreateIndex(MetaIndex, ErrorString);
+			break;
 		}
 	}
-	return true;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::indexes()
 {
-	ISLOGGER_DEBUG("Updating indexes...");
+	bool Result = true, Exist = true;
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
 		Progress("Index", i, CountIndexes);
-		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes().at(i);
+		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes()[i];
+		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
+		if (Result)
+		{
+			Result = Exist ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
+		}
 
-		QString ErrorString;
-		CGIndex::CheckExistIndex(MetaIndex) ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
+		if (!Result)
+		{
+			break;
+		}
 	}
-	return true;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::compoundindexes()
 {
-	ISLOGGER_DEBUG("Updating compound indexes...");
+	bool Result = true, Exist = true;
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().size(); i < CountIndexes; ++i)
 	{
 		Progress("Compound index", i, CountIndexes);
-		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes().at(i);
-
-		QString ErrorString;
-		CGIndex::CheckExistIndex(MetaIndex) ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
+		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes()[i];
+		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
+		if (Result)
+		{
+			Result = Exist ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
+		}
+		
+		if (!Result)
+		{
+			break;
+		}
 	}
 	return true;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::foreigns()
+bool CGConfiguratorUpdate::foreigns()
 {
-	ISLOGGER_DEBUG("Updating foreigns...");
+	bool Result = true, Exist = true;
 	for (int i = 0, CountForeigns = ISMetaData::GetInstanse().GetForeigns().size(); i < CountForeigns; ++i)
 	{
 		Progress("Foreign", i, CountForeigns);
-		PMetaClassForeign *MetaForeign = ISMetaData::GetInstanse().GetForeigns().at(i);
-		QString ErrorString;
-		CGForeign::CheckExistForeign(MetaForeign) ? CGForeign::UpdateForeign(MetaForeign, ErrorString) : CGForeign::CreateForeign(MetaForeign, ErrorString);
+		PMetaClassForeign *MetaForeign = ISMetaData::GetInstanse().GetForeigns()[i];
+		Result = CGForeign::CheckExistForeign(MetaForeign, Exist, ErrorString);
+		if (Result)
+		{
+			Result = Exist ? CGForeign::UpdateForeign(MetaForeign, ErrorString) : CGForeign::CreateForeign(MetaForeign, ErrorString);
+		}
+
+		if (!Result)
+		{
+			break;
+		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::resources()
+bool CGConfiguratorUpdate::resources()
 {
-	ISLOGGER_DEBUG("Updating resources...");
+	bool Result = true, Exist = true;
 	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().size(); i < CountResources; ++i)
 	{
 		Progress("Resource", i, CountResources);
-		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
+		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources()[i];
 		
-		QString ErrorString;
-		CGResource::CheckExistResource(MetaResource) ? CGResource::UpdateResource(MetaResource) : CGResource::InsertResource(MetaResource, ErrorString);
+		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))
+		{
+			Result = Exist ? CGResource::UpdateResource(MetaResource, ErrorString) : CGResource::InsertResource(MetaResource, ErrorString);
+		}
+
+		if (!Result)
+		{
+			break;
+		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::systemuser()
+bool CGConfiguratorUpdate::systemuser()
 {
 	ISQuery qSelect(QS_SYSTEM_USER);
 	qSelect.BindValue(":UID", CONST_UID_USER_POSTGRES);
-	if (qSelect.ExecuteFirst())
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
 	{
-		if (qSelect.ReadColumn("count").toInt())
+		if (qSelect.ReadColumn("count").toInt() > 0)
 		{
 			ISQuery qUpdate(QU_SYSTEM_USER);
 			qUpdate.BindValue(":IsSystem", true);
@@ -234,9 +297,14 @@ void CGConfiguratorUpdate::systemuser()
 			qUpdate.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
 			qUpdate.BindValue(":AccessAllowed", true);
 			qUpdate.BindValue(":UID", CONST_UID_USER_POSTGRES);
-			if (qUpdate.Execute())
+			Result = qUpdate.Execute();
+			if (Result)
 			{
 				ISLOGGER_UNKNOWN("System user updated");
+			}
+			else
+			{
+				ErrorString = qUpdate.GetErrorString();
 			}
 		}
 		else
@@ -250,21 +318,32 @@ void CGConfiguratorUpdate::systemuser()
 			qInsert.BindValue(":SexUID", CONST_UID_SEX_MALE);
 			qInsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
 			qInsert.BindValue(":AccessAllowed", true);
-			if (qInsert.Execute())
+			Result = qInsert.Execute();
+			if (Result)
 			{
 				ISLOGGER_UNKNOWN("System user created");
 			}
+			else
+			{
+				ErrorString = qInsert.GetErrorString();
+			}
 		}
 	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorUpdate::databasesettings()
+bool CGConfiguratorUpdate::databasesettings()
 {
 	ISQuery qSelect(QS_SETTINGS_DATABASE);
 	qSelect.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-	if (qSelect.ExecuteFirst())
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
 	{
-		if (qSelect.ReadColumn("count").toInt())
+		if (qSelect.ReadColumn("count").toInt() > 0)
 		{
 			ISQuery qUpdate(QU_SETTINGS_DATABASE);
 			qUpdate.BindValue(":IsSystem", true);
@@ -272,9 +351,14 @@ void CGConfiguratorUpdate::databasesettings()
 			qUpdate.BindValue(":UserAccessDatabase", true);
 			qUpdate.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
 			qUpdate.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-			if (qUpdate.Execute())
+			Result = qUpdate.Execute();
+			if (Result)
 			{
 				ISLOGGER_UNKNOWN("Database settings updated");
+			}
+			else
+			{
+				ErrorString = qUpdate.GetErrorString();
 			}
 		}
 		else
@@ -285,11 +369,17 @@ void CGConfiguratorUpdate::databasesettings()
 			qInsert.BindValue(":SettingName", LANG("DatabaseSettings.Name"));
 			qInsert.BindValue(":UserAccessDatabase", true);
 			qInsert.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
-			if (qInsert.Execute())
+			Result = qInsert.Execute();
+			if (Result)
 			{
 				ISLOGGER_UNKNOWN("Database settings created");
 			}
+			else
+			{
+				ErrorString = qInsert.GetErrorString();
+			}
 		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

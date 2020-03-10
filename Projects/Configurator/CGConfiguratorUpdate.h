@@ -20,10 +20,10 @@ public slots:
 	bool systemindexes(); //Обновление системных индексов
 	bool indexes(); //Обновление индексов
 	bool compoundindexes(); //Обновление составных индексов
-	void foreigns(); //Обновление внешних ключей
-	void resources(); //Обновление ресурсов
-	void systemuser(); //Обновление системного пользователя
-	void databasesettings();
+	bool foreigns(); //Обновление внешних ключей
+	bool resources(); //Обновление ресурсов
+	bool systemuser(); //Обновление системного пользователя
+	bool databasesettings();
 };
 //-----------------------------------------------------------------------------
 #endif

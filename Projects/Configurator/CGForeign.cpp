@@ -34,53 +34,47 @@ bool CGForeign::CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorStri
 
 	ISQuery qCreateForeign;
 	qCreateForeign.SetShowLongQuery(false);
-	bool Created = qCreateForeign.Execute(SqlText);
-	if (!Created)
+	bool Result = qCreateForeign.Execute(SqlText);
+	if (!Result)
 	{
 		ErrorString = qCreateForeign.GetErrorString();
 	}
-
-	return Created;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGForeign::UpdateForeign(PMetaClassForeign *MetaForeign, QString &ErrorString)
 {
 	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
 
-	QString QueryText = QD_FOREIGN;
-	QueryText = QueryText.arg(MetaTable->Name.toLower());
-	QueryText = QueryText.arg(GetForeignName(MetaForeign));
-
 	ISQuery qDeleteForeign;
 	qDeleteForeign.SetShowLongQuery(false);
-	if (qDeleteForeign.Execute(QueryText))
+	bool Result = qDeleteForeign.Execute(QD_FOREIGN.arg(MetaTable->Name.toLower()).arg(GetForeignName(MetaForeign)));
+	if (Result)
 	{
-		bool Created = CreateForeign(MetaForeign, ErrorString);
-		return Created;
+		Result = CreateForeign(MetaForeign, ErrorString);
 	}
 	else
 	{
 		ErrorString = qDeleteForeign.GetErrorString();
 	}
-	
-	return false;
+	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGForeign::CheckExistForeign(PMetaClassForeign *MetaForeign)
+bool CGForeign::CheckExistForeign(PMetaClassForeign *MetaForeign, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelect(QS_FOREIGN);
 	qSelect.SetShowLongQuery(false);
 	qSelect.BindValue(":ForeignName", GetForeignName(MetaForeign));
-	if (qSelect.ExecuteFirst())
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
 	{
-		int Count = qSelect.ReadColumn("count").toInt();
-		if (Count)
-		{
-			return true;
-		}
+		Exist = qSelect.ReadColumn("count").toInt() > 0;
 	}
-
-	return false;
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QString CGForeign::GetForeignName(PMetaClassForeign *MetaForeign)

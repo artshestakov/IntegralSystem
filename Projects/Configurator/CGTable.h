@@ -6,11 +6,11 @@ class CGTable
 {
 public:
 	static bool CreateTable(PMetaClassTable *MetaTable, QString &ErrorString);
-	static bool UpdateTable(PMetaClassTable *MetaTable);
-	static bool CheckExistTable(PMetaClassTable *MetaTable);
+	static bool UpdateTable(PMetaClassTable *MetaTable, QString &ErrorString);
+	static bool CheckExistTable(PMetaClassTable *MetaTable, bool &Exist, QString &ErrorString);
 
 protected:
-	static void AlterExistFields(PMetaClassTable *MetaTable);
-	static void CreateNewFields(PMetaClassTable *MetaTable);
+	static bool AlterExistFields(PMetaClassTable *MetaTable, QString &ErrorString);
+	static bool CreateNewFields(PMetaClassTable *MetaTable, QString &ErrorString);
 };
 //-----------------------------------------------------------------------------

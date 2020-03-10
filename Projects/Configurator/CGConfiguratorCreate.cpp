@@ -23,19 +23,23 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorCreate::resources()
 {
-	bool Result = true;
+	bool Result = true, Exist = true;
 	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().size(); i < CountResources; ++i)
 	{
 		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
 		Progress("Resources for " + MetaResource->TableName, i, CountResources);
 
-		if (!CGResource::CheckExistResource(MetaResource)) //≈сли такого ресурса нет - добавл€ем его
+		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))
 		{
-			Result = CGResource::InsertResource(MetaResource, ErrorString);
-			if (!Result)
+			if (!Exist)
 			{
-				break;
+				Result = CGResource::InsertResource(MetaResource, ErrorString);
 			}
+		}
+		
+		if (!Result)
+		{
+			break;
 		}
 	}
 	return Result;

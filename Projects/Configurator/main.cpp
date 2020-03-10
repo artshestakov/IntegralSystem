@@ -335,16 +335,16 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 					{
 						if (ReturnValue)
 						{
-							ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
+							ISLOGGER_UNKNOWN(QString("Command \"%1 %2\" executed with %3 msec").arg(Argument).arg(SubArgument).arg(CountingTime.Elapsed()));
 						}
 						else
 						{
-							ISLOGGER_UNKNOWN("Command \"" + Argument + " " + SubArgument + "\" executed with error " + CommandBase->GetErrorString());
+							ISLOGGER_UNKNOWN(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
 						}
 					}
 					else
 					{
-						ISLOGGER_ERROR("Command \"" + Argument + " " + SubArgument + "\" not executed.");
+						ISLOGGER_ERROR(QString("Command \"%1 %2\" not executed.").arg(Argument).arg(SubArgument));
 					}
 					Result = ReturnValue;
 				}
