@@ -40,8 +40,9 @@ void ISASSERT::ShowAssert(const QString &FalseMessage, const char *FunctionName,
 	StringStream << "Source file: " << FileName << std::endl;
 	StringStream << "Line: " << Line << std::endl;
 	StringStream << "Function: " << FunctionName;
+	std::string String = StringStream.str();
 
-	ISCrashDumper::SetAssertMessage(StringStream.str().c_str());
-    throw std::runtime_error(StringStream.str());
+	ISCrashDumper::SetAssertMessage(String.c_str());
+    throw std::runtime_error(String);
 }
 //-----------------------------------------------------------------------------

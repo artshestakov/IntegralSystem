@@ -1,6 +1,7 @@
 #pragma once
+#ifndef _ISUSEROBJECTFORM_H_INCLUDED
+#define _ISUSEROBJECTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISObjectFormBase.h"
 //-----------------------------------------------------------------------------
 class ISUserObjectForm : public ISObjectFormBase
@@ -27,3 +28,4 @@ private:
 	QString LoginOld;
 };
 //-----------------------------------------------------------------------------
+#endif

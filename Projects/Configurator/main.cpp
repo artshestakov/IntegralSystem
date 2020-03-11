@@ -99,7 +99,10 @@ int main(int argc, char *argv[])
 	if (ArgumentType == ISNamespace::CAT_Interpreter)
 	{
 		ISLOGGER_UNKNOWN(QString("Configurator [Version %1]").arg(ISVersion::Instance().ToString()));
-		ISLOGGER_UNKNOWN("Welcome to the Configurator. DBName: " + DBName + " DBHost: " + DBServer);
+		ISLOGGER_UNKNOWN("Welcome to the Configurator.");
+		ISLOGGER_UNKNOWN("DBHost: " + DBServer);
+		ISLOGGER_UNKNOWN("DBName: " + DBName);
+		ISLOGGER_UNKNOWN("DBPort: " + QString::number(DBPort));
 		ISLOGGER_UNKNOWN("Enter the \"help\" command to get help");
 		
 		while (Result)
