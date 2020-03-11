@@ -776,7 +776,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 			MetaField->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
 			MetaField->Name = FieldName;
 			MetaField->Type = ISMetaData::GetInstanse().GetTypeField(DomNamedNodeMap.namedItem("Type").nodeValue());
-			MetaField->Size = DomNamedNodeMap.namedItem("LocalName").nodeValue().toInt();
+			MetaField->Size = DomNamedNodeMap.namedItem("Size").nodeValue().toInt();
 			MetaField->Upper = QVariant(DomNamedNodeMap.namedItem("LocalListName").nodeValue()).toBool();
 			MetaField->Lower = QVariant(DomNamedNodeMap.namedItem("TitleName").nodeValue()).toBool();
 			MetaField->DefaultValue = DomNamedNodeMap.namedItem("DefaultValue").nodeValue().isEmpty() ? QVariant() : DomNamedNodeMap.namedItem("DefaultValue").nodeValue();

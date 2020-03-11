@@ -119,9 +119,8 @@ bool CGConfiguratorUpdate::tables()
 
 		if (Result) //Комментируем поля таблицы
 		{
-			for (int i = 0, c = MetaTable->AllFields.size(); i < c; ++i)
+			for (PMetaClassField *MetaField : MetaTable->AllFields)
 			{
-				PMetaClassField *MetaField = MetaTable->AllFields[i];
 				if (MetaField->QueryText.isEmpty()) //Если поле является обычным полем - комментируем его
 				{
 					Result = CGHelper::CommentField(MetaTable->Name.toLower(), MetaTable->Alias + '_' + MetaField->Name.toLower(), MetaField->LocalListName, ErrorString);

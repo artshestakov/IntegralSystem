@@ -13,12 +13,7 @@ static QString Q_REINDEX = "REINDEX INDEX %1";
 //-----------------------------------------------------------------------------
 bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 {
-	QString IndexUnique;
-	if (Index->Unique)
-	{
-		IndexUnique = "UNIQUE";
-	}
-
+	QString IndexUnique = Index->Unique ? "UNIQUE" : QString();
 	QString Fields, SqlText = QC_INDEX.arg(IndexUnique).arg(GetIndexName(Index)).arg(Index->TableName);
 	if (!Index->Fields.empty())
 	{

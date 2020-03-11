@@ -6,42 +6,52 @@
 #include "CGSequence.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
+#include "ISConsole.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLE = PREPARE_QUERY("SELECT COUNT(*) FROM pg_tables WHERE schemaname = current_schema() AND tablename = :TableName");
 //-----------------------------------------------------------------------------
-static QString QS_COLUMNS = PREPARE_QUERY("SELECT column_name, column_default, is_nullable::BOOLEAN, data_type, character_maximum_length "
+static QString QS_COLUMNS = PREPARE_QUERY("SELECT column_name AS column_full_name, split_part(column_name, '_', 2) AS column_name, column_default, is_nullable::BOOLEAN, data_type, character_maximum_length "
 										  "FROM information_schema.columns "
 										  "WHERE table_catalog = current_database() "
 										  "AND table_schema = current_schema() "
 										  "AND table_name = :TableName "
 										  "ORDER BY ordinal_position");
 //-----------------------------------------------------------------------------
+static QString QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
+											  "column_name AS column_full_name, "
+											  "substr(column_name, position('_' IN column_name) + 1, length(column_name) - position('_' IN column_name)) AS column_name "
+											  "FROM information_schema.columns "
+											  "WHERE table_catalog = current_database() "
+											  "AND table_schema = current_schema() "
+											  "AND table_name = :TableName "
+											  "ORDER BY ordinal_position");
+//-----------------------------------------------------------------------------
 bool CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 {
 	QString TableName = MetaTable->Name.toLower(), TableAlias = MetaTable->Alias.toLower();
 
-	//Проверка существования последовательности, если последовательность не существует - произвести её создание
 	bool Exist = true;
 	bool Result = CGSequence::CheckExistSequence(TableName, Exist, ErrorString);
 	if (Result)
 	{
-		if (!Exist) //Последовательность не существует
+		if (!Exist)
 		{
-			Result = CGSequence::CreateSequence(TableName);
+			Result = CGSequence::CreateSequence(TableName, ErrorString);
 		}
 	}
-	else //Ошибка проверки наличия последовательности
+
+	if (!Result)
 	{
 		return Result;
 	}
 
-	QString SqlText = "CREATE TABLE public." + MetaTable->Name.toLower() + "(\n";
+	QString SqlText = "CREATE TABLE public." + MetaTable->Name.toLower() + " \n( \n";
 	SqlText += CGTemplateField::GetSqlTextForTemplateSystemFields(TableName, TableAlias);
 
 	//Формирование запроса на создание таблицы
-	for (int i = 0, CountFields = MetaTable->Fields.size(); i < CountFields; ++i) //Обход полей таблицы
+	for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей таблицы
 	{
-		PMetaClassField *MetaField = MetaTable->Fields[i];
 		if (!MetaField->QueryText.isEmpty())
 		{
 			continue;
@@ -53,7 +63,7 @@ bool CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 		QString FieldDefalutValue = MetaField->DefaultValue.toString(); //Значение по умолчанию для поля
 		bool FieldNotNull = MetaField->NotNull; //Статус обязательного заполнения поля
 
-		SqlText += TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::GetInstanse().GetTypeDB(FieldType);
+		SqlText += "\t" + TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::GetInstanse().GetTypeDB(FieldType);
 
 		if (FieldSize > 0) //Если указан размер поля
 		{
@@ -66,7 +76,7 @@ bool CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 		}
 		else //Значение по умолчанию указано
 		{
-			SqlText += " DEFAULT " + FieldType == ISNamespace::FT_UID ? ("'" + FieldDefalutValue + "\'") : FieldDefalutValue;			
+			SqlText += " DEFAULT " + (FieldType == ISNamespace::FT_UID ? QString("'%1'").arg(FieldDefalutValue) : FieldDefalutValue);
 		}
 
 		if (FieldNotNull) //Если поле обязательно для заполнения
@@ -99,6 +109,11 @@ bool CGTable::UpdateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 	{
 		Result = CreateNewFields(MetaTable, ErrorString);
 	}
+
+	if (Result)
+	{
+		Result = DeleteOldFields(MetaTable, ErrorString);
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -125,8 +140,8 @@ bool CGTable::AlterExistFields(PMetaClassTable *MetaTable, QString &ErrorString)
 	{
 		while (qSelectColumns.Next())
 		{
-			QString ColumnNameFull = qSelectColumns.ReadColumn("column_name").toString();
-			QString ColumnName = qSelectColumns.ReadColumn("column_name").toString().split('_').at(1);
+			QString ColumnNameFull = qSelectColumns.ReadColumn("column_full_name").toString();
+			QString ColumnName = qSelectColumns.ReadColumn("column_name").toString();
 			QString ColumnDefaultValue = qSelectColumns.ReadColumn("column_default").toString();
 			bool ColumnNotNull = !qSelectColumns.ReadColumn("is_nullable").toBool();
 			QString ColumnType = qSelectColumns.ReadColumn("data_type").toString().toUpper();
@@ -144,26 +159,21 @@ bool CGTable::AlterExistFields(PMetaClassTable *MetaTable, QString &ErrorString)
 			int MetaSize = MetaField->Size;
 
 			//Проверка соответствия типов
-			if (ColumnType != MetaType)
+			if (ColumnType != MetaType || ColumnSize != MetaSize)
 			{
-				QString QueryText;
-				QueryText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
-				QueryText += "ALTER COLUMN " + MetaTable->Alias + '_' + MetaField->Name.toLower() + " TYPE " + MetaType;// +" \n";
-
-				if (MetaSize)
-				{
-					QueryText += '(' + QString::number(MetaSize) + ") \n";
-				}
-				else
-				{
-					QueryText += " \n";
-				}
-
+				QString QueryText = "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
+				QueryText += "ALTER COLUMN " + MetaTable->Alias + '_' + MetaField->Name.toLower() + " TYPE " + MetaType;
+				QueryText += MetaSize > 0 ? QString("(%1) \n").arg(MetaSize) : " \n";
 				QueryText += "USING " + MetaTable->Alias + '_' + MetaField->Name.toLower() + "::" + MetaType;
 
 				ISQuery qAlterType;
 				qAlterType.SetShowLongQuery(false);
-				qAlterType.Execute(QueryText);
+				Result = qAlterType.Execute(QueryText);
+				if (!Result)
+				{
+					ErrorString = qAlterType.GetErrorString();
+					break;
+				}
 			}
 
 			//Если поле является ID - то не продолжаем дальше
@@ -237,6 +247,10 @@ bool CGTable::AlterExistFields(PMetaClassTable *MetaTable, QString &ErrorString)
 			}
 		}
 	}
+	else
+	{
+		ErrorString = qSelectColumns.GetErrorString();
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -288,7 +302,7 @@ bool CGTable::CreateNewFields(PMetaClassTable *MetaTable, QString &ErrorString)
 				Result = qAddColumn.Execute(AddColumn);
 				if (!Result)
 				{
-					ErrorString = ErrorString;
+					ErrorString = qAddColumn.GetErrorString();
 					break;
 				}
 			}
@@ -297,6 +311,45 @@ bool CGTable::CreateNewFields(PMetaClassTable *MetaTable, QString &ErrorString)
 		{
 			break;
 		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGTable::DeleteOldFields(PMetaClassTable *MetaTable, QString &ErrorString)
+{
+	ISQuery qSelectColumns(QS_OLD_COLUMNS);
+	qSelectColumns.SetShowLongQuery(false);
+	qSelectColumns.BindValue(":TableName", MetaTable->Name.toLower());
+	bool Result = qSelectColumns.Execute();
+	if (Result)
+	{
+		while (qSelectColumns.Next())
+		{
+			QString FieldFullName = qSelectColumns.ReadColumn("column_full_name").toString();
+			QString FieldName = qSelectColumns.ReadColumn("column_name").toString();
+			if (!MetaTable->ContainsField(FieldName)) //Если поле существует в базе, но не существует в мета-данных - предлагаем удалить
+			{
+				if (ISConsole::Question(QString("The field \"%1\" in the table \"%2\" is out of date, delete?").arg(FieldFullName).arg(MetaTable->Name))) //Пользователь согласился удалить поле - удаляем
+				{
+					ISQuery qDropColumn;
+					qDropColumn.SetShowLongQuery(false);
+					Result = qDropColumn.Execute("ALTER TABLE public." + MetaTable->Name + " DROP COLUMN " + FieldFullName);
+					if (!Result)
+					{
+						ErrorString = qDropColumn.GetErrorString();
+						break;
+					}
+				}
+				else //Не согласен удалять поле - пропускаем и идём дальше
+				{
+					ISLOGGER_UNKNOWN("Skip deletion field " + FieldFullName);
+				}
+			}
+		}
+	}
+	else
+	{
+		ErrorString = qSelectColumns.GetErrorString();
 	}
 	return Result;
 }

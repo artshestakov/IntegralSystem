@@ -12,5 +12,6 @@ public:
 protected:
 	static bool AlterExistFields(PMetaClassTable *MetaTable, QString &ErrorString);
 	static bool CreateNewFields(PMetaClassTable *MetaTable, QString &ErrorString);
+	static bool DeleteOldFields(PMetaClassTable *MetaTable, QString &ErrorString);
 };
 //-----------------------------------------------------------------------------

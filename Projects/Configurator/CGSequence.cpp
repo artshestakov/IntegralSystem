@@ -13,12 +13,16 @@ static QString QC_SEQUENCE = "CREATE SEQUENCE public.%1 "
 							 "MAXVALUE 2147483647 START 1 "
 							 "CACHE 1";
 //-----------------------------------------------------------------------------
-bool CGSequence::CreateSequence(const QString &ClassName)
+bool CGSequence::CreateSequence(const QString &ClassName, QString &ErrorString)
 {
-	QString Query = QC_SEQUENCE.arg(GetSequenceNameForClass(ClassName)); //Формирование запроса
 	ISQuery qCreateSequence;
 	qCreateSequence.SetShowLongQuery(false);
-	return qCreateSequence.Execute(Query);
+	bool Result = qCreateSequence.Execute(QC_SEQUENCE.arg(GetSequenceNameForClass(ClassName)));
+	if (!Result)
+	{
+		ErrorString = qCreateSequence.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGSequence::CheckExistSequence(const QString &ClassName, bool &Exist, QString &ErrorString)

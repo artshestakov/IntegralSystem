@@ -141,15 +141,27 @@ struct PMetaClassTable : public PMetaClass
 
 	int GetFieldIndex(const QString &FieldName) const //Получить индекс поля по его имени
 	{
-		for (int i = 0; i < AllFields.size(); ++i)
+		for (int i = 0, c = AllFields.size(); i < c; ++i)
 		{
-			PMetaClassField *MetaField = AllFields.at(i);
-			if (MetaField->Name == FieldName)
+			PMetaClassField *MetaField = AllFields[i];
+			if (MetaField->Name.toLower() == FieldName.toLower())
 			{
 				return i;
 			}
 		}
 		return -1;
+	}
+
+	bool ContainsField(const QString &FieldName)
+	{
+		for (PMetaClassField *MetaField : AllFields)
+		{
+			if (MetaField->Name.toLower() == FieldName.toLower())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	QString Name; //Название таблицы

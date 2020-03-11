@@ -17,7 +17,7 @@ bool CGHelper::CheckExistColumn(PMetaClassTable *MetaTable, const QString &Colum
 	bool Result = qSelectColumn.ExecuteFirst();
 	if (Result)
 	{
-		Exist = qSelectColumn.ReadColumn("count").toInt() > 1;
+		Exist = qSelectColumn.ReadColumn("count").toInt() > 0;
 	}
 	else
 	{
