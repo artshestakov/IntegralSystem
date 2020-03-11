@@ -284,6 +284,7 @@
   <Local Name="Field.Bik.PlaceholderText" Russian="9 цифр"/>
   <Local Name="Field.Inn.PlaceholderText" Russian="10 или 12 цифр"/>
   <Local Name="Field.Kpp.PlaceholderText" Russian="9 цифр"/>
+  <Local Name="Field.Vin.PlaceholderText" Russian="17 цифр"/>
   <Local Name="Field.Ogrn.PlaceholderText" Russian="13 цифр"/>
   <Local Name="Field.Okpo.PlaceholderText" Russian="8 цифр"/>
   <Local Name="Field.Password.PlaceholderText" Russian="Введите пароль"/>

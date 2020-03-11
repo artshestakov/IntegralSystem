@@ -54,6 +54,7 @@
 #include "ISINNEdit.h"
 #include "ISOKPOEdit.h"
 #include "ISKPPEdit.h"
+#include "ISVINEdit.h"
 #include "ISOGRNEdit.h"
 #include "ISYearEdit.h"
 #include "ISComboTimeEdit.h"
@@ -148,6 +149,7 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISINNEdit*>("ISINNEdit");
 	qRegisterMetaType<ISOKPOEdit*>("ISOKPOEdit");
 	qRegisterMetaType<ISKPPEdit*>("ISKPPEdit");
+	qRegisterMetaType<ISVINEdit*>("ISVINEdit");
 	qRegisterMetaType<ISOGRNEdit*>("ISOGRNEdit");
 	qRegisterMetaType<ISYearEdit*>("ISYearEdit");
 	qRegisterMetaType<ISComboTimeEdit*>("ISComboTimeEdit");

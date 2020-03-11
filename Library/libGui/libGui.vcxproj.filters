@@ -1228,6 +1228,9 @@
     <ClCompile Include="ISOilSphereCounterpartyObjectForm.cpp">
       <Filter>Objects\OilSphere\Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISVINEdit.cpp">
+      <Filter>Fields\Other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -2108,6 +2111,9 @@
     </QtMoc>
     <QtMoc Include="ISOilSphereCounterpartyObjectForm.h">
       <Filter>Objects\OilSphere\Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISVINEdit.h">
+      <Filter>Fields\Other</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

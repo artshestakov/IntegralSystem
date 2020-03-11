@@ -228,7 +228,7 @@
       <Field UID="{61BF0C58-DFFC-4998-AEAD-1A7BABAC33AD}" Name="Mark" Type="String" LabelName="Марка" LocalListName="Марка" NotNull="true"/>
       <Field UID="{593974BD-BF3C-4270-86CC-DE6936D45C7B}" Name="Model" Type="String" LabelName="Модель" LocalListName="Модель" NotNull="true"/>
       <Field UID="{DB93A5B6-5F6C-4E03-AF9E-B133024D2F1A}" Name="Number" Type="String" LabelName="Гос. номер" LocalListName="Гос. номер" NotNull="true"/>
-      <Field UID="{2B4D0C01-6018-4E9A-B110-AEE74332C5C6}" Name="VIN" Type="String" LabelName="ВИН" LocalListName="ВИН"/>
+      <Field UID="{2B4D0C01-6018-4E9A-B110-AEE74332C5C6}" Name="VIN" Type="Vin" LabelName="ВИН" LocalListName="ВИН"/>
     </Fields>
     <Indexes>
       <Index Field="Mark"/>

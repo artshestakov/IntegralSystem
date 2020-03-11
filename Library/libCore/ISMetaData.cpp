@@ -31,6 +31,7 @@ ISMetaData::ISMetaData()
 		{ "Ogrn", ISNamespace::FT_Ogrn, "CHARACTER VARYING", "ISOGRNEdit", "ISComboSearchString", true },
 		{ "Okpo", ISNamespace::FT_Okpo, "CHARACTER VARYING", "ISOKPOEdit", "ISComboSearchString", true },
 		{ "Bik", ISNamespace::FT_Bik, "CHARACTER VARYING", "ISBIKEdit", "ISComboSearchString", true },
+		{ "Vin", ISNamespace::FT_Vin, "CHARACTER VARYING", "ISVINEdit", "ISComboSearchString", true },
 		{ "Year", ISNamespace::FT_Year, "INTEGER", "ISYearEdit", "ISComboSearchNumber", true },
 		{ "PhoneBase", ISNamespace::FT_PhoneBase, "CHARACTER VARYING", "ISPhoneBaseEdit", "ISComboSearchString", true },
 		{ "Phone", ISNamespace::FT_Phone, "CHARACTER VARYING", "ISPhoneEdit", "ISComboSearchString", true },

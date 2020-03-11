@@ -424,6 +424,7 @@
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISUserStatusForm.cpp" />
     <ClCompile Include="ISUuidEdit.cpp" />
+    <ClCompile Include="ISVINEdit.cpp" />
     <ClCompile Include="ISVolumeEdit.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="ISWeekDayEdit.cpp" />
@@ -459,6 +460,7 @@
     <QtMoc Include="ISSqlModelCore.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISStyleSheet.h" />
+    <QtMoc Include="ISVINEdit.h" />
     <ClInclude Include="libGui_global.h" />
     <QtMoc Include="ISIncomingCallBaseForm.h" />
     <QtMoc Include="ISInterfaceMetaForm.h" />
