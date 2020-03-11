@@ -11,10 +11,11 @@
     <Function FunctionName="Database" LocalName="База данных" Description="Полное обновление базы данных."/>
     <Function FunctionName="Functions" LocalName="Функции" Description="Обновление всех функций базы данных."/>
     <Function FunctionName="Tables" LocalName="Таблицы" Description="Обновление таблиц базы данных."/>
+    <Function FunctionName="IndexesAll" LocalName="Все индексы" Description="Обновление всех индексов базы данных."/>
     <Function FunctionName="SystemIndexes" LocalName="Системные индексы" Description="Обновление системных индексов базы данных."/>
     <Function FunctionName="Indexes" LocalName="Индексы" Description="Обновление индексов базы данных."/>
     <Function FunctionName="CompoundIndexes" LocalName="Составные индексы" Description="Обновление составных индексов базы данных."/>
-    <Function FunctionName="Foreigns" LocalName="Внешние ключи" Description="Обновление внешних ключе базы данных."/>
+    <Function FunctionName="Foreigns" LocalName="Внешние ключи" Description="Обновление внешних ключей базы данных."/>
     <Function FunctionName="Resources" LocalName="Ресурсы" Description="Обновление ресурсов и справочников базы данных."/>
   </Section>
 
