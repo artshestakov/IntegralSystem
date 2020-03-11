@@ -191,6 +191,9 @@
     <Filter Include="Objects\OilSphere">
       <UniqueIdentifier>{4fb78c6d-6486-45e6-99ef-705f3a5ec0f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\OilSphere\Forms">
+      <UniqueIdentifier>{c0db5c58-dfe5-44c0-9dc3-8548c50a4f61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -1222,6 +1225,9 @@
     <ClCompile Include="ISDictionaryWord.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISOilSphereCounterpartyObjectForm.cpp">
+      <Filter>Objects\OilSphere\Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -2099,6 +2105,9 @@
     </QtMoc>
     <QtMoc Include="ISDateTimeEdit.h">
       <Filter>Fields\DateTime</Filter>
+    </QtMoc>
+    <QtMoc Include="ISOilSphereCounterpartyObjectForm.h">
+      <Filter>Objects\OilSphere\Forms</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

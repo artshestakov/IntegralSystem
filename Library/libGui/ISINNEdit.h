@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISLineEdit.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISINNEdit : public ISLineEdit
 {
@@ -15,5 +16,9 @@ public:
 	virtual ~ISINNEdit();
 
 	bool IsValid() const;
+	void SetEnabledSearch(bool Enabled);
+
+private:
+	ISServiceButton *ButtonSearch;
 };
 //-----------------------------------------------------------------------------

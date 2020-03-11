@@ -89,6 +89,7 @@ ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType f
 	}
 
 	INNEdit = dynamic_cast<ISINNEdit*>(GetFieldWidget("INN"));
+	INNEdit->SetEnabledSearch(true);
 	connect(INNEdit, &ISINNEdit::ValueChange, this, &ISOrganizationObjectForm::INNChanged);
 	connect(INNEdit, &ISINNEdit::SearchFromINN, this, &ISOrganizationObjectForm::SearchFromINN);
 }
@@ -235,7 +236,7 @@ void ISOrganizationObjectForm::SearchFinished(const ISDaDataOrganization &Organi
 
 	if (!GetFieldWidget("Principal")->GetValue().isValid())
 	{
-		GetFieldWidget("Principal")->SetValue(OrganizationStruct.Management.Name);
+		GetFieldWidget("Principal")->SetValue(OrganizationStruct.Management.FIO);
 	}
 
 	if (!OrganizationStruct.Okved.Okved.isEmpty())

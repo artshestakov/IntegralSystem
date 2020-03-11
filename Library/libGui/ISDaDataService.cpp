@@ -76,7 +76,7 @@ void ISDaDataService::SuccessOrganization(const QJsonObject &JsonObject)
 		Organization.Ogrn = VariantMap["data"].toMap()["ogrn"].toString();
 		Organization.OrgnDate = VariantMap["data"].toMap()["ogrn_date"].toString();
 		Organization.HID = VariantMap["data"].toMap()["hid"].toString();
-		Organization.Management.Name = VariantMap["data"].toMap()["management"].toMap()["name"].toString();
+		Organization.Management.FIO = VariantMap["data"].toMap()["management"].toMap()["name"].toString();
 		Organization.Management.Post = VariantMap["data"].toMap()["management"].toMap()["post"].toString();
 		Organization.Name.FullWithOPF = VariantMap["data"].toMap()["name"].toMap()["full_with_opf"].toString();
 		Organization.Name.ShortWithOPF = VariantMap["data"].toMap()["name"].toMap()["short_with_opf"].toString();

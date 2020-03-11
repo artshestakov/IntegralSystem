@@ -306,7 +306,7 @@ struct LIBCORE_EXPORT ISDaDataOrganizationBranch
 //-----------------------------------------------------------------------------
 struct LIBCORE_EXPORT ISDaDataOrganizationManagement
 {
-	QString Name; //ФИО руководителя
+	QString FIO; //ФИО руководителя
 	QString Post; //Должность руководителя
 };
 //-----------------------------------------------------------------------------

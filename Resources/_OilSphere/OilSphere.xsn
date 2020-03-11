@@ -21,22 +21,28 @@
     </Foreigns>
   </Table>
 
-  <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name">
+  <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphereCounterpartyObjectForm">
     <Fields>
       <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{3B7EB4F8-CFEB-40C8-99E9-22150ED555B9}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
       <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="Int" LabelName="Тип" LocalListName="Тип"/>
       <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус"/>
       <Field UID="{4514E2E7-18C5-4B1B-8052-AEFCBF4626E8}" Name="Director" Type="String" LabelName="Директор" LocalListName="Директор"/>
       <Field UID="{3CB172A8-590C-462B-AB70-F6A4BABF3A24}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН"/>
+      <Field UID="{4459AAC7-F885-4120-A1D8-13C7E84179B0}" Name="Kpp" Type="Kpp" LabelName="КПП" LocalListName="КПП"/>
+      <Field UID="{2BF964F2-20F0-44C6-91D6-CB436DBFFE67}" Name="Ogrn" Type="Ogrn" LabelName="ОГРН" LocalListName="ОГРН"/>
       <Field UID="{6A63EE11-4F3E-4C72-BBE6-454AF87E2BD6}" Name="Phone" Type="PhoneBase" LabelName="Телефон" LocalListName="Телефон"/>
       <Field UID="{AB52855E-A2E9-4DA8-BFBE-1885CCCA13EF}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
+      <Index Field="Address"/>
       <Index Field="Type"/>
       <Index Field="Status"/>
       <Index Field="Director"/>
       <Index Field="Inn"/>
+      <Index Field="Kpp"/>
+      <Index Field="Ogrn"/>
       <Index Field="Phone"/>
       <Index Field="EMail"/>
     </Indexes>
