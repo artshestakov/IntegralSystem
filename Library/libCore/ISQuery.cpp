@@ -7,6 +7,7 @@
 #include "ISCountingTime.h"
 #include "ISAssert.h"
 #include "ISException.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(const QString &sql_text, bool prepare)
 	: ErrorString(NO_ERROR_STRING),
@@ -261,13 +262,21 @@ void ISQuery::Raise()
 	if (SqlQuery.lastError().type() != QSqlError::NoError)
 	{
 		ISLOGGER_ERROR(GetErrorString());
-		if (SqlDatabase.isOpen())
+
+		//Если в данный момент запущен графический интерфейс - выбрасываем исключения
+		//потому они будут в дальнейшем перехвачены
+		//Посылать исключения в конфигураторе или карате смысла нет, потому что они 
+		//консольные и достаточно просто их залогировать
+		if (ISDefines::Core::IS_GUI)
 		{
-			throw ISExceptionSqlSyntax(GetErrorString());
-		}
-		else
-		{
-			throw ISExceptionConnectionDB();
+			if (SqlDatabase.isOpen())
+			{
+				throw ISExceptionSqlSyntax(GetErrorString());
+			}
+			else
+			{
+				throw ISExceptionConnectionDB();
+			}
 		}
 	}
 }
