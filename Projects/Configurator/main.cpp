@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------
-QVector<CGSection*> Arguments;
+std::vector<CGSection*> Arguments;
 QString DBServer, DBName, DBLogin, DBPassword;
 int DBPort = 0;
 //-----------------------------------------------------------------------------
@@ -156,7 +156,7 @@ bool InitConfiguratorScheme(QString &ErrorString)
 				NodeSections.attributes().namedItem("ClassName").nodeValue(),
 				std::vector<CGSectionItem*>()
 			};
-			Arguments.append(Section);
+			Arguments.emplace_back(Section);
 
 			QDomNode NodeFunctions = NodeSections.firstChild();
 			while (!NodeFunctions.isNull()) //Обход подразделов

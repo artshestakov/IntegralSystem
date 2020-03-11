@@ -4,7 +4,7 @@
 #include "CGConfiguratorBase.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-CGConfigurator::CGConfigurator(const QVector<CGSection*> &arguments)
+CGConfigurator::CGConfigurator(const std::vector<CGSection*> &arguments)
 	: CGConfiguratorBase(),
 	Arguments(arguments)
 {

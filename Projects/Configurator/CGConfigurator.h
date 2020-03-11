@@ -10,14 +10,14 @@ class CGConfigurator : public CGConfiguratorBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE CGConfigurator(const QVector<CGSection*> &arguments);
+	Q_INVOKABLE CGConfigurator(const std::vector<CGSection*> &arguments);
 	virtual ~CGConfigurator();
 
 public slots:
 	bool help(); //Показать помощь
 
 private:
-	QVector<CGSection*> Arguments;
+	std::vector<CGSection*> Arguments;
 };
 //-----------------------------------------------------------------------------
 #endif
