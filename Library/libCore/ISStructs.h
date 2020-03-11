@@ -8,6 +8,7 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISTypedefs.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 struct ISMetaDataType
 {
@@ -478,6 +479,20 @@ struct LIBCORE_EXPORT ISDaDataLocation
 	QString UnparsedParts;
 	QString Source;
 	QString QC;
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT CGSectionItem
+{
+	QString Function;
+	QString LocalName;
+	QString Description;
+};
+//-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT CGSection
+{
+	QString Name;
+	QString ClassName;
+	std::vector<CGSectionItem*> Items;
 };
 //-----------------------------------------------------------------------------
 #endif

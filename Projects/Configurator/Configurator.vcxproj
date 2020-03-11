@@ -27,8 +27,6 @@
     <ClCompile Include="CGHelper.cpp" />
     <ClCompile Include="CGIndex.cpp" />
     <ClCompile Include="CGResource.cpp" />
-    <ClCompile Include="CGSection.cpp" />
-    <ClCompile Include="CGSectionItem.cpp" />
     <ClCompile Include="CGSequence.cpp" />
     <ClCompile Include="CGTable.cpp" />
     <ClCompile Include="CGTemplateField.cpp" />
@@ -36,12 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CGConfigurator.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGSection.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGSectionItem.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CGConfiguratorBase.h" />

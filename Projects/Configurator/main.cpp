@@ -8,7 +8,6 @@
 #include "ISCore.h"
 #include "ISSystem.h"
 #include "ISCountingTime.h"
-#include "CGSection.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
 #include "ISLogger.h"
@@ -151,19 +150,23 @@ bool InitConfiguratorScheme(QString &ErrorString)
 		QDomNode NodeSections = DomElement.firstChild();
 		while (!NodeSections.isNull()) //Обход разделов
 		{
-			CGSection *Section = new CGSection();
-			Section->SetName(NodeSections.attributes().namedItem("Name").nodeValue());
-			Section->SetClassName(NodeSections.attributes().namedItem("ClassName").nodeValue());
+			CGSection *Section = new CGSection
+			{
+				NodeSections.attributes().namedItem("Name").nodeValue(),
+				NodeSections.attributes().namedItem("ClassName").nodeValue(),
+				std::vector<CGSectionItem*>()
+			};
 			Arguments.append(Section);
 
 			QDomNode NodeFunctions = NodeSections.firstChild();
 			while (!NodeFunctions.isNull()) //Обход подразделов
 			{
-				CGSectionItem *SectionItem = new CGSectionItem();
-				SectionItem->SetFunction(NodeFunctions.attributes().namedItem("FunctionName").nodeValue());
-				SectionItem->SetLocalName(NodeFunctions.attributes().namedItem("FunctionLocalName").nodeValue());
-				SectionItem->SetDescription(NodeFunctions.attributes().namedItem("Description").nodeValue());
-				Section->AddItem(SectionItem);
+				Section->Items.emplace_back(new CGSectionItem
+				{
+					NodeFunctions.attributes().namedItem("FunctionName").nodeValue(),
+					NodeFunctions.attributes().namedItem("FunctionLocalName").nodeValue(),
+					NodeFunctions.attributes().namedItem("Description").nodeValue()
+				});
 				NodeFunctions = NodeFunctions.nextSibling();
 			}
 			NodeSections = NodeSections.nextSibling();
@@ -375,9 +378,9 @@ QString GetClassName(const QString &Argument)
 {
 	for (CGSection *Section : Arguments)
 	{
-		if (Section->GetName().toLower() == Argument)
+		if (Section->Name.toLower() == Argument)
 		{
-			return Section->GetClassName();
+			return Section->ClassName;
 		}
 	}
 	return QString();

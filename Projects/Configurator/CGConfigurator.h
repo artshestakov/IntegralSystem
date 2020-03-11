@@ -3,7 +3,7 @@
 #define _CGCONFIGURATOR_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorBase.h"
-#include "CGSection.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class CGConfigurator : public CGConfiguratorBase
 {

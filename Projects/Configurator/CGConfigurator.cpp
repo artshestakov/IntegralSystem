@@ -24,9 +24,9 @@ bool CGConfigurator::help()
 	ISLOGGER_EMPTY();
 	for (CGSection *Section : Arguments)
 	{
-		for (CGSectionItem *SectionItem : Section->GetItems())
+		for (CGSectionItem *SectionItem : Section->Items)
 		{
-			ISLOGGER_UNKNOWN(Section->GetName() + SYMBOL_SPACE + SectionItem->GetFunction() + " - " + SectionItem->GetDescription());
+			ISLOGGER_UNKNOWN(Section->Name + SYMBOL_SPACE + SectionItem->Function + " - " + SectionItem->Description);
 		}
 	}
 	return true;

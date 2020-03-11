@@ -91,7 +91,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<std::vector<QSqlRecord>>("std::vector<QSqlRecord>");
 	qRegisterMetaType<QSqlError>("QSqlError");
 	qRegisterMetaType<ISUuid>("ISUuid");
-	qRegisterMetaType<QVector<int>>("QVector<int>");
 
 	qRegisterMetaType<ISListObjectForm*>("ISListObjectForm");
 	qRegisterMetaType<ISUserListForm*>("ISUserListForm");
