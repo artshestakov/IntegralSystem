@@ -358,7 +358,6 @@
   <Local Name="Service" Russian="Сервис"/>
   <Local Name="Apply" Russian="Применить"/>
   <Local Name="FieldNotNull" Russian="Поле обязательно для заполнения"/>
-  <Local Name="FillThisField" Russian="Обязательно заполните это поле"/>
   <Local Name="Cancel" Russian="Отмена"/>
   <Local Name="SaveAs" Russian="Сохранить как..."/>
   <Local Name="SelectFolder" Russian="Выберите папку"/>

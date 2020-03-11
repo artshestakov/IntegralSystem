@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISOILSPHERECOUNTERPATRYOBJECTFORM_H_INCLUDED
-#define _ISOILSPHERECOUNTERPATRYOBJECTFORM_H_INCLUDED
+#ifndef _ISOILSPHERECOUNTERPARTYOBJECTFORM_H_INCLUDED
+#define _ISOILSPHERECOUNTERPARTYOBJECTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISObjectFormBase.h"
 #include "ISINNEdit.h"

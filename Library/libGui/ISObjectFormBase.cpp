@@ -577,7 +577,6 @@ void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEdit
 		LabelField->setText(QString("<font>%1:</font><font color=#FF0000 size=4>*</font>").arg(MetaField->LabelName));
 		LabelField->setToolTip(LANG("FieldNotNull"));
 		LabelField->setCursor(CURSOR_WHATS_THIS);
-		FieldEditBase->SetToolTip(LANG("FillThisField"));
 	}
 	else
 	{

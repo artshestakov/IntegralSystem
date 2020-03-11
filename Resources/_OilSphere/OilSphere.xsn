@@ -92,6 +92,57 @@
     </Indexes>
   </Table>
 
+  <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="Counterparty">
+    <Fields>
+      <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки"/>
+      <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта" LayoutName="ProductType"/>
+      <Field UID="{7A1F9081-2B9C-4FB9-A45B-E9881CE237C2}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" LayoutName="ProductType"/>
+      <Field UID="{BF15D8D3-D1E8-4B5F-A082-CB85AC681ED1}" Name="WeightTotal" Type="Double" LabelName="Вес (общий)" LocalListName="Вес (общий)" LayoutName="Weight"/>
+      <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="Container" Type="Double" LabelName="Тара" LocalListName="Тара" LayoutName="Weight"/>
+      <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Weight"/>
+      <Field UID="{590547D1-75DD-4CE2-95C4-B6EC97D43EFD}" Name="PriceKG" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="Price"/>
+      <Field UID="{64CCFB48-4BF4-4322-B35D-7869E27554EB}" Name="Cost" Type="Double" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="Price"/>
+      <Field UID="{F666929C-5DC1-4D51-8527-6D14D3F64409}" Name="Payment" Type="Double" LabelName="Оплата" LocalListName="Оплата" LayoutName="Payment"/>
+      <Field UID="{9B8377B2-46E7-4DD7-B8B1-A3306A6C5593}" Name="Balance" Type="Double" LabelName="Баланс" LocalListName="Баланс" LayoutName="Payment"/>
+      <Field UID="{3A359B86-5270-4BFE-9ABF-A625FBCB20CB}" Name="PlaceOfLoad" Type="Int" LabelName="Место загрузки" LocalListName="Место загрузки"/>
+      <Field UID="{66950052-D388-467C-8F7D-AE5B071AFAFA}" Name="WightLoad" Type="Double" LabelName="Вес загрузки" LocalListName="Вес загрузки"/>
+      <Field UID="{DD79EB7F-CCAC-46C1-8E63-073935646196}" Name="PurchasePrice" Type="Double" LabelName="Стоимость закупки" LocalListName="Стоимость закупки"/>
+      <Field UID="{D4AAA5D3-53D8-40F2-88C3-7A712F0726FB}" Name="Organization" Type="Int" LabelName="Огранизация" LocalListName="Огранизация"/>
+      <Field UID="{B47E3F31-CE60-450F-905C-F54D6D17F7D4}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+      <Field UID="{E3EC604A-96C7-4DA2-9C44-7EB4C9871796}" Name="Driver" Type="Int" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
+      <Field UID="{AA821AE0-6837-4386-B371-D4E8614A1811}" Name="Car" Type="Int" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Driver"/>
+      <Field UID="{45EC9CDF-3142-41BC-A396-16DEF03D0EF5}" Name="WeightDifference" Type="Int" LabelName="Разница весов" LocalListName="Разница весов"/>
+    </Fields>
+    <Indexes>
+      <Index Field="DateLoad"/>
+      <Index Field="ProductType"/>
+      <Index Field="Counterparty"/>
+      <Index Field="WeightTotal"/>
+      <Index Field="Container"/>
+      <Index Field="WeightGross"/>
+      <Index Field="PriceKG"/>
+      <Index Field="Cost"/>
+      <Index Field="Payment"/>
+      <Index Field="Balance"/>
+      <Index Field="PlaceOfLoad"/>
+      <Index Field="WightLoad"/>
+      <Index Field="PurchasePrice"/>
+      <Index Field="Organization"/>
+      <Index Field="Note"/>
+      <Index Field="Driver"/>
+      <Index Field="Car"/>
+      <Index Field="WeightDifference"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="PlaceOfLoad" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Organization" ForeignClass="Organization" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model"/>
+    </Foreigns>
+  </Table>
+
   <Table Name="CounterpartyType" UID="{838409C1-063F-4595-AD0C-0D9499CA4E5C}" Alias="cntp" LocalName="Тип контрагента" LocalListName="Типы контрагентов" TitleName="Name">
     <Fields>
       <Field UID="{3C15FF5D-3C52-4F62-9E34-CFD4FCC2D80E}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
@@ -116,6 +167,74 @@
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="ProductType" UID="{7863AAAC-FB7B-4330-97BB-8490409134DB}" Alias="pdtp" LocalName="Тип продукта" LocalListName="Типы продуктов" TitleName="Name">
+    <Fields>
+      <Field UID="{31320A15-8039-4899-B642-4DF4A7B34F13}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Organization" UID="{168A7F8D-0CA2-4930-B214-AC7A6E09B7F6}" Alias="orgz" LocalName="Организация" LocalListName="Организации" TitleName="Name">
+    <Fields>
+      <Field UID="{50790BDB-3B26-4DE5-B6B2-F4080F19CCF0}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Driver" UID="{DB23E49B-FAE0-4BEB-BC6F-0661C3B74BFF}" Alias="drvr" LocalName="Водитель" LocalListName="Водители" TitleName="Name">
+    <Fields>
+      <Field UID="{19147562-18AA-4DC7-953F-A0DD4A0843D7}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
+      <Field UID="{FECC72D2-03B6-44BC-85D5-0197204274C9}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения"/>
+      <Field UID="{1F9C9036-EDC7-4E91-AC72-852A810A7CB1}" Name="Type" Type="Int" LabelName="Тип водителя" LocalListName="Тип водителя"/>
+      <Field UID="{50874597-C07E-4CF9-9DC1-12A2C99D007F}" Name="Address" Type="String" LabelName="Адрес (домашний)" LocalListName="Адрес (домашний)"/>
+      <Field UID="{5CFC1697-2A76-4C3E-B5A7-D7365BAF441B}" Name="PhoneMain" Type="PhoneBase" LabelName="Телефон (основной)" LocalListName="Телефон (основной)"/>
+      <Field UID="{FE94A84B-E945-4D59-AD10-5962DBF23102}" Name="PhoneOther" Type="PhoneBase" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
+      <Field UID="{B259018F-0E88-4DA7-988B-36747489F91F}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
+      <Field UID="{32A4254D-1D93-4FE8-811F-6E8235343785}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="FIO"/>
+      <Index Field="Birthday"/>
+      <Index Field="Type"/>
+      <Index Field="Address"/>
+      <Index Field="PhoneMain"/>
+      <Index Field="PhoneOther"/>
+      <Index Field="EMail"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Type" ForeignClass="DriverType" ForeignField="ID" ForeignViewNameField="FIO"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="DriverType" UID="{B237DF98-804E-4913-A20B-8D1536CC313A}" Alias="drtp" LocalName="Тип водителя" LocalListName="Типы водителей" TitleName="Name">
+    <Fields>
+      <Field UID="{A2C7173B-3DF8-4FF2-9EB6-B8325459D041}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="Car" UID="{5D3EA65D-8595-4334-BA66-F76AA0A5D0AE}" Alias="cars" LocalName="Автомобиль" LocalListName="Автомобили" TitleName="Name">
+    <Fields>
+      <Field UID="{61BF0C58-DFFC-4998-AEAD-1A7BABAC33AD}" Name="Mark" Type="String" LabelName="Марка" LocalListName="Марка" NotNull="true"/>
+      <Field UID="{593974BD-BF3C-4270-86CC-DE6936D45C7B}" Name="Model" Type="String" LabelName="Модель" LocalListName="Модель" NotNull="true"/>
+      <Field UID="{DB93A5B6-5F6C-4E03-AF9E-B133024D2F1A}" Name="Number" Type="String" LabelName="Гос. номер" LocalListName="Гос. номер" NotNull="true"/>
+      <Field UID="{2B4D0C01-6018-4E9A-B110-AEE74332C5C6}" Name="VIN" Type="String" LabelName="ВИН" LocalListName="ВИН"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Mark"/>
+      <Index Field="Model"/>
+      <Index Field="Number"/>
+      <Index Field="VIN"/>
     </Indexes>
   </Table>
 
