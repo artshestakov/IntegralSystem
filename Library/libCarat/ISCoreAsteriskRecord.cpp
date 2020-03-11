@@ -4,6 +4,7 @@
 #include "ISNetwork.h"
 #include "ISConstants.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISCoreAsteriskRecord::ISCoreAsteriskRecord(int &argc, char **argv) : ISCaratCoreApplication(argc, argv)
 {
@@ -119,12 +120,12 @@ void ISCoreAsteriskRecord::ReadyRead()
 	FileRecord.close(); //Закрытие файла
 
 	int Size = 0; //Общий размер файла
-	QVector<QByteArray> Vector;
-	while (RecordData.length()) //Разделение сжатого файла на блоки
+	ISVectorByteArray Vector;
+	while (!RecordData.isEmpty()) //Разделение сжатого файла на блоки
 	{
 		QByteArray ByteArray = RecordData.mid(0, 1000 * 128);
 		Size += ByteArray.size();
-		Vector.append(ByteArray);
+		Vector.emplace_back(ByteArray);
 		RecordData.remove(0, 1000 * 128);
 	}
 
@@ -133,9 +134,9 @@ void ISCoreAsteriskRecord::ReadyRead()
 	ISSystem::ExecLoop(500); //Задержка перед отправкой файла
 
 	int Sended = 0; //Размер отправленной информации
-	while (Vector.count()) //Отправка файла
+	while (!Vector.empty()) //Отправка файла
 	{
-		QByteArray ByteArray = Vector.takeFirst(); //Забираем из вектора первый блок
+		QByteArray ByteArray = VectorTakeFront(Vector); //Забираем из вектора первый блок
 		if (TcpSocket->isOpen()) //Если сокет открыт
 		{
 			TcpSocket->write(ByteArray);
