@@ -7,7 +7,6 @@
 //-----------------------------------------------------------------------------
 #include "ISCenterSeven.h"
 #include "ISDemo.h"
-#include "ISFrame.h"
 #include "ISHighway.h"
 #include "ISInformResource.h"
 #include "ISMedTech.h"
@@ -21,7 +20,6 @@ ISObjects::ISObjects()
 {
 	qRegisterMetaType<ISCenterSeven*>("ISCenterSeven");
 	qRegisterMetaType<ISDemo*>("ISDemo");
-	qRegisterMetaType<ISFrame*>("ISFrame");
 	qRegisterMetaType<ISHighway*>("ISHighway");
 	qRegisterMetaType<ISInformResource*>("ISInformResource");
 	qRegisterMetaType<ISMedTech*>("ISMedTech");

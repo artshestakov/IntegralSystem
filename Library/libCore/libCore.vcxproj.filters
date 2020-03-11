@@ -55,9 +55,6 @@
     <Filter Include="Resources\_Demo">
       <UniqueIdentifier>{0e7c414d-528e-4e3d-9d73-f267cebae871}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\_Frame">
-      <UniqueIdentifier>{1c9e3e8a-0d6c-487a-ab7a-bc9294fdc858}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\_Highway">
       <UniqueIdentifier>{c8e5e86e-438b-4987-967b-a541d1ddefa5}</UniqueIdentifier>
     </Filter>
@@ -488,12 +485,6 @@
     </None>
     <None Include="..\..\Resources\_Demo\ServiceCenter.xsn">
       <Filter>Resources\_Demo</Filter>
-    </None>
-    <None Include="..\..\Resources\_Frame\Frame.xsn">
-      <Filter>Resources\_Frame</Filter>
-    </None>
-    <None Include="..\..\Resources\_Frame\Frame.xsr">
-      <Filter>Resources\_Frame</Filter>
     </None>
     <None Include="..\..\Resources\_Highway\Highway.xsn">
       <Filter>Resources\_Highway</Filter>

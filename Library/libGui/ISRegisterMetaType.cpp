@@ -46,7 +46,6 @@
 #include "ISImageEdit.h"
 #include "ISImageEdit64.h"
 #include "ISListEdit.h"
-#include "ISIPAddressEdit.h"
 #include "ISPathEditFile.h"
 #include "ISPathEditDir.h"
 #include "ISPasswordEdit.h"
@@ -62,7 +61,6 @@
 #include "ISPhoneEdit.h"
 #include "ISUserEdit.h"
 #include "ISBIKEdit.h"
-#include "ISICQEdit.h"
 #include "ISEMailEdit.h"
 #include "ISPassportEdit.h"
 #include "ISDivisionCodeEdit.h"
@@ -141,7 +139,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISImageEdit*>("ISImageEdit");
 	qRegisterMetaType<ISImageEdit64*>("ISImageEdit64");
 	qRegisterMetaType<ISListEdit*>("ISListEdit");
-	qRegisterMetaType<ISIPAddressEdit*>("ISIPAddressEdit");
 	qRegisterMetaType<ISPathEditFile*>("ISPathEditFile");
 	qRegisterMetaType<ISPathEditDir*>("ISPathEditDir"); 
 	qRegisterMetaType<ISPasswordEdit*>("ISPasswordEdit");
@@ -158,7 +155,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISPhoneEdit*>("ISPhoneEdit");
 	qRegisterMetaType<ISUserEdit*>("ISUserEdit");
 	qRegisterMetaType<ISBIKEdit*>("ISBIKEdit");
-	qRegisterMetaType<ISICQEdit*>("ISICQEdit");
 	qRegisterMetaType<ISEMailEdit*>("ISEMailEdit");
 	qRegisterMetaType<ISPassportEdit*>("ISPassportEdit");
 	qRegisterMetaType<ISDivisionCodeEdit*>("ISDivisionCodeEdit");

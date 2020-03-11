@@ -266,8 +266,6 @@
     <None Include="..\..\Resources\_Demo\Demo.xsr" />
     <None Include="..\..\Resources\_Demo\Denta.xsn" />
     <None Include="..\..\Resources\_Demo\ServiceCenter.xsn" />
-    <None Include="..\..\Resources\_Frame\Frame.xsn" />
-    <None Include="..\..\Resources\_Frame\Frame.xsr" />
     <None Include="..\..\Resources\_Highway\Highway.xsn" />
     <None Include="..\..\Resources\_Highway\Highway.xsr" />
     <None Include="..\..\Resources\_InformResource\InformResource.xsn" />

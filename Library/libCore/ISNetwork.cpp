@@ -43,15 +43,14 @@ bool ISNetwork::CheckAccessInternet(QString &ErrorString) const
 //-----------------------------------------------------------------------------
 QString ISNetwork::ParseIPAddress(const QString &IPAddress) const
 {
-	QRegExp RegExp(REG_EXP_IP_ADDRESS);
 	int Pos = 0;
 	QString Result;
+	QRegExp RegExp(REG_EXP_IP_ADDRESS);
 	while ((Pos = RegExp.indexIn(IPAddress, Pos)) != -1)
 	{
 		Result = RegExp.cap(0);
 		Pos += RegExp.matchedLength();
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

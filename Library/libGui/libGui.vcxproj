@@ -127,7 +127,6 @@
     <ClCompile Include="ISAttachFilesForm.cpp" />
     <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISAutoLocking.cpp" />
-    <ClCompile Include="ISBannerProgressBar.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBIKEdit.cpp" />
     <ClCompile Include="ISBirthdayEdit.cpp" />
@@ -170,7 +169,6 @@
     <ClCompile Include="ISControlDatabaseForm.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
-    <ClCompile Include="ISCurrentAffairsForm.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDateEdit.cpp" />
@@ -223,8 +221,6 @@
     <ClCompile Include="ISFileDialog.cpp" />
     <ClCompile Include="ISFileEdit.cpp" />
     <ClCompile Include="ISFlowLayout.cpp" />
-    <ClCompile Include="ISFrame.cpp" />
-    <ClCompile Include="ISFrameClientsListForm.cpp" />
     <ClCompile Include="ISFullTextSearchForm.cpp" />
     <ClCompile Include="ISGui.cpp" />
     <ClCompile Include="ISHighway.cpp" />
@@ -236,7 +232,6 @@
     <ClCompile Include="ISHTML.cpp" />
     <ClCompile Include="ISHTMLHelper.cpp" />
     <ClCompile Include="ISHtmlQuery.cpp" />
-    <ClCompile Include="ISICQEdit.cpp" />
     <ClCompile Include="ISImageEdit.cpp" />
     <ClCompile Include="ISImageEdit64.cpp" />
     <ClCompile Include="ISImageViewerForm.cpp" />
@@ -252,7 +247,6 @@
     <ClCompile Include="ISInterfaceForm.cpp" />
     <ClCompile Include="ISInterfaceMetaForm.cpp" />
     <ClCompile Include="ISInternalDirectoriesForm.cpp" />
-    <ClCompile Include="ISIPAddressEdit.cpp" />
     <ClCompile Include="ISKnowledgeBaseSubSystem.cpp" />
     <ClCompile Include="ISKPPEdit.cpp" />
     <ClCompile Include="ISLabels.cpp" />
@@ -560,9 +554,7 @@
     <QtMoc Include="ISColorEdit.h" />
     <QtMoc Include="ISComboEdit.h" />
     <QtMoc Include="ISEMailEdit.h" />
-    <QtMoc Include="ISICQEdit.h" />
     <QtMoc Include="ISINNEdit.h" />
-    <QtMoc Include="ISIPAddressEdit.h" />
     <QtMoc Include="ISKPPEdit.h" />
     <QtMoc Include="ISOGRNEdit.h" />
     <QtMoc Include="ISOKPOEdit.h" />
@@ -593,7 +585,6 @@
     <QtMoc Include="ISMessageBox.h" />
     <QtMoc Include="ISPopupMessage.h" />
     <QtMoc Include="ISAddressBox.h" />
-    <QtMoc Include="ISBannerProgressBar.h" />
     <QtMoc Include="ISAttachFileItem.h" />
     <QtMoc Include="ISAutoLocking.h" />
     <QtMoc Include="ISChatMessageWidget.h" />
@@ -660,9 +651,6 @@
     <QtMoc Include="ISDeviceObjectForm.h" />
     <QtMoc Include="ISDeviceSubSystem.h" />
     <QtMoc Include="ISDemo.h" />
-    <QtMoc Include="ISCurrentAffairsForm.h" />
-    <QtMoc Include="ISFrame.h" />
-    <QtMoc Include="ISFrameClientsListForm.h" />
     <QtMoc Include="ISHighway.h" />
     <QtMoc Include="ISHighwayIncomingCallForm.h" />
     <QtMoc Include="ISHighwayOrganizationListForm.h" />

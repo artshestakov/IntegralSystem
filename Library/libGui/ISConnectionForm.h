@@ -2,10 +2,8 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISIPAddressEdit.h"
 #include "ISIntegerEdit.h"
 #include "ISPasswordEdit.h"
-
 //-----------------------------------------------------------------------------
 class ISConnectionForm : public ISInterfaceDialogForm
 {
@@ -22,7 +20,7 @@ protected:
 	bool CheckFields(); //Проверка на заполнение полей
 
 private:
-	ISIPAddressEdit *EditServer;
+	ISLineEdit *EditServer;
 	ISIntegerEdit *EditPort;
 	ISLineEdit *EditDatabase;
 };

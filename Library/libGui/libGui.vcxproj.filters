@@ -140,12 +140,6 @@
     <Filter Include="Objects\Demo">
       <UniqueIdentifier>{736d72e5-f463-445b-b40b-7787129c9163}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Frame">
-      <UniqueIdentifier>{abc79714-00a2-4cd5-88fd-d614f71d0178}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Frame\Forms">
-      <UniqueIdentifier>{03450b13-0422-4d7e-a597-da227069da14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Highway">
       <UniqueIdentifier>{c812425b-eb7a-451c-aaa8-559a800034f1}</UniqueIdentifier>
     </Filter>
@@ -562,13 +556,7 @@
     <ClCompile Include="ISEMailEdit.cpp">
       <Filter>Fields\Other</Filter>
     </ClCompile>
-    <ClCompile Include="ISICQEdit.cpp">
-      <Filter>Fields\Other</Filter>
-    </ClCompile>
     <ClCompile Include="ISINNEdit.cpp">
-      <Filter>Fields\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="ISIPAddressEdit.cpp">
       <Filter>Fields\Other</Filter>
     </ClCompile>
     <ClCompile Include="ISKPPEdit.cpp">
@@ -665,9 +653,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISAttachFileItem.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISBannerProgressBar.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISPageNavigation.cpp">
@@ -966,15 +951,6 @@
     </ClCompile>
     <ClCompile Include="ISDemo.cpp">
       <Filter>Objects\Demo</Filter>
-    </ClCompile>
-    <ClCompile Include="ISFrame.cpp">
-      <Filter>Objects\Frame</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCurrentAffairsForm.cpp">
-      <Filter>Objects\Frame\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISFrameClientsListForm.cpp">
-      <Filter>Objects\Frame\Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISHighway.cpp">
       <Filter>Objects\Highway</Filter>
@@ -1503,13 +1479,7 @@
     <QtMoc Include="ISEMailEdit.h">
       <Filter>Fields\Other</Filter>
     </QtMoc>
-    <QtMoc Include="ISICQEdit.h">
-      <Filter>Fields\Other</Filter>
-    </QtMoc>
     <QtMoc Include="ISINNEdit.h">
-      <Filter>Fields\Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISIPAddressEdit.h">
       <Filter>Fields\Other</Filter>
     </QtMoc>
     <QtMoc Include="ISKPPEdit.h">
@@ -1597,9 +1567,6 @@
       <Filter>Other</Filter>
     </QtMoc>
     <QtMoc Include="ISAddressBox.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISBannerProgressBar.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISAttachFileItem.h">
@@ -1895,15 +1862,6 @@
     </QtMoc>
     <QtMoc Include="ISDemo.h">
       <Filter>Objects\Demo</Filter>
-    </QtMoc>
-    <QtMoc Include="ISFrame.h">
-      <Filter>Objects\Frame</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCurrentAffairsForm.h">
-      <Filter>Objects\Frame\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISFrameClientsListForm.h">
-      <Filter>Objects\Frame\Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISHighway.h">
       <Filter>Objects\Highway</Filter>

@@ -158,7 +158,7 @@ void ISAuthForm::TimeoutCapsLook()
 {
 	if (ISGui::CheckPressCapsLook())
 	{
-		if (!LabelCapsLook->text().length())
+		if (LabelCapsLook->text().isEmpty())
 		{
 			LabelCapsLook->setText(LANG("CapsLookActivate"));
 		}
@@ -184,14 +184,12 @@ void ISAuthForm::TimeoutLang()
 //-----------------------------------------------------------------------------
 void ISAuthForm::ShowConnectionForm()
 {
-	ISConnectionForm ConnectionForm;
-	ConnectionForm.Exec();
+	ISConnectionForm().Exec();
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::ShowAboutForm()
 {
-	ISAboutForm AboutForm;
-	AboutForm.Exec();
+	ISAboutForm().Exec();
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::Input()
@@ -282,7 +280,7 @@ bool ISAuthForm::Check()
 		return false;
 	}
 
-	if (!EditLogin->GetValue().toString().length())
+	if (EditLogin->GetValue().toString().isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.LoginEmpty"));
@@ -290,7 +288,7 @@ bool ISAuthForm::Check()
 		return false;
 	}
 
-	if (!EditPassword->GetValue().toString().length())
+	if (EditPassword->GetValue().toString().isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.PasswordEmpty"));

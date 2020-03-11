@@ -282,7 +282,6 @@
   
   <!--PlaceholderText-->
   <Local Name="Field.Bik.PlaceholderText" Russian="9 цифр"/>
-  <Local Name="Field.Icq.PlaceholderText" Russian="9 цифр"/>
   <Local Name="Field.Inn.PlaceholderText" Russian="10 или 12 цифр"/>
   <Local Name="Field.Kpp.PlaceholderText" Russian="9 цифр"/>
   <Local Name="Field.Ogrn.PlaceholderText" Russian="13 цифр"/>

@@ -13,11 +13,6 @@ ISDivisionCodeEdit::~ISDivisionCodeEdit()
 //-----------------------------------------------------------------------------
 bool ISDivisionCodeEdit::IsValid() const
 {
-	if (GetValue().toString().length() == 7)
-	{
-		return true;
-	}
-
-	return false;
+	return GetValue().toString().length() == 7;
 }
 //-----------------------------------------------------------------------------

@@ -4,7 +4,6 @@
   <Configuration UID="{E41E739C-2F5A-4A24-A18C-67F257BAA122}" Name="Alpha" LocalName="Сервисный центр «Альфа»" ClassName="ISAlpha"/>
   <Configuration UID="{45662D03-7680-4C07-965E-B7D6CD93668A}" Name="CenterSeven" LocalName="ООО «Центр 7»" ClassName="ISCenterSeven" DesktopForm="ISCenterSevenDesktop" IncomingCallForm="ISCenterSevenIncomingCallForm"/>
   <Configuration UID="{5F65B2D5-D77D-4D41-A749-F59B46FFD76A}" Name="Demo" LocalName="Демонстрационная версия" ClassName="ISDemo"/>
-  <Configuration UID="{11463289-A4E7-457B-87EF-452FB530F0BF}" Name="Frame" LocalName="ООО «Фрейм»" ClassName="ISFrame"/>
   <Configuration UID="{23DE116A-60B8-4DD8-9F80-FEA5BBB3D445}" Name="Highway" LocalName="ООО «Магистраль-ЮГ»" ClassName="ISHighway" IncomingCallForm="ISHighwayIncomingCallForm"/>
   <Configuration UID="{4AB46AAA-FCF9-49E7-BCE3-463435F8E166}" Name="InformResource" LocalName="ООО «Информ Ресурс МИР»" ClassName="ISInformResource" DesktopForm="ISDesktopInformResource" IncomingCallForm="ISIncomingCallInformResourceForm"/>
   <Configuration UID="{744D107A-6BAD-4038-8E9D-D33A1C62C537}" Name="MedTech" LocalName="ООО «Медицинские технологии»" ClassName="ISMedTech"/>

@@ -20,7 +20,7 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 	LabelServer->setToolTip(LANG("ConnectionForm.Hint.Server"));
 	LabelServer->setCursor(CURSOR_WHATS_THIS);
 
-	EditServer = new ISIPAddressEdit(this);
+	EditServer = new ISLineEdit(this);
 	EditServer->SetValue(CONFIG_VALUE(CONST_CONFIG_CONNECTION_SERVER));
 	FormLayout->addRow(LabelServer, EditServer);
 
