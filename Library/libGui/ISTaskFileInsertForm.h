@@ -2,9 +2,9 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISPathEditFile.h"
 #include "ISLineEdit.h"
 #include "ISButtonDialog.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISTaskFileInsertForm : public ISInterfaceDialogForm
 {

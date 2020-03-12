@@ -2,10 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISLineEdit.h"
-#include "ISDateEdit.h"
-#include "ISTextEdit.h"
-#include "ISDivisionCodeEdit.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISPassportForm : public ISInterfaceDialogForm
 {

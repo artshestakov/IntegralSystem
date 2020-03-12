@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISIntegerEdit.h"
-#include "ISPasswordEdit.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISConnectionForm : public ISInterfaceDialogForm
 {

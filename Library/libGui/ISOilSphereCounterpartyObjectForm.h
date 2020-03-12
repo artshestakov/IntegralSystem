@@ -3,7 +3,7 @@
 #define _ISOILSPHERECOUNTERPARTYOBJECTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISObjectFormBase.h"
-#include "ISINNEdit.h"
+#include "ISFieldEdits.h"
 #include "ISDaDataService.h"
 //-----------------------------------------------------------------------------
 class ISOilSphereCounterpartyObjectForm : public ISObjectFormBase

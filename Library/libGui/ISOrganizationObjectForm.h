@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISObjectFormBase.h"
-#include "ISINNEdit.h"
+#include "ISFieldEdits.h"
 #include "ISDaDataService.h"
 //-----------------------------------------------------------------------------
 class ISOrganizationObjectForm : public ISObjectFormBase

@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
-#include "ISPhoneLineEdit.h"
+#include "ISEdits.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISPhoneBaseEdit : public ISFieldEditBase

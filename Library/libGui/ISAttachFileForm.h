@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISAttachFileBaseForm.h"
-#include "ISPathEditFile.h"
 #include "ISButtonDialog.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISAttachFileForm : public ISAttachFileBaseForm
 {

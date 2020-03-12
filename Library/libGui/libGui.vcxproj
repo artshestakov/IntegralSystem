@@ -128,8 +128,6 @@
     <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISAutoLocking.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
-    <ClCompile Include="ISBIKEdit.cpp" />
-    <ClCompile Include="ISBirthdayEdit.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISButtonDialog.cpp" />
     <ClCompile Include="ISButtons.cpp" />
@@ -198,11 +196,9 @@
     <ClCompile Include="ISDiscussionObjectForm.cpp" />
     <ClCompile Include="ISDispatchListForm.cpp" />
     <ClCompile Include="ISDispatchOrganizationListForm.cpp" />
-    <ClCompile Include="ISDivisionCodeEdit.cpp" />
     <ClCompile Include="ISDoubleEdit.cpp" />
     <ClCompile Include="ISEditObjectListForm.cpp" />
     <ClCompile Include="ISEdits.cpp" />
-    <ClCompile Include="ISEMailEdit.cpp" />
     <ClCompile Include="ISEMailSelectEdit.cpp" />
     <ClCompile Include="ISExecutorEdit.cpp" />
     <ClCompile Include="ISExitForm.cpp" />
@@ -218,6 +214,7 @@
     <ClCompile Include="ISFavorites.cpp" />
     <ClCompile Include="ISFavoritesForm.cpp" />
     <ClCompile Include="ISFieldEditBase.cpp" />
+    <ClCompile Include="ISFieldEdits.cpp" />
     <ClCompile Include="ISFileDialog.cpp" />
     <ClCompile Include="ISFileEdit.cpp" />
     <ClCompile Include="ISFlowLayout.cpp" />
@@ -239,7 +236,6 @@
     <ClCompile Include="ISIncomingCallBaseForm.cpp" />
     <ClCompile Include="ISIncomingCallInformResourceForm.cpp" />
     <ClCompile Include="ISInformResource.cpp" />
-    <ClCompile Include="ISINNEdit.cpp" />
     <ClCompile Include="ISInputDialog.cpp" />
     <ClCompile Include="ISIntegerEdit.cpp" />
     <ClCompile Include="ISIntegralSystem.cpp" />
@@ -248,7 +244,6 @@
     <ClCompile Include="ISInterfaceMetaForm.cpp" />
     <ClCompile Include="ISInternalDirectoriesForm.cpp" />
     <ClCompile Include="ISKnowledgeBaseSubSystem.cpp" />
-    <ClCompile Include="ISKPPEdit.cpp" />
     <ClCompile Include="ISLabels.cpp" />
     <ClCompile Include="ISLineEdit.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
@@ -274,7 +269,6 @@
     <ClCompile Include="ISModelThreadWorker.cpp" />
     <ClCompile Include="ISMonitorActivityForm.cpp" />
     <ClCompile Include="ISMonitorUserWidget.cpp" />
-    <ClCompile Include="ISMonthEdit.cpp" />
     <ClCompile Include="ISNoteForm.cpp" />
     <ClCompile Include="ISNoteObjectForm.cpp" />
     <ClCompile Include="ISNotificationService.cpp" />
@@ -285,10 +279,8 @@
     <ClCompile Include="ISObjectInterface.cpp" />
     <ClCompile Include="ISObjectModel.cpp" />
     <ClCompile Include="ISObjects.cpp" />
-    <ClCompile Include="ISOGRNEdit.cpp" />
     <ClCompile Include="ISOilSphere.cpp" />
     <ClCompile Include="ISOilSphereCounterpartyObjectForm.cpp" />
-    <ClCompile Include="ISOKPOEdit.cpp" />
     <ClCompile Include="ISOnline.cpp" />
     <ClCompile Include="ISOrganizationListForm.cpp" />
     <ClCompile Include="ISOrganizationMyListForm.cpp" />
@@ -303,10 +295,7 @@
     <ClCompile Include="ISPassportEdit.cpp" />
     <ClCompile Include="ISPassportForm.cpp" />
     <ClCompile Include="ISPassword.cpp" />
-    <ClCompile Include="ISPasswordEdit.cpp" />
     <ClCompile Include="ISPasswordWidthWidget.cpp" />
-    <ClCompile Include="ISPathEditDir.cpp" />
-    <ClCompile Include="ISPathEditFile.cpp" />
     <ClCompile Include="ISPatriot.cpp" />
     <ClCompile Include="ISPatriotCardListForm.cpp" />
     <ClCompile Include="ISPatriotClientsBirthdayForm.cpp" />
@@ -318,13 +307,11 @@
     <ClCompile Include="ISPatriotVisitListForm.cpp" />
     <ClCompile Include="ISPatternActivityForm.cpp" />
     <ClCompile Include="ISPatternWidget.cpp" />
-    <ClCompile Include="ISPercentEdit.cpp" />
     <ClCompile Include="ISPeriodForm.cpp" />
     <ClCompile Include="ISPGSettingsForm.cpp" />
     <ClCompile Include="ISPhoneBaseEdit.cpp" />
     <ClCompile Include="ISPhoneEdit.cpp" />
     <ClCompile Include="ISPhoneForm.cpp" />
-    <ClCompile Include="ISPhoneLineEdit.cpp" />
     <ClCompile Include="ISPlayerWidget.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPriceListObjectForm.cpp" />
@@ -384,7 +371,6 @@
     <ClCompile Include="ISTaskBaseListForm.cpp" />
     <ClCompile Include="ISTaskCommentsTab.cpp" />
     <ClCompile Include="ISTaskCommentWidget.cpp" />
-    <ClCompile Include="ISTaskDescriptionEdit.cpp" />
     <ClCompile Include="ISTaskDoneForm.cpp" />
     <ClCompile Include="ISTaskDuplicatesTab.cpp" />
     <ClCompile Include="ISTaskFavoriteListForm.cpp" />
@@ -394,13 +380,10 @@
     <ClCompile Include="ISTaskForm.cpp" />
     <ClCompile Include="ISTaskFromListForm.cpp" />
     <ClCompile Include="ISTaskHistoryTab.cpp" />
-    <ClCompile Include="ISTaskImportantEdit.cpp" />
     <ClCompile Include="ISTaskInfoWidget.cpp" />
     <ClCompile Include="ISTaskMyListForm.cpp" />
-    <ClCompile Include="ISTaskNameEdit.cpp" />
     <ClCompile Include="ISTaskObjectForm.cpp" />
     <ClCompile Include="ISTaskOverdueListForm.cpp" />
-    <ClCompile Include="ISTaskPriorityEdit.cpp" />
     <ClCompile Include="ISTaskTabBase.cpp" />
     <ClCompile Include="ISTaskTodayListForm.cpp" />
     <ClCompile Include="ISTaskViewForm.cpp" />
@@ -412,7 +395,6 @@
     <ClCompile Include="ISToolBarAccessTable.cpp" />
     <ClCompile Include="ISToolBarObject.cpp" />
     <ClCompile Include="ISTransferOrganizationForm.cpp" />
-    <ClCompile Include="ISUrlEdit.cpp" />
     <ClCompile Include="ISUserEdit.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
     <ClCompile Include="ISUserGroupWidget.cpp" />
@@ -423,13 +405,9 @@
     <ClCompile Include="ISUserPasswordForm.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISUserStatusForm.cpp" />
-    <ClCompile Include="ISUuidEdit.cpp" />
-    <ClCompile Include="ISVINEdit.cpp" />
     <ClCompile Include="ISVolumeEdit.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
-    <ClCompile Include="ISWeekDayEdit.cpp" />
     <ClCompile Include="ISWorkspaceForm.cpp" />
-    <ClCompile Include="ISYearEdit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISBuffer.h" />
@@ -441,6 +419,7 @@
     <QtMoc Include="ISDelegates.h" />
     <QtMoc Include="ISEdits.h" />
     <ClInclude Include="ISDictionaryWord.h" />
+    <QtMoc Include="ISFieldEdits.h" />
     <ClInclude Include="ISHTML.h" />
     <ClInclude Include="ISHTMLHelper.h" />
     <ClInclude Include="ISHtmlQuery.h" />
@@ -460,7 +439,6 @@
     <QtMoc Include="ISSqlModelCore.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISStyleSheet.h" />
-    <QtMoc Include="ISVINEdit.h" />
     <ClInclude Include="libGui_global.h" />
     <QtMoc Include="ISIncomingCallBaseForm.h" />
     <QtMoc Include="ISInterfaceMetaForm.h" />
@@ -519,7 +497,6 @@
     <QtMoc Include="ISNotificationService.h" />
     <QtMoc Include="ISNotifyRecipient.h" />
     <QtMoc Include="ISAddressEdit.h" />
-    <QtMoc Include="ISDivisionCodeEdit.h" />
     <QtMoc Include="ISFileEdit.h" />
     <QtMoc Include="ISListEdit.h" />
     <QtMoc Include="ISListEditPopup.h" />
@@ -540,36 +517,19 @@
     <QtMoc Include="ISRangeEditBase.h" />
     <QtMoc Include="ISCheckEdit.h" />
     <QtMoc Include="ISDateEdit.h" />
-    <QtMoc Include="ISMonthEdit.h" />
     <QtMoc Include="ISTimeEdit.h" />
-    <QtMoc Include="ISYearEdit.h" />
     <QtMoc Include="ISDoubleEdit.h" />
     <QtMoc Include="ISImageEdit.h" />
     <QtMoc Include="ISImageEdit64.h" />
     <QtMoc Include="ISIntegerEdit.h" />
-    <QtMoc Include="ISBIKEdit.h" />
     <QtMoc Include="ISPhoneBaseEdit.h" />
-    <QtMoc Include="ISPhoneLineEdit.h" />
     <QtMoc Include="ISLineEdit.h" />
     <QtMoc Include="ISTextEdit.h" />
     <QtMoc Include="ISRangeDateEdit.h" />
     <QtMoc Include="ISRangeDateTimeEdit.h" />
-    <QtMoc Include="ISBirthdayEdit.h" />
     <QtMoc Include="ISColorEdit.h" />
     <QtMoc Include="ISComboEdit.h" />
-    <QtMoc Include="ISEMailEdit.h" />
-    <QtMoc Include="ISINNEdit.h" />
-    <QtMoc Include="ISKPPEdit.h" />
-    <QtMoc Include="ISOGRNEdit.h" />
-    <QtMoc Include="ISOKPOEdit.h" />
-    <QtMoc Include="ISPasswordEdit.h" />
-    <QtMoc Include="ISPathEditDir.h" />
-    <QtMoc Include="ISPathEditFile.h" />
-    <QtMoc Include="ISPercentEdit.h" />
     <QtMoc Include="ISRadioEdit.h" />
-    <QtMoc Include="ISUrlEdit.h" />
-    <QtMoc Include="ISUuidEdit.h" />
-    <QtMoc Include="ISWeekDayEdit.h" />
     <QtMoc Include="ISCalendarPopup.h" />
     <QtMoc Include="ISCalendarWidget.h" />
     <QtMoc Include="ISInterfaceDialogForm.h" />
@@ -703,10 +663,6 @@
     <QtMoc Include="ISSystemsPanel.h" />
     <QtMoc Include="ISToolBarAccessTable.h" />
     <QtMoc Include="ISUserGroupWidget.h" />
-    <QtMoc Include="ISTaskDescriptionEdit.h" />
-    <QtMoc Include="ISTaskImportantEdit.h" />
-    <QtMoc Include="ISTaskNameEdit.h" />
-    <QtMoc Include="ISTaskPriorityEdit.h" />
     <QtMoc Include="ISTaskCommentsTab.h" />
     <QtMoc Include="ISTaskCommentWidget.h" />
     <QtMoc Include="ISTaskDuplicatesTab.h" />

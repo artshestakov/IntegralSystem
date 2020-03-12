@@ -4,9 +4,9 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISButtons.h"
 #include "ISLineEdit.h"
-#include "ISPathEditFile.h"
 #include "ISButtonDialog.h"
 #include "ISListWidget.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISExternalToolsForm : public ISInterfaceDialogForm
 {
