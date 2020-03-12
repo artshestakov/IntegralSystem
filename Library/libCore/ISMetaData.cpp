@@ -37,7 +37,6 @@ ISMetaData::ISMetaData()
 		{ "Phone", ISNamespace::FT_Phone, "CHARACTER VARYING", "ISPhoneEdit", "ISComboSearchString", true },
 		{ "Password", ISNamespace::FT_Password, "CHARACTER VARYING", "ISPasswordEdit", "ISComboSearchString", false },
 		{ "Image", ISNamespace::FT_Image, "BYTEA", "ISImageEdit", QString(), false },
-		{ "Image64", ISNamespace::FT_Image64, "CHARACTER VARYING", "ISImageEdit64", QString(), false },
 		{ "Color", ISNamespace::FT_Color, "CHARACTER VARYING", "ISColorEdit", QString(), false },
 		{ "EMail", ISNamespace::FT_EMail, "CHARACTER VARYING", "ISEMailEdit", "ISComboSearchString", true },
 		{ "Passport", ISNamespace::FT_Passport, "CHARACTER VARYING", "ISPassportEdit", "ISComboSearchString", true },

@@ -230,7 +230,6 @@
     <ClCompile Include="ISHTMLHelper.cpp" />
     <ClCompile Include="ISHtmlQuery.cpp" />
     <ClCompile Include="ISImageEdit.cpp" />
-    <ClCompile Include="ISImageEdit64.cpp" />
     <ClCompile Include="ISImageViewerForm.cpp" />
     <ClCompile Include="ISImageWidget.cpp" />
     <ClCompile Include="ISIncomingCallBaseForm.cpp" />
@@ -520,7 +519,6 @@
     <QtMoc Include="ISTimeEdit.h" />
     <QtMoc Include="ISDoubleEdit.h" />
     <QtMoc Include="ISImageEdit.h" />
-    <QtMoc Include="ISImageEdit64.h" />
     <QtMoc Include="ISIntegerEdit.h" />
     <QtMoc Include="ISPhoneBaseEdit.h" />
     <QtMoc Include="ISLineEdit.h" />

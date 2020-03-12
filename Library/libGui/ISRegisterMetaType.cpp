@@ -43,7 +43,6 @@
 #include "ISDateEdit.h"
 #include "ISTimeEdit.h"
 #include "ISImageEdit.h"
-#include "ISImageEdit64.h"
 #include "ISListEdit.h"
 #include "ISColorEdit.h"
 #include "ISFieldEdits.h"
@@ -117,7 +116,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISDateEdit*>("ISDateEdit");
 	qRegisterMetaType<ISTimeEdit*>("ISTimeEdit");
 	qRegisterMetaType<ISImageEdit*>("ISImageEdit");
-	qRegisterMetaType<ISImageEdit64*>("ISImageEdit64");
 	qRegisterMetaType<ISListEdit*>("ISListEdit");
 	qRegisterMetaType<ISPathEditFile*>("ISPathEditFile");
 	qRegisterMetaType<ISPathEditDir*>("ISPathEditDir"); 

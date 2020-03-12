@@ -32,7 +32,6 @@ public:
 		FT_Phone, //Номер телефона
 		FT_Password, //Пароль
 		FT_Image, //Изображение
-		FT_Image64, //Изображение
 		FT_Color, //Цвет
 		FT_EMail, //Адрес электронной почты
 		FT_Passport, //Паспорт

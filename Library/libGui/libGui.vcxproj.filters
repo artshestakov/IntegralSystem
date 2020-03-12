@@ -61,9 +61,6 @@
     <Filter Include="Fields">
       <UniqueIdentifier>{f6b68bca-1160-4404-9dcf-75aabeac0cb0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fields\Image">
-      <UniqueIdentifier>{a81a7da2-5844-4c3a-bb02-894601dd8d21}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fields\Range">
       <UniqueIdentifier>{d208c610-3c91-4b79-8302-14209c2d3058}</UniqueIdentifier>
     </Filter>
@@ -477,9 +474,6 @@
     </ClCompile>
     <ClCompile Include="ISRangeEditBase.cpp">
       <Filter>Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISImageEdit64.cpp">
-      <Filter>Fields\Image</Filter>
     </ClCompile>
     <ClCompile Include="ISRangeDateEdit.cpp">
       <Filter>Fields\Range</Filter>
@@ -1340,9 +1334,6 @@
     </QtMoc>
     <QtMoc Include="ISRangeEditBase.h">
       <Filter>Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISImageEdit64.h">
-      <Filter>Fields\Image</Filter>
     </QtMoc>
     <QtMoc Include="ISRangeDateEdit.h">
       <Filter>Fields\Range</Filter>
