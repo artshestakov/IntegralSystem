@@ -50,10 +50,10 @@ void ISSettingsDatabase::Initialize()
 	}
 
 	QString SqlText = "SELECT \n";
-	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable("_SettingsDatabase");
+	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable("_SettingsDatabase");
 	for (int i = 0; i < MetaTable->AllFields.size(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->AllFields[i];
+		PMetaField *MetaField = MetaTable->AllFields[i];
 		QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();
 
 		if (VectorContains(VectorString, FieldName))

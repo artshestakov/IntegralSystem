@@ -9,7 +9,7 @@ class LIBCORE_EXPORT ISQueryModel : public QObject
 	Q_OBJECT
 
 public:
-	ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent = 0);
+	ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent = 0);
 	virtual ~ISQueryModel();
 
 	void SetCondition(const QVariantMap &VariantMap);
@@ -49,7 +49,7 @@ protected:
 	void CheckQuery(const QString &QueryText); //Проверка запроса
 
 private:
-	PMetaClassTable *MetaTable;
+	PMetaTable *MetaTable;
 	ISNamespace::QueryModelType ModelType;
 	
 	QString QuerySelectText; //Текст запроса на выборку

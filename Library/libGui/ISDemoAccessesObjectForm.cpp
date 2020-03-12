@@ -8,7 +8,7 @@ static QString QU_ORGANIZATION_USER = PREPARE_QUERY2("UPDATE organizations SET o
 //-----------------------------------------------------------------------------
 static QString QU_EDIT_USER = PREPARE_QUERY2("UPDATE demoaccesses SET dacc_edituser = :EditUserID WHERE dacc_id = :ObjectID");
 //-----------------------------------------------------------------------------
-ISDemoAccessesObjectForm::ISDemoAccessesObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISDemoAccessesObjectForm::ISDemoAccessesObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 
 }

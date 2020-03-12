@@ -20,7 +20,7 @@ QString ISMetaViewQuery::GetQueryText()
 
 	for (int i = 0; i < MetaQuery->Fields.size(); ++i)
 	{
-		PMetaClassField *MetaQueryField = MetaQuery->Fields[i];
+		PMetaField *MetaQueryField = MetaQuery->Fields[i];
 		Result += MetaQueryField->QueryText + " AS \"" + MetaQueryField->Name + "\", \n";
 	}
 

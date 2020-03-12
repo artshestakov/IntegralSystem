@@ -1,7 +1,7 @@
 #include "CGFunction.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
-bool CGFunction::CreateOrReplaceFunction(PMetaClassFunction *MetaFunction, QString &ErrorString)
+bool CGFunction::CreateOrReplaceFunction(PMetaFunction *MetaFunction, QString &ErrorString)
 {
 	ISQuery qCreateFunction;
 	qCreateFunction.SetShowLongQuery(false);

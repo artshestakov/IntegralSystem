@@ -26,7 +26,7 @@ bool CGConfiguratorCreate::resources()
 	bool Result = true, Exist = true;
 	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().size(); i < CountResources; ++i)
 	{
-		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
+		PMetaResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
 		Progress("Resources for " + MetaResource->TableName, i, CountResources);
 
 		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))

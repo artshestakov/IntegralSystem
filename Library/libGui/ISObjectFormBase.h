@@ -26,10 +26,10 @@ signals:
 	void CurrentObjectTab(); //Сигнал для вкладки (установление текущей вкладки)
 	void Close();
 	void CloseTab(int Index);
-	void SaveAndCreate(PMetaClassTable *MetaTable);
+	void SaveAndCreate(PMetaTable *MetaTable);
 
 public:
-	ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id = 0);
+	ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
 	virtual ~ISObjectFormBase();
 
 	int GetParentObjectID() const;
@@ -37,7 +37,7 @@ public:
 
 	ISNamespace::ObjectFormType GetFormType(); //Получить тип формы
 	int GetObjectID() const; //Получить идентификатор объекта
-	PMetaClassTable* GetMetaTable(); //Получить мета-таблицу
+	PMetaTable* GetMetaTable(); //Получить мета-таблицу
 	bool GetModificationFlag() const; //Получить флаг модицикации данных 
 
 	void SetFieldValue(const QString &FieldName, const QVariant &value); //Изменить значение поля
@@ -67,8 +67,8 @@ protected:
 	void FillDataFields(); //Заполнение полей данными
 
 	void CreateFieldID(QFormLayout *FormLayout); //Создание виджета с системной иформацией
-	ISFieldEditBase* CreateColumnForField(PMetaClassField *MetaField); //Создать поле редактирования информации
-	void AddColumnForField(PMetaClassField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *FormLayout); //Добавить поле редактирования информации на форму
+	ISFieldEditBase* CreateColumnForField(PMetaField *MetaField); //Создать поле редактирования информации
+	void AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *FormLayout); //Добавить поле редактирования информации на форму
 	void AddObjectEscort(QWidget *ObjectForm);
 
 	void ToolBarClicked(QAction *ActionClicked); //Событие нажатия на действие в тулбаре
@@ -105,7 +105,7 @@ protected:
 
 private:
 	ISNamespace::ObjectFormType FormType; //Тип формы
-	PMetaClassTable *MetaTable; //Мета-таблица
+	PMetaTable *MetaTable; //Мета-таблица
 	int ObjectID; //Идентификатор текущего объекта
 	int ParentObjectID; //Идентификатор родителя
 	QTimer *TimerAutoSave;

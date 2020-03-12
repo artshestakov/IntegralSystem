@@ -8,7 +8,7 @@ static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 										 "AND table_name = :TableName "
 										 "AND column_name = :ColumnName");
 //-----------------------------------------------------------------------------
-bool CGHelper::CheckExistColumn(PMetaClassTable *MetaTable, const QString &ColumnName, bool &Exist, QString &ErrorString)
+bool CGHelper::CheckExistColumn(PMetaTable *MetaTable, const QString &ColumnName, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectColumn(QS_COLUMN);
 	qSelectColumn.SetShowLongQuery(false);

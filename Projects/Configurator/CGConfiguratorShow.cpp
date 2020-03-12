@@ -50,7 +50,7 @@ void CGConfiguratorShow::obsoletetables()
 		{
 			QString TableName = qSelectTables.ReadColumn("tablename").toString().toLower();
 
-			PMetaClassTable *MetaTable = FoundTable(TableName);
+			PMetaTable *MetaTable = FoundTable(TableName);
 			if (!MetaTable)
 			{
 				ISLOGGER_UNKNOWN(TableName);
@@ -75,7 +75,7 @@ void CGConfiguratorShow::obsoletefields()
 		{
 			QString TableName = qSelectTables.ReadColumn("tablename").toString().toLower();
 
-			PMetaClassTable *MetaTable = FoundTable(TableName);
+			PMetaTable *MetaTable = FoundTable(TableName);
 			if (MetaTable)
 			{
 				ISQuery qSelectColumns(QS_COLUMNS);
@@ -87,7 +87,7 @@ void CGConfiguratorShow::obsoletefields()
 					{
 						QString ColumnName = qSelectColumns.ReadColumn("column_name").toString().toLower();
 
-						PMetaClassField *MetaField = FoundField(MetaTable, ColumnName);
+						PMetaField *MetaField = FoundField(MetaTable, ColumnName);
 						if (!MetaField)
 						{
 							ISLOGGER_UNKNOWN(TableName + ": " + ColumnName);
@@ -105,7 +105,7 @@ void CGConfiguratorShow::obsoleteresources()
 	ISLOGGER_UNKNOWN("Searching not needed resources...");
 
 	std::map<QString, ISVectorString> Map, MapOutput;
-	for (PMetaClassResource *MetaResource : ISMetaData::GetInstanse().GetResources())
+	for (PMetaResource *MetaResource : ISMetaData::GetInstanse().GetResources())
 	{
 		QString TableName = MetaResource->TableName;
 		QString ResourceUID = MetaResource->UID.toLower();
@@ -211,11 +211,11 @@ void CGConfiguratorShow::config()
 	}
 }
 //-----------------------------------------------------------------------------
-PMetaClassTable* CGConfiguratorShow::FoundTable(const QString &TableName)
+PMetaTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 {
 	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().size(); ++i)
 	{
-		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
+		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		if (MetaTable->Name.toLower() == TableName)
 		{
 			return MetaTable;
@@ -225,11 +225,11 @@ PMetaClassTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-PMetaClassField* CGConfiguratorShow::FoundField(PMetaClassTable *MetaTable, const QString &ColumnName)
+PMetaField* CGConfiguratorShow::FoundField(PMetaTable *MetaTable, const QString &ColumnName)
 {
 	for (int i = 0; i < MetaTable->AllFields.size(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->AllFields[i];
+		PMetaField *MetaField = MetaTable->AllFields[i];
 		if (QString(MetaTable->Alias + '_' + MetaField->Name).toLower() == ColumnName)
 		{
 			return MetaField;

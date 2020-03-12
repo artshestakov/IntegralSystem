@@ -201,7 +201,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 
 		QString StringXML = File.readLine();
 		ISStringMap StringMap = ParseLine(StringXML);
-		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 		if (Select(MetaTable, StringMap))
 		{
 			Update(MetaTable, StringMap);
@@ -275,7 +275,7 @@ quint64 CGConfiguratorFIAS::GetCountLine(const QString &FilePath) const
 	return CountLine;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorFIAS::Select(PMetaClassTable *MetaTable, const ISStringMap &StringMap) const
+bool CGConfiguratorFIAS::Select(PMetaTable *MetaTable, const ISStringMap &StringMap) const
 {
 	QString KeyField = MapKeys.at(MetaTable->Name);
 	ISQuery qSelectFIAS("SELECT COUNT(*) FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + '_' + KeyField + " = :Value");
@@ -293,7 +293,7 @@ bool CGConfiguratorFIAS::Select(PMetaClassTable *MetaTable, const ISStringMap &S
 	return false;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const ISStringMap &StringMap)
+void CGConfiguratorFIAS::Update(PMetaTable *MetaTable, const ISStringMap &StringMap)
 {
 	QString UpdateText = "UPDATE " + MetaTable->Name + " SET \n";
 	QString WhereText = "WHERE ";
@@ -323,7 +323,7 @@ void CGConfiguratorFIAS::Update(PMetaClassTable *MetaTable, const ISStringMap &S
 	qUpdateFIAS.Execute();
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorFIAS::Insert(PMetaClassTable *MetaTable, const ISStringMap &StringMap)
+void CGConfiguratorFIAS::Insert(PMetaTable *MetaTable, const ISStringMap &StringMap)
 {
 	QString SqlInsert = "INSERT INTO " + MetaTable->Name + '(';
 	QString SqlValues = "VALUES(";

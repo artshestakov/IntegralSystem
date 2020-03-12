@@ -2,7 +2,7 @@
 #include "ISSystem.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableForeignAlias, PMetaClassForeign *MetaForeign, int Iterator)
+QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableForeignAlias, PMetaForeign *MetaForeign, int Iterator)
 {
 	QStringList StringList = MetaForeign->ForeignViewNameField.split(';');
 	if (StringList.count() > 1)

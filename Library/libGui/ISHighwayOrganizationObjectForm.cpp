@@ -32,7 +32,7 @@ static QString QU_ORGANIZATION_BRANCH = PREPARE_QUERY2("UPDATE organization SET 
 //-----------------------------------------------------------------------------
 static QString QU_REBIND = PREPARE_QUERY2("UPDATE organization SET orgz_parent = NULL WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-ISHighwayOrganizationObjectForm::ISHighwayOrganizationObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id)
+ISHighwayOrganizationObjectForm::ISHighwayOrganizationObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	ActionBranchMenu = new QAction(this);

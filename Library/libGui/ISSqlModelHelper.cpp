@@ -66,7 +66,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QVariant ISSqlModelHelper::ValueFromTextAlignment(ISNamespace::FieldType FieldType, PMetaClassForeign *MetaForeign)
+QVariant ISSqlModelHelper::ValueFromTextAlignment(ISNamespace::FieldType FieldType, PMetaForeign *MetaForeign)
 {
 	QVariant Result;
 

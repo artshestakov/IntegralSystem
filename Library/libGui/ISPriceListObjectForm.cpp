@@ -1,6 +1,6 @@
 #include "ISPriceListObjectForm.h"
 //-----------------------------------------------------------------------------
-ISPriceListObjectForm::ISPriceListObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISPriceListObjectForm::ISPriceListObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	EditMount12Price = GetFieldWidget("Mount12Price");
 	connect(EditMount12Price, &ISFieldEditBase::DataChanged, this, &ISPriceListObjectForm::Month12);

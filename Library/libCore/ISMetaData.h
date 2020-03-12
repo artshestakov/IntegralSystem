@@ -20,22 +20,22 @@ public:
 	QString GetErrorString() const;
 	bool Initialize(const QString &configuration_name, bool InitXSR, bool InitXSF); //Инициализация
 
-	PMetaClassTable* GetMetaTable(const QString &TableName); //Получить мета-таблицу по имени
-	PMetaClassTable* GetMetaQuery(const QString &QueryName); //Получить мета-запрос по имени
-	PMetaClassField* GetMetaField(PMetaClassTable *MetaTable, const QString &FieldName); //Получить мета-поле из указанной таблицы
-	PMetaClassField* GetMetaField(const QString &TableName, const QString &FieldName); //Получить мета-поле из указанной таблицы
+	PMetaTable* GetMetaTable(const QString &TableName); //Получить мета-таблицу по имени
+	PMetaTable* GetMetaQuery(const QString &QueryName); //Получить мета-запрос по имени
+	PMetaField* GetMetaField(PMetaTable *MetaTable, const QString &FieldName); //Получить мета-поле из указанной таблицы
+	PMetaField* GetMetaField(const QString &TableName, const QString &FieldName); //Получить мета-поле из указанной таблицы
 
-	std::vector<PMetaClassFunction*> GetFunctions(); //Получить список всех функций
-	std::vector<PMetaClassTable*> GetTables(); //Получить список всех таблиц
+	std::vector<PMetaFunction*> GetFunctions(); //Получить список всех функций
+	std::vector<PMetaTable*> GetTables(); //Получить список всех таблиц
 	ISVectorString GetMetaQueries(); //Получить вектор всех мета-запросов
-	std::vector<PMetaClassIndex*> GetSystemIndexes(); //Получить список системных индексов
-	std::vector<PMetaClassIndex*> GetIndexes(); //Получить список индексов для пользовательских полей
-	std::vector<PMetaClassIndex*> GetCompoundIndexes(); //Получить список составных индексов
-	std::vector<PMetaClassForeign*> GetForeigns(); //Получить список внешних ключей
-	std::vector<PMetaClassResource*> GetResources(); //Получить ресурсы
+	std::vector<PMetaIndex*> GetSystemIndexes(); //Получить список системных индексов
+	std::vector<PMetaIndex*> GetIndexes(); //Получить список индексов для пользовательских полей
+	std::vector<PMetaIndex*> GetCompoundIndexes(); //Получить список составных индексов
+	std::vector<PMetaForeign*> GetForeigns(); //Получить список внешних ключей
+	std::vector<PMetaResource*> GetResources(); //Получить ресурсы
 
 	bool CheckExistTable(const QString &TableName) const; //Проверить наличие указанной таблицы в базе
-	bool CheckExitField(PMetaClassTable *MetaTable, const QString &FieldName) const; //Проверить наличие указанного поля в указанной таблице
+	bool CheckExitField(PMetaTable *MetaTable, const QString &FieldName) const; //Проверить наличие указанного поля в указанной таблице
 
 	ISNamespace::FieldType GetTypeField(const QString &type_name); //Получить тип данных по мета-имени
 	QString GetTypeDB(ISNamespace::FieldType field_type) const; //Получить наименование типа в базе данных
@@ -53,13 +53,13 @@ protected:
 	bool InitializeXSN(const QString &Content); //Инициализация контента XSN
 	
 	bool InitializeXSNTable(QDomNode &DomNode); //Инициализация таблицы
-	void InitializeXSNTableSystemFields(PMetaClassTable *MetaTable); //Инициализация системных полей для таблицы
-    bool InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация видимости системных полей
-    bool InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация полей таблицы
-    bool InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация индексов полей таблицы
-    bool InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация внешних ключей полей таблицы
-    bool InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация эскортов таблицы
-    bool InitializeXSNTableJoins(PMetaClassTable *MetaTable, const QDomNode &DomNode); //Инициализация JOIN'ов
+	void InitializeXSNTableSystemFields(PMetaTable *MetaTable); //Инициализация системных полей для таблицы
+    bool InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация видимости системных полей
+    bool InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация полей таблицы
+    bool InitializeXSNTableIndexes(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация индексов полей таблицы
+    bool InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация внешних ключей полей таблицы
+    bool InitializeXSNTableEscorts(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация эскортов таблицы
+    bool InitializeXSNTableJoins(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация JOIN'ов
 
 	bool InitializeXSR(); //Инициализация XSR
 	bool InitializeXSR(const QString &Content); //Инициализация файла XSR
@@ -76,12 +76,12 @@ private:
 
     QDomNode GetChildDomNode(QDomNode &TableNode, const QString &TagName) const;
 
-	std::map<QString, PMetaClassFunction *> FunctionsMap; //Функции
-	std::map<QString, PMetaClassTable *> TablesMap; //Таблицы
-	std::map<QString, PMetaClassTable *> QueriesMap; //Запросы
+	std::map<QString, PMetaFunction *> FunctionsMap; //Функции
+	std::map<QString, PMetaTable *> TablesMap; //Таблицы
+	std::map<QString, PMetaTable *> QueriesMap; //Запросы
 
-	std::vector<PMetaClassResource *> Resources; //Реурсы
-	std::vector<PMetaClassIndex*> IndexesCompound; //Составные индексы
+	std::vector<PMetaResource *> Resources; //Реурсы
+	std::vector<PMetaIndex*> IndexesCompound; //Составные индексы
 
 	QString CurrentXSN; //Текущий обрабатываемый XSN
 	QString CurrentXSR; //Текущий обрабатываемый XSR

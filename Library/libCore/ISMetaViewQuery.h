@@ -18,7 +18,7 @@ public:
 	void SetOrderSort(Qt::SortOrder order_sort); //Изменить тип сортировки
 
 private:
-	PMetaClassTable *MetaQuery;
+	PMetaTable *MetaQuery;
 
 	QString ClassFilter;
 	QString OrderField; //Имя поля по которому идет сортировка

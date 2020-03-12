@@ -13,7 +13,7 @@
 #include "ISGui.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISListEditPopup::ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *ComboBox) : ISInterfaceForm(ComboBox)
+ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox) : ISInterfaceForm(ComboBox)
 {
 	MetaForeign = meta_foreign;
 	MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);

@@ -15,7 +15,7 @@ static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_id "
                                               "FROM _taskstatus "
                                               "WHERE tsst_uid = :StatusUID");
 //-----------------------------------------------------------------------------
-ISTaskObjectForm::ISTaskObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISTaskObjectForm::ISTaskObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	CheckFavorite = nullptr;
 

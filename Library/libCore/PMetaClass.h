@@ -7,17 +7,17 @@
 #include "ISNamespace.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
-struct PMetaClass
+struct PMetaBase
 {
-	PMetaClass(const QString &type_object) : TypeObject(type_object.isEmpty() ? "Unknown" : type_object) { }
+	PMetaBase(const QString &type_object) : TypeObject(type_object.isEmpty() ? "Unknown" : type_object) { }
 
 	QString TypeObject; //Тип объекта
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassIndex : public PMetaClass
+struct PMetaIndex : public PMetaBase
 {
-	PMetaClassIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name) 
-		: PMetaClass("Index"), Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
+	PMetaIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name) 
+		: PMetaBase("Index"), Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
 
 	bool Unique;
 	QString Alias;
@@ -26,9 +26,9 @@ struct PMetaClassIndex : public PMetaClass
 	ISVectorString Fields;
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassForeign : public PMetaClass
+struct PMetaForeign : public PMetaBase
 {
-	PMetaClassForeign() : PMetaClass("Foreign") { }
+	PMetaForeign() : PMetaBase("Foreign") { }
 
 	QString Field; //Поле, на которое устанавливается внешний ключ
 	QString ForeignClass; //На какую таблицу ссылкается внешний ключ
@@ -40,9 +40,9 @@ struct PMetaClassForeign : public PMetaClass
 	QString SqlQuery; //Запрос на выбору по внешнему ключу
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassEscort : public PMetaClass
+struct PMetaEscort : public PMetaBase
 {
-	PMetaClassEscort() : PMetaClass("Escort") { }
+	PMetaEscort() : PMetaBase("Escort") { }
 
 	QString LocalName;
 	QString TableName;
@@ -50,9 +50,9 @@ struct PMetaClassEscort : public PMetaClass
 	QString ClassFilter;
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassField : public PMetaClass
+struct PMetaField : public PMetaBase
 {
-	PMetaClassField() : PMetaClass("Field"),
+	PMetaField() : PMetaBase("Field"),
 		Sequence(false),
 		Type(ISNamespace::FT_Unknown),
 		Size(0),
@@ -96,22 +96,22 @@ struct PMetaClassField : public PMetaClass
 
 	QString QueryText; //Текст подзапроса
 
-	PMetaClassIndex *Index; //Индекс
-	PMetaClassForeign *Foreign; //Внешний ключ
+	PMetaIndex *Index; //Индекс
+	PMetaForeign *Foreign; //Внешний ключ
 
 	bool Sequence; //Последовательность поля
 	QString LayoutName; //Наименование компоновщика (для горизонтального размещения поля)
 	QString SeparatorName; //Наименование вкладки
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassTable : public PMetaClass
+struct PMetaTable : public PMetaBase
 {
-	PMetaClassTable() : PMetaClass("Table"), UseRoles(true), ShowOnly(false), IsSystem(false) { }
-	PMetaClassTable(const QString &type_object) : PMetaClass(type_object), UseRoles(true), ShowOnly(false), IsSystem(false) { }
+	PMetaTable() : PMetaBase("Table"), UseRoles(true), ShowOnly(false), IsSystem(false) { }
+	PMetaTable(const QString &type_object) : PMetaBase(type_object), UseRoles(true), ShowOnly(false), IsSystem(false) { }
 
-	PMetaClassField* GetField(const QString &FieldName) //Получить поле по имени
+	PMetaField* GetField(const QString &FieldName) //Получить поле по имени
 	{
-		for (PMetaClassField *MetaField : AllFields)
+		for (PMetaField *MetaField : AllFields)
 		{
 			if (MetaField->Name.toLower() == FieldName.toLower())
 			{
@@ -121,7 +121,7 @@ struct PMetaClassTable : public PMetaClass
 		return nullptr;
 	}
 
-	PMetaClassField* GetField(int Index) //Получить поле по индексу
+	PMetaField* GetField(int Index) //Получить поле по индексу
 	{
 		if (!AllFields.empty())
 		{
@@ -130,7 +130,7 @@ struct PMetaClassTable : public PMetaClass
 		return nullptr;
 	}
 
-	PMetaClassField* GetFieldID() //Получить поле "Код"
+	PMetaField* GetFieldID() //Получить поле "Код"
 	{
 		if (!SystemFields.empty())
 		{
@@ -143,7 +143,7 @@ struct PMetaClassTable : public PMetaClass
 	{
 		for (int i = 0, c = AllFields.size(); i < c; ++i)
 		{
-			PMetaClassField *MetaField = AllFields[i];
+			PMetaField *MetaField = AllFields[i];
 			if (MetaField->Name.toLower() == FieldName.toLower())
 			{
 				return i;
@@ -154,7 +154,7 @@ struct PMetaClassTable : public PMetaClass
 
 	bool ContainsField(const QString &FieldName)
 	{
-		for (PMetaClassField *MetaField : AllFields)
+		for (PMetaField *MetaField : AllFields)
 		{
 			if (MetaField->Name.toLower() == FieldName.toLower())
 			{
@@ -183,26 +183,26 @@ struct PMetaClassTable : public PMetaClass
 	QString Where;
 	QString OrderField;
 
-	std::vector<PMetaClassEscort*> Escorts; //Эскортные таблицы
-	std::vector<PMetaClassField*> Fields; //Поля
-	std::vector<PMetaClassField*> SystemFields; //Системные поля
-	std::vector<PMetaClassField*> AllFields; //Все поля
+	std::vector<PMetaEscort*> Escorts; //Эскортные таблицы
+	std::vector<PMetaField*> Fields; //Поля
+	std::vector<PMetaField*> SystemFields; //Системные поля
+	std::vector<PMetaField*> AllFields; //Все поля
 
-	std::vector<PMetaClassField*> SystemFieldsVisible; //Отображаемые системные поля
+	std::vector<PMetaField*> SystemFieldsVisible; //Отображаемые системные поля
 	ISVectorString Joins;
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassFunction : public PMetaClass
+struct PMetaFunction : public PMetaBase
 {
-	PMetaClassFunction() : PMetaClass("Function") { }
+	PMetaFunction() : PMetaBase("Function") { }
 
 	QString Name; //Имя функции
 	QString Text; //Текст функции
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassQuery : public PMetaClassTable
+struct PMetaQuery : public PMetaTable
 {
-	PMetaClassQuery() : PMetaClassTable("Query") { }
+	PMetaQuery() : PMetaTable("Query") { }
 
 	QString From;
 	QString Where;
@@ -211,9 +211,9 @@ struct PMetaClassQuery : public PMetaClassTable
 	ISVectorString Joins;
 };
 //-----------------------------------------------------------------------------
-struct PMetaClassResource : public PMetaClass
+struct PMetaResource : public PMetaBase
 {
-	PMetaClassResource() : PMetaClass("Resource") { }
+	PMetaResource() : PMetaBase("Resource") { }
 
 	void AddField(const QString &FieldName, const QString &Value) //Добавить параметр и его значение в ресурс
 	{

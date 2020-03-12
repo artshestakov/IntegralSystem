@@ -5,11 +5,11 @@
 class CGForeign
 {
 public:
-	static bool CreateForeign(PMetaClassForeign *MetaForeign, QString &ErrorString); //Создание внешнего ключа
-	static bool UpdateForeign(PMetaClassForeign *MetaForeign, QString &ErrorString); //Обновление внешнего ключа
-	static bool CheckExistForeign(PMetaClassForeign *MetaForeign, bool &Exist, QString &ErrorString); //Проверка существования внешнего ключа
+	static bool CreateForeign(PMetaForeign *MetaForeign, QString &ErrorString); //Создание внешнего ключа
+	static bool UpdateForeign(PMetaForeign *MetaForeign, QString &ErrorString); //Обновление внешнего ключа
+	static bool CheckExistForeign(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString); //Проверка существования внешнего ключа
 
 private:
-	static QString GetForeignName(PMetaClassForeign *MetaForeign); //Получение имени внешнего ключа
+	static QString GetForeignName(PMetaForeign *MetaForeign); //Получение имени внешнего ключа
 };
 //-----------------------------------------------------------------------------

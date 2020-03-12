@@ -21,7 +21,7 @@ public:
 
 	void SetReadOnly(bool read_only) override;
 
-	virtual void InvokeList(PMetaClassForeign *meta_foreign);
+	virtual void InvokeList(PMetaForeign *meta_foreign);
 
 	QString GetCurrentText() const; //Получить локальное наименование объекта
 	void SetEnabled(bool Enabled);
@@ -40,8 +40,8 @@ protected:
 	void EditObject();
 
 private:
-	PMetaClassForeign *MetaForeign;
-	PMetaClassTable *MetaTable;
+	PMetaForeign *MetaForeign;
+	PMetaTable *MetaTable;
 
 	ISPushButton *ButtonMain;
 	QToolButton *ButtonList;

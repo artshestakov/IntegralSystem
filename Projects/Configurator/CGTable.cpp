@@ -27,7 +27,7 @@ static QString QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
 											  "AND table_name = :TableName "
 											  "ORDER BY ordinal_position");
 //-----------------------------------------------------------------------------
-bool CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
+bool CGTable::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 {
 	QString TableName = MetaTable->Name.toLower(), TableAlias = MetaTable->Alias.toLower();
 
@@ -50,7 +50,7 @@ bool CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 	SqlText += CGTemplateField::GetSqlTextForTemplateSystemFields(TableName, TableAlias);
 
 	//Формирование запроса на создание таблицы
-	for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей таблицы
+	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей таблицы
 	{
 		if (!MetaField->QueryText.isEmpty())
 		{
@@ -102,7 +102,7 @@ bool CGTable::CreateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGTable::UpdateTable(PMetaClassTable *MetaTable, QString &ErrorString)
+bool CGTable::UpdateTable(PMetaTable *MetaTable, QString &ErrorString)
 {
 	bool Result = AlterExistFields(MetaTable, ErrorString);
 	if (Result)
@@ -117,7 +117,7 @@ bool CGTable::UpdateTable(PMetaClassTable *MetaTable, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGTable::CheckExistTable(PMetaClassTable *MetaTable, bool &Exist, QString &ErrorString)
+bool CGTable::CheckExistTable(PMetaTable *MetaTable, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectTable(QS_TABLE);
 	qSelectTable.SetShowLongQuery(false);
@@ -130,7 +130,7 @@ bool CGTable::CheckExistTable(PMetaClassTable *MetaTable, bool &Exist, QString &
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGTable::AlterExistFields(PMetaClassTable *MetaTable, QString &ErrorString)
+bool CGTable::AlterExistFields(PMetaTable *MetaTable, QString &ErrorString)
 {
 	ISQuery qSelectColumns(QS_COLUMNS);
 	qSelectColumns.SetShowLongQuery(false);
@@ -152,7 +152,7 @@ bool CGTable::AlterExistFields(PMetaClassTable *MetaTable, QString &ErrorString)
 				continue;
 			}
 
-			PMetaClassField *MetaField = ISMetaData::GetInstanse().GetMetaField(MetaTable, ColumnName);
+			PMetaField *MetaField = ISMetaData::GetInstanse().GetMetaField(MetaTable, ColumnName);
 			QString MetaType = ISMetaData::GetInstanse().GetTypeDB(MetaField->Type);
 			QString MetaDefaultValue = MetaField->DefaultValue.toString();
 			bool MetaNotNull = MetaField->NotNull;
@@ -254,10 +254,10 @@ bool CGTable::AlterExistFields(PMetaClassTable *MetaTable, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGTable::CreateNewFields(PMetaClassTable *MetaTable, QString &ErrorString)
+bool CGTable::CreateNewFields(PMetaTable *MetaTable, QString &ErrorString)
 {
 	bool Result = true, Exist = true;
-	for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей
+	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 	{
 		if (!MetaField->QueryText.isEmpty())
 		{
@@ -315,7 +315,7 @@ bool CGTable::CreateNewFields(PMetaClassTable *MetaTable, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGTable::DeleteOldFields(PMetaClassTable *MetaTable, QString &ErrorString)
+bool CGTable::DeleteOldFields(PMetaTable *MetaTable, QString &ErrorString)
 {
 	ISQuery qSelectColumns(QS_OLD_COLUMNS);
 	qSelectColumns.SetShowLongQuery(false);

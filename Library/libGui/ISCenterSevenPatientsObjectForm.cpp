@@ -3,7 +3,7 @@
 #include "ISBuffer.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISCenterSevenPatientsObjectForm::ISCenterSevenPatientsObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISCenterSevenPatientsObjectForm::ISCenterSevenPatientsObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	QAction *ActionWaitAdmission = new QAction(this);
 	ActionWaitAdmission->setText(LANG("CenterSeven.AddWaitAdmission"));

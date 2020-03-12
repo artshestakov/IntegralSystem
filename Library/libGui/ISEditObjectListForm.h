@@ -8,7 +8,7 @@ class ISEditObjectListForm : public ISListObjectForm
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISEditObjectListForm(PMetaClassTable *MetaTable, int ParentObjectID, QWidget *parent = 0);
+	Q_INVOKABLE ISEditObjectListForm(PMetaTable *MetaTable, int ParentObjectID, QWidget *parent = 0);
 	virtual ~ISEditObjectListForm();
 
 protected:

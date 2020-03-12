@@ -10,7 +10,7 @@ class ISDeviceUserObjectForm : public ISObjectFormBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDeviceUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id = 0);
+	Q_INVOKABLE ISDeviceUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
 	virtual ~ISDeviceUserObjectForm();
 
 	bool Save() override;

@@ -8,7 +8,7 @@ class ISSqlModelView : public QAbstractItemModel
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISSqlModelView(PMetaClassTable *meta_table, QObject *parent = 0);
+	Q_INVOKABLE ISSqlModelView(PMetaTable *meta_table, QObject *parent = 0);
 	virtual ~ISSqlModelView();
 
 	QSqlRecord GetRecord(int RowIndex) const; //Получить запись по идентификатору строки
@@ -30,7 +30,7 @@ protected:
 	QIcon GetSortingIcon(int Section) const; //Получить иконку сортировки
 
 private:
-	PMetaClassTable *MetaTable;
+	PMetaTable *MetaTable;
 	std::vector<QSqlRecord> Records; //Данные модели
 
 	int CurrentSortingColumn;

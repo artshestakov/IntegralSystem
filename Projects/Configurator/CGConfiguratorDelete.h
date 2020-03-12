@@ -23,7 +23,7 @@ public slots:
 	void resources();
 
 protected:
-	void ShowResourceConsole(PMetaClassTable *MetaTable, const ISUuid &ResourceUID);
+	void ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID);
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -13,7 +13,7 @@ signals:
 	void OpenObject(const QString &TableName, int ObjectID);
 
 public:
-	ISFavoritesForm(QWidget *parent = 0, PMetaClassTable *meta_table = nullptr);
+	ISFavoritesForm(QWidget *parent = 0, PMetaTable *meta_table = nullptr);
 	virtual ~ISFavoritesForm();
 
 protected:
@@ -34,6 +34,6 @@ private:
 	QAction *ActionDelete;
 	QAction *ActionClearFavorites;
 	ISListWidget *ListWidget;
-	PMetaClassTable *MetaTable;
+	PMetaTable *MetaTable;
 };
 //-----------------------------------------------------------------------------

@@ -12,7 +12,7 @@ static QString QC_USER = "CREATE ROLE \"%1\" SUPERUSER NOINHERIT NOREPLICATION L
 //-----------------------------------------------------------------------------
 static QString QA_LOGIN = "ALTER ROLE %1 RENAME TO %2";
 //-----------------------------------------------------------------------------
-ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	QAction *ActionChangePassword = ISControls::CreateActionPasswordChange(this);
 	connect(ActionChangePassword, &QAction::triggered, this, &ISUserObjectForm::PasswordChange);

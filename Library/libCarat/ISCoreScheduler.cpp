@@ -58,9 +58,9 @@ void ISCoreScheduler::ClearFiles()
 		}
 	}
 	
-	for (PMetaClassTable *MetaTable : ISMetaData::GetInstanse().GetTables()) //Обход всех сущностей
+	for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables()) //Обход всех сущностей
 	{
-		for (PMetaClassField *MetaField : MetaTable->Fields) //Обход всех пользовательских полей текущей сущности
+		for (PMetaField *MetaField : MetaTable->Fields) //Обход всех пользовательских полей текущей сущности
 		{
 			if (MetaField->Type == ISNamespace::FT_File) //Если тип данных текущего поля является хранением файлов
 			{

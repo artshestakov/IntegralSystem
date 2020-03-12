@@ -66,185 +66,167 @@ QSqlDatabase& ISDatabase::GetSystemDB()
 //-----------------------------------------------------------------------------
 bool ISDatabase::CheckExistDatabase(const QString &Database)
 {
-	bool Result = false;
 	ISQuery qSelectDatabase(SystemDB, QS_DATABASE);
 	qSelectDatabase.SetShowLongQuery(false);
 	qSelectDatabase.BindValue(":DatabaseName", Database);
-	if (qSelectDatabase.ExecuteFirst())
+	bool Result = qSelectDatabase.ExecuteFirst();
+	if (Result)
 	{
-		int Count = qSelectDatabase.ReadColumn("count").toInt();
-		if (Count)
-		{
-			Result = true;
-		}
+		Result = qSelectDatabase.ReadColumn("count").toBool();
 	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetVersionPostgres()
 {
-	QString Version;
 	ISQuery qSelectVersion(QS_VERSION_POSTGRESQL);
 	if (qSelectVersion.ExecuteFirst())
 	{
-		Version = qSelectVersion.ReadColumn("version").toString();
+		return qSelectVersion.ReadColumn("version").toString();
 	}
-	return Version;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetCurrentDatabaseSize()
 {
-	QString DatabaseSize;
 	ISQuery qSelectDatabaseSize(QS_DATABASE_SIZE);
 	qSelectDatabaseSize.SetShowLongQuery(false);
 	if (qSelectDatabaseSize.ExecuteFirst())
 	{
-		DatabaseSize = qSelectDatabaseSize.ReadColumn("databasesize").toString();
+		return qSelectDatabaseSize.ReadColumn("databasesize").toString();
 	}
-	return DatabaseSize;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetTableSize(const QString &TableName) const
 {
-	QString TableSize;
 	ISQuery qSelect(QS_TABLE_SIZE);
 	qSelect.BindValue(":TableName", TableName);
 	if (qSelect.ExecuteFirst())
 	{
-		TableSize = qSelect.ReadColumn("pg_size_pretty").toString();
+		return qSelect.ReadColumn("pg_size_pretty").toString();
 	}
-	return TableSize;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetTableSizeWithIndices(const QString &TableName) const
 {
-	QString TableSize;
 	ISQuery qSelect(QS_TABLE_SIZE_WITH_INDICES);
 	qSelect.BindValue(":TableName", TableName);
 	if (qSelect.ExecuteFirst())
 	{
-		TableSize = qSelect.ReadColumn("pg_size_pretty").toString();
+		return qSelect.ReadColumn("pg_size_pretty").toString();
 	}
-	return TableSize;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 int ISDatabase::GetTableRowCount(const QString &TableName) const
 {
-	int RowCount = 0;
 	ISQuery qSelect("SELECT COUNT(*) FROM " + TableName);
 	if (qSelect.ExecuteFirst())
 	{
-		RowCount = qSelect.ReadColumn("count").toInt();
+		return qSelect.ReadColumn("count").toInt();
 	}
-	return RowCount;
+	return 0;
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetStartTimeServer() const
 {
-	QString StartTime;
 	ISQuery qSelect(QS_START_TIME_SERVER);
 	if (qSelect.ExecuteFirst())
 	{
-		StartTime = qSelect.ReadColumn("pg_postmaster_start_time").toDateTime().toString(FORMAT_DATE_TIME_V3);
+		return qSelect.ReadColumn("pg_postmaster_start_time").toDateTime().toString(FORMAT_DATE_TIME_V3);
 	}
-	return StartTime;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetLoadConfigurationTime()
 {
-	QString LoadConfiguration;
 	ISQuery qSelect(QS_LOAD_CONFIGURATION_TIME);
 	if (qSelect.ExecuteFirst())
 	{
-		LoadConfiguration = qSelect.ReadColumn("pg_conf_load_time").toDateTime().toString(FORMAT_DATE_TIME_V3);
+		return qSelect.ReadColumn("pg_conf_load_time").toDateTime().toString(FORMAT_DATE_TIME_V3);
 	}
-	return LoadConfiguration;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetInetClientAddress()
 {
-	QString Address;
 	ISQuery qSelect(QS_INET_CLIENT_ADDRESS);
 	if (qSelect.ExecuteFirst())
 	{
-		Address = qSelect.ReadColumn("inet_client_addr").toString();
+		return qSelect.ReadColumn("inet_client_addr").toString();
 	}
-	return Address;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetInetServerAddress()
 {
-	QString Address;
 	ISQuery qSelect(QS_INET_SERVER_ADDRESS);
 	if (qSelect.ExecuteFirst())
 	{
-		Address = qSelect.ReadColumn("inet_server_addr").toString();
+		return qSelect.ReadColumn("inet_server_addr").toString();
 	}
-	return Address;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 int ISDatabase::GetServerProcessID()
 {
-	int ID = 0;
 	ISQuery qSelect(QS_BACKEND_PID);
 	if (qSelect.ExecuteFirst())
 	{
-		ID = qSelect.ReadColumn("pg_backend_pid").toInt();
+		return qSelect.ReadColumn("pg_backend_pid").toInt();
 	}
-	return ID;
+	return 0;
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetDatabaseCollate()
 {
-	QString LCCollate;
 	ISQuery qSelect(QS_LC_COLLATE);
 	if (qSelect.ExecuteFirst())
 	{
-		LCCollate = qSelect.ReadColumn("datcollate").toString();
+		return qSelect.ReadColumn("datcollate").toString();
 	}
-	return LCCollate;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetDatabaseCType()
 {
-	QString CType;
 	ISQuery qSelect(QS_C_TYPE);
 	if (qSelect.ExecuteFirst())
 	{
-		CType = qSelect.ReadColumn("datctype").toString();
+		return qSelect.ReadColumn("datctype").toString();
 	}
-	return CType;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetDatabaseDataDirectory()
 {
-	QString DataDirectory;
 	ISQuery qSelect(QS_DATA_DIRECTORY);
 	if (qSelect.ExecuteFirst())
 	{
-		DataDirectory = qSelect.ReadColumn("setting").toString();
+		return qSelect.ReadColumn("setting").toString();
 	}
-	return DataDirectory;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 QString ISDatabase::GetAge(const QDateTime &DateTime) const
 {
-	QString Age;
 	ISQuery qAge(QString("SELECT age(to_timestamp('%1', 'DD.MM.YYYY hh24:mi:ss'))").arg(DateTime.toString(FORMAT_DATE_TIME_V4)));
 	qAge.SetShowLongQuery(false);
 	if (qAge.ExecuteFirst())
 	{
-		Age = qAge.ReadColumn("age").toString();
+		return qAge.ReadColumn("age").toString();
 	}
-	return Age;
+	return QString();
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::IsUserOnline(int UserID) const
 {
-	bool Result = false;
 	ISQuery qSelect(QS_USER_ONLINE_FROM_ID);
 	qSelect.BindValue(":UserID", UserID);
-	if (qSelect.ExecuteFirst())
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
 	{
 		Result = qSelect.ReadColumn("useronline").toBool();
 	}
@@ -253,10 +235,10 @@ bool ISDatabase::IsUserOnline(int UserID) const
 //-----------------------------------------------------------------------------
 bool ISDatabase::IsUserOnline(const QString &UserLogin) const
 {
-	bool Result = false;
 	ISQuery qSelect(QS_USER_ONLINE_FROM_LOGIN);
 	qSelect.BindValue(":UserLogin", UserLogin);
-	if (qSelect.ExecuteFirst())
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
 	{
 		Result = qSelect.ReadColumn("useronline").toBool();
 	}
@@ -265,17 +247,16 @@ bool ISDatabase::IsUserOnline(const QString &UserLogin) const
 //-----------------------------------------------------------------------------
 QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName, int ObjectID)
 {
-	QVariant Value;
-	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
-	PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+	PMetaField *MetaField = MetaTable->GetField(FieldName);
 	QString SqlText = "SELECT " + MetaTable->Alias + '_' + MetaField->Name + " FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id = :ObjectID";
 	ISQuery qSelect(SqlText);
 	qSelect.BindValue(":ObjectID", ObjectID);
 	if (qSelect.ExecuteFirst())
 	{
-		Value = qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name);
+		return qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name);
 	}
-	return Value;
+	return QVariant();
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::ConnectToDefaultDB(const QString &Login, const QString &Password, QString &ErrorConnection)

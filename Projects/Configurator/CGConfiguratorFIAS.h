@@ -29,9 +29,9 @@ private:
 	quint64 GetCountLine(const QString &FilePath) const; //Получить количество строк в файле
 	QString GetTableName(const QString &FilePath) const; //Получить наименование таблицы
 	ISStringMap ParseLine(const QString &Content) const; //Парсинг строки
-	bool Select(PMetaClassTable *MetaTable, const ISStringMap &StringMap) const;
-	void Update(PMetaClassTable *MetaTable, const ISStringMap &StringMap);
-	void Insert(PMetaClassTable *MetaTable, const ISStringMap &StringMap);
+	bool Select(PMetaTable *MetaTable, const ISStringMap &StringMap) const;
+	void Update(PMetaTable *MetaTable, const ISStringMap &StringMap);
+	void Insert(PMetaTable *MetaTable, const ISStringMap &StringMap);
 
 private:
 	ISStringMap MapKeys;

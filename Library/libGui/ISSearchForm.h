@@ -15,7 +15,7 @@ signals:
 	void StartSearch(const QString &SearchString, const QVariantMap &VariantMap);
 
 public:
-	ISSearchForm(PMetaClassTable *meta_table, QWidget *parent = 0);
+	ISSearchForm(PMetaTable *meta_table, QWidget *parent = 0);
 	virtual ~ISSearchForm();
 
 protected:
@@ -38,7 +38,7 @@ protected:
 	void UpdateInterface(); //Обновление интерфейса
 
 private:
-	PMetaClassTable *MetaTable;
+	PMetaTable *MetaTable;
 	QTreeWidget *TreeWidget;
 
 	ISPushButton *ButtonAddFilter;

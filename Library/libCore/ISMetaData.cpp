@@ -113,7 +113,7 @@ bool ISMetaData::Initialize(const QString &configuration_name, bool InitXSR, boo
 	return Result;
 }
 //-----------------------------------------------------------------------------
-PMetaClassTable* ISMetaData::GetMetaTable(const QString &TableName)
+PMetaTable* ISMetaData::GetMetaTable(const QString &TableName)
 {
 	if (TablesMap.count(TableName))
 	{
@@ -123,7 +123,7 @@ PMetaClassTable* ISMetaData::GetMetaTable(const QString &TableName)
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-PMetaClassTable* ISMetaData::GetMetaQuery(const QString &QueryName)
+PMetaTable* ISMetaData::GetMetaQuery(const QString &QueryName)
 {
 	if (QueriesMap.count(QueryName))
 	{
@@ -132,9 +132,9 @@ PMetaClassTable* ISMetaData::GetMetaQuery(const QString &QueryName)
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-PMetaClassField* ISMetaData::GetMetaField(PMetaClassTable *MetaTable, const QString &FieldName)
+PMetaField* ISMetaData::GetMetaField(PMetaTable *MetaTable, const QString &FieldName)
 {
-	for (PMetaClassField *MetaField : MetaTable->AllFields)
+	for (PMetaField *MetaField : MetaTable->AllFields)
 	{
 		if (MetaField->Name.toLower() == FieldName.toLower())
 		{
@@ -144,19 +144,19 @@ PMetaClassField* ISMetaData::GetMetaField(PMetaClassTable *MetaTable, const QStr
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-PMetaClassField* ISMetaData::GetMetaField(const QString &TableName, const QString &FieldName)
+PMetaField* ISMetaData::GetMetaField(const QString &TableName, const QString &FieldName)
 {
 	return GetMetaField(TablesMap[TableName], FieldName);
 }
 //-----------------------------------------------------------------------------
-std::vector<PMetaClassFunction*> ISMetaData::GetFunctions()
+std::vector<PMetaFunction*> ISMetaData::GetFunctions()
 {
-	return ConvertMapToValues<QString, PMetaClassFunction *>(FunctionsMap);
+	return ConvertMapToValues<QString, PMetaFunction *>(FunctionsMap);
 }
 //-----------------------------------------------------------------------------
-std::vector<PMetaClassTable*> ISMetaData::GetTables()
+std::vector<PMetaTable*> ISMetaData::GetTables()
 {
-	return ConvertMapToValues<QString, PMetaClassTable *>(TablesMap);
+	return ConvertMapToValues<QString, PMetaTable *>(TablesMap);
 }
 //-----------------------------------------------------------------------------
 ISVectorString ISMetaData::GetMetaQueries()
@@ -171,12 +171,12 @@ ISVectorString ISMetaData::GetMetaQueries()
 	return Vector;
 }
 //-----------------------------------------------------------------------------
-std::vector<PMetaClassIndex*> ISMetaData::GetSystemIndexes()
+std::vector<PMetaIndex*> ISMetaData::GetSystemIndexes()
 {
-	std::vector<PMetaClassIndex*> SystemIndexes;
-	for (PMetaClassTable *MetaTable : GetTables()) //Обход таблиц
+	std::vector<PMetaIndex*> SystemIndexes;
+	for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
 	{
-		for (PMetaClassField *MetaField : MetaTable->SystemFields) //Обход полей
+		for (PMetaField *MetaField : MetaTable->SystemFields) //Обход полей
 		{
 			if (MetaField->Index)
 			{
@@ -187,12 +187,12 @@ std::vector<PMetaClassIndex*> ISMetaData::GetSystemIndexes()
 	return SystemIndexes;
 }
 //-----------------------------------------------------------------------------
-std::vector<PMetaClassIndex*> ISMetaData::GetIndexes()
+std::vector<PMetaIndex*> ISMetaData::GetIndexes()
 {
-	std::vector<PMetaClassIndex*> Indexes;
-	for (PMetaClassTable *MetaTable : GetTables()) //Обход таблиц
+	std::vector<PMetaIndex*> Indexes;
+	for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
 	{
-		for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей
+		for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 		{
 			if (MetaField->Index)
 			{
@@ -203,17 +203,17 @@ std::vector<PMetaClassIndex*> ISMetaData::GetIndexes()
 	return Indexes;
 }
 //-----------------------------------------------------------------------------
-std::vector<PMetaClassIndex*> ISMetaData::GetCompoundIndexes()
+std::vector<PMetaIndex*> ISMetaData::GetCompoundIndexes()
 {
 	return IndexesCompound;
 }
 //-----------------------------------------------------------------------------
-std::vector<PMetaClassForeign*> ISMetaData::GetForeigns()
+std::vector<PMetaForeign*> ISMetaData::GetForeigns()
 {
-	std::vector<PMetaClassForeign*> Foreigns;
-	for (PMetaClassTable *MetaTable : GetTables()) //Обход таблиц
+	std::vector<PMetaForeign*> Foreigns;
+	for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
 	{
-		for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей
+		for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 		{
 			if (MetaField->Foreign)
 			{
@@ -224,7 +224,7 @@ std::vector<PMetaClassForeign*> ISMetaData::GetForeigns()
 	return Foreigns;
 }
 //-----------------------------------------------------------------------------
-std::vector<PMetaClassResource*> ISMetaData::GetResources()
+std::vector<PMetaResource*> ISMetaData::GetResources()
 {
 	return Resources;
 }
@@ -234,9 +234,9 @@ bool ISMetaData::CheckExistTable(const QString &TableName) const
 	return TablesMap.find(TableName) != TablesMap.end();
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::CheckExitField(PMetaClassTable *MetaTable, const QString &FieldName) const
+bool ISMetaData::CheckExitField(PMetaTable *MetaTable, const QString &FieldName) const
 {
-	for (PMetaClassField *MetaField : MetaTable->AllFields)
+	for (PMetaField *MetaField : MetaTable->AllFields)
 	{
 		if (MetaField->Name.toLower() == FieldName.toLower())
 		{
@@ -362,7 +362,7 @@ bool ISMetaData::CheckUniqueAllAliases()
 	bool Result = true;
 	for (const auto &MapItem : TablesMap) //Обход таблиц
 	{
-		PMetaClassTable *MetaTable = MapItem.second;
+		PMetaTable *MetaTable = MapItem.second;
 		Result = MetaTable ? true : false;
 		if (!Result)
 		{
@@ -388,11 +388,11 @@ bool ISMetaData::CheckUniqueAllAliases()
 bool ISMetaData::GenerateSqlFromForeigns()
 {
 	bool Result = true;
-	std::vector<PMetaClassForeign*> Foreigns = GetForeigns();
-	for (PMetaClassForeign *MetaForeign : Foreigns) //Обходим все внешние ключи
+	std::vector<PMetaForeign*> Foreigns = GetForeigns();
+	for (PMetaForeign *MetaForeign : Foreigns) //Обходим все внешние ключи
 	{
 		//Внешняя сущность
-		PMetaClassTable *MetaTableExtern = GetMetaTable(MetaForeign->ForeignClass);
+		PMetaTable *MetaTableExtern = GetMetaTable(MetaForeign->ForeignClass);
 
 		//Проверка наличия сущности, на которую будет ссылаться внешний ключ
 		Result = MetaTableExtern ? true : false;
@@ -531,7 +531,7 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 	bool Result = !DomNode.attributes().isEmpty();
 	if (Result)
 	{
-		PMetaClassTable *MetaTable = new PMetaClassTable();
+		PMetaTable *MetaTable = new PMetaTable();
 		QString TableName = DomNode.attributes().namedItem("Name").nodeValue();
 		QString Parent = DomNode.attributes().namedItem("Parent").nodeValue();
 
@@ -681,7 +681,7 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::InitializeXSNTableSystemFields(PMetaClassTable *MetaTable)
+void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 {
 	QFile File(PATH_SCHEMA_TEMPLATE_FIELDS);
 	IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
@@ -692,48 +692,48 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaClassTable *MetaTable)
 	QDomNode DomNode = DomElement.firstChild();
 	InitializeXSNTableFields(MetaTable, DomNode);
 
-	PMetaClassField *FieldID = MetaTable->GetField("ID");
+	PMetaField *FieldID = MetaTable->GetField("ID");
 	IS_ASSERT(FieldID, "Null field object");
-	FieldID->Index = new PMetaClassIndex(true, MetaTable->Alias, MetaTable->Name, FieldID->Name);
+	FieldID->Index = new PMetaIndex(true, MetaTable->Alias, MetaTable->Name, FieldID->Name);
 
-	PMetaClassField *FieldUID = MetaTable->GetField("UID");
+	PMetaField *FieldUID = MetaTable->GetField("UID");
 	IS_ASSERT(FieldUID, "Null field object");
-	FieldUID->Index = new PMetaClassIndex(true, MetaTable->Alias, MetaTable->Name, FieldUID->Name);
+	FieldUID->Index = new PMetaIndex(true, MetaTable->Alias, MetaTable->Name, FieldUID->Name);
 
-	PMetaClassField *FieldIsDeleted = MetaTable->GetField("IsDeleted");
+	PMetaField *FieldIsDeleted = MetaTable->GetField("IsDeleted");
 	IS_ASSERT(FieldIsDeleted, "Null field object");
-	FieldIsDeleted->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsDeleted->Name);
+	FieldIsDeleted->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsDeleted->Name);
 
-	PMetaClassField *FieldIsSystem = MetaTable->GetField("IsSystem");
+	PMetaField *FieldIsSystem = MetaTable->GetField("IsSystem");
 	IS_ASSERT(FieldIsSystem, "Null field object");
-	FieldIsSystem->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsSystem->Name);
+	FieldIsSystem->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsSystem->Name);
 
-	PMetaClassField *FieldCreationDate = MetaTable->GetField("CreationDate");
+	PMetaField *FieldCreationDate = MetaTable->GetField("CreationDate");
 	IS_ASSERT(FieldCreationDate, "Null field object");
-	FieldCreationDate->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationDate->Name);
+	FieldCreationDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationDate->Name);
 
-	PMetaClassField *FieldUpdationDate = MetaTable->GetField("UpdationDate");
+	PMetaField *FieldUpdationDate = MetaTable->GetField("UpdationDate");
 	IS_ASSERT(FieldUpdationDate, "Null field object");
-	FieldUpdationDate->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationDate->Name);
+	FieldUpdationDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationDate->Name);
 
-	PMetaClassField *FieldDeletionDate = MetaTable->GetField("DeletionDate");
+	PMetaField *FieldDeletionDate = MetaTable->GetField("DeletionDate");
 	IS_ASSERT(FieldDeletionDate, "Null field object");
-	FieldDeletionDate->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionDate->Name);
+	FieldDeletionDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionDate->Name);
 
-	PMetaClassField *FieldCreationUser = MetaTable->GetField("CreationUser");
+	PMetaField *FieldCreationUser = MetaTable->GetField("CreationUser");
 	IS_ASSERT(FieldCreationUser, "Null field object");
-	FieldCreationUser->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUser->Name);
+	FieldCreationUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUser->Name);
 
-	PMetaClassField *FieldUpdationUser = MetaTable->GetField("UpdationUser");
+	PMetaField *FieldUpdationUser = MetaTable->GetField("UpdationUser");
 	IS_ASSERT(FieldUpdationUser, "Null field object");
-	FieldUpdationUser->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationUser->Name);
+	FieldUpdationUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationUser->Name);
 
-	PMetaClassField *FieldDeletionUser = MetaTable->GetField("DeletionUser");
+	PMetaField *FieldDeletionUser = MetaTable->GetField("DeletionUser");
 	IS_ASSERT(FieldDeletionUser, "Null field object");
-	FieldDeletionUser->Index = new PMetaClassIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionUser->Name);
+	FieldDeletionUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionUser->Name);
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, const QDomNode &DomNode)
 {
 	bool Result = true;
 	QDomNode Temp = DomNode;
@@ -754,7 +754,7 @@ bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTabl
 			break;
 		}
 
-		PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+		PMetaField *MetaField = MetaTable->GetField(FieldName);
 		Result = MetaField ? true : false;
 		if (!Result)
 		{
@@ -775,7 +775,7 @@ bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaClassTable *MetaTabl
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode &DomNode)
 {
 	bool Result = false;
 	QDomNode Temp = DomNode;
@@ -814,7 +814,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 			}
 
 			QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
-			PMetaClassField *MetaField = new PMetaClassField();
+			PMetaField *MetaField = new PMetaField();
 			MetaField->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
 			MetaField->Name = FieldName;
 			MetaField->Type = ISMetaData::GetInstanse().GetTypeField(DomNamedNodeMap.namedItem("Type").nodeValue());
@@ -886,7 +886,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaClassTable *MetaTable, const QDom
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableIndexes(PMetaTable *MetaTable, const QDomNode &DomNode)
 {
 	bool Result = true;
 	QDomNode Temp = DomNode;
@@ -920,7 +920,7 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDo
 			QStringList IndexList = FieldName.split(';');
 			if (IndexList.count() > 1) //Если индекс составной
 			{
-				PMetaClassIndex *Index = new PMetaClassIndex(Unique, MetaTable->Alias, MetaTable->Name, QString());
+				PMetaIndex *Index = new PMetaIndex(Unique, MetaTable->Alias, MetaTable->Name, QString());
 				for (const QString &IndexName : IndexList)
 				{
 					Index->Fields.emplace_back(IndexName);
@@ -929,7 +929,7 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDo
 			}
 			else //Индекс стандартный
 			{
-				PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+				PMetaField *MetaField = MetaTable->GetField(FieldName);
 				Result = MetaField ? true : false;
 				if (!Result)
 				{
@@ -943,7 +943,7 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDo
 					ErrorString = QString("Index already exist. TableName: %1. FieldName: %2.").arg(MetaTable->Name).arg(FieldName);
 					break;
 				}
-				MetaField->Index = new PMetaClassIndex(Unique, MetaTable->Alias, MetaTable->Name, FieldName);
+				MetaField->Index = new PMetaIndex(Unique, MetaTable->Alias, MetaTable->Name, FieldName);
 			}
 		}
 		Temp = Temp.nextSibling();
@@ -951,7 +951,7 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaClassTable *MetaTable, const QDo
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNode &DomNode)
 {
 	bool Result = true;
 	QDomNode Temp = DomNode;
@@ -987,7 +987,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 		}
 
 		QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
-		PMetaClassForeign *MetaForeign = new PMetaClassForeign();
+		PMetaForeign *MetaForeign = new PMetaForeign();
 		MetaForeign->Field = DomNamedNodeMap.namedItem("Field").nodeValue();
 		MetaForeign->ForeignClass = DomNamedNodeMap.namedItem("ForeignClass").nodeValue();
 		MetaForeign->ForeignField = DomNamedNodeMap.namedItem("ForeignField").nodeValue();
@@ -996,7 +996,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 		MetaForeign->TableName = MetaTable->Name;
 
 		//Проверка наличия поля - на котором делается внешний ключ
-		PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+		PMetaField *MetaField = MetaTable->GetField(FieldName);
 		Result = MetaTable ? true : false;
 		if (!Result)
 		{
@@ -1018,7 +1018,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableEscorts(PMetaTable *MetaTable, const QDomNode &DomNode)
 {
 	bool Result = true;
 	QDomNode Temp = DomNode;
@@ -1033,7 +1033,7 @@ bool ISMetaData::InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDo
 		}
 
 		QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
-		PMetaClassEscort *MetaEscort = new PMetaClassEscort();
+		PMetaEscort *MetaEscort = new PMetaEscort();
 		MetaEscort->LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
 		MetaEscort->TableName = DomNamedNodeMap.namedItem("TableName").nodeValue();
 		MetaEscort->ClassName = DomNamedNodeMap.namedItem("ClassName").nodeValue();
@@ -1044,7 +1044,7 @@ bool ISMetaData::InitializeXSNTableEscorts(PMetaClassTable *MetaTable, const QDo
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitializeXSNTableJoins(PMetaClassTable *MetaTable, const QDomNode &DomNode)
+bool ISMetaData::InitializeXSNTableJoins(PMetaTable *MetaTable, const QDomNode &DomNode)
 {
 	bool Result = true;
 	QDomNode Temp = DomNode;
@@ -1140,7 +1140,7 @@ bool ISMetaData::InitializeXSR(const QString &Content)
 							break;
 						}
 
-						PMetaClassResource *MetaResource = new PMetaClassResource();
+						PMetaResource *MetaResource = new PMetaResource();
 						MetaResource->TableName = TableName;
 						MetaResource->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
 						DomNamedNodeMap.removeNamedItem("UID");
@@ -1151,7 +1151,7 @@ bool ISMetaData::InitializeXSR(const QString &Content)
 							QString FieldName = DomItem.nodeName(); //Имя поля
 							QString Value = DomItem.nodeValue(); //Значение поля
 
-							PMetaClassTable *MetaTable = TablesMap[TableName];
+							PMetaTable *MetaTable = TablesMap[TableName];
 							Result = MetaTable ? true : false;
 							if (!Result)
 							{
@@ -1159,7 +1159,7 @@ bool ISMetaData::InitializeXSR(const QString &Content)
 								break;
 							}
 
-							PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+							PMetaField *MetaField = MetaTable->GetField(FieldName);
 							Result = MetaField ? true : false;
 							if (Result)
 							{
@@ -1282,7 +1282,7 @@ bool ISMetaData::InitializeXSF(const QString &Content)
 
 					if (ElementName == "Function")
 					{
-						PMetaClassFunction *MetaFunction = new PMetaClassFunction();
+						PMetaFunction *MetaFunction = new PMetaFunction();
 						MetaFunction->Name = DomNode.attributes().namedItem("Name").nodeValue();
 						MetaFunction->Text = DomNode.toElement().text();
 						FunctionsMap.emplace(MetaFunction->Name, MetaFunction);

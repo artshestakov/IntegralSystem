@@ -89,7 +89,7 @@ bool CGConfiguratorUpdate::functions()
 	for (int i = 0, CountFunctions = ISMetaData::GetInstanse().GetFunctions().size(); i < CountFunctions; ++i)
 	{
 		Progress("Function", i, CountFunctions);
-		PMetaClassFunction *MetaFunction = ISMetaData::GetInstanse().GetFunctions()[i];
+		PMetaFunction *MetaFunction = ISMetaData::GetInstanse().GetFunctions()[i];
 		Result = CGFunction::CreateOrReplaceFunction(MetaFunction, ErrorString);
 		if (!Result)
 		{
@@ -104,7 +104,7 @@ bool CGConfiguratorUpdate::tables()
 	bool Result = true, Exist = true;
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().size(); i < CountTables; ++i) //Обход таблиц
 	{
-		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables()[i];
+		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetTables()[i];
 		Progress("Table " + MetaTable->Name, i, CountTables);
 		Result = CGTable::CheckExistTable(MetaTable, Exist, ErrorString);
 		if (Result)
@@ -119,7 +119,7 @@ bool CGConfiguratorUpdate::tables()
 
 		if (Result) //Комментируем поля таблицы
 		{
-			for (PMetaClassField *MetaField : MetaTable->AllFields)
+			for (PMetaField *MetaField : MetaTable->AllFields)
 			{
 				if (MetaField->QueryText.isEmpty()) //Если поле является обычным полем - комментируем его
 				{
@@ -162,7 +162,7 @@ bool CGConfiguratorUpdate::systemindexes()
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
 		Progress("System index", i, CountIndexes);
-		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes()[i];
+		PMetaIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes()[i];
 		if (CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString))
 		{
 			if (Exist)
@@ -200,7 +200,7 @@ bool CGConfiguratorUpdate::indexes()
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
 		Progress("Index", i, CountIndexes);
-		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes()[i];
+		PMetaIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes()[i];
 		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
 		if (Result)
 		{
@@ -221,7 +221,7 @@ bool CGConfiguratorUpdate::compoundindexes()
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().size(); i < CountIndexes; ++i)
 	{
 		Progress("Compound index", i, CountIndexes);
-		PMetaClassIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes()[i];
+		PMetaIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes()[i];
 		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
 		if (Result)
 		{
@@ -242,7 +242,7 @@ bool CGConfiguratorUpdate::foreigns()
 	for (int i = 0, CountForeigns = ISMetaData::GetInstanse().GetForeigns().size(); i < CountForeigns; ++i)
 	{
 		Progress("Foreign", i, CountForeigns);
-		PMetaClassForeign *MetaForeign = ISMetaData::GetInstanse().GetForeigns()[i];
+		PMetaForeign *MetaForeign = ISMetaData::GetInstanse().GetForeigns()[i];
 		Result = CGForeign::CheckExistForeign(MetaForeign, Exist, ErrorString);
 		if (Result)
 		{
@@ -263,7 +263,7 @@ bool CGConfiguratorUpdate::resources()
 	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().size(); i < CountResources; ++i)
 	{
 		Progress("Resource", i, CountResources);
-		PMetaClassResource *MetaResource = ISMetaData::GetInstanse().GetResources()[i];
+		PMetaResource *MetaResource = ISMetaData::GetInstanse().GetResources()[i];
 		
 		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))
 		{

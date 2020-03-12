@@ -9,7 +9,7 @@ static QString QU_RESEARCH = PREPARE_QUERY2("UPDATE research SET "
 										   "WHERE resr_id = :ResearchID "
 										   "RETURNING resr_money, resr_moneydoctor");
 //-----------------------------------------------------------------------------
-ISSironaResearchObjectForm::ISSironaResearchObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISSironaResearchObjectForm::ISSironaResearchObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	
 }

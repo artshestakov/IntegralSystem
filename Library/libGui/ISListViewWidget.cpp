@@ -6,7 +6,7 @@
 #include "ISGui.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-ISListViewWidget::ISListViewWidget(PMetaClassTable *meta_query, QWidget *parent) : ISInterfaceMetaForm(parent)
+ISListViewWidget::ISListViewWidget(PMetaTable *meta_query, QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	MetaViewQuery = new ISMetaViewQuery(meta_query->Name);
 	MetaQuery = meta_query;

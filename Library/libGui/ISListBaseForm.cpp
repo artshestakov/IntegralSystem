@@ -239,7 +239,7 @@ void ISListBaseForm::SetSelectObjectAfterUpdate(int object_id)
 	SelectObjectAfterUpdate = object_id;
 }
 //-----------------------------------------------------------------------------
-PMetaClassTable* ISListBaseForm::GetMetaTable()
+PMetaTable* ISListBaseForm::GetMetaTable()
 {
 	return MetaTable;
 }
@@ -517,7 +517,7 @@ void ISListBaseForm::CreateDelegates()
 	for (int i = 0; i < SqlModel->columnCount(); ++i) //Обход полей
 	{
 		QString HeaderData = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-		PMetaClassField *MetaField = MetaTable->GetField(HeaderData);
+		PMetaField *MetaField = MetaTable->GetField(HeaderData);
 
 		QAbstractItemDelegate *AbstractItemDelegate = TableView->itemDelegateForColumn(i);
 		if (!AbstractItemDelegate)
@@ -689,7 +689,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 
 		for (int Column = 0; Column < SqlModel->columnCount(); ++Column) //Обход полей записи
 		{
-			PMetaClassField *MetaField = SqlModel->GetField(Column);
+			PMetaField *MetaField = SqlModel->GetField(Column);
 			if (!ISMetaData::GetInstanse().GetSearch(MetaField->Type))
 			{
 				continue;
@@ -703,7 +703,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 			{
 				if (MetaField->Foreign) //Если на поле установлен внешний ключ
 				{
-					PMetaClassTable *MetaForeignTable = ISMetaData::GetInstanse().GetMetaTable(MetaField->Foreign->ForeignClass);
+					PMetaTable *MetaForeignTable = ISMetaData::GetInstanse().GetMetaTable(MetaField->Foreign->ForeignClass);
 					WhereText += "(SELECT concat(";
 					for (const QString &FieldName : MetaField->Foreign->ForeignViewNameField.split(';'))
 					{
@@ -1739,7 +1739,7 @@ void ISListBaseForm::CreateModels()
 	{
 		int ObjectType = QMetaType::type((MetaTable->SqlModel + SYMBOL_STAR).toLocal8Bit().constData());
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		SqlModel = dynamic_cast<ISSqlModelCore*>(MetaObject->newInstance(Q_ARG(PMetaClassTable *, MetaTable), Q_ARG(QObject *, TableView)));
+		SqlModel = dynamic_cast<ISSqlModelCore*>(MetaObject->newInstance(Q_ARG(PMetaTable *, MetaTable), Q_ARG(QObject *, TableView)));
 	}
 	else //Модель в мета-данных таблицы не указана, создавать стандартную (базовую)
 	{

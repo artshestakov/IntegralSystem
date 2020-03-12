@@ -148,7 +148,7 @@ void ISCore::ExitApplication()
 	QCoreApplication::quit();
 }
 //-----------------------------------------------------------------------------
-QString ISCore::GetObjectName(PMetaClassTable *MetaTable, int ObjectID)
+QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 {
 	QString ObjectName;
 	if (MetaTable->TitleName.isEmpty())

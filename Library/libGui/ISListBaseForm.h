@@ -42,7 +42,7 @@ public:
 	ISVectorInt GetSelectedRowIndexes(); //Получить список индексов выделенных строк
 	ISQueryModel* GetQueryModel(); //Получить указатель на модель запроса
 	void SetSelectObjectAfterUpdate(int object_id); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
-	PMetaClassTable* GetMetaTable(); //Получить указатель на мета-таблицу
+	PMetaTable* GetMetaTable(); //Получить указатель на мета-таблицу
 
 	virtual void Create(); //Создание объекта
 	virtual void CreateCopy(); //Создание копии объекта
@@ -140,7 +140,7 @@ private:
 	void ShowContextMenu(const QPoint &Point); //Отображение контекстного меню
 
 private:
-	PMetaClassTable *MetaTable;
+	PMetaTable *MetaTable;
 	ISSqlModelCore *SqlModel;
 	QLabel *LabelRowCount;
 	QLabel *LabelPeriod;

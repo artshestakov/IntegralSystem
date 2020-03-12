@@ -115,9 +115,9 @@ void CGConfiguratorService::cleartable()
 		return;
 	}
 
-	PMetaClassTable *MetaTable = nullptr;
-	std::vector<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
-	for (PMetaClassTable *meta_table : Tables) //Поиск таблицы по введенному имени
+	PMetaTable *MetaTable = nullptr;
+	std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
+	for (PMetaTable *meta_table : Tables) //Поиск таблицы по введенному имени
 	{
 		if (meta_table->Name.toLower() == InputName)
 		{

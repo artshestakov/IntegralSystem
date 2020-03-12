@@ -35,14 +35,14 @@ static QString QU_ORGANIZATION_USER = PREPARE_QUERY2("UPDATE organizations SET "
 													"orgz_user = :UserID "
 													"WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISOrganizationObjectForm::ISOrganizationObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	DaDataService = new ISDaDataService(this);
 	connect(DaDataService, &ISDaDataService::FoundedOgranization, this, &ISOrganizationObjectForm::SearchFinished);
 
 	for (int i = 0; i < meta_table->Fields.size(); ++i)
 	{
-		PMetaClassField *MetaField = meta_table->Fields[i];
+		PMetaField *MetaField = meta_table->Fields[i];
 		if (MetaField->Type == ISNamespace::FT_Phone)
 		{
 			ISPhoneEdit *PhoneEdit = dynamic_cast<ISPhoneEdit*>(GetFieldWidget(MetaField->Name));

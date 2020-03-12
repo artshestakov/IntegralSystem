@@ -11,7 +11,7 @@ static QString QC_INDEX = "CREATE %1 INDEX %2 ON public.%3 USING btree(%4);";
 //-----------------------------------------------------------------------------
 static QString Q_REINDEX = "REINDEX INDEX %1";
 //-----------------------------------------------------------------------------
-bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
+bool CGIndex::CreateIndex(PMetaIndex *Index, QString &ErrorString)
 {
 	QString IndexUnique = Index->Unique ? "UNIQUE" : QString();
 	QString Fields, SqlText = QC_INDEX.arg(IndexUnique).arg(GetIndexName(Index)).arg(Index->TableName);
@@ -39,7 +39,7 @@ bool CGIndex::CreateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGIndex::UpdateIndex(PMetaClassIndex *Index, QString &ErrorString)
+bool CGIndex::UpdateIndex(PMetaIndex *Index, QString &ErrorString)
 {
 	ISQuery qDelete;
 	qDelete.SetShowLongQuery(false);
@@ -55,7 +55,7 @@ bool CGIndex::UpdateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGIndex::CheckExistIndex(PMetaClassIndex *Index, bool &Exist, QString &ErrorString)
+bool CGIndex::CheckExistIndex(PMetaIndex *Index, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectIndex(QS_INDEXES);
 	qSelectIndex.SetShowLongQuery(false);
@@ -73,13 +73,13 @@ bool CGIndex::CheckExistIndex(PMetaClassIndex *Index, bool &Exist, QString &Erro
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGIndex::CheckIndexForeign(PMetaClassIndex *Index)
+bool CGIndex::CheckIndexForeign(PMetaIndex *Index)
 {
 	bool Result = true;
-	std::vector<PMetaClassForeign*> Foreigns = ISMetaData::GetInstanse().GetForeigns();
+	std::vector<PMetaForeign*> Foreigns = ISMetaData::GetInstanse().GetForeigns();
 	for (int i = 0; i < Foreigns.size(); ++i)
 	{
-		PMetaClassForeign *MetaForeign = Foreigns.at(i);
+		PMetaForeign *MetaForeign = Foreigns.at(i);
 		Result = Index->TableName.toLower() == MetaForeign->ForeignClass.toLower();
 		if (Result)
 		{
@@ -93,7 +93,7 @@ bool CGIndex::CheckIndexForeign(PMetaClassIndex *Index)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGIndex::ReindexIndex(PMetaClassIndex *Index, QString &ErrorString)
+bool CGIndex::ReindexIndex(PMetaIndex *Index, QString &ErrorString)
 {
 	ISQuery qReindex;
 	qReindex.SetShowLongQuery(false);
@@ -105,7 +105,7 @@ bool CGIndex::ReindexIndex(PMetaClassIndex *Index, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString CGIndex::GetIndexName(PMetaClassIndex *Index)
+QString CGIndex::GetIndexName(PMetaIndex *Index)
 {
 	QString IndexName;
 	if (!Index->Fields.empty())

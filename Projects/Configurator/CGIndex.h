@@ -5,13 +5,13 @@
 class CGIndex
 {
 public:
-	static bool CreateIndex(PMetaClassIndex *Index, QString &ErrorString); //Создание индекса
-	static bool UpdateIndex(PMetaClassIndex *Index, QString &ErrorString); //Обновление индекса
-	static bool CheckExistIndex(PMetaClassIndex *Index, bool &Exist, QString &ErrorString); //Проверка существования индекса
-	static bool CheckIndexForeign(PMetaClassIndex *Index); //Проверить ссылается ли на этого индекс внешний ключ
-	static bool ReindexIndex(PMetaClassIndex *Index, QString &ErrorString); //Перестроить индекс
+	static bool CreateIndex(PMetaIndex *Index, QString &ErrorString); //Создание индекса
+	static bool UpdateIndex(PMetaIndex *Index, QString &ErrorString); //Обновление индекса
+	static bool CheckExistIndex(PMetaIndex *Index, bool &Exist, QString &ErrorString); //Проверка существования индекса
+	static bool CheckIndexForeign(PMetaIndex *Index); //Проверить ссылается ли на этого индекс внешний ключ
+	static bool ReindexIndex(PMetaIndex *Index, QString &ErrorString); //Перестроить индекс
 
 private:
-	static QString GetIndexName(PMetaClassIndex *Index); //Получение имени индекса
+	static QString GetIndexName(PMetaIndex *Index); //Получение имени индекса
 };
 //-----------------------------------------------------------------------------

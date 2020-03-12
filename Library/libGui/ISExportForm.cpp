@@ -5,7 +5,7 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISExportForm::ISExportForm(PMetaClassTable *meta_table, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISExportForm::ISExportForm(PMetaTable *meta_table, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	MetaTable = meta_table;
 	SelectedType = ISNamespace::ET_Unknown;
@@ -127,7 +127,7 @@ void ISExportForm::CreateTabFields()
 
 	for (int i = 0; i < MetaTable->Fields.size(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->Fields[i];
+		PMetaField *MetaField = MetaTable->Fields[i];
 		if (!MetaField->HideFromList)
 		{
 			CreateFieldItem(MetaField);
@@ -159,7 +159,7 @@ void ISExportForm::Select()
 	close();
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::CreateFieldItem(PMetaClassField *MetaField)
+void ISExportForm::CreateFieldItem(PMetaField *MetaField)
 {
 	QListWidgetItem *FieldItem = new QListWidgetItem(ListFields);
 	FieldItem->setText(MetaField->LabelName);

@@ -11,7 +11,7 @@
 #include "ISMetaData.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISSearchForm::ISSearchForm(PMetaClassTable *meta_table, QWidget *parent) : ISInterfaceForm(parent)
+ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent) : ISInterfaceForm(parent)
 {
 	MetaTable = meta_table;
 
@@ -146,7 +146,7 @@ void ISSearchForm::LoadFields()
 
 	for (int i = 0; i < MetaTable->Fields.size(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->Fields[i];
+		PMetaField *MetaField = MetaTable->Fields[i];
 		if (MetaField->HideFromList || MetaField->NotSearch || !MetaField->QueryText.isEmpty())
 		{
 			continue;
@@ -171,7 +171,7 @@ void ISSearchForm::AddFieldFromList(const QString &FieldLocalName, const QString
 void ISSearchForm::AddFilter()
 {
 	QString FieldName = dynamic_cast<QAction*>(sender())->data().toString();
-	PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+	PMetaField *MetaField = MetaTable->GetField(FieldName);
 	QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem();
 	TreeWidgetItem->setData(0, Qt::UserRole, FieldName);
 
@@ -269,7 +269,7 @@ void ISSearchForm::Search()
 //-----------------------------------------------------------------------------
 void ISSearchForm::SearchFromField(ISSearchModel &SearchModel, QTreeWidgetItem *TreeWidgetItem)
 {
-	PMetaClassField *MetaField = MetaTable->GetField(TreeWidgetItem->data(0, Qt::UserRole).toString());
+	PMetaField *MetaField = MetaTable->GetField(TreeWidgetItem->data(0, Qt::UserRole).toString());
 	QString FieldName = MetaTable->Alias + '_' + MetaField->Name;
 	QString Condition = ':' + MetaField->Name;
 

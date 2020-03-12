@@ -45,17 +45,17 @@ public:
 	//Календарь
 	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName = QString(), int ObjectID = 0);
 
-	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, PMetaClassField *MetaField);
+	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, PMetaField *MetaField);
 	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, ISNamespace::FieldType DataType, const QString &ControlWidget = QString());
 	static ISObjectFormBase* CreateObjectForm(ISNamespace::ObjectFormType FormType, const QString &TableName, int ObjectID = 0, QWidget *parent = 0);
-	static ISComboSearchBase* CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaClassForeign *MetaForeign);
+	static ISComboSearchBase* CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaForeign *MetaForeign);
 
 	static int SelectObject(const QString &TableName, int SelectObjectID = 0); //Выбор одной записи из таблицы
 	static ISVectorInt SelectObjects(const QString &TableName); //Выбор нескольких записей из таблицы
 
 	static void ShowSettingsForm(const QString &SettingGroupUID = QString()); //Открыть форму настроек
 	static bool ShowUserPasswordForm(int UserID); //Открыть форму изменения пароля для пользователя
-	static void ShowSystemInfoRecord(PMetaClassTable *MetaTable, int ObjectID); //Просмотр системной информации о записи
+	static void ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID); //Просмотр системной информации о записи
 	static void ShowDatabaseSettings(); //Показать настройки базы данных
 	
 	static ISImageViewerForm* ShowImageForm(const QPixmap &Pixmap); //Показать изображение
@@ -67,7 +67,7 @@ public:
 	static void ShowTaskObjectForm(QWidget *TaskObjectForm); //Показать форму объекта задачи
 
 private:
-	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaClassField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());
+	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());
 };
 //-----------------------------------------------------------------------------
 #endif

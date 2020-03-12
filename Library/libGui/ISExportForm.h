@@ -14,7 +14,7 @@ class ISExportForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISExportForm(PMetaClassTable *meta_table, QWidget *parent = 0);
+	ISExportForm(PMetaTable *meta_table, QWidget *parent = 0);
 	virtual ~ISExportForm();
 
 	ISNamespace::ExportType GetSelectedType();
@@ -27,7 +27,7 @@ protected:
 	void CreateTabFields();
 	void Select();
 
-	void CreateFieldItem(PMetaClassField *MetaField);
+	void CreateFieldItem(PMetaField *MetaField);
 	void FieldsPositionChanged();
 	void ItemDoubleClicked(QListWidgetItem *item);
 
@@ -35,7 +35,7 @@ protected:
 
 private:
 	ISNamespace::ExportType SelectedType;
-	PMetaClassTable *MetaTable;
+	PMetaTable *MetaTable;
 	ISVectorString SelectedFields;
 	ISComboEdit *ComboBoxType;
 	QTabWidget *TabWidget;

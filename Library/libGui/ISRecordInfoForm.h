@@ -9,7 +9,7 @@ class ISRecordInfoForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWidget *parent = 0);
+	ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID, QWidget *parent = 0);
 	virtual ~ISRecordInfoForm();
 };
 //-----------------------------------------------------------------------------

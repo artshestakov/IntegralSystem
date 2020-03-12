@@ -153,7 +153,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, CentralForm, &ISInterfaceMetaForm::LoadData);
 }
 //-----------------------------------------------------------------------------
-void ISWorkspaceForm::CreateDuplicate(PMetaClassTable *MetaTable)
+void ISWorkspaceForm::CreateDuplicate(PMetaTable *MetaTable)
 {
 	AddObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name));
 }

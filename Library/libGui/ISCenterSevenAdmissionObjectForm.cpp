@@ -9,7 +9,7 @@ static QString QS_ADMISSION_STATUS = PREPARE_QUERY2("SELECT adst_id "
 												   "FROM admissionstatus "
 												   "WHERE adst_uid = :StatusUID");
 //-----------------------------------------------------------------------------
-ISCenterSevenAdmissionObjectForm::ISCenterSevenAdmissionObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISCenterSevenAdmissionObjectForm::ISCenterSevenAdmissionObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	ISQuery qSelectStatus(QS_ADMISSION_STATUS);
 	qSelectStatus.BindValue(":StatusUID", "{92BF6D81-5A6C-4333-8783-5436BCD41A64}");

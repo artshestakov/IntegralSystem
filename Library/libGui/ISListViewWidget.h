@@ -16,7 +16,7 @@ signals:
 	void DoubleClickedSignal(const QSqlRecord &SqlRecord); //Сигнал двоного нажатия на строку
 
 public:
-	ISListViewWidget(PMetaClassTable *meta_query, QWidget *parent = 0);
+	ISListViewWidget(PMetaTable *meta_query, QWidget *parent = 0);
 	virtual ~ISListViewWidget();
 
 	void LoadData() override;
@@ -57,7 +57,7 @@ private:
 	QLabel *LabelRows;
 
 	ISMetaViewQuery *MetaViewQuery;
-	PMetaClassTable *MetaQuery;
+	PMetaTable *MetaQuery;
 	ISModelThreadQuery *ModelThreadQuery;
 	ISSqlModelView *SqlModel;
 	QString ClassFilter;

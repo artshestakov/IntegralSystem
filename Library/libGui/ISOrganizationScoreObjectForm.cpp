@@ -1,7 +1,7 @@
 #include "ISOrganizationScoreObjectForm.h"
 #include "ISNotifySender.h"
 //-----------------------------------------------------------------------------
-ISOrganizationScoreObjectForm::ISOrganizationScoreObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISOrganizationScoreObjectForm::ISOrganizationScoreObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 
 }

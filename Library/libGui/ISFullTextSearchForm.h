@@ -22,7 +22,7 @@ protected:
 	void AfterSearch();
 	void Execute(const QString &QueryText, const QVariant &QueryValue);
 
-	QString CreateQuery(PMetaClassTable *MetaTable) const;
+	QString CreateQuery(PMetaTable *MetaTable) const;
 	void ClickedRecord();
 	void Stop();
 

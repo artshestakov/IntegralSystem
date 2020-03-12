@@ -26,7 +26,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISInterfaceForm(parent)
+ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISInterfaceForm(parent)
 {
 	FormType = form_type;
 	MetaTable = meta_table;
@@ -82,7 +82,7 @@ int ISObjectFormBase::GetObjectID() const
 	return ObjectID;
 }
 //-----------------------------------------------------------------------------
-PMetaClassTable* ISObjectFormBase::GetMetaTable()
+PMetaTable* ISObjectFormBase::GetMetaTable()
 {
 	return MetaTable;
 }
@@ -281,7 +281,7 @@ void ISObjectFormBase::CreateToolBarEscorts()
 
 	for (int i = 0; i < MetaTable->Escorts.size(); ++i) //Обход эскортных мета-таблиц
 	{
-		PMetaClassEscort *MetaEscort = MetaTable->Escorts[i];
+		PMetaEscort *MetaEscort = MetaTable->Escorts[i];
 		
 		QAction *ActionEscort = ToolBarNavigation->CreateAction(BUFFER_ICONS("Table"), MetaEscort->LocalName, ISNamespace::OAT_Escort, MetaEscort->TableName, MetaEscort->ClassName);
 		ActionEscort->setProperty("ClassFilter", MetaEscort->ClassFilter);
@@ -427,7 +427,7 @@ void ISObjectFormBase::CreateFieldsWidget()
 	WidgetObjectLayout->addWidget(ScrollAreaMain);
 
 	CreateFieldID(FormLayout);
-	for (PMetaClassField *MetaField : MetaTable->Fields) //Обход полей
+	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 	{
 		if (!MetaField->QueryText.isEmpty()) //Если поле является запросом - пропускать его
 		{
@@ -551,7 +551,7 @@ void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
 	}
 }
 //-----------------------------------------------------------------------------
-ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaClassField *MetaField)
+ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaField *MetaField)
 {
 	ISFieldEditBase	*FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
 	FieldsMap.insert(MetaField->Name, FieldEditBase);
@@ -559,7 +559,7 @@ ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaClassField *MetaFie
 	return FieldEditBase;
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::AddColumnForField(PMetaClassField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *FormLayout)
+void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *FormLayout)
 {
 	QLabel *LabelField = new QLabel(this);
 	LabelField->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
@@ -789,7 +789,7 @@ bool ISObjectFormBase::Save()
 	for (const auto &Field : FieldsMap.toStdMap()) //Обход существующих полей на форме
 	{
 		QString FieldName = Field.first;
-		PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+		PMetaField *MetaField = MetaTable->GetField(FieldName);
 		ISFieldEditBase *FieldEditBase = Field.second;
 
 		QVariant Value = FieldEditBase->GetValue();

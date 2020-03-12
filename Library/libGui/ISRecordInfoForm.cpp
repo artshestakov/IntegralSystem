@@ -7,7 +7,7 @@
 #include "ISQuery.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
 {
 	setWindowIcon(BUFFER_ICONS("RecordInformation"));
 	setWindowTitle(MetaTable->LocalName);
@@ -26,7 +26,7 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaClassTable *MetaTable, int ObjectID, QWi
 
 	for (int i = 0; i < MetaTable->SystemFields.size(); ++i)
 	{
-		PMetaClassField *MetaField = MetaTable->SystemFields[i];
+		PMetaField *MetaField = MetaTable->SystemFields[i];
 
 		QLabel *Label = new QLabel(this);
 		Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);

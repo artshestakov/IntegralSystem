@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISSqlModelHelper.h"
 //-----------------------------------------------------------------------------
-ISSqlModelView::ISSqlModelView(PMetaClassTable *meta_table, QObject *parent) : QAbstractItemModel(parent)
+ISSqlModelView::ISSqlModelView(PMetaTable *meta_table, QObject *parent) : QAbstractItemModel(parent)
 {
 	MetaTable = meta_table;
 	CurrentSortingColumn = 0;
@@ -74,7 +74,7 @@ QVariant ISSqlModelView::data(const QModelIndex &ModelIndex, int Role) const
 		return QVariant();
 	}
 
-	PMetaClassField *MetaField = MetaTable->GetField(headerData(ModelIndex.column(), Qt::Horizontal, Qt::UserRole).toString());
+	PMetaField *MetaField = MetaTable->GetField(headerData(ModelIndex.column(), Qt::Horizontal, Qt::UserRole).toString());
 	ISNamespace::FieldType FieldType = MetaField->Type;
 
 	if (Role == Qt::DisplayRole)

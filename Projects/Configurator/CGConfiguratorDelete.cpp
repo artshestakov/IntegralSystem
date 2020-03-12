@@ -142,8 +142,8 @@ void CGConfiguratorDelete::subsystems()
 void CGConfiguratorDelete::tables()
 {
 	ISVectorString VectorString;
-	std::vector<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
-	for (PMetaClassTable *MetaTable : Tables)
+	std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
+	for (PMetaTable *MetaTable : Tables)
 	{
 		VectorString.emplace_back(MetaTable->Name.toLower());
 	}
@@ -191,13 +191,13 @@ void CGConfiguratorDelete::tables()
 void CGConfiguratorDelete::fields()
 {
 	QMap<QString, ISVectorString> Map;
-	std::vector<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
-	for (PMetaClassTable *MetaTable : Tables)
+	std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
+	for (PMetaTable *MetaTable : Tables)
 	{
 		QString TableName = MetaTable->Name.toLower();
 		Map.insert(TableName, ISVectorString());
 
-		for (PMetaClassField* MetaField : MetaTable->AllFields)
+		for (PMetaField* MetaField : MetaTable->AllFields)
 		{
 			Map[TableName].emplace_back(MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower());
 		}
@@ -251,7 +251,7 @@ void CGConfiguratorDelete::fields()
 void CGConfiguratorDelete::resources()
 {
 	QMap<QString, ISVectorString> Map;
-	for (PMetaClassResource *MetaResource : ISMetaData::GetInstanse().GetResources())
+	for (PMetaResource *MetaResource : ISMetaData::GetInstanse().GetResources())
 	{
 		if (Map.contains(MetaResource->TableName))
 		{
@@ -272,7 +272,7 @@ void CGConfiguratorDelete::resources()
 	{
 		QString TableName = MapItem.first;
 		ISVectorString UIDs = MapItem.second;
-		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 
 		//Запрос к текущей таблице ресурсов
 		ISQuery qSelect("SELECT " + MetaTable->Alias + "_uid FROM " + TableName);
@@ -314,7 +314,7 @@ void CGConfiguratorDelete::resources()
 	}
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::ShowResourceConsole(PMetaClassTable *MetaTable, const ISUuid &ResourceUID)
+void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID)
 {
 	ISLOGGER_EMPTY();
 	ISQuery qSelect("SELECT * FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");

@@ -15,7 +15,7 @@ signals:
 	void Hided();
 
 public:
-	ISListEditPopup(PMetaClassForeign *meta_foreign, QWidget *ComboBox = 0);
+	ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox = 0);
 	virtual ~ISListEditPopup();
 
 	void showEvent(QShowEvent *e);
@@ -46,8 +46,8 @@ private:
 	QLabel *LabelEmpty;
 
 	QString SqlFilter;
-	PMetaClassForeign *MetaForeign;
-	PMetaClassTable *MetaTableForeign;
+	PMetaForeign *MetaForeign;
+	PMetaTable *MetaTableForeign;
 	QVariant CurrentValue;
 };
 //-----------------------------------------------------------------------------

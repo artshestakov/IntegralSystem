@@ -14,7 +14,7 @@ public:
 	
 	static void ExitApplication(); //Выход из программы
 
-	static QString GetObjectName(PMetaClassTable *MetaTable, int ObjectID); //Получить наименование объекта
+	static QString GetObjectName(PMetaTable *MetaTable, int ObjectID); //Получить наименование объекта
 	static QString GetVersionInFileName(const QString &FileName); //Получить версию из наименования файла программы IntegralSystem
 
 	static void ExecuteStartCommand(); //Выплнение команды перед запуском программы

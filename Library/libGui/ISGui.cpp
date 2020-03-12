@@ -403,7 +403,7 @@ int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const 
 	return CalendarID;
 }
 //-----------------------------------------------------------------------------
-ISFieldEditBase* ISGui::CreateColumnForField(QWidget *ParentWidget, PMetaClassField *MetaField)
+ISFieldEditBase* ISGui::CreateColumnForField(QWidget *ParentWidget, PMetaField *MetaField)
 {
 	return CreateFieldEditBase(ParentWidget, MetaField);
 }
@@ -417,14 +417,14 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 {
 	SetWaitGlobalCursor(true);
 	ISObjectFormBase *ObjectForm = nullptr;
-	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 	if (!MetaTable->ObjectForm.isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
 	{
 		int ObjectType = QMetaType::type((MetaTable->ObjectForm + SYMBOL_STAR).toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("ObjectForm for table \"%1\" is null.").arg(MetaTable->ObjectForm));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		ObjectForm = dynamic_cast<ISObjectFormBase*>(MetaObject->newInstance(Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaClassTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID)));
+		ObjectForm = dynamic_cast<ISObjectFormBase*>(MetaObject->newInstance(Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID)));
 		IS_ASSERT(ObjectForm, "ObjectForm not dynamic cast.");
 	}
 	else //У мета-таблицы нет переопределенной формы объекта - создаем базовую
@@ -435,7 +435,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 	return ObjectForm;
 }
 //-----------------------------------------------------------------------------
-ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaClassForeign *MetaForeign)
+ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaForeign *MetaForeign)
 {
 	QString SearchOperatorWidget;
 
@@ -499,7 +499,7 @@ bool ISGui::ShowUserPasswordForm(int UserID)
 	return UserPasswordForm.Exec();
 }
 //-----------------------------------------------------------------------------
-void ISGui::ShowSystemInfoRecord(PMetaClassTable *MetaTable, int ObjectID)
+void ISGui::ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID)
 {
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_SYSTEM_INFO_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID);
 	SetWaitGlobalCursor(true);
@@ -570,7 +570,7 @@ void ISGui::ShowTaskObjectForm(QWidget *TaskObjectForm)
 	TaskObjectForm->show();
 }
 //-----------------------------------------------------------------------------
-ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaClassField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)
+ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)
 {
 	ISFieldEditBase *FieldEditBase = nullptr;
 	QString Temp = ControlWidget;

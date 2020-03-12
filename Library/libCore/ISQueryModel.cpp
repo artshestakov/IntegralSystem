@@ -7,7 +7,7 @@
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISQueryModel::ISQueryModel(PMetaClassTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent)
+ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent)
 	: QObject(parent),
 	MetaTable(meta_table),
 	ModelType(model_type),
@@ -209,7 +209,7 @@ void ISQueryModel::ClearSearchFilter()
 //-----------------------------------------------------------------------------
 void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &FieldName)
 {
-	PMetaClassField *MetaField = MetaTable->GetField(FieldName);
+	PMetaField *MetaField = MetaTable->GetField(FieldName);
 	QString FieldQueryText = MetaField->QueryText;
 	if (FieldQueryText.length()) //Если сортируемое поле является виртуальным - сортировать по запросу поля
 	{
@@ -247,7 +247,7 @@ void ISQueryModel::CreateQuerySelectSystemFields()
 {
 	for (int i = 1, c = MetaTable->SystemFields.size(); i < c; ++i) //Обход системных полей и включение их в запрос
 	{
-		PMetaClassField *SystemField = MetaTable->SystemFields[i];
+		PMetaField *SystemField = MetaTable->SystemFields[i];
 		if (!VectorContains(MetaTable->SystemFieldsVisible, SystemField))
 		{
 			if (SystemField->HideFromList)
@@ -263,7 +263,7 @@ void ISQueryModel::CreateQuerySelectFields()
 {
 	for (int i = 0, c = MetaTable->Fields.size(); i < c; ++i)
 	{
-		PMetaClassField *Field = MetaTable->Fields[i];
+		PMetaField *Field = MetaTable->Fields[i];
 
 		if (ModelType == ISNamespace::QMT_Object)
 		{
@@ -282,7 +282,7 @@ void ISQueryModel::CreateQuerySelectFields()
 
 		if (Field->Foreign) //Если на поле установлен внешний ключ
 		{
-			PMetaClassTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(Field->Foreign->ForeignClass);
+			PMetaTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(Field->Foreign->ForeignClass);
 			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->Name.toLower() + SYMBOL_SPACE + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + " ON " + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower() + " = " + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + SYMBOL_POINT + MetaTableForeign->Alias + '_' + Field->Foreign->ForeignField.toLower() + " \n";
 			
 			QString Temp = ISQueryModelHelper::GetForeignViewNameField(MetaTableForeign->Alias, Field->Foreign, i).toLower();

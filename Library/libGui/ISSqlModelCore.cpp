@@ -9,7 +9,7 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISSqlModelCore::ISSqlModelCore(PMetaClassTable *meta_table, QObject *parent) : QAbstractItemModel(parent)
+ISSqlModelCore::ISSqlModelCore(PMetaTable *meta_table, QObject *parent) : QAbstractItemModel(parent)
 {
 	MetaTable = meta_table;
 	CurrentSortingColumn = -1;
@@ -86,7 +86,7 @@ void ISSqlModelCore::RemoveRecord(int Index)
 	endResetModel();
 }
 //-----------------------------------------------------------------------------
-void ISSqlModelCore::RemoveColumn(PMetaClassField *MetaField)
+void ISSqlModelCore::RemoveColumn(PMetaField *MetaField)
 {
 	beginResetModel();
 	
@@ -132,7 +132,7 @@ QString ISSqlModelCore::GetFieldLocalName(const QString &FieldName) const
 	return LocalName;
 }
 //-----------------------------------------------------------------------------
-PMetaClassField* ISSqlModelCore::GetField(int Index)
+PMetaField* ISSqlModelCore::GetField(int Index)
 {
 	return Fields[Index];
 }
@@ -144,7 +144,7 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 		return QVariant();
 	}
 	
-	PMetaClassField *MetaField = MetaTable->GetField(headerData(ModelIndex.column(), Qt::Horizontal, Qt::UserRole).toString());
+	PMetaField *MetaField = MetaTable->GetField(headerData(ModelIndex.column(), Qt::Horizontal, Qt::UserRole).toString());
 	ISNamespace::FieldType FieldType = MetaField->Type;
 
 	if (Role == Qt::TextColorRole) //Роль цвета текста в ячейках
@@ -270,12 +270,12 @@ void ISSqlModelCore::SetShowToolTip(bool show_tooltip)
 	ShowToolTip = show_tooltip;
 }
 //-----------------------------------------------------------------------------
-PMetaClassTable* ISSqlModelCore::GetMetaTable()
+PMetaTable* ISSqlModelCore::GetMetaTable()
 {
 	return MetaTable;
 }
 //-----------------------------------------------------------------------------
-void ISSqlModelCore::AppendField(PMetaClassField *MetaField)
+void ISSqlModelCore::AppendField(PMetaField *MetaField)
 {
 	Fields.emplace_back(MetaField);
 }

@@ -11,7 +11,7 @@ static QString QU_RESET_RESOURCE_FIELD = "UPDATE %1 SET %2 = NULL WHERE %3_uid =
 //-----------------------------------------------------------------------------
 static QString QU_RESOURCE_FIELD = "UPDATE %1 SET %2 = :ResourceValue WHERE %3_uid = :ResourceUID";
 //-----------------------------------------------------------------------------
-bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &ErrorString)
+bool CGResource::InsertResource(PMetaResource *MetaResource, QString &ErrorString)
 {
 	QString TableAlias = ISMetaData::GetInstanse().GetMetaTable(MetaResource->TableName)->Alias;
 
@@ -54,7 +54,7 @@ bool CGResource::InsertResource(PMetaClassResource *MetaResource, QString &Error
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGResource::UpdateResource(PMetaClassResource *MetaResource, QString &ErrorString)
+bool CGResource::UpdateResource(PMetaResource *MetaResource, QString &ErrorString)
 {
 	QString TableName = MetaResource->TableName;
 	QString TableAlias = ISMetaData::GetInstanse().GetMetaTable(TableName)->Alias;
@@ -72,7 +72,7 @@ bool CGResource::UpdateResource(PMetaClassResource *MetaResource, QString &Error
 		QString FieldNameComplete = QString(TableAlias + '_' + Resource.first).toLower();
 		QString FieldValue = Resource.second;
 
-		PMetaClassField *MetaField = ISMetaData::GetInstanse().GetMetaField(TableName, FieldName);
+		PMetaField *MetaField = ISMetaData::GetInstanse().GetMetaField(TableName, FieldName);
 		if (!MetaField->NotNull) //≈сли поле Ќ≈ я¬Ћя≈“—я об€зательным дл€ заполнени€ - обнулить его
 		{
 			bool ResetField = ResetResourceField(TableName, TableAlias, FieldNameComplete, ResourceUID, ErrorString);
@@ -83,10 +83,10 @@ bool CGResource::UpdateResource(PMetaClassResource *MetaResource, QString &Error
 		IS_ASSERT(Result, QString("Not update resource. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(FieldNameComplete).arg(ResourceUID).arg(ErrorString));
 	}
 
-	PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 	for (int i = 0; i < MetaTable->Fields.size(); ++i) //ќбход пользовательских полей таблицы и их очистка
 	{
-		PMetaClassField *MetaField = MetaTable->Fields[i];
+		PMetaField *MetaField = MetaTable->Fields[i];
 		if (MetaField->NotNull || MetaField->QueryText.length())
 		{
 			continue;
@@ -101,7 +101,7 @@ bool CGResource::UpdateResource(PMetaClassResource *MetaResource, QString &Error
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGResource::CheckExistResource(PMetaClassResource *MetaResource, bool &Exist, QString &ErrorString)
+bool CGResource::CheckExistResource(PMetaResource *MetaResource, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectResource(QS_RESOURCE.arg(MetaResource->TableName).arg(ISMetaData::GetInstanse().GetMetaTable(MetaResource->TableName)->Alias));
 	qSelectResource.SetShowLongQuery(false);

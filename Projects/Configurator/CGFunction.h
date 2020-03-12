@@ -5,6 +5,6 @@
 class CGFunction
 {
 public:
-	static bool CreateOrReplaceFunction(PMetaClassFunction *MetaFunction, QString &ErrorString); //Создание функции
+	static bool CreateOrReplaceFunction(PMetaFunction *MetaFunction, QString &ErrorString); //Создание функции
 };
 //-----------------------------------------------------------------------------

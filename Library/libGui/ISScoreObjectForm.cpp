@@ -1,6 +1,6 @@
 #include "ISScoreObjectForm.h"
 //-----------------------------------------------------------------------------
-ISScoreObjectForm::ISScoreObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISScoreObjectForm::ISScoreObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	EditCompetitor = GetFieldWidget("Competitor");
 	connect(EditCompetitor, &ISFieldEditBase::DataChanged, this, &ISScoreObjectForm::CompetitorChanged);

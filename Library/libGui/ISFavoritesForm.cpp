@@ -20,7 +20,7 @@ static QString QS_FAVORITES_TABLE = PREPARE_QUERY("SELECT fvts_id, fvts_tablenam
 												  "AND fvts_tablename = :TableName "
 												  "ORDER BY fvts_id DESC");
 //-----------------------------------------------------------------------------
-ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaClassTable *meta_table) : ISInterfaceForm(parent)
+ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaTable *meta_table) : ISInterfaceForm(parent)
 {
 	MetaTable = meta_table;
 

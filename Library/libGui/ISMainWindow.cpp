@@ -490,29 +490,24 @@ void ISMainWindow::ActivateWorkspace()
 void ISMainWindow::ShowFavoritesForm()
 {
 	ISGui::SetWaitGlobalCursor(true);
-
 	ISFavoritesForm *FavoritesForm = new ISFavoritesForm();
 	connect(FavoritesForm, &ISFavoritesForm::OpenObject, this, &ISMainWindow::OpenFavoritesObject);
 	FavoritesForm->show();
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowHistoryForm()
 {
 	ISGui::SetWaitGlobalCursor(true);
-
 	ISHistoryForm *HistoryForm = new ISHistoryForm();
 	connect(HistoryForm, &ISHistoryForm::OpenObject, this, &ISMainWindow::OpenHistoryObject);
 	HistoryForm->show();
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowDeviceSettings()
 {
-	ISDeviceSettingsForm *DeviceSettingsForm = new ISDeviceSettingsForm();
-	DeviceSettingsForm->show();
+	(new ISDeviceSettingsForm())->show();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()
@@ -538,10 +533,7 @@ void ISMainWindow::ShowChangePasswordForm()
 void ISMainWindow::ShowNoteForm()
 {
 	ISGui::SetWaitGlobalCursor(true);
-
-	ISNoteForm *NoteListForm = new ISNoteForm();
-	NoteListForm->show();
-
+	(new ISNoteForm())->show();
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

@@ -18,7 +18,7 @@ static QString QU_SUBSCRIBER = PREPARE_QUERY2("UPDATE subscriptions SET "
 											 "sbsr_price = :Price "
 											 "WHERE sbsr_id = :SubscriptionID");
 //-----------------------------------------------------------------------------
-ISPatriotSubscriptionObjectForm::ISPatriotSubscriptionObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISPatriotSubscriptionObjectForm::ISPatriotSubscriptionObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 
 }

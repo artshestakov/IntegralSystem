@@ -1,6 +1,6 @@
 #include "ISDeviceObjectForm.h"
 //-----------------------------------------------------------------------------
-ISDeviceObjectForm::ISDeviceObjectForm(ISNamespace::ObjectFormType form_type, PMetaClassTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+ISDeviceObjectForm::ISDeviceObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	ISFieldEditBase *ControlBrand = GetFieldWidget("Brand");
 	connect(ControlBrand, &ISFieldEditBase::ValueChange, this, &ISDeviceObjectForm::BrandChanged);

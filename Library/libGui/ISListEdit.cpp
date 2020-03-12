@@ -109,7 +109,7 @@ void ISListEdit::SetReadOnly(bool read_only)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListEdit::InvokeList(PMetaClassForeign *meta_foreign)
+void ISListEdit::InvokeList(PMetaForeign *meta_foreign)
 {
 	MetaForeign = meta_foreign;
 	MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);

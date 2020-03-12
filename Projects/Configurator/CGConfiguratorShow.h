@@ -22,8 +22,8 @@ public slots:
 	void databasesize();
 
 private:
-	PMetaClassTable * FoundTable(const QString &TableName);
-	PMetaClassField* FoundField(PMetaClassTable *MetaTable, const QString &ColumnName);
+	PMetaTable * FoundTable(const QString &TableName);
+	PMetaField* FoundField(PMetaTable *MetaTable, const QString &ColumnName);
 };
 //-----------------------------------------------------------------------------
 #endif

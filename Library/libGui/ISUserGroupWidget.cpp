@@ -100,8 +100,8 @@ void ISUserGroupWidget::CreateTables()
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.Tables"));
 
 	QMap<QString, ISUuid> Map;
-	std::vector<PMetaClassTable*> Tables = ISMetaData::GetInstanse().GetTables();
-	for (PMetaClassTable *MetaTable : Tables)
+	std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
+	for (PMetaTable *MetaTable : Tables)
 	{
 		if (!MetaTable->IsSystem) //≈сли таблица €вл€етс€ системной - пропускать
 		{
