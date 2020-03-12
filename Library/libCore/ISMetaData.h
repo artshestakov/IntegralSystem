@@ -47,7 +47,7 @@ public:
 protected:
 	bool CheckUniqueAllIdentifiers(bool InitXSR); //Проверка уникальности всех идентификаторов
 	bool CheckUniqueAllAliases(); //Проверка уникальности всех псевдонимов таблиц
-	void GenerateSqlFromForeigns(); //Генерация SQL-запросов для внешних ключей
+	bool GenerateSqlFromForeigns(); //Генерация SQL-запросов для внешних ключей
 
 	bool InitializeXSN(); //Инициализация XSN
 	bool InitializeXSN(const QString &Content); //Инициализация контента XSN

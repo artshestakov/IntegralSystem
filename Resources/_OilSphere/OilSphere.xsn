@@ -210,7 +210,7 @@
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Type" ForeignClass="DriverType" ForeignField="ID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Type" ForeignClass="DriverType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
 

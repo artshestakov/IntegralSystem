@@ -106,10 +106,9 @@ bool ISMetaData::Initialize(const QString &configuration_name, bool InitXSR, boo
 
 			if (Result)
 			{
-				GenerateSqlFromForeigns();
+				Result = GenerateSqlFromForeigns();
 			}
 		}
-
 		Initialized = Result;
 	}
 	return Result;
@@ -387,13 +386,58 @@ bool ISMetaData::CheckUniqueAllAliases()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISMetaData::GenerateSqlFromForeigns()
+bool ISMetaData::GenerateSqlFromForeigns()
 {
+	bool Result = true;
 	std::vector<PMetaClassForeign*> Foreigns = GetForeigns();
-	for (PMetaClassForeign *MetaForeign : Foreigns)
+	for (PMetaClassForeign *MetaForeign : Foreigns) //Обходим все внешние ключи
 	{
-		MetaForeign->SqlQuery = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign); //Генерация SQL-запроса для внешнего ключа
+		//Внешняя сущность
+		PMetaClassTable *MetaTableExtern = GetMetaTable(MetaForeign->ForeignClass);
+
+		//Проверка наличия сущности, на которую будет ссылаться внешний ключ
+		Result = MetaTableExtern ? true : false;
+		if (!Result)
+		{
+			ErrorString = QString("Not found table \"%1\"").arg(MetaForeign->ForeignClass);
+			break;
+		}
+
+		//Проверка наличия поля во внешней сущности
+		Result = MetaTableExtern->ContainsField(MetaForeign->ForeignField);
+		if (!Result)
+		{
+			ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(MetaForeign->ForeignField).arg(MetaForeign->ForeignClass);
+			break;
+		}
+
+		//Проверка наличия видимых полей
+		QStringList ViewFields = MetaForeign->ForeignViewNameField.split(";");
+		for (const QString &ViewField : ViewFields)
+		{
+			//Если поле не пустое - проверяем. Поле в данном месте может быть пустым,
+			//если "ForeignViewNameField" вообще не заполнено ничем (это нормально)
+			if (!ViewField.isEmpty())
+			{
+				Result = MetaTableExtern->ContainsField(ViewField);
+				if (!Result)
+				{
+					ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(ViewField).arg(MetaForeign->ForeignClass);
+					break;
+				}
+			}
+		}
+
+		if (Result)
+		{
+			MetaForeign->SqlQuery = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign); //Генерация SQL-запроса для внешнего ключа
+		}
+		else
+		{
+			break;
+		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitializeXSN()
@@ -952,6 +996,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 		MetaForeign->OrderField = DomNamedNodeMap.namedItem("OrderField").nodeValue();
 		MetaForeign->TableName = MetaTable->Name;
 
+		//Проверка наличия поля - на котором делается внешний ключ
 		PMetaClassField *MetaField = MetaTable->GetField(FieldName);
 		Result = MetaTable ? true : false;
 		if (!Result)
@@ -960,6 +1005,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaClassTable *MetaTable, const QD
 			break;
 		}
 
+		//Проверка наличия внешнего ключа на этом поле
 		Result = !MetaField->Foreign;
 		if (!Result)
 		{

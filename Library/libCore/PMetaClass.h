@@ -32,7 +32,7 @@ struct PMetaClassForeign : public PMetaClass
 
 	QString Field; //Поле, на которое устанавливается внешний ключ
 	QString ForeignClass; //На какую таблицу ссылкается внешний ключ
-	QString ForeignField; //На какое поле ссылкается внешний ключ
+	QString ForeignField; //На какое поле ссылается внешний ключ
 	QString ForeignViewNameField; //Какое поле (поля) отображать в запросе на выборку
 	QString OrderField; //Поле по которому будет происходить сортировка
 
