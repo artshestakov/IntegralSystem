@@ -26,6 +26,10 @@
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------
+static QString QS_FUNCTION = "SELECT COUNT(*) "
+							 "FROM information_schema.routines "
+							 "WHERE routines.routine_name = 'get_configuration_name'";
+//-----------------------------------------------------------------------------
 std::vector<CGSection*> Arguments;
 QString DBServer, DBName, DBLogin, DBPassword;
 int DBPort = 0;
@@ -209,37 +213,48 @@ bool CreateDatabase(const QString &DBName)
 			Result = ISConsole::Question("Database \"" + DBName + "\" not exist! Create?");
 			if (Result) //Создаем БД
 			{
-				//Запрашиваем название конфигурации
-				QString ConfigurationName = ISConsole::GetString("Input configuration name (from file Configuration.xml): ");
-				Result = !ConfigurationName.isEmpty();
-				if (!Result) //Если название не ввели - выходим с ошибкой
-				{
-					ISLOGGER_UNKNOWN("Configuration name is empty.");
-				}
+				QSqlError SqlError = ISDatabase::GetInstance().GetSystemDB().exec(QC_DATABASE.arg(DBName).arg(DBLogin)).lastError(); //Исполнение запроса на создание базы данных
+				Result = SqlError.type() == QSqlError::NoError;
+				Result ? ISLOGGER_UNKNOWN("The \"" + DBName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
+					: ISLOGGER_UNKNOWN("Error creating database \"" + DBName + "\": " + SqlError.text());
 
-				if (Result)
-				{
-					QSqlQuery SqlQuery = ISDatabase::GetInstance().GetSystemDB().exec(QC_DATABASE.arg(DBName).arg(DBLogin)); //Исполнение запроса на создание базы данных
-					QSqlError SqlError = SqlQuery.lastError();
-					Result = SqlError.type() == QSqlError::NoError;
-					Result ? ISLOGGER_UNKNOWN("The \"" + DBName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
-						: ISLOGGER_UNKNOWN("Error creating database \"" + DBName + "\": " + SqlError.text());
-				}
 				if (Result) //Если БД была создана - подключаемся к ней
 				{
 					Result = ISDatabase::GetInstance().ConnectToDefaultDB(DBLogin, DBPassword, ErrorString);
 				}
-				if (Result) //Если подключение прошло успешно - создаём функцию
+			}
+		}
+
+		if (Result)
+		{
+			//Проверяем наличие функции для получения конфигурации базы
+			ISQuery qFunction(QS_FUNCTION);
+			Result = qFunction.ExecuteFirst();
+			if (Result)
+			{
+				if (!qFunction.ReadColumn("count").toBool()) //Если функция не существует - запрашиваем имя конфигурации и создаём функцию
 				{
-					ISQuery qCreateFunction;
-					Result = qCreateFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + ConfigurationName + "'; END; $$ LANGUAGE plpgsql IMMUTABLE");
-					if (!Result)
+					//Запрашиваем название конфигурации
+					QString ConfigurationName = ISConsole::GetString("Input configuration name (from file Configuration.xml): ");
+					Result = !ConfigurationName.isEmpty();
+					if (!Result) //Если название не ввели - выходим с ошибкой
 					{
-						ErrorString = qCreateFunction.GetErrorString();
+						ISLOGGER_UNKNOWN("Configuration name is empty.");
+					}
+
+					if (Result)
+					{
+						Result = qFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + ConfigurationName + "'; END; $$ LANGUAGE plpgsql IMMUTABLE");
+						if (!Result)
+						{
+							ISLOGGER_UNKNOWN(qFunction.GetErrorString());
+						}
 					}
 				}
 			}
 		}
+
+		//Отключаемся от системной базы
 		ISDatabase::GetInstance().DisconnectFromSystemDB();
 	}
 	else //Ошибка подключения к системной БД

@@ -104,8 +104,8 @@ bool CGConfiguratorUpdate::tables()
 	bool Result = true, Exist = true;
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().size(); i < CountTables; ++i) //Обход таблиц
 	{
-		Progress("Table", i, CountTables);
 		PMetaClassTable *MetaTable = ISMetaData::GetInstanse().GetTables()[i];
+		Progress("Table " + MetaTable->Name, i, CountTables);
 		Result = CGTable::CheckExistTable(MetaTable, Exist, ErrorString);
 		if (Result)
 		{

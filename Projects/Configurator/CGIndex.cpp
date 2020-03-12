@@ -48,6 +48,10 @@ bool CGIndex::UpdateIndex(PMetaClassIndex *Index, QString &ErrorString)
 	{
 		Result = CreateIndex(Index, ErrorString);
 	}
+	else
+	{
+		ErrorString = qDelete.GetErrorString();
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
