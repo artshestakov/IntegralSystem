@@ -7,9 +7,10 @@ static QString QS_LOGIN_EXIST = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _users "
 											  "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
-ISLoginEdit::ISLoginEdit(QWidget *parent) : ISLineEdit(parent)
+ISLoginEdit::ISLoginEdit(QWidget *parent)
+	: ISLineEdit(parent),
+	Valid(false)
 {
-	Valid = false;
 	connect(this, &ISLoginEdit::DataChanged, this, &ISLoginEdit::LoginChanged);
 }
 //-----------------------------------------------------------------------------
@@ -32,7 +33,8 @@ void ISLoginEdit::LoginChanged()
 	qSelectLogin.BindValue(":Login", GetValue());
 	if (qSelectLogin.ExecuteFirst())
 	{
-		if (qSelectLogin.ReadColumn("count").toInt())
+		Valid = qSelectLogin.ReadColumn("count").toBool();
+		if (Valid)
 		{
 			if (!QToolTip::isVisible())
 			{
@@ -41,8 +43,6 @@ void ISLoginEdit::LoginChanged()
 				Point.setY(Point.y() + 8);
 				QToolTip::showText(Point, LANG("ThisLoginAlreadyExist"), GetLineEdit(), QRect(), 5000);
 			}
-
-			Valid = false;
 		}
 		else
 		{
@@ -50,8 +50,6 @@ void ISLoginEdit::LoginChanged()
 			{
 				QToolTip::hideText();
 			}
-
-			Valid = true;
 		}
 	}
 

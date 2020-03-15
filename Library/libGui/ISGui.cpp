@@ -591,7 +591,7 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
 	{
 		if (MetaField)
 		{
-			if (MetaField && !MetaField->ControlWidget.isEmpty())
+			if (MetaField && !MetaField->ControlWidget.isEmpty()) //??? нужна ли двойная проверка MetaField
 			{
 				Temp = MetaField->ControlWidget;
 			}
