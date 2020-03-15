@@ -188,7 +188,7 @@
     </Indexes>
   </Table>
 
-  <Table Name="Driver" UID="{DB23E49B-FAE0-4BEB-BC6F-0661C3B74BFF}" Alias="drvr" LocalName="Водитель" LocalListName="Водители" TitleName="Name">
+  <Table Name="Driver" UID="{DB23E49B-FAE0-4BEB-BC6F-0661C3B74BFF}" Alias="drvr" LocalName="Водитель" LocalListName="Водители" TitleName="FIO">
     <Fields>
       <Field UID="{19147562-18AA-4DC7-953F-A0DD4A0843D7}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
       <Field UID="{FECC72D2-03B6-44BC-85D5-0197204274C9}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения"/>
@@ -223,7 +223,7 @@
     </Indexes>
   </Table>
   
-  <Table Name="Car" UID="{5D3EA65D-8595-4334-BA66-F76AA0A5D0AE}" Alias="cars" LocalName="Автомобиль" LocalListName="Автомобили" TitleName="Name">
+  <Table Name="Car" UID="{5D3EA65D-8595-4334-BA66-F76AA0A5D0AE}" Alias="cars" LocalName="Автомобиль" LocalListName="Автомобили" TitleName="Mark;Model;Number">
     <Fields>
       <Field UID="{61BF0C58-DFFC-4998-AEAD-1A7BABAC33AD}" Name="Mark" Type="String" LabelName="Марка" LocalListName="Марка" NotNull="true"/>
       <Field UID="{593974BD-BF3C-4270-86CC-DE6936D45C7B}" Name="Model" Type="String" LabelName="Модель" LocalListName="Модель" NotNull="true"/>

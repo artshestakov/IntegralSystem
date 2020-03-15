@@ -89,7 +89,7 @@
     </Indexes>
   </Table>
 
-  <Table Name="_NotificationUser" UID="{790D1FBE-DEB6-41F8-8533-78BE92066BF2}" Alias="ntfu" LocalName="Уведомление пользователя" LocalListName="Уведомления пользователей" TitleName="Notification" IsSystem="true">
+  <Table Name="_NotificationUser" UID="{790D1FBE-DEB6-41F8-8533-78BE92066BF2}" Alias="ntfu" LocalName="Уведомление пользователя" LocalListName="Уведомления пользователей" TitleName="NotificationID" IsSystem="true">
     <Fields>
       <Field UID="{D9558125-E14B-4664-A8F5-6CB9C7D8962F}" Name="NotificationID" Type="Int" LabelName="Уведомление" LocalListName="Уведомление" NotNull="true"/>
       <Field UID="{3436147C-EFCB-4C5D-A1E5-CE7C3BDB5234}" Name="UserTo" Type="Int" LabelName="Для пользователя" LocalListName="Для пользователя"/>

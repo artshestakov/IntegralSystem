@@ -70,7 +70,7 @@
     </Indexes>
   </Table>
 
-  <Table Name="_InternalDirectories" UID="{4E1B9753-9D99-41A8-ACE8-0BF7D769530A}" Alias="intd" LocalName="Запись" LocalListName="Записи" TitleName="Name" IsSystem="true">
+  <Table Name="_InternalDirectories" UID="{4E1B9753-9D99-41A8-ACE8-0BF7D769530A}" Alias="intd" LocalName="Запись" LocalListName="Записи" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{E0F92EF8-6541-48D5-88F9-AB272ED71A6B}" Name="TableName" Type="String" LabelName="Наименование таблицы" LocalListName="Наименование таблицы" NotNull="true"/>
       <Field UID="{DC40FAE8-90F9-4714-87EA-D8E2F8FC2468}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
@@ -142,7 +142,7 @@
     </Indexes>
   </Table>
 
-  <Table Name="_Units" UID="{7678C356-20C7-4EA9-AD89-F049F3D5FD8E}" Alias="unit" LocalName="Единица измерения" LocalListName="Единицы измерения" TitleName="Name" IsSystem="true">
+  <Table Name="_Units" UID="{7678C356-20C7-4EA9-AD89-F049F3D5FD8E}" Alias="unit" LocalName="Единица измерения" LocalListName="Единицы измерения" TitleName="FullName" IsSystem="true">
     <Fields>
       <Field UID="{8D5C0778-C1D7-44BF-9833-D5DDE119DEE0}" Name="FullName" Type="String" LabelName="Полное наименование" LocalListName="Полное наименование" NotNull="true"/>
       <Field UID="{B4558BCE-AC37-4CE9-A62A-89C50C067D1F}" Name="SmallName" Type="String" LabelName="Сокращенное наименование" LocalListName="Сокращенное наименование" NotNull="true"/>
@@ -155,7 +155,7 @@
     </Indexes>
   </Table>
 
-  <Table Name="_Discussion" UID="{40A4BD67-DA00-4443-831A-D41B6B3FC415}" Alias="dson" LocalName="Обсуждение" LocalListName="Обсуждения" TitleName="TableLocalName" IsSystem="true">
+  <Table Name="_Discussion" UID="{40A4BD67-DA00-4443-831A-D41B6B3FC415}" Alias="dson" LocalName="Обсуждение" LocalListName="Обсуждения" TitleName="Message" IsSystem="true">
     <Fields>
       <Field UID="{969E2A77-691F-4E12-9095-2C9BB933739B}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotSearch="true" NotNull="true" HideFromList="true"/>
       <Field UID="{32684211-638E-4EC7-A107-043D8DB16793}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotSearch="true" NotNull="true" HideFromList="true"/>

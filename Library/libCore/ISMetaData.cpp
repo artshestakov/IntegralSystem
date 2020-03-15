@@ -411,7 +411,7 @@ bool ISMetaData::GenerateSqlFromForeigns()
 		}
 
 		//Проверка наличия видимых полей
-		QStringList ViewFields = MetaForeign->ForeignViewNameField.split(";");
+		QStringList ViewFields = MetaForeign->ForeignViewNameField.split(';');
 		for (const QString &ViewField : ViewFields)
 		{
 			//Если поле не пустое - проверяем. Поле в данном месте может быть пустым,
@@ -623,14 +623,28 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 										Result = !MetaTable->TitleName.isEmpty();
 										if (Result)
 										{
-											Result = !TablesMap.count(TableName);
+											QStringList TitleFields = MetaTable->TitleName.split(';');
+											for (const QString &FieldName : TitleFields)
+											{
+												Result = MetaTable->ContainsField(FieldName);
+												if (!Result)
+												{
+													ErrorString = QString("Invalid field name \"%1\" in title name. Table name: %2").arg(MetaTable->TitleName).arg(TableName);
+													break;
+												}
+											}
+											
 											if (Result)
 											{
-												TablesMap.emplace(TableName, MetaTable);
-											}
-											else
-											{
-												ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
+												Result = !TablesMap.count(TableName);
+												if (Result)
+												{
+													TablesMap.emplace(TableName, MetaTable);
+												}
+												else
+												{
+													ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
+												}
 											}
 										}
 										else

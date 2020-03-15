@@ -54,7 +54,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_TaskFile" UID="{648DE93D-3610-4259-99BD-B6BACA4027EF}" Alias="tfls" LocalName="Прекрепленный файл к задаче" LocalListName="Прекрепленные файлы к задачам" TitleName="Comment" IsSystem="true">
+  <Table Name="_TaskFile" UID="{648DE93D-3610-4259-99BD-B6BACA4027EF}" Alias="tfls" LocalName="Прекрепленный файл к задаче" LocalListName="Прекрепленные файлы к задачам" TitleName="FileName" IsSystem="true">
     <Fields>
       <Field UID="{D187B5F7-4BE2-4090-9DE9-A0F0F2C7A6CC}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{76AB72DF-EA51-4EC0-A871-5CDB3309DC44}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
@@ -120,7 +120,7 @@
     </Indexes>
   </Table>
 
-  <Table Name="_TaskDuplicate" UID="{3CC4AC97-2EFD-44A8-B613-86EB9770D61A}" Alias="tsdp" LocalName="Дубликат задачи" LocalListName="Дубликаты задач" TitleName="Name" IsSystem="true">
+  <Table Name="_TaskDuplicate" UID="{3CC4AC97-2EFD-44A8-B613-86EB9770D61A}" Alias="tsdp" LocalName="Дубликат задачи" LocalListName="Дубликаты задач" TitleName="Original" IsSystem="true">
     <Fields>
       <Field UID="{8CB4CAD8-E673-498A-901E-9C3D978C81FA}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{97E6D312-E804-47FE-BB7F-D8AF5C700382}" Name="Original" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
@@ -138,7 +138,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_TaskObject" UID="{A05DB1B2-4F5B-4512-84B3-ED3C80DB1203}" Alias="tobj" LocalName="Объект" LocalListName="Объекты" TitleName="Name" IsSystem="true">
+  <Table Name="_TaskObject" UID="{A05DB1B2-4F5B-4512-84B3-ED3C80DB1203}" Alias="tobj" LocalName="Объект" LocalListName="Объекты" TitleName="Task" IsSystem="true">
     <Fields>
       <Field UID="{6CE7C9D0-87BF-4045-9983-DA98C1B59CBA}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{2519DD27-50EA-482C-B1EE-DD22F26879EB}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
@@ -157,7 +157,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="Name" IsSystem="true">
+  <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="LinkTask" IsSystem="true">
     <Fields>
       <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{3615E923-9B37-4E47-927B-738218705DDD}" Name="LinkTask" Type="Int" LabelName="Связанная задача" LocalListName="Связанная задача" NotNull="true"/>
