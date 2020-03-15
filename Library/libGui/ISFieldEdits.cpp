@@ -515,6 +515,7 @@ ISEMailEdit::ISEMailEdit(QWidget *parent) : ISLineEdit(parent)
 	ISServiceButton *ButtonSend = new ISServiceButton(this);
 	ButtonSend->setToolTip(LANG("Send"));
 	ButtonSend->setIcon(BUFFER_ICONS("EMailSend"));
+	ButtonSend->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonSend, &ISServiceButton::clicked, this, &ISEMailEdit::Send);
 	AddWidgetToRight(ButtonSend);
 }
