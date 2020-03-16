@@ -362,14 +362,15 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
 //-----------------------------------------------------------------------------
 void ISDatabase::Disconnect(const QString &ConnectionName)
 {
-	Connections[ConnectionName].close();
-	Connections[ConnectionName].setHostName(QString());
-	Connections[ConnectionName].setPort(-1);
-	Connections[ConnectionName].setDatabaseName(QString());
-	Connections[ConnectionName].setUserName(QString());
-	Connections[ConnectionName].setPassword(QString());
-	QSqlDatabase::removeDatabase(ConnectionName);
-	Connections.erase(ConnectionName);
+	if (Connections[ConnectionName].isOpen())
+	{
+		Connections[ConnectionName].close();
+		Connections[ConnectionName].setHostName(QString());
+		Connections[ConnectionName].setPort(-1);
+		Connections[ConnectionName].setDatabaseName(QString());
+		Connections[ConnectionName].setUserName(QString());
+		Connections[ConnectionName].setPassword(QString());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISDatabase::DisconnectFromDefaultDB()
