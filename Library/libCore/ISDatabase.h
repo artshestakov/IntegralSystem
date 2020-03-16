@@ -13,10 +13,14 @@ public:
 
 	static ISDatabase& GetInstance();
 
+	QString GetErrorString() const; //Получить описание последней ошибки
+	void SetErrorString(const QString &error_string); //Изменить описание ошибки
+
 	QSqlDatabase& GetDefaultDB(); //Получить стандартную базу данных
 	QSqlDatabase& GetSystemDB(); //Получить системную базу данных
+	QSqlDatabase& GetDB(const QString &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
 
-	bool CheckExistDatabase(const QString &Database); //Проверить существование базы данных
+	bool CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist); //Проверить существование базы данных
 	QString GetVersionPostgres(); //Получить версию PostgreSQL
 	QString GetCurrentDatabaseSize(); //Получить размер базы данных
 	QString GetTableSize(const QString &TableName) const; //Получить размер таблицы
@@ -37,19 +41,22 @@ public:
 
     bool ConnectToDefaultDB(const QString &Login, const QString &Password, QString &ErrorConnection); //Подключение к стандартной базе данных
     bool ConnectToSystemDB(QString &ErrorConnection); //Подключение к системной базе данных
+	bool ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Login, const QString &Password, const QString &Database, QString &ErrorConnection); //Подключение к базе данных
+	
+	bool Connect(const QString &ConnectionName, const QString &Host, int Port, const QString &Database, const QString &Login, const QString &Password); //Подключение к базе данных
+	void Disconnect(const QString &ConnectionName); //Отключиться от БД по имени соединения
 
 	void DisconnectFromDefaultDB(); //Отключиться от стандартной базы данных
 	void DisconnectFromSystemDB(); //Отключиться от системной базы данных
 
 	void DisconnectFromDatabase(QSqlDatabase &SqlDatabase); //Отключиться от базы данных
 
-protected:
-    bool ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Login, const QString &Password, const QString &Database, QString &ErrorConnection); //Подключение к базе данных
-
 private:
 	ISDatabase();
 
+	QString ErrorString;
 	QSqlDatabase DefaultDB;
 	QSqlDatabase SystemDB;
+	std::map<QString, QSqlDatabase> Connections;
 };
 //-----------------------------------------------------------------------------

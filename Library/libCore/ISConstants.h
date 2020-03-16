@@ -141,7 +141,7 @@ const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_MODEL_THREAD[] = "ModelThreadDB";
 //-----------------------------------------------------------------------------
-const char SYSTEM_DATABASE_NAME[] = "postgres";
+const char SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char FIGURES_STRING[] = "0123456789";
 const char SQL_DRIVER_QPSQL[] = "QPSQL";
 const int MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)
