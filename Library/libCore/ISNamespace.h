@@ -199,14 +199,6 @@ public:
 		OST_MACOS,
 	};
 
-	enum ConsoleArgumentType //Тип аргументов консоли
-	{
-		CAT_Unknown, //Неизвестно
-		CAT_Interpreter, //Аргументы отсутствуют
-		CAT_OneArgument, //Один аргумент
-		CAT_Standart, //Стандартные два аргумента
-	};
-
 	enum PeriodType //Тип фильтрации по периоду
 	{
 		PT_UnknownDate,
@@ -284,7 +276,6 @@ Q_DECLARE_METATYPE(ISNamespace::QueryModelType);
 Q_DECLARE_METATYPE(ISNamespace::FunctionNameFormat);
 Q_DECLARE_METATYPE(ISNamespace::PhoneIconType);
 Q_DECLARE_METATYPE(ISNamespace::OSType);
-Q_DECLARE_METATYPE(ISNamespace::ConsoleArgumentType);
 Q_DECLARE_METATYPE(ISNamespace::PeriodType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::TelephonyForm);

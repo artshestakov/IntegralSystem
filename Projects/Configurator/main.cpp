@@ -36,7 +36,6 @@ int DBPort = 0;
 //-----------------------------------------------------------------------------
 void RegisterMetatype(); //Регистрация мета-типов
 bool InitConfiguratorScheme(QString &ErrorString); //Инициализация схемы конфигуратора
-ISNamespace::ConsoleArgumentType CheckArguments(); //Проверка аргументов
 bool CreateDatabase(); //Проверка существования БД
 void InterpreterMode(bool &IsRunning); //Режим интерпретатора
 bool Execute(const QString &Argument); //Выполнить одиночную команду
@@ -67,8 +66,9 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	ISNamespace::ConsoleArgumentType ArgumentType = CheckArguments();
-	if (ArgumentType == ISNamespace::CAT_Unknown)
+	int ArgumentSize = CoreArralication.arguments().size();
+	Result = ArgumentSize > 0 && ArgumentSize < 4;
+	if (!Result)
 	{
 		ISLOGGER_WARNING("Invalid arguments");
 		ISConsole::Pause();
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
 	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 
-	if (ArgumentType == ISNamespace::CAT_Interpreter)
+	if (ArgumentSize == 1)
 	{
 		ISLOGGER_UNKNOWN(QString("Configurator [Version %1]").arg(ISVersion::Instance().ToString()));
 		ISLOGGER_UNKNOWN("Welcome to the Configurator.");
@@ -116,11 +116,11 @@ int main(int argc, char *argv[])
 		ISLogger::Instance().Shutdown();
 		return EXIT_SUCCESS;
 	}
-	else if (ArgumentType == ISNamespace::CAT_OneArgument)
+	else if (ArgumentSize = 2)
 	{
 		Result = Execute(CoreArralication.arguments().at(1).toLower());
 	}
-	else if (ArgumentType == ISNamespace::CAT_Standart)
+	else if (ArgumentSize = 3)
 	{
 		Result = Execute(CoreArralication.arguments().at(1).toLower(), CoreArralication.arguments().at(2).toLower());
 	}
@@ -184,17 +184,6 @@ bool InitConfiguratorScheme(QString &ErrorString)
 		ErrorString = FileScheme.errorString();
 	}
 	return Result;
-}
-//-----------------------------------------------------------------------------
-ISNamespace::ConsoleArgumentType CheckArguments()
-{
-	switch (QCoreApplication::arguments().size())
-	{
-	case 1: return ISNamespace::CAT_Interpreter; break; //Интерпретатор
-	case 2: return ISNamespace::CAT_OneArgument; break; //Один аргумент
-	case 3: return ISNamespace::CAT_Standart; break; //Два аргумента
-	}
-	return ISNamespace::CAT_Unknown;
 }
 //-----------------------------------------------------------------------------
 bool CreateDatabase()
