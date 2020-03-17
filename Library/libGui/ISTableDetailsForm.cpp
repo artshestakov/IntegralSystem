@@ -11,9 +11,9 @@ ISTableDetailsForm::ISTableDetailsForm(const QString &TableName, QWidget *parent
 	QFormLayout *FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);
 
-	FormLayout->addRow(LANG("Size") + ':', new QLabel(ISDatabase::GetInstance().GetTableSize(TableName), this));
-	FormLayout->addRow(LANG("SizeWithIndices") + ':', new QLabel(ISDatabase::GetInstance().GetTableSizeWithIndices(TableName), this));
-	FormLayout->addRow(LANG("RowCount") + ':', new QLabel(QString::number(ISDatabase::GetInstance().GetTableRowCount(TableName)), this));
+	FormLayout->addRow(LANG("Size") + ':', new QLabel(ISDatabase::Instance().GetTableSize(TableName), this));
+	FormLayout->addRow(LANG("SizeWithIndices") + ':', new QLabel(ISDatabase::Instance().GetTableSizeWithIndices(TableName), this));
+	FormLayout->addRow(LANG("RowCount") + ':', new QLabel(QString::number(ISDatabase::Instance().GetTableRowCount(TableName)), this));
 }
 //-----------------------------------------------------------------------------
 ISTableDetailsForm::~ISTableDetailsForm()

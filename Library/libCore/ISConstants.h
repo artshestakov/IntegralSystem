@@ -140,6 +140,7 @@ const char AMI_EXTENSION_STATUS[] = "ExtensionStatus";
 const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_MODEL_THREAD[] = "ModelThreadDB";
+const char CONNECTON_PATTERN_ACITIVITY[] = "PatternActivity";
 //-----------------------------------------------------------------------------
 const char SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char FIGURES_STRING[] = "0123456789";
@@ -155,7 +156,6 @@ const int MINIMUM_PASSWORD_LENGHT = 8;
 const int WAIT_LOAD_DATA_LIST_FORM = 400;
 const int ASTERISK_RECONNECT_TIMEOUT = 10000;
 const char DATABASE_CONNECTON_THREAD_QUERY[] = "ThreadQuery";
-const char DATABASE_CONNECTON_PATTERN_ACITIVITY[] = "PatternActivity";
 const int YEAR_MINIMUM = 1752;
 const int YEAR_MAXIMUM = 8000;
 const int MAX_FILE_SIZE_FIELD = ((1000 * 1024) * 10); //Максимальный размер файла в поле редактирования файла (10 мегабайт)

@@ -65,7 +65,7 @@ void ISUserListForm::ChangePassword()
 		return;
 	}
 
-	if (ISDatabase::GetInstance().GetValue("_Users", "IsSystem", GetObjectID()).toBool())
+	if (ISDatabase::Instance().GetValue("_Users", "IsSystem", GetObjectID()).toBool())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.User.ChangePassword.Postgres"));
 		return;

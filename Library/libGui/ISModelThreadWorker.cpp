@@ -19,7 +19,8 @@ ISModelThreadWorker::~ISModelThreadWorker()
 //-----------------------------------------------------------------------------
 void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap &Conditions)
 {
-	QSqlDatabase SqlDatabase = QSqlDatabase::cloneDatabase(ISDatabase::GetInstance().GetDefaultDB(), CONNECTION_MODEL_THREAD);
+	//???
+	QSqlDatabase SqlDatabase;// = QSqlDatabase::cloneDatabase(ISDatabase::Instance().GetDefaultDB(), CONNECTION_MODEL_THREAD);
 	if (SqlDatabase.open())
 	{
 		{

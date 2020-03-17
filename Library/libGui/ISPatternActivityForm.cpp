@@ -20,7 +20,9 @@ static QString QS_PATTERN_STATUS = PREPARE_QUERY("SELECT aspt_uid, aspt_pattern,
 												 "WHERE NOT aspt_isdeleted "
 												 "AND aspt_currentstatus IS NOT NULL");
 //-----------------------------------------------------------------------------
-ISPatternActivityForm::ISPatternActivityForm(QWidget *parent) : ISInterfaceForm(parent)
+ISPatternActivityForm::ISPatternActivityForm(QWidget *parent)
+	: ISInterfaceForm(parent),
+	FutureWatcher(new QFutureWatcher<void>(this))
 {
 	connect(this, &ISPatternActivityForm::PatternData, this, &ISPatternActivityForm::SetPatternData);
 
@@ -33,14 +35,12 @@ ISPatternActivityForm::ISPatternActivityForm(QWidget *parent) : ISInterfaceForm(
 	Timer = new QTimer(this);
 	Timer->setInterval(1000);
 	connect(Timer, &QTimer::timeout, this, &ISPatternActivityForm::Timeout);
-	//QTimer::singleShot(1000, Timer, static_cast<void(QTimer::*)(void)>(&QTimer::start));
-
-	FutureWatcher = new QFutureWatcher<void>(this);
 
 	Database = QSqlDatabase::database("PatternActivity");
 	if (!Database.isValid())
 	{
-		Database = QSqlDatabase::cloneDatabase(ISDatabase::GetInstance().GetDefaultDB(), DATABASE_CONNECTON_PATTERN_ACITIVITY);
+		//???
+		//Database = QSqlDatabase::cloneDatabase(ISDatabase::Instance().GetDefaultDB(), CONNECTON_PATTERN_ACITIVITY);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -149,7 +149,8 @@ void ISPatternActivityForm::CheckStatus()
 			}
 		}
 
-		ISDatabase::GetInstance().DisconnectFromDatabase(Database);
+		//???
+		//ISDatabase::Instance().DisconnectFromDatabase(Database);
 	}
 	else
 	{

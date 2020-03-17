@@ -63,7 +63,8 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaFor
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
 	GetMainLayout()->addWidget(ScrollArea);
 
-	Database = QSqlDatabase::cloneDatabase(ISDatabase::GetInstance().GetDefaultDB(), "123");
+	//???
+	//Database = QSqlDatabase::cloneDatabase(ISDatabase::Instance().GetDefaultDB(), "123");
 	EventLoop = new QEventLoop(this);
 
 	FutureWatcher = new QFutureWatcher<void>(this);

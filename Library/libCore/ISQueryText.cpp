@@ -40,10 +40,10 @@ bool ISQueryText::CheckAllQueries()
 	bool Result = !Vector.empty();
 	if (Result)
 	{
-		Result = ISDatabase::GetInstance().GetDefaultDB().isOpen();
+		Result = ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).isOpen();
 		if (Result)
 		{
-			QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
+			QSqlQuery SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
 			for (const ISSqlQuery &Item : Vector)
 			{
 				Result = SqlQuery.prepare(Item.SqlText);
@@ -64,7 +64,7 @@ bool ISQueryText::CheckAllQueries()
 			{
 				for (const QString &SqlText : ISMetaData::GetInstanse().GetMetaQueries())
 				{
-					QSqlQuery SqlQuery(ISDatabase::GetInstance().GetDefaultDB());
+					QSqlQuery SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
 					Result = SqlQuery.prepare(SqlText);
 					if (Result)
 					{

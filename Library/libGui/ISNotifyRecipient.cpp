@@ -11,8 +11,8 @@
 //-----------------------------------------------------------------------------
 ISNotifyRecipient::ISNotifyRecipient() : QObject()
 {
-	SqlDriver = ISDatabase::GetInstance().GetDefaultDB().driver();
-	connect(SqlDriver, static_cast<void(QSqlDriver::*)(const QString &, QSqlDriver::NotificationSource, const QVariant &)>(&QSqlDriver::notification), this, &ISNotifyRecipient::Notification);
+	connect(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).driver(),
+		static_cast<void(QSqlDriver::*)(const QString &, QSqlDriver::NotificationSource, const QVariant &)>(&QSqlDriver::notification), this, &ISNotifyRecipient::Notification);
 }
 //-----------------------------------------------------------------------------
 ISNotifyRecipient::~ISNotifyRecipient()

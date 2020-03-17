@@ -241,6 +241,6 @@ PMetaField* CGConfiguratorShow::FoundField(PMetaTable *MetaTable, const QString 
 //-----------------------------------------------------------------------------
 void CGConfiguratorShow::databasesize()
 {
-	ISLOGGER_UNKNOWN(ISDatabase::GetInstance().GetCurrentDatabaseSize());
+	ISLOGGER_UNKNOWN(ISDatabase::Instance().GetCurrentDatabaseSize());
 }
 //-----------------------------------------------------------------------------

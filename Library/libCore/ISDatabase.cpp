@@ -1,9 +1,7 @@
 #include "ISDatabase.h"
-#include "ISConfig.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
 #include "ISLogger.h"
-#include "ISCountingTime.h"
 #include "ISMetaData.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
@@ -50,7 +48,7 @@ ISDatabase::~ISDatabase()
 
 }
 //-----------------------------------------------------------------------------
-ISDatabase& ISDatabase::GetInstance()
+ISDatabase& ISDatabase::Instance()
 {
 	static ISDatabase Database;
 	return Database;
@@ -59,11 +57,6 @@ ISDatabase& ISDatabase::GetInstance()
 QString ISDatabase::GetErrorString() const
 {
 	return ErrorString;
-}
-//-----------------------------------------------------------------------------
-QSqlDatabase& ISDatabase::GetDefaultDB()
-{
-	return DefaultDB;
 }
 //-----------------------------------------------------------------------------
 QSqlDatabase& ISDatabase::GetSystemDB()
@@ -93,7 +86,7 @@ bool ISDatabase::CheckExistDatabase(const QString &ConnectionName, const QString
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString ISDatabase::GetVersionPostgres()
+QString ISDatabase::GetVersionPostgres() const
 {
 	ISQuery qSelectVersion(QS_VERSION_POSTGRESQL);
 	if (qSelectVersion.ExecuteFirst())
@@ -103,7 +96,7 @@ QString ISDatabase::GetVersionPostgres()
 	return QString();
 }
 //-----------------------------------------------------------------------------
-QString ISDatabase::GetCurrentDatabaseSize()
+QString ISDatabase::GetCurrentDatabaseSize() const
 {
 	ISQuery qSelectDatabaseSize(QS_DATABASE_SIZE);
 	qSelectDatabaseSize.SetShowLongQuery(false);
@@ -156,7 +149,7 @@ QString ISDatabase::GetStartTimeServer() const
 	return QString();
 }
 //-----------------------------------------------------------------------------
-QString ISDatabase::GetLoadConfigurationTime()
+QString ISDatabase::GetLoadConfigurationTime() const
 {
 	ISQuery qSelect(QS_LOAD_CONFIGURATION_TIME);
 	if (qSelect.ExecuteFirst())
@@ -166,7 +159,7 @@ QString ISDatabase::GetLoadConfigurationTime()
 	return QString();
 }
 //-----------------------------------------------------------------------------
-QString ISDatabase::GetInetClientAddress()
+QString ISDatabase::GetInetClientAddress() const
 {
 	ISQuery qSelect(QS_INET_CLIENT_ADDRESS);
 	if (qSelect.ExecuteFirst())
@@ -176,7 +169,7 @@ QString ISDatabase::GetInetClientAddress()
 	return QString();
 }
 //-----------------------------------------------------------------------------
-QString ISDatabase::GetInetServerAddress()
+QString ISDatabase::GetInetServerAddress() const
 {
 	ISQuery qSelect(QS_INET_SERVER_ADDRESS);
 	if (qSelect.ExecuteFirst())
@@ -186,7 +179,7 @@ QString ISDatabase::GetInetServerAddress()
 	return QString();
 }
 //-----------------------------------------------------------------------------
-int ISDatabase::GetServerProcessID()
+int ISDatabase::GetServerProcessID() const
 {
 	ISQuery qSelect(QS_BACKEND_PID);
 	if (qSelect.ExecuteFirst())
@@ -196,7 +189,7 @@ int ISDatabase::GetServerProcessID()
 	return 0;
 }
 //-----------------------------------------------------------------------------
-QString ISDatabase::GetDatabaseCollate()
+QString ISDatabase::GetDatabaseCollate() const
 {
 	ISQuery qSelect(QS_LC_COLLATE);
 	if (qSelect.ExecuteFirst())
@@ -206,7 +199,7 @@ QString ISDatabase::GetDatabaseCollate()
 	return QString();
 }
 //-----------------------------------------------------------------------------
-QString ISDatabase::GetDatabaseCType()
+QString ISDatabase::GetDatabaseCType() const
 {
 	ISQuery qSelect(QS_C_TYPE);
 	if (qSelect.ExecuteFirst())
@@ -216,7 +209,7 @@ QString ISDatabase::GetDatabaseCType()
 	return QString();
 }
 //-----------------------------------------------------------------------------
-QString ISDatabase::GetDatabaseDataDirectory()
+QString ISDatabase::GetDatabaseDataDirectory() const
 {
 	ISQuery qSelect(QS_DATA_DIRECTORY);
 	if (qSelect.ExecuteFirst())
@@ -261,7 +254,7 @@ bool ISDatabase::IsUserOnline(const QString &UserLogin) const
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName, int ObjectID)
+QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName, int ObjectID) const
 {
 	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 	PMetaField *MetaField = MetaTable->GetField(FieldName);
@@ -275,46 +268,6 @@ QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-bool ISDatabase::ConnectToDefaultDB(const QString &Login, const QString &Password, QString &ErrorConnection)
-{
-	bool Result = ConnectToDatabase(DefaultDB, Login, Password, CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), ErrorConnection);
-	if (Result)
-	{
-		QSqlQuery SqlQuery = DefaultDB.exec("SET application_name = '" + ISDefines::Core::APPLICATION_NAME + "'");
-		Result = SqlQuery.lastError().type() == QSqlError::NoError;
-		if (!Result)
-		{
-			ErrorConnection = SqlQuery.lastError().text();
-		}
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISDatabase::ConnectToSystemDB(QString &ErrorConnection)
-{
-	return ConnectToDatabase(SystemDB, CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), SYSTEM_DATABASE_NAME, ErrorConnection);
-}
-//-----------------------------------------------------------------------------
-bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Login, const QString &Password, const QString &Database, QString &ErrorConnection)
-{
-	bool Result = SqlDatabase.isOpen();
-	if (!Result)
-	{
-		SqlDatabase.setHostName(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
-		SqlDatabase.setPort(CONFIG_INT(CONST_CONFIG_CONNECTION_PORT));
-		SqlDatabase.setDatabaseName(Database);
-		SqlDatabase.setUserName(Login);
-		SqlDatabase.setPassword(Password);
-		Result = SqlDatabase.open();
-		if (!Result)
-		{
-			ErrorConnection = SqlDatabase.lastError().text();
-			ISLOGGER_WARNING(QString("Connection to database \"%1\" failed. Error: %2").arg(Database).arg(ErrorConnection));
-		}
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
 bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int Port, const QString &Database, const QString &Login, const QString &Password)
 {
 	//Если объект БД с таким именем соединения уже существует - то забираем
@@ -323,23 +276,32 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
 		QSqlDatabase::database(ConnectionName) :
 		QSqlDatabase::addDatabase(SQL_DRIVER_QPSQL, ConnectionName);
 	bool Result = SqlDatabase.isValid();
-	if (Result)
-	{
-		SqlDatabase.setHostName(Host);
-		SqlDatabase.setPort(Port);
-		SqlDatabase.setDatabaseName(Database);
-		SqlDatabase.setUserName(Login);
-		SqlDatabase.setPassword(Password);
-	}
-	
-	if (Result)
-	{
-		Result = SqlDatabase.open();
-	}
-
-	if (!Result)
+	if (!Result) //Ошибка при добавлении нового подключения в память
 	{
 		ErrorString = SqlDatabase.lastError().databaseText().simplified();
+		return Result;
+	}
+
+	//Заполняем параметры подключения
+	SqlDatabase.setHostName(Host);
+	SqlDatabase.setPort(Port);
+	SqlDatabase.setDatabaseName(Database);
+	SqlDatabase.setUserName(Login);
+	SqlDatabase.setPassword(Password);
+	
+	Result = SqlDatabase.open();
+	if (!Result) //Ошибка при подключении
+	{
+		ErrorString = SqlDatabase.lastError().databaseText().simplified();
+		return Result;
+	}
+
+	//Изменяем имя приложения для коннекта
+	QSqlError SqlError = SqlDatabase.exec("SET application_name = '" + ISDefines::Core::APPLICATION_NAME + "'").lastError();
+	if (SqlError.type() != QSqlError::NoError) //Не удалось изменить имя приложенения
+	{
+		ErrorString = "Not change application_name: " + SqlError.databaseText();
+		return Result;
 	}
 
 	return Result;
@@ -369,25 +331,5 @@ void ISDatabase::Disconnect(const QString &ConnectionName)
 	{
 		QSqlDatabase::removeDatabase(ConnectionName);
 	}
-}
-//-----------------------------------------------------------------------------
-void ISDatabase::DisconnectFromDefaultDB()
-{
-	DisconnectFromDatabase(DefaultDB);
-}
-//-----------------------------------------------------------------------------
-void ISDatabase::DisconnectFromSystemDB()
-{
-	DisconnectFromDatabase(SystemDB);
-}
-//-----------------------------------------------------------------------------
-void ISDatabase::DisconnectFromDatabase(QSqlDatabase &SqlDatabase)
-{
-	SqlDatabase.close();
-	SqlDatabase.setHostName(QString());
-	SqlDatabase.setPort(-1);
-	SqlDatabase.setDatabaseName(QString());
-	SqlDatabase.setUserName(QString());
-	SqlDatabase.setPassword(QString());
 }
 //-----------------------------------------------------------------------------

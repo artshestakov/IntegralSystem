@@ -861,7 +861,7 @@ bool ISObjectFormBase::Save()
 		QueryText += "WHERE " + MetaTable->Alias + "_id = " + QString::number(ObjectID);
 	}
 
-	ISDatabase::GetInstance().GetDefaultDB().transaction(); //Открытие транзакции
+	ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).transaction(); //Открытие транзакции
 	SavedEvent();
 
 	//Заполнение запроса значениями
@@ -884,13 +884,13 @@ bool ISObjectFormBase::Save()
 	} //???
 	catch (/*ISQueryException &e*/std::exception &e)
 	{
-		ISDatabase::GetInstance().GetDefaultDB().rollback(); //Откат транзакции
+		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).rollback(); //Откат транзакции
 		//ISMessageBox::ShowWarning(this, LANG(QString("PostgreSQL.Error.%1").arg(SqlQuery.GetErrorNumber())), e.GetWhat());
 	}
 
 	if (Executed) //Запрос выполнен успешно
 	{
-		ISDatabase::GetInstance().GetDefaultDB().commit();
+		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).commit();
 		ObjectName = ISCore::GetObjectName(MetaTable, ObjectID);
 
 		if (FormType == ISNamespace::OFT_New)

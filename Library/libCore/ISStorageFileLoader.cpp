@@ -43,7 +43,7 @@ bool ISStorageFileLoader::Load()
 	}
 
 	QFileInfo FileInfo(FilePath);
-	ISDatabase::GetInstance().GetDefaultDB().transaction(); //Открытие транзакции
+	ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).transaction(); //Открытие транзакции
 
 	try
 	{
@@ -81,11 +81,11 @@ bool ISStorageFileLoader::Load()
 	} //???
 	catch (/*ISQueryException &QueryException*/std::exception &e)
 	{
-		ISDatabase::GetInstance().GetDefaultDB().rollback(); //Откат транзакции
+		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).rollback(); //Откат транзакции
 		return false;
 	}
 
-	ISDatabase::GetInstance().GetDefaultDB().commit(); //Коммит
+	ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).commit(); //Коммит
 
 	File.close();
 	return true;

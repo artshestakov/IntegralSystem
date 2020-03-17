@@ -199,23 +199,23 @@ ISNamespace::ConsoleArgumentType CheckArguments()
 //-----------------------------------------------------------------------------
 bool CreateDatabase()
 {
-	bool Result = ISDatabase::GetInstance().Connect(CONNECTION_SYSTEM, DBHost, DBPort, SYSTEM_DATABASE_NAME, DBLogin, DBPassword), Exist = true;
+	bool Result = ISDatabase::Instance().Connect(CONNECTION_SYSTEM, DBHost, DBPort, SYSTEM_DATABASE_NAME, DBLogin, DBPassword), Exist = true;
 	if (!Result) //Не удалось подключиться к системной БД
 	{
-		ISLOGGER_ERROR(QString("Not connected to system database \"%1\": %2").arg(SYSTEM_DATABASE_NAME).arg(ISDatabase::GetInstance().GetErrorString()));
+		ISLOGGER_ERROR(QString("Not connected to system database \"%1\": %2").arg(SYSTEM_DATABASE_NAME).arg(ISDatabase::Instance().GetErrorString()));
 		return Result;
 	}
 
-	Result = ISDatabase::GetInstance().CheckExistDatabase(CONNECTION_SYSTEM, DBName, Exist);
+	Result = ISDatabase::Instance().CheckExistDatabase(CONNECTION_SYSTEM, DBName, Exist);
 	if (!Result) //Удалось проверить наличие БД
 	{
-		ISLOGGER_ERROR(QString("Checking exist database \"%1\": %2").arg(DBName).arg(ISDatabase::GetInstance().GetErrorString()));
+		ISLOGGER_ERROR(QString("Checking exist database \"%1\": %2").arg(DBName).arg(ISDatabase::Instance().GetErrorString()));
 		return Result;
 	}
 
 	if (Exist) //БД существует - подключаемся к существующей
 	{
-		Result = ISDatabase::GetInstance().Connect(CONNECTION_DEFAULT, DBHost, DBPort, DBName, DBLogin, DBPassword);
+		Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT, DBHost, DBPort, DBName, DBLogin, DBPassword);
 	}
 	else //БД не существует - создаём её
 	{
@@ -223,13 +223,13 @@ bool CreateDatabase()
 		Result = ISConsole::Question("Database \"" + DBName + "\" not exist! Create?");
 		if (Result) //Создаем БД
 		{
-			QSqlError SqlError = ISDatabase::GetInstance().GetDB(CONNECTION_SYSTEM).exec(QC_DATABASE.arg(DBName).arg(DBLogin)).lastError(); //Исполнение запроса на создание базы данных
+			QSqlError SqlError = ISDatabase::Instance().GetDB(CONNECTION_SYSTEM).exec(QC_DATABASE.arg(DBName).arg(DBLogin)).lastError(); //Исполнение запроса на создание базы данных
 			Result = SqlError.type() == QSqlError::NoError;
 			Result ? ISLOGGER_UNKNOWN("The \"" + DBName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
 				: ISLOGGER_UNKNOWN("Error creating database \"" + DBName + "\": " + SqlError.databaseText());
 			if (Result) //Если БД была создана - подключаемся к ней
 			{
-				Result = ISDatabase::GetInstance().Connect(CONNECTION_DEFAULT, DBHost, DBPort, DBName, DBLogin, DBPassword);
+				Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT, DBHost, DBPort, DBName, DBLogin, DBPassword);
 			}
 		}
 		else //Пользователь отказался
@@ -239,7 +239,7 @@ bool CreateDatabase()
 	}
 
 	//Отключаемся от системной БД
-	ISDatabase::GetInstance().Disconnect(CONNECTION_SYSTEM);
+	ISDatabase::Instance().Disconnect(CONNECTION_SYSTEM);
 	
 	if (!Result) //На каком-то из этапов создания БД возникла ошибка - выходим
 	{

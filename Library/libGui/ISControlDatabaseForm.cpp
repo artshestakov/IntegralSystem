@@ -49,34 +49,34 @@ void ISControlDatabaseForm::CreateGeneralTab()
 	FormLayout->addRow(LANG("DatabaseName") + ':', new QLabel(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), ScrollArea));
 
 	//Размер базы данных
-	FormLayout->addRow(LANG("DatabaseSize") + ':', new QLabel(ISDatabase::GetInstance().GetCurrentDatabaseSize(), ScrollArea));
+	FormLayout->addRow(LANG("DatabaseSize") + ':', new QLabel(ISDatabase::Instance().GetCurrentDatabaseSize(), ScrollArea));
 
 	//Версия PostgreSQL
-	FormLayout->addRow(LANG("VersionPostgreSQL") + ':', new QLabel(ISDatabase::GetInstance().GetVersionPostgres(), ScrollArea));
+	FormLayout->addRow(LANG("VersionPostgreSQL") + ':', new QLabel(ISDatabase::Instance().GetVersionPostgres(), ScrollArea));
 
 	//Время запуска сервера
-	FormLayout->addRow(LANG("ServerStartTime") + ':', new QLabel(ISDatabase::GetInstance().GetStartTimeServer(), ScrollArea));
+	FormLayout->addRow(LANG("ServerStartTime") + ':', new QLabel(ISDatabase::Instance().GetStartTimeServer(), ScrollArea));
 
 	//Время загрузки конфигурации
-	FormLayout->addRow(LANG("ServerLoadConfigrationTime") + ':', new QLabel(ISDatabase::GetInstance().GetLoadConfigurationTime(), ScrollArea));
+	FormLayout->addRow(LANG("ServerLoadConfigrationTime") + ':', new QLabel(ISDatabase::Instance().GetLoadConfigurationTime(), ScrollArea));
 
 	//Адресс локального соединения
-	FormLayout->addRow(LANG("InetClientAddress") + ':', new QLabel(ISDatabase::GetInstance().GetInetClientAddress(), ScrollArea));
+	FormLayout->addRow(LANG("InetClientAddress") + ':', new QLabel(ISDatabase::Instance().GetInetClientAddress(), ScrollArea));
 
 	//Адрес удаленного соединения
-	FormLayout->addRow(LANG("InetServerAddress") + ':', new QLabel(ISDatabase::GetInstance().GetInetServerAddress(), ScrollArea));
+	FormLayout->addRow(LANG("InetServerAddress") + ':', new QLabel(ISDatabase::Instance().GetInetServerAddress(), ScrollArea));
 
 	//Код серверного процесса обслуживающего текущий сеанс
-	FormLayout->addRow(LANG("CodeServerProcess") + ':', new QLabel(QString::number(ISDatabase::GetInstance().GetServerProcessID()), ScrollArea));
+	FormLayout->addRow(LANG("CodeServerProcess") + ':', new QLabel(QString::number(ISDatabase::Instance().GetServerProcessID()), ScrollArea));
 
 	//LCCollate базы
-	FormLayout->addRow("LC_COLLATE:", new QLabel(ISDatabase::GetInstance().GetDatabaseCollate(), ScrollArea));
+	FormLayout->addRow("LC_COLLATE:", new QLabel(ISDatabase::Instance().GetDatabaseCollate(), ScrollArea));
 
 	//CType базы
-	FormLayout->addRow("CType:", new QLabel(ISDatabase::GetInstance().GetDatabaseCType(), ScrollArea));
+	FormLayout->addRow("CType:", new QLabel(ISDatabase::Instance().GetDatabaseCType(), ScrollArea));
 
 	//Путь к кластеру на сервере СУБД
-	FormLayout->addRow(LANG("ClusterDirectory") + ':', new QLabel(ISDatabase::GetInstance().GetDatabaseDataDirectory()));
+	FormLayout->addRow(LANG("ClusterDirectory") + ':', new QLabel(ISDatabase::Instance().GetDatabaseDataDirectory()));
 }
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::CreatePGSettings()

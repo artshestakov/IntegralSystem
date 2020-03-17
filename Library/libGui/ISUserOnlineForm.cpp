@@ -84,7 +84,7 @@ void ISUserOnlineForm::Update()
 
 			int SecondsActive = 0;
 			int SecondsInactive = 0;
-			int InactiveTimeout = ISDatabase::GetInstance().GetValue("_Users", "InactiveTimeout", UserID).toInt() * 60;
+			int InactiveTimeout = ISDatabase::Instance().GetValue("_Users", "InactiveTimeout", UserID).toInt() * 60;
 			QTime PreviousTime(0, 0);
 
 			while (qSelect.Next())

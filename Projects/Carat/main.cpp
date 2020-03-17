@@ -47,7 +47,9 @@ int main(int argc, char *argv[])
 		Result = ISApplicationRunning(CARAT_UID).IsRunning();
 		if (Result) //Если приложение можно запускать
 		{
-			Result = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
+			Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+				CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+				CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD));
 			if (Result)
 			{
 				Result = ISQueryText::Instance().CheckAllQueries();
@@ -55,6 +57,10 @@ int main(int argc, char *argv[])
 				{
 					(new ISCaratService(&CoreApplication))->StartService();
 				}
+			}
+			else
+			{
+				ISLOGGER_ERROR("Not connected to database: " + ISDatabase::Instance().GetErrorString());
 			}
 		}
 		else

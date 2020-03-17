@@ -241,7 +241,7 @@ void ISMonitorActivityForm::TerminateUser()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		if (ISDatabase::GetInstance().IsUserOnline(MonitorUserWidget->GetUserID()))
+		if (ISDatabase::Instance().IsUserOnline(MonitorUserWidget->GetUserID()))
 		{
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TerminateUser").arg(MonitorUserWidget->GetUserName())))
 			{
@@ -287,7 +287,7 @@ void ISMonitorActivityForm::TerminateAll()
 				continue;
 			}
 
-			if (ISDatabase::GetInstance().IsUserOnline(MonitorUserWidget->GetUserID()))
+			if (ISDatabase::Instance().IsUserOnline(MonitorUserWidget->GetUserID()))
 			{
 				ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TERMINATE_USER, MonitorUserWidget->GetUserID(), QVariant(), QString(), false);
 				++TerminatedCount;

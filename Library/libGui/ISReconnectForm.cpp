@@ -10,6 +10,7 @@
 #include "ISDatabase.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 {
@@ -117,7 +118,9 @@ void ISReconnectForm::StartReconnect(bool &Connect)
 //-----------------------------------------------------------------------------
 bool ISReconnectForm::Connect()
 {
-	return ISDatabase::GetInstance().ConnectToDefaultDB(ISMetaUser::GetInstance().GetData()->Login, ISMetaUser::GetInstance().GetData()->Password, QString());
+	return ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		ISMetaUser::GetInstance().GetData()->Login, ISMetaUser::GetInstance().GetData()->Password);
 }
 //-----------------------------------------------------------------------------
 void ISReconnectForm::Restart()

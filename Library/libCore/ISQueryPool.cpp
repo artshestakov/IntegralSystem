@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 ISQueryPool::ISQueryPool(QObject *parent) : QObject(parent)
 {
-	DB = QSqlDatabase::cloneDatabase(ISDatabase::GetInstance().GetDefaultDB(), DATABASE_CONNECTON_THREAD_QUERY);
+	DB = QSqlDatabase::cloneDatabase(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT), DATABASE_CONNECTON_THREAD_QUERY);
 	FutureWatcher = new QFutureWatcher<void>(this);
 
 	QTimer *Timer = new QTimer(this);

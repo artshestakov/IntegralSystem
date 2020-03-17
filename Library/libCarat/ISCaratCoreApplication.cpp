@@ -27,7 +27,13 @@ bool ISCaratCoreApplication::Invoke()
 	bool Result = ISCore::Startup(false, ErrorString);
 	if (Result)
 	{
-		Result = ISDatabase::GetInstance().ConnectToDefaultDB(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD), ErrorString);
+		Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+			CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+			CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD));
+		if (!Result)
+		{
+			ErrorString = ISDatabase::Instance().GetErrorString();
+		}
 	}
 	return Result;
 }

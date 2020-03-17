@@ -28,17 +28,17 @@ bool ISSironaResearchObjectForm::Save()
 		ISQuery qUpdateMoney(QU_RESEARCH);
 		qUpdateMoney.BindValue(":ResearchTypeID", GetFieldValue("Type"));
 
-		if (ISDatabase::GetInstance().GetValue("Doctors", "Bonus", DoctorID).toBool()) //≈сли выбранный доктор работает по бонусу
+		if (ISDatabase::Instance().GetValue("Doctors", "Bonus", DoctorID).toBool()) //≈сли выбранный доктор работает по бонусу
 		{
 			int ResearchTypeID = GetFieldValue("Type").toInt();
 			double MoneyDoctor = 0;
-			if (ISDatabase::GetInstance().GetValue("Doctors", "IsCenterSeven", DoctorID).toBool()) //≈сли выбранный доктор из центра 7
+			if (ISDatabase::Instance().GetValue("Doctors", "IsCenterSeven", DoctorID).toBool()) //≈сли выбранный доктор из центра 7
 			{
-				MoneyDoctor = ISDatabase::GetInstance().GetValue("ResearchType", "CenterSeven", ResearchTypeID).toDouble();
+				MoneyDoctor = ISDatabase::Instance().GetValue("ResearchType", "CenterSeven", ResearchTypeID).toDouble();
 			}
 			else
 			{
-				MoneyDoctor = ISDatabase::GetInstance().GetValue("ResearchType", "Bonus", ResearchTypeID).toDouble();
+				MoneyDoctor = ISDatabase::Instance().GetValue("ResearchType", "Bonus", ResearchTypeID).toDouble();
 			}
 			 
 			qUpdateMoney.BindValue(":MoneyDoctor", MoneyDoctor);

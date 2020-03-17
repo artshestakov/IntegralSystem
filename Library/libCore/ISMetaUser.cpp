@@ -63,7 +63,7 @@ void ISMetaUser::Initialize(const QString &login, const QString &password)
 		UserData->Birthday = qSelectUser.ReadColumn("usrs_birthday").toDate();
 		UserData->Login = login;
 		UserData->Password = password;
-		UserData->IPAddress = ISDatabase::GetInstance().GetInetClientAddress();
+		UserData->IPAddress = ISDatabase::Instance().GetInetClientAddress();
 		UserData->FullName = UserData->Surname + SYMBOL_SPACE + UserData->Name + SYMBOL_SPACE + UserData->Patronymic;
 		UserData->AccessAllowed = qSelectUser.ReadColumn("usrs_accessallowed").toBool();
 		

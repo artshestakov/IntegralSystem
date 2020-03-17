@@ -206,8 +206,9 @@ void ISAuthForm::ConnectedDone()
 	AuthConnector->Disconnect();
 	SetConnecting(false);
 
-	QString ErrorConnection;
-	if (ISDatabase::GetInstance().ConnectToDefaultDB(EditLogin->GetValue().toString(), EditPassword->GetValue().toString(), ErrorConnection)) //Подключение к базе данных установлено
+	if (ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Если подключение к базе данных установлено
 	{
 		hide();
 		SetResult(true);
@@ -215,7 +216,10 @@ void ISAuthForm::ConnectedDone()
 	}
 	else //Ошибка подключения к базе данных
 	{
-		ISMessageBox MessageBox(ISMessageBox::Warning, LANG("ErrorConnectionDatabase"), LANG("Message.Question.ConnectionError.Reconnect").arg(ErrorConnection), ISMessageBox::Yes | ISMessageBox::No | ISMessageBox::Close, this);
+		ISMessageBox MessageBox(ISMessageBox::Warning,
+			LANG("ErrorConnectionDatabase"),
+			LANG("Message.Question.ConnectionError.Reconnect").arg(ISDatabase::Instance().GetErrorString()),
+			ISMessageBox::Yes | ISMessageBox::No | ISMessageBox::Close, this);
 		MessageBox.setButtonText(ISMessageBox::Close, LANG("Exit"));
 		MessageBox.setDefaultButton(ISMessageBox::No);
 		MessageBox.adjustSize();

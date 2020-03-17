@@ -432,7 +432,7 @@ void ISMainWindow::BeforeClose()
 	}
 
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.DisconnectFromDatabase"));
-	ISDatabase::GetInstance().DisconnectFromDefaultDB();
+	ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
 
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ExitApplication"));
 }

@@ -26,7 +26,7 @@ static QString QI_NOTIFICATION_USERS = PREPARE_QUERY("INSERT INTO _notificationu
 //-----------------------------------------------------------------------------
 ISNotifySender::ISNotifySender()
 	: QObject(),
-	SqlDriver(ISDatabase::GetInstance().GetDefaultDB().driver()),
+	SqlDriver(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).driver()),
 	NewNotify(0)
 {
 	

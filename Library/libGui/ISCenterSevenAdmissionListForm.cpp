@@ -73,8 +73,8 @@ void ISCenterSevenAdmissionListForm::Update()
 void ISCenterSevenAdmissionListForm::StatusChange()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	int CurrentStatusID = ISDatabase::GetInstance().GetValue("Admission", "Status", GetObjectID()).toInt();
-	ISUuid CurrentStatusUID = ISDatabase::GetInstance().GetValue("AdmissionStatus", "UID", CurrentStatusID);
+	int CurrentStatusID = ISDatabase::Instance().GetValue("Admission", "Status", GetObjectID()).toInt();
+	ISUuid CurrentStatusUID = ISDatabase::Instance().GetValue("AdmissionStatus", "UID", CurrentStatusID);
 	ISCenterSevenStatusAdmissionForm StatusAdmissionForm(CurrentStatusUID, GetCurrentRecordValue("StatusComment").toString());
 	ISGui::SetWaitGlobalCursor(false);
 	if (StatusAdmissionForm.Exec())
