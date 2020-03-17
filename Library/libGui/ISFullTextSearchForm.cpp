@@ -14,9 +14,11 @@
 #include "ISControls.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaForm(parent)
+ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent)
+	: ISInterfaceMetaForm(parent),
+	Stopped(false),
+	EventLoop(new QEventLoop(this))
 {
-	Stopped = false;
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
@@ -41,6 +43,7 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaFor
 	Layout->addWidget(ButtonStop);
 
 	ProgressBar = new QProgressBar(this);
+	ProgressBar->setVisible(false);
 	GetMainLayout()->addWidget(ProgressBar);
 
 	QHBoxLayout *LayoutLabels = new QHBoxLayout();
@@ -62,10 +65,6 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaFor
 	ScrollArea = new ISScrollArea(this);
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
 	GetMainLayout()->addWidget(ScrollArea);
-
-	//???
-	//Database = QSqlDatabase::cloneDatabase(ISDatabase::Instance().GetDefaultDB(), "123");
-	EventLoop = new QEventLoop(this);
 
 	FutureWatcher = new QFutureWatcher<void>(this);
 	connect(FutureWatcher, &QFutureWatcher<void>::finished, EventLoop, &QEventLoop::quit);
@@ -97,6 +96,7 @@ void ISFullTextSearchForm::BeforeSearch()
 	LineEdit->setEnabled(false);
 	ButtonSearch->setEnabled(false);
 	ButtonStop->setEnabled(true);
+	ProgressBar->setVisible(true);
 	ProgressBar->setValue(0);
 	LabelSearch->setVisible(true);
 	LabelResult->clear();
@@ -144,7 +144,7 @@ void ISFullTextSearchForm::Search()
 	ISGui::RepaintWidget(LabelSearch);
 	int ResultCount = 0;
 
-	for (const auto &MapItem : Map.toStdMap()) //Обход таблиц
+	for (const auto &MapItem : Map) //Обход таблиц
 	{
 		QString TableName = MapItem.first;
 		ISVectorInt VectorInt = MapItem.second;
@@ -152,8 +152,6 @@ void ISFullTextSearchForm::Search()
 
 		for (int ObjectID : VectorInt) //Обход объектов
 		{
-			++ResultCount;
-
 			ISLabelLink *LabelLink = new ISLabelLink(ScrollArea);
 			LabelLink->setText(QString::number(ResultCount) + ". " + MetaTable->LocalName + ": " + ISCore::GetObjectName(MetaTable, ObjectID));
 			LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
@@ -162,6 +160,7 @@ void ISFullTextSearchForm::Search()
 			connect(LabelLink, &ISLabelLink::Clicked, this, &ISFullTextSearchForm::ClickedRecord);
 			dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addWidget(LabelLink/*, 0, Qt::AlignTop*/);
 			WidgetList.append(LabelLink);
+			++ResultCount;
 		}
 	}
 	dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addStretch();
@@ -174,6 +173,7 @@ void ISFullTextSearchForm::AfterSearch()
 	LineEdit->setEnabled(true);
 	ButtonSearch->setEnabled(true);
 	ButtonStop->setEnabled(false);
+	ProgressBar->setVisible(false);
 	LabelSearch->setVisible(false);
 	Frame->setVisible(true);
 	ISGui::SetWaitGlobalCursor(false);
@@ -181,30 +181,23 @@ void ISFullTextSearchForm::AfterSearch()
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::Execute(const QString &QueryText, const QVariant &QueryValue)
 {
-	if (Database.open())
+	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
+	bool Result = ISDatabase::Instance().Connect(CONNECTION_FULL_TEXT_SEARCH, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password);
+	if (Result)
 	{
+		ISQuery qSelect(ISDatabase::Instance().GetDB(CONNECTION_FULL_TEXT_SEARCH), QueryText);
+		qSelect.BindValue(":Value", QueryValue);
+		Result = qSelect.Execute();
+		if (Result)
 		{
-			ISQuery qSelect(Database, QueryText);
-			qSelect.BindValue(":Value", QueryValue);
-			if (qSelect.Execute())
+			while (qSelect.Next())
 			{
-				while (qSelect.Next())
-				{
-					int ObjectID = qSelect.ReadColumn("ID").toInt();
-					QString TableName = qSelect.ReadColumn("table_name").toString();
-
-					if (Map.contains(TableName))
-					{
-						Map[TableName].emplace_back(ObjectID);
-					}
-					else
-					{
-						Map.insert(TableName, ISVectorInt{ ObjectID });
-					}
-				}
+				int ObjectID = qSelect.ReadColumn("ID").toInt();
+				QString TableName = qSelect.ReadColumn("table_name").toString();
+				Map.count(TableName) ? Map[TableName].emplace_back(ObjectID) : Map.emplace(TableName, ISVectorInt{ ObjectID });
 			}
 		}
-		Database.close();
+		ISDatabase::Instance().Disconnect(CONNECTION_FULL_TEXT_SEARCH);
 	}
 }
 //-----------------------------------------------------------------------------

@@ -27,11 +27,10 @@ protected:
 	void Stop();
 
 private:
-	QSqlDatabase Database;
 	QEventLoop *EventLoop;
 	QFutureWatcher<void> *FutureWatcher;
 	QWidgetList WidgetList;
-	QMap<QString, ISVectorInt> Map;
+	std::map<QString, ISVectorInt> Map;
 	bool Stopped;
 
 	ISLineEdit *LineEdit;

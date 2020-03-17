@@ -140,7 +140,8 @@ const char AMI_EXTENSION_STATUS[] = "ExtensionStatus";
 const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_MODEL_THREAD[] = "ModelThreadDB";
-const char CONNECTON_PATTERN_ACITIVITY[] = "PatternActivity";
+const char CONNECTION_PATTERN_ACITIVITY[] = "PatternActivity";
+const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearch";
 //-----------------------------------------------------------------------------
 const char SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char FIGURES_STRING[] = "0123456789";
