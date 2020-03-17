@@ -10,7 +10,6 @@
 *.ipdb
 *.obj
 *.pdb
-*.user
 *.opendb
 *.sdf
 *.suo
