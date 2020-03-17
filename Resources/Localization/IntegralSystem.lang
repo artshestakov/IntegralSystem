@@ -226,7 +226,7 @@
   <Local Name="Message.Question.RestartApplication" Russian="Перезапустить программу?"/>
   <Local Name="Message.Question.SaveNote" Russian="Сохранить изменения записи &quot;%1&quot;?"/>
   <Local Name="Message.Question.DeleteNote" Russian="Удалить выбранную запись?"/>
-  <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;%1&#10;&#10;Повторить попытку подключения?"/>
+  <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
   <Local Name="Message.Question.Lock" Russian="Заблокировать программу?"/>
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
   <Local Name="Message.Question.ReReadCard" Russian="Перечитать информацию?"/>
@@ -360,7 +360,6 @@
   <Local Name="Named" Russian="Наименование"/>
   <Local Name="ErrorQuery" Russian="Ошибка запроса"/>
   <Local Name="EnterLogin" Russian="Введите логин"/>
-  <Local Name="EnterDatabaseName" Russian="Введите имя базы данных"/>
   <Local Name="Database" Russian="База данных"/>
   <Local Name="ConnectionSettings" Russian="Настройки подключения"/>
   <Local Name="CreateNewObject" Russian="Создание нового объекта"/>
@@ -594,6 +593,7 @@
   <Local Name="BuildingListResult" Russian="Построение списка..."/>
   <Local Name="SendNotify" Russian="Отправить уведомление"/>
   <Local Name="NotifyText" Russian="Текст уведмления"/>
+  <Local Name="RememberMe" Russian="Запомнить меня"/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>

@@ -49,8 +49,13 @@ ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	LayoutLabels->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	Layout->addLayout(LayoutLabels);
 
+	CheckRememberUser = new QCheckBox(LANG("RememberMe"), this);
+	CheckRememberUser->setChecked(CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE));
+	CheckRememberUser->setCursor(CURSOR_POINTING_HAND);
+	LayoutLabels->addWidget(CheckRememberUser);
+
 	LabelCapsLook = new QLabel(this);
-	LabelCapsLook->setFont(ISDefines::Gui::FONT_TAHOMA_8);
+	LabelCapsLook->setFont(ISDefines::Gui::FONT_TAHOMA_8_BOLD);
 	LayoutLabels->addWidget(LabelCapsLook);
 
 	LayoutLabels->addStretch();
@@ -117,6 +122,11 @@ ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 #ifdef DEBUG
 	EditLogin->SetValue("postgres");
 	EditPassword->SetValue("adm777");
+#else
+	if (CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE))
+	{
+		EditLogin->SetValue(CONFIG_STRING(CONST_CONFIG_REMEMBER_USER_LOGIN));
+	}
 #endif
 }
 //-----------------------------------------------------------------------------
@@ -210,6 +220,11 @@ void ISAuthForm::ConnectedDone()
 		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
 		EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Если подключение к базе данных установлено
 	{
+		ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_INCLUDE, CheckRememberUser->isChecked());
+		CheckRememberUser->isChecked() ?
+			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, EditLogin->GetValue()) :
+			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, QString());
+
 		hide();
 		SetResult(true);
 		close();
@@ -225,7 +240,6 @@ void ISAuthForm::ConnectedDone()
 		MessageBox.adjustSize();
 		ISGui::MoveWidgetToDesktop(&MessageBox, ISNamespace::MWD_Center);
 		ISMessageBox::StandardButtons ClickedButton = static_cast<ISMessageBox::StandardButtons>(MessageBox.Exec());
-
 		if (ClickedButton == ISMessageBox::Yes) //Предложить повтор попытки соединения
 		{
 			Input();

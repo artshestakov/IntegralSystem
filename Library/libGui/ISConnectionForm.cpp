@@ -40,7 +40,6 @@ ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(pare
 
 	EditDatabase = new ISLineEdit(this);
 	EditDatabase->SetValue(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
-	EditDatabase->SetPlaceholderText(LANG("EnterDatabaseName"));
 	FormLayout->addRow(LabelDatabase, EditDatabase);
 
 	ISPushButton *ButtonSave = new ISPushButton(this);

@@ -38,6 +38,7 @@ protected:
 private:
 	ISLineEdit *EditLogin;
 	ISPasswordEdit *EditPassword;
+	QCheckBox *CheckRememberUser;
 	QLabel *LabelCapsLook;
 	QLabel *LabelLang;
 	QLabel *LabelConnectToDatabase;
