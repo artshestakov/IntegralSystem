@@ -42,8 +42,7 @@ static QString QS_USER_ONLINE_FROM_LOGIN = PREPARE_QUERY("SELECT useronline(:Use
 ISDatabase::ISDatabase()
 	: ErrorString(NO_ERROR_STRING)
 {
-	//DefaultDB = QSqlDatabase::addDatabase(SQL_DRIVER_QPSQL, CONNECTION_DEFAULT);
-	//SystemDB = QSqlDatabase::addDatabase(SQL_DRIVER_QPSQL, CONNECTION_SYSTEM);
+	
 }
 //-----------------------------------------------------------------------------
 ISDatabase::~ISDatabase()
@@ -62,11 +61,6 @@ QString ISDatabase::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-void ISDatabase::SetErrorString(const QString &error_string)
-{
-	ErrorString = error_string;
-}
-//-----------------------------------------------------------------------------
 QSqlDatabase& ISDatabase::GetDefaultDB()
 {
 	return DefaultDB;
@@ -77,18 +71,18 @@ QSqlDatabase& ISDatabase::GetSystemDB()
 	return SystemDB;
 }
 //-----------------------------------------------------------------------------
-QSqlDatabase& ISDatabase::GetDB(const QString &ConnectionName)
+QSqlDatabase ISDatabase::GetDB(const QString &ConnectionName)
 {
-	if (ConnectionName.isEmpty())
+	if (QSqlDatabase::contains(ConnectionName))
 	{
-		return Connections[CONNECTION_DEFAULT];
+		return QSqlDatabase::database(ConnectionName);
 	}
-	return Connections[ConnectionName];
+	return QSqlDatabase();
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist)
 {
-	ISQuery qSelectDatabase(Connections[ConnectionName], QS_DATABASE);
+	ISQuery qSelectDatabase(GetDB(ConnectionName), QS_DATABASE);
 	qSelectDatabase.SetShowLongQuery(false);
 	qSelectDatabase.BindValue(":DatabaseName", Database);
 	bool Result = qSelectDatabase.ExecuteFirst();
@@ -323,26 +317,12 @@ bool ISDatabase::ConnectToDatabase(QSqlDatabase &SqlDatabase, const QString &Log
 //-----------------------------------------------------------------------------
 bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int Port, const QString &Database, const QString &Login, const QString &Password)
 {
-	QSqlDatabase SqlDatabase;
-	bool Result = Connections.count(ConnectionName) > 0;
-	if (Result)
-	{
-		SqlDatabase = Connections[ConnectionName];
-	}
-	else
-	{
-		SqlDatabase = QSqlDatabase::addDatabase(SQL_DRIVER_QPSQL, ConnectionName);
-		Result = SqlDatabase.isValid();
-		if (Result) //Если при добавлении БД возникла ошибка
-		{
-			Connections.emplace(ConnectionName, SqlDatabase);
-		}
-		else
-		{
-			ErrorString = SqlDatabase.lastError().text();
-		}
-	}
-
+	//Если объект БД с таким именем соединения уже существует - то забираем
+	//его из внутренней памяти QSqlDatabase, иначе - добавляем
+	QSqlDatabase SqlDatabase = QSqlDatabase::contains(ConnectionName) ?
+		QSqlDatabase::database(ConnectionName) :
+		QSqlDatabase::addDatabase(SQL_DRIVER_QPSQL, ConnectionName);
+	bool Result = SqlDatabase.isValid();
 	if (Result)
 	{
 		SqlDatabase.setHostName(Host);
@@ -350,11 +330,16 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
 		SqlDatabase.setDatabaseName(Database);
 		SqlDatabase.setUserName(Login);
 		SqlDatabase.setPassword(Password);
+	}
+	
+	if (Result)
+	{
 		Result = SqlDatabase.open();
-		if (!Result)
-		{
-			ErrorString = QString("Error connect to db \"%1\": %2").arg(Database).arg(SqlDatabase.lastError().text());
-		}
+	}
+
+	if (!Result)
+	{
+		ErrorString = SqlDatabase.lastError().databaseText().simplified();
 	}
 
 	return Result;
@@ -362,14 +347,27 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
 //-----------------------------------------------------------------------------
 void ISDatabase::Disconnect(const QString &ConnectionName)
 {
-	if (Connections[ConnectionName].isOpen())
+	bool Contains = true; //Флаг удаления экземпляра БД из памяти
 	{
-		Connections[ConnectionName].close();
-		Connections[ConnectionName].setHostName(QString());
-		Connections[ConnectionName].setPort(-1);
-		Connections[ConnectionName].setDatabaseName(QString());
-		Connections[ConnectionName].setUserName(QString());
-		Connections[ConnectionName].setPassword(QString());
+		Contains = QSqlDatabase::contains(ConnectionName);
+		if (Contains) //Если БД существует - проводим процедуру отключения от неё
+		{
+			QSqlDatabase SqlDatabase = QSqlDatabase::database(ConnectionName);
+			if (SqlDatabase.isOpen())
+			{
+				SqlDatabase.close();
+				SqlDatabase.setHostName(QString());
+				SqlDatabase.setPort(-1);
+				SqlDatabase.setDatabaseName(QString());
+				SqlDatabase.setUserName(QString());
+				SqlDatabase.setPassword(QString());
+			}
+		}
+	}
+	
+	if (Contains)
+	{
+		QSqlDatabase::removeDatabase(ConnectionName);
 	}
 }
 //-----------------------------------------------------------------------------

@@ -12,8 +12,8 @@
 ISQuery::ISQuery(const QString &sql_text, bool prepare)
 	: ErrorString(NO_ERROR_STRING),
 	SqlText(sql_text),
+	SqlQuery(ISDatabase::GetInstance().GetDB(CONNECTION_DEFAULT)),
 	SqlDatabase(ISDatabase::GetInstance().GetDB(CONNECTION_DEFAULT)),
-	SqlQuery(SqlDatabase),
 	Prepared(false),
 	ShowLongQuery(true)
 {
@@ -233,7 +233,7 @@ QString ISQuery::GetSqlText() const
 //-----------------------------------------------------------------------------
 QString ISQuery::GetErrorString()
 {
-	return SqlQuery.lastError().text();
+	return SqlQuery.lastError().databaseText();
 }
 //-----------------------------------------------------------------------------
 int ISQuery::GetErrorNumber() const

@@ -14,11 +14,10 @@ public:
 	static ISDatabase& GetInstance();
 
 	QString GetErrorString() const; //Получить описание последней ошибки
-	void SetErrorString(const QString &error_string); //Изменить описание ошибки
 
 	QSqlDatabase& GetDefaultDB(); //Получить стандартную базу данных
 	QSqlDatabase& GetSystemDB(); //Получить системную базу данных
-	QSqlDatabase& GetDB(const QString &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
+	QSqlDatabase GetDB(const QString &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
 
 	bool CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist); //Проверить существование базы данных
 	QString GetVersionPostgres(); //Получить версию PostgreSQL
@@ -57,6 +56,5 @@ private:
 	QString ErrorString;
 	QSqlDatabase DefaultDB;
 	QSqlDatabase SystemDB;
-	std::map<QString, QSqlDatabase> Connections;
 };
 //-----------------------------------------------------------------------------
