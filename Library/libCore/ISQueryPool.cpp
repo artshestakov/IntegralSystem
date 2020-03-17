@@ -33,12 +33,10 @@ void ISQueryPool::AddQuery(const QString &SqlText)
 void ISQueryPool::AddQuery(const QString &SqlText, const QVariantMap &Parameters)
 {
 	ISQueryPoolObject QueryPoolObject(SqlText);
-	
 	for (const auto &MapItem : Parameters.toStdMap())
 	{
-		QueryPoolObject.AddBindValue(MapItem.first, MapItem.second);
+		QueryPoolObject.Parameters.emplace(MapItem.first, MapItem.second);
 	}
-
 	Queue.push_front(QueryPoolObject);
 }
 //-----------------------------------------------------------------------------
@@ -63,21 +61,17 @@ void ISQueryPool::ExecuteQuery()
 		if (DB.open())
 		{
 			ISQueryPoolObject QueryPoolObject = Queue.dequeue();
-
 			{
-				ISQuery Query(DB, QueryPoolObject.GetSqlText());
-
-				if (QueryPoolObject.GetParameters().count())
+				ISQuery Query(DB, QueryPoolObject.SqlText);
+				if (!QueryPoolObject.Parameters.empty())
 				{
-					for (const auto &MapItem : QueryPoolObject.GetParameters().toStdMap())
+					for (const auto &MapItem : QueryPoolObject.Parameters)
 					{
 						Query.BindValue(MapItem.first, MapItem.second);
 					}
 				}
-
 				Query.Execute();
 			}
-
 			DB.close();
 		}
 	}

@@ -164,7 +164,6 @@
     <ClInclude Include="ISQuery.h" />
     <QtMoc Include="ISQueryModel.h" />
     <ClInclude Include="ISQueryModelHelper.h" />
-    <ClInclude Include="ISQueryPoolObject.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="ISSearchModel.h" />
     <ClInclude Include="ISQuotedPrintable.h" />
@@ -228,7 +227,6 @@
     <ClCompile Include="ISQueryModel.cpp" />
     <ClCompile Include="ISQueryModelHelper.cpp" />
     <ClCompile Include="ISQueryPool.cpp" />
-    <ClCompile Include="ISQueryPoolObject.cpp" />
     <ClCompile Include="ISQueryText.cpp" />
     <ClCompile Include="ISQuotedPrintable.cpp" />
     <ClCompile Include="ISRandom.cpp" />

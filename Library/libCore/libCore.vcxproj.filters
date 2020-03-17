@@ -132,9 +132,6 @@
     <ClInclude Include="ISQuery.h">
       <Filter>Database</Filter>
     </ClInclude>
-    <ClInclude Include="ISQueryPoolObject.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="ISMimeInlineFile.h">
       <Filter>Network\SMTP</Filter>
     </ClInclude>
@@ -334,9 +331,6 @@
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="ISQueryModelHelper.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQueryPoolObject.cpp">
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="ISQueryText.cpp">

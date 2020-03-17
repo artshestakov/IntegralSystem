@@ -506,4 +506,12 @@ struct LIBCORE_EXPORT ISConnectOptionDB
 	QString Password; //Пароль
 };
 //-----------------------------------------------------------------------------
+struct ISQueryPoolObject
+{
+	ISQueryPoolObject(const QString & sql_text) : SqlText(sql_text) { }
+
+	QString SqlText;
+	ISStringToVariantMap Parameters;
+};
+//-----------------------------------------------------------------------------
 #endif
