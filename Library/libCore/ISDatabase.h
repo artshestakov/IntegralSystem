@@ -1,6 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISDatabase
 {
@@ -11,6 +12,7 @@ public:
 
 	QSqlDatabase& GetSystemDB(); //Получить системную базу данных
 	QSqlDatabase GetDB(const QString &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
+	ISConnectOptionDB GetOption(const QString &ConnectionName); //Получить параметры подключения к БД
 
 	bool CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist); //Проверить существование базы данных
 	QString GetVersionPostgres() const; //Получить версию PostgreSQL

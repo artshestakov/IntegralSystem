@@ -73,6 +73,21 @@ QSqlDatabase ISDatabase::GetDB(const QString &ConnectionName)
 	return QSqlDatabase();
 }
 //-----------------------------------------------------------------------------
+ISConnectOptionDB ISDatabase::GetOption(const QString &ConnectionName)
+{
+	ISConnectOptionDB ConnectOptionDB;
+	QSqlDatabase SqlDatabase = GetDB(ConnectionName);
+	if (SqlDatabase.isValid())
+	{
+		ConnectOptionDB.Host = SqlDatabase.hostName();
+		ConnectOptionDB.Port = SqlDatabase.port();
+		ConnectOptionDB.Name = SqlDatabase.databaseName();
+		ConnectOptionDB.Login = SqlDatabase.userName();
+		ConnectOptionDB.Password = SqlDatabase.password();
+	}
+	return ConnectOptionDB;
+}
+//-----------------------------------------------------------------------------
 bool ISDatabase::CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist)
 {
 	ISQuery qSelectDatabase(GetDB(ConnectionName), QS_DATABASE);
@@ -319,7 +334,7 @@ void ISDatabase::Disconnect(const QString &ConnectionName)
 			{
 				SqlDatabase.close();
 				SqlDatabase.setHostName(QString());
-				SqlDatabase.setPort(-1);
+				SqlDatabase.setPort(0);
 				SqlDatabase.setDatabaseName(QString());
 				SqlDatabase.setUserName(QString());
 				SqlDatabase.setPassword(QString());

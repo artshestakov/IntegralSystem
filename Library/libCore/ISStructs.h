@@ -495,4 +495,15 @@ struct LIBCORE_EXPORT CGSection
 	std::vector<CGSectionItem*> Items;
 };
 //-----------------------------------------------------------------------------
+struct LIBCORE_EXPORT ISConnectOptionDB
+{
+	ISConnectOptionDB() : Port(0) { }
+
+	QString Host; //Адрес сервера
+	int Port; //Порт
+	QString Name; //Имя базы данных
+	QString Login; //Логин пользователя
+	QString Password; //Пароль
+};
+//-----------------------------------------------------------------------------
 #endif
