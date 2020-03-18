@@ -85,6 +85,7 @@
   <_ProtocolType IsSystem="true" UID="{9DF0B966-40CE-4D44-B049-29D9DA8732B2}" Name="Разблокировка программы"/>
   <_ProtocolType IsSystem="true" UID="{EA1AEC58-FE91-4287-A968-25CA0129B55C}" Name="Неудачная разблокировка программы"/>
   <_ProtocolType IsSystem="true" UID="{179F73BF-8983-4B52-B505-AF0EF4BF8093}" Name="Расширенный поиск"/>
+  <_ProtocolType IsSystem="true" UID="{B0A1EF68-2AA4-4EB2-A5A9-F8E5604F864B}" Name="Полнотекстовый поиск"/>
   <_ProtocolType IsSystem="true" UID="{F8ACA207-50D6-4BE4-9658-08F869D0E54F}" Name="Прослушивание записи разговора"/>
   <_ProtocolType IsSystem="true" UID="{EA2EF795-5243-4D9B-97C9-283605D290B6}" Name="Сохранение записи разговора на диск"/>
   <_ProtocolType IsSystem="true" UID="{B88FD6FA-CC88-4B6A-8641-C2B2686D67C8}" Name="Отправка ссылки на запись в общий чат"/>

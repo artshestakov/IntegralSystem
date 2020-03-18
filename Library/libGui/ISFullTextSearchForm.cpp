@@ -13,6 +13,7 @@
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISMessageBox.h"
+#include "ISProtocol.h"
 //-----------------------------------------------------------------------------
 ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent)
 	: ISInterfaceMetaForm(parent),
@@ -119,6 +120,7 @@ void ISFullTextSearchForm::Search()
 		return;
 	}
 
+	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SEARCH_FULL_TEXT, QString(), QString(), QVariant(), LineEdit->GetValue().toString());
 	SetSearchInProgress(true);
 	
 	QFuture<void> Future = QtConcurrent::run(this, &ISFullTextSearchForm::Execute, LineEdit->GetValue());
