@@ -76,7 +76,8 @@ QSqlDatabase ISDatabase::GetDB(const QString &ConnectionName)
 ISConnectOptionDB ISDatabase::GetOption(const QString &ConnectionName)
 {
 	ISConnectOptionDB ConnectOptionDB;
-	QSqlDatabase SqlDatabase = GetDB(ConnectionName);
+	bool ok = GetDB(ConnectionName).isOpen();
+	QSqlDatabase SqlDatabase = QSqlDatabase::cloneDatabase(QSqlDatabase::database(ConnectionName), "123");
 	if (SqlDatabase.isValid())
 	{
 		ConnectOptionDB.Host = SqlDatabase.hostName();

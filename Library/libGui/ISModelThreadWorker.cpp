@@ -11,20 +11,20 @@ ISModelThreadWorker::ISModelThreadWorker(QObject *parent)
 //-----------------------------------------------------------------------------
 ISModelThreadWorker::~ISModelThreadWorker()
 {
-	if (QSqlDatabase::contains(CONNECTION_MODEL_THREAD))
+	/*if (QSqlDatabase::contains(CONNECTION_MODEL_THREAD))
 	{
 		QSqlDatabase::removeDatabase(CONNECTION_MODEL_THREAD);
-	}
+	}*/
 }
 //-----------------------------------------------------------------------------
 void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap &Conditions)
 {
-	//???
-	QSqlDatabase SqlDatabase;// = QSqlDatabase::cloneDatabase(ISDatabase::Instance().GetDefaultDB(), CONNECTION_MODEL_THREAD);
-	if (SqlDatabase.open())
+	if (ISDatabase::Instance().Connect(CONNECTION_MODEL_THREAD,
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
 	{
 		{
-			QSqlQuery SqlQuery = QSqlQuery(SqlDatabase);
+			QSqlQuery SqlQuery = QSqlQuery(ISDatabase::Instance().GetDB(CONNECTION_MODEL_THREAD));
 			if (SqlQuery.prepare(SqlQueryText))
 			{
 				for (const auto &Condition : Conditions.toStdMap()) //Обход параметров запроса
@@ -68,11 +68,12 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 				emit ErrorQuery(SqlQuery.lastError(), SqlQueryText);
 			}
 		}
-		SqlDatabase.close();
+		//SqlDatabase.close();
+		ISDatabase::Instance().Disconnect(CONNECTION_MODEL_THREAD);
 	}
 	else
 	{
-		emit ErrorConnection(SqlDatabase.lastError());
+		emit ErrorConnection(/*SqlDatabase.lastError()*/ISDatabase::Instance().GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISUuid.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISModelThreadWorker : public QObject
 {
