@@ -10,7 +10,6 @@ public:
 
 	QString GetErrorString() const; //Получить описание последней ошибки
 
-	QSqlDatabase& GetSystemDB(); //Получить системную базу данных
 	QSqlDatabase GetDB(const QString &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
 	ISConnectOptionDB GetOption(const QString &ConnectionName); //Получить параметры подключения к БД
 
@@ -44,6 +43,6 @@ private:
 
 private:
 	QString ErrorString;
-	QSqlDatabase SystemDB;
+	std::map<QString, ISConnectOptionDB> ConnectOptions;
 };
 //-----------------------------------------------------------------------------

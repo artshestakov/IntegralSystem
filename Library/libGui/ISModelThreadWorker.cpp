@@ -2,8 +2,6 @@
 #include "ISDatabase.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
-#include "ISConfig.h"
-#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISModelThreadWorker::ISModelThreadWorker(QObject *parent)
 	: QObject(parent)
@@ -18,9 +16,8 @@ ISModelThreadWorker::~ISModelThreadWorker()
 //-----------------------------------------------------------------------------
 void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap &Conditions)
 {
-	if (ISDatabase::Instance().Connect(CONNECTION_MODEL_THREAD,
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		ISMetaUser::Instance().UserData->Login, ISMetaUser::Instance().UserData->Password))
+	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
+	if (ISDatabase::Instance().Connect(CONNECTION_MODEL_THREAD, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password))
 	{
 		{
 			QSqlQuery SqlQuery = QSqlQuery(ISDatabase::Instance().GetDB(CONNECTION_MODEL_THREAD));

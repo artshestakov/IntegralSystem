@@ -113,8 +113,8 @@ int main(int argc, char *argv[])
 		{
 			InterpreterMode(Result);
 		}
+		ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
 		ISLogger::Instance().Shutdown();
-		return EXIT_SUCCESS;
 	}
 	else if (ArgumentSize = 2)
 	{
@@ -237,6 +237,7 @@ bool CreateDatabase()
 
 	//Проверяем наличие функции для получения конфигурации базы
 	ISQuery qFunction(QS_FUNCTION);
+	qFunction.SetShowLongQuery(false);
 	Result = qFunction.ExecuteFirst();
 	if (!Result)
 	{

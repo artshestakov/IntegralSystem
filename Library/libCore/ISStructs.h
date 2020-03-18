@@ -497,8 +497,6 @@ struct LIBCORE_EXPORT CGSection
 //-----------------------------------------------------------------------------
 struct LIBCORE_EXPORT ISConnectOptionDB
 {
-	ISConnectOptionDB() : Port(0) { }
-
 	QString Host; //Адрес сервера
 	int Port; //Порт
 	QString Name; //Имя базы данных

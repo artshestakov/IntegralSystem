@@ -59,11 +59,6 @@ QString ISDatabase::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-QSqlDatabase& ISDatabase::GetSystemDB()
-{
-	return SystemDB;
-}
-//-----------------------------------------------------------------------------
 QSqlDatabase ISDatabase::GetDB(const QString &ConnectionName)
 {
 	if (QSqlDatabase::contains(ConnectionName))
@@ -75,18 +70,16 @@ QSqlDatabase ISDatabase::GetDB(const QString &ConnectionName)
 //-----------------------------------------------------------------------------
 ISConnectOptionDB ISDatabase::GetOption(const QString &ConnectionName)
 {
-	ISConnectOptionDB ConnectOptionDB;
-	bool ok = GetDB(ConnectionName).isOpen();
-	QSqlDatabase SqlDatabase = QSqlDatabase::cloneDatabase(QSqlDatabase::database(ConnectionName), "123");
-	if (SqlDatabase.isValid())
+	ISConnectOptionDB ConnectOption;
+	if (ConnectOptions.count(ConnectionName))
 	{
-		ConnectOptionDB.Host = SqlDatabase.hostName();
-		ConnectOptionDB.Port = SqlDatabase.port();
-		ConnectOptionDB.Name = SqlDatabase.databaseName();
-		ConnectOptionDB.Login = SqlDatabase.userName();
-		ConnectOptionDB.Password = SqlDatabase.password();
+		ConnectOption.Host = ConnectOptions[ConnectionName].Host;
+		ConnectOption.Port = ConnectOptions[ConnectionName].Port;
+		ConnectOption.Name = ConnectOptions[ConnectionName].Name;
+		ConnectOption.Login = ConnectOptions[ConnectionName].Login;
+		ConnectOption.Password = ConnectOptions[ConnectionName].Password;
 	}
-	return ConnectOptionDB;
+	return ConnectOption;
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist)
@@ -311,6 +304,8 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
 		ErrorString = SqlDatabase.lastError().databaseText().simplified();
 		return Result;
 	}
+	
+	ConnectOptions.emplace(ConnectionName, ISConnectOptionDB{ Host, Port, Database, Login, Password });
 
 	//Изменяем имя приложения для коннекта
 	QSqlError SqlError = SqlDatabase.exec("SET application_name = '" + ISDefines::Core::APPLICATION_NAME + "'").lastError();
@@ -346,6 +341,7 @@ void ISDatabase::Disconnect(const QString &ConnectionName)
 	if (Contains)
 	{
 		QSqlDatabase::removeDatabase(ConnectionName);
+		ConnectOptions.erase(ConnectionName);
 	}
 }
 //-----------------------------------------------------------------------------
