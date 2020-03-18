@@ -2,6 +2,8 @@
 #include "ISDatabase.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
+#include "ISConfig.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISModelThreadWorker::ISModelThreadWorker(QObject *parent)
 	: QObject(parent)
@@ -11,17 +13,14 @@ ISModelThreadWorker::ISModelThreadWorker(QObject *parent)
 //-----------------------------------------------------------------------------
 ISModelThreadWorker::~ISModelThreadWorker()
 {
-	/*if (QSqlDatabase::contains(CONNECTION_MODEL_THREAD))
-	{
-		QSqlDatabase::removeDatabase(CONNECTION_MODEL_THREAD);
-	}*/
+	
 }
 //-----------------------------------------------------------------------------
 void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap &Conditions)
 {
 	if (ISDatabase::Instance().Connect(CONNECTION_MODEL_THREAD,
 		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
+		ISMetaUser::GetInstance().GetData()->Login, ISMetaUser::GetInstance().GetData()->Password))
 	{
 		{
 			QSqlQuery SqlQuery = QSqlQuery(ISDatabase::Instance().GetDB(CONNECTION_MODEL_THREAD));
@@ -68,12 +67,11 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 				emit ErrorQuery(SqlQuery.lastError(), SqlQueryText);
 			}
 		}
-		//SqlDatabase.close();
 		ISDatabase::Instance().Disconnect(CONNECTION_MODEL_THREAD);
 	}
 	else
 	{
-		emit ErrorConnection(/*SqlDatabase.lastError()*/ISDatabase::Instance().GetErrorString());
+		emit ErrorConnection(ISDatabase::Instance().GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------
