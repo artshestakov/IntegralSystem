@@ -30,7 +30,7 @@ struct StructModelItem
 //-----------------------------------------------------------------------------
 struct ISMetaUserData
 {
-	ISMetaUserData() : System(false), ID(0), GroupID(0), AccessAllowed(false), FixedInactive(false), InactiveTimeout(0), GroupFullAccess(false) { }
+	ISMetaUserData() : System(false), ID(0), AccessAllowed(false), AccountLifeTime(false), FixedInactive(false), InactiveTimeout(0), GroupID(0), GroupFullAccess(false) { }
 
 	bool System; //Системный
 	int ID; //Идентификатор пользователя
@@ -43,9 +43,9 @@ struct ISMetaUserData
 	QString IPAddress; //IP-адресс
 	QString FullName; //ФИО
 	bool AccessAllowed; //Доступ разрешен
-	bool AccountLifetime; //Использовать срок действия учётной записи
-	QDate AccountLifetimeStart; //Начало действия учётной записи
-	QDate AccountLifetimeEnd; //Окончание действия учётной записи
+	bool AccountLifeTime; //Использовать срок действия учётной записи
+	QDate AccountLifeTimeStart; //Начало действия учётной записи
+	QDate AccountLifeTimeEnd; //Окончание действия учётной записи
 	bool FixedInactive; //Фиксировать бездействие
 	int InactiveTimeout; //Таймаут фиксирования бездействия
 

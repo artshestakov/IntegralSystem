@@ -44,7 +44,7 @@ ISLockForm::ISLockForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 
 	QLabel *LabelUser = new QLabel(this);
 	LabelUser->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	LabelUser->setText(ISMetaUser::GetInstance().GetData()->FullName);
+	LabelUser->setText(ISMetaUser::Instance().UserData->FullName);
 	FormLayout->addRow(LANG("User") + ':', LabelUser);
 
 	EditPassword = new ISPasswordEdit(this);
@@ -93,7 +93,7 @@ void ISLockForm::Unlock()
 	QString EnterPassword = EditPassword->GetValue().toString();
 	if (EnterPassword.length())
 	{
-		if (ISMetaUser::GetInstance().CheckPassword(EnterPassword))
+		if (ISMetaUser::Instance().CheckPassword(EnterPassword))
 		{
 			SetResult(true);
 			IsClose = true;

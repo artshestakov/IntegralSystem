@@ -20,7 +20,7 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 {
 	if (ISDatabase::Instance().Connect(CONNECTION_MODEL_THREAD,
 		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		ISMetaUser::GetInstance().GetData()->Login, ISMetaUser::GetInstance().GetData()->Password))
+		ISMetaUser::Instance().UserData->Login, ISMetaUser::Instance().UserData->Password))
 	{
 		{
 			QSqlQuery SqlQuery = QSqlQuery(ISDatabase::Instance().GetDB(CONNECTION_MODEL_THREAD));

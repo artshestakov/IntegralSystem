@@ -251,13 +251,24 @@ void ISCore::ExecuteExitComamnd()
 //-----------------------------------------------------------------------------
 void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, const QString &ObjectName, int ObjectID)
 {
-	QVariantMap Parameters;
-	Parameters.insert(":CurrentUserID", ISMetaUser::GetInstance().GetData()->ID);
-	Parameters.insert(":TableName", TableName);
-	Parameters.insert(":TableLocalName", LocalListName);
-	Parameters.insert(":ObjectName", ObjectName);
-	Parameters.insert(":ObjectID", ObjectID);
-	ISQueryPool::GetInstance().AddQuery(QI_HISTORY, Parameters);
+	/*QVariantMap Parameters =
+	{
+		{ ":CurrentUserID", ISMetaUser::Instance().UserData->ID },
+		{ ":TableName", TableName },
+		{ ":TableLocalName", LocalListName },
+		{ ":ObjectName", ObjectName },
+		{ ":ObjectID", ObjectID }
+	};
+	ISQueryPool::GetInstance().AddQuery(QI_HISTORY, Parameters);*/
+	ISQueryPool::GetInstance().AddQuery(QI_HISTORY,
+	{
+		{ ":CurrentUserID", ISMetaUser::Instance().UserData->ID },
+		{ ":TableName", TableName },
+		{ ":TableLocalName", LocalListName },
+		{ ":ObjectName", ObjectName },
+		{ ":ObjectID", ObjectID }
+		}
+	);
 }
 //-----------------------------------------------------------------------------
 void ISCore::ClearHistory()
@@ -417,7 +428,7 @@ void ISCore::TaskInsertHistory(int TaskID, int UserID, const ISUuid &HistoryUID,
 //-----------------------------------------------------------------------------
 void ISCore::TaskInsertHistory(int TaskID, const ISUuid &HistoryUID, const QString &Information)
 {
-	TaskInsertHistory(TaskID, ISMetaUser::GetInstance().GetData()->ID, HistoryUID, Information);
+	TaskInsertHistory(TaskID, ISMetaUser::Instance().UserData->ID, HistoryUID, Information);
 }
 //-----------------------------------------------------------------------------
 bool ISCore::TaskIsAttachedObject(int TaskID, const QString &TableName, int ObjectID)

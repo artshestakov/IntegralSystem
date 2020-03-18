@@ -120,7 +120,7 @@ bool ISReconnectForm::Connect()
 {
 	return ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
 		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		ISMetaUser::GetInstance().GetData()->Login, ISMetaUser::GetInstance().GetData()->Password);
+		ISMetaUser::Instance().UserData->Login, ISMetaUser::Instance().UserData->Password);
 }
 //-----------------------------------------------------------------------------
 void ISReconnectForm::Restart()

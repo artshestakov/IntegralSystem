@@ -48,7 +48,7 @@ bool ISStorageFileLoader::Load()
 	try
 	{
 		ISQuery qInsertFile(QI_FILE);
-		qInsertFile.BindValue(":OwnerUser", ISMetaUser::GetInstance().GetData()->ID);
+		qInsertFile.BindValue(":OwnerUser", ISMetaUser::Instance().UserData->ID);
 		qInsertFile.BindValue(":Name", FileInfo.baseName());
 		qInsertFile.BindValue(":Expansion", FileInfo.completeSuffix());
 		qInsertFile.BindValue(":Size", ISSystem::FileSizeFromString(ISSystem::GetFileSize(File.fileName())));

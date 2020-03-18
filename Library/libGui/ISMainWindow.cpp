@@ -50,7 +50,7 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	connect(&ISCreatedObjectsEntity::GetInstance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	setWindowIcon(BUFFER_PIXMAPS("Logo"));
-	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::GetInstance().GetInfo().LocalName).arg(ISMetaUser::GetInstance().GetData()->FullName));
+	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::GetInstance().GetInfo().LocalName).arg(ISMetaUser::Instance().UserData->FullName));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
 	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setSpacing(0);
@@ -218,12 +218,12 @@ void ISMainWindow::AfterShowEvent()
 		QApplication::beep();
 	}
 
-	if (ISMetaUser::GetInstance().GetData()->FixedInactive)
+	if (ISMetaUser::Instance().UserData->FixedInactive)
 	{
-		ISOnline::GetInstance().Initialize(ISMetaUser::GetInstance().GetData()->InactiveTimeout);
+		ISOnline::GetInstance().Initialize(ISMetaUser::Instance().UserData->InactiveTimeout);
 	}
 
-	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_ONLINE, QVariant(), ISMetaUser::GetInstance().GetData()->FullName, false);
+	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_ONLINE, QVariant(), ISMetaUser::Instance().UserData->FullName, false);
 
 	int CountOverdue = ISCore::TaskCountOverdue();
 	if (CountOverdue)
@@ -404,7 +404,7 @@ void ISMainWindow::BeforeClose()
 {
 	hide();
 
-	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_OFFLINE, QVariant(), ISMetaUser::GetInstance().GetData()->FullName, false);
+	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_OFFLINE, QVariant(), ISMetaUser::Instance().UserData->FullName, false);
 
 	ISSplashScreen::GetInstance().DefaultPixmap();
 	ISSplashScreen::GetInstance().show();
@@ -512,7 +512,7 @@ void ISMainWindow::ShowDeviceSettings()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()
 {
-	if (ISMetaUser::GetInstance().GetData()->System)
+	if (ISMetaUser::Instance().UserData->System)
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotChangeSystemUserPassword"));
 		return;
@@ -524,7 +524,7 @@ void ISMainWindow::ShowChangePasswordForm()
 		return;
 	}
 
-	if (ISGui::ShowUserPasswordForm(ISMetaUser::GetInstance().GetData()->ID))
+	if (ISGui::ShowUserPasswordForm(ISMetaUser::Instance().UserData->ID))
 	{
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.YouPasswordDoneChanged"));
 	}
@@ -561,8 +561,8 @@ void ISMainWindow::UserStatusChange()
 	ISGui::SetWaitGlobalCursor(false);
 	if (UserStatusForm.Exec())
 	{
-		QString StatusName = ISMetaUser::GetInstance().GetCurrentStatus(ISMetaUser::GetInstance().GetData()->ID);
-		ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_STATUS, QVariant(), ISMetaUser::GetInstance().GetData()->FullName + ": " + StatusName, false);
+		QString StatusName = ISMetaUser::Instance().GetCurrentStatus(ISMetaUser::Instance().UserData->ID);
+		ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_STATUS, QVariant(), ISMetaUser::Instance().UserData->FullName + ": " + StatusName, false);
 	}
 
 	SetVisibleShadow(false);

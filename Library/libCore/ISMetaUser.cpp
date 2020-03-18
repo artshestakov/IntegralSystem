@@ -32,7 +32,8 @@ static QString QS_USER_STATUS = PREPARE_QUERY("SELECT usts_name "
 											  "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 ISMetaUser::ISMetaUser()
-	: UserData(new ISMetaUserData())
+	: UserData(new ISMetaUserData()),
+	ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -42,17 +43,23 @@ ISMetaUser::~ISMetaUser()
 	delete UserData;
 }
 //-----------------------------------------------------------------------------
-ISMetaUser& ISMetaUser::GetInstance()
+ISMetaUser& ISMetaUser::Instance()
 {
 	static ISMetaUser UserData;
 	return UserData;
 }
 //-----------------------------------------------------------------------------
-void ISMetaUser::Initialize(const QString &login, const QString &password)
+QString ISMetaUser::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaUser::Initialize(const QString &login, const QString &password)
 {
 	ISQuery qSelectUser(QS_USER);
 	qSelectUser.BindValue(":Login", login);
-	if (qSelectUser.ExecuteFirst())
+	bool Result = qSelectUser.ExecuteFirst();
+	if (Result)
 	{
 		UserData->System = qSelectUser.ReadColumn("usrs_issystem").toBool();
 		UserData->ID = qSelectUser.ReadColumn("usrs_id").toInt();
@@ -67,26 +74,35 @@ void ISMetaUser::Initialize(const QString &login, const QString &password)
 		UserData->FullName = UserData->Surname + SYMBOL_SPACE + UserData->Name + SYMBOL_SPACE + UserData->Patronymic;
 		UserData->AccessAllowed = qSelectUser.ReadColumn("usrs_accessallowed").toBool();
 		
-		UserData->AccountLifetime = qSelectUser.ReadColumn("usrs_accountlifetime").toBool();
-		UserData->AccountLifetimeStart = qSelectUser.ReadColumn("usrs_accountlifetimestart").toDate();
-		UserData->AccountLifetimeEnd = qSelectUser.ReadColumn("usrs_accountlifetimeend").toDate();
+		UserData->AccountLifeTime = qSelectUser.ReadColumn("usrs_accountlifetime").toBool();
+		UserData->AccountLifeTimeStart = qSelectUser.ReadColumn("usrs_accountlifetimestart").toDate();
+		UserData->AccountLifeTimeEnd = qSelectUser.ReadColumn("usrs_accountlifetimeend").toDate();
 
 		UserData->FixedInactive = qSelectUser.ReadColumn("usrs_fixedinactive").toBool();
 		UserData->InactiveTimeout = qSelectUser.ReadColumn("usrs_inactivetimeout").toInt();
 	}
-
-	ISQuery qSelectGroup(QS_USER_GROUP);
-	qSelectGroup.BindValue(":GroupID", UserData->GroupID);
-	if (qSelectGroup.ExecuteFirst())
+	else
 	{
-		UserData->GroupName = qSelectGroup.ReadColumn("usgp_name").toString();
-		UserData->GroupFullAccess = qSelectGroup.ReadColumn("usgp_fullaccess").toBool();
+		ErrorString = qSelectUser.GetErrorString();
 	}
-}
-//-----------------------------------------------------------------------------
-ISMetaUserData* ISMetaUser::GetData()
-{
-	return UserData;
+
+	if (Result)
+	{
+		ISQuery qSelectGroup(QS_USER_GROUP);
+		qSelectGroup.BindValue(":GroupID", UserData->GroupID);
+		Result = qSelectGroup.ExecuteFirst();
+		if (Result)
+		{
+			UserData->GroupName = qSelectGroup.ReadColumn("usgp_name").toString();
+			UserData->GroupFullAccess = qSelectGroup.ReadColumn("usgp_fullaccess").toBool();
+		}
+		else
+		{
+			ErrorString = qSelectGroup.GetErrorString();
+		}
+	}
+	
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISMetaUser::CheckPassword(const QString &EnteredPassword)

@@ -8,25 +8,24 @@
 class LIBCORE_EXPORT ISMetaUser
 {
 public:
-	ISMetaUser(const ISMetaUser &) = delete;
-	ISMetaUser(ISMetaUser &&) = delete;
-	ISMetaUser &operator=(const ISMetaUser &) = delete;
-	ISMetaUser &operator=(ISMetaUser &&) = delete;
-	~ISMetaUser();
+	ISMetaUserData *UserData;
 
-	static ISMetaUser& GetInstance();
+public:
+	static ISMetaUser& Instance();
+	QString GetErrorString() const;
+	bool Initialize(const QString &login, const QString &password);
 
-	void Initialize(const QString &login, const QString &password);
-
-	ISMetaUserData* GetData();
 	bool CheckPassword(const QString &EnteredPassword);
 	QString GetCurrentStatus(int UserID) const; //Получить статус пользователя
 
 private:
 	ISMetaUser();
+	~ISMetaUser();
+	ISMetaUser(ISMetaUser const &) {};
+	ISMetaUser& operator=(ISMetaUser const&) { return *this; };
 
 private:
-	ISMetaUserData *UserData;
+	QString ErrorString;
 };
 //-----------------------------------------------------------------------------
 #endif

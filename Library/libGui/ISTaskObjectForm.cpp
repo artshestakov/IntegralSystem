@@ -89,7 +89,7 @@ bool ISTaskObjectForm::Save()
 		QString TaskName = GetFieldValue("Name").toString();
 		int ExecutorID = GetFieldValue("Executor").toInt();
 
-		if (ExecutorID && ExecutorID != ISMetaUser::GetInstance().GetData()->ID) //≈сли исполнитель не €вл€етс€ создателем - отправить уведомление
+		if (ExecutorID && ExecutorID != ISMetaUser::Instance().UserData->ID) //≈сли исполнитель не €вл€етс€ создателем - отправить уведомление
 		{
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TASK_CREATE_OR_UPDATE, ExecutorID, QVariant(), TaskName);
 		}
@@ -127,7 +127,7 @@ void ISTaskObjectForm::TakeToWork()
 
 	if (GetFieldValue("Executor").toInt()) //≈сли у задачи есть исполнитель
 	{
-		if (GetFieldValue("Executor").toInt() == ISMetaUser::GetInstance().GetData()->ID) //≈сли исполнителем задачи €вл€етс€ текущий пользователь
+		if (GetFieldValue("Executor").toInt() == ISMetaUser::Instance().UserData->ID) //≈сли исполнителем задачи €вл€етс€ текущий пользователь
 		{
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskTakeToWork")))
 			{

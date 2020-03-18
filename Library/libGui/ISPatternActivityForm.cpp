@@ -131,7 +131,7 @@ void ISPatternActivityForm::Timeout()
 //-----------------------------------------------------------------------------
 void ISPatternActivityForm::CheckStatus()
 {
-	if (Database.open(ISMetaUser::GetInstance().GetData()->Login, ISMetaUser::GetInstance().GetData()->Password))
+	if (Database.open(ISMetaUser::Instance().UserData->Login, ISMetaUser::Instance().UserData->Password))
 	{
 		{
 			ISQuery qSelect(Database, QS_PATTERN_STATUS);

@@ -89,7 +89,7 @@ void ISUserListForm::UpdateLabelOnline()
 //-----------------------------------------------------------------------------
 bool ISUserListForm::CheckThisUser()
 {
-	if (GetObjectID() == ISMetaUser::GetInstance().GetData()->ID)
+	if (GetObjectID() == ISMetaUser::Instance().UserData->ID)
 	{
 		return true;
 	}

@@ -64,7 +64,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	//Загрузка мета-данных о пользователе
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.MetaDataCurrentUser"));
-	ISMetaUser::GetInstance().Initialize(UserLogin, UserPassword);
+	ISMetaUser::Instance().Initialize(UserLogin, UserPassword);
 
 	//Инициализация мета-данных
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.MetaData"));
@@ -121,19 +121,19 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Printing"));
 	ISPrintingEntity::GetInstance();
 
-	if (!ISMetaUser::GetInstance().GetData()->System) //Если пользователь НЕ СИСТЕМНЫЙ
+	if (!ISMetaUser::Instance().UserData->System) //Если пользователь НЕ СИСТЕМНЫЙ
 	{
-		if (!ISMetaUser::GetInstance().GetData()->GroupID) //Если пользователь привязан к группе
+		if (!ISMetaUser::Instance().UserData->GroupID) //Если пользователь привязан к группе
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.UserGroupIsNull"));
 			return EXIT_FAILURE;
 		}
 	}
 
-	if (ISMetaUser::GetInstance().GetData()->AccountLifetime) //Если для пользователя настроено ограничение срока действия учётной записи
+	if (ISMetaUser::Instance().UserData->AccountLifeTime) //Если для пользователя настроено ограничение срока действия учётной записи
 	{
-		QDate DateStart = ISMetaUser::GetInstance().GetData()->AccountLifetimeStart;
-		QDate DateEnd = ISMetaUser::GetInstance().GetData()->AccountLifetimeEnd;
+		QDate DateStart = ISMetaUser::Instance().UserData->AccountLifeTimeStart;
+		QDate DateEnd = ISMetaUser::Instance().UserData->AccountLifeTimeEnd;
 
 		if (QDate::currentDate() < DateStart)
 		{
@@ -186,15 +186,15 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.InitializeDevice"));
 	ISDeviceEntity::GetInstance().Initialize();
 
-	if (!ISMetaUser::GetInstance().GetData()->System)
+	if (!ISMetaUser::Instance().UserData->System)
 	{
-		if (!ISMetaUser::GetInstance().GetData()->Birthday.isNull())
+		if (!ISMetaUser::Instance().UserData->Birthday.isNull())
 		{
-			if (ISMetaUser::GetInstance().GetData()->Birthday == QDate::currentDate())
+			if (ISMetaUser::Instance().UserData->Birthday == QDate::currentDate())
 			{
 				ISSplashScreen::GetInstance().hide();
 				ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO("HappyBirthday"));
-				ISMessageBox::ShowInformation(nullptr, LANG("HappyBirthday").arg(ISMetaUser::GetInstance().GetData()->FullName));
+				ISMessageBox::ShowInformation(nullptr, LANG("HappyBirthday").arg(ISMetaUser::Instance().UserData->FullName));
 			}
 		}
 	}
@@ -254,7 +254,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(const QString &Login)
 {
-	if (ISMetaUser::GetInstance().GetData()->System)
+	if (ISMetaUser::Instance().UserData->System)
 	{
 		return true;
 	}
@@ -273,7 +273,7 @@ bool ISStartup::CheckAccessAllowed()
 {
 	bool Result = true;
 
-	if (!ISMetaUser::GetInstance().GetData()->AccessAllowed) //Если у пользователя нет права доступа
+	if (!ISMetaUser::Instance().UserData->AccessAllowed) //Если у пользователя нет права доступа
 	{
 		ISSplashScreen::GetInstance().hide();
 		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.User.NotAccessAllowed"));
@@ -286,13 +286,13 @@ bool ISStartup::CheckAccessAllowed()
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckExistUserGroup()
 {
-	if (ISMetaUser::GetInstance().GetData()->System)
+	if (ISMetaUser::Instance().UserData->System)
 	{
 		return true;
 	}
 	else
 	{
-		if (!ISMetaUser::GetInstance().GetData()->GroupID)
+		if (!ISMetaUser::Instance().UserData->GroupID)
 		{
 			ISSplashScreen::GetInstance().hide();
 			ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.User.NotLinkWithGroup"));

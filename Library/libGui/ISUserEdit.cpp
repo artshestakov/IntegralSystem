@@ -28,7 +28,7 @@ ISUserEdit::ISUserEdit(QWidget *parent) : ISComboEdit(parent)
 				QString UserFullName = qSelect.ReadColumn("userfullname").toString();
 				int UserID = qSelect.ReadColumn("usrs_id").toInt();
 
-				if (UserID == ISMetaUser::GetInstance().GetData()->ID)
+				if (UserID == ISMetaUser::Instance().UserData->ID)
 				{
 					UserFullName += " (" + LANG("You") + ')';
 				}

@@ -166,7 +166,7 @@ void ISUserRoleEntity::DeleteSpecialAccess(int GroupID, const ISUuid &SpecialAcc
 //-----------------------------------------------------------------------------
 void ISUserRoleEntity::Initialize()
 {
-	if (!ISMetaUser::GetInstance().GetData()->System) //Если текущий пользователь не является системным - инициализируем
+	if (!ISMetaUser::Instance().UserData->System) //Если текущий пользователь не является системным - инициализируем
 	{
 		InitializeSubSystem();
 		InitializeTables();
@@ -177,7 +177,7 @@ void ISUserRoleEntity::Initialize()
 bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 {
 	bool Result = false;
-	if (ISMetaUser::GetInstance().GetData()->System || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
+	if (ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess)
 	{
 		Result = true;
 	}
@@ -191,7 +191,7 @@ bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 bool ISUserRoleEntity::CheckAccessTable(const ISUuid &TableUID, const ISUuid &AccessUID)
 {
 	bool Result = false;
-	if (ISMetaUser::GetInstance().GetData()->System || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
+	if (ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess)
 	{
 		Result = true;
 	}
@@ -205,7 +205,7 @@ bool ISUserRoleEntity::CheckAccessTable(const ISUuid &TableUID, const ISUuid &Ac
 bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
 {
 	bool Result = false;
-	if (ISMetaUser::GetInstance().GetData()->System || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
+	if (ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess)
 	{
 		Result = true;
 	}
@@ -219,7 +219,7 @@ bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
 bool ISUserRoleEntity::CheckExistAccesses() const
 {
 	bool Result = false;
-	if (ISMetaUser::GetInstance().GetData()->System || ISMetaUser::GetInstance().GetData()->GroupFullAccess)
+	if (ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess)
 	{
 		Result = true;
 	}
@@ -233,7 +233,7 @@ bool ISUserRoleEntity::CheckExistAccesses() const
 void ISUserRoleEntity::InitializeSubSystem()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_SUBSYSTEM);
-	qSelect.BindValue(":GroupID", ISMetaUser::GetInstance().GetData()->GroupID);
+	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData->GroupID);
 	if (qSelect.Execute())
 	{
 		while (qSelect.Next())
@@ -246,7 +246,7 @@ void ISUserRoleEntity::InitializeSubSystem()
 void ISUserRoleEntity::InitializeTables()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_TABLE);
-	qSelect.BindValue(":GroupID", ISMetaUser::GetInstance().GetData()->GroupID);
+	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData->GroupID);
 	if (qSelect.Execute())
 	{
 		while (qSelect.Next())
@@ -261,7 +261,7 @@ void ISUserRoleEntity::InitializeTables()
 void ISUserRoleEntity::InitializeSpecial()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_SPECIAL);
-	qSelect.BindValue(":GroupID", ISMetaUser::GetInstance().GetData()->GroupID);
+	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData->GroupID);
 	if (qSelect.Execute())
 	{
 		while (qSelect.Next())

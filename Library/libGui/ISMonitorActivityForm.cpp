@@ -264,7 +264,7 @@ void ISMonitorActivityForm::SendNotify()
 		QVariant NotifyText = ISInputDialog::GetText(this, LANG("Notify"), LANG("NotifyText") + ':');
 		if (NotifyText.isValid())
 		{
-			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_MESSAGE, MonitorUserWidget->GetUserID(), QVariant(), LANG("NotifyUserMessage").arg(ISMetaUser::GetInstance().GetData()->FullName).arg(NotifyText.toString()), true);
+			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_MESSAGE, MonitorUserWidget->GetUserID(), QVariant(), LANG("NotifyUserMessage").arg(ISMetaUser::Instance().UserData->FullName).arg(NotifyText.toString()), true);
 		}
 	}
 }
@@ -282,7 +282,7 @@ void ISMonitorActivityForm::TerminateAll()
 		int TerminatedCount = 0;
 		for (ISMonitorUserWidget *MonitorUserWidget : VectorUsers)
 		{
-			if (MonitorUserWidget->GetUserID() == ISMetaUser::GetInstance().GetData()->ID)
+			if (MonitorUserWidget->GetUserID() == ISMetaUser::Instance().UserData->ID)
 			{
 				continue;
 			}
