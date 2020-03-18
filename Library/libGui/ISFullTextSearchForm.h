@@ -29,6 +29,7 @@ private:
 	QString CreateQuery(PMetaTable *MetaTable) const;
 	void ClickedRecord();
 	void Stop();
+	void AddHistory(const QString &Value);
 
 private:
 	QEventLoop *EventLoop;

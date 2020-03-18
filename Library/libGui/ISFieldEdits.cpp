@@ -601,8 +601,6 @@ ISTaskPriorityEdit::~ISTaskPriorityEdit()
 //-----------------------------------------------------------------------------
 ISTaskNameEdit::ISTaskNameEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	Completer = nullptr;
-
 	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/TaskNameLog");
 	if (File.exists())
 	{
@@ -646,22 +644,6 @@ void ISTaskNameEdit::Invoke()
 	}
 
 	CreateCompleter(StringList);
-}
-//-----------------------------------------------------------------------------
-void ISTaskNameEdit::CreateCompleter(const QStringList &StringList)
-{
-	if (Completer)
-	{
-		delete Completer;
-		Completer = nullptr;
-	}
-
-	Completer = new QCompleter(StringList, this);
-	Completer->setMaxVisibleItems(20);
-	Completer->setFilterMode(Qt::MatchContains);
-	Completer->setCaseSensitivity(Qt::CaseInsensitive);
-	Completer->setCompletionMode(QCompleter::PopupCompletion);
-	SetCompleter(Completer);
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

@@ -297,10 +297,6 @@ public:
 	void Invoke() override;
 
 private:
-	void CreateCompleter(const QStringList &StringList);
-
-private:
-	QCompleter *Completer;
 	QStringList StringList;
 };
 //-----------------------------------------------------------------------------

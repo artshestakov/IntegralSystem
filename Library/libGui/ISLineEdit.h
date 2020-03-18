@@ -39,6 +39,9 @@ public:
 	void ResetFontcase(); //Сброс контроля регистра
 
 	void AddAction(QAction *Action, QLineEdit::ActionPosition Position);
+	
+	void CreateCompleter(const QStringList &StringList);
+	QStringList GetCompleterList() const;
 
 protected:
 	void OnUpperText(const QString &Text);
@@ -47,5 +50,6 @@ protected:
 
 private:
 	ISQLineEdit *LineEdit;
+	QCompleter *Completer;
 };
 //-----------------------------------------------------------------------------

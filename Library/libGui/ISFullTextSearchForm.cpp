@@ -15,6 +15,14 @@
 #include "ISMessageBox.h"
 #include "ISProtocol.h"
 //-----------------------------------------------------------------------------
+static QString QS_SEARCH_HISTORY = PREPARE_QUERY("SELECT fsth_value "
+												 "FROM _fullsearchtexthistory "
+												 "WHERE NOT fsth_isdeleted "
+												 "AND fsth_user = currentuserid()");
+//-----------------------------------------------------------------------------
+static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _fullsearchtexthistory(fsth_value) "
+										  "VALUES (:Value)");
+//-----------------------------------------------------------------------------
 ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	Stopped(false),
@@ -81,6 +89,17 @@ ISFullTextSearchForm::~ISFullTextSearchForm()
 void ISFullTextSearchForm::LoadData()
 {
 	LineEdit->SetFocus();
+
+	ISQuery qSelect(QS_SEARCH_HISTORY);
+	if (qSelect.Execute())
+	{
+		QStringList StringList;
+		while (qSelect.Next())
+		{
+			StringList.append(qSelect.ReadColumn("fsth_value").toString());
+		}
+		LineEdit->CreateCompleter(StringList);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::SetSearchInProgress(bool InProgress)
@@ -120,6 +139,7 @@ void ISFullTextSearchForm::Search()
 		return;
 	}
 
+	AddHistory(LineEdit->GetValue().toString());
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SEARCH_FULL_TEXT, QString(), QString(), QVariant(), LineEdit->GetValue().toString());
 	SetSearchInProgress(true);
 	
@@ -266,5 +286,15 @@ void ISFullTextSearchForm::Stop()
 	Mutex.lock();
 	Stopped = true;
 	Mutex.unlock();
+}
+//-----------------------------------------------------------------------------
+void ISFullTextSearchForm::AddHistory(const QString &Value)
+{
+	ISQuery qInsert(QI_HISTORY);
+	qInsert.BindValue(":Value", Value);
+	if (qInsert.Execute())
+	{
+		LineEdit->CreateCompleter(LineEdit->GetCompleterList() << Value);
+	}
 }
 //-----------------------------------------------------------------------------

@@ -1,6 +1,8 @@
 #include "ISLineEdit.h"
 //-----------------------------------------------------------------------------
-ISLineEdit::ISLineEdit(QWidget *parent) : ISFieldEditBase(parent)
+ISLineEdit::ISLineEdit(QWidget *parent)
+	: ISFieldEditBase(parent),
+	Completer(nullptr)
 {
 	SetSizePolicyHorizontal(QSizePolicy::Minimum);
 
@@ -99,6 +101,32 @@ void ISLineEdit::ResetFontcase()
 void ISLineEdit::AddAction(QAction *Action, QLineEdit::ActionPosition Position)
 {
 	LineEdit->AddAction(Action, Position);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::CreateCompleter(const QStringList &StringList)
+{
+	if (Completer)
+	{
+		delete Completer;
+		Completer = nullptr;
+	}
+
+	Completer = new QCompleter(StringList, this);
+	Completer->setMaxVisibleItems(20);
+	Completer->setFilterMode(Qt::MatchContains);
+	Completer->setCaseSensitivity(Qt::CaseInsensitive);
+	Completer->setCompletionMode(QCompleter::PopupCompletion);
+	SetCompleter(Completer);
+}
+//-----------------------------------------------------------------------------
+QStringList ISLineEdit::GetCompleterList() const
+{
+	QStringList StringList;
+	for (int i = 0; i < Completer->model()->rowCount(); ++i)
+	{
+		StringList.append(Completer->model()->data(Completer->model()->index(i, 0)).toString());
+	}
+	return StringList;
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetReadOnly(bool read_only)
