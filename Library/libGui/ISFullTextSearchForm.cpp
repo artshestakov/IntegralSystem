@@ -44,6 +44,8 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent)
 
 	ProgressBar = new QProgressBar(this);
 	ProgressBar->setVisible(false);
+	connect(this, &ISFullTextSearchForm::SetProgressMaximum, ProgressBar, &QProgressBar::setMaximum);
+	connect(this, &ISFullTextSearchForm::SetProgressValue, ProgressBar, &QProgressBar::setValue);
 	GetMainLayout()->addWidget(ProgressBar);
 
 	QHBoxLayout *LayoutLabels = new QHBoxLayout();
@@ -51,6 +53,7 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent)
 
 	LabelSearch = new QLabel(this);
 	LabelSearch->setVisible(false);
+	connect(this, &ISFullTextSearchForm::SetLabelSearch, LabelSearch, &QLabel::setText);
 	LayoutLabels->addWidget(LabelSearch);
 
 	LayoutLabels->addStretch();
@@ -63,7 +66,6 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent)
 	GetMainLayout()->addWidget(Frame);
 
 	ScrollArea = new ISScrollArea(this);
-	ScrollArea->widget()->setLayout(new QVBoxLayout());
 	GetMainLayout()->addWidget(ScrollArea);
 
 	FutureWatcher = new QFutureWatcher<void>(this);
@@ -80,71 +82,60 @@ void ISFullTextSearchForm::LoadData()
 	LineEdit->SetFocus();
 }
 //-----------------------------------------------------------------------------
-void ISFullTextSearchForm::BeforeSearch()
+void ISFullTextSearchForm::SetSearchInProgress(bool InProgress)
 {
-	ISGui::SetWaitGlobalCursor(true);
+	ISGui::SetWaitGlobalCursor(InProgress);
+	LineEdit->setEnabled(!InProgress);
+	ButtonSearch->setEnabled(!InProgress);
+	ButtonStop->setEnabled(InProgress);
+	ProgressBar->setVisible(InProgress);
+	LabelSearch->setVisible(InProgress);
 
-	while (WidgetList.count())
+	if (InProgress)
 	{
-		QWidget *Widget = WidgetList.takeFirst();
-		if (Widget)
+		while (!WidgetList.isEmpty())
 		{
-			delete Widget;
+			delete WidgetList.takeFirst();
 		}
+		ProgressBar->setValue(0);
+		LabelResult->clear();
+		MapResult.clear();
 	}
-
-	LineEdit->setEnabled(false);
-	ButtonSearch->setEnabled(false);
-	ButtonStop->setEnabled(true);
-	ProgressBar->setVisible(true);
-	ProgressBar->setValue(0);
-	LabelSearch->setVisible(true);
-	LabelResult->clear();
+	else
+	{
+		LineEdit->SetFocus();
+		LineEdit->SelectAll();
+		ProgressBar->setValue(0);
+		Frame->setVisible(true);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::Search()
 {
-	BeforeSearch();
-	
-	std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
-	ProgressBar->setMaximum(Tables.size());
-
-	for (PMetaTable *MetaTable : Tables) //Обход таблиц
+	if (LineEdit->GetValue().toString().isEmpty())
 	{
-		if (Stopped)
-		{
-			ISGui::SetWaitGlobalCursor(false);
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.StopFullTextSearch")))
-			{
-				ProgressBar->setValue(0);
-				AfterSearch();
-				LineEdit->SetFocus();
-				LineEdit->SelectAll();
-				return;
-			}
-			else
-			{
-				ISGui::SetWaitGlobalCursor(true);
-			}
-			Stopped = false;
-		}
-
-		ProgressBar->setValue(ProgressBar->value() + 1);
-		LabelSearch->setText(LANG("SearchIn") + ": " + MetaTable->LocalListName);
-
-		if (!MetaTable->IsSystem) //Таблица не системная
-		{
-			QFuture<void> Future = QtConcurrent::run(this, &ISFullTextSearchForm::Execute, CreateQuery(MetaTable), LineEdit->GetValue());
-			FutureWatcher->setFuture(Future);
-			EventLoop->exec();
-		}
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SearchFieldNotValid"));
+		LineEdit->BlinkRed();
+		return;
 	}
+
+	SetSearchInProgress(true);
+	
+	QFuture<void> Future = QtConcurrent::run(this, &ISFullTextSearchForm::Execute, LineEdit->GetValue());
+	FutureWatcher->setFuture(Future);
+	EventLoop->exec();
 
 	LabelSearch->setText(LANG("BuildingListResult"));
 	ISGui::RepaintWidget(LabelSearch);
 	int ResultCount = 0;
 
-	for (const auto &MapItem : Map) //Обход таблиц
+	if (ScrollArea->widget()->layout())
+	{
+		delete ScrollArea->widget()->layout();
+	}
+
+	ScrollArea->widget()->setLayout(new QVBoxLayout());
+	for (const auto &MapItem : MapResult) //Обход таблиц
 	{
 		QString TableName = MapItem.first;
 		ISVectorInt VectorInt = MapItem.second;
@@ -153,48 +144,66 @@ void ISFullTextSearchForm::Search()
 		for (int ObjectID : VectorInt) //Обход объектов
 		{
 			ISLabelLink *LabelLink = new ISLabelLink(ScrollArea);
-			LabelLink->setText(QString::number(ResultCount) + ". " + MetaTable->LocalName + ": " + ISCore::GetObjectName(MetaTable, ObjectID));
+			LabelLink->setText(QString::number(++ResultCount) + ". " + MetaTable->LocalName + ": " + ISCore::GetObjectName(MetaTable, ObjectID));
 			LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
 			LabelLink->setProperty("TableName", TableName);
 			LabelLink->setProperty("ObjectID", ObjectID);
 			connect(LabelLink, &ISLabelLink::Clicked, this, &ISFullTextSearchForm::ClickedRecord);
-			dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addWidget(LabelLink/*, 0, Qt::AlignTop*/);
+			dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addWidget(LabelLink);
 			WidgetList.append(LabelLink);
-			++ResultCount;
 		}
 	}
+
+	if (!ResultCount) //Если поиск не дал результатов
+	{
+		QLabel *LabelNotFound = new QLabel(LANG("FullSearchTextNotResult"), ScrollArea);
+		ISGui::SetFontWidgetBold(LabelNotFound, true);
+		dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addWidget(LabelNotFound);
+		WidgetList.append(LabelNotFound);
+	}
+
 	dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addStretch();
 	LabelResult->setText(LANG("Search.ResultCount") + ": " + QString::number(ResultCount));
-	AfterSearch();
+	SetSearchInProgress(false);
 }
 //-----------------------------------------------------------------------------
-void ISFullTextSearchForm::AfterSearch()
-{
-	LineEdit->setEnabled(true);
-	ButtonSearch->setEnabled(true);
-	ButtonStop->setEnabled(false);
-	ProgressBar->setVisible(false);
-	LabelSearch->setVisible(false);
-	Frame->setVisible(true);
-	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISFullTextSearchForm::Execute(const QString &QueryText, const QVariant &QueryValue)
+void ISFullTextSearchForm::Execute(const QVariant &SearchValue)
 {
 	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
 	bool Result = ISDatabase::Instance().Connect(CONNECTION_FULL_TEXT_SEARCH, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password);
 	if (Result)
 	{
-		ISQuery qSelect(ISDatabase::Instance().GetDB(CONNECTION_FULL_TEXT_SEARCH), QueryText);
-		qSelect.BindValue(":Value", QueryValue);
-		Result = qSelect.Execute();
-		if (Result)
+		std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
+		emit SetProgressMaximum(Tables.size());
+
+		int ProgressValue = 0;
+		for (PMetaTable *MetaTable : Tables) //Обход не системных таблиц
 		{
-			while (qSelect.Next())
+			if (Stopped)
 			{
-				int ObjectID = qSelect.ReadColumn("ID").toInt();
-				QString TableName = qSelect.ReadColumn("table_name").toString();
-				Map.count(TableName) ? Map[TableName].emplace_back(ObjectID) : Map.emplace(TableName, ISVectorInt{ ObjectID });
+				break;
+				Stopped = false;
+			}
+
+			emit SetProgressValue(++ProgressValue);
+			emit SetLabelSearch(LANG("SearchIn") + ": " + MetaTable->LocalListName);
+
+			if (MetaTable->IsSystem)
+			{
+				continue;
+			}
+
+			ISQuery qSelect(ISDatabase::Instance().GetDB(CONNECTION_FULL_TEXT_SEARCH), CreateQuery(MetaTable));
+			qSelect.BindValue(":Value", SearchValue);
+			Result = qSelect.Execute();
+			if (Result)
+			{
+				while (qSelect.Next())
+				{
+					int ObjectID = qSelect.ReadColumn("ID").toInt();
+					QString TableName = qSelect.ReadColumn("table_name").toString();
+					MapResult.count(TableName) ? MapResult[TableName].emplace_back(ObjectID) : MapResult.emplace(TableName, ISVectorInt{ ObjectID });
+				}
 			}
 		}
 		ISDatabase::Instance().Disconnect(CONNECTION_FULL_TEXT_SEARCH);
@@ -252,6 +261,8 @@ void ISFullTextSearchForm::ClickedRecord()
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::Stop()
 {
+	Mutex.lock();
 	Stopped = true;
+	Mutex.unlock();
 }
 //-----------------------------------------------------------------------------

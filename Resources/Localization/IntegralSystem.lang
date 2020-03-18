@@ -4,8 +4,8 @@
   <Local Name="DescriptionApplication" Russian="Система учёта данных IntegralSystem — это современный инструмент для ведения учёта базы данных любого предприятия. IntegralSystem позволяет в комплексе автоматизировать задачи оперативного и управленческого учёта, анализа и отчетных операций."/>
   <Local Name="SplashSceen.Copyright" Russian="Copyright © 2015-2020 IntegralSystem. Все права защищены."/>
   
-  <Local Name="Form.Authorization.ConnectionSettings" Russian="Настройки подключения"/>
-  <Local Name="Form.Authorization.About" Russian="О программе"/>
+  <Local Name="Form.Authorization.ConnectionSettings" Russian="Настройки подключения (F9)"/>
+  <Local Name="Form.Authorization.About" Russian="О программе (F1)"/>
 
   <Local Name="AboutFrameworkDeveloped" Russian="О фреймворке разработки"/>
 
@@ -36,7 +36,7 @@
   <Local Name="AboutForm.Tab.Contacts.WhatsApp" Russian="Whats's App"/>
   <Local Name="AboutForm.Tab.Contacts.ProductAuthorMail" Russian="Электронная почта"/>
   <Local Name="AboutForm.Tab.Contacts.Address" Russian="Адрес"/>
-  <Local Name="AboutForm.Tab.Contacts.Address.Text" Russian="Ставропольский край, г. Ставрополь, пр-кт Карла Маркса 15, 355008"/>
+  <Local Name="AboutForm.Tab.Contacts.Address.Text" Russian="г. Москва, ул. Беговая 26, 125284"/>
   <Local Name="AboutForm.Tab.Contacts.SaveAuthorInformation" Russian="Сохранить информацию об авторе"/>
   <Local Name="AboutForm.Tab.Configuration" Russian="Конфигурация"/>
   <Local Name="AboutForm.Tab.Configuration.Name" Russian="Наименование модуля"/>
@@ -740,6 +740,7 @@
   <Local Name="NotifyUserMessage" Russian="Отправитель: %1. Сообщение: %2"/>
   <Local Name="ClickFromShowUserList" Russian="Нажмите, чтобы показать список пользователей"/>
   <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
+  <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
   
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>

@@ -10,17 +10,21 @@ class ISFullTextSearchForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 
+signals:
+	void SetProgressMaximum(int);
+	void SetProgressValue(int);
+	void SetLabelSearch(const QString &);
+
 public:
 	Q_INVOKABLE ISFullTextSearchForm(QWidget *parent = 0);
 	virtual ~ISFullTextSearchForm();
 
 	void LoadData() override;
 
-protected:
-	void BeforeSearch();
+private:
+	void SetSearchInProgress(bool InProgress);
 	void Search();
-	void AfterSearch();
-	void Execute(const QString &QueryText, const QVariant &QueryValue);
+	void Execute(const QVariant &SearchValue);
 
 	QString CreateQuery(PMetaTable *MetaTable) const;
 	void ClickedRecord();
@@ -30,7 +34,8 @@ private:
 	QEventLoop *EventLoop;
 	QFutureWatcher<void> *FutureWatcher;
 	QWidgetList WidgetList;
-	std::map<QString, ISVectorInt> Map;
+	std::map<QString, ISVectorInt> MapResult;
+	std::mutex Mutex;
 	bool Stopped;
 
 	ISLineEdit *LineEdit;
