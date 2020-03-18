@@ -6,6 +6,7 @@ ISLineEdit::ISLineEdit(QWidget *parent) : ISFieldEditBase(parent)
 
 	LineEdit = new ISQLineEdit(this);
 	connect(LineEdit, &ISQLineEdit::ClearClicked, this, &ISLineEdit::Clear);
+	connect(LineEdit, &ISQLineEdit::returnPressed, this, &ISLineEdit::EnterClicked);
 	connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::ValueChanged);
 	AddWidgetEdit(LineEdit, this);
 }

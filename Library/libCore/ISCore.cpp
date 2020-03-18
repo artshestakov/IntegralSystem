@@ -251,15 +251,6 @@ void ISCore::ExecuteExitComamnd()
 //-----------------------------------------------------------------------------
 void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, const QString &ObjectName, int ObjectID)
 {
-	/*QVariantMap Parameters =
-	{
-		{ ":CurrentUserID", ISMetaUser::Instance().UserData->ID },
-		{ ":TableName", TableName },
-		{ ":TableLocalName", LocalListName },
-		{ ":ObjectName", ObjectName },
-		{ ":ObjectID", ObjectID }
-	};
-	ISQueryPool::GetInstance().AddQuery(QI_HISTORY, Parameters);*/
 	ISQueryPool::GetInstance().AddQuery(QI_HISTORY,
 	{
 		{ ":CurrentUserID", ISMetaUser::Instance().UserData->ID },

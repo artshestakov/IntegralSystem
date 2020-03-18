@@ -9,6 +9,7 @@ class ISLineEdit : public ISFieldEditBase
 
 signals:
 	void ClearPressed();
+	void EnterClicked();
 
 public:
 	Q_INVOKABLE ISLineEdit(QWidget *parent);

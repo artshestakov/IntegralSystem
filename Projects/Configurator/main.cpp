@@ -130,7 +130,6 @@ int main(int argc, char *argv[])
 		return EXIT_SUCCESS;
 	}
 	
-	ISConsole::Pause();
 	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------
