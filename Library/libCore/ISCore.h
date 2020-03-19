@@ -7,18 +7,8 @@ class LIBCORE_EXPORT ISCore
 {
 public:
 	static bool Startup(bool IsGui, QString &ErrorString); //Инициализация ядра
-
-	static bool DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName); //Удалить/Восстановить запись
-	static bool DeleteCascadeObject(const QString &TableName, const QString &TableAlias, int ObjectID); //Удалить объект каскадом
-
-	
 	static void ExitApplication(); //Выход из программы
-
 	static QString GetObjectName(PMetaTable *MetaTable, int ObjectID); //Получить наименование объекта
-	static QString GetVersionInFileName(const QString &FileName); //Получить версию из наименования файла программы IntegralSystem
-
-	static void ExecuteStartCommand(); //Выплнение команды перед запуском программы
-	static void ExecuteExitComamnd(); //Выполнение команды перед выходом
 
 	//История
 	static void AddHistory(const QString &TableName, const QString &LocalListName, const QString &ObjectName, int ObjectID); //Добавить объект в историю

@@ -115,7 +115,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	//Команда перед запуском
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CommandAtStartup"));
-	ISCore::ExecuteStartCommand();
+	ISGui::ExecuteStartCommand();
 
 	//Инициалищация печати
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Printing"));

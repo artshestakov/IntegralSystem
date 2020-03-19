@@ -14,12 +14,6 @@
 #include "ISCrashDumper.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
-static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
-//-----------------------------------------------------------------------------
-static QString QD_OBJECT_CASCADE = "DELETE FROM %1 WHERE %2_id = :ObjectID";
-//-----------------------------------------------------------------------------
-static QString QU_OBJECT = "UPDATE %1 SET %2_deletiondate = now(), %2_deletionuser = CURRENT_USER WHERE %2_id = %3";
-//-----------------------------------------------------------------------------
 static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_user, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid) "
 										  "VALUES(:CurrentUserID, :TableName, :TableLocalName, :ObjectName, :ObjectID)");
 //-----------------------------------------------------------------------------
@@ -115,34 +109,6 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISCore::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName)
-{
-	QString QueryText = Q_DELETE_OR_RECOVERY_OBJECT.arg(TableName).arg(TableAlias);
-
-	ISQuery qDeleteOrRecovery(QueryText);
-	qDeleteOrRecovery.BindValue(":ObjectID", ID);
-	qDeleteOrRecovery.BindValue(":IsDeleted", DeleteOrRecovery == ISNamespace::DRO_Delete ? true : false);
-	bool Result = qDeleteOrRecovery.Execute();
-	if (Result && DeleteOrRecovery == ISNamespace::DRO_Delete)
-	{
-		QString UpdateQuery = QU_OBJECT;
-		UpdateQuery = UpdateQuery.arg(TableName);
-		UpdateQuery = UpdateQuery.arg(TableAlias);
-		UpdateQuery = UpdateQuery.arg(ID);
-		ISQueryPool::GetInstance().AddQuery(UpdateQuery);
-		DeleteOrRecovery == ISNamespace::DRO_Delete ? ISProtocol::DeleteObject(TableName, LocalListName, ID) : ISProtocol::RecoveryObject(TableName, LocalListName, ID);
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISCore::DeleteCascadeObject(const QString &TableName, const QString &TableAlias, int ObjectID)
-{
-	QString QueryText = QD_OBJECT_CASCADE.arg(TableName).arg(TableAlias);
-	ISQuery qDeleteCascade(QueryText);
-	qDeleteCascade.BindValue(":ObjectID", ObjectID);
-	return qDeleteCascade.Execute();
-}
-//-----------------------------------------------------------------------------
 void ISCore::ExitApplication()
 {
 	QCoreApplication::quit();
@@ -188,65 +154,6 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 		}
 	}
 	return ObjectName;
-}
-//-----------------------------------------------------------------------------
-QString ISCore::GetVersionInFileName(const QString &FileName)
-{
-	QStringList StringListFile = FileName.split('_');
-	QString Version = StringListFile[StringListFile.length() - 1];
-	QStringList StringListVersion = Version.split(SYMBOL_POINT);
-
-	QString VersionComplete;
-	for (int i = 0; i < StringListVersion.count(); ++i)
-	{
-		QString String = StringListVersion.at(i);
-		VersionComplete += String + SYMBOL_POINT;
-	}
-
-	ISSystem::RemoveLastSymbolFromString(VersionComplete);
-	return VersionComplete;
-}
-//-----------------------------------------------------------------------------
-void ISCore::ExecuteStartCommand()
-{
-	if (SETTING_BOOL(CONST_UID_SETTING_EVENTS_EVENT_AT_STARTUP))
-	{
-		QString CommandText = SETTING_STRING(CONST_UID_SETTING_EVENTS_STARTUP_COMMAND);
-		if (CommandText.length())
-		{
-			ISLOGGER_DEBUG(QString("Executing command: %1").arg(CommandText));
-			int ExitCode = QProcess::execute("cmd.exe", QStringList() << "/C" << CommandText);
-			if (ExitCode == 0)
-			{
-				ISLOGGER_DEBUG("Executed command done.");
-			}
-			else
-			{
-				ISLOGGER_DEBUG("Executed command error.");
-			}
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCore::ExecuteExitComamnd()
-{
-	if (SETTING_BOOL(CONST_UID_SETTING_EVENTS_EVENT_ON_EXIT))
-	{
-		QString CommandText = SETTING_STRING(CONST_UID_SETTING_EVENTS_EXIT_COMMAND);
-		if (CommandText.length())
-		{
-			ISLOGGER_DEBUG(QString("Executing command: %1").arg(CommandText));
-			int ExitCode = QProcess::execute("cmd.exe", QStringList() << "/C" << CommandText);
-			if (ExitCode == 0)
-			{
-				ISLOGGER_DEBUG("Executed command done.");
-			}
-			else
-			{
-				ISLOGGER_DEBUG("Executed command error.");
-			}
-		}
-	}
 }
 //-----------------------------------------------------------------------------
 void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, const QString &ObjectName, int ObjectID)

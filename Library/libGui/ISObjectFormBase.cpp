@@ -1045,7 +1045,7 @@ void ISObjectFormBase::Delete()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryThisRecord")))
 		{
-			if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, GetObjectID(), MetaTable->LocalListName))
+			if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, GetObjectID(), MetaTable->LocalListName))
 			{
 				emit UpdateList();
 				close();
@@ -1056,7 +1056,7 @@ void ISObjectFormBase::Delete()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteThisRecord")))
 		{
-			if (ISCore::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, GetObjectID(), MetaTable->LocalListName))
+			if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, GetObjectID(), MetaTable->LocalListName))
 			{
 				emit UpdateList();
 				close();
@@ -1075,7 +1075,7 @@ void ISObjectFormBase::DeleteCascade()
 
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
 	{
-		if (ISCore::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, GetObjectID()))
+		if (ISGui::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, GetObjectID()))
 		{
 			ISNotificationService::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
 			ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());

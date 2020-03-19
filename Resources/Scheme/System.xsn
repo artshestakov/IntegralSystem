@@ -41,7 +41,7 @@
   <Table Name="_Protocol" UID="{F7194787-0AB7-4D59-AEA4-9632FF560374}" Alias="prtc" ShowOnly="true" LocalName="Протокол работы" LocalListName="Протокол работы" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{C247978E-C0B7-4D60-910C-782882E81F38}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{A0C19CBE-8426-456D-A37A-76ACA9D97231}" Name="TableName" Type="String" LabelName="Таблица" LocalListName="Таблица" HideFromList="true" NotSearch="true"/>
+      <Field UID="{A0C19CBE-8426-456D-A37A-76ACA9D97231}" Name="TableName" Type="String" LabelName="Таблица / Подсистема" LocalListName="Таблица" HideFromList="true" NotSearch="true"/>
       <Field UID="{C2143C81-9045-43B5-BCFC-F2EB4E0C00EE}" Name="TableLocalName" Type="String" LabelName="Таблица" LocalListName="Таблица"/>
       <Field UID="{F8881FC1-E7E8-468E-9DEF-358C12F6F625}" Name="Type" Type="Int" LabelName="Действие" LocalListName="Действие"/>
       <Field UID="{53D25190-AB48-455D-B87D-2BBACD32A966}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта"/>

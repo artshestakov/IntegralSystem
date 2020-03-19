@@ -418,7 +418,7 @@ void ISMainWindow::BeforeClose()
 	ISSortingBuffer::GetInstance().SaveSortings();
 
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.CommandOnExit"));
-	ISCore::ExecuteExitComamnd();
+	ISGui::ExecuteExitComamnd();
 
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
 	{
