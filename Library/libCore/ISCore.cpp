@@ -158,7 +158,7 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 //-----------------------------------------------------------------------------
 void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, const QString &ObjectName, int ObjectID)
 {
-	ISQueryPool::GetInstance().AddQuery(QI_HISTORY,
+	ISQueryPool::Instance().AddQuery(QI_HISTORY,
 	{
 		{ ":CurrentUserID", ISMetaUser::Instance().UserData->ID },
 		{ ":TableName", TableName },
@@ -171,7 +171,7 @@ void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, 
 //-----------------------------------------------------------------------------
 void ISCore::ClearHistory()
 {
-	ISQueryPool::GetInstance().AddQuery(QD_HISTORY);
+	ISQueryPool::Instance().AddQuery(QD_HISTORY);
 }
 //-----------------------------------------------------------------------------
 int ISCore::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName, int ObjectID)
@@ -321,7 +321,7 @@ void ISCore::TaskInsertHistory(int TaskID, int UserID, const ISUuid &HistoryUID,
 	VariantMap.insert(":UserID", UserID);
 	VariantMap.insert(":ActionUID", HistoryUID);
 	VariantMap.insert(":Information", Information.isEmpty() ? QVariant() : Information);
-	ISQueryPool::GetInstance().AddQuery(QI_TASK_HISTORY, VariantMap);
+	ISQueryPool::Instance().AddQuery(QI_TASK_HISTORY, VariantMap);
 }
 //-----------------------------------------------------------------------------
 void ISCore::TaskInsertHistory(int TaskID, const ISUuid &HistoryUID, const QString &Information)

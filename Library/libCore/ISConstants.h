@@ -140,8 +140,9 @@ const char AMI_EXTENSION_STATUS[] = "ExtensionStatus";
 const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_MODEL_THREAD[] = "ModelThreadDB";
-const char CONNECTION_PATTERN_ACITIVITY[] = "PatternActivity";
-const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearch";
+const char CONNECTION_PATTERN_ACITIVITY[] = "PatternActivityDB";
+const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearchDB";
+const char CONNECTION_QUERY_POOL[] = "QueryPoolDB";
 //-----------------------------------------------------------------------------
 const char SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char FIGURES_STRING[] = "0123456789";
@@ -166,6 +167,7 @@ const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 const char NO_ERROR_STRING[] = "No error.";
 const int DOUBLE_DECIMALS = 3;
 const size_t WORD_SIZE = 40; //Максимальный размер слова в словаре
+const int QUERY_POOL_TIMEOUT = 2000; //Таймаут выполнения запросов из очереди
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 2000;

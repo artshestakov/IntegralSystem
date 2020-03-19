@@ -3,26 +3,42 @@
 #include "ISDatabase.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
-ISQueryPool::ISQueryPool(QObject *parent) : QObject(parent)
+ISQueryPool::ISQueryPool()
+	: QObject(),
+	ErrorString(NO_ERROR_STRING),
+	FutureWatcher(new QFutureWatcher<void>(this))
 {
-	DB = QSqlDatabase::cloneDatabase(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT), DATABASE_CONNECTON_THREAD_QUERY);
-	FutureWatcher = new QFutureWatcher<void>(this);
-
 	QTimer *Timer = new QTimer(this);
-	Timer->setInterval(2000);
+	Timer->setInterval(QUERY_POOL_TIMEOUT);
 	connect(Timer, &QTimer::timeout, this, &ISQueryPool::StartExecuting);
 	Timer->start();
 }
 //-----------------------------------------------------------------------------
 ISQueryPool::~ISQueryPool()
 {
-
+	ISDatabase::Instance().Disconnect(CONNECTION_QUERY_POOL);
 }
 //-----------------------------------------------------------------------------
-ISQueryPool& ISQueryPool::GetInstance()
+ISQueryPool& ISQueryPool::Instance()
 {
 	static ISQueryPool QueryThreader;
 	return QueryThreader;
+}
+//-----------------------------------------------------------------------------
+QString ISQueryPool::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISQueryPool::Initialize()
+{
+	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
+	bool Result = ISDatabase::Instance().Connect(CONNECTION_QUERY_POOL, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password);
+	if (!Result)
+	{
+		ErrorString = ISDatabase::Instance().GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISQueryPool::AddQuery(const QString &SqlText)
@@ -58,21 +74,14 @@ void ISQueryPool::ExecuteQuery()
 {
 	if (Queue.count())
 	{
-		if (DB.open())
+		ISQueryPoolObject QueryPoolObject = Queue.dequeue();
 		{
-			ISQueryPoolObject QueryPoolObject = Queue.dequeue();
+			ISQuery Query(ISDatabase::Instance().GetDB(CONNECTION_QUERY_POOL), QueryPoolObject.SqlText);
+			for (const auto &MapItem : QueryPoolObject.Parameters)
 			{
-				ISQuery Query(DB, QueryPoolObject.SqlText);
-				if (!QueryPoolObject.Parameters.empty())
-				{
-					for (const auto &MapItem : QueryPoolObject.Parameters)
-					{
-						Query.BindValue(MapItem.first, MapItem.second);
-					}
-				}
-				Query.Execute();
+				Query.BindValue(MapItem.first, MapItem.second);
 			}
-			DB.close();
+			Query.Execute();
 		}
 	}
 }

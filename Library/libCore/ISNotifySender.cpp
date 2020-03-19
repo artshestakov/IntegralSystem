@@ -106,11 +106,11 @@ void ISNotifySender::SendNotification(const ISUuid &NotificationUID, int UserID,
 	if (UserID) //Отправка конкретному пользователю
 	{
 		VariantMap.insert(":UserTo", UserID);
-		ISQueryPool::GetInstance().AddQuery(QI_NOTIFICATION_USER, VariantMap);
+		ISQueryPool::Instance().AddQuery(QI_NOTIFICATION_USER, VariantMap);
 	}
 	else //Отправка всем пользователям кроме текущего
 	{
-		ISQueryPool::GetInstance().AddQuery(QI_NOTIFICATION_USERS, VariantMap);
+		ISQueryPool::Instance().AddQuery(QI_NOTIFICATION_USERS, VariantMap);
 	}
 }
 //-----------------------------------------------------------------------------

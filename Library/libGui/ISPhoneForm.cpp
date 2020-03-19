@@ -159,7 +159,7 @@ void ISPhoneForm::Call()
 
 	QVariantMap VariantMap;
 	VariantMap.insert(":Number", EditNumber->GetValue());
-	ISQueryPool::GetInstance().AddQuery(QI_MAKE_CALL, VariantMap);
+	ISQueryPool::Instance().AddQuery(QI_MAKE_CALL, VariantMap);
 }
 //-----------------------------------------------------------------------------
 void ISPhoneForm::Hide()

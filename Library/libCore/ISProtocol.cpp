@@ -72,7 +72,6 @@ void ISProtocol::DeleteCascadeObject(const QString &TableName, const QString &Lo
 int ISProtocol::Insert(bool Thread, const QString &TypeUID, const QString &TableName, const QString &LocalListName, const QVariant &ObjectID, const QString &Information)
 {
 	int Result = 0;
-
 	if (Thread)
 	{
 		QVariantMap Parameters;
@@ -81,8 +80,7 @@ int ISProtocol::Insert(bool Thread, const QString &TypeUID, const QString &Table
 		Parameters.insert(":ObjectID", ObjectID);
 		Parameters.insert(":TableLocalName", LocalListName);
 		Parameters.insert(":Information", Information);
-		
-		ISQueryPool::GetInstance().AddQuery(QI_PROTOCOL, Parameters);
+		ISQueryPool::Instance().AddQuery(QI_PROTOCOL, Parameters);
 	}
 	else
 	{
@@ -92,16 +90,9 @@ int ISProtocol::Insert(bool Thread, const QString &TypeUID, const QString &Table
 		qInsertProtocol.BindValue(":ObjectID", ObjectID);
 		qInsertProtocol.BindValue(":TableLocalName", LocalListName);
 		qInsertProtocol.BindValue(":Information", Information);
-		if (qInsertProtocol.ExecuteFirst())
-		{
-			Result = qInsertProtocol.ReadColumn("prtc_id").toInt();
-		}
-		else
-		{
-			IS_ASSERT(false, "Not executed query: " + qInsertProtocol.GetSqlText());
-		}
+		IS_ASSERT(qInsertProtocol.ExecuteFirst(), "Not executed query: " + qInsertProtocol.GetSqlText());
+		Result = qInsertProtocol.ReadColumn("prtc_id").toInt();
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

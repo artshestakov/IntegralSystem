@@ -8,24 +8,26 @@ class LIBCORE_EXPORT ISQueryPool : public QObject
 	Q_OBJECT
 
 public:
-	ISQueryPool(const ISQueryPool &) = delete;
-	ISQueryPool(ISQueryPool &&) = delete;
-	ISQueryPool &operator=(const ISQueryPool &) = delete;
-	ISQueryPool &operator=(ISQueryPool &&) = delete;
-	~ISQueryPool();
+	static ISQueryPool& Instance();
 
-	static ISQueryPool& GetInstance();
+	QString GetErrorString() const;
+	bool Initialize();
 
 	void AddQuery(const QString &SqlText); //Добавить запрос в очередь
 	void AddQuery(const QString &SqlText, const QVariantMap &Parameters); //Добавить запрос в очередь
 
-protected:
+private:
 	void StartExecuting();
 	void ExecuteQuery();
 
 private:
-	ISQueryPool(QObject *parent = 0);
-	QSqlDatabase DB;
+	ISQueryPool();
+	~ISQueryPool();
+	ISQueryPool(ISQueryPool const &) {};
+	ISQueryPool& operator=(ISQueryPool const&) { return *this; };
+
+private:
+	QString ErrorString;
 	QFutureWatcher<void> *FutureWatcher;
 	QQueue<ISQueryPoolObject> Queue;
 };

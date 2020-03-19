@@ -412,7 +412,7 @@ bool ISGui::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRec
 		UpdateQuery = UpdateQuery.arg(TableName);
 		UpdateQuery = UpdateQuery.arg(TableAlias);
 		UpdateQuery = UpdateQuery.arg(ID);
-		ISQueryPool::GetInstance().AddQuery(UpdateQuery);
+		ISQueryPool::Instance().AddQuery(UpdateQuery);
 		DeleteOrRecovery == ISNamespace::DRO_Delete ? ISProtocol::DeleteObject(TableName, LocalListName, ID) : ISProtocol::RecoveryObject(TableName, LocalListName, ID);
 	}
 	return Result;
