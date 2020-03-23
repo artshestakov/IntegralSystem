@@ -66,15 +66,6 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	int ArgumentSize = CoreArralication.arguments().size();
-	Result = ArgumentSize > 0 && ArgumentSize < 4;
-	if (!Result)
-	{
-		ISLOGGER_WARNING("Invalid arguments");
-		ISConsole::Pause();
-		return EXIT_FAILURE;
-	}
-
 	FillConfig();
 	if (DBLogin.isEmpty() || DBPassword.isEmpty())
 	{
@@ -100,7 +91,9 @@ int main(int argc, char *argv[])
 
 	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 
-	if (ArgumentSize == 1)
+	ISVectorString Arguments = CoreArralication.arguments().toVector().toStdVector();
+	Arguments.erase(Arguments.begin());
+	if (Arguments.size() == 0)
 	{
 		ISLOGGER_UNKNOWN(QString("Configurator [Version %1]").arg(ISVersion::Instance().ToString()));
 		ISLOGGER_UNKNOWN("Welcome to the Configurator.");
@@ -116,13 +109,13 @@ int main(int argc, char *argv[])
 		ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
 		ISLogger::Instance().Shutdown();
 	}
-	else if (ArgumentSize = 2)
+	else if (Arguments.size() == 1)
 	{
-		Result = Execute(CoreArralication.arguments().at(1).toLower());
+		Result = Execute(Arguments[0].toLower());
 	}
-	else if (ArgumentSize = 3)
+	else if (Arguments.size() == 2)
 	{
-		Result = Execute(CoreArralication.arguments().at(1).toLower(), CoreArralication.arguments().at(2).toLower());
+		Result = Execute(Arguments[0].toLower(), Arguments[1].toLower());
 	}
 	
 	if (Result)

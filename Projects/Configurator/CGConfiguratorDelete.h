@@ -20,7 +20,7 @@ public slots:
 	void subsystems();
 	void tables();
 	void fields();
-	void resources();
+	bool resources();
 
 protected:
 	void ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID);

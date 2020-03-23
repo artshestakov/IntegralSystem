@@ -248,26 +248,17 @@ void CGConfiguratorDelete::fields()
 	}
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::resources()
+bool CGConfiguratorDelete::resources()
 {
 	QMap<QString, ISVectorString> Map;
 	for (PMetaResource *MetaResource : ISMetaData::GetInstanse().GetResources())
 	{
-		if (Map.contains(MetaResource->TableName))
-		{
-			Map[MetaResource->TableName].emplace_back(MetaResource->UID);
-		}
-		else
-		{
-			ISVectorString VectorString;
-			VectorString.emplace_back(MetaResource->UID);
-			Map.insert(MetaResource->TableName, VectorString);
-		}
+		Map.contains(MetaResource->TableName) ? 
+			Map[MetaResource->TableName].emplace_back(MetaResource->UID) : 
+			Map.insert(MetaResource->TableName, { MetaResource->UID });
 	}
 
-	int Removed = 0;
-	int Skipped = 0;
-
+	int Removed = 0, Skipped = 0;
 	for (const auto &MapItem : Map.toStdMap()) //Обход всех ресурсов
 	{
 		QString TableName = MapItem.first;
@@ -294,6 +285,10 @@ void CGConfiguratorDelete::resources()
 						{
 							++Removed;
 						}
+						else
+						{
+							ISLOGGER_ERROR("Error delete resource: " + qDeleteResources.GetErrorString());
+						}
 					}
 					else
 					{
@@ -302,21 +297,23 @@ void CGConfiguratorDelete::resources()
 				}
 			}
 		}
+		else
+		{
+			ISLOGGER_ERROR(qSelect.GetErrorString());
+		}
 	}
 
-	if (Removed == Skipped) //Ресурсы для удаления не найдены
-	{
-		ISLOGGER_UNKNOWN("Not found obsolete resources");
-	}
-	else
-	{
+	ISLOGGER_EMPTY();
+	Removed == Skipped ? 
+		ISLOGGER_UNKNOWN("Not found obsolete resources") :
 		ISLOGGER_UNKNOWN(QString("Removed resources: %1. Skipped resources: %2").arg(Removed).arg(Skipped));
-	}
+	return true;
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID)
 {
 	ISLOGGER_EMPTY();
+	ISLOGGER_UNKNOWN("Table name: " + MetaTable->Name);
 	ISQuery qSelect("SELECT * FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 	qSelect.BindValue(":ResourceUID", ResourceUID);
 	if (qSelect.ExecuteFirst())
