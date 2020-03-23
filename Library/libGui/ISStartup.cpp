@@ -48,6 +48,13 @@ ISStartup::~ISStartup()
 //-----------------------------------------------------------------------------
 int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 {
+	//Проверка всех запросов
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.PrepareQueries"));
+	if (!ISQueryText::Instance().CheckAllQueries())
+	{
+		return EXIT_FAILURE;
+	}
+
 	ISObjects::GetInstance().Initialize();
 
 	//Проверка введенных данных пользователем
@@ -108,13 +115,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISParagraphEntity::GetInstance();
 
 	ISQueryPool::Instance().Start();
-
-	//Проверка всех запросов
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.PrepareQueries"));
-	if (!ISQueryText::Instance().CheckAllQueries())
-	{
-		return EXIT_FAILURE;
-	}
 
 	//Команда перед запуском
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CommandAtStartup"));
