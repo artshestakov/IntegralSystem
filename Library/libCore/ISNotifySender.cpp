@@ -97,15 +97,14 @@ void ISNotifySender::SendToUser(const ISUuid &NotificationUID, int UserID, const
 //-----------------------------------------------------------------------------
 void ISNotifySender::SendNotification(const ISUuid &NotificationUID, int UserID, const QVariant &Payload, const QString &String, bool Save)
 {
-	QVariantMap VariantMap;
-	VariantMap.insert(":NotificationUID", NotificationUID);
-	VariantMap.insert(":Payload", Payload);
-	VariantMap.insert(":String", String);
-	VariantMap.insert(":Save", Save);
-	
+	ISStringToVariantMap VariantMap;
+	VariantMap.emplace(":NotificationUID", NotificationUID);
+	VariantMap.emplace(":Payload", Payload);
+	VariantMap.emplace(":String", String);
+	VariantMap.emplace(":Save", Save);
 	if (UserID) //Отправка конкретному пользователю
 	{
-		VariantMap.insert(":UserTo", UserID);
+		VariantMap.emplace(":UserTo", UserID);
 		ISQueryPool::Instance().AddQuery(QI_NOTIFICATION_USER, VariantMap);
 	}
 	else //Отправка всем пользователям кроме текущего

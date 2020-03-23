@@ -316,12 +316,13 @@ void ISCore::TaskInsertDuplicate(int TaskOriginalID, int TaskDuplicateID)
 //-----------------------------------------------------------------------------
 void ISCore::TaskInsertHistory(int TaskID, int UserID, const ISUuid &HistoryUID, const QString &Information)
 {
-	QVariantMap VariantMap;
-	VariantMap.insert(":TaskID", TaskID);
-	VariantMap.insert(":UserID", UserID);
-	VariantMap.insert(":ActionUID", HistoryUID);
-	VariantMap.insert(":Information", Information.isEmpty() ? QVariant() : Information);
-	ISQueryPool::Instance().AddQuery(QI_TASK_HISTORY, VariantMap);
+	ISQueryPool::Instance().AddQuery(QI_TASK_HISTORY,
+	{
+		{ ":TaskID", TaskID },
+		{ ":UserID", UserID },
+		{ ":ActionUID", HistoryUID },
+		{ ":Information", Information.isEmpty() ? QVariant() : Information }
+	});
 }
 //-----------------------------------------------------------------------------
 void ISCore::TaskInsertHistory(int TaskID, const ISUuid &HistoryUID, const QString &Information)

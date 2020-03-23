@@ -107,10 +107,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Paragraphs"));
 	ISParagraphEntity::GetInstance();
 
-	if (!ISQueryPool::Instance().Initialize())
-	{
-		return EXIT_FAILURE;
-	}
+	ISQueryPool::Instance().Start();
 
 	//Проверка всех запросов
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.PrepareQueries"));

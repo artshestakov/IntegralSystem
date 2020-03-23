@@ -156,10 +156,7 @@ void ISPhoneForm::Call()
 {
 	HideAnimation(400);
 	ISNotificationService::ShowNotification(LANG("CallWithNumber").arg(EditNumber->GetValue().toString()));
-
-	QVariantMap VariantMap;
-	VariantMap.insert(":Number", EditNumber->GetValue());
-	ISQueryPool::Instance().AddQuery(QI_MAKE_CALL, VariantMap);
+	ISQueryPool::Instance().AddQuery(QI_MAKE_CALL, { { ":Number", EditNumber->GetValue() } });
 }
 //-----------------------------------------------------------------------------
 void ISPhoneForm::Hide()

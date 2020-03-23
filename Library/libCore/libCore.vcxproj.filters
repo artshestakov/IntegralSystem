@@ -235,6 +235,9 @@
     <ClInclude Include="ISTypedefs.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISQueryPool.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISApplicationRunning.cpp">
@@ -432,9 +435,6 @@
       <Filter>Network</Filter>
     </QtMoc>
     <QtMoc Include="ISQueryModel.h">
-      <Filter>Database</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQueryPool.h">
       <Filter>Database</Filter>
     </QtMoc>
   </ItemGroup>

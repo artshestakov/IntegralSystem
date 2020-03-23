@@ -75,9 +75,7 @@ void ISOnline::Insert(bool Thread, const ISUuid &TypeUID)
 {
 	if (Thread)
 	{
-		QVariantMap VariantMap;
-		VariantMap.insert(":TypeUID", TypeUID);
-		ISQueryPool::Instance().AddQuery(QI_ONLINE, VariantMap);
+		ISQueryPool::Instance().AddQuery(QI_ONLINE, { { ":TypeUID", TypeUID } });
 	}
 	else
 	{

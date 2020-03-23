@@ -74,13 +74,14 @@ int ISProtocol::Insert(bool Thread, const QString &TypeUID, const QString &Table
 	int Result = 0;
 	if (Thread)
 	{
-		QVariantMap Parameters;
-		Parameters.insert(":TypeUID", TypeUID);
-		Parameters.insert(":TableName", TableName);
-		Parameters.insert(":ObjectID", ObjectID);
-		Parameters.insert(":TableLocalName", LocalListName);
-		Parameters.insert(":Information", Information);
-		ISQueryPool::Instance().AddQuery(QI_PROTOCOL, Parameters);
+		ISQueryPool::Instance().AddQuery(QI_PROTOCOL,
+		{
+			{ ":TypeUID", TypeUID },
+			{ ":TableName", TableName },
+			{ ":ObjectID", ObjectID },
+			{ ":TableLocalName", LocalListName },
+			{ ":Information", Information }
+		});
 	}
 	else
 	{

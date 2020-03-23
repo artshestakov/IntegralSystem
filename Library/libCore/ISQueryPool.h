@@ -2,23 +2,22 @@
 //-----------------------------------------------------------------------------
 #include "libCore_global.h"
 #include "ISStructs.h"
+#include <queue>
 //-----------------------------------------------------------------------------
-class LIBCORE_EXPORT ISQueryPool : public QObject
+class LIBCORE_EXPORT ISQueryPool
 {
-	Q_OBJECT
-
 public:
 	static ISQueryPool& Instance();
 
 	QString GetErrorString() const;
-	bool Initialize();
+	void Start();
+	void Shutdown();
 
 	void AddQuery(const QString &SqlText); //Добавить запрос в очередь
-	void AddQuery(const QString &SqlText, const QVariantMap &Parameters); //Добавить запрос в очередь
+	void AddQuery(const QString &SqlText, const ISStringToVariantMap &Parameters); //Добавить запрос в очередь
 
 private:
-	void StartExecuting();
-	void ExecuteQuery();
+	void StartWorker();
 
 private:
 	ISQueryPool();
@@ -28,7 +27,8 @@ private:
 
 private:
 	QString ErrorString;
-	QFutureWatcher<void> *FutureWatcher;
-	QQueue<ISQueryPoolObject> Queue;
+	bool IsRunning;
+	std::mutex Mutex;
+	std::queue<ISQueryPoolObject> Queue;
 };
 //-----------------------------------------------------------------------------

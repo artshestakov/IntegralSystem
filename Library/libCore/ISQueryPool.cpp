@@ -2,27 +2,24 @@
 #include "ISConstants.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISQueryPool::ISQueryPool()
-	: QObject(),
-	ErrorString(NO_ERROR_STRING),
-	FutureWatcher(new QFutureWatcher<void>(this))
+	: ErrorString(NO_ERROR_STRING),
+	IsRunning(false)
 {
-	QTimer *Timer = new QTimer(this);
-	Timer->setInterval(QUERY_POOL_TIMEOUT);
-	connect(Timer, &QTimer::timeout, this, &ISQueryPool::StartExecuting);
-	Timer->start();
+	
 }
 //-----------------------------------------------------------------------------
 ISQueryPool::~ISQueryPool()
 {
-	ISDatabase::Instance().Disconnect(CONNECTION_QUERY_POOL);
+	
 }
 //-----------------------------------------------------------------------------
 ISQueryPool& ISQueryPool::Instance()
 {
-	static ISQueryPool QueryThreader;
-	return QueryThreader;
+	static ISQueryPool QueryPool;
+	return QueryPool;
 }
 //-----------------------------------------------------------------------------
 QString ISQueryPool::GetErrorString() const
@@ -30,59 +27,70 @@ QString ISQueryPool::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISQueryPool::Initialize()
+void ISQueryPool::Start()
 {
-	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
-	bool Result = ISDatabase::Instance().Connect(CONNECTION_QUERY_POOL, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password);
-	if (!Result)
-	{
-		ErrorString = ISDatabase::Instance().GetErrorString();
-	}
-	return Result;
+	IsRunning = true;
+	std::thread(&ISQueryPool::StartWorker, this).detach();
+}
+//-----------------------------------------------------------------------------
+void ISQueryPool::Shutdown()
+{
+	Mutex.lock();
+	IsRunning = false;
+	Mutex.unlock();
 }
 //-----------------------------------------------------------------------------
 void ISQueryPool::AddQuery(const QString &SqlText)
 {
-	Queue.enqueue(ISQueryPoolObject(SqlText));
+	Mutex.lock();
+	Queue.push(ISQueryPoolObject{ SqlText });
+	Mutex.unlock();
 }
 //-----------------------------------------------------------------------------
-void ISQueryPool::AddQuery(const QString &SqlText, const QVariantMap &Parameters)
+void ISQueryPool::AddQuery(const QString &SqlText, const ISStringToVariantMap &Parameters)
 {
-	ISQueryPoolObject QueryPoolObject(SqlText);
-	for (const auto &MapItem : Parameters.toStdMap())
+	Mutex.lock();
+	Queue.push(ISQueryPoolObject{ SqlText, Parameters });
+	Mutex.unlock();
+}
+//-----------------------------------------------------------------------------
+void ISQueryPool::StartWorker()
+{
+	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
+	if (!ISDatabase::Instance().Connect(CONNECTION_QUERY_POOL, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password))
 	{
-		QueryPoolObject.Parameters.emplace(MapItem.first, MapItem.second);
+		ISLOGGER_ERROR(QString("Error create connection \"%1\": %2").arg(CONNECTION_QUERY_POOL).arg(ISDatabase::Instance().GetErrorString()));
+		return;
 	}
-	Queue.push_front(QueryPoolObject);
-}
-//-----------------------------------------------------------------------------
-void ISQueryPool::StartExecuting()
-{
-	if (Queue.count()) //Если в очереди есть запросы
-	{
-		if (FutureWatcher->isRunning()) //Если в данный момент времени происходит отработка запроса, выходить из функции
-		{
-			return;
-		}
 
-		QFuture<void> Future = QtConcurrent::run(this, &ISQueryPool::ExecuteQuery);
-		FutureWatcher->setFuture(Future);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISQueryPool::ExecuteQuery()
-{
-	if (Queue.count())
+	while (true)
 	{
-		ISQueryPoolObject QueryPoolObject = Queue.dequeue();
+		Mutex.lock();
+		while (!Queue.empty())
 		{
-			ISQuery Query(ISDatabase::Instance().GetDB(CONNECTION_QUERY_POOL), QueryPoolObject.SqlText);
-			for (const auto &MapItem : QueryPoolObject.Parameters)
+			ISQueryPoolObject QueryPoolObject = Queue.front();
+			Queue.pop();
 			{
-				Query.BindValue(MapItem.first, MapItem.second);
+				ISQuery Query(ISDatabase::Instance().GetDB(CONNECTION_QUERY_POOL), QueryPoolObject.SqlText);
+				for (const auto &MapItem : QueryPoolObject.Parameters)
+				{
+					Query.BindValue(MapItem.first, MapItem.second);
+				}
+				Query.Execute();
 			}
-			Query.Execute();
+		}
+		bool is_running = IsRunning;
+		Mutex.unlock();
+
+		if (is_running)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(QUERY_POOL_TIMEOUT));
+		}
+		else
+		{
+			break;
 		}
 	}
+	ISDatabase::Instance().Disconnect(CONNECTION_QUERY_POOL);
 }
 //-----------------------------------------------------------------------------

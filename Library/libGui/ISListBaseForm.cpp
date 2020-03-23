@@ -676,10 +676,11 @@ void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SearchFast(const QString &SearchValue)
 {
-	QVariantMap VariantMap;
-	VariantMap.insert(":UserID", ISMetaUser::Instance().UserData->ID);
-	VariantMap.insert(":Value", SearchValue);
-	ISQueryPool::Instance().AddQuery(QI_SEARCH_FAST, VariantMap);
+	ISQueryPool::Instance().AddQuery(QI_SEARCH_FAST, 
+	{
+		{ ":UserID", ISMetaUser::Instance().UserData->ID },
+		{ ":Value", SearchValue }
+	});
 
 	QString PreparedSearchValue = SearchValue.toLower(); //ѕреобразование поискового запроса в нижний регистр (ќЅя«ј“≈Ћ№Ќќ!!!)
 	if (PreparedSearchValue.length()) //≈сли пользователь ввел поисковое значение

@@ -147,7 +147,7 @@
     <QtMoc Include="ISSMS.h" />
     <ClInclude Include="ISMetaUser.h" />
     <QtMoc Include="ISNotifySender.h" />
-    <QtMoc Include="ISQueryPool.h" />
+    <ClInclude Include="ISQueryPool.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
     <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISProtocol.h" />

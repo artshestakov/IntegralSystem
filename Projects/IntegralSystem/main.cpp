@@ -7,6 +7,7 @@
 #include "ISStartup.h"
 #include "ISMessageBox.h"
 #include "ISLogger.h"
+#include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -45,6 +46,11 @@ int main(int argc, char *argv[])
 		ISSplashScreen::GetInstance().ResetPixmap();
 	}
 
-	return Applicaton.exec();
+	int ReturnCode = Applicaton.exec();
+
+	ISLogger::Instance().Shutdown();
+	ISQueryPool::Instance().Shutdown();
+
+	return ReturnCode;
 }
 //-----------------------------------------------------------------------------
