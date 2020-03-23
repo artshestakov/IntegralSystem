@@ -422,20 +422,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_MakeCallHistory" UID="{6C33C787-A069-4346-8DAF-FBE8FA0A55E9}" Alias="mchs" LocalName="Номер" LocalListName="История совершения звонков" TitleName="Number" IsSystem="true">
-    <Fields>
-      <Field UID="{F23115E5-D778-4883-ACB3-F2B26E5EB8D5}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{7CC89E92-1155-4844-821E-6E822AEEAFAA}" Name="Number" Type="Phone" LabelName="Номер" LocalListName="Номер" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="Number"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_File" UID="{FE070794-7865-4060-B6E2-764911F835C6}" Alias="file" LocalName="Файл" LocalListName="Файлы" TitleName="Name" IsSystem="true">
     <Fields>
       <Field UID="{82D5A45B-8FB7-47AF-A99E-C172713D1CCF}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>

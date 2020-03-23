@@ -15,7 +15,7 @@ ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISPhoneBaseEdit(parent)
 {
 	SetVisibleCall(true);
 	
-	if (!ISTelephony::CheckSetUp())
+	if (!ISTelephony::CheckSetup())
 	{
 		SetToolTipCall(LANG("NotSettingTelephonyForCurrentUser"));
 		SetCursorCall(CURSOR_FORBIDDEN);
@@ -29,7 +29,7 @@ ISPhoneEdit::~ISPhoneEdit()
 //-----------------------------------------------------------------------------
 void ISPhoneEdit::Call()
 {
-	if (ISTelephony::CheckSetUp())
+	if (ISTelephony::CheckSetup())
 	{
 		ISGui::SetWaitGlobalCursor(true);
 		

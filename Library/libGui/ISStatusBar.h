@@ -8,7 +8,6 @@ class ISStatusBar : public QStatusBar
 
 signals:
 	void DateTimeClicked();
-	void MakeCall();
 
 public:
 	ISStatusBar(QWidget *parent = 0);

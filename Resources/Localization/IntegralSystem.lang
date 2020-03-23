@@ -550,8 +550,6 @@
   <Local Name="Player.Volume.Off" Russian="Выключить звук"/>
   <Local Name="TimeAlert" Russian="Время уведомления"/>
   <Local Name="OverdueEvent" Russian="Просроченное событие"/>
-  <Local Name="MakeCall" Russian="Совершить звонок"/>
-  <Local Name="InputtheNumber" Russian="Введите номер"/>
   <Local Name="StatusUser" Russian="Статус пользователя"/>
   <Local Name="StatusUser.NotInstalled" Russian="Не установлен"/>
   <Local Name="EnteringSearchQuery" Russian="Введите поисковый запрос"/>
@@ -712,9 +710,6 @@
   <Local Name="ConnectionForm.Hint.Server" Russian="В этом поле укажите IP-адрес сервера, на котором находится база данных программы."/>
   <Local Name="ConnectionForm.Hint.Port" Russian="В этом поле укажите порт, по которому будет происходить подключение к базе данных."/>
   <Local Name="ConnectionForm.Hint.Database" Russian="В этом поле укажите наименование базы данных, подключение к которой требуется."/>
-  <Local Name="ClickedFromMakeCallWithInputNumber" Russian="Нажмите, чтобы совершить звонок на набранный номер"/>
-  <Local Name="HidePanelInputNumber" Russian="Скрыть панель набора номера"/>
-  <Local Name="CallWithNumber" Russian="Вызов на номер &quot;%1&quot;"/>
   <Local Name="ISImportantEditToolTip" Russian="Отметьте этот флажок, чтобы другие пользователи видели, что эта задача является важной."/>
   <Local Name="NotEventsWithSelectedDay" Russian="События на выбранный день отсутствуют"/>
   <Local Name="InputNoteFileStorage" Russian="Введите примечание к файлу (не обязательно)"/>

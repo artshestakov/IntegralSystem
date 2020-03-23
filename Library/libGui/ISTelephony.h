@@ -10,6 +10,6 @@ public:
     ISTelephony();
     virtual ~ISTelephony();
 
-    static bool CheckSetUp(); //Проверка настроена ли телефония
+    static bool CheckSetup(); //Проверка настроена ли телефония
 };
 //-----------------------------------------------------------------------------

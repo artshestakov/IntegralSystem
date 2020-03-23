@@ -310,7 +310,6 @@
     <ClCompile Include="ISPGSettingsForm.cpp" />
     <ClCompile Include="ISPhoneBaseEdit.cpp" />
     <ClCompile Include="ISPhoneEdit.cpp" />
-    <ClCompile Include="ISPhoneForm.cpp" />
     <ClCompile Include="ISPlayerWidget.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPriceListObjectForm.cpp" />
@@ -671,7 +670,6 @@
     <QtMoc Include="ISTaskTabBase.h" />
     <QtMoc Include="ISParagraphBaseForm.h" />
     <QtMoc Include="ISPGSettingsForm.h" />
-    <QtMoc Include="ISPhoneForm.h" />
     <QtMoc Include="ISProtocolObjectListForm.h" />
     <QtMoc Include="ISReconnectForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />

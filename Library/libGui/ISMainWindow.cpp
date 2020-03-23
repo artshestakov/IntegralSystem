@@ -60,8 +60,6 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	CreateStackWidget();
 	CreateStatusBar();
 
-	PhoneForm = new ISPhoneForm();
-
 	//Отключение пользователя
 	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::TermianteUser, this, &ISMainWindow::TerminateMe);
 
@@ -321,7 +319,6 @@ void ISMainWindow::CreateStatusBar()
 		{
 			MenuBar->ButtonParagraphClicked(CONST_UID_PARAGRAPH_CALENDAR);
 		});
-		connect(StatusBar, &ISStatusBar::MakeCall, this, &ISMainWindow::MakeCall);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -601,28 +598,5 @@ void ISMainWindow::ShowAboutForm()
 void ISMainWindow::ShowAboutQt()
 {
 	QApplication::aboutQt();
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::MakeCall()
-{
-	if (ISTelephony::CheckSetUp())
-	{
-		ISGui::SetWaitGlobalCursor(true);
-
-		PhoneForm->adjustSize();
-
-		QPoint Point = StatusBar->mapToGlobal(QPoint());
-		Point.setX(Point.x() + StatusBar->width() - PhoneForm->width() - 25);
-		Point.setY(Point.y() - PhoneForm->height() - 10);
-
-		PhoneForm->move(Point);
-		PhoneForm->ShowAnimated(false, 400);
-
-		ISGui::SetWaitGlobalCursor(false);
-	}
-	else
-	{
-		ISMessageBox::ShowInformation(this, LANG("NotSettingTelephonyForCurrentUser"));
-	}
 }
 //-----------------------------------------------------------------------------

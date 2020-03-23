@@ -736,9 +736,6 @@
     <ClCompile Include="ISPGSettingsForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISPhoneForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISProtocolObjectListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -1585,9 +1582,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISPGSettingsForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPhoneForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISProtocolObjectListForm.h">

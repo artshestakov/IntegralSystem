@@ -16,7 +16,7 @@ ISTelephony::~ISTelephony()
 
 }
 //-----------------------------------------------------------------------------
-bool ISTelephony::CheckSetUp()
+bool ISTelephony::CheckSetup()
 {
     ISQuery qSelect(QS_TELEPHONY);
     if (qSelect.ExecuteFirst())

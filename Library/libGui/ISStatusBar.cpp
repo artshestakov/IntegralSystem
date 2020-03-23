@@ -20,12 +20,6 @@ ISStatusBar::ISStatusBar(QWidget *parent) : QStatusBar(parent)
 											LANG("Port") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT) + "\n" +
 											LANG("Database") + ": " + CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 	});
-
-	ISServiceButton *ButtonCall = new ISServiceButton(this);
-	ButtonCall->setToolTip(LANG("MakeCall"));
-	ButtonCall->setIcon(BUFFER_ICONS("CallPhone"));
-	connect(ButtonCall, &ISServiceButton::clicked, this, &ISStatusBar::MakeCall);
-	addPermanentWidget(ButtonCall);
 }
 //-----------------------------------------------------------------------------
 ISStatusBar::~ISStatusBar()

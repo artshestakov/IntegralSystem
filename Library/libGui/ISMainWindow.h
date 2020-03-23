@@ -8,7 +8,6 @@
 #include "ISCalendarForm.h"
 #include "ISChatForm.h"
 #include "ISWorkspaceForm.h"
-#include "ISPhoneForm.h"
 //-----------------------------------------------------------------------------
 class ISMainWindow : public ISInterfaceForm
 {
@@ -69,8 +68,6 @@ protected:
 	void ShowAboutForm(); //Открыть форму "О программе"
 	void ShowAboutQt(); //Открыть форму "О Qt"
 
-	void MakeCall();
-
 private:
 	ISMenuBar *MenuBar;
 
@@ -80,7 +77,6 @@ private:
 	ISWorkspaceForm *WorkspaceForm; //Виджет рабочей области
 	ISCalendarForm *CalendarForm; //Виджет календаря
 	ISChatForm *ChatForm; //Виджет чата
-	ISPhoneForm *PhoneForm;
 	ISStatusBar *StatusBar;
 	
 	QString CurrentParagraphUID;
