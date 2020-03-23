@@ -29,6 +29,7 @@
 #include "ISDeviceEntity.h"
 #include "ISObjects.h"
 #include "ISVersion.h"
+#include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 											 "FROM _users "
@@ -105,6 +106,11 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	//Инициализация параграфов
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Paragraphs"));
 	ISParagraphEntity::GetInstance();
+
+	if (!ISQueryPool::Instance().Initialize())
+	{
+		return EXIT_FAILURE;
+	}
 
 	//Проверка всех запросов
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.PrepareQueries"));
