@@ -268,7 +268,6 @@
   <Local Name="Banner.Initialize.Paragraphs" Russian="Инициализация параграфов..."/>
   <Local Name="Banner.Initialize.ConfigurationInformation" Russian="Инициализация информации о текущей конфигурации..."/>
   <Local Name="Banner.Initialize.MetaData" Russian="Инициализация мета-данных..."/>
-  <Local Name="Banner.Initialize.CommandAtStartup" Russian="Выполнение команды при запуске..."/>
   <Local Name="Banner.Initialize.Printing" Russian="Инициализация печати..."/>
   <Local Name="Banner.Initialize.ErrorConnectionDatabase" Russian="Ошибка подключения к базе данных."/>
   <Local Name="Banner.Initialize.CheckCurrentUser" Russian="Проверка введенного логина..."/>
@@ -291,7 +290,6 @@
   <!--Banner Closing-->
   <Local Name="Banner.CloseApplication.FixingExitToProtocol" Russian="Завершение работы: фиксация выхода в протоколе..."/>
   <Local Name="Banner.CloseApplication.SaveUserSortings" Russian="Завершение работы: сохранение пользовательских сортировок..."/>
-  <Local Name="Banner.CloseApplication.CommandOnExit" Russian="Завершение работы: выполнение команды при выходе..."/>
   <Local Name="Banner.CloseApplication.ColumnSize.Save" Russian="Завершение работы: сохранение размеров колонок..."/>
   <Local Name="Banner.CloseApplication.ColumnSize.Clear" Russian="Завершение работы: очистка размеров колонок..."/>
   <Local Name="Banner.CloseApplication.DisconnectFromDatabase" Russian="Завершение работы: отключение от базы данных..."/>

@@ -68,17 +68,12 @@
   <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="10" System="true"/>
   <_Settings IsSystem="true" UID="{B03FBAC5-F793-4565-92A3-821C87AE3B56}" Group="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Order="1" Name="NoteViewType" Type="String" WidgetEditName="ISComboCalendarNoteType" LocalName="Отображение примечаний" DefaultValue="ToolTip"/>
 
-  <_SettingsGroup IsSystem="true" UID="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Name="Debug" LocalName="Отладка" IconName="Settings.Debug" Order="11" System="true"/>
-  <_Settings IsDeleted="true" IsSystem="true" UID="{DC11DFE1-5CF8-405D-AF0B-FBB63E7D76AA}" Group="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Order="1" Name="AccessToDebugView" Type="Bool" LocalName="Доступ к отладчику" DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{5332D8E9-6D80-4901-A720-33132AA51F37}" Group="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Order="2" Name="TimeShowListForm" Type="Bool" LocalName="Выводить время отображения формы списка" DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{3AB3621F-EC12-40C9-8E93-9E5BFFB73173}" Group="{2A6A4382-9008-40C8-9FF6-67CD5AC6C849}" Order="3" Name="TimeShowObjectForm" Type="Bool" LocalName="Выводить время отображения формы объекта" DefaultValue="false"/>
-
-  <_SettingsGroup IsSystem="true" UID="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Name="Telephony" LocalName="Телефония" IconName="Settings.Telephony" Order="12" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Name="Telephony" LocalName="Телефония" IconName="Settings.Telephony" Order="11" System="true"/>
   <_Settings IsSystem="true" UID="{BDB8F660-4014-4A16-913C-94E8C02B7630}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="1" Name="IncomingFormPosition" Type="String" WidgetEditName="ISComboIncomingFormPosition" LocalName="Расположение формы входящего звонка" DefaultValue="Center"/>
   <_Settings IsSystem="true" UID="{10FDBAF9-2E4D-4480-9CFF-ED87E8B31A59}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="2" Name="AutoCloseIncomingForm" Type="Bool" LocalName="Автоматически закрывать форму входящего звонка" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{0C9AAC0D-1BDD-4FD9-BEB8-80FAF90D5FDE}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="3" Name="AutoCloseIncomingFormTimeout" Type="Int" LocalName="Таймаут закрытия формы входящего звонка (сек.)" DefaultValue="15"/>
   
-  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{F5887212-6F26-4ECA-BE0D-16C295E39937}" Name="EMail" LocalName="Электронная почта" IconName="Settings.EMail" Order="13" System="true"/>
+  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{F5887212-6F26-4ECA-BE0D-16C295E39937}" Name="EMail" LocalName="Электронная почта" IconName="Settings.EMail" Order="12" System="true"/>
   <_Settings IsSystem="true" UID="{CEF6588C-51E0-4BE6-8B1F-1F5D585448EB}" Group="{F5887212-6F26-4ECA-BE0D-16C295E39937}" Order="1" Name="EMail" Type="EMail" LocalName="Почтовый ящик" DefaultValue=""/>
   <_Settings IsSystem="true" UID="{2278A79B-40A3-41EC-A017-6BCD730DC8D4}" Group="{F5887212-6F26-4ECA-BE0D-16C295E39937}" Order="2" Name="Password" Type="Password" LocalName="Пароль" DefaultValue=""/>
   <_Settings IsSystem="true" UID="{C32F11A9-4EC3-4BC5-845B-B57C3FC082B1}" Group="{F5887212-6F26-4ECA-BE0D-16C295E39937}" Order="3" Name="IncomingServer" Type="String" LocalName="Адрес входящего сервера" DefaultValue=""/>
@@ -87,15 +82,9 @@
   <_Settings IsSystem="true" UID="{1607E289-2F82-44E9-AF4C-2B4E1C9298D3}" Group="{F5887212-6F26-4ECA-BE0D-16C295E39937}" Order="6" Name="OutgoingPort" Type="Int" LocalName="Порт исходящего сервера" DefaultValue=""/>
   <_Settings IsSystem="true" UID="{60F2DB1F-977B-472C-AF6C-16F36407A7CA}" Group="{F5887212-6F26-4ECA-BE0D-16C295E39937}" Order="7" Name="SSL" Type="Bool" LocalName="Защита соединения" DefaultValue="false"/>
 
-  <_SettingsGroup IsSystem="true" UID="{8E914C6E-BF94-4466-B6E0-00E507B9622A}" Name="Events" LocalName="События" IconName="Settings.Events" Order="14" System="true"/>
-  <_Settings IsSystem="true" UID="{D5D3C819-6C24-444B-9C33-F12F42170E50}" Group="{8E914C6E-BF94-4466-B6E0-00E507B9622A}" Order="1" Name="EventAtStartup" Type="Bool" LocalName="Выполнение команды при запуске" DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{4CAD72AD-CC6B-49BA-9731-796E187619F9}" Group="{8E914C6E-BF94-4466-B6E0-00E507B9622A}" Order="2" Name="StartupCommand" Type="Text" LocalName="Команда при запуске" DefaultValue=""/>
-  <_Settings IsSystem="true" UID="{3A55BC7A-19ED-4980-9DCC-AE5995FC1D78}" Group="{8E914C6E-BF94-4466-B6E0-00E507B9622A}" Order="3" Name="EventOnExit" Type="Bool" LocalName="Выполнение команды при выходе" DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{A80F760A-4BD3-4723-86A4-2FE1D3FF80EC}" Group="{8E914C6E-BF94-4466-B6E0-00E507B9622A}" Order="4" Name="ExitCommand" Type="Text" LocalName="Команда при выходе" DefaultValue=""/>
-
-  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="Device" LocalName="Устройства" IconName="Settings.Device" Order="15" System="true"/>
+  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="Device" LocalName="Устройства" IconName="Settings.Device" Order="13" System="true"/>
   
-  <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="16" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="14" System="true"/>
   <_Settings IsSystem="true" UID="{97D72002-CEF4-4D2A-B00F-7A3E9F1B8DA2}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="1" Name="MaximumViewHistory" Type="Int" LocalName="Отображаемое количество открытых объектов в истории" DefaultValue="10"/>
   <_Settings IsSystem="true" UID="{118A02D4-4437-496C-BC89-BB81B6CD2391}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="2" Name="AutoCleanTempDir" Type="Bool" LocalName="Автоматическая очистка временного хранилища" Hint="При выходе из программы, хранилище временных файлов будет очищаться автоматически." DefaultValue="false"/>
   <_Settings IsSystem="true" UID="{3AD4888F-EDC7-4D69-A97F-F9678B6AAC44}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="3" Name="SelectedMenu" Type="Bool" LocalName="Включить всплывающее меню при выборе текста" Hint="При выделении текста в полях редактирования текста будет всплывать меню, через которое Вы сможете вырезать или скопировать выбранный текст." DefaultValue="false"/>

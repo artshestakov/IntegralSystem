@@ -426,48 +426,6 @@ bool ISGui::DeleteCascadeObject(const QString &TableName, const QString &TableAl
 	return qDeleteCascade.Execute();
 }
 //-----------------------------------------------------------------------------
-void ISGui::ExecuteStartCommand()
-{
-	if (SETTING_BOOL(CONST_UID_SETTING_EVENTS_EVENT_AT_STARTUP))
-	{
-		QString CommandText = SETTING_STRING(CONST_UID_SETTING_EVENTS_STARTUP_COMMAND);
-		if (CommandText.length())
-		{
-			ISLOGGER_DEBUG(QString("Executing command: %1").arg(CommandText));
-			int ExitCode = QProcess::execute("cmd.exe", QStringList() << "/C" << CommandText);
-			if (ExitCode == 0)
-			{
-				ISLOGGER_DEBUG("Executed command done.");
-			}
-			else
-			{
-				ISLOGGER_DEBUG("Executed command error.");
-			}
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISGui::ExecuteExitComamnd()
-{
-	if (SETTING_BOOL(CONST_UID_SETTING_EVENTS_EVENT_ON_EXIT))
-	{
-		QString CommandText = SETTING_STRING(CONST_UID_SETTING_EVENTS_EXIT_COMMAND);
-		if (CommandText.length())
-		{
-			ISLOGGER_DEBUG(QString("Executing command: %1").arg(CommandText));
-			int ExitCode = QProcess::execute("cmd.exe", QStringList() << "/C" << CommandText);
-			if (ExitCode == 0)
-			{
-				ISLOGGER_DEBUG("Executed command done.");
-			}
-			else
-			{
-				ISLOGGER_DEBUG("Executed command error.");
-			}
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName, int ObjectID)
 {
 	int CalendarID = ISCore::CalendarInsert(DateTime, Name, Text, TableName, ObjectID);

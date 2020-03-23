@@ -116,10 +116,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	ISQueryPool::Instance().Start();
 
-	//Команда перед запуском
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CommandAtStartup"));
-	ISGui::ExecuteStartCommand();
-
 	//Инициалищация печати
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Printing"));
 	ISPrintingEntity::GetInstance();

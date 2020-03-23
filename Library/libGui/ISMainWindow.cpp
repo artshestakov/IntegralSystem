@@ -414,9 +414,6 @@ void ISMainWindow::BeforeClose()
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.SaveUserSortings"));
 	ISSortingBuffer::GetInstance().SaveSortings();
 
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.CommandOnExit"));
-	ISGui::ExecuteExitComamnd();
-
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
 	{
 		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ColumnSize.Save"));
