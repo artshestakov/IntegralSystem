@@ -13,11 +13,11 @@ public:
 	virtual ~CGConfiguratorService();
 
 public slots:
-	void reindex();
-	void vacuum();
-	void vacuumanalyze();
-	void vacuumfull();
-	void cleartable();
+	bool reindex();
+	bool vacuum();
+	bool vacuumanalyze();
+	bool vacuumfull();
+	bool cleartable();
 };
 //-----------------------------------------------------------------------------
 #endif

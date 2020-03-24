@@ -77,17 +77,15 @@ bool CGConfiguratorDelete::indexes()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::foreigns()
+bool CGConfiguratorDelete::foreigns()
 {
 	ISLOGGER_DEBUG("Deleting foreigns...");
-	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qSelectForeigns(QS_FOREIGNS);
-	if (qSelectForeigns.Execute())
+	bool Result = qSelectForeigns.Execute();
+	if (Result)
 	{
-		int Deleted = 0;
-		int CountForeigns = qSelectForeigns.GetCountResultRows();
-
+		int Deleted = 0, CountForeigns = qSelectForeigns.GetCountResultRows();
 		while (qSelectForeigns.Next())
 		{
 			QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
@@ -105,41 +103,59 @@ void CGConfiguratorDelete::foreigns()
 
 
 			ISQuery qDeleteForeign;
-			if (qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName)))
+			Result = qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName));
+			if (Result)
 			{
-				++Deleted;
+				ISLOGGER_INFO(QString("Deleted %1 of %2 foreigns").arg(++Deleted).arg(CountForeigns));
+			}
+			else
+			{
+				ErrorString = qDeleteForeign.GetErrorString();
 			}
 		}
-
-		ISLOGGER_INFO("Deleted " + QString::number(Deleted) + " of " + QString::number(CountForeigns) + " foreigns");
 	}
+	else
+	{
+		ErrorString = qSelectForeigns.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::systems()
+bool CGConfiguratorDelete::systems()
 {
 	ISLOGGER_DEBUG("Deleting systems...");
-	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qDelete(QD_SYSTEMS);
-	if (qDelete.Execute())
+	bool Result = qDelete.Execute();
+	if (Result)
 	{
 		ISLOGGER_INFO("Deleting all systems done");
 	}
+	else
+	{
+		ErrorString = qDelete.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::subsystems()
+bool CGConfiguratorDelete::subsystems()
 {
 	ISLOGGER_DEBUG("Deleting subsystems...");
-	ISSystem::SleepMilliseconds(ONE_SECOND_TO_MILLISECOND);
 
 	ISQuery qDelete(QD_SUB_SYSTEMS);
-	if (qDelete.Execute())
+	bool Result = qDelete.Execute();
+	if (Result)
 	{
 		ISLOGGER_INFO("Deleting all subsystems done");
 	}
+	else
+	{
+		ErrorString = qDelete.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::tables()
+bool CGConfiguratorDelete::tables()
 {
 	ISVectorString VectorString;
 	std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
@@ -148,11 +164,11 @@ void CGConfiguratorDelete::tables()
 		VectorString.emplace_back(MetaTable->Name.toLower());
 	}
 
-	int Removed = 0;
-	int Skipped = 0;
+	int Removed = 0, Skipped = 0;
 
 	ISQuery qSelectTables(QS_TABLES);
-	if (qSelectTables.Execute())
+	bool Result = qSelectTables.Execute();
+	if (Result)
 	{
 		while (qSelectTables.Next()) //Обход таблиц базы данных
 		{
@@ -161,13 +177,17 @@ void CGConfiguratorDelete::tables()
 			{
 				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName))) //Удаление таблицы
 				{
-					ISQuery qDeleteTable;
 					ISLOGGER_UNKNOWN(QString("Removing table \"%1\"...").arg(TableName));
-					bool Executed = qDeleteTable.Execute("DROP TABLE public." + TableName);
-					if (Executed)
+					ISQuery qDeleteTable;
+					Result = qDeleteTable.Execute("DROP TABLE public." + TableName);
+					if (Result)
 					{
 						++Removed;
 						ISLOGGER_UNKNOWN("Removed table");
+					}
+					else
+					{
+						ErrorString = qDeleteTable.GetErrorString();
 					}
 				}
 				else //Пропустить удаление таблицы
@@ -186,9 +206,10 @@ void CGConfiguratorDelete::tables()
 	{
 		ISLOGGER_UNKNOWN(QString("Removed tables: %1. Skipped tables: %2").arg(Removed).arg(Skipped));
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::fields()
+bool CGConfiguratorDelete::fields()
 {
 	QMap<QString, ISVectorString> Map;
 	std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
@@ -207,26 +228,30 @@ void CGConfiguratorDelete::fields()
 
 	ISQuery qSelectColumns(QS_COLUMNS);
 	qSelectColumns.SetShowLongQuery(false);
-	if (qSelectColumns.Execute())
+	bool Result = qSelectColumns.Execute();
+	if (Result)
 	{
 		while (qSelectColumns.Next()) //Обход всех полей базы данных
 		{
 			QString TableName = qSelectColumns.ReadColumn("table_name").toString();
 			QString ColumnName = qSelectColumns.ReadColumn("column_name").toString();
-
 			if (Map.contains(TableName))
 			{
 				if (!VectorContains(Map.value(TableName), ColumnName)) //Если поле из базы данных отсутствует в мета-данных
 				{
 					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName))) //Удаление поля
 					{
-						ISQuery qDeleteField;
 						ISLOGGER_UNKNOWN(QString("Removing column \"%1\"...").arg(ColumnName));
-						bool Executed = qDeleteField.Execute("ALTER TABLE public." + TableName + " DROP COLUMN " + ColumnName);
-						if (Executed)
+						ISQuery qDeleteField;
+						Result = qDeleteField.Execute("ALTER TABLE public." + TableName + " DROP COLUMN " + ColumnName);
+						if (Result)
 						{
 							++Removed;
 							ISLOGGER_UNKNOWN("Removed column");
+						}
+						else
+						{
+							ErrorString = qDeleteField.GetErrorString();
 						}
 					}
 					else //Пропустить удаление поля
@@ -246,6 +271,7 @@ void CGConfiguratorDelete::fields()
 	{
 		ISLOGGER_UNKNOWN(QString("Removed columns: %1. Skipped columns: %2").arg(Removed).arg(Skipped));
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorDelete::resources()

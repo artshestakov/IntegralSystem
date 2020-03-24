@@ -35,7 +35,7 @@ CGConfiguratorShow::~CGConfiguratorShow()
 
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorShow::obsoletetables()
+bool CGConfiguratorShow::obsoletetables()
 {
 	ISLOGGER_UNKNOWN("Searching not needed tables...");
 
@@ -43,13 +43,13 @@ void CGConfiguratorShow::obsoletetables()
 
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
-	if (qSelectTables.Execute())
+	bool Result = qSelectTables.Execute();
+	if (Result)
 	{
 		ISLOGGER_UNKNOWN("Tables:");
 		while (qSelectTables.Next()) //Обход таблиц базы
 		{
 			QString TableName = qSelectTables.ReadColumn("tablename").toString().toLower();
-
 			PMetaTable *MetaTable = FoundTable(TableName);
 			if (!MetaTable)
 			{
@@ -58,35 +58,40 @@ void CGConfiguratorShow::obsoletetables()
 			}
 		}
 	}
+	else
+	{
+		ErrorString = qSelectTables.GetErrorString();
+	}
 
 	ISLOGGER_UNKNOWN(QString("Founded tables: %1").arg(FoundedTables));
 	ISLOGGER_EMPTY();
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorShow::obsoletefields()
+bool CGConfiguratorShow::obsoletefields()
 {
 	ISLOGGER_UNKNOWN("Searching not needed fields...");
 
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
-	if (qSelectTables.Execute())
+	bool Result = qSelectTables.Execute();
+	if (Result)
 	{
 		while (qSelectTables.Next()) //Обход таблиц базы
 		{
 			QString TableName = qSelectTables.ReadColumn("tablename").toString().toLower();
-
 			PMetaTable *MetaTable = FoundTable(TableName);
 			if (MetaTable)
 			{
 				ISQuery qSelectColumns(QS_COLUMNS);
 				qSelectColumns.SetShowLongQuery(false);
 				qSelectColumns.BindValue(":TableName", TableName);
-				if (qSelectColumns.Execute())
+				Result = qSelectColumns.Execute();
+				if (Result)
 				{
 					while (qSelectColumns.Next()) //Обход полей таблицы
 					{
 						QString ColumnName = qSelectColumns.ReadColumn("column_name").toString().toLower();
-
 						PMetaField *MetaField = FoundField(MetaTable, ColumnName);
 						if (!MetaField)
 						{
@@ -94,13 +99,24 @@ void CGConfiguratorShow::obsoletefields()
 						}
 					}
 				}
+				else
+				{
+					ErrorString = qSelectColumns.GetErrorString();
+					break;
+				}
 			}
 		}
 	}
+	else
+	{
+		ErrorString = qSelectTables.GetErrorString();
+	}
+
 	ISLOGGER_EMPTY();
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorShow::obsoleteresources()
+bool CGConfiguratorShow::obsoleteresources()
 {
 	ISLOGGER_UNKNOWN("Searching not needed resources...");
 
@@ -142,6 +158,11 @@ void CGConfiguratorShow::obsoleteresources()
 				MapOutput[TableName].emplace_back(qSelect.ReadColumn(0).toString());
 			}
 		}
+		else
+		{
+			ErrorString = qSelect.GetErrorString();
+			return false;
+		}
 	}
 	ISLOGGER_EMPTY();
 	for (const auto &OutputItem : MapOutput)
@@ -157,9 +178,10 @@ void CGConfiguratorShow::obsoleteresources()
 		ISLOGGER_EMPTY();
 	}
 	ISLOGGER_EMPTY();
+	return true;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorShow::obsoletesequence()
+bool CGConfiguratorShow::obsoletesequence()
 {
 	ISLOGGER_UNKNOWN("Searching not needed sequences...");
 
@@ -175,40 +197,53 @@ void CGConfiguratorShow::obsoletesequence()
 
 	ISQuery qSelectSequences(QS_SEQUENCES.replace(":Where", Where));
 	qSelectSequences.SetShowLongQuery(false);
-	if (qSelectSequences.Execute())
+	bool Result = qSelectSequences.Execute();
+	if (Result)
 	{
 		while (qSelectSequences.Next())
 		{
-			QString SequenceName = qSelectSequences.ReadColumn("sequence_name").toString();
-			ISLOGGER_UNKNOWN(SequenceName);
+			ISLOGGER_UNKNOWN(qSelectSequences.ReadColumn("sequence_name").toString());
 		}
 	}
+	else
+	{
+		ErrorString = qSelectSequences.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorShow::config()
+bool CGConfiguratorShow::config()
 {
 	QFile FileConfig(ISDefines::Core::PATH_CONFIG_FILE);
-	if (FileConfig.exists())
+	bool Result = FileConfig.exists();
+	if (Result)
 	{
-		if (FileConfig.open(QIODevice::ReadOnly))
+		Result = FileConfig.open(QIODevice::ReadOnly);
+		if (Result)
 		{
 			QStringList StringList = QString(FileConfig.readAll()).split("\n");
 			for (const QString &String : StringList)
 			{
 				ISLOGGER_UNKNOWN(String);
 			}
-
 			FileConfig.close();
 		}
 		else
 		{
-			ISLOGGER_UNKNOWN(QString("Not open file config: %1").arg(FileConfig.errorString()));
+			ErrorString = QString("Not open file config: %1").arg(FileConfig.errorString());
 		}
 	}
 	else
 	{
-		ISLOGGER_UNKNOWN(QString("Not exist file config: %1").arg(FileConfig.fileName()));
+		ErrorString = QString("Not exist file config: %1").arg(FileConfig.fileName());
 	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorShow::databasesize()
+{
+	ISLOGGER_UNKNOWN(ISDatabase::Instance().GetCurrentDatabaseSize());
+	return true;
 }
 //-----------------------------------------------------------------------------
 PMetaTable* CGConfiguratorShow::FoundTable(const QString &TableName)
@@ -237,10 +272,5 @@ PMetaField* CGConfiguratorShow::FoundField(PMetaTable *MetaTable, const QString 
 	}
 
 	return nullptr;
-}
-//-----------------------------------------------------------------------------
-void CGConfiguratorShow::databasesize()
-{
-	ISLOGGER_UNKNOWN(ISDatabase::Instance().GetCurrentDatabaseSize());
 }
 //-----------------------------------------------------------------------------

@@ -14,8 +14,8 @@ public:
 	virtual ~CGConfiguratorFIAS();
 
 public slots:
-	void prepare(); //Подготовка выгрузки
-	void update(); //Обновление
+	bool prepare(); //Подготовка выгрузки
+	bool update(); //Обновление
 
 private:
 

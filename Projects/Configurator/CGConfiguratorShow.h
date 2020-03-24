@@ -14,12 +14,12 @@ public:
 	virtual ~CGConfiguratorShow();
 
 public slots:
-	void obsoletetables();
-	void obsoletefields();
-	void obsoleteresources();
-	void obsoletesequence();
-	void config();
-	void databasesize();
+	bool obsoletetables();
+	bool obsoletefields();
+	bool obsoleteresources();
+	bool obsoletesequence();
+	bool config();
+	bool databasesize();
 
 private:
 	PMetaTable * FoundTable(const QString &TableName);

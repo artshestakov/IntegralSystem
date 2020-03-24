@@ -21,71 +21,79 @@ CGConfiguratorFIAS::~CGConfiguratorFIAS()
 
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorFIAS::prepare()
+bool CGConfiguratorFIAS::prepare()
 {
 	QString UnloadPath = ISConsole::GetString("Enter path to unloading FIAS dir: "); //Путь к файлам ФИАС
 	if (!UnloadPath.length()) //Если путь не введен
 	{
 		ISLOGGER_WARNING("Entered path is empty");
-		return;
+		return false;
 	}
 
 	QDir UnloadDir(UnloadPath);
 	if (!UnloadDir.exists()) //Если папка по введенному пути не существует
 	{
 		ISLOGGER_WARNING("Dir \"" + UnloadPath + "\" not exist");
-		return;
+		return false;
 	}
 
 	QString ResultPath = ISConsole::GetString("Enter the path to the folder with the FIAS processing result: ");
 	if (!ResultPath.length())
 	{
 		ISLOGGER_WARNING("Entered path is empty");
-		return;
+		return false;
 	}
 
 	QDir ResultDir(ResultPath);
 	if (!ResultDir.exists())
 	{
 		ISLOGGER_WARNING("Dir \"" + UnloadPath + "\" not exist");
-		return;
+		return false;
 	}
 
-	if (ResultDir.entryInfoList(QDir::Files).count())
+	if (!ResultDir.entryInfoList(QDir::Files).isEmpty())
 	{
 		ISLOGGER_WARNING("The folder \"" + ResultPath + "\" already contains data. Choose another folder");
-		return;
+		return false;
 	}
 
 	QFileInfoList FileInfoList = UnloadDir.entryInfoList(QStringList() << QString("*.%1").arg(EXTENSION_XML), QDir::Files, QDir::Name);
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех файлов в директории
 	{
-		FileHandling(FileInfo, ResultPath);
+		if (!FileHandling(FileInfo, ResultPath))
+		{
+			return false;
+		}
 	}
+	return true;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorFIAS::update()
+bool CGConfiguratorFIAS::update()
 {
 	QString DirPath = ISConsole::GetString("Enter the path to the folder with prepared FIAS files: ");
 	if (!DirPath.length()) //Если путь не введен
 	{
 		ISLOGGER_WARNING("Entered path is empty");
-		return;
+		return false;
 	}
 
 	QDir Dir(DirPath);
 	if (!Dir.exists()) //Если папка по введенному пути не существует
 	{
 		ISLOGGER_WARNING("Dir \"" + DirPath + "\" not exist");
-		return;
+		return false;
 	}
 
 	InitializeKeys();
 	QFileInfoList FileInfoList = Dir.entryInfoList(QDir::Files, QDir::Name);
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех файлов в директории
 	{
-		FileUpload(FileInfo);
+		if (!FileUpload(FileInfo))
+		{
+			return false;
+		}
 	}
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorFIAS::FileHandling(const QFileInfo &FileInfo, const QString &ResultPath)

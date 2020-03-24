@@ -15,11 +15,11 @@ public:
 
 public slots:
 	bool indexes();
-	void foreigns();
-	void systems();
-	void subsystems();
-	void tables();
-	void fields();
+	bool foreigns();
+	bool systems();
+	bool subsystems();
+	bool tables();
+	bool fields();
 	bool resources();
 
 protected:
