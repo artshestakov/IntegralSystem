@@ -170,7 +170,7 @@ const size_t WORD_SIZE = 40; //Максимальный размер слова в словаре
 const int QUERY_POOL_TIMEOUT = 1000; //Таймаут выполнения запросов из очереди
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
-const int		LOGGER_TIMEOUT = 2000;
+const int		LOGGER_TIMEOUT = 1000;
 const size_t	LOGGER_ARRAY_SIZE = 10000;
 //CARAT------------------------------------------------------------------------
 const char	CARAT_UID[] = "{88DD90C4-2DFF-4515-8C32-7371C39C598A}"; //Уникальный идентификатор для контроля единого запущенного экземпляра
