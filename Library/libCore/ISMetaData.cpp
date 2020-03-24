@@ -22,7 +22,7 @@ ISMetaData::ISMetaData()
 		{ "UID", ISNamespace::FT_UID, "UUID", "ISUuidEdit", "ISComboSearchString", true },
 		{ "Bool", ISNamespace::FT_Bool, "BOOLEAN", "ISCheckEdit", "ISComboSearchBase", true },
 		{ "Double", ISNamespace::FT_Double, "NUMERIC", "ISDoubleEdit", "ISComboSearchNumber", true },
-		{ "ByteArray", ISNamespace::FT_ByteArray, "BYTEA", QString(), QString(), false },
+		{ "ByteArray", ISNamespace::FT_ByteArray, "BYTEA", "ISLineEdit", QString(), false },
 		{ "Date", ISNamespace::FT_Date, "DATE", "ISDateEdit", "ISComboSearchNumber", true },
 		{ "Time", ISNamespace::FT_Time, "TIME WITHOUT TIME ZONE", "ISTimeEdit", "ISComboSearchNumber", true },
 		{ "DateTime", ISNamespace::FT_DateTime, "TIMESTAMP WITHOUT TIME ZONE", "ISDateTimeEdit", "ISComboSearchNumber", true },
@@ -43,7 +43,7 @@ ISMetaData::ISMetaData()
 		{ "Volume", ISNamespace::FT_Volume, "INTEGER", "ISVolumeEdit", QString(), false },
 		{ "Birthday", ISNamespace::FT_Birthday, "DATE", "ISBirthdayEdit", "ISComboSearchNumber", true },
 		{ "Seconds", ISNamespace::FT_Seconds, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", false },
-		{ "CallDetails", ISNamespace::FT_CallDetails, "BOOLEAN", QString(), QString(), false },
+		{ "CallDetails", ISNamespace::FT_CallDetails, "BOOLEAN", "ISCheckEdit", QString(), false },
 		{ "Month", ISNamespace::FT_Month, "INTEGER", "ISMonthEdit", "ISComboSearchNumber", false },
 		{ "Login", ISNamespace::FT_Login, "CHARACTER VARYING", "ISLoginEdit", "ISComboSearchNumber", true },
 		{ "Percent", ISNamespace::FT_Percent, "NUMERIC", "ISPercentEdit", "ISComboSearchNumber", true },
@@ -590,91 +590,94 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 					Result = InitializeXSNTableJoins(MetaTable, GetChildDomNode(DomNode, "Joins").firstChild()); //»нициализаци€ JOIN'ов
 				}
 
-				if (Parent.length()) //≈сли у мета-таблицы есть родительска€ таблица - мета-таблица €вл€етс€ запросом
+				if (Result)
 				{
-					Result = !QueriesMap.count(TableName);
-					if (Result)
+					if (!Parent.isEmpty()) //≈сли у мета-таблицы есть родительска€ таблица - мета-таблица €вл€етс€ запросом
 					{
-						QueriesMap.emplace(TableName, MetaTable);
-					}
-					else
-					{
-						ErrorString = QString("Query \"%1\" already exist in meta data").arg(TableName);
-					}
-				}
-				else //” мета-таблицы нет родительской таблицы
-				{
-					//ѕроверка на заполнение об€зательных атрибутов
-					Result = !MetaTable->Name.isEmpty();
-					if (Result)
-					{
-						Result = !MetaTable->UID.isEmpty();
+						Result = !QueriesMap.count(TableName);
 						if (Result)
 						{
-							Result = !MetaTable->Alias.isEmpty();
+							QueriesMap.emplace(TableName, MetaTable);
+						}
+						else
+						{
+							ErrorString = QString("Query \"%1\" already exist in meta data").arg(TableName);
+						}
+					}
+					else //” мета-таблицы нет родительской таблицы
+					{
+						//ѕроверка на заполнение об€зательных атрибутов
+						Result = !MetaTable->Name.isEmpty();
+						if (Result)
+						{
+							Result = !MetaTable->UID.isEmpty();
 							if (Result)
 							{
-								Result = !MetaTable->LocalName.isEmpty();
+								Result = !MetaTable->Alias.isEmpty();
 								if (Result)
 								{
-									Result = !MetaTable->LocalListName.isEmpty();
+									Result = !MetaTable->LocalName.isEmpty();
 									if (Result)
 									{
-										Result = !MetaTable->TitleName.isEmpty();
+										Result = !MetaTable->LocalListName.isEmpty();
 										if (Result)
 										{
-											QStringList TitleFields = MetaTable->TitleName.split(';');
-											for (const QString &FieldName : TitleFields)
-											{
-												Result = MetaTable->ContainsField(FieldName);
-												if (!Result)
-												{
-													ErrorString = QString("Invalid field name \"%1\" in title name. Table name: %2").arg(MetaTable->TitleName).arg(TableName);
-													break;
-												}
-											}
-											
+											Result = !MetaTable->TitleName.isEmpty();
 											if (Result)
 											{
-												Result = !TablesMap.count(TableName);
+												QStringList TitleFields = MetaTable->TitleName.split(';');
+												for (const QString &FieldName : TitleFields)
+												{
+													Result = MetaTable->ContainsField(FieldName);
+													if (!Result)
+													{
+														ErrorString = QString("Invalid field name \"%1\" in title name. Table name: %2").arg(MetaTable->TitleName).arg(TableName);
+														break;
+													}
+												}
+
 												if (Result)
 												{
-													TablesMap.emplace(TableName, MetaTable);
+													Result = !TablesMap.count(TableName);
+													if (Result)
+													{
+														TablesMap.emplace(TableName, MetaTable);
+													}
+													else
+													{
+														ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
+													}
 												}
-												else
-												{
-													ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
-												}
+											}
+											else
+											{
+												ErrorString = QString("Empty table \"%1\" title name.").arg(MetaTable->Name);
 											}
 										}
 										else
 										{
-											ErrorString = QString("Empty table \"%1\" title name.").arg(MetaTable->Name);
+											ErrorString = QString("Empty table \"%1\" local list name.").arg(MetaTable->Name);
 										}
 									}
 									else
 									{
-										ErrorString = QString("Empty table \"%1\" local list name.").arg(MetaTable->Name);
+										ErrorString = QString("Empty table \"%1\" local name.").arg(MetaTable->Name);
 									}
 								}
 								else
 								{
-									ErrorString = QString("Empty table \"%1\" local name.").arg(MetaTable->Name);
+									ErrorString = QString("Empty table \"%1\" alias.").arg(MetaTable->Name);
 								}
 							}
 							else
 							{
-								ErrorString = QString("Empty table \"%1\" alias.").arg(MetaTable->Name);
+								ErrorString = QString("Empty table \"%1\" uid.").arg(MetaTable->Name);
 							}
 						}
 						else
 						{
-							ErrorString = QString("Empty table \"%1\" uid.").arg(MetaTable->Name);
+							ErrorString = "Empty table name.";
 						}
-					}
-					else
-					{
-						ErrorString = "Empty table name.";
 					}
 				}
 			}
@@ -837,8 +840,8 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 			MetaField->Lower = QVariant(DomNamedNodeMap.namedItem("TitleName").nodeValue()).toBool();
 			MetaField->DefaultValue = DomNamedNodeMap.namedItem("DefaultValue").nodeValue().isEmpty() ? QVariant() : DomNamedNodeMap.namedItem("DefaultValue").nodeValue();
 			MetaField->DefaultValueWidget = DomNamedNodeMap.namedItem("DefaultValueWidget").nodeValue().isEmpty() ? QVariant() : DomNamedNodeMap.namedItem("DefaultValueWidget").nodeValue();
-			MetaField->LabelName = DomNamedNodeMap.namedItem("LabelName").nodeValue();
-			MetaField->LocalListName = DomNamedNodeMap.namedItem("LocalListName").nodeValue();
+			MetaField->LabelName = DomNamedNodeMap.namedItem("LabelName").nodeValue().isEmpty() ? MetaField->Name : DomNamedNodeMap.namedItem("LabelName").nodeValue();
+			MetaField->LocalListName = DomNamedNodeMap.namedItem("LocalListName").nodeValue().isEmpty() ? MetaField->Name : DomNamedNodeMap.namedItem("LocalListName").nodeValue();
 			MetaField->NotNull = QVariant(DomNamedNodeMap.namedItem("NotNull").nodeValue()).toBool();
 			MetaField->ReadOnly = QVariant(DomNamedNodeMap.namedItem("ReadOnly").nodeValue()).toBool();
 			MetaField->HideFromObject = QVariant(DomNamedNodeMap.namedItem("HideFromObject").nodeValue()).toBool();

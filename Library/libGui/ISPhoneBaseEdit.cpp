@@ -6,9 +6,10 @@
 //-----------------------------------------------------------------------------
 ISPhoneBaseEdit::ISPhoneBaseEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
+	SetFixedWidth(175);
+
 	PhoneLineEdit = new ISPhoneLineEdit(this);
 	PhoneLineEdit->SetIcon(ISNamespace::PIT_Standart);
-	PhoneLineEdit->setFixedWidth(200);
 	connect(PhoneLineEdit, &ISPhoneLineEdit::ClearClicked, this, &ISPhoneBaseEdit::Clear);
 	connect(PhoneLineEdit, &ISPhoneLineEdit::textChanged, this, &ISPhoneBaseEdit::ValueChanged);
 	connect(PhoneLineEdit, &ISPhoneLineEdit::Pasted, this, &ISPhoneBaseEdit::Paste);
@@ -60,7 +61,6 @@ void ISPhoneBaseEdit::SetVisibleClear(bool Visible)
 bool ISPhoneBaseEdit::IsValid() const
 {
 	bool Result = true;
-
 	QString PhoneString = ISPhoneNumberParser::RemoveNotDigits(PhoneLineEdit->text());
 	if (PhoneString.length())
 	{
@@ -69,7 +69,6 @@ bool ISPhoneBaseEdit::IsValid() const
 			Result = false;
 		}
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------------
 ISBIKEdit::ISBIKEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(180);
+	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_9), this));
 	SetPlaceholderText(LANG("Field.Bik.PlaceholderText"));
@@ -29,7 +29,7 @@ ISBIKEdit::~ISBIKEdit()
 //-----------------------------------------------------------------------------
 ISKPPEdit::ISKPPEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(180);
+	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_9), this));
 	SetPlaceholderText(LANG("Field.Kpp.PlaceholderText"));
@@ -44,7 +44,7 @@ ISKPPEdit::~ISKPPEdit()
 //-----------------------------------------------------------------------------
 ISOGRNEdit::ISOGRNEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(180);
+	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_13), this));
 	SetPlaceholderText(LANG("Field.Ogrn.PlaceholderText"));
@@ -59,7 +59,7 @@ ISOGRNEdit::~ISOGRNEdit()
 //-----------------------------------------------------------------------------
 ISOKPOEdit::ISOKPOEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(180);
+	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_8), this));
 	SetPlaceholderText(LANG("Field.Okpo.PlaceholderText"));
@@ -88,10 +88,12 @@ ISUuidEdit::ISUuidEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	SetUppercase(true);
 	SetPlaceholderText("{00000000-0000-0000-0000-000000000000}");
+	SetFixedWidth(320);
 
 	ISServiceButton *ButtonGenerate = new ISServiceButton(this);
 	ButtonGenerate->setToolTip(LANG("ClickFromGenerateNewUID"));
 	ButtonGenerate->setIcon(BUFFER_ICONS("UUID.Generate"));
+	connect(ButtonGenerate, &ISServiceButton::clicked, this, &ISUuidEdit::Generate);
 	AddWidgetToRight(ButtonGenerate);
 }
 //-----------------------------------------------------------------------------
@@ -110,11 +112,16 @@ bool ISUuidEdit::IsValid() const
 	return !ISUuid(GetValue().toString()).isEmpty();
 }
 //-----------------------------------------------------------------------------
+void ISUuidEdit::Generate()
+{
+	SetValue(ISSystem::GenerateUuid());
+}
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISVINEdit::ISVINEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(180);
+	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_17), this));
 	SetPlaceholderText(LANG("Field.Vin.PlaceholderText"));
@@ -178,7 +185,7 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
 //-----------------------------------------------------------------------------
 ISINNEdit::ISINNEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(180);
+	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetPlaceholderText(LANG("Field.Inn.PlaceholderText"));
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_12), this));
@@ -507,12 +514,13 @@ void ISMonthEdit::SelectCurrentMonth()
 //-----------------------------------------------------------------------------
 ISEMailEdit::ISEMailEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	setMaximumWidth(280);
+	SetFixedWidth(250);
 
 	SetIcon(BUFFER_ICONS("EMail.FieldEdit.Acceptable"));
 	SetPlaceholderText(LANG("Field.EMail.PlaceholderText"));
 
 	ISServiceButton *ButtonSend = new ISServiceButton(this);
+	ButtonSend->setVisible(false);
 	ButtonSend->setToolTip(LANG("Send"));
 	ButtonSend->setIcon(BUFFER_ICONS("EMailSend"));
 	ButtonSend->setFocusPolicy(Qt::NoFocus);

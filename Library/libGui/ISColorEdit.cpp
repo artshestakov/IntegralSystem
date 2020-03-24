@@ -26,7 +26,7 @@ ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 	connect(ButtonSelectColor, &ISServiceButton::clicked, this, &ISColorEdit::SelectColor);
 	AddWidgetToRight(ButtonSelectColor);
 
-	SetFixedWidth(200);
+	SetFixedWidth(150);
 }
 //-----------------------------------------------------------------------------
 ISColorEdit::~ISColorEdit()

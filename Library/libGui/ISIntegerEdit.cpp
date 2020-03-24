@@ -8,7 +8,7 @@ ISIntegerEdit::ISIntegerEdit(QWidget *parent)
 	IntValidator(new QIntValidator(this))
 {
 	SetValidator(IntValidator);
-	SetFixedWidth(150);
+	SetFixedWidth(200);
 	AddMainLayoutStretch();
 }
 //-----------------------------------------------------------------------------

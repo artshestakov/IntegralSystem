@@ -16,7 +16,7 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 	BorderRed(false),
 	ButtonClear(nullptr)
 {
-	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+	//SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
 	//Главный компоновщик
 	MainLayout = new QHBoxLayout();
@@ -107,7 +107,7 @@ void ISFieldEditBase::SetToolTip(const QString &ToolTip)
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetFixedWidth(int Width)
 {
-	EditWidget->setFixedWidth(Width);
+	setFixedWidth(Width);
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal)

@@ -40,7 +40,7 @@ public:
 	ISNamespace::FieldType GetTypeField(const QString &type_name); //ѕолучить тип данных по мета-имени
 	QString GetTypeDB(ISNamespace::FieldType field_type) const; //ѕолучить наименование типа в базе данных
 	QString GetTypeDB(const QString &type_name) const; //ѕолучить наименование типа в базе данных по имени типа в системе
-	QString GetNameFieldEdit(ISNamespace::FieldType field_type) const; //ѕолучить наименование класса дл€ типа данных
+	QString GetNameFieldEdit(ISNamespace::FieldType field_type) const; //ѕолучить наименование класса пол€ редактировани€ дл€ типа данных
 	QString GetSearchWidget(ISNamespace::FieldType field_type) const; //ѕолучить им€ поискового виджета
 	bool GetSearch(ISNamespace::FieldType field_type) const; //ѕолучить факт разрешение на поиск дл€ типа данных
 

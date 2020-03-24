@@ -76,6 +76,9 @@ public:
 
 	void SetValue(const QVariant &value) override;
 	bool IsValid() const override;
+
+private:
+	void Generate();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
