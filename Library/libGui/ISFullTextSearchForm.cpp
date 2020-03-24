@@ -14,6 +14,7 @@
 #include "ISControls.h"
 #include "ISMessageBox.h"
 #include "ISProtocol.h"
+#include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH_HISTORY = PREPARE_QUERY("SELECT fsth_value "
 												 "FROM _fullsearchtexthistory "
@@ -290,11 +291,7 @@ void ISFullTextSearchForm::Stop()
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::AddHistory(const QString &Value)
 {
-	ISQuery qInsert(QI_HISTORY);
-	qInsert.BindValue(":Value", Value);
-	if (qInsert.Execute())
-	{
-		LineEdit->CreateCompleter(LineEdit->GetCompleterList() << Value);
-	}
+	ISQueryPool::Instance().AddQuery(QI_HISTORY, { {":Value", Value} });
+	LineEdit->CreateCompleter(LineEdit->GetCompleterList() << Value);
 }
 //-----------------------------------------------------------------------------
