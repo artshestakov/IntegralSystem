@@ -106,8 +106,6 @@ int main(int argc, char *argv[])
 		{
 			InterpreterMode(Result);
 		}
-		ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
-		ISLogger::Instance().Shutdown();
 	}
 	else if (Arguments.size() == 1)
 	{
@@ -118,12 +116,9 @@ int main(int argc, char *argv[])
 		Result = Execute(Arguments[0].toLower(), Arguments[1].toLower());
 	}
 	
-	if (Result)
-	{
-		return EXIT_SUCCESS;
-	}
-	
-	return EXIT_FAILURE;
+	ISCore::ExitApplication();
+	ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
+	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------
 void RegisterMetatype()

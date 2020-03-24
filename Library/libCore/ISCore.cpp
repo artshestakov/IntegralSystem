@@ -111,6 +111,8 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 //-----------------------------------------------------------------------------
 void ISCore::ExitApplication()
 {
+	ISLogger::Instance().Shutdown();
+	ISQueryPool::Instance().Shutdown();
 	QCoreApplication::quit();
 }
 //-----------------------------------------------------------------------------
