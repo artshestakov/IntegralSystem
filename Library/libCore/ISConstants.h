@@ -167,7 +167,7 @@ const char COLOR_PATTERN_WIDGET_NOT_REGISTERED[] = "#bbbbbb";
 const char NO_ERROR_STRING[] = "No error.";
 const int DOUBLE_DECIMALS = 3;
 const size_t WORD_SIZE = 40; //Максимальный размер слова в словаре
-const int QUERY_POOL_TIMEOUT = 2000; //Таймаут выполнения запросов из очереди
+const int QUERY_POOL_TIMEOUT = 1000; //Таймаут выполнения запросов из очереди
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 2000;

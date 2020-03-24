@@ -458,11 +458,10 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 	if (!MetaTable->ObjectForm.isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
 	{
 		int ObjectType = QMetaType::type((MetaTable->ObjectForm + SYMBOL_STAR).toLocal8Bit().constData());
-		IS_ASSERT(ObjectType, QString("ObjectForm for table \"%1\" is null.").arg(MetaTable->ObjectForm));
+		IS_ASSERT(ObjectType, QString("ObjectForm for table \"%1\" with name \"%2\" is null.").arg(MetaTable->Name).arg(MetaTable->ObjectForm));
 
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 		ObjectForm = dynamic_cast<ISObjectFormBase*>(MetaObject->newInstance(Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID)));
-		IS_ASSERT(ObjectForm, "ObjectForm not dynamic cast.");
 	}
 	else //У мета-таблицы нет переопределенной формы объекта - создаем базовую
 	{
