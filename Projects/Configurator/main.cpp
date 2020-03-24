@@ -117,7 +117,6 @@ int main(int argc, char *argv[])
 	}
 	
 	ISCore::ExitApplication();
-	ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

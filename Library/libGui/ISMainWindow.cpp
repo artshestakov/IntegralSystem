@@ -424,11 +424,6 @@ void ISMainWindow::BeforeClose()
 		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ColumnSize.Clear"));
 		ISColumnSizer::Instance().Clear();
 	}
-
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.DisconnectFromDatabase"));
-	ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
-
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ExitApplication"));
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)

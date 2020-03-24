@@ -13,6 +13,7 @@
 #include "ISSettingsDatabase.h"
 #include "ISCrashDumper.h"
 #include "ISDefinesCore.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_user, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid) "
 										  "VALUES(:CurrentUserID, :TableName, :TableLocalName, :ObjectName, :ObjectID)");
@@ -113,6 +114,7 @@ void ISCore::ExitApplication()
 {
 	ISLogger::Instance().Shutdown();
 	ISQueryPool::Instance().Shutdown();
+	ISDatabase::Instance().DisconnectAll();
 	QCoreApplication::quit();
 }
 //-----------------------------------------------------------------------------

@@ -35,9 +35,12 @@ void ISQueryPool::Start()
 //-----------------------------------------------------------------------------
 void ISQueryPool::Shutdown()
 {
-	Mutex.lock();
-	IsRunning = false;
-	Mutex.unlock();
+	if (IsRunning)
+	{
+		Mutex.lock();
+		IsRunning = false;
+		Mutex.unlock();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISQueryPool::AddQuery(const QString &SqlText)

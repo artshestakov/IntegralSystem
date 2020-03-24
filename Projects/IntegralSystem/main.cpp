@@ -45,12 +45,6 @@ int main(int argc, char *argv[])
 	{
 		ISSplashScreen::GetInstance().ResetPixmap();
 	}
-
-	int ReturnCode = Applicaton.exec();
-
-	ISLogger::Instance().Shutdown();
-	ISQueryPool::Instance().Shutdown();
-
-	return ReturnCode;
+	return Applicaton.exec();
 }
 //-----------------------------------------------------------------------------

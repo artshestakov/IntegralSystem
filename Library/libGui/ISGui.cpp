@@ -384,7 +384,6 @@ void ISGui::ChangeUser()
 void ISGui::RestartApplication()
 {
 	ExitApplication();
-	ISSystem::SleepSeconds(1);
 	QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
 }
 //-----------------------------------------------------------------------------

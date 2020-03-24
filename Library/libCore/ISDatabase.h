@@ -34,6 +34,7 @@ public:
 
 	bool Connect(const QString &ConnectionName, const QString &Host, int Port, const QString &Database, const QString &Login, const QString &Password); //Подключение к базе данных
 	void Disconnect(const QString &ConnectionName); //Отключиться от БД по имени соединения
+	void DisconnectAll(); //Отключение от всех экземпляров БД
 
 private:
 	ISDatabase();

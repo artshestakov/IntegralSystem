@@ -345,3 +345,14 @@ void ISDatabase::Disconnect(const QString &ConnectionName)
 	}
 }
 //-----------------------------------------------------------------------------
+void ISDatabase::DisconnectAll()
+{
+	for (const QString &ConnectionName : QSqlDatabase::connectionNames())
+	{
+		if (GetDB(ConnectionName).isOpen())
+		{
+			Disconnect(ConnectionName);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
