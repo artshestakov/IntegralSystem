@@ -18,6 +18,8 @@ class ISBIKEdit : public ISLineEdit
 public:
 	Q_INVOKABLE ISBIKEdit(QWidget *parent);
 	virtual ~ISBIKEdit();
+
+	bool IsValid() const override;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -29,6 +31,8 @@ class ISKPPEdit : public ISLineEdit
 public:
 	Q_INVOKABLE ISKPPEdit(QWidget *parent);
 	virtual ~ISKPPEdit();
+
+	bool IsValid() const override;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -40,6 +44,8 @@ class ISOGRNEdit : public ISLineEdit
 public:
 	Q_INVOKABLE ISOGRNEdit(QWidget *parent);
 	virtual ~ISOGRNEdit();
+
+	bool IsValid() const override;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -51,6 +57,8 @@ class ISOKPOEdit : public ISLineEdit
 public:
 	Q_INVOKABLE ISOKPOEdit(QWidget *parent);
 	virtual ~ISOKPOEdit();
+
+	bool IsValid() const override;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -90,6 +98,8 @@ class ISVINEdit : public ISLineEdit
 public:
 	Q_INVOKABLE ISVINEdit(QWidget *parent);
 	~ISVINEdit();
+
+	bool IsValid() const override;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -124,7 +134,7 @@ public:
 	Q_INVOKABLE ISINNEdit(QWidget *parent);
 	virtual ~ISINNEdit();
 
-	bool IsValid() const;
+	bool IsValid() const override;
 	void SetEnabledSearch(bool Enabled);
 
 private:

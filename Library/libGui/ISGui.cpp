@@ -332,6 +332,11 @@ QString ISGui::PrepareLongToolTip(QString ToolTipText, int MaxWidth)
 	return Result + ToolTipText;
 }
 //-----------------------------------------------------------------------------
+int ISGui::GetStringWidth(const QString &String, const QFont &Font)
+{
+	return QFontMetrics(Font).width(String);
+}
+//-----------------------------------------------------------------------------
 QColor ISGui::StringToColor(const QString &String)
 {
 	return QColor(String);

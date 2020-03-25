@@ -4,8 +4,6 @@ ISLineEdit::ISLineEdit(QWidget *parent)
 	: ISFieldEditBase(parent),
 	Completer(nullptr)
 {
-	SetSizePolicyHorizontal(QSizePolicy::Minimum);
-
 	LineEdit = new ISQLineEdit(this);
 	connect(LineEdit, &ISQLineEdit::ClearClicked, this, &ISLineEdit::Clear);
 	connect(LineEdit, &ISQLineEdit::returnPressed, this, &ISLineEdit::EnterClicked);
@@ -25,12 +23,7 @@ void ISLineEdit::SetValue(const QVariant &value)
 //-----------------------------------------------------------------------------
 QVariant ISLineEdit::GetValue() const
 {
-	if (LineEdit->text().length())
-	{
-		return LineEdit->text();
-	}
-
-	return QVariant();
+	return LineEdit->text().isEmpty() ? QVariant() : LineEdit->text();
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::Clear()
@@ -70,26 +63,16 @@ void ISLineEdit::SetTextAlignment(Qt::Alignment Alignment)
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetUppercase(bool uppercase)
 {
-	if (uppercase)
-	{
-		connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnUpperText);
-	}
-	else
-	{
+	uppercase ?
+		connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnUpperText) :
 		disconnect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnUpperText);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetLowercase(bool lowercase)
 {
-	if (lowercase)
-	{
-		connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnLowerText);
-	}
-	else
-	{
+	lowercase ?
+		connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnLowerText) :
 		disconnect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnLowerText);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::ResetFontcase()
@@ -142,16 +125,14 @@ void ISLineEdit::SetPlaceholderText(const QString &placeholder_text)
 //-----------------------------------------------------------------------------
 void ISLineEdit::OnUpperText(const QString &Text)
 {
-	int Position = LineEdit->cursorPosition();
 	LineEdit->setText(Text.toUpper());
-	LineEdit->setCursorPosition(Position);
+	LineEdit->setCursorPosition(LineEdit->cursorPosition());
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::OnLowerText(const QString &Text)
 {
-	int Position = LineEdit->cursorPosition();
 	LineEdit->setText(Text.toLower());
-	LineEdit->setCursorPosition(Position);
+	LineEdit->setCursorPosition(LineEdit->cursorPosition());
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetInputMask(const QString &InputMask)

@@ -16,7 +16,8 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 	BorderRed(false),
 	ButtonClear(nullptr)
 {
-	//SetSizePolicyHorizontal(QSizePolicy::Maximum);
+	SetSizePolicyHorizontal(QSizePolicy::Minimum);
+	SetSizePolicyVertical(QSizePolicy::Maximum);
 
 	//Главный компоновщик
 	MainLayout = new QHBoxLayout();
@@ -107,7 +108,7 @@ void ISFieldEditBase::SetToolTip(const QString &ToolTip)
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetFixedWidth(int Width)
 {
-	setFixedWidth(Width);
+	EditWidget->setFixedWidth(Width);
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal)
@@ -123,31 +124,12 @@ void ISFieldEditBase::SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical)
 void ISFieldEditBase::BlinkRed()
 {
 	EditWidget->clearFocus();
-
-	BorderRed = true;
-	repaint();
-	ISSystem::SleepMilliseconds(100);
-
-	BorderRed = false;
-	repaint();
-	ISSystem::SleepMilliseconds(100);
-
-	BorderRed = true;
-	repaint();
-	ISSystem::SleepMilliseconds(100);
-
-	BorderRed = false;
-	repaint();
-	ISSystem::SleepMilliseconds(100);
-
-	BorderRed = true;
-	repaint();
-	ISSystem::SleepMilliseconds(100);
-
-	BorderRed = false;
-	repaint();
-	ISSystem::SleepMilliseconds(100);
-
+	for (size_t i = 0; i < EDIT_BLINK_COUNT; i++)
+	{
+		BorderRed = BorderRed ? false : true;
+		repaint();
+		ISSystem::SleepMilliseconds(100);
+	}
 	SetFocus();
 }
 //-----------------------------------------------------------------------------
@@ -163,7 +145,7 @@ bool ISFieldEditBase::GetModificationFlag() const
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::CreateHint(const QString &Hint)
 {
-	if (Hint.length())
+	if (!Hint.isEmpty())
 	{
 		if (!ButtonHint)
 		{
@@ -194,13 +176,10 @@ void ISFieldEditBase::paintEvent(QPaintEvent *PaintEvent)
 	{
 		if (BorderRed)
 		{
-			//Расположение рамки
-			QRect Rect(EditWidget->pos().x() - 1, EditWidget->pos().y() - 1, EditWidget->width() + 2, EditWidget->height() + 2);
-
 			QPainter Painter(this);
 			Painter.setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
 			Painter.setPen(QPen(ISDefines::Gui::EDIT_WIDGET_COLOR_RED, 2.5, Qt::SolidLine));
-			Painter.drawRect(Rect);
+			Painter.drawRect(EditWidget->pos().x() - 1, EditWidget->pos().y() - 1, EditWidget->width() + 2, EditWidget->height() + 2);
 		}
 	}
 }

@@ -61,12 +61,6 @@ const char REG_EXP_PASSWORD_UPPER[] = "^[А-ЯA-Z]+$";
 const char REG_EXP_URL[] = "^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$"; //Ссылка на сайт или страницу в интернете
 const char REG_EXP_FIAS_CONTENT[] = "<\\w+ .+\\/>";
 const char REG_EXP_FIAS_TABLE_NAME[] = "[A-Za-z]+ ";
-const char REG_EXP_NUMBER_COUNT_8[] = "^[0-9]{8}$"; //8 цифр
-const char REG_EXP_NUMBER_COUNT_9[] = "^[0-9]{9}$"; //9 цифр
-const char REG_EXP_NUMBER_COUNT_10[] = "^[0-9]{10}$"; //10 цифр
-const char REG_EXP_NUMBER_COUNT_12[] = "^[0-9]{12}$"; //12 цифр
-const char REG_EXP_NUMBER_COUNT_13[] = "^[0-9]{13}$"; //13 цифр
-const char REG_EXP_NUMBER_COUNT_17[] = "^[0-9]{17}$"; //17 цифр
 //DATE_TIME_FORMATS------------------------------------------------------------
 const char FORMAT_DATE_V1[] = "d MMMM yyyy";
 const char FORMAT_DATE_V2[] = "dd.MM.yyyy";
@@ -168,6 +162,8 @@ const char NO_ERROR_STRING[] = "No error.";
 const int DOUBLE_DECIMALS = 3;
 const size_t WORD_SIZE = 40; //Максимальный размер слова в словаре
 const int QUERY_POOL_TIMEOUT = 1000; //Таймаут выполнения запросов из очереди
+const size_t EDIT_BLINK_COUNT = (3) * 2; //Количество миганий поля редактирования. Где 3 - количество миганий.
+const char UUID_PLACEHOLDER_TEXT[] = "{00000000-0000-0000-0000-000000000000}";
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 1000;

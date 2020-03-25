@@ -3,41 +3,41 @@
 
   <Table Name="_Test" UID="{F67231DA-9DFD-45FB-98D2-B2DA5DC8B804}" Alias="test" LocalName="Тест" LocalListName="Тесты" TitleName="String">
     <Fields>
-      <Field UID="{8C0C9204-DA75-46A2-AF76-6FCE6C59CD98}" Name="Int" Type="Int" LayoutName="Integer"/>
-      <Field UID="{88F9C933-01D0-4A91-A124-CABDA2339D47}" Name="BigInt" Type="BigInt" LayoutName="Integer"/>
-      <Field UID="{408946A9-F7AE-4955-832C-365ED0ABEE3D}" Name="String" Type="String" LayoutName="Integer"/>
-      <Field UID="{A4E59810-7FE5-46C4-9036-A5291BC9CECE}" Name="Text" Type="Text" LabelName="" LocalListName=""/>
-      <Field UID="{C5BD6959-3D2C-4B75-8962-B6FF91495A8C}" Name="UUID" Type="UID" LabelName="" LocalListName=""/>
-      <Field UID="{9A2926B3-301C-49A9-9EF9-15B0CD09BE2D}" Name="Bool" Type="Bool" LabelName="" LocalListName=""/>
-      <Field UID="{AB1BCDE2-BE0C-4026-9BDA-9DD74C285E10}" Name="Double" Type="Double" LabelName="" LocalListName=""/>
-      <Field UID="{93CA57A6-56FC-4B92-8198-3ED30632F22A}" Name="ByteArray" Type="ByteArray" LabelName="" LocalListName=""/>
-      <Field UID="{6D0DF589-C079-4626-B161-7DF2717536B0}" Name="Date" Type="Date" LabelName="" LocalListName=""/>
-      <Field UID="{D0CECD2F-618C-4FC0-B8B7-F39F286BA07C}" Name="Time" Type="Time" LabelName="" LocalListName=""/>
-      <Field UID="{A04C5B7B-CA07-4D5B-AD00-23FA1AC2F079}" Name="DateTime" Type="DateTime" LabelName="" LocalListName=""/>
-      <Field UID="{1B7C9CE9-59AB-472F-96A3-F3DD3E105BF1}" Name="Inn" Type="Inn" LabelName="" LocalListName=""/>
-      <Field UID="{4DA6F7F2-7DA9-4F38-A980-3F91A40F5514}" Name="Kpp" Type="Kpp" LabelName="" LocalListName=""/>
-      <Field UID="{3F6726D9-7447-46F2-B7EB-CAA311D426ED}" Name="Ogrn" Type="Ogrn" LabelName="" LocalListName=""/>
-      <Field UID="{C4C332C1-A37F-4E36-B289-E0FA8CF2E9E0}" Name="Okpo" Type="Okpo" LabelName="" LocalListName=""/>
-      <Field UID="{A4DAE20A-E751-4C78-96F0-D84F3107775A}" Name="Bik" Type="Bik" LabelName="" LocalListName=""/>
-      <Field UID="{2329CBCC-85A3-438A-8679-C75CF1DD4CF3}" Name="Vin" Type="Vin" LabelName="" LocalListName=""/>
-      <Field UID="{96CB1395-A26F-4141-B921-C07E90BBB632}" Name="Year" Type="Year" LabelName="" LocalListName=""/>
-      <Field UID="{CBC08C8F-41CF-425C-BDFA-3B913AAACED3}" Name="PhoneBase" Type="PhoneBase" LabelName="" LocalListName=""/>
-      <Field UID="{416F1A31-A8E1-4786-8439-6DF8D3AEF4DA}" Name="Phone" Type="Phone" LabelName="" LocalListName=""/>
-      <Field UID="{7F136648-585F-45B2-840D-2FE504765EC0}" Name="Password" Type="Password" LabelName="" LocalListName=""/>
-      <Field UID="{EA2338DC-DD87-472F-A081-B3D00BD06EA7}" Name="Image" Type="Image" LabelName="" LocalListName=""/>
-      <Field UID="{378E842C-061F-49BB-B731-5050362665B1}" Name="Color" Type="Color" LabelName="" LocalListName=""/>
-      <Field UID="{35FDD215-A544-4E0C-BBC5-466BBF8BAD00}" Name="EMail" Type="EMail" LabelName="" LocalListName=""/>
-      <Field UID="{78F9AE49-3DC6-4A8F-8E2A-DC5A02593BDA}" Name="Passport" Type="Passport" LabelName="" LocalListName=""/>
-      <Field UID="{78F1C5F2-80E0-4FE6-8108-3053DF1E53DE}" Name="Volume" Type="Volume" LabelName="" LocalListName=""/>
-      <Field UID="{8B1E212C-5140-4412-9A75-EA092B8D5945}" Name="Birthday" Type="Birthday" LabelName="" LocalListName=""/>
-      <Field UID="{50E46330-1A2D-4A19-BB2D-5FAFBA55BA98}" Name="Seconds" Type="Seconds" LabelName="" LocalListName=""/>
-      <Field UID="{53CC6D02-DDB8-4987-8257-5303046E22FE}" Name="CallDetails" Type="CallDetails" LabelName="" LocalListName=""/>
-      <Field UID="{03079B94-ED11-48A7-91AD-F8A483A23CC4}" Name="Month" Type="Month" LabelName="" LocalListName=""/>
-      <Field UID="{98253B62-FAF4-4962-B9D1-34A025B859BA}" Name="Login" Type="Login" LabelName="" LocalListName=""/>
-      <Field UID="{346D0A1A-F956-429A-A307-12E2ED178FB6}" Name="Percent" Type="Percent" LabelName="" LocalListName=""/>
-      <Field UID="{BF10DFE6-705C-4547-93A1-07F25D28ADEE}" Name="Address" Type="Address" LabelName="" LocalListName=""/>
-      <Field UID="{EB450550-AE7E-45DC-ADFF-A2DF34AE0A77}" Name="Url" Type="Url" LabelName="" LocalListName=""/>
-      <Field UID="{476D7186-BFAA-4AE9-A589-D49FD970C149}" Name="File" Type="File" LabelName="" LocalListName=""/>
+      <Field UID="{8C0C9204-DA75-46A2-AF76-6FCE6C59CD98}" Name="Int" Type="Int" LayoutName="Int"/>
+      <Field UID="{88F9C933-01D0-4A91-A124-CABDA2339D47}" Name="BigInt" Type="BigInt" LayoutName="Int"/>
+      <Field UID="{408946A9-F7AE-4955-832C-365ED0ABEE3D}" Name="String" Type="String" LayoutName="Int" NotNull="true"/>
+      <Field UID="{A4E59810-7FE5-46C4-9036-A5291BC9CECE}" Name="Text" Type="Text"/>
+      <Field UID="{C5BD6959-3D2C-4B75-8962-B6FF91495A8C}" Name="UUID" Type="UID"/>
+      <Field UID="{9A2926B3-301C-49A9-9EF9-15B0CD09BE2D}" Name="Bool" Type="Bool"/>
+      <Field UID="{AB1BCDE2-BE0C-4026-9BDA-9DD74C285E10}" Name="Double" Type="Double"/>
+      <Field UID="{93CA57A6-56FC-4B92-8198-3ED30632F22A}" Name="ByteArray" Type="ByteArray"/>
+      <Field UID="{6D0DF589-C079-4626-B161-7DF2717536B0}" Name="Date" Type="Date"/>
+      <Field UID="{D0CECD2F-618C-4FC0-B8B7-F39F286BA07C}" Name="Time" Type="Time"/>
+      <Field UID="{A04C5B7B-CA07-4D5B-AD00-23FA1AC2F079}" Name="DateTime" Type="DateTime"/>
+      <Field UID="{1B7C9CE9-59AB-472F-96A3-F3DD3E105BF1}" Name="Inn" Type="Inn" LayoutName="Inn"/>
+      <Field UID="{4DA6F7F2-7DA9-4F38-A980-3F91A40F5514}" Name="Kpp" Type="Kpp" LayoutName="Inn"/>
+      <Field UID="{3F6726D9-7447-46F2-B7EB-CAA311D426ED}" Name="Ogrn" Type="Ogrn" LayoutName="Inn"/>
+      <Field UID="{C4C332C1-A37F-4E36-B289-E0FA8CF2E9E0}" Name="Okpo" Type="Okpo" LayoutName="Inn"/>
+      <Field UID="{A4DAE20A-E751-4C78-96F0-D84F3107775A}" Name="Bik" Type="Bik" LayoutName="Inn"/>
+      <Field UID="{2329CBCC-85A3-438A-8679-C75CF1DD4CF3}" Name="Vin" Type="Vin" LayoutName="Inn"/>
+      <Field UID="{96CB1395-A26F-4141-B921-C07E90BBB632}" Name="Year" Type="Year"/>
+      <Field UID="{CBC08C8F-41CF-425C-BDFA-3B913AAACED3}" Name="PhoneBase" Type="PhoneBase"/>
+      <Field UID="{416F1A31-A8E1-4786-8439-6DF8D3AEF4DA}" Name="Phone" Type="Phone"/>
+      <Field UID="{7F136648-585F-45B2-840D-2FE504765EC0}" Name="Password" Type="Password"/>
+      <Field UID="{EA2338DC-DD87-472F-A081-B3D00BD06EA7}" Name="Image" Type="Image"/>
+      <Field UID="{378E842C-061F-49BB-B731-5050362665B1}" Name="Color" Type="Color"/>
+      <Field UID="{35FDD215-A544-4E0C-BBC5-466BBF8BAD00}" Name="EMail" Type="EMail"/>
+      <Field UID="{78F9AE49-3DC6-4A8F-8E2A-DC5A02593BDA}" Name="Passport" Type="Passport"/>
+      <Field UID="{78F1C5F2-80E0-4FE6-8108-3053DF1E53DE}" Name="Volume" Type="Volume"/>
+      <Field UID="{8B1E212C-5140-4412-9A75-EA092B8D5945}" Name="Birthday" Type="Birthday"/>
+      <Field UID="{50E46330-1A2D-4A19-BB2D-5FAFBA55BA98}" Name="Seconds" Type="Seconds"/>
+      <Field UID="{53CC6D02-DDB8-4987-8257-5303046E22FE}" Name="CallDetails" Type="CallDetails"/>
+      <Field UID="{03079B94-ED11-48A7-91AD-F8A483A23CC4}" Name="Month" Type="Month"/>
+      <Field UID="{98253B62-FAF4-4962-B9D1-34A025B859BA}" Name="Login" Type="Login"/>
+      <Field UID="{346D0A1A-F956-429A-A307-12E2ED178FB6}" Name="Percent" Type="Percent"/>
+      <Field UID="{BF10DFE6-705C-4547-93A1-07F25D28ADEE}" Name="Address" Type="Address"/>
+      <Field UID="{EB450550-AE7E-45DC-ADFF-A2DF34AE0A77}" Name="Url" Type="Url"/>
+      <Field UID="{476D7186-BFAA-4AE9-A589-D49FD970C149}" Name="File" Type="File"/>
     </Fields>
   </Table>
 

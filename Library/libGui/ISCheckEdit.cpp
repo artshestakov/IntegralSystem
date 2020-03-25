@@ -3,13 +3,14 @@
 //-----------------------------------------------------------------------------
 ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+
 	CheckBox = new QCheckBox(this);
 	CheckBox->setChecked(false);
 	CheckBox->setTristate(false);
 	CheckBox->setCursor(CURSOR_POINTING_HAND);
 	connect(CheckBox, &QCheckBox::stateChanged, this, &ISCheckEdit::ValueChanged);
 	AddWidgetEdit(CheckBox, this);
-	AddWidgetEditStretch();
 }
 //-----------------------------------------------------------------------------
 ISCheckEdit::~ISCheckEdit()

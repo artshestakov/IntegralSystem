@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
-	setMaximumWidth(300);
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
 	QLabel *LabelImageMinimum = new QLabel(this);
 	LabelImageMinimum->setPixmap(BUFFER_ICONS("Volume.Minimum").pixmap(ISDefines::Gui::SIZE_20_20));

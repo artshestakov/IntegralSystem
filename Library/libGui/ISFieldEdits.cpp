@@ -14,9 +14,9 @@
 //-----------------------------------------------------------------------------
 ISBIKEdit::ISBIKEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
-	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_9), this));
+	SetMaxLength(9);
+	SetFixedWidth(ISGui::GetStringWidth("123456789", ISDefines::Gui::FONT_APPLICATION) + 35);
 	SetPlaceholderText(LANG("Field.Bik.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
@@ -25,13 +25,19 @@ ISBIKEdit::~ISBIKEdit()
 
 }
 //-----------------------------------------------------------------------------
+bool ISBIKEdit::IsValid() const
+{
+	int Count = GetValue().toString().length();
+	return !Count || Count == 9;
+}
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISKPPEdit::ISKPPEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
-	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_9), this));
+	SetMaxLength(9);
+	SetFixedWidth(ISGui::GetStringWidth("123456789", ISDefines::Gui::FONT_APPLICATION) + 35);
 	SetPlaceholderText(LANG("Field.Kpp.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
@@ -40,13 +46,19 @@ ISKPPEdit::~ISKPPEdit()
 
 }
 //-----------------------------------------------------------------------------
+bool ISKPPEdit::IsValid() const
+{
+	int Count = GetValue().toString().length();
+	return !Count || Count == 9;
+}
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISOGRNEdit::ISOGRNEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
-	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_13), this));
+	SetMaxLength(13);
+	SetFixedWidth(ISGui::GetStringWidth("1234567890123", ISDefines::Gui::FONT_APPLICATION) + 35);
 	SetPlaceholderText(LANG("Field.Ogrn.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
@@ -55,19 +67,31 @@ ISOGRNEdit::~ISOGRNEdit()
 
 }
 //-----------------------------------------------------------------------------
+bool ISOGRNEdit::IsValid() const
+{
+	int Count = GetValue().toString().length();
+	return !Count || Count == 13;
+}
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISOKPOEdit::ISOKPOEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
-	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_8), this));
+	SetMaxLength(8);
+	SetFixedWidth(ISGui::GetStringWidth("12345678", ISDefines::Gui::FONT_APPLICATION) + 35);
 	SetPlaceholderText(LANG("Field.Okpo.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
 ISOKPOEdit::~ISOKPOEdit()
 {
 
+}
+//-----------------------------------------------------------------------------
+bool ISOKPOEdit::IsValid() const
+{
+	int Count = GetValue().toString().length();
+	return !Count || Count == 8;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -86,9 +110,10 @@ ISPercentEdit::~ISPercentEdit()
 //-----------------------------------------------------------------------------
 ISUuidEdit::ISUuidEdit(QWidget *parent) : ISLineEdit(parent)
 {
+	SetPlaceholderText(UUID_PLACEHOLDER_TEXT);
+	SetFixedWidth(ISGui::GetStringWidth(UUID_PLACEHOLDER_TEXT, ISDefines::Gui::FONT_APPLICATION) + 35);
 	SetUppercase(true);
-	SetPlaceholderText("{00000000-0000-0000-0000-000000000000}");
-	SetFixedWidth(320);
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
 	ISServiceButton *ButtonGenerate = new ISServiceButton(this);
 	ButtonGenerate->setToolTip(LANG("ClickFromGenerateNewUID"));
@@ -121,15 +146,21 @@ void ISUuidEdit::Generate()
 //-----------------------------------------------------------------------------
 ISVINEdit::ISVINEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
-	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_17), this));
+	SetMaxLength(17);
+	SetFixedWidth(ISGui::GetStringWidth("12345678901234567", ISDefines::Gui::FONT_APPLICATION) + 35);
 	SetPlaceholderText(LANG("Field.Vin.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
 ISVINEdit::~ISVINEdit()
 {
 
+}
+//-----------------------------------------------------------------------------
+bool ISVINEdit::IsValid() const
+{
+	int Count = GetValue().toString().length();
+	return !Count || Count == 17;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -141,16 +172,12 @@ ISBirthdayEdit::ISBirthdayEdit(QWidget *parent) : ISDateEdit(parent)
 	Label = new QLabel(this);
 	Label->setFrameShape(QFrame::Shape::Panel);
 	Label->setFrameShadow(QFrame::Plain);
-	Label->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	Label->setFixedHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	Label->setSizePolicy(QSizePolicy::Maximum, Label->sizePolicy().verticalPolicy());
 	AddWidgetToRight(Label);
 
 	UpdateLabel(QDate());
-
-	connect(this, &ISBirthdayEdit::DataChanged, [=]
-	{
-		UpdateLabel(GetValue().toDate());
-	});
+	connect(this, &ISBirthdayEdit::DataChanged, [=] { UpdateLabel(GetValue().toDate()); });
 }
 //-----------------------------------------------------------------------------
 ISBirthdayEdit::~ISBirthdayEdit()
@@ -185,10 +212,10 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
 //-----------------------------------------------------------------------------
 ISINNEdit::ISINNEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(170);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetPlaceholderText(LANG("Field.Inn.PlaceholderText"));
-	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_NUMBER_COUNT_12), this));
+	SetMaxLength(12);
+	SetFixedWidth(ISGui::GetStringWidth("123456789012", ISDefines::Gui::FONT_APPLICATION) + 35);
 
 	ButtonSearch = new ISServiceButton(this);
 	ButtonSearch->setVisible(false);
@@ -484,6 +511,7 @@ void ISYearEdit::SelectCurrentYear()
 //-----------------------------------------------------------------------------
 ISMonthEdit::ISMonthEdit(QWidget *parent) : ISComboEdit(parent)
 {
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetEditable(false);
 
 	AddItem(LANG("Month.January"), 1);
@@ -514,7 +542,7 @@ void ISMonthEdit::SelectCurrentMonth()
 //-----------------------------------------------------------------------------
 ISEMailEdit::ISEMailEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetFixedWidth(250);
+	//SetFixedWidth(250);
 
 	SetIcon(BUFFER_ICONS("EMail.FieldEdit.Acceptable"));
 	SetPlaceholderText(LANG("Field.EMail.PlaceholderText"));
@@ -536,7 +564,7 @@ ISEMailEdit::~ISEMailEdit()
 void ISEMailEdit::Send()
 {
 	QString EMail = GetValue().toString();
-	if (EMail.length())
+	if (!EMail.isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(true);
 		QDesktopServices::openUrl(QUrl("mailto:" + EMail));

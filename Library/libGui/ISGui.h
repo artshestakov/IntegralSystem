@@ -32,6 +32,7 @@ public:
 	static bool OpenUrl(const QString &Url); //Открыть ссылку в браузере по умолчанию
 	static bool OpenFile(const QString &FilePath); //Открыть файл приложением по умолчанию
 	static QString PrepareLongToolTip(QString ToolTipText, int MaxWidth = 250); //Правка текста высплывающей подсказки (для переноса слов на новую строку)
+	static int GetStringWidth(const QString &String, const QFont &Font); //Получить размер строки в пикселях для шрифта
 	static QColor StringToColor(const QString &String); //Конвертация строки в цвет
 	static bool IsStringUrl(const QString &Url); //Проверить является ли строка ссылкой
 	static bool OpenFolder(const QString &FolderPath); //Открыть дикекторию

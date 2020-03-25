@@ -8,9 +8,10 @@ ISDoubleEdit::ISDoubleEdit(QWidget *parent)
 	DoubleValidator(new QDoubleValidator(this))
 {
 	DoubleValidator->setLocale(QLocale(QLocale::English));
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(DoubleValidator);
-	SetFixedWidth(200);
-	AddMainLayoutStretch();
+	//SetFixedWidth(200);
+	//AddMainLayoutStretch();
 }
 //-----------------------------------------------------------------------------
 ISDoubleEdit::~ISDoubleEdit()

@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 ISPhoneBaseEdit::ISPhoneBaseEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
-	SetFixedWidth(175);
+	//SetFixedWidth(175);
 
 	PhoneLineEdit = new ISPhoneLineEdit(this);
 	PhoneLineEdit->SetIcon(ISNamespace::PIT_Standart);

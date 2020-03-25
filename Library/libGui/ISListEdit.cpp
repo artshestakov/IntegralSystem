@@ -14,7 +14,6 @@
 //-----------------------------------------------------------------------------
 ISListEdit::ISListEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
-	SetSizePolicyHorizontal(QSizePolicy::Minimum);
 	CreateButtonClear();
 
 	ButtonMain = new ISPushButton(this);

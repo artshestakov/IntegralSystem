@@ -6,6 +6,7 @@
 ISImageEdit::ISImageEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	CreateButtonClear();
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
 	ImageWidget = new ISImageWidget(this);
 	ImageWidget->setFixedSize(QSize(150, 150));
@@ -13,8 +14,6 @@ ISImageEdit::ISImageEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ImageWidget->setToolTip(LANG("ClickRightButtonMouseForCallContextMenu"));
 	connect(ImageWidget, &ISImageWidget::ImageChanged, this, &ISImageEdit::ValueChanged);
 	AddWidgetEdit(ImageWidget, this);
-
-	AddMainLayoutStretch();
 }
 //-----------------------------------------------------------------------------
 ISImageEdit::~ISImageEdit()

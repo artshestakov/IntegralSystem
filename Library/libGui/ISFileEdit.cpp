@@ -36,6 +36,7 @@ static QString QS_FILE_DATA = PREPARE_QUERY("SELECT file_data FROM _file WHERE f
 //-----------------------------------------------------------------------------
 ISFileEdit::ISFileEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	CreateButtonClear();
 
 	ButtonFile = new ISButtonFile(this);

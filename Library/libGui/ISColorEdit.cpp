@@ -7,6 +7,7 @@
 //-----------------------------------------------------------------------------
 ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	CreateButtonClear();
 
 	QGroupBox *GroupBox = new QGroupBox(this);
@@ -26,7 +27,7 @@ ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 	connect(ButtonSelectColor, &ISServiceButton::clicked, this, &ISColorEdit::SelectColor);
 	AddWidgetToRight(ButtonSelectColor);
 
-	SetFixedWidth(150);
+	//SetFixedWidth(150);
 }
 //-----------------------------------------------------------------------------
 ISColorEdit::~ISColorEdit()

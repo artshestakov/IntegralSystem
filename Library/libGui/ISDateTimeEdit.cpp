@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 ISDateTimeEdit::ISDateTimeEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
-    setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
+    SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	CreateButtonClear();
 
     QHBoxLayout *Layout = new QHBoxLayout();
