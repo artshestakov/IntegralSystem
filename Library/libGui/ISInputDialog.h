@@ -13,8 +13,6 @@ public:
 	ISInputDialog(const QString &Title, const QString &LabelText = QString(), QWidget *parent = 0);
 	virtual ~ISInputDialog();
 
-	void showEvent(QShowEvent *e);
-
 	static QVariant GetString(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Value = QVariant()); //Получить строку
 	static QVariant GetText(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Value = QVariant()); //Получить большую строку
 	static QVariant GetInteger(QWidget *parent, const QString &Title, const QString &LabelText, int Minimum = 0, int Maximum = 0, const QVariant &Value = QVariant()); //Получить целое число
@@ -33,6 +31,7 @@ public:
 
 protected:
 	void Apply();
+	void AfterShowEvent() override;
 	void EnterClicked() override;
 	void ControlEnterClicked() override;
 

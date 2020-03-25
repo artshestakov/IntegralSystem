@@ -17,7 +17,6 @@ ISInputDialog::ISInputDialog(const QString &Title, const QString &LabelText, QWi
 
 	setWindowTitle(Title);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
-	ForbidResize();
 
 	if (LabelText.length())
 	{
@@ -50,12 +49,6 @@ ISInputDialog::ISInputDialog(const QString &Title, const QString &LabelText, QWi
 ISInputDialog::~ISInputDialog()
 {
 
-}
-//-----------------------------------------------------------------------------
-void ISInputDialog::showEvent(QShowEvent *e)
-{
-	ISInterfaceDialogForm::showEvent(e);
-	FieldEditBase->SetFocus();
 }
 //-----------------------------------------------------------------------------
 QVariant ISInputDialog::GetString(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Value)
@@ -199,18 +192,15 @@ QVariant ISInputDialog::GetList(QWidget *parent, const QString &Title, const QSt
 void ISInputDialog::SetEditWidget(ISNamespace::FieldType DataType, const QString &WidgetEditName)
 {
 	IS_ASSERT(!AddingFieldEdit, "FieldEditBase alredy adding");
-
 	FieldEditBase = ISGui::CreateColumnForField(this, DataType, WidgetEditName);
-	LayoutField->addWidget(FieldEditBase);
-	
+	LayoutField->addWidget(FieldEditBase, 0, Qt::AlignLeft);
 	AddingFieldEdit = true;
 }
 //-----------------------------------------------------------------------------
 void ISInputDialog::SetEditWidget(ISFieldEditBase *EditWidget)
 {
 	FieldEditBase = EditWidget;
-	LayoutField->addWidget(FieldEditBase);
-
+	LayoutField->addWidget(FieldEditBase, 0, Qt::AlignLeft);
 	AddingFieldEdit = true;
 }
 //-----------------------------------------------------------------------------
@@ -235,6 +225,14 @@ void ISInputDialog::Apply()
 	Value = FieldEditBase->GetValue();
 	SetResult(true);
 	close();
+}
+//-----------------------------------------------------------------------------
+void ISInputDialog::AfterShowEvent()
+{
+	ISInterfaceDialogForm::AfterShowEvent();
+	FieldEditBase->SetFocus();
+	adjustSize();
+	ForbidResize();
 }
 //-----------------------------------------------------------------------------
 void ISInputDialog::EnterClicked()
