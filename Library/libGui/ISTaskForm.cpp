@@ -165,24 +165,32 @@ void ISTaskForm::CreateTask()
 //-----------------------------------------------------------------------------
 void ISTaskForm::SearchByNumber()
 {
-	int TaskID = ISInputDialog::GetInteger(this, LANG("Search"), LANG("InputTheTaskNumber") + ':', 0, MAXIMUM_INTEGER).toInt();
-	if (TaskID)
+	while (true)
 	{
-		if (ISCore::TaskCheckExist(TaskID))
+		int TaskID = ISInputDialog::GetInteger(this, LANG("Search"), LANG("InputTheTaskNumber") + ':', 0, MAXIMUM_INTEGER).toInt();
+		if (TaskID)
 		{
-			ISUuid StatusUID = ISCore::TaskGetStatusUID(TaskID);
-			if (StatusUID == CONST_UID_TASK_STATUS_NEW)
+			if (ISCore::TaskCheckExist(TaskID))
 			{
-				ISGui::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID);
+				ISUuid StatusUID = ISCore::TaskGetStatusUID(TaskID);
+				if (StatusUID == CONST_UID_TASK_STATUS_NEW)
+				{
+					ISGui::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID);
+				}
+				else
+				{
+					ISGui::ShowTaskViewForm(TaskID);
+				}
+				break;
 			}
 			else
 			{
-				ISGui::ShowTaskViewForm(TaskID);
+				ISMessageBox::ShowInformation(this, LANG("Message.Information.TaskWithNumberNotFound").arg(TaskID));
 			}
 		}
 		else
 		{
-			ISMessageBox::ShowInformation(this, LANG("Message.Information.TaskWithNumberNotFound").arg(TaskID));
+			break;
 		}
 	}
 }
