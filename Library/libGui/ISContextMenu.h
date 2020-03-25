@@ -19,7 +19,6 @@ public:
 protected:
 	void AppendOtherAction(QAction *Action);
 	void BeforeToShow(); //Действие перед отображением меню
-	void CallVirtualKeyboard(); //Вызов виртуальной клавиатуры
 
 private:
 	QAction *ActionOtherMenu;

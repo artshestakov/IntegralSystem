@@ -178,15 +178,6 @@ QAction* ISControls::GetActionContextSelectAll(QObject *ParentObject)
 	return ContextActionSelectAll;
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextVirtualKeyboard(QObject *ParentObject)
-{
-	QAction *ContextActionVirtualKeyboard = new QAction(ParentObject);
-	ContextActionVirtualKeyboard->setText(LANG("ContextMenu.ScreenKeyboard"));
-	ContextActionVirtualKeyboard->setToolTip(LANG("ContextMenu.ScreenKeyboard.ToolTip"));
-	ContextActionVirtualKeyboard->setIcon(BUFFER_ICONS("Keyboard"));
-	return ContextActionVirtualKeyboard;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::GetActionContextToUpper(QObject *ParentObject)
 {
 	QAction *ContextActionUpper = new QAction(ParentObject);

@@ -108,7 +108,6 @@
   <Local Name="Message.Error.ApplicationDemoEnd" Russian="Демо версия закончилась! Чтобы продолжить работу в программе, активируйте лицензию. За дополнительной информацией обратитесь к разработчику программы."/>
   <Local Name="Message.Error.NotStartedAssistant" Russian="Не удалось запустить систему справки!"/>
   <Local Name="Message.Error.User.Activate" Russian="При создании пользователя в базе произошла ошибка."/>
-  <Local Name="Message.Error.CallVirtualKeyboard" Russian="Не удалось запустить виртуальную клавиатуру."/>
   <Local Name="Message.Error.ConnectionLoadingData" Russian="Ошибка при подключении к базе данных."/>
   <Local Name="Message.Error.LoadingData" Russian="Ошибка загрузки данных."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>

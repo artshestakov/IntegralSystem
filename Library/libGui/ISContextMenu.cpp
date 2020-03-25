@@ -79,17 +79,6 @@ ISContextMenuBase::ISContextMenuBase(QWidget *ParentEdit, bool ReadOnly, bool Un
 
 	addAction(ISControls::CreateSeparator(this));
 
-	if (!ReadOnly)
-	{
-		//Виртуальная клавиатура
-		QAction *ActionVirtualKeyboard = ISControls::GetActionContextVirtualKeyboard(this);
-		ActionVirtualKeyboard->setEnabled(!ReadOnly);
-		connect(ActionVirtualKeyboard, &QAction::triggered, this, &ISContextMenuBase::CallVirtualKeyboard);
-		addAction(ActionVirtualKeyboard);
-	}
-
-	addAction(ISControls::CreateSeparator(this));
-
 	//Прочие действия
 	ActionOtherMenu = new QAction(this);
 	ActionOtherMenu->setText(LANG("OtherActions"));
@@ -112,14 +101,6 @@ void ISContextMenuBase::BeforeToShow()
 	if (!ActionOtherMenu->menu()->actions().count())
 	{
 		ActionOtherMenu->setVisible(false);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISContextMenuBase::CallVirtualKeyboard()
-{
-	if (!ISGui::OpenFile("C:/Windows/System32/osk.exe"))
-	{
-		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.CallVirtualKeyboard"));
 	}
 }
 //-----------------------------------------------------------------------------

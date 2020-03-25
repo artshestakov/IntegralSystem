@@ -132,8 +132,6 @@
   <Local Name="ContextMenu.Delete" Russian="Удалить"/>
   <Local Name="ContextMenu.Delete.ToolTip" Russian="Удалить выделенный текст"/>
   <Local Name="ContextMenu.SelectAll" Russian="Выделить всё"/>
-  <Local Name="ContextMenu.ScreenKeyboard" Russian="Экранная клавиатура"/>
-  <Local Name="ContextMenu.ScreenKeyboard.ToolTip" Russian="Вызов экранной клавиатуры"/>
   <Local Name="ContextMenu.ToUpper" Russian="ПРОПИСНЫЕ"/>
   <Local Name="ContextMenu.ToUpper.ToolTip" Russian="Перевод выделенного текста в верхний регистр"/>
   <Local Name="ContextMenu.Google" Russian="Google поиск"/>

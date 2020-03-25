@@ -33,7 +33,6 @@ public:
 	static QAction* GetActionContextPaste(QObject *ParentObject); //Действие вставить
 	static QAction* GetActionContextDelete(QObject *ParentObject); //Действие удалить
 	static QAction* GetActionContextSelectAll(QObject *ParentObject); //Действие выделить все
-	static QAction* GetActionContextVirtualKeyboard(QObject *ParentObject); //Действие вызвать виртуальную клавиатуру
 	static QAction* GetActionContextToUpper(QObject *ParentObject); //Действие верхний регистр
 	static QAction* GetActionContextToLower(QObject *ParentObject); //Действие нижний регистр
 	static QAction* GetActionContextGoogle(QObject *ParentObject); //Действие поиск в Google
