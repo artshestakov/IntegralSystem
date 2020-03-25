@@ -13,6 +13,7 @@
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISObjects.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_description "
 											"FROM _keyboardshortcuts "
@@ -78,6 +79,9 @@ void ISAboutForm::CreateCommonTab()
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionHash"), ISVersion::Instance().Info.Hash);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), ISVersion::Instance().Info.Branch);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Database"), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 
 	LayoutCommon->addStretch();
 }

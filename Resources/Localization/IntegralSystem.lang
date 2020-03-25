@@ -22,6 +22,9 @@
   <Local Name="AboutForm.Tab.Common.Platform" Russian="Целевая платформа"/>
   <Local Name="AboutForm.Tab.Common.ProductVersion" Russian="Версия продукта"/>
   <Local Name="AboutForm.Tab.Common.QtVersion" Russian="Версия Qt"/>
+  <Local Name="AboutForm.Tab.Common.Server" Russian="Сервер"/>
+  <Local Name="AboutForm.Tab.Common.Port" Russian="Порт"/>
+  <Local Name="AboutForm.Tab.Common.Database" Russian="База данных"/>
   <Local Name="AboutForm.Tab.Common.ProductVersionRevision" Russian="Ревизия"/>
   <Local Name="AboutForm.Tab.Common.ProductVersionBuild" Russian="Сборка"/>
   <Local Name="AboutForm.Tab.Common.ReleaseDate" Russian="Дата релиза"/>
@@ -513,7 +516,6 @@
   <Local Name="NotificationEmpty.DetailedText" Russian="Как только Вам придут уведомления, они появятся здесь."/>
   <Local Name="Settings.Export" Russian="Экспорт"/>
   <Local Name="Settings.Import" Russian="Импорт"/>
-  <Local Name="ConnectionInfoDatabase" Russian="Информация о подключении к базе данных"/>
   <Local Name="Cores" Russian="Ядра"/>
   <Local Name="Share" Russian="Поделиться"/>
   <Local Name="AttachTask" Russian="Прикрепить к задаче"/>

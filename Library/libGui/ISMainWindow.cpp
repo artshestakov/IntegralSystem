@@ -314,11 +314,8 @@ void ISMainWindow::CreateStatusBar()
 		Frame->setPalette(Palette);
 
 		StatusBar = new ISStatusBar(this);
+		StatusBar->setVisible(false);
 		GetMainLayout()->addWidget(StatusBar);
-		connect(StatusBar, &ISStatusBar::DateTimeClicked, [=]
-		{
-			MenuBar->ButtonParagraphClicked(CONST_UID_PARAGRAPH_CALENDAR);
-		});
 	}
 }
 //-----------------------------------------------------------------------------
