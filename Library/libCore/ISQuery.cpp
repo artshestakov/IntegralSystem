@@ -199,10 +199,7 @@ QSqlRecord ISQuery::GetRecord()
 	{
 		return SqlQuery.record();
 	}
-	else 
-	{
-		Raise();
-	}
+	Raise();
 	return QSqlRecord();
 }
 //-----------------------------------------------------------------------------
