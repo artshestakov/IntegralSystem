@@ -82,10 +82,13 @@ Source: ..\Deploy\.Configuration.-.Platform.\CaratSMS.exe; DestDir: {app}; Flags
 Source: ..\Deploy\.Configuration.-.Platform.\CaratTelephony.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 
 Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
-Source: ..\Components\Redistributable\Redistributable_2015_.Platform..exe; DestDir: {app}; Flags: ignoreversion; Components: Server Client
+Source: ..\Components\PostgreSQL\9.4\Bin-.Platform.\*; DestDir: {app}; Flags: ignoreversion;
+Source: ..\Components\Redistributable\Redistributable_2013_.Platform..exe; DestDir: {app}; Flags: ignoreversion;
+Source: ..\Components\Redistributable\Redistributable_2015_.Platform..exe; DestDir: {app}; Flags: ignoreversion;
 
 [Run]
-Filename: {app}\Redistributable_2015_.Platform..exe; Description: "Установка VC++ Redistributable"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable...";
+Filename: {app}\Redistributable_2013_.Platform..exe; Description: "Установка VC++ Redistributable 2013"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2013...";
+Filename: {app}\Redistributable_2015_.Platform..exe; Description: "Установка VC++ Redistributable 2015"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015...";
 
 [Code]
 procedure InitializeWizard();
