@@ -280,6 +280,7 @@
     <ClCompile Include="ISObjects.cpp" />
     <ClCompile Include="ISOilSphere.cpp" />
     <ClCompile Include="ISOilSphereCounterpartyObjectForm.cpp" />
+    <ClCompile Include="ISOilSphereImplementationObjectForm.cpp" />
     <ClCompile Include="ISOnline.cpp" />
     <ClCompile Include="ISOrganizationListForm.cpp" />
     <ClCompile Include="ISOrganizationMyListForm.cpp" />
@@ -428,6 +429,7 @@
     <QtMoc Include="ISLabels.h" />
     <QtMoc Include="ISOilSphere.h" />
     <QtMoc Include="ISOilSphereCounterpartyObjectForm.h" />
+    <QtMoc Include="ISOilSphereImplementationObjectForm.h" />
     <ClInclude Include="ISPassword.h" />
     <QtMoc Include="ISPrintingBase.h" />
     <ClInclude Include="ISPrintingEntity.h" />

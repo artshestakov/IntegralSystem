@@ -1,26 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="OilSphere.xsn">
-
-  <Table Name="Test" UID="{E953E594-EA4E-4F46-A96B-E5B8D8E8692C}" Alias="test" LocalName="Тест" LocalListName="Тесты" TitleName="Name">
-    <Fields>
-      <Field UID="{D69DEE93-C1AD-42A5-B148-B82BB6F925F7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{1207C608-6874-4997-B906-93E3A5924453}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
-      <Field UID="{34C4BD11-0ADC-4A86-81C1-13429475C26A}" Name="Time" Type="Time" LabelName="Время" LocalListName="Время" NotNull="true"/>
-      <Field UID="{4044B24E-C9A6-4A4B-B3BE-574217136B4E}" Name="Owner" Type="Int" LabelName="Владелец" LocalListName="Владелец" NotNull="true"/>
-      <Field UID="{AFC1DA1B-6054-4C2E-B425-F77BCF680FB9}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Date"/>
-      <Index Field="Time"/>
-      <Index Field="Owner"/>
-      <Index Field="Note"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname"/>
-    </Foreigns>
-  </Table>
-
+  
   <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphereCounterpartyObjectForm">
     <Fields>
       <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
@@ -92,21 +72,23 @@
     </Indexes>
   </Table>
 
-  <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="Counterparty">
+  <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="DateLoad" ObjectForm="ISOilSphereImplementationObjectForm">
     <Fields>
-      <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки"/>
-      <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта" LayoutName="ProductType"/>
-      <Field UID="{7A1F9081-2B9C-4FB9-A45B-E9881CE237C2}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" LayoutName="ProductType"/>
-      <Field UID="{BF15D8D3-D1E8-4B5F-A082-CB85AC681ED1}" Name="WeightTotal" Type="Double" LabelName="Вес (общий)" LocalListName="Вес (общий)" LayoutName="Weight"/>
-      <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="Container" Type="Double" LabelName="Тара" LocalListName="Тара" LayoutName="Weight"/>
-      <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Weight"/>
-      <Field UID="{590547D1-75DD-4CE2-95C4-B6EC97D43EFD}" Name="PriceKG" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="Price"/>
-      <Field UID="{64CCFB48-4BF4-4322-B35D-7869E27554EB}" Name="Cost" Type="Double" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="Price"/>
-      <Field UID="{F666929C-5DC1-4D51-8527-6D14D3F64409}" Name="Payment" Type="Double" LabelName="Оплата" LocalListName="Оплата" LayoutName="Payment"/>
-      <Field UID="{9B8377B2-46E7-4DD7-B8B1-A3306A6C5593}" Name="Balance" Type="Double" LabelName="Баланс" LocalListName="Баланс" LayoutName="Payment"/>
-      <Field UID="{3A359B86-5270-4BFE-9ABF-A625FBCB20CB}" Name="PlaceOfLoad" Type="Int" LabelName="Место загрузки" LocalListName="Место загрузки"/>
-      <Field UID="{66950052-D388-467C-8F7D-AE5B071AFAFA}" Name="WightLoad" Type="Double" LabelName="Вес загрузки" LocalListName="Вес загрузки"/>
-      <Field UID="{DD79EB7F-CCAC-46C1-8E63-073935646196}" Name="PurchasePrice" Type="Double" LabelName="Стоимость закупки" LocalListName="Стоимость закупки"/>
+      <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки" LayoutName="DateLoadAndProductType" SeparatorName="Загрузка"/>
+      <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта" LayoutName="DateLoadAndProductType"/>
+      <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент (загрузка)" LocalListName="Контрагент" NotNull="true"/>
+      <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="LoadContainer" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="LoadContainer"/>
+      <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="LoadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="LoadContainer"/>
+      <Field UID="{F6E17298-F970-4E8F-92AC-1560184CB2DE}" Name="LoadWeightNet" Type="Double" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="LoadContainer"/>
+      <Field UID="{590547D1-75DD-4CE2-95C4-B6EC97D43EFD}" Name="LoadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="LoadPrice"/>
+      <Field UID="{64CCFB48-4BF4-4322-B35D-7869E27554EB}" Name="LoadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="LoadPrice"/>
+      <Field UID="{CD120D42-00D6-4D80-ADF5-77D82E089D12}" Name="UnloadPlace" Type="Int" LabelName="Место выгрузки" LocalListName="Место выгрузки" SeparatorName="Выгрузка"/>
+      <Field UID="{66950052-D388-467C-8F7D-AE5B071AFAFA}" Name="UnloadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Unload"/>
+      <Field UID="{F666929C-5DC1-4D51-8527-6D14D3F64409}" Name="UnloadWeightContainer" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" LayoutName="Unload"/>
+      <Field UID="{9B8377B2-46E7-4DD7-B8B1-A3306A6C5593}" Name="UnloadWeightNet" Type="Double" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Unload"/>
+      <Field UID="{DD79EB7F-CCAC-46C1-8E63-073935646196}" Name="UnloadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="UnloadPrice"/>
+      <Field UID="{E00C3A63-5EBF-44AC-AF4E-427F163D9E6C}" Name="UnloadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="UnloadPrice"/>
+      <Field UID="{B7FA062E-4DB3-432C-B26E-AE3FA681999E}" Name="PaymentType" Type="Int" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true"/>
       <Field UID="{D4AAA5D3-53D8-40F2-88C3-7A712F0726FB}" Name="Organization" Type="Int" LabelName="Огранизация" LocalListName="Огранизация"/>
       <Field UID="{B47E3F31-CE60-450F-905C-F54D6D17F7D4}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
       <Field UID="{E3EC604A-96C7-4DA2-9C44-7EB4C9871796}" Name="Driver" Type="Int" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
@@ -116,17 +98,19 @@
     <Indexes>
       <Index Field="DateLoad"/>
       <Index Field="ProductType"/>
-      <Index Field="Counterparty"/>
-      <Index Field="WeightTotal"/>
-      <Index Field="Container"/>
-      <Index Field="WeightGross"/>
-      <Index Field="PriceKG"/>
-      <Index Field="Cost"/>
-      <Index Field="Payment"/>
-      <Index Field="Balance"/>
-      <Index Field="PlaceOfLoad"/>
-      <Index Field="WightLoad"/>
-      <Index Field="PurchasePrice"/>
+      <Index Field="LoadCounterparty"/>
+      <Index Field="LoadContainer"/>
+      <Index Field="LoadWeightGross"/>
+      <Index Field="LoadWeightNet"/>
+      <Index Field="LoadPriceUnit"/>
+      <Index Field="LoadCost"/>
+      <Index Field="UnloadPlace"/>
+      <Index Field="UnloadWeightGross"/>
+      <Index Field="UnloadWeightContainer"/>
+      <Index Field="UnloadWeightNet"/>
+      <Index Field="UnloadPriceUnit"/>
+      <Index Field="UnloadCost"/>
+      <Index Field="PaymentType"/>
       <Index Field="Organization"/>
       <Index Field="Note"/>
       <Index Field="Driver"/>
@@ -135,11 +119,12 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="PlaceOfLoad" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="LoadCounterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="UnloadPlace" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Organization" ForeignClass="Organization" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
-      <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model"/>
+      <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
     </Foreigns>
   </Table>
 

@@ -1141,6 +1141,9 @@
     <ClCompile Include="ISSettingTableNameFieldsForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISOilSphereImplementationObjectForm.cpp">
+      <Filter>Objects\OilSphere\Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1955,6 +1958,9 @@
     </QtMoc>
     <QtMoc Include="ISSettingTableNameFieldsForm.h">
       <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISOilSphereImplementationObjectForm.h">
+      <Filter>Objects\OilSphere\Forms</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
