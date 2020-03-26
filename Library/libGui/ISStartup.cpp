@@ -36,6 +36,10 @@ static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 											 "WHERE NOT usrs_isdeleted "
 											 "AND usrs_login = :Login");
 //-----------------------------------------------------------------------------
+static QString QS_LOCAL_NAME = PREPARE_QUERY("SELECT lcnm_tablename, lcnm_fieldname, lcnm_localname "
+											 "FROM _localnames "
+											 "WHERE lcnm_user = currentuserid()");
+//-----------------------------------------------------------------------------
 ISStartup::ISStartup() : QObject()
 {
 
@@ -94,6 +98,11 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	}
 
 	if (!CheckExistUserGroup()) //Проверка наличия привязки пользователя к группе
+	{
+		return EXIT_FAILURE;
+	}
+
+	if (!LoadLocalNames())
 	{
 		return EXIT_FAILURE;
 	}
@@ -295,11 +304,34 @@ bool ISStartup::CheckExistUserGroup()
 		{
 			ISSplashScreen::GetInstance().hide();
 			ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.User.NotLinkWithGroup"));
-
 			return false;
 		}
 	}
 
 	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISStartup::LoadLocalNames()
+{
+	ISQuery qSelect(QS_LOCAL_NAME);
+	bool Result = qSelect.Execute();
+	if (Result)
+	{
+		while (qSelect.Next())
+		{
+			PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(qSelect.ReadColumn("lcnm_tablename").toString());
+			if (MetaTable)
+			{
+				PMetaField *MetaField = MetaTable->GetField(qSelect.ReadColumn("lcnm_fieldname").toString());
+				if (MetaField)
+				{
+					MetaField->LabelName = qSelect.ReadColumn("lcnm_localname").toString();
+					MetaField->LocalListName = MetaField->LabelName;
+				}
+			}
+
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

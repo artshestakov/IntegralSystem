@@ -565,6 +565,14 @@ void ISGui::ShowDatabaseSettings()
 	}
 }
 //-----------------------------------------------------------------------------
+void ISGui::ShowObjectForm(QWidget *ObjectForm)
+{
+	ObjectForm->setParent(nullptr);
+	ObjectForm->resize(ISDefines::Gui::SIZE_TASK_OBJECT_FORM);
+	MoveWidgetToDesktop(ObjectForm, ISNamespace::MWD_Center);
+	ObjectForm->show();
+}
+//-----------------------------------------------------------------------------
 ISImageViewerForm* ISGui::ShowImageForm(const QPixmap &Pixmap)
 {
 	SetWaitGlobalCursor(true);
@@ -598,16 +606,7 @@ void ISGui::ShowTaskViewForm(int TaskID)
 //-----------------------------------------------------------------------------
 void ISGui::ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID)
 {
-	ISObjectFormBase *TaskObjectForm = CreateObjectForm(FormType, "_Task", TaskID);
-	ShowTaskObjectForm(TaskObjectForm);
-}
-//-----------------------------------------------------------------------------
-void ISGui::ShowTaskObjectForm(QWidget *TaskObjectForm)
-{
-	TaskObjectForm->setParent(nullptr);
-	TaskObjectForm->resize(ISDefines::Gui::SIZE_TASK_OBJECT_FORM);
-	MoveWidgetToDesktop(TaskObjectForm, ISNamespace::MWD_Center);
-	TaskObjectForm->show();
+	ShowObjectForm(CreateObjectForm(FormType, "_Task", TaskID));
 }
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)

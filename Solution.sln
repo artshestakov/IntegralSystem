@@ -79,8 +79,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheme", "Scheme", "{EDC6FC
 		Resources\Scheme\Asterisk.xsr = Resources\Scheme\Asterisk.xsr
 		Resources\Scheme\Carat.xsn = Resources\Scheme\Carat.xsn
 		Resources\Scheme\Carat.xsr = Resources\Scheme\Carat.xsr
-		Resources\Scheme\Class.xsn = Resources\Scheme\Class.xsn
-		Resources\Scheme\Class.xsr = Resources\Scheme\Class.xsr
 		Resources\Scheme\Countries.xsr = Resources\Scheme\Countries.xsr
 		Resources\Scheme\Currency.xsr = Resources\Scheme\Currency.xsr
 		Resources\Scheme\Device.xsn = Resources\Scheme\Device.xsn
@@ -95,6 +93,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheme", "Scheme", "{EDC6FC
 		Resources\Scheme\SettingsDatabase.xsn = Resources\Scheme\SettingsDatabase.xsn
 		Resources\Scheme\SettingsDatabase.xsr = Resources\Scheme\SettingsDatabase.xsr
 		Resources\Scheme\System.xsn = Resources\Scheme\System.xsn
+		Resources\Scheme\System.xsr = Resources\Scheme\System.xsr
 		Resources\Scheme\Task.xsn = Resources\Scheme\Task.xsn
 		Resources\Scheme\Task.xsr = Resources\Scheme\Task.xsr
 		Resources\Scheme\Units.xsr = Resources\Scheme\Units.xsr
@@ -366,7 +365,7 @@ Global
 		{8C1C6DF9-CA03-426D-A1EB-6A573409CD17} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

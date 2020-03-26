@@ -22,8 +22,6 @@ protected:
 	void CreateTask();
 	void SearchByNumber();
 
-	void CreateObjectForm(QWidget *TaskObjectForm);
-
 private:
 	QVBoxLayout *MainLayout;
 	QToolBar *ToolBar;

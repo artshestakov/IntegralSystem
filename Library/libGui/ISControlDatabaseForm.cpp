@@ -10,6 +10,7 @@
 #include "ISQuery.h"
 #include "ISPGSettingsForm.h"
 #include "ISStatisticTablesForm.h"
+#include "ISSettingTableNameFieldsForm.h"
 //-----------------------------------------------------------------------------
 ISControlDatabaseForm::ISControlDatabaseForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
@@ -34,6 +35,7 @@ void ISControlDatabaseForm::LoadData()
 	CreateGeneralTab();
 	CreatePGSettings();
 	CreateStatisticTablesForm();
+	CreateSettingLocalNameFields();
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -81,13 +83,16 @@ void ISControlDatabaseForm::CreateGeneralTab()
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::CreatePGSettings()
 {
-	ISPGSettingsForm *PGSettingsForm = new ISPGSettingsForm(TabWidget);
-	TabWidget->addTab(PGSettingsForm, LANG("PG_Settings"));
+	TabWidget->addTab(new ISPGSettingsForm(TabWidget), LANG("PG_Settings"));
 }
 //-----------------------------------------------------------------------------
 void ISControlDatabaseForm::CreateStatisticTablesForm()
 {
-	ISStatisticTablesForm *StatisticTablesForm = new ISStatisticTablesForm(TabWidget);
-	TabWidget->addTab(StatisticTablesForm, BUFFER_ICONS("TablesStatistics"), LANG("StatisticTables"));
+	TabWidget->addTab(new ISStatisticTablesForm(TabWidget), LANG("StatisticTables"));
+}
+//-----------------------------------------------------------------------------
+void ISControlDatabaseForm::CreateSettingLocalNameFields()
+{
+	TabWidget->addTab(new ISSettingTableNameFieldsForm(TabWidget), LANG("SettingNameFields"));
 }
 //-----------------------------------------------------------------------------

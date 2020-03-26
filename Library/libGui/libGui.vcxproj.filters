@@ -1138,6 +1138,9 @@
     <ClCompile Include="ISPhoneBaseEdit.cpp">
       <Filter>Fields\Base</Filter>
     </ClCompile>
+    <ClCompile Include="ISSettingTableNameFieldsForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1949,6 +1952,9 @@
     </QtMoc>
     <QtMoc Include="ISPhoneBaseEdit.h">
       <Filter>Fields\Base</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingTableNameFieldsForm.h">
+      <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

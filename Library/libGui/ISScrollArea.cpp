@@ -2,10 +2,10 @@
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISScrollArea::ISScrollArea(QWidget *parent) : QScrollArea(parent)
+ISScrollArea::ISScrollArea(QWidget *parent)
+	: QScrollArea(parent),
+	WheelTracking(true)
 {
-	WheelTracking = true;
-
 	Widget = new QWidget(this);
 	Widget->setObjectName("WidgetScrollArea");
 	Widget->setStyleSheet(STYLE_SHEET("ISScrollArea"));

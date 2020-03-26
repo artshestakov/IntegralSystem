@@ -339,6 +339,7 @@
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
+    <ClCompile Include="ISSettingTableNameFieldsForm.cpp" />
     <ClCompile Include="ISSirona.cpp" />
     <ClCompile Include="ISSironaAppointmentListForm.cpp" />
     <ClCompile Include="ISSironaCostListForm.cpp" />
@@ -432,6 +433,7 @@
     <ClInclude Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
     <QtMoc Include="ISSettingFieldWidgets.h" />
+    <QtMoc Include="ISSettingTableNameFieldsForm.h" />
     <ClInclude Include="ISSqlModelHelper.h" />
     <QtMoc Include="ISSqlModelView.h" />
     <QtMoc Include="ISSqlModelCore.h" />

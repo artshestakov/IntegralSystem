@@ -571,6 +571,7 @@
   <Local Name="YesterdayAt" Russian="Вчера в %1"/>
   <Local Name="GeneralInformation" Russian="Общая информация"/>
   <Local Name="StatisticTables" Russian="Статистика таблиц"/>
+  <Local Name="SettingNameFields" Russian="Настройка имен полей"/>
   <Local Name="SettingsDatabase" Russian="Настройки базы данных"/>
   <Local Name="SelectDialog.Title.Single" Russian="Выберите одну запись из списка ниже"/>
   <Local Name="SelectDialog.Title.Multi" Russian="Выберите несколько записей из списка ниже"/>

@@ -60,6 +60,7 @@ public:
 	static bool ShowUserPasswordForm(int UserID); //Открыть форму изменения пароля для пользователя
 	static void ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID); //Просмотр системной информации о записи
 	static void ShowDatabaseSettings(); //Показать настройки базы данных
+	static void ShowObjectForm(QWidget *ObjectForm); //Показать форму объекта
 	
 	static ISImageViewerForm* ShowImageForm(const QPixmap &Pixmap); //Показать изображение
 	static ISImageViewerForm* ShowImageForm(const QString &FilePath); //Показать изображение
@@ -67,7 +68,6 @@ public:
 
 	static void ShowTaskViewForm(int TaskID); //Показать карточку просмотра задачи
 	static void ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID = 0); //Показать форму объекта задачи
-	static void ShowTaskObjectForm(QWidget *TaskObjectForm); //Показать форму объекта задачи
 
 private:
 	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<XSR Name="Class.xsr">
+<XSR Name="System.xsr">
 
   <_Paragraphs IsSystem="true" UID="{9A36AD64-5A2F-4B62-9DA7-4FC545B6AB5F}" Name="Desktop" OrderID="1" LocalName="Рабочий стол" ToolTip="Рабочий стол" Icon="MainPanel.Desktop" ClassName="ISDesktopForm"/>
   <_Paragraphs IsSystem="true" UID="{18A90F8B-1D99-420E-BA60-C3EBF60D595E}" Name="Workspace" OrderID="2" LocalName="Рабочая область" ToolTip="Рабочая область" Icon="MainPanel.Workspace" ClassName="ISWorkspaceForm" Default="true"/>

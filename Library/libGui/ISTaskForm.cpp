@@ -139,7 +139,7 @@ void ISTaskForm::FilterClicked()
 
 	TaskListForm = dynamic_cast<ISTaskBaseListForm*>(MetaObject->newInstance(Q_ARG(QWidget *, this)));
 	IS_ASSERT(TaskListForm, QString("Error instance task list form . ListForm: %1").arg(ListFormName));
-	connect(TaskListForm, &ISTaskBaseListForm::AddFormFromTab, this, &ISTaskForm::CreateObjectForm);
+	connect(TaskListForm, &ISTaskBaseListForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
 	MainLayout->addWidget(TaskListForm);
 	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, TaskListForm, &ISTaskBaseListForm::LoadData);
 
@@ -193,10 +193,5 @@ void ISTaskForm::SearchByNumber()
 			break;
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-void ISTaskForm::CreateObjectForm(QWidget *TaskObjectForm)
-{
-	ISGui::ShowTaskObjectForm(TaskObjectForm);
 }
 //-----------------------------------------------------------------------------
