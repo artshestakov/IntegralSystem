@@ -270,13 +270,6 @@ void ISMainWindow::CreateStatusBar()
 {
 	if (SETTING_BOOL(CONST_UID_SETTING_STATUS_BAR_SHOWSTATUSBAR))
 	{
-		QFrame *Frame = ISControls::CreateHorizontalLine(this);
-		GetMainLayout()->addWidget(Frame);
-
-		QPalette Palette = Frame->palette();
-		Palette.setColor(QPalette::Dark, ISDefines::Gui::COLOR_MAIN_MENU_BAR);
-		Frame->setPalette(Palette);
-
 		StatusBar = new ISStatusBar(this);
 		StatusBar->setVisible(false);
 		GetMainLayout()->addWidget(StatusBar);
@@ -285,14 +278,12 @@ void ISMainWindow::CreateStatusBar()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowCreateRecords()
 {
-	ISFastCreateRecordsForm FastCreateRecordsForm;
-	FastCreateRecordsForm.Exec();
+	ISFastCreateRecordsForm().Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowExternalTools()
 {
-	ISExternalToolsForm FastAccessSettingsForm;
-	FastAccessSettingsForm.Exec();
+	ISExternalToolsForm().Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
@@ -531,8 +522,7 @@ void ISMainWindow::ShowHelpSystem()
 void ISMainWindow::ShowAboutForm()
 {
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_ABOUT_FORM, QString(), QString(), QVariant());
-	ISAboutForm AboutForm;
-	AboutForm.Exec();
+	ISAboutForm().Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAboutQt()
