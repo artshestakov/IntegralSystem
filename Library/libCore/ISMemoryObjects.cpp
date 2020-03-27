@@ -1,8 +1,7 @@
 #include "ISMemoryObjects.h"
 //-----------------------------------------------------------------------------
 ISMemoryObjects::ISMemoryObjects()
-	: MainWindow(nullptr),
-	TabNavigation(nullptr),
+	: TabNavigation(nullptr),
 	Desktop(nullptr),
 	WorkspaceForm(nullptr),
 	Logger(nullptr),
@@ -20,16 +19,6 @@ ISMemoryObjects& ISMemoryObjects::GetInstance()
 {
 	static ISMemoryObjects MemoryObjects;
 	return MemoryObjects;
-}
-//-----------------------------------------------------------------------------
-void ISMemoryObjects::SetMainWindow(QObject *main_window)
-{
-	MainWindow = main_window;
-}
-//-----------------------------------------------------------------------------
-QObject* ISMemoryObjects::GetMainWindow()
-{
-	return MainWindow;
 }
 //-----------------------------------------------------------------------------
 void ISMemoryObjects::SetTabNavigation(QObject *tab_navigation)

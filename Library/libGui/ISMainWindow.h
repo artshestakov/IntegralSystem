@@ -13,7 +13,6 @@ class ISMainWindow : public ISInterfaceForm
 {
 	Q_OBJECT
 
-	Q_PROPERTY(bool CloseEvent READ GetCloseEventFlag WRITE SetCloseEventFlag)
 	Q_PROPERTY(ISUuid CurrentParagraphUID READ GetCurrentParagraphUID WRITE SetCurrentParagraphUID)
 
 signals:
@@ -23,9 +22,6 @@ public:
 	ISMainWindow(QWidget *parent = 0);
 	virtual ~ISMainWindow();
 	
-	void SetCloseEventFlag(bool close_event);
-	bool GetCloseEventFlag() const;
-
 	void SetCurrentParagraphUID(const ISUuid &current_paragraph_uid);
 	ISUuid GetCurrentParagraphUID() const;
 
@@ -80,6 +76,5 @@ private:
 	ISStatusBar *StatusBar;
 	
 	QString CurrentParagraphUID;
-	bool CloseEvent;
 };
 //-----------------------------------------------------------------------------

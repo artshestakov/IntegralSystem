@@ -13,9 +13,6 @@ public:
 
 	static ISMemoryObjects& GetInstance();
 
-	void SetMainWindow(QObject *main_window);
-	QObject* GetMainWindow();
-
 	void SetTabNavigation(QObject *tab_navigation);
 	QObject* GetTabNavigation();
 
@@ -34,7 +31,6 @@ public:
 private:
 	ISMemoryObjects();
 
-	QObject *MainWindow;
 	QObject *TabNavigation;
 	QObject *Desktop;
 	QObject *WorkspaceForm;

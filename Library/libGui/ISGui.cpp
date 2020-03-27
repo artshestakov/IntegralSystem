@@ -394,10 +394,6 @@ void ISGui::RestartApplication()
 //-----------------------------------------------------------------------------
 void ISGui::ExitApplication()
 {
-	if (ISMemoryObjects::GetInstance().GetMainWindow())
-	{
-		ISMemoryObjects::GetInstance().GetMainWindow()->setProperty("CloseEvent", false);
-	}
 	qApp->closeAllWindows();
 	ISCore::ExitApplication();
 }

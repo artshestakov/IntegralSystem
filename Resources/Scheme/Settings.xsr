@@ -16,10 +16,6 @@
   <_SettingsGroup IsSystem="true" UID="{8FF98150-6022-4551-96BB-FCAD816589B3}" Name="Security" LocalName="Безопасность" IconName="Settings.Security" Order="3" System="true"/>
   <_Settings IsSystem="true" UID="{4AF0990B-B17F-4B71-AFB4-BE42CFA0A71C}" Group="{8FF98150-6022-4551-96BB-FCAD816589B3}" Order="1" Name="AutoLock" Type="Bool" LocalName="Автоблокировка" DefaultValue="false" Hint="Автоматическая блокировка приложения"/>
   <_Settings IsSystem="true" UID="{E5EBC475-FC14-4D8F-98AD-91271006855F}" Group="{8FF98150-6022-4551-96BB-FCAD816589B3}" Order="2" Name="AutoLockInterval" Type="String" WidgetEditName="ISComboTimeEdit" LocalName="Интервал автоблокировки" DefaultValue="5" Hint="Интервал автоматической блокировки приложения"/>
-  <_Settings IsSystem="true" UID="{322387EB-A40B-4404-A638-532A20759F6A}" Group="{8FF98150-6022-4551-96BB-FCAD816589B3}" Order="3" Name="PasswordSettingsShow" Type="Bool" LocalName="Требовать пароль при открытии настроек" DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{7EDD7BA7-E7AC-4092-B2CB-220C65B49F80}" Group="{8FF98150-6022-4551-96BB-FCAD816589B3}" Order="4" Name="PasswordSettings" Type="Password" LocalName="Пароль"/>
-  <_Settings IsSystem="true" UID="{12B30CBC-5323-4737-B6EB-6681DD7D55E7}" Group="{8FF98150-6022-4551-96BB-FCAD816589B3}" Order="5" Name="PasswordExitShow" Type="Bool" LocalName="Требовать пароль при закрытии программы" DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{C6F96A0E-ACCD-4A86-9903-89CCC6F90ADD}" Group="{8FF98150-6022-4551-96BB-FCAD816589B3}" Order="6" Name="PasswordExit" Type="Password" LocalName="Пароль"/>
   
   <_SettingsGroup IsSystem="true" UID="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Name="Tables" LocalName="Таблицы" IconName="Settings.Tables" Order="4" System="true"/>
   <_Settings IsSystem="true" UID="{9CBB5512-9559-4740-A7E5-A44D94BEC434}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="1" Name="HighlightingOddRows" Type="Bool" LocalName="Затемнить четные строчки" Hint="Все четные строчки будут немного затемнены для более удобного просмотра больших таблиц." DefaultValue="true"/>

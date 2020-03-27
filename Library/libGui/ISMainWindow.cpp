@@ -22,7 +22,6 @@
 #include "ISConstants.h"
 #include "ISLockForm.h"
 #include "ISExitForm.h"
-#include "ISMemoryObjects.h"
 #include "ISColumnSizer.h"
 #include "ISHistoryForm.h"
 #include "ISFastCreateObjectForm.h"
@@ -42,11 +41,8 @@
 #include "ISOnline.h"
 #include "ISAddressBookListForm.h"
 //-----------------------------------------------------------------------------
-ISMainWindow::ISMainWindow(QWidget *parent)
-	: ISInterfaceForm(parent),
-	CloseEvent(true)
+ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 {
-	ISMemoryObjects::GetInstance().SetMainWindow(this);
 	connect(&ISCreatedObjectsEntity::GetInstance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	setWindowIcon(BUFFER_PIXMAPS("Logo"));
@@ -73,16 +69,6 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 ISMainWindow::~ISMainWindow()
 {
 
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::SetCloseEventFlag(bool close_event)
-{
-	CloseEvent = close_event;
-}
-//-----------------------------------------------------------------------------
-bool ISMainWindow::GetCloseEventFlag() const
-{
-	return CloseEvent;
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::SetCurrentParagraphUID(const ISUuid &current_paragraph_uid)
@@ -118,82 +104,60 @@ void ISMainWindow::LockApplication()
 //-----------------------------------------------------------------------------
 void ISMainWindow::closeEvent(QCloseEvent *e)
 {
-	if (CloseEvent)
+	if (ISCreatedObjectsEntity::GetInstance().CheckExistForms())
 	{
-		if (ISCreatedObjectsEntity::GetInstance().CheckExistForms())
+		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_CONFIRMEXITAPPLICATION))
 		{
-			if (SETTING_BOOL(CONST_UID_SETTING_SECURITY_PASSWORDEXITSHOW))
+			SetVisibleShadow(true);
+			raise();
+			activateWindow();
+
+			ISGui::SetWaitGlobalCursor(true);
+			ISExitForm ExitForm;
+			ExitForm.raise();
+			connect(&ExitForm, &ISExitForm::Showed, [=] { ISGui::SetWaitGlobalCursor(false); });
+
+			if (ExitForm.Exec())
 			{
-				QString Password = ISInputDialog::GetPassword(this, LANG("Security"), LANG("EnterThePasswordForExit")).toString();
-				if (Password.length())
+				switch (ExitForm.GetSelectedAction())
 				{
-					if (Password != SETTING_STRING(CONST_UID_SETTING_SECURITY_PASSWORDEXIT))
-					{
-						e->ignore();
-						ISMessageBox::ShowWarning(this, LANG("Message.Password.Error"));
-						return;
-					}
-				}
-				else
-				{
+				case ISNamespace::EFA_Lock:
 					e->ignore();
-					return;
-				}
-			}
+					LockApplication();
+					break;
 
-			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_CONFIRMEXITAPPLICATION))
-			{
-				SetVisibleShadow(true);
-				raise();
-				activateWindow();
-
-				ISGui::SetWaitGlobalCursor(true);
-				ISExitForm ExitForm;
-				ExitForm.raise();
-				connect(&ExitForm, &ISExitForm::Showed, [=] { ISGui::SetWaitGlobalCursor(false); });
-
-				if (ExitForm.Exec())
-				{
-					switch (ExitForm.GetSelectedAction())
-					{
-					case ISNamespace::EFA_Lock:
-						e->ignore();
-						LockApplication();
-						break;
-
-					case ISNamespace::EFA_ChangeUser:
-						e->ignore();
-						BeforeClose();
-						ISGui::ChangeUser();
-						break;
-
-					case ISNamespace::EFA_Exit:
-						BeforeClose();
-						ISGui::ExitApplication();
-						break;
-
-					case ISNamespace::EFT_Close:
-						e->ignore();
-						break;
-					}
-				}
-				else
-				{
+				case ISNamespace::EFA_ChangeUser:
 					e->ignore();
-				}
+					BeforeClose();
+					ISGui::ChangeUser();
+					break;
 
-				SetVisibleShadow(false);
+				case ISNamespace::EFA_Exit:
+					BeforeClose();
+					ISGui::ExitApplication();
+					break;
+
+				case ISNamespace::EFT_Close:
+					e->ignore();
+					break;
+				}
 			}
 			else
 			{
-				BeforeClose();
-				ISGui::ExitApplication();
+				e->ignore();
 			}
+
+			SetVisibleShadow(false);
 		}
 		else
 		{
-			e->ignore();
+			BeforeClose();
+			ISGui::ExitApplication();
 		}
+	}
+	else
+	{
+		e->ignore();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -556,19 +520,6 @@ void ISMainWindow::UserStatusChange()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowSettingsForm()
 {
-	if (SETTING_BOOL(CONST_UID_SETTING_SECURITY_PASSWORDSETTINGSSHOW))
-	{
-		QString InputPassword = ISInputDialog::GetPassword(this, LANG("Security"), LANG("EnterThePasswordForShowSettingsForm")).toString();
-		if (InputPassword.length())
-		{
-			if (InputPassword != SETTING_STRING(CONST_UID_SETTING_SECURITY_PASSWORDSETTINGS))
-			{
-				ISMessageBox::ShowWarning(this, LANG("Message.Password.Error"));
-				return;
-			}
-		}
-	}
-
 	ISGui::ShowSettingsForm(CONST_UID_SETTING_GROUP_GENERAL);
 }
 //-----------------------------------------------------------------------------

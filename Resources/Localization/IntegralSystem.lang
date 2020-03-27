@@ -117,7 +117,6 @@
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
   <Local Name="Message.Objects.Delete.Cascade" Russian="Вы действительно удалить выбранные (%1 шт.) записи каскадом?"/>
   <Local Name="Message.Objects.Recovery" Russian="Вы действительно хотите восстановить выбранные (%1 шт.) записи?"/>
-  <Local Name="Message.Password.Error" Russian="Неверный пароль."/>
   <Local Name="Message.User.Change.Postgres" Russian="Редактировать системного пользователя запрещено."/>
   <Local Name="Message.User.ChangePassword.Postgres" Russian="Менять пароль системному пользователю запрещено."/>
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
@@ -482,7 +481,6 @@
   <Local Name="NewTools" Russian="Новый инструмент"/>
   <Local Name="CreateRecords" Russian="Создание записей"/>
   <Local Name="CreateRecord" Russian="Создать запись"/>
-  <Local Name="Security" Russian="Безопасность"/>
   <Local Name="CopyText" Russian="Копировать текст"/>
   <Local Name="Continue" Russian="Продолжить"/>
   <Local Name="Mode" Russian="Режим"/>
@@ -700,8 +698,6 @@
   <Local Name="RecordMarkerIsDeleted" Russian="Запись помечена на удаление"/>
   <Local Name="NotSettingTelephonyForCurrentUser" Russian="Телефония для Вашей учётной записи не настроена, обратитесь к системному администратору."/>
   <Local Name="ClickFromViewList" Russian="Чтобы просмотреть справочник, нажмите на соответствующий пункт слева."/>
-  <Local Name="EnterThePasswordForShowSettingsForm" Russian="Введите пароль чтобы открыть настройки программы"/>
-  <Local Name="EnterThePasswordForExit" Russian="Введите пароль чтобы закрыть программу"/>
   <Local Name="ClickFromViewMyLLastSearchQuery" Russian="Нажмите, чтобы увидеть Ваши последние поисковые запросы"/>
   <Local Name="ClickFromGoMainJournal" Russian="Нажмите, чтобы перейти в основной журнал"/>
   <Local Name="ListeningRecordVoice" Russian="Прослушивание записи разговора"/>

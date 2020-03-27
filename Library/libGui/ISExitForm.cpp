@@ -3,7 +3,6 @@
 #include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISMemoryObjects.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
@@ -73,7 +72,7 @@ ISNamespace::ExitFormAction ISExitForm::GetSelectedAction()
 void ISExitForm::showEvent(QShowEvent *e)
 {
 	ISInterfaceDialogForm::showEvent(e);
-	QRect Rect = ISMemoryObjects::GetInstance().GetMainWindow()->property("geometry").toRect();
+	QRect Rect;// = ISMemoryObjects::GetInstance().GetMainWindow()->property("geometry").toRect();
 	
 	int x = Rect.width() / 2;
 	x = Rect.x() + x;
