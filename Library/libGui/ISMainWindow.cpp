@@ -43,7 +43,7 @@
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 {
-	connect(&ISCreatedObjectsEntity::GetInstance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
+	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	setWindowIcon(BUFFER_PIXMAPS("Logo"));
 	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::GetInstance().GetInfo().LocalName).arg(ISMetaUser::Instance().UserData->FullName));
@@ -104,7 +104,7 @@ void ISMainWindow::LockApplication()
 //-----------------------------------------------------------------------------
 void ISMainWindow::closeEvent(QCloseEvent *e)
 {
-	if (ISCreatedObjectsEntity::GetInstance().CheckExistForms())
+	if (ISCreatedObjectsEntity::Instance().CheckExistForms())
 	{
 		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_CONFIRMEXITAPPLICATION))
 		{
@@ -330,7 +330,7 @@ void ISMainWindow::UpdateAviable(const QVariantMap &VariantMap)
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.NotifyUpdateAviable")))
 	{
-		if (ISCreatedObjectsEntity::GetInstance().CheckExistForms())
+		if (ISCreatedObjectsEntity::Instance().CheckExistForms())
 		{
 			ISGui::ChangeUser();
 		}

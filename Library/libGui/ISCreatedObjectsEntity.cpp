@@ -5,6 +5,7 @@
 #include "ISInterfaceForm.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISCreatedObjectsEntity::ISCreatedObjectsEntity() : QObject()
 {
@@ -16,7 +17,7 @@ ISCreatedObjectsEntity::~ISCreatedObjectsEntity()
 
 }
 //-----------------------------------------------------------------------------
-ISCreatedObjectsEntity& ISCreatedObjectsEntity::GetInstance()
+ISCreatedObjectsEntity& ISCreatedObjectsEntity::Instance()
 {
 	static ISCreatedObjectsEntity CreatedObjectsEntity;
 	return CreatedObjectsEntity;
@@ -24,23 +25,23 @@ ISCreatedObjectsEntity& ISCreatedObjectsEntity::GetInstance()
 //-----------------------------------------------------------------------------
 void ISCreatedObjectsEntity::RegisterForm(QWidget *ObjectForm)
 {
-	ObjectForms.insert(dynamic_cast<ISInterfaceForm*>(ObjectForm)->GetFormUID(), ObjectForm);
+	ObjectForms.emplace(dynamic_cast<ISInterfaceForm*>(ObjectForm)->GetFormUID(), ObjectForm);
 }
 //-----------------------------------------------------------------------------
 void ISCreatedObjectsEntity::UnregisterForm(const QString &FormUID)
 {
-	ObjectForms.remove(FormUID);
+	ObjectForms.erase(FormUID);
 }
 //-----------------------------------------------------------------------------
 bool ISCreatedObjectsEntity::CheckExistForms()
 {
-	QList<QWidget*> Forms = ObjectForms.values();
+	std::vector<QWidget *> Forms = ConvertMapToValues<ISUuid, QWidget *>(ObjectForms);
 	int CountNotSaved = 0;
 	QString DetailedText;
 
-	for (int i = 0; i < Forms.count(); ++i)
+	for (int i = 0; i < Forms.size(); ++i)
 	{
-		QWidget *ObjectFormBase = Forms.at(i);
+		QWidget *ObjectFormBase = Forms[i];
 		if (ObjectFormBase->property("ModificationFlag").toBool())
 		{
 			++CountNotSaved;

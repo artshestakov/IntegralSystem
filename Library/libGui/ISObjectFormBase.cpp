@@ -54,12 +54,12 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	CreateFieldsWidget();
 	FillDataFields();
 
-	ISCreatedObjectsEntity::GetInstance().RegisterForm(this);
+	ISCreatedObjectsEntity::Instance().RegisterForm(this);
 }
 //-----------------------------------------------------------------------------
 ISObjectFormBase::~ISObjectFormBase()
 {
-	ISCreatedObjectsEntity::GetInstance().UnregisterForm(GetFormUID());
+	ISCreatedObjectsEntity::Instance().UnregisterForm(GetFormUID());
 }
 //-----------------------------------------------------------------------------
 int ISObjectFormBase::GetParentObjectID() const

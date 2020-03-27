@@ -11,13 +11,7 @@ signals:
 	void Existed();
 
 public:
-	ISCreatedObjectsEntity(const ISCreatedObjectsEntity &) = delete;
-	ISCreatedObjectsEntity(ISCreatedObjectsEntity &&) = delete;
-	ISCreatedObjectsEntity &operator=(const ISCreatedObjectsEntity &) = delete;
-	ISCreatedObjectsEntity &operator=(ISCreatedObjectsEntity &&) = delete;
-	~ISCreatedObjectsEntity();
-
-	static ISCreatedObjectsEntity& GetInstance();
+	static ISCreatedObjectsEntity& Instance();
 
 	void RegisterForm(QWidget *ObjectForm); //Зарегистрировать форму объекта
 	void UnregisterForm(const QString &FormUID); //Отменить регистрацию формы объекта
@@ -25,7 +19,11 @@ public:
 
 private:
 	ISCreatedObjectsEntity();
-
-	QMap<ISUuid, QWidget*> ObjectForms;
+	~ISCreatedObjectsEntity();
+	ISCreatedObjectsEntity(ISCreatedObjectsEntity const &) {};
+	ISCreatedObjectsEntity& operator=(ISCreatedObjectsEntity const&) { return *this; };
+	
+private:
+	std::map<ISUuid, QWidget*> ObjectForms;
 };
 //-----------------------------------------------------------------------------
