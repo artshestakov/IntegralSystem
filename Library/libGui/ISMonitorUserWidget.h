@@ -12,7 +12,6 @@ signals:
 	void ShowActivity();
 	void ShowProtocol();
 	void ShowDetails();
-	void EndSession();
 	void SendNotify();
 
 public:

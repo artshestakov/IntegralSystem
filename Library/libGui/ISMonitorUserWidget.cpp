@@ -60,12 +60,6 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	connect(ActionDetails, &QAction::triggered, this, &ISMonitorUserWidget::ShowDetails);
 	addAction(ActionDetails);
 
-	QAction *ActionTerminate = new QAction(this);
-	ActionTerminate->setText(LANG("MonitorActivity.EndSession"));
-	ActionTerminate->setIcon(BUFFER_ICONS("EndSessionUser"));
-	connect(ActionTerminate, &QAction::triggered, this, &ISMonitorUserWidget::EndSession);
-	addAction(ActionTerminate);
-
 	QAction *ActionSendNotify = new QAction(this);
 	ActionSendNotify->setText(LANG("SendNotify"));
 	ActionSendNotify->setIcon(BUFFER_ICONS("SendNotify"));

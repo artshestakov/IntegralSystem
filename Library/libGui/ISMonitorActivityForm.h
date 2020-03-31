@@ -23,10 +23,7 @@ protected:
 	void ShowActivity(); //Просмотр активности
 	void ShowProtocol(); //Просмотр протокола
 	void ShowDetails(); //Просмотр подробностей
-	void TerminateUser(); //Завершить сеанс
 	void SendNotify(); //Отправить уведомление
-
-	void TerminateAll(); //Отключить всех
 
 private:
 	ISCheckEdit *CheckEdit;

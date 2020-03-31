@@ -42,12 +42,6 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 	connect(ButtonUpdate, &ISPushButton::clicked, this, &ISMonitorActivityForm::LoadData);
 	LayoutTitle->addWidget(ButtonUpdate);
 
-	ISPushButton *ButtonTerminateAll = new ISPushButton(this);
-	ButtonTerminateAll->setText(LANG("MonitorActivity.TerminateAll"));
-	ButtonTerminateAll->setIcon(BUFFER_ICONS("TerminateAll"));
-	connect(ButtonTerminateAll, &ISPushButton::clicked, this, &ISMonitorActivityForm::TerminateAll);
-	LayoutTitle->addWidget(ButtonTerminateAll);
-
 	ISLineEdit *EditSearch = new ISLineEdit(this);
 	EditSearch->SetPlaceholderText(LANG("Search"));
 	EditSearch->setFixedWidth(200);
@@ -116,7 +110,6 @@ void ISMonitorActivityForm::LoadData()
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowActivity, this, &ISMonitorActivityForm::ShowActivity);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowDetails, this, &ISMonitorActivityForm::ShowDetails);
-			connect(MonitorUserWidget, &ISMonitorUserWidget::EndSession, this, &ISMonitorActivityForm::TerminateUser);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::SendNotify, this, &ISMonitorActivityForm::SendNotify);
 			ScrollArea->widget()->layout()->addWidget(MonitorUserWidget);
 			MonitorUserWidget->adjustSize();
@@ -230,32 +223,6 @@ void ISMonitorActivityForm::ShowDetails()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISMonitorActivityForm::TerminateUser()
-{
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_TERMINATE_USER))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.TerminateUser"));
-		return;
-	}
-
-	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
-	if (MonitorUserWidget)
-	{
-		if (ISDatabase::Instance().IsUserOnline(MonitorUserWidget->GetUserID()))
-		{
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TerminateUser").arg(MonitorUserWidget->GetUserName())))
-			{
-				ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TERMINATE_USER, MonitorUserWidget->GetUserID(), QVariant(), QString(), false);
-				ISProtocol::Insert(true, CONST_UID_PROTOCOL_TERMINATE_USER, QString(), QString(), QVariant(), MonitorUserWidget->GetUserName());
-			}
-		}
-		else
-		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.UserIsNotOnline").arg(MonitorUserWidget->GetUserName()));
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISMonitorActivityForm::SendNotify()
 {
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
@@ -265,39 +232,6 @@ void ISMonitorActivityForm::SendNotify()
 		if (NotifyText.isValid())
 		{
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_MESSAGE, MonitorUserWidget->GetUserID(), QVariant(), LANG("NotifyUserMessage").arg(ISMetaUser::Instance().UserData->FullName).arg(NotifyText.toString()), true);
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISMonitorActivityForm::TerminateAll()
-{
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_TERMINATE_ALL_USERS))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.TerminateAllUsers"));
-		return;
-	}
-
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TerminateAllUser")))
-	{
-		int TerminatedCount = 0;
-		for (ISMonitorUserWidget *MonitorUserWidget : VectorUsers)
-		{
-			if (MonitorUserWidget->GetUserID() == ISMetaUser::Instance().UserData->ID)
-			{
-				continue;
-			}
-
-			if (ISDatabase::Instance().IsUserOnline(MonitorUserWidget->GetUserID()))
-			{
-				ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TERMINATE_USER, MonitorUserWidget->GetUserID(), QVariant(), QString(), false);
-				++TerminatedCount;
-			}
-		}
-
-		if (TerminatedCount)
-		{
-			ISProtocol::Insert(true, CONST_UID_PROTOCOL_TERMIANTE_ALL_USERS, QString(), QString(), QVariant());
-			ISMessageBox::ShowInformation(this, LANG("Message.Information.TermiantedUsers").arg(TerminatedCount));
 		}
 	}
 }

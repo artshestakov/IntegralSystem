@@ -136,8 +136,6 @@ void ISMainWindow::AfterShowEvent()
 		ISOnline::GetInstance().Initialize(ISMetaUser::Instance().UserData->InactiveTimeout);
 	}
 
-	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_ONLINE, QVariant(), ISMetaUser::Instance().UserData->FullName, false);
-
 	int CountOverdue = ISCore::TaskCountOverdue();
 	if (CountOverdue)
 	{
@@ -295,8 +293,6 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 void ISMainWindow::BeforeClose()
 {
 	hide();
-
-	ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_OFFLINE, QVariant(), ISMetaUser::Instance().UserData->FullName, false);
 
 	ISSplashScreen::GetInstance().DefaultPixmap();
 	ISSplashScreen::GetInstance().show();

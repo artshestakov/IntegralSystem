@@ -75,7 +75,6 @@
   <Local Name="Message.Information.NotFoundPrintFormFromMetaTable" Russian="Для таблицы &quot;%1&quot; нет доступных печатных форм."/>
   <Local Name="Message.Information.AttachedObjectTask" Russian="Запись успешно прикреплена к задаче."/>
   <Local Name="Message.Information.DetachedObjectTask" Russian="Запись успешно откреплена от задачи."/>
-  <Local Name="Message.Information.TermiantedUsers" Russian="Отключено пользователей: %1."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Error.Login.IsEmpty" Russian="Поле ввода логина обязательно для заполнения."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
@@ -191,9 +190,6 @@
   <Local Name="Message.Warning.NotAccess.Special.SendMessageToChat" Russian="У Вас нет прав на отправку сообщений в общий чат."/>
   <Local Name="Message.Warning.NotAccess.Special.AttachObjectTask" Russian="У Вас нет права на прикрепление записей к задачам."/>
   <Local Name="Message.Warning.NotAccess.Special.ShowActivityUser" Russian="У Вас нет права на просмотр активности пользователя."/>
-  <Local Name="Message.Warning.NotAccess.Special.TerminateUser" Russian="У Вас нет права на завершение сеанса пользователя."/>
-  <Local Name="Message.Warning.NotAccess.Special.TerminateAllUsers" Russian="У Вас нет права на завершение сеанса всех пользователей."/>
-  <Local Name="Message.Warning.UserIsNotOnline" Russian="Пользователь %1 не в сети."/>
   <Local Name="Message.Warning.NotLinkTaskCurrentForCurrent" Russian="Вы не можете связать задачу саму с собой."/>
   <Local Name="Message.Warning.LinkInBufferInvalid" Russian="Ссылка в буфере не является корректной, загрузка невозможна."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
@@ -253,8 +249,6 @@
   <Local Name="Message.Question.CheckThisTaskAsDuplicate" Russian="Отметить эту задачу как дубликат?"/>
   <Local Name="Message.Question.DetachObjectTask" Russian="Эта запись уже привязанна к выбранной задаче, открепить её?"/>
   <Local Name="Message.Question.OpenFileInChat" Russian="Открыть файл?"/>
-  <Local Name="Message.Question.TerminateUser" Russian="Завершить сеанс пользователя %1?"/>
-  <Local Name="Message.Question.TerminateAllUser" Russian="Отключить всех пользователей?"/>
   <Local Name="Message.Question.StopFullTextSearch" Russian="Остановить поиск?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
   <Local Name="Message.Question.NotSettingAdministratorInSettingDatabase" Russian="ВНИМАНИЕ! В настроках базы данных не настроен администратор системы. Сделать настройку сейчас?"/>
@@ -586,9 +580,7 @@
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
-  <Local Name="MonitorActivity.TerminateAll" Russian="Отключить всех"/>
   <Local Name="MonitorActivity.ActivityUser" Russian="Активность пользователя"/>
-  <Local Name="MonitorActivity.EndSession" Russian="Завершить сеанс"/>
   <Local Name="MonitorActivity.MonitorUser.Online" Russian="в сети"/>
   <Local Name="MonitorActivity.MonitorUser.Offline" Russian="не в сети"/>
   <Local Name="MonitorActivity.ActivityUserCount" Russian="Активность: %1. Бездействие: %2"/>

@@ -57,13 +57,9 @@
   <_Notification IsSystem="true" UID="{8DB698E7-B1FE-4A7D-813E-3FA555FE4FB7}" Name="Task.AddFile" Message="К Вашей задаче прикреплен файл" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{77A232D0-6A44-4A9B-833E-2C55E73E0FA2}" Name="ChatMessage" Message="Новое сообщение в общем чате" SoundFileName="Chat.NewMessage" SignalName="ChatMessage" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{C1141CF5-8E95-4793-841A-2E1E8270A2F3}" Name="UserChanged" Message="Данные Вашей учётной записи были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{50CD9037-7809-4059-B20C-B18900E8BE34}" Name="TerminateUser" Message="ВНИМАНИЕ! Вашу учётную запись принудительно отключили от системы." SoundFileName="Critical" SignalName="TermianteUser" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{168CA167-EA0B-48DA-918D-C617FFE2BA35}" Name="UpdateAviable" Message="ВНИМАНИЕ! Доступно обновление! Программа будет обновлена при следующем перезапуске." SoundFileName="Information" SignalName="UpdateAviable" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{721777DC-65D9-43DE-97F0-D50DAED2F4C2}" Name="SettingsDatabaseChanged" Message="Настройки базы данных были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{BAD25391-7009-472C-A7E4-A89106CB7904}" Name="IncomingCall" Message="Входящий звонок" SignalName="IncomingCall" ShowPopup="false"/>
   <_Notification IsSystem="true" UID="{3FF15EBE-43BD-4B2A-9E45-CA53E1CE1F54}" Name="CalendarEvent" Message="Напоминание" SignalName="CalendarEvent" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{E5D25227-E5E1-49AB-9034-2EEC5784DA14}" Name="UserOnline" Message="Пользователь в сети" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{366E23D9-800C-4C52-9302-F4E1AB68B372}" Name="UserOffline" Message="Пользователь не в сети" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{3C0EAFD8-1FC0-48F7-9BF2-D8E8E5875390}" Name="UserMessage" Message="Уведомление" SoundFileName="Information" ShowPopup="true"/>
 
   <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
@@ -98,8 +94,6 @@
   <_ProtocolType IsSystem="true" UID="{FB494E8E-BDF3-4804-AF42-43487AF8A871}" Name="Добавление специального права"/>
   <_ProtocolType IsSystem="true" UID="{4E7C34E5-C7FE-4C0D-BB4D-7B4A1D4CF9D2}" Name="Удаление специального права"/>
   <_ProtocolType IsSystem="true" UID="{154AA62F-A422-47E7-ADD6-862E5F0CBC17}" Name="Просмотр активности пользователя"/>
-  <_ProtocolType IsSystem="true" UID="{55EDD956-11D6-4AAC-8998-D4221E71A58D}" Name="Завершение сеанса пользователя"/>
-  <_ProtocolType IsSystem="true" UID="{301046C1-2E68-4B1B-9FD9-04478186A03C}" Name="Завершение сеанса всех пользователей"/>
 
   <_SystemParameters IsDeleted="true" IsSystem="true" UID="{4A3DFE73-B66E-4560-848F-64408F3B9846}" LocalName="Текущая версия базы данных"/>
 
