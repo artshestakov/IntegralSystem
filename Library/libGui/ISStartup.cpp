@@ -261,9 +261,8 @@ bool ISStartup::CheckAccessDatabase(const QString &Login)
 	if (!AccessDatabase)
 	{
 		ISSplashScreen::GetInstance().hide();
-		ISMessageBox::ShowWarning(nullptr, LANG("Message.Information.NotAccessToDatabase"));
+		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotAccessToDatabase"));
 	}
-
 	return AccessDatabase;
 }
 //-----------------------------------------------------------------------------

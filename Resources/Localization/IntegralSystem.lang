@@ -55,7 +55,6 @@
 
   <!--Messages-->
   <Local Name="Message.Information.Reconnect.Done" Russian="Подключение к базе данных восстановлено и Вы можете продолжать работу."/>
-  <Local Name="Message.Information.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Information.UpdateDownloaded" Russian="Обновление загружено!"/>
   <Local Name="Message.Information.CreatedPasswordUser" Russian="Пароль пользователя успешно изменен!"/>
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
@@ -192,6 +191,7 @@
   <Local Name="Message.Warning.NotAccess.Special.ShowActivityUser" Russian="У Вас нет права на просмотр активности пользователя."/>
   <Local Name="Message.Warning.NotLinkTaskCurrentForCurrent" Russian="Вы не можете связать задачу саму с собой."/>
   <Local Name="Message.Warning.LinkInBufferInvalid" Russian="Ссылка в буфере не является корректной, загрузка невозможна."/>
+  <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>
   <Local Name="Message.Warning.NotExistLinkInBuffer" Russian="Ссылка в буфере обмена отсутствует."/>

@@ -21,7 +21,7 @@ ISLoginEdit::~ISLoginEdit()
 //-----------------------------------------------------------------------------
 bool ISLoginEdit::IsValid() const
 {
-	return Valid;
+	return !Valid;
 }
 //-----------------------------------------------------------------------------
 void ISLoginEdit::LoginChanged()

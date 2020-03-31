@@ -25,7 +25,7 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
-	LabelIcon->setPixmap(BUFFER_ICONS("UserMonitor." + is_online ? "Online" : "Offline").pixmap(ISDefines::Gui::SIZE_32_32));
+	LabelIcon->setPixmap(BUFFER_ICONS(QString("UserMonitor.%1").arg(is_online ? "Online" : "Offline")).pixmap(ISDefines::Gui::SIZE_32_32));
 	Layout->addWidget(LabelIcon, 0, Qt::AlignHCenter);
 
 	QLabel *LabelUserName = new QLabel(this);
