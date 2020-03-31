@@ -404,7 +404,6 @@
     <ClCompile Include="ISUserOnlineForm.cpp" />
     <ClCompile Include="ISUserPasswordForm.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
-    <ClCompile Include="ISUserStatusForm.cpp" />
     <ClCompile Include="ISVolumeEdit.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="ISWorkspaceForm.cpp" />
@@ -686,7 +685,6 @@
     <QtMoc Include="ISUserObjectForm.h" />
     <QtMoc Include="ISUserOnlineDetailsForm.h" />
     <QtMoc Include="ISUserOnlineForm.h" />
-    <QtMoc Include="ISUserStatusForm.h" />
     <QtMoc Include="ISWorkspaceForm.h" />
     <QtMoc Include="ISPriceListObjectForm.h" />
     <QtMoc Include="ISScoreObjectForm.h" />

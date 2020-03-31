@@ -58,9 +58,7 @@ protected:
 	void ShowChangePasswordForm(); //Открыть форму смены пароля
 	void ShowNoteForm(); //Открыть форму "Блокнот"
 	void ShowAddressBook(); //Открыть адресную книгу
-	void UserStatusChange(); //Изменение текущего статуса пользователя
 	void ShowSettingsForm(); //Открыть форму "Настройки"
-	void ShowHelpSystem(); //Открыть справочную систему
 	void ShowAboutForm(); //Открыть форму "О программе"
 	void ShowAboutQt(); //Открыть форму "О Qt"
 

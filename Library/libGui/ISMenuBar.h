@@ -21,7 +21,6 @@ signals:
 	void History();
 	void DeviceSettings();
 	void ChangePassword();
-	void UserStatus();
 	void Settings();
 	void Notebook();
 	void AddressBook();

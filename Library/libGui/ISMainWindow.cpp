@@ -34,7 +34,6 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISLogger.h"
 #include "ISIncomingCallBaseForm.h"
-#include "ISUserStatusForm.h"
 #include "ISDeviceSettingsForm.h"
 #include "ISTelephony.h"
 #include "ISObjects.h"
@@ -207,7 +206,6 @@ void ISMainWindow::CreateMenuBar()
 	connect(MenuBar, &ISMenuBar::History, this, &ISMainWindow::ShowHistoryForm);
 	connect(MenuBar, &ISMenuBar::DeviceSettings, this, &ISMainWindow::ShowDeviceSettings);
 	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
-	connect(MenuBar, &ISMenuBar::UserStatus, this, &ISMainWindow::UserStatusChange);
 	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
 	connect(MenuBar, &ISMenuBar::Notebook, this, &ISMainWindow::ShowNoteForm);
 	connect(MenuBar, &ISMenuBar::AddressBook, this, &ISMainWindow::ShowAddressBook);
@@ -485,38 +483,9 @@ void ISMainWindow::ShowAddressBook()
 	AddressBookListForm->showMaximized();
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::UserStatusChange()
-{
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_USER_STATUS_CHANGE))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.UserStatusChange"));
-		return;
-	}
-
-	SetVisibleShadow(true);
-	raise();
-	activateWindow();
-
-	ISGui::SetWaitGlobalCursor(true);
-	ISUserStatusForm UserStatusForm;
-	ISGui::SetWaitGlobalCursor(false);
-	if (UserStatusForm.Exec())
-	{
-		QString StatusName = ISMetaUser::Instance().GetCurrentStatus(ISMetaUser::Instance().UserData->ID);
-		ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_USER_STATUS, QVariant(), ISMetaUser::Instance().UserData->FullName + ": " + StatusName, false);
-	}
-
-	SetVisibleShadow(false);
-}
-//-----------------------------------------------------------------------------
 void ISMainWindow::ShowSettingsForm()
 {
 	ISGui::ShowSettingsForm(CONST_UID_SETTING_GROUP_GENERAL);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowHelpSystem()
-{
-	
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAboutForm()

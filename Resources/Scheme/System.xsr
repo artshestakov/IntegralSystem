@@ -62,7 +62,6 @@
   <_Notification IsSystem="true" UID="{721777DC-65D9-43DE-97F0-D50DAED2F4C2}" Name="SettingsDatabaseChanged" Message="Настройки базы данных были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{BAD25391-7009-472C-A7E4-A89106CB7904}" Name="IncomingCall" Message="Входящий звонок" SignalName="IncomingCall" ShowPopup="false"/>
   <_Notification IsSystem="true" UID="{3FF15EBE-43BD-4B2A-9E45-CA53E1CE1F54}" Name="CalendarEvent" Message="Напоминание" SignalName="CalendarEvent" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{410AE8B0-A9EC-42DB-9E32-F9FFA9BF068B}" Name="UserStatus" Message="Пользователь сменил статус" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{E5D25227-E5E1-49AB-9034-2EEC5784DA14}" Name="UserOnline" Message="Пользователь в сети" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{366E23D9-800C-4C52-9302-F4E1AB68B372}" Name="UserOffline" Message="Пользователь не в сети" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{3C0EAFD8-1FC0-48F7-9BF2-D8E8E5875390}" Name="UserMessage" Message="Уведомление" SoundFileName="Information" ShowPopup="true"/>
@@ -92,7 +91,6 @@
   <_ProtocolType IsSystem="true" UID="{B88FD6FA-CC88-4B6A-8641-C2B2686D67C8}" Name="Отправка ссылки на запись в общий чат"/>
   <_ProtocolType IsSystem="true" UID="{662105B6-6671-46BE-8E1A-E57061C5C268}" Name="Добавление примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{C20634AF-EF58-4D96-9215-8085C2B8C416}" Name="Изменение примечания к записи"/>
-  <_ProtocolType IsSystem="true" UID="{4BC93101-8A4A-4469-A7B1-9F43BE080BB5}" Name="Изменение статуса"/>
   <_ProtocolType IsSystem="true" UID="{A0115A19-05CC-4AFD-8568-F9AE970E7157}" Name="Просмотр информации о программе"/>
   <_ProtocolType IsSystem="true" UID="{CDCB7490-C975-4ECA-AC3A-4532A32ECC4D}" Name="Изменение пароля от своей учётной записи"/>
   <_ProtocolType IsSystem="true" UID="{898A6F59-4BAB-4D9A-BF4B-B0CAFDF2072B}" Name="Прикрепление записи к задаче"/>

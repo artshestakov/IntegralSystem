@@ -19,7 +19,6 @@
       <Field UID="{12AA7823-6617-472D-A7C3-9C104DC61ED3}" Name="InactiveTimeout" Type="Int" LabelName="Таймаут бездействия (мин.)" LocalListName="Таймаут бездействия (мин.)" HideFromList="true" Hint="Укажите, сколько должно пройти минут чтобы система заиксировала бездействие"/>
       <Field UID="{18F6BFE0-0770-4F2F-A8DE-973416F41CEA}" Name="LastEnter" Type="DateTime" LabelName="Последний вход" LocalListName="Последний вход" HideFromObject="true"/>
       <Field UID="{852CB655-75AF-4515-BBDC-149F08BB82AE}" Name="LastAddress" Type="String" LabelName="Последний адрес" LocalListName="Последний адрес" HideFromObject="true"/>
-      <Field UID="{EA084041-0D7E-4167-8705-4BC6680E9922}" Name="CurrentStatus" Type="Int" LabelName="Статус" LocalListName="Статус" HideFromObject="true"/>
       <Field UID="{402CD7B9-B765-4177-9C2B-9495F7B3D405}" Name="Online" Type="Bool" LabelName="Онлайн" LocalListName="Онлайн" QueryText="useronline(usrs.usrs_login)"/>
       <Field UID="{C19191C0-9398-4FEB-9BED-BA1C3F8C0979}" Name="Photo" Type="Image" LabelName="Фотография" LocalListName="Фотография" HideFromList="true"/>
     </Fields>
@@ -39,14 +38,12 @@
       <Index Field="InactiveTimeout"/>
       <Index Field="LastEnter"/>
       <Index Field="LastAddress"/>
-      <Index Field="CurrentStatus"/>
       <Index Field="Photo"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Subdivision" ForeignClass="_Subdivision" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Sex" ForeignClass="_Sex" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="CurrentStatus" ForeignClass="_UserStatus" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <Escorts>
       <Escort LocalName="Изменения пароля" TableName="_UserPasswordChanged" ClassFilter="upcg_user = :ParentObjectID"/>
@@ -160,19 +157,6 @@
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-
-  <Table Name="_UserStatus" UID="{660AF115-AE22-44E1-A4F6-CDA1EA8E32A4}" Alias="usts" ShowOnly="true" LocalName="Статус пользователя" LocalListName="Статусы пользователя" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{3AF35250-7564-4331-BC32-E09ADE0A8B2A}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{0F1B7FDC-8806-48DF-8DD1-9FEE149FB63E}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка" NotNull="true"/>
-      <Field UID="{87847CCF-611B-442D-B691-E76D9C7A923B}" Name="Order" Type="String" LabelName="Порядок" LocalListName="Порядок"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Icon" Unique="true"/>
-      <Index Field="Order" Unique="true"/>
     </Indexes>
   </Table>
 

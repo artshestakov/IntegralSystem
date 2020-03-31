@@ -772,9 +772,6 @@
     <ClCompile Include="ISUserOnlineForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserStatusForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISWorkspaceForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -1624,9 +1621,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISUserOnlineForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserStatusForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISWorkspaceForm.h">

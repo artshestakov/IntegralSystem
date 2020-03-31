@@ -39,7 +39,6 @@
   <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="5"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Редактирование печатных форм" Hint="Возможность редактировать печатные формы в режиме предпросмотра" Order="1"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{1196470D-AE52-4361-AC0D-9C15612663D0}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Добавление примечаний к записям в таблицах" Order="2"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{CBB2F3AB-BC0C-41BB-9DD3-16AD594100C9}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Изменение статуса пользователя" Hint="Возможность менять свой статус (работаю, перерыв, ушёл и т.д.)" Order="3"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{6423FC8B-3804-44B6-B4AC-013541C11B96}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Отправка сообщений в общий чат" Order="4"/>
   
 </XSR>
