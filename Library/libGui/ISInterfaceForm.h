@@ -24,7 +24,6 @@ public:
 	void HideAnimation(int duration = 0);
 
 	void SetVisibleShadow(bool Visible); //Изменить видимость тени
-	bool IsVisibleShadow() const; //Получить видимость тени
 
 	ISUuid GetFormUID() const; //Получить уникальный идентификатор формы
 

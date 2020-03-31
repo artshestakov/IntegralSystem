@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISMAINWINDOW_H_INCLUDED
+#define _ISMAINWINDOW_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
@@ -15,17 +17,12 @@ class ISMainWindow : public ISInterfaceForm
 
 	Q_PROPERTY(ISUuid CurrentParagraphUID READ GetCurrentParagraphUID WRITE SetCurrentParagraphUID)
 
-signals:
-	void Unlocked();
-
 public:
 	ISMainWindow(QWidget *parent = 0);
 	virtual ~ISMainWindow();
 	
 	void SetCurrentParagraphUID(const ISUuid &current_paragraph_uid);
 	ISUuid GetCurrentParagraphUID() const;
-
-	void LockApplication(); //Блокировка программы
 
 protected:
 	void closeEvent(QCloseEvent *e);
@@ -49,7 +46,6 @@ protected:
 	void OpenFavoritesObject(const QString &TableName, int ObjectID);
 	void EscapeClicked() override;
 	void InitializePlugin();
-	void LockClicked(); //Блокировка программы
 	void ChangeUser(); //Смена пользователя
 	void ActivateWorkspace(); //Активация рабочей области
 	void ShowFavoritesForm(); //Открыть форму избранного
@@ -65,7 +61,7 @@ protected:
 private:
 	ISMenuBar *MenuBar;
 
-	QMap<ISUuid, int> Paragraphs;
+	std::map<ISUuid, int> Paragraphs;
 	QStackedWidget *StackedWidget; //Стек-главных виджетов
 	ISDesktopForm *WidgetDesktop; //Виджет рабочего стола
 	ISWorkspaceForm *WorkspaceForm; //Виджет рабочей области
@@ -76,3 +72,4 @@ private:
 	QString CurrentParagraphUID;
 };
 //-----------------------------------------------------------------------------
+#endif

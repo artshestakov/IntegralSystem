@@ -153,7 +153,6 @@ void ISMenuBar::CreateMenuHelp()
 void ISMenuBar::CreateButtonsPanel()
 {
 	connect(CreateButton(LANG("Settings"), "MainPanel.Settings"), &QToolButton::clicked, this, &ISMenuBar::Settings); //Настройки
-	connect(CreateButton(LANG("ExitForm.Lock"), "MainPanel.Lock"), &QToolButton::clicked, this, &ISMenuBar::Lock); //Блокировка
 	connect(CreateButton(LANG("ChangeUser"), "MainPanel.ChangeUser"), &QToolButton::clicked, this, &ISMenuBar::ChangeUser); //Смена пользователя
 }
 //-----------------------------------------------------------------------------

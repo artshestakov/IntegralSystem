@@ -24,13 +24,6 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	LayoutButtons->setSpacing(0);
 	GetMainLayout()->addLayout(LayoutButtons);
 
-	QCommandLinkButton *ButtonLock = new QCommandLinkButton(this);
-	ButtonLock->setText(LANG("ExitForm.Lock"));
-	ButtonLock->setToolTip(LANG("ExitForm.Lock.ToolTip"));
-	ButtonLock->setIcon(BUFFER_ICONS("Lock"));
-	ButtonLock->setCursor(CURSOR_POINTING_HAND);
-	LayoutButtons->addWidget(ButtonLock);
-
 	QCommandLinkButton *ButtonChangeUser = new QCommandLinkButton(this);
 	ButtonChangeUser->setText(LANG("ExitForm.ChangeUser"));
 	ButtonChangeUser->setToolTip(LANG("ExitForm.ChangeUser.ToolTip"));
@@ -52,7 +45,6 @@ ISExitForm::ISExitForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 	LayoutButtons->addWidget(ButtonClose);
 
 	ButtonGroup = new QButtonGroup(this);
-	ButtonGroup->addButton(ButtonLock, ISNamespace::EFA_Lock);
 	ButtonGroup->addButton(ButtonChangeUser, ISNamespace::EFA_ChangeUser);
 	ButtonGroup->addButton(ButtonExit, ISNamespace::EFA_Exit);
 	ButtonGroup->addButton(ButtonClose, ISNamespace::EFT_Close);

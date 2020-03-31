@@ -126,7 +126,6 @@
     <ClCompile Include="ISAttachFileItem.cpp" />
     <ClCompile Include="ISAttachFilesForm.cpp" />
     <ClCompile Include="ISAuthForm.cpp" />
-    <ClCompile Include="ISAutoLocking.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISButtonDialog.cpp" />
@@ -252,7 +251,6 @@
     <ClCompile Include="ISListObjectForm.cpp" />
     <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
-    <ClCompile Include="ISLockForm.cpp" />
     <ClCompile Include="ISLoginEdit.cpp" />
     <ClCompile Include="ISMainMenu.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
@@ -550,7 +548,6 @@
     <QtMoc Include="ISPopupMessage.h" />
     <QtMoc Include="ISAddressBox.h" />
     <QtMoc Include="ISAttachFileItem.h" />
-    <QtMoc Include="ISAutoLocking.h" />
     <QtMoc Include="ISChatMessageWidget.h" />
     <QtMoc Include="ISComboTimeEdit.h" />
     <QtMoc Include="ISCalendarDayWidget.h" />
@@ -604,7 +601,6 @@
     <QtMoc Include="ISHistoryForm.h" />
     <QtMoc Include="ISInternalDirectoriesForm.h" />
     <QtMoc Include="ISKnowledgeBaseSubSystem.h" />
-    <QtMoc Include="ISLockForm.h" />
     <QtMoc Include="ISMainWindow.h" />
     <QtMoc Include="ISMonitorActivityForm.h" />
     <QtMoc Include="ISNoteForm.h" />

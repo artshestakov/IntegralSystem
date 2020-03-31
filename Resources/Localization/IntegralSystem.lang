@@ -78,7 +78,6 @@
   <Local Name="Message.Information.TermiantedUsers" Russian="Отключено пользователей: %1."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Error.Login.IsEmpty" Russian="Поле ввода логина обязательно для заполнения."/>
-  <Local Name="Message.Error.Password.IsEmpty" Russian="Поле ввода пароля обязательно для заполнения."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
   <Local Name="Message.Error.ConnectionSetting.Input.DatabaseNameEmpty" Russian="В настройках подключения к базе данных не указано имя базы данных."/>
@@ -152,7 +151,6 @@
   <Local Name="Message.Warning.AccountLifetimeLeftLastDay" Russian="ВНИМАНИЕ! Сегодня истекает срок действия Вашей учётной записи."/>
   <Local Name="Message.Warning.AccountLifetimeLeftLastDayTwo" Russian="ВНИМАНИЕ! Завтра истекает срок действия Вашей учётной записи."/>
   <Local Name="Message.Warning.AccountLifetimeEnded" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи закончился. Обратитесь к администратору системы за подробностями для восстановления доступа."/>
-  <Local Name="Message.Warning.NotCloseLockForm" Russian="Закрытие формы невозможно! Введите пароль и нажмите кнопку &quot;Разблокировать&quot; для продолжения."/>
   <Local Name="Message.Warning.DuplicateFormNotObjectFormBase" Russian="Дублируемая вкладка не является базовой формой объекта."/>
   <Local Name="Message.Warning.RecipientIsNull" Russian="Заполните поле &quot;Отправитель&quot;!"/>
   <Local Name="Message.Warning.TypeDispatchIsNull" Russian="Выберите тип отправки письма!"/>
@@ -227,7 +225,6 @@
   <Local Name="Message.Question.SaveNote" Russian="Сохранить изменения записи &quot;%1&quot;?"/>
   <Local Name="Message.Question.DeleteNote" Russian="Удалить выбранную запись?"/>
   <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
-  <Local Name="Message.Question.Lock" Russian="Заблокировать программу?"/>
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
   <Local Name="Message.Question.ReReadCard" Russian="Перечитать информацию?"/>
   <Local Name="Message.Question.ResetWidthColumn" Russian="Сбросить ширину всех колонок?"/>
@@ -617,8 +614,6 @@
   <Local Name="AccessRights.SpecialRoles" Russian="Специальные права"/>
   
   <!--ExitForm-->
-  <Local Name="ExitForm.Lock" Russian="Блокировать программу"/>
-  <Local Name="ExitForm.Lock.ToolTip" Russian="Блокировка программы закроет доступ в Вашим данным пока Вас нет на месте."/>
   <Local Name="ExitForm.ChangeUser" Russian="Сменить пользователя"/>
   <Local Name="ExitForm.ChangeUser.ToolTip" Russian="Смена текущего пользователя для повторной авторизации в программе."/>
   <Local Name="ExitForm.Exit" Russian="Выход из программы"/>
@@ -672,7 +667,6 @@
   <Local Name="PleaceWait" Russian="Пожалуйста, подождите"/>
   <Local Name="SelectExportType" Russian="Выберите тип экспорта"/>
   <Local Name="ClickFromShowList" Russian="Нажмите, чтобы раскрыть справочник."/>
-  <Local Name="ApplicationLock" Russian="Программа заблокирована, введите пароль от своей учётной записи для разблокировки."/>
   <Local Name="EnterKeywordFromSearch" Russian="Введите ключевое слово для поиска!"/>
   <Local Name="RecordAddFavorites" Russian="Запись &quot;%1&quot; добавлена в избранное"/>
   <Local Name="RecordRemoveFavorites" Russian="Запись &quot;%1&quot; удалена из избранного"/>
@@ -682,7 +676,6 @@
   <Local Name="VacuumTableDist" Russian="Пожалуйста подождите, выполняется вакуум"/>
   <Local Name="SelectColorFont" Russian="Выберите цвет шрифта"/>
   <Local Name="ClickFromSelectNumberPage" Russian="Нажмите, чтобы выбрать номер страницы и перейти на неё."/>
-  <Local Name="AutoLocking" Russian="Блокировка программы..."/>
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
   <Local Name="ClickFromIncludeAndExcludeCore" Russian="Нажмите, чтобы включить или отключить ядро."/>

@@ -113,7 +113,7 @@ void ISInterfaceForm::HideAnimation(int duration)
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::SetVisibleShadow(bool Visible)
 {
-	if (Visible && LabelShadow)
+	if (Visible && LabelShadow) //Если тень уже отображена
 	{
 		return;
 	}
@@ -131,11 +131,6 @@ void ISInterfaceForm::SetVisibleShadow(bool Visible)
 		delete LabelShadow;
 		LabelShadow = nullptr;
 	}
-}
-//-----------------------------------------------------------------------------
-bool ISInterfaceForm::IsVisibleShadow() const
-{
-	return LabelShadow;
 }
 //-----------------------------------------------------------------------------
 ISUuid ISInterfaceForm::GetFormUID() const

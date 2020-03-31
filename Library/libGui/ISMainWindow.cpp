@@ -20,7 +20,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
-#include "ISLockForm.h"
 #include "ISExitForm.h"
 #include "ISColumnSizer.h"
 #include "ISHistoryForm.h"
@@ -80,27 +79,6 @@ ISUuid ISMainWindow::GetCurrentParagraphUID() const
 	return CurrentParagraphUID;
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::LockApplication()
-{
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_LOCK_APPLICATION, QString(), QString(), QVariant());
-	HideAnimation();
-
-	ISLockForm *LockForm = new ISLockForm();
-	connect(LockForm, &ISLockForm::Unlocked, [=]
-	{
-		SetVisibleShadow(false);
-		show();
-		ShowAnimated();
-		raise();
-		activateWindow();
-		setFocus();
-
-		emit Unlocked();
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_UNLOCK_APPLICATION, QString(), QString(), QVariant());
-	});
-	LockForm->ShowAnimated();
-}
-//-----------------------------------------------------------------------------
 void ISMainWindow::closeEvent(QCloseEvent *e)
 {
 	if (ISCreatedObjectsEntity::Instance().CheckExistForms())
@@ -120,11 +98,6 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 			{
 				switch (ExitForm.GetSelectedAction())
 				{
-				case ISNamespace::EFA_Lock:
-					e->ignore();
-					LockApplication();
-					break;
-
 				case ISNamespace::EFA_ChangeUser:
 					e->ignore();
 					BeforeClose();
@@ -199,7 +172,6 @@ void ISMainWindow::CreateMenuBar()
 	connect(MenuBar, &ISMenuBar::ParagraphClicked, this, &ISMainWindow::ParagraphClicked);
 	connect(MenuBar, &ISMenuBar::CreateRecords, this, &ISMainWindow::ShowCreateRecords);
 	connect(MenuBar, &ISMenuBar::ExternalTools, this, &ISMainWindow::ShowExternalTools);
-	connect(MenuBar, &ISMenuBar::Lock, this, &ISMainWindow::LockApplication);
 	connect(MenuBar, &ISMenuBar::ChangeUser, this, &ISMainWindow::ChangeUser);
 	connect(MenuBar, &ISMenuBar::Exit, this, &ISMainWindow::close);
 	connect(MenuBar, &ISMenuBar::Favorites, this, &ISMainWindow::ShowFavoritesForm);
@@ -238,12 +210,8 @@ void ISMainWindow::CreateStackWidget()
 {
 	StackedWidget = new QStackedWidget(this);
 	GetMainLayout()->addWidget(StackedWidget);
-
-	for (int i = 0; i < ISParagraphEntity::GetInstance().GetParagraphs().count(); ++i)
+	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::GetInstance().GetParagraphs())
 	{
-		ISMetaParagraph *MetaParagraph = ISParagraphEntity::GetInstance().GetParagraphs().at(i);
-		ISUuid ParagraphUID = MetaParagraph->UID;
-
 		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->LocalName));
 
 		int ObjectType = QMetaType::type((MetaParagraph->ClassName + SYMBOL_STAR).toLocal8Bit().constData());
@@ -254,13 +222,12 @@ void ISMainWindow::CreateStackWidget()
 
 		ISParagraphBaseForm *ParagraphBaseForm = dynamic_cast<ISParagraphBaseForm*>(MetaObject->newInstance(Q_ARG(QWidget *, this)));
 		IS_ASSERT(ParagraphBaseForm, QString("Invalid class object from paragraph: %1").arg(MetaParagraph->Name));
-		ParagraphBaseForm->SetButtonParagraph(MenuBar->GetParagraphButton(ParagraphUID));
+		ParagraphBaseForm->SetButtonParagraph(MenuBar->GetParagraphButton(MetaParagraph->UID));
 		int ParagraphIndex = StackedWidget->addWidget(ParagraphBaseForm);
-		Paragraphs.insert(ParagraphUID, ParagraphIndex);
+		Paragraphs.emplace(MetaParagraph->UID, ParagraphIndex);
 
 		ISLOGGER_DEBUG(QString("Initialized paragraph \"%1\"").arg(MetaParagraph->Name));
 	}
-
 	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());
 }
 //-----------------------------------------------------------------------------
@@ -293,8 +260,7 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 
 	ISGui::SetWaitGlobalCursor(true);
 
-	int ParagraphIndex = Paragraphs.value(ParagraphUID);
-	ISParagraphBaseForm *ParagraphWidget = dynamic_cast<ISParagraphBaseForm*>(StackedWidget->widget(ParagraphIndex));
+	ISParagraphBaseForm *ParagraphWidget = dynamic_cast<ISParagraphBaseForm*>(StackedWidget->widget(Paragraphs[ParagraphUID]));
 	StackedWidget->setCurrentWidget(ParagraphWidget);
 	ParagraphWidget->Invoke();
 	
@@ -404,14 +370,6 @@ void ISMainWindow::InitializePlugin()
 	ISObjects::GetInstance().GetInterface()->InitializePlugin();
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::LockClicked()
-{
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.Lock")))
-	{
-		LockApplication();
-	}
-}
-//-----------------------------------------------------------------------------
 void ISMainWindow::ChangeUser()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser")))
@@ -490,8 +448,10 @@ void ISMainWindow::ShowSettingsForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAboutForm()
 {
+	SetVisibleShadow(true);
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_ABOUT_FORM, QString(), QString(), QVariant());
 	ISAboutForm().Exec();
+	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAboutQt()

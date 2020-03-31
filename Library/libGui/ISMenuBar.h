@@ -14,7 +14,6 @@ signals:
 	void CreateRecords();
 	void ExternalTools();
 	void ParagraphClicked(const ISUuid &ParagraphUID);
-	void Lock();
 	void ChangeUser();
 	void Exit();
 	void Favorites();

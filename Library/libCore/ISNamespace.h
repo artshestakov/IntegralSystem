@@ -111,7 +111,6 @@ public:
 		EFA_Unknown,
 		EFA_Exit,
 		EFA_ChangeUser,
-		EFA_Lock,
 		EFT_Close,
 	};
 

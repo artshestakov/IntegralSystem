@@ -13,7 +13,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISSettingsDatabase.h"
 #include "ISFastAccessEntity.h"
-#include "ISAutoLocking.h"
 #include "ISSettings.h"
 #include "ISProtocol.h"
 #include "ISCore.h"
@@ -243,15 +242,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 		{
 			MainWindow->show();
 		}
-	}
-
-	if (SETTING_BOOL(CONST_UID_SETTING_SECURITY_AUTOLOCK))
-	{
-		ISAutoLocking::GetInstance().Initialize();
-		ISAutoLocking::GetInstance().SetInterval(SETTING_INT(CONST_UID_SETTING_SECURITY_AUTOLOCKINTERVAL) * 60000);
-		ISAutoLocking::GetInstance().StartTimer();
-		QObject::connect(MainWindow, &ISMainWindow::Unlocked, &ISAutoLocking::GetInstance(), &ISAutoLocking::UnlockApplication);
-		QObject::connect(&ISAutoLocking::GetInstance(), &ISAutoLocking::AutoLock, MainWindow, &ISMainWindow::LockApplication);
 	}
 
 	MainWindow->raise();

@@ -565,9 +565,6 @@
     <ClCompile Include="ISStartup.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISAutoLocking.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISChatMessageWidget.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -713,9 +710,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISKnowledgeBaseSubSystem.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISLockForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISMainWindow.cpp">
@@ -1416,9 +1410,6 @@
     <QtMoc Include="ISStartup.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISAutoLocking.h">
-      <Filter>System</Filter>
-    </QtMoc>
     <QtMoc Include="ISChatMessageWidget.h">
       <Filter>Controls</Filter>
     </QtMoc>
@@ -1564,9 +1555,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISKnowledgeBaseSubSystem.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISLockForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISMainWindow.h">
