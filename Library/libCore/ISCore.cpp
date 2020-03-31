@@ -101,7 +101,7 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 	}
 
 #ifdef WIN32
-	Result = SetConsoleOutputCP(650011) == TRUE ? true : false;
+	Result = SetConsoleOutputCP(65001) == TRUE ? true : false;
 #else
 	//Добавить реализацию для Linux
 #endif
