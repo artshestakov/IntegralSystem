@@ -106,14 +106,6 @@ public:
 		DRO_Recovery,
 	};
 
-	enum ExitFormAction
-	{
-		EFA_Unknown,
-		EFA_Exit,
-		EFA_ChangeUser,
-		EFT_Close,
-	};
-
 	enum ActionType
 	{
 		AT_Create,
@@ -265,7 +257,6 @@ Q_DECLARE_METATYPE(ISNamespace::SearchOperatorType);
 Q_DECLARE_METATYPE(ISNamespace::ExportType);
 Q_DECLARE_METATYPE(ISNamespace::MessageBoxButton);
 Q_DECLARE_METATYPE(ISNamespace::DeleteRecoveryObject);
-Q_DECLARE_METATYPE(ISNamespace::ExitFormAction);
 Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
 Q_DECLARE_METATYPE(ISNamespace::ObjectActionType);

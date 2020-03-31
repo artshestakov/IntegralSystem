@@ -404,7 +404,6 @@
   <Local Name="ErrorConnectionDatabase" Russian="Ошибка подключения"/>
   <Local Name="ClosePreview" Russian="Закрыть предпросмотр"/>
   <Local Name="Blocked" Russian="Заблокировано"/>
-  <Local Name="SelectAction" Russian="Выберите действие"/>
   <Local Name="CancelChanged" Russian="Отменить изменения"/>
   <Local Name="Image" Russian="Изображение"/>
   <Local Name="Calculated" Russian="Вычисляется"/>

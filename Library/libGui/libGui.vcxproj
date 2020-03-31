@@ -200,7 +200,6 @@
     <ClCompile Include="ISEdits.cpp" />
     <ClCompile Include="ISEMailSelectEdit.cpp" />
     <ClCompile Include="ISExecutorEdit.cpp" />
-    <ClCompile Include="ISExitForm.cpp" />
     <ClCompile Include="ISExportCSV.cpp" />
     <ClCompile Include="ISExportDBF.cpp" />
     <ClCompile Include="ISExportForm.cpp" />
@@ -594,7 +593,6 @@
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISDiscussionObjectForm.h" />
     <QtMoc Include="ISEditObjectListForm.h" />
-    <QtMoc Include="ISExitForm.h" />
     <QtMoc Include="ISExternalToolsForm.h" />
     <QtMoc Include="ISFastCreateObjectForm.h" />
     <QtMoc Include="ISFullTextSearchForm.h" />

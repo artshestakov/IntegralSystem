@@ -20,7 +20,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
-#include "ISExitForm.h"
 #include "ISColumnSizer.h"
 #include "ISHistoryForm.h"
 #include "ISFastCreateObjectForm.h"
@@ -86,33 +85,13 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_CONFIRMEXITAPPLICATION))
 		{
 			SetVisibleShadow(true);
-			raise();
-			activateWindow();
+			//raise();
+			//activateWindow();
 
-			ISGui::SetWaitGlobalCursor(true);
-			ISExitForm ExitForm;
-			ExitForm.raise();
-			connect(&ExitForm, &ISExitForm::Showed, [=] { ISGui::SetWaitGlobalCursor(false); });
-
-			if (ExitForm.Exec())
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication")))
 			{
-				switch (ExitForm.GetSelectedAction())
-				{
-				case ISNamespace::EFA_ChangeUser:
-					e->ignore();
-					BeforeClose();
-					ISGui::ChangeUser();
-					break;
-
-				case ISNamespace::EFA_Exit:
-					BeforeClose();
-					ISGui::ExitApplication();
-					break;
-
-				case ISNamespace::EFT_Close:
-					e->ignore();
-					break;
-				}
+				BeforeClose();
+				ISGui::ExitApplication();
 			}
 			else
 			{

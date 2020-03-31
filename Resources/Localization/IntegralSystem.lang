@@ -203,7 +203,7 @@
   <Local Name="Message.Question.Reconnect" Russian="Соединение к базе данных потеряно. Произвести переподключение?"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
-  <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти?"/>
+  <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути: %1. Открыть его?"/>
   <Local Name="Message.Question.SaveObjectChanged" Russian="Карточка объекта &quot;%1&quot; была изменена, сохранить изменения?"/>
   <Local Name="Message.Question.SettingsDatabaseSaved" Russian="Для того чтобы все настройки базы данных вступили в силу, рекомендуется перезапустить программу. Сделать это сейчас?"/>
@@ -612,13 +612,6 @@
   <Local Name="AccessRights.SubSystems" Russian="Интерфейс"/>
   <Local Name="AccessRights.Tables" Russian="Таблицы"/>
   <Local Name="AccessRights.SpecialRoles" Russian="Специальные права"/>
-  
-  <!--ExitForm-->
-  <Local Name="ExitForm.ChangeUser" Russian="Сменить пользователя"/>
-  <Local Name="ExitForm.ChangeUser.ToolTip" Russian="Смена текущего пользователя для повторной авторизации в программе."/>
-  <Local Name="ExitForm.Exit" Russian="Выход из программы"/>
-  <Local Name="ExitForm.Exit.ToolTip" Russian="Завершение всех процессов и закрытие программы."/>
-  <Local Name="ExitForm.Close" Russian="Закрыть это окно"/>
   
   <!--StorageFiles-->
   <Local Name="StorageFiles.AddMore" Russian="Добавить несколько файлов"/>

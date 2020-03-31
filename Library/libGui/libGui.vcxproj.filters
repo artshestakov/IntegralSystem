@@ -691,9 +691,6 @@
     <ClCompile Include="ISEditObjectListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISExitForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISExternalToolsForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -1534,9 +1531,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISEditObjectListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISExitForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISExternalToolsForm.h">
