@@ -5,10 +5,6 @@
   <_Sex IsSystem="true" UID="{38A3AE76-2D27-4EEB-9AC7-AE4BCFC030FF}" Name="Женский"/>
   <_Sex IsSystem="true" UID="{7446B115-AED2-4D5B-89D7-16F367B0CF13}" Name="Не определено"/>
   
-  <_UserStatus IsSystem="true" UID="{92898CB1-4D33-4CEB-8E86-8FE47CD1A7F8}" Name="Работаю" Icon="UserStatus.Working" Order="1"/>
-  <_UserStatus IsSystem="true" UID="{DE8066B8-FCD0-468C-8B70-9F8562E8E00C}" Name="Перерыв" Icon="UserStatus.Break" Order="2"/>
-  <_UserStatus IsSystem="true" UID="{F0290AA4-4C71-4EB8-A471-3E023974B0DF}" Name="Ушёл" Icon="UserStatus.Gone" Order="3"/>
-
   <_UserOnlineType IsSystem="true" UID="{175389A8-393E-46E9-8692-335A4555DDE8}" Name="Вход в программу"/>
   <_UserOnlineType IsSystem="true" UID="{C233D65C-7768-4992-8A76-F0591F83368D}" Name="Активность"/>
   <_UserOnlineType IsSystem="true" UID="{1ABE0B0C-A2BF-4B5A-8F6E-197DAC7B7020}" Name="Бездействие"/>
