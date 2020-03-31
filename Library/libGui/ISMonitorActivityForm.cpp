@@ -26,7 +26,6 @@
 static QString QS_USERS = PREPARE_QUERY("SELECT useronline(usrs_login), usrs_id, userfullname(usrs_id) "
 										"FROM _users "
 										"WHERE usrs_uid != :PostgresUID "
-										"AND useronline(usrs_login) IN(:Online) "
 										"ORDER BY userfullname(usrs_id)");
 //-----------------------------------------------------------------------------
 ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaForm(parent)
@@ -72,36 +71,30 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 //-----------------------------------------------------------------------------
 ISMonitorActivityForm::~ISMonitorActivityForm()
 {
-	ISGui::SetWaitGlobalCursor(false);
+	
 }
 //-----------------------------------------------------------------------------
 void ISMonitorActivityForm::LoadData()
 {
 	ISGui::SetWaitGlobalCursor(true);
-
-	while (VectorUsers.count())
+	while (!VectorUsers.isEmpty())
 	{
 		delete VectorUsers.takeFirst();
 	}
 
 	QSize SizeWidget;
-	QString QueryText = QS_USERS;
-	if (CheckEdit->GetValue().toBool())
-	{
-		QueryText = QueryText.replace(":Online", "true");
-	}
-	else
-	{
-		QueryText = QueryText.replace(":Online", "true, false");
-	}
-	
-	ISQuery qSelect(QueryText);
+	ISQuery qSelect(QS_USERS);
 	qSelect.BindValue(":PostgresUID", CONST_UID_USER_POSTGRES);
 	if (qSelect.Execute())
 	{
 		while (qSelect.Next())
 		{
 			bool IsOnline = qSelect.ReadColumn("useronline").toBool();
+			if (CheckEdit->GetValue().toBool() && !IsOnline)
+			{
+				continue;
+			}
+
 			int UserID = qSelect.ReadColumn("usrs_id").toInt();
 			QString UserFullName = qSelect.ReadColumn("userfullname").toString();
 
@@ -135,7 +128,6 @@ void ISMonitorActivityForm::LoadData()
 	{
 		MonitorUserWidget->setMinimumSize(SizeWidget);
 	}
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
