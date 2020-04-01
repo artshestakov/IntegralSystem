@@ -1,23 +1,36 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
-#include <time.h>
-#include <sys/time.h>
 #include <math.h>
+
+#ifdef WIN32
+#include <windows.h>
+#endif
 //-----------------------------------------------------------------------------
 struct DateTimeStruct
 {
-    DateTimeStruct() : Day(-1), Month(-1), Year(-1), Hour(-1), Minute(-1), Second(-1), Millisecond(-1) { }
-
-    short Day, Month, Year, Hour, Minute, Second, Millisecond;
+	short Day;
+	short Month;
+	short Year;
+	short Hour;
+	short Minute;
+	short Second;
+	short Millisecond;
 };
 //-----------------------------------------------------------------------------
 DateTimeStruct GetCurrentDateTime()
 {
     DateTimeStruct DT;
 #ifdef WIN32
-    // Windows
+	SYSTEMTIME ST;
+	GetLocalTime(&ST);
+	DT.Day = ST.wDay;
+	DT.Month = ST.wMonth;
+	DT.Year = ST.wYear;
+	DT.Hour = ST.wHour;
+	DT.Minute = ST.wMinute;
+	DT.Second = ST.wSecond;
+	DT.Millisecond = ST.wMilliseconds;
 #else
     struct timeval TV;
     gettimeofday(&TV, NULL);
@@ -39,7 +52,7 @@ DateTimeStruct GetCurrentDateTime()
     return DT;
 }
 //-----------------------------------------------------------------------------
-int main(/*int argc, char **argv*/void)
+int main(void)
 {
     DateTimeStruct DT = GetCurrentDateTime();
     return 0;
