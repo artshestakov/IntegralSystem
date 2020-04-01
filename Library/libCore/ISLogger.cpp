@@ -46,18 +46,12 @@ bool ISLogger::Initialize(bool OutPrintf, bool OutFile, const std::string &file_
 	if (EnableOutFile) //Если включен вывод в файл - выполняем соответствующие подготовки
 	{
 		//Получаем путь к исполняемому файлу
-		char Temp[MAX_PATH];
-		Running = GetModuleFileNameA(NULL, Temp, MAX_PATH) > 0 ? true : false;
-		if (Running) //Путь к исполняемому файлу успешно получен
+        PathDirectory = GetCurrentDirectory();
+        Running = !PathDirectory.empty();
+        if (!Running) //Не удалось получить путь
 		{
-			PathDirectory = &Temp[0];
-			size_t Pos = PathDirectory.rfind('\\');
-			PathDirectory.erase(Pos + 1, PathDirectory.size() - Pos - 1);
-		}
-		else //Не удалось получить путь
-		{
-			ErrorString = "Error getting current module file path.";
-			return Running;
+            ErrorString = "Error getting current module file path.";
+            return Running;
 		}
 
 		Running = CreateDir();
@@ -93,8 +87,7 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 	}
 
 	//Получаем текущую дату и время
-	SYSTEMTIME ST;
-	GetLocalTime(&ST);
+    ISDateTime DateTime = GetCurrentDateTime();
 
 	if (Type == ISNamespace::DMT_Unknown)
 	{
@@ -110,8 +103,9 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 	{
 		//Формируем начало строки лога (дата, время, идентификатор текущего потока)
 		char Temp[MAX_PATH];
-		itoa(ST.wYear, Year, 10); //Преобразование года в строку
-		sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", ST.wDay, ST.wMonth, Year[2], Year[3], ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds, GetCurrentThreadId());
+        //itoa(DateTime.Year, Year, 10); //Преобразование года в строку
+        sprintf(Year, "%d", DateTime.Year);
+        sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", DateTime.Day, DateTime.Month, Year[2], Year[3], DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds, 10); //???
 
 		//Формируем остальную часть (тип сообщения, имя файла с исходным кодом, номер строки)
 		std::stringstream Stream;
@@ -165,7 +159,7 @@ void ISLogger::Shutdown()
 		//Ждём пока логгер не остановится
 		while (!Finished)
 		{
-			Sleep(100);
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 		File.close(); //Закрываем файл
 	}
@@ -190,13 +184,12 @@ void ISLogger::Worker()
 		Mutex.unlock(); //Разблокируем мьютекс
 		
 		//Получаем текущие дату и время
-		SYSTEMTIME ST;
-		GetLocalTime(&ST);
+        ISDateTime DateTime = GetCurrentDateTime();
 		
 		//Если сменился год/месяц/день - создаём недостающую директорию, обновляем текущий путь к файлу и переоткрываем новый файл
-		if (CurrentYear != ST.wYear || CurrentMonth != ST.wMonth || CurrentDay != ST.wDay)
+        if (CurrentYear != DateTime.Year || CurrentMonth != DateTime.Month || CurrentDay != DateTime.Day)
 		{
-			bool Result = CurrentMonth != ST.wMonth;
+            bool Result = CurrentMonth != DateTime.Month;
 			if (Result) //Если сменился месяц - создаём недостающую директорию
 			{
 				Result = CreateDir();
@@ -218,7 +211,7 @@ void ISLogger::Worker()
 		{
 			break;
 		}
-		Sleep(LOGGER_TIMEOUT); //Ждём 2 секунды
+        std::this_thread::sleep_for(std::chrono::milliseconds(LOGGER_TIMEOUT)); //Ждём 2 секунды
 	}
 	Finished = true;
 }
@@ -226,10 +219,10 @@ void ISLogger::Worker()
 bool ISLogger::CreateDir()
 {
 	//Получаем текущую дату и время и формируем путь к папке Logs
-	SYSTEMTIME ST;
-	GetLocalTime(&ST);
-	PathLogs = PathDirectory + "Logs\\" + std::to_string(ST.wYear) + '\\' + (ST.wMonth < 10 ? '0' + std::to_string(ST.wMonth) : std::to_string(ST.wMonth)) + '\\';
+    ISDateTime DateTime = GetCurrentDateTime();
+    PathLogs = PathDirectory + "Logs\\" + std::to_string(DateTime.Year) + '\\' + (DateTime.Month < 10 ? '0' + std::to_string(DateTime.Month) : std::to_string(DateTime.Month)) + '\\';
 
+#ifdef WIN32
 	DWORD Attributes = GetFileAttributesA(PathLogs.c_str());
 	bool Result = (Attributes != INVALID_FILE_ATTRIBUTES && (Attributes & FILE_ATTRIBUTE_DIRECTORY));
 	if (!Result) //Если папка не существует - создаём её
@@ -240,19 +233,22 @@ bool ISLogger::CreateDir()
 			ErrorString = "Error create dir " + PathLogs;
 		}
 	}
+#else
+    bool Result = true;
+    //???
+#endif
 	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISLogger::UpdateFilePath()
 {
 	//Получаем текущую дату и время
-	SYSTEMTIME ST;
-	GetLocalTime(&ST);
+    ISDateTime DateTime = GetCurrentDateTime();
 
 	//Запоминаем год, месяц и день
-	CurrentYear = ST.wYear;
-	CurrentMonth = ST.wMonth;
-	CurrentDay = ST.wDay;
+    CurrentYear = DateTime.Year;
+    CurrentMonth = DateTime.Month;
+    CurrentDay = DateTime.Day;
 
 	//Формируем путь к лог-файлу
 	std::stringstream Stream;
@@ -261,5 +257,56 @@ void ISLogger::UpdateFilePath()
 		(CurrentDay < 10 ? '0' + std::to_string(CurrentDay) : std::to_string(CurrentDay)) <<
 		SYMBOL_POINT << EXTENSION_LOG;
 	PathFile = Stream.str();
+}
+//-----------------------------------------------------------------------------
+ISDateTime GetCurrentDateTime()
+{
+    ISDateTime DT;
+#ifdef WIN32
+    SYSTEMTIME ST;
+    GetLocalTime(&ST);
+    DT.Day = ST.wDay;
+    DT.Month = ST.wMonth;
+    DT.Year = ST.wYear;
+    DT.Hour = ST.wHour;
+    DT.Minute = ST.wMinute;
+    DT.Second = ST.wSecond;
+    DT.Milliseconds = ST.wMilliseconds;
+#else
+    struct timeval TV;
+    gettimeofday(&TV, NULL);
+    int Millisecond = lrint(TV.tv_usec / 1000.0);
+    if (Millisecond >= 1000)
+    {
+        Millisecond -= 1000;
+        ++TV.tv_sec;
+    }
+    struct tm *TM = localtime(&TV.tv_sec);
+    DT.Day = TM->tm_mday;
+    DT.Month = TM->tm_mon + 1;
+    DT.Year = TM->tm_year + 1900;
+    DT.Hour = TM->tm_hour;
+    DT.Minute = TM->tm_min;
+    DT.Second = TM->tm_sec;
+    DT.Milliseconds = Millisecond;
+#endif
+    return DT;
+}
+//-----------------------------------------------------------------------------
+std::string GetCurrentDirectory()
+{
+    std::string DirPath;
+#ifdef WIN32
+    // Windows
+#else
+    char *Char = NULL;
+    Char = getcwd(Char, MAX_PATH);
+    if (Char)
+    {
+        strcpy(&DirPath[0], Char);
+        free(Char);
+    }
+#endif
+    return DirPath;
 }
 //-----------------------------------------------------------------------------

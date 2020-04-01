@@ -1,5 +1,5 @@
 QT += core
-QT -= gui widgets
+QT -= gui
 
 TARGET = ConsoleApplication
 TEMPLATE = app

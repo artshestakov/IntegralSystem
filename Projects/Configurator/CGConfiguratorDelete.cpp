@@ -279,9 +279,9 @@ bool CGConfiguratorDelete::resources()
 	QMap<QString, ISVectorString> Map;
 	for (PMetaResource *MetaResource : ISMetaData::GetInstanse().GetResources())
 	{
-		Map.contains(MetaResource->TableName) ? 
+        /*Map.contains(MetaResource->TableName) ?
 			Map[MetaResource->TableName].emplace_back(MetaResource->UID) : 
-			Map.insert(MetaResource->TableName, { MetaResource->UID });
+            Map.insert(MetaResource->TableName, { MetaResource->UID });*/
 	}
 
 	int Removed = 0, Skipped = 0;

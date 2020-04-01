@@ -14,49 +14,63 @@
 #define ISLOGGER_WARNING(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Warning, MESSAGE, __FILE__, __LINE__) //Логирование предупреждения
 #define ISLOGGER_ERROR(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Error, MESSAGE, __FILE__, __LINE__) //Логирование ошибки
 //-----------------------------------------------------------------------------
+struct ISDateTime
+{
+    short Day;
+    short Month;
+    short Year;
+    short Hour;
+    short Minute;
+    short Second;
+    short Milliseconds;
+};
+//-----------------------------------------------------------------------------
 class LIBCORE_EXPORT ISLogger
 {
 public:
-	static ISLogger& Instance(); //Получить ссылку на объект логгера
+    static ISLogger& Instance(); //Получить ссылку на объект логгера
 
-	QString GetErrorString() const; //Получить описание ошибки
-	bool Initialize(bool OutPrintf, bool OutFile, const std::string &file_prefix = std::string()); //Инициализировать логгер
+    QString GetErrorString() const; //Получить описание ошибки
+    bool Initialize(bool OutPrintf, bool OutFile, const std::string &file_prefix = std::string()); //Инициализировать логгер
 
-	void Log(ISNamespace::DebugMessageType Type, const QString &String, const char *SourceName, int Line); //Добавить сообщение в лог
-	void Shutdown(); //Остановка логгера
-
-private:
-	void Worker(); //Обработчик очереди сообщений
-	bool CreateDir(); //Создание необходимых директорий
-	void UpdateFilePath(); //Обновить путь к файлу
+    void Log(ISNamespace::DebugMessageType Type, const QString &String, const char *SourceName, int Line); //Добавить сообщение в лог
+    void Shutdown(); //Остановка логгера
 
 private:
-	ISLogger();
-	~ISLogger();
-	ISLogger(ISLogger const &) {};
-	ISLogger& operator=(ISLogger const&) { return *this; };
+    void Worker(); //Обработчик очереди сообщений
+    bool CreateDir(); //Создание необходимых директорий
+    void UpdateFilePath(); //Обновить путь к файлу
+
+    ISDateTime GetCurrentDateTime(); //Получить текущую дату и время
+    std::string GetCurrentDirectory(); //Получить путь к папке с исполняемым файлом приложения
 
 private:
-	std::string ErrorString; //Описание ошибки
-	std::mutex Mutex; //Мьютекс для массива
-	std::array<std::string, LOGGER_ARRAY_SIZE> Array; //Массив сообщений
-	size_t LastPosition; //Посденяя позиция
-	bool Running; //Флаг работы логгера
-	bool Finished; //Флаг остановки логгера
-	char Year[5];
-	
-	std::ofstream File; //Текущий лог-файл
-	std::string PathDirectory; //Путь к папке с исполняемым файлом приложения
-	std::string PathLogs; //Путь к папке с логами
-	std::string PathFile; //Путь к текущему лог-файлу
+    ISLogger();
+    ~ISLogger();
+    ISLogger(ISLogger const &) {};
+    ISLogger& operator=(ISLogger const&) { return *this; };
 
-	size_t CurrentYear; //Текущий год
-	size_t CurrentMonth; //Текущий месяц
-	size_t CurrentDay; //Текущий день
+private:
+    std::string ErrorString; //Описание ошибки
+    std::mutex Mutex; //Мьютекс для массива
+    std::array<std::string, LOGGER_ARRAY_SIZE> Array; //Массив сообщений
+    size_t LastPosition; //Посденяя позиция
+    bool Running; //Флаг работы логгера
+    bool Finished; //Флаг остановки логгера
+    char Year[5];
 
-	bool EnableOutPrintf; //Флаг вывода в консоль
-	bool EnableOutFile; //Флаг вывода в файл
-	std::string FilePrefix; //Префикс имени файла
+    std::ofstream File; //Текущий лог-файл
+    std::string PathDirectory; //Путь к папке с исполняемым файлом приложения
+    std::string PathLogs; //Путь к папке с логами
+    std::string PathFile; //Путь к текущему лог-файлу
+
+    size_t CurrentYear; //Текущий год
+    size_t CurrentMonth; //Текущий месяц
+    size_t CurrentDay; //Текущий день
+
+    bool EnableOutPrintf; //Флаг вывода в консоль
+    bool EnableOutFile; //Флаг вывода в файл
+    std::string FilePrefix; //Префикс имени файла
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -1,5 +1,7 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 
-#SUBDIRS += Library/libCore
+SUBDIRS += Library/libCore
+
+SUBDIRS += Projects/Configurator
 SUBDIRS += Projects/ConsoleApplication

@@ -120,7 +120,7 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 const int CALENDAR_POPUP_ANIMATION_DURATION = 500; //Таймаут анимации виджета календаря
 //SYMBOLS----------------------------------------------------------------------
 const char SYMBOL_SPACE = ' '; //Символ пробела
-const char SYMBOL_NUMBER = '№'; //Символ "Номер"
+const char SYMBOL_NUMBER = '#'; //Символ "Номер"
 const char SYMBOL_PLUS = '+'; //Символ "Плюс"
 const char SYMBOL_MINUS = '-'; //Символ "Минус"
 const char SYMBOL_PERCENT = '%'; //Символ "Процент"

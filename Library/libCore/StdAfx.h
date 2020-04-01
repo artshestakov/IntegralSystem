@@ -2,6 +2,15 @@
 #ifndef _STDAFX_H_INCLUDED
 #define _STDAFX_H_INCLUDED
 //-----------------------------------------------------------------------------
+#ifdef WIN32
+#include <windows.h>
+#include <ShlObj.h>
+#else
+#include <float.h>
+#include <unistd.h>
+#include <sys/time.h>
+#endif
+//-----------------------------------------------------------------------------
 #include <cstdio>
 #include <iostream>
 #include <csignal>
@@ -15,13 +24,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-//-----------------------------------------------------------------------------
-#ifdef WIN32
-#include <windows.h>
-#include <ShlObj.h>
-#else
-#include <float.h>
-#endif
+#include <time.h>
+#include <math.h>
 //-----------------------------------------------------------------------------
 #include <QtCore/QtGlobal>
 #include <QtCore/QObject>

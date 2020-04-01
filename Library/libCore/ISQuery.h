@@ -46,7 +46,7 @@ public:
 
 private:
     void Raise();
-    void PrepareColumnIndices() throw();
+    void PrepareColumnIndices();
 
 private:
     QString ErrorString;

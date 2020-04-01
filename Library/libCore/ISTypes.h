@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------------
 struct ISRangeStruct
 {
-public:
 	ISRangeStruct() { }
 	ISRangeStruct(const QVariant &begin_value, const QVariant &end_value) : BeginValue(begin_value), EndValue(end_value) { }
 

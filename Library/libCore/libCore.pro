@@ -1,5 +1,5 @@
-QT += core network xml sql
-QT -= gui widgets
+QT += core network xml
+QT -= gui
 
 TARGET = libCore
 TEMPLATE = lib
