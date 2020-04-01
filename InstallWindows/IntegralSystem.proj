@@ -15,7 +15,7 @@
 	<Target Name="Build">
 	
 		<!-- Сборка библиотек -->
-		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libCore $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISCore $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libGui $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libCarat $(Configuration) $(Platform) $(PlatformToolset)"/>
 		
@@ -42,7 +42,7 @@
 	
 	<!-- Сборка зависимостей -->
 	<Target Name="Deploy">
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libCore.dll $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ISCore.dll $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libGui.dll $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libCarat.dll $(Configuration) $(Platform)"/>
 		

@@ -1,0 +1,517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="MetaData">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="MetaUser">
+      <UniqueIdentifier>{1622ff2b-c6fb-4642-9eea-c58c267b792a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{e4784d47-59e4-4c39-956f-f5725430d28f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\SMTP">
+      <UniqueIdentifier>{936c47ab-f591-435b-a4c7-d08d8a9259a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Notify">
+      <UniqueIdentifier>{fc7646d5-fb0e-4e1e-8d25-5b5305ac79fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{48cff0e7-04f2-4e38-8822-b4e1b6552fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{3c8bb7e9-794e-4dbf-a0c9-e51c3f514b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_Alpha">
+      <UniqueIdentifier>{4ae21f52-8182-4b29-a0f7-7cece7d29d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_CenterSeven">
+      <UniqueIdentifier>{53d92222-dd29-4263-b13d-52b2a1788b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_Demo">
+      <UniqueIdentifier>{2a230b61-4445-4d72-b33d-87c62205d753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_Highway">
+      <UniqueIdentifier>{42fa687e-da46-4d83-a845-62a5924d17a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_InformResource">
+      <UniqueIdentifier>{d9606321-9afe-476b-a8da-5b3917507990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_MedTech">
+      <UniqueIdentifier>{b999f67a-ea02-4a79-86ea-9eeac1589d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_OilSphere">
+      <UniqueIdentifier>{922d7d9c-d456-48a0-864f-b5de44c10fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_Patriot">
+      <UniqueIdentifier>{e76aa580-3a49-49ce-93d5-a66890a6835f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\_Sirona">
+      <UniqueIdentifier>{f78db7c1-b6ab-4346-a785-39ae9e4ab602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{c2230eda-9c5a-49e6-bb10-cf55dc2c5a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StackTrace">
+      <UniqueIdentifier>{d9564784-63b1-411f-9788-6cbdfc61e7fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{058f6e61-3fee-4c74-8f53-c52804ffc704}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ISDatabase.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQuery.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryModel.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryModelHelper.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryPool.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryText.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSearchModel.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaData.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaDataHelper.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaUuidCheckeder.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaViewQuery.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaUser.cpp">
+      <Filter>MetaUser</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAuthConnector.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ISNetwork.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRestWorker.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ISEmailAddress.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeAttachment.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeContentFormatter.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeFile.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeHtml.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeInlineFile.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeMessage.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeMultipart.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimePart.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMimeText.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQuotedPrintable.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSmtpClient.cpp">
+      <Filter>Network\SMTP</Filter>
+    </ClCompile>
+    <ClCompile Include="ISNotifySender.cpp">
+      <Filter>Notify</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProtocol.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStorageFileLoader.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettings.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingsDatabase.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStackWalker.cpp">
+      <Filter>StackTrace</Filter>
+    </ClCompile>
+    <ClCompile Include="StackWalker.cpp">
+      <Filter>StackTrace</Filter>
+    </ClCompile>
+    <ClCompile Include="ISApplicationRunning.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAssert.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISConfig.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISConsole.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCore.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCountingTime.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCrashDumper.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDefinesCore.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISEMail.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISException.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLocalization.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLogger.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMemoryObjects.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPhoneNumberParser.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProperty.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRandom.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSMS.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTrace.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUuid.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISVersion.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISDatabase.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQuery.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryModelHelper.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryPool.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryText.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSearchModel.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaData.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaDataHelper.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaUuidCheckeder.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaViewQuery.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClass.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaUser.h">
+      <Filter>MetaUser</Filter>
+    </ClInclude>
+    <ClInclude Include="ISEmailAddress.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeAttachment.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeContentFormatter.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeFile.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeHtml.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeInlineFile.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeMessage.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeMultipart.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimePart.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMimeText.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQuotedPrintable.h">
+      <Filter>Network\SMTP</Filter>
+    </ClInclude>
+    <ClInclude Include="ISProtocol.h">
+      <Filter>Other</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSettings.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSettingsDatabase.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="call_stack.hpp">
+      <Filter>StackTrace</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStackWalker.h">
+      <Filter>StackTrace</Filter>
+    </ClInclude>
+    <ClInclude Include="StackWalker.h">
+      <Filter>StackTrace</Filter>
+    </ClInclude>
+    <ClInclude Include="iscore_global.h" />
+    <ClInclude Include="ISAlgorithm.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISApplicationRunning.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISAssert.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConfig.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConsole.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConstants.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCore.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCountingTime.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCrashDumper.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDefinesCore.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISException.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLocalization.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLogger.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMemoryObjects.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISNamespace.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISPhoneNumberParser.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISProperty.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISRandom.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStructs.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTrace.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTypedefs.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTypes.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISUuid.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISVersion.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISQueryModel.h">
+      <Filter>Database</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAuthConnector.h">
+      <Filter>Network</Filter>
+    </QtMoc>
+    <QtMoc Include="ISNetwork.h">
+      <Filter>Network</Filter>
+    </QtMoc>
+    <QtMoc Include="ISRestWorker.h">
+      <Filter>Network</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSmtpClient.h">
+      <Filter>Network\SMTP</Filter>
+    </QtMoc>
+    <QtMoc Include="ISNotifySender.h">
+      <Filter>Notify</Filter>
+    </QtMoc>
+    <QtMoc Include="ISStorageFileLoader.h">
+      <Filter>Other</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEMail.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSMS.h">
+      <Filter>System</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\Resources.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Resources\_Alpha\Alpha.xsn">
+      <Filter>Resources\_Alpha</Filter>
+    </None>
+    <None Include="..\..\Resources\_Alpha\Alpha.xsr">
+      <Filter>Resources\_Alpha</Filter>
+    </None>
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsf">
+      <Filter>Resources\_CenterSeven</Filter>
+    </None>
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsn">
+      <Filter>Resources\_CenterSeven</Filter>
+    </None>
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsr">
+      <Filter>Resources\_CenterSeven</Filter>
+    </None>
+    <None Include="..\..\Resources\_Demo\Autoservice.xsn">
+      <Filter>Resources\_Demo</Filter>
+    </None>
+    <None Include="..\..\Resources\_Demo\Demo.xsn">
+      <Filter>Resources\_Demo</Filter>
+    </None>
+    <None Include="..\..\Resources\_Demo\Demo.xsr">
+      <Filter>Resources\_Demo</Filter>
+    </None>
+    <None Include="..\..\Resources\_Demo\Denta.xsn">
+      <Filter>Resources\_Demo</Filter>
+    </None>
+    <None Include="..\..\Resources\_Demo\ServiceCenter.xsn">
+      <Filter>Resources\_Demo</Filter>
+    </None>
+    <None Include="..\..\Resources\_Highway\Highway.xsn">
+      <Filter>Resources\_Highway</Filter>
+    </None>
+    <None Include="..\..\Resources\_Highway\Highway.xsr">
+      <Filter>Resources\_Highway</Filter>
+    </None>
+    <None Include="..\..\Resources\_InformResource\InformResource.xsn">
+      <Filter>Resources\_InformResource</Filter>
+    </None>
+    <None Include="..\..\Resources\_InformResource\InformResource.xsr">
+      <Filter>Resources\_InformResource</Filter>
+    </None>
+    <None Include="..\..\Resources\_MedTech\MedTech.xsn">
+      <Filter>Resources\_MedTech</Filter>
+    </None>
+    <None Include="..\..\Resources\_MedTech\MedTech.xsr">
+      <Filter>Resources\_MedTech</Filter>
+    </None>
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsn">
+      <Filter>Resources\_OilSphere</Filter>
+    </None>
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsr">
+      <Filter>Resources\_OilSphere</Filter>
+    </None>
+    <None Include="..\..\Resources\_Patriot\Patriot.xsn">
+      <Filter>Resources\_Patriot</Filter>
+    </None>
+    <None Include="..\..\Resources\_Patriot\Patriot.xsr">
+      <Filter>Resources\_Patriot</Filter>
+    </None>
+    <None Include="..\..\Resources\_Sirona\Sirona.xsn">
+      <Filter>Resources\_Sirona</Filter>
+    </None>
+    <None Include="..\..\Resources\_Sirona\Sirona.xsr">
+      <Filter>Resources\_Sirona</Filter>
+    </None>
+  </ItemGroup>
+</Project>

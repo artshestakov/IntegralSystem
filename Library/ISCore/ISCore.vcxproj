@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DF96E239-1BB5-402B-B4F4-BF01D4A168BF}</ProjectGuid>
+    <Keyword>QtVS_v302</Keyword>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(Configuration)-$(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(Configuration)-$(Platform)\</IntDir>
+  </PropertyGroup>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <QtInstall>msvc2015</QtInstall>
+    <QtModules>core;network;sql;xml</QtModules>
+  </PropertyGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <QtInstall>msvc2015</QtInstall>
+    <QtModules>core;network;sql;xml</QtModules>
+  </PropertyGroup>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PreprocessorDefinitions>WIN32;DEBUG;ISCORE_LIBRARY</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <QtRcc>
+      <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
+      <Compression>level9</Compression>
+    </QtRcc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PreprocessorDefinitions>WIN32;ISCORE_LIBRARY</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <QtRcc>
+      <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
+      <Compression>level9</Compression>
+    </QtRcc>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ISApplicationRunning.cpp" />
+    <ClCompile Include="ISAssert.cpp" />
+    <ClCompile Include="ISAuthConnector.cpp" />
+    <ClCompile Include="ISConfig.cpp" />
+    <ClCompile Include="ISConsole.cpp" />
+    <ClCompile Include="ISCore.cpp" />
+    <ClCompile Include="ISCountingTime.cpp" />
+    <ClCompile Include="ISCrashDumper.cpp" />
+    <ClCompile Include="ISDatabase.cpp" />
+    <ClCompile Include="ISDefinesCore.cpp" />
+    <ClCompile Include="ISEMail.cpp" />
+    <ClCompile Include="ISEmailAddress.cpp" />
+    <ClCompile Include="ISException.cpp" />
+    <ClCompile Include="ISLocalization.cpp" />
+    <ClCompile Include="ISLogger.cpp" />
+    <ClCompile Include="ISMemoryObjects.cpp" />
+    <ClCompile Include="ISMetaData.cpp" />
+    <ClCompile Include="ISMetaDataHelper.cpp" />
+    <ClCompile Include="ISMetaUser.cpp" />
+    <ClCompile Include="ISMetaUuidCheckeder.cpp" />
+    <ClCompile Include="ISMetaViewQuery.cpp" />
+    <ClCompile Include="ISMimeAttachment.cpp" />
+    <ClCompile Include="ISMimeContentFormatter.cpp" />
+    <ClCompile Include="ISMimeFile.cpp" />
+    <ClCompile Include="ISMimeHtml.cpp" />
+    <ClCompile Include="ISMimeInlineFile.cpp" />
+    <ClCompile Include="ISMimeMessage.cpp" />
+    <ClCompile Include="ISMimeMultipart.cpp" />
+    <ClCompile Include="ISMimePart.cpp" />
+    <ClCompile Include="ISMimeText.cpp" />
+    <ClCompile Include="ISNetwork.cpp" />
+    <ClCompile Include="ISNotifySender.cpp" />
+    <ClCompile Include="ISPhoneNumberParser.cpp" />
+    <ClCompile Include="ISProperty.cpp" />
+    <ClCompile Include="ISProtocol.cpp" />
+    <ClCompile Include="ISQuery.cpp" />
+    <ClCompile Include="ISQueryModel.cpp" />
+    <ClCompile Include="ISQueryModelHelper.cpp" />
+    <ClCompile Include="ISQueryPool.cpp" />
+    <ClCompile Include="ISQueryText.cpp" />
+    <ClCompile Include="ISQuotedPrintable.cpp" />
+    <ClCompile Include="ISRandom.cpp" />
+    <ClCompile Include="ISRestWorker.cpp" />
+    <ClCompile Include="ISSearchModel.cpp" />
+    <ClCompile Include="ISSettings.cpp" />
+    <ClCompile Include="ISSettingsDatabase.cpp" />
+    <ClCompile Include="ISSMS.cpp" />
+    <ClCompile Include="ISSmtpClient.cpp" />
+    <ClCompile Include="ISStackWalker.cpp" />
+    <ClCompile Include="ISStorageFileLoader.cpp" />
+    <ClCompile Include="ISSystem.cpp" />
+    <ClCompile Include="ISTrace.cpp" />
+    <ClCompile Include="ISUuid.cpp" />
+    <ClCompile Include="ISVersion.cpp" />
+    <ClCompile Include="StackWalker.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="call_stack.hpp" />
+    <ClInclude Include="ISAlgorithm.h" />
+    <ClInclude Include="ISApplicationRunning.h" />
+    <ClInclude Include="ISAssert.h" />
+    <ClInclude Include="ISConfig.h" />
+    <ClInclude Include="ISConsole.h" />
+    <ClInclude Include="ISConstants.h" />
+    <ClInclude Include="ISCore.h" />
+    <ClInclude Include="iscore_global.h" />
+    <ClInclude Include="ISCountingTime.h" />
+    <ClInclude Include="ISCrashDumper.h" />
+    <ClInclude Include="ISDefinesCore.h" />
+    <ClInclude Include="ISException.h" />
+    <ClInclude Include="ISLocalization.h" />
+    <ClInclude Include="ISLogger.h" />
+    <ClInclude Include="ISMemoryObjects.h" />
+    <ClInclude Include="ISNamespace.h" />
+    <ClInclude Include="ISPhoneNumberParser.h" />
+    <ClInclude Include="ISProperty.h" />
+    <ClInclude Include="ISRandom.h" />
+    <ClInclude Include="ISStructs.h" />
+    <ClInclude Include="ISSystem.h" />
+    <ClInclude Include="ISTrace.h" />
+    <ClInclude Include="ISTypedefs.h" />
+    <ClInclude Include="ISTypes.h" />
+    <ClInclude Include="ISUuid.h" />
+    <ClInclude Include="ISVersion.h" />
+    <ClInclude Include="StdAfx.h" />
+    <QtMoc Include="ISSMS.h" />
+    <QtMoc Include="ISEMail.h" />
+    <ClInclude Include="ISEmailAddress.h" />
+    <ClInclude Include="ISMimeAttachment.h" />
+    <ClInclude Include="ISMimeContentFormatter.h" />
+    <ClInclude Include="ISMimeFile.h" />
+    <ClInclude Include="ISMimeHtml.h" />
+    <ClInclude Include="ISMimeInlineFile.h" />
+    <ClInclude Include="ISMimeMessage.h" />
+    <ClInclude Include="ISMimeMultipart.h" />
+    <ClInclude Include="ISMimePart.h" />
+    <ClInclude Include="ISMimeText.h" />
+    <ClInclude Include="ISProtocol.h" />
+    <ClInclude Include="ISSettings.h" />
+    <ClInclude Include="ISSettingsDatabase.h" />
+    <ClInclude Include="ISStackWalker.h" />
+    <ClInclude Include="StackWalker.h" />
+    <QtMoc Include="ISStorageFileLoader.h" />
+    <QtMoc Include="ISNotifySender.h" />
+    <ClInclude Include="ISQuotedPrintable.h" />
+    <QtMoc Include="ISSmtpClient.h" />
+    <QtMoc Include="ISRestWorker.h" />
+    <QtMoc Include="ISNetwork.h" />
+    <QtMoc Include="ISAuthConnector.h" />
+    <ClInclude Include="ISDatabase.h" />
+    <ClInclude Include="ISMetaData.h" />
+    <ClInclude Include="ISMetaDataHelper.h" />
+    <ClInclude Include="ISMetaUser.h" />
+    <ClInclude Include="ISMetaUuidCheckeder.h" />
+    <ClInclude Include="ISMetaViewQuery.h" />
+    <ClInclude Include="ISQuery.h" />
+    <ClInclude Include="ISQueryModelHelper.h" />
+    <ClInclude Include="ISQueryPool.h" />
+    <ClInclude Include="ISQueryText.h" />
+    <ClInclude Include="ISSearchModel.h" />
+    <ClInclude Include="PMetaClass.h" />
+    <QtMoc Include="ISQueryModel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\Resources.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Resources\_Alpha\Alpha.xsn" />
+    <None Include="..\..\Resources\_Alpha\Alpha.xsr" />
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsf" />
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsn" />
+    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsr" />
+    <None Include="..\..\Resources\_Demo\Autoservice.xsn" />
+    <None Include="..\..\Resources\_Demo\Demo.xsn" />
+    <None Include="..\..\Resources\_Demo\Demo.xsr" />
+    <None Include="..\..\Resources\_Demo\Denta.xsn" />
+    <None Include="..\..\Resources\_Demo\ServiceCenter.xsn" />
+    <None Include="..\..\Resources\_Highway\Highway.xsn" />
+    <None Include="..\..\Resources\_Highway\Highway.xsr" />
+    <None Include="..\..\Resources\_InformResource\InformResource.xsn" />
+    <None Include="..\..\Resources\_InformResource\InformResource.xsr" />
+    <None Include="..\..\Resources\_MedTech\MedTech.xsn" />
+    <None Include="..\..\Resources\_MedTech\MedTech.xsr" />
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsn" />
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsr" />
+    <None Include="..\..\Resources\_Patriot\Patriot.xsn" />
+    <None Include="..\..\Resources\_Patriot\Patriot.xsr" />
+    <None Include="..\..\Resources\_Sirona\Sirona.xsn" />
+    <None Include="..\..\Resources\_Sirona\Sirona.xsr" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" MocOptions="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
