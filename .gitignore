@@ -22,3 +22,5 @@
 *.iss.tmp
 
 Build.ini.tmp
+.qmake.stash
+Makefile
