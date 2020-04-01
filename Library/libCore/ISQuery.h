@@ -10,52 +10,52 @@ class LIBCORE_EXPORT ISQuery
 {
 public:
     ISQuery(const QString &sql_text = QString(), bool prepare = true);
-	ISQuery(QSqlDatabase &sql_database, const QString &sql_text = QString(), bool prepare = true);
-	~ISQuery();
+    ISQuery(const QSqlDatabase &sql_database, const QString &sql_text = QString(), bool prepare = true);
+    ~ISQuery();
 
-	bool Prepare(const QString &sql_text);
-	bool Prepare(QSqlDatabase &sql_database, const QString &sql_text);
+    bool Prepare(const QString &sql_text);
+    bool Prepare(QSqlDatabase &sql_database, const QString &sql_text);
 
-	bool Execute();
-	bool Execute(const QString &sql_text);
-	bool Execute(QSqlDatabase &sql_database, const QString &sql_text);
+    bool Execute();
+    bool Execute(const QString &sql_text);
+    bool Execute(QSqlDatabase &sql_database, const QString &sql_text);
 
-	bool ExecuteFirst();
-	bool ExecuteFirst(QSqlDatabase &sql_database, const QString &sql_text);
+    bool ExecuteFirst();
+    bool ExecuteFirst(QSqlDatabase &sql_database, const QString &sql_text);
 
-	bool BindValue(const QString &ParameterName, const QVariant &ParameterValue);
+    bool BindValue(const QString &ParameterName, const QVariant &ParameterValue);
 
-	QVariant ReadColumn(const QString &ColumnName);
-	QVariant ReadColumn(int ColumnIndex);
-	
-	bool Next();
-	bool First();
+    QVariant ReadColumn(const QString &ColumnName);
+    QVariant ReadColumn(int ColumnIndex);
 
-	QSqlRecord GetRecord();
-	QSqlQuery GetSqlQuery() const;
+    bool Next();
+    bool First();
 
-	bool IsValid() const;
-	bool IsSelect() const;
-	bool ExistParameter(const QString &ParameterName) const;
-	QString GetSqlText() const; //Получить текст запроса
-	QString GetErrorString(); //Получить текст ошибки
-	int GetErrorNumber() const; //Получить номер ошибки
-	int GetCountResultRows() const; //Получить количество строк из результата запроса (только для SELECT)
-	int GetCountAffected() const; //Получить количество затронутых запросом строк
-	void SetShowLongQuery(bool show_long_query);
+    QSqlRecord GetRecord();
+    QSqlQuery GetSqlQuery() const;
 
-private:
-	void Raise();
-	void PrepareColumnIndices() throw();
+    bool IsValid() const;
+    bool IsSelect() const;
+    bool ExistParameter(const QString &ParameterName) const;
+    QString GetSqlText() const; //Получить текст запроса
+    QString GetErrorString(); //Получить текст ошибки
+    int GetErrorNumber() const; //Получить номер ошибки
+    int GetCountResultRows() const; //Получить количество строк из результата запроса (только для SELECT)
+    int GetCountAffected() const; //Получить количество затронутых запросом строк
+    void SetShowLongQuery(bool show_long_query);
 
 private:
-	QString ErrorString;
-	QSqlQuery SqlQuery;
-	QString SqlText;
-	ISStringToIntMap ColumnIndices;
-	QSqlDatabase SqlDatabase;
-	bool Prepared;
-	bool ShowLongQuery;
+    void Raise();
+    void PrepareColumnIndices() throw();
+
+private:
+    QString ErrorString;
+    QSqlQuery SqlQuery;
+    QString SqlText;
+    ISStringToIntMap ColumnIndices;
+    QSqlDatabase SqlDatabase;
+    bool Prepared;
+    bool ShowLongQuery;
 };
 //-----------------------------------------------------------------------------
 #endif

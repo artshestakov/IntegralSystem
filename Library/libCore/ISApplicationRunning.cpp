@@ -23,11 +23,11 @@ bool ISApplicationRunning::IsRunning()
 		CloseHandle(Mutex);
 	}
 #else
-	int RC = flock(open(PATH_LOCK_FILE.toStdString().c_str(), O_CREAT | O_RDWR, 0666), LOCK_EX | LOCK_NB);
+        /*int RC = flock(open(PATH_LOCK_FILE.toStdString().c_str(), O_CREAT | O_RDWR, 0666), LOCK_EX | LOCK_NB);
 	if (!RC)
 	{
 		Result = false;
-	}
+        }*/
 #endif
 	return Result;
 }

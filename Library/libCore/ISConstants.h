@@ -1,6 +1,12 @@
 #pragma once
 #ifndef _ISCONSTANTS_H_INCLUDED
 #define _ISCONSTANTS_H_INCLUDED
+//-----------------------------------------------------------------------------
+#include "StdAfx.h"
+//-----------------------------------------------------------------------------
+#ifndef WIN32
+const size_t MAX_PATH = 260;
+#endif
 //EXTENSIONS-------------------------------------------------------------------
 const char EXTENSION_DLL[] = "dll";
 const char EXTENSION_SO[] = "so";

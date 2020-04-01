@@ -8,13 +8,13 @@
 class LIBCORE_EXPORT ISExceptionBase : public std::exception
 {
 public:
-	ISExceptionBase(const QString &ExceptionString = QString());
-	virtual ~ISExceptionBase();
+    ISExceptionBase(const QString &ExceptionString = QString());
+    virtual ~ISExceptionBase();
 
-	QString What() const;
+    QString What() const;
 
 private:
-	QString Description;
+    QString Description;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -23,8 +23,8 @@ private:
 class LIBCORE_EXPORT ISExceptionConnectionDB : public ISExceptionBase
 {
 public:
-	ISExceptionConnectionDB(const QString &ExceptionString = QString());
-	virtual ~ISExceptionConnectionDB();
+    ISExceptionConnectionDB(const QString &ExceptionString = QString());
+    virtual ~ISExceptionConnectionDB();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -33,8 +33,8 @@ public:
 class LIBCORE_EXPORT ISExceptionSqlSyntax : public ISExceptionBase
 {
 public:
-	ISExceptionSqlSyntax(const QString &ExceptionString = QString());
-	virtual ~ISExceptionSqlSyntax();
+    ISExceptionSqlSyntax(const QString &ExceptionString = QString());
+    virtual ~ISExceptionSqlSyntax();
 };
 //-----------------------------------------------------------------------------
 #endif
