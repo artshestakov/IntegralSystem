@@ -4,8 +4,11 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-#ifndef WIN32
+#ifdef WIN32
+const char PATH_SEPARATOR = '\\';
+#else
 const size_t MAX_PATH = 260;
+const char PATH_SEPARATOR = '/';
 #endif
 //EXTENSIONS-------------------------------------------------------------------
 const char EXTENSION_DLL[] = "dll";

@@ -23,11 +23,11 @@ DESTDIR = $$PWD/../../Bin/$${CONFIGURATION}-$${PLATFORM}
 MOC_DIR = $$PWD/../../Build/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 OBJECTS_DIR = $$PWD/../../Build/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
-INCLUDEPATH += $$PWD/../../Library/libCore
+INCLUDEPATH += $$PWD/../../Library/ISCore
 INCLUDEPATH += .
 
 LIBS += -L$$DESTDIR -Wl,-rpath="$${DESTDIR}",-rpath-link="$${DESTDIR}" \
-    -llibCore
+    -lISCore
 
 SOURCES += \
     CGConfigurator.cpp \

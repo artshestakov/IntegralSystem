@@ -9,6 +9,8 @@
 #include <float.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #endif
 //-----------------------------------------------------------------------------
 #include <cstdio>

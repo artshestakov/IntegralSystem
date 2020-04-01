@@ -220,7 +220,7 @@ bool ISLogger::CreateDir()
 {
 	//Получаем текущую дату и время и формируем путь к папке Logs
     ISDateTime DateTime = GetCurrentDateTime();
-    PathLogs = PathDirectory + "Logs\\" + std::to_string(DateTime.Year) + '\\' + (DateTime.Month < 10 ? '0' + std::to_string(DateTime.Month) : std::to_string(DateTime.Month)) + '\\';
+    PathLogs = PathDirectory + PATH_SEPARATOR + "Logs" + PATH_SEPARATOR + std::to_string(DateTime.Year) + PATH_SEPARATOR + (DateTime.Month < 10 ? '0' + std::to_string(DateTime.Month) : std::to_string(DateTime.Month));
 
 #ifdef WIN32
 	DWORD Attributes = GetFileAttributesA(PathLogs.c_str());
@@ -230,12 +230,21 @@ bool ISLogger::CreateDir()
 		Result = SHCreateDirectoryExA(NULL, PathLogs.c_str(), NULL) == 0;
 		if (!Result) //Не удалось создать папку
 		{
-			ErrorString = "Error create dir " + PathLogs;
+            ErrorString = "Error create dir \"" + PathLogs + "\"";
 		}
 	}
 #else
-    bool Result = true;
-    //???
+    struct stat sb;
+    bool Result = stat(PathLogs.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode);
+    if (!Result) //Если папка не существует - создаём её
+    {
+        std::string Command = "mkdir -p " + PathLogs;
+        Result = system(Command.c_str()) == 0;
+        if (!Result)
+        {
+            ErrorString = "Error create dir \"" + PathLogs + "\"";
+        }
+    }
 #endif
 	return Result;
 }
@@ -252,7 +261,7 @@ void ISLogger::UpdateFilePath()
 
 	//Формируем путь к лог-файлу
 	std::stringstream Stream;
-	Stream << PathLogs << FilePrefix << "_" << CurrentYear <<
+    Stream << PathLogs << PATH_SEPARATOR << FilePrefix << "_" << CurrentYear <<
 		(CurrentMonth < 10 ? '0' + std::to_string(CurrentMonth) : std::to_string(CurrentMonth)) <<
 		(CurrentDay < 10 ? '0' + std::to_string(CurrentDay) : std::to_string(CurrentDay)) <<
 		SYMBOL_POINT << EXTENSION_LOG;
@@ -303,7 +312,7 @@ std::string ISLogger::GetCurrentDirectory()
     Char = getcwd(Char, MAX_PATH);
     if (Char)
     {
-        strcpy(&DirPath[0], Char);
+        DirPath = std::string(Char);
         free(Char);
     }
 #endif
