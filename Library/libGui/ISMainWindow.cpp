@@ -347,7 +347,11 @@ void ISMainWindow::InitializePlugin()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ChangeUser()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser")))
+	SetVisibleShadow(true);
+	bool Change = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser"));
+	SetVisibleShadow(false);
+
+	if (Change)
 	{
 		BeforeClose();
 		ISGui::ChangeUser();

@@ -79,7 +79,6 @@ QString ISUserOnlineDetailsForm::GetState(const QString &State) const
 	{
 		Result = LANG("MonitorActivity.UserOnlineDetails.State.Idle");
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

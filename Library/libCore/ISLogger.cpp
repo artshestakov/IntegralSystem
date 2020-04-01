@@ -188,7 +188,7 @@ void ISLogger::Worker()
 			LastPosition = 0;
 		}
 		Mutex.unlock(); //Разблокируем мьютекс
-
+		
 		//Получаем текущие дату и время
 		SYSTEMTIME ST;
 		GetLocalTime(&ST);

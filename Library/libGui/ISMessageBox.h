@@ -27,7 +27,7 @@ protected:
 
 private:
 	ISNamespace::MessageBoxButton AdditionalButtonClicked;
-	QMap<QPushButton*, ISNamespace::MessageBoxButton> AdditionalButtons;
+	std::map<QPushButton*, ISNamespace::MessageBoxButton> AdditionalButtons;
 };
 //-----------------------------------------------------------------------------
 #endif

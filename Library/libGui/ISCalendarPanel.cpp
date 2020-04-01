@@ -68,7 +68,6 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 
 	QRect RectText(Rect.x() + 3, Rect.y() + 3, Rect.width(), Rect.height()); //Расположение текста
 	QPoint PointIndicator(Rect.x(), Rect.y()); //Расположение индикатора события
-	QString Text = QString::number(Date.day()); //Текст
 
 	if (Date == QDate::currentDate())
 	{
@@ -81,9 +80,11 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 		Painter->drawPixmap(PointIndicator, PixmapIndicator);
 	}
 
-	//Рисование текста с датой
-	Painter->drawText(RectText, Text);
+	char Buffer[3];
+	itoa(Date.day(), &Buffer[0], 10);
 
+	//Рисование текста с датой
+	Painter->drawText(RectText, Buffer);
 	Painter->restore();
 }
 //-----------------------------------------------------------------------------

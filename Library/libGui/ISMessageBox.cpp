@@ -2,6 +2,7 @@
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISMessageBox::ISMessageBox(QMessageBox::Icon Icon, const QString &Title, const QString &Message, QMessageBox::StandardButtons Buttons, QWidget *parent)
 	: QMessageBox(Icon, Title, Message, Buttons, parent),
@@ -41,14 +42,7 @@ bool ISMessageBox::ShowQuestion(QWidget *parent, const QString &Message, const Q
 	ISMessageBox MessageBox(QMessageBox::Question, LANG("Question"), Message, QMessageBox::Yes | QMessageBox::No, parent);
 	MessageBox.setDetailedText(DetailedText);
 	MessageBox.setDefaultButton(QMessageBox::No);
-
-	QApplication::beep();
-	if (MessageBox.Exec() == QMessageBox::Yes)
-	{
-		return true;
-	}
-
-	return false;
+	return MessageBox.Exec() == QMessageBox::Yes ? true : false;
 }
 //-----------------------------------------------------------------------------
 void ISMessageBox::AddButton(const QString &Text, ISNamespace::MessageBoxButton ButtonType)
@@ -57,7 +51,7 @@ void ISMessageBox::AddButton(const QString &Text, ISNamespace::MessageBoxButton 
 	Button->setText(Text);
 	connect(Button, &QPushButton::clicked, this, &ISMessageBox::ButtonClicked);
 	addButton(Button, ButtonRole::NoRole);
-	AdditionalButtons.insert(Button, ButtonType);
+	AdditionalButtons.emplace(Button, ButtonType);
 }
 //-----------------------------------------------------------------------------
 ISNamespace::MessageBoxButton ISMessageBox::GetClickedButton()
@@ -68,14 +62,7 @@ ISNamespace::MessageBoxButton ISMessageBox::GetClickedButton()
 void ISMessageBox::ButtonClicked()
 {
 	QPushButton *Button = dynamic_cast<QPushButton*>(sender());
-	if (Button)
-	{
-		AdditionalButtonClicked = AdditionalButtons.value(Button);
-	}
-	else
-	{
-		AdditionalButtonClicked = ISNamespace::MBB_Unknown;
-	}
+	AdditionalButtonClicked = Button ? AdditionalButtons[Button] : ISNamespace::MBB_Unknown;
 }
 //-----------------------------------------------------------------------------
 int ISMessageBox::Exec()
@@ -86,8 +73,8 @@ int ISMessageBox::Exec()
 		Button->setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
 		Button->setFixedHeight(23);
 	}
-
 	QApplication::beep();
+	ISGui::ProcessEvents();
 	return exec();
 }
 //-----------------------------------------------------------------------------
