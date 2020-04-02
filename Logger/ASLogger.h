@@ -6,17 +6,29 @@
 #include <mutex>
 #include <fstream>
 #include <array>
+#include <thread>
 //-----------------------------------------------------------------------------
 #define ARRAY_SIZE 20000
 //-----------------------------------------------------------------------------
 class ASLogger
 {
 public:
+	enum MessageType //Типы сообщений
+	{
+		MT_Debug, //Отладка
+		MT_Info, //Информация
+		MT_Warning, //Предупреждение
+		MT_Error //Ошибка
+	};
+
+public:
 	static ASLogger& Instance(); //Получить ссылку на объект логгера
 
 	std::string GetErrorString() const; //Получить описание ошибки
 	bool Initialize(const std::string &Prefix = std::string()); //Инициализировать логгер
 	void Shutdown(); //Остановка логгера
+
+	void Log(MessageType message_type, const std::string &message_string, const char *SourceName, int Line);
 
 private:
 	bool CreateLogDirectory(); //Создание директории

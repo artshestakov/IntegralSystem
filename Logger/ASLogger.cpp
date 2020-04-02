@@ -54,12 +54,25 @@ bool ASLogger::Initialize(const std::string &Prefix)
 		return false;
 	}
 
+	Running = true;
+	std::thread(&ASLogger::Worker, this).detach();
 	return true;
 }
 //-----------------------------------------------------------------------------
 void ASLogger::Shutdown()
 {
 	File.close();
+}
+//-----------------------------------------------------------------------------
+void ASLogger::Log(MessageType message_type, const std::string &message_string, const char *SourceName, int Line)
+{
+	SYSTEMTIME ST;
+	GetSystemTime(&ST);
+
+	char Buffer[MAX_PATH];
+	//sprintf(Buffer, "%02d.%02d.%d %02d:%02d:%02d.%03d %d", );
+
+	std::string CompleteMessage;
 }
 //-----------------------------------------------------------------------------
 bool ASLogger::CreateLogDirectory()
@@ -109,7 +122,10 @@ bool ASLogger::CreateLogDirectory()
 //-----------------------------------------------------------------------------
 void ASLogger::Worker()
 {
+	while (Running)
+	{
 
+	}
 }
 //-----------------------------------------------------------------------------
 bool ASLogger::CheckExistDir(const std::string &PathDir)
