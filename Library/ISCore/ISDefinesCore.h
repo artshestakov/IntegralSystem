@@ -20,6 +20,7 @@ namespace ISDefines
 		static QString PATH_CRASH_DIR;
 		static QString PATH_TRANSLATIONS_DIR;
 		static QString PATH_CONFIG_FILE;
+        static QString PATH_PID_FILE;
 		static QString SYMBOL_CIRCLE; //Символ "Круг"
 		static QString SYMBOL_MULTIPLY; //Символ "Умножение"
 		static QString SYMBOL_DIVIDE; //Символ "Деление"

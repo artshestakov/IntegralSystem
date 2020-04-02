@@ -11,6 +11,7 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/file.h>
 #endif
 //-----------------------------------------------------------------------------
 #include <cstdio>

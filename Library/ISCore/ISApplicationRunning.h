@@ -9,9 +9,6 @@ public:
 	~ISApplicationRunning();
 
 	bool IsRunning();
-	bool IsAnotherRunning();
-	bool TryToRun();
-	void Release();
 
 private:
 	std::string Key;
