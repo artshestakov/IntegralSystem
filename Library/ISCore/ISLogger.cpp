@@ -50,7 +50,6 @@ bool ISLogger::Initialize(bool OutPrintf, bool OutFile, const std::string &file_
         Running = !PathDirectory.empty();
         if (!Running) //Не удалось получить путь
 		{
-            ErrorString = "Error getting current module file path.";
             return Running;
 		}
 
@@ -220,7 +219,7 @@ bool ISLogger::CreateDir()
 {
 	//Получаем текущую дату и время и формируем путь к папке Logs
     ISDateTime DateTime = GetCurrentDateTime();
-    PathLogs = PathDirectory + PATH_SEPARATOR + "Logs" + PATH_SEPARATOR + std::to_string(DateTime.Year) + PATH_SEPARATOR + (DateTime.Month < 10 ? '0' + std::to_string(DateTime.Month) : std::to_string(DateTime.Month));
+    PathLogs = PathDirectory + "Logs" + PATH_SEPARATOR + std::to_string(DateTime.Year) + PATH_SEPARATOR + (DateTime.Month < 10 ? '0' + std::to_string(DateTime.Month) : std::to_string(DateTime.Month));
 
 #ifdef WIN32
 	DWORD Attributes = GetFileAttributesA(PathLogs.c_str());
@@ -306,7 +305,12 @@ std::string ISLogger::GetCurrentDirectory()
 {
     std::string DirPath;
 #ifdef WIN32
-    // Windows
+	char Buffer[MAX_PATH];
+	if (GetModuleFileNameA(NULL, Buffer, MAX_PATH) > 0)
+	{
+		DirPath = std::string(Buffer);
+		DirPath = DirPath.substr(0, DirPath.rfind(PATH_SEPARATOR) + 1);
+	}
 #else
     char *Char = NULL;
     Char = getcwd(Char, MAX_PATH);
@@ -316,6 +320,10 @@ std::string ISLogger::GetCurrentDirectory()
         free(Char);
     }
 #endif
+	if (DirPath.empty())
+	{
+		ErrorString = "Error getting current directory.";
+	}
     return DirPath;
 }
 //-----------------------------------------------------------------------------

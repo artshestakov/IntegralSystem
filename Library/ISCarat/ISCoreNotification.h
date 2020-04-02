@@ -3,7 +3,7 @@
 #include "ISCaratCoreApplication.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
-class LIBCARAT_EXPORT ISCoreNotification : public ISCaratCoreApplication
+class ISCARAT_EXPORT ISCoreNotification : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

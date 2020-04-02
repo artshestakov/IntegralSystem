@@ -97,14 +97,16 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 	if (!Result)
 	{
 		ISLOGGER_ERROR(ISLogger::Instance().GetErrorString());
-		return EXIT_FAILURE;
+		return Result;
 	}
 
 #ifdef WIN32
-	Result = SetConsoleOutputCP(65001) == TRUE ? true : false;
-#else
-	//Добавить реализацию для Linux
+	if (!IsGui)
+	{
+		Result = SetConsoleOutputCP(65001) == TRUE ? true : false;
+	}
 #endif
+
 	if (!Result)
 	{
 		ISLOGGER_WARNING("Error changed console encoding");

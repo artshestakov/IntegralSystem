@@ -1,23 +1,21 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "ISCaratCoreApplication.h"
-#include "ISAsteriskSocket.h"
 //-----------------------------------------------------------------------------
-class LIBCARAT_EXPORT ISCoreMedTech : public ISCaratCoreApplication
+class ISCARAT_EXPORT ISCoreCalendar : public ISCaratCoreApplication
 {
 	Q_OBJECT
 
 public:
-	ISCoreMedTech(int &argc, char **argv);
-	virtual ~ISCoreMedTech();
+	ISCoreCalendar(int &argc, char **argv);
+	virtual ~ISCoreCalendar();
 
 	bool Invoke() override;
 
 protected:
-	void SuccessfulAuth(const ISStringMap &StringMap);
-	void UserEvent(const ISStringMap &StringMap); //Обработка качества обслуживания
+	void Timeout();
 
 private:
-	ISAsteriskSocket *AsteriskSocket;	
+	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------

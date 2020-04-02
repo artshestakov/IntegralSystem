@@ -17,7 +17,7 @@
 		<!-- Сборка библиотек -->
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISCore $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libGui $(Configuration) $(Platform) $(PlatformToolset)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libCarat $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISCarat $(Configuration) $(Platform) $(PlatformToolset)"/>
 		
 		<!-- Сборка проектов -->
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd Carat $(Configuration) $(Platform) $(PlatformToolset)"/>
@@ -44,7 +44,7 @@
 	<Target Name="Deploy">
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ISCore.dll $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libGui.dll $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libCarat.dll $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ISCarat.dll $(Configuration) $(Platform)"/>
 		
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd Carat.exe $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd Configurator.exe $(Configuration) $(Platform)"/>

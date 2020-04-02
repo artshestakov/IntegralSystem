@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
     <Filter Include="AsteriskQueue">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -11,48 +16,52 @@
       <ParseFiles>false</ParseFiles>
     </Filter>
     <Filter Include="Calendar">
-      <UniqueIdentifier>{9de61bcb-dc8c-4bef-937e-9787bbcab1d4}</UniqueIdentifier>
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="CenterCeven">
-      <UniqueIdentifier>{3afb9866-64be-445e-afa6-a38417902814}</UniqueIdentifier>
+      <UniqueIdentifier>{a41c2a4c-04da-4502-a2ab-383872da361f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Highway">
-      <UniqueIdentifier>{0bcf0ec8-b293-4c9e-9d34-61189ca504ab}</UniqueIdentifier>
+      <UniqueIdentifier>{4f15f45b-db08-4e18-8545-9837f6b91f6f}</UniqueIdentifier>
     </Filter>
     <Filter Include="InformResource">
-      <UniqueIdentifier>{051d1b5b-fdd3-431f-a543-8d4d13b1499c}</UniqueIdentifier>
+      <UniqueIdentifier>{c4ab335a-4d37-4545-a174-18a3f9dba564}</UniqueIdentifier>
     </Filter>
     <Filter Include="Mail">
-      <UniqueIdentifier>{f1810d5a-b0b3-4f46-aa66-3c80368238d0}</UniqueIdentifier>
+      <UniqueIdentifier>{c638e21a-5cc8-437e-8f18-84d7e177b6e2}</UniqueIdentifier>
     </Filter>
     <Filter Include="MedTech">
-      <UniqueIdentifier>{4720d29b-f6e6-4b2e-99cf-248c034fe956}</UniqueIdentifier>
+      <UniqueIdentifier>{b52abdd0-80a6-49d5-ad05-759b5b475cb6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Notification">
-      <UniqueIdentifier>{1033816a-0e04-4ffb-899a-c849f7ad7b57}</UniqueIdentifier>
+      <UniqueIdentifier>{c1b11f5f-1b90-483f-a65f-6846e5e6ce59}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scheduler">
-      <UniqueIdentifier>{e051906f-75a3-4134-97c1-6d1b12ce978d}</UniqueIdentifier>
+      <UniqueIdentifier>{5ddd98c1-67b0-49f5-92e9-52b6892a17d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="SMS">
-      <UniqueIdentifier>{0703f940-c7c1-47c8-8ad4-d9f29875872d}</UniqueIdentifier>
+      <UniqueIdentifier>{bb9eee5e-d64f-4942-b1b5-e697ea2a4fe9}</UniqueIdentifier>
     </Filter>
     <Filter Include="System">
-      <UniqueIdentifier>{cf2b492e-3934-43fe-a72e-b23f8f06db3d}</UniqueIdentifier>
+      <UniqueIdentifier>{b51414ae-710e-4832-9498-8006aea58d8a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Telephony">
-      <UniqueIdentifier>{5ff9b1df-9073-4df2-97e7-c7977521f172}</UniqueIdentifier>
+      <UniqueIdentifier>{409aac18-28e8-4cd5-a2eb-42fa3656db83}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="iscarat_global.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISCoreAsteriskQueue.cpp">
       <Filter>AsteriskQueue</Filter>
     </ClCompile>
-    <ClCompile Include="ISCoreCalendar.cpp">
-      <Filter>Calendar</Filter>
-    </ClCompile>
     <ClCompile Include="ISCoreAsteriskRecord.cpp">
       <Filter>AsteriskRecord</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCoreCalendar.cpp">
+      <Filter>Calendar</Filter>
     </ClCompile>
     <ClCompile Include="ISCoreCenterSeven.cpp">
       <Filter>CenterCeven</Filter>
@@ -92,11 +101,11 @@
     <QtMoc Include="ISCoreAsteriskQueue.h">
       <Filter>AsteriskQueue</Filter>
     </QtMoc>
-    <QtMoc Include="ISCoreCalendar.h">
-      <Filter>Calendar</Filter>
-    </QtMoc>
     <QtMoc Include="ISCoreAsteriskRecord.h">
       <Filter>AsteriskRecord</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCoreCalendar.h">
+      <Filter>Calendar</Filter>
     </QtMoc>
     <QtMoc Include="ISCoreCenterSeven.h">
       <Filter>CenterCeven</Filter>
@@ -131,8 +140,5 @@
     <QtMoc Include="ISCoreNotification.h">
       <Filter>Notification</Filter>
     </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="libCarat_global.h" />
   </ItemGroup>
 </Project>

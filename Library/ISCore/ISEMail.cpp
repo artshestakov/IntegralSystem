@@ -82,7 +82,7 @@ QString ISEMail::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISEMail::SendMessage()
+bool ISEMail::Send()
 {
 	bool Result = true;
 	QString FilePath; //Путь к файлу отправки

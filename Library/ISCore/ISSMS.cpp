@@ -57,7 +57,7 @@ int ISSMS::GetMessageID() const
 	return MessageID;
 }
 //-----------------------------------------------------------------------------
-bool ISSMS::SendMessage()
+bool ISSMS::Send()
 {
 	bool Result = true;
 	QEventLoop EventLoop;

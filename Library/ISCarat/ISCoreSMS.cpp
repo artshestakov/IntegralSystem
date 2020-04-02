@@ -77,7 +77,7 @@ void ISCoreSMS::Timeout()
 
 		ISLOGGER_INFO("Sending message - start");
 		ISSMS SMS(Login, Password, Phone, Message, Charset, this);
-		if (SMS.SendMessage())
+		if (SMS.Send())
 		{
 			SendDone(ID, SMS.GetMessageID());
 			ISLOGGER_INFO("Sending message - done");

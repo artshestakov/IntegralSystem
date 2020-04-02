@@ -4,7 +4,7 @@
 #include "ISAsteriskSocket.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBCARAT_EXPORT ISCoreAsteriskQueue : public ISCaratCoreApplication
+class ISCARAT_EXPORT ISCoreAsteriskQueue : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

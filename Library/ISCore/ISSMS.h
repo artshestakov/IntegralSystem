@@ -20,7 +20,7 @@ public:
 	QString GetErrorString() const; //Получить текст ошибки
 	ISNamespace::SMSErrorType GetErrorType() const; //Получить тип ошибки
 	int GetMessageID() const; //Получить идентификатор сообщения
-	bool SendMessage();
+	bool Send();
 
 protected:
 	QString CreateUrl() const;

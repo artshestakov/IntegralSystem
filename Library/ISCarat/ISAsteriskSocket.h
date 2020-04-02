@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libCarat_global.h"
+#include "iscarat_global.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
-class LIBCARAT_EXPORT ISAsteriskSocket : public QTcpSocket
+class ISCARAT_EXPORT ISAsteriskSocket : public QTcpSocket
 {
 	Q_OBJECT
 

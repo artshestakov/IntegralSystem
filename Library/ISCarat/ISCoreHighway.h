@@ -3,7 +3,7 @@
 #include "ISCaratCoreApplication.h"
 #include "ISAsteriskSocket.h"
 //-----------------------------------------------------------------------------
-class LIBCARAT_EXPORT ISCoreHighway : public ISCaratCoreApplication
+class ISCARAT_EXPORT ISCoreHighway : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

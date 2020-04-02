@@ -72,7 +72,7 @@ void ISCoreMail::Timeout()
 
 		ISLOGGER_INFO("Sending message - start");
 		ISEMail EMail(Server, Port, ConnectionType, SenderLogin, SenderPassword, SenderName, RecipientLogin, Subject, Message, this);
-		if (EMail.SendMessage())
+		if (EMail.Send())
 		{
 			SendDone(ID);
 			ISLOGGER_INFO("Sending message - done");

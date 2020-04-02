@@ -23,7 +23,7 @@ public:
 	void SetMessage(const QString &message);
 
 	QString GetErrorString() const; //Получить текст ошибки
-	bool SendMessage(); //Отправить сообщение
+	bool Send(); //Отправить сообщение
 
 protected:
 	void ReadyReadStandardOutput();

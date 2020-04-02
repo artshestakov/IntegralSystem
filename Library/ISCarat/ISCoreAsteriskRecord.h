@@ -3,22 +3,23 @@
 #include "ISCaratCoreApplication.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
-class LIBCARAT_EXPORT ISCoreMail : public ISCaratCoreApplication
+class ISCARAT_EXPORT ISCoreAsteriskRecord : public ISCaratCoreApplication
 {
 	Q_OBJECT
 
 public:
-	ISCoreMail(int &argc, char **argv);
-	virtual ~ISCoreMail();
+	ISCoreAsteriskRecord(int &argc, char **argv);
+	virtual ~ISCoreAsteriskRecord();
 
 	bool Invoke() override;
 
 protected:
-	void Timeout();
-	void SendDone(int MailID);
-	void SendFailed(int MailID, const QString &ErrorString);
+	void NewConnection(); //Новое подключение
+	void Disconnected(); //Отключение
+	void ReadyRead();
 
 private:
-	QTimer *Timer;
+	QString RepositoryPath;
+	QTcpServer *TcpServer;
 };
 //-----------------------------------------------------------------------------

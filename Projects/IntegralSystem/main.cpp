@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	bool Result = ISGui::Startup(ErrorString);
 	if (!Result)
 	{
-		ISMessageBox::ShowCritical(nullptr, ErrorString);
+		QMessageBox::critical(nullptr, "Error", ErrorString, QMessageBox::Ok, QMessageBox::Ok);
 		return EXIT_FAILURE;
 	}
 

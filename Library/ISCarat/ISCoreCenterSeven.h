@@ -3,7 +3,7 @@
 #include "ISCaratCoreApplication.h"
 #include "ISAsteriskSocket.h"
 //-----------------------------------------------------------------------------
-class LIBCARAT_EXPORT ISCoreCenterSeven : public ISCaratCoreApplication
+class ISCARAT_EXPORT ISCoreCenterSeven : public ISCaratCoreApplication
 {
 	Q_OBJECT
 

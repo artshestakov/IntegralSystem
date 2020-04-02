@@ -1,8 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "libCarat_global.h"
+#include "iscarat_global.h"
 //-----------------------------------------------------------------------------
-class LIBCARAT_EXPORT ISCaratCoreApplication : public QCoreApplication
+class ISCARAT_EXPORT ISCaratCoreApplication : public QCoreApplication
 {
 	Q_OBJECT
 
