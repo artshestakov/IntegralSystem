@@ -146,40 +146,6 @@ void ISSystem::BeginSymbolToUpper(QString &String)
 	}
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::GetCurrentOSName()
-{
-#if defined(Q_OS_WIN)
-	return OS_NAME_WINDOWS;
-#elif defined(Q_OS_LINUX)
-	return OS_NAME_LINUX;
-#elif defined(Q_OS_MACX)
-	return OS_NAME_MACOS;
-#endif
-	return OS_NAME_UNKNOWN;
-}
-//-----------------------------------------------------------------------------
-ISNamespace::OSType ISSystem::GetCurrentOSType()
-{
-#if defined(Q_OS_WIN)
-    return ISNamespace::OST_Windows;
-#elif defined(Q_OS_LINUX)
-    return ISNamespace::OST_Linux;
-#elif defined(Q_OS_MACX)
-    return ISNamespace::OST_MACOS;
-#endif
-	return ISNamespace::OST_Unknown;
-}
-//-----------------------------------------------------------------------------
-QString ISSystem::GetLibraryExtension()
-{
-	switch (GetCurrentOSType())
-	{
-	case ISNamespace::OST_Windows: return EXTENSION_DLL; break;
-	case ISNamespace::OST_Linux: return EXTENSION_SO; break;
-	}
-	return QString();
-}
-//-----------------------------------------------------------------------------
 bool ISSystem::CheckExistSlot(QObject *Object, const QString &SlotName)
 {
 	bool Result = false;

@@ -24,7 +24,7 @@ ISEMail::ISEMail(const QString &server, int port, const ISUuid &connection_type,
 //-----------------------------------------------------------------------------
 ISEMail::ISEMail(QObject *parent) : ISEMail(QString(), -1, ISUuid(), QString(), QString(), QString(), QString(), QString(), QString())
 {
-
+    Q_UNUSED(parent);
 }
 //-----------------------------------------------------------------------------
 ISEMail::~ISEMail()

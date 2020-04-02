@@ -18,7 +18,7 @@ QString ISMetaViewQuery::GetQueryText()
 {
 	QString Result = "SELECT \n";
 
-	for (int i = 0; i < MetaQuery->Fields.size(); ++i)
+    for (size_t i = 0; i < MetaQuery->Fields.size(); ++i)
 	{
 		PMetaField *MetaQueryField = MetaQuery->Fields[i];
 		Result += MetaQueryField->QueryText + " AS \"" + MetaQueryField->Name + "\", \n";
@@ -29,7 +29,7 @@ QString ISMetaViewQuery::GetQueryText()
 	Result += " \n";
 	Result += "FROM " + MetaQuery->Parent + " \n";
 
-	for (int i = 0; i < MetaQuery->Joins.size(); ++i)
+    for (size_t i = 0; i < MetaQuery->Joins.size(); ++i)
 	{
 		Result += MetaQuery->Joins[i] + " \n";
 	}

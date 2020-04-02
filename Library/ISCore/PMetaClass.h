@@ -53,8 +53,7 @@ struct PMetaEscort : public PMetaBase
 struct PMetaField : public PMetaBase
 {
 	PMetaField() : PMetaBase("Field"),
-		Sequence(false),
-		Type(ISNamespace::FT_Unknown),
+        Type(ISNamespace::FT_Unknown),
 		Size(0),
 		Upper(false),
 		Lower(false),
@@ -65,7 +64,8 @@ struct PMetaField : public PMetaBase
 		NotSearch(false),
 		IsSystem(false),
 		Index(nullptr),
-		Foreign(nullptr)
+        Foreign(nullptr),
+        Sequence(false)
 	{
 
 	}
