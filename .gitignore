@@ -1,6 +1,7 @@
 /Bin
 /Deploy
 /Library/**/*-*
+/Logger/Bin
 /Output
 /Projects/**/*-*
 /Tools/**/*-*
