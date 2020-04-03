@@ -5,12 +5,12 @@
 #include "ISNotifySender.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-static QString QS_ORGANIZATION_USER = PREPARE_QUERY("SELECT orgz_id, orgz_name, orgz_user, aspt_pattern "
+static QString QS_ORGANIZATION_USER = PREPARE_QUERY2("SELECT orgz_id, orgz_name, orgz_user, aspt_pattern "
 													"FROM organization "
 													"LEFT JOIN _asteriskpattern ON aspt_user = orgz_user "
 													"WHERE orgz_id = (SELECT orph_organization FROM organizationphone WHERE NOT orph_isdeleted AND orph_phone = :Phone LIMIT 1)");
 //-----------------------------------------------------------------------------
-static QString QI_RAITING = PREPARE_QUERY("INSERT INTO raiting(rtng_user, rtng_raiting) "
+static QString QI_RAITING = PREPARE_QUERY2("INSERT INTO raiting(rtng_user, rtng_raiting) "
 										  "VALUES((SELECT aspt_user FROM _asteriskpattern WHERE aspt_pattern = :Pattern), :Raiting) "
 										  "RETURNING userfullname(rtng_user)");
 //-----------------------------------------------------------------------------

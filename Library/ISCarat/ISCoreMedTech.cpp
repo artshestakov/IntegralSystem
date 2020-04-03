@@ -6,11 +6,11 @@
 #include "ISConstants.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-static QString QI_RATING = PREPARE_QUERY("INSERT INTO rating(rtng_uniqueid, rtng_datetimecall, rtng_branch, rtng_rating) "
+static QString QI_RATING = PREPARE_QUERY2("INSERT INTO rating(rtng_uniqueid, rtng_datetimecall, rtng_branch, rtng_rating) "
 										 "VALUES(:UniqueID, now(), (SELECT brnm_branch FROM branchesnumber WHERE brnm_number = :InteriorNumber), :Rating) "
 										 "RETURNING rtng_id");
 //-----------------------------------------------------------------------------
-static QString QS_BRANCH = PREPARE_QUERY("SELECT brch_name FROM branches WHERE brch_id = (SELECT rtng_branch FROM rating WHERE rtng_id = :RatingID)");
+static QString QS_BRANCH = PREPARE_QUERY2("SELECT brch_name FROM branches WHERE brch_id = (SELECT rtng_branch FROM rating WHERE rtng_id = :RatingID)");
 //-----------------------------------------------------------------------------
 ISCoreMedTech::ISCoreMedTech(int &argc, char **argv) : ISCaratCoreApplication(argc, argv)
 {

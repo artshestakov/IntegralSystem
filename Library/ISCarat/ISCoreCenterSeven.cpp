@@ -9,7 +9,7 @@
 #include "ISConstants.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-static QString QS_BRANCH = PREPARE_QUERY("SELECT (SELECT ptnt_id FROM patients WHERE concat(ptnt_phonemain, ptnt_phoneother) LIKE '%' || :Phone || '%' ), brch_name, brch_administrator "
+static QString QS_BRANCH = PREPARE_QUERY2("SELECT (SELECT ptnt_id FROM patients WHERE concat(ptnt_phonemain, ptnt_phoneother) LIKE '%' || :Phone || '%' ), brch_name, brch_administrator "
 										 "FROM branches "
 										 "WHERE NOT brch_isdeleted "
 										 "AND brch_aliasbranch = :Alias");

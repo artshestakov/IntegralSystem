@@ -97,6 +97,7 @@ void ISCaratService::Finished(int ExitCode, QProcess::ExitStatus Status)
 //-----------------------------------------------------------------------------
 void ISCaratService::Error(QProcess::ProcessError ErrorType)
 {
+    Q_UNUSED(ErrorType);
 	QProcess *Process = dynamic_cast<QProcess*>(sender());
 	OutputString(Process->objectName(), Process->errorString());
 }

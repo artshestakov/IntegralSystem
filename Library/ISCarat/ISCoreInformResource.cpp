@@ -9,7 +9,7 @@
 #include "ISSettingsDatabase.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-static QString QS_ORGANIZATION = PREPARE_QUERY("SELECT orgz_id, orgz_user, aspt_pattern, userfullname(orgz_user) "
+static QString QS_ORGANIZATION = PREPARE_QUERY2("SELECT orgz_id, orgz_user, aspt_pattern, userfullname(orgz_user) "
 											   "FROM organizations "
 											   "LEFT JOIN _asteriskpattern ON aspt_user = orgz_user "
 											   "WHERE concat(orgz_principalphone, orgz_principalphonework, orgz_chiefaccountantphone, orgz_chiefaccountantphonework, orgz_departmentlegalphone, orgz_departmentlegalphonework, orgz_departmentframesphone, orgz_departmentframesphonework, orgz_chiefagronomistphone, orgz_chiefagronomistphonework, orgz_chiefengineerphone, orgz_chiefengineerphonework, orgz_departmentsalesphone, orgz_departmentsalesphonework) LIKE '%' || :Phone || '%' "

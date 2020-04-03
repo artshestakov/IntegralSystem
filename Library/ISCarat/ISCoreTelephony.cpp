@@ -5,7 +5,7 @@
 #include "ISPhoneNumberParser.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-static QString QS_CDR_ID = PREPARE_QUERY("SELECT id "
+static QString QS_CDR_ID = PREPARE_QUERY2("SELECT id "
 										 "FROM _cdr "
 										 "WHERE NOT handling "
 										 "AND NOT handling_error "
@@ -13,16 +13,16 @@ static QString QS_CDR_ID = PREPARE_QUERY("SELECT id "
 										 "AND NOT dstchannel IS NULL "
 										 "ORDER BY id");
 //-----------------------------------------------------------------------------
-static QString QS_CDR = PREPARE_QUERY("SELECT calldate, src, dst, dstchannel, duration, billsec, disposition, uniqueid "
+static QString QS_CDR = PREPARE_QUERY2("SELECT calldate, src, dst, dstchannel, duration, billsec, disposition, uniqueid "
 									  "FROM _cdr "
 									  "WHERE id = :ID");
 //-----------------------------------------------------------------------------
-static QString QU_CDR_HANDLING = PREPARE_QUERY("UPDATE _cdr SET handling = true WHERE id = :ID");
+static QString QU_CDR_HANDLING = PREPARE_QUERY2("UPDATE _cdr SET handling = true WHERE id = :ID");
 //-----------------------------------------------------------------------------
 static QString QI_ASTERISK_CALLS = PREPARE_QUERY("INSERT INTO _asteriskcalls(ascl_uniqueid, ascl_dialbegin, ascl_direction, ascl_user, ascl_subscriber, ascl_number, ascl_dialend, ascl_hangup, ascl_duration, ascl_dialstatus) "
 												 "VALUES(:UniqueID, :DialBegin, :Direction, :User, :Subscriber, :Number, :DialEnd, :Hangup, :Duration, :DialStatus)");
 //-----------------------------------------------------------------------------
-static QString QU_CDR_ERROR = PREPARE_QUERY("UPDATE _cdr SET handling_error = true WHERE id = :ID");
+static QString QU_CDR_ERROR = PREPARE_QUERY2("UPDATE _cdr SET handling_error = true WHERE id = :ID");
 //-----------------------------------------------------------------------------
 static QString QS_USER = PREPARE_QUERY("SELECT aspt_user FROM _asteriskpattern WHERE aspt_pattern = :Pattern");
 //-----------------------------------------------------------------------------

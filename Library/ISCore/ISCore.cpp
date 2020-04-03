@@ -100,6 +100,7 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 		return Result;
 	}
 
+    //Установим кодировку для консольного приложения под Windows
 #ifdef WIN32
 	if (!IsGui)
 	{
