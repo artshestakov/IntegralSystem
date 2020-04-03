@@ -317,6 +317,7 @@ std::string ISLogger::GetCurrentDirectory()
     if (Char)
     {
         DirPath = std::string(Char);
+        DirPath.push_back(PATH_SEPARATOR);
         free(Char);
     }
 #endif
