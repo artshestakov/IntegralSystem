@@ -188,7 +188,6 @@
   <Local Name="Message.Warning.NotAccess.Special.SaveAsteriskRecord" Russian="У Вас нет прав на сохранение записей разговоров."/>
   <Local Name="Message.Warning.NotAccess.Special.SendMessageToChat" Russian="У Вас нет прав на отправку сообщений в общий чат."/>
   <Local Name="Message.Warning.NotAccess.Special.AttachObjectTask" Russian="У Вас нет права на прикрепление записей к задачам."/>
-  <Local Name="Message.Warning.NotAccess.Special.ShowActivityUser" Russian="У Вас нет права на просмотр активности пользователя."/>
   <Local Name="Message.Warning.NotLinkTaskCurrentForCurrent" Russian="Вы не можете связать задачу саму с собой."/>
   <Local Name="Message.Warning.LinkInBufferInvalid" Russian="Ссылка в буфере не является корректной, загрузка невозможна."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
@@ -580,10 +579,8 @@
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
-  <Local Name="MonitorActivity.ActivityUser" Russian="Активность пользователя"/>
   <Local Name="MonitorActivity.MonitorUser.Online" Russian="(в сети)"/>
   <Local Name="MonitorActivity.MonitorUser.Offline" Russian="(не в сети)"/>
-  <Local Name="MonitorActivity.ActivityUserCount" Russian="Активность: %1. Бездействие: %2"/>
   <Local Name="MonitorActivity.DetailsSession" Russian="Подробности сеанса"/>
   <Local Name="MonitorActivity.UserOnlineDetails.User" Russian="Пользователь"/>
   <Local Name="MonitorActivity.UserOnlineDetails.Login" Russian="Логин"/>
@@ -695,7 +692,6 @@
   <Local Name="SelectedUserGroupLeftFromAccessSetting" Russian="Выберите группу пользователей из списка слева, чтобы настроить ей права доступа."/>
   <Local Name="OpeningLargeFilesMayTakeSomeTime" Russian="Открытие больших файлов может занять некоторое время."/>
   <Local Name="MessageCopyToClipboard" Russian="Сообщение из общего чата скопировано в буфер обмена"/>
-  <Local Name="ActivityUserNotRegisteredFromDate" Russian="Активность не зарегистрирована по дате: %1"/>
   <Local Name="ClickFromOpenUrlInBrowser" Russian="Нажмите, чтобы открыть ссылку в браузере"/>
   <Local Name="DownloadingImage" Russian="Пожалуйста подождите, изображение скачивается"/>
   <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается"/>

@@ -7,7 +7,6 @@
 #include "ISBuffer.h"
 #include "ISFlowLayout.h"
 #include "ISSystem.h"
-#include "ISUserOnlineForm.h"
 #include "ISGui.h"
 #include "ISProtocolListForm.h"
 #include "ISLineEdit.h"
@@ -100,7 +99,6 @@ void ISMonitorActivityForm::LoadData()
 
 			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline, UserID, UserFullName, ScrollArea);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivityForm::ShowUserCard);
-			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowActivity, this, &ISMonitorActivityForm::ShowActivity);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowDetails, this, &ISMonitorActivityForm::ShowDetails);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::SendNotify, this, &ISMonitorActivityForm::SendNotify);
@@ -165,26 +163,6 @@ void ISMonitorActivityForm::ShowUserCard()
 	if (MonitorUserWidget)
 	{
 		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->GetUserID())->show();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISMonitorActivityForm::ShowActivity()
-{
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_SHOW_ACTIVITY_USER))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.ShowActivityUser"));
-		return;
-	}
-
-	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
-	if (MonitorUserWidget)
-	{
-		ISGui::SetWaitGlobalCursor(true);
-		ISUserOnlineForm *UserOnlineForm = new ISUserOnlineForm(MonitorUserWidget->GetUserID(), MonitorUserWidget->GetUserName());
-		UserOnlineForm->showMaximized();
-		ISGui::SetWaitGlobalCursor(false);
-
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_ACTIVITY_USER, QString(), QString(), QVariant(), MonitorUserWidget->GetUserName());
 	}
 }
 //-----------------------------------------------------------------------------

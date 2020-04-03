@@ -9,7 +9,6 @@ class ISMonitorUserWidget : public QFrame
 
 signals:
 	void ShowUserCard();
-	void ShowActivity();
 	void ShowProtocol();
 	void ShowDetails();
 	void SendNotify();

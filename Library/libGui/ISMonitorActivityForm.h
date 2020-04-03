@@ -20,7 +20,6 @@ protected:
 	void CheckEditChanged(const QVariant &value);
 	void Search(const QVariant &value);
 	void ShowUserCard(); //Показать карточку пользователя
-	void ShowActivity(); //Просмотр активности
 	void ShowProtocol(); //Просмотр протокола
 	void ShowDetails(); //Просмотр подробностей
 	void SendNotify(); //Отправить уведомление

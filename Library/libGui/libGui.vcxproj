@@ -398,7 +398,6 @@
     <ClCompile Include="ISUserListForm.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
     <ClCompile Include="ISUserOnlineDetailsForm.cpp" />
-    <ClCompile Include="ISUserOnlineForm.cpp" />
     <ClCompile Include="ISUserPasswordForm.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISVolumeEdit.cpp" />
@@ -678,7 +677,6 @@
     <QtMoc Include="ISUserListForm.h" />
     <QtMoc Include="ISUserObjectForm.h" />
     <QtMoc Include="ISUserOnlineDetailsForm.h" />
-    <QtMoc Include="ISUserOnlineForm.h" />
     <QtMoc Include="ISWorkspaceForm.h" />
     <QtMoc Include="ISPriceListObjectForm.h" />
     <QtMoc Include="ISScoreObjectForm.h" />

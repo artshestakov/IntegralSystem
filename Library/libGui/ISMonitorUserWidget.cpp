@@ -41,12 +41,6 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	connect(ActionUser, &QAction::triggered, this, &ISMonitorUserWidget::ShowUserCard);
 	addAction(ActionUser);
 
-	QAction *ActionShowInfo = new QAction(this);
-	ActionShowInfo->setText(LANG("MonitorActivity.ActivityUser"));
-	ActionShowInfo->setIcon(BUFFER_ICONS("ActivityUser"));
-	connect(ActionShowInfo, &QAction::triggered, this, &ISMonitorUserWidget::ShowActivity);
-	addAction(ActionShowInfo);
-
 	QAction *ActionProtocol = new QAction(this);
 	ActionProtocol->setText(LANG("ProtocolUser"));
 	ActionProtocol->setIcon(BUFFER_ICONS("Protocol"));

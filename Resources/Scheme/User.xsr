@@ -26,11 +26,8 @@
 
   <_GroupAccessSpecialType IsSystem="true" UID="{12E4D67B-1247-4EB6-8327-F49990EB8290}" Name="Трекер задач" Order="3"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{846B097E-D9BA-4CCA-B408-2E5379E1C539}" Parent="{12E4D67B-1247-4EB6-8327-F49990EB8290}" Name="Прикрепление записей к задачам" Hint="Возможность прикреплять записи из таблиц к задачам" Order="1"/>
-
-  <_GroupAccessSpecialType IsSystem="true" UID="{3B449E15-74E1-4E7B-BCC2-FC00F9961556}" Name="Монитор активности" Order="4"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{280BE05C-9EDA-4715-902F-1807C5E32234}" Parent="{3B449E15-74E1-4E7B-BCC2-FC00F9961556}" Name="Просмотр активности пользователя" Order="1"/>
   
-  <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="5"/>
+  <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="4"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Редактирование печатных форм" Hint="Возможность редактировать печатные формы в режиме предпросмотра" Order="1"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{1196470D-AE52-4361-AC0D-9C15612663D0}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Добавление примечаний к записям в таблицах" Order="2"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{6423FC8B-3804-44B6-B4AC-013541C11B96}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Отправка сообщений в общий чат" Order="4"/>
