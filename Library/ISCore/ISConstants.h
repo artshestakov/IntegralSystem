@@ -51,6 +51,16 @@ const char EXTENSION_BINARY[] = ".exe"; //Расширение исполняемого файла для теку
 #else
 const char EXTENSION_BINARY[] = ""; //Расширение исполняемого файла для текущей операционной системы
 #endif
+//OS_TYPES---------------------------------------------------------------------
+#if defined(Q_OS_WIN)
+const char CURRENT_OS_NAME[] = "Windows";
+#elif defined(Q_OS_LINUX)
+const char CURRENT_OS_NAME[] = "Linux";
+#elif defined(Q_OS_MACX)
+const char CURRENT_OS_NAME[] = "Mac OS";
+#else
+const char CURRENT_OS_NAME[] = "Unknown";
+#endif
 //LOCALIZATION-----------------------------------------------------------------
 const char LOCALIZATION_FILE_CORE[] = "Core";
 const char LOCALIZATION_FILE_INTEGRAL_SYSTEM[] = "IntegralSystem";

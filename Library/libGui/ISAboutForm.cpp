@@ -70,7 +70,7 @@ void ISAboutForm::CreateCommonTab()
 
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), LANG("IntegralSystem"));
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISSystem::GetConfigurationName());
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.OS"), ISSystem::GetCurrentOSName());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.OS"), CURRENT_OS_NAME);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersion::Instance().Info.Platform);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersion::Instance().ToString());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersion::Instance().Info.Revision));
