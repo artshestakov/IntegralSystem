@@ -43,7 +43,6 @@ HEADERS += \
     ISEMail.h \
     ISEmailAddress.h \
     ISException.h \
-    ISHTML.h \
     ISLocalization.h \
     ISLogger.h \
     ISMemoryObjects.h \
@@ -89,8 +88,7 @@ HEADERS += \
     ISUuid.h \
     ISVersion.h \
     PMetaClass.h \
-    StdAfx.h \
-    call_stack_gcc.cpp
+    StdAfx.h
 
 SOURCES += \
     ISApplicationRunning.cpp \
