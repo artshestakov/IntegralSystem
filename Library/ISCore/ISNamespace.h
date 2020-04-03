@@ -182,14 +182,6 @@ public:
         PIT_FALSE, //Некорректный ввод
     };
 
-    enum OSType //Тип операционной системы
-    {
-        OST_Unknown,
-        OST_Windows,
-        OST_Linux,
-        OST_MACOS,
-    };
-
     enum PeriodType //Тип фильтрации по периоду
     {
         PT_UnknownDate,
@@ -265,7 +257,6 @@ Q_DECLARE_METATYPE(ISNamespace::ReportType);
 Q_DECLARE_METATYPE(ISNamespace::QueryModelType);
 Q_DECLARE_METATYPE(ISNamespace::FunctionNameFormat);
 Q_DECLARE_METATYPE(ISNamespace::PhoneIconType);
-Q_DECLARE_METATYPE(ISNamespace::OSType);
 Q_DECLARE_METATYPE(ISNamespace::PeriodType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::TelephonyForm);

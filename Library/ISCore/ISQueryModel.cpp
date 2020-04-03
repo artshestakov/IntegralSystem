@@ -11,13 +11,13 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 	: QObject(parent),
 	MetaTable(meta_table),
 	ModelType(model_type),
+    OrderSort(Qt::AscendingOrder),
+    Limit(0),
+    Offset(0),
+    VisibleIsDeleted(false),
+    PeriodType(ISNamespace::PT_CreationDate),
 	ClassAlias(meta_table->Alias),
-	ClassFilter(meta_table->ClassFilter),
-	Limit(0),
-	Offset(0),
-	VisibleIsDeleted(false),
-	PeriodType(ISNamespace::PT_UnknownDate),
-	OrderSort(Qt::AscendingOrder)
+    ClassFilter(meta_table->ClassFilter)
 {
 	CreateQuerySelectSystemFields();
 	CreateQuerySelectFields();

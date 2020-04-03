@@ -58,6 +58,7 @@ bool ISConfig::Initialize()
 		{
 			switch (SettingsStatus)
 			{
+            case QSettings::NoError: break;
 			case QSettings::AccessError: ErrorString = "access error with path " + ISDefines::Core::PATH_CONFIG_FILE; break;
 			case QSettings::FormatError: ErrorString = "format error"; break;
 			}

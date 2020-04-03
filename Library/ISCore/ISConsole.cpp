@@ -9,7 +9,7 @@ bool ISConsole::Question(const QString &QuestionText)
 	{
 		printf("%s (press 'y' or 'n' for anser): ", QuestionText.toStdString().c_str());
 		Answer = GetString().toLower(); //Запрашиваем ответ
-		Result = (!Answer.isEmpty() && Answer == "y" || Answer == "n");
+        Result = (!Answer.isEmpty() && (Answer == 'y' || Answer == 'n'));
 		if (Result) //Если ответ валидный - проверяем его
 		{
 			if (Answer == "n") //Если введено "НЕТ" - выходим, если введено "ДА" - выход из цикла произойдет автоматически (потому что Result и так уже true)

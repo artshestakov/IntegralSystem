@@ -26,9 +26,6 @@ public:
 	static void RemoveLastSymbolFromString(QString &String, int CountSymbols = 1); //Удалить последние символы из строки
 	static ISUuid GenerateUuid(); //Сгенерировать новый UID
 	static void BeginSymbolToUpper(QString &String); //Преобразование первого символа строки в верхний регистр
-	static QString GetCurrentOSName(); //Получить наименование текущей операционной системы
-	static ISNamespace::OSType GetCurrentOSType(); //Получить тип текущей операционной системы
-	static QString GetLibraryExtension(); //Получить расширение динамической библиотеки для текущей операционной системы
 	static bool CheckExistSlot(QObject *Object, const QString &SlotName); //Проверить наличие слота в объекте
 	static void ExecLoop(unsigned long Milliseconds); //Остановка потока событий
 	static bool AddressIsList(const QString &AddressString); //Проверка строки адреса на ввод по справочнику
