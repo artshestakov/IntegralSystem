@@ -38,7 +38,7 @@ void ISCaratService::StartService()
 			while (qSelectCore.Next()) //Обход ядер
 			{
 				QString CoreName = qSelectCore.ReadColumn("core_name").toString();
-				QString FileName = qSelectCore.ReadColumn("core_filename").toString() + (ISSystem::GetCurrentOSType() == ISNamespace::OST_Windows ? QString().append(".").append(EXTENSION_EXE) : QString());
+				QString FileName = qSelectCore.ReadColumn("core_filename").toString() + EXTENSION_BINARY;
 
 				ISLOGGER_INFO("Core \"" + CoreName + "\": starting...");
 				QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
