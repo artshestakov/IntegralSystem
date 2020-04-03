@@ -3,6 +3,8 @@
 #define _GAMAINWINDOW_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QPushButton>
 //-----------------------------------------------------------------------------
 class GAMainWindow : public QWidget
 {
@@ -11,6 +13,11 @@ class GAMainWindow : public QWidget
 public:
 	GAMainWindow(QWidget *parent = 0);
 	virtual ~GAMainWindow();
+
+private:
+	void Start();
+	void Log();
+	void Destroy();
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -3,9 +3,11 @@
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-	//GAMainWindow w;
-	//w.show();
-	return a.exec();
+	QApplication Application(argc, argv);
+	GAMainWindow MainWindow;
+	MainWindow.show();
+
+	int ReturnCode = Application.exec();
+	return ReturnCode;
 }
 //-----------------------------------------------------------------------------

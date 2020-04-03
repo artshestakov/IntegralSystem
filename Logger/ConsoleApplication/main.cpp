@@ -5,9 +5,11 @@
 int main(int argc, char *argv[])
 {
 	QCoreApplication CoreApplication(argc, argv);
-	if (!ASLogger::Instance().Initialize())
+	if (ASLogger::Instance().Initialize())
 	{
-		ASLogger::Instance().Shutdown();
+		ASLOGGER_L("test lite");
+		ASLOGGER_D("test debug");
+		//ASLogger::Instance().Shutdown();
 	}
 	else
 	{
