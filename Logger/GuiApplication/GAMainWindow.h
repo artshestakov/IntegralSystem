@@ -2,11 +2,12 @@
 #ifndef _GAMAINWINDOW_H_INCLUDED
 #define _GAMAINWINDOW_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include <QtCore/QUuid>
+#include <QtCore/QTimer>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QInputDialog>
-#include <QtCore/QUuid>
 //-----------------------------------------------------------------------------
 class GAMainWindow : public QWidget
 {
@@ -22,9 +23,11 @@ private:
 	void Log2();
 	void LogN();
 	void Destroy();
+	void Timeout();
 
 private:
 	int LastValue;
+	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------
 #endif

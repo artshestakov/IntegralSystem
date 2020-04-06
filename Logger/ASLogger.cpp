@@ -43,7 +43,7 @@ bool ASLogger::Initialize(const std::string &prefix)
 	FilePrefix = prefix.empty() ? temp.substr(pos + 1, temp.size() - pos - 5) : prefix;
 
 	//Получаем путь к папке приложения
-	PathCurrentDirectory = temp.substr(0, pos + 1);
+	PathApplicationDir = temp.substr(0, pos + 1);
 
 	//Получаем текущую дату и время
 	SYSTEMTIME st;
@@ -126,13 +126,13 @@ bool ASLogger::CreateLogDirectory(const SYSTEMTIME &st)
 	CurrentYear = st.wYear;
 
 	//Формируем путь к текущей папке
-	PathDirCurrent = PathCurrentDirectory + "Logs\\" + std::to_string(CurrentYear) + '\\' + std::to_string(CurrentMonth) + '\\';
+	PathLogsDir = PathApplicationDir + "Logs\\" + std::to_string(CurrentYear) + '\\' + std::to_string(CurrentMonth) + '\\';
 
-	if (PathFileExistsA(PathDirCurrent.c_str()) == FALSE) //Если папка с текущим месяцем не существует - создаём её
+	if (PathFileExistsA(PathLogsDir.c_str()) == FALSE) //Если папка с текущим месяцем не существует - создаём её
 	{
-		if (SHCreateDirectoryExA(NULL, PathDirCurrent.c_str(), NULL) != ERROR_SUCCESS) //Ошибка создания папки
+		if (SHCreateDirectoryExA(NULL, PathLogsDir.c_str(), NULL) != ERROR_SUCCESS) //Ошибка создания папки
 		{
-			ErrorString = "Error create directory \"" + PathDirCurrent + '"';
+			ErrorString = "Error create directory \"" + PathLogsDir + '"';
 			return false;
 		}
 	}
@@ -142,7 +142,7 @@ bool ASLogger::CreateLogDirectory(const SYSTEMTIME &st)
 std::string ASLogger::GetPathFile(const SYSTEMTIME &st) const
 {
 	char buffer[MAX_PATH];
-	sprintf(buffer, "%s%s_%02d.%02d.%02d.log", PathDirCurrent.c_str(), FilePrefix.c_str(), st.wDay, st.wMonth, st.wYear);
+	sprintf(buffer, "%s%s_%02d.%02d.%02d.log", PathLogsDir.c_str(), FilePrefix.c_str(), st.wDay, st.wMonth, st.wYear);
 	return buffer;
 }
 //-----------------------------------------------------------------------------

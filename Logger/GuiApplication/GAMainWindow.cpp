@@ -31,6 +31,14 @@ GAMainWindow::GAMainWindow(QWidget *parent)
 	MainLayout->addWidget(ButttonDestroy);
 
 	MainLayout->addStretch();
+
+	Start();
+
+	Timer = new QTimer(this);
+	Timer->setSingleShot(true);
+	Timer->setInterval(500);
+	connect(Timer, &QTimer::timeout, this, &GAMainWindow::Timeout);
+	Timer->start();
 }
 //-----------------------------------------------------------------------------
 GAMainWindow::~GAMainWindow()
@@ -71,5 +79,11 @@ void GAMainWindow::LogN()
 void GAMainWindow::Destroy()
 {
 	ASLogger::Instance().Shutdown();
+}
+//-----------------------------------------------------------------------------
+void GAMainWindow::Timeout()
+{
+	ASLOGGER_D("test");
+	Timer->start();
 }
 //-----------------------------------------------------------------------------

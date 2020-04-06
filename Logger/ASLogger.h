@@ -20,7 +20,7 @@ class ASLogger
 public:
 	enum MessageType //Типы сообщений
 	{
-		MT_Lite, //Упрощенное
+		MT_Lite, //Упрощенное сообщение (без даты, потока и источника в коде)
 		MT_Debug, //Отладка
 		MT_Info, //Информация
 		MT_Warning, //Предупреждение
@@ -68,21 +68,19 @@ private:
 	size_t LastIndex; //Последняя позиция в очереди
 	bool IsRunning; //Флаг работы
 	bool IsFinished; //Флаг остановки
-
 	std::ofstream File; //Текущий лог-файл
-	std::string PathCurrentDirectory; //Путь к текущей папке приложения
-	std::string PathDirCurrent; //Текущий путь к конечной папке с логами
-	//std::string PathFile; //Путь к текущему лог-файлу
+	std::string PathApplicationDir; //Путь к папке приложения
+	std::string PathLogsDir; //Текущий путь к конечной папке с логами
 	std::string FilePrefix; //Префикс имени файла
-
-	//Текущая дата
-	size_t CurrentDay, CurrentMonth, CurrentYear;
+	size_t CurrentDay; //Текущий день
+	size_t CurrentMonth; //Текущий месяц
+	size_t CurrentYear; //Текущий год
 };
 //-----------------------------------------------------------------------------
-#define ASLOGGER_L(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Lite, MESSAGE, __FILE__, __LINE__)
-#define ASLOGGER_D(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Debug, MESSAGE, __FILE__, __LINE__)
-#define ASLOGGER_I(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Info, MESSAGE, __FILE__, __LINE__)
-#define ASLOGGER_W(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Warning, MESSAGE, __FILE__, __LINE__)
-#define ASLOGGER_E(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Error, MESSAGE, __FILE__, __LINE__)
+#define ASLOGGER_L(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Lite, MESSAGE, __FILE__, __LINE__) //Логирование упрощенного сообщения
+#define ASLOGGER_D(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
+#define ASLOGGER_I(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
+#define ASLOGGER_W(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Warning, MESSAGE, __FILE__, __LINE__) //Логировние предупреждающего сообщения
+#define ASLOGGER_E(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Error, MESSAGE, __FILE__, __LINE__) //Логирование сообщения об ошибке
 //-----------------------------------------------------------------------------
 #endif
