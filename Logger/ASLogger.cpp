@@ -49,6 +49,9 @@ bool ASLogger::Initialize(const std::string &prefix)
 	SYSTEMTIME st;
 	GetSystemTime(&st);
 
+	//Запоминаем текущий день
+	CurrentDay = st.wDay;
+
 	if (!CreateLogDirectory(st)) //Ошибка при создании директорий
 	{
 		return false;
@@ -116,12 +119,11 @@ void ASLogger::Log(MessageType type_message, const std::string &string_message, 
 	LeaveCriticalSection(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-bool ASLogger::CreateLogDirectory(const SYSTEMTIME &system_time)
+bool ASLogger::CreateLogDirectory(const SYSTEMTIME &st)
 {
-	//Запоминаем текущую дату
-	CurrentDay = system_time.wDay;
-	CurrentMonth = system_time.wMonth;
-	CurrentYear = system_time.wYear;
+	//Запоминаем текущий месяц и год
+	CurrentMonth = st.wMonth;
+	CurrentYear = st.wYear;
 
 	//Формируем путь к текущей папке
 	PathDirCurrent = PathCurrentDirectory + "Logs\\" + std::to_string(CurrentYear) + '\\' + std::to_string(CurrentMonth) + '\\';
@@ -137,10 +139,10 @@ bool ASLogger::CreateLogDirectory(const SYSTEMTIME &system_time)
 	return true;
 }
 //-----------------------------------------------------------------------------
-std::string ASLogger::GetPathFile(const SYSTEMTIME &system_time) const
+std::string ASLogger::GetPathFile(const SYSTEMTIME &st) const
 {
 	char buffer[MAX_PATH];
-	sprintf(buffer, "%s%s_%02d.%02d.%02d.log", PathDirCurrent.c_str(), FilePrefix.c_str(), system_time.wDay, system_time.wMonth, system_time.wYear);
+	sprintf(buffer, "%s%s_%02d.%02d.%02d.log", PathDirCurrent.c_str(), FilePrefix.c_str(), st.wDay, st.wMonth, st.wYear);
 	return buffer;
 }
 //-----------------------------------------------------------------------------
@@ -163,6 +165,17 @@ void ASLogger::Worker()
 		SYSTEMTIME st;
 		GetSystemTime(&st);
 
+		//Если сменился месяц или год - создаём недостающие папки
+		if (CurrentMonth != st.wMonth || CurrentYear != st.wYear)
+		{
+			//Пытаемся создать недосающие директории пока не получится
+			while (!CreateLogDirectory(st))
+			{
+				std::cerr << ErrorString << std::endl;
+				Sleep(1000);
+			}
+		}
+
 		//Если сменился день - закрываем текущий файл и открываем новый
 		if (CurrentDay != st.wDay)
 		{
@@ -174,7 +187,11 @@ void ASLogger::Worker()
 				std::string path_file = GetPathFile(st);
 				File.open(path_file.c_str(), std::ios::app);
 				is_opened = File.is_open();
-				if (!is_opened) //Если файл не удалось открыть пытаемся сделать жто ещё раз через секунду
+				if (is_opened) //Файл был успешно открыт - запоминаем текущий день
+				{
+					CurrentDay = st.wDay;
+				}
+				else //Файл не удалось открыть пытаемся сделать жто ещё раз через секунду
 				{
 					std::cerr << "Error open file \"" + path_file + "\": " + std::string(strerror(errno)) << std::endl;
 					Sleep(1000);

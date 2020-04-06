@@ -47,10 +47,10 @@ public:
 private:
 
 	//Создать директорию
-	bool CreateLogDirectory(const SYSTEMTIME &system_time);
+	bool CreateLogDirectory(const SYSTEMTIME &st);
 
 	//Получить путь к текущему файлу
-	std::string GetPathFile(const SYSTEMTIME &system_time) const;
+	std::string GetPathFile(const SYSTEMTIME &st) const;
 
 	//Обработчик очереди сообщений
 	void Worker();
