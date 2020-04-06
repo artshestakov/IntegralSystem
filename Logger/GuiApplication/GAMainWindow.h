@@ -5,6 +5,8 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QInputDialog>
+#include <QtCore/QUuid>
 //-----------------------------------------------------------------------------
 class GAMainWindow : public QWidget
 {
@@ -17,7 +19,12 @@ public:
 private:
 	void Start();
 	void Log();
+	void Log2();
+	void LogN();
 	void Destroy();
+
+private:
+	int LastValue;
 };
 //-----------------------------------------------------------------------------
 #endif

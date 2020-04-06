@@ -1,5 +1,4 @@
 #include "ASLogger.h"
-#include <windows.h>
 //-----------------------------------------------------------------------------
 ASLogger::ASLogger()
 	: ErrorString("No error."),
@@ -12,18 +11,7 @@ ASLogger::ASLogger()
 //-----------------------------------------------------------------------------
 ASLogger::~ASLogger()
 {
-	//Останавливаем логгер
-	Mutex.lock();
-	IsRunning = false;
-	Mutex.unlock();
-
-	//Ждём когда он остановится и закрываем файл
-	while (!IsFinished)
-	{
-		Sleep(50);
-	}
-
-	File.close();
+	Shutdown();
 }
 //-----------------------------------------------------------------------------
 ASLogger& ASLogger::Instance()
@@ -39,6 +27,8 @@ std::string ASLogger::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ASLogger::Initialize(const std::string &prefix)
 {
+	InitializeCriticalSection(&CriticalSection);
+
 	char buffer[MAX_PATH];
 	if (!(GetModuleFileNameA(NULL, buffer, MAX_PATH) > 0)) //Не удалось получить путь к исполняемому файлу
 	{
@@ -72,6 +62,21 @@ bool ASLogger::Initialize(const std::string &prefix)
 	return true;
 }
 //-----------------------------------------------------------------------------
+void ASLogger::Shutdown()
+{
+	//Останавливаем логгер
+	EnterCriticalSection(&CriticalSection);
+	IsRunning = false;
+	LeaveCriticalSection(&CriticalSection);
+
+	//Ждём когда он остановится и закрываем файл
+	while (!IsFinished)
+	{
+		Sleep(50);
+	}
+	File.close();
+}
+//-----------------------------------------------------------------------------
 void ASLogger::Log(MessageType type_message, const std::string &string_message, const char *source_name, int source_line)
 {
 	std::string string_complete;
@@ -100,10 +105,10 @@ void ASLogger::Log(MessageType type_message, const std::string &string_message, 
 		string_complete = string_stream.str();
 	}
 
-	Mutex.lock();
+	EnterCriticalSection(&CriticalSection);
 	Array[LastIndex] = string_complete;
 	++LastIndex;
-	Mutex.unlock();
+	LeaveCriticalSection(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 bool ASLogger::CreateLogDirectory()
@@ -119,11 +124,11 @@ bool ASLogger::CreateLogDirectory()
 	}
 
 	//Получаем текущую дату и время
-	SYSTEMTIME ST;
-	GetSystemTime(&ST);
+	SYSTEMTIME st;
+	GetSystemTime(&st);
 
 	//Создаём папку с текущим годом
-	PathDirCurrent = PathDirLogs + std::to_string(ST.wYear) + '\\';
+	PathDirCurrent = PathDirLogs + std::to_string(st.wYear) + '\\';
 	if (!CheckExistDir(PathDirCurrent)) //Папка не существует - создаём её
 	{
 		if (CreateDirectoryA(PathDirCurrent.c_str(), NULL) == FALSE) //Ошибка создания папки
@@ -134,7 +139,7 @@ bool ASLogger::CreateLogDirectory()
 	}
 
 	//Создаём папку с текущим месяцем
-	PathDirCurrent += std::to_string(ST.wMonth) + '\\';
+	PathDirCurrent += std::to_string(st.wMonth) + '\\';
 	if (!CheckExistDir(PathDirCurrent))
 	{
 		if (CreateDirectoryA(PathDirCurrent.c_str(), NULL) == FALSE) //Ошибка создания папки
@@ -145,10 +150,16 @@ bool ASLogger::CreateLogDirectory()
 	}
 
 	//Формируем путь к текущему лог-файлу
-	char Buffer[MAX_PATH];
-	sprintf(Buffer, "%s%s_%02d.%02d.%02d.log", PathDirCurrent.c_str(), FilePrefix.c_str(), ST.wDay, ST.wMonth, ST.wYear);
-	PathFile = Buffer;
+	char buffer[MAX_PATH];
+	sprintf(buffer, "%s%s_%02d.%02d.%02d.log", PathDirCurrent.c_str(), FilePrefix.c_str(), st.wDay, st.wMonth, st.wYear);
+	PathFile = buffer;
 	return true;
+}
+//-----------------------------------------------------------------------------
+bool ASLogger::CheckExistDir(const std::string &path_dir)
+{
+	DWORD Attributes = GetFileAttributesA(path_dir.c_str());
+	return (Attributes != INVALID_FILE_ATTRIBUTES && (Attributes & FILE_ATTRIBUTE_DIRECTORY));
 }
 //-----------------------------------------------------------------------------
 void ASLogger::Worker()
@@ -156,19 +167,17 @@ void ASLogger::Worker()
 	while (IsRunning)
 	{
 		Sleep(50);
-
-		Mutex.lock();
+		EnterCriticalSection(&CriticalSection);
 		if (LastIndex) //Если в очереди есть сообщения
 		{
-
+			for (size_t i = 0; i < LastIndex; ++i)
+			{
+				File << Array[i] << std::endl;
+			}
+			LastIndex = 0;
 		}
+		LeaveCriticalSection(&CriticalSection);
 	}
 	IsFinished = true;
-}
-//-----------------------------------------------------------------------------
-bool ASLogger::CheckExistDir(const std::string &PathDir)
-{
-	DWORD Attributes = GetFileAttributesA(PathDir.c_str());
-	return (Attributes != INVALID_FILE_ATTRIBUTES && (Attributes & FILE_ATTRIBUTE_DIRECTORY));
 }
 //-----------------------------------------------------------------------------

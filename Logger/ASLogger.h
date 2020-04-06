@@ -3,11 +3,12 @@
 #define _ASLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include <string>
-#include <mutex>
 #include <fstream>
 #include <sstream>
 #include <array>
 #include <thread>
+#include <windows.h>
+#include <minwindef.h>
 //-----------------------------------------------------------------------------
 #define ARRAY_SIZE 20000
 //-----------------------------------------------------------------------------
@@ -24,19 +25,32 @@ public:
 	};
 
 public:
-	static ASLogger& Instance(); //Получить ссылку на объект логгера
 
-	std::string GetErrorString() const; //Получить описание ошибки
-	bool Initialize(const std::string &prefix = std::string()); //Инициализировать логгер
+	//Получить ссылку на объект логгера
+	static ASLogger& Instance();
 
+	//Получить описание ошибки
+	std::string GetErrorString() const;
+
+	//Инициализировать логгер
+	bool Initialize(const std::string &prefix = std::string());
+
+	//Остановка логгера
+	void Shutdown();
+
+	//Добавить сообщение в лог-файл
 	void Log(MessageType type_message, const std::string &string_message, const char *source_name, int source_line);
 
 private:
-	bool CreateLogDirectory(); //Создание директории
-	void Worker(); //Обработчик очереди сообщений
 
-private:
-	bool CheckExistDir(const std::string &PathDir); //Проверка существования директории
+	//Создать директорию
+	bool CreateLogDirectory();
+
+	//Проверка существования директории
+	bool CheckExistDir(const std::string &path_dir);
+
+	//Обработчик очереди сообщений
+	void Worker();
 
 private:
 	ASLogger();
@@ -46,9 +60,9 @@ private:
 
 private:
 	std::string ErrorString; //Описание ошибки
-	std::mutex Mutex; //Мьютекс для массива
-	std::array<std::string, ARRAY_SIZE> Array; //Массив сообщений
-	size_t LastIndex;
+	CRITICAL_SECTION CriticalSection; //Ктирическая секция для синхронизации
+	std::array<std::string, ARRAY_SIZE> Array; //Массив сообщений (очередь)
+	size_t LastIndex; //Последняя позиция в очереди
 	bool IsRunning; //Флаг работы
 	bool IsFinished; //Флаг остановки
 
