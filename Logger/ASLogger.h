@@ -2,6 +2,7 @@
 #ifndef _ASLOGGER_H_INCLUDED
 #define _ASLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -9,6 +10,8 @@
 #include <thread>
 #include <windows.h>
 #include <minwindef.h>
+#include <Shlwapi.h>
+#include <ShlObj.h>
 //-----------------------------------------------------------------------------
 #define ARRAY_SIZE 20000
 //-----------------------------------------------------------------------------
@@ -44,10 +47,10 @@ public:
 private:
 
 	//Создать директорию
-	bool CreateLogDirectory();
+	bool CreateLogDirectory(const SYSTEMTIME &system_time);
 
-	//Проверка существования директории
-	bool CheckExistDir(const std::string &path_dir);
+	//Получить путь к текущему файлу
+	std::string GetPathFile(const SYSTEMTIME &system_time) const;
 
 	//Обработчик очереди сообщений
 	void Worker();
@@ -67,11 +70,13 @@ private:
 	bool IsFinished; //Флаг остановки
 
 	std::ofstream File; //Текущий лог-файл
-	std::string PathDirLogs; //Путь к корневой папке с логами
+	std::string PathCurrentDirectory; //Путь к текущей папке приложения
 	std::string PathDirCurrent; //Текущий путь к конечной папке с логами
-	std::string PathFile; //Путь к текущему лог-файлу
-
+	//std::string PathFile; //Путь к текущему лог-файлу
 	std::string FilePrefix; //Префикс имени файла
+
+	//Текущая дата
+	size_t CurrentDay, CurrentMonth, CurrentYear;
 };
 //-----------------------------------------------------------------------------
 #define ASLOGGER_L(MESSAGE) ASLogger::Instance().Log(ASLogger::MT_Lite, MESSAGE, __FILE__, __LINE__)
