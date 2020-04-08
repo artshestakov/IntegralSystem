@@ -828,8 +828,10 @@
   <Local Name="Settings.Table.SelectionBehavior.SelectItems" Russian="Выбор ячеек"/>
   <Local Name="Settings.Table.SelectionBehavior.SelectRows" Russian="Выбор строк"/>
   <Local Name="Settings.Table.SelectionBehavior.SelectColumns" Russian="Выбор столбцов"/>
-  <Local Name="Settings.Table.DateFormat.Default" Russian="Стандартный"/>
-  <Local Name="Settings.Table.DateFormat.Extended" Russian="Расширенный"/>
+  <Local Name="Settings.Table.DateFormat.1" Russian="1 Январь 2000"/>
+  <Local Name="Settings.Table.DateFormat.2" Russian="01.01.2000"/>
+  <Local Name="Settings.Table.DateFormat.3" Russian="01/01/2000"/>
+  <Local Name="Settings.Table.DateFormat.4" Russian="1 Январь 2000 (Пн)"/>
   <Local Name="Settings.Table.DoubleClickEvent.Window" Russian="Открывать запись в отдельном окне"/>
   <Local Name="Settings.Table.DoubleClickEvent.Tab" Russian="Открывать запись в режиме вкладки"/>
   <Local Name="Settings.CalendarEvents.NoteView.ToolTip" Russian="Всплывающая панель"/>

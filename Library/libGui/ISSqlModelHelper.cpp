@@ -8,18 +8,9 @@
 QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::FieldType Type)
 {
 	QVariant Result = Value;
-
 	if (Type == ISNamespace::FT_Date)
 	{
-		QString DateFormat = SETTING_STRING(CONST_UID_SETTING_TABLE_DATE_FORMAT);
-		if (DateFormat == "Default")
-		{
-			Result = Value.toDate().toString(FORMAT_DATE_V1);
-		}
-		else if (DateFormat == "Extended")
-		{
-			Result = ISGui::ConvertDateToString(Value.toDate(), FORMAT_DATE_V1);
-		}
+		Result = Value.toDate().toString(SETTING_STRING(CONST_UID_SETTING_TABLE_DATE_FORMAT));
 	}
 	else if (Type == ISNamespace::FT_Birthday)
 	{
@@ -31,15 +22,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_DateTime)
 	{
-		QString DateFormat = SETTING_STRING(CONST_UID_SETTING_TABLE_DATE_FORMAT);
-		if (DateFormat == "Default")
-		{
-			Result = Value.toDateTime().toString(FORMAT_DATE_TIME_V1);
-		}
-		else if (DateFormat == "Extended")
-		{
-			Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), FORMAT_DATE_V1, FORMAT_TIME_V1);
-		}
+		Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), SETTING_STRING(CONST_UID_SETTING_TABLE_DATE_FORMAT), FORMAT_TIME_V1);
 	}
 	else if (Type == ISNamespace::FT_Password)
 	{
@@ -62,14 +45,12 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	{
 		Result = Value.toString() + '%';
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
 QVariant ISSqlModelHelper::ValueFromTextAlignment(ISNamespace::FieldType FieldType, PMetaForeign *MetaForeign)
 {
 	QVariant Result;
-
 	if (FieldType == ISNamespace::FT_Date ||
 		FieldType == ISNamespace::FT_Time ||
 		FieldType == ISNamespace::FT_DateTime ||
@@ -89,14 +70,12 @@ QVariant ISSqlModelHelper::ValueFromTextAlignment(ISNamespace::FieldType FieldTy
 			Result = Qt::AlignRight + Qt::AlignVCenter;
 		}
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
 QString ISSqlModelHelper::ValueForToolTip(bool ShowToolTip, const QVariant &Value, ISNamespace::FieldType FieldType)
 {
 	QString Result = Value.toString();
-
 	if (ShowToolTip)
 	{
 		if (FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray || FieldType == ISNamespace::FT_CallDetails)
@@ -104,7 +83,6 @@ QString ISSqlModelHelper::ValueForToolTip(bool ShowToolTip, const QVariant &Valu
 			return QString();
 		}
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

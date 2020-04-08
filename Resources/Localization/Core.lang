@@ -438,6 +438,5 @@
   <Local Name="ZoomOut" Russian="Отдалить"/>
   <Local Name="NormalSize" Russian="Нормальный размер"/>
   <Local Name="FitToWindow" Russian="Подогнать"/>
-  <Local Name="At" Russian="в"/>
 
 </Localization>

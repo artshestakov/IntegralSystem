@@ -186,8 +186,10 @@ ISComboTabBarSelectionBehavior::~ISComboTabBarSelectionBehavior()
 //-----------------------------------------------------------------------------
 ISComboTableDateFormat::ISComboTableDateFormat(QWidget *parent) : ISComboSettingEdit(parent)
 {
-	AddItem(LANG("Settings.Table.DateFormat.Default"), "Default");
-	AddItem(LANG("Settings.Table.DateFormat.Extended"), "Extended");
+	AddItem(LANG("Settings.Table.DateFormat.1"), FORMAT_DATE_V1);
+	AddItem(LANG("Settings.Table.DateFormat.2"), FORMAT_DATE_V2);
+	AddItem(LANG("Settings.Table.DateFormat.3"), FORMAT_DATE_V3);
+	AddItem(LANG("Settings.Table.DateFormat.4"), FORMAT_DATE_V4);
 }
 //-----------------------------------------------------------------------------
 ISComboTableDateFormat::~ISComboTableDateFormat()
