@@ -22,7 +22,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_DateTime)
 	{
-		Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), SETTING_STRING(CONST_UID_SETTING_TABLE_DATE_FORMAT), FORMAT_TIME_V1);
+		Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), SETTING_STRING(CONST_UID_SETTING_TABLE_DATE_FORMAT), SETTING_STRING(CONST_UID_SETTING_TABLE_TIME_FORMAT));
 	}
 	else if (Type == ISNamespace::FT_Password)
 	{
