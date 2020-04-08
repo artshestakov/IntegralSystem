@@ -16,7 +16,6 @@ public:
 	bool Initialize(const QString &login, const QString &password);
 
 	bool CheckPassword(const QString &EnteredPassword);
-	QString GetCurrentStatus(int UserID) const; //Получить статус пользователя
 
 private:
 	ISMetaUser();

@@ -26,11 +26,6 @@ static QString QS_USER_GROUP = PREPARE_QUERY("SELECT usgp_name, usgp_fullaccess 
 //-----------------------------------------------------------------------------
 static QString QS_USER_PASSWORD = PREPARE_QUERY("SELECT passwd FROM pg_shadow WHERE usename = :Login");
 //-----------------------------------------------------------------------------
-static QString QS_USER_STATUS = PREPARE_QUERY("SELECT usts_name "
-											  "FROM _users "
-											  "LEFT JOIN _userstatus ON usts_id = usrs_currentstatus "
-											  "WHERE usrs_id = :UserID");
-//-----------------------------------------------------------------------------
 ISMetaUser::ISMetaUser()
 	: UserData(new ISMetaUserData()),
 	ErrorString(NO_ERROR_STRING)
@@ -125,18 +120,5 @@ bool ISMetaUser::CheckPassword(const QString &EnteredPassword)
 	}
 
 	return false;
-}
-//-----------------------------------------------------------------------------
-QString ISMetaUser::GetCurrentStatus(int UserID) const
-{
-	QString Status;
-	ISQuery qSelect(QS_USER_STATUS);
-	qSelect.BindValue(":UserID", UserID);
-	if (qSelect.ExecuteFirst())
-	{
-		Status = qSelect.ReadColumn("usts_name").toString();
-	}
-
-	return Status;
 }
 //-----------------------------------------------------------------------------
