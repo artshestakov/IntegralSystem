@@ -15,10 +15,6 @@ public:
 	~ISSettings();
 
 	static ISSettings& GetInstance();
-
-	bool GetValueBool(const QString &SettingUID);
-	QString GetValueString(const QString &SettingUID);
-	int GetValueInt(const QString &SettingUID);
 	
 	QVariant GetValue(const QString &SettingUID); //Получить значение мета-настройки
 	void SetValue(const QString &SettingUID, const QVariant &Value); //Изменить значение мета-настройки
@@ -40,8 +36,8 @@ private:
 };
 //-----------------------------------------------------------------------------
 #define SETTING_VALUE(SETTING_UID) ISSettings::GetInstance().GetValue(SETTING_UID)
-#define SETTING_BOOL(SETTING_UID) ISSettings::GetInstance().GetValueBool(SETTING_UID)
-#define SETTING_STRING(SETTING_UID) ISSettings::GetInstance().GetValueString(SETTING_UID)
-#define SETTING_INT(SETTING_UID) ISSettings::GetInstance().GetValueInt(SETTING_UID)
+#define SETTING_BOOL(SETTING_UID) ISSettings::GetInstance().GetValue(SETTING_UID).toBool()
+#define SETTING_STRING(SETTING_UID) ISSettings::GetInstance().GetValue(SETTING_UID).toString()
+#define SETTING_INT(SETTING_UID) ISSettings::GetInstance().GetValue(SETTING_UID).toInt()
 //-----------------------------------------------------------------------------
 #endif

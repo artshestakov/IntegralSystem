@@ -25,7 +25,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) 
 {
 	setWindowIcon(BUFFER_ICONS("Settings"));
 	setWindowTitle(LANG("Settings"));
-	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
+	setMinimumSize(900, 600);
 
 	Layout = new QHBoxLayout();
 	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
