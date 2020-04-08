@@ -360,6 +360,7 @@ const char CONST_UID_DATABASE_SETTING_LOGO_FULL[] = "Logo";
 const char CONST_UID_DATABASE_SETTING_LOGO_SMALL[] = "LogoSmall";
 const char CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGE[] = "InformationMessage";
 const char CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGECOLOR[] = "InformationMessageColor";
+const char CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA[] = "NumberSimbolsAfterComma";
 const char CONST_SETTING_DATABASE_CARAT_SEND_CRASH_REPORT[] = "CaratSendCrashReport";
 //-----------------------------------------------------------------------------
 const char CONST_UID_SETTING_GROUP_GENERAL[] = "{152517C5-B081-42E5-98E4-0BA102EF7FF8}";

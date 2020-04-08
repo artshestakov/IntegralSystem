@@ -45,21 +45,6 @@ ISSettings& ISSettings::GetInstance()
 	return Settings;
 }
 //-----------------------------------------------------------------------------
-bool ISSettings::GetValueBool(const QString &SettingUID)
-{
-	return GetValue(SettingUID).toBool();
-}
-//-----------------------------------------------------------------------------
-QString ISSettings::GetValueString(const QString &SettingUID)
-{
-	return GetValue(SettingUID).toString();
-}
-//-----------------------------------------------------------------------------
-int ISSettings::GetValueInt(const QString &SettingUID)
-{
-	return GetValue(SettingUID).toInt();
-}
-//-----------------------------------------------------------------------------
 QVariant ISSettings::GetValue(const QString &SettingUID)
 {
 	return GetMetaSetting(SettingUID)->Value;

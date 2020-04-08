@@ -13,6 +13,7 @@ public:
 	static void Assert(bool Boolean, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
 	static void Assert(int Integer, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
 	static void Assert(QString String, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
+	static void Assert(size_t SizeT, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);
 
 protected:
 	static void ShowAssert(const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName);

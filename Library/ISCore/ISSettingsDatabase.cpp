@@ -84,9 +84,17 @@ void ISSettingsDatabase::Initialize()
 				QVariant SettingValue = qSelectValues.ReadColumn(String);
 				if (SettingValue.isNull())
 				{
-					SettingValue.clear();
+					QVariant DefaultValue = MetaTable->GetField(String)->DefaultValueWidget;
+					if (DefaultValue.isNull())
+					{
+						SettingValue.clear();
+					}
+					else
+					{
+						SettingValue = DefaultValue;
+					}
 				}
-				Settings.insert(String, SettingValue);
+				Settings.emplace(String, SettingValue);
 			} //???
 			catch (/*ISQueryException &QueryException*/std::exception &e) { }
 		}
@@ -102,24 +110,9 @@ void ISSettingsDatabase::InitializedSystemParameters()
 	{
 		while (qSelect.Next())
 		{
-			SystemParameters.insert(qSelect.ReadColumn("spdb_uid"), qSelect.ReadColumn("spdb_value"));
+			SystemParameters.emplace(qSelect.ReadColumn("spdb_uid"), qSelect.ReadColumn("spdb_value"));
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-bool ISSettingsDatabase::GetValueBool(const QString &SettingName)
-{
-	return GetValue(SettingName).toBool();
-}
-//-----------------------------------------------------------------------------
-QString ISSettingsDatabase::GetValueString(const QString &SettingName)
-{
-	return GetValue(SettingName).toString();
-}
-//-----------------------------------------------------------------------------
-int ISSettingsDatabase::GetValueInt(const QString &SettingName)
-{
-	return GetValue(SettingName).toInt();
 }
 //-----------------------------------------------------------------------------
 QVariant ISSettingsDatabase::GetValueDB(const QString &SettingName)
@@ -138,12 +131,12 @@ QVariant ISSettingsDatabase::GetValueDB(const QString &SettingName)
 //-----------------------------------------------------------------------------
 QVariant ISSettingsDatabase::GetValue(const QString &SettingName)
 {
-	return Settings.value(SettingName);
+	return Settings[SettingName];
 }
 //-----------------------------------------------------------------------------
 QVariant ISSettingsDatabase::GetSystemParameter(const ISUuid &UID)
 {
-	IS_ASSERT(SystemParameters.contains(UID), QString("Not found system parameter with uid: %1").arg(UID));
-	return SystemParameters.value(UID);
+	IS_ASSERT(SystemParameters.count(UID), QString("Not found system parameter with uid: %1").arg(UID));
+	return SystemParameters[UID];
 }
 //-----------------------------------------------------------------------------

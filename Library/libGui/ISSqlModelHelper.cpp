@@ -4,6 +4,7 @@
 #include "ISSettings.h"
 #include "ISGui.h"
 #include "ISDefinesCore.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::FieldType Type)
 {
@@ -44,6 +45,10 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	else if (Type == ISNamespace::FT_Percent)
 	{
 		Result = Value.toString() + '%';
+	}
+	else if (Type == ISNamespace::FT_Double)
+	{
+		Result.setValue<QString>(QString::number(Value.toDouble(), 'g', SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA) + 1));
 	}
 	return Result;
 }

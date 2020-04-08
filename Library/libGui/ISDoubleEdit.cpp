@@ -2,12 +2,14 @@
 #include "ISDefinesCore.h"
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 ISDoubleEdit::ISDoubleEdit(QWidget *parent)
 	: ISLineEdit(parent),
 	DoubleValidator(new QDoubleValidator(this))
 {
 	DoubleValidator->setLocale(QLocale(QLocale::English));
+	DoubleValidator->setDecimals(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(DoubleValidator);
 	//SetFixedWidth(200);
