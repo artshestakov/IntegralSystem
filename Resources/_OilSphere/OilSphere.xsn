@@ -74,9 +74,21 @@
 
   <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="DateLoad" ObjectForm="ISOilSphereImplementationObjectForm">
     <Fields>
-      <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки" LayoutName="DateLoadAndProductType" SeparatorName="Загрузка"/>
-      <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта" LayoutName="DateLoadAndProductType"/>
-      <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент (загрузка)" LocalListName="Контрагент" NotNull="true"/>
+      <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки"/>
+      <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта"/>
+    </Fields>
+    <Indexes>
+      <Index Field="DateLoad"/>
+      <Index Field="ProductType"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="LoadCounterparty">
+    <Fields>
+      <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент (загрузка)" LocalListName="Контрагент" NotNull="true" SeparatorName="Загрузка"/>
       <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="LoadContainer" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="LoadContainer"/>
       <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="LoadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="LoadContainer"/>
       <Field UID="{F6E17298-F970-4E8F-92AC-1560184CB2DE}" Name="LoadWeightNet" Type="Double" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="LoadContainer"/>
@@ -96,8 +108,6 @@
       <Field UID="{45EC9CDF-3142-41BC-A396-16DEF03D0EF5}" Name="WeightDifference" Type="Int" LabelName="Разница весов" LocalListName="Разница весов"/>
     </Fields>
     <Indexes>
-      <Index Field="DateLoad"/>
-      <Index Field="ProductType"/>
       <Index Field="LoadCounterparty"/>
       <Index Field="LoadContainer"/>
       <Index Field="LoadWeightGross"/>
@@ -118,7 +128,6 @@
       <Index Field="WeightDifference"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="LoadCounterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="UnloadPlace" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
