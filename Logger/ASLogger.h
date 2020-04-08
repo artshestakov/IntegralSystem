@@ -52,6 +52,9 @@ private:
 	//Получить путь к текущему файлу
 	std::string GetPathFile(const SYSTEMTIME &st) const;
 
+	//Получить описание ошибки от функций WinAPI
+	std::string GetErrorWinAPI() const;
+
 	//Обработчик очереди сообщений
 	void Worker();
 

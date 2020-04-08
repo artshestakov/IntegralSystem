@@ -30,9 +30,10 @@ bool ASLogger::Initialize(const std::string &prefix)
 	InitializeCriticalSection(&CriticalSection);
 
 	char buffer[MAX_PATH];
-	if (!(GetModuleFileNameA(NULL, buffer, MAX_PATH) > 0)) //Не удалось получить путь к исполняемому файлу
+	unsigned long buffer_size = GetModuleFileNameA(NULL, buffer, MAX_PATH);
+	if (!buffer_size) //Не удалось получить путь к исполняемому файлу
 	{
-		ErrorString = "Error getting module file name.";
+		ErrorString = "Error getting module file name: " + GetErrorWinAPI();
 		return false;
 	}
 
@@ -40,7 +41,7 @@ bool ASLogger::Initialize(const std::string &prefix)
 	size_t pos = temp.rfind('\\');
 
 	//Если префикс файла не указан - получаем его из имени исполняемого файла, иначе - используем тот что указан
-	FilePrefix = prefix.empty() ? temp.substr(pos + 1, temp.size() - pos - 5) : prefix;
+	FilePrefix = prefix.empty() ? temp.substr(pos + 1, buffer_size - pos - 5) : prefix;
 
 	//Получаем путь к папке приложения
 	PathApplicationDir = temp.substr(0, pos + 1);
@@ -98,16 +99,17 @@ void ASLogger::Log(MessageType type_message, const std::string &string_message, 
 		GetSystemTime(&st);
 
 		char buffer[MAX_PATH];
-		sprintf(buffer, "%02d.%02d.%d %02d:%02d:%02d.%03d %d", st.wDay, st.wMonth, st.wYear, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, GetCurrentThreadId());
+		sprintf(buffer, "%02d.%02d.%d %02d:%02d:%02d.%03d %lu", st.wDay, st.wMonth, st.wYear, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, GetCurrentThreadId());
 
 		std::stringstream string_stream;
 		string_stream << buffer << " [";
 		switch (type_message)
 		{
 		case MessageType::MT_Debug: string_stream << "Debug"; break;
-		case MessageType::MT_Info: string_stream << "Debug"; break;
-		case MessageType::MT_Warning: string_stream << "Debug"; break;
-		case MessageType::MT_Error: string_stream << "Debug"; break;
+		case MessageType::MT_Info: string_stream << "Info"; break;
+		case MessageType::MT_Warning: string_stream << "Warning"; break;
+		case MessageType::MT_Error: string_stream << "Error"; break;
+		case MessageType::MT_Lite: break;
 		}
 		string_stream << "][" << source_name << ':' << source_line << "] " << string_message;
 		string_complete = string_stream.str();
@@ -132,7 +134,7 @@ bool ASLogger::CreateLogDirectory(const SYSTEMTIME &st)
 	{
 		if (SHCreateDirectoryExA(NULL, PathLogsDir.c_str(), NULL) != ERROR_SUCCESS) //Ошибка создания папки
 		{
-			ErrorString = "Error create directory \"" + PathLogsDir + '"';
+			ErrorString = "Error create directory \"" + PathLogsDir + "\": " + GetErrorWinAPI();
 			return false;
 		}
 	}
@@ -144,6 +146,24 @@ std::string ASLogger::GetPathFile(const SYSTEMTIME &st) const
 	char buffer[MAX_PATH];
 	sprintf(buffer, "%s%s_%02d.%02d.%02d.log", PathLogsDir.c_str(), FilePrefix.c_str(), st.wDay, st.wMonth, st.wYear);
 	return buffer;
+}
+//-----------------------------------------------------------------------------
+std::string ASLogger::GetErrorWinAPI() const
+{
+	std::string error_string = ErrorString;
+	DWORD error_code = GetLastError();
+	if (error_code > 0)
+	{
+		LPSTR buffer = NULL;
+		size_t buffer_suze = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+											NULL, error_code, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /*(LPSTR)&buffer*/buffer, 0, NULL);
+		if (buffer && buffer_suze)
+		{
+			error_string = buffer;
+			LocalFree(buffer);
+		}
+	}
+	return error_string;
 }
 //-----------------------------------------------------------------------------
 void ASLogger::Worker()
