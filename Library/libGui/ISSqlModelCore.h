@@ -20,6 +20,7 @@ public:
 	int GetFieldIndex(const QString &FieldName) const; //Получить индекс поля по его имени
 	QString GetFieldLocalName(const QString &FieldName) const; //Получить локальное имя поля
 	PMetaField* GetField(int Index); //Получить мета-поле по его индексу
+	int GetSortColumn() const; //Получить индекс сортировки текущего поля
 	Qt::SortOrder GetSortOrder() const; //Получить текущий порядок сортировки
 
 	virtual QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;

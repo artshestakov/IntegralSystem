@@ -277,7 +277,7 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 {
-	if (Order == SqlModel->GetSortOrder())
+	if (Order == SqlModel->GetSortOrder() && LogicalIndex == SqlModel->GetSortColumn())
 	{
 		Order = Order == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
 	}
@@ -298,7 +298,7 @@ void ISListBaseForm::SortingDefault()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SortingDefault")))
 	{
-		TableView->horizontalHeader()->sortIndicatorChanged(0, Qt::AscendingOrder);
+		SortingChanged(0, Qt::AscendingOrder);
 	}
 }
 //-----------------------------------------------------------------------------

@@ -19,7 +19,6 @@ ISBaseTableView::ISBaseTableView(QWidget *parent)
 	verticalHeader()->setMinimumWidth(40);
 	verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
 	horizontalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
-	//horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
 	horizontalHeader()->setSortIndicatorShown(false);
 	horizontalHeader()->setTextElideMode(Qt::ElideRight);
 	horizontalHeader()->setMinimumHeight(25);
