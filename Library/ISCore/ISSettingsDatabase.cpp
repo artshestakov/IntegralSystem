@@ -79,24 +79,20 @@ void ISSettingsDatabase::Initialize()
 	{
 		for (const QString &String : VectorString)
 		{
-			try
+			QVariant SettingValue = qSelectValues.ReadColumn(String);
+			if (SettingValue.isNull())
 			{
-				QVariant SettingValue = qSelectValues.ReadColumn(String);
-				if (SettingValue.isNull())
+				QVariant DefaultValue = MetaTable->GetField(String)->DefaultValueWidget;
+				if (DefaultValue.isNull())
 				{
-					QVariant DefaultValue = MetaTable->GetField(String)->DefaultValueWidget;
-					if (DefaultValue.isNull())
-					{
-						SettingValue.clear();
-					}
-					else
-					{
-						SettingValue = DefaultValue;
-					}
+					SettingValue.clear();
 				}
-				Settings.emplace(String, SettingValue);
-			} //???
-			catch (/*ISQueryException &QueryException*/std::exception &e) { }
+				else
+				{
+					SettingValue = DefaultValue;
+				}
+			}
+			Settings.emplace(String, SettingValue);
 		}
 	}
 

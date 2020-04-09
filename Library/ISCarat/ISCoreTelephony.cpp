@@ -50,20 +50,17 @@ bool ISCoreTelephony::Invoke()
 		AsteriskDigitNumbers = SETTING_DATABASE_VALUE_DB(CONST_UID_DATABASE_SETTING_ASTERISK_DIGITNUMBERS).toInt(); //Скольки значные внутренние номера
 
 		Timer = new QTimer(this);
-		Timer->setInterval(1000);
+		Timer->setSingleShot(true);
 		connect(Timer, &QTimer::timeout, this, &ISCoreTelephony::Timeout);
-		Timer->start();
-
+		Timer->start(1000);
 		Started();
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISCoreTelephony::Timeout()
 {
 	Timer->stop();
-
 	try
 	{
 		ISQuery qSelectCDR(QS_CDR_ID);
@@ -77,7 +74,6 @@ void ISCoreTelephony::Timeout()
 		}
 	}
 	catch (...) { }
-
 	Timer->start();
 }
 //-----------------------------------------------------------------------------
@@ -172,7 +168,6 @@ QVariant ISCoreTelephony::GetDialEnd(int Duration, int BillSec) const
 	{
 		DialEnd.clear();
 	}
-
 	return DialEnd;
 }
 //-----------------------------------------------------------------------------
@@ -243,7 +238,6 @@ QString ISCoreTelephony::GetPattern(int ID, const QString &String) const
 QVariant ISCoreTelephony::GetUser(int ID, const QVariant &Pattern) const
 {
 	QVariant UserID;
-
 	try
 	{
 		ISQuery qSelect(QS_USER);
@@ -260,14 +254,12 @@ QVariant ISCoreTelephony::GetUser(int ID, const QVariant &Pattern) const
 	{
 		ISLOGGER_WARNING("Not found user with pattern \"" + Pattern.toString() + "\". Call id: " + ID);
 	}
-
 	return UserID;
 }
 //-----------------------------------------------------------------------------
 bool ISCoreTelephony::CheckExistCall(const QString &UniqueID) const
 {
 	bool Result = false;
-
 	try
 	{
 		ISQuery qSelect(QS_CALL_EXIST);
@@ -282,7 +274,6 @@ bool ISCoreTelephony::CheckExistCall(const QString &UniqueID) const
 		}
 	}
 	catch (...) { }
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

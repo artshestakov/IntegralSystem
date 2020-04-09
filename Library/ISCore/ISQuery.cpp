@@ -230,7 +230,7 @@ QString ISQuery::GetSqlText() const
 //-----------------------------------------------------------------------------
 QString ISQuery::GetErrorString()
 {
-    return SqlQuery.lastError().databaseText();
+    return ErrorString;
 }
 //-----------------------------------------------------------------------------
 int ISQuery::GetErrorNumber() const
@@ -258,7 +258,8 @@ void ISQuery::Raise()
 {
     if (SqlQuery.lastError().type() != QSqlError::NoError)
     {
-        ISLOGGER_ERROR(GetErrorString());
+		ErrorString = SqlQuery.lastError().databaseText();
+        ISLOGGER_ERROR(ErrorString);
 
         //Если в данный момент запущен графический интерфейс - выбрасываем исключения
         //потому они будут в дальнейшем перехвачены
@@ -266,13 +267,9 @@ void ISQuery::Raise()
         //консольные и достаточно просто их залогировать
         if (ISDefines::Core::IS_GUI)
         {
-            if (SqlDatabase.isOpen())
+            if (SqlQuery.lastError().type() == QSqlError::ConnectionError)
             {
-                throw ISExceptionSqlSyntax(GetErrorString());
-            }
-            else
-            {
-                throw ISExceptionConnectionDB();
+				throw ISExceptionConnectionDB();
             }
         }
     }

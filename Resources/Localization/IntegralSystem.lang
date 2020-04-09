@@ -107,6 +107,8 @@
   <Local Name="Message.Error.User.Activate" Russian="При создании пользователя в базе произошла ошибка."/>
   <Local Name="Message.Error.ConnectionLoadingData" Russian="Ошибка при подключении к базе данных."/>
   <Local Name="Message.Error.LoadingData" Russian="Ошибка загрузки данных."/>
+  <Local Name="Message.Error.ErrorQuerySQL" Russian="Произошла ошибка SQL-запроса!"/>
+  <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -917,10 +919,5 @@
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
   <Local Name="Task.ReRead" Russian="Перечитать"/>
   <Local Name="Task.ReRead.ToolTip" Russian="Перечитать карточку задачи"/>
-  
-  <!--PostgresqlErrors-->
-  <Local Name="PostgreSQL.Error.23505" Russian="Ошибка повторяющегося ключа, нарушение ограничения уникальности."/>
-  <Local Name="PostgreSQL.Error.23503" Russian="Нарушения ограничения целостности."/>
-  <Local Name="PostgreSQL.Error.23502" Russian="Поле обязательно для заполнения."/>
   
 </Localization>

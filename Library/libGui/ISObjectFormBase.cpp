@@ -868,31 +868,20 @@ bool ISObjectFormBase::Save()
 	ISQuery SqlQuery(QueryText);
 	for (const auto &Value : ValuesMap.toStdMap())
 	{
-		bool BindValue = SqlQuery.BindValue(':' + Value.first, Value.second);
-		IS_ASSERT(BindValue, "Not bind value");
+		IS_ASSERT(SqlQuery.BindValue(':' + Value.first, Value.second), "Not bind value");
 	}
 
-	try
+	Executed = SqlQuery.Execute(); //Исполнение запроса
+	if (Executed) //Запрос выполнен успешно
 	{
-		Executed = SqlQuery.Execute(); //Исполнение запроса
-
+		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).commit(); //Коммит транзакции
 		if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
 		{
 			IS_ASSERT(SqlQuery.First(), "Not first SqlQuery");
 			ObjectID = SqlQuery.ReadColumn(MetaTable->Alias + "_id").toInt();
 		}
-	} //???
-	catch (/*ISQueryException &e*/std::exception &e)
-	{
-		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).rollback(); //Откат транзакции
-		//ISMessageBox::ShowWarning(this, LANG(QString("PostgreSQL.Error.%1").arg(SqlQuery.GetErrorNumber())), e.GetWhat());
-	}
 
-	if (Executed) //Запрос выполнен успешно
-	{
-		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).commit();
 		ObjectName = ISCore::GetObjectName(MetaTable, ObjectID);
-
 		if (FormType == ISNamespace::OFT_New)
 		{
 			FormType = ISNamespace::OFT_Edit;
@@ -920,10 +909,13 @@ bool ISObjectFormBase::Save()
 
 		emit SavedObject(ObjectID);
 		emit UpdateList();
-
 		return true;
 	}
-
+	else
+	{
+		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).rollback(); //Откат транзакции
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorQuerySQL"), LANG("Message.Error.ErrorQuerySQL.Details").arg(SqlQuery.GetErrorString()).arg(SqlQuery.GetSqlText()));
+	}
 	return false;
 }
 //-----------------------------------------------------------------------------
