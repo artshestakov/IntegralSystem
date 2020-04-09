@@ -163,7 +163,7 @@ void ISTabWidgetMain::SeparateWindow(int Index)
 
 	Widget->setParent(nullptr);
 	ISGui::MoveWidgetToDesktop(Widget, ISNamespace::MWD_Center);
-	Widget->show();
+	Widget->showMaximized();
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::CloseCliciked()
