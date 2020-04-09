@@ -42,7 +42,6 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 
 	setWindowTitle(LANG("Reminder"));
 	setWindowIcon(BUFFER_ICONS("Bell"));
-	//setWindowFlags(Qt::WindowStaysOnTopHint);
 	setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
 
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);

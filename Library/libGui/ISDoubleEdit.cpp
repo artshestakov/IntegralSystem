@@ -12,8 +12,6 @@ ISDoubleEdit::ISDoubleEdit(QWidget *parent)
 	DoubleValidator->setDecimals(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetValidator(DoubleValidator);
-	//SetFixedWidth(200);
-	//AddMainLayoutStretch();
 }
 //-----------------------------------------------------------------------------
 ISDoubleEdit::~ISDoubleEdit()

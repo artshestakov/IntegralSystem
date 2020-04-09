@@ -542,8 +542,6 @@ void ISMonthEdit::SelectCurrentMonth()
 //-----------------------------------------------------------------------------
 ISEMailEdit::ISEMailEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	//SetFixedWidth(250);
-
 	SetIcon(BUFFER_ICONS("EMail.FieldEdit.Acceptable"));
 	SetPlaceholderText(LANG("Field.EMail.PlaceholderText"));
 

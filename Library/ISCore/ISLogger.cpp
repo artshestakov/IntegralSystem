@@ -102,7 +102,6 @@ void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, co
 	{
 		//Формируем начало строки лога (дата, время, идентификатор текущего потока)
 		char Temp[MAX_PATH];
-        //itoa(DateTime.Year, Year, 10); //Преобразование года в строку
         sprintf(Year, "%d", DateTime.Year);
         sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", DateTime.Day, DateTime.Month, Year[2], Year[3], DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds, 10); //???
 

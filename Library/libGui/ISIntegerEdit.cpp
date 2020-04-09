@@ -8,9 +8,7 @@ ISIntegerEdit::ISIntegerEdit(QWidget *parent)
 	IntValidator(new QIntValidator(this))
 {
 	SetValidator(IntValidator);
-	//SetFixedWidth(200);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
-	//AddMainLayoutStretch();
 }
 //-----------------------------------------------------------------------------
 ISIntegerEdit::~ISIntegerEdit()

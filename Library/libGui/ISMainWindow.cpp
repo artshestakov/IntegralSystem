@@ -85,9 +85,6 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_CONFIRMEXITAPPLICATION))
 		{
 			SetVisibleShadow(true);
-			//raise();
-			//activateWindow();
-
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication")))
 			{
 				BeforeClose();
@@ -97,7 +94,6 @@ void ISMainWindow::closeEvent(QCloseEvent *e)
 			{
 				e->ignore();
 			}
-
 			SetVisibleShadow(false);
 		}
 		else

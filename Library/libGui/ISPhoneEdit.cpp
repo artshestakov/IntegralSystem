@@ -13,7 +13,6 @@ static QString QI_ASTERISK_QUEUE = PREPARE_QUERY("INSERT INTO _asteriskqueue(ast
 //-----------------------------------------------------------------------------
 ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISPhoneBaseEdit(parent)
 {
-	//SetFixedWidth(200);
 	SetVisibleCall(true);
 	
 	if (!ISTelephony::CheckSetup())

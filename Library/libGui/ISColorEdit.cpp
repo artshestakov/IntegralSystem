@@ -26,8 +26,6 @@ ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ButtonSelectColor->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonSelectColor, &ISServiceButton::clicked, this, &ISColorEdit::SelectColor);
 	AddWidgetToRight(ButtonSelectColor);
-
-	//SetFixedWidth(150);
 }
 //-----------------------------------------------------------------------------
 ISColorEdit::~ISColorEdit()

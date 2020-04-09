@@ -4,11 +4,8 @@ ISEditObjectListForm::ISEditObjectListForm(PMetaTable *MetaTable, int ParentObje
 {
 	GetAction(ISNamespace::AT_SystemInfo)->setVisible(false);
 
-	QString ClassFilter;
-	ClassFilter += "prtc_protocoltype = '{0361643D-0A62-4F51-84BD-313F53115EFD}' \n";
-	//ClassFilter += "AND prtc_tablename = '" + dynamic_cast<ISObjectForm*>(parent)->GetMetaTable()->Name + "' \n";
+	QString ClassFilter = "prtc_protocoltype = '{0361643D-0A62-4F51-84BD-313F53115EFD}' \n";
 	ClassFilter += "AND prtc_objectid = " + QString::number(ParentObjectID) + " \n";
-
 	GetQueryModel()->SetClassFilter(ClassFilter);
 }
 //-----------------------------------------------------------------------------
