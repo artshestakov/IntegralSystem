@@ -138,6 +138,11 @@ PMetaField* ISSqlModelCore::GetField(int Index)
 	return Fields[Index];
 }
 //-----------------------------------------------------------------------------
+Qt::SortOrder ISSqlModelCore::GetSortOrder() const
+{
+	return SortingOrder;
+}
+//-----------------------------------------------------------------------------
 QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 {
 	if (!ModelIndex.isValid())

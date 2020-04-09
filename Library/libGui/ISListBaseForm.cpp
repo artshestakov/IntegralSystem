@@ -41,6 +41,7 @@
 #include "ISQueryPool.h"
 #include "ISGui.h"
 #include "ISException.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include "ISPrintingWord.h"
@@ -276,6 +277,11 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 {
+	if (Order == SqlModel->GetSortOrder())
+	{
+		Order = Order == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
+	}
+
 	QString FieldName = SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString();
 	QueryModel->SetOrderField(MetaTable->Alias + '_' + FieldName.toLower(), FieldName, Order);
 	SqlModel->SetSorting(LogicalIndex, Order);
