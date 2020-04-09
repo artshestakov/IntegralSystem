@@ -27,7 +27,6 @@ ISTabBarMain::ISTabBarMain(QWidget *parent) : QTabBar(parent)
 	{
 		setSelectionBehaviorOnRemove(QTabBar::SelectionBehavior::SelectPreviousTab);
 	}
-	
 	CreateContextMenu();
 }
 //-----------------------------------------------------------------------------
@@ -54,7 +53,6 @@ bool ISTabBarMain::CheckFixedTab(const QString &TabUID)
 void ISTabBarMain::mousePressEvent(QMouseEvent *e)
 {
 	QTabBar::mousePressEvent(e);
-
 	MouseRightClickTabIndex = tabAt(e->pos());
 
 	if (e->button() == Qt::LeftButton)
@@ -70,7 +68,6 @@ void ISTabBarMain::mousePressEvent(QMouseEvent *e)
 	else if (e->button() == Qt::RightButton) //Вызов контекстного меню
 	{
 		SetVisibleContextActions(true);
-
 		if (MouseRightClickTabIndex) //Контекстное меню вызывается для вкладок объектов
 		{
 			if (FixedTabs.contains(tabData(MouseRightClickTabIndex).toString()))
@@ -91,7 +88,6 @@ void ISTabBarMain::mousePressEvent(QMouseEvent *e)
 			ActionSeparateWindow->setVisible(false);
 			ActionFixedTab->setVisible(false);
 		}
-
 		ContextMenu->exec(e->globalPos());
 	}
 }
@@ -130,7 +126,6 @@ void ISTabBarMain::mouseMoveEvent(QMouseEvent *e)
 void ISTabBarMain::mouseReleaseEvent(QMouseEvent *e)
 {
 	QTabBar::mouseReleaseEvent(e);
-
 	MouseClick = false;
 	PressPos.setX(0);
 	PressPos.setY(0);
@@ -228,7 +223,6 @@ void ISTabBarMain::CloseAllTabs()
 	{
 		emit MidButtonClicked(i);
 	}
-
 	MouseRightClickTabIndex = 0;
 }
 //-----------------------------------------------------------------------------
@@ -245,10 +239,8 @@ void ISTabBarMain::CloseOtherTabs()
 		{
 			continue;
 		}
-
 		emit MidButtonClicked(i);
 	}
-
 	MouseRightClickTabIndex = 0;
 }
 //-----------------------------------------------------------------------------
@@ -258,7 +250,6 @@ void ISTabBarMain::CloseRightTabs()
 	{
 		emit MidButtonClicked(i);
 	}
-
 	MouseRightClickTabIndex = 0;
 }
 //-----------------------------------------------------------------------------

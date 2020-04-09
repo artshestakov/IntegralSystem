@@ -148,7 +148,6 @@ void ISTaskForm::FilterClicked()
 	{
 		Action->setFont(ISDefines::Gui::FONT_APPLICATION);
 		Action->setChecked(false);
-
 		if (Action == sender())
 		{
 			Action->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
@@ -171,15 +170,7 @@ void ISTaskForm::SearchByNumber()
 		{
 			if (ISCore::TaskCheckExist(TaskID))
 			{
-				ISUuid StatusUID = ISCore::TaskGetStatusUID(TaskID);
-				if (StatusUID == CONST_UID_TASK_STATUS_NEW)
-				{
-					ISGui::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID);
-				}
-				else
-				{
-					ISGui::ShowTaskViewForm(TaskID);
-				}
+				ISCore::TaskGetStatusUID(TaskID) == CONST_UID_TASK_STATUS_NEW ? ISGui::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID) : ISGui::ShowTaskViewForm(TaskID);
 				break;
 			}
 			else
