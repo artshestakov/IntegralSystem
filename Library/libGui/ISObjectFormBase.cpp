@@ -26,34 +26,30 @@
 #include "ISUserRoleEntity.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISInterfaceForm(parent)
+ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+	: ISInterfaceForm(parent),
+	FormType(form_type),
+	MetaTable(meta_table),
+	ObjectID(object_id),
+	ParentObjectID(0),
+	WidgetObject(nullptr),
+	WidgetEscort(nullptr),
+	EditObjectID(nullptr),
+	BeginFieldEdit(nullptr),
+	ModificationFlag(false),
+	RecordIsDeleted(false),
+	CurrentIndexTab(-1),
+	ActionDelete(nullptr),
+	ActionGroup(new QActionGroup(this))
 {
-	FormType = form_type;
-	MetaTable = meta_table;
-	ObjectID = object_id;
-	ParentObjectID = 0;
-	TimerAutoSave = nullptr;
-	WidgetObject = nullptr;
-	WidgetEscort = nullptr;
-	EditObjectID = nullptr;
-	BeginFieldEdit = nullptr;
-	ModificationFlag = false;
-	RecordIsDeleted = false;
-	CurrentIndexTab = -1;
-
-	ActionDelete = nullptr;
-
 	GetMainLayout()->setContentsMargins(0, 3, 0, 0);
 	GetMainLayout()->setSpacing(0);
-
-	ActionGroup = new QActionGroup(this);
 
 	CreateToolBarEscorts();
 	CreateMainTabWidget();
 	CreateToolBar();
 	CreateFieldsWidget();
 	FillDataFields();
-
 	ISCreatedObjectsEntity::Instance().RegisterForm(this);
 }
 //-----------------------------------------------------------------------------
@@ -146,11 +142,6 @@ void ISObjectFormBase::SetVisibleReRead(bool Visible)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::closeEvent(QCloseEvent *e)
 {
-	if (TimerAutoSave)
-	{
-		TimerAutoSave->stop();
-	}
-
 	if (ModificationFlag)
 	{
 		emit CurrentObjectTab();
@@ -245,14 +236,6 @@ void ISObjectFormBase::AfterShowEvent()
 	UpdateObjectActions();
 	SetModificationFlag(false);
 	ResizeRemove();
-
-	if (SETTING_BOOL(CONST_UID_SETTING_OBJECTS_AUTOSAVE) && FormType == ISNamespace::OFT_Edit)
-	{
-		TimerAutoSave = new QTimer(this);
-		TimerAutoSave->setInterval(SETTING_INT(CONST_UID_SETTING_OBJECTS_AUTOSAVE_TIMEOUT) * 1000);
-		connect(TimerAutoSave, &QTimer::timeout, this, &ISObjectFormBase::TimeoutAutoSave);
-		TimerAutoSave->start();
-	}
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateToolBarEscorts()
@@ -421,8 +404,9 @@ void ISObjectFormBase::CreateToolBar()
 void ISObjectFormBase::CreateFieldsWidget()
 {
 	FormLayout = new QFormLayout(); //Компоновщик для главного таба
-
+	
 	ScrollAreaMain = new ISScrollArea(this); //Панель основной (главной) группы полей
+	ScrollAreaMain->setSizePolicy(ScrollAreaMain->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
 	ScrollAreaMain->widget()->setLayout(FormLayout);
 	WidgetObjectLayout->addWidget(ScrollAreaMain);
 
@@ -711,11 +695,10 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 			ISListObjectForm *ListForm = new ISListObjectForm(TableName, ObjectID, WidgetTabEscort);
 			ListForm->SetUID(ISMetaData::GetInstanse().GetMetaTable(TableName)->UID);
 			
-			if (ClassFilter.length())
+			if (!ClassFilter.isEmpty())
 			{
 				ListForm->GetQueryModel()->SetClassFilter(ClassFilter);
 			}
-
 			WidgetEscort = ListForm;
 		}
 
@@ -725,7 +708,6 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		//Присвоения ниже должны быть перед вызовом LoadData()
 		WidgetEscort->SetParentTableName(MetaTable->Name);
 		WidgetEscort->SetParentObjectID(ObjectID);
-
 		WidgetEscort->LoadData();
 	}
 }
@@ -1177,14 +1159,9 @@ void ISObjectFormBase::SetEnabledActions(bool Enabled)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::TimeoutAutoSave()
+void ISObjectFormBase::AddWidgetToBottom(QWidget *Widget)
 {
-	if (GetModificationFlag())
-	{
-		TimerAutoSave->stop();
-		Save();
-		TimerAutoSave->start();
-	}
+	WidgetObjectLayout->addWidget(Widget);
 }
 //-----------------------------------------------------------------------------
 QString ISObjectFormBase::GetObjectName() const

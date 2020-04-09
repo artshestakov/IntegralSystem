@@ -92,7 +92,6 @@ void ISTaskForm::CreateTempWidget()
 	LayoutLabel->addWidget(LabelText);
 
 	LayoutLabel->addStretch();
-
 	Layout->addStretch();
 }
 //-----------------------------------------------------------------------------

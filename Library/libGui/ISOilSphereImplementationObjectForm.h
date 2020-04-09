@@ -3,8 +3,7 @@
 #define _ISOILSPHEREIMPLEMENTATIONOBJECTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISObjectFormBase.h"
-#include "ISFieldEdits.h"
-#include "ISDaDataService.h"
+#include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
 class ISOilSphereImplementationObjectForm : public ISObjectFormBase
 {
@@ -13,6 +12,13 @@ class ISOilSphereImplementationObjectForm : public ISObjectFormBase
 public:
 	Q_INVOKABLE ISOilSphereImplementationObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
 	virtual ~ISOilSphereImplementationObjectForm();
+
+private:
+	void AfterShowEvent() override;
+	void Saved(int ObjectID);
+
+private:
+	ISListBaseForm *ImplementationDetailListForm;
 };
 //-----------------------------------------------------------------------------
 #endif

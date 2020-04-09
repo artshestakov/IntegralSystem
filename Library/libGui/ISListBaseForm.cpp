@@ -363,7 +363,6 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 
 	ActionSetEnabled(ISNamespace::AT_Delete, SelectedRows);
 	ActionSetEnabled(ISNamespace::AT_DeleteCascade, SelectedRows);
-
 	emit SelectedRowSignal();
 }
 //-----------------------------------------------------------------------------
@@ -404,7 +403,6 @@ void ISListBaseForm::LoadDataAfterEvent()
 			LabelSearchResult->setVisible(true);
 		}
 	}
-
 	emit Updated();
 }
 //-----------------------------------------------------------------------------
@@ -524,14 +522,12 @@ void ISListBaseForm::CreateDelegates()
 			case ISNamespace::FT_CallDetails: AbstractItemDelegate = new ISDelegateCallDetails(TableView); break;
 			case ISNamespace::FT_File: AbstractItemDelegate = new ISDelegateFile(TableView); break;
 			}
-
 			if (AbstractItemDelegate)
 			{
 				TableView->setItemDelegateForColumn(i, AbstractItemDelegate);
 			}
 		}
 	}
-
 	DelegatesCreated = true;
 }
 //-----------------------------------------------------------------------------
@@ -589,7 +585,6 @@ void ISListBaseForm::Period()
 		}
 		
 		LabelPeriod->setVisible(true);
-
 		QueryModel->SetPeriod(PeriodForm.GetPeriodType(), PeriodForm.GetRange());
 		Update();
 	}
@@ -599,7 +594,6 @@ void ISListBaseForm::PeriodClear()
 {
 	LabelPeriod->setVisible(false);
 	LabelPeriod->clear();
-
 	QueryModel->ClearPeriod();
 	Update();
 }
@@ -996,11 +990,9 @@ void ISListBaseForm::Delete()
 				ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.at(i), MetaTable->LocalListName);
 				ProgressForm.AddOneValue();
 			}
-
 			Update();
 		}
 	}
-
 	VisibleIndicatorWidget();
 }
 //-----------------------------------------------------------------------------
@@ -1029,7 +1021,6 @@ bool ISListBaseForm::DeleteCascade()
 				ISNotificationService::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
 				ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				Update();
-
 				return true;
 			}
 		}
@@ -1063,12 +1054,10 @@ bool ISListBaseForm::DeleteCascade()
 					break;
 				}
 			}
-
 			Update();
 			return true;
 		}
 	}
-
 	return false;
 }
 //-----------------------------------------------------------------------------
@@ -1174,7 +1163,6 @@ void ISListBaseForm::Export()
 	{
 		ISMessageBox::ShowWarning(this, LANG("Export.Error.Prepare"), ExportWorker->GetErrorString());
 	}
-
 	delete ExportWorker;
 	ExportWorker = nullptr;
 }
@@ -1199,7 +1187,6 @@ void ISListBaseForm::Print()
 	}
 
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_PRINT, MetaTable->Name, MetaTable->LocalListName, GetObjectID(), MetaReport->LocalName);
-
 	ISGui::SetWaitGlobalCursor(true);
 
     ISProcessForm ProcessForm;
@@ -1269,7 +1256,6 @@ void ISListBaseForm::Print()
 	}
 
 	ISGui::SetWaitGlobalCursor(false);
-
 	if (PrintingBase)
 	{
 		delete PrintingBase;
@@ -1761,7 +1747,7 @@ void ISListBaseForm::CreateStatusBar()
 
 	LabelRowCount = new QLabel(StatusBar);
 	LabelRowCount->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWCOUNTRECORD));
-	LabelRowCount->setText(LANG("RecordsCount") + ": " + LANG("Calculated") + "...");
+	LabelRowCount->setText(LANG("RecordsCount") + ": -");
 	StatusBar->addWidget(LabelRowCount);
 
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))

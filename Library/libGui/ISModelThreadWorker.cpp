@@ -2,6 +2,7 @@
 #include "ISDatabase.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISModelThreadWorker::ISModelThreadWorker(QObject *parent)
 	: QObject(parent)
@@ -16,11 +17,12 @@ ISModelThreadWorker::~ISModelThreadWorker()
 //-----------------------------------------------------------------------------
 void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap &Conditions)
 {
+	ISUuid ConnectionName = ISSystem::GenerateUuid();
 	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
-	if (ISDatabase::Instance().Connect(CONNECTION_MODEL_THREAD, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password))
+	if (ISDatabase::Instance().Connect(ConnectionName, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password))
 	{
 		{
-			QSqlQuery SqlQuery = QSqlQuery(ISDatabase::Instance().GetDB(CONNECTION_MODEL_THREAD));
+			QSqlQuery SqlQuery = QSqlQuery(ISDatabase::Instance().GetDB(ConnectionName));
 			if (SqlQuery.prepare(SqlQueryText))
 			{
 				for (const auto &Condition : Conditions.toStdMap()) //Обход параметров запроса
@@ -64,7 +66,7 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 				emit ErrorQuery(SqlQuery.lastError(), SqlQueryText);
 			}
 		}
-		ISDatabase::Instance().Disconnect(CONNECTION_MODEL_THREAD);
+		ISDatabase::Instance().Disconnect(ConnectionName);
 	}
 	else
 	{

@@ -45,7 +45,6 @@ protected:
 	void CreateQuerySelectSystemFields(); //Создание списка системных полей для запроса выборки
 	void CreateQuerySelectFields(); //Создание списка полей для запроса выборки
 	void CreateQuerySelectIsDeleted(); //Создание условия отображения полей удаленные/не удаленные
-	void CheckQuery(const QString &QueryText); //Проверка запроса
 
 private:
 	PMetaTable *MetaTable;

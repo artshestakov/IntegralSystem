@@ -33,8 +33,6 @@
   
   <_SettingsGroup IsSystem="true" UID="{44F9C562-D8CA-4D01-AF83-D26B40499923}" Name="EditRecord" LocalName="Редактирование записей" IconName="Settings.EditRecord" Order="4" System="true"/>
   <_Settings IsSystem="true" UID="{8407C4D3-C031-44CB-BC3D-7F4074EEBF0F}" Group="{44F9C562-D8CA-4D01-AF83-D26B40499923}" Order="1" Name="SaveCloseNew" Type="Bool" LocalName="Функция сохранить, закрыть и создать" Hint="Функция позволяет сохранить, закрыть и создать новую запись." DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{73B5B90F-4873-4D82-B1CA-37593D80DA6C}" Group="{44F9C562-D8CA-4D01-AF83-D26B40499923}" Order="2" Name="AutoSave" Type="Bool" LocalName="Автоматическое сохранение" Hint="Автоматическое сохранение редактируемых записей. Работает только в режиме редактирования записи." DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{98D55B14-DDD8-48FB-B008-0B4D70F2D524}" Group="{44F9C562-D8CA-4D01-AF83-D26B40499923}" Order="3" Name="AutoSaveTimeout" Type="Int" LocalName="Таймаут автоматического сохранения (секунды)" DefaultValue="60"/>
 
   <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{B523692A-F837-46CC-B278-0862280917D0}" Name="Desktop" LocalName="Рабочий стол" IconName="Settings.Desktop" Order="5" System="true"/>
   

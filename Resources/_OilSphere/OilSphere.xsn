@@ -86,8 +86,9 @@
     </Foreigns>
   </Table>
 
-  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="LoadCounterparty">
+  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="LoadCounterparty" ClassFilterField="Implementation">
     <Fields>
+      <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="Int" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент (загрузка)" LocalListName="Контрагент" NotNull="true" SeparatorName="Загрузка"/>
       <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="LoadContainer" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="LoadContainer"/>
       <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="LoadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="LoadContainer"/>
@@ -108,6 +109,7 @@
       <Field UID="{45EC9CDF-3142-41BC-A396-16DEF03D0EF5}" Name="WeightDifference" Type="Int" LabelName="Разница весов" LocalListName="Разница весов"/>
     </Fields>
     <Indexes>
+      <Index Field="Implementation"/>
       <Index Field="LoadCounterparty"/>
       <Index Field="LoadContainer"/>
       <Index Field="LoadWeightGross"/>
@@ -128,6 +130,7 @@
       <Index Field="WeightDifference"/>
     </Indexes>
     <Foreigns>
+      <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="DateLoad"/>
       <Foreign Field="LoadCounterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="UnloadPlace" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>

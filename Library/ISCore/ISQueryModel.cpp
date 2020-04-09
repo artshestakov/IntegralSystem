@@ -93,43 +93,26 @@ QString ISQueryModel::GetQueryText()
 	}
 
 	//Если для таблицы существует фильтр
-	if (ClassFilter.length())
+	if (!ClassFilter.isEmpty())
 	{
 		SqlText += "AND " + ClassFilter + " \n";
 	}
 
 	//Фильтр поиска
-	if (SearchFilter.length())
+	if (!SearchFilter.isEmpty())
 	{
 		SqlText += "AND " + SearchFilter + " \n";
 	}
 
 	//Учитывание сортировки
-	QString Sort;
-	if (OrderSort == Qt::AscendingOrder)
-	{
-		Sort = " ASC";
-	}
-	else
-	{
-		Sort = " DESC";
-	}
-
-	if (OrderField.isEmpty())
-	{
-		QueryOrderText = "ORDER BY " + OrderFieldDefault + Sort;
-	}
-	else
-	{
-		QueryOrderText = "ORDER BY " + OrderField + Sort;
-	}
-
+	QString Sort = OrderSort == Qt::AscendingOrder ? " ASC" : " DESC";
+	QueryOrderText = "ORDER BY " + (OrderField.isEmpty() ? OrderFieldDefault : OrderField) + Sort;
 	SqlText += QueryOrderText;
+
 	if (Limit)
 	{
 		SqlText += QString(" \nLIMIT %1 OFFSET %2").arg(Limit).arg(Offset);
 	}
-
 	return SqlText;
 }
 //-----------------------------------------------------------------------------
@@ -217,14 +200,7 @@ void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &Fi
 	}
 	else
 	{
-		if (MetaField->Foreign)
-		{
-			OrderField = ForeignFields[FieldName];
-		}
-		else
-		{
-			OrderField = FullFieldName;
-		}
+		OrderField = MetaField->Foreign ? ForeignFields[FieldName] : FullFieldName;
 	}
 	OrderSort = Order;
 }
@@ -306,18 +282,5 @@ void ISQueryModel::CreateQuerySelectFields()
 void ISQueryModel::CreateQuerySelectIsDeleted()
 {
 	QuerySelectIsDeleted = ClassAlias + SYMBOL_POINT + ClassAlias + "_isdeleted";
-}
-//-----------------------------------------------------------------------------
-void ISQueryModel::CheckQuery(const QString &QueryText)
-{
-	ISQuery qQuery;
-	if (qQuery.Prepare(QueryText))
-	{
-		ISLOGGER_DEBUG("Prepare Query - OK");
-	}
-	else
-	{
-		ISLOGGER_ERROR("Prepare Query - ERROR");
-	}
 }
 //-----------------------------------------------------------------------------

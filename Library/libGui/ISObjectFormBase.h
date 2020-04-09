@@ -95,7 +95,8 @@ protected:
 	void AddActionToolBar(QAction *Action, bool AddingToActionGroup = true); //Добавить кнопку-действие на тулбар
 	void AddActionMenu(QAction *Action, bool AddingToActionGroup = true); //Добавить кнопку-действие в меню
 	void SetEnabledActions(bool Enabled); //Изменение доступности кнопок действий
-	void TimeoutAutoSave();
+
+	void AddWidgetToBottom(QWidget *Widget); //Добавить виджет в самый низ формы
 
 	QString GetObjectName() const; //Получить наименование объекта
 	ISFieldEditBase* GetFieldWidget(const QString &FieldName); //Получиь виджет редактирования по его имени
@@ -108,7 +109,6 @@ private:
 	PMetaTable *MetaTable; //Мета-таблица
 	int ObjectID; //Идентификатор текущего объекта
 	int ParentObjectID; //Идентификатор родителя
-	QTimer *TimerAutoSave;
 
 	ISToolBarObject *ToolBarNavigation; //Тулбар эскортов
 	ISTabWidgetObject *TabWidgetMain; //Главный таб
