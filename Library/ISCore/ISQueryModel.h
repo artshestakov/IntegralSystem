@@ -37,8 +37,7 @@ public:
 	QString GetSearchFilter() const;
 	void ClearSearchFilter();
 
-	void SetOrderField(const QString &FullFieldName, const QString &FieldName); //Изменить имя столбца, по которому идет сортировка
-	void SetOrderSort(Qt::SortOrder order_sort); //Изменить тип сортировки
+	void SetOrderField(const QString &FullFieldName, const QString &FieldName, Qt::SortOrder Order); //Изменить имя столбца, по которому идет сортировка
 	void SetLimit(int limit); //Изменить количество выводимых записей на странице
 	void SetOffset(int offset); //Изменить страницу
 

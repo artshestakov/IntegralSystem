@@ -31,7 +31,8 @@ public:
 
 	void SetIsDeletedIndex(int IndexColumn);
 	void SetIsSystemIndex(int IndexColumn);
-	void SetCurrentSorting(int IndexColumn, Qt::SortOrder Order);
+	void SetSorting(const QString &FieldName, Qt::SortOrder Order);
+	void SetSorting(int IndexColumn, Qt::SortOrder Order);
 	void SetShowToolTip(bool show_tooltip);
 
 protected:
@@ -47,8 +48,8 @@ private:
 	std::vector<QSqlRecord> Records; //Данные модели
 	std::vector<PMetaField*> Fields; //Список полей таблицы
 
-	int CurrentSortingColumn;
-	Qt::SortOrder CurrentColumnSortOrder;
+	int SortingColumn;
+	Qt::SortOrder SortingOrder;
 	int IsDeletedIndex;
 	int IsSystemIndex;
 

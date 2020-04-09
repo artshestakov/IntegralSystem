@@ -121,7 +121,7 @@ protected:
 
 	virtual void DoubleClickedTable(const QModelIndex &ModelIndex); //Обработчик события двойного нажатия на строку таблицы
 
-	void SortingChanged(int LogicalIndex, Qt::SortOrder SortOrder);
+	void SortingChanged(int LogicalIndex, Qt::SortOrder Order);
 	void SortingDefault(); //Установка сортировки по умолчанию
 	void HideSystemFields(); //Скрытие системных полей
 	void VisibleIndicatorWidget(); //Изменение видимости индикатора
@@ -154,7 +154,6 @@ private:
 	ISQueryModel *QueryModel;
 	ISSearchForm *SearchForm;
 
-	bool BeginInstallSorting; //Индикатор первичной установки сортировки
 	int SelectObjectAfterUpdate;
 	bool DelegatesCreated; //Индикатор указания созданы делегаты или нет
 	bool ShowOnly;

@@ -14,7 +14,7 @@ public:
 
 	static ISSortingBuffer& GetInstance();
 
-	void AddSorting(const QString &TableName, const QString &FieldName, int Sorting); //Добавить сортировку в память
+	void AddSorting(const QString &TableName, const QString &FieldName, Qt::SortOrder Sorting); //Добавить сортировку в память
 	void SaveSortings(); //Сохранение сортировок в базу из памяти
 
 	ISSortingMetaTable* GetSorting(const QString &TableName); //Получить мета-сортировку для таблицы
@@ -22,11 +22,11 @@ public:
 protected:
 	void Initialize(); //Инициализация (чтение из базы)
 	void SaveSorting(ISSortingMetaTable *MetaSorting); //Сохранение одной сортировки
-	ISSortingMetaTable* CreateSorting(const QString &TableName, const QString &FieldName, int Sorting); //Создание мета-сортировки
+	ISSortingMetaTable* CreateSorting(const QString &TableName, const QString &FieldName, Qt::SortOrder Sorting); //Создание мета-сортировки
 
 private:
 	ISSortingBuffer();
 
-	QVector<ISSortingMetaTable*> Sortings;
+	std::vector<ISSortingMetaTable*> Sortings;
 };
 //-----------------------------------------------------------------------------

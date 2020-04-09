@@ -128,7 +128,7 @@ struct ISSortingMetaTable
 
     QString TableName;
     QString FieldName;
-    Qt::SortOrder Sorting;
+    Qt::SortOrder Order;
     bool ModificationFlag;
 };
 //-----------------------------------------------------------------------------

@@ -3,11 +3,11 @@
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISBaseTableView::ISBaseTableView(QWidget *parent) : QTableView(parent)
+ISBaseTableView::ISBaseTableView(QWidget *parent)
+	: QTableView(parent),
+	SelectionScroll(false),
+	CtrlClicked(false)
 {
-	SelectionScroll = false;
-	CtrlClicked = false;
-
 	setSortingEnabled(true);
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -19,7 +19,8 @@ ISBaseTableView::ISBaseTableView(QWidget *parent) : QTableView(parent)
 	verticalHeader()->setMinimumWidth(40);
 	verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
 	horizontalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
-	horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
+	//horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
+	horizontalHeader()->setSortIndicatorShown(false);
 	horizontalHeader()->setTextElideMode(Qt::ElideRight);
 	horizontalHeader()->setMinimumHeight(25);
 	horizontalHeader()->setHighlightSections(false);
@@ -75,43 +76,24 @@ void ISBaseTableView::keyPressEvent(QKeyEvent *e)
 void ISBaseTableView::keyReleaseEvent(QKeyEvent *e)
 {
 	QTableView::keyReleaseEvent(e);
-	if (CtrlClicked)
-	{
-		CtrlClicked = false;
-	}
+	CtrlClicked = false;
 }
 //-----------------------------------------------------------------------------
-void ISBaseTableView::wheelEvent(QWheelEvent *e)
+void ISBaseTableView::wheelEvent(QWheelEvent *WheelEvent)
 {
 	if (SelectionScroll)
 	{
-		if (e->delta() > 0)
-		{
-			emit WheelUp();
-		}
-		else
-		{
-			emit WheelDown();
-		}
+		emit WheelEvent->delta() > 0 ? WheelUp() : WheelDown();
 	}
 	else
 	{
-		if (CtrlClicked)
-		{
-			QWheelEvent WheelEvent(e->pos(), e->delta(), e->buttons(), e->modifiers(), Qt::Horizontal);
-			QTableView::wheelEvent(&WheelEvent);
-		}
-		else
-		{
-			QTableView::wheelEvent(e);
-		}
+		QTableView::wheelEvent(CtrlClicked ? &QWheelEvent(WheelEvent->pos(), WheelEvent->delta(), WheelEvent->buttons(), WheelEvent->modifiers(), Qt::Horizontal) : WheelEvent);
 	}
 }
 //-----------------------------------------------------------------------------
-void ISBaseTableView::paintEvent(QPaintEvent *e)
+void ISBaseTableView::paintEvent(QPaintEvent *PaintEvent)
 {
-	QTableView::paintEvent(e);
-
+	QTableView::paintEvent(PaintEvent);
 	ButtonCorner->move(1, 1);
 	ButtonCorner->setFixedWidth(verticalHeader()->width() - 1);
 	ButtonCorner->setFixedHeight(horizontalHeader()->height());

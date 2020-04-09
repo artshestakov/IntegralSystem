@@ -55,20 +55,18 @@ static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_user
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
-	ActionObjectGroup(new QActionGroup(this)) //Группа действий, остосящихся только к одному объекту
+	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
+	MetaTable(ISMetaData::GetInstanse().GetMetaTable(TableName)),
+	SqlModel(nullptr),
+	PageNavigation(nullptr),
+	QueryModel(nullptr),
+	SearchForm(nullptr),
+	SelectObjectAfterUpdate(0),
+	DelegatesCreated(false),
+	ShowOnly(MetaTable->ShowOnly),
+	IsLoadingData(false),
+	SearchFlag(false)
 {
-	MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
-	SqlModel = nullptr;
-	PageNavigation = nullptr;
-	QueryModel = nullptr;
-	SearchForm = nullptr;
-	BeginInstallSorting = false;
-	SelectObjectAfterUpdate = 0;
-	DelegatesCreated = false;
-	ShowOnly = MetaTable->ShowOnly;
-	IsLoadingData = false;
-	SearchFlag = false;
-
 	//Создание действий
 	CreateActions();
 
@@ -276,28 +274,18 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortOrder)
+void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 {
 	QString FieldName = SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString();
-	QString OrderField = MetaTable->Alias + '_' + FieldName.toLower();
-	QueryModel->SetOrderField(OrderField, FieldName);
-	QueryModel->SetOrderSort(SortOrder);
-	SqlModel->SetCurrentSorting(LogicalIndex, SortOrder);
-
+	QueryModel->SetOrderField(MetaTable->Alias + '_' + FieldName.toLower(), FieldName, Order);
+	SqlModel->SetSorting(LogicalIndex, Order);
+	
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING))
 	{
-		ISSortingBuffer::GetInstance().AddSorting(MetaTable->Name, FieldName, SortOrder);
+		ISSortingBuffer::GetInstance().AddSorting(MetaTable->Name, FieldName, Order);
 	}
 
-	if (BeginInstallSorting)
-	{
-		Update();
-	}
-
-	//Отсоединение и соединение нужно обязательно, иначе в этом методе произойдет рекурсия
-	disconnect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
-	TableView->horizontalHeader()->setSortIndicator(LogicalIndex, SortOrder);
-	connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
+	Update();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingDefault()
@@ -916,22 +904,6 @@ void ISListBaseForm::Edit()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Update()
 {
-	if (!BeginInstallSorting) //Если первичная сортировка ещё не была установлена (первая загрузка данных в таблицу)
-	{
-		ISSortingMetaTable *MetaSorting = ISSortingBuffer::GetInstance().GetSorting(MetaTable->Name);
-		if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её
-		{
-			SortingChanged(SqlModel->GetFieldIndex(MetaSorting->FieldName), static_cast<Qt::SortOrder>(MetaSorting->Sorting));
-		}
-		else //Сортировка не существует, использовать стандартную по коду (от меньшего к большему)
-		{
-			SortingChanged(0, Qt::AscendingOrder);
-		}
-
-		QueryModel->SetParentObjectIDClassFilter(GetParentObjectID());
-		BeginInstallSorting = true;
-	}
-
 	IsLoadingData = true;
 	SqlModel->Clear();
 	ModelThreadQuery->Execute(QueryModel->GetQueryText(), QueryModel->GetConditions());
@@ -1688,9 +1660,9 @@ void ISListBaseForm::CreateTableView()
 	TableView = new ISBaseTableView(this);
 	TableView->SetCornerText(LANG("Reduction.SerialNumber"));
 	TableView->SetCornerToolTip(LANG("OrdinalNumber"));
-	
 	connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
 	connect(TableView, &ISBaseTableView::CornerClicked, this, &ISListBaseForm::CornerButtonClicked);
+	connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
 	LayoutTableView->addWidget(TableView);
 
 	connect(TableView, &ISBaseTableView::doubleClicked, this, &ISListBaseForm::DoubleClickedTable);
@@ -1750,10 +1722,19 @@ void ISListBaseForm::CreateModels()
 	SqlModel->FillColumns();
 	SqlModel->SetShowToolTip(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWTOOLTIP));
 
+	QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
+	QueryModel->SetParentObjectIDClassFilter(GetParentObjectID());
+
+	ISSortingMetaTable *MetaSorting = ISSortingBuffer::GetInstance().GetSorting(MetaTable->Name);
+	if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её
+	{
+		SqlModel->SetSorting(MetaSorting->FieldName, MetaSorting->Order);
+		QueryModel->SetOrderField(MetaTable->Alias + '_' + MetaSorting->FieldName.toLower(), MetaSorting->FieldName, MetaSorting->Order);
+	}
+
 	TableView->setModel(SqlModel);
 	connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);//Это соединение обязательно должно быть после присваивания модели к QTableView
 
-	QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
 	HideSystemFields();
 
 	ModelThreadQuery = new ISModelThreadQuery(this);

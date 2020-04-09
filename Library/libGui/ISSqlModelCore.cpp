@@ -9,17 +9,18 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISSqlModelCore::ISSqlModelCore(PMetaTable *meta_table, QObject *parent) : QAbstractItemModel(parent)
+ISSqlModelCore::ISSqlModelCore(PMetaTable *meta_table, QObject *parent)
+	: QAbstractItemModel(parent),
+	MetaTable(meta_table),
+	SortingColumn(0),
+	SortingOrder(Qt::AscendingOrder),
+	IsSystemIndex(-1),
+	IsDeletedIndex(-1),
+	ShowToolTip(false),
+	IconSortingUp(BUFFER_ICONS("Arrow.Up")),
+	IconSortingDown(BUFFER_ICONS("Arrow.Down"))
 {
-	MetaTable = meta_table;
-	CurrentSortingColumn = -1;
-	CurrentColumnSortOrder = Qt::AscendingOrder;
-	IsSystemIndex = -1;
-	IsDeletedIndex = -1;
-	ShowToolTip = false;
 	
-	IconSortingUp = BUFFER_ICONS("Arrow.Up");
-	IconSortingDown = BUFFER_ICONS("Arrow.Down");
 }
 //-----------------------------------------------------------------------------
 ISSqlModelCore::~ISSqlModelCore()
@@ -259,10 +260,15 @@ void ISSqlModelCore::SetIsSystemIndex(int IndexColumn)
 	IsSystemIndex = IndexColumn;
 }
 //-----------------------------------------------------------------------------
-void ISSqlModelCore::SetCurrentSorting(int IndexColumn, Qt::SortOrder Order)
+void ISSqlModelCore::SetSorting(const QString &FieldName, Qt::SortOrder Order)
 {
-	CurrentSortingColumn = IndexColumn;
-	CurrentColumnSortOrder = Order;
+	SetSorting(GetFieldIndex(FieldName), Order);
+}
+//-----------------------------------------------------------------------------
+void ISSqlModelCore::SetSorting(int IndexColumn, Qt::SortOrder Order)
+{
+	SortingColumn = IndexColumn;
+	SortingOrder = Order;
 }
 //-----------------------------------------------------------------------------
 void ISSqlModelCore::SetShowToolTip(bool show_tooltip)
@@ -293,13 +299,13 @@ bool ISSqlModelCore::GetIsDeleted(int RowIndex) const
 QIcon ISSqlModelCore::GetSortingIcon(int Section) const
 {
 	QIcon SortingIcon;
-	if (Section == CurrentSortingColumn)
+	if (Section == SortingColumn)
 	{
-		if (CurrentColumnSortOrder == Qt::AscendingOrder)
+		if (SortingOrder == Qt::AscendingOrder)
 		{
 			SortingIcon = IconSortingUp;
 		}
-		else if (CurrentColumnSortOrder == Qt::DescendingOrder)
+		else if (SortingOrder == Qt::DescendingOrder)
 		{
 			SortingIcon = IconSortingDown;
 		}

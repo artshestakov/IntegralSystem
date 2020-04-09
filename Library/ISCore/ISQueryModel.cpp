@@ -207,7 +207,7 @@ void ISQueryModel::ClearSearchFilter()
 	SearchFilter.clear();
 }
 //-----------------------------------------------------------------------------
-void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &FieldName)
+void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &FieldName, Qt::SortOrder Order)
 {
 	PMetaField *MetaField = MetaTable->GetField(FieldName);
 	QString FieldQueryText = MetaField->QueryText;
@@ -226,11 +226,7 @@ void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &Fi
 			OrderField = FullFieldName;
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-void ISQueryModel::SetOrderSort(Qt::SortOrder order_sort)
-{
-	OrderSort = order_sort;
+	OrderSort = Order;
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::SetLimit(int limit)

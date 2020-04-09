@@ -26,8 +26,8 @@ public:
 protected:
 	void keyPressEvent(QKeyEvent *e);
 	void keyReleaseEvent(QKeyEvent *e);
-	void wheelEvent(QWheelEvent *e);
-	void paintEvent(QPaintEvent *e);
+	void wheelEvent(QWheelEvent *WheelEvent);
+	void paintEvent(QPaintEvent *PaintEvent);
 	
 private:
 	bool SelectionScroll;
