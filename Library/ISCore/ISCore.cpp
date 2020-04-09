@@ -167,7 +167,14 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 		qSelectName.BindValue(":ObjectID", ObjectID);
 		if (qSelectName.ExecuteFirst())
 		{
-			ObjectName = qSelectName.ReadColumn(0).toString();
+			QVariant Value = qSelectName.ReadColumn(0);
+			switch (Value.type())
+			{
+			case QVariant::Date: ObjectName = Value.toDate().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT)); break;
+			case QVariant::Time: ObjectName = Value.toTime().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT)); break;
+			case QVariant::DateTime: ObjectName = Value.toDateTime().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT) + SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT)); break;
+			default: ObjectName = qSelectName.ReadColumn(0).toString();
+			}
 		}
 	}
 	return ObjectName;
