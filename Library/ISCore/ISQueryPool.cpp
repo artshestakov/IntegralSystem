@@ -6,7 +6,8 @@
 //-----------------------------------------------------------------------------
 ISQueryPool::ISQueryPool()
 	: ErrorString(NO_ERROR_STRING),
-	IsRunning(false)
+	IsRunning(false),
+	IsFinished(false)
 {
 	
 }
@@ -40,6 +41,12 @@ void ISQueryPool::Shutdown()
 		Mutex.lock();
 		IsRunning = false;
 		Mutex.unlock();
+
+		while (!IsFinished)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+		int x = 0;
 	}
 }
 //-----------------------------------------------------------------------------
@@ -95,5 +102,6 @@ void ISQueryPool::StartWorker()
 		}
 	}
 	ISDatabase::Instance().Disconnect(CONNECTION_QUERY_POOL);
+	IsFinished = true;
 }
 //-----------------------------------------------------------------------------

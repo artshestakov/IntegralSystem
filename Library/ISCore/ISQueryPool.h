@@ -28,6 +28,7 @@ private:
 private:
 	QString ErrorString;
 	bool IsRunning;
+	bool IsFinished;
 	std::mutex Mutex;
 	std::queue<ISQueryPoolObject> Queue;
 };
