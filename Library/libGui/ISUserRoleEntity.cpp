@@ -183,7 +183,7 @@ bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 	}
 	else
 	{
-		Result = VectorContains(SubSystems, SubSystemUID);
+		Result = ISAlgorithm::VectorContains(SubSystems, SubSystemUID);
 	}
 	return Result;
 }
@@ -197,7 +197,7 @@ bool ISUserRoleEntity::CheckAccessTable(const ISUuid &TableUID, const ISUuid &Ac
 	}
 	else
 	{
-		Result = VectorContains(Tables.value(TableUID), AccessUID);
+		Result = ISAlgorithm::VectorContains(Tables.value(TableUID), AccessUID);
 	}
 	return Result;
 }
@@ -211,7 +211,7 @@ bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
 	}
 	else
 	{
-		Result = VectorContains(Specials, SpecialAccessUID);
+		Result = ISAlgorithm::VectorContains(Specials, SpecialAccessUID);
 	}
 	return Result;
 }

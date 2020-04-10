@@ -10,9 +10,10 @@ class ISColumnSizer
 public:
 	static ISColumnSizer& Instance();
 
+	QString GetErrorString() const; //Получить описание ошибки
 	bool Initialize();
-	void Save(); //Сохранить размеры в базу данных
-	void Clear(); //Очистить размеры
+	bool Save(); //Сохранить размеры в базу данных
+	bool Clear(); //Очистить размеры
 
 	void SetColumnSize(const QString &TableName, const QString &FieldName, int Size); //Изменить размер поля в таблице
 	int GetColumnSize(const QString &TableName, const QString &FieldName) const; //Получить размер поля в таблице
@@ -24,7 +25,8 @@ private:
 	ISColumnSizer& operator=(ISColumnSizer const&) { return *this; };
 
 private:
-	QMap<QString, ISColumnSizeItem *> Tables;
+	QString ErrorString;
+	std::map<QString, ISColumnSizeItem*> Tables;
 };
 //-----------------------------------------------------------------------------
 #endif

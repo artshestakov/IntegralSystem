@@ -1,5 +1,6 @@
 #include "ISColumnSizer.h"
 #include "ISQuery.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
@@ -24,6 +25,7 @@ static QString QD_COLUMN_SIZE = PREPARE_QUERY("DELETE FROM _columnsize "
 											  "WHERE clsz_user = currentuserid()");
 //-----------------------------------------------------------------------------
 ISColumnSizer::ISColumnSizer()
+	: ErrorString(NO_ERROR_STRING)
 {
 
 }
@@ -32,7 +34,7 @@ ISColumnSizer::~ISColumnSizer()
 {
 	while (!Tables.empty())
 	{
-		delete Tables.take(Tables.keys().back());
+		delete ISAlgorithm::MapTakeFront<QString, ISColumnSizeItem*>(Tables);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -40,6 +42,11 @@ ISColumnSizer& ISColumnSizer::Instance()
 {
 	static ISColumnSizer ColumnSizer;
 	return ColumnSizer;
+}
+//-----------------------------------------------------------------------------
+QString ISColumnSizer::GetErrorString() const
+{
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 bool ISColumnSizer::Initialize()
@@ -53,8 +60,7 @@ bool ISColumnSizer::Initialize()
 			QString TableName = qSelect.ReadColumn("clsz_tablename").toString();
 			QString FieldName = qSelect.ReadColumn("clsz_fieldname").toString();
 			int FieldSize = qSelect.ReadColumn("clsz_size").toInt();
-
-			if (Tables.contains(TableName))
+			if (Tables.count(TableName))
 			{
 				Tables[TableName]->Fields[FieldName] = FieldSize;
 			}
@@ -62,16 +68,21 @@ bool ISColumnSizer::Initialize()
 			{
 				ISColumnSizeItem *ColumnSizeItem = new ISColumnSizeItem();
 				ColumnSizeItem->Fields[FieldName] = FieldSize;
-				Tables.insert(TableName, ColumnSizeItem);
+				Tables.emplace(TableName, ColumnSizeItem);
 			}
 		}
+	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
 	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISColumnSizer::Save()
+bool ISColumnSizer::Save()
 {
-	for (const auto &TableItem : Tables.toStdMap())
+	bool Result = true;
+	for (const auto &TableItem : Tables)
 	{
 		if (TableItem.second->ModificationFlag)
 		{
@@ -80,42 +91,53 @@ void ISColumnSizer::Save()
 				ISQuery qSelect(QS_COLUMN_SIZE_COUNT);
 				qSelect.BindValue(":TableName", TableItem.first);
 				qSelect.BindValue(":FieldName", FieldItem.first);
-				if (qSelect.ExecuteFirst())
+				Result = qSelect.ExecuteFirst();
+				if (!Result)
 				{
-					if (qSelect.ReadColumn("count").toInt())
-					{
-						ISQuery qUpdate(QU_COLUMN_SIZE);
-						qUpdate.BindValue(":Size", FieldItem.second);
-						qUpdate.BindValue(":TableName", TableItem.first);
-						qUpdate.BindValue(":FieldName", FieldItem.first);
-						qUpdate.Execute();
-					}
-					else
-					{
-						ISQuery qInsert(QI_COLUMN_SIZE);
-						qInsert.BindValue(":TableName", TableItem.first);
-						qInsert.BindValue(":FieldName", FieldItem.first);
-						qInsert.BindValue(":Size", FieldItem.second);
-						qInsert.Execute();
-					}
+					ErrorString = qSelect.GetErrorString();
+					break;
 				}
+
+				ISQuery qUpsert(qSelect.ReadColumn("count").toInt() ? QU_COLUMN_SIZE : QI_COLUMN_SIZE);
+				qUpsert.BindValue(":TableName", TableItem.first);
+				qUpsert.BindValue(":FieldName", FieldItem.first);
+				qUpsert.BindValue(":Size", FieldItem.second);
+				Result = qUpsert.Execute();
+				if (!Result)
+				{
+					ErrorString = qUpsert.GetErrorString();
+					break;
+				}
+			}
+
+			if (!Result)
+			{
+				break;
 			}
 		}
 	}
+
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISColumnSizer::Clear()
+bool ISColumnSizer::Clear()
 {
-	ISQuery(QD_COLUMN_SIZE).Execute();
+	ISQuery qDelete(QD_COLUMN_SIZE);
+	bool Result = qDelete.Execute();
+	if (!Result)
+	{
+		ErrorString = qDelete.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &FieldName, int Size)
 {
-	ISColumnSizeItem *ColumnSizeItem = Tables.value(TableName);
+	ISColumnSizeItem *ColumnSizeItem = Tables[TableName];
 	if (!ColumnSizeItem)
 	{
 		ColumnSizeItem = new ISColumnSizeItem();
-		Tables.insert(TableName, ColumnSizeItem);
+		Tables[TableName] = ColumnSizeItem;
 	}
 	ColumnSizeItem->Fields[FieldName] = Size;
 	ColumnSizeItem->ModificationFlag = true;
@@ -123,12 +145,11 @@ void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &Field
 //-----------------------------------------------------------------------------
 int ISColumnSizer::GetColumnSize(const QString &TableName, const QString &FieldName) const
 {
-	int Result = 0;
-	ISColumnSizeItem *ColumnSizeItem = Tables.value(TableName);
-	if (ColumnSizeItem)
+	std::map<QString, ISColumnSizeItem*>::const_iterator It = Tables.find(TableName);
+	if (It != Tables.end())
 	{
-		Result = ColumnSizeItem->Fields[FieldName];
+		return It->second->Fields[FieldName];
 	}
-	return Result;
+	return 0;
 }
 //-----------------------------------------------------------------------------

@@ -21,7 +21,7 @@ bool CGResource::InsertResource(PMetaResource *MetaResource, QString &ErrorStrin
 	int CountParameters = MetaResource->Parameters.size();
 	for (int i = 0; i < CountParameters; ++i)
 	{
-		QString FieldName = TableAlias + '_' + ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
+		QString FieldName = TableAlias + '_' + ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
 		InsertText += FieldName + ", ";
 		ValuesText += ':' + FieldName + ", ";
 	}
@@ -40,8 +40,8 @@ bool CGResource::InsertResource(PMetaResource *MetaResource, QString &ErrorStrin
 
 	for (int i = 0; i < CountParameters; ++i)
 	{
-		QString FieldName = TableAlias + '_' + ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
-		QString FieldValue = ConvertMapToValues(MetaResource->Parameters)[i];
+		QString FieldName = TableAlias + '_' + ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
+		QString FieldValue = ISAlgorithm::ConvertMapToValues(MetaResource->Parameters)[i];
 		bool BindValue = qInsertResource.BindValue(':' + FieldName, FieldValue);
 		IS_ASSERT(BindValue, QString("Not BindValue. TableName: %1. FieldName: %2").arg(MetaResource->TableName).arg(FieldName));
 	}
@@ -92,7 +92,7 @@ bool CGResource::UpdateResource(PMetaResource *MetaResource, QString &ErrorStrin
 			continue;
 		}
 
-		if (!VectorContains(ConvertMapToKeys(MetaResource->Parameters), MetaField->Name))
+		if (!ISAlgorithm::VectorContains(ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters), MetaField->Name))
 		{
 			bool ResetUserField = ResetResourceField(TableName, TableAlias, TableAlias + '_' + MetaField->Name, ResourceUID, ErrorString);
 			IS_ASSERT(ResetUserField, QString("Not reset resource field. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(TableAlias + '_' + MetaField->Name).arg(ResourceUID).arg(ErrorString));

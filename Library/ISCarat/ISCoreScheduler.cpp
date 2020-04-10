@@ -73,7 +73,7 @@ void ISCoreScheduler::ClearFiles()
 				{
 					while (qSelect.Next())
 					{
-						VectorRemoveAll(VectorInt, qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name).toInt());
+						ISAlgorithm::VectorRemoveAll(VectorInt, qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name).toInt());
 					}
 				}
 			}

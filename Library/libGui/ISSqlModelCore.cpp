@@ -91,7 +91,7 @@ void ISSqlModelCore::RemoveColumn(PMetaField *MetaField)
 {
 	beginResetModel();
 	
-	int Index = VectorIndexOf(Fields, MetaField);
+	int Index = ISAlgorithm::VectorIndexOf(Fields, MetaField);
 	Fields.erase(Fields.begin() + Index);
 
 	for (int i = 0; i < Records.size(); ++i)

@@ -8,7 +8,6 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISTypedefs.h"
-#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 struct ISMetaDataType
 {

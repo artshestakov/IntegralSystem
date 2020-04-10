@@ -173,7 +173,7 @@ bool CGConfiguratorDelete::tables()
 		while (qSelectTables.Next()) //Обход таблиц базы данных
 		{
 			QString TableName = qSelectTables.ReadColumn("table_name").toString();
-			if (!VectorContains(VectorString, TableName)) //Если таблица из базы данных отсутствует в мета-данных
+			if (!ISAlgorithm::VectorContains(VectorString, TableName)) //Если таблица из базы данных отсутствует в мета-данных
 			{
 				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName))) //Удаление таблицы
 				{
@@ -237,7 +237,7 @@ bool CGConfiguratorDelete::fields()
 			QString ColumnName = qSelectColumns.ReadColumn("column_name").toString();
 			if (Map.contains(TableName))
 			{
-				if (!VectorContains(Map.value(TableName), ColumnName)) //Если поле из базы данных отсутствует в мета-данных
+				if (!ISAlgorithm::VectorContains(Map.value(TableName), ColumnName)) //Если поле из базы данных отсутствует в мета-данных
 				{
 					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName))) //Удаление поля
 					{
@@ -299,7 +299,7 @@ bool CGConfiguratorDelete::resources()
 			while (qSelect.Next())
 			{
 				ISUuid ResourceUID = qSelect.ReadColumn(MetaTable->Alias + "_uid");
-				if (!VectorContains<QString>(UIDs, ResourceUID)) //Если ресурс из базы не найден в мета-данных
+				if (!ISAlgorithm::VectorContains<QString>(UIDs, ResourceUID)) //Если ресурс из базы не найден в мета-данных
 				{
 					ShowResourceConsole(MetaTable, ResourceUID);
 					if (ISConsole::Question(QString("Remove resource \"%1\" in table \"%2\"?").arg(ResourceUID).arg(TableName)))

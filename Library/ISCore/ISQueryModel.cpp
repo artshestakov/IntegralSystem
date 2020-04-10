@@ -220,7 +220,7 @@ void ISQueryModel::CreateQuerySelectSystemFields()
 	for (int i = 1, c = MetaTable->SystemFields.size(); i < c; ++i) //Обход системных полей и включение их в запрос
 	{
 		PMetaField *SystemField = MetaTable->SystemFields[i];
-		if (!VectorContains(MetaTable->SystemFieldsVisible, SystemField))
+		if (!ISAlgorithm::VectorContains(MetaTable->SystemFieldsVisible, SystemField))
 		{
 			if (SystemField->HideFromList)
 			{

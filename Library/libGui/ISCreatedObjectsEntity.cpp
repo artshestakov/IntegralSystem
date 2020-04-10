@@ -35,7 +35,7 @@ void ISCreatedObjectsEntity::UnregisterForm(const QString &FormUID)
 //-----------------------------------------------------------------------------
 bool ISCreatedObjectsEntity::CheckExistForms()
 {
-	std::vector<QWidget *> Forms = ConvertMapToValues<ISUuid, QWidget *>(ObjectForms);
+	std::vector<QWidget *> Forms = ISAlgorithm::ConvertMapToValues<ISUuid, QWidget *>(ObjectForms);
 	int CountNotSaved = 0;
 	QString DetailedText;
 

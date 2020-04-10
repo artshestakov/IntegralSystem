@@ -91,7 +91,7 @@ bool ISFavorites::DeleteFavorite(const QString &TableName, int ObjectID)
 	bool Executed = qDeleteFavorite.Execute();
 	if (Executed)
 	{
-		Favorites[TableName].erase(Favorites[TableName].begin() + VectorIndexOf(Favorites[TableName], ObjectID));
+		Favorites[TableName].erase(Favorites[TableName].begin() + ISAlgorithm::VectorIndexOf(Favorites[TableName], ObjectID));
 		if (Favorites[TableName].empty())
 		{
 			Favorites.take(TableName);
@@ -118,7 +118,7 @@ bool ISFavorites::CheckExistFavoriteObject(const QString &TableName, int ObjectI
 	bool Result = Favorites.contains(TableName);
 	if (Result)
 	{
-		Result = VectorContains(Favorites[TableName], ObjectID);
+		Result = ISAlgorithm::VectorContains(Favorites[TableName], ObjectID);
 	}
 	return Result;
 }

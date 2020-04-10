@@ -34,7 +34,7 @@ ISSortingBuffer::~ISSortingBuffer()
 {
 	while (!Sortings.empty())
 	{
-		delete VectorTakeBack<ISSortingMetaTable *>(Sortings);
+		delete ISAlgorithm::VectorTakeBack<ISSortingMetaTable *>(Sortings);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -128,12 +128,12 @@ void ISSortingBuffer::Initialize()
 //-----------------------------------------------------------------------------
 bool ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
 {
-	ISQuery qSelectSorting(QS_SORTING_EXIST);
-	qSelectSorting.BindValue(":TableName", MetaSorting->TableName);
-	bool Result = qSelectSorting.ExecuteFirst();
+	ISQuery qSelect(QS_SORTING_EXIST);
+	qSelect.BindValue(":TableName", MetaSorting->TableName);
+	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
-		ISQuery qUpsert(qSelectSorting.ReadColumn("count").toInt() > 0 ? QU_SORTING : QI_SORTING);
+		ISQuery qUpsert(qSelect.ReadColumn("count").toInt() > 0 ? QU_SORTING : QI_SORTING);
 		qUpsert.BindValue(":TableName", MetaSorting->TableName);
 		qUpsert.BindValue(":FieldName", MetaSorting->FieldName);
 		qUpsert.BindValue(":Sorting", MetaSorting->Order);
@@ -142,6 +142,10 @@ bool ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
 		{
 			ErrorString = qUpsert.GetErrorString();
 		}
+	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
 	}
 	return Result;
 }

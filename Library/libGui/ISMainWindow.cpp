@@ -304,17 +304,13 @@ void ISMainWindow::BeforeClose()
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
 	}
 
-	/*if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
-	{
-		ISColumnSizer::Instance().Save();
-	}
-	else
-	{
-		ISColumnSizer::Instance().Clear();
-	}*/
-	SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ?
+	Result = SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ?
 		ISColumnSizer::Instance().Save() :
 		ISColumnSizer::Instance().Clear();
+	if (!Result)
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)

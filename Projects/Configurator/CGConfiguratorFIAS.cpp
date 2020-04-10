@@ -336,7 +336,7 @@ void CGConfiguratorFIAS::Insert(PMetaTable *MetaTable, const ISStringMap &String
 	QString SqlInsert = "INSERT INTO " + MetaTable->Name + '(';
 	QString SqlValues = "VALUES(";
 
-	for (const QString &FieldName : ConvertMapToKeys<QString>(StringMap))
+	for (const QString &FieldName : ISAlgorithm::ConvertMapToKeys<QString>(StringMap))
 	{
 		SqlInsert += MetaTable->Alias + '_' + FieldName + ", ";
 		SqlValues += ':' + FieldName + ", ";

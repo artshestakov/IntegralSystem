@@ -136,7 +136,7 @@ void ISCoreAsteriskRecord::ReadyRead()
 	int Sended = 0; //Размер отправленной информации
 	while (!Vector.empty()) //Отправка файла
 	{
-		QByteArray ByteArray = VectorTakeFront(Vector); //Забираем из вектора первый блок
+		QByteArray ByteArray = ISAlgorithm::VectorTakeFront(Vector); //Забираем из вектора первый блок
 		if (TcpSocket->isOpen()) //Если сокет открыт
 		{
 			TcpSocket->write(ByteArray);

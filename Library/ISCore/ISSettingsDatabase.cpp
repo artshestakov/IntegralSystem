@@ -56,15 +56,15 @@ void ISSettingsDatabase::Initialize()
 		PMetaField *MetaField = MetaTable->AllFields[i];
 		QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();
 
-		if (VectorContains(VectorString, FieldName))
+		if (ISAlgorithm::VectorContains(VectorString, FieldName))
 		{
 			SqlText += FieldName + " AS \"" + MetaField->Name + "\", \n";
-			VectorString[VectorIndexOf(VectorString, FieldName)] = MetaField->Name;
+			VectorString[ISAlgorithm::VectorIndexOf(VectorString, FieldName)] = MetaField->Name;
 		}
 		else
 		{
 			ISLOGGER_WARNING(QString("Not found column '%1' in table _SettingsDatabase").arg(FieldName));
-			VectorRemoveAll(VectorString, FieldName);
+			ISAlgorithm::VectorRemoveAll(VectorString, FieldName);
 		}
 	}
 

@@ -110,6 +110,8 @@
   <Local Name="Message.Error.ErrorQuerySQL" Russian="Произошла ошибка SQL-запроса!"/>
   <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
   <Local Name="Message.Error.SaveSortingBuffer" Russian="Не удалось сохранить сортировки полей."/>
+  <Local Name="Message.Error.SaveColumnSizer" Russian="Не удалось сохранить размерность полей."/>
+  <Local Name="Message.Error.InitializeColumnSizer" Russian="Не удалось загрузить размеры полей."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>

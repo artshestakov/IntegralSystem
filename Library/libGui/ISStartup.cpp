@@ -178,6 +178,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.ColumnSizer"));
 	if (!ISColumnSizer::Instance().Initialize())
 	{
+		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
 		return EXIT_FAILURE;
 	}
 

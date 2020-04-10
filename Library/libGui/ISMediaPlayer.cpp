@@ -41,7 +41,7 @@ void ISMediaPlayer::StateChanged(QMediaPlayer::State NewState)
 {
 	if (!Queue.empty())
 	{
-		Play(VectorTakeFront(Queue));
+		Play(ISAlgorithm::VectorTakeFront(Queue));
 	}
 }
 //-----------------------------------------------------------------------------

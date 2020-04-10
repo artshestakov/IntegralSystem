@@ -52,7 +52,7 @@ bool ISExportCSV::Export()
 		for (int i = 0; i < Fields.size(); ++i) //Обход выбранных для экспорта полей
 		{
 			QString FieldName = Fields.at(i);
-			if (VectorContains(Fields, FieldName))
+			if (ISAlgorithm::VectorContains(Fields, FieldName))
 			{
 				QString LocalName = Model->GetFieldLocalName(FieldName);
 				HeaderString.append(LocalName);
@@ -83,7 +83,7 @@ bool ISExportCSV::Export()
 
 		if (!SelectedRows.empty()) //Если есть выделенные строки
 		{
-			if (!VectorContains(SelectedRows, Row))
+			if (!ISAlgorithm::VectorContains(SelectedRows, Row))
 			{
 				continue;
 			}
