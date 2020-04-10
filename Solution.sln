@@ -25,7 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{EE400866
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{33F902D5-EB73-4A94-85ED-91278C95C687}"
 	ProjectSection(SolutionItems) = preProject
-		Resources\CSS\Banner.ProgressBar.css = Resources\CSS\Banner.ProgressBar.css
 		Resources\CSS\ISBaseTableView.css = Resources\CSS\ISBaseTableView.css
 		Resources\CSS\ISButtonNotify.Blink.css = Resources\CSS\ISButtonNotify.Blink.css
 		Resources\CSS\ISButtonNotify.White.css = Resources\CSS\ISButtonNotify.White.css
@@ -328,7 +327,7 @@ Global
 		{B5362F26-1F58-4E99-9E7B-EA5956EEEE4B} = {04D21698-EEDE-414A-9D4F-62C37E85A4A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

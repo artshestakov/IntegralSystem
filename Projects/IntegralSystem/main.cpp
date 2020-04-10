@@ -29,12 +29,15 @@ int main(int argc, char *argv[])
 		return EXIT_SUCCESS;
 	}
 
-	ISSplashScreen::GetInstance().show();
 	QString UserLogin = AuthForm->GetEnteredLogin();
 	QString UserPassword = AuthForm->GetEnteredPassword();
 	delete AuthForm;
 
-	int Startup = ISStartup::Startup(UserLogin, UserPassword);
+	ISSplashScreen SplashScreen;
+	SplashScreen.show();
+	SplashScreen.SetMessage(LANG("Banner.StartupSystem"));
+
+	int Startup = ISStartup::Startup(&SplashScreen, UserLogin, UserPassword);
 	if (Startup) //Если при запуске произошла ошибка
 	{
 		ISGui::ExitApplication();
@@ -43,7 +46,7 @@ int main(int argc, char *argv[])
 	}
 	else //Запуск прошёл успешно
 	{
-		ISSplashScreen::GetInstance().ResetPixmap();
+		SplashScreen.ResetPixmap();
 	}
 	return Applicaton.exec();
 }

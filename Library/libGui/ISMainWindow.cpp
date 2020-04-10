@@ -179,7 +179,8 @@ void ISMainWindow::CreateStackWidget()
 	GetMainLayout()->addWidget(StackedWidget);
 	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::GetInstance().GetParagraphs())
 	{
-		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->LocalName));
+		//???
+		//ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->LocalName));
 
 		int ObjectType = QMetaType::type((MetaParagraph->ClassName + SYMBOL_STAR).toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("Invalid object type from paragraph: %1").arg(MetaParagraph->Name));
@@ -284,9 +285,10 @@ void ISMainWindow::BeforeClose()
 {
 	hide();
 
-	ISSplashScreen::GetInstance().DefaultPixmap();
-	ISSplashScreen::GetInstance().show();
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication"));
+	//???
+	//ISSplashScreen::GetInstance().DefaultPixmap();
+	//ISSplashScreen::GetInstance().show();
+	//ISSplashScreen::GetInstance().SetMessage(LANG("Banner.ShutdownSystem"));
 	ISProtocol::ExitApplication();
 
 	bool Result = SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ?

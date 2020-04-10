@@ -7,7 +7,7 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)
+ISSplashScreen::ISSplashScreen() : QSplashScreen()
 {
 	setFont(ISDefines::Gui::FONT_TAHOMA_12);
 	setCursor(CURSOR_WAIT);
@@ -21,19 +21,11 @@ ISSplashScreen::ISSplashScreen(QWidget *parent) : QSplashScreen(parent)
 	QLabel *LabelCopyright = new QLabel(this);
 	LabelCopyright->setFont(ISDefines::Gui::FONT_TAHOMA_8);
 	LabelCopyright->setText(LANG("SplashSceen.Copyright"));
-	MainLayout->addWidget(LabelCopyright, 0, Qt::AlignRight);
+	MainLayout->addWidget(LabelCopyright, 0, Qt::AlignCenter);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(0, 0, 0, 15);
+	Layout->setContentsMargins(0, 0, 0, 35);
 	MainLayout->addLayout(Layout);
-
-	ProgressBar = new QProgressBar(this);
-	ProgressBar->setValue(0);
-	ProgressBar->setRange(0, 100);
-	ProgressBar->setTextVisible(false);
-	ProgressBar->setStyleSheet(STYLE_SHEET("Banner.ProgressBar"));
-	ProgressBar->setMaximumHeight(25);
-	Layout->addWidget(ProgressBar);
 }
 //-----------------------------------------------------------------------------
 ISSplashScreen::~ISSplashScreen()
@@ -41,32 +33,10 @@ ISSplashScreen::~ISSplashScreen()
 
 }
 //-----------------------------------------------------------------------------
-ISSplashScreen& ISSplashScreen::GetInstance()
-{
-	static ISSplashScreen SplashScreen;
-	return SplashScreen;
-}
-//-----------------------------------------------------------------------------
 void ISSplashScreen::SetMessage(const QString &Message)
 {
-	int Value = ProgressBar->value();
-	if (Value == 100)
-	{
-		Value = 0;
-	}
-	else
-	{
-		Value += 5;
-	}
-	ProgressBar->setValue(Value);
-
-	ISLOGGER_INFO(Message);
 	showMessage(Message, Qt::AlignHCenter | Qt::AlignBottom, ISDefines::Gui::COLOR_SPLASH_SCREEN_TEXT);
 	activateWindow();
-
-	ISGui::RepaintWidget(ProgressBar, false);
-	ISGui::RepaintWidget(this, false);
-	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
 void ISSplashScreen::ResetPixmap()

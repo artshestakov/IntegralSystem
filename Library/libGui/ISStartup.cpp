@@ -1,6 +1,5 @@
 #include "ISStartup.h"
 #include "ISConstants.h"
-#include "ISSplashScreen.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
@@ -49,10 +48,9 @@ ISStartup::~ISStartup()
 
 }
 //-----------------------------------------------------------------------------
-int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
+int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, const QString &UserPassword)
 {
 	//Проверка всех запросов
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.PrepareQueries"));
 	if (!ISQueryText::Instance().CheckAllQueries())
 	{
 		return EXIT_FAILURE;
@@ -61,7 +59,6 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISObjects::GetInstance().Initialize();
 
 	//Проверка введенных данных пользователем
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CheckCurrentUser"));
 	ISQuery qSelectUser(QS_USER_CHECK);
 	qSelectUser.BindValue(":Login", UserLogin);
 	if (qSelectUser.ExecuteFirst())
@@ -74,15 +71,12 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	}
 
 	//Загрузка мета-данных о пользователе
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.MetaDataCurrentUser"));
 	ISMetaUser::Instance().Initialize(UserLogin, UserPassword);
 
 	//Инициализация мета-данных
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.MetaData"));
 	ISMetaData::GetInstanse().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false);
 
 	//Инициализация настроек базы данных
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.SettingsDatabase"));
 	ISSettingsDatabase::GetInstance().Initialize();
 	ISSettingsDatabase::GetInstance().InitializedSystemParameters();
 
@@ -107,25 +101,20 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	}
 
 	//Инициализация прав доступа
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.UserRoles"));
 	ISUserRoleEntity::GetInstance().Initialize();
 
 	//Загрузка мета-данных о системах и подсистемах
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.SystemsAndSubSystems"));
 	ISMetaSystemsEntity::GetInstance().Initialize();
 
 	//Инициализация настроек
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.SettingsUser"));
 	ISSettings::GetInstance();
 
 	//Инициализация параграфов
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Paragraphs"));
 	ISParagraphEntity::GetInstance();
 
 	ISQueryPool::Instance().Start();
 
 	//Инициалищация печати
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Printing"));
 	ISPrintingEntity::GetInstance();
 
 	if (!ISMetaUser::Instance().UserData->System) //Если пользователь НЕ СИСТЕМНЫЙ
@@ -163,19 +152,15 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	}
 
 	//Инициализация нотификаций
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Notification"));
 	ISNotifySender::GetInstance().Initialize();
 
 	//Инициализация избранного
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.Favorites"));
 	ISFavorites::GetInstance().Initialize();
 
 	//Инициализация сортировок
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.UserSortings"));
 	ISSortingBuffer::Instance();
 
 	//Инициализация размеров колонок
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.ColumnSizer"));
 	if (!ISColumnSizer::Instance().Initialize())
 	{
 		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
@@ -183,15 +168,12 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	}
 
 	//Инициализация внешних инструментов
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.ExternalTools"));
 	ISFastAccessEntity::GetInstance().LoadExternalTools();
 
 	//Инициализация создания записей
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.CreateRecords"));
 	ISFastAccessEntity::GetInstance().LoadCreateRecords();
 
 	//Иницилазация устройств
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.InitializeDevice"));
 	ISDeviceEntity::GetInstance().Initialize();
 
 	if (!ISMetaUser::Instance().UserData->System)
@@ -200,27 +182,23 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 		{
 			if (ISMetaUser::Instance().UserData->Birthday == QDate::currentDate())
 			{
-				ISSplashScreen::GetInstance().hide();
+				SplashScreen->hide();
 				ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO("HappyBirthday"));
 				ISMessageBox::ShowInformation(nullptr, LANG("HappyBirthday").arg(ISMetaUser::Instance().UserData->FullName));
+				SplashScreen->show();
 			}
 		}
 	}
 
 	//Фиксация входа в протоколе
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.RegisterEnterProtocol"));
 	ISProtocol::EnterApplication();
 
 	ISObjects::GetInstance().GetInterface()->BeforeShowMainWindow();
-
-	//Создание главной формы
-	ISSplashScreen::GetInstance().show();
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow"));
-
 	ISProperty::Instance().SetValue(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
 
+	//Создание главной формы
 	ISMainWindow *MainWindow = new ISMainWindow();
-	ISSplashScreen::GetInstance().hide();
+	SplashScreen->hide();
 
 	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_MAINWINDOWMAXIMIZE))
 	{
@@ -261,7 +239,6 @@ bool ISStartup::CheckAccessDatabase(const QString &Login)
 	bool AccessDatabase = SETTING_DATABASE_VALUE_BOOL(CONST_UID_DATABASE_SETTING_GENERAL_ACCESSDATABASE);
 	if (!AccessDatabase)
 	{
-		ISSplashScreen::GetInstance().hide();
 		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotAccessToDatabase"));
 	}
 	return AccessDatabase;
@@ -269,17 +246,12 @@ bool ISStartup::CheckAccessDatabase(const QString &Login)
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessAllowed()
 {
-	bool Result = true;
-
 	if (!ISMetaUser::Instance().UserData->AccessAllowed) //Если у пользователя нет права доступа
 	{
-		ISSplashScreen::GetInstance().hide();
 		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.User.NotAccessAllowed"));
-
-		Result = false;
+		return false;
 	}
-
-	return Result;
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckExistUserGroup()
@@ -292,12 +264,10 @@ bool ISStartup::CheckExistUserGroup()
 	{
 		if (!ISMetaUser::Instance().UserData->GroupID)
 		{
-			ISSplashScreen::GetInstance().hide();
 			ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.User.NotLinkWithGroup"));
 			return false;
 		}
 	}
-
 	return true;
 }
 //-----------------------------------------------------------------------------

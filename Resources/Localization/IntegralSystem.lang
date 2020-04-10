@@ -256,32 +256,6 @@
   <Local Name="Message.Question.StopFullTextSearch" Russian="Остановить поиск?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
   <Local Name="Message.Question.NotSettingAdministratorInSettingDatabase" Russian="ВНИМАНИЕ! В настроках базы данных не настроен администратор системы. Сделать настройку сейчас?"/>
-  
-  <!--Banner Startup User-->
-  <Local Name="Banner.Initialize.SettingsUser" Russian="Инициализация настроек пользователя..."/>
-  <Local Name="Banner.Initialize.SystemsAndSubSystems" Russian="Инициализация систем и подсистем..."/>
-  <Local Name="Banner.Initialize.Paragraphs" Russian="Инициализация параграфов..."/>
-  <Local Name="Banner.Initialize.ConfigurationInformation" Russian="Инициализация информации о текущей конфигурации..."/>
-  <Local Name="Banner.Initialize.MetaData" Russian="Инициализация мета-данных..."/>
-  <Local Name="Banner.Initialize.Printing" Russian="Инициализация печати..."/>
-  <Local Name="Banner.Initialize.ErrorConnectionDatabase" Russian="Ошибка подключения к базе данных."/>
-  <Local Name="Banner.Initialize.CheckCurrentUser" Russian="Проверка введенного логина..."/>
-  <Local Name="Banner.Initialize.PrepareQueries" Russian="Проверка запросов..."/>
-  <Local Name="Banner.Initialize.MetaDataCurrentUser" Russian="Загрузка данных о пользователе..."/>
-  <Local Name="Banner.Initialize.SettingsDatabase" Russian="Инициализация настроек базы данных..."/>
-  <Local Name="Banner.Initialize.UserRoles" Russian="Инициализация прав доступа..."/>
-  <Local Name="Banner.Initialize.Notification" Russian="Инициализация нотификаций..."/>
-  <Local Name="Banner.Initialize.Favorites" Russian="Инициализация избранных объектов..."/>
-  <Local Name="Banner.Initialize.UserSortings" Russian="Инициализация пользовательских сортировок..."/>
-  <Local Name="Banner.Initialize.ColumnSizer" Russian="Инициализация размеров колонок..."/>
-  <Local Name="Banner.Initialize.ExternalTools" Russian="Инициализация внешних инструментов..."/>
-  <Local Name="Banner.Initialize.CreateRecords" Russian="Инициализация быстрого создания записей..."/>
-  <Local Name="Banner.Initialize.InitializeDevice" Russian="Инициализация устройств..."/>
-  <Local Name="Banner.Initialize.RegisterEnterProtocol" Russian="Фиксация входа в систему..."/>
-  <Local Name="Banner.Initialize.OpeningMainWindow" Russian="Открытие главного окна..."/>
-  <Local Name="Banner.Initialize.OpeningMainWindow.CreateParagparh" Russian="Открытие главного окна: %1..."/>
-  <Local Name="Banner.Initialize.DownloadUpdate" Russian="Обновление загружено."/>
-  <Local Name="Banner.CloseApplication" Russian="Завершение работы программы..."/>
 
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
@@ -576,6 +550,8 @@
   <Local Name="SendNotify" Russian="Отправить уведомление"/>
   <Local Name="NotifyText" Russian="Текст уведмления"/>
   <Local Name="RememberMe" Russian="Запомнить меня"/>
+  <Local Name="Banner.StartupSystem" Russian="Запуск системы..."/>
+  <Local Name="Banner.ShutdownSystem" Russian="Завершение работы системы..."/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
