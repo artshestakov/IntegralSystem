@@ -12,9 +12,9 @@
   <_SubSystems UID="{EE8684B4-F174-47F8-9124-E21029713353}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="8" LocalName="Автомобили" Icon="Lists" TableName="Car"/>
   
   <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
-  <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Контрагенты" Icon="Lists" TableName="Counterparty"/>
-  <_SubSystems UID="{CA4CDA5C-34CD-445A-9B32-2E715D3CC85D}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Продажи" Icon="Lists" TableName="Sales"/>
-  <_SubSystems UID="{EDF8F5FF-F776-4D65-A72D-3149644D74C8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Поставщики" Icon="Lists" TableName="Suppliers"/>
-  <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="5" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
+  <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Контрагенты" Icon="Lists" TableName="Counterparty"/>
+  <_SubSystems UID="{CA4CDA5C-34CD-445A-9B32-2E715D3CC85D}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Продажи" Icon="Lists" TableName="Sales"/>
+  <_SubSystems UID="{EDF8F5FF-F776-4D65-A72D-3149644D74C8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Поставщики" Icon="Lists" TableName="Suppliers"/>
+  <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
 
 </XSR>

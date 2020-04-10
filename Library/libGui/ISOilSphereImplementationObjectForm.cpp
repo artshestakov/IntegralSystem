@@ -30,11 +30,6 @@ ISOilSphereImplementationObjectForm::~ISOilSphereImplementationObjectForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphereImplementationObjectForm::AfterShowEvent()
-{
-	ISObjectFormBase::AfterShowEvent();
-}
-//-----------------------------------------------------------------------------
 void ISOilSphereImplementationObjectForm::Saved(int ObjectID)
 {
 	ImplementationDetailListForm->setVisible(true);

@@ -14,7 +14,6 @@ public:
 	virtual ~ISOilSphereImplementationObjectForm();
 
 private:
-	void AfterShowEvent() override;
 	void Saved(int ObjectID);
 
 private:
