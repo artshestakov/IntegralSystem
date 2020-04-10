@@ -172,7 +172,7 @@ int ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	//Инициализация сортировок
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.UserSortings"));
-	ISSortingBuffer::GetInstance();
+	ISSortingBuffer::Instance();
 
 	//Инициализация размеров колонок
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.ColumnSizer"));

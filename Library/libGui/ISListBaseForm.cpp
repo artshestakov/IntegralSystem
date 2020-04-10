@@ -288,7 +288,7 @@ void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 	
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING))
 	{
-		ISSortingBuffer::GetInstance().AddSorting(MetaTable->Name, FieldName, Order);
+		ISSortingBuffer::Instance().AddSorting(MetaTable->Name, FieldName, Order);
 	}
 
 	Update();
@@ -1717,7 +1717,7 @@ void ISListBaseForm::CreateModels()
 	QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
 	QueryModel->SetParentObjectIDClassFilter(GetParentObjectID());
 
-	ISSortingMetaTable *MetaSorting = ISSortingBuffer::GetInstance().GetSorting(MetaTable->Name);
+	ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
 	if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её
 	{
 		SqlModel->SetSorting(MetaSorting->FieldName, MetaSorting->Order);

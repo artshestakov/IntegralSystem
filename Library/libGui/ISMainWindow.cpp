@@ -292,25 +292,29 @@ void ISMainWindow::BeforeClose()
 
 	ISSplashScreen::GetInstance().DefaultPixmap();
 	ISSplashScreen::GetInstance().show();
-	ISGui::ProcessEvents();
-
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.FixingExitToProtocol"));
+	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication"));
 	ISProtocol::ExitApplication();
 	ISOnline::GetInstance().Exit();
 
-	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.SaveUserSortings"));
-	ISSortingBuffer::GetInstance().SaveSortings();
-
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
+	bool Result = SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ?
+		ISSortingBuffer::Instance().SaveSortings() :
+		ISSortingBuffer::Instance().Clear();
+	if (!Result)
 	{
-		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ColumnSize.Save"));
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
+	}
+
+	/*if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
+	{
 		ISColumnSizer::Instance().Save();
 	}
 	else
 	{
-		ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication.ColumnSize.Clear"));
 		ISColumnSizer::Instance().Clear();
-	}
+	}*/
+	SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ?
+		ISColumnSizer::Instance().Save() :
+		ISColumnSizer::Instance().Clear();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)

@@ -109,6 +109,7 @@
   <Local Name="Message.Error.LoadingData" Russian="Ошибка загрузки данных."/>
   <Local Name="Message.Error.ErrorQuerySQL" Russian="Произошла ошибка SQL-запроса!"/>
   <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
+  <Local Name="Message.Error.SaveSortingBuffer" Russian="Не удалось сохранить сортировки полей."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -278,12 +279,7 @@
   <Local Name="Banner.Initialize.OpeningMainWindow" Russian="Открытие главного окна..."/>
   <Local Name="Banner.Initialize.OpeningMainWindow.CreateParagparh" Russian="Открытие главного окна: %1..."/>
   <Local Name="Banner.Initialize.DownloadUpdate" Russian="Обновление загружено."/>
-  
-  <!--Banner Closing-->
-  <Local Name="Banner.CloseApplication.FixingExitToProtocol" Russian="Завершение работы: фиксация выхода в протоколе..."/>
-  <Local Name="Banner.CloseApplication.SaveUserSortings" Russian="Завершение работы: сохранение пользовательских сортировок..."/>
-  <Local Name="Banner.CloseApplication.ColumnSize.Save" Russian="Завершение работы: сохранение размеров колонок..."/>
-  <Local Name="Banner.CloseApplication.ColumnSize.Clear" Russian="Завершение работы: очистка размеров колонок..."/>
+  <Local Name="Banner.CloseApplication" Russian="Завершение работы программы..."/>
 
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>

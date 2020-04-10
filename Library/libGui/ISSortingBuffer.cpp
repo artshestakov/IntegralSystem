@@ -22,7 +22,10 @@ static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
 static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_tablename, sgts_fieldname, sgts_sorting) "
 										  "VALUES(:TableName, :FieldName, :Sorting)");
 //-----------------------------------------------------------------------------
+static QString QD_SORTING = PREPARE_QUERY("DELETE FROM _sortingtables WHERE sgts_user = currentuserid()");
+//-----------------------------------------------------------------------------
 ISSortingBuffer::ISSortingBuffer()
+	: ErrorString(NO_ERROR_STRING)
 {
 	Initialize();
 }
@@ -35,10 +38,15 @@ ISSortingBuffer::~ISSortingBuffer()
 	}
 }
 //-----------------------------------------------------------------------------
-ISSortingBuffer& ISSortingBuffer::GetInstance()
+ISSortingBuffer& ISSortingBuffer::Instance()
 {
 	static ISSortingBuffer SortingBuffer;
 	return SortingBuffer;
+}
+//-----------------------------------------------------------------------------
+QString ISSortingBuffer::GetErrorString() const
+{
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 void ISSortingBuffer::AddSorting(const QString &TableName, const QString &FieldName, Qt::SortOrder Sorting)
@@ -66,15 +74,32 @@ void ISSortingBuffer::AddSorting(const QString &TableName, const QString &FieldN
 	}
 }
 //-----------------------------------------------------------------------------
-void ISSortingBuffer::SaveSortings()
+bool ISSortingBuffer::SaveSortings()
 {
+	bool Result = true;
 	for (ISSortingMetaTable *MetaSorting : Sortings)
 	{
 		if (MetaSorting->ModificationFlag)
 		{
-			SaveSorting(MetaSorting);
+			Result = SaveSorting(MetaSorting);
+			if (!Result)
+			{
+				break;
+			}
 		}
 	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISSortingBuffer::Clear()
+{
+	ISQuery qDelete(QD_SORTING);
+	bool Result = qDelete.Execute();
+	if (!Result)
+	{
+		ErrorString = qDelete.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 ISSortingMetaTable* ISSortingBuffer::GetSorting(const QString &TableName)
@@ -101,38 +126,28 @@ void ISSortingBuffer::Initialize()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
+bool ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
 {
 	ISQuery qSelectSorting(QS_SORTING_EXIST);
 	qSelectSorting.BindValue(":TableName", MetaSorting->TableName);
-	if (qSelectSorting.ExecuteFirst())
+	bool Result = qSelectSorting.ExecuteFirst();
+	if (Result)
 	{
-		if (qSelectSorting.ReadColumn("count").toInt())
+		ISQuery qUpsert(qSelectSorting.ReadColumn("count").toInt() > 0 ? QU_SORTING : QI_SORTING);
+		qUpsert.BindValue(":TableName", MetaSorting->TableName);
+		qUpsert.BindValue(":FieldName", MetaSorting->FieldName);
+		qUpsert.BindValue(":Sorting", MetaSorting->Order);
+		Result = qUpsert.Execute();
+		if (!Result)
 		{
-			ISQuery qUpdateSorting(QU_SORTING);
-			qUpdateSorting.BindValue(":FieldName", MetaSorting->FieldName);
-			qUpdateSorting.BindValue(":Sorting", MetaSorting->Order);
-			qUpdateSorting.BindValue(":TableName", MetaSorting->TableName);
-			qUpdateSorting.Execute();
-		}
-		else
-		{
-			ISQuery qInsertSorting(QI_SORTING);
-			qInsertSorting.BindValue(":TableName", MetaSorting->TableName);
-			qInsertSorting.BindValue(":FieldName", MetaSorting->FieldName);
-			qInsertSorting.BindValue(":Sorting", MetaSorting->Order);
-			qInsertSorting.Execute();
+			ErrorString = qUpsert.GetErrorString();
 		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 ISSortingMetaTable* ISSortingBuffer::CreateSorting(const QString &TableName, const QString &FieldName, Qt::SortOrder Sorting)
 {
-	//???
-	ISSortingMetaTable *MetaSorting = new ISSortingMetaTable();
-	MetaSorting->TableName = TableName;
-	MetaSorting->FieldName = FieldName;
-	MetaSorting->Order = Sorting;
-	return MetaSorting;
+	return new ISSortingMetaTable{ TableName, FieldName, Sorting };
 }
 //-----------------------------------------------------------------------------
