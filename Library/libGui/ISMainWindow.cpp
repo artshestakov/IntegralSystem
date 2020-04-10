@@ -35,7 +35,6 @@
 #include "ISDeviceSettingsForm.h"
 #include "ISTelephony.h"
 #include "ISObjects.h"
-#include "ISOnline.h"
 #include "ISAddressBookListForm.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
@@ -125,11 +124,6 @@ void ISMainWindow::AfterShowEvent()
 		MenuBar->GetbuttonNotify()->SetCountNotify(NewNotifyCount);
 		ISNotificationService::ShowNotification(LANG("NewNotifications").arg(NewNotifyCount));
 		QApplication::beep();
-	}
-
-	if (ISMetaUser::Instance().UserData->FixedInactive)
-	{
-		ISOnline::GetInstance().Initialize(ISMetaUser::Instance().UserData->InactiveTimeout);
 	}
 
 	int CountOverdue = ISCore::TaskCountOverdue();
@@ -294,7 +288,6 @@ void ISMainWindow::BeforeClose()
 	ISSplashScreen::GetInstance().show();
 	ISSplashScreen::GetInstance().SetMessage(LANG("Banner.CloseApplication"));
 	ISProtocol::ExitApplication();
-	ISOnline::GetInstance().Exit();
 
 	bool Result = SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ?
 		ISSortingBuffer::Instance().SaveSortings() :

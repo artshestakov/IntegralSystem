@@ -278,11 +278,6 @@ const char CONST_UID_USERSTATUS_WORKING[] = "{92898CB1-4D33-4CEB-8E86-8FE47CD1A7
 const char CONST_UID_USERSTATUS_BREAK[] = "{DE8066B8-FCD0-468C-8B70-9F8562E8E00C}"; //Перерыв
 const char CONST_UID_USERSTATUS_GONE[] = "{F0290AA4-4C71-4EB8-A471-3E023974B0DF}"; //Ушёл
 //-----------------------------------------------------------------------------
-const char CONST_UID_USER_ONLINE_TYPE_ENTER[] = "{175389A8-393E-46E9-8692-335A4555DDE8}"; //Вход в программу
-const char CONST_UID_USER_ONLINE_TYPE_ACTIVE[] = "{C233D65C-7768-4992-8A76-F0591F83368D}"; //Активность
-const char CONST_UID_USER_ONLINE_TYPE_INACTIVE[] = "{1ABE0B0C-A2BF-4B5A-8F6E-197DAC7B7020}"; //Активность прекращена
-const char CONST_UID_USER_ONLINE_TYPE_EXIT[] = "{429A6390-78DE-416F-9AB4-B64C29A0CC9D}"; //Выход из программы
-//-----------------------------------------------------------------------------
 const char CONST_UID_TELEPHONY_ASTERISK[] = "{AAF1708E-B224-441C-B4E9-7569267F3B55}";
 const char CONST_UID_TELEPHONY_BEELINE[] = "{CA82CCF7-D66B-4415-BE7B-DC02006DFABF}";
 //-----------------------------------------------------------------------------

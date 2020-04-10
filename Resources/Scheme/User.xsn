@@ -15,8 +15,6 @@
       <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия." SeparatorName="Учётная запись"/>
       <Field UID="{07CB8028-4695-4F7C-A676-8D89E38932F8}" Name="AccountLifeTimeStart" Type="Date" LabelName="Дата начала действия" LocalListName="Дата начала действия" HideFromList="true"/>
       <Field UID="{196BD860-208E-4DF7-8E4D-A65F7A9E8F35}" Name="AccountLifeTimeEnd" Type="Date" LabelName="Дата окончания действия" LocalListName="Дата окончания действия" HideFromList="true"/>
-      <Field UID="{41EA0A03-4022-492D-B311-C79E982EAECD}" Name="FixedInactive" Type="Bool" LabelName="Фиксировать бездействие" LocalListName="Фиксировать бездействие" HideFromList="true" Hint="Фиксирование бездействия пользователя"/>
-      <Field UID="{12AA7823-6617-472D-A7C3-9C104DC61ED3}" Name="InactiveTimeout" Type="Int" LabelName="Таймаут бездействия (мин.)" LocalListName="Таймаут бездействия (мин.)" HideFromList="true" Hint="Укажите, сколько должно пройти минут чтобы система заиксировала бездействие"/>
       <Field UID="{18F6BFE0-0770-4F2F-A8DE-973416F41CEA}" Name="LastEnter" Type="DateTime" LabelName="Последний вход" LocalListName="Последний вход" HideFromObject="true"/>
       <Field UID="{852CB655-75AF-4515-BBDC-149F08BB82AE}" Name="LastAddress" Type="String" LabelName="Последний адрес" LocalListName="Последний адрес" HideFromObject="true"/>
       <Field UID="{402CD7B9-B765-4177-9C2B-9495F7B3D405}" Name="Online" Type="Bool" LabelName="Онлайн" LocalListName="Онлайн" QueryText="useronline(usrs.usrs_login)"/>
@@ -34,8 +32,6 @@
       <Index Field="AccountLifetime"/>
       <Index Field="AccountLifetimeStart"/>
       <Index Field="AccountLifetimeEnd"/>
-      <Index Field="FixedInactive"/>
-      <Index Field="InactiveTimeout"/>
       <Index Field="LastEnter"/>
       <Index Field="LastAddress"/>
       <Index Field="Photo"/>
@@ -187,35 +183,6 @@
     <IncludeSystemFields>
       <Field Name="CreationDate" LocalName="Дата и время изменения"/>
     </IncludeSystemFields>
-  </Table>
-
-  <Table Name="_UserOnline" UID="{839C2992-ED46-4D59-808F-B3577214E23B}" Alias="uonl" ShowOnly="true" LocalName="Онлайн" LocalListName="Онлайн" TitleName="User" IsSystem="true">
-    <Fields>
-      <Field UID="{707DDBBE-02C4-4011-BAB7-C888B06BBC4E}" Name="Date" Type="Date" DefaultValue="CURRENT_DATE" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
-      <Field UID="{649B675F-80FB-4C4C-9450-7802C89B0C27}" Name="Time" Type="Time" DefaultValue="CURRENT_TIME" LabelName="Время" LocalListName="Время" NotNull="true"/>
-      <Field UID="{AAFCB60E-72FB-42CA-B50A-BDE2503D4A11}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{27EE58E1-8A9F-43EA-9688-C98840FBAAF0}" Name="Type" Type="Int" LabelName="Тип отметки" LocalListName="Тип отметки" NotNull="true"/>
-      <Field UID="{2BCBE69E-493C-413F-A80D-FDEF3AF9CDEB}" Name="Online" Type="Bool" LabelName="Сейчас онлайн" LocalListName="Сейчас онлайн" QueryText="useronline((SELECT usrs_login FROM _users WHERE usrs_id = uonl.uonl_user))"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Date"/>
-      <Index Field="Time"/>
-      <Index Field="User"/>
-      <Index Field="Type"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-      <Foreign Field="Type" ForeignClass="_UserOnlineType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-
-  <Table Name="_UserOnlineType" UID="{CB2CA103-97C0-4DC2-BAD3-E9568C0AB870}" Alias="uotp" LocalName="Тип отметки" LocalListName="Типы отметок" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{E0442B86-F8B0-4DD2-9B09-0BA73DAD863D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
   </Table>
          
 </XSN>

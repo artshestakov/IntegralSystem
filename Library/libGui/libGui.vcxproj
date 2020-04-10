@@ -278,7 +278,6 @@
     <ClCompile Include="ISOilSphere.cpp" />
     <ClCompile Include="ISOilSphereCounterpartyObjectForm.cpp" />
     <ClCompile Include="ISOilSphereImplementationObjectForm.cpp" />
-    <ClCompile Include="ISOnline.cpp" />
     <ClCompile Include="ISOrganizationListForm.cpp" />
     <ClCompile Include="ISOrganizationMyListForm.cpp" />
     <ClCompile Include="ISOrganizationObjectForm.cpp" />
@@ -578,7 +577,6 @@
     <QtMoc Include="ISCenterSevenStatusAdmissionForm.h" />
     <ClInclude Include="ISControls.h" />
     <QtMoc Include="ISIntegralSystem.h" />
-    <QtMoc Include="ISOnline.h" />
     <QtMoc Include="ISMainMenu.h" />
     <QtMoc Include="ISMenuBar.h" />
     <QtMoc Include="ISMenuFastAccess.h" />

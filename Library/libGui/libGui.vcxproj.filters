@@ -556,9 +556,6 @@
     <ClCompile Include="ISIntegralSystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISOnline.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISRegisterMetaType.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -1396,9 +1393,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISIntegralSystem.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISOnline.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISStartup.h">
