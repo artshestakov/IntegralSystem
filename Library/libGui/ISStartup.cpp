@@ -172,20 +172,6 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, 
 	//Иницилазация устройств
 	ISDeviceEntity::GetInstance().Initialize();
 
-	if (!ISMetaUser::Instance().UserData->System)
-	{
-		if (!ISMetaUser::Instance().UserData->Birthday.isNull())
-		{
-			if (ISMetaUser::Instance().UserData->Birthday == QDate::currentDate())
-			{
-				SplashScreen->hide();
-				ISMediaPlayer::GetInstance().Play(BUFFER_AUDIO("HappyBirthday"));
-				ISMessageBox::ShowInformation(nullptr, LANG("HappyBirthday").arg(ISMetaUser::Instance().UserData->FullName));
-				SplashScreen->show();
-			}
-		}
-	}
-
 	//Фиксация входа в протоколе
 	ISProtocol::EnterApplication();
 

@@ -330,8 +330,6 @@
   <Local Name="RecordInformation" Russian="Информация о записи"/>
   <Local Name="SystemInformation" Russian="Системная информация"/>
   <Local Name="ChangeUser" Russian="Сменить пользователя"/>
-  <Local Name="HappyBirthday" Russian="%1, система поздравляет Вас с днём рождения!"/>
-  <Local Name="IntegralSystem" Russian="IntegralSystem"/>
   <Local Name="Utility" Russian="Утилиты"/>
   <Local Name="TableNavigationSelectBegin" Russian="Выбрать первую запись"/>
   <Local Name="TableNavigationSelectPrevious" Russian="Выбрать предыдущую запись"/>
