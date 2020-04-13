@@ -11,6 +11,7 @@ public:
 	virtual ~ISStartup();
 
 	static bool Startup(const QString &UserLogin, const QString &UserPassword);
+	static void Shutdown();
 
 private:
 	static bool CheckAccessDatabase(const QString &Login); //Проверка доступа к базе

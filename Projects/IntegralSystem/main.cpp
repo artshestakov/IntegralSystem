@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	}
 
 	//Создание формы авторизации
-	ISAuthForm *AuthForm = new ISAuthForm(nullptr);
+	ISAuthForm *AuthForm = new ISAuthForm();
 	Result = AuthForm->ExecAnimated();
 	if (!Result) //Форма авторизации была закрыта
 	{
@@ -56,6 +56,13 @@ int main(int argc, char *argv[])
 		MainWindow.raise();
 		MainWindow.activateWindow();
 		Result = Applicaton.exec() == EXIT_SUCCESS;
+
+		SplashScreen.DefaultPixmap();
+		SplashScreen.show();
+		SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
+
+		ISStartup::Shutdown();
+		ISGui::ExitApplication();
 	}
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }

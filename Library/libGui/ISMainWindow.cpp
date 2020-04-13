@@ -7,7 +7,6 @@
 #include "ISProtocol.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
-#include "ISSortingBuffer.h"
 #include "ISMetaUser.h"
 #include "ISSettings.h"
 #include "ISFavoritesForm.h"
@@ -15,22 +14,17 @@
 #include "ISSettingsDatabase.h"
 #include "ISControls.h"
 #include "ISNoteForm.h"
-#include "ISDatabase.h"
-#include "ISSplashScreen.h"
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
-#include "ISColumnSizer.h"
 #include "ISHistoryForm.h"
 #include "ISFastCreateObjectForm.h"
 #include "ISExternalToolsForm.h"
-#include "ISInputDialog.h"
 #include "ISParagraphEntity.h"
 #include "ISNotifyRecipient.h"
 #include "ISNotifySender.h"
 #include "ISNotificationService.h"
 #include "ISCreatedObjectsEntity.h"
-#include "ISLogger.h"
 #include "ISIncomingCallBaseForm.h"
 #include "ISDeviceSettingsForm.h"
 #include "ISTelephony.h"
@@ -41,6 +35,7 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 {
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
+	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_PIXMAPS("Logo"));
 	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::GetInstance().GetInfo().LocalName).arg(ISMetaUser::Instance().UserData->FullName));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
@@ -80,14 +75,7 @@ void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
 			SetVisibleShadow(true);
 			bool Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication"));
 			SetVisibleShadow(false);
-			if (Answer)
-			{
-				ISGui::ExitApplication();
-			}
-			else
-			{
-				CloseEvent->ignore();
-			}
+			Answer ? CloseEvent->accept() : CloseEvent->ignore();
 		}
 		else
 		{
@@ -149,7 +137,7 @@ void ISMainWindow::CreateMenuBar()
 void ISMainWindow::CreateInformationMessage()
 {
 	QString InformationMessage = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGE);
-	if (InformationMessage.length())
+	if (!InformationMessage.isEmpty())
 	{
 		QLabel *Label = new QLabel(this);
 		Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
@@ -172,9 +160,6 @@ void ISMainWindow::CreateStackWidget()
 	GetMainLayout()->addWidget(StackedWidget);
 	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::GetInstance().GetParagraphs())
 	{
-		//???
-		//ISSplashScreen::GetInstance().SetMessage(LANG("Banner.Initialize.OpeningMainWindow.CreateParagparh").arg(MetaParagraph->LocalName));
-
 		int ObjectType = QMetaType::type((MetaParagraph->ClassName + SYMBOL_STAR).toLocal8Bit().constData());
 		IS_ASSERT(ObjectType, QString("Invalid object type from paragraph: %1").arg(MetaParagraph->Name));
 
@@ -186,8 +171,6 @@ void ISMainWindow::CreateStackWidget()
 		ParagraphBaseForm->SetButtonParagraph(MenuBar->GetParagraphButton(MetaParagraph->UID));
 		int ParagraphIndex = StackedWidget->addWidget(ParagraphBaseForm);
 		Paragraphs.emplace(MetaParagraph->UID, ParagraphIndex);
-
-		ISLOGGER_DEBUG(QString("Initialized paragraph \"%1\"").arg(MetaParagraph->Name));
 	}
 	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());
 }
@@ -253,33 +236,6 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::BeforeClose()
-{
-	hide();
-
-	//???
-	//ISSplashScreen::GetInstance().DefaultPixmap();
-	//ISSplashScreen::GetInstance().show();
-	//ISSplashScreen::GetInstance().SetMessage(LANG("Banner.ShutdownSystem"));
-	ISProtocol::ExitApplication();
-
-	bool Result = SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ?
-		ISSortingBuffer::Instance().SaveSortings() :
-		ISSortingBuffer::Instance().Clear();
-	if (!Result)
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
-	}
-
-	Result = SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ?
-		ISColumnSizer::Instance().Save() :
-		ISColumnSizer::Instance().Clear();
-	if (!Result)
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
-	}
-}
-//-----------------------------------------------------------------------------
 void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)
 {
 	ISGui::CreateObjectForm(ISNamespace::ObjectFormType::OFT_Edit, TableName, ObjectID)->show();
@@ -313,10 +269,8 @@ void ISMainWindow::ChangeUser()
 	SetVisibleShadow(true);
 	bool Change = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser"));
 	SetVisibleShadow(false);
-
 	if (Change)
 	{
-		BeforeClose();
 		ISGui::ChangeUser();
 	}
 }

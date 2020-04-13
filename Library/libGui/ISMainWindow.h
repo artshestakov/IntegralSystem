@@ -39,7 +39,6 @@ protected:
 	
 	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
 
-	void BeforeClose(); //Действие перед завершением программы
 	void OpenHistoryObject(const QString &TableName, int ObjectID);
 	void OpenFavoritesObject(const QString &TableName, int ObjectID);
 	void EscapeClicked() override;

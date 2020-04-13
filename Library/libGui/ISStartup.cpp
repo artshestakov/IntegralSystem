@@ -181,6 +181,20 @@ bool ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	return true;
 }
 //-----------------------------------------------------------------------------
+void ISStartup::Shutdown()
+{
+	ISProtocol::ExitApplication();
+	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ? ISSortingBuffer::Instance().SaveSortings() : ISSortingBuffer::Instance().Clear()))
+	{
+		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
+	}
+
+	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ? ISColumnSizer::Instance().Save() : ISColumnSizer::Instance().Clear()))
+	{
+		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(const QString &Login)
 {
 	if (ISMetaUser::Instance().UserData->System)
