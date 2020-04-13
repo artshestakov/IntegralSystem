@@ -1,6 +1,5 @@
 #include "ISStartup.h"
 #include "ISConstants.h"
-#include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISMetaData.h"
@@ -14,7 +13,6 @@
 #include "ISFastAccessEntity.h"
 #include "ISSettings.h"
 #include "ISProtocol.h"
-#include "ISCore.h"
 #include "ISGui.h"
 #include "ISParagraphEntity.h"
 #include "ISPrintingEntity.h"
@@ -22,11 +20,9 @@
 #include "ISBuffer.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISProperty.h"
-#include "ISMainWindow.h"
 #include "ISMediaPlayer.h"
 #include "ISDeviceEntity.h"
 #include "ISObjects.h"
-#include "ISVersion.h"
 #include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
@@ -48,12 +44,12 @@ ISStartup::~ISStartup()
 
 }
 //-----------------------------------------------------------------------------
-int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, const QString &UserPassword)
+bool ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, const QString &UserPassword)
 {
 	//Проверка всех запросов
 	if (!ISQueryText::Instance().CheckAllQueries())
 	{
-		return EXIT_FAILURE;
+		return false;
 	}
 
 	ISObjects::GetInstance().Initialize();
@@ -66,7 +62,7 @@ int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, c
 		if (!qSelectUser.ReadColumn("count").toInt())
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotFoundUserWithLogin").arg(UserLogin));
-			return EXIT_FAILURE;
+			return false;
 		}
 	}
 
@@ -82,22 +78,22 @@ int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, c
 
 	if (!CheckAccessDatabase(UserLogin)) //Проверка разрешения доступа к базе пользователям
 	{
-		return EXIT_FAILURE;
+		return false;
 	}
 
 	if (!CheckAccessAllowed()) //Проверка разрешения доступа пользователя
 	{
-		return EXIT_FAILURE;
+		return false;
 	}
 
 	if (!CheckExistUserGroup()) //Проверка наличия привязки пользователя к группе
 	{
-		return EXIT_FAILURE;
+		return false;
 	}
 
 	if (!LoadLocalNames())
 	{
-		return EXIT_FAILURE;
+		return false;
 	}
 
 	//Инициализация прав доступа
@@ -122,7 +118,7 @@ int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, c
 		if (!ISMetaUser::Instance().UserData->GroupID) //Если пользователь привязан к группе
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.UserGroupIsNull"));
-			return EXIT_FAILURE;
+			return false;
 		}
 	}
 
@@ -134,7 +130,7 @@ int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, c
 		if (QDate::currentDate() < DateStart)
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeNotStarted"));
-			return EXIT_FAILURE;
+			return false;
 		}
 		else if (QDate::currentDate() == DateEnd) //Если сегодня истекает срок действия
 		{
@@ -147,7 +143,7 @@ int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, c
 		else if (QDate::currentDate() > DateEnd)
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeEnded"));
-			return EXIT_FAILURE;
+			return false;
 		}
 	}
 
@@ -164,7 +160,7 @@ int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, c
 	if (!ISColumnSizer::Instance().Initialize())
 	{
 		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
-		return EXIT_FAILURE;
+		return false;
 	}
 
 	//Инициализация внешних инструментов
@@ -195,38 +191,7 @@ int ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, c
 
 	ISObjects::GetInstance().GetInterface()->BeforeShowMainWindow();
 	ISProperty::Instance().SetValue(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
-
-	//Создание главной формы
-	ISMainWindow *MainWindow = new ISMainWindow();
-	SplashScreen->hide();
-
-	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_MAINWINDOWMAXIMIZE))
-	{
-		if (SETTING_BOOL(CONST_UID_SETTING_VIEW_STARTMAINWINDOWANIMATED))
-		{
-			MainWindow->ShowAnimated(true);
-		}
-		else
-		{
-			MainWindow->showMaximized();
-		}
-	}
-	else
-	{
-		if (SETTING_BOOL(CONST_UID_SETTING_VIEW_STARTMAINWINDOWANIMATED))
-		{
-			MainWindow->ShowAnimated();
-		}
-		else
-		{
-			MainWindow->show();
-		}
-	}
-
-	MainWindow->raise();
-	MainWindow->activateWindow();
-
-	return EXIT_SUCCESS;
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(const QString &Login)

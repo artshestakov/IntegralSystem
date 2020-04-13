@@ -11,7 +11,7 @@
 #include "ISChatForm.h"
 #include "ISWorkspaceForm.h"
 //-----------------------------------------------------------------------------
-class ISMainWindow : public ISInterfaceForm
+class LIBGUI_EXPORT ISMainWindow : public ISInterfaceForm
 {
 	Q_OBJECT
 
@@ -25,7 +25,7 @@ public:
 	ISUuid GetCurrentParagraphUID() const;
 
 protected:
-	void closeEvent(QCloseEvent *e);
+	void closeEvent(QCloseEvent *CloseEvent);
 	void AfterShowEvent() override;
 
 	void CreateMenuBar(); //Создание главного тулбара

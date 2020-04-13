@@ -77,33 +77,32 @@ ISUuid ISMainWindow::GetCurrentParagraphUID() const
 	return CurrentParagraphUID;
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::closeEvent(QCloseEvent *e)
+void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
 {
 	if (ISCreatedObjectsEntity::Instance().CheckExistForms())
 	{
 		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_CONFIRMEXITAPPLICATION))
 		{
 			SetVisibleShadow(true);
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication")))
+			bool Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication"));
+			SetVisibleShadow(false);
+			if (Answer)
 			{
-				BeforeClose();
 				ISGui::ExitApplication();
 			}
 			else
 			{
-				e->ignore();
+				CloseEvent->ignore();
 			}
-			SetVisibleShadow(false);
 		}
 		else
 		{
-			BeforeClose();
 			ISGui::ExitApplication();
 		}
 	}
 	else
 	{
-		e->ignore();
+		CloseEvent->ignore();
 	}
 }
 //-----------------------------------------------------------------------------

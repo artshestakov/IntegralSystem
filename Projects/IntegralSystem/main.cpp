@@ -5,9 +5,9 @@
 #include "ISAuthForm.h"
 #include "ISIntegralSystem.h"
 #include "ISStartup.h"
-#include "ISMessageBox.h"
 #include "ISLogger.h"
-#include "ISQueryPool.h"
+#include "ISMainWindow.h"
+#include "ISSettings.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -37,17 +37,26 @@ int main(int argc, char *argv[])
 	SplashScreen.show();
 	SplashScreen.SetMessage(LANG("Banner.StartupSystem"));
 
-	int Startup = ISStartup::Startup(&SplashScreen, UserLogin, UserPassword);
-	if (Startup) //Если при запуске произошла ошибка
-	{
-		ISGui::ExitApplication();
-		ISLogger::Instance().Shutdown();
-		return Startup;
-	}
-	else //Запуск прошёл успешно
+	Result = ISStartup::Startup(&SplashScreen, UserLogin, UserPassword);
+	SplashScreen.hide();
+
+	if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()
 	{
 		SplashScreen.ResetPixmap();
+
+		ISMainWindow MainWindow;
+		if (SETTING_BOOL(CONST_UID_SETTING_VIEW_MAINWINDOWMAXIMIZE))
+		{
+			SETTING_BOOL(CONST_UID_SETTING_VIEW_STARTMAINWINDOWANIMATED) ? MainWindow.ShowAnimated(true) : MainWindow.showMaximized();
+		}
+		else
+		{
+			SETTING_BOOL(CONST_UID_SETTING_VIEW_STARTMAINWINDOWANIMATED) ? MainWindow.ShowAnimated() : MainWindow.show();
+		}
+		MainWindow.raise();
+		MainWindow.activateWindow();
+		Result = Applicaton.exec() == EXIT_SUCCESS;
 	}
-	return Applicaton.exec();
+	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------
