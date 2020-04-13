@@ -2,9 +2,6 @@
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"
-#include "ISCountingTime.h"
-#include "ISSystem.h"
-#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
 										   "stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
@@ -91,8 +88,6 @@ void ISSettings::SaveValue(const QString &SettingUID, const QVariant &Value)
 //-----------------------------------------------------------------------------
 void ISSettings::Initialize()
 {
-	ISCountingTime Time;
-
 	ISQuery qSelectSettings(QS_SETTINGS);
 	if (qSelectSettings.Execute())
 	{
@@ -135,8 +130,6 @@ void ISSettings::Initialize()
 			}
 		}
 	}
-
-	ISLOGGER_DEBUG(QString("Initialized Settings time %1 msec").arg(Time.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 ISMetaSettingsGroup* ISSettings::CheckExistGroup(const ISUuid &GroupUID)

@@ -1,9 +1,7 @@
 #include "ISMetaSystemsEntity.h"
 #include "ISQuery.h"
-#include "ISCountingTime.h"
 #include "ISMetaUser.h"
 #include "ISUserRoleEntity.h"
-#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 										  "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "
@@ -34,8 +32,6 @@ ISMetaSystemsEntity& ISMetaSystemsEntity::GetInstance()
 //-----------------------------------------------------------------------------
 void ISMetaSystemsEntity::Initialize()
 {
-	ISCountingTime CountingTime;
-
 	ISQuery qSelect(QS_SYSTEMS);
 	if (qSelect.Execute())
 	{
@@ -82,8 +78,6 @@ void ISMetaSystemsEntity::Initialize()
 			MetaSystem->SubSystems.append(MetaSubSystem);
 		}
 	}
-
-	ISLOGGER_DEBUG(QString("Initialized MetaSystems %1 msec").arg(CountingTime.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 QVector<ISMetaSystem*> ISMetaSystemsEntity::GetSystems()

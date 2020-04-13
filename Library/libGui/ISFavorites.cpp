@@ -1,9 +1,6 @@
 #include "ISFavorites.h"
 #include "ISQuery.h"
-#include "ISCountingTime.h"
-#include "ISSystem.h"
 #include "ISMetaUser.h"
-#include "ISLogger.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
@@ -38,8 +35,6 @@ ISFavorites& ISFavorites::GetInstance()
 //-----------------------------------------------------------------------------
 void ISFavorites::Initialize()
 {
-	ISCountingTime CountingTime;
-
 	ISQuery qSelectFavorites(QS_FAVORITES);
 	if (qSelectFavorites.Execute())
 	{
@@ -58,8 +53,6 @@ void ISFavorites::Initialize()
 			}
 		}
 	}
-
-	ISLOGGER_DEBUG(QString("Initialized Favorites %1 msec").arg(CountingTime.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 void ISFavorites::AddFavorite(const QString &TableName, const QString &TableLocalName, const QString &ObjectName, int ObjectID)
@@ -72,14 +65,7 @@ void ISFavorites::AddFavorite(const QString &TableName, const QString &TableLoca
 	qInsertFavorite.BindValue(":ObjectID", ObjectID);
 	if (qInsertFavorite.Execute())
 	{
-		if (Favorites.contains(TableName))
-		{
-			Favorites[TableName].emplace_back(ObjectID);
-		}
-		else
-		{
-			Favorites.insert(TableName, ISVectorInt{ ObjectID });
-		}
+		Favorites.contains(TableName) ? Favorites[TableName].emplace_back(ObjectID) : Favorites.insert(TableName, ISVectorInt{ ObjectID });
 	}
 }
 //-----------------------------------------------------------------------------
@@ -107,8 +93,7 @@ void ISFavorites::DeleteAllFavorites()
 	{
 		while (Favorites.count())
 		{
-			ISVectorInt VectorInt = Favorites.take(Favorites.begin().key());
-			VectorInt.clear();
+			Favorites.take(Favorites.begin().key()).clear();
 		}
 	}
 }

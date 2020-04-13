@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	//Создание формы авторизации
 	ISAuthForm AuthForm;
 	Result = AuthForm.ExecAnimated();
 	if (!Result) //Форма авторизации была закрыта

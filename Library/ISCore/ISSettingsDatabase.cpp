@@ -4,7 +4,6 @@
 #include "ISSystem.h"
 #include "ISAssert.h"
 #include "ISMetaData.h"
-#include "ISCountingTime.h"
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
@@ -37,7 +36,6 @@ ISSettingsDatabase& ISSettingsDatabase::GetInstance()
 //-----------------------------------------------------------------------------
 void ISSettingsDatabase::Initialize()
 {
-	ISCountingTime CountingTime;
 	ISVectorString VectorString;
 	ISQuery qSelectColumn(QS_COLUMN_SETTING);
 	qSelectColumn.SetShowLongQuery(false);
@@ -95,8 +93,6 @@ void ISSettingsDatabase::Initialize()
 			Settings.emplace(String, SettingValue);
 		}
 	}
-
-	ISLOGGER_DEBUG(QString("Initilize SettingsDatabase %1 msec").arg(CountingTime.Elapsed()));
 }
 //-----------------------------------------------------------------------------
 void ISSettingsDatabase::InitializedSystemParameters()
