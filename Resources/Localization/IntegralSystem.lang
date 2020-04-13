@@ -59,7 +59,6 @@
   <Local Name="Message.Information.CreatedPasswordUser" Russian="Пароль пользователя успешно изменен!"/>
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
-  <Local Name="Message.Information.TerminateMe" Russian="ВНИМАНИЕ! Вашу учётную запись отключили. Нажмите кнопку ОК для выхода из программы."/>
   <Local Name="Message.Information.SharedRecord" Russian="Ссылка на запись успешно отправлена в общий чат."/>
   <Local Name="Message.Information.FileSaved" Russian="Файл успешно сохранен."/>
   <Local Name="Message.Information.NotFoundChildCalls" Russian="Подробностей по выбранному звонку нет."/>
@@ -238,7 +237,6 @@
   <Local Name="Message.Question.SaveDist" Russian="Сохранить этот дистрибутив на диск?"/>
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его программой по умолчанию?"/>
   <Local Name="Message.Question.ImportedSettings" Russian="Настройки успешно импортированы! Для того чтобы все импортированные настройки вступили в силу, рекомендуется перезапустить программу. Сделать это сейчас?"/>
-  <Local Name="Message.Question.NotifyUpdateAviable" Russian="Доступно обновление. Выполнить перезапуск программы для последующего обновления?"/>
   <Local Name="Message.Question.ShareRecordFromChat" Russian="Поделиться ссылкой на эту запись в общий чат?"/>
   <Local Name="Message.Question.AttachRecordFromTask" Russian="Прикрепить выбранную запись к задаче?"/>
   <Local Name="Message.Question.ClearListNotifications" Russian="Очистить список уведомлений?"/>

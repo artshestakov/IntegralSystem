@@ -11,8 +11,6 @@ signals:
 
 	//Персональные сигналы для нотификаций
 	void ChatMessage(const QVariantMap &VariantMap); //Сигнал о новом сообщении в чате
-	void TermianteUser(const QVariantMap &VariantMap); //Сигнал о принудительном отключении от системы
-	void UpdateAviable(const QVariantMap &VariantMap); //Сигнал о наличии обновления
 	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
 	void CalendarEvent(const QVariantMap &VariantMap); //Сигнал о событии календаря
 

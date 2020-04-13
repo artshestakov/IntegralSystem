@@ -52,12 +52,6 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 	CreateStackWidget();
 	CreateStatusBar();
 
-	//Отключение пользователя
-	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::TermianteUser, this, &ISMainWindow::TerminateMe);
-
-	//Доступно обновление
-	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::UpdateAviable, this, &ISMainWindow::UpdateAviable);
-
 	//Входящий звонок
 	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::IncomingCall, this, &ISMainWindow::IncomingCall);
 }
@@ -236,27 +230,6 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_PARAGRAPH, QString(), QString(), QVariant(), ISParagraphEntity::GetInstance().GetParagraph(ParagraphUID)->LocalName);
 	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::TerminateMe(const QVariantMap &VariantMap)
-{
-	activateWindow();
-	raise();
-	ISGui::ProcessEvents();
-	ISMessageBox::ShowInformation(this, LANG("Message.Information.TerminateMe"));
-	BeforeClose();
-	ISGui::ExitApplication();
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::UpdateAviable(const QVariantMap &VariantMap)
-{
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.NotifyUpdateAviable")))
-	{
-		if (ISCreatedObjectsEntity::Instance().CheckExistForms())
-		{
-			ISGui::ChangeUser();
-		}
-	}
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)

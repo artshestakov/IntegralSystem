@@ -44,7 +44,7 @@ ISStartup::~ISStartup()
 
 }
 //-----------------------------------------------------------------------------
-bool ISStartup::Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, const QString &UserPassword)
+bool ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 {
 	//Проверка всех запросов
 	if (!ISQueryText::Instance().CheckAllQueries())

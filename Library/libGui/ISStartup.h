@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libGui_global.h"
-#include "ISSplashScreen.h"
 //-----------------------------------------------------------------------------
 class LIBGUI_EXPORT	ISStartup : public QObject
 {
@@ -11,7 +10,7 @@ public:
 	ISStartup();
 	virtual ~ISStartup();
 
-	static bool Startup(ISSplashScreen *SplashScreen, const QString &UserLogin, const QString &UserPassword);
+	static bool Startup(const QString &UserLogin, const QString &UserPassword);
 
 private:
 	static bool CheckAccessDatabase(const QString &Login); //Проверка доступа к базе

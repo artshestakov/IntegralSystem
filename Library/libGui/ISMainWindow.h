@@ -37,8 +37,6 @@ protected:
 	void ShowExternalTools(); //Показать форму настроек быстрого доступа
 	void ParagraphClicked(const ISUuid &ParagraphUID); //Событие нажатия на кнопку-параграф
 	
-	void TerminateMe(const QVariantMap &VariantMap); //Сигнал об отключении пользователя
-	void UpdateAviable(const QVariantMap &VariantMap); //Сигнал о наличии обновления
 	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
 
 	void BeforeClose(); //Действие перед завершением программы

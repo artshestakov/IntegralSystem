@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	SplashScreen.show();
 	SplashScreen.SetMessage(LANG("Banner.StartupSystem"));
 
-	Result = ISStartup::Startup(&SplashScreen, UserLogin, UserPassword);
+	Result = ISStartup::Startup(UserLogin, UserPassword);
 	SplashScreen.hide();
 
 	if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()
