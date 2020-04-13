@@ -787,6 +787,7 @@
       <Index Field="FieldName"/>
       <Index Field="LocalName"/>
       <Index Field="User;TableName;FieldName;LocalName"/>
+      <Index Field="IsDeleted;User"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>

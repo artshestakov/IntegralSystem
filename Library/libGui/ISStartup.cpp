@@ -32,7 +32,8 @@ static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 static QString QS_LOCAL_NAME = PREPARE_QUERY("SELECT lcnm_tablename, lcnm_fieldname, lcnm_localname "
 											 "FROM _localnames "
-											 "WHERE lcnm_user = currentuserid()");
+											 "WHERE NOT lcnm_isdeleted "
+											 "AND lcnm_user = currentuserid()");
 //-----------------------------------------------------------------------------
 ISStartup::ISStartup() : QObject()
 {
