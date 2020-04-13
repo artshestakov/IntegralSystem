@@ -7,25 +7,31 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISSplashScreen::ISSplashScreen() : QSplashScreen()
+ISSplashScreen::ISSplashScreen()
+	: QWidget(nullptr, Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint)
 {
 	setFont(ISDefines::Gui::FONT_TAHOMA_12);
 	setCursor(CURSOR_WAIT);
-	DefaultPixmap();
+
+	QPixmap Pixmap = BUFFER_PIXMAPS("BannerSplashScreen");
+	setFixedSize(Pixmap.size());
+
+	QPalette Palette;
+	Palette.setBrush(QPalette::Background, Pixmap);
+	setPalette(Palette);
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
-	MainLayout->setSpacing(0);
+	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	MainLayout->addStretch();
 	setLayout(MainLayout);
 
-	QLabel *LabelCopyright = new QLabel(this);
-	LabelCopyright->setFont(ISDefines::Gui::FONT_TAHOMA_8);
-	LabelCopyright->setText(LANG("SplashSceen.Copyright"));
-	MainLayout->addWidget(LabelCopyright, 0, Qt::AlignCenter);
+	LabelText = new QLabel(this);
+	MainLayout->addWidget(LabelText, 0, Qt::AlignCenter);
 
-	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(0, 0, 0, 35);
-	MainLayout->addLayout(Layout);
+	QPalette PaletteLabel = LabelText->palette();
+	PaletteLabel.setColor(LabelText->backgroundRole(), ISDefines::Gui::COLOR_SPLASH_SCREEN_TEXT);
+	PaletteLabel.setColor(LabelText->foregroundRole(), ISDefines::Gui::COLOR_SPLASH_SCREEN_TEXT);
+	LabelText->setPalette(PaletteLabel);
 }
 //-----------------------------------------------------------------------------
 ISSplashScreen::~ISSplashScreen()
@@ -35,22 +41,8 @@ ISSplashScreen::~ISSplashScreen()
 //-----------------------------------------------------------------------------
 void ISSplashScreen::SetMessage(const QString &Message)
 {
-	showMessage(Message, Qt::AlignHCenter | Qt::AlignBottom, ISDefines::Gui::COLOR_SPLASH_SCREEN_TEXT);
-	activateWindow();
-}
-//-----------------------------------------------------------------------------
-void ISSplashScreen::ResetPixmap()
-{
-	setPixmap(QPixmap());
-}
-//-----------------------------------------------------------------------------
-void ISSplashScreen::DefaultPixmap()
-{
-	setPixmap(BUFFER_PIXMAPS("BannerSplashScreen"));
-}
-//-----------------------------------------------------------------------------
-void ISSplashScreen::mousePressEvent(QMouseEvent *e)
-{
-	return; //Это переопределение нужно для того, чтобы банер не скрывался при нажатии кнопок мыши
+	LabelText->setText(Message);
+	LabelText->adjustSize();
+	ISGui::RepaintWidget(this);
 }
 //-----------------------------------------------------------------------------

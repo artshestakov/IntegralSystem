@@ -42,8 +42,6 @@ int main(int argc, char *argv[])
 
 	if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()
 	{
-		SplashScreen.ResetPixmap();
-
 		ISMainWindow MainWindow;
 		if (SETTING_BOOL(CONST_UID_SETTING_VIEW_MAINWINDOWMAXIMIZE))
 		{
@@ -57,9 +55,8 @@ int main(int argc, char *argv[])
 		MainWindow.activateWindow();
 		Result = Applicaton.exec() == EXIT_SUCCESS;
 
-		SplashScreen.DefaultPixmap();
-		SplashScreen.show();
 		SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
+		SplashScreen.show();
 
 		ISStartup::Shutdown();
 		ISGui::ExitApplication();
