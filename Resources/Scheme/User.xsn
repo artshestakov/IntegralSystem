@@ -27,6 +27,7 @@
       <Index Field="Name"/>
       <Index Field="Patronymic"/>
       <Index Field="Sex"/>
+      <Index Field="Birthday"/>
       <Index Field="Login" Unique="true"/>
       <Index Field="AccessAllowed"/>
       <Index Field="AccountLifetime"/>
@@ -35,6 +36,7 @@
       <Index Field="LastEnter"/>
       <Index Field="LastAddress"/>
       <Index Field="Photo"/>
+      <Index Field="IsDeleted;Login"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>

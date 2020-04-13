@@ -18,6 +18,7 @@
       <Index Field="ComPort"/>
       <Index Field="JsonSetting"/>
       <Index Field="User;Type;Device" Unique="true"/>
+      <Index Field="IsDeleted;User"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>

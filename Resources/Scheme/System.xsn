@@ -635,6 +635,9 @@
       <Index Field="TableName"/>
       <Index Field="FieldName"/>
       <Index Field="Sorting"/>
+      <Index Field="IsDeleted;User"/>
+      <Index Field="IsDeleted;User;TableName"/>
+      <Index Field="User;TableName"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>

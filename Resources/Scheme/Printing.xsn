@@ -34,6 +34,7 @@
       <Index Field="FieldQuery"/>
       <Index Field="QueryName"/>
       <Index Field="ParameterName"/>
+      <Index Field="IsDeleted;Report"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Report" ForeignClass="_Report" ForeignField="UID" ForeignViewNameField="LocalName"/>

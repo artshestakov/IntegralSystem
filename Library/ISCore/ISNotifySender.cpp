@@ -12,8 +12,8 @@ static QString QS_NOTIFICATIONS = PREPARE_QUERY("SELECT ntfn_uid, ntfn_name, ntf
 												"ORDER BY ntfn_id");
 //-----------------------------------------------------------------------------
 static QString QS_NOTIFICATION_NEW = PREPARE_QUERY("SELECT COUNT(*) "
-													 "FROM _notificationuser "
-													 "WHERE ntfu_userto = currentuserid()");
+												   "FROM _notificationuser "
+												   "WHERE ntfu_userto = currentuserid()");
 //-----------------------------------------------------------------------------
 static QString QI_NOTIFICATION_USER = PREPARE_QUERY("INSERT INTO _notificationuser(ntfu_notificationid, ntfu_userto, ntfu_payload, ntfu_string, ntfu_save) "
 													"VALUES((SELECT ntfn_id FROM _notification WHERE ntfn_uid = :NotificationUID), :UserTo, :Payload, :String, :Save)");

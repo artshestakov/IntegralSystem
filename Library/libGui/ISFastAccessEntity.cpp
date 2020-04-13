@@ -2,7 +2,10 @@
 #include "ISQuery.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-static QString QS_EXTERNAL_TOOLS = PREPARE_QUERY("SELECT extl_uid, extl_uid, extl_localname, extl_command, extl_icon FROM _externaltools WHERE extl_user = currentuserid() ORDER BY extl_order");
+static QString QS_EXTERNAL_TOOLS = PREPARE_QUERY("SELECT extl_uid, extl_uid, extl_localname, extl_command, extl_icon "
+												 "FROM _externaltools "
+												 "WHERE extl_user = currentuserid() "
+												 "ORDER BY extl_order");
 //-----------------------------------------------------------------------------
 static QString QS_CREATE_RECORDS = PREPARE_QUERY("SELECT fcob_table FROM _fastcreateobject WHERE fcob_user = currentuserid() ORDER BY fcob_id");
 //-----------------------------------------------------------------------------
