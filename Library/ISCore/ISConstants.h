@@ -98,7 +98,6 @@ const char FORMAT_DATE_TIME_V8[] = "dd.MM.yyyy_hh.mm.ss";
 const char TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 //PROPERTY---------------------------------------------------------------------
 const char PROPERTY_LINE_EDIT_SELECTED_MENU[] = "LineEditSelectedMenu";
-const char PROPERTY_TIMEOUT[] = "Timeout";
 //-----------------------------------------------------------------------------
 const char PATH_SCHEMA_TEMPLATE_FIELDS[] = ":Other/ClassTemplateFields.xml";
 const char PATH_CONFIGURATOR_SCHEME[] = ":Other/Configurator.xml";

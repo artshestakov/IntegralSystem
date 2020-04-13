@@ -11,7 +11,7 @@
 #include "ISConnectionForm.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
-#include "ISProperty.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
 {
@@ -135,20 +135,9 @@ ISAuthForm::~ISAuthForm()
 	
 }
 //-----------------------------------------------------------------------------
-QString ISAuthForm::GetEnteredLogin() const
-{
-	return EditLogin->GetValue().toString();
-}
-//-----------------------------------------------------------------------------
-QString ISAuthForm::GetEnteredPassword() const
-{
-	return EditPassword->GetValue().toString();
-}
-//-----------------------------------------------------------------------------
 void ISAuthForm::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
-	ISProperty::Instance().SetValue("Timeout", QDateTime::currentDateTime());
 
 	QTimer *TimerCapsLook = new QTimer(this);
 	connect(TimerCapsLook, &QTimer::timeout, this, &ISAuthForm::TimeoutCapsLook);
@@ -227,6 +216,8 @@ void ISAuthForm::ConnectedDone()
 
 		hide();
 		SetResult(true);
+		ISMetaUser::Instance().UserData->Login = EditLogin->GetValue().toString();
+		ISMetaUser::Instance().UserData->Password = EditPassword->GetValue().toString();
 		close();
 	}
 	else //Ошибка подключения к базе данных

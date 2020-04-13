@@ -14,9 +14,6 @@ class LIBGUI_EXPORT	ISAuthForm : public ISInterfaceDialogForm
 public:
 	ISAuthForm(QWidget *parent = 0);
 	virtual ~ISAuthForm();
-	
-	QString GetEnteredLogin() const; //Получить введенный логин
-	QString GetEnteredPassword() const; //Получить введенный пароль
 
 protected:
 	void AfterShowEvent() override;

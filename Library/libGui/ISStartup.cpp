@@ -24,6 +24,7 @@
 #include "ISDeviceEntity.h"
 #include "ISObjects.h"
 #include "ISQueryPool.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 											 "FROM _users "
@@ -45,7 +46,7 @@ ISStartup::~ISStartup()
 
 }
 //-----------------------------------------------------------------------------
-bool ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
+bool ISStartup::Startup()
 {
 	//Проверка всех запросов
 	if (!ISQueryText::Instance().CheckAllQueries())
@@ -57,18 +58,18 @@ bool ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 
 	//Проверка введенных данных пользователем
 	ISQuery qSelectUser(QS_USER_CHECK);
-	qSelectUser.BindValue(":Login", UserLogin);
+	qSelectUser.BindValue(":Login", ISMetaUser::Instance().UserData->Login);
 	if (qSelectUser.ExecuteFirst())
 	{
 		if (!qSelectUser.ReadColumn("count").toInt())
 		{
-			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotFoundUserWithLogin").arg(UserLogin));
+			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotFoundUserWithLogin").arg(ISMetaUser::Instance().UserData->Login));
 			return false;
 		}
 	}
 
 	//Загрузка мета-данных о пользователе
-	ISMetaUser::Instance().Initialize(UserLogin, UserPassword);
+	ISMetaUser::Instance().Initialize();
 
 	//Инициализация мета-данных
 	ISMetaData::GetInstanse().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false);
@@ -77,7 +78,7 @@ bool ISStartup::Startup(const QString &UserLogin, const QString &UserPassword)
 	ISSettingsDatabase::GetInstance().Initialize();
 	ISSettingsDatabase::GetInstance().InitializedSystemParameters();
 
-	if (!CheckAccessDatabase(UserLogin)) //Проверка разрешения доступа к базе пользователям
+	if (!CheckAccessDatabase()) //Проверка разрешения доступа к базе пользователям
 	{
 		return false;
 	}
@@ -195,7 +196,7 @@ void ISStartup::Shutdown()
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISStartup::CheckAccessDatabase(const QString &Login)
+bool ISStartup::CheckAccessDatabase()
 {
 	if (ISMetaUser::Instance().UserData->System)
 	{

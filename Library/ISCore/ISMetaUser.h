@@ -12,10 +12,9 @@ public:
 
 public:
 	static ISMetaUser& Instance();
-	QString GetErrorString() const;
-	bool Initialize(const QString &login, const QString &password);
 
-	bool CheckPassword(const QString &EnteredPassword);
+	QString GetErrorString() const;
+	bool Initialize();
 
 private:
 	ISMetaUser();

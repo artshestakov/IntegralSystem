@@ -22,22 +22,18 @@ int main(int argc, char *argv[])
 	}
 
 	//Создание формы авторизации
-	ISAuthForm *AuthForm = new ISAuthForm();
-	Result = AuthForm->ExecAnimated();
+	ISAuthForm AuthForm;
+	Result = AuthForm.ExecAnimated();
 	if (!Result) //Форма авторизации была закрыта
 	{
 		return EXIT_SUCCESS;
 	}
 
-	QString UserLogin = AuthForm->GetEnteredLogin();
-	QString UserPassword = AuthForm->GetEnteredPassword();
-	delete AuthForm;
-
 	ISSplashScreen SplashScreen;
 	SplashScreen.show();
 	SplashScreen.SetMessage(LANG("Banner.StartupSystem"));
 
-	Result = ISStartup::Startup(UserLogin, UserPassword);
+	Result = ISStartup::Startup();
 	SplashScreen.hide();
 
 	if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()

@@ -24,8 +24,6 @@ static QString QS_USER = PREPARE_QUERY("SELECT "
 //-----------------------------------------------------------------------------
 static QString QS_USER_GROUP = PREPARE_QUERY("SELECT usgp_name, usgp_fullaccess FROM _usergroup WHERE NOT usgp_isdeleted AND usgp_id = :GroupID");
 //-----------------------------------------------------------------------------
-static QString QS_USER_PASSWORD = PREPARE_QUERY("SELECT passwd FROM pg_shadow WHERE usename = :Login");
-//-----------------------------------------------------------------------------
 ISMetaUser::ISMetaUser()
 	: UserData(new ISMetaUserData()),
 	ErrorString(NO_ERROR_STRING)
@@ -49,10 +47,10 @@ QString ISMetaUser::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaUser::Initialize(const QString &login, const QString &password)
+bool ISMetaUser::Initialize()
 {
 	ISQuery qSelectUser(QS_USER);
-	qSelectUser.BindValue(":Login", login);
+	qSelectUser.BindValue(":Login", UserData->Login);
 	bool Result = qSelectUser.ExecuteFirst();
 	if (Result)
 	{
@@ -63,8 +61,6 @@ bool ISMetaUser::Initialize(const QString &login, const QString &password)
 		UserData->Name = qSelectUser.ReadColumn("usrs_name").toString();
 		UserData->Patronymic = qSelectUser.ReadColumn("usrs_patronymic").toString();
 		UserData->Birthday = qSelectUser.ReadColumn("usrs_birthday").toDate();
-		UserData->Login = login;
-		UserData->Password = password;
 		UserData->IPAddress = ISDatabase::Instance().GetInetClientAddress();
 		UserData->FullName = UserData->Surname + SYMBOL_SPACE + UserData->Name + SYMBOL_SPACE + UserData->Patronymic;
 		UserData->AccessAllowed = qSelectUser.ReadColumn("usrs_accessallowed").toBool();
@@ -95,27 +91,5 @@ bool ISMetaUser::Initialize(const QString &login, const QString &password)
 	}
 	
 	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISMetaUser::CheckPassword(const QString &EnteredPassword)
-{
-	ISQuery qSelectPassword(QS_USER_PASSWORD);
-	qSelectPassword.BindValue(":Login", UserData->Login);
-	if (qSelectPassword.ExecuteFirst())
-	{
-		QString MD5 = qSelectPassword.ReadColumn("passwd").toString();
-		MD5 = MD5.remove(0, 3);
-
-		QCryptographicHash CryptographicHash(QCryptographicHash::Md5);
-		CryptographicHash.addData(QString(EnteredPassword + UserData->Login).toUtf8());
-		QString HashString(CryptographicHash.result().toHex());
-
-		if (MD5 == HashString)
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 //-----------------------------------------------------------------------------
