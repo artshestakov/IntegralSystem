@@ -72,9 +72,6 @@ bool ISMetaUser::Initialize(const QString &login, const QString &password)
 		UserData->AccountLifeTime = qSelectUser.ReadColumn("usrs_accountlifetime").toBool();
 		UserData->AccountLifeTimeStart = qSelectUser.ReadColumn("usrs_accountlifetimestart").toDate();
 		UserData->AccountLifeTimeEnd = qSelectUser.ReadColumn("usrs_accountlifetimeend").toDate();
-
-		UserData->FixedInactive = qSelectUser.ReadColumn("usrs_fixedinactive").toBool();
-		UserData->InactiveTimeout = qSelectUser.ReadColumn("usrs_inactivetimeout").toInt();
 	}
 	else
 	{

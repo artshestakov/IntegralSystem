@@ -67,7 +67,7 @@ bool ISExportHTML::Export()
 		for (int i = 0; i < Fields.size(); ++i) //Обход выбранных для экспорта полей
 		{
 			QString FieldName = Fields.at(i);
-			if (VectorContains(Fields, FieldName))
+			if (ISAlgorithm::VectorContains(Fields, FieldName))
 			{
 				QString LocalName = Model->GetFieldLocalName(FieldName);
 				FileHTML->write("    <th>" + LocalName.toUtf8() + "</th>\r\n");
@@ -95,7 +95,7 @@ bool ISExportHTML::Export()
 
 		if (!SelectedRows.empty()) //Если есть выделенные строки
 		{
-			if (!VectorContains(SelectedRows, Row))
+			if (!ISAlgorithm::VectorContains(SelectedRows, Row))
 			{
 				continue;
 			}

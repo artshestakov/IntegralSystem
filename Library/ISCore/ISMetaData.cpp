@@ -57,7 +57,7 @@ ISMetaData::~ISMetaData()
 {
 	while (!Resources.empty())
 	{
-		delete VectorTakeBack(Resources);
+		delete ISAlgorithm::VectorTakeBack(Resources);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -151,12 +151,12 @@ PMetaField* ISMetaData::GetMetaField(const QString &TableName, const QString &Fi
 //-----------------------------------------------------------------------------
 std::vector<PMetaFunction*> ISMetaData::GetFunctions()
 {
-	return ConvertMapToValues<QString, PMetaFunction *>(FunctionsMap);
+	return ISAlgorithm::ConvertMapToValues<QString, PMetaFunction *>(FunctionsMap);
 }
 //-----------------------------------------------------------------------------
 std::vector<PMetaTable*> ISMetaData::GetTables()
 {
-	return ConvertMapToValues<QString, PMetaTable *>(TablesMap);
+	return ISAlgorithm::ConvertMapToValues<QString, PMetaTable *>(TablesMap);
 }
 //-----------------------------------------------------------------------------
 ISVectorString ISMetaData::GetMetaQueries()

@@ -75,7 +75,7 @@ void ISLocalization::InitializeContent(const QString &Content)
 		QString LocalizationName = DomElement.attributes().namedItem("Name").nodeValue();
 		if (!LocalizationName.isEmpty())
 		{
-			if (!VectorContains(LoadedFiles, LocalizationName))
+			if (!ISAlgorithm::VectorContains(LoadedFiles, LocalizationName))
 			{
 				while (!NodeLocalization.isNull())
 				{

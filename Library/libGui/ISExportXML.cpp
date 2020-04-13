@@ -66,7 +66,7 @@ bool ISExportXML::Export()
 
 		if (!SelectedRows.empty()) //Если есть выделенные строки
 		{
-			if (!VectorContains(SelectedRows, Row))
+			if (!ISAlgorithm::VectorContains(SelectedRows, Row))
 			{
 				continue;
 			}
