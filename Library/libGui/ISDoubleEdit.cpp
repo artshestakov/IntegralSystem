@@ -1,17 +1,13 @@
 #include "ISDoubleEdit.h"
 #include "ISDefinesCore.h"
-#include "ISStyleSheet.h"
-#include "ISConstants.h"
 #include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
-ISDoubleEdit::ISDoubleEdit(QWidget *parent)
-	: ISLineEdit(parent),
-	DoubleValidator(new QDoubleValidator(this))
+ISDoubleEdit::ISDoubleEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	DoubleValidator->setLocale(QLocale(QLocale::English));
-	DoubleValidator->setDecimals(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
-	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+	DoubleValidator = new ISDoubleValidator(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA), this);
 	SetValidator(DoubleValidator);
+
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 }
 //-----------------------------------------------------------------------------
 ISDoubleEdit::~ISDoubleEdit()
@@ -19,29 +15,22 @@ ISDoubleEdit::~ISDoubleEdit()
 
 }
 //-----------------------------------------------------------------------------
-QVariant ISDoubleEdit::GetValue() const
+void ISDoubleEdit::SetValue(const QVariant &value)
 {
-	QVariant Value = ISLineEdit::GetValue();
-	if (Value.isValid())
+	bool Ok = true;
+	double Double = value.toDouble(&Ok);
+	if (Ok)
 	{
-		QString StringValue = Value.toString();
-		if (StringValue.contains(SYMBOL_COMMA))
-		{
-			StringValue.replace(SYMBOL_COMMA, SYMBOL_POINT);
-			Value.setValue<QString>(StringValue);
-		}
+		std::stringstream StringStream;
+		StringStream << std::setprecision(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA) + 1) << Double;
+		std::string String = StringStream.str();
+		ISLineEdit::SetValue(String.c_str());
 	}
-	return Value;
 }
 //-----------------------------------------------------------------------------
 void ISDoubleEdit::SetRange(double Minimum, double Maximum)
 {
-	if (DoubleValidator)
-	{
-		delete DoubleValidator;
-	}
-	
-	DoubleValidator = new QDoubleValidator(Minimum, Maximum, DOUBLE_DECIMALS, this);
-	SetValidator(DoubleValidator);
+	DoubleValidator->setBottom(Minimum);
+	DoubleValidator->setTop(Maximum);
 }
 //-----------------------------------------------------------------------------

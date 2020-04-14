@@ -86,22 +86,22 @@
     </Foreigns>
   </Table>
 
-  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="LoadCounterparty" ClassFilterField="Implementation">
+  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="LoadCounterparty" ClassFilterField="Implementation" ObjectForm="ISOilSphereImplementationDetailObjectForm">
     <Fields>
       <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="Int" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент (загрузка)" LocalListName="Контрагент" NotNull="true" SeparatorName="Загрузка"/>
       <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="LoadContainer" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="LoadContainer"/>
       <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="LoadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="LoadContainer"/>
-      <Field UID="{F6E17298-F970-4E8F-92AC-1560184CB2DE}" Name="LoadWeightNet" Type="Double" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="LoadContainer"/>
+      <Field UID="{F6E17298-F970-4E8F-92AC-1560184CB2DE}" Name="LoadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="LoadContainer"/>
       <Field UID="{590547D1-75DD-4CE2-95C4-B6EC97D43EFD}" Name="LoadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="LoadPrice"/>
       <Field UID="{64CCFB48-4BF4-4322-B35D-7869E27554EB}" Name="LoadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="LoadPrice"/>
       <Field UID="{CD120D42-00D6-4D80-ADF5-77D82E089D12}" Name="UnloadPlace" Type="Int" LabelName="Место выгрузки" LocalListName="Место выгрузки" SeparatorName="Выгрузка"/>
+      <Field UID="{F666929C-5DC1-4D51-8527-6D14D3F64409}" Name="UnloadContainer" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" LayoutName="Unload"/>
       <Field UID="{66950052-D388-467C-8F7D-AE5B071AFAFA}" Name="UnloadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Unload"/>
-      <Field UID="{F666929C-5DC1-4D51-8527-6D14D3F64409}" Name="UnloadWeightContainer" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" LayoutName="Unload"/>
       <Field UID="{9B8377B2-46E7-4DD7-B8B1-A3306A6C5593}" Name="UnloadWeightNet" Type="Double" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Unload"/>
       <Field UID="{DD79EB7F-CCAC-46C1-8E63-073935646196}" Name="UnloadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="UnloadPrice"/>
       <Field UID="{E00C3A63-5EBF-44AC-AF4E-427F163D9E6C}" Name="UnloadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="UnloadPrice"/>
-      <Field UID="{B7FA062E-4DB3-432C-B26E-AE3FA681999E}" Name="PaymentType" Type="Int" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true"/>
+      <Field UID="{B7FA062E-4DB3-432C-B26E-AE3FA681999E}" Name="PaymentType" Type="Int" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true" SeparatorName="Дополнительно"/>
       <Field UID="{D4AAA5D3-53D8-40F2-88C3-7A712F0726FB}" Name="Organization" Type="Int" LabelName="Огранизация" LocalListName="Огранизация"/>
       <Field UID="{B47E3F31-CE60-450F-905C-F54D6D17F7D4}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
       <Field UID="{E3EC604A-96C7-4DA2-9C44-7EB4C9871796}" Name="Driver" Type="Int" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
@@ -118,7 +118,7 @@
       <Index Field="LoadCost"/>
       <Index Field="UnloadPlace"/>
       <Index Field="UnloadWeightGross"/>
-      <Index Field="UnloadWeightContainer"/>
+      <Index Field="UnloadContainer"/>
       <Index Field="UnloadWeightNet"/>
       <Index Field="UnloadPriceUnit"/>
       <Index Field="UnloadCost"/>

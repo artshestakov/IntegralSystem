@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "ISOilSphereCounterpartyObjectForm.h"
 #include "ISOilSphereImplementationObjectForm.h"
+#include "ISOilSphereImplementationDetailObjectForm.h"
 //-----------------------------------------------------------------------------
 ISOilSphere::ISOilSphere() : ISObjectInterface()
 {
@@ -27,5 +28,6 @@ void ISOilSphere::InitializePlugin() const
 {
 	qRegisterMetaType<ISOilSphereCounterpartyObjectForm*>("ISOilSphereCounterpartyObjectForm");
 	qRegisterMetaType<ISOilSphereImplementationObjectForm*>("ISOilSphereImplementationObjectForm");
+	qRegisterMetaType<ISOilSphereImplementationDetailObjectForm*>("ISOilSphereImplementationDetailObjectForm");
 }
 //-----------------------------------------------------------------------------

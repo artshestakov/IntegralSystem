@@ -277,6 +277,7 @@
     <ClCompile Include="ISObjects.cpp" />
     <ClCompile Include="ISOilSphere.cpp" />
     <ClCompile Include="ISOilSphereCounterpartyObjectForm.cpp" />
+    <ClCompile Include="ISOilSphereImplementationDetailObjectForm.cpp" />
     <ClCompile Include="ISOilSphereImplementationObjectForm.cpp" />
     <ClCompile Include="ISOrganizationListForm.cpp" />
     <ClCompile Include="ISOrganizationMyListForm.cpp" />
@@ -399,6 +400,7 @@
     <ClCompile Include="ISUserOnlineDetailsForm.cpp" />
     <ClCompile Include="ISUserPasswordForm.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
+    <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISVolumeEdit.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="ISWorkspaceForm.cpp" />
@@ -424,6 +426,7 @@
     <QtMoc Include="ISOilSphere.h" />
     <QtMoc Include="ISOilSphereCounterpartyObjectForm.h" />
     <QtMoc Include="ISOilSphereImplementationObjectForm.h" />
+    <QtMoc Include="ISOilSphereImplementationDetailObjectForm.h" />
     <ClInclude Include="ISPassword.h" />
     <QtMoc Include="ISPrintingBase.h" />
     <ClInclude Include="ISPrintingEntity.h" />
@@ -435,6 +438,7 @@
     <QtMoc Include="ISSqlModelCore.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
     <ClInclude Include="ISStyleSheet.h" />
+    <QtMoc Include="ISValidators.h" />
     <ClInclude Include="libGui_global.h" />
     <QtMoc Include="ISIncomingCallBaseForm.h" />
     <QtMoc Include="ISInterfaceMetaForm.h" />

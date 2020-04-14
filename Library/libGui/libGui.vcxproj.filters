@@ -1126,6 +1126,12 @@
     <ClCompile Include="ISOilSphereImplementationObjectForm.cpp">
       <Filter>Objects\OilSphere\Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISOilSphereImplementationDetailObjectForm.cpp">
+      <Filter>Objects\OilSphere\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISValidators.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISIncomingCallBaseForm.h">
@@ -1925,6 +1931,12 @@
     </QtMoc>
     <QtMoc Include="ISOilSphereImplementationObjectForm.h">
       <Filter>Objects\OilSphere\Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISOilSphereImplementationDetailObjectForm.h">
+      <Filter>Objects\OilSphere\Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISValidators.h">
+      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
