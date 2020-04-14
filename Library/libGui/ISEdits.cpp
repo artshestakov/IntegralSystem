@@ -121,18 +121,6 @@ void ISQLineEdit::ContextMenuCopy()
 	QApplication::clipboard()->setText(SelectedText);
 }
 //-----------------------------------------------------------------------------
-void ISQLineEdit::focusInEvent(QFocusEvent *e)
-{
-	QLineEdit::focusInEvent(e);
-	emit FocusInSignal();
-}
-//-----------------------------------------------------------------------------
-void ISQLineEdit::focusOutEvent(QFocusEvent *e)
-{
-	QLineEdit::focusOutEvent(e);
-	emit FocusOutSignal();
-}
-//-----------------------------------------------------------------------------
 void ISQLineEdit::contextMenuEvent(QContextMenuEvent *e)
 {
 	ISGui::SetWaitGlobalCursor(true);
@@ -184,12 +172,6 @@ void ISQLineEdit::contextMenuEvent(QContextMenuEvent *e)
 	ContextMenu.exec(e->globalPos());
 }
 //-----------------------------------------------------------------------------
-void ISQLineEdit::mouseDoubleClickEvent(QMouseEvent *e)
-{
-	QLineEdit::mouseDoubleClickEvent(e);
-	emit MouseDoubleClicked();
-}
-//-----------------------------------------------------------------------------
 void ISQLineEdit::mousePressEvent(QMouseEvent *e)
 {
 	QLineEdit::mousePressEvent(e);
@@ -200,7 +182,6 @@ void ISQLineEdit::mousePressEvent(QMouseEvent *e)
 			paste();
 		}
 	}
-	emit MousePressEvent();
 }
 //-----------------------------------------------------------------------------
 void ISQLineEdit::mouseReleaseEvent(QMouseEvent *e)
@@ -218,27 +199,15 @@ void ISQLineEdit::mouseReleaseEvent(QMouseEvent *e)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISQLineEdit::wheelEvent(QWheelEvent *e)
-{
-	QLineEdit::wheelEvent(e);
-	emit WheelEventSignal(e);
-}
-//-----------------------------------------------------------------------------
-void ISQLineEdit::keyPressEvent(QKeyEvent *e)
-{
-	QLineEdit::keyPressEvent(e);
-	emit KeyPressEventSignal(e);
-}
-//-----------------------------------------------------------------------------
 void ISQLineEdit::paintEvent(QPaintEvent *e)
 {
 	QLineEdit::paintEvent(e);
 	if (!Icon.isNull())
 	{
-		QPainter Painter(this);
 		QPixmap Pixmap = Icon.pixmap(height() - 6, height() - 6);
 		int x = Pixmap.width();
 
+		QPainter Painter(this);
 		Painter.drawPixmap(2, 3, Pixmap);
 		Painter.setPen(Qt::lightGray);
 		Painter.drawLine(x + 2, 3, x + 2, height() - 4);

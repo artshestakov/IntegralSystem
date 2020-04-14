@@ -10,7 +10,7 @@ class ISQComboBox : public QComboBox
 {
 	Q_OBJECT
 
-		signals :
+signals:
 	void ShowPopup();
 	void HidePopup();
 
@@ -35,13 +35,7 @@ class ISQLineEdit : public QLineEdit
 {
 	Q_OBJECT
 
-		signals :
-	void FocusInSignal();
-	void FocusOutSignal();
-	void MouseDoubleClicked();
-	void WheelEventSignal(QWheelEvent *WheelEvent);
-	void KeyPressEventSignal(QKeyEvent *KeyEvent);
-	void MousePressEvent();
+signals:
 	void ClearClicked();
 
 public:
@@ -55,14 +49,9 @@ public:
 
 protected:
 	void ContextMenuCopy();
-	virtual void focusInEvent(QFocusEvent *e);
-	virtual void focusOutEvent(QFocusEvent *e);
 	virtual void contextMenuEvent(QContextMenuEvent *e);
-	virtual void mouseDoubleClickEvent(QMouseEvent *e);
 	virtual void mousePressEvent(QMouseEvent *e);
 	virtual void mouseReleaseEvent(QMouseEvent *e);
-	virtual void wheelEvent(QWheelEvent *e);
-	virtual void keyPressEvent(QKeyEvent *e);
 	virtual void paintEvent(QPaintEvent *e);
 
 private:
@@ -166,7 +155,7 @@ class ISPhoneLineEdit : public QLineEdit
 {
 	Q_OBJECT
 
-		signals :
+signals:
 	void Pasted(const QString &String);
 	void ClearClicked();
 

@@ -1,10 +1,11 @@
 #include "ISModelThreadQuery.h"
 #include "ISMetaData.h"
-#include "ISTrace.h"
 //-----------------------------------------------------------------------------
-ISModelThreadQuery::ISModelThreadQuery(QObject *parent) : QThread(parent)
+ISModelThreadQuery::ISModelThreadQuery(QObject *parent)
+	: QThread(parent),
+	ModelWorker(nullptr)
 {
-	ModelWorker = nullptr;
+	
 }
 //-----------------------------------------------------------------------------
 ISModelThreadQuery::~ISModelThreadQuery()
@@ -18,7 +19,6 @@ ISModelThreadQuery::~ISModelThreadQuery()
 //-----------------------------------------------------------------------------
 void ISModelThreadQuery::Execute(const QString &SqlQuery, const QVariantMap &Conditions)
 {
-	IS_TRACE();
 	emit Started();
 
 	//ќжидание создани€ рабочего класса модели
@@ -26,7 +26,6 @@ void ISModelThreadQuery::Execute(const QString &SqlQuery, const QVariantMap &Con
 	{
 		QThread::currentThread()->msleep(10);
 	}
-
 	emit ExecuteQuery(SqlQuery, Conditions);
 }
 //-----------------------------------------------------------------------------
@@ -40,7 +39,6 @@ void ISModelThreadQuery::run()
 	connect(ModelWorker, &ISModelThreadWorker::ExecutedQuery, this, &ISModelThreadQuery::ExecutedQuery);
 	connect(ModelWorker, &ISModelThreadWorker::ErrorConnection, this, &ISModelThreadQuery::ErrorConnection);
 	connect(ModelWorker, &ISModelThreadWorker::ErrorQuery, this, &ISModelThreadQuery::ErrorQuery);
-
 	exec();
 }
 //-----------------------------------------------------------------------------
