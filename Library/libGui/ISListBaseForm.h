@@ -161,8 +161,8 @@ private:
 	bool SearchFlag;
 	
 	QToolBar *ToolBar;
-	QMap<ISNamespace::ActionType, QAction*> Actions;
-	QMap<ISNamespace::ActionSpecialType, QAction *> ActionsSpecial;
+	std::map<ISNamespace::ActionType, QAction*> Actions;
+	std::map<ISNamespace::ActionSpecialType, QAction *> ActionsSpecial;
 	QActionGroup *ActionObjectGroup; //Группа действий для одного объекта
 
 	QMenu *ContextMenu;

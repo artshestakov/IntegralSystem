@@ -481,12 +481,12 @@ QHBoxLayout* ISListBaseForm::GetLayoutTableView()
 //-----------------------------------------------------------------------------
 QAction* ISListBaseForm::GetAction(ISNamespace::ActionType action_type)
 {
-	return Actions.value(action_type);
+	return Actions[action_type];
 }
 //-----------------------------------------------------------------------------
 QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_special)
 {
-	return ActionsSpecial.value(action_special);
+	return ActionsSpecial[action_special];
 }
 //-----------------------------------------------------------------------------
 ISSqlModelCore* ISListBaseForm::GetSqlModel()
@@ -1430,97 +1430,97 @@ void ISListBaseForm::CreateActions()
 	QAction *ActionCreate = ISControls::CreateActionCreate(this);
 	ActionCreate->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	connect(ActionCreate, &QAction::triggered, this, &ISListBaseForm::Create);
-	Actions.insert(ISNamespace::AT_Create, ActionCreate);
+	Actions.emplace(ISNamespace::AT_Create, ActionCreate);
 
 	//Создать копию
 	QAction *ActionCreateCopy = ISControls::CreateActionCreateCopy(this);
 	connect(ActionCreateCopy, &QAction::triggered, this, &ISListBaseForm::CreateCopy);
-	Actions.insert(ISNamespace::AT_CreateCopy, ActionCreateCopy);
+	Actions.emplace(ISNamespace::AT_CreateCopy, ActionCreateCopy);
 
 	//Изменить
 	QAction *ActionEdit = ISControls::CreateActionEdit(this);
 	connect(ActionEdit, &QAction::triggered, this, &ISListBaseForm::Edit);
-	Actions.insert(ISNamespace::AT_Edit, ActionEdit);
+	Actions.emplace(ISNamespace::AT_Edit, ActionEdit);
 
 	//Удалить
 	QAction *ActionDelete = ISControls::CreateActionDelete(this);
 	connect(ActionDelete, &QAction::triggered, this, &ISListBaseForm::Delete);
-	Actions.insert(ISNamespace::AT_Delete, ActionDelete);
+	Actions.emplace(ISNamespace::AT_Delete, ActionDelete);
 
 	//Удалить каскадом
 	QAction *ActionDeleteCascade = ISControls::CreateActionDeleteCascade(this);
 	connect(ActionDeleteCascade, &QAction::triggered, this, &ISListBaseForm::DeleteCascade);
-	Actions.insert(ISNamespace::AT_DeleteCascade, ActionDeleteCascade);
+	Actions.emplace(ISNamespace::AT_DeleteCascade, ActionDeleteCascade);
 
 	//Обновить
 	QAction *ActionUpdate = ISControls::CreateActionUpdate(this);
 	connect(ActionUpdate, &QAction::triggered, this, &ISListBaseForm::Update);
-	Actions.insert(ISNamespace::AT_Update, ActionUpdate);
+	Actions.emplace(ISNamespace::AT_Update, ActionUpdate);
 
 	//Показывать удаленные записи
 	QAction *ActionShowDeleted = ISControls::CreateActionShowDeleted(this);
 	connect(ActionShowDeleted, &QAction::triggered, this, &ISListBaseForm::ShowDeleted);
-	Actions.insert(ISNamespace::AT_ShowDeleted, ActionShowDeleted);
+	Actions.emplace(ISNamespace::AT_ShowDeleted, ActionShowDeleted);
 
 	//Поиск
 	QAction *ActionSearch = ISControls::CreateActionSearch(this);
 	connect(ActionSearch, &QAction::triggered, this, &ISListBaseForm::Search);
-	Actions.insert(ISNamespace::AT_Search, ActionSearch);
+	Actions.emplace(ISNamespace::AT_Search, ActionSearch);
 
 	//Очистка результатов поиска
 	QAction *ActionSearchClearResult = ISControls::CreateActionSearchClearResults(this);
 	ActionSearchClearResult->setEnabled(false);
 	connect(ActionSearchClearResult, &QAction::triggered, this, &ISListBaseForm::SearchClear);
-	Actions.insert(ISNamespace::AT_SearchClear, ActionSearchClearResult);
+	Actions.emplace(ISNamespace::AT_SearchClear, ActionSearchClearResult);
 
 	//Экспорт
 	QAction *ActionExport = ISControls::CreateActionExport(this);
 	connect(ActionExport, &QAction::triggered, this, &ISListBaseForm::Export);
-	Actions.insert(ISNamespace::AT_Export, ActionExport);
+	Actions.emplace(ISNamespace::AT_Export, ActionExport);
 
 	//Печать
 	QAction *ActionPrint = ISControls::CreateActionPrint(this);
 	connect(ActionPrint, &QAction::triggered, this, &ISListBaseForm::Print);
-	Actions.insert(ISNamespace::AT_Print, ActionPrint);
+	Actions.emplace(ISNamespace::AT_Print, ActionPrint);
 
 	//Избранное
 	QAction *ActionFavorites = ISControls::CreateActionFavorites(this);
 	connect(ActionFavorites, &QAction::triggered, this, &ISListBaseForm::ShowFavorites);
-	Actions.insert(ISNamespace::AT_Favorites, ActionFavorites);
+	Actions.emplace(ISNamespace::AT_Favorites, ActionFavorites);
 
 	//Системная информация
 	QAction *ActionSystemInformation = ISControls::CreateActionRecordInformartion(this);
 	connect(ActionSystemInformation, &QAction::triggered, this, &ISListBaseForm::ShowSystemInfo);
-	Actions.insert(ISNamespace::AT_SystemInfo, ActionSystemInformation);
+	Actions.emplace(ISNamespace::AT_SystemInfo, ActionSystemInformation);
 
 	//Поделиться
 	QAction *ActionShare = ISControls::CreateActionShare(this);
 	connect(ActionShare, &QAction::triggered, this, &ISListBaseForm::Share);
-	Actions.insert(ISNamespace::AT_Share, ActionShare);
+	Actions.emplace(ISNamespace::AT_Share, ActionShare);
 
 	QAction *ActionAttachTask = ISControls::CreateActionAttachTask(this);
 	connect(ActionAttachTask, &QAction::triggered, this, &ISListBaseForm::AttachTask);
-	Actions.insert(ISNamespace::AT_AttachTask, ActionAttachTask);
+	Actions.emplace(ISNamespace::AT_AttachTask, ActionAttachTask);
 
 	//Первая запись
 	QAction *ActionNavigationBegin = ISControls::CreateActionNavigationBegin(this);
 	connect(ActionNavigationBegin, &QAction::triggered, this, &ISListBaseForm::NavigationSelectBeginRecord);
-	Actions.insert(ISNamespace::AT_NavigationBegin, ActionNavigationBegin);
+	Actions.emplace(ISNamespace::AT_NavigationBegin, ActionNavigationBegin);
 
 	//Предыдущая запись
 	QAction *ActionNavigationPrevious = ISControls::CreateActionNavigationPrevious(this);
 	connect(ActionNavigationPrevious, &QAction::triggered, this, &ISListBaseForm::NavigationSelectPreviousRecord);
-	Actions.insert(ISNamespace::AT_NavigationPrevious, ActionNavigationPrevious);
+	Actions.emplace(ISNamespace::AT_NavigationPrevious, ActionNavigationPrevious);
 
 	//Следующая запись
 	QAction *ActionNavigationNext = ISControls::CreateActionNavigationNext(this);
 	connect(ActionNavigationNext, &QAction::triggered, this, &ISListBaseForm::NavigationSelectNextRecord);
-	Actions.insert(ISNamespace::AT_NavigationNext, ActionNavigationNext);
+	Actions.emplace(ISNamespace::AT_NavigationNext, ActionNavigationNext);
 
 	//Последняя запись
 	QAction *ActionNavigationLast = ISControls::CreateActionNavigationLast(this);
 	connect(ActionNavigationLast, &QAction::triggered, this, &ISListBaseForm::NavigationSelectLastRecord);
-	Actions.insert(ISNamespace::AT_NavigationLast, ActionNavigationLast);
+	Actions.emplace(ISNamespace::AT_NavigationLast, ActionNavigationLast);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateSpecialActions()
@@ -1528,12 +1528,12 @@ void ISListBaseForm::CreateSpecialActions()
 	//Сортировка по умолчанию
 	QAction *ActionSortDefault = ISControls::CreateActionSortDefault(this);
 	connect(ActionSortDefault, &QAction::triggered, this, &ISListBaseForm::SortingDefault);
-	ActionsSpecial.insert(ISNamespace::AST_SortDefault, ActionSortDefault);
+	ActionsSpecial.emplace(ISNamespace::AST_SortDefault, ActionSortDefault);
 
 	//Примечание
 	QAction *ActionNoteObject = ISControls::CreateActionNoteObject(this);
 	connect(ActionNoteObject, &QAction::triggered, this, &ISListBaseForm::NoteObject);
-	ActionsSpecial.insert(ISNamespace::AST_Note, ActionNoteObject);
+	ActionsSpecial.emplace(ISNamespace::AST_Note, ActionNoteObject);
 
 	//Автоподбор ширины
 	QAction *ActionResizeFromContent = new QAction(this);
@@ -1541,21 +1541,21 @@ void ISListBaseForm::CreateSpecialActions()
 	ActionResizeFromContent->setToolTip(LANG("AutoFitColumnWidth"));
 	ActionResizeFromContent->setIcon(BUFFER_ICONS("AutoFitColumnWidth"));
 	connect(ActionResizeFromContent, &QAction::triggered, this, &ISListBaseForm::AutoFitColumnWidth);
-	ActionsSpecial.insert(ISNamespace::AST_ResizeFromContent, ActionResizeFromContent);
+	ActionsSpecial.emplace(ISNamespace::AST_ResizeFromContent, ActionResizeFromContent);
 
 	//Сброс ширины колонок
 	QAction *ActionResetWidthColumn = new QAction(this);
 	ActionResetWidthColumn->setText(LANG("ResetWidthColumn"));
 	ActionResetWidthColumn->setToolTip(LANG("ResetWidthColumn"));
 	connect(ActionResetWidthColumn, &QAction::triggered, this, &ISListBaseForm::ResetWidthColumn);
-	ActionsSpecial.insert(ISNamespace::AST_ResetWidthColumn, ActionResetWidthColumn);
+	ActionsSpecial.emplace(ISNamespace::AST_ResetWidthColumn, ActionResetWidthColumn);
 
 	//Копирование записи в буфер
 	QAction *ActionCopyRecord = new QAction(this);
 	ActionCopyRecord->setText(LANG("CopyRecord"));
 	ActionCopyRecord->setToolTip(LANG("CopyRecord"));
 	connect(ActionCopyRecord, &QAction::triggered, this, &ISListBaseForm::CopyRecord);
-	ActionsSpecial.insert(ISNamespace::AST_CopyRecord, ActionCopyRecord);
+	ActionsSpecial.emplace(ISNamespace::AST_CopyRecord, ActionCopyRecord);
 
 	ActionObjectGroup->addAction(ActionNoteObject);
 }
