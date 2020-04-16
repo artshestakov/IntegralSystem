@@ -37,6 +37,8 @@ public:
 	void SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical); //Изменить политику растяжения по горизонтали
 
 	void BlinkRed(); //Подсветить поле красным цветом
+	void Blink(const QColor &Color);
+
 	void SetFocus(); //Установить фокус на виджет редактирования
 
 	void SetModificationFlag(bool modification_flag); //Изменить флаг изменения значения
@@ -70,7 +72,8 @@ private:
 	QWidget *FieldEditPointer;
 
 	bool ModificationFlag;
-	bool BorderRed;
+	bool IsBlinkBorder;
+	QColor BlinkColor;
 };
 //-----------------------------------------------------------------------------
 #endif

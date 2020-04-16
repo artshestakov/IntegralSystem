@@ -13,7 +13,7 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 	EditWidget(nullptr),
 	FieldEditPointer(nullptr),
 	ModificationFlag(false),
-	BorderRed(false),
+	IsBlinkBorder(false),
 	ButtonClear(nullptr)
 {
 	SetSizePolicyHorizontal(QSizePolicy::Minimum);
@@ -127,10 +127,16 @@ void ISFieldEditBase::SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical)
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::BlinkRed()
 {
+	Blink(ISDefines::Gui::EDIT_WIDGET_COLOR_RED);
+}
+//-----------------------------------------------------------------------------
+void ISFieldEditBase::Blink(const QColor &Color)
+{
+	BlinkColor = Color;
 	EditWidget->clearFocus();
 	for (size_t i = 0; i < EDIT_BLINK_COUNT; i++)
 	{
-		BorderRed = BorderRed ? false : true;
+		IsBlinkBorder = IsBlinkBorder ? false : true;
 		repaint();
 		ISSystem::SleepMilliseconds(100);
 	}
@@ -178,11 +184,11 @@ void ISFieldEditBase::paintEvent(QPaintEvent *PaintEvent)
 	QWidget::paintEvent(PaintEvent);
 	if (EditWidget)
 	{
-		if (BorderRed)
+		if (IsBlinkBorder)
 		{
 			QPainter Painter(this);
 			Painter.setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
-			Painter.setPen(QPen(ISDefines::Gui::EDIT_WIDGET_COLOR_RED, 2.5, Qt::SolidLine));
+			Painter.setPen(QPen(BlinkColor, 2.5, Qt::SolidLine));
 			Painter.drawRect(EditWidget->pos().x() - 1, EditWidget->pos().y() - 1, EditWidget->width() + 2, EditWidget->height() + 2);
 		}
 	}
