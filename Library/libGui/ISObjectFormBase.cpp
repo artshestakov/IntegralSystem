@@ -88,12 +88,12 @@ bool ISObjectFormBase::GetModificationFlag() const
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetFieldValue(const QString &FieldName, const QVariant &value)
 {
-	FieldsMap.value(FieldName)->SetValue(value);
+	FieldsMap[FieldName]->SetValue(value);
 }
 //-----------------------------------------------------------------------------
 QVariant ISObjectFormBase::GetFieldValue(const QString &FieldName) const
 {
-	return FieldsMap.value(FieldName)->GetValue();
+	return FieldsMap.at(FieldName)->GetValue();
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetCurrentIndexTab(int current_index_tab)
@@ -108,8 +108,8 @@ void ISObjectFormBase::SetVisibleNavigationBar(bool Visible)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleField(const QString &FieldName, bool Visible)
 {
-	LabelsMap.value(FieldName)->setVisible(Visible);
-	FieldsMap.value(FieldName)->setVisible(Visible);
+	LabelsMap[FieldName]->setVisible(Visible);
+	FieldsMap[FieldName]->setVisible(Visible);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleFavorites(bool Visible)
@@ -224,7 +224,7 @@ void ISObjectFormBase::AfterShowEvent()
 		BeginFieldEdit->SetFocus();
 	}
 
-	ISFieldEditBase *FieldEditWidget = FieldsMap.value(MetaTable->ClassFilterField);
+	ISFieldEditBase *FieldEditWidget = FieldsMap[MetaTable->ClassFilterField];
 	if (FieldEditWidget)
 	{
 		FieldEditWidget->SetValue(ParentObjectID);
@@ -424,11 +424,11 @@ void ISObjectFormBase::CreateFieldsWidget()
 
 		if (!MetaField->LayoutName.isEmpty()) //Если поле должно быть в горизональном компоновщике
 		{
-			if (!Layouts.contains(MetaField->LayoutName))
+			if (!Layouts.count(MetaField->LayoutName))
 			{
 				QHBoxLayout *LayoutHorizontal = new QHBoxLayout();
 				LayoutHorizontal->setProperty("Inserted", false);
-				Layouts.insert(MetaField->LayoutName, LayoutHorizontal);
+				Layouts.emplace(MetaField->LayoutName, LayoutHorizontal);
 			}
 		}
 
@@ -477,7 +477,7 @@ void ISObjectFormBase::FillDataFields()
 				continue;
 			}
 
-			ISFieldEditBase *FieldEditWidget = FieldsMap.value(FieldName);
+			ISFieldEditBase *FieldEditWidget = FieldsMap[FieldName];
 			if (FieldEditWidget)
 			{
 				disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
@@ -533,7 +533,7 @@ void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
 ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaField *MetaField)
 {
 	ISFieldEditBase	*FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
-	FieldsMap.insert(MetaField->Name, FieldEditBase);
+	FieldsMap.emplace(MetaField->Name, FieldEditBase);
 	connect(FieldEditBase, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 	return FieldEditBase;
 }
@@ -542,7 +542,7 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 {
 	QLabel *LabelField = new QLabel(this);
 	LabelField->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-	LabelsMap.insert(MetaField->Name, LabelField);
+	LabelsMap.emplace(MetaField->Name, LabelField);
 
 	if (MetaField->DefaultValueWidget.isValid()) //Если в поле указано значение по умолчанию для виджета-редактора
 	{
@@ -609,7 +609,7 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		FormLayout->addRow(LabelTab, WidgetLine);
 	}
 
-	QHBoxLayout *LayoutHorizontal = Layouts.value(MetaField->LayoutName);
+	QHBoxLayout *LayoutHorizontal = Layouts[MetaField->LayoutName];
 	if (LayoutHorizontal)
 	{
 		if (LayoutHorizontal->property("Inserted").toBool())
@@ -763,7 +763,7 @@ bool ISObjectFormBase::Save()
 	QString QueryText;
 	bool Executed = false;
 
-	for (const auto &Field : FieldsMap.toStdMap()) //Обход существующих полей на форме
+	for (const auto &Field : FieldsMap) //Обход существующих полей на форме
 	{
 		QString FieldName = Field.first;
 		PMetaField *MetaField = MetaTable->GetField(FieldName);
@@ -1063,7 +1063,7 @@ void ISObjectFormBase::CancelChanged()
 
 		if (FormType == ISNamespace::OFT_New)
 		{
-			for (const auto &MapItem : FieldsMap.toStdMap())
+			for (const auto &MapItem : FieldsMap)
 			{
 				ISFieldEditBase *FieldEditBase = MapItem.second;
 				if (FieldEditBase->GetModificationFlag())
@@ -1100,7 +1100,7 @@ void ISObjectFormBase::ReRead()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ReReadCard")))
 	{
 		ISGui::SetWaitGlobalCursor(true);
-		for (const auto &FieldItem : FieldsMap.toStdMap())
+		for (const auto &FieldItem : FieldsMap)
 		{
 			QString FieldName = FieldItem.first;
 			ISFieldEditBase *FieldWidget = FieldItem.second;
@@ -1166,7 +1166,7 @@ QString ISObjectFormBase::GetObjectName() const
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISObjectFormBase::GetFieldWidget(const QString &FieldName)
 {
-	return FieldsMap.value(FieldName);
+	return FieldsMap[FieldName];
 }
 //-----------------------------------------------------------------------------
 ISTabWidgetObject* ISObjectFormBase::GetTabWidget()

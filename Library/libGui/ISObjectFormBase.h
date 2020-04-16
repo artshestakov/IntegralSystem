@@ -138,9 +138,9 @@ private:
 
 	ISLineEdit *EditObjectID;
 	ISFieldEditBase *BeginFieldEdit; //Указатель на первое поле редактирования информации
-	QMap<QString, ISFieldEditBase*> FieldsMap;
-	QMap<QString, QLabel*> LabelsMap;
-	QMap<QString, QHBoxLayout*> Layouts;
+	std::map<QString, ISFieldEditBase*> FieldsMap;
+	std::map<QString, QLabel*> LabelsMap;
+	std::map<QString, QHBoxLayout*> Layouts;
 	QVariantMap BeginValues;
 
 	bool ModificationFlag;
