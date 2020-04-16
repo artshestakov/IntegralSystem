@@ -11,7 +11,7 @@ class ISPeriodForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISPeriodForm(QWidget *parent = 0);
+	ISPeriodForm();
 	virtual ~ISPeriodForm();
 
 	ISNamespace::PeriodType GetPeriodType() const;

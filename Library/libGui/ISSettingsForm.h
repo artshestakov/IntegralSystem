@@ -12,7 +12,7 @@ class ISSettingsForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISSettingsForm(const QString &SettingGroupUID, QWidget *parent = 0);
+	ISSettingsForm(const QString &SettingGroupUID);
 	virtual ~ISSettingsForm();
 
 protected:

@@ -14,7 +14,7 @@ static QString QU_DISCUSSION = PREPARE_QUERY("UPDATE _discussion SET "
 											 "dson_message = :Message "
 											 "WHERE dson_id = :DiscussionID");
 //-----------------------------------------------------------------------------
-ISDiscussionObjectForm::ISDiscussionObjectForm(const QString &table_name, int parent_object_id, const QString &message, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISDiscussionObjectForm::ISDiscussionObjectForm(const QString &table_name, int parent_object_id, const QString &message) : ISInterfaceDialogForm()
 {
 	DiscussionID = 0;
 	TableName = table_name;

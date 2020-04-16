@@ -5,7 +5,7 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISExportForm::ISExportForm(PMetaTable *meta_table, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISExportForm::ISExportForm(PMetaTable *meta_table) : ISInterfaceDialogForm()
 {
 	MetaTable = meta_table;
 	SelectedType = ISNamespace::ET_Unknown;

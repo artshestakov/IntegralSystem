@@ -8,7 +8,7 @@ class ISAboutForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISAboutForm(QWidget *parent = 0);
+	ISAboutForm();
 	virtual ~ISAboutForm();
 
 protected:

@@ -9,7 +9,7 @@ class ISSelectDialogForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID, QWidget *parent = 0);
+	ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID);
 	virtual ~ISSelectDialogForm();
 
 	bool Exec() override;

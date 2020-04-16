@@ -9,16 +9,16 @@
 #include "ISComboEdit.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISInputDialog::ISInputDialog(const QString &Title, const QString &LabelText, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISInputDialog::ISInputDialog(const QString &Title, const QString &LabelText)
+	: ISInterfaceDialogForm(),
+	AddingFieldEdit(false),
+	FieldEditBase(nullptr),
+	Label(nullptr)
 {
-	AddingFieldEdit = false;
-	FieldEditBase = nullptr;
-	Label = nullptr;
-
 	setWindowTitle(Title);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
-	if (LabelText.length())
+	if (!LabelText.isEmpty())
 	{
 		Label = new QLabel(this);
 		Label->setText(LabelText);
@@ -51,35 +51,33 @@ ISInputDialog::~ISInputDialog()
 
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetString(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Value)
+QVariant ISInputDialog::GetString(const QString &Title, const QString &LabelText, const QVariant &Value)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 	InputDialog.SetEditWidget(ISNamespace::FT_String);
 	InputDialog.SetValue(Value);
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetText(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Value)
+QVariant ISInputDialog::GetText(const QString &Title, const QString &LabelText, const QVariant &Value)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 	InputDialog.SetEditWidget(ISNamespace::FT_Text);
 	InputDialog.SetValue(Value);
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetInteger(QWidget *parent, const QString &Title, const QString &LabelText, int Minimum, int Maximum, const QVariant &Value)
+QVariant ISInputDialog::GetInteger(const QString &Title, const QString &LabelText, int Minimum, int Maximum, const QVariant &Value)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 	InputDialog.SetEditWidget(ISNamespace::FT_Int);
 	InputDialog.SetValue(Value);
 
@@ -103,9 +101,9 @@ QVariant ISInputDialog::GetInteger(QWidget *parent, const QString &Title, const 
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetDateTime(QWidget *parent, const QString &Title, const QString &LabelText)
+QVariant ISInputDialog::GetDateTime(const QString &Title, const QString &LabelText)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 	InputDialog.SetEditWidget(ISNamespace::FT_DateTime);
 
 	if (InputDialog.Exec())
@@ -114,62 +112,57 @@ QVariant ISInputDialog::GetDateTime(QWidget *parent, const QString &Title, const
 		DateTime.setTime(QTime(DateTime.time().hour(), DateTime.time().minute()));
 		return DateTime;
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetDate(QWidget *parent, const QString &Title, const QString &LabelText)
+QVariant ISInputDialog::GetDate(const QString &Title, const QString &LabelText)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 	InputDialog.SetEditWidget(ISNamespace::FT_Date);
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toDate();
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetTime(QWidget *parent, const QString &Title, const QString &LabelText)
+QVariant ISInputDialog::GetTime(const QString &Title, const QString &LabelText)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 	InputDialog.SetEditWidget(ISNamespace::FT_Time);
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toTime();
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetPassword(QWidget *parent, const QString &Title, const QString &LabelText)
+QVariant ISInputDialog::GetPassword(const QString &Title, const QString &LabelText)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 	InputDialog.SetEditWidget(ISNamespace::FT_String, QString("ISPasswordEdit"));
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetColor(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Color)
+QVariant ISInputDialog::GetColor(const QString &Title, const QString &LabelText, const QVariant &Color)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 	InputDialog.SetEditWidget(ISNamespace::FT_Color);
 	InputDialog.SetValue(Color);
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetList(QWidget *parent, const QString &Title, const QString &LabelText, const QVariantMap &VariantMap)
+QVariant ISInputDialog::GetList(const QString &Title, const QString &LabelText, const QVariantMap &VariantMap)
 {
-	ISInputDialog InputDialog(Title, LabelText, parent);
+	ISInputDialog InputDialog(Title, LabelText);
 
 	ISComboEdit *ComboEdit = new ISComboEdit(&InputDialog);
 	ComboEdit->setSizePolicy(QSizePolicy::Minimum, ComboEdit->sizePolicy().verticalPolicy());
@@ -185,7 +178,6 @@ QVariant ISInputDialog::GetList(QWidget *parent, const QString &Title, const QSt
 	{
 		return InputDialog.GetValue();
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------

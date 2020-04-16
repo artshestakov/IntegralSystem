@@ -10,7 +10,7 @@ class ISAddressForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISAddressForm(const QString &address_string, QWidget *parent = 0);
+	Q_INVOKABLE ISAddressForm(const QString &address_string);
 	virtual ~ISAddressForm();
 
 	QString GetString() const;

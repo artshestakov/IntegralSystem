@@ -46,11 +46,11 @@ void ISDeviceListForm::Issue()
 
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.Issue")))
 		{
-			QString Defect = ISInputDialog::GetText(this, LANG("Defect"), LANG("EnterDefect") + ':').toString();
+			QString Defect = ISInputDialog::GetText(LANG("Defect"), LANG("EnterDefect") + ':').toString();
 
 			ISQuery qUpdate(QU_ISSUE);
 
-			if (Defect.length())
+			if (!Defect.isEmpty())
 			{
 				qUpdate.BindValue(":Defect", Defect);
 			}

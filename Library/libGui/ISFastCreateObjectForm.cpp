@@ -20,7 +20,7 @@ static QString QD_FAST_CREATE_OBJECT = PREPARE_QUERY("DELETE FROM _fastcreateobj
 													 "WHERE fcob_user = currentuserid() "
 													 "AND fcob_table = :Table");
 //-----------------------------------------------------------------------------
-ISFastCreateRecordsForm::ISFastCreateRecordsForm(QWidget *parent) : ISInterfaceDialogForm(parent)
+ISFastCreateRecordsForm::ISFastCreateRecordsForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("CreateRecords"));
 

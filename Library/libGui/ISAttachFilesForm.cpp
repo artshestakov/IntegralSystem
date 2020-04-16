@@ -9,7 +9,7 @@
 #include "ISStorageFileLoader.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISAttachFilesForm::ISAttachFilesForm(QWidget *parent) : ISAttachFileBaseForm(parent)
+ISAttachFilesForm::ISAttachFilesForm() : ISAttachFileBaseForm()
 {
 	setWindowTitle(LANG("AddingFiles"));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);

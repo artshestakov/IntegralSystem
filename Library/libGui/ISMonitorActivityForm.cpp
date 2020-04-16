@@ -198,7 +198,7 @@ void ISMonitorActivityForm::SendNotify()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		QVariant NotifyText = ISInputDialog::GetText(this, LANG("Notify"), LANG("NotifyText") + ':');
+		QVariant NotifyText = ISInputDialog::GetText(LANG("Notify"), LANG("NotifyText") + ':');
 		if (NotifyText.isValid())
 		{
 			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_MESSAGE, MonitorUserWidget->GetUserID(), QVariant(), LANG("NotifyUserMessage").arg(ISMetaUser::Instance().UserData->FullName).arg(NotifyText.toString()), true);

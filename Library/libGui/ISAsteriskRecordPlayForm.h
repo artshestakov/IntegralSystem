@@ -9,7 +9,7 @@ class ISAsteriskRecordPlayForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISAsteriskRecordPlayForm(const QString &FilePath, QWidget *parent = 0);
+	ISAsteriskRecordPlayForm(const QString &FilePath);
 	virtual ~ISAsteriskRecordPlayForm();
 
 private:

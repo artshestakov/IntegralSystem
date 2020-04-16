@@ -14,7 +14,7 @@ class ISExportForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISExportForm(PMetaTable *meta_table, QWidget *parent = 0);
+	ISExportForm(PMetaTable *meta_table);
 	virtual ~ISExportForm();
 
 	ISNamespace::ExportType GetSelectedType();

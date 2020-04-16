@@ -8,7 +8,7 @@ class ISHighwayIncomingCallForm : public ISIncomingCallBaseForm
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISHighwayIncomingCallForm(const QVariantMap &payload, QWidget *parent = 0);
+	Q_INVOKABLE ISHighwayIncomingCallForm(const QVariantMap &payload);
 	virtual ~ISHighwayIncomingCallForm();
 
 protected:

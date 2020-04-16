@@ -10,7 +10,7 @@ class ISUserPasswordForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISUserPasswordForm(int user_id, QWidget *parent = 0);
+	ISUserPasswordForm(int user_id);
 	virtual ~ISUserPasswordForm();
 
 protected:

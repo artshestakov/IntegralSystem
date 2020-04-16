@@ -9,7 +9,7 @@ class ISDiscussionObjectForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISDiscussionObjectForm(const QString &table_name, int parent_object_id, const QString &message, QWidget *parent = 0);
+	ISDiscussionObjectForm(const QString &table_name, int parent_object_id, const QString &message);
 	virtual ~ISDiscussionObjectForm();
 
 	void SetUID(int discussion_id);

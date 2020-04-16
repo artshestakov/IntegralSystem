@@ -16,7 +16,7 @@ static QString QS_SUBSCRIPTION = PREPARE_QUERY2("SELECT sbsr_id, sbtp_name, sbtp
 											   "AND sbsr_client = (SELECT card_client FROM card WHERE card_barcode = :Barcode) "
 											   "ORDER BY sbsr_id");
 //-----------------------------------------------------------------------------
-ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &Barcode, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &Barcode) : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("Patriot.SubscriptionSelect"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);

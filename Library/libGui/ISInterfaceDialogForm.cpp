@@ -1,10 +1,11 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISInterfaceDialogForm::ISInterfaceDialogForm(QWidget *parent, Qt::WindowFlags Flags)
-	: ISInterfaceForm(parent, Flags | ((Flags & Qt::WindowType_Mask) == 0 ? Qt::Dialog : Qt::WindowType(0)))
+ISInterfaceDialogForm::ISInterfaceDialogForm()
+	: ISInterfaceForm(nullptr, Qt::Dialog),
+	Result(false)
 {
-	Result = false;
+	
 }
 //-----------------------------------------------------------------------------
 ISInterfaceDialogForm::~ISInterfaceDialogForm()
@@ -19,9 +20,11 @@ bool ISInterfaceDialogForm::Exec()
 
 	if (!IsShowed())
 	{
+		adjustSize();
+		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 		show();
 	}
-
+	
 	QEventLoop EventLoop;
 	connect(this, &ISInterfaceDialogForm::Accept, &EventLoop, &QEventLoop::quit);
 	EventLoop.exec(QEventLoop::DialogExec);
@@ -36,10 +39,9 @@ bool ISInterfaceDialogForm::ExecAnimated()
 	return Exec();
 }
 //-----------------------------------------------------------------------------
-void ISInterfaceDialogForm::closeEvent(QCloseEvent *e)
+void ISInterfaceDialogForm::closeEvent(QCloseEvent *CloseEvent)
 {
-	ISInterfaceForm::closeEvent(e);
-	SetResult(Result);
+	ISInterfaceForm::closeEvent(CloseEvent);
 	emit Accept();
 }
 //-----------------------------------------------------------------------------

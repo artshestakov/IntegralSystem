@@ -5,10 +5,10 @@
 #include "ISPrintingEntity.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISPrintForm::ISPrintForm(const QString &TableName, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISPrintForm::ISPrintForm(const QString &TableName)
+	: ISInterfaceDialogForm(),
+	MetaReport(nullptr)
 {
-	MetaReport = nullptr;
-
 	setWindowTitle(LANG("PrintForms"));
 	setWindowIcon(BUFFER_ICONS("Print"));
 	

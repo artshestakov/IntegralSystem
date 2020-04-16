@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_PATIENTS = PREPARE_QUERY2("SELECT ptnt_fio FROM patients WHERE ptnt_id = :PatientID");
 //-----------------------------------------------------------------------------
-ISCenterSevenIncomingCallForm::ISCenterSevenIncomingCallForm(const QVariantMap &payload, QWidget *parent) : ISIncomingCallBaseForm(payload, parent)
+ISCenterSevenIncomingCallForm::ISCenterSevenIncomingCallForm(const QVariantMap &payload) : ISIncomingCallBaseForm(payload)
 {
 	QStringList StringList = payload.value("Payload").toString().split('_');
 	PatientID = StringList.first().toInt();

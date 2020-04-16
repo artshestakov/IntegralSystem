@@ -9,7 +9,7 @@ class ISTaskDoneForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISTaskDoneForm(int task_id, QWidget *parent = 0);
+	ISTaskDoneForm(int task_id);
 	virtual ~ISTaskDoneForm();
 
 	void Apply();

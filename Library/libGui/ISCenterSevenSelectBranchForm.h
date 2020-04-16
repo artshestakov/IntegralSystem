@@ -8,7 +8,7 @@ class ISCenterSevenSelectBranchForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISCenterSevenSelectBranchForm(QWidget *parent = 0);
+	ISCenterSevenSelectBranchForm();
 	virtual ~ISCenterSevenSelectBranchForm();
 
 	int GetSelectedBranchID() const;

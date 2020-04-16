@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
-ISTableDetailsForm::ISTableDetailsForm(const QString &TableName, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISTableDetailsForm::ISTableDetailsForm(const QString &TableName) : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("TableDetails") + ": " + TableName);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);

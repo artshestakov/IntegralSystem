@@ -18,7 +18,7 @@ static QString QU_NOTE = PREPARE_QUERY("UPDATE _noteobject SET nobj_note = :Note
 //-----------------------------------------------------------------------------
 static QString QI_NOTE = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tablename, nobj_objectid, nobj_note) VALUES(:TableName, :ObjectID, :Note)");
 //-----------------------------------------------------------------------------
-ISNoteObjectForm::ISNoteObjectForm(const QString &table_name, int object_id, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISNoteObjectForm::ISNoteObjectForm(const QString &table_name, int object_id) : ISInterfaceDialogForm()
 {
 	TableName = table_name;
 	ObjectID = object_id;

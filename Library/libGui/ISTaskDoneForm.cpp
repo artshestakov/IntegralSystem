@@ -6,10 +6,10 @@
 #include "ISButtonDialog.h"
 #include "ISCore.h"
 //-----------------------------------------------------------------------------
-ISTaskDoneForm::ISTaskDoneForm(int task_id, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISTaskDoneForm::ISTaskDoneForm(int task_id)
+	: ISInterfaceDialogForm(),
+	TaskID(task_id)
 {
-	TaskID = task_id;
-
 	setWindowTitle(LANG("Task.ResolutionTask"));
 	setWindowIcon(BUFFER_ICONS("Task"));
 	setFixedWidth(550);

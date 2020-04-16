@@ -218,7 +218,7 @@ void ISCalendarForm::Create()
 //-----------------------------------------------------------------------------
 void ISCalendarForm::DateTo()
 {
-	QVariant Date = ISInputDialog::GetDate(this, LANG("CalendarForm.CalendarDateTo"), LANG("SelectDate"));
+	QVariant Date = ISInputDialog::GetDate(LANG("CalendarForm.CalendarDateTo"), LANG("SelectDate"));
 	if (Date.isValid())
 	{
 		CalendarPanel->setSelectedDate(Date.toDate());

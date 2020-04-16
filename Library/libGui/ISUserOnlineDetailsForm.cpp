@@ -23,7 +23,7 @@ static QString QS_PG_STAT_ACTIVITY = PREPARE_QUERY("SELECT "
 												   "FROM pg_stat_activity "
 												   "WHERE usename = userlogin(:UserID)");
 //-----------------------------------------------------------------------------
-ISUserOnlineDetailsForm::ISUserOnlineDetailsForm(int user_id, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISUserOnlineDetailsForm::ISUserOnlineDetailsForm(int user_id) : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("MonitorActivity.DetailsSession"));
 	setWindowIcon(BUFFER_ICONS("Information"));

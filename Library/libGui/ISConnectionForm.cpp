@@ -6,7 +6,7 @@
 #include "ISMessageBox.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-ISConnectionForm::ISConnectionForm(QWidget *parent) : ISInterfaceDialogForm(parent)
+ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("ConnectionSettings"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);

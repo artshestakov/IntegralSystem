@@ -195,7 +195,7 @@ void ISOrganizationListForm::Percentage()
 //-----------------------------------------------------------------------------
 void ISOrganizationListForm::CalledMoreDays()
 {
-	QVariant Days = ISInputDialog::GetInteger(this, LANG("Days"), LANG("InformResource.InputCountDays") + ':');
+	QVariant Days = ISInputDialog::GetInteger(LANG("Days"), LANG("InformResource.InputCountDays") + ':');
 	if (Days.isValid())
 	{
 		if (Days.toInt() > 0)
@@ -206,7 +206,6 @@ void ISOrganizationListForm::CalledMoreDays()
 		{
 			GetQueryModel()->ClearClassFilter();
 		}
-		
 		Update();
 	}
 }

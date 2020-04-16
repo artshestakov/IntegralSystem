@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	}
 
 	ISAuthForm AuthForm;
-	Result = AuthForm.ExecAnimated();
+	Result = AuthForm.Exec();
 	if (!Result) //Форма авторизации была закрыта
 	{
 		return EXIT_SUCCESS;

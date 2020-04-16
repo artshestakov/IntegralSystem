@@ -1176,7 +1176,7 @@ void ISListBaseForm::Print()
 	}
 
 	ISGui::SetWaitGlobalCursor(true);
-	ISPrintForm PrintListForm(MetaTable->Name, this);
+	ISPrintForm PrintListForm(MetaTable->Name);
 	ISGui::SetWaitGlobalCursor(false);
 	PrintListForm.Exec();
 
@@ -1272,7 +1272,7 @@ void ISListBaseForm::Share()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ShareRecordFromChat")))
 	{
-		QVariant MessageText = ISInputDialog::GetString(this, LANG("Share"), LANG("InputMessageFromLinkToRecord"));
+		QVariant MessageText = ISInputDialog::GetString(LANG("Share"), LANG("InputMessageFromLinkToRecord"));
 
 		ISQuery qShare(QI_SHARE_RECORD);
 		qShare.BindValue(":Message", MessageText);

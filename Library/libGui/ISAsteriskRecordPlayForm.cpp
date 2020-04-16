@@ -4,7 +4,7 @@
 #include "ISButtons.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
-ISAsteriskRecordPlayForm::ISAsteriskRecordPlayForm(const QString &FilePath, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISAsteriskRecordPlayForm::ISAsteriskRecordPlayForm(const QString &FilePath) : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("ReproductionAsteriskRecord"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);

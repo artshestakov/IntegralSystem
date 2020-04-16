@@ -9,7 +9,7 @@ static QString QS_BRANCH = PREPARE_QUERY2("SELECT brch_id, brch_name, brch_addre
 										 "WHERE NOT brch_isdeleted "
 										 "ORDER BY brch_name");
 //-----------------------------------------------------------------------------
-ISCenterSevenSelectBranchForm::ISCenterSevenSelectBranchForm(QWidget *parent) : ISInterfaceDialogForm(parent)
+ISCenterSevenSelectBranchForm::ISCenterSevenSelectBranchForm() : ISInterfaceDialogForm()
 {
 	SelectedBranchID = 0;
 

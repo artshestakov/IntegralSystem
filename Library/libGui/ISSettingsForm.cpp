@@ -21,7 +21,7 @@ static QString QS_SETTING_EXPORT = PREPARE_QUERY("SELECT usst_setting, usst_valu
 //-----------------------------------------------------------------------------
 static QString QU_SETTINGS_DEFAULT = PREPARE_QUERY("UPDATE _usersettings SET usst_value = :SettingValue WHERE usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
-ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDialogForm()
 {
 	setWindowIcon(BUFFER_ICONS("Settings"));
 	setWindowTitle(LANG("Settings"));

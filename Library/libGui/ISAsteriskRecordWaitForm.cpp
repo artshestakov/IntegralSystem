@@ -8,7 +8,7 @@
 #include "ISDefinesCore.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
-ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id) : ISInterfaceDialogForm()
 {
 	Size = 0;
 	UniqueID = unique_id;

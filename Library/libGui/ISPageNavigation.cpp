@@ -120,13 +120,12 @@ void ISPageNavigation::PreviousClicked()
 //-----------------------------------------------------------------------------
 void ISPageNavigation::Select()
 {
-	int Page = ISInputDialog::GetInteger(this, LANG("Page"), LANG("InputNumberPage"), 1, PageCount, CurrentPage + 1).toInt();
+	int Page = ISInputDialog::GetInteger(LANG("Page"), LANG("InputNumberPage"), 1, PageCount, CurrentPage + 1).toInt();
 	if (Page)
 	{
 		CurrentPage = Page - 1;
 		Offset = CurrentPage * Limit;
 		emit OffsetSignal(Offset);
-
 		PageChanged();
 	}
 }

@@ -305,7 +305,7 @@ void ISTaskViewForm::CreateRight()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Rename()
 {
-	QVariant NewName = ISInputDialog::GetString(this, LANG("Renaming"), LANG("Task.Rename.Description") + ':', TaskName);
+	QVariant NewName = ISInputDialog::GetString(LANG("Renaming"), LANG("Task.Rename.Description") + ':', TaskName);
 	if (NewName.isValid())
 	{
 		ISQuery qRename(QU_TASK_NAME);
@@ -372,7 +372,7 @@ void ISTaskViewForm::CloseTask()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::AddComment()
 {
-	QVariant Comment = ISInputDialog::GetText(this, LANG("Task.CommentTask"), LANG("Task.InputTheComment") + ':');
+	QVariant Comment = ISInputDialog::GetText(LANG("Task.CommentTask"), LANG("Task.InputTheComment") + ':');
 	if (Comment.isValid())
 	{
 		ISQuery qInsertComment(QI_COMMENT);
@@ -418,7 +418,7 @@ void ISTaskViewForm::Duplicate()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CheckThisTaskAsDuplicate")))
 	{
-		int TaskOriginal = ISInputDialog::GetInteger(this, LANG("Task.Duplicate"), LANG("Task.NumberTask") + ':', 1, MAXIMUM_INTEGER).toInt();
+		int TaskOriginal = ISInputDialog::GetInteger(LANG("Task.Duplicate"), LANG("Task.NumberTask") + ':', 1, MAXIMUM_INTEGER).toInt();
 		if (TaskOriginal)
 		{
 			if (ISCore::TaskCheckExist(TaskID)) //Задача найдена

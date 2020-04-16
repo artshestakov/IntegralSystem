@@ -10,7 +10,7 @@ class ISTransferOrganizationForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISTransferOrganizationForm(int OrganizationCount, QWidget *parent = 0);
+	ISTransferOrganizationForm(int OrganizationCount);
 	virtual ~ISTransferOrganizationForm();
 
 	int GetSelectedUserID() const;

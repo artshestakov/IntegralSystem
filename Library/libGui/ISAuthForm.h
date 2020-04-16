@@ -12,10 +12,10 @@ class LIBGUI_EXPORT	ISAuthForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISAuthForm(QWidget *parent = 0);
+	ISAuthForm();
 	virtual ~ISAuthForm();
 
-protected:
+private:
 	void AfterShowEvent() override;
 	void EnterClicked() override;
 	void TimeoutCapsLook();

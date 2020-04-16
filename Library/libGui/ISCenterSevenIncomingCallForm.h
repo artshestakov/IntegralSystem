@@ -8,7 +8,7 @@ class ISCenterSevenIncomingCallForm : public ISIncomingCallBaseForm
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISCenterSevenIncomingCallForm(const QVariantMap &payload, QWidget *parent = 0);
+	Q_INVOKABLE ISCenterSevenIncomingCallForm(const QVariantMap &payload);
 	virtual ~ISCenterSevenIncomingCallForm();
 
 protected:

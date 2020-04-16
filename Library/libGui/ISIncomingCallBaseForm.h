@@ -8,7 +8,7 @@ class ISIncomingCallBaseForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISIncomingCallBaseForm(const QVariantMap &payload, QWidget *parent = 0);
+	ISIncomingCallBaseForm(const QVariantMap &payload);
 	virtual ~ISIncomingCallBaseForm();
 
 protected:

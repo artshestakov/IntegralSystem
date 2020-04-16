@@ -11,7 +11,7 @@ static QString QS_ADMISSION_STATUS = PREPARE_QUERY2("SELECT adst_uid, adst_name 
 												   "WHERE NOT adst_isdeleted "
 												   "ORDER BY adst_order");
 //-----------------------------------------------------------------------------
-ISCenterSevenStatusAdmissionForm::ISCenterSevenStatusAdmissionForm(const ISUuid &CurrentStatusUID, const QString &Comment, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISCenterSevenStatusAdmissionForm::ISCenterSevenStatusAdmissionForm(const ISUuid &CurrentStatusUID, const QString &Comment) : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("CenterSeven.ChangeStatusAdmission"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);

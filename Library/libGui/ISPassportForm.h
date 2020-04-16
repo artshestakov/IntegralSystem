@@ -9,7 +9,7 @@ class ISPassportForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISPassportForm(const QString &PassportString, QWidget *parent = 0);
+	ISPassportForm(const QString &PassportString);
 	virtual ~ISPassportForm();
 
 	QString GetPassportString();

@@ -11,7 +11,7 @@ signals:
 	void UpdateList();
 
 public:
-	ISAttachFileBaseForm(QWidget *parent = 0);
+	ISAttachFileBaseForm();
 	virtual ~ISAttachFileBaseForm();
 };
 //-----------------------------------------------------------------------------

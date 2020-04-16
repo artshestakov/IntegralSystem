@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-ISPeriodForm::ISPeriodForm(QWidget *parent) : ISInterfaceDialogForm(parent)
+ISPeriodForm::ISPeriodForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("Period"));
 	setWindowIcon(BUFFER_ICONS("Period"));

@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISButtonDialog.h"
 //-----------------------------------------------------------------------------
-ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISTransferOrganizationForm::ISTransferOrganizationForm(int OrganizationCount) : ISInterfaceDialogForm()
 {
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	ForbidResize();

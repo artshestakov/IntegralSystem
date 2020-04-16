@@ -11,7 +11,7 @@ class ISFastCreateRecordsForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISFastCreateRecordsForm(QWidget *parent = 0);
+	ISFastCreateRecordsForm();
 	virtual ~ISFastCreateRecordsForm();
 
 protected:

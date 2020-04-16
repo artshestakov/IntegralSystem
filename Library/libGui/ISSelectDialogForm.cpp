@@ -4,7 +4,7 @@
 #include "ISGui.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
-ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID) : ISInterfaceDialogForm()
 {
 	resize(ISDefines::Gui::SIZE_640_480);
 	setWindowTitle(ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName);

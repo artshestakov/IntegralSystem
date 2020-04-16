@@ -7,7 +7,7 @@
 #include "ISQuery.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInterfaceDialogForm()
 {
 	setWindowIcon(BUFFER_ICONS("RecordInformation"));
 	setWindowTitle(MetaTable->LocalName);

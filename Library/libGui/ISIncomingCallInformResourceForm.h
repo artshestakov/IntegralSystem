@@ -8,7 +8,7 @@ class ISIncomingCallInformResourceForm : public ISIncomingCallBaseForm
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISIncomingCallInformResourceForm(const QVariantMap &payload, QWidget *parent = 0);
+	Q_INVOKABLE ISIncomingCallInformResourceForm(const QVariantMap &payload);
 	virtual ~ISIncomingCallInformResourceForm();
 
 protected:

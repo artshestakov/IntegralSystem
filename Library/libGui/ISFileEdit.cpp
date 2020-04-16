@@ -199,7 +199,7 @@ void ISFileEdit::Open()
 void ISFileEdit::Rename()
 {
 	QFileInfo FileInfo(ButtonFile->text());
-	QVariant NewName = ISInputDialog::GetString(this, LANG("Renaming"), LANG("NewFileName"), FileInfo.baseName());
+	QVariant NewName = ISInputDialog::GetString(LANG("Renaming"), LANG("NewFileName"), FileInfo.baseName());
 	if (NewName.isValid())
 	{
 		ISGui::SetWaitGlobalCursor(true);

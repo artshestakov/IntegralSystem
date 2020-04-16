@@ -19,7 +19,7 @@ static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_descript
 											"FROM _keyboardshortcuts "
 											"ORDER BY kbsc_id");
 //-----------------------------------------------------------------------------
-ISAboutForm::ISAboutForm(QWidget *parent) : ISInterfaceDialogForm(parent)
+ISAboutForm::ISAboutForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("AboutForm.AboutApplication"));
 	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);

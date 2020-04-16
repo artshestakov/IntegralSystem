@@ -9,7 +9,7 @@ class ISNoteObjectForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISNoteObjectForm(const QString &table_name, int object_id, QWidget *parent = 0);
+	ISNoteObjectForm(const QString &table_name, int object_id);
 	virtual ~ISNoteObjectForm();
 
 protected:

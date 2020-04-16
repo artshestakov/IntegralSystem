@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_ORGANIZATION = PREPARE_QUERY2("SELECT orgz_name FROM organizations WHERE orgz_id = :OrganizationID");
 //-----------------------------------------------------------------------------
-ISIncomingCallInformResourceForm::ISIncomingCallInformResourceForm(const QVariantMap &payload, QWidget *parent) : ISIncomingCallBaseForm(payload, parent)
+ISIncomingCallInformResourceForm::ISIncomingCallInformResourceForm(const QVariantMap &payload) : ISIncomingCallBaseForm(payload)
 {
 	OrganizationID = payload.value("Payload").toInt();
 

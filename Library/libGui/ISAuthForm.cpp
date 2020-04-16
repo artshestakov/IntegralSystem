@@ -13,7 +13,7 @@
 #include "ISGui.h"
 #include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
-ISAuthForm::ISAuthForm(QWidget *parent) : ISInterfaceDialogForm(parent)
+ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("InputInSystem"));
 	ForbidResize();

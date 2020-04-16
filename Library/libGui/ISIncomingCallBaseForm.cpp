@@ -10,7 +10,7 @@
 #include "ISSettings.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload) : ISInterfaceDialogForm()
 {
 	Payload = payload;
 

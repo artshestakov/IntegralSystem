@@ -22,7 +22,7 @@ ISPatriotSubscriptionListForm::~ISPatriotSubscriptionListForm()
 //-----------------------------------------------------------------------------
 void ISPatriotSubscriptionListForm::Register()
 {
-	QVariant Barcode = ISInputDialog::GetString(this, LANG("Patriot.Register"), LANG("Patriot.InputBarcode"));
+	QVariant Barcode = ISInputDialog::GetString(LANG("Patriot.Register"), LANG("Patriot.InputBarcode"));
 	if (Barcode.isValid())
 	{
 		dynamic_cast<ISPatriot*>(ISObjects::GetInstance().GetInterface())->InputScannerData(Barcode.toString());

@@ -8,7 +8,7 @@ class ISTableDetailsForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISTableDetailsForm(const QString &TableName, QWidget *parent = 0);
+	ISTableDetailsForm(const QString &TableName);
 	virtual ~ISTableDetailsForm();
 };
 //-----------------------------------------------------------------------------

@@ -124,7 +124,7 @@ void ISOrganizationObjectForm::INNChanged(const QVariant &value)
 //-----------------------------------------------------------------------------
 void ISOrganizationObjectForm::Notify()
 {
-	QDateTime DateTime = ISInputDialog::GetDateTime(this, LANG("Reminder"), LANG("DateTime") + ':').toDateTime();
+	QDateTime DateTime = ISInputDialog::GetDateTime(LANG("Reminder"), LANG("DateTime") + ':').toDateTime();
 	if (DateTime.isValid())
 	{
 		if (ISGui::CalendarInsert(DateTime, LANG("CallToOrganization").arg(GetFieldWidget("Name")->GetValue().toString()), QVariant(), GetMetaTable()->Name, GetObjectID()))

@@ -10,18 +10,18 @@ class ISInputDialog : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISInputDialog(const QString &Title, const QString &LabelText = QString(), QWidget *parent = 0);
+	ISInputDialog(const QString &Title, const QString &LabelText = QString());
 	virtual ~ISInputDialog();
 
-	static QVariant GetString(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Value = QVariant()); //Получить строку
-	static QVariant GetText(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Value = QVariant()); //Получить большую строку
-	static QVariant GetInteger(QWidget *parent, const QString &Title, const QString &LabelText, int Minimum = 0, int Maximum = 0, const QVariant &Value = QVariant()); //Получить целое число
-	static QVariant GetDateTime(QWidget *parent, const QString &Title, const QString &LabelText); //Получить дату и время
-	static QVariant GetDate(QWidget *parent, const QString &Title, const QString &LabelText); //Получить дату
-	static QVariant GetTime(QWidget *parent, const QString &Title, const QString &LabelText); //Получить время
-	static QVariant GetPassword(QWidget *parent, const QString &Title, const QString &LabelText); //Получить пароль
-	static QVariant GetColor(QWidget *parent, const QString &Title, const QString &LabelText, const QVariant &Color = QVariant()); //Получить цвет
-	static QVariant GetList(QWidget *parent, const QString &Title, const QString &LabelText, const QVariantMap &VariantMap); //Получить список
+	static QVariant GetString(const QString &Title, const QString &LabelText, const QVariant &Value = QVariant()); //Получить строку
+	static QVariant GetText(const QString &Title, const QString &LabelText, const QVariant &Value = QVariant()); //Получить большую строку
+	static QVariant GetInteger(const QString &Title, const QString &LabelText, int Minimum = 0, int Maximum = 0, const QVariant &Value = QVariant()); //Получить целое число
+	static QVariant GetDateTime(const QString &Title, const QString &LabelText); //Получить дату и время
+	static QVariant GetDate(const QString &Title, const QString &LabelText); //Получить дату
+	static QVariant GetTime(const QString &Title, const QString &LabelText); //Получить время
+	static QVariant GetPassword(const QString &Title, const QString &LabelText); //Получить пароль
+	static QVariant GetColor(const QString &Title, const QString &LabelText, const QVariant &Color = QVariant()); //Получить цвет
+	static QVariant GetList(const QString &Title, const QString &LabelText, const QVariantMap &VariantMap); //Получить список
 
     void SetEditWidget(ISNamespace::FieldType DataType, const QString &WidgetEditName = QString());
 	void SetEditWidget(ISFieldEditBase *EditWidget);

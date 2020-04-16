@@ -118,7 +118,7 @@ void ISHighwayOrganizationObjectForm::BindBranch()
 	}
 
 	ISGui::SetWaitGlobalCursor(false);
-	QVariant Value = ISInputDialog::GetList(this, LANG("Highway.Branche"), LANG("Highway.SelectBranche") + ':', VariantMap);
+	QVariant Value = ISInputDialog::GetList(LANG("Highway.Branche"), LANG("Highway.SelectBranche") + ':', VariantMap);
 	if (Value.isValid())
 	{
 		ISQuery qUpdateBranch(QU_ORGANIZATION_BRANCH);

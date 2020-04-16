@@ -56,9 +56,8 @@ void ISPassportEdit::Clear()
 void ISPassportEdit::Edit()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISPassportForm PassportForm(PassportString, this);
+	ISPassportForm PassportForm(PassportString);
 	ISGui::SetWaitGlobalCursor(false);
-
 	if (PassportForm.Exec())
 	{
 		PassportString = PassportForm.GetPassportString();

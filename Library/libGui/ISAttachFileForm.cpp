@@ -3,7 +3,7 @@
 #include "ISStorageFileLoader.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
-ISAttachFileForm::ISAttachFileForm(const QString &FilePath, QWidget *parent) : ISAttachFileBaseForm(parent)
+ISAttachFileForm::ISAttachFileForm(const QString &FilePath) : ISAttachFileBaseForm()
 {
 	setWindowTitle(LANG("AddingFiles"));
 	setMinimumWidth(500);

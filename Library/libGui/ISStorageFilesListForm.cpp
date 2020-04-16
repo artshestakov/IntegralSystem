@@ -90,9 +90,8 @@ void ISStorageFilesListForm::CreateCopy()
 
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreateCopyFile").arg(FileName)))
 	{
-		FileName = ISInputDialog::GetString(this, LANG("Named"), LANG("FileName"), FileName).toString();
-
-		if (FileName.length())
+		FileName = ISInputDialog::GetString(LANG("Named"), LANG("FileName"), FileName).toString();
+		if (!FileName.isEmpty())
 		{
 			ISQuery qInsertCopy(QI_FILE_COPY);
 			qInsertCopy.BindValue(":ObjectID", GetObjectID());

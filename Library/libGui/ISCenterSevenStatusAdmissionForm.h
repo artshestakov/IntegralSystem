@@ -9,7 +9,7 @@ class ISCenterSevenStatusAdmissionForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISCenterSevenStatusAdmissionForm(const ISUuid &CurrentStatusUID, const QString &Comment, QWidget *parent = 0);
+	ISCenterSevenStatusAdmissionForm(const ISUuid &CurrentStatusUID, const QString &Comment);
 	virtual ~ISCenterSevenStatusAdmissionForm();
 
 	ISUuid GetStatusUID() const;

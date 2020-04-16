@@ -8,7 +8,7 @@ class ISUserOnlineDetailsForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISUserOnlineDetailsForm(int user_id, QWidget *parent = 0);
+	ISUserOnlineDetailsForm(int user_id);
 	virtual ~ISUserOnlineDetailsForm();
 
 protected:

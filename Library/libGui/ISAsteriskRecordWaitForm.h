@@ -8,7 +8,7 @@ class ISAsteriskRecordWaitForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISAsteriskRecordWaitForm(const QString &unique_id, QWidget *parent = 0);
+	ISAsteriskRecordWaitForm(const QString &unique_id);
 	virtual ~ISAsteriskRecordWaitForm();
 
 	QString GetFilePath() const;

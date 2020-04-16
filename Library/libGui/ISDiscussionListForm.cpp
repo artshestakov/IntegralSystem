@@ -20,14 +20,12 @@ void ISDiscussionListForm::LoadData()
 		ClassFilter += "AND dson_objectid = " + QString::number(GetParentObjectID());
 		GetQueryModel()->SetClassFilter(ClassFilter);
 	}
-
 	ISListBaseForm::LoadData();
 }
 //-----------------------------------------------------------------------------
 void ISDiscussionListForm::Create()
 {
-	ISDiscussionObjectForm DiscussionObjectForm(GetParentTableName(), GetParentObjectID(), QString(), this);
-	if (DiscussionObjectForm.Exec())
+	if (ISDiscussionObjectForm(GetParentTableName(), GetParentObjectID(), QString()).Exec())
 	{
 		Update();
 	}
@@ -37,7 +35,7 @@ void ISDiscussionListForm::CreateCopy()
 {
 	QString Message = GetCurrentRecordValue("Message").toString();
 
-	ISDiscussionObjectForm DiscussionObjectForm(GetParentTableName(), GetParentObjectID(), QString(), this);
+	ISDiscussionObjectForm DiscussionObjectForm(GetParentTableName(), GetParentObjectID(), QString());
 	DiscussionObjectForm.SetEditMessageText(Message);
 	if (DiscussionObjectForm.Exec())
 	{
@@ -50,7 +48,7 @@ void ISDiscussionListForm::Edit()
 	QString Message = GetCurrentRecordValue("Message").toString();
 	int DiscussionID = GetCurrentRecordValue("ID").toInt();
 
-	ISDiscussionObjectForm DiscussionObjectForm(GetParentTableName(), GetParentObjectID(), Message, this);
+	ISDiscussionObjectForm DiscussionObjectForm(GetParentTableName(), GetParentObjectID(), Message);
 	DiscussionObjectForm.SetUID(DiscussionID);
 	if (DiscussionObjectForm.Exec())
 	{

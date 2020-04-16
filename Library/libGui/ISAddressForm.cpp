@@ -49,7 +49,7 @@ static QString QS_REGION_CODE = PREPARE_QUERY("SELECT fobj_regioncode "
 											  "FROM _fias_object "
 											  "WHERE fobj_aoguid = :RegionUID");
 //-----------------------------------------------------------------------------
-ISAddressForm::ISAddressForm(const QString &AddressString, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISAddressForm::ISAddressForm(const QString &AddressString) : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("Address"));
 	setWindowIcon(BUFFER_ICONS("Address"));

@@ -15,7 +15,7 @@ signals:
 	void Loaded(int FileID);
 
 public:
-	ISAttachFileForm(const QString &FilePath = QString(), QWidget *parent = 0);
+	ISAttachFileForm(const QString &FilePath = QString());
 	virtual ~ISAttachFileForm();
 
 	void SetEnabledPath(bool Enabled);

@@ -12,7 +12,7 @@ class ISPrintForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISPrintForm(const QString &TableName, QWidget *parent = 0);
+	ISPrintForm(const QString &TableName);
 	virtual ~ISPrintForm();
 
 	ISPrintMetaReport* GetMetaReport();

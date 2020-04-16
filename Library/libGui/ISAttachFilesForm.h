@@ -13,7 +13,7 @@ signals:
 	void RemoveBeginItem();
 
 public:
-	ISAttachFilesForm(QWidget *parent = 0);
+	ISAttachFilesForm();
 	virtual ~ISAttachFilesForm();
 
 protected:

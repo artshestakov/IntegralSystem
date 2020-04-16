@@ -23,7 +23,7 @@ static QString QA_PASSWORD = "ALTER ROLE %1 WITH ENCRYPTED PASSWORD '%2'";
 static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_whouser) "
 														"VALUES(:User, :WhoUser)");
 //-----------------------------------------------------------------------------
-ISUserPasswordForm::ISUserPasswordForm(int user_id, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISUserPasswordForm::ISUserPasswordForm(int user_id) : ISInterfaceDialogForm()
 {
 	ISQuery qSelectUser(QS_USER);
 	qSelectUser.BindValue(":UserID", user_id);

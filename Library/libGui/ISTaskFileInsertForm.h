@@ -11,7 +11,7 @@ class ISTaskFileInsertForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISTaskFileInsertForm(int task_id, QWidget *parent = 0);
+	ISTaskFileInsertForm(int task_id);
 	virtual ~ISTaskFileInsertForm();
 
 	QString GetFileName() const;

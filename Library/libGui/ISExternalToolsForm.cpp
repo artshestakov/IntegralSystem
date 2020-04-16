@@ -27,7 +27,7 @@ static QString QI_EXTERNAL_TOOLS = PREPARE_QUERY("INSERT INTO _externaltools(ext
 //-----------------------------------------------------------------------------
 static QString QD_EXTERNAL_TOOLS = PREPARE_QUERY("DELETE FROM _externaltools WHERE extl_uid = :UID");
 //-----------------------------------------------------------------------------
-ISExternalToolsForm::ISExternalToolsForm(QWidget *parent) : ISInterfaceDialogForm(parent)
+ISExternalToolsForm::ISExternalToolsForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("ExternalTools"));
 

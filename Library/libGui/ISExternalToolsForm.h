@@ -13,7 +13,7 @@ class ISExternalToolsForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISExternalToolsForm(QWidget *parent = 0);
+	ISExternalToolsForm();
 	virtual ~ISExternalToolsForm();
 
 protected:

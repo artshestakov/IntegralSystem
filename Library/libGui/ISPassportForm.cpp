@@ -6,7 +6,7 @@
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
-ISPassportForm::ISPassportForm(const QString &PassportString, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISPassportForm::ISPassportForm(const QString &PassportString) : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("Passport.EditingPassport"));
 	setWindowIcon(BUFFER_ICONS("Passport"));

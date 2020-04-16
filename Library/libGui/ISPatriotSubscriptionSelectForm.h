@@ -8,7 +8,7 @@ class ISPatriotSubscriptionSelectForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISPatriotSubscriptionSelectForm(const QString &Barcode, QWidget *parent = 0);
+	ISPatriotSubscriptionSelectForm(const QString &Barcode);
 	virtual ~ISPatriotSubscriptionSelectForm();
 
 protected:

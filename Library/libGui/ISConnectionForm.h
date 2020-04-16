@@ -10,7 +10,7 @@ class ISConnectionForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISConnectionForm(QWidget *parent = 0);
+	ISConnectionForm();
 	virtual ~ISConnectionForm();
 
 protected:

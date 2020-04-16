@@ -13,10 +13,10 @@ static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_us
 static QString QI_FILE_DATA = PREPARE_QUERY("INSERT INTO _taskfiledata(tfdt_taskfile, tfdt_data) "
 											"VALUES(:TaskFileID, :Data)");
 //-----------------------------------------------------------------------------
-ISTaskFileInsertForm::ISTaskFileInsertForm(int task_id, QWidget *parent) : ISInterfaceDialogForm(parent)
+ISTaskFileInsertForm::ISTaskFileInsertForm(int task_id)
+	: ISInterfaceDialogForm(),
+	TaskID(task_id)
 {
-	TaskID = task_id;
-
 	setWindowTitle(LANG("Task.AttachingFile"));
 	setMinimumWidth(500);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
