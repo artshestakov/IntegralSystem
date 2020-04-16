@@ -52,9 +52,11 @@ void ISDateTimeEdit::Clear()
 	TimeEdit->Clear();
 }
 //-----------------------------------------------------------------------------
-void ISDateTimeEdit::SetVisibleClear(bool Visible)
+void ISDateTimeEdit::SetReadOnly(bool read_only)
 {
-	ISFieldEditBase::SetVisibleClear(Visible);
+	ISFieldEditBase::SetReadOnly(read_only);
+	DateEdit->SetReadOnly(read_only);
+	TimeEdit->SetReadOnly(read_only);
 }
 //-----------------------------------------------------------------------------
 void ISDateTimeEdit::SetDate(const QDate &Date)

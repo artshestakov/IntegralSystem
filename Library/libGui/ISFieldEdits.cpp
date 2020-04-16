@@ -115,7 +115,7 @@ ISUuidEdit::ISUuidEdit(QWidget *parent) : ISLineEdit(parent)
 	SetUppercase(true);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
-	ISServiceButton *ButtonGenerate = new ISServiceButton(this);
+	ButtonGenerate = new ISServiceButton(this);
 	ButtonGenerate->setToolTip(LANG("ClickFromGenerateNewUID"));
 	ButtonGenerate->setIcon(BUFFER_ICONS("UUID.Generate"));
 	connect(ButtonGenerate, &ISServiceButton::clicked, this, &ISUuidEdit::Generate);
@@ -135,6 +135,12 @@ void ISUuidEdit::SetValue(const QVariant &value)
 bool ISUuidEdit::IsValid() const
 {
 	return !ISUuid(GetValue().toString()).isEmpty();
+}
+//-----------------------------------------------------------------------------
+void ISUuidEdit::SetReadOnly(bool read_only)
+{
+	ISLineEdit::SetReadOnly(read_only);
+	ButtonGenerate->setVisible(!read_only);
 }
 //-----------------------------------------------------------------------------
 void ISUuidEdit::Generate()

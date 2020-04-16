@@ -50,11 +50,6 @@ void ISImageEdit::Clear()
 	ImageWidget->Clear();
 }
 //-----------------------------------------------------------------------------
-void ISImageEdit::SetVisibleClear(bool Visible)
-{
-
-}
-//-----------------------------------------------------------------------------
 void ISImageEdit::SetReadOnly(bool read_only)
 {
 	ImageWidget->setEnabled(!read_only);

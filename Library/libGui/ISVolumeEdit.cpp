@@ -64,11 +64,6 @@ void ISVolumeEdit::Clear()
 	ISFieldEditBase::Clear();
 }
 //-----------------------------------------------------------------------------
-void ISVolumeEdit::SetVisibleClear(bool Visible)
-{
-	ISFieldEditBase::SetVisibleClear(Visible);
-}
-//-----------------------------------------------------------------------------
 void ISVolumeEdit::ValueChanged()
 {
 	ISFieldEditBase::ValueChanged();

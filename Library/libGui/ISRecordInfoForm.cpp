@@ -32,7 +32,6 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInte
 
 		ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
 		FieldEditBase->SetReadOnly(true);
-		FieldEditBase->SetVisibleClear(false);
 		FormLayout->addRow(Label, FieldEditBase);
 
 		ISQuery qSelect("SELECT " + MetaTable->Alias + '_' + MetaField->Name + " FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id = :ObjectID");

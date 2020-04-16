@@ -272,6 +272,11 @@ void ISQDateEdit::Clear()
 	clear();
 }
 //-----------------------------------------------------------------------------
+void ISQDateEdit::SetReadOnly(bool Visible)
+{
+	ButtonCalendar->setVisible(!Visible);
+}
+//-----------------------------------------------------------------------------
 void ISQDateEdit::SetRange(const QDate &Minimum, const QDate &Maximum)
 {
 	CalendarWidget->setDateRange(Minimum, Maximum);
@@ -542,6 +547,13 @@ void ISQTimeEdit::Clear()
 	ComboBoxHour->setCurrentIndex(0);
 	ComboBoxMinute->setCurrentIndex(0);
 	ComboBoxSecond->setCurrentIndex(0);
+}
+//-----------------------------------------------------------------------------
+void ISQTimeEdit::SetReadOnly(bool ReadOnly)
+{
+	ComboBoxHour->setEnabled(!ReadOnly);
+	ComboBoxMinute->setEnabled(!ReadOnly);
+	ComboBoxSecond->setEnabled(!ReadOnly);
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

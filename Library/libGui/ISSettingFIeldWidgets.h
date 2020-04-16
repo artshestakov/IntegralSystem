@@ -15,11 +15,9 @@ public:
 	void SetValue(const QVariant &value) override;
 	QVariant GetValue() const override;
 	void Clear() override;
-	void SetVisibleClear(bool Visible) override;
 
 private:
 	QButtonGroup *ButtonGroup;
-
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

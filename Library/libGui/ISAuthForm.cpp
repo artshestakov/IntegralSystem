@@ -33,7 +33,6 @@ ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
 	EditLogin = new ISLineEdit(this);
 	EditLogin->SetPlaceholderText(LANG("Login"));
 	EditLogin->SetIcon(BUFFER_ICONS("Auth.Login"));
-	EditLogin->SetVisibleClear(false);
 	EditLogin->SetRegExp(REG_EXP_LOGIN);
 	Layout->addWidget(EditLogin);
 
@@ -42,7 +41,6 @@ ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
 	EditPassword->SetVisibleGenerate(false);
 	EditPassword->SetIcon(BUFFER_ICONS("Auth.Password"));
 	EditPassword->SetVisibleCheckBox(false);
-	EditPassword->SetVisibleClear(false);
 	Layout->addWidget(EditPassword);
 
 	QHBoxLayout *LayoutLabels = new QHBoxLayout();

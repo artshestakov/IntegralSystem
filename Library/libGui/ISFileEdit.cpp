@@ -101,11 +101,6 @@ void ISFileEdit::Clear()
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISFileEdit::SetVisibleClear(bool Visible)
-{
-
-}
-//-----------------------------------------------------------------------------
 void ISFileEdit::SelectFile()
 {
 	QString FilePath = ISFileDialog::GetOpenFileName(this);

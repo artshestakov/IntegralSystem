@@ -18,7 +18,6 @@ public:
 	void SetValue(const QVariant &value) override;
 	QVariant GetValue() const override;
 	void Clear() override;
-	void SetVisibleClear(bool Visible) override;
 
 	void SetReadOnly(bool ReadOnly) override;
 	void SetPlaceholderText(const QString &placeholder_text) override;

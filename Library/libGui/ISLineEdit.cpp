@@ -31,11 +31,6 @@ void ISLineEdit::Clear()
 	LineEdit->clear();
 }
 //-----------------------------------------------------------------------------
-void ISLineEdit::SetVisibleClear(bool Visible)
-{
-	LineEdit->SetVisibleClear(Visible);
-}
-//-----------------------------------------------------------------------------
 void ISLineEdit::SetRegExp(const QString &RegExp)
 {
 	SetValidator(new QRegExpValidator(QRegExp(RegExp), this));
@@ -114,8 +109,9 @@ QStringList ISLineEdit::GetCompleterList() const
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetReadOnly(bool read_only)
 {
-	SetVisibleClear(false);
+	SetVisibleClear(!read_only);
 	LineEdit->setReadOnly(read_only);
+	LineEdit->SetVisibleClear(!read_only);
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetPlaceholderText(const QString &placeholder_text)

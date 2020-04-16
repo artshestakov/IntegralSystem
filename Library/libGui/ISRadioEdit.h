@@ -14,7 +14,6 @@ public:
 	void SetValue(const QVariant &value) override;
 	QVariant GetValue() const override;
 	void Clear() override;
-	void SetVisibleClear(bool Visible) override;
 
 protected:
 	void AddButton(QRadioButton *RadioButton, const QVariant &Value); //Добавить кнопку

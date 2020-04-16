@@ -38,11 +38,6 @@ void ISTextEdit::Clear()
 	TextEdit->clear();
 }
 //-----------------------------------------------------------------------------
-void ISTextEdit::SetVisibleClear(bool Visible)
-{
-	GetButtonClear()->setVisible(Visible);
-}
-//-----------------------------------------------------------------------------
 void ISTextEdit::AddText(const QString &Text)
 {
 	TextEdit->append(Text);

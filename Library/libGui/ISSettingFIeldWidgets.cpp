@@ -103,11 +103,6 @@ void ISCheckViewParagraph::Clear()
 	ISFieldEditBase::Clear();
 }
 //-----------------------------------------------------------------------------
-void ISCheckViewParagraph::SetVisibleClear(bool Visible)
-{
-	ISFieldEditBase::SetVisibleClear(Visible);
-}
-//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISComboSettingEdit::ISComboSettingEdit(QWidget *parent) : ISComboEdit(parent)

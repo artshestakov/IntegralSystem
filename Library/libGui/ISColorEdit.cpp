@@ -57,11 +57,6 @@ void ISColorEdit::Clear()
 	WidgetColor->setToolTip(QString());
 }
 //-----------------------------------------------------------------------------
-void ISColorEdit::SetVisibleClear(bool Visible)
-{
-	ISFieldEditBase::SetVisibleClear(Visible);
-}
-//-----------------------------------------------------------------------------
 void ISColorEdit::SetReadOnly(bool read_only)
 {
 	WidgetColor->setEnabled(!read_only);

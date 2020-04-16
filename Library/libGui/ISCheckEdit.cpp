@@ -33,11 +33,6 @@ void ISCheckEdit::Clear()
 	ISFieldEditBase::Clear();
 }
 //-----------------------------------------------------------------------------
-void ISCheckEdit::SetVisibleClear(bool Visible)
-{
-	ISFieldEditBase::SetVisibleClear(Visible);
-}
-//-----------------------------------------------------------------------------
 void ISCheckEdit::SetText(const QString &Text)
 {
 	CheckBox->setText(Text);

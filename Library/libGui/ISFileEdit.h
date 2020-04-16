@@ -15,7 +15,6 @@ public:
 	void SetValue(const QVariant &value) override;
 	QVariant GetValue() const override;
 	void Clear() override;
-	void SetVisibleClear(bool Visible) override;
 
 protected:
 	void SelectFile(); //Выбор файла через проводник

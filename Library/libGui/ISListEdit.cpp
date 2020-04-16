@@ -85,11 +85,6 @@ void ISListEdit::Clear()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListEdit::SetVisibleClear(bool Visible)
-{
-	GetButtonClear()->setVisible(Visible);
-}
-//-----------------------------------------------------------------------------
 void ISListEdit::SetReadOnly(bool read_only)
 {
 	ISFieldEditBase::SetReadOnly(read_only);

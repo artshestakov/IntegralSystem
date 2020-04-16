@@ -53,11 +53,6 @@ void ISComboEdit::Clear()
 	ISFieldEditBase::Clear();
 }
 //-----------------------------------------------------------------------------
-void ISComboEdit::SetVisibleClear(bool Visible)
-{
-	ISFieldEditBase::SetVisibleClear(Visible);
-}
-//-----------------------------------------------------------------------------
 QString ISComboEdit::GetCurrentText() const
 {
 	return ComboBox->currentText();

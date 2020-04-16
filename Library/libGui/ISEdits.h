@@ -78,6 +78,7 @@ public:
 	QDate GetDate() const;
 	void SetDate(const QDate &Date);
 	void Clear();
+	void SetReadOnly(bool Visible);
 
 	void SetRange(const QDate &Minimum, const QDate &Maximum);
 	void SetMinimumDate(const QDate &Date);
@@ -115,6 +116,7 @@ public:
 	QTime GetTime() const;
 	void SetTime(const QTime &Time);
 	void Clear();
+	void SetReadOnly(bool ReadOnly);
 
 private:
 	ISQComboBox *ComboBoxHour;

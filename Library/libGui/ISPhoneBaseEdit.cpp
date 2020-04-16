@@ -51,11 +51,6 @@ void ISPhoneBaseEdit::Clear()
 	PhoneLineEdit->ResetLastPosition();
 }
 //-----------------------------------------------------------------------------
-void ISPhoneBaseEdit::SetVisibleClear(bool Visible)
-{
-
-}
-//-----------------------------------------------------------------------------
 bool ISPhoneBaseEdit::IsValid() const
 {
 	bool Result = true;

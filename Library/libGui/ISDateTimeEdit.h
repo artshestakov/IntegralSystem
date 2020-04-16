@@ -20,7 +20,7 @@ public:
 	virtual void SetValue(const QVariant &value) override;
 	virtual QVariant GetValue() const override;
 	virtual void Clear() override;
-	virtual void SetVisibleClear(bool Visible) override;
+	virtual void SetReadOnly(bool read_only) override;
 
     void SetDate(const QDate &Date);
     void SetTime(const QTime &Time);

@@ -61,11 +61,6 @@ void ISFieldEditBase::Clear()
 	std::runtime_error(Q_FUNC_INFO);
 }
 //-----------------------------------------------------------------------------
-void ISFieldEditBase::SetVisibleClear(bool Visible)
-{
-	std::runtime_error(Q_FUNC_INFO);
-}
-//-----------------------------------------------------------------------------
 void ISFieldEditBase::Invoke()
 {
 
@@ -123,6 +118,14 @@ void ISFieldEditBase::SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizont
 void ISFieldEditBase::SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical)
 {
 	setSizePolicy(QSizePolicy(sizePolicy().horizontalPolicy(), PolicyVertical));
+}
+//-----------------------------------------------------------------------------
+void ISFieldEditBase::SetVisibleClear(bool Visible)
+{
+	if (ButtonClear)
+	{
+		ButtonClear->setVisible(Visible);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::BlinkRed()
@@ -247,10 +250,5 @@ void ISFieldEditBase::CreateButtonClear()
 		connect(ButtonClear, &ISButtonClear::clicked, this, &ISFieldEditBase::SetFocus);
 		MainLayout->addWidget(ButtonClear);
 	}
-}
-//-----------------------------------------------------------------------------
-ISButtonClear* ISFieldEditBase::GetButtonClear()
-{
-	return ButtonClear;
 }
 //-----------------------------------------------------------------------------

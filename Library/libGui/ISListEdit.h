@@ -17,7 +17,6 @@ public:
 	void SetValue(const QVariant &value) override; //Приходит идентификатор
 	QVariant GetValue() const override; //Возвращает идентификатор
 	void Clear() override;
-	void SetVisibleClear(bool Visible) override;
 
 	void SetReadOnly(bool read_only) override;
 

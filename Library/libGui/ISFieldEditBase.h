@@ -21,7 +21,6 @@ public:
 	virtual void SetValue(const QVariant &value) = 0; //Изменить значение
 	virtual QVariant GetValue() const = 0; //Получить значение
 	virtual void Clear() = 0; //Очистка значения
-	virtual void SetVisibleClear(bool Visible) = 0;
 
 	virtual void Invoke();
 	virtual bool IsValid() const; //Проверка корректности поля
@@ -35,6 +34,7 @@ public:
 	void SetFixedWidth(int Width); //Изменить максимальную ширину виджета редактирования
 	void SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal); //Изменить политику растяжения по горизонтали
 	void SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical); //Изменить политику растяжения по горизонтали
+	void SetVisibleClear(bool Visible);
 
 	void BlinkRed(); //Подсветить поле красным цветом
 	void Blink(const QColor &Color);
@@ -58,7 +58,6 @@ protected:
 	void AddWidgetToRight(QWidget *widget); //Добавить виджет в правый компоновщик
 	
 	void CreateButtonClear(); //Создание кнопки очистки
-	ISButtonClear* GetButtonClear();
 
 private:
 	QHBoxLayout *MainLayout;

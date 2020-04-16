@@ -41,11 +41,6 @@ void ISRadioEdit::Clear()
 	ISFieldEditBase::Clear();
 }
 //-----------------------------------------------------------------------------
-void ISRadioEdit::SetVisibleClear(bool Visible)
-{
-	ISFieldEditBase::SetVisibleClear(Visible);
-}
-//-----------------------------------------------------------------------------
 void ISRadioEdit::AddButton(QRadioButton *RadioButton, const QVariant &Value)
 {
 	RadioButton->setParent(WidgetPanel);

@@ -16,7 +16,6 @@ public:
 	void SetValue(const QVariant &value) override;
 	QVariant GetValue() const override;
 	void Clear() override;
-	void SetVisibleClear(bool Visible) override;
 
 	bool IsValid() const override; //Проверка корректности номера
 	void SetVisibleCall(bool Visible); //Именить видимость кнопки звонка

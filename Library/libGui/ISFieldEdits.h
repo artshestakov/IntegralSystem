@@ -84,9 +84,13 @@ public:
 
 	void SetValue(const QVariant &value) override;
 	bool IsValid() const override;
+	void SetReadOnly(bool read_only) override;
 
 private:
 	void Generate();
+
+private:
+	ISServiceButton *ButtonGenerate;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
