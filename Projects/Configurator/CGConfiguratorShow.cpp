@@ -262,15 +262,13 @@ PMetaTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 //-----------------------------------------------------------------------------
 PMetaField* CGConfiguratorShow::FoundField(PMetaTable *MetaTable, const QString &ColumnName)
 {
-	for (int i = 0; i < MetaTable->AllFields.size(); ++i)
+	for (PMetaField *MetaField : MetaTable->AllFields)
 	{
-		PMetaField *MetaField = MetaTable->AllFields[i];
 		if (QString(MetaTable->Alias + '_' + MetaField->Name).toLower() == ColumnName)
 		{
 			return MetaField;
 		}
 	}
-
 	return nullptr;
 }
 //-----------------------------------------------------------------------------

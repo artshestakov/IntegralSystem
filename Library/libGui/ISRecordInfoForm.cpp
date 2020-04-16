@@ -12,7 +12,7 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInte
 	setWindowIcon(BUFFER_ICONS("RecordInformation"));
 	setWindowTitle(MetaTable->LocalName);
 	ForbidResize();
-
+	
 	QFormLayout *FormLayout = new QFormLayout();
 	FormLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(FormLayout);
@@ -24,10 +24,8 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInte
 	ISGui::SetFontWidgetUnderline(LabelTitle, true);
 	FormLayout->addRow(LabelTitle, new QWidget(this));
 
-	for (int i = 0; i < MetaTable->SystemFields.size(); ++i)
+	for (PMetaField *MetaField : MetaTable->SystemFields)
 	{
-		PMetaField *MetaField = MetaTable->SystemFields[i];
-
 		QLabel *Label = new QLabel(this);
 		Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		Label->setText(MetaField->LabelName + ':');
@@ -45,7 +43,6 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInte
 			FieldEditBase->SetValue(Value);
 		}
 	}
-
 	setFocus();
 }
 //-----------------------------------------------------------------------------

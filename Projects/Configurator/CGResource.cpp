@@ -84,10 +84,9 @@ bool CGResource::UpdateResource(PMetaResource *MetaResource, QString &ErrorStrin
 	}
 
 	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
-	for (int i = 0; i < MetaTable->Fields.size(); ++i) //Обход пользовательских полей таблицы и их очистка
+	for (PMetaField *MetaField : MetaTable->Fields) //Обход пользовательских полей таблицы и их очистка
 	{
-		PMetaField *MetaField = MetaTable->Fields[i];
-		if (MetaField->NotNull || MetaField->QueryText.length())
+		if (MetaField->NotNull || !MetaField->QueryText.isEmpty())
 		{
 			continue;
 		}

@@ -33,7 +33,6 @@ int ISSqlModelView::GetFieldIndex(const QString &FieldName) const
 			return i;
 		}
 	}
-
 	IS_ASSERT(false, QString("Not found field index from field name: %1.").arg(FieldName));
 	return -1;
 }
