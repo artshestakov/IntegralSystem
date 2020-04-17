@@ -6,26 +6,31 @@
 #include "ISGui.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
-ISProgressForm::ISProgressForm(int Minimum, int Maximum, QWidget *parent) : QProgressDialog(parent)
+ISProgressForm::ISProgressForm(int Maximum, const QString &LabelText, QWidget *parent, const QString &TitleText)
+	: QProgressDialog(LabelText, QString(), 0, Maximum, parent),
+	Value(0),
+	Canceled(false)
 {
-	Value = 0;
-	setWindowTitle(LANG("PleaseWait"));
+	setWindowTitle(TitleText.isEmpty() ? LANG("PleaseWait") : TitleText);
 	setWindowModality(Qt::WindowModal);
 	setFixedSize(ISDefines::Gui::SIZE_PROGRESS_FORM);
-	setMinimum(Minimum);
-	setMaximum(Maximum);
+	setValue(Value);
+	setMinimumDuration(0);
+	setAutoClose(true);
+
+	ISButtonClose *ButtonClose = new ISButtonClose(this);
+	connect(ButtonClose, &ISButtonClose::clicked, this, &ISProgressForm::CancelClicked);
+	setCancelButton(ButtonClose);
 
 	ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
 
-	LabelStatus = new QLabel(this);
-	LabelStatus->setAlignment(Qt::AlignLeft);
-	setLabel(LabelStatus);
-
-	QMargins Margins = LabelStatus->contentsMargins();
-	Margins.setTop(10);
-	LabelStatus->setContentsMargins(Margins);
+	//LabelStatus = new QLabel(this);
+	//LabelStatus->setAlignment(Qt::AlignLeft);
+	//setLabel(LabelStatus);
 	
-	setCancelButton(dynamic_cast<QPushButton*>(new ISButtonClose(this)));
+	//QMargins Margins = LabelStatus->contentsMargins();
+	//Margins.setTop(10);
+	//LabelStatus->setContentsMargins(Margins);
 }
 //-----------------------------------------------------------------------------
 ISProgressForm::~ISProgressForm()
@@ -33,23 +38,30 @@ ISProgressForm::~ISProgressForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISProgressForm::SetText(const QString &Text)
+void ISProgressForm::IncrementValue()
 {
-	setLabelText(Text);
-	ISGui::RepaintWidget(LabelStatus);
+	setValue(++Value);
 	ISGui::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
-void ISProgressForm::AddOneValue()
+bool ISProgressForm::WasCanceled() const
 {
-	++Value;
-	setValue(Value);
+	return Canceled;
+}
+//-----------------------------------------------------------------------------
+void ISProgressForm::SetCanceled(bool canceled)
+{
+	Canceled = canceled;
 }
 //-----------------------------------------------------------------------------
 void ISProgressForm::showEvent(QShowEvent *e)
 {
 	QProgressDialog::showEvent(e);
-	ISGui::RepaintWidget(this);
 	ISGui::ProcessEvents();
+}
+//-----------------------------------------------------------------------------
+void ISProgressForm::CancelClicked()
+{
+	Canceled = true;
 }
 //-----------------------------------------------------------------------------

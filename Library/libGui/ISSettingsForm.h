@@ -37,7 +37,7 @@ private:
 	QTabWidget *TabWidget;
 	ISButtonDialog *ButtonDialog;
 
-	QMap<QListWidgetItem*, ISMetaSettingsGroup*> Groups;
-	QMap<QString, ISFieldEditBase*> Fields;
+	std::map<QListWidgetItem*, ISMetaSettingsGroup*> Groups;
+	std::map<QString, ISFieldEditBase*> Fields;
 };
 //-----------------------------------------------------------------------------

@@ -46,7 +46,7 @@ void ISDeviceListForm::Issue()
 
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.Issue")))
 		{
-			QString Defect = ISInputDialog::GetText(LANG("Defect"), LANG("EnterDefect") + ':').toString();
+			QString Defect = ISInputDialog::GetText(LANG("Defect"), LANG("EnterDefect") + ':');
 
 			ISQuery qUpdate(QU_ISSUE);
 

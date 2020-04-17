@@ -172,7 +172,7 @@ void ISInterfaceForm::ForbidResize()
 {
 	if (!parentWidget())
 	{
-		setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint | Qt::MSWindowsFixedSizeDialogHint);
+		setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
 	}
 }
 //-----------------------------------------------------------------------------

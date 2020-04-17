@@ -33,7 +33,7 @@
   <Local Name="CenterSeven.Message.Warning.AlreadyCloseWait" Russian="Выбранное ожидание уже закрыто."/>
   <Local Name="CenterSeven.Message.Question.SendMessagePatients" Russian="Начать процесс рассылки?"/>
   <Local Name="CenterSeven.Message.Question.CloseWait" Russian="Закрыть ожидание?"/>
-  <Local Name="CenterSeven.Sending" Russian="Отправка сообщения: %1 из %2"/>
+  <Local Name="CenterSeven.Sending" Russian="Отправка сообщений"/>
   <Local Name="CenterSeven.SelectBranch" Russian="Выбор филиала"/>
   <Local Name="CenterSeven.SelectYouCurrentBranch" Russian="Выбери филиал, в котором Вы находитесь сейчас территориально"/>
   <Local Name="CenterSeven.Branch" Russian="Филиал"/>
@@ -99,8 +99,8 @@
 	<Local Name="DemoAccessesInWord" Russian="Демо доступы в работе"/>
 	<Local Name="Score" Russian="Счёт"/>
 	<Local Name="AgreementDateTimeFilter" Russian="Фильтр по дате договоренности"/>
-	<Local Name="CalculatePercentage" Russian="Расчёт процента заполнения организации %1 из %2"/>
-	<Local Name="Dispatching" Russian="Отправка письма в организацию: %1. Осталось отправить: %2"/>
+	<Local Name="CalculatePercentage" Russian="Расчёт процента заполнения организаций"/>
+	<Local Name="Dispatching" Russian="Отправка писем в организации..."/>
 	<Local Name="InputNote" Russian="Введите примечание"/>
   <Local Name="InputNoteFromDay" Russian="Введите заметку о дне"/>
 	<Local Name="CallToOrganization" Russian="Позвонить в организацию %1"/>

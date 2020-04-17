@@ -7,37 +7,30 @@
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
 #include "ISControls.h"
-#include "ISAttachFilesForm.h"
-#include "ISAttachFileForm.h"
 #include "ISInputDialog.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISDefinesCore.h"
+#include "ISProgressForm.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
-static QString QI_FILE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size) "
-											"SELECT sgfs_owneruser, sgfs_name, sgfs_expansion, sgfs_size "
+static QString QI_FILE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_name, sgfs_expansion, sgfs_size, sgfs_private, sgfs_data) "
+									   "VALUES (:Name, :Expansion, :Size, :Private, :Data) "
+									   "RETURNING sgfs_id");
+//-----------------------------------------------------------------------------
+static QString QI_FILE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_name, sgfs_expansion, sgfs_size, sgfs_private, sgfs_data) "
+											"SELECT :Name, sgfs_expansion, sgfs_size, sgfs_private, sgfs_data "
 											"FROM _storagefiles "
 											"WHERE sgfs_id = :ObjectID "
 											"RETURNING sgfs_id");
 //-----------------------------------------------------------------------------
-static QString QI_FILE_COPY_DATA = PREPARE_QUERY("INSERT INTO _storagefilesdata(sgfd_storagefile, sgfd_data) "
-												 "SELECT :StorageFile, sgfd_data "
-												 "FROM _storagefilesdata "
-												 "WHERE sgfd_storagefile = :StorageFile "
-												 "ORDER BY sgfd_id");
-//-----------------------------------------------------------------------------
-static QString QS_FILE = PREPARE_QUERY("SELECT sgfd_data FROM _storagefilesdata WHERE sgfd_StorageFile = :StorageFile ORDER BY sgfd_id");
+static QString QS_FILE = PREPARE_QUERY("SELECT sgfs_data "
+									   "FROM _storagefiles "
+									   "WHERE sgfs_id = :ObjectID");
 //-----------------------------------------------------------------------------
 ISStorageFilesListForm::ISStorageFilesListForm(QWidget *parent) : ISListBaseForm("_StorageFiles", parent)
 {
 	GetQueryModel()->SetClassFilter("NOT sgfs_private");
-
-	QAction *ActionCreateMore = new QAction(this);
-	ActionCreateMore->setText(LANG("StorageFiles.AddMore"));
-	ActionCreateMore->setToolTip(LANG("StorageFiles.AddMore"));
-	ActionCreateMore->setIcon(BUFFER_ICONS("StorageFiles.AddMore"));
-	connect(ActionCreateMore, &QAction::triggered, this, &ISStorageFilesListForm::AddMore);
-	InsertAction(ActionCreateMore, GetAction(ISNamespace::AT_Create), false);
 
 	ActionSetText(ISNamespace::AT_Create, LANG("StorageFiles.Create"));
 	ActionSetToolTip(ISNamespace::AT_Create, LANG("StorageFiles.Create"));
@@ -45,24 +38,22 @@ ISStorageFilesListForm::ISStorageFilesListForm(QWidget *parent) : ISListBaseForm
 	QAction *ActionSave = ISControls::CreateActionSave(this);
 	connect(ActionSave, &QAction::triggered, this, &ISStorageFilesListForm::SaveFile);
 	AddAction(ActionSave, true, true);
-	
-	QAction *ActionOpen = new QAction(this);
-	ActionOpen->setText(LANG("StorageFiles.Open"));
-	ActionOpen->setToolTip(LANG("StorageFiles.Open"));
-	ActionOpen->setIcon(BUFFER_ICONS("File.Open"));
-	connect(ActionOpen, &QAction::triggered, this, &ISStorageFilesListForm::OpenFile);
-	AddAction(ActionSave, true, true);
 
-	RadioAll = new QRadioButton(this);
-	RadioAll->setText(LANG("StorageFiles.AllFiles"));
-	RadioAll->setChecked(true);
-	connect(RadioAll, &QRadioButton::clicked, this, &ISStorageFilesListForm::FilterChanged);
-	GetToolBar()->addWidget(RadioAll);
+	RadioAllFiles = new QRadioButton(LANG("StorageFiles.AllFiles"), this);
+	RadioAllFiles->setChecked(true);
+	GetToolBar()->addWidget(RadioAllFiles);
 
-	RadioPrivate = new QRadioButton(this);
-	RadioPrivate->setText(LANG("StorageFiles.MyPrivateFiles"));
-	connect(RadioPrivate, &QRadioButton::clicked, this, &ISStorageFilesListForm::FilterChanged);
-	GetToolBar()->addWidget(RadioPrivate);
+	RadioMyFiles = new QRadioButton(LANG("StorageFiles.MyFiles"), this);
+	GetToolBar()->addWidget(RadioMyFiles);
+
+	RadioMyPrivateFiles = new QRadioButton(LANG("StorageFiles.MyPrivateFiles"), this);
+	GetToolBar()->addWidget(RadioMyPrivateFiles);
+
+	QButtonGroup *ButtonGroup = new QButtonGroup(this);
+	ButtonGroup->addButton(RadioAllFiles);
+	ButtonGroup->addButton(RadioMyFiles);
+	ButtonGroup->addButton(RadioMyPrivateFiles);
+	connect(ButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), this, &ISStorageFilesListForm::FilterChanged);
 }
 //-----------------------------------------------------------------------------
 ISStorageFilesListForm::~ISStorageFilesListForm()
@@ -70,38 +61,122 @@ ISStorageFilesListForm::~ISStorageFilesListForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISStorageFilesListForm::AddMore()
-{
-	ISAttachFilesForm AttachmentFileForm;
-	connect(&AttachmentFileForm, &ISAttachFilesForm::UpdateList, this, &ISStorageFilesListForm::Update);
-	AttachmentFileForm.Exec();
-}
-//-----------------------------------------------------------------------------
 void ISStorageFilesListForm::Create()
 {
-	ISAttachFileForm AttachFileForm;
-	connect(&AttachFileForm, &ISAttachFileForm::UpdateList, this, &ISStorageFilesListForm::Update);
-	AttachFileForm.Exec();
+	QStringList StringList = ISFileDialog::GetOpenFilesName(this);
+	if (!StringList.isEmpty())
+	{
+		bool Private = ISMessageBox::ShowQuestion(this, StringList.size() > 1 ? LANG("Message.Question.AllStorageFileIsPrivate").arg(StringList.size()) : LANG("Message.Question.StorageFileIsPrivate")),
+			IsUpdateList = false;
+		ISVectorInt VectorInt;
+
+		ISProgressForm ProgressForm(StringList.size(), LANG("InsertingFiles"), this);
+		ProgressForm.show();
+
+		for (const QString &FilePath : StringList)
+		{
+			ProgressForm.IncrementValue();
+
+			QFileInfo FileInfo(FilePath);
+			QFile File(FilePath);
+
+			if (File.size() > (((1000 * 1024) * SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE))))
+			{
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.InsertingFileSizeVeryBig").arg(FileInfo.completeBaseName()).arg(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE)));
+				continue;
+			}
+
+			if (!File.open(QIODevice::ReadOnly))
+			{
+				ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FilePath));
+				continue;
+			}
+
+			QByteArray ByteArray = File.readAll();
+			File.close();
+
+			
+			ISQuery qInsert(QI_FILE);
+			qInsert.BindValue(":Name", FileInfo.baseName());
+			qInsert.BindValue(":Expansion", FileInfo.suffix());
+			qInsert.BindValue(":Size", ISSystem::FileSizeFromString(FileInfo.size()));
+			qInsert.BindValue(":Private", Private);
+			qInsert.BindValue(":Data", ByteArray);
+
+			ISGui::SetWaitGlobalCursor(true);
+			bool Inserted = qInsert.ExecuteFirst();
+			ISGui::SetWaitGlobalCursor(false);
+
+			if (Inserted)
+			{
+				VectorInt.emplace_back(qInsert.ReadColumn("sgfs_id").toInt());
+				IsUpdateList = true;
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorInsertFileToStorage").arg(FilePath), qInsert.GetErrorString());
+			}
+
+			if (ProgressForm.WasCanceled())
+			{
+				if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.StopInsertingToStorage")))
+				{
+					if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteInsetedFiles")))
+					{
+						QString SqlText = "DELETE FROM _storagefiles WHERE sgfs_id IN (";
+						for (int ID : VectorInt)
+						{
+							SqlText += QString::number(ID) + ", ";
+						}
+						SqlText.chop(2);
+						SqlText += ')';
+
+						ISQuery qDelete(SqlText);
+						if (!qDelete.Execute())
+						{
+							ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteInsetedFiles"));
+						}
+					}
+					break;
+				}
+				else
+				{
+					ProgressForm.SetCanceled(false);
+				}
+			}
+		}
+
+		if (IsUpdateList)
+		{
+			Update();
+		}
+	}
 }
 //-----------------------------------------------------------------------------
 void ISStorageFilesListForm::CreateCopy()
 {
 	QString FileName = GetCurrentRecordValue("Name").toString();
-
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreateCopyFile").arg(FileName)))
 	{
-		FileName = ISInputDialog::GetString(LANG("Named"), LANG("FileName"), FileName).toString();
+		FileName = ISInputDialog::GetString(LANG("Named"), LANG("FileName") + ':', FileName);
 		if (!FileName.isEmpty())
 		{
 			ISQuery qInsertCopy(QI_FILE_COPY);
+			qInsertCopy.BindValue(":Name", FileName);
 			qInsertCopy.BindValue(":ObjectID", GetObjectID());
-			if (qInsertCopy.ExecuteFirst())
-			{
-				ISQuery qInsertData(QI_FILE_COPY_DATA);
-				qInsertData.BindValue(":StorageFile", qInsertCopy.ReadColumn("sgfs_id").toInt());
-				qInsertData.Execute();
 
-				ISListBaseForm::Update();
+			ISGui::SetWaitGlobalCursor(true);
+			bool Inserted = qInsertCopy.ExecuteFirst();
+			ISGui::SetWaitGlobalCursor(false);
+			
+			if (Inserted)
+			{
+				SetSelectObjectAfterUpdate(qInsertCopy.ReadColumn("sgfs_id").toInt());
+				Update();
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.CreateCopyStorageFile"));
 			}
 		}
 		else
@@ -111,39 +186,14 @@ void ISStorageFilesListForm::CreateCopy()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISStorageFilesListForm::OpenFile()
-{
-	QFile File(ISDefines::Core::PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + GetCurrentRecordValue("Expansion").toString());
-	if (!File.open(QIODevice::WriteOnly))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(File.fileName()), File.errorString());
-		return;
-	}
-
-	ISQuery qSelectFile(QS_FILE);
-	qSelectFile.BindValue(":StorageFile", GetObjectID());
-	if (qSelectFile.Execute())
-	{
-		while (qSelectFile.Next())
-		{
-			File.write(qSelectFile.ReadColumn("sgfd_data").toByteArray());
-		}
-
-		File.close();
-
-		ISGui::OpenFile(File.fileName());
-	}
-}
-//-----------------------------------------------------------------------------
 void ISStorageFilesListForm::SaveFile()
 {
 	QString FileExpansion = GetCurrentRecordValue("Expansion").toString();
 	QString FileName = GetCurrentRecordValue("Name").toString();
-
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(FileName + SYMBOL_POINT + FileExpansion)))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(FileName)))
 	{
 		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(FileExpansion), FileName);
-		if (!FilePath.length())
+		if (FilePath.isEmpty())
 		{
 			return;
 		}
@@ -156,39 +206,40 @@ void ISStorageFilesListForm::SaveFile()
 		}
 
 		ISQuery qSelectFile(QS_FILE);
-		qSelectFile.BindValue(":StorageFile", GetObjectID());
-		if (qSelectFile.Execute())
+		qSelectFile.BindValue(":ObjectID", GetObjectID());
+		if (qSelectFile.ExecuteFirst())
 		{
-			while (qSelectFile.Next())
-			{
-				QByteArray ByteArray = qSelectFile.ReadColumn("sgfd_data").toByteArray();
-				File.write(qUncompress(ByteArray));
-			}
-
+			File.write(qSelectFile.ReadColumn("sgfs_data").toByteArray());
 			File.close();
-
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.File.SavedToPath").arg(FilePath)))
 			{
-				ISGui::OpenFile(FilePath);
+				if (!ISGui::OpenFile(FilePath))
+				{
+					ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FileName));
+				}
 			}
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectStorageFileData"));
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-void ISStorageFilesListForm::FilterChanged()
+void ISStorageFilesListForm::FilterChanged(QAbstractButton *AbstractButton)
 {
-	QString ClassFilter;
-
-	if (RadioAll->isChecked())
+	if (AbstractButton == RadioAllFiles)
 	{
 		GetQueryModel()->SetClassFilter("NOT sgfs_private");
 	}
-	else if (RadioPrivate->isChecked())
+	else if (AbstractButton == RadioMyFiles)
 	{
-		GetQueryModel()->SetClassFilter("sgfs_owneruser = currentuserid() AND sgfs_private");
+		GetQueryModel()->SetClassFilter("sgfs_owner = currentuserid() AND NOT sgfs_private");
 	}
-
-	GetQueryModel()->SetClassFilter(ClassFilter);
+	else if (AbstractButton == RadioMyPrivateFiles)
+	{
+		GetQueryModel()->SetClassFilter("sgfs_owner = currentuserid() AND sgfs_private");
+	}
 	Update();
 }
 //-----------------------------------------------------------------------------

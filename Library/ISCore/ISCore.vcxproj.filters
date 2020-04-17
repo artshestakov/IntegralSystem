@@ -31,9 +31,6 @@
     <Filter Include="Notify">
       <UniqueIdentifier>{fc7646d5-fb0e-4e1e-8d25-5b5305ac79fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Other">
-      <UniqueIdentifier>{48cff0e7-04f2-4e38-8822-b4e1b6552fdc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{3c8bb7e9-794e-4dbf-a0c9-e51c3f514b88}</UniqueIdentifier>
     </Filter>
@@ -159,12 +156,6 @@
     <ClCompile Include="ISNotifySender.cpp">
       <Filter>Notify</Filter>
     </ClCompile>
-    <ClCompile Include="ISProtocol.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
-    <ClCompile Include="ISStorageFileLoader.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
     <ClCompile Include="ISSettings.cpp">
       <Filter>Settings</Filter>
     </ClCompile>
@@ -243,6 +234,9 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISProtocol.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -313,9 +307,6 @@
     </ClInclude>
     <ClInclude Include="ISQuotedPrintable.h">
       <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISProtocol.h">
-      <Filter>Other</Filter>
     </ClInclude>
     <ClInclude Include="ISSettings.h">
       <Filter>Settings</Filter>
@@ -411,6 +402,9 @@
     <ClInclude Include="StdAfx.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISProtocol.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISQueryModel.h">
@@ -430,9 +424,6 @@
     </QtMoc>
     <QtMoc Include="ISNotifySender.h">
       <Filter>Notify</Filter>
-    </QtMoc>
-    <QtMoc Include="ISStorageFileLoader.h">
-      <Filter>Other</Filter>
     </QtMoc>
     <QtMoc Include="ISEMail.h">
       <Filter>System</Filter>

@@ -67,9 +67,7 @@
       <Field UID="{2B485045-EF0E-4DAA-8E31-3CEFC440528C}" Name="InformationMessage" Type="String" LabelName="Информационное сообщение" LocalListName="Информационное сообщение" Hint="Будет отображаться для всех пользователей в главной форме программы." SeparatorName="Прочее"/>
       <Field UID="{A1BB9779-82E4-49EE-B5B2-4E6AD493644E}" Name="InformationMessageColor" Type="Color" DefaultValueWidget="#000000" LabelName="Цвет информационного сообщения" LocalListName="Цвет информационного сообщения"/>
       <Field UID="{2878FEEB-F439-422C-A7B8-DA4684A6460F}" Name="NumberSimbolsAfterComma" Type="Int" DefaultValueWidget="3" LabelName="Количество символов после запятой" LocalListName="Количество символов после запятой"/>
-
-      <!--Карат-->
-      <Field UID="{E766832B-B1A7-43F3-8125-36788C2D62C5}" Name="CaratSendCrashReport" Type="Bool" DefaultValue="true" LabelName="Отправка отчётов о падении ядер" LocalListName="Отправка отчётов о падении ядер" Hint="В случае падения одного из ядер сервера, будет отправляться электронное письмо разработчику с очётом о падении." SeparatorName="Сервер"/>
+      <Field UID="{6288E37D-413A-48E0-B9BF-D4CA288B5007}" Name="StorageFileMaxSize" Type="Int" DefaultValueWidget="10" LabelName="Максимальный размер файла в хранилище (мб)" LocalListName="Максимальный размер файла в хранилище (мб)" Hint="Ограничение размера файла добавляемого в файловое хранилище."/>
     </Fields>
     <Indexes>
       <Index Field="SettingName"/>
@@ -118,7 +116,7 @@
       <Index Field="InformationMessage"/>
       <Index Field="InformationMessageColor"/>
       <Index Field="NumberSimbolsAfterComma"/>
-      <Index Field="CaratSendCrashReport"/>
+      <Index Field="StorageFileMaxSize"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="AccountCurrency" ForeignClass="_Currency" ForeignField="ID" ForeignViewNameField="Name"/>

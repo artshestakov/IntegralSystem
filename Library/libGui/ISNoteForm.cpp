@@ -148,8 +148,8 @@ void ISNoteForm::Reload()
 //-----------------------------------------------------------------------------
 void ISNoteForm::Create()
 {
-	QString Name = ISInputDialog::GetString(LANG("NewRecord"), LANG("Named")).toString();
-	if (Name.length())
+	QString Name = ISInputDialog::GetString(LANG("NewRecord"), LANG("Named"));
+	if (!Name.isEmpty())
 	{
 		ISQuery qInsert(QI_NOTE);
 		qInsert.BindValue(":Name", Name);
@@ -170,14 +170,13 @@ void ISNoteForm::Create()
 //-----------------------------------------------------------------------------
 void ISNoteForm::Edit()
 {
-	QString Name = ISInputDialog::GetString(LANG("EditRecord"), LANG("Named") + ':', ListWidget->currentItem()->text()).toString();
-
+	QString Name = ISInputDialog::GetString(LANG("EditRecord"), LANG("Named") + ':', ListWidget->currentItem()->text());
 	if (Name == ListWidget->currentItem()->text())
 	{
 		return;
 	}
 
-	if (Name.length())
+	if (!Name.isEmpty())
 	{
 		int NoteID = Items.value(ListWidget->currentItem());
 

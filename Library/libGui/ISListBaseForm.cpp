@@ -66,30 +66,16 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	DelegatesCreated(false),
 	ShowOnly(MetaTable->ShowOnly),
 	IsLoadingData(false),
-	SearchFlag(false)
+	SearchFlag(false),
+	ListIndicatorWidget(new ISListIndicatorWidget(this))
 {
-	//Создание действий
-	CreateActions();
-
-	//Создание специальных действий
-	CreateSpecialActions();
-
-	//Создание тулбара
-	CreateToolBar();
-
-	//Создание таблицы
-	CreateTableView();
-
-	//Создание контекстного меню
-	CreateContextMenu();
-
-	//Создание моделей
-	CreateModels();
-
-	//Создание статус-бара
-	CreateStatusBar();
-
-	ListIndicatorWidget = new ISListIndicatorWidget(this);
+	CreateActions(); //Создание действий
+	CreateSpecialActions(); //Создание специальных действий
+	CreateToolBar(); //Создание тулбара
+	CreateTableView(); //Создание таблицы
+	CreateContextMenu(); //Создание контекстного меню
+	CreateModels(); //Создание моделей
+	CreateStatusBar(); //Создание статус-бара
 }
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
@@ -634,7 +620,7 @@ void ISListBaseForm::SelectRowObject(int object_id)
 		if (RowIndex != -1)
 		{
 			SelectRowIndex(RowIndex);
-			SetSelectObjectAfterUpdate(-1);
+			SetSelectObjectAfterUpdate(0);
 		}
 	}
 }
@@ -975,20 +961,18 @@ void ISListBaseForm::Delete()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size())))
 		{
-			ISProgressForm ProgressForm(0, VectorInt.size(), this);
+			ISProgressForm ProgressForm(VectorInt.size(), LANG("DeletingObjects"), this);
 			ProgressForm.show();
-			ProgressForm.SetText(LANG("DeletingObjects").arg(0).arg(VectorInt.size()) + "...");
 
 			for (int i = 0; i < VectorInt.size(); ++i)
 			{
-				ProgressForm.SetText(LANG("DeletingObjects").arg(i + 1).arg(VectorInt.size()) + "...");
 				if (ProgressForm.wasCanceled())
 				{
 					break;
 				}
 
 				ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.at(i), MetaTable->LocalListName);
-				ProgressForm.AddOneValue();
+				ProgressForm.IncrementValue();
 			}
 			Update();
 		}
@@ -1029,16 +1013,14 @@ bool ISListBaseForm::DeleteCascade()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete.Cascade").arg(VectorInt.size()), LANG("Message.Object.Delete.Cascade.Help")))
 		{
-			ISProgressForm ProgressForm(0, VectorInt.size(), this);
+			ISProgressForm ProgressForm(VectorInt.size(), LANG("DeletingCascadeObjects"), this);
 			ProgressForm.show();
-			ProgressForm.SetText(LANG("DeletingCascadeObjects").arg(0).arg(VectorInt.size()) + "...");
 
 			for (int i = 0; i < VectorInt.size(); ++i)
 			{
-				ProgressForm.SetText(LANG("DeletingCascadeObjects").arg(i + 1).arg(VectorInt.size()) + "...");
-				ProgressForm.AddOneValue();
+				ProgressForm.IncrementValue();
 
-				int ObjectID = VectorInt.at(i);
+				int ObjectID = VectorInt[i];
 				if (ISGui::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, ObjectID))
 				{
 					ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
@@ -1137,12 +1119,11 @@ void ISListBaseForm::Export()
 	ExportWorker->SetHeader(ExportForm.GetHeader());
 	ExportWorker->SetSelectedRows(GetSelectedRowIndexes());
 
-	ISProgressForm ProgressForm(0, SqlModel->rowCount(), this);
-	ProgressForm.show();
-	ProgressForm.SetText(LANG("Export.Process.Prepare") + "...");
+	ISProgressForm ProgressForm(SqlModel->rowCount(), LANG("Export.Process.Prepare"), this);
 	connect(&ProgressForm, &ISProgressForm::canceled, ExportWorker, &ISExportWorker::Cancel);
-	connect(ExportWorker, &ISExportWorker::ExportedRow, &ProgressForm, &ISProgressForm::AddOneValue);
-	connect(ExportWorker, &ISExportWorker::Message, &ProgressForm, &ISProgressForm::SetText);
+	connect(ExportWorker, &ISExportWorker::ExportedRow, &ProgressForm, &ISProgressForm::IncrementValue);
+	//connect(ExportWorker, &ISExportWorker::Message, &ProgressForm, &ISProgressForm::SetText);
+	ProgressForm.show();
 
 	bool Prepared = ExportWorker->Prepare();
 	if (Prepared)

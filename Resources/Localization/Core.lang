@@ -375,7 +375,6 @@
   <Local Name="Settings" Russian="Настройки"/>
   <Local Name="SettingsList" Russian="Настройки списка"/>
   <Local Name="SettingsDefault" Russian="Настройки по умолчанию"/>
-  <Local Name="PleaseWait" Russian="Пожалуйста, подождите"/>
   <Local Name="NotSelect" Russian="Не выбрано"/>
   <Local Name="SavingProcess" Russian="Сохранение"/>
   <Local Name="GeneratePassword" Russian="Сгенерировать пароль"/>
@@ -397,7 +396,6 @@
   <Local Name="Adding" Russian="Добавление"/>
   <Local Name="OpeningFile" Russian="Открытие файла"/>
   <Local Name="AddingFile" Russian="Добавление файла"/>
-  <Local Name="AddingFiles" Russian="Добавление файлов"/>
   <Local Name="ReadFile" Russian="Чтение файла"/>
   <Local Name="Key" Russian="Ключ"/>
   <Local Name="Default" Russian="По умолчанию"/>
@@ -410,7 +408,6 @@
   <Local Name="Unlock" Russian="Разблокировать"/>
   <Local Name="OrdinalNumber" Russian="Порядковый номер"/>
   <Local Name="Stop" Russian="Стоп"/>
-  <Local Name="FilesCount" Russian="Количество файлов"/>
   <Local Name="Files" Russian="Файлы"/>
   <Local Name="FileName" Russian="Имя файла"/>
   <Local Name="Text" Russian="Текст"/>
@@ -438,5 +435,6 @@
   <Local Name="ZoomOut" Russian="Отдалить"/>
   <Local Name="NormalSize" Russian="Нормальный размер"/>
   <Local Name="FitToWindow" Russian="Подогнать"/>
+  <Local Name="PleaseWait" Russian="Пожалуйста, подождите"/>
 
 </Localization>

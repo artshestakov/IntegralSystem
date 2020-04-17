@@ -165,8 +165,8 @@ void ISTaskForm::SearchByNumber()
 {
 	while (true)
 	{
-		int TaskID = ISInputDialog::GetInteger(LANG("Search"), LANG("InputTheTaskNumber") + ':', 0, MAXIMUM_INTEGER).toInt();
-		if (TaskID)
+		int TaskID = ISInputDialog::GetInteger(LANG("Search"), LANG("InputTheTaskNumber") + ':', 0, MAXIMUM_INTEGER);
+		if (TaskID != NPOS)
 		{
 			if (ISCore::TaskCheckExist(TaskID))
 			{

@@ -2,7 +2,7 @@
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISInterfaceDialogForm::ISInterfaceDialogForm()
-	: ISInterfaceForm(nullptr, Qt::Dialog),
+	: ISInterfaceForm(nullptr, Qt::Dialog | Qt::WindowCloseButtonHint),
 	Result(false)
 {
 	

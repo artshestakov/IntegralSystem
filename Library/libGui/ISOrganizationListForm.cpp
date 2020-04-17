@@ -147,13 +147,12 @@ void ISOrganizationListForm::Percentage()
 	ISVectorInt Objects = GetSelectedIDs();
 	if (Objects.size())
 	{
-		ISProgressForm ProgressForm(0, Objects.size(), this);
+		ISProgressForm ProgressForm(Objects.size(), LANG("CalculatePercentage"), this);
 		ProgressForm.show();
 
 		for (int i = 0; i < Objects.size(); ++i) //Обход всех организаций
 		{
-			ProgressForm.SetText(LANG("CalculatePercentage").arg(i).arg(Objects.size()));
-			ProgressForm.setValue(i);
+			ProgressForm.IncrementValue();
 
 			int CountFill = 0; //Количество заполненных полей
 			int CountFields = GetMetaTable()->Fields.size(); //Количество полей

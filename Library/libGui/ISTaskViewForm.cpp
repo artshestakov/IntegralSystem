@@ -418,8 +418,8 @@ void ISTaskViewForm::Duplicate()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CheckThisTaskAsDuplicate")))
 	{
-		int TaskOriginal = ISInputDialog::GetInteger(LANG("Task.Duplicate"), LANG("Task.NumberTask") + ':', 1, MAXIMUM_INTEGER).toInt();
-		if (TaskOriginal)
+		int TaskOriginal = ISInputDialog::GetInteger(LANG("Task.Duplicate"), LANG("Task.NumberTask") + ':', 1, MAXIMUM_INTEGER);
+		if (TaskOriginal != NPOS)
 		{
 			if (ISCore::TaskCheckExist(TaskID)) //Задача найдена
 			{

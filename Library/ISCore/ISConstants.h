@@ -177,6 +177,7 @@ const size_t WORD_SIZE = 40; //Максимальный размер слова в словаре
 const int QUERY_POOL_TIMEOUT = 1000; //Таймаут выполнения запросов из очереди
 const size_t EDIT_BLINK_COUNT = (3) * 2; //Количество миганий поля редактирования. Где 3 - количество миганий.
 const char UUID_PLACEHOLDER_TEXT[] = "{00000000-0000-0000-0000-000000000000}";
+const int NPOS = std::string::npos;
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 1000;
@@ -354,7 +355,7 @@ const char CONST_UID_DATABASE_SETTING_LOGO_SMALL[] = "LogoSmall";
 const char CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGE[] = "InformationMessage";
 const char CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGECOLOR[] = "InformationMessageColor";
 const char CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA[] = "NumberSimbolsAfterComma";
-const char CONST_SETTING_DATABASE_CARAT_SEND_CRASH_REPORT[] = "CaratSendCrashReport";
+const char CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE[] = "StorageFileMaxSize";
 //-----------------------------------------------------------------------------
 const char CONST_UID_SETTING_GROUP_GENERAL[] = "{152517C5-B081-42E5-98E4-0BA102EF7FF8}";
 const char CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM[] = "{98F5F993-7647-422A-8C81-340C065F58FE}";

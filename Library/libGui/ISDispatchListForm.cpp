@@ -55,11 +55,13 @@ void ISDispatchListForm::Send()
 		int CountOrganizations = qSelect.GetCountResultRows();
 		if (CountOrganizations)
 		{
-			ISProgressForm ProgressForm(0, CountOrganizations, this);
+			ISProgressForm ProgressForm(CountOrganizations, LANG("Dispatching"), this);
 			ProgressForm.show();
 				
 			while (qSelect.Next()) //Обход организаций
 			{
+				ProgressForm.IncrementValue();
+
 				int DispatchOrganizationID = qSelect.ReadColumn("dorg_id").toInt();
 				int OrganizationID = qSelect.ReadColumn("orgz_id").toInt();
 				QString OrganizationName = qSelect.ReadColumn("orgz_name").toString();
@@ -71,8 +73,6 @@ void ISDispatchListForm::Send()
 				{
 					EMailRecipient = qSelectMail.ReadColumn(EMailRecipient).toString();
 				}
-
-				ProgressForm.SetText(LANG("Dispatching").arg(OrganizationName).arg(CountOrganizations));
 
 				if (Recipient)
 				{

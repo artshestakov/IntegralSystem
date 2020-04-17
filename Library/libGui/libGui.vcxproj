@@ -121,10 +121,7 @@
     <ClCompile Include="ISAsteriskRecordPlayForm.cpp" />
     <ClCompile Include="ISAsteriskRecordWaitForm.cpp" />
     <ClCompile Include="ISAsteriskTotalForm.cpp" />
-    <ClCompile Include="ISAttachFileBaseForm.cpp" />
-    <ClCompile Include="ISAttachFileForm.cpp" />
     <ClCompile Include="ISAttachFileItem.cpp" />
-    <ClCompile Include="ISAttachFilesForm.cpp" />
     <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
@@ -468,9 +465,6 @@
     <ClInclude Include="ISFastAccessEntity.h" />
     <ClInclude Include="ISFavorites.h" />
     <QtMoc Include="ISAsteriskTotalForm.h" />
-    <QtMoc Include="ISAttachFileBaseForm.h" />
-    <QtMoc Include="ISAttachFileForm.h" />
-    <QtMoc Include="ISAttachFilesForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
     <QtMoc Include="ISNoteObjectForm.h" />
     <QtMoc Include="ISPassportForm.h" />

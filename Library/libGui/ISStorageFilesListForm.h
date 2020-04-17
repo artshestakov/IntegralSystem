@@ -1,6 +1,7 @@
 #pragma once
+#ifndef _ISSTORAGEFILESLISTFORM_H_INCLUDED
+#define _ISSTORAGEFILESLISTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
 class ISStorageFilesListForm : public ISListBaseForm
@@ -12,17 +13,17 @@ public:
 	virtual ~ISStorageFilesListForm();
 
 protected:
-	void AddMore();
 	void Create() override;
 	void CreateCopy() override;
 
-	void OpenFile(); //Открыть файл
+private:
 	void SaveFile(); //Сохранить файл
-
-	void FilterChanged();
+	void FilterChanged(QAbstractButton *AbstractButton);
 
 private:
-	QRadioButton *RadioAll;
-	QRadioButton *RadioPrivate;
+	QRadioButton *RadioAllFiles;
+	QRadioButton *RadioMyFiles;
+	QRadioButton *RadioMyPrivateFiles;
 };
 //-----------------------------------------------------------------------------
+#endif

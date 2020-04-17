@@ -106,14 +106,14 @@ void ISHighwayOrganizationObjectForm::BindBranch()
 {
 	ISGui::SetWaitGlobalCursor(true);
 
-	QVariantMap VariantMap;
+	ISStringToVariantMap VariantMap;
 	ISQuery qSelect(QS_ORGANIZATION);
 	qSelect.BindValue(":CurrentOrganization", GetObjectID());
 	if (qSelect.Execute())
 	{
 		while (qSelect.Next())
 		{
-			VariantMap.insert(qSelect.ReadColumn("orgz_name").toString(), qSelect.ReadColumn("orgz_id"));
+			VariantMap.emplace(qSelect.ReadColumn("orgz_name").toString(), qSelect.ReadColumn("orgz_id"));
 		}
 	}
 

@@ -256,15 +256,16 @@
 
   <Table Name="_StorageFiles" UID="{48151E73-0ABB-4B50-9C6B-42B838F644B0}" Alias="sgfs" LocalName="Файл" LocalListName="Файлы" TitleName="Name">
     <Fields>
-      <Field UID="{E8FD6DCC-697B-4EC5-AB83-88CA608D9878}" Name="OwnerUser" Type="Int" LabelName="Владелец (добавил)" LocalListName="Владелец (добавил)" HideFromObject="true" NotNull="true"/>
+      <Field UID="{E8FD6DCC-697B-4EC5-AB83-88CA608D9878}" Name="Owner" Type="Int" DefaultValue="currentuserid()" LabelName="Добавил" LocalListName="Добавил" HideFromObject="true" NotNull="true"/>
       <Field UID="{DF4FBDE0-3434-4DBC-8E1B-946E51002964}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
       <Field UID="{B3AB39BD-09B8-4AA7-A81A-08BB1E7EA727}" Name="Expansion" Type="String" LabelName="Расширение" LocalListName="Расширение" HideFromObject="true" NotNull="true"/>
       <Field UID="{91980012-F6A6-4F08-A35F-FD8335989C85}" Name="Size" Type="String" LabelName="Размер" LocalListName="Размер" HideFromObject="true" NotNull="true"/>
       <Field UID="{3C553AB8-E7A6-4334-B280-C952FECF5E92}" Name="Private" Type="Bool" DefaultValue="false" LabelName="Приватный файл" LocalListName="Приватный файл" HideFromList="true" Hint="Если Вы установите файл как приватный, то другие пользователи его не увидят."/>
       <Field UID="{C3A5FEF7-86F0-4FD9-8D32-656C926604C1}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
+      <Field UID="{F3B4D524-5B30-4B70-8DAA-1245FB97C808}" Name="Data" Type="ByteArray" LabelName="Данные" LocalListName="Данные" HideFromList="true" HideFromObject="true" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="OwnerUser"/>
+      <Index Field="Owner"/>
       <Index Field="Name"/>
       <Index Field="Expansion"/>
       <Index Field="Size"/>
@@ -272,18 +273,8 @@
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="OwnerUser" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="_StorageFilesData" UID="{6FBE8D74-191E-485C-B05F-3E906B892D70}" Alias="sgfd" LocalName="Данные файла" LocalListName="Данные файла" TitleName="StorageFile" IsSystem="true">
-    <Fields>
-      <Field UID="{F2E0C06B-1A9B-41AE-9C78-A4B04A3D427E}" Name="StorageFile" Type="Int" LabelName="Файл" LocalListName="Файл" NotNull="true"/>
-      <Field UID="{579F93AE-4464-40B7-822C-1F337C0FF491}" Name="DATA" Type="ByteArray" LabelName="Данные" LocalListName="Данные" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="StorageFile"/>
-    </Indexes>
   </Table>
 
   <Table Name="_Calendar" UID="{D5E4684A-569B-4567-B94A-0C94E5656AFF}" Alias="cldr" LocalName="Событие календаря" LocalListName="События календаря" ObjectForm="ISCalendarObjectForm" TitleName="Name" IsSystem="true">

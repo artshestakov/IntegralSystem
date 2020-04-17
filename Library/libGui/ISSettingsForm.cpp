@@ -155,10 +155,9 @@ void ISSettingsForm::CreateSettings()
 			FieldEditBase->SetValue(Value);
 			connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSettingsForm::DataChanged);
 			FormLayout->addRow(LabelRow, FieldEditBase);
-			Fields.insert(MetaSetting->UID, FieldEditBase);
+			Fields.emplace(MetaSetting->UID, FieldEditBase);
 		}
-		
-		Groups.insert(ListWidgetItem, MetaGroup);
+		Groups.emplace(ListWidgetItem, MetaGroup);
 	}
 
 	if (ListWidget->count())
@@ -170,15 +169,11 @@ void ISSettingsForm::CreateSettings()
 //-----------------------------------------------------------------------------
 void ISSettingsForm::Save()
 {
-	ISProgressForm ProgressForm(0, Fields.count(), this);
+	ISProgressForm ProgressForm(Fields.size(), LANG("SavedSetting"), this);
 	ProgressForm.show();
-
-	int Iterator = 0;
-	for (const auto &MapItem : Fields.toStdMap())
+	for (const auto &MapItem : Fields)
 	{
-		++Iterator;
-		ProgressForm.setValue(Iterator);
-		ProgressForm.SetText(LANG("SavedSetting").arg(Iterator).arg(Fields.count()));
+		ProgressForm.IncrementValue();
 
 		QString SettingUID = MapItem.first;
 		ISFieldEditBase *FieldEditBase = MapItem.second;
@@ -187,7 +182,6 @@ void ISSettingsForm::Save()
 			ISSettings::GetInstance().SaveValue(SettingUID, FieldEditBase->GetValue());
 		}
 	}
-
 	ProgressForm.hide();
 
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SettingsSaved")))
@@ -207,26 +201,21 @@ void ISSettingsForm::DefaultSettings()
 		ISQuery qSelectSettings(QS_SETTINGS);
 		if (qSelectSettings.Execute())
 		{
-			ISProgressForm ProgressForm(0, qSelectSettings.GetCountResultRows(), this);
+			ISProgressForm ProgressForm(qSelectSettings.GetCountResultRows(), LANG("SavedSetting"), this);
 			ProgressForm.show();
-			
-			int Iterator = 0;
 			while (qSelectSettings.Next())
 			{
-				++Iterator;
+				ProgressForm.IncrementValue();
+
 				QString SettingUID = qSelectSettings.ReadColumn("stgs_uid").toString();
 				QVariant SettingValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
 				QString SettingLocalName = qSelectSettings.ReadColumn("stgs_localname").toString();
-
-				ProgressForm.setValue(ProgressForm.value() + 1);
-				ProgressForm.SetText(LANG("SavedSetting").arg(Iterator).arg(qSelectSettings.GetCountResultRows()));
 
 				ISQuery qUpdateDefault(QU_SETTINGS_DEFAULT);
 				qUpdateDefault.BindValue(":SettingValue", SettingValue);
 				qUpdateDefault.BindValue(":SettingUID", SettingUID);
 				qUpdateDefault.Execute();
 			}
-
 			ProgressForm.hide();
 
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.AppliocationWillBeRestart"));
@@ -276,13 +265,12 @@ void ISSettingsForm::Import()
 		QSettings Settings(FilePath, QSettings::IniFormat);
 		QStringList AllKeys = Settings.allKeys();
 
-		ISProgressForm ProgressForm(0, AllKeys.count(), this);
+		ISProgressForm ProgressForm(AllKeys.count(), LANG("ImportSetting"), this);
 		ProgressForm.show();
 
 		for (int i = 0; i < AllKeys.count(); ++i)
 		{
-			ProgressForm.setValue(i);
-			ProgressForm.SetText(LANG("ImportSetting").arg(i).arg(Fields.count()));
+			ProgressForm.IncrementValue();
 
 			QString SettingKey = AllKeys[i];
 
@@ -322,7 +310,6 @@ QListWidgetItem* ISSettingsForm::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)
 	{
 		ListWidgetItem->setIcon(BUFFER_ICONS(MetaGroup->IconName));
 	}
-
 	return ListWidgetItem;
 }
 //-----------------------------------------------------------------------------
@@ -337,23 +324,12 @@ void ISSettingsForm::ItemSelectionChanged()
 	}
 
 	ClickedItem->setFont(ISDefines::Gui::FONT_TAHOMA_9_BOLD);
-
-	int IndexClicked = ListWidget->row(ClickedItem);
-	TabWidget->setCurrentIndex(IndexClicked);
-
+	TabWidget->setCurrentIndex(ListWidget->row(ClickedItem));
 	LabelCurrentGroup->setText(ClickedItem->text());
 
-	QString GroupHint = Groups.value(ClickedItem)->Hint;
-	if (!GroupHint.isEmpty())
-	{
-		LabelCurrentGroupHint->setText(ISDefines::Core::SYMBOL_CIRCLE + SYMBOL_SPACE + GroupHint);
-		LabelCurrentGroupHint->setVisible(true);
-	}
-	else
-	{
-		LabelCurrentGroupHint->clear();
-		LabelCurrentGroupHint->setVisible(false);
-	}
+	QString GroupHint = Groups[ClickedItem]->Hint;
+	LabelCurrentGroupHint->setText(GroupHint.isEmpty() ? QString() : ISDefines::Core::SYMBOL_CIRCLE + SYMBOL_SPACE + GroupHint);
+	LabelCurrentGroupHint->setVisible(!GroupHint.isEmpty());
 }
 //-----------------------------------------------------------------------------
 void ISSettingsForm::DataChanged()

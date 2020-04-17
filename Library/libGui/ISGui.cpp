@@ -129,11 +129,11 @@ QString ISGui::GetCurrentLayoutName()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISGui::RepaintWidget(QWidget *Widget, bool adjust_size)
+void ISGui::RepaintWidget(QWidget *Widget, bool AdjustSize)
 {
 	if (Widget)
 	{
-		if (adjust_size)
+		if (AdjustSize)
 		{
 			Widget->adjustSize();
 		}

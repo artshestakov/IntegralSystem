@@ -47,14 +47,12 @@ void ISCenterSevenPatientsListForm::Send()
 			QString TemplateText = GetSMSTemplate(TemplateID);
 			ISVectorInt VectorInt = GetIDs();
 
-			ISProgressForm ProgressForm(0, VectorInt.size(), this);
+			ISProgressForm ProgressForm(VectorInt.size(), LANG("CenterSeven.Sending"), this);
 			ProgressForm.show();
-			int Iterator = 1;
 
 			for (int PatientID : VectorInt)
 			{
-				ProgressForm.SetText(LANG("CenterSeven.Sending").arg(Iterator).arg(VectorInt.size()));
-				ProgressForm.AddOneValue();
+				ProgressForm.IncrementValue();
 
 				ISQuery qSelect(QS_PATIENT);
 				qSelect.BindValue(":PatientID", PatientID);

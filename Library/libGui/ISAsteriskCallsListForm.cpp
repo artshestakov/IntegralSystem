@@ -9,7 +9,6 @@
 #include "ISControls.h"
 #include "ISSettingsDatabase.h"
 #include "ISFileDialog.h"
-#include "ISAttachFileForm.h"
 #include "ISAsteriskRecordWaitForm.h"
 #include "ISAsteriskRecordPlayForm.h"
 #include "ISProtocol.h"
@@ -355,6 +354,8 @@ void ISAsteriskCallsListForm::SaveToStorage()
 		}
 	}
 
+	//???
+	/*
 	ISAttachFileForm AttachFileForm;
 	AttachFileForm.SetEnabledPath(false);
 	AttachFileForm.SetFilePath(FilePath);
@@ -382,6 +383,7 @@ void ISAsteriskCallsListForm::SaveToStorage()
 		}
 	});
 	AttachFileForm.Exec();
+	*/
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskCallsListForm::Play(const QString &FilePath)

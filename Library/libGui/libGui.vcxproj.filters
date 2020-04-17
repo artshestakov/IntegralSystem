@@ -71,9 +71,6 @@
     <Filter Include="Calendar">
       <UniqueIdentifier>{8e1af1fb-d761-4b44-8b99-d3a99f5ad6ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="User Role">
-      <UniqueIdentifier>{714b6641-8fd6-4116-bbd2-267e12caa4d8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dialogs">
       <UniqueIdentifier>{b4487417-5e3d-48d9-8d3b-044d44de87cc}</UniqueIdentifier>
     </Filter>
@@ -173,6 +170,9 @@
     <Filter Include="Fields\Base">
       <UniqueIdentifier>{1c19f76d-8d4c-42dd-9dcd-4312e858deae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UserRole">
+      <UniqueIdentifier>{714b6641-8fd6-4116-bbd2-267e12caa4d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISControls.h">
@@ -221,7 +221,7 @@
       <Filter>Printing</Filter>
     </ClInclude>
     <ClInclude Include="ISUserRoleEntity.h">
-      <Filter>User Role</Filter>
+      <Filter>UserRole</Filter>
     </ClInclude>
     <ClInclude Include="ISFastAccessEntity.h">
       <Filter>FastAccess</Filter>
@@ -337,15 +337,6 @@
     <ClCompile Include="ISAsteriskTotalForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISAttachFileBaseForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAttachFileForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAttachFilesForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISFavoritesForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -404,7 +395,7 @@
       <Filter>Telephony</Filter>
     </ClCompile>
     <ClCompile Include="ISUserRoleEntity.cpp">
-      <Filter>User Role</Filter>
+      <Filter>UserRole</Filter>
     </ClCompile>
     <ClCompile Include="ISCreatedObjectsEntity.cpp">
       <Filter>System</Filter>
@@ -1207,15 +1198,6 @@
       <Filter>Export</Filter>
     </QtMoc>
     <QtMoc Include="ISAsteriskTotalForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAttachFileBaseForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAttachFileForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAttachFilesForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISFavoritesForm.h">
