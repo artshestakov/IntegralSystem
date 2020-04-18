@@ -16,12 +16,10 @@ QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableFore
 				continue;
 			}
 		}
-
-		ISSystem::RemoveLastSymbolFromString(SqlText, 2);
+		SqlText.chop(2);
 		SqlText += ')';
 		return SqlText;
 	}
-
 	return ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeignAlias, Iterator) + SYMBOL_POINT + MetaTableForeignAlias + '_' + MetaForeign->ForeignViewNameField.toLower();
 }
 //-----------------------------------------------------------------------------

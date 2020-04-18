@@ -128,11 +128,6 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
 	Dir.rmdir(DirPath);
 }
 //-----------------------------------------------------------------------------
-void ISSystem::RemoveLastSymbolFromString(QString &String, int CountSymbols)
-{
-	String.chop(CountSymbols);
-}
-//-----------------------------------------------------------------------------
 void ISSystem::RemoveLastSymbolLoop(QString &String, char Char)
 {
 	while (String.back() == Char)

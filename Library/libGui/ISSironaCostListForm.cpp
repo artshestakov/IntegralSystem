@@ -29,7 +29,7 @@ void ISSironaCostListForm::LoadDataAfterEvent()
 		{
 			SqlIN += QString::number(ID) + ", ";
 		}
-		ISSystem::RemoveLastSymbolFromString(SqlIN, 2);
+		SqlIN.chop(2);
 
 		ISQuery qSelect("SELECT SUM(cost_sum) FROM cost WHERE cost_id IN(" + SqlIN + ')');
 		if (qSelect.ExecuteFirst())

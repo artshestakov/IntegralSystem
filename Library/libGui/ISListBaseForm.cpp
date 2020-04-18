@@ -684,7 +684,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 					{
 						WhereText += MetaForeignTable->Alias + '_' + FieldName + ", ";
 					}
-					ISSystem::RemoveLastSymbolFromString(WhereText, 2);
+					WhereText.chop(2);
 					WhereText += ") FROM " + MetaForeignTable->Name + SYMBOL_SPACE;
 					WhereText += "WHERE " + MetaForeignTable->Alias + '_' + MetaField->Foreign->ForeignField + " = " + MetaTable->Alias + '_' + MetaField->Name + ')';
 				}
@@ -697,7 +697,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 			WhereText += ", ';', ";
 		}
 
-		ISSystem::RemoveLastSymbolFromString(WhereText, 7);
+		WhereText.chop(7);
 		WhereText += ")) LIKE '%' || :Search || '%'";
 		
 		QueryModel->SetSearchFilter(WhereText);
@@ -1395,13 +1395,11 @@ void ISListBaseForm::CopyRecord()
 {
 	QString Content;
 	QSqlRecord SqlRecord = GetCurrentRecord();
-
 	for (int i = 0; i < SqlModel->columnCount(); ++i)
 	{
 		Content += SqlRecord.value(i).toString() + "\n";
 	}
-
-	ISSystem::RemoveLastSymbolFromString(Content);
+	Content.chop(1);
 	QApplication::clipboard()->setText(Content);
 }
 //-----------------------------------------------------------------------------

@@ -21,7 +21,7 @@ bool CGIndex::CreateIndex(PMetaIndex *Index, QString &ErrorString)
 		{
 			Fields += Index->Alias + '_' + Index->Fields.at(i) + ", ";
 		}
-		ISSystem::RemoveLastSymbolFromString(Fields, 2);
+		Fields.chop(2);
 		SqlText = SqlText.arg(Fields);
 	}
 	else
@@ -115,7 +115,7 @@ QString CGIndex::GetIndexName(PMetaIndex *Index)
 		{
 			IndexName += Index->Fields.at(i) + '_';
 		}
-		ISSystem::RemoveLastSymbolFromString(IndexName);
+		IndexName.chop(1);
 	}
 	else
 	{

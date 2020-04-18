@@ -26,10 +26,10 @@ bool CGResource::InsertResource(PMetaResource *MetaResource, QString &ErrorStrin
 		ValuesText += ':' + FieldName + ", ";
 	}
 
-	ISSystem::RemoveLastSymbolFromString(InsertText, 2);
+	InsertText.chop(2);
 	InsertText += ") \n";
 
-	ISSystem::RemoveLastSymbolFromString(ValuesText, 2);
+	ValuesText.chop(2);
 	ValuesText += ");";
 
 	ISQuery qInsertResource(InsertText + ValuesText);

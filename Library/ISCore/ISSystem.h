@@ -23,7 +23,6 @@ public:
 	static QString GetDayOfWeekName(Qt::DayOfWeek Day); //Получить название дня
 	static QString GetConfigurationName(); //Получить текущую конфигурацию
 	static void ClearDirRecursive(const QString &DirPath); //Очистить папку рекурсивно (с подпапками)
-	static void RemoveLastSymbolFromString(QString &String, int CountSymbols = 1); //Удалить последние символы из строки
 	static void RemoveLastSymbolLoop(QString &String, char Char); //Удалить символ в конце если существует
 	static ISUuid GenerateUuid(); //Сгенерировать новый UID
 	static void BeginSymbolToUpper(QString &String); //Преобразование первого символа строки в верхний регистр

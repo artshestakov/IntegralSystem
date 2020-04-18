@@ -17,14 +17,12 @@ ISMetaViewQuery::~ISMetaViewQuery()
 QString ISMetaViewQuery::GetQueryText()
 {
 	QString Result = "SELECT \n";
-
     for (size_t i = 0; i < MetaQuery->Fields.size(); ++i)
 	{
 		PMetaField *MetaQueryField = MetaQuery->Fields[i];
 		Result += MetaQueryField->QueryText + " AS \"" + MetaQueryField->Name + "\", \n";
 	}
-
-	ISSystem::RemoveLastSymbolFromString(Result, 3);
+	Result.chop(3);
 	
 	Result += " \n";
 	Result += "FROM " + MetaQuery->Parent + " \n";

@@ -803,8 +803,8 @@ bool ISObjectFormBase::Save()
 			InsertValues += ':' + FieldsVector.at(i) + ", ";
 		}
 
-		ISSystem::RemoveLastSymbolFromString(InsertFields, 2);
-		ISSystem::RemoveLastSymbolFromString(InsertValues, 2);
+		InsertFields.chop(2);
+		InsertValues.chop(2);
 
 		QueryText += InsertFields + ") \n";
 		QueryText += InsertValues + ") \n";
@@ -823,8 +823,7 @@ bool ISObjectFormBase::Save()
 			QueryText += MetaTable->Alias + '_' + FieldsVector.at(i) + " = :" + FieldsVector.at(i) + ", \n";
 		}
 
-		ISSystem::RemoveLastSymbolFromString(QueryText, 3);
-
+		QueryText.chop(3);
 		QueryText += " \n";
 		QueryText += "WHERE " + MetaTable->Alias + "_id = " + QString::number(ObjectID);
 	}

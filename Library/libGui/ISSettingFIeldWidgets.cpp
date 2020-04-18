@@ -90,11 +90,9 @@ QVariant ISCheckViewParagraph::GetValue() const
 		{
 			Result.append(String + SYMBOL_COMMA);
 		}
-
-		ISSystem::RemoveLastSymbolFromString(Result);
+		Result.chop(1);
 		return Result;
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------

@@ -11,13 +11,11 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign,
 	QStringList FieldList = MetaForeign->ForeignViewNameField.split(';');
 
 	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField.toLower() + " AS ID, concat(";
-
 	for (int i = 0; i < FieldList.count(); ++i) //Обход полей (которые должны быть отображены)
 	{
 		SqlQuery += MetaTableForeign->Alias + '_' + FieldList.at(i).toLower() + ", ' ', ";
 	}
-
-	ISSystem::RemoveLastSymbolFromString(SqlQuery, 7);
+	SqlQuery.chop(7);
 
 	SqlQuery += ") ";
 	SqlQuery += "AS Value \n";

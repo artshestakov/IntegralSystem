@@ -325,7 +325,7 @@ QString ISChatForm::RemoveLastSpace(const QString &Message) const
 			QChar LastSymbol = Result.at(Result.count() - 1);
 			if (LastSymbol == SYMBOL_SPACE)
 			{
-				ISSystem::RemoveLastSymbolFromString(Result);
+				Result.chop(1);
 			}
 			else
 			{

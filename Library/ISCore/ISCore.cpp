@@ -151,8 +151,7 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 			{
 				QueryText += MetaTable->Alias + '_' + StringList[i] + ", ' ', ";
 			}
-
-			ISSystem::RemoveLastSymbolFromString(QueryText, 7);
+			QueryText.chop(7);
 			QueryText += ") \n";
 		}
 		else //Если указано только одно поле

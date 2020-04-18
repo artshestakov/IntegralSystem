@@ -42,7 +42,7 @@ bool ISExportDBF::Export()
 		}
 	}
 
-	ISSystem::RemoveLastSymbolFromString(CreateTableSql, 2);
+	CreateTableSql.chop(2);
 	CreateTableSql += ')';
 
 	QSqlQuery SqlQuery(QSqlDatabase::database(ConnectionName));
@@ -96,10 +96,10 @@ bool ISExportDBF::Export()
 			Bind.emplace(':' + FieldName, FieldValue);
 		}
 
-		ISSystem::RemoveLastSymbolFromString(InsertFields, 2);
+		InsertFields.chop(2);
 		InsertFields += ')';
 
-		ISSystem::RemoveLastSymbolFromString(ValuesField, 2);
+		ValuesField.chop(2);
 		ValuesField += ')';
 
 		if (!SqlQuery.prepare(InsertFields + SYMBOL_SPACE + ValuesField))

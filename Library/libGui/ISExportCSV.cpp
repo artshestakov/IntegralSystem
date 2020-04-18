@@ -60,7 +60,7 @@ bool ISExportCSV::Export()
 			}
 		}
 
-		ISSystem::RemoveLastSymbolFromString(HeaderString);
+		HeaderString.chop(1);
 		HeaderString.append("\r\n");
 		FileCSV->write(HeaderString.toLocal8Bit());
 	}
@@ -100,7 +100,7 @@ bool ISExportCSV::Export()
 			RowString.append(';');
 		}
 
-		ISSystem::RemoveLastSymbolFromString(RowString);
+		RowString.chop(1);
 		RowString.append("\r\n");
 		FileCSV->write(RowString.toLocal8Bit());
 

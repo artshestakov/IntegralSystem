@@ -34,7 +34,7 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 				
 				Conditions.insert(Condition, Value);
 			}
-			ISSystem::RemoveLastSymbolFromString(SearchString, 4);
+			SearchString.chop(4);
 		}
 		else //Поиск одного значения
 		{
@@ -52,7 +52,7 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 
 		SearchString += " \nAND ";
 	}
-	ISSystem::RemoveLastSymbolFromString(SearchString, 5);
+	SearchString.chop(5);
 }
 //-----------------------------------------------------------------------------
 void ISSearchModel::AddField(const QString &FieldName, const QVariant &Value, ISNamespace::SearchOperatorType Operator, ISNamespace::FieldType FieldType)

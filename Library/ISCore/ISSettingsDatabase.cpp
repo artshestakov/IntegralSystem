@@ -63,8 +63,7 @@ void ISSettingsDatabase::Initialize()
 			ISAlgorithm::VectorRemoveAll(VectorString, FieldName);
 		}
 	}
-
-	ISSystem::RemoveLastSymbolFromString(SqlText, 3);
+	SqlText.chop(3);
 	SqlText += " \nFROM _settingsdatabase \n";
 	SqlText += "WHERE sgdb_uid = :UID";
 

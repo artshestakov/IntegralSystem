@@ -142,7 +142,7 @@ bool CGConfiguratorShow::obsoleteresources()
 		{
 			NotIN += '\'' + String + "', ";
 		}
-		ISSystem::RemoveLastSymbolFromString(NotIN, 2);
+		NotIN.chop(2);
 		SqlText = SqlText.arg(NotIN);
 
 		ISQuery qSelect(SqlText);
@@ -192,8 +192,7 @@ bool CGConfiguratorShow::obsoletesequence()
 		QString SequnceName = TableName + "_sequence";
 		Where += '\'' + SequnceName + "', ";
 	}
-
-	ISSystem::RemoveLastSymbolFromString(Where, 2);
+	Where.chop(2);
 
 	ISQuery qSelectSequences(QS_SEQUENCES.replace(":Where", Where));
 	qSelectSequences.SetShowLongQuery(false);

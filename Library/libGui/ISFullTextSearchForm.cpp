@@ -257,7 +257,7 @@ QString ISFullTextSearchForm::CreateQuery(PMetaTable *MetaTable) const
 			{
 				QueryText += MetaForeignTable->Alias + '_' + FieldName + ", ";
 			}
-			ISSystem::RemoveLastSymbolFromString(QueryText, 2);
+			QueryText.chop(2);
 			QueryText += ") FROM " + MetaForeignTable->Name + SYMBOL_SPACE;
 			QueryText += "WHERE " + MetaForeignTable->Alias + '_' + MetaField->Foreign->ForeignField + " = " + MetaTable->Alias + '_' + MetaField->Name + ')';
 		}
@@ -268,7 +268,7 @@ QString ISFullTextSearchForm::CreateQuery(PMetaTable *MetaTable) const
 		QueryText += ", ";
 	}
 	
-	ISSystem::RemoveLastSymbolFromString(QueryText, 2);
+	QueryText.chop(2);
 	QueryText += ") \nFROM " + MetaTable->Name + " \n";
 	QueryText += "ORDER BY " + MetaTable->Alias + "_id \n)\n";
 	QueryText += "SELECT id, '" + MetaTable->Name + "' AS table_name \n";

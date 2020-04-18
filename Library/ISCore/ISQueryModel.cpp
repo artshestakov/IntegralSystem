@@ -236,7 +236,6 @@ void ISQueryModel::CreateQuerySelectFields()
 	for (int i = 0, c = MetaTable->Fields.size(); i < c; ++i)
 	{
 		PMetaField *Field = MetaTable->Fields[i];
-
 		if (ModelType == ISNamespace::QMT_Object)
 		{
 			if (Field->HideFromObject)
@@ -274,8 +273,7 @@ void ISQueryModel::CreateQuerySelectFields()
 			}
 		}
 	}
-
-	ISSystem::RemoveLastSymbolFromString(QuerySelectFields, 3);
+	QuerySelectFields.chop(3);
 	QuerySelectFields += " \n";
 }
 //-----------------------------------------------------------------------------

@@ -88,7 +88,7 @@ bool CGTable::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 	}
 
 	//«авершение формировани€ запроса на создание таблицы
-	ISSystem::RemoveLastSymbolFromString(SqlText, 2);
+	SqlText.chop(2);
 	SqlText += "\n);";
 
 	//»сполнение запроса

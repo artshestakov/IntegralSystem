@@ -52,7 +52,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
 	if (CountNotSaved)
 	{
 		emit Existed();
-		ISSystem::RemoveLastSymbolFromString(DetailedText, 2);
+		DetailedText.chop(2);
 		DetailedText += SYMBOL_POINT;
 
 		ISMessageBox MessageBox(QMessageBox::Warning, LANG("Warning"), LANG("Message.Information.NotSavedObjects").arg(CountNotSaved), QMessageBox::Ok);

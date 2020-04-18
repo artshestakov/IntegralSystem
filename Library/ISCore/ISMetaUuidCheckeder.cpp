@@ -46,7 +46,7 @@ bool ISMetaUuidCheckeder::Search(const QString &Content)
 	{
 		QString FindedUID = RegExp.cap(0);
 		FindedUID.remove(0, 5);
-		ISSystem::RemoveLastSymbolFromString(FindedUID);
+		FindedUID.chop(1);
 
 		Result = !StringList.contains(FindedUID);
 		if (!Result)

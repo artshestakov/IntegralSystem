@@ -36,7 +36,7 @@ void ISSironaResearchListForm::LoadDataAfterEvent()
 		{
 			SqlIN += QString::number(ID) + ", ";
 		}
-		ISSystem::RemoveLastSymbolFromString(SqlIN, 2);
+		SqlIN.chop(2);
 
 		QString SqlText = QS_RESEARCH;
 		ISQuery qSelect(SqlText.replace(":IN", SqlIN));

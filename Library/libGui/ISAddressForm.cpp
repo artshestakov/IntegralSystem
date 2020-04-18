@@ -437,7 +437,7 @@ void ISAddressForm::UpdatePerfomance()
 		String += ComboHouse->currentText() + ISDefines::Core::SYMBOL_FIAS_SPLIT;
 	}
 
-	ISSystem::RemoveLastSymbolFromString(String, 2);
+	String.chop(2);
 	LineEdit->setText(String);
 }
 //-----------------------------------------------------------------------------

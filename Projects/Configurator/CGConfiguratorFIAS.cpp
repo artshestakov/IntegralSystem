@@ -239,7 +239,7 @@ QString CGConfiguratorFIAS::GetTableName(const QString &FilePath) const
 			{
 				Pos += RegExp.matchedLength();
 				TableName = RegExp.cap(0);
-				ISSystem::RemoveLastSymbolFromString(TableName);
+				TableName.chop(1);
 			}
 			break;
 		}
@@ -321,7 +321,7 @@ void CGConfiguratorFIAS::Update(PMetaTable *MetaTable, const ISStringMap &String
 		}
 	}
 
-	ISSystem::RemoveLastSymbolFromString(UpdateText, 3);
+	UpdateText.chop(3);
 	ISQuery qUpdateFIAS(UpdateText + " \n" + WhereText);
 	qUpdateFIAS.SetShowLongQuery(false);
 	for (const auto &Parameter : Parameters)
@@ -342,8 +342,8 @@ void CGConfiguratorFIAS::Insert(PMetaTable *MetaTable, const ISStringMap &String
 		SqlValues += ':' + FieldName + ", ";
 	}
 
-	ISSystem::RemoveLastSymbolFromString(SqlInsert, 2);
-	ISSystem::RemoveLastSymbolFromString(SqlValues, 2);
+	SqlInsert.chop(2);
+	SqlValues.chop(2);
 	SqlInsert += ')';
 	SqlValues += ')';
 
