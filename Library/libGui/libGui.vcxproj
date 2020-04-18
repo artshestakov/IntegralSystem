@@ -633,7 +633,7 @@
     <QtMoc Include="ISPageNavigation.h" />
     <QtMoc Include="ISPatternWidget.h" />
     <ClInclude Include="ISRegisterMetaType.h" />
-    <QtMoc Include="ISStartup.h" />
+    <ClInclude Include="ISStartup.h" />
     <QtMoc Include="ISTaskAllListForm.h" />
     <QtMoc Include="ISTaskBaseListForm.h" />
     <QtMoc Include="ISTaskDoneForm.h" />

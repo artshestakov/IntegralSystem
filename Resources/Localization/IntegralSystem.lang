@@ -114,6 +114,10 @@
   <Local Name="Message.Error.DeleteInsetedFiles" Russian="Не удалось удалить добавленные файлы."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
   <Local Name="Message.Error.SelectStorageFileData" Russian="Не удалось получить файл из базы данных."/>
+  <Local Name="Message.Error.CheckValidUser" Russian="Не удалось получить информацию о пользователе."/>
+  <Local Name="Message.Error.CurrentUserIsDeleted" Russian="Ваша учётная запись помечена на удаление, обратитесь к системному администратору."/>
+  <Local Name="Message.Error.OverrideLocalListName" Russian="Не удалось получить переопределённые имена полей."/>
+  <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -142,7 +146,6 @@
   <Local Name="Message.Warning.NotLoadLibrary" Russian="Не удалось загрузить библиотеку %1."/>
   <Local Name="Message.Warning.SelectedModuleInvalid" Russian="Выбранный файл не является модулем!"/>
   <Local Name="Message.Warning.FileNameIsNull" Russian="Вы не ввели имя файла."/>
-  <Local Name="Message.Warning.UserGroupIsNull" Russian="Ваша учетная запись не привязанна к группе. Обратитесь к системному администратору."/>
   <Local Name="Message.Warning.ChatImageSizeConstraint" Russian="Ограничение на размер загружаемого изображения - 5 мегабайт."/>
   <Local Name="Message.Warning.ChatFileSizeConstraint" Russian="Ограничение на размер загружаемого файла - 15 мегабайт."/>
   <Local Name="Message.Warning.SelectNamedTools" Russian="Укажите наименование инструмента!"/>

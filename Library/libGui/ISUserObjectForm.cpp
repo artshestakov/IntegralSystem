@@ -7,6 +7,7 @@
 #include "ISQuery.h"
 #include "ISGui.h"
 #include "ISNotifySender.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QC_USER = "CREATE ROLE \"%1\" SUPERUSER NOINHERIT NOREPLICATION LOGIN CONNECTION LIMIT 1";
 //-----------------------------------------------------------------------------
@@ -51,13 +52,14 @@ void ISUserObjectForm::AfterShowEvent()
 bool ISUserObjectForm::Save()
 {
 	bool Result = true;
-
 	if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
 	{
 		Result = ISObjectFormBase::Save();
 		if (Result)
 		{
 			QString UserFullName = GetFieldValue("Surname").toString() + SYMBOL_SPACE + GetFieldValue("Name").toString() + SYMBOL_SPACE + GetFieldValue("Patronymic").toString();
+			ISSystem::RemoveLastSymbolLoop(UserFullName, SYMBOL_SPACE);
+
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreatePasswordUser").arg(UserFullName)))
 			{
 				if (ISGui::ShowUserPasswordForm(GetObjectID()))
@@ -76,7 +78,6 @@ bool ISUserObjectForm::Save()
 	{
 		ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_CHANGED, GetObjectID(), QVariant(), QString(), false);
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

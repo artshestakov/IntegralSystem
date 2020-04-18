@@ -1,22 +1,17 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "libGui_global.h"
+#include "ISSplashScreen.h"
 //-----------------------------------------------------------------------------
-class LIBGUI_EXPORT	ISStartup : public QObject
+class LIBGUI_EXPORT	ISStartup
 {
-	Q_OBJECT
-
 public:
-	ISStartup();
-	virtual ~ISStartup();
-
-	static bool Startup();
-	static void Shutdown();
+	static bool Startup(ISSplashScreen *SplashScreen);
+	static void Shutdown(ISSplashScreen *SplashScreen);
 
 private:
-	static bool CheckAccessDatabase(); //Проверка доступа к базе
-	static bool CheckAccessAllowed(); //Проверка разрешения доступа пользователя
-	static bool CheckExistUserGroup(); //Проверка наличия привязки пользователя к группе
-	static bool LoadLocalNames(); //Загрузка переопределнных имен полей
+	static bool IsValidUser(ISSplashScreen *SplashScreen); //Проверка валидности пользователя
+	static bool CheckAccessDatabase(ISSplashScreen *SplashScreen); //Проверка доступа к базе
+	static bool LoadLocalNames(ISSplashScreen *SplashScreen); //Загрузка переопределнных имен полей
 };
 //-----------------------------------------------------------------------------

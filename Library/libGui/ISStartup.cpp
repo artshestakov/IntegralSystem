@@ -26,27 +26,16 @@
 #include "ISQueryPool.h"
 #include "ISProperty.h"
 //-----------------------------------------------------------------------------
-static QString QS_USER_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
-											 "FROM _users "
-											 "WHERE NOT usrs_isdeleted "
-											 "AND usrs_login = :Login");
+static QString QS_USER_CHECK = PREPARE_QUERY("SELECT "
+											 "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
+											 "(SELECT usrs_isdeleted FROM _users WHERE usrs_login = :Login)");
 //-----------------------------------------------------------------------------
 static QString QS_LOCAL_NAME = PREPARE_QUERY("SELECT lcnm_tablename, lcnm_fieldname, lcnm_localname "
 											 "FROM _localnames "
 											 "WHERE NOT lcnm_isdeleted "
 											 "AND lcnm_user = currentuserid()");
 //-----------------------------------------------------------------------------
-ISStartup::ISStartup() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISStartup::~ISStartup()
-{
-
-}
-//-----------------------------------------------------------------------------
-bool ISStartup::Startup()
+bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
 	//Проверка всех запросов
 	if (!ISQueryText::Instance().CheckAllQueries())
@@ -56,44 +45,26 @@ bool ISStartup::Startup()
 
 	ISObjects::GetInstance().Initialize();
 
-	//Проверка введенных данных пользователем
-	ISQuery qSelectUser(QS_USER_CHECK);
-	qSelectUser.BindValue(":Login", ISMetaUser::Instance().UserData->Login);
-	if (qSelectUser.ExecuteFirst())
-	{
-		if (!qSelectUser.ReadColumn("count").toInt())
-		{
-			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotFoundUserWithLogin").arg(ISMetaUser::Instance().UserData->Login));
-			return false;
-		}
-	}
-
-	//Загрузка мета-данных о пользователе
-	ISMetaUser::Instance().Initialize();
-
 	//Инициализация мета-данных
-	ISMetaData::GetInstanse().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false);
+	if (!ISMetaData::GetInstanse().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false))
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::GetInstanse().GetErrorString());
+		return false;
+	}
 
 	//Инициализация настроек базы данных
 	ISSettingsDatabase::GetInstance().Initialize();
 	ISSettingsDatabase::GetInstance().InitializedSystemParameters();
 
-	if (!CheckAccessDatabase()) //Проверка разрешения доступа к базе пользователям
+	if (!CheckAccessDatabase(SplashScreen)) //Проверка разрешения доступа к базе пользователям
 	{
 		return false;
 	}
 
-	if (!CheckAccessAllowed()) //Проверка разрешения доступа пользователя
-	{
-		return false;
-	}
+	//Загрузка мета-данных о пользователе
+	ISMetaUser::Instance().Initialize();
 
-	if (!CheckExistUserGroup()) //Проверка наличия привязки пользователя к группе
-	{
-		return false;
-	}
-
-	if (!LoadLocalNames())
+	if (!IsValidUser(SplashScreen))
 	{
 		return false;
 	}
@@ -104,31 +75,117 @@ bool ISStartup::Startup()
 	//Загрузка мета-данных о системах и подсистемах
 	ISMetaSystemsEntity::GetInstance().Initialize();
 
+	ISQueryPool::Instance().Start();
+
+	//Инициалищация печати
+	ISPrintingEntity::GetInstance();
+
+	//Инициализация нотификаций
+	ISNotifySender::GetInstance().Initialize();
+
+	//Инициализация избранного
+	ISFavorites::GetInstance().Initialize();
+
+	//Инициализация сортировок
+	ISSortingBuffer::Instance();
+
+	//Инициализация размеров колонок
+	if (!ISColumnSizer::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
+		return false;
+	}
+
+	//Инициализация переопределнных локальных имен полей
+	if (!LoadLocalNames(SplashScreen))
+	{
+		return false;
+	}
+
 	//Инициализация настроек
 	ISSettings::GetInstance();
 
 	//Инициализация параграфов
 	ISParagraphEntity::GetInstance();
 
-	ISQueryPool::Instance().Start();
+	//Инициализация внешних инструментов
+	ISFastAccessEntity::GetInstance().LoadExternalTools();
 
-	//Инициалищация печати
-	ISPrintingEntity::GetInstance();
+	//Инициализация создания записей
+	ISFastAccessEntity::GetInstance().LoadCreateRecords();
 
-	if (!ISMetaUser::Instance().UserData->System) //Если пользователь НЕ СИСТЕМНЫЙ
+	//Иницилазация устройств
+	ISDeviceEntity::GetInstance().Initialize();
+
+	//Фиксация входа в протоколе
+	ISProtocol::EnterApplication();
+
+	ISObjects::GetInstance().GetInterface()->BeforeShowMainWindow();
+	ISProperty::Instance().SetValue(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
+	return true;
+}
+//-----------------------------------------------------------------------------
+void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
+{
+	ISProtocol::ExitApplication();
+	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ? ISSortingBuffer::Instance().SaveSortings() : ISSortingBuffer::Instance().Clear()))
 	{
-		if (!ISMetaUser::Instance().UserData->GroupID) //Если пользователь привязан к группе
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
+	}
+
+	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ? ISColumnSizer::Instance().Save() : ISColumnSizer::Instance().Clear()))
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
+bool ISStartup::IsValidUser(ISSplashScreen *SplashScreen)
+{
+	//Проверка введенных данных пользователем
+	ISQuery qSelectUser(QS_USER_CHECK);
+	qSelectUser.BindValue(":Login", ISMetaUser::Instance().UserData->Login);
+	if (!qSelectUser.ExecuteFirst())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.CheckValidUser"), qSelectUser.GetErrorString());
+		return false;
+	}
+
+	//Если такой логин в БД не сузествует
+	if (!qSelectUser.ReadColumn("count").toInt())
+	{
+		ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.NotFoundUserWithLogin").arg(ISMetaUser::Instance().UserData->Login));
+		return false;
+	}
+
+	//Если такой логин помечен на удаление
+	if (qSelectUser.ReadColumn("usrs_isdeleted").toBool())
+	{
+		ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Error.CurrentUserIsDeleted"));
+		return false;
+	}
+
+	//Если у пользователя нет права доступа
+	if (!ISMetaUser::Instance().UserData->AccessAllowed)
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.User.NotAccessAllowed"));
+		return false;
+	}
+
+	//Проверка наличия привязки пользователя к группе
+	if (!ISMetaUser::Instance().UserData->System)
+	{
+		if (!ISMetaUser::Instance().UserData->GroupID)
 		{
-			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.UserGroupIsNull"));
+			ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.User.NotLinkWithGroup"));
 			return false;
 		}
 	}
 
-	if (ISMetaUser::Instance().UserData->AccountLifeTime) //Если для пользователя настроено ограничение срока действия учётной записи
+	//Если для пользователя настроено ограничение срока действия учётной записи
+	if (ISMetaUser::Instance().UserData->AccountLifeTime)
 	{
 		QDate DateStart = ISMetaUser::Instance().UserData->AccountLifeTimeStart;
 		QDate DateEnd = ISMetaUser::Instance().UserData->AccountLifeTimeEnd;
-
 		if (QDate::currentDate() < DateStart)
 		{
 			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeNotStarted"));
@@ -149,54 +206,10 @@ bool ISStartup::Startup()
 		}
 	}
 
-	//Инициализация нотификаций
-	ISNotifySender::GetInstance().Initialize();
-
-	//Инициализация избранного
-	ISFavorites::GetInstance().Initialize();
-
-	//Инициализация сортировок
-	ISSortingBuffer::Instance();
-
-	//Инициализация размеров колонок
-	if (!ISColumnSizer::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
-		return false;
-	}
-
-	//Инициализация внешних инструментов
-	ISFastAccessEntity::GetInstance().LoadExternalTools();
-
-	//Инициализация создания записей
-	ISFastAccessEntity::GetInstance().LoadCreateRecords();
-
-	//Иницилазация устройств
-	ISDeviceEntity::GetInstance().Initialize();
-
-	//Фиксация входа в протоколе
-	ISProtocol::EnterApplication();
-
-	ISObjects::GetInstance().GetInterface()->BeforeShowMainWindow();
-	ISProperty::Instance().SetValue(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISStartup::Shutdown()
-{
-	ISProtocol::ExitApplication();
-	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ? ISSortingBuffer::Instance().SaveSortings() : ISSortingBuffer::Instance().Clear()))
-	{
-		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
-	}
-
-	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ? ISColumnSizer::Instance().Save() : ISColumnSizer::Instance().Clear()))
-	{
-		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
-	}
-}
-//-----------------------------------------------------------------------------
-bool ISStartup::CheckAccessDatabase()
+bool ISStartup::CheckAccessDatabase(ISSplashScreen *SplashScreen)
 {
 	if (ISMetaUser::Instance().UserData->System)
 	{
@@ -206,39 +219,12 @@ bool ISStartup::CheckAccessDatabase()
 	bool AccessDatabase = SETTING_DATABASE_VALUE_BOOL(CONST_UID_DATABASE_SETTING_GENERAL_ACCESSDATABASE);
 	if (!AccessDatabase)
 	{
-		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotAccessToDatabase"));
+		ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.NotAccessToDatabase"));
 	}
 	return AccessDatabase;
 }
 //-----------------------------------------------------------------------------
-bool ISStartup::CheckAccessAllowed()
-{
-	if (!ISMetaUser::Instance().UserData->AccessAllowed) //Если у пользователя нет права доступа
-	{
-		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.User.NotAccessAllowed"));
-		return false;
-	}
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISStartup::CheckExistUserGroup()
-{
-	if (ISMetaUser::Instance().UserData->System)
-	{
-		return true;
-	}
-	else
-	{
-		if (!ISMetaUser::Instance().UserData->GroupID)
-		{
-			ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.User.NotLinkWithGroup"));
-			return false;
-		}
-	}
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISStartup::LoadLocalNames()
+bool ISStartup::LoadLocalNames(ISSplashScreen *SplashScreen)
 {
 	ISQuery qSelect(QS_LOCAL_NAME);
 	bool Result = qSelect.Execute();
@@ -258,6 +244,10 @@ bool ISStartup::LoadLocalNames()
 			}
 
 		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.OverrideLocalListName"), qSelect.GetErrorString());
 	}
 	return Result;
 }

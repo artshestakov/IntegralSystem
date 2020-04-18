@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	SplashScreen.show();
 	SplashScreen.SetMessage(LANG("Banner.StartupSystem"));
 
-	Result = ISStartup::Startup();
+	Result = ISStartup::Startup(&SplashScreen);
 	SplashScreen.hide();
 
 	if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 		SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
 		SplashScreen.show();
 
-		ISStartup::Shutdown();
+		ISStartup::Shutdown(&SplashScreen);
 		ISGui::ExitApplication();
 	}
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;

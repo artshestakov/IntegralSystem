@@ -251,6 +251,9 @@
     <ClInclude Include="ISDictionaryWord.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISStartup.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISIncomingCallBaseForm.cpp">
@@ -1381,9 +1384,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISIntegralSystem.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISStartup.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISChatMessageWidget.h">

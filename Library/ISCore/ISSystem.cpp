@@ -133,6 +133,14 @@ void ISSystem::RemoveLastSymbolFromString(QString &String, int CountSymbols)
 	String.chop(CountSymbols);
 }
 //-----------------------------------------------------------------------------
+void ISSystem::RemoveLastSymbolLoop(QString &String, char Char)
+{
+	while (String.back() == Char)
+	{
+		String.chop(1);
+	}
+}
+//-----------------------------------------------------------------------------
 ISUuid ISSystem::GenerateUuid()
 {
 	return QUuid::createUuid();

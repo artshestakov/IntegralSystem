@@ -224,10 +224,9 @@ void ISObjectFormBase::AfterShowEvent()
 		BeginFieldEdit->SetFocus();
 	}
 
-	ISFieldEditBase *FieldEditWidget = FieldsMap[MetaTable->ClassFilterField];
-	if (FieldEditWidget)
+	if (FieldsMap.count(MetaTable->ClassFilterField))
 	{
-		FieldEditWidget->SetValue(ParentObjectID);
+		FieldsMap[MetaTable->ClassFilterField]->SetValue(ParentObjectID);
 	}
 
 	RenameReiconForm();
@@ -477,9 +476,9 @@ void ISObjectFormBase::FillDataFields()
 				continue;
 			}
 
-			ISFieldEditBase *FieldEditWidget = FieldsMap[FieldName];
-			if (FieldEditWidget)
+			if (FieldsMap.count(FieldName))
 			{
+				ISFieldEditBase *FieldEditWidget = FieldsMap[FieldName];
 				disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 
 				if (MetaTable->GetField(FieldName)->Foreign)
@@ -494,19 +493,11 @@ void ISObjectFormBase::FillDataFields()
 					BeginValues.insert(FieldName, Value);
 				}
 
-				if (FormType == ISNamespace::OFT_Copy) //≈сли формы открываетс€ дл€ создани€ копии
-				{
-					FieldEditWidget->SetModificationFlag(true);
-				}
-				else
-				{
-					FieldEditWidget->SetModificationFlag(false);
-				}
-
+				//≈сли формы открываетс€ дл€ создани€ копии
+				FieldEditWidget->SetModificationFlag(FormType == ISNamespace::OFT_Copy);
 				connect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 			}
 		}
-
 		ISCore::AddHistory(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
 	}
 }
