@@ -88,34 +88,24 @@ void ISPhoneBaseEdit::Call()
 void ISPhoneBaseEdit::PhoneChanged()
 {
 	disconnect(this, &ISPhoneBaseEdit::DataChanged, this, &ISPhoneBaseEdit::PhoneChanged);
-
 	QString PhoneString = ISPhoneNumberParser::RemoveNotDigits(PhoneLineEdit->text());
 	if (PhoneString.length() == 10) //Если номер телефона введен корректно
 	{
-		QToolTip::hideText();
 		PhoneLineEdit->SetIcon(ISNamespace::PIT_TRUE);
 		ButtonCall->setEnabled(true);
 	}
 	else //Номер телефона некорректный
 	{
 		ButtonCall->setEnabled(false);
-
 		if (PhoneString.length() > 0 && PhoneString.length() < 10) //Номер телефона введен частично
 		{
-			QPoint Point = PhoneLineEdit->mapToGlobal(QPoint());
-			Point.setX(Point.x() - 2);
-			Point.setY(Point.y() + 8);
-			QToolTip::showText(Point, LANG("PhoneNumberInputIncorrect"), PhoneLineEdit, QRect(), 2000);
-
 			PhoneLineEdit->SetIcon(ISNamespace::PIT_FALSE);
 		}
 		else if (PhoneString.length() == 0) //Номер телефона не введен вообще
 		{
-			QToolTip::hideText();
 			PhoneLineEdit->SetIcon(ISNamespace::PIT_Standart);
 		}
 	}
-
 	connect(this, &ISPhoneBaseEdit::DataChanged, this, &ISPhoneBaseEdit::PhoneChanged);
 }
 //-----------------------------------------------------------------------------

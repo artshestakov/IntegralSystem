@@ -633,7 +633,6 @@
   <Local Name="RecordAddFavorites" Russian="Запись &quot;%1&quot; добавлена в избранное"/>
   <Local Name="RecordRemoveFavorites" Russian="Запись &quot;%1&quot; удалена из избранного"/>
   <Local Name="LoadingUpdateText" Russian="Обнаружена новая версия программы! Чтобы начать загрузку новой версии, нажмите «Начать загрузку». Вы можете обновить программу и позже, для этого нажмите кнопку «Отмена»."/>
-  <Local Name="PhoneNumberInputIncorrect" Russian="Номер телефона введен некорректно."/>
   <Local Name="ThisLoginAlreadyExist" Russian="Такой логин уже существует в системе, введите другой."/>
   <Local Name="VacuumTableDist" Russian="Пожалуйста подождите, выполняется вакуум"/>
   <Local Name="SelectColorFont" Russian="Выберите цвет шрифта"/>
