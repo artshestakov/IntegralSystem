@@ -32,7 +32,7 @@ ISOrganizationListForm::ISOrganizationListForm(QWidget *parent) : ISListBaseForm
 	GetToolBar()->addWidget(UserEdit);
 
 	QAction *ActionTransfer = new QAction(GetToolBar());
-	ActionTransfer->setText(LANG("TransferInWork") + "...");
+	ActionTransfer->setText(LANG("TransferInWork"));
 	ActionTransfer->setToolTip(LANG("TransferInWork"));
 	ActionTransfer->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("TransferOrganization"));
 	connect(ActionTransfer, &QAction::triggered, this, &ISOrganizationListForm::Transfer);

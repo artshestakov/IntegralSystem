@@ -116,7 +116,7 @@ bool ISExportHTML::Export()
 		FileHTML->write(RowString.toUtf8());
 
 		emit ExportedRow();
-		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()) + "...");
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
 	}
 
 	FileHTML->write("  </table>\r\n");

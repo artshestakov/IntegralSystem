@@ -21,7 +21,7 @@ ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 	GroupBox->layout()->addWidget(WidgetColor);
 
 	ISServiceButton *ButtonSelectColor = new ISServiceButton(this);
-	ButtonSelectColor->setToolTip(LANG("SelectColor") + "...");
+	ButtonSelectColor->setToolTip(LANG("SelectColor"));
 	ButtonSelectColor->setIcon(BUFFER_ICONS("Color"));
 	ButtonSelectColor->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonSelectColor, &ISServiceButton::clicked, this, &ISColorEdit::SelectColor);

@@ -279,7 +279,7 @@ ISPathEditDir::ISPathEditDir(QWidget *parent) : ISLineEdit(parent)
 	SetFocusPolicy(Qt::NoFocus);
 
 	ISPushButton *ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LANG("Overview") + "...");
+	ButtonSelect->setText(LANG("Overview"));
 	ButtonSelect->setToolTip(LANG("SelectFolder"));
 	connect(ButtonSelect, &ISPushButton::clicked, this, &ISPathEditDir::SelectDir);
 	AddWidgetToRight(ButtonSelect);
@@ -347,7 +347,7 @@ ISPathEditFile::ISPathEditFile(QWidget *parent) : ISLineEdit(parent)
 	SetPlaceholderText(LANG("ClickOverviewFromSelectFile"));
 
 	ISPushButton *ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LANG("Overview") + "...");
+	ButtonSelect->setText(LANG("Overview"));
 	ButtonSelect->setToolTip(LANG("SelectFile"));
 	connect(ButtonSelect, &ISPushButton::clicked, this, &ISPathEditFile::SelectFile);
 	AddWidgetToRight(ButtonSelect);
@@ -394,7 +394,7 @@ ISPasswordEdit::ISPasswordEdit(QWidget *parent) : ISLineEdit(parent)
 
 	ButtonGeneratePassword = new ISServiceButton(this);
 	ButtonGeneratePassword->setVisible(true);
-	ButtonGeneratePassword->setToolTip(LANG("GeneratePassword") + "...");
+	ButtonGeneratePassword->setToolTip(LANG("GeneratePassword"));
 	ButtonGeneratePassword->setIcon(BUFFER_ICONS("PasswordGenerate"));
 	connect(ButtonGeneratePassword, &ISPushButton::clicked, this, &ISPasswordEdit::GeneratePassword);
 	AddWidgetToRight(ButtonGeneratePassword);
@@ -460,7 +460,7 @@ void ISUrlEdit::OpenUrl()
 		if (ISGui::OpenUrl(UrlString))
 		{
 			ISPopupMessage *PopupMessage = new ISPopupMessage(nullptr);
-			PopupMessage->SetTitle(LANG("OpeningUrl") + "...");
+			PopupMessage->SetTitle(LANG("OpeningUrl"));
 			PopupMessage->SetMessage(UrlString);
 			PopupMessage->show();
 		}

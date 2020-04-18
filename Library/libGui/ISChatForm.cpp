@@ -90,7 +90,7 @@ ISChatForm::ISChatForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	LayoutCenter->addLayout(LayoutBar);
 	
 	LabelLoading = new QLabel(this);
-	LabelLoading->setText(LANG("ChatForm.LoadingMessages") + "...");
+	LabelLoading->setText(LANG("ChatForm.LoadingMessages"));
 	LabelLoading->setVisible(false);
 	LayoutBar->addWidget(LabelLoading);
 	
@@ -131,7 +131,7 @@ ISChatForm::ISChatForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	LayoutBar->addWidget(ButtonSend);
 
 	TextEdit = new ISTextEdit(this);
-	TextEdit->SetPlaceholderText(LANG("ChatForm.InputMessage") + "...");
+	TextEdit->SetPlaceholderText(LANG("ChatForm.InputMessage"));
 	TextEdit->SetExecuteEnter(false);
 	TextEdit->setMaximumHeight(80);
 	connect(TextEdit, &ISTextEdit::KeyPressEnter, this, &ISChatForm::SendMessage);
@@ -204,7 +204,7 @@ void ISChatForm::SendMessage()
 
 	if (Message.length() || CurrentAttach == ISNamespace::ACT_Image || CurrentAttach == ISNamespace::ACT_File)
 	{
-		ButtonSend->setText(LANG("ChatForm.Sending") + "...");
+		ButtonSend->setText(LANG("ChatForm.Sending"));
 		ISGui::RepaintWidget(ButtonSend);
 		ISGui::SetWaitGlobalCursor(true);
 

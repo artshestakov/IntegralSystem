@@ -84,7 +84,7 @@ bool ISExportXML::Export()
 		}
 
 		emit ExportedRow();
-		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()) + "...");
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
 	}
 
 	QString Content = DomDocument.toString();

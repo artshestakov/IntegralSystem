@@ -254,7 +254,7 @@ void ISAuthForm::ConnectedFailed()
 void ISAuthForm::SetConnecting(bool Connecting)
 {
 	Connecting ? WaitWidget->Start() : WaitWidget->Stop();
-	LabelConnectToDatabase->setText(Connecting ? LANG("ConnectingToServer") + "..." : QString());
+	LabelConnectToDatabase->setText(Connecting ? LANG("ConnectingToServer") : QString());
 	ISGui::SetWaitGlobalCursor(Connecting);
 	EditLogin->setEnabled(!Connecting);
 	EditPassword->setEnabled(!Connecting);

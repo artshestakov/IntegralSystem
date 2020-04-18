@@ -23,14 +23,6 @@ ISProgressForm::ISProgressForm(int Maximum, const QString &LabelText, QWidget *p
 	setCancelButton(ButtonClose);
 
 	ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
-
-	//LabelStatus = new QLabel(this);
-	//LabelStatus->setAlignment(Qt::AlignLeft);
-	//setLabel(LabelStatus);
-	
-	//QMargins Margins = LabelStatus->contentsMargins();
-	//Margins.setTop(10);
-	//LabelStatus->setContentsMargins(Margins);
 }
 //-----------------------------------------------------------------------------
 ISProgressForm::~ISProgressForm()

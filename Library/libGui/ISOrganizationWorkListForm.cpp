@@ -12,7 +12,7 @@ ISOrganizationWorkListForm::ISOrganizationWorkListForm(QWidget *parent) : ISList
 	GetQueryModel()->SetClassFilter("orgz_perspective");
 
 	QAction *ActionTakeToWork = new QAction(GetToolBar());
-	ActionTakeToWork->setText(LANG("TakeOrganization") + "...");
+	ActionTakeToWork->setText(LANG("TakeOrganization"));
 	ActionTakeToWork->setToolTip(LANG("TakeOrganization"));
 	ActionTakeToWork->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("TakeOrganization"));
 	connect(ActionTakeToWork, &QAction::triggered, this, &ISOrganizationWorkListForm::TakeToWork);

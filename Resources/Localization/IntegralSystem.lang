@@ -341,17 +341,17 @@
   <Local Name="TableNavigationSelectPrevious" Russian="Выбрать предыдущую запись"/>
   <Local Name="TableNavigationSelectNext" Russian="Выбрать следующую запись"/>
   <Local Name="TableNavigationSelectLast" Russian="Выбрать последнюю запись"/>
-  <Local Name="FillTableData" Russian="Заполнение таблицы данными"/>
+  <Local Name="FillTableData" Russian="Заполнение таблицы данными..."/>
   <Local Name="Protocol" Russian="Протокол"/>
   <Local Name="ProtocolCard" Russian="Протокол карточки"/>
   <Local Name="ProtocolUser" Russian="Протокол пользователя"/>
   <Local Name="HistoryEditing" Russian="История изменений"/>
   <Local Name="ConnectionDatabaseLost" Russian="Связь с базой данных потеряна."/>
-  <Local Name="ReconnectText" Russian="Попытка подключиться %1"/>
+  <Local Name="ReconnectText" Russian="Попытка подключиться %1..."/>
   <Local Name="ReconnectToDatabase" Russian="Переподключение к базе данных"/>
   <Local Name="DatabaseSize" Russian="Размер базы данных"/>
   <Local Name="TableSize" Russian="Размер таблицы"/>
-  <Local Name="ConnectingToServer" Russian="Подключение к серверу"/>
+  <Local Name="ConnectingToServer" Russian="Подключение к серверу..."/>
   <Local Name="CloseTab" Russian="Закрыть вкладку"/>
   <Local Name="CloseOtherTabs" Russian="Закрыть другие вкладки"/>
   <Local Name="CloseAllTabs" Russian="Закрыть все вкладки"/>
@@ -604,7 +604,7 @@
   <Local Name="Export.NoData" Russian="Данных нет! Экспорт невозможен."/>
   <Local Name="Export.Setting.Header" Russian="Заголовки колонок"/>
   <Local Name="Export.Process.Prepare" Russian="Подготовка..."/>
-  <Local Name="Export.Process.Process" Russian="Экспортировано %1 из %2"/>
+  <Local Name="Export.Process.Process" Russian="Экспортировано %1 из %2..."/>
   
   <Local Name="ThisActionCanNotUndone" Russian="Это действие нельзя отменить."/>
   <Local Name="ClickToViewHelp" Russian="Нажмите, чтобы просмотреть дополнительную информацию."/>
@@ -644,7 +644,7 @@
   <Local Name="ClickFromOpenImage" Russian="Нажмите, чтобы открыть изображение"/>
   <Local Name="ClickFromOpenFile" Russian="Нажмите, чтобы открыть файл"/>
   <Local Name="ClickFromCheckLevelVolume" Russian="Нажмите, чтобы проверить уровень громкости"/>
-  <Local Name="LoadDataPleceWait" Russian="Загрузка данных. Пожалуйста, подождите"/>
+  <Local Name="LoadDataPleceWait" Russian="Загрузка данных. Пожалуйста, подождите..."/>
   <Local Name="RecordMarkerIsDeleted" Russian="Запись помечена на удаление"/>
   <Local Name="NotSettingTelephonyForCurrentUser" Russian="Телефония для Вашей учётной записи не настроена, обратитесь к системному администратору."/>
   <Local Name="ClickFromViewList" Russian="Чтобы просмотреть справочник, нажмите на соответствующий пункт слева."/>
@@ -673,7 +673,7 @@
   <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается"/>
   <Local Name="YouHaveExpiredTasks" Russian="У Вас есть просроченные задачи: %1"/>
   <Local Name="InputThisSearchQuery" Russian="Введите поисковый запрос"/>
-  <Local Name="OpeningUrl" Russian="Открытие ссылки"/>
+  <Local Name="OpeningUrl" Russian="Открытие ссылки..."/>
   <Local Name="NotifyUserMessage" Russian="Отправитель: %1. Сообщение: %2"/>
   <Local Name="ClickFromShowUserList" Russian="Нажмите, чтобы показать список пользователей"/>
   <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
@@ -706,13 +706,13 @@
   <Local Name="ChatForm.Last20Messages" Russian="Последние 20 сообщений"/>
   <Local Name="ChatForm.Last100Messages" Russian="Последние 100 сообщений"/>
   <Local Name="ChatForm.GroupBox.Title" Russian="Общий чат"/>
-  <Local Name="ChatForm.LoadingMessages" Russian="Загрузка сообщений"/>
+  <Local Name="ChatForm.LoadingMessages" Russian="Загрузка сообщений..."/>
   <Local Name="ChatForm.Attach" Russian="Прикрепить"/>
   <Local Name="ChatForm.ClearAttach" Russian="Отменить прикрепление"/>
   <Local Name="ChatForm.Send" Russian="Отправить"/>
   <Local Name="ChatForm.Send.ToolTip" Russian="Отправить сообщение в чат"/>
-  <Local Name="ChatForm.InputMessage" Russian="Введите сообщение"/>
-  <Local Name="ChatForm.Sending" Russian="Отправка сообщения"/>
+  <Local Name="ChatForm.InputMessage" Russian="Введите сообщение..."/>
+  <Local Name="ChatForm.Sending" Russian="Отправка сообщения..."/>
   <Local Name="ChatForm.UnreadMessages" Russian="Имеются непрочитанные сообщения."/>
   <Local Name="ChatForm.User.Online" Russian="Пользователь в сети"/>
   <Local Name="ChatForm.User.Offline" Russian="Пользователь не в сети"/>

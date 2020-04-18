@@ -124,7 +124,7 @@ void ISMenuBar::CreateMenuService()
 	MenuService->addAction(BUFFER_ICONS("Device.Settings"), LANG("Device.Settings"), this, &ISMenuBar::DeviceSettings);
 
 	//Смена пароля
-	MenuService->addAction(LANG("ChangePassword") + "...", this, &ISMenuBar::ChangePassword);
+	MenuService->addAction(LANG("ChangePassword"), this, &ISMenuBar::ChangePassword);
 }
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateMenuAddition()

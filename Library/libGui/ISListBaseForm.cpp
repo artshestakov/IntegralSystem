@@ -761,7 +761,7 @@ void ISListBaseForm::ModelThreadStarted()
 
 	ListIndicatorWidget->SetPixmap(QPixmap());
 	ListIndicatorWidget->SetVisibleAnimation(true);
-	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait") + "...");
+	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait"));
 	ListIndicatorWidget->setVisible(true);
 
 	LabelRowCount->setText(QString("%1: %2...").arg(LANG("RecordsCount")).arg(LANG("Calculated"))); //Изменение значения в надписе "Записей"
@@ -772,7 +772,7 @@ void ISListBaseForm::ModelThreadStarted()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadLoadingData()
 {
-	ListIndicatorWidget->SetText(LANG("FillTableData") + "...");
+	ListIndicatorWidget->SetText(LANG("FillTableData"));
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadFinished()

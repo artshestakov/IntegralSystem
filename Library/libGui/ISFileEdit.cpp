@@ -53,7 +53,7 @@ ISFileEdit::ISFileEdit(QWidget *parent) : ISFieldEditBase(parent)
 	MenuFile->addAction(LANG("SaveToDisk"), this, &ISFileEdit::Save);
 
 	ISPushButton *ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LANG("Overview") + "...");
+	ButtonSelect->setText(LANG("Overview"));
 	ButtonSelect->setToolTip(LANG("SelectFile"));
 	ButtonSelect->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonSelect, &ISPushButton::clicked, this, &ISFileEdit::SelectFile);
@@ -139,7 +139,7 @@ void ISFileEdit::HandlingFile(const QString &FilePath)
 	}
 
 	ISGui::SetWaitGlobalCursor(true);
-	ButtonFile->setText(LANG("Adding") + "...");
+	ButtonFile->setText(LANG("Adding"));
 	ISGui::RepaintWidget(ButtonFile);
 
 	if (FileID.isValid())

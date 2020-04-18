@@ -138,7 +138,7 @@ void ISListViewWidget::ModelThreadStarted()
 	LabelAnimation->setMovie(Movie);
 	Movie->start();
 
-	LabelLoading->setText(LANG("LoadDataPleceWait") + "...");
+	LabelLoading->setText(LANG("LoadDataPleceWait"));
 }
 //-----------------------------------------------------------------------------
 void ISListViewWidget::ModelThreadFinished()

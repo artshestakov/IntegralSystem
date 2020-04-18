@@ -64,7 +64,7 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	LayoutReconnect->addWidget(LabelStatus);
 
 	LabelCurrentStatus = new QLabel(this);
-	LabelCurrentStatus->setText(LANG("ReconnectText").arg('1') + "...");
+	LabelCurrentStatus->setText(LANG("ReconnectText").arg('1'));
 	LayoutReconnect->addWidget(LabelCurrentStatus);
 
 	LayoutReconnect->addStretch();
@@ -152,7 +152,7 @@ void ISReconnectForm::AddLabel(const QString &Text)
 void ISReconnectForm::TimerTick()
 {
 	++CurrentAttemp;
-	LabelCurrentStatus->setText(LANG("ReconnectText").arg(CurrentAttemp) + "...");
+	LabelCurrentStatus->setText(LANG("ReconnectText").arg(CurrentAttemp));
 
 	Connected = Connect();
 	if (Connected)

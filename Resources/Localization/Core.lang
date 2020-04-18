@@ -384,7 +384,7 @@
   <Local Name="OtherActions" Russian="Другие действия"/>
   <Local Name="ViewImage" Russian="Просмотр изображения"/>
   <Local Name="SettingsSaved" Russian="Настройки сохранены"/>
-  <Local Name="SelectColor" Russian="Выбрать цвет"/>
+  <Local Name="SelectColor" Russian="Выбрать цвет..."/>
   <Local Name="SelectedColor" Russian="Выбор цвета"/>
   <Local Name="All" Russian="Все"/>
   <Local Name="AutoFillField" Russian="Уникальный код записи. Это поле заполняется автоматически после создания записи."/>
@@ -393,7 +393,7 @@
   <Local Name="Other" Russian="Прочее"/>
   <Local Name="Options" Russian="Опции"/>
   <Local Name="Duration" Russian="Длительность"/>
-  <Local Name="Adding" Russian="Добавление"/>
+  <Local Name="Adding" Russian="Добавление..."/>
   <Local Name="OpeningFile" Russian="Открытие файла"/>
   <Local Name="AddingFile" Russian="Добавление файла"/>
   <Local Name="ReadFile" Russian="Чтение файла"/>
@@ -414,7 +414,7 @@
   <Local Name="StartCommand" Russian="Запуск команды"/>
   <Local Name="Command" Russian="Команда"/>
   <Local Name="TimeWork" Russian="Время работы"/>
-  <Local Name="Overview" Russian="Обзор"/>
+  <Local Name="Overview" Russian="Обзор..."/>
   <Local Name="Hide" Russian="Скрыть"/>
   <Local Name="Table" Russian="Таблица"/>
   <Local Name="InstallLocalHost" Russian="Установить локальный адрес"/>
@@ -435,6 +435,6 @@
   <Local Name="ZoomOut" Russian="Отдалить"/>
   <Local Name="NormalSize" Russian="Нормальный размер"/>
   <Local Name="FitToWindow" Russian="Подогнать"/>
-  <Local Name="PleaseWait" Russian="Пожалуйста, подождите"/>
+  <Local Name="PleaseWait" Russian="Пожалуйста, подождите..."/>
 
 </Localization>

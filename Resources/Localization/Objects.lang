@@ -82,7 +82,7 @@
 	<Local Name="Message.Warning.OrganizationPhoneMainNull" Russian="У организации %1 не заполнено поле &quot;Основной номер&quot;."/>
 	<Local Name="Message.Warning.NotSelectedUserWithTransfer" Russian="Вы не выбрали пользователя для передачи организации в работу!"/>
 	<Local Name="Message.Warning.OkvedNotFound" Russian="Код ОКВЕД по ИНН &quot;%1&quot; не найден!"/>
-	<Local Name="TransferInWork" Russian="Передать в работу"/>
+	<Local Name="TransferInWork" Russian="Передать в работу..."/>
 	<Local Name="TakeOrganization" Russian="Взять в работу"/>
 	<Local Name="ReturnOrganization" Russian="Вернуть организацию"/>
 	<Local Name="ResetExecutor" Russian="Сбросить исполнителя"/>
