@@ -234,7 +234,7 @@ void ISStorageFilesListForm::FilterChanged(QAbstractButton *AbstractButton)
 	}
 	else if (AbstractButton == RadioMyFiles)
 	{
-		GetQueryModel()->SetClassFilter("sgfs_owner = currentuserid() AND NOT sgfs_private");
+		GetQueryModel()->SetClassFilter("sgfs_owner = currentuserid()");
 	}
 	else if (AbstractButton == RadioMyPrivateFiles)
 	{

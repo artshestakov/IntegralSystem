@@ -188,20 +188,20 @@ bool ISStartup::IsValidUser(ISSplashScreen *SplashScreen)
 		QDate DateEnd = ISMetaUser::Instance().UserData->AccountLifeTimeEnd;
 		if (QDate::currentDate() < DateStart)
 		{
-			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeNotStarted"));
+			ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.AccountLifetimeNotStarted"));
 			return false;
 		}
 		else if (QDate::currentDate() == DateEnd) //Если сегодня истекает срок действия
 		{
-			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeLeftLastDay"));
+			ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.AccountLifetimeLeftLastDay"));
 		}
 		else if (QDate::currentDate().addDays(1) == DateEnd) //Если завтра истекает срок действия
 		{
-			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeLeftLastDayTwo"));
+			ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.AccountLifetimeLeftLastDayTwo"));
 		}
 		else if (QDate::currentDate() > DateEnd)
 		{
-			ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.AccountLifetimeEnded"));
+			ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.AccountLifetimeEnded"));
 			return false;
 		}
 	}

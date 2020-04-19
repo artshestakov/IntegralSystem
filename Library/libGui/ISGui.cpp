@@ -473,16 +473,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 //-----------------------------------------------------------------------------
 ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaForeign *MetaForeign)
 {
-	QString SearchOperatorWidget;
-
-	if (DataType == ISNamespace::FT_Int && MetaForeign)
-	{
-		SearchOperatorWidget = "ISComboSearchBase";
-	}
-	else
-	{
-		SearchOperatorWidget = ISMetaData::GetInstanse().GetSearch(DataType);
-	}
+	QString SearchOperatorWidget = DataType == ISNamespace::FT_Int && MetaForeign ? "ISComboSearchBase" : ISMetaData::GetInstanse().GetSearchWidget(DataType);
 
 	int ObjectType = QMetaType::type((SearchOperatorWidget + SYMBOL_STAR).toLocal8Bit().constData());
 	IS_ASSERT(ObjectType, "Widget search operator is null.");
