@@ -111,7 +111,7 @@ void ISUserPasswordForm::ChangePassword()
 	if (qSelectAuth.ExecuteFirst())
 	{
 		QString CurrentPassword = qSelectAuth.ReadColumn("rolpassword").toString().remove(0, 3);
-		QString InputCurrentPassword = ISSystem::StringFromMD5(EditCurrentPassword->GetValue().toString() + Login);
+		QString InputCurrentPassword = ISSystem::StringToMD5(EditCurrentPassword->GetValue().toString() + Login);
 
 		if (CurrentPassword == InputCurrentPassword || !CurrentPassword.length()) //Сравнение MD5 хеша текущего пароля
 		{

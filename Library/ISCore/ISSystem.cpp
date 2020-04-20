@@ -207,7 +207,6 @@ int ISSystem::TimeFromMinutes(const QTime &Time)
 	{
 		Minute += Time.minute();
 	}
-
 	return Minute;
 }
 //-----------------------------------------------------------------------------
@@ -264,12 +263,11 @@ QString ISSystem::VariantMapToJsonString(const QVariantMap &VariantMap)
 	return QJsonDocument(QJsonObject::fromVariantMap(VariantMap)).toJson();
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::StringFromMD5(const QString &String)
+QString ISSystem::StringToMD5(const QString &String)
 {
 	QCryptographicHash CryptographicHash(QCryptographicHash::Md5);
 	CryptographicHash.addData(String.toUtf8());
-	QString ResultString(CryptographicHash.result().toHex());
-	return ResultString;
+	return QString(CryptographicHash.result().toHex());
 }
 //-----------------------------------------------------------------------------
 qint64 ISSystem::GetFileSize(const QString &FilePath)

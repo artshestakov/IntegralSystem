@@ -118,6 +118,8 @@
   <Local Name="Message.Error.CurrentUserIsDeleted" Russian="Ваша учётная запись помечена на удаление, обратитесь к системному администратору."/>
   <Local Name="Message.Error.OverrideLocalListName" Russian="Не удалось получить переопределённые имена полей."/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
+  <Local Name="Message.Error.InstallPasswordStorageFile" Russian="Ошибка установки пароля."/>
+  <Local Name="Message.Error.IncorrectPassword" Russian="Неверный пароль."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -207,6 +209,7 @@
   <Local Name="Message.Warning.SettingsDatabaseNotExist" Russian="ВНИМАНИЕ! Настройки базы данных не созданы. Обратитесь к системному администратору."/>
   <Local Name="Message.Warning.InsertingFileSizeVeryBig" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Message.Warning.NotEditAlienStorageFiles" Russian="Редактировать чужие файлы запрещено."/>
+  <Local Name="Message.Warning.NotCopyAlienStorageFiles" Russian="Создавать копии чужих файлов запрещено."/>
   <Local Name="Message.Question.Reconnect" Russian="Соединение к базе данных потеряно. Произвести переподключение?"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
@@ -266,6 +269,7 @@
   <Local Name="Message.Question.AllStorageFileIsPrivate" Russian="Применить приватность для всех файлов (%1)?"/>
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
   <Local Name="Message.Question.DeleteInsetedFiles" Russian="Удалить добавленные файлы?"/>
+  <Local Name="Message.Question.InstallPasswordToStorageFile" Russian="Установить пароль на файл &quot;%1&quot;?"/>
 
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>

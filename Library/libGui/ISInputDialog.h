@@ -21,7 +21,7 @@ public:
 	static QDateTime GetDateTime(const QString &Title, const QString &LabelText); //Получить дату и время
 	static QDate GetDate(const QString &Title, const QString &LabelText); //Получить дату
 	static QTime GetTime(const QString &Title, const QString &LabelText); //Получить время
-	static QString GetPassword(const QString &Title, const QString &LabelText); //Получить пароль
+	static QString GetPassword(); //Получить пароль
 	static QVariant GetList(const QString &Title, const QString &LabelText, const ISStringToVariantMap &VariantMap); //Получить список
 
 	QVariant GetValue() const;

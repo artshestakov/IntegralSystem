@@ -20,6 +20,9 @@ protected:
 private:
 	void SaveFile(); //Сохранить файл
 	void FilterChanged(QAbstractButton *AbstractButton);
+	
+	bool IsMyFile();
+	bool CheckPassword();
 
 private:
 	QRadioButton *RadioAllFiles;

@@ -108,9 +108,9 @@ QTime ISInputDialog::GetTime(const QString &Title, const QString &LabelText)
 	return QTime();
 }
 //-----------------------------------------------------------------------------
-QString ISInputDialog::GetPassword(const QString &Title, const QString &LabelText)
+QString ISInputDialog::GetPassword()
 {
-	ISInputDialog InputDialog(ISNamespace::FT_String, Title, LabelText);
+	ISInputDialog InputDialog(ISNamespace::FT_Password, LANG("Password"), LANG("EnterThePassword"));
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
