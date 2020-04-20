@@ -652,7 +652,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 {
 	ISQueryPool::Instance().AddQuery(QI_SEARCH_FAST, 
 	{
-		{ ":UserID", ISMetaUser::Instance().UserData->ID },
+		{ ":UserID", CURRENT_USER_ID },
 		{ ":Value", SearchValue }
 	});
 

@@ -183,7 +183,7 @@ void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, 
 {
 	ISQueryPool::Instance().AddQuery(QI_HISTORY,
 	{
-		{ ":CurrentUserID", ISMetaUser::Instance().UserData->ID },
+		{ ":CurrentUserID", CURRENT_USER_ID },
 		{ ":TableName", TableName },
 		{ ":TableLocalName", LocalListName },
 		{ ":ObjectName", ObjectName },
@@ -350,7 +350,7 @@ void ISCore::TaskInsertHistory(int TaskID, int UserID, const ISUuid &HistoryUID,
 //-----------------------------------------------------------------------------
 void ISCore::TaskInsertHistory(int TaskID, const ISUuid &HistoryUID, const QString &Information)
 {
-	TaskInsertHistory(TaskID, ISMetaUser::Instance().UserData->ID, HistoryUID, Information);
+	TaskInsertHistory(TaskID, CURRENT_USER_ID, HistoryUID, Information);
 }
 //-----------------------------------------------------------------------------
 bool ISCore::TaskIsAttachedObject(int TaskID, const QString &TableName, int ObjectID)

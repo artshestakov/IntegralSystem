@@ -28,6 +28,6 @@ void ISExecutorEdit::SetReadOnly(bool read_only)
 //-----------------------------------------------------------------------------
 void ISExecutorEdit::DesignateMe()
 {
-	SetValue(ISMetaUser::Instance().UserData->ID);
+	SetValue(CURRENT_USER_ID);
 }
 //-----------------------------------------------------------------------------

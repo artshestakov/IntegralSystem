@@ -10,7 +10,7 @@ static QString QU_RETURN_ORGANIZATION = PREPARE_QUERY2("UPDATE organizations SET
 //-----------------------------------------------------------------------------
 ISOrganizationMyListForm::ISOrganizationMyListForm(QWidget *parent) : ISListBaseForm("Organizations", parent)
 {
-	GetQueryModel()->SetClassFilter(QString("orgz_user = %1").arg(ISMetaUser::Instance().UserData->ID));
+	GetQueryModel()->SetClassFilter(QString("orgz_user = %1").arg(CURRENT_USER_ID));
 	
 	QAction *ActionReturn = new QAction(GetToolBar());
 	ActionReturn->setText(LANG("ReturnOrganization"));

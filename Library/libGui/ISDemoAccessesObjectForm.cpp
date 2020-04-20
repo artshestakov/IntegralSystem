@@ -48,7 +48,7 @@ bool ISDemoAccessesObjectForm::Save()
 		qUpdate.Execute();
 
 		ISQuery qEditUser(QU_EDIT_USER);
-		qEditUser.BindValue(":EditUserID", ISMetaUser::Instance().UserData->ID);
+		qEditUser.BindValue(":EditUserID", CURRENT_USER_ID);
 		qEditUser.BindValue(":ObjectID", GetObjectID());
 		qEditUser.Execute();
 	}

@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 ISDemoAccessesMyCreatedListForm::ISDemoAccessesMyCreatedListForm(QWidget *parent) : ISListBaseForm("DemoAccesses", parent)
 {
-	GetQueryModel()->SetClassFilter("dacc_registrationuser = " + QString::number(ISMetaUser::Instance().UserData->ID));
+	GetQueryModel()->SetClassFilter("dacc_registrationuser = " + QString::number(CURRENT_USER_ID));
 }
 //-----------------------------------------------------------------------------
 ISDemoAccessesMyCreatedListForm::~ISDemoAccessesMyCreatedListForm()

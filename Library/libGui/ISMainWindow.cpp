@@ -317,7 +317,7 @@ void ISMainWindow::ShowChangePasswordForm()
 		return;
 	}
 
-	if (ISGui::ShowUserPasswordForm(ISMetaUser::Instance().UserData->ID))
+	if (ISGui::ShowUserPasswordForm(CURRENT_USER_ID))
 	{
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.YouPasswordDoneChanged"));
 	}

@@ -130,13 +130,13 @@ void ISOrganizationObjectForm::Notify()
 		if (ISGui::CalendarInsert(DateTime, LANG("CallToOrganization").arg(GetFieldWidget("Name")->GetValue().toString()), QVariant(), GetMetaTable()->Name, GetObjectID()))
 		{
 			ISQuery qUpdate(QI_ORGANIZATION_WORK);
-			qUpdate.BindValue(":User", ISMetaUser::Instance().UserData->ID);
+			qUpdate.BindValue(":User", CURRENT_USER_ID);
 			qUpdate.BindValue(":Organization", GetObjectID());
 			qUpdate.BindValue(":Date", DateTime.date());
 			if (qUpdate.Execute())
 			{
 				ISQuery qUpdateOrgUser(QU_ORGANIZATION_USER);
-				qUpdateOrgUser.BindValue(":UserID", ISMetaUser::Instance().UserData->ID);
+				qUpdateOrgUser.BindValue(":UserID", CURRENT_USER_ID);
 				qUpdateOrgUser.BindValue(":OrganizationID", GetObjectID());
 				qUpdateOrgUser.Execute();
 			}

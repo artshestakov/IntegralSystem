@@ -47,7 +47,7 @@ void ISTaskBaseListForm::TakeToWork()
 	{
 		if (ISCore::TaskGetStatusUID(GetObjectID()) == CONST_UID_TASK_STATUS_IN_WORK) //≈сли задача уже в работе
 		{
-			if (GetCurrentRecordValueDB("Executor").toInt() == ISMetaUser::Instance().UserData->ID) //≈сли задача уже в работе у текущего пользовател€
+			if (GetCurrentRecordValueDB("Executor").toInt() == CURRENT_USER_ID) //≈сли задача уже в работе у текущего пользовател€
 			{
 				ISMessageBox::ShowInformation(this, LANG("Message.Information.TakeAlreadyInWorkYou"));
 			}
@@ -58,7 +58,7 @@ void ISTaskBaseListForm::TakeToWork()
 		}
 		else //«адача не в работе
 		{
-			if (GetCurrentRecordValueDB("Executor").toInt() == ISMetaUser::Instance().UserData->ID) //≈сли исполнителем задачи €вл€етс€ текущий пользователь
+			if (GetCurrentRecordValueDB("Executor").toInt() == CURRENT_USER_ID) //≈сли исполнителем задачи €вл€етс€ текущий пользователь
 			{
 				if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskTakeToWork")))
 				{
