@@ -13,6 +13,7 @@
 #include "ISDefinesCore.h"
 #include "ISProgressForm.h"
 #include "ISSettingsDatabase.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_name, sgfs_expansion, sgfs_size, sgfs_private, sgfs_data) "
 									   "VALUES (:Name, :Expansion, :Size, :Private, :Data) "
@@ -184,6 +185,14 @@ void ISStorageFilesListForm::CreateCopy()
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.FileNameIsNull"));
 		}
 	}
+}
+//-----------------------------------------------------------------------------
+void ISStorageFilesListForm::Edit()
+{
+	//≈сли текущий пользователь владелец файла - редактирование возможно, иначе - запрещено
+	GetCurrentRecordValueDB("Owner").toInt() == CURRENT_USER_ID ?
+		ISListBaseForm::Edit() :
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotEditAlienStorageFiles"));
 }
 //-----------------------------------------------------------------------------
 void ISStorageFilesListForm::SaveFile()

@@ -15,6 +15,7 @@ public:
 protected:
 	void Create() override;
 	void CreateCopy() override;
+	void Edit() override;
 
 private:
 	void SaveFile(); //Сохранить файл

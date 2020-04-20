@@ -206,6 +206,7 @@
   <Local Name="Message.Warning.NotExistLinkInBuffer" Russian="Ссылка в буфере обмена отсутствует."/>
   <Local Name="Message.Warning.SettingsDatabaseNotExist" Russian="ВНИМАНИЕ! Настройки базы данных не созданы. Обратитесь к системному администратору."/>
   <Local Name="Message.Warning.InsertingFileSizeVeryBig" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
+  <Local Name="Message.Warning.NotEditAlienStorageFiles" Russian="Редактировать чужие файлы запрещено."/>
   <Local Name="Message.Question.Reconnect" Russian="Соединение к базе данных потеряно. Произвести переподключение?"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
