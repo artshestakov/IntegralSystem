@@ -38,16 +38,7 @@ int main(int argc, char *argv[])
 	if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()
 	{
 		ISMainWindow MainWindow;
-		if (SETTING_BOOL(CONST_UID_SETTING_VIEW_MAINWINDOWMAXIMIZE))
-		{
-			SETTING_BOOL(CONST_UID_SETTING_VIEW_STARTMAINWINDOWANIMATED) ? MainWindow.ShowAnimated(true) : MainWindow.showMaximized();
-		}
-		else
-		{
-			SETTING_BOOL(CONST_UID_SETTING_VIEW_STARTMAINWINDOWANIMATED) ? MainWindow.ShowAnimated() : MainWindow.show();
-		}
-		MainWindow.raise();
-		MainWindow.activateWindow();
+		MainWindow.showMaximized();
 		Result = Applicaton.exec() == EXIT_SUCCESS;
 
 		SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
