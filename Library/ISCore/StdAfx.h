@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <ShlObj.h>
 #else
+#include <pthread.h>
 #include <float.h>
 #include <unistd.h>
 #include <sys/time.h>

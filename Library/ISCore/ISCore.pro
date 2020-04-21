@@ -79,7 +79,6 @@ HEADERS += \
     ISSettings.h \
     ISSettingsDatabase.h \
     ISSmtpClient.h \
-    ISStorageFileLoader.h \
     ISStructs.h \
     ISSystem.h \
     ISTrace.h \
@@ -139,7 +138,6 @@ SOURCES += \
     ISSettings.cpp \
     ISSettingsDatabase.cpp \
     ISSmtpClient.cpp \
-    ISStorageFileLoader.cpp \
     ISSystem.cpp \
     ISTrace.cpp \
     ISUuid.cpp \

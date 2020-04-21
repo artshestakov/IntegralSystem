@@ -54,7 +54,6 @@ private:
 
 private:
 	QString ErrorString; //Описание ошибки
-	CRITICAL_SECTION CriticalSection; //Ктирическая секция для синхронизации
 	std::array<QString, LOGGER_ARRAY_SIZE> Array; //Массив сообщений (очередь)
 	size_t LastIndex; //Последняя позиция в очереди
 	bool IsRunning; //Флаг работы
@@ -64,6 +63,12 @@ private:
 	size_t CurrentDay; //Текущий день
 	size_t CurrentMonth; //Текущий месяц
 	size_t CurrentYear; //Текущий год
+
+#ifdef WIN32
+    CRITICAL_SECTION CriticalSection; //Ктирическая секция для синхронизации
+#else
+    pthread_mutex_t CriticalSection; //Ктирическая секция для синхронизации
+#endif
 };
 //-----------------------------------------------------------------------------
 #define ISLOGGER_N() ISLogger::Instance().Log(ISLogger::MT_Null, QString(), __FILE__, __LINE__) //Логирование пустой строки

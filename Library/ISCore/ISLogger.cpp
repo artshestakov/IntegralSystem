@@ -1,6 +1,19 @@
 #include "ISLogger.h"
 #include "ISDefinesCore.h"
-#include <QDir>
+//-----------------------------------------------------------------------------
+#ifdef WIN32
+#define INIT_CRITICAL_SECTION(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
+#define LOCK_CRITICAL_SECTION(CRITICAL_SECTION) EnterCriticalSection(CRITICAL_SECTION)
+#define UNLOCK_CRITICAL_SECTION(CRITICAL_SECTION) LeaveCriticalSection(CRITICAL_SECTION)
+#define GET_CURRENT_THREAD_ID GetCurrentThreadId
+#define SLEEP(x) Sleep(x)
+#else
+#define INIT_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_init(CRITICAL_SECTION, NULL)
+#define LOCK_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_lock(CRITICAL_SECTION)
+#define UNLOCK_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_unlock(CRITICAL_SECTION)
+#define GET_CURRENT_THREAD_ID pthread_self
+#define SLEEP(x) usleep(x)
+#endif
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
 	: ErrorString(NO_ERROR_STRING),
@@ -29,7 +42,7 @@ QString ISLogger::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISLogger::Initialize()
 {
-	InitializeCriticalSection(&CriticalSection);
+    INIT_CRITICAL_SECTION(&CriticalSection);
 
 	//Получаем текущую дату и время и запоминаем текущий день
 	QDate CurrentDate = QDate::currentDate();
@@ -56,14 +69,14 @@ bool ISLogger::Initialize()
 void ISLogger::Shutdown()
 {
 	//Останавливаем логгер
-	EnterCriticalSection(&CriticalSection);
+    LOCK_CRITICAL_SECTION(&CriticalSection);
 	IsRunning = false;
-	LeaveCriticalSection(&CriticalSection);
+    UNLOCK_CRITICAL_SECTION(&CriticalSection);
 
 	//Ждём когда он остановится и закрываем файл
 	while (!IsFinished)
 	{
-		Sleep(50);
+        SLEEP(50);
 	}
 	File.close();
 }
@@ -78,7 +91,8 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 	else //Стандартное сообщение
 	{
 		std::stringstream string_stream;
-		string_stream << QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9).toStdString() << SYMBOL_SPACE << GetCurrentThreadId() << " [";
+        string_stream << QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9).toStdString() << SYMBOL_SPACE << GET_CURRENT_THREAD_ID() << " [";
+
 		switch (type_message)
 		{
 		case MessageType::MT_Null: break;
@@ -93,10 +107,10 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 	}
 
 	std::cout << string_complete.toStdString() << std::endl;
-	EnterCriticalSection(&CriticalSection);
-	Array[LastIndex] = string_complete;
-	++LastIndex;
-	LeaveCriticalSection(&CriticalSection);
+    LOCK_CRITICAL_SECTION(&CriticalSection);
+    Array[LastIndex] = string_complete;
+    ++LastIndex;
+    UNLOCK_CRITICAL_SECTION(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 bool ISLogger::CreateLogDirectory(const QDate &Date)
@@ -122,9 +136,6 @@ bool ISLogger::CreateLogDirectory(const QDate &Date)
 //-----------------------------------------------------------------------------
 QString ISLogger::GetPathFile(const QDate &Date) const
 {
-	//char buffer[MAX_PATH];
-	//sprintf(buffer, "%s%s_%02d.%02d.%02d.log", PathLogsDir.toStdString().c_str(), ISDefines::Core::APPLICATION_NAME.toStdString().c_str(), Date.day(), Date.month(), Date.year());
-	//return buffer;
 	return PathLogsDir + ISDefines::Core::APPLICATION_NAME + '_' + Date.toString(FORMAT_DATE_V2) + SYMBOL_POINT + EXTENSION_LOG;
 }
 //-----------------------------------------------------------------------------
@@ -132,8 +143,8 @@ void ISLogger::Worker()
 {
 	while (IsRunning)
 	{
-		Sleep(50);
-		EnterCriticalSection(&CriticalSection);
+        SLEEP(50);
+        LOCK_CRITICAL_SECTION(&CriticalSection);
 		if (LastIndex) //Если в очереди есть сообщения
 		{
 			for (size_t i = 0; i < LastIndex; ++i)
@@ -143,7 +154,7 @@ void ISLogger::Worker()
 			}
 			LastIndex = 0;
 		}
-		LeaveCriticalSection(&CriticalSection);
+        UNLOCK_CRITICAL_SECTION(&CriticalSection);
 
 		QDate CurrentDate = QDate::currentDate();
 
@@ -154,7 +165,7 @@ void ISLogger::Worker()
 			while (!CreateLogDirectory(CurrentDate))
 			{
 				std::cerr << ErrorString.toStdString() << std::endl;
-				Sleep(1000);
+                SLEEP(50);
 			}
 		}
 
@@ -176,7 +187,7 @@ void ISLogger::Worker()
 				else //Файл не удалось открыть пытаемся сделать это ещё раз через секунду
 				{
 					std::cerr << "Error open file \"" + path_file.toStdString() + "\": " + strerror(errno) << std::endl;
-					Sleep(1000);
+                    SLEEP(50);
 				}
 			}
 		}
