@@ -80,7 +80,7 @@ QVariant ISConfig::GetValue(const QString &ParameterName)
 	}
 	else
 	{
-		ISLOGGER_WARNING(QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
+		ISLOGGER_W(QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
 	}
 	return Value;
 }
@@ -93,7 +93,7 @@ void ISConfig::SetValue(const QString &ParameterName, const QVariant &Value)
 	}
 	else
 	{
-		ISLOGGER_WARNING(QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
+		ISLOGGER_W(QString("Not found config key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
 	}
 }
 //-----------------------------------------------------------------------------

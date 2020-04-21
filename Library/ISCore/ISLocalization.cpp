@@ -16,17 +16,17 @@ ISLocalization::ISLocalization()
 		{
 			if (!qApp->installTranslator(Translator))
 			{
-				ISLOGGER_WARNING(QString("Translator \"%1\" not installing").arg(TranslatorFilePath));
+				ISLOGGER_W(QString("Translator \"%1\" not installing").arg(TranslatorFilePath));
 			}
 		}
 		else
 		{
-			ISLOGGER_WARNING("Not load translator file " + TranslatorFilePath);
+			ISLOGGER_W("Not load translator file " + TranslatorFilePath);
 		}
 	}
 	else
 	{
-		ISLOGGER_WARNING(QString("Not found translator file: %1").arg(TranslatorFilePath));
+		ISLOGGER_W(QString("Not found translator file: %1").arg(TranslatorFilePath));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void ISLocalization::LoadResourceFile(const QString &FileName)
 	}
 	else
 	{
-		ISLOGGER_WARNING(QString("Not opened localization file \"%1\". Error: %2").arg(File.fileName()).arg(File.errorString()));
+		ISLOGGER_W(QString("Not opened localization file \"%1\". Error: %2").arg(File.fileName()).arg(File.errorString()));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void ISLocalization::InitializeContent(const QString &Content)
 						}
 						else
 						{
-							ISLOGGER_WARNING(QString("Localization key is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber()));
+							ISLOGGER_W(QString("Localization key is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber()));
 						}
 					}
 					NodeLocalization = NodeLocalization.nextSibling();
@@ -99,12 +99,12 @@ void ISLocalization::InitializeContent(const QString &Content)
 			}
 			else
 			{
-				ISLOGGER_WARNING(QString("Localization file \"%1\" already initialized.").arg(LocalizationName));
+				ISLOGGER_W(QString("Localization file \"%1\" already initialized.").arg(LocalizationName));
 			}
 		}
 		else
 		{
-			ISLOGGER_WARNING(QString("Invalid name file localization. Name: %1").arg(LocalizationName));
+			ISLOGGER_W(QString("Invalid name file localization. Name: %1").arg(LocalizationName));
 		}
 	}
 }

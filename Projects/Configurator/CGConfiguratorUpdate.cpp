@@ -299,7 +299,7 @@ bool CGConfiguratorUpdate::systemuser()
 			Result = qUpdate.Execute();
 			if (Result)
 			{
-				ISLOGGER_UNKNOWN("System user updated");
+				ISLOGGER_L("System user updated");
 			}
 			else
 			{
@@ -320,7 +320,7 @@ bool CGConfiguratorUpdate::systemuser()
 			Result = qInsert.Execute();
 			if (Result)
 			{
-				ISLOGGER_UNKNOWN("System user created");
+				ISLOGGER_L("System user created");
 			}
 			else
 			{
@@ -353,7 +353,7 @@ bool CGConfiguratorUpdate::databasesettings()
 			Result = qUpdate.Execute();
 			if (Result)
 			{
-				ISLOGGER_UNKNOWN("Database settings updated");
+				ISLOGGER_L("Database settings updated");
 			}
 			else
 			{
@@ -371,7 +371,7 @@ bool CGConfiguratorUpdate::databasesettings()
 			Result = qInsert.Execute();
 			if (Result)
 			{
-				ISLOGGER_UNKNOWN("Database settings created");
+				ISLOGGER_L("Database settings created");
 			}
 			else
 			{

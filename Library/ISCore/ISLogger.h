@@ -1,76 +1,76 @@
-//-----------------------------------------------------------------------------
 #pragma once
 #ifndef _ISLOGGER_H_INCLUDED
 #define _ISLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
-#include "ISNamespace.h"
 #include "ISConstants.h"
-//-----------------------------------------------------------------------------
-#define ISLOGGER_EMPTY() ISLogger::Instance().Log(ISNamespace::DMT_Unknown, QString(), __FILE__, __LINE__) //Логирование неизвестного сообщения (в консоль)
-#define ISLOGGER_UNKNOWN(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Unknown, MESSAGE, __FILE__, __LINE__) //Логирование неизвестного сообщения
-#define ISLOGGER_INFO(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
-#define ISLOGGER_DEBUG(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
-#define ISLOGGER_WARNING(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Warning, MESSAGE, __FILE__, __LINE__) //Логирование предупреждения
-#define ISLOGGER_ERROR(MESSAGE) ISLogger::Instance().Log(ISNamespace::DMT_Error, MESSAGE, __FILE__, __LINE__) //Логирование ошибки
-//-----------------------------------------------------------------------------
-struct ISDateTime
-{
-    short Day;
-    short Month;
-    short Year;
-    short Hour;
-    short Minute;
-    short Second;
-    short Milliseconds;
-};
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISLogger
 {
 public:
-    static ISLogger& Instance(); //Получить ссылку на объект логгера
+	enum MessageType //Типы сообщений
+	{
+		MT_Null, //Пустое сообщение
+		MT_Lite, //Упрощенное сообщение (без даты, потока и источника в коде)
+		MT_Debug, //Отладка
+		MT_Info, //Информация
+		MT_Warning, //Предупреждение
+		MT_Error //Ошибка
+	};
 
-    QString GetErrorString() const; //Получить описание ошибки
-    bool Initialize(bool OutPrintf, bool OutFile, const std::string &file_prefix = std::string()); //Инициализировать логгер
+public:
 
-    void Log(ISNamespace::DebugMessageType Type, const QString &String, const char *SourceName, int Line); //Добавить сообщение в лог
-    void Shutdown(); //Остановка логгера
+	//Получить ссылку на объект логгера
+	static ISLogger& Instance();
+
+	//Получить описание ошибки
+	QString GetErrorString() const;
+
+	//Инициализировать логгер
+	bool Initialize();
+
+	//Остановка логгера
+	void Shutdown();
+
+	//Добавить сообщение в лог-файл
+	void Log(MessageType type_message, const QString &string_message, const char *source_name, int source_line);
 
 private:
-    void Worker(); //Обработчик очереди сообщений
-    bool CreateDir(); //Создание необходимых директорий
-    void UpdateFilePath(); //Обновить путь к файлу
 
-    ISDateTime GetCurrentDateTime(); //Получить текущую дату и время
-    std::string GetCurrentDirectory(); //Получить путь к папке с исполняемым файлом приложения
+	//Создать директорию
+	bool CreateLogDirectory(const QDate &Date);
 
-private:
-    ISLogger();
-    ~ISLogger();
-    ISLogger(ISLogger const &) {};
-    ISLogger& operator=(ISLogger const&) { return *this; };
+	//Получить путь к текущему файлу
+	QString GetPathFile(const QDate &Date) const;
+
+	//Обработчик очереди сообщений
+	void Worker();
 
 private:
-    std::string ErrorString; //Описание ошибки
-    std::mutex Mutex; //Мьютекс для массива
-    std::array<std::string, LOGGER_ARRAY_SIZE> Array; //Массив сообщений
-    size_t LastPosition; //Посденяя позиция
-    bool Running; //Флаг работы логгера
-    bool Finished; //Флаг остановки логгера
-    char Year[5];
+	ISLogger();
+	~ISLogger();
+	ISLogger(ISLogger const &) {};
+	ISLogger& operator=(ISLogger const&) { return *this; };
 
-    std::ofstream File; //Текущий лог-файл
-    std::string PathDirectory; //Путь к папке с исполняемым файлом приложения
-    std::string PathLogs; //Путь к папке с логами
-    std::string PathFile; //Путь к текущему лог-файлу
-
-    size_t CurrentYear; //Текущий год
-    size_t CurrentMonth; //Текущий месяц
-    size_t CurrentDay; //Текущий день
-
-    bool EnableOutPrintf; //Флаг вывода в консоль
-    bool EnableOutFile; //Флаг вывода в файл
-    std::string FilePrefix; //Префикс имени файла
+private:
+	QString ErrorString; //Описание ошибки
+	CRITICAL_SECTION CriticalSection; //Ктирическая секция для синхронизации
+	std::array<QString, LOGGER_ARRAY_SIZE> Array; //Массив сообщений (очередь)
+	size_t LastIndex; //Последняя позиция в очереди
+	bool IsRunning; //Флаг работы
+	bool IsFinished; //Флаг остановки
+	std::ofstream File; //Текущий лог-файл
+	QString PathLogsDir; //Текущий путь к конечной папке с логами
+	size_t CurrentDay; //Текущий день
+	size_t CurrentMonth; //Текущий месяц
+	size_t CurrentYear; //Текущий год
 };
+//-----------------------------------------------------------------------------
+#define ISLOGGER_N() ISLogger::Instance().Log(ISLogger::MT_Null, QString(), __FILE__, __LINE__) //Логирование пустой строки
+#define ISLOGGER_L(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Lite, MESSAGE, __FILE__, __LINE__) //Логирование упрощенного сообщения
+#define ISLOGGER_D(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
+#define ISLOGGER_I(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
+#define ISLOGGER_W(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Warning, MESSAGE, __FILE__, __LINE__) //Логировние предупреждающего сообщения
+#define ISLOGGER_E(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Error, MESSAGE, __FILE__, __LINE__) //Логирование сообщения об ошибке
 //-----------------------------------------------------------------------------
 #endif

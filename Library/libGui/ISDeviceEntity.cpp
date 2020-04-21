@@ -41,7 +41,7 @@ void ISDeviceEntity::Initialize()
 			QString DeviceUserName = qSelectDevice.ReadColumn("concat").toString();
 			QString ClassName = qSelectDevice.ReadColumn("dvce_class").toString();
 
-			ISLOGGER_INFO(LANG("Device.Initialize.Process").arg(DeviceUserName));
+			ISLOGGER_I(LANG("Device.Initialize.Process").arg(DeviceUserName));
 			ISCountingTime Time;
 
 			int ObjectType = QMetaType::type((ClassName + SYMBOL_STAR).toLocal8Bit().constData());
@@ -58,11 +58,11 @@ void ISDeviceEntity::Initialize()
 
 			if (DeviceObjectBase->Initialize())
 			{
-				ISLOGGER_INFO(LANG("Device.Initialize.Done").arg(DeviceUserName).arg(ISSystem::MillisecondsToString(Time.Elapsed())));
+				ISLOGGER_I(LANG("Device.Initialize.Done").arg(DeviceUserName).arg(ISSystem::MillisecondsToString(Time.Elapsed())));
 			}
 			else
 			{
-				ISLOGGER_INFO(LANG("Device.Initialize.Error").arg(DeviceUserName) + ": " + DeviceObjectBase->GetErrorText());
+				ISLOGGER_I(LANG("Device.Initialize.Error").arg(DeviceUserName) + ": " + DeviceObjectBase->GetErrorText());
 			}
 		}
 	}

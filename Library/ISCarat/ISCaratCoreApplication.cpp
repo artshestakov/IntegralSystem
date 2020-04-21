@@ -40,6 +40,6 @@ bool ISCaratCoreApplication::Invoke()
 //-----------------------------------------------------------------------------
 void ISCaratCoreApplication::Started()
 {
-	ISLOGGER_UNKNOWN(CARAT_CORE_START_FLAG);
+	ISLOGGER_L(CARAT_CORE_START_FLAG);
 }
 //-----------------------------------------------------------------------------

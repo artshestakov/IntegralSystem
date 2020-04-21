@@ -78,7 +78,7 @@ bool ISQuery::Execute()
     {
         if (Msec > MAX_QUERY_TIME)
         {
-            ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+            ISLOGGER_W(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 
@@ -100,7 +100,7 @@ bool ISQuery::Execute(const QString &sql_text)
     {
         if (Msec > MAX_QUERY_TIME)
         {
-            ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+            ISLOGGER_W(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 
@@ -122,7 +122,7 @@ bool ISQuery::Execute(QSqlDatabase &sql_database, const QString &sql_text)
     {
         if (Msec > MAX_QUERY_TIME)
         {
-            ISLOGGER_WARNING(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+            ISLOGGER_W(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
     Raise();
@@ -259,7 +259,7 @@ void ISQuery::Raise()
     if (SqlQuery.lastError().type() != QSqlError::NoError)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-        ISLOGGER_ERROR(ErrorString);
+        ISLOGGER_E(ErrorString);
 
         //Если в данный момент запущен графический интерфейс - выбрасываем исключения
         //потому они будут в дальнейшем перехвачены

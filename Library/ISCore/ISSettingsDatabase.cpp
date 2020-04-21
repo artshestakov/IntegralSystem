@@ -59,7 +59,7 @@ void ISSettingsDatabase::Initialize()
 		}
 		else
 		{
-			ISLOGGER_WARNING(QString("Not found column '%1' in table _SettingsDatabase").arg(FieldName));
+			ISLOGGER_W(QString("Not found column '%1' in table _SettingsDatabase").arg(FieldName));
 			ISAlgorithm::VectorRemoveAll(VectorString, FieldName);
 		}
 	}

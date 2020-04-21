@@ -117,7 +117,7 @@ void ISEMail::ReadyReadStandardOutput()
 
 	for (const QString &String : StringList)
 	{
-		ISLOGGER_INFO(String);
+		ISLOGGER_I(String);
 	}
 }
 //-----------------------------------------------------------------------------

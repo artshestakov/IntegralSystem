@@ -74,7 +74,7 @@ void ISCoreMedTech::UserEvent(const ISStringMap &StringMap)
 		qSelectBranch.BindValue(":RatingID", RatingID);
 		if (qSelectBranch.ExecuteFirst())
 		{
-			ISLOGGER_UNKNOWN("New raiting \"" + QString::number(Rating) + "\" for filial: " + qSelectBranch.ReadColumn("brch_name").toString());
+			ISLOGGER_L("New raiting \"" + QString::number(Rating) + "\" for filial: " + qSelectBranch.ReadColumn("brch_name").toString());
 		}
 	}
 }

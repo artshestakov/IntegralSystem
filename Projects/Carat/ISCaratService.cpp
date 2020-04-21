@@ -40,11 +40,11 @@ void ISCaratService::StartService()
 				QString CoreName = qSelectCore.ReadColumn("core_name").toString();
 				QString FileName = qSelectCore.ReadColumn("core_filename").toString() + EXTENSION_BINARY;
 
-				ISLOGGER_INFO("Core \"" + CoreName + "\": starting...");
+				ISLOGGER_I("Core \"" + CoreName + "\": starting...");
 				QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
 				if (!QFile::exists(CoreFilePath)) //≈сли €дро не существует - переходим к следующему
 				{
-					ISLOGGER_ERROR("Core \"" + CoreName + "\" not found. Path: " + CoreFilePath);
+					ISLOGGER_E("Core \"" + CoreName + "\" not found. Path: " + CoreFilePath);
 					continue;
 				}
 
@@ -59,21 +59,21 @@ void ISCaratService::StartService()
 				//≈сли дождались первого сообщени€ от €дра и оно валидное - считаем, что €дро успешно запустилось - иначе ошибка в любом случае
 				if (Process->waitForReadyRead(CARAT_CORE_START_TIMEOUT) && Process->readAll().contains(CARAT_CORE_START_FLAG))
 				{
-					ISLOGGER_INFO("Core \"" + CoreName + "\" started. PID: " + QString::number(Process->processId()));
+					ISLOGGER_I("Core \"" + CoreName + "\" started. PID: " + QString::number(Process->processId()));
 					++CoreCountStarted;
 				}
 				else
 				{
-					ISLOGGER_ERROR("Core \"" + CoreName + "\" not started");
+					ISLOGGER_E("Core \"" + CoreName + "\" not started");
 				}
 			}
 			CoreCountStarted == CoreCountTotal ?
-				ISLOGGER_INFO("Started all cores") : //≈сли €дра были успешно запущены
-				ISLOGGER_WARNING("Started " + QString::number(CoreCountStarted) + " of " + QString::number(CoreCountTotal));
+				ISLOGGER_I("Started all cores") : //≈сли €дра были успешно запущены
+				ISLOGGER_W("Started " + QString::number(CoreCountStarted) + " of " + QString::number(CoreCountTotal));
 		}
 		else
 		{
-			ISLOGGER_WARNING("Active core not exist");
+			ISLOGGER_W("Active core not exist");
 		}
 	}
 
@@ -85,7 +85,7 @@ void ISCaratService::StartService()
 	}
 	else
 	{
-		ISLOGGER_WARNING("Not listen port for local server");
+		ISLOGGER_W("Not listen port for local server");
 	}
 }
 //-----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ void ISCaratService::ReadyReadStandartOutput()
 void ISCaratService::OutputString(const QString &CoreObjectName, const QString &String)
 {
 	QString CompleteString = "[" + CoreObjectName + "] " + String;
-	ISLOGGER_UNKNOWN(CompleteString);
+	ISLOGGER_L(CompleteString);
 	if (IsConnectedDebugger)
 	{
 		if (LocalSocket->isOpen() && LocalSocket->isValid())

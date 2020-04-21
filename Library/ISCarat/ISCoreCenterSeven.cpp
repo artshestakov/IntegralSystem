@@ -60,7 +60,7 @@ void ISCoreCenterSeven::UserEvent(const ISStringMap &StringMap)
 		QString BranchName = qSelect.ReadColumn("brch_name").toString();
 		int UserID = qSelect.ReadColumn("brch_administrator").toInt();
 
-		ISLOGGER_UNKNOWN("Incoming call from \"" + StringMap.at("CallerIDNum") + "\" to filial: " + BranchName);
+		ISLOGGER_L("Incoming call from \"" + StringMap.at("CallerIDNum") + "\" to filial: " + BranchName);
 		ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, PatientID + '_' + Phone);
 	}
 }

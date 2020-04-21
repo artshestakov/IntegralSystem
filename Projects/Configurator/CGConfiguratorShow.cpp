@@ -37,7 +37,7 @@ CGConfiguratorShow::~CGConfiguratorShow()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::obsoletetables()
 {
-	ISLOGGER_UNKNOWN("Searching not needed tables...");
+	ISLOGGER_L("Searching not needed tables...");
 
 	int FoundedTables = 0;
 
@@ -46,14 +46,14 @@ bool CGConfiguratorShow::obsoletetables()
 	bool Result = qSelectTables.Execute();
 	if (Result)
 	{
-		ISLOGGER_UNKNOWN("Tables:");
+		ISLOGGER_L("Tables:");
 		while (qSelectTables.Next()) //Обход таблиц базы
 		{
 			QString TableName = qSelectTables.ReadColumn("tablename").toString().toLower();
 			PMetaTable *MetaTable = FoundTable(TableName);
 			if (!MetaTable)
 			{
-				ISLOGGER_UNKNOWN(TableName);
+				ISLOGGER_L(TableName);
 				++FoundedTables;
 			}
 		}
@@ -63,14 +63,14 @@ bool CGConfiguratorShow::obsoletetables()
 		ErrorString = qSelectTables.GetErrorString();
 	}
 
-	ISLOGGER_UNKNOWN(QString("Founded tables: %1").arg(FoundedTables));
-	ISLOGGER_EMPTY();
+	ISLOGGER_L(QString("Founded tables: %1").arg(FoundedTables));
+	ISLOGGER_N();
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::obsoletefields()
 {
-	ISLOGGER_UNKNOWN("Searching not needed fields...");
+	ISLOGGER_L("Searching not needed fields...");
 
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
@@ -95,7 +95,7 @@ bool CGConfiguratorShow::obsoletefields()
 						PMetaField *MetaField = FoundField(MetaTable, ColumnName);
 						if (!MetaField)
 						{
-							ISLOGGER_UNKNOWN(TableName + ": " + ColumnName);
+							ISLOGGER_L(TableName + ": " + ColumnName);
 						}
 					}
 				}
@@ -112,13 +112,13 @@ bool CGConfiguratorShow::obsoletefields()
 		ErrorString = qSelectTables.GetErrorString();
 	}
 
-	ISLOGGER_EMPTY();
+	ISLOGGER_N();
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::obsoleteresources()
 {
-	ISLOGGER_UNKNOWN("Searching not needed resources...");
+	ISLOGGER_L("Searching not needed resources...");
 
 	std::map<QString, ISVectorString> Map, MapOutput;
 	for (PMetaResource *MetaResource : ISMetaData::GetInstanse().GetResources())
@@ -164,26 +164,26 @@ bool CGConfiguratorShow::obsoleteresources()
 			return false;
 		}
 	}
-	ISLOGGER_EMPTY();
+	ISLOGGER_N();
 	for (const auto &OutputItem : MapOutput)
 	{
 		QString TableName = OutputItem.first;
 		ISVectorString Vector = OutputItem.second;
 
-		ISLOGGER_UNKNOWN(TableName + ':');
+		ISLOGGER_L(TableName + ':');
 		for (const QString &String : Vector)
 		{
-			ISLOGGER_UNKNOWN(String);
+			ISLOGGER_L(String);
 		}
-		ISLOGGER_EMPTY();
+		ISLOGGER_N();
 	}
-	ISLOGGER_EMPTY();
+	ISLOGGER_N();
 	return true;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::obsoletesequence()
 {
-	ISLOGGER_UNKNOWN("Searching not needed sequences...");
+	ISLOGGER_L("Searching not needed sequences...");
 
 	QString Where;
 	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().size(); ++i)
@@ -201,7 +201,7 @@ bool CGConfiguratorShow::obsoletesequence()
 	{
 		while (qSelectSequences.Next())
 		{
-			ISLOGGER_UNKNOWN(qSelectSequences.ReadColumn("sequence_name").toString());
+			ISLOGGER_L(qSelectSequences.ReadColumn("sequence_name").toString());
 		}
 	}
 	else
@@ -223,7 +223,7 @@ bool CGConfiguratorShow::config()
 			QStringList StringList = QString(FileConfig.readAll()).split("\n");
 			for (const QString &String : StringList)
 			{
-				ISLOGGER_UNKNOWN(String);
+				ISLOGGER_L(String);
 			}
 			FileConfig.close();
 		}
@@ -241,7 +241,7 @@ bool CGConfiguratorShow::config()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::databasesize()
 {
-	ISLOGGER_UNKNOWN(ISDatabase::Instance().GetCurrentDatabaseSize());
+	ISLOGGER_L(ISDatabase::Instance().GetCurrentDatabaseSize());
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -75,17 +75,17 @@ void ISCoreSMS::Timeout()
 
 		UpdateStatus(ID, CONST_UID_SMS_STATUS_SENDING);
 
-		ISLOGGER_INFO("Sending message - start");
+		ISLOGGER_I("Sending message - start");
 		ISSMS SMS(Login, Password, Phone, Message, Charset, this);
 		if (SMS.Send())
 		{
 			SendDone(ID, SMS.GetMessageID());
-			ISLOGGER_INFO("Sending message - done");
+			ISLOGGER_I("Sending message - done");
 		}
 		else
 		{
 			SendFailed(ID, SMS.GetMessageID(), SMS.GetErrorString());
-			ISLOGGER_WARNING(QString("Sending message - failed: %1").arg(SMS.GetErrorString()));
+			ISLOGGER_W(QString("Sending message - failed: %1").arg(SMS.GetErrorString()));
 		}
 	}
 

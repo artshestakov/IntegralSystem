@@ -1,22 +1,19 @@
 #include "ISLogger.h"
+#include "ISDefinesCore.h"
+#include <QDir>
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
 	: ErrorString(NO_ERROR_STRING),
-	LastPosition(0),
-	Running(false),
-	Finished(false),
-	CurrentYear(0),
-	CurrentMonth(0),
-	CurrentDay(0),
-	EnableOutPrintf(false),
-	EnableOutFile(false)
+	LastIndex(0),
+	IsRunning(false),
+	IsFinished(false)
 {
-	
+
 }
 //-----------------------------------------------------------------------------
 ISLogger::~ISLogger()
 {
-	
+	Shutdown();
 }
 //-----------------------------------------------------------------------------
 ISLogger& ISLogger::Instance()
@@ -27,303 +24,163 @@ ISLogger& ISLogger::Instance()
 //-----------------------------------------------------------------------------
 QString ISLogger::GetErrorString() const
 {
-	return QString::fromStdString(ErrorString);
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::Initialize(bool OutPrintf, bool OutFile, const std::string &file_prefix)
+bool ISLogger::Initialize()
 {
-	if (Running) //Если логгер уже работает, возвращаем true
+	InitializeCriticalSection(&CriticalSection);
+
+	//Получаем текущую дату и время и запоминаем текущий день
+	QDate CurrentDate = QDate::currentDate();
+	CurrentDay = CurrentDate.day();
+
+	if (!CreateLogDirectory(CurrentDate)) //Ошибка при создании директорий
 	{
-		return Running;
+		return false;
 	}
 
-	EnableOutPrintf = OutPrintf;
-	EnableOutFile = OutFile;
-
-	//Если префикс не задан - используем префикс по умолчанию, иначе - тот что был задан
-	FilePrefix = file_prefix.empty() ? LOGGER_NAME_DEFAULT : file_prefix;
-
-	if (EnableOutFile) //Если включен вывод в файл - выполняем соответствующие подготовки
+	QString path_file = GetPathFile(CurrentDate);
+	File.open(path_file.toStdString().c_str(), std::ios::app);
+	if (!File.is_open()) //Не удалось открыть файл
 	{
-		//Получаем путь к исполняемому файлу
-        PathDirectory = GetCurrentDirectory();
-        Running = !PathDirectory.empty();
-        if (!Running) //Не удалось получить путь
-		{
-            return Running;
-		}
-
-		Running = CreateDir();
-		if (!Running) //При создании директории произошла ошибка
-		{
-			return Running;
-		}
-
-		UpdateFilePath();
-		File.open(PathFile, std::ios::app);
-		Running = File.is_open();
-		if (Running)
-		{
-			std::thread(&ISLogger::Worker, this).detach();
-		}
-		else
-		{
-			ErrorString = strerror(errno);
-		}
-	}
-	else
-	{
-		Running = true;
-	}
-	return Running;
-}
-//-----------------------------------------------------------------------------
-void ISLogger::Log(ISNamespace::DebugMessageType Type, const QString &String, const char *SourceName, int Line)
-{
-	if (LastPosition == LOGGER_ARRAY_SIZE || !Running) //Если превышен допустимый предел размера очереди или обработчик очереди уже остановился - выходим из функции
-	{
-		return;
+		ErrorString = QString("Error open file \"%1\": %2").arg(path_file).arg(strerror(errno));
+		return false;
 	}
 
-	//Получаем текущую дату и время
-    ISDateTime DateTime = GetCurrentDateTime();
-
-	if (Type == ISNamespace::DMT_Unknown)
-	{
-		fprintf(stdout, "%s\n", String.toStdString().c_str());
-		fflush(stdout);
-
-#ifdef DEBUG
-		OutputDebugString(String.toStdString().c_str());
-		OutputDebugString("\n");
-#endif
-	}
-	else
-	{
-		//Формируем начало строки лога (дата, время, идентификатор текущего потока)
-		char Temp[MAX_PATH];
-        sprintf(Year, "%d", DateTime.Year);
-        sprintf(Temp, "%02d.%02d.%c%c %02d:%02d:%02d.%03d %d", DateTime.Day, DateTime.Month, Year[2], Year[3], DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds, 10); //???
-
-		//Формируем остальную часть (тип сообщения, имя файла с исходным кодом, номер строки)
-		std::stringstream Stream;
-		Stream << Temp << " [";
-		switch (Type)
-		{
-		case ISNamespace::DMT_Info: Stream << "Info"; break;
-		case ISNamespace::DMT_Debug: Stream << "Debug"; break;
-		case ISNamespace::DMT_Warning: Stream << "Warning"; break;
-		case ISNamespace::DMT_Error: Stream << "Error"; break;
-		}
-		Stream << "]";
-
-		if (EnableOutPrintf) //Если включена опция вывода в консоль - выводим
-		{
-			fprintf(stdout, "%s %s\n", Stream.str().c_str(), String.toStdString().c_str());
-			fflush(stdout);
-
-#ifdef DEBUG
-			OutputDebugString(Stream.str().c_str());
-			OutputDebugString(" ");
-			OutputDebugString(String.toStdString().c_str());
-			OutputDebugString("\n");
-#endif
-		}
-
-		if (EnableOutFile) //Если включена опция записи в файл - дополняем именем файла с исходным кодом, номером строки и добавляем в очередь
-		{
-			Stream << " [" << SourceName << ":" << Line << "] " << String.toStdString() << std::endl;
-			Mutex.lock();
-			Array[LastPosition++] = Stream.str();
-			Mutex.unlock();
-		}
-	}
+	IsRunning = true;
+	std::thread(&ISLogger::Worker, this).detach();
+	return true;
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Shutdown()
 {
-	if (!Running) //Попытка остановить не запущенный логгер
+	//Останавливаем логгер
+	EnterCriticalSection(&CriticalSection);
+	IsRunning = false;
+	LeaveCriticalSection(&CriticalSection);
+
+	//Ждём когда он остановится и закрываем файл
+	while (!IsFinished)
 	{
-		return;
+		Sleep(50);
 	}
-
-	if (EnableOutFile) //Если включен вывод в файл
+	File.close();
+}
+//-----------------------------------------------------------------------------
+void ISLogger::Log(MessageType type_message, const QString &string_message, const char *source_name, int source_line)
+{
+	QString string_complete;
+	if (type_message == MessageType::MT_Lite || type_message == MessageType::MT_Null) //Если добавляется упрощенное сообщение (без типа, метки времени и т.д.)
 	{
-		//Останавливаем обработчик очереди
-		Mutex.lock();
-		Running = false;
-		Mutex.unlock();
-
-		//Ждём пока логгер не остановится
-		while (!Finished)
+		string_complete = string_message;
+	}
+	else //Стандартное сообщение
+	{
+		std::stringstream string_stream;
+		string_stream << QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9).toStdString() << SYMBOL_SPACE << GetCurrentThreadId() << " [";
+		switch (type_message)
 		{
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		case MessageType::MT_Null: break;
+		case MessageType::MT_Lite: break;
+		case MessageType::MT_Debug: string_stream << "Debug"; break;
+		case MessageType::MT_Info: string_stream << "Info"; break;
+		case MessageType::MT_Warning: string_stream << "Warning"; break;
+		case MessageType::MT_Error: string_stream << "Error"; break;
 		}
-		File.close(); //Закрываем файл
+		string_stream << "][" << source_name << ':' << source_line << "] " << string_message.toStdString();
+		string_complete = QString::fromStdString(string_stream.str());
 	}
+
+	std::cout << string_complete.toStdString() << std::endl;
+	EnterCriticalSection(&CriticalSection);
+	Array[LastIndex] = string_complete;
+	++LastIndex;
+	LeaveCriticalSection(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
+bool ISLogger::CreateLogDirectory(const QDate &Date)
+{
+	//Запоминаем текущий месяц и год
+	CurrentMonth = Date.month();
+	CurrentYear = Date.year();
+
+	//Формируем путь к текущей папке
+	PathLogsDir = ISDefines::Core::PATH_APPLICATION_DIR + "/Logs/" + QString::number(CurrentYear) + '/' + QString::number(CurrentMonth) + '/';
+	
+	QDir Dir;
+	if (!Dir.exists(PathLogsDir)) //Если папка с текущим месяцем не существует - создаём её
+	{
+		if (!Dir.mkpath(PathLogsDir)) //Ошибка создания папки
+		{
+			ErrorString = "Error create directory \"" + PathLogsDir + "\"";
+			return false;
+		}
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+QString ISLogger::GetPathFile(const QDate &Date) const
+{
+	//char buffer[MAX_PATH];
+	//sprintf(buffer, "%s%s_%02d.%02d.%02d.log", PathLogsDir.toStdString().c_str(), ISDefines::Core::APPLICATION_NAME.toStdString().c_str(), Date.day(), Date.month(), Date.year());
+	//return buffer;
+	return PathLogsDir + ISDefines::Core::APPLICATION_NAME + '_' + Date.toString(FORMAT_DATE_V2) + SYMBOL_POINT + EXTENSION_LOG;
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Worker()
 {
-	while (true) //Работа потока
+	while (IsRunning)
 	{
-		Mutex.lock(); //Блокируем мьютекс
-		bool running = Running;
-		if (LastPosition) //Если очередь не пустая
+		Sleep(50);
+		EnterCriticalSection(&CriticalSection);
+		if (LastIndex) //Если в очереди есть сообщения
 		{
-			for (size_t i = 0; i < LastPosition; ++i) //Обходим очередь
+			for (size_t i = 0; i < LastIndex; ++i)
 			{
-				File << Array[i];
+				File << Array[i].toStdString() << std::endl;
 				Array[i].clear();
 			}
-			File.flush();
-			LastPosition = 0;
+			LastIndex = 0;
 		}
-		Mutex.unlock(); //Разблокируем мьютекс
-		
-		//Получаем текущие дату и время
-        ISDateTime DateTime = GetCurrentDateTime();
-		
-		//Если сменился год/месяц/день - создаём недостающую директорию, обновляем текущий путь к файлу и переоткрываем новый файл
-        if (CurrentYear != DateTime.Year || CurrentMonth != DateTime.Month || CurrentDay != DateTime.Day)
-		{
-            bool Result = CurrentMonth != DateTime.Month;
-			if (Result) //Если сменился месяц - создаём недостающую директорию
-			{
-				Result = CreateDir();
-			}
-			else //Месяц не менялся - создание директории не требуется
-			{
-				Result = true;
-			}
+		LeaveCriticalSection(&CriticalSection);
 
-			if (Result) //Папка для нового месяца сущется/создана успешно - обновляем путь к файлу и переоткрываем его
+		QDate CurrentDate = QDate::currentDate();
+
+		//Если сменился месяц или год - создаём недостающие папки
+		if (CurrentMonth != CurrentDate.month() || CurrentYear != CurrentDate.year())
+		{
+			//Пытаемся создать недосающие директории пока не получится
+			while (!CreateLogDirectory(CurrentDate))
 			{
-				UpdateFilePath();
-				File.close();
-				File.open(PathFile, std::ios::app); //Обрабатывать (File.is_open() == false)?
+				std::cerr << ErrorString.toStdString() << std::endl;
+				Sleep(1000);
 			}
 		}
 
-		if (!running)
+		//Если сменился день - закрываем текущий файл и открываем новый
+		if (CurrentDay != CurrentDate.day())
 		{
-			break;
-		}
-        std::this_thread::sleep_for(std::chrono::milliseconds(LOGGER_TIMEOUT)); //Ждём 2 секунды
-	}
-	Finished = true;
-}
-//-----------------------------------------------------------------------------
-bool ISLogger::CreateDir()
-{
-	//Получаем текущую дату и время и формируем путь к папке Logs
-    ISDateTime DateTime = GetCurrentDateTime();
-    PathLogs = PathDirectory + "Logs" + PATH_SEPARATOR + std::to_string(DateTime.Year) + PATH_SEPARATOR + (DateTime.Month < 10 ? '0' + std::to_string(DateTime.Month) : std::to_string(DateTime.Month));
+			File.close();
 
-#ifdef WIN32
-	DWORD Attributes = GetFileAttributesA(PathLogs.c_str());
-	bool Result = (Attributes != INVALID_FILE_ATTRIBUTES && (Attributes & FILE_ATTRIBUTE_DIRECTORY));
-	if (!Result) //Если папка не существует - создаём её
-	{
-		Result = SHCreateDirectoryExA(NULL, PathLogs.c_str(), NULL) == 0;
-		if (!Result) //Не удалось создать папку
-		{
-            ErrorString = "Error create dir \"" + PathLogs + "\"";
+			bool is_opened = false;
+			while (!is_opened)
+			{
+				QString path_file = GetPathFile(CurrentDate);
+				File.open(path_file.toStdString().c_str(), std::ios::app);
+				is_opened = File.is_open();
+				if (is_opened) //Файл был успешно открыт - запоминаем текущий день
+				{
+					CurrentDay = CurrentDate.day();
+				}
+				else //Файл не удалось открыть пытаемся сделать это ещё раз через секунду
+				{
+					std::cerr << "Error open file \"" + path_file.toStdString() + "\": " + strerror(errno) << std::endl;
+					Sleep(1000);
+				}
+			}
 		}
 	}
-#else
-    struct stat sb;
-    bool Result = stat(PathLogs.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode);
-    if (!Result) //Если папка не существует - создаём её
-    {
-        std::string Command = "mkdir -p " + PathLogs;
-        Result = system(Command.c_str()) == 0;
-        if (!Result)
-        {
-            ErrorString = "Error create dir \"" + PathLogs + "\"";
-        }
-    }
-#endif
-	return Result;
-}
-//-----------------------------------------------------------------------------
-void ISLogger::UpdateFilePath()
-{
-	//Получаем текущую дату и время
-    ISDateTime DateTime = GetCurrentDateTime();
-
-	//Запоминаем год, месяц и день
-    CurrentYear = DateTime.Year;
-    CurrentMonth = DateTime.Month;
-    CurrentDay = DateTime.Day;
-
-	//Формируем путь к лог-файлу
-	std::stringstream Stream;
-    Stream << PathLogs << PATH_SEPARATOR << FilePrefix << "_" << CurrentYear <<
-		(CurrentMonth < 10 ? '0' + std::to_string(CurrentMonth) : std::to_string(CurrentMonth)) <<
-		(CurrentDay < 10 ? '0' + std::to_string(CurrentDay) : std::to_string(CurrentDay)) <<
-		SYMBOL_POINT << EXTENSION_LOG;
-	PathFile = Stream.str();
-}
-//-----------------------------------------------------------------------------
-ISDateTime ISLogger::GetCurrentDateTime()
-{
-    ISDateTime DT;
-#ifdef WIN32
-    SYSTEMTIME ST;
-    GetLocalTime(&ST);
-    DT.Day = ST.wDay;
-    DT.Month = ST.wMonth;
-    DT.Year = ST.wYear;
-    DT.Hour = ST.wHour;
-    DT.Minute = ST.wMinute;
-    DT.Second = ST.wSecond;
-    DT.Milliseconds = ST.wMilliseconds;
-#else
-    struct timeval TV;
-    gettimeofday(&TV, NULL);
-    int Millisecond = lrint(TV.tv_usec / 1000.0);
-    if (Millisecond >= 1000)
-    {
-        Millisecond -= 1000;
-        ++TV.tv_sec;
-    }
-    struct tm *TM = localtime(&TV.tv_sec);
-    DT.Day = TM->tm_mday;
-    DT.Month = TM->tm_mon + 1;
-    DT.Year = TM->tm_year + 1900;
-    DT.Hour = TM->tm_hour;
-    DT.Minute = TM->tm_min;
-    DT.Second = TM->tm_sec;
-    DT.Milliseconds = Millisecond;
-#endif
-    return DT;
-}
-//-----------------------------------------------------------------------------
-std::string ISLogger::GetCurrentDirectory()
-{
-    std::string DirPath;
-#ifdef WIN32
-	char Buffer[MAX_PATH];
-	if (GetModuleFileNameA(NULL, Buffer, MAX_PATH) > 0)
-	{
-		DirPath = std::string(Buffer);
-		DirPath = DirPath.substr(0, DirPath.rfind(PATH_SEPARATOR) + 1);
-	}
-#else
-    char *Char = NULL;
-    Char = getcwd(Char, MAX_PATH);
-    if (Char)
-    {
-        DirPath = std::string(Char);
-        DirPath.push_back(PATH_SEPARATOR);
-        free(Char);
-    }
-#endif
-	if (DirPath.empty())
-	{
-		ErrorString = "Error getting current directory.";
-	}
-    return DirPath;
+	IsFinished = true;
 }
 //-----------------------------------------------------------------------------

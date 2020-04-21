@@ -28,7 +28,7 @@ CGConfiguratorService::~CGConfiguratorService()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::reindex()
 {
-	ISLOGGER_UNKNOWN("Reindex...");
+	ISLOGGER_L("Reindex...");
 
 	bool Result = true;
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().size(); i < CountTables; ++i)
@@ -36,41 +36,41 @@ bool CGConfiguratorService::reindex()
 		Progress("Reindex", i, CountTables);
 
 		QString TableName = ISMetaData::GetInstanse().GetTables()[i]->Name;
-		ISLOGGER_UNKNOWN("Reindex table: " + TableName);
+		ISLOGGER_L("Reindex table: " + TableName);
 
 		ISQuery qReindexTable;
 		qReindexTable.SetShowLongQuery(false);
 		Result = qReindexTable.Execute(QString("REINDEX TABLE %1").arg(TableName));
 		if (Result)
 		{
-			ISLOGGER_UNKNOWN(QString("Reindex table %1 done").arg(TableName));
+			ISLOGGER_L(QString("Reindex table %1 done").arg(TableName));
 		}
 		else
 		{
-			ISLOGGER_UNKNOWN(QString("Reindex table %1 error").arg(TableName));
+			ISLOGGER_L(QString("Reindex table %1 error").arg(TableName));
 			ErrorString = qReindexTable.GetErrorString();
 		}
 	}
 
-	ISLOGGER_UNKNOWN("Reindex done");
-	ISLOGGER_EMPTY();
+	ISLOGGER_L("Reindex done");
+	ISLOGGER_N();
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuum()
 {
-	ISLOGGER_DEBUG("Vacuum...");
+	ISLOGGER_D("Vacuum...");
 
 	ISQuery qVacuum;
 	qVacuum.SetShowLongQuery(false);
 	bool Result = qVacuum.Execute(Q_VACUUM);
 	if (Result)
 	{
-		ISLOGGER_INFO("Vacuum done");
+		ISLOGGER_I("Vacuum done");
 	}
 	else
 	{
-		ISLOGGER_WARNING("Vacuum error: " + qVacuum.GetErrorString());
+		ISLOGGER_W("Vacuum error: " + qVacuum.GetErrorString());
 		ErrorString = qVacuum.GetErrorString();
 	}
 	return Result;
@@ -78,18 +78,18 @@ bool CGConfiguratorService::vacuum()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuumanalyze()
 {
-	ISLOGGER_DEBUG("Vacuum analyze...");
+	ISLOGGER_D("Vacuum analyze...");
 
 	ISQuery qVacuumAnalyze;
 	qVacuumAnalyze.SetShowLongQuery(false);
 	bool Result = qVacuumAnalyze.Execute(Q_VACUUM_ANALYZE);
 	if (Result)
 	{
-		ISLOGGER_INFO("Vacuum analyze done");
+		ISLOGGER_I("Vacuum analyze done");
 	}
 	else
 	{
-		ISLOGGER_WARNING("Vacuum analyze error: " + qVacuumAnalyze.GetErrorString());
+		ISLOGGER_W("Vacuum analyze error: " + qVacuumAnalyze.GetErrorString());
 		ErrorString = qVacuumAnalyze.GetErrorString();
 	}
 	return Result;
@@ -97,18 +97,18 @@ bool CGConfiguratorService::vacuumanalyze()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuumfull()
 {
-	ISLOGGER_DEBUG("Vacuum full...");
+	ISLOGGER_D("Vacuum full...");
 
 	ISQuery qVacuumFull;
 	qVacuumFull.SetShowLongQuery(false);
 	bool Result = qVacuumFull.Execute(Q_VACUUM_FULL);
 	if (Result)
 	{
-		ISLOGGER_INFO("Vacuum full done");
+		ISLOGGER_I("Vacuum full done");
 	}
 	else
 	{
-		ISLOGGER_WARNING("Vacuum full error: " + qVacuumFull.GetErrorString());
+		ISLOGGER_W("Vacuum full error: " + qVacuumFull.GetErrorString());
 		ErrorString = qVacuumFull.GetErrorString();
 	}
 	return Result;
@@ -119,14 +119,14 @@ bool CGConfiguratorService::cleartable()
 	QString InputName = ISConsole::GetString("Input table name: "); //Запрос на ввод имени таблицы
 	if (InputName.isEmpty())
 	{
-		ISLOGGER_UNKNOWN("Table name is empty");
+		ISLOGGER_L("Table name is empty");
 		return false;
 	}
 
 	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(InputName);
 	if (!MetaTable) //Если таблица не найдена
 	{
-		ISLOGGER_UNKNOWN(QString("Table \"%1\" not found").arg(InputName));
+		ISLOGGER_L(QString("Table \"%1\" not found").arg(InputName));
 		return false;
 	}
 
@@ -145,7 +145,7 @@ bool CGConfiguratorService::cleartable()
 			Result = qDelete.Execute();
 			if (Result)
 			{
-				ISLOGGER_UNKNOWN(QString("Delete record %1 of %2").arg(Removed).arg(RecordCount));
+				ISLOGGER_L(QString("Delete record %1 of %2").arg(Removed).arg(RecordCount));
 				++Removed;
 			}
 			else

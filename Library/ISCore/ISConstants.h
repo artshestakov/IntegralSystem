@@ -94,6 +94,7 @@ const char FORMAT_DATE_TIME_V5[] = "d MMMM yy hh:mm:ss.zzz";
 const char FORMAT_DATE_TIME_V6[] = "dd.MM.yyyy hh.mm";
 const char FORMAT_DATE_TIME_V7[] = "yyyy-MM-dd hh:mm:ss";
 const char FORMAT_DATE_TIME_V8[] = "dd.MM.yyyy_hh.mm.ss";
+const char FORMAT_DATE_TIME_V9[] = "dd.MM.yy hh:mm:ss.zzz";
 //TOKENS-----------------------------------------------------------------------
 const char TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 //PROPERTY---------------------------------------------------------------------
@@ -181,7 +182,7 @@ const int NPOS = std::string::npos;
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 1000;
-const size_t	LOGGER_ARRAY_SIZE = 10000;
+const size_t	LOGGER_ARRAY_SIZE = 20000;
 //CARAT------------------------------------------------------------------------
 const char	CARAT_UID[] = "{88DD90C4-2DFF-4515-8C32-7371C39C598A}"; //Уникальный идентификатор для контроля единого запущенного экземпляра
 const char	CARAT_CORE_START_FLAG[] = "exec"; //Посылаемое сообщение от ядра означающее успешный запуск ядра

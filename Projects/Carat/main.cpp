@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	bool Result = ISCore::Startup(false, ErrorString);
 	if (!Result)
 	{
-		ISLOGGER_ERROR(ErrorString);
+		ISLOGGER_E(ErrorString);
 		return EXIT_FAILURE;
 	}
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			ISLOGGER_WARNING("Invalid argument \"" + Argument + "\"");
+			ISLOGGER_W("Invalid argument \"" + Argument + "\"");
 			Usage();
 			return EXIT_SUCCESS;
 		}
@@ -60,12 +60,12 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				ISLOGGER_ERROR("Not connected to database: " + ISDatabase::Instance().GetErrorString());
+				ISLOGGER_E("Not connected to database: " + ISDatabase::Instance().GetErrorString());
 			}
 		}
 		else
 		{
-			ISLOGGER_WARNING("Carat already started");
+			ISLOGGER_W("Carat already started");
 		}
 	}
 
@@ -79,22 +79,22 @@ int main(int argc, char *argv[])
 void Usage()
 {
 #ifdef WIN32
-	ISLOGGER_UNKNOWN("Usage: Carat [argument]");
+	ISLOGGER_L("Usage: Carat [argument]");
 #else
-	ISLOGGER_UNKNOWN("Usage: ./Carat [argument]");
+	ISLOGGER_L("Usage: ./Carat [argument]");
 #endif
-	ISLOGGER_UNKNOWN(QString());
-	ISLOGGER_UNKNOWN("Arguments:");
-	ISLOGGER_UNKNOWN("  -d, --debug\t\tdebug mode");
-	ISLOGGER_UNKNOWN("  -h, --help\t\tshow this help");
-	ISLOGGER_UNKNOWN(QString());
+	ISLOGGER_L(QString());
+	ISLOGGER_L("Arguments:");
+	ISLOGGER_L("  -d, --debug\t\tdebug mode");
+	ISLOGGER_L("  -h, --help\t\tshow this help");
+	ISLOGGER_L(QString());
 #ifdef WIN32
-	ISLOGGER_UNKNOWN("Example: Carat.exe -d (debug mode)");
-	ISLOGGER_UNKNOWN("Example: Carat.exe (service mode)");
+	ISLOGGER_L("Example: Carat.exe -d (debug mode)");
+	ISLOGGER_L("Example: Carat.exe (service mode)");
 #else
-	ISLOGGER_UNKNOWN("Example: ./Carat -d (debug mode)");
-	ISLOGGER_UNKNOWN("Example: ./Carat (service mode)");
+	ISLOGGER_L("Example: ./Carat -d (debug mode)");
+	ISLOGGER_L("Example: ./Carat (service mode)");
 #endif
-	ISLOGGER_UNKNOWN("* No arguments needed to start in service mode");
+	ISLOGGER_L("* No arguments needed to start in service mode");
 }
 //-----------------------------------------------------------------------------

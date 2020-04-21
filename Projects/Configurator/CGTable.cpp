@@ -342,7 +342,7 @@ bool CGTable::DeleteOldFields(PMetaTable *MetaTable, QString &ErrorString)
 				}
 				else //Не согласен удалять поле - пропускаем и идём дальше
 				{
-					ISLOGGER_UNKNOWN("Skip deletion field " + FieldFullName);
+					ISLOGGER_L("Skip deletion field " + FieldFullName);
 				}
 			}
 		}

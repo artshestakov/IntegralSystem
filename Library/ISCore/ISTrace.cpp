@@ -12,13 +12,13 @@ ISTrace::ISTrace(const QString &q_func_info, const QString &message_text)
 		MessageText += " | " + message_text;
 	}
 
-	ISLOGGER_DEBUG(MessageText);
+	ISLOGGER_D(MessageText);
 	Time = new ISCountingTime();
 }
 //-----------------------------------------------------------------------------
 ISTrace::~ISTrace()
 {
-	ISLOGGER_DEBUG("END TRACE (" + QString::number(Time->Elapsed()) + " msec): " + Q_FUNC_INFO_STRING);
+	ISLOGGER_D("END TRACE (" + QString::number(Time->Elapsed()) + " msec): " + Q_FUNC_INFO_STRING);
 	delete Time;
 }
 //-----------------------------------------------------------------------------

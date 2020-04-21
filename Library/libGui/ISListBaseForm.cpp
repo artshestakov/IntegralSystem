@@ -533,7 +533,7 @@ void ISListBaseForm::HideField(const QString &FieldName)
 			return;
 		}
 	}
-	ISLOGGER_WARNING(QString("Not found field \"%1\" from HideField").arg(FieldName));
+	ISLOGGER_W(QString("Not found field \"%1\" from HideField").arg(FieldName));
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowField(const QString &FieldName)
@@ -547,7 +547,7 @@ void ISListBaseForm::ShowField(const QString &FieldName)
 			return;
 		}
 	}
-	ISLOGGER_WARNING(QString("Not found field \"%1\" from ShowField").arg(FieldName));
+	ISLOGGER_W(QString("Not found field \"%1\" from ShowField").arg(FieldName));
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SetShowOnly(bool show_only)
@@ -802,7 +802,7 @@ void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
 	}
 	else
 	{
-		ISLOGGER_WARNING(SqlError.text());
+		ISLOGGER_W(SqlError.text());
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text());
 	}
 }
@@ -820,7 +820,7 @@ void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QStr
 	}
 	else
 	{
-		ISLOGGER_WARNING(SqlError.text());
+		ISLOGGER_W(SqlError.text());
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text(), QueryText);
 	}
 }

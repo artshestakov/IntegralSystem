@@ -52,7 +52,7 @@ void ISCoreInformResource::SuccessfulAuth(const ISStringMap &StringMap)
 void ISCoreInformResource::UserEvent(const ISStringMap &StringMap)
 {
 	QString Number = ISPhoneNumberParser::PasteEvent(StringMap.at("CallerIDNum"));
-	ISLOGGER_UNKNOWN("Search organization with number: " + Number);
+	ISLOGGER_L("Search organization with number: " + Number);
 
 	ISQuery qSelect(QS_ORGANIZATION);
 	qSelect.BindValue(":Phone", Number);
@@ -67,14 +67,14 @@ void ISCoreInformResource::UserEvent(const ISStringMap &StringMap)
 			{
 				QString UserName = qSelect.ReadColumn("userfullname").toString();
 
-				ISLOGGER_UNKNOWN("Organization founded. Redirect to: " + UserName);
+				ISLOGGER_L("Organization founded. Redirect to: " + UserName);
 				AsteriskSocket->Redirect(StringMap, Pattern);
 				ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_INCOMING_CALL, UserID, OrganizationID);
 			}
 		}
 		else
 		{
-			ISLOGGER_UNKNOWN("Organization not found");
+			ISLOGGER_L("Organization not found");
 		}
 	}
 }

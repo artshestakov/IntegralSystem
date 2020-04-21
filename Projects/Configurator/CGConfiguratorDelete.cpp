@@ -68,7 +68,7 @@ bool CGConfiguratorDelete::indexes()
 				break;
 			}
 		}
-		ISLOGGER_INFO(QString("Deleted %1 of %2 indexes").arg(Deleted).arg(CountIndexes));
+		ISLOGGER_I(QString("Deleted %1 of %2 indexes").arg(Deleted).arg(CountIndexes));
 	}
 	else
 	{
@@ -79,7 +79,7 @@ bool CGConfiguratorDelete::indexes()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorDelete::foreigns()
 {
-	ISLOGGER_DEBUG("Deleting foreigns...");
+	ISLOGGER_D("Deleting foreigns...");
 
 	ISQuery qSelectForeigns(QS_FOREIGNS);
 	bool Result = qSelectForeigns.Execute();
@@ -106,7 +106,7 @@ bool CGConfiguratorDelete::foreigns()
 			Result = qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName));
 			if (Result)
 			{
-				ISLOGGER_INFO(QString("Deleted %1 of %2 foreigns").arg(++Deleted).arg(CountForeigns));
+				ISLOGGER_I(QString("Deleted %1 of %2 foreigns").arg(++Deleted).arg(CountForeigns));
 			}
 			else
 			{
@@ -123,13 +123,13 @@ bool CGConfiguratorDelete::foreigns()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorDelete::systems()
 {
-	ISLOGGER_DEBUG("Deleting systems...");
+	ISLOGGER_D("Deleting systems...");
 
 	ISQuery qDelete(QD_SYSTEMS);
 	bool Result = qDelete.Execute();
 	if (Result)
 	{
-		ISLOGGER_INFO("Deleting all systems done");
+		ISLOGGER_I("Deleting all systems done");
 	}
 	else
 	{
@@ -140,13 +140,13 @@ bool CGConfiguratorDelete::systems()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorDelete::subsystems()
 {
-	ISLOGGER_DEBUG("Deleting subsystems...");
+	ISLOGGER_D("Deleting subsystems...");
 
 	ISQuery qDelete(QD_SUB_SYSTEMS);
 	bool Result = qDelete.Execute();
 	if (Result)
 	{
-		ISLOGGER_INFO("Deleting all subsystems done");
+		ISLOGGER_I("Deleting all subsystems done");
 	}
 	else
 	{
@@ -177,13 +177,13 @@ bool CGConfiguratorDelete::tables()
 			{
 				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName))) //Удаление таблицы
 				{
-					ISLOGGER_UNKNOWN(QString("Removing table \"%1\"...").arg(TableName));
+					ISLOGGER_L(QString("Removing table \"%1\"...").arg(TableName));
 					ISQuery qDeleteTable;
 					Result = qDeleteTable.Execute("DROP TABLE public." + TableName);
 					if (Result)
 					{
 						++Removed;
-						ISLOGGER_UNKNOWN("Removed table");
+						ISLOGGER_L("Removed table");
 					}
 					else
 					{
@@ -200,11 +200,11 @@ bool CGConfiguratorDelete::tables()
 
 	if (Removed == Skipped) //Таблицы для удаления не найдены
 	{
-		ISLOGGER_UNKNOWN("Not found obsolete tables");
+		ISLOGGER_L("Not found obsolete tables");
 	}
 	else
 	{
-		ISLOGGER_UNKNOWN(QString("Removed tables: %1. Skipped tables: %2").arg(Removed).arg(Skipped));
+		ISLOGGER_L(QString("Removed tables: %1. Skipped tables: %2").arg(Removed).arg(Skipped));
 	}
 	return Result;
 }
@@ -241,13 +241,13 @@ bool CGConfiguratorDelete::fields()
 				{
 					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName))) //Удаление поля
 					{
-						ISLOGGER_UNKNOWN(QString("Removing column \"%1\"...").arg(ColumnName));
+						ISLOGGER_L(QString("Removing column \"%1\"...").arg(ColumnName));
 						ISQuery qDeleteField;
 						Result = qDeleteField.Execute("ALTER TABLE public." + TableName + " DROP COLUMN " + ColumnName);
 						if (Result)
 						{
 							++Removed;
-							ISLOGGER_UNKNOWN("Removed column");
+							ISLOGGER_L("Removed column");
 						}
 						else
 						{
@@ -265,11 +265,11 @@ bool CGConfiguratorDelete::fields()
 
 	if (Removed == Skipped) //Поля для удаления не найдены
 	{
-		ISLOGGER_UNKNOWN("Not found obsolete fields");
+		ISLOGGER_L("Not found obsolete fields");
 	}
 	else
 	{
-		ISLOGGER_UNKNOWN(QString("Removed columns: %1. Skipped columns: %2").arg(Removed).arg(Skipped));
+		ISLOGGER_L(QString("Removed columns: %1. Skipped columns: %2").arg(Removed).arg(Skipped));
 	}
 	return Result;
 }
@@ -313,7 +313,7 @@ bool CGConfiguratorDelete::resources()
 						}
 						else
 						{
-							ISLOGGER_ERROR("Error delete resource: " + qDeleteResources.GetErrorString());
+							ISLOGGER_E("Error delete resource: " + qDeleteResources.GetErrorString());
 						}
 					}
 					else
@@ -325,21 +325,21 @@ bool CGConfiguratorDelete::resources()
 		}
 		else
 		{
-			ISLOGGER_ERROR(qSelect.GetErrorString());
+			ISLOGGER_E(qSelect.GetErrorString());
 		}
 	}
 
-	ISLOGGER_EMPTY();
+	ISLOGGER_N();
 	Removed == Skipped ? 
-		ISLOGGER_UNKNOWN("Not found obsolete resources") :
-		ISLOGGER_UNKNOWN(QString("Removed resources: %1. Skipped resources: %2").arg(Removed).arg(Skipped));
+		ISLOGGER_L("Not found obsolete resources") :
+		ISLOGGER_L(QString("Removed resources: %1. Skipped resources: %2").arg(Removed).arg(Skipped));
 	return true;
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID)
 {
-	ISLOGGER_EMPTY();
-	ISLOGGER_UNKNOWN("Table name: " + MetaTable->Name);
+	ISLOGGER_N();
+	ISLOGGER_L("Table name: " + MetaTable->Name);
 	ISQuery qSelect("SELECT * FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 	qSelect.BindValue(":ResourceUID", ResourceUID);
 	if (qSelect.ExecuteFirst())
@@ -347,7 +347,7 @@ void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const ISUu
 		QSqlRecord SqlRecord = qSelect.GetRecord();
 		for (int i = 0; i < SqlRecord.count(); ++i)
 		{
-			ISLOGGER_UNKNOWN(QString("%1: %2").arg(SqlRecord.field(i).name()).arg(SqlRecord.value(i).toString()));
+			ISLOGGER_L(QString("%1: %2").arg(SqlRecord.field(i).name()).arg(SqlRecord.value(i).toString()));
 		}
 	}
 }

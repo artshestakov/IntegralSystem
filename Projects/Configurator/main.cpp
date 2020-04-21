@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	bool Result = ISCore::Startup(false, ErrorString);
 	if (!Result)
 	{
-		ISLOGGER_ERROR(ErrorString);
+		ISLOGGER_E(ErrorString);
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 	Result = InitConfiguratorScheme(ErrorString);
 	if (!Result)
 	{
-		ISLOGGER_ERROR(ErrorString);
+		ISLOGGER_E(ErrorString);
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 	FillConfig();
 	if (DBLogin.isEmpty() || DBPassword.isEmpty())
 	{
-		ISLOGGER_ERROR("Not specified server or password in config file");
+		ISLOGGER_E("Not specified server or password in config file");
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 	Result = ISMetaData::GetInstanse().Initialize(ISMetaDataHelper::GetConfigurationName(), true, true);
 	if (!Result)
 	{
-		ISLOGGER_ERROR("Initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
+		ISLOGGER_E("Initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
@@ -95,12 +95,12 @@ int main(int argc, char *argv[])
 	Arguments.erase(Arguments.begin());
 	if (Arguments.size() == 0)
 	{
-		ISLOGGER_UNKNOWN(QString("Configurator [Version %1]").arg(ISVersion::Instance().ToString()));
-		ISLOGGER_UNKNOWN("Welcome to the Configurator.");
-		ISLOGGER_UNKNOWN("DBHost: " + DBHost);
-		ISLOGGER_UNKNOWN("DBName: " + DBName);
-		ISLOGGER_UNKNOWN("DBPort: " + QString::number(DBPort));
-		ISLOGGER_UNKNOWN("Enter the \"help\" command to get help");
+		ISLOGGER_L(QString("Configurator [Version %1]").arg(ISVersion::Instance().ToString()));
+		ISLOGGER_L("Welcome to the Configurator.");
+		ISLOGGER_L("DBHost: " + DBHost);
+		ISLOGGER_L("DBName: " + DBName);
+		ISLOGGER_L("DBPort: " + QString::number(DBPort));
+		ISLOGGER_L("Enter the \"help\" command to get help");
 		
 		while (Result)
 		{
@@ -177,14 +177,14 @@ bool CreateDatabase()
 	bool Result = ISDatabase::Instance().Connect(CONNECTION_SYSTEM, DBHost, DBPort, SYSTEM_DATABASE_NAME, DBLogin, DBPassword), Exist = true;
 	if (!Result) //Не удалось подключиться к системной БД
 	{
-		ISLOGGER_ERROR(QString("Not connected to system database \"%1\": %2").arg(SYSTEM_DATABASE_NAME).arg(ISDatabase::Instance().GetErrorString()));
+		ISLOGGER_E(QString("Not connected to system database \"%1\": %2").arg(SYSTEM_DATABASE_NAME).arg(ISDatabase::Instance().GetErrorString()));
 		return Result;
 	}
 
 	Result = ISDatabase::Instance().CheckExistDatabase(CONNECTION_SYSTEM, DBName, Exist);
 	if (!Result) //Удалось проверить наличие БД
 	{
-		ISLOGGER_ERROR(QString("Checking exist database \"%1\": %2").arg(DBName).arg(ISDatabase::Instance().GetErrorString()));
+		ISLOGGER_E(QString("Checking exist database \"%1\": %2").arg(DBName).arg(ISDatabase::Instance().GetErrorString()));
 		return Result;
 	}
 
@@ -200,8 +200,8 @@ bool CreateDatabase()
 		{
 			QSqlError SqlError = ISDatabase::Instance().GetDB(CONNECTION_SYSTEM).exec(QC_DATABASE.arg(DBName).arg(DBLogin)).lastError(); //Исполнение запроса на создание базы данных
 			Result = SqlError.type() == QSqlError::NoError;
-			Result ? ISLOGGER_UNKNOWN("The \"" + DBName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
-				: ISLOGGER_UNKNOWN("Error creating database \"" + DBName + "\": " + SqlError.databaseText());
+			Result ? ISLOGGER_L("The \"" + DBName + "\" database was created successfully. It is recommended that you run the \"update database\" command")
+				: ISLOGGER_L("Error creating database \"" + DBName + "\": " + SqlError.databaseText());
 			if (Result) //Если БД была создана - подключаемся к ней
 			{
 				Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT, DBHost, DBPort, DBName, DBLogin, DBPassword);
@@ -209,7 +209,7 @@ bool CreateDatabase()
 		}
 		else //Пользователь отказался
 		{
-			ISLOGGER_WARNING("You have refused to create a database");
+			ISLOGGER_W("You have refused to create a database");
 		}
 	}
 
@@ -227,7 +227,7 @@ bool CreateDatabase()
 	Result = qFunction.ExecuteFirst();
 	if (!Result)
 	{
-		ISLOGGER_ERROR("Not checked configuration function: " + qFunction.GetErrorString());
+		ISLOGGER_E("Not checked configuration function: " + qFunction.GetErrorString());
 		return Result;
 	}
 
@@ -238,7 +238,7 @@ bool CreateDatabase()
 		Result = !ConfigurationName.isEmpty();
 		if (!Result) //Если название не ввели - выходим с ошибкой
 		{
-			ISLOGGER_WARNING("Configuration name is empty.");
+			ISLOGGER_W("Configuration name is empty.");
 			return Result;
 		}
 
@@ -246,7 +246,7 @@ bool CreateDatabase()
 		Result = qFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + ConfigurationName + "'; END; $$ LANGUAGE plpgsql IMMUTABLE");
 		if (!Result)
 		{
-			ISLOGGER_ERROR(qFunction.GetErrorString());
+			ISLOGGER_E(qFunction.GetErrorString());
 		}
 	}
 
@@ -255,7 +255,7 @@ bool CreateDatabase()
 //-----------------------------------------------------------------------------
 void InterpreterMode(bool &IsRunning)
 {
-	ISLOGGER_EMPTY();
+	ISLOGGER_N();
 	QString Command = ISConsole::GetString("Enter command (press Enter or Return to exit): ");
 	IsRunning = !Command.isEmpty();
 	if (IsRunning)
@@ -282,7 +282,7 @@ void InterpreterMode(bool &IsRunning)
 		}
 		else
 		{
-			ISLOGGER_UNKNOWN("command not found");
+			ISLOGGER_L("command not found");
 		}
 	}
 }
@@ -300,22 +300,22 @@ bool Execute(const QString &Argument)
 		{
 			if (ReturnValue)
 			{
-				ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
+				ISLOGGER_L("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
 			}
 			else
 			{
-				ISLOGGER_UNKNOWN("Command \"" + Argument + "\" executed with error " + Configurator.GetErrorString());
+				ISLOGGER_L("Command \"" + Argument + "\" executed with error " + Configurator.GetErrorString());
 			}
 		}
 		else
 		{
-			ISLOGGER_ERROR("Command \"" + Argument + "\" not executed.");
+			ISLOGGER_E("Command \"" + Argument + "\" not executed.");
 		}
 		Result = ReturnValue;
 	}
 	else
 	{
-		ISLOGGER_UNKNOWN("Command \"" + Argument + "\" not found");
+		ISLOGGER_L("Command \"" + Argument + "\" not found");
 	}
 	return Result;
 }
@@ -345,38 +345,38 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 					{
 						if (ReturnValue)
 						{
-							ISLOGGER_UNKNOWN(QString("Command \"%1 %2\" executed with %3 msec").arg(Argument).arg(SubArgument).arg(CountingTime.Elapsed()));
+							ISLOGGER_L(QString("Command \"%1 %2\" executed with %3 msec").arg(Argument).arg(SubArgument).arg(CountingTime.Elapsed()));
 						}
 						else
 						{
-							ISLOGGER_UNKNOWN(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
+							ISLOGGER_L(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
 						}
 					}
 					else
 					{
-						ISLOGGER_ERROR(QString("Command \"%1 %2\" not executed.").arg(Argument).arg(SubArgument));
+						ISLOGGER_E(QString("Command \"%1 %2\" not executed.").arg(Argument).arg(SubArgument));
 					}
 					Result = ReturnValue;
 				}
 				else
 				{
-					ISLOGGER_UNKNOWN("Command \"" + SubArgument + "\" not found");
+					ISLOGGER_L("Command \"" + SubArgument + "\" not found");
 				}
 				delete CommandBase;
 			}
 			else
 			{
-				ISLOGGER_UNKNOWN("Class \"" + Argument + "\" not found");
+				ISLOGGER_L("Class \"" + Argument + "\" not found");
 			}
 		}
 		else
 		{
-			ISLOGGER_UNKNOWN("Class \"" + Argument + "\" not found");
+			ISLOGGER_L("Class \"" + Argument + "\" not found");
 		}
 	}
 	else
 	{
-		ISLOGGER_UNKNOWN("Class \"" + Argument + "\" not found");
+		ISLOGGER_L("Class \"" + Argument + "\" not found");
 	}
 	return Result;
 }
@@ -415,7 +415,7 @@ void FillConfig()
 		DBHost = ISConsole::GetString("Enter the host: ");
 		if (DBHost.isEmpty())
 		{
-			ISLOGGER_UNKNOWN("Host is empty!");
+			ISLOGGER_L("Host is empty!");
 		}
 	}
 
@@ -426,7 +426,7 @@ void FillConfig()
 		DBPort = ISConsole::GetInt("Enter the port: ");
 		if (!DBPort)
 		{
-			ISLOGGER_UNKNOWN("Port is empty or null!");
+			ISLOGGER_L("Port is empty or null!");
 		}
 	}
 
@@ -437,7 +437,7 @@ void FillConfig()
 		DBName = ISConsole::GetString("Enter the database name: ");
 		if (DBName.isEmpty())
 		{
-			ISLOGGER_UNKNOWN("Database name is empty!");
+			ISLOGGER_L("Database name is empty!");
 		}
 	}
 
@@ -448,7 +448,7 @@ void FillConfig()
 		DBLogin = ISConsole::GetString("Enter the login: ");
 		if (DBLogin.isEmpty())
 		{
-			ISLOGGER_UNKNOWN("Login is empty!");
+			ISLOGGER_L("Login is empty!");
 		}
 	}
 
@@ -459,7 +459,7 @@ void FillConfig()
 		DBPassword = ISConsole::GetString("Enter the password: ");
 		if (DBPassword.isEmpty())
 		{
-			ISLOGGER_UNKNOWN("Password is empty!");
+			ISLOGGER_L("Password is empty!");
 		}
 	}
 

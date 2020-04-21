@@ -43,7 +43,7 @@ void ISAsteriskSocket::AddFilter(const QString &EventName)
 	write(QString("Filter: Event: %1\r\n").arg(EventName).toUtf8().data());
 	write("\r\n");
 
-	ISLOGGER_INFO("Append filter for event: " + EventName);
+	ISLOGGER_I("Append filter for event: " + EventName);
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskSocket::Redirect(const ISStringMap &StringMap, const QString &Pattern)
@@ -56,7 +56,7 @@ void ISAsteriskSocket::Redirect(const ISStringMap &StringMap, const QString &Pat
 		QString Context = qSelectContext.ReadColumn("aspt_context").toString();
 		QString Channel = StringMap.at("Channel");
 
-		ISLOGGER_UNKNOWN("Redirect to number \"" + Pattern + "\". Channel: " + Channel);
+		ISLOGGER_L("Redirect to number \"" + Pattern + "\". Channel: " + Channel);
 		write(QString("Action: Redirect\r\n").toUtf8().data());
 		write(QString("Channel: %1\r\n").arg(Channel).toUtf8().data());
 		write(QString("Exten: %1\r\n").arg(Pattern).toUtf8().data());
@@ -66,7 +66,7 @@ void ISAsteriskSocket::Redirect(const ISStringMap &StringMap, const QString &Pat
 	}
 	else
 	{
-		ISLOGGER_UNKNOWN("Forwarding is not possible, outgoing context is not specified for number: " + Pattern);
+		ISLOGGER_L("Forwarding is not possible, outgoing context is not specified for number: " + Pattern);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void ISAsteriskSocket::ConnectedHost()
 		Timer->stop();
 	}
 
-	ISLOGGER_INFO("Connecting to Asterisk Manager Interface...");
+	ISLOGGER_I("Connecting to Asterisk Manager Interface...");
 	write(QString("Action: Login\r\n").toUtf8().data());
 	write(QString("Username: %1\r\n").arg(Login).toUtf8().data());
 	write(QString("Secret: %1\r\n").arg(Password).toUtf8().data());
@@ -94,20 +94,20 @@ void ISAsteriskSocket::StateChangedHost(QAbstractSocket::SocketState NewState)
 {
 	switch (NewState)
 	{
-	case QAbstractSocket::UnconnectedState: ISLOGGER_INFO("Unconnected"); break;
-	case QAbstractSocket::HostLookupState: ISLOGGER_INFO("Host lookup"); break;
-	case QAbstractSocket::ConnectingState: ISLOGGER_INFO("Connecting"); break;
-	case QAbstractSocket::ConnectedState: ISLOGGER_INFO("Connected"); break;
-	case QAbstractSocket::BoundState: ISLOGGER_INFO("Bound"); break;
-	case QAbstractSocket::ClosingState: ISLOGGER_INFO("Closing"); break;
-	case QAbstractSocket::ListeningState: ISLOGGER_INFO("Listening"); break;
+	case QAbstractSocket::UnconnectedState: ISLOGGER_I("Unconnected"); break;
+	case QAbstractSocket::HostLookupState: ISLOGGER_I("Host lookup"); break;
+	case QAbstractSocket::ConnectingState: ISLOGGER_I("Connecting"); break;
+	case QAbstractSocket::ConnectedState: ISLOGGER_I("Connected"); break;
+	case QAbstractSocket::BoundState: ISLOGGER_I("Bound"); break;
+	case QAbstractSocket::ClosingState: ISLOGGER_I("Closing"); break;
+	case QAbstractSocket::ListeningState: ISLOGGER_I("Listening"); break;
 	}
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskSocket::ErrorHost(QAbstractSocket::SocketError ErrorHost)
 {
     Q_UNUSED(ErrorHost);
-	ISLOGGER_DEBUG(errorString());
+	ISLOGGER_D(errorString());
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskSocket::ReadyRead()
@@ -119,7 +119,7 @@ void ISAsteriskSocket::ReadyRead()
 		QString EventName = VariantMapEvent["Event"]; //Наименование события
 		if (EventName == AMI_SUCCESSFUL_AUTH)
 		{
-			ISLOGGER_UNKNOWN("Connected to Asterisk Manager Interface");
+			ISLOGGER_L("Connected to Asterisk Manager Interface");
 			emit SuccessfulAuth(VariantMapEvent);
 		}
 		else if (EventName == AMI_USER_EVENT)
@@ -188,7 +188,7 @@ QVector<ISStringMap> ISAsteriskSocket::ParseReadyRead(const QString &String)
 //-----------------------------------------------------------------------------
 void ISAsteriskSocket::Timeout()
 {
-	ISLOGGER_DEBUG("Reconnect to Asterisk Manager Interface...");
+	ISLOGGER_D("Reconnect to Asterisk Manager Interface...");
 	Connect();
 }
 //-----------------------------------------------------------------------------

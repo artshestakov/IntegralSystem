@@ -28,7 +28,7 @@ bool ISNetwork::CheckAccessInternet(QString &ErrorString) const
 		if (NetworkReply->error() != QNetworkReply::NoError)
 		{
 			ErrorString = NetworkReply->errorString();
-			ISLOGGER_WARNING(NetworkReply->errorString());
+			ISLOGGER_W(NetworkReply->errorString());
 		}
 
 		delete NetworkReply;

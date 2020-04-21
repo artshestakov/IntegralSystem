@@ -20,7 +20,7 @@ bool ISConsole::Question(const QString &QuestionText)
 		}
 		else
 		{
-			ISLOGGER_UNKNOWN("Invalid answer!");
+			ISLOGGER_L("Invalid answer!");
 		}
 	}
 	return Result;
@@ -28,7 +28,7 @@ bool ISConsole::Question(const QString &QuestionText)
 //-----------------------------------------------------------------------------
 void ISConsole::Pause()
 {
-	ISLOGGER_UNKNOWN("To continue, press \"Enter\" or \"Return\" buttons...");
+	ISLOGGER_L("To continue, press \"Enter\" or \"Return\" buttons...");
 	getchar();
 }
 //-----------------------------------------------------------------------------

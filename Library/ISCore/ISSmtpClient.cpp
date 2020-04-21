@@ -229,7 +229,7 @@ bool ISSmtpClient::connectToHost()
 
             if (!((QSslSocket*) socket)->waitForEncrypted(connectionTimeout)) 
 			{
-                ISLOGGER_DEBUG(((QSslSocket*) socket)->errorString());
+                ISLOGGER_D(((QSslSocket*) socket)->errorString());
                 emit smtpError(ConnectionTimeoutError);
                 return false;
             }
@@ -485,7 +485,7 @@ void ISSmtpClient::socketStateChanged(QAbstractSocket::SocketState state)
 //-----------------------------------------------------------------------------
 void ISSmtpClient::socketError(QAbstractSocket::SocketError socketError)
 {
-	ISLOGGER_ERROR(socket->errorString());
+	ISLOGGER_E(socket->errorString());
 }
 //-----------------------------------------------------------------------------
 void ISSmtpClient::socketReadyRead()

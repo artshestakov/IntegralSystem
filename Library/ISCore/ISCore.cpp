@@ -93,10 +93,10 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 
 	ISCrashDumper::Init();
 
-	Result = ISLogger::Instance().Initialize(true, true, ISDefines::Core::APPLICATION_NAME.toStdString());
+	Result = ISLogger::Instance().Initialize();
 	if (!Result)
 	{
-		ISLOGGER_ERROR(ISLogger::Instance().GetErrorString());
+		ISLOGGER_L(ISLogger::Instance().GetErrorString());
 		return Result;
 	}
 
@@ -110,7 +110,7 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 
 	if (!Result)
 	{
-		ISLOGGER_WARNING("Error changed console encoding");
+		ISLOGGER_W("Error changed console encoding");
 	}
 
 	Result = ISConfig::Instance().Initialize();
