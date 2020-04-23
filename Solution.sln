@@ -108,6 +108,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegralSystem", "Projects\IntegralSystem\IntegralSystem.vcxproj", "{C053A5FD-33FA-4841-B964-3C8CC6AF3F23}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DF96E239-1BB5-402B-B4F4-BF01D4A168BF} = {DF96E239-1BB5-402B-B4F4-BF01D4A168BF}
+		{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36} = {9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Carat", "Projects\Carat\Carat.vcxproj", "{0E5C4046-F164-4AEA-91E1-E0B899A28F3D}"

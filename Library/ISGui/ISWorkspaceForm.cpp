@@ -12,6 +12,7 @@
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISConstants.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISWorkspaceForm::ISWorkspaceForm(QWidget *parent) : ISParagraphBaseForm(parent)
 {
@@ -125,22 +126,12 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 	if (!MetaSubSystem->TableName.isEmpty()) //Открытие таблицы
 	{
 		ISProtocol::OpenSubSystem(MetaSubSystem->TableName, ISMetaData::GetInstanse().GetMetaTable(MetaSubSystem->TableName)->LocalListName);
-
-		ISListBaseForm *ListBaseForm = new ISListBaseForm(MetaSubSystem->TableName, this);
-		CentralForm = ListBaseForm;
+		CentralForm = new ISListBaseForm(MetaSubSystem->TableName, this);
 	}
 	else if (!MetaSubSystem->ClassName.isEmpty()) //Открытие класса (виджета)
 	{
 		ISProtocol::OpenSubSystem(QString(), MetaSubSystem->LocalName);
-
-		int ObjectType = QMetaType::type((MetaSubSystem->ClassName + SYMBOL_STAR).toLocal8Bit().constData());
-		IS_ASSERT(ObjectType, QString("Class for SybSystem is NULL. ClassName: %1").arg(MetaSubSystem->ClassName));
-
-		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		IS_ASSERT(MetaObject, "Error opening subsystem widget.");
-
-		CentralForm = dynamic_cast<ISInterfaceMetaForm*>(MetaObject->newInstance(Q_ARG(QWidget *, this)));
-		IS_ASSERT(CentralForm, QString("Error instance subsystem. ClassName: %1").arg(MetaSubSystem->ClassName));
+		CentralForm = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
 	}
 
 	CentralForm->SetUID(SubSystemUID);
@@ -149,7 +140,6 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 
 	ISGui::SetWaitGlobalCursor(false);
 	ISGui::RepaintWidget(CentralForm);
-
 	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, CentralForm, &ISInterfaceMetaForm::LoadData);
 }
 //-----------------------------------------------------------------------------

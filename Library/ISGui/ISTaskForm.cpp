@@ -12,6 +12,7 @@
 #include "ISGui.h"
 #include "ISInputDialog.h"
 #include "ISMessageBox.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISTaskForm::ISTaskForm(QWidget *parent) : ISParagraphBaseForm(parent)
 {
@@ -130,14 +131,7 @@ void ISTaskForm::FilterClicked()
 		TaskListForm = nullptr;
 	}
 
-	int ObjectType = QMetaType::type((ListFormName + SYMBOL_STAR).toLocal8Bit().constData());
-	IS_ASSERT(ObjectType, QString("Class for task list form is NULL. ClassName: %1").arg(ListFormName));
-
-	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-	IS_ASSERT(MetaObject, "Error opening subsystem widget.");
-
-	TaskListForm = dynamic_cast<ISTaskBaseListForm*>(MetaObject->newInstance(Q_ARG(QWidget *, this)));
-	IS_ASSERT(TaskListForm, QString("Error instance task list form . ListForm: %1").arg(ListFormName));
+	TaskListForm = ISAlgorithm::CreatePointer<ISTaskBaseListForm *>(ListFormName, Q_ARG(QWidget *, this));
 	connect(TaskListForm, &ISTaskBaseListForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
 	MainLayout->addWidget(TaskListForm);
 	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, TaskListForm, &ISTaskBaseListForm::LoadData);

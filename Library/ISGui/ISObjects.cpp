@@ -4,6 +4,7 @@
 #include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISMetaDataHelper.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 #include "ISCenterSeven.h"
 #include "ISDemo.h"
@@ -92,32 +93,9 @@ bool ISObjects::Initialize()
 
 	if (Result)
 	{
-		int ObjectType = QMetaType::type((Info.ClassName + SYMBOL_STAR).toLocal8Bit().constData());
-		if (ObjectType)
-		{
-			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-			if (MetaObject)
-			{
-				ObjectInterface = dynamic_cast<ISObjectInterface*>(MetaObject->newInstance());
-				if (ObjectInterface)
-				{
-					ObjectInterface->SetConfigurationName(ConfigurationName);
-					ObjectInterface->RegisterMetaTypes();
-				}
-				else
-				{
-					ErrorString = QString("Error instance configuration. ClassName: %1.").arg(Info.ClassName);
-				}
-			}
-			else
-			{
-				ErrorString = "Error opening subsystem widget.";
-			}
-		}
-		else
-		{
-			ErrorString = QString("Class for configuration is null. ClassName: %1.").arg(Info.ClassName);
-		}
+		ObjectInterface = ISAlgorithm::CreatePointer<ISObjectInterface *>(Info.ClassName);
+		ObjectInterface->SetConfigurationName(ConfigurationName);
+		ObjectInterface->RegisterMetaTypes();
 	}
 	return Result;
 }

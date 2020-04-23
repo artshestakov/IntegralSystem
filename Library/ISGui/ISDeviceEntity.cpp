@@ -5,6 +5,7 @@
 #include "ISCountingTime.h"
 #include "ISSystem.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_DEVICE_USER = PREPARE_QUERY("SELECT dvus_id, dvus_uid, concat(dvtp_name, '/', dvce_name), dvce_class "
 											  "FROM _deviceuser "
@@ -42,28 +43,13 @@ void ISDeviceEntity::Initialize()
 			QString ClassName = qSelectDevice.ReadColumn("dvce_class").toString();
 
 			ISLOGGER_I(LANG("Device.Initialize.Process").arg(DeviceUserName));
-			ISCountingTime Time;
 
-			int ObjectType = QMetaType::type((ClassName + SYMBOL_STAR).toLocal8Bit().constData());
-			IS_ASSERT(ObjectType, QString("Class for device is NULL. ClassName: %1").arg(ClassName));
-
-			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-			IS_ASSERT(MetaObject, "Invalid meta object for device class.");
-
-			ISDeviceObjectBase *DeviceObjectBase = dynamic_cast<ISDeviceObjectBase*>(MetaObject->newInstance(Q_ARG(int, DeviceUserID), Q_ARG(QObject *, this)));
-			IS_ASSERT(DeviceObjectBase, QString("Error instance device. ClassName: %1").arg(ClassName));
-
+			ISDeviceObjectBase *DeviceObjectBase = ISAlgorithm::CreatePointer<ISDeviceObjectBase *>(ClassName, Q_ARG(int, DeviceUserID), Q_ARG(QObject *, this));
 			connect(DeviceObjectBase, &ISDeviceObjectBase::InputData, this, &ISDeviceEntity::InputData);
 			Devices.insert(DeviceUserUID, DeviceObjectBase);
-
-			if (DeviceObjectBase->Initialize())
-			{
-				ISLOGGER_I(LANG("Device.Initialize.Done").arg(DeviceUserName).arg(ISSystem::MillisecondsToString(Time.Elapsed())));
-			}
-			else
-			{
+			DeviceObjectBase->Initialize() ?
+				ISLOGGER_I(LANG("Device.Initialize.Done").arg(DeviceUserName)) :
 				ISLOGGER_I(LANG("Device.Initialize.Error").arg(DeviceUserName) + ": " + DeviceObjectBase->GetErrorText());
-			}
 		}
 	}
 }

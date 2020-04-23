@@ -16,6 +16,7 @@
 #include "ISVersion.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorCreate.h"
 #include "CGConfiguratorUpdate.h"
@@ -322,62 +323,35 @@ bool Execute(const QString &Argument)
 //-----------------------------------------------------------------------------
 bool Execute(const QString &Argument, const QString &SubArgument)
 {
-	CGConfiguratorBase *CommandBase = nullptr;
-	int ObjectType = QMetaType::type(GetClassName(Argument).toLocal8Bit().constData());
-	bool Result = ObjectType > 0 ? true : false;
+	CGConfiguratorBase *CommandBase = ISAlgorithm::CreatePointer<CGConfiguratorBase *>(GetClassName(Argument));
+	bool Result = ISSystem::CheckExistSlot(CommandBase, SubArgument);
 	if (Result)
 	{
-		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		Result = MetaObject ? true : false;
+		ISCountingTime CountingTime;
+		bool ReturnValue = true;
+		Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData(), Q_RETURN_ARG(bool, ReturnValue));
 		if (Result)
 		{
-			CommandBase = dynamic_cast<CGConfiguratorBase*>(MetaObject->newInstance());
-			Result = CommandBase ? true : false;
-			if (Result)
+			if (ReturnValue)
 			{
-				Result = ISSystem::CheckExistSlot(CommandBase, SubArgument);
-				if (Result)
-				{
-					ISCountingTime CountingTime;
-					bool ReturnValue = true;
-					Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData(), Q_RETURN_ARG(bool, ReturnValue));
-					if (Result)
-					{
-						if (ReturnValue)
-						{
-							ISLOGGER_L(QString("Command \"%1 %2\" executed with %3 msec").arg(Argument).arg(SubArgument).arg(CountingTime.Elapsed()));
-						}
-						else
-						{
-							ISLOGGER_L(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
-						}
-					}
-					else
-					{
-						ISLOGGER_E(QString("Command \"%1 %2\" not executed.").arg(Argument).arg(SubArgument));
-					}
-					Result = ReturnValue;
-				}
-				else
-				{
-					ISLOGGER_L("Command \"" + SubArgument + "\" not found");
-				}
-				delete CommandBase;
+				ISLOGGER_L(QString("Command \"%1 %2\" executed with %3 msec").arg(Argument).arg(SubArgument).arg(CountingTime.Elapsed()));
 			}
 			else
 			{
-				ISLOGGER_L("Class \"" + Argument + "\" not found");
+				ISLOGGER_L(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
 			}
 		}
 		else
 		{
-			ISLOGGER_L("Class \"" + Argument + "\" not found");
+			ISLOGGER_E(QString("Command \"%1 %2\" not executed.").arg(Argument).arg(SubArgument));
 		}
+		Result = ReturnValue;
 	}
 	else
 	{
-		ISLOGGER_L("Class \"" + Argument + "\" not found");
+		ISLOGGER_L("Command \"" + SubArgument + "\" not found");
 	}
+	delete CommandBase;
 	return Result;
 }
 //-----------------------------------------------------------------------------

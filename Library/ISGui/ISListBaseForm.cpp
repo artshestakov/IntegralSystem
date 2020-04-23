@@ -1681,9 +1681,7 @@ void ISListBaseForm::CreateModels()
 {
 	if (!MetaTable->SqlModel.isEmpty()) //≈сли в мета-данных таблицы указана пользовательска€ модель, создавать еЄ
 	{
-		int ObjectType = QMetaType::type((MetaTable->SqlModel + SYMBOL_STAR).toLocal8Bit().constData());
-		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		SqlModel = dynamic_cast<ISSqlModelCore*>(MetaObject->newInstance(Q_ARG(PMetaTable *, MetaTable), Q_ARG(QObject *, TableView)));
+		SqlModel = ISAlgorithm::CreatePointer<ISSqlModelCore *>(MetaTable->SqlModel, Q_ARG(PMetaTable *, MetaTable), Q_ARG(QObject *, TableView));
 	}
 	else //ћодель в мета-данных таблицы не указана, создавать стандартную (базовую)
 	{

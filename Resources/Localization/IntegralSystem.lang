@@ -698,7 +698,7 @@
   
   <!--Device-->
   <Local Name="Device.Initialize.Process" Russian="Инициализация устройства: %1"/>
-  <Local Name="Device.Initialize.Done" Russian="Инициализация устройства %1 прошла успешно: %2"/>
+  <Local Name="Device.Initialize.Done" Russian="Инициализация устройства %1 прошла успешно"/>
   <Local Name="Device.Initialize.Error" Russian="Инициализация устройства %1 завершилась с ошибкой"/>
   <Local Name="Device.Settings" Russian="Настройка устройств"/>
   <Local Name="Device.My" Russian="Мои устройства"/>

@@ -23,6 +23,7 @@
 #include "ISFavorites.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISInterfaceForm(parent),
@@ -665,16 +666,9 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		QString ClassName = ActionClicked->property("ClassName").toString();
 		QString ClassFilter = ActionClicked->property("ClassFilter").toString();
 
-		if (ClassName.length()) //Открытие виджета
+		if (!ClassName.isEmpty()) //Открытие виджета
 		{
-			int ObjectType = QMetaType::type((ClassName + SYMBOL_STAR).toLocal8Bit().constData());
-			IS_ASSERT(ObjectType, "Class for SybSystem is NULL. ClassName: " + ClassName);
-
-			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-			IS_ASSERT(MetaObject, "Error opening subsystem widget.");
-
-			WidgetEscort = dynamic_cast<ISInterfaceMetaForm*>(MetaObject->newInstance(Q_ARG(QWidget *, WidgetTabEscort)));
-			IS_ASSERT(WidgetEscort, "Error instance escort class.");
+			WidgetEscort = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, WidgetTabEscort));
 		}
 		else //Открытие таблицы
 		{

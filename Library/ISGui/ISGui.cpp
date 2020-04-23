@@ -26,6 +26,8 @@
 #include "ISQueryPool.h"
 #include "ISSettings.h"
 #include "ISLogger.h"
+#include "ISUserObjectForm.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _settingsdatabase WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
@@ -457,11 +459,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
 	if (!MetaTable->ObjectForm.isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
 	{
-		int ObjectType = QMetaType::type((MetaTable->ObjectForm + SYMBOL_STAR).toLocal8Bit().constData());
-		IS_ASSERT(ObjectType, QString("ObjectForm for table \"%1\" with name \"%2\" is null.").arg(MetaTable->Name).arg(MetaTable->ObjectForm));
-
-		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		ObjectForm = dynamic_cast<ISObjectFormBase*>(MetaObject->newInstance(Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID)));
+		ObjectForm = ISAlgorithm::CreatePointer<ISObjectFormBase *>(MetaTable->ObjectForm, Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID));
 	}
 	else //У мета-таблицы нет переопределенной формы объекта - создаем базовую
 	{
@@ -474,13 +472,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaForeign *MetaForeign)
 {
 	QString SearchOperatorWidget = DataType == ISNamespace::FT_Int && MetaForeign ? "ISComboSearchBase" : ISMetaData::GetInstanse().GetSearchWidget(DataType);
-
-	int ObjectType = QMetaType::type((SearchOperatorWidget + SYMBOL_STAR).toLocal8Bit().constData());
-	IS_ASSERT(ObjectType, "Widget search operator is null.");
-
-	const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-	ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase*>(MetaObject->newInstance(Q_ARG(QWidget *, parent)));
-	IS_ASSERT(ComboSearchBase, "Widget search operator not dynamic cast.");
+	ISComboSearchBase *ComboSearchBase = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, parent));
 	return ComboSearchBase;
 }
 //-----------------------------------------------------------------------------
@@ -602,16 +594,7 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
 	QString Temp = ControlWidget;
 	if (!Temp.isEmpty())
 	{
-		int ObjectType = QMetaType::type((Temp + SYMBOL_STAR).toLocal8Bit().constData());
-		if (ObjectType)
-		{
-			const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-			QObject *Object = MetaObject->newInstance((Q_ARG(QWidget *, ParentWidget)));
-			if (Object)
-			{
-				FieldEditBase = dynamic_cast<ISFieldEditBase*>(Object);
-			}
-		}
+		FieldEditBase = ISAlgorithm::CreatePointer<ISFieldEditBase *>(Temp, Q_ARG(QWidget *, ParentWidget));
 	}
 	else
 	{

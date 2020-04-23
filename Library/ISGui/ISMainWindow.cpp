@@ -30,6 +30,7 @@
 #include "ISTelephony.h"
 #include "ISObjects.h"
 #include "ISAddressBookListForm.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 {
@@ -160,17 +161,9 @@ void ISMainWindow::CreateStackWidget()
 	GetMainLayout()->addWidget(StackedWidget);
 	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::GetInstance().GetParagraphs())
 	{
-		int ObjectType = QMetaType::type((MetaParagraph->ClassName + SYMBOL_STAR).toLocal8Bit().constData());
-		IS_ASSERT(ObjectType, QString("Invalid object type from paragraph: %1").arg(MetaParagraph->Name));
-
-		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		IS_ASSERT(MetaObject, QString("Invalid meta object from paragraph: %1").arg(MetaParagraph->Name));
-
-		ISParagraphBaseForm *ParagraphBaseForm = dynamic_cast<ISParagraphBaseForm*>(MetaObject->newInstance(Q_ARG(QWidget *, this)));
-		IS_ASSERT(ParagraphBaseForm, QString("Invalid class object from paragraph: %1").arg(MetaParagraph->Name));
+		ISParagraphBaseForm *ParagraphBaseForm = ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this));
 		ParagraphBaseForm->SetButtonParagraph(MenuBar->GetParagraphButton(MetaParagraph->UID));
-		int ParagraphIndex = StackedWidget->addWidget(ParagraphBaseForm);
-		Paragraphs.emplace(MetaParagraph->UID, ParagraphIndex);
+		Paragraphs.emplace(MetaParagraph->UID, StackedWidget->addWidget(ParagraphBaseForm));
 	}
 	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());
 }
@@ -218,22 +211,9 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISIncomingCallBaseForm *IncomingCallForm = nullptr;
-	int ObjectType = QMetaType::type((ISObjects::GetInstance().GetInfo().IncomingCallForm + SYMBOL_STAR).toLocal8Bit().constData());
-	if (ObjectType)
-	{
-		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
-		if (MetaObject)
-		{
-			IncomingCallForm = dynamic_cast<ISIncomingCallBaseForm*>(MetaObject->newInstance(Q_ARG(const QVariantMap &, VariantMap)));
-		}
-	}
-
+	ISIncomingCallBaseForm *IncomingCallForm = ISAlgorithm::CreatePointer<ISIncomingCallBaseForm *>(ISObjects::GetInstance().GetInfo().IncomingCallForm, Q_ARG(const QVariantMap &, VariantMap));
 	ISGui::SetWaitGlobalCursor(false);
-	if (IncomingCallForm)
-	{
-		IncomingCallForm->ExecAnimated();
-	}
+	IncomingCallForm->ExecAnimated();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)
