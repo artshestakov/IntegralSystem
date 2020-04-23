@@ -59,9 +59,9 @@ Filename: "{app}\IntegralSystem.exe"; Description: "Запустить прог�
 [Files]
 Source: ..\Deploy\.Configuration.-.Platform.\*; Excludes: "*.exp, *.ilk, *.lib, *.pdb"; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
-Source: ..\Deploy\.Configuration.-.Platform.\libCarat.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\libCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
-Source: ..\Deploy\.Configuration.-.Platform.\libGui.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Client;
+Source: ..\Deploy\.Configuration.-.Platform.\ISCarat.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
+Source: ..\Deploy\.Configuration.-.Platform.\ISGui.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Client;
 
 Source: ..\Deploy\.Configuration.-.Platform.\Carat.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\Configurator.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
