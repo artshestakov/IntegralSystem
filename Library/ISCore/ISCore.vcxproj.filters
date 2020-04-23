@@ -34,9 +34,6 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{3c8bb7e9-794e-4dbf-a0c9-e51c3f514b88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\_Alpha">
-      <UniqueIdentifier>{4ae21f52-8182-4b29-a0f7-7cece7d29d64}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\_CenterSeven">
       <UniqueIdentifier>{53d92222-dd29-4263-b13d-52b2a1788b06}</UniqueIdentifier>
     </Filter>
@@ -438,12 +435,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\_Alpha\Alpha.xsn">
-      <Filter>Resources\_Alpha</Filter>
-    </None>
-    <None Include="..\..\Resources\_Alpha\Alpha.xsr">
-      <Filter>Resources\_Alpha</Filter>
-    </None>
     <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsf">
       <Filter>Resources\_CenterSeven</Filter>
     </None>

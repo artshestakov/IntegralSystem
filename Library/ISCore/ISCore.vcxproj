@@ -233,8 +233,6 @@
     <QtRcc Include="..\..\Resources\Resources.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\_Alpha\Alpha.xsn" />
-    <None Include="..\..\Resources\_Alpha\Alpha.xsr" />
     <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsf" />
     <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsn" />
     <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsr" />

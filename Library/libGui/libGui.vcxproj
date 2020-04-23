@@ -116,7 +116,6 @@
     <ClCompile Include="ISAddressBox.cpp" />
     <ClCompile Include="ISAddressEdit.cpp" />
     <ClCompile Include="ISAddressForm.cpp" />
-    <ClCompile Include="ISAlpha.cpp" />
     <ClCompile Include="ISAsteriskCallsListForm.cpp" />
     <ClCompile Include="ISAsteriskRecordPlayForm.cpp" />
     <ClCompile Include="ISAsteriskRecordWaitForm.cpp" />
@@ -152,7 +151,6 @@
     <ClCompile Include="ISChatForm.cpp" />
     <ClCompile Include="ISChatMessageWidget.cpp" />
     <ClCompile Include="ISCheckEdit.cpp" />
-    <ClCompile Include="ISClientsSqlModel.cpp" />
     <ClCompile Include="ISColorEdit.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboEdit.cpp" />
@@ -178,11 +176,8 @@
     <ClCompile Include="ISDesktopInformResource.cpp" />
     <ClCompile Include="ISDeviceComObject.cpp" />
     <ClCompile Include="ISDeviceEntity.cpp" />
-    <ClCompile Include="ISDeviceListForm.cpp" />
     <ClCompile Include="ISDeviceObjectBase.cpp" />
-    <ClCompile Include="ISDeviceObjectForm.cpp" />
     <ClCompile Include="ISDeviceSettingsForm.cpp" />
-    <ClCompile Include="ISDeviceSubSystem.cpp" />
     <ClCompile Include="ISDeviceUserObjectForm.cpp" />
     <ClCompile Include="ISDevice_Atol1101.cpp" />
     <ClCompile Include="ISDevice_Atol1101Plus.cpp" />
@@ -483,7 +478,7 @@
     <ClInclude Include="ISParagraphEntity.h" />
     <ClInclude Include="ISSortingBuffer.h" />
     <QtMoc Include="ISTelephony.h" />
-    <QtMoc Include="ISTelephonySummary.h" />
+    <ClInclude Include="ISTelephonySummary.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISCreatedObjectsEntity.h" />
     <ClInclude Include="ISGui.h" />
@@ -559,8 +554,6 @@
     <QtMoc Include="ISChatForm.h" />
     <QtMoc Include="ISConnectionForm.h" />
     <QtMoc Include="ISControlDatabaseForm.h" />
-    <QtMoc Include="ISAlpha.h" />
-    <QtMoc Include="ISClientsSqlModel.h" />
     <QtMoc Include="ISCenterSeven.h" />
     <QtMoc Include="ISCenterSevenAdmissionListForm.h" />
     <QtMoc Include="ISCenterSevenAdmissionObjectForm.h" />
@@ -600,9 +593,6 @@
     <QtMoc Include="ISNotificationsForm.h" />
     <QtMoc Include="ISObjectInterface.h" />
     <ClInclude Include="ISObjects.h" />
-    <QtMoc Include="ISDeviceListForm.h" />
-    <QtMoc Include="ISDeviceObjectForm.h" />
-    <QtMoc Include="ISDeviceSubSystem.h" />
     <QtMoc Include="ISDemo.h" />
     <QtMoc Include="ISHighway.h" />
     <QtMoc Include="ISHighwayIncomingCallForm.h" />

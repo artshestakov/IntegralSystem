@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Localization Name="Objects">
 	
-	<!--Alpha-->
-	<Local Name="Alpha.DeviceType" Russian="Тип устройства"/>
-	<Local Name="Alpha.SerialNumber" Russian="Серийный номер"/>
-	<Local Name="Alpha.Reason" Russian="Причина обращения"/>
-	<Local Name="Alpha.Set" Russian="Комплектность"/>
-	<Local Name="Alpha.Brand" Russian="Бренд"/>
-	<Local Name="Alpha.Model" Russian="Модель"/>
-	<Local Name="Alpha.Color" Russian="Цвет"/>
-	<Local Name="Alpha.Leave" Russian="Выезд"/>
-	<Local Name="Alpha.Services" Russian="Услуги"/>
-	<Local Name="Alpha.Cost" Russian="Цена"/>
-	<Local Name="Alpha.Guarantee" Russian="Гарантия"/>
-	<Local Name="Alpha.Issue" Russian="Выдать"/>
-	<Local Name="Alpha.UsedParts" Russian="Компоненты и запасные части"/>
-	<Local Name="Alpha.Defect" Russian="Дефект"/>
-	<Local Name="Alpha.EnterDefect" Russian="Укажите дефект"/>
-	<Local Name="Alpha.NoticeToSMS" Russian="Уведомить о готовности по СМС"/>
-	<Local Name="Alpha.SMSSentReport" Russian="Идентификатор отправленного сообщения: %1. Количество отправленных СМС: %2. Стоимость отправленного сообщения: %3. Баланс счёта: %4."/>
-	<Local Name="Alpha.CurrencyRuble" Russian="руб"/>
-	<Local Name="Alpha.SMSSentCompleted" Russian="Отправка сообщения прошла успешно."/>
-	<Local Name="Alpha.Message.Question.Issue" Russian="Вы действительно хотите выдать выделенное устройство?"/>
-	<Local Name="Alpha.Message.Information.Issued" Russian="Устройство помечено как &quot;Выдано&quot;!"/>
-	<Local Name="Alpha.Message.Warning.AlreadyIssued" Russian="Устройство уже выдано!"/>
-	
 	<!--CenterSeven-->
 	<Local Name="CenterSeven.CallingPatient" Russian="Вызывает пациент"/>
   <Local Name="CenterSeven.CallingPatient.Unknown" Russian="неизвестен (%1)"/>

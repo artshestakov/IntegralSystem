@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configurations>
 
-  <Configuration UID="{E41E739C-2F5A-4A24-A18C-67F257BAA122}" Name="Alpha" LocalName="Сервисный центр «Альфа»" ClassName="ISAlpha"/>
   <Configuration UID="{45662D03-7680-4C07-965E-B7D6CD93668A}" Name="CenterSeven" LocalName="ООО «Центр 7»" ClassName="ISCenterSeven" DesktopForm="ISCenterSevenDesktop" IncomingCallForm="ISCenterSevenIncomingCallForm"/>
   <Configuration UID="{5F65B2D5-D77D-4D41-A749-F59B46FFD76A}" Name="Demo" LocalName="Демонстрационная версия" ClassName="ISDemo"/>
   <Configuration UID="{23DE116A-60B8-4DD8-9F80-FEA5BBB3D445}" Name="Highway" LocalName="ООО «Магистраль-ЮГ»" ClassName="ISHighway" IncomingCallForm="ISHighwayIncomingCallForm"/>

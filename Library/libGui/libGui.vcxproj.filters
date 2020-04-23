@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ColumnSizer">
-      <UniqueIdentifier>{c17d3407-16bc-406d-b3b4-ca5c2cce6fcd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AdditionalForms">
       <UniqueIdentifier>{09ed626a-4906-4ad9-b11f-0d1513baef91}</UniqueIdentifier>
     </Filter>
@@ -13,26 +10,14 @@
     <Filter Include="Export">
       <UniqueIdentifier>{b0629043-e6f4-4d6e-8591-50c4317ad3f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FastAccess">
-      <UniqueIdentifier>{ad7dedbf-270c-4514-9e62-03fb17c28e04}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{23b477e1-81f8-4895-8c03-e31a6e3ecdc2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Forms">
       <UniqueIdentifier>{2578635a-82f7-4954-b774-ca7b88ff46c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MetaSystems">
-      <UniqueIdentifier>{37906155-198a-4a73-b4fd-415dd1768c21}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ObjectModel">
       <UniqueIdentifier>{f05a3db5-289f-4379-ba9a-f668598bd191}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Paragraphs">
-      <UniqueIdentifier>{abcb5f06-9f04-4a85-9fda-0f9ec768455b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SortingBuffer">
-      <UniqueIdentifier>{92d3eab6-33ee-4298-bd38-c0b247b5588d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Telephony">
       <UniqueIdentifier>{8b9cf64f-9a3f-46b5-82c9-b2803f8f22f6}</UniqueIdentifier>
@@ -80,14 +65,8 @@
     <Filter Include="Widgets">
       <UniqueIdentifier>{8c9c2b14-221e-41d0-8106-071e6a22302d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Other">
-      <UniqueIdentifier>{2ccd6236-8173-42c9-920b-aaa76f7198de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Printing">
       <UniqueIdentifier>{bc1a5c63-9800-4fa0-baf9-da0f709d48fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Controls\Mail Calendar">
-      <UniqueIdentifier>{b854530b-1edd-4651-8fe8-c0ee31e025dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Controls\Task">
       <UniqueIdentifier>{95d840a6-b8ae-427e-b2ec-e1da8ddc2f43}</UniqueIdentifier>
@@ -97,12 +76,6 @@
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{3bf191de-51f2-4fc0-bbd2-3aaa575a44ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Alpha">
-      <UniqueIdentifier>{d7f233c3-ba7c-4bd7-a90e-37cce84376c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Alpha\Forms">
-      <UniqueIdentifier>{9df18342-bce3-40c6-b89e-c85852e11be2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects\CenterSeven">
       <UniqueIdentifier>{19f03436-0b66-4cb9-a8a1-96a5edf4da8a}</UniqueIdentifier>
@@ -155,9 +128,6 @@
     <Filter Include="Printing\Word">
       <UniqueIdentifier>{f460dc76-e385-432a-ac73-6abedb5d4999}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{fd190b60-95fc-4868-9bc4-a7ebef8f88e6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ModelThread">
       <UniqueIdentifier>{8c2dfde7-a4f1-439f-b30d-b863e8e88e8d}</UniqueIdentifier>
     </Filter>
@@ -170,8 +140,8 @@
     <Filter Include="Fields\Base">
       <UniqueIdentifier>{1c19f76d-8d4c-42dd-9dcd-4312e858deae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UserRole">
-      <UniqueIdentifier>{714b6641-8fd6-4116-bbd2-267e12caa4d8}</UniqueIdentifier>
+    <Filter Include="Controls\MailCalendar">
+      <UniqueIdentifier>{b854530b-1edd-4651-8fe8-c0ee31e025dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -190,20 +160,8 @@
     <ClInclude Include="ISSqlModelHelper.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="ISParagraphEntity.h">
-      <Filter>Paragraphs</Filter>
-    </ClInclude>
-    <ClInclude Include="ISColumnSizer.h">
-      <Filter>ColumnSizer</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaSystemsEntity.h">
-      <Filter>MetaSystems</Filter>
-    </ClInclude>
     <ClInclude Include="ISObjectModel.h">
       <Filter>ObjectModel</Filter>
-    </ClInclude>
-    <ClInclude Include="ISSortingBuffer.h">
-      <Filter>SortingBuffer</Filter>
     </ClInclude>
     <ClInclude Include="ISFavorites.h">
       <Filter>System</Filter>
@@ -219,18 +177,6 @@
     </ClInclude>
     <ClInclude Include="ISPrintingEntity.h">
       <Filter>Printing</Filter>
-    </ClInclude>
-    <ClInclude Include="ISUserRoleEntity.h">
-      <Filter>UserRole</Filter>
-    </ClInclude>
-    <ClInclude Include="ISFastAccessEntity.h">
-      <Filter>FastAccess</Filter>
-    </ClInclude>
-    <ClInclude Include="ISBuffer.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="ISStyleSheet.h">
-      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="ISPassword.h">
       <Filter>System</Filter>
@@ -252,6 +198,33 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISStartup.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTelephonySummary.h">
+      <Filter>Telephony</Filter>
+    </ClInclude>
+    <ClInclude Include="ISBuffer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISColumnSizer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISFastAccessEntity.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaSystemsEntity.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISParagraphEntity.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSortingBuffer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStyleSheet.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISUserRoleEntity.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
@@ -295,9 +268,6 @@
     <ClCompile Include="ISProgressForm.cpp">
       <Filter>AdditionalForms</Filter>
     </ClCompile>
-    <ClCompile Include="ISColumnSizer.cpp">
-      <Filter>ColumnSizer</Filter>
-    </ClCompile>
     <ClCompile Include="ISDevice_Atol30F.cpp">
       <Filter>Device</Filter>
     </ClCompile>
@@ -330,9 +300,6 @@
     </ClCompile>
     <ClCompile Include="ISExportXML.cpp">
       <Filter>Export</Filter>
-    </ClCompile>
-    <ClCompile Include="ISFastAccessEntity.cpp">
-      <Filter>FastAccess</Filter>
     </ClCompile>
     <ClCompile Include="ISFavorites.cpp">
       <Filter>System</Filter>
@@ -379,26 +346,14 @@
     <ClCompile Include="ISAsteriskRecordWaitForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISMetaSystemsEntity.cpp">
-      <Filter>MetaSystems</Filter>
-    </ClCompile>
     <ClCompile Include="ISObjectModel.cpp">
       <Filter>ObjectModel</Filter>
-    </ClCompile>
-    <ClCompile Include="ISParagraphEntity.cpp">
-      <Filter>Paragraphs</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSortingBuffer.cpp">
-      <Filter>SortingBuffer</Filter>
     </ClCompile>
     <ClCompile Include="ISTelephony.cpp">
       <Filter>Telephony</Filter>
     </ClCompile>
     <ClCompile Include="ISTelephonySummary.cpp">
       <Filter>Telephony</Filter>
-    </ClCompile>
-    <ClCompile Include="ISUserRoleEntity.cpp">
-      <Filter>UserRole</Filter>
     </ClCompile>
     <ClCompile Include="ISCreatedObjectsEntity.cpp">
       <Filter>System</Filter>
@@ -511,21 +466,6 @@
     <ClCompile Include="ISWaitWidget.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="ISButtonDialog.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
-    <ClCompile Include="ISImageWidget.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
-    <ClCompile Include="ISListWidget.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMessageBox.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPopupMessage.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
     <ClCompile Include="ISControls.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -602,16 +542,16 @@
       <Filter>Controls\Fields</Filter>
     </ClCompile>
     <ClCompile Include="ISCalendarDayWidget.cpp">
-      <Filter>Controls\Mail Calendar</Filter>
+      <Filter>Controls\MailCalendar</Filter>
     </ClCompile>
     <ClCompile Include="ISCalendarEventItem.cpp">
-      <Filter>Controls\Mail Calendar</Filter>
+      <Filter>Controls\MailCalendar</Filter>
     </ClCompile>
     <ClCompile Include="ISCalendarEventsWidget.cpp">
-      <Filter>Controls\Mail Calendar</Filter>
+      <Filter>Controls\MailCalendar</Filter>
     </ClCompile>
     <ClCompile Include="ISCalendarPanel.cpp">
-      <Filter>Controls\Mail Calendar</Filter>
+      <Filter>Controls\MailCalendar</Filter>
     </ClCompile>
     <ClCompile Include="ISTaskCommentsTab.cpp">
       <Filter>Controls\Task</Filter>
@@ -759,21 +699,6 @@
     </ClCompile>
     <ClCompile Include="ISObjects.cpp">
       <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAlpha.cpp">
-      <Filter>Objects\Alpha</Filter>
-    </ClCompile>
-    <ClCompile Include="ISClientsSqlModel.cpp">
-      <Filter>Objects\Alpha</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDeviceListForm.cpp">
-      <Filter>Objects\Alpha\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDeviceObjectForm.cpp">
-      <Filter>Objects\Alpha\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDeviceSubSystem.cpp">
-      <Filter>Objects\Alpha\Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISCenterSeven.cpp">
       <Filter>Objects\CenterSeven</Filter>
@@ -1018,12 +943,6 @@
     <ClCompile Include="ISTaskViewForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISBuffer.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="ISStyleSheet.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="ISPassword.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -1124,6 +1043,45 @@
       <Filter>Objects\OilSphere\Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISValidators.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISButtonDialog.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMessageBox.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPopupMessage.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISImageWidget.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISListWidget.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISBuffer.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISColumnSizer.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFastAccessEntity.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaSystemsEntity.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISParagraphEntity.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSortingBuffer.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStyleSheet.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserRoleEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1245,9 +1203,6 @@
     <QtMoc Include="ISTelephony.h">
       <Filter>Telephony</Filter>
     </QtMoc>
-    <QtMoc Include="ISTelephonySummary.h">
-      <Filter>Telephony</Filter>
-    </QtMoc>
     <QtMoc Include="ISMediaPlayer.h">
       <Filter>System</Filter>
     </QtMoc>
@@ -1353,21 +1308,6 @@
     <QtMoc Include="ISWaitWidget.h">
       <Filter>Widgets</Filter>
     </QtMoc>
-    <QtMoc Include="ISButtonDialog.h">
-      <Filter>Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISImageWidget.h">
-      <Filter>Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISListWidget.h">
-      <Filter>Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMessageBox.h">
-      <Filter>Other</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPopupMessage.h">
-      <Filter>Other</Filter>
-    </QtMoc>
     <QtMoc Include="ISAddressBox.h">
       <Filter>Controls</Filter>
     </QtMoc>
@@ -1432,16 +1372,16 @@
       <Filter>Controls\Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarDayWidget.h">
-      <Filter>Controls\Mail Calendar</Filter>
+      <Filter>Controls\MailCalendar</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarEventItem.h">
-      <Filter>Controls\Mail Calendar</Filter>
+      <Filter>Controls\MailCalendar</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarEventsWidget.h">
-      <Filter>Controls\Mail Calendar</Filter>
+      <Filter>Controls\MailCalendar</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarPanel.h">
-      <Filter>Controls\Mail Calendar</Filter>
+      <Filter>Controls\MailCalendar</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskCommentsTab.h">
       <Filter>Controls\Task</Filter>
@@ -1586,21 +1526,6 @@
     </QtMoc>
     <QtMoc Include="ISObjectInterface.h">
       <Filter>Objects</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAlpha.h">
-      <Filter>Objects\Alpha</Filter>
-    </QtMoc>
-    <QtMoc Include="ISClientsSqlModel.h">
-      <Filter>Objects\Alpha</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceListForm.h">
-      <Filter>Objects\Alpha\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceObjectForm.h">
-      <Filter>Objects\Alpha\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceSubSystem.h">
-      <Filter>Objects\Alpha\Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISCenterSeven.h">
       <Filter>Objects\CenterSeven</Filter>
@@ -1919,6 +1844,21 @@
     </QtMoc>
     <QtMoc Include="ISValidators.h">
       <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISButtonDialog.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMessageBox.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPopupMessage.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISImageWidget.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISListWidget.h">
+      <Filter>Controls</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
