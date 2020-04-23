@@ -926,7 +926,7 @@ void ISListBaseForm::Delete()
 		{
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryObjectSelected")))
 			{
-				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, VectorInt.at(0), MetaTable->LocalListName)) //Если восстановление прошло успешно, обновить таблицу
+				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, VectorInt.front(), MetaTable->LocalListName)) //Если восстановление прошло успешно, обновить таблицу
 				{
 					ISNotificationService::ShowNotification(ISNamespace::NotificationFormType::NFT_Recovery, MetaTable->LocalName);
 					if (QueryModel->GetVisibleIsDeleted())
@@ -945,7 +945,7 @@ void ISListBaseForm::Delete()
 		{
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteSelectedRecord")))
 			{
-				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.at(0), MetaTable->LocalListName)) //Если удаление прошло успешно, обновить таблицу
+				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.front(), MetaTable->LocalListName)) //Если удаление прошло успешно, обновить таблицу
 				{
 					ISNotificationService::ShowNotification(ISNamespace::NotificationFormType::NFT_Delete, MetaTable->LocalName);
 					if (QueryModel->GetVisibleIsDeleted())
@@ -973,7 +973,7 @@ void ISListBaseForm::Delete()
 				{
 					break;
 				}
-				ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.at(i), MetaTable->LocalListName);
+				ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt[i], MetaTable->LocalListName);
 				ProgressForm.IncrementValue();
 			}
 			Update();
@@ -1001,7 +1001,7 @@ bool ISListBaseForm::DeleteCascade()
 
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
 		{
-			int ObjectID = VectorInt.at(0);
+			int ObjectID = VectorInt.front();
 			if (ISGui::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, ObjectID))
 			{
 				ISNotificationService::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));

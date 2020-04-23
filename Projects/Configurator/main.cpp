@@ -264,22 +264,22 @@ void InterpreterMode(bool &IsRunning)
 		QStringList StringList = ParseInputCommand(Command);
 		if (StringList.count() == 1)
 		{
-			if (StringList.at(0).toLower() == "exit" || StringList.at(0) == "quit") //Выход
+			if (StringList.front().toLower() == "exit" || StringList.front() == "quit") //Выход
 			{
 				IsRunning = false;
 				return;
 			}
-			else if (StringList.at(0) == "restart") //Перезапуск
+			else if (StringList.front() == "restart") //Перезапуск
 			{
 				QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
 				IsRunning = false;
 				return;
 			}
-			Execute(StringList.at(0));
+			Execute(StringList.front());
 		}
 		else if (StringList.count() == 2)
 		{
-			Execute(StringList.at(0), StringList.at(1));
+			Execute(StringList.front(), StringList.at(1));
 		}
 		else
 		{

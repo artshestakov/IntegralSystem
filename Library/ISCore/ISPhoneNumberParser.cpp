@@ -3,12 +3,11 @@
 QString ISPhoneNumberParser::RemoveNotDigits(const QString &String)
 {
 	QString ResultString;
-	for (int i = 0; i < String.count(); ++i)
+	for (const QChar &Char : String)
 	{
-		QChar Symbol = String.at(i);
-		if (Symbol.isDigit())
+		if (Char.isDigit())
 		{
-			ResultString.append(Symbol);
+			ResultString.append(Char);
 		}
 	}
 	return ResultString;

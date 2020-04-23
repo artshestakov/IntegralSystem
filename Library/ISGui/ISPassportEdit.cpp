@@ -69,8 +69,7 @@ void ISPassportEdit::Edit()
 QString ISPassportEdit::PreparePassport(const QString &passport_string)
 {
 	QString Result;
-
-	if (passport_string.length())
+	if (!passport_string.isEmpty())
 	{
 		QStringList StringList = passport_string.split(ISDefines::Core::SYMBOL_SPACE_HIDE);
 		QString Seria = StringList.at(0);

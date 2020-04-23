@@ -11,18 +11,17 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign,
 	QStringList FieldList = MetaForeign->ForeignViewNameField.split(';');
 
 	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField.toLower() + " AS ID, concat(";
-	for (int i = 0; i < FieldList.count(); ++i) //Обход полей (которые должны быть отображены)
+	for (const QString &String : FieldList) //Обход полей (которые должны быть отображены)
 	{
-		SqlQuery += MetaTableForeign->Alias + '_' + FieldList.at(i).toLower() + ", ' ', ";
+		SqlQuery += MetaTableForeign->Alias + '_' + String.toLower() + ", ' ', ";
 	}
 	SqlQuery.chop(7);
-
 	SqlQuery += ") ";
 	SqlQuery += "AS Value \n";
 	SqlQuery += "FROM " + MetaTableForeign->Name + " \n";
 	SqlQuery += "WHERE NOT " + MetaTableForeign->Alias + "_isdeleted \n";
 
-	if (SqlFilter.length())
+	if (!SqlFilter.isEmpty())
 	{
 		SqlQuery += "AND " + SqlFilter + " \n";
 	}
@@ -42,7 +41,6 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign,
 	{
 		SqlQuery += "2 ASC";
 	}
-
 	return SqlQuery;
 }
 //-----------------------------------------------------------------------------

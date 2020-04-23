@@ -61,12 +61,9 @@ void ISSearchEdit::SearchChanged()
 void ISSearchEdit::AboutToShow()
 {
 	ISGui::SetWaitGlobalCursor(true);
-
 	while (ButtonLastSearch->menu()->actions().count())
 	{
-		QAction *Action = ButtonLastSearch->menu()->actions().takeAt(0);
-		delete Action;
-		Action = nullptr;
+		delete ButtonLastSearch->menu()->actions().takeAt(0);
 	}
 
 	ISQuery qSelect(QS_SEARCH_FAST);
@@ -81,7 +78,6 @@ void ISSearchEdit::AboutToShow()
 			ButtonLastSearch->menu()->addAction(Action);
 		}
 	}
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -92,15 +88,13 @@ void ISSearchEdit::AboutToHide()
 //-----------------------------------------------------------------------------
 void ISSearchEdit::LastSearchClicked()
 {
-	QString SearchValue = dynamic_cast<QAction*>(sender())->text();
-	SetValue(SearchValue);
+	SetValue(dynamic_cast<QAction*>(sender())->text());
 }
 //-----------------------------------------------------------------------------
 void ISSearchEdit::Timeout()
 {
 	Timer->stop();
 	ISGui::RepaintWidget(this);
-
 	emit Search(GetValue().toString());
 }
 //-----------------------------------------------------------------------------

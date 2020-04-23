@@ -51,7 +51,7 @@ void ISCoreMedTech::UserEvent(const ISStringMap &StringMap)
 	QStringList StringList = StringUserEvent.split(SYMBOL_SPACE);
 	int InteriorNumber = 0;
 	
-	int Rating = StringList.at(0).toInt(); //ќценка
+	int Rating = StringList.front().toInt(); //ќценка
 	QString Pattern = StringList.at(1); //¬нутренний номер
 	if (Pattern.contains("SIP"))
 	{

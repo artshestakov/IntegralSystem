@@ -56,9 +56,9 @@ void ISMenuFastAccess::AboutToShow()
 
 	//«аполнение быстрого создани€ записей
 	ISVectorString VectorRecords = ISFastAccessEntity::GetInstance().GetCreateRecords();
-	for (int i = 0; i < VectorRecords.size(); ++i)
+	for (const QString &String : VectorRecords)
 	{
-		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(VectorRecords.at(i));
+		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(String);
 
 		QAction *ActionRecord = new QAction(LANG("CreateRecord") + ": " + MetaTable->LocalName, this);
 		ActionRecord->setFont(ISDefines::Gui::FONT_TAHOMA_10);

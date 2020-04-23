@@ -790,10 +790,10 @@ bool ISObjectFormBase::Save()
 		QString InsertFields = "INSERT INTO " + MetaTable->Name + " (";
 		QString InsertValues = "VALUES (";
 
-		for (int i = 0; i < FieldsVector.size(); ++i)
+		for (const QString &String : FieldsVector)
 		{
-			InsertFields += MetaTable->Alias + '_' + FieldsVector.at(i) + ", ";
-			InsertValues += ':' + FieldsVector.at(i) + ", ";
+			InsertFields += MetaTable->Alias + '_' + String + ", ";
+			InsertValues += ':' + String + ", ";
 		}
 
 		InsertFields.chop(2);
@@ -811,9 +811,9 @@ bool ISObjectFormBase::Save()
 		QueryText += MetaTable->Alias + "_updationdate = now(), \n";
 		QueryText += MetaTable->Alias + "_updationuser = CURRENT_USER, \n";
 
-		for (int i = 0; i < FieldsVector.size(); ++i)
+		for (const QString &String : FieldsVector)
 		{
-			QueryText += MetaTable->Alias + '_' + FieldsVector.at(i) + " = :" + FieldsVector.at(i) + ", \n";
+			QueryText += MetaTable->Alias + '_' + String + " = :" + String + ", \n";
 		}
 
 		QueryText.chop(3);
@@ -1130,9 +1130,9 @@ void ISObjectFormBase::AddActionMenu(QAction *Action, bool AddingToActionGroup)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetEnabledActions(bool Enabled)
 {
-	for (int i = 0; i < ActionGroup->actions().count(); ++i)
+	for (QAction *Action : ActionGroup->actions())
 	{
-		ActionGroup->actions().at(i)->setEnabled(Enabled);
+		Action->setEnabled(Enabled);
 	}
 }
 //-----------------------------------------------------------------------------

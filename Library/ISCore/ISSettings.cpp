@@ -59,12 +59,10 @@ QVector<ISMetaSettingsGroup*> ISSettings::GetSettingGroups()
 //-----------------------------------------------------------------------------
 ISMetaSetting* ISSettings::GetMetaSetting(const QString &SettingUID)
 {
-	for (int i = 0; i < SettingGroups.count(); ++i)
+	for (ISMetaSettingsGroup *MetaGroup : SettingGroups)
 	{
-		ISMetaSettingsGroup *MetaGroup = SettingGroups.at(i);
-		for (int j = 0; j < MetaGroup->Settings.count(); ++j)
+		for (ISMetaSetting *MetaSetting : MetaGroup->Settings)
 		{
-			ISMetaSetting *MetaSetting = MetaGroup->Settings[j];
 			if (MetaSetting->UID == SettingUID)
 			{
 				return MetaSetting;

@@ -404,7 +404,7 @@
   <Local Name="Blocked" Russian="Заблокировано"/>
   <Local Name="CancelChanged" Russian="Отменить изменения"/>
   <Local Name="Image" Russian="Изображение"/>
-  <Local Name="Calculated" Russian="Вычисляется"/>
+  <Local Name="Calculated" Russian="вычисляется"/>
   <Local Name="Unlock" Russian="Разблокировать"/>
   <Local Name="OrdinalNumber" Russian="Порядковый номер"/>
   <Local Name="Stop" Russian="Стоп"/>

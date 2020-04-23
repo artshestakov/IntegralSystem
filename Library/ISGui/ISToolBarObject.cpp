@@ -39,9 +39,8 @@ QAction* ISToolBarObject::CreateAction(const QIcon &Icon, const QString &Text, I
 //-----------------------------------------------------------------------------
 void ISToolBarObject::UpdateEnabledActionsList(bool Enabled)
 {
-	for (int i = 0; i < actions().count(); ++i)
+	for (QAction *Action : actions())
 	{
-		QAction *Action = actions().at(i);
 		if (!Action->property("Object").toBool())
 		{
 			Action->setEnabled(Enabled);
@@ -51,9 +50,9 @@ void ISToolBarObject::UpdateEnabledActionsList(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISToolBarObject::ActionTriggered(QAction *ActionTriggered)
 {
-	for (int i = 0; i < actions().count(); ++i)
+	for (QAction *Action : actions())
 	{
-		actions().at(i)->setFont(ISDefines::Gui::FONT_APPLICATION);
+		Action->setFont(ISDefines::Gui::FONT_APPLICATION);
 	}
 
 	if (qvariant_cast<ISNamespace::ObjectActionType>(ActionTriggered->property("Type")) != ISNamespace::OAT_Service)

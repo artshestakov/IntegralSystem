@@ -38,19 +38,13 @@ void ISSystem::SleepSeconds(unsigned long Seconds)
 //-----------------------------------------------------------------------------
 QString ISSystem::GetSizeDir(const QString &DirPath)
 {
-	QDir Dir(DirPath);
-	QFileInfoList FileInfoList = Dir.entryInfoList(QDir::Files);
 	qint64 Size = 0;
-	for (int i = 0; i < FileInfoList.count(); ++i)
+	QFileInfoList FileInfoList = QDir(DirPath).entryInfoList(QDir::Files);
+	for (const QFileInfo &FileInfo : FileInfoList)
 	{
-		QFileInfo FileInfo = FileInfoList.at(i);
-		QString FilePath = FileInfo.absoluteFilePath();
-		qint64 FileSize = GetFileSize(FilePath);
-		Size += FileSize;
+		Size += GetFileSize(FileInfo.absoluteFilePath());
 	}
-
-	QString StringSize = FileSizeFromString(Size);
-	return StringSize;
+	return FileSizeFromString(Size);
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::FormatQFuncInfo(const QString &QFuncInfo, ISNamespace::FunctionNameFormat Format)
@@ -69,7 +63,7 @@ QString ISSystem::FormatQFuncInfo(const QString &QFuncInfo, ISNamespace::Functio
 		break;
 
 	case ISNamespace::FNF_Type:
-		Result = Temp.replace("__thiscall ", QString()).split("::").at(0);
+		Result = Temp.replace("__thiscall ", QString()).split("::").front();
 		break;
 
 	case ISNamespace::FNF_Function:

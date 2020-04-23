@@ -37,9 +37,8 @@ ISFastCreateRecordsForm::ISFastCreateRecordsForm() : ISInterfaceDialogForm()
 	connect(ComboEdit, &ISComboEdit::ValueChange, this, &ISFastCreateRecordsForm::TableChanged);
 	Layout->addWidget(ComboEdit);
 
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().size(); ++i)
+	for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables())
 	{
-		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		if (!MetaTable->IsSystem)
 		{
 			ComboEdit->AddItem(MetaTable->LocalListName, MetaTable->Name);

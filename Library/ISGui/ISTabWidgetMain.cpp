@@ -190,7 +190,7 @@ void ISTabWidgetMain::TabsMenuTriggered(QAction *ActionClicked)
 {
 	for (int i = 0; i < ButtonMenu->menu()->actions().count(); ++i)
 	{
-		QAction *Action = ButtonMenu->menu()->actions().at(i);
+		QAction *Action = ButtonMenu->menu()->actions()[i];
 		if (Action->property("ID").toString() == ActionClicked->property("ID").toString())
 		{
 			++i; //Прибавление единицы требуется т.к. обход начинается с НУЛЕВОЙ (главной) вкладки таб-бара

@@ -220,10 +220,8 @@ void ISMenuBar::CreateParagraphs()
 	LayoutParagraphs = new QHBoxLayout();
 	MainLayout->addLayout(LayoutParagraphs);
 
-	for (int i = 0; i < ISParagraphEntity::GetInstance().GetParagraphs().count(); ++i)
+	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::GetInstance().GetParagraphs())
 	{
-		ISMetaParagraph *MetaParagraph = ISParagraphEntity::GetInstance().GetParagraphs().at(i);
-
 		ISParagraphButton *ParagraphButton = new ISParagraphButton(MetaParagraph, this);
 		connect(ParagraphButton, &ISParagraphButton::Clicked, this, static_cast<void(ISMenuBar::*)()>(&ISMenuBar::ButtonParagraphClicked));
 		LayoutParagraphs->addWidget(ParagraphButton);
@@ -234,7 +232,6 @@ void ISMenuBar::CreateParagraphs()
 void ISMenuBar::ButtonParagraphClicked()
 {
 	QList<ISParagraphButton*> Buttons = ParagraphButtons.values();
-
 	for (ISParagraphButton *ParagraphButton : Buttons)
 	{
 		if (ParagraphButton == sender())

@@ -42,9 +42,8 @@ ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 	for (QAction *Action : ButtonMonth->menu()->actions())
 	{
         QString Text = Action->text();
-        Text.replace(0, 1, Text.at(0).toUpper());
+		Text[0] = Text[0].toUpper();
         Action->setText(QString::number(MonthID) + " - " + Text);
-
 		Action->setCheckable(true);
 
 		if (Action->data().toInt() == QDate::currentDate().month())
@@ -52,7 +51,6 @@ ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 			Action->setChecked(true);
 			Action->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		}
-
 		++MonthID;
 	}
 

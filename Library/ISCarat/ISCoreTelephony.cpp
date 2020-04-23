@@ -220,10 +220,10 @@ QString ISCoreTelephony::GetPattern(int ID, const QString &String) const
 	QStringList StringList = String.split('/');
 	if (StringList.count() == 2)
 	{
-		StringList = StringList.at(1).split("-");
+		StringList = StringList[1].split("-");
 		if (StringList.count() == 2)
 		{
-			Pattern = StringList.at(0);
+			Pattern = StringList.front();
 		}
 	}
 

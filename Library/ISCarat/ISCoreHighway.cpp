@@ -48,7 +48,7 @@ void ISCoreHighway::SuccessfulAuth(const ISStringMap &StringMap)
 void ISCoreHighway::UserEvent(const ISStringMap &StringMap)
 {
 	QStringList StringList = StringMap.at("UserEvent").split(SYMBOL_SPACE);
-	QString EventType = StringList.at(0);
+	QString EventType = StringList.front();
 	if (EventType == "call") //Событие входящего звонка
 	{
 		QString Number = StringMap.at("CallerIDNum");
