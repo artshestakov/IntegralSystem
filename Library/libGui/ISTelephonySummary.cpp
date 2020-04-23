@@ -27,16 +27,6 @@ static QString QS_AVERAGE_RANGE = PREPARE_QUERY("SELECT to_char(((SELECT AVG(asc
 												"AND ascl_dialstatus = (SELECT asds_id FROM _asteriskcallstatus WHERE asds_uid = '{6DA83A49-93D3-4D5F-AFC9-C5C89C82E894}') "
 												"AND ascl_dialbegin::DATE BETWEEN :BeginDate AND :EndDate) || ' seconds')::INTERVAL, 'HH24:MI:SS')");
 //-----------------------------------------------------------------------------
-ISTelephonySummary::ISTelephonySummary() : QObject()
-{
-
-}
-//-----------------------------------------------------------------------------
-ISTelephonySummary::~ISTelephonySummary()
-{
-
-}
-//-----------------------------------------------------------------------------
 int ISTelephonySummary::GetCountIncoming(const ISRangeStruct &RangeStruct)
 {
 	int Result = 0;

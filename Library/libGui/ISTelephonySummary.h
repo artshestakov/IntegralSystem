@@ -3,14 +3,9 @@
 #include "StdAfx.h"
 #include "ISTypes.h"
 //-----------------------------------------------------------------------------
-class ISTelephonySummary : public QObject
+class ISTelephonySummary
 {
-	Q_OBJECT
-
 public:
-	ISTelephonySummary();
-	virtual ~ISTelephonySummary();
-
 	static int GetCountIncoming(const ISRangeStruct &RangeStruct); //Получить общее количество входящих звонков по диапазону
 	static int GetCountOutcoming(const ISRangeStruct &RangeStruct); //Получить общее количество исходящих звонков по диапазону
 	static QString GetDurationAll(const ISRangeStruct &RangeStruct); //Получить общую длительность всех звонков по диапазону
