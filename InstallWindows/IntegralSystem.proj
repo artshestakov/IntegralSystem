@@ -16,7 +16,7 @@
 	
 		<!-- Сборка библиотек -->
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISCore $(Configuration) $(Platform) $(PlatformToolset)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd libGui $(Configuration) $(Platform) $(PlatformToolset)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISGui $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildLibrary.cmd ISCarat $(Configuration) $(Platform) $(PlatformToolset)"/>
 		
 		<!-- Сборка проектов -->

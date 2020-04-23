@@ -73,7 +73,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\libGui;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISGui;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG</PreprocessorDefinitions>
       <WarningLevel>Level1</WarningLevel>
     </ClCompile>
@@ -82,7 +82,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;libGui.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5PrintSupportd.lib;Qt5SerialPortd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ISCore.lib;ISGui.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5PrintSupportd.lib;Qt5SerialPortd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -91,7 +91,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\libGui;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISGui;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtSerialPort;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
       <WarningLevel>Level1</WarningLevel>
     </ClCompile>
@@ -100,7 +100,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;libGui.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5PrintSupport.lib;Qt5SerialPort.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ISCore.lib;ISGui.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5PrintSupport.lib;Qt5SerialPort.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
