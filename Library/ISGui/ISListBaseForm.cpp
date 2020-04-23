@@ -66,8 +66,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	DelegatesCreated(false),
 	ShowOnly(MetaTable->ShowOnly),
 	IsLoadingData(false),
-	SearchFlag(false),
-	ListIndicatorWidget(new ISListIndicatorWidget(this))
+	SearchFlag(false)
 {
 	CreateActions(); //Создание действий
 	CreateSpecialActions(); //Создание специальных действий
@@ -76,6 +75,9 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	CreateContextMenu(); //Создание контекстного меню
 	CreateModels(); //Создание моделей
 	CreateStatusBar(); //Создание статус-бара
+
+	//Создание этого виджета должно происходить после создания всех остальных
+	ListIndicatorWidget = new ISListIndicatorWidget(this);
 }
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
