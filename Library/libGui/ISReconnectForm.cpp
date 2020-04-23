@@ -90,7 +90,7 @@ ISReconnectForm::ISReconnectForm() : ISInterfaceDialogForm()
 	LayoutButtons->addWidget(ButtonExit);
 
 	Timer = new QTimer(this);
-	Timer->setInterval(FIVE_SECOND_TO_MILLISECOND);
+	Timer->setInterval(5000);
 	connect(Timer, &QTimer::timeout, this, &ISReconnectForm::TimerTick);
 }
 //-----------------------------------------------------------------------------
