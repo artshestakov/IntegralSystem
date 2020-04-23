@@ -15,6 +15,7 @@ public:
 
 private:
 	void Saved(int ObjectID);
+	void Updated();
 
 private:
 	ISListBaseForm *ImplementationDetailListForm;

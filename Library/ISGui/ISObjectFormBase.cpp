@@ -542,7 +542,7 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		FieldEditBase->SetModificationFlag(true);
 	}
 
-	if (MetaField->NotNull) //Если поле обязательно для заполнения
+	if (MetaField->NotNull && MetaField->DefaultValue.toString().isEmpty()) //Если поле обязательно для заполнения
 	{
 		LabelField->setTextFormat(Qt::RichText);
 		LabelField->setText(QString("<font>%1:</font><font color=#FF0000 size=4>*</font>").arg(MetaField->LabelName));
@@ -746,7 +746,6 @@ bool ISObjectFormBase::Save()
 	QVariantMap ValuesMap;
 	ISVectorString FieldsVector;
 	QString QueryText;
-	bool Executed = false;
 
 	for (const auto &Field : FieldsMap) //Обход существующих полей на форме
 	{
@@ -757,7 +756,7 @@ bool ISObjectFormBase::Save()
 		QVariant Value = FieldEditBase->GetValue();
 		if (Value.isNull()) //Если значение в поле отсутствует, проверить обязательно ли поле для заполнения
 		{
-			if (MetaField->NotNull && !MetaField->HideFromObject) //Если поле обязательно для заполнения
+			if (MetaField->NotNull && !MetaField->HideFromObject && MetaField->DefaultValue.toString().isEmpty()) //Если поле обязательно для заполнения
 			{
 				ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(MetaField->LabelName));
 				FieldEditBase->BlinkRed();
@@ -832,8 +831,7 @@ bool ISObjectFormBase::Save()
 		IS_ASSERT(SqlQuery.BindValue(':' + Value.first, Value.second), "Not bind value");
 	}
 
-	Executed = SqlQuery.Execute(); //Исполнение запроса
-	if (Executed) //Запрос выполнен успешно
+	if (SqlQuery.Execute()) //Запрос выполнен успешно
 	{
 		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).commit(); //Коммит транзакции
 		if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)

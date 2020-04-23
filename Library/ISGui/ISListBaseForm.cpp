@@ -935,6 +935,7 @@ void ISListBaseForm::Delete()
 					{
 						SqlModel->RemoveRecord(GetCurrentRowIndex());
 					}
+					emit Updated();
 				}
 			}
 		}
@@ -953,6 +954,7 @@ void ISListBaseForm::Delete()
 					{
 						SqlModel->RemoveRecord(GetCurrentRowIndex());
 					}
+					emit Updated();
 				}
 			}
 		}
@@ -963,14 +965,12 @@ void ISListBaseForm::Delete()
 		{
 			ISProgressForm ProgressForm(VectorInt.size(), LANG("DeletingObjects"), this);
 			ProgressForm.show();
-
 			for (int i = 0; i < VectorInt.size(); ++i)
 			{
 				if (ProgressForm.wasCanceled())
 				{
 					break;
 				}
-
 				ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.at(i), MetaTable->LocalListName);
 				ProgressForm.IncrementValue();
 			}

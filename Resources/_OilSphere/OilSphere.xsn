@@ -76,10 +76,12 @@
     <Fields>
       <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки" NotNull="true"/>
       <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта" NotNull="true"/>
+      <Field UID="{F7F29CDC-674A-4EA0-ADEE-4BBEF8E58C13}" Name="ResultCount" Type="Int" DefaultValue="0" LabelName="Количество" LocalListName="Количество" ReadOnly="true" NotNull="true" SeparatorName="Итого"/>
     </Fields>
     <Indexes>
       <Index Field="DateLoad"/>
       <Index Field="ProductType"/>
+      <Index Field="ResultCount"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
