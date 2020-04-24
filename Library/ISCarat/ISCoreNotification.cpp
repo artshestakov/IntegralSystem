@@ -75,6 +75,7 @@ void ISCoreNotification::Timeout()
 				ISVectorInt Users = GetUsers();
 				for (int UserID : Users) //Обход пользователей и отправка каждому нотификации
 				{
+                    Q_UNUSED(UserID);
 					SendNotification(NotificationUID, NotificationName, UserTo, Payload, String, Save);
 				}
 			}
