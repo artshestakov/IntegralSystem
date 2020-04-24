@@ -93,6 +93,7 @@ QString ISSearchModel::CreateSubString(ISNamespace::SearchOperatorType Operator,
 		case ISNamespace::SOT_Less: ResultString = FieldName + " < " + Condition; break;
 		case ISNamespace::SOT_MoreOrEqual: ResultString = FieldName + " >= " + Condition; break;
 		case ISNamespace::SOT_LessOrEqual: ResultString = FieldName + " <= " + Condition; break;
+        default: break;
 		}
 	}
 	else
@@ -108,6 +109,7 @@ QString ISSearchModel::CreateSubString(ISNamespace::SearchOperatorType Operator,
 		case ISNamespace::SOT_Less: ResultString = FieldName + " < " + Condition + " OR "; break;
 		case ISNamespace::SOT_MoreOrEqual: ResultString = FieldName + " >= " + Condition + " OR "; break;
 		case ISNamespace::SOT_LessOrEqual: ResultString = FieldName + " <= " + Condition + " OR "; break;
+        default: break;
 		}
 	}
 

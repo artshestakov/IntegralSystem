@@ -11,8 +11,8 @@
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(const QString &sql_text, bool prepare)
     : ErrorString(NO_ERROR_STRING),
-      SqlText(sql_text),
       SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT)),
+      SqlText(sql_text),
       SqlDatabase(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT)),
       Prepared(false),
       ShowLongQuery(true)

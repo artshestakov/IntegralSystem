@@ -60,9 +60,9 @@ private:
 	bool IsFinished; //Флаг остановки
 	std::ofstream File; //Текущий лог-файл
 	QString PathLogsDir; //Текущий путь к конечной папке с логами
-	size_t CurrentDay; //Текущий день
-	size_t CurrentMonth; //Текущий месяц
-	size_t CurrentYear; //Текущий год
+    int CurrentDay; //Текущий день
+    int CurrentMonth; //Текущий месяц
+    int CurrentYear; //Текущий год
 
 #ifdef WIN32
     CRITICAL_SECTION CriticalSection; //Ктирическая секция для синхронизации
