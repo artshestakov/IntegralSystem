@@ -6,7 +6,6 @@
 class ISMimePart
 {
 public:
-
 	enum Encoding
 	{
 		_7Bit,
@@ -15,8 +14,9 @@ public:
 		QuotedPrintable
 	};
 
+public:
 	ISMimePart();
-	~ISMimePart();
+    virtual ~ISMimePart();
 
 	const QString& getHeader() const;
 	const QByteArray& getContent() const;

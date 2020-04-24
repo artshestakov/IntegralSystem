@@ -7,7 +7,6 @@
 class ISCORE_EXPORT ISMimeMessage : public QObject
 {
 public:
-
     enum RecipientType 
 	{
         To, // primary
@@ -15,8 +14,9 @@ public:
         Bcc, // blind carbon copy
     };
 
+public:
     ISMimeMessage(bool createAutoMimeConent = true);
-    ~ISMimeMessage();
+    virtual ~ISMimeMessage();
 
     void setSender(ISEmailAddress* e);
     void addRecipient(ISEmailAddress* rcpt, RecipientType type = To);
@@ -34,15 +34,15 @@ public:
     const QList<ISMimePart*> & getParts() const;
 
     ISMimePart& getContent();
-    void setContent(ISMimePart *content);
+    void setContent(ISMimePart *mime_part);
 
     virtual QString toString();
 
 protected:
     ISEmailAddress* sender;
     QList<ISEmailAddress*> recipientsTo, recipientsCc, recipientsBcc;
-    QString subject;
-    ISMimePart *content;
+    QString Subject;
+    ISMimePart *MimePart;
     bool autoMimeContentCreated;
     
     ISMimePart::Encoding hEncoding;

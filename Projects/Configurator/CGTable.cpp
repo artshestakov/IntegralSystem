@@ -127,6 +127,10 @@ bool CGTable::CheckExistTable(PMetaTable *MetaTable, bool &Exist, QString &Error
 	{
 		Exist = qSelectTable.ReadColumn("count").toInt() > 0;
 	}
+    else
+    {
+        ErrorString = qSelectTable.GetErrorString();
+    }
 	return Result;
 }
 //-----------------------------------------------------------------------------

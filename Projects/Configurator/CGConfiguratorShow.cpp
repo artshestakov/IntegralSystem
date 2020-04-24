@@ -186,11 +186,9 @@ bool CGConfiguratorShow::obsoletesequence()
 	ISLOGGER_L("Searching not needed sequences...");
 
 	QString Where;
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().size(); ++i)
+    for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables())
 	{
-		QString TableName = ISMetaData::GetInstanse().GetTables()[i]->Name.toLower();
-		QString SequnceName = TableName + "_sequence";
-		Where += '\'' + SequnceName + "', ";
+        Where += '\'' + MetaTable->Name.toLower() + "_sequence" + "', ";
 	}
 	Where.chop(2);
 
@@ -247,15 +245,13 @@ bool CGConfiguratorShow::databasesize()
 //-----------------------------------------------------------------------------
 PMetaTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 {
-	for (int i = 0; i < ISMetaData::GetInstanse().GetTables().size(); ++i)
+    for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables())
 	{
-		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetTables().at(i);
 		if (MetaTable->Name.toLower() == TableName)
 		{
 			return MetaTable;
 		}
 	}
-
 	return nullptr;
 }
 //-----------------------------------------------------------------------------

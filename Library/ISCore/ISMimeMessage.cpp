@@ -3,39 +3,39 @@
 #include "ISConstants.h"
 #include "ISMimeMultipart.h"
 //-----------------------------------------------------------------------------
-ISMimeMessage::ISMimeMessage(bool createAutoMimeContent) : hEncoding(ISMimePart::_8Bit)
+ISMimeMessage::ISMimeMessage(bool createAutoMimeContent)
+    : QObject(),
+    hEncoding(ISMimePart::_8Bit)
 {
 	if (createAutoMimeContent)
 	{
-		this->content = new ISMimeMultiPart();
+        MimePart = new ISMimeMultiPart();
 	}
-    
     autoMimeContentCreated = createAutoMimeContent;
 }
 //-----------------------------------------------------------------------------
 ISMimeMessage::~ISMimeMessage()
 {
-    if (this->autoMimeContentCreated)
+    if (autoMimeContentCreated)
     {
-      this->autoMimeContentCreated = false;
-      delete (this->content);
+      autoMimeContentCreated = false;
+      delete MimePart;
     }
 }
 //-----------------------------------------------------------------------------
 ISMimePart& ISMimeMessage::getContent() 
 {
-    return *content;
+    return *MimePart;
 }
 //-----------------------------------------------------------------------------
-void ISMimeMessage::setContent(ISMimePart *content) 
+void ISMimeMessage::setContent(ISMimePart *mime_part)
 {
-    if (this->autoMimeContentCreated)
+    if (autoMimeContentCreated)
     {
-      this->autoMimeContentCreated = false;
-      delete (this->content);
+      autoMimeContentCreated = false;
+      delete MimePart;
     }
-
-    this->content = content;
+    MimePart = mime_part;
 }
 //-----------------------------------------------------------------------------
 void ISMimeMessage::setSender(ISEmailAddress* e)
@@ -61,35 +61,35 @@ void ISMimeMessage::addRecipient(ISEmailAddress* rcpt, RecipientType type)
 //-----------------------------------------------------------------------------
 void ISMimeMessage::addTo(ISEmailAddress* rcpt) 
 {
-    this->recipientsTo << rcpt;
+    recipientsTo << rcpt;
 }
 //-----------------------------------------------------------------------------
 void ISMimeMessage::addCc(ISEmailAddress* rcpt) 
 {
-    this->recipientsCc << rcpt;
+    recipientsCc << rcpt;
 }
 //-----------------------------------------------------------------------------
 void ISMimeMessage::addBcc(ISEmailAddress* rcpt) 
 {
-    this->recipientsBcc << rcpt;
+    recipientsBcc << rcpt;
 }
 //-----------------------------------------------------------------------------
-void ISMimeMessage::setSubject(const QString & subject)
+void ISMimeMessage::setSubject(const QString &subject)
 {
-    this->subject = subject;
+    Subject = subject;
 }
 //-----------------------------------------------------------------------------
 void ISMimeMessage::addPart(ISMimePart *part)
 {
-    if (typeid(*content) == typeid(ISMimeMultiPart)) 
+    if (typeid(*MimePart) == typeid(ISMimeMultiPart))
 	{
-        ((ISMimeMultiPart*) content)->addPart(part);
+        ((ISMimeMultiPart*)MimePart)->addPart(part);
     };
 }
 //-----------------------------------------------------------------------------
 void ISMimeMessage::setHeaderEncoding(ISMimePart::Encoding hEnc)
 {
-    this->hEncoding = hEnc;
+    hEncoding = hEnc;
 }
 //-----------------------------------------------------------------------------
 const ISEmailAddress & ISMimeMessage::getSender() const
@@ -113,17 +113,19 @@ const QList<ISEmailAddress*> & ISMimeMessage::getRecipients(RecipientType type) 
 //-----------------------------------------------------------------------------
 const QString & ISMimeMessage::getSubject() const
 {
-    return subject;
+    return Subject;
 }
 //-----------------------------------------------------------------------------
 const QList<ISMimePart*> & ISMimeMessage::getParts() const
 {
-    if (typeid(*content) == typeid(ISMimeMultiPart)) {
-        return ((ISMimeMultiPart*) content)->getParts();
+    if (typeid(*MimePart) == typeid(ISMimeMultiPart))
+    {
+        return ((ISMimeMultiPart*)MimePart)->getParts();
     }
-    else {
+    else
+    {
         QList<ISMimePart*> *res = new QList<ISMimePart*>();
-        res->append(content);
+        res->append(MimePart);
         return *res;
     }
 }
@@ -173,12 +175,17 @@ QString ISMimeMessage::toString()
     }
     mime += "\r\n";
 
-	if (recipientsCc.size() != 0) {
+    if (recipientsCc.size() != 0)
+    {
         mime += "Cc:";
     }
+
     for (i = 0, it = recipientsCc.begin(); it != recipientsCc.end(); ++it, ++i)
     {
-        if (i != 0) { mime += ','; }
+        if (i != 0)
+        {
+            mime += ',';
+        }
 
         if ((*it)->getName() != "")
         {
@@ -196,7 +203,9 @@ QString ISMimeMessage::toString()
         }
         mime += " <" + (*it)->getAddress() + '>';
     }
-    if (recipientsCc.size() != 0) {
+
+    if (recipientsCc.size() != 0)
+    {
         mime += "\r\n";
     }
 
@@ -205,20 +214,19 @@ QString ISMimeMessage::toString()
     switch (hEncoding)
     {
     case ISMimePart::Base64:
-        mime += "=?utf-8?B?" + QByteArray().append(subject).toBase64() + "?=";
+        mime += "=?utf-8?B?" + QByteArray().append(Subject).toBase64() + "?=";
         break;
     case ISMimePart::QuotedPrintable:
-        mime += "=?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append(subject)).replace(' ', '_').replace(':',"=3A") + "?=";
+        mime += "=?utf-8?Q?" + ISQuotedPrintable::encode(QByteArray().append(Subject)).replace(' ', '_').replace(':',"=3A") + "?=";
         break;
     default:
-        mime += subject;
+        mime += Subject;
     }
 
     mime += "\r\n";
     mime += "MIME-Version: 1.0\r\n";
     mime += QString("Date: %1\r\n").arg(QDateTime::currentDateTime().toString(Qt::RFC2822Date));
-
-    mime += content->toString();
+    mime += MimePart->toString();
     return mime;
 }
 //-----------------------------------------------------------------------------

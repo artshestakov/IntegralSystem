@@ -34,6 +34,7 @@ void ISCaratDebugger::Disconnected()
 //-----------------------------------------------------------------------------
 void ISCaratDebugger::Error(QLocalSocket::LocalSocketError ErrorType)
 {
+    Q_UNUSED(ErrorType);
 	printf("Error connection: %s\n", LocalSocket->errorString().toStdString().c_str());
 }
 //-----------------------------------------------------------------------------

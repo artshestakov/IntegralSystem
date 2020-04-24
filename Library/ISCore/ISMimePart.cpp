@@ -10,7 +10,7 @@ ISMimePart::ISMimePart()
 //-----------------------------------------------------------------------------
 ISMimePart::~ISMimePart()
 {
-	return;
+
 }
 //-----------------------------------------------------------------------------
 void ISMimePart::setContent(const QByteArray & content)
