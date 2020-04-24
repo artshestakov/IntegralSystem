@@ -480,11 +480,12 @@ void ISSmtpClient::sendMessage(const QString &text)
 //-----------------------------------------------------------------------------
 void ISSmtpClient::socketStateChanged(QAbstractSocket::SocketState state)
 {
-
+    Q_UNUSED(state);
 }
 //-----------------------------------------------------------------------------
 void ISSmtpClient::socketError(QAbstractSocket::SocketError socketError)
 {
+    Q_UNUSED(socketError);
 	ISLOGGER_E(socket->errorString());
 }
 //-----------------------------------------------------------------------------

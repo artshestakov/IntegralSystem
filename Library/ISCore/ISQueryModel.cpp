@@ -88,6 +88,7 @@ QString ISQueryModel::GetQueryText()
 		{
 		case ISNamespace::PT_CreationDate: PeriodString = PeriodString.arg("creationdate"); break;
 		case ISNamespace::PT_UpdationDate: PeriodString = PeriodString.arg("updationdate"); break;
+        default: break;
 		}
 		SqlText += PeriodString.arg(QDateTime(PeriodRange.BeginValue.toDate(), QTime(0, 0)).toString(FORMAT_DATE_TIME_V7)).arg(QDateTime(PeriodRange.EndValue.toDate(), QTime(23, 59, 59)).toString(FORMAT_DATE_TIME_V7));
 	}
