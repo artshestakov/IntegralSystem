@@ -43,7 +43,7 @@
 	<!-- Сборка зависимостей -->
 	<Target Name="Deploy">
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ISCore.dll $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd libGui.dll $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ISGui.dll $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ISCarat.dll $(Configuration) $(Platform)"/>
 		
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd Carat.exe $(Configuration) $(Platform)"/>
