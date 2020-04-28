@@ -35,7 +35,6 @@
       <Index Field="AccountLifetimeEnd"/>
       <Index Field="LastEnter"/>
       <Index Field="LastAddress"/>
-      <Index Field="Photo"/>
       <Index Field="IsDeleted;Login"/>
     </Indexes>
     <Foreigns>

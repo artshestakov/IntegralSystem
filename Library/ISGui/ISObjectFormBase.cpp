@@ -451,55 +451,65 @@ void ISObjectFormBase::FillDataFields()
 		//Подготовка запроса
 		ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_Object);
 		QueryModel.SetClassFilter(MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + "_id = " + QString::number(ObjectID));
-		QString QueryText = QueryModel.GetQueryText();
 
 		//Выполнение запроса
-		ISQuery qSelect(QueryText);
-		IS_ASSERT(qSelect.ExecuteFirst(), QString("Not executed query:\n%1\n%2").arg(QueryText).arg(qSelect.GetErrorString()));
-		IS_ASSERT(qSelect.GetCountResultRows() == 1, "Error count result rows");
-		QSqlRecord SqlRecord = qSelect.GetRecord();
-		
-		RecordIsDeleted = SqlRecord.value("IsDeleted").toBool();
-		LabelIsDeleted->setVisible(RecordIsDeleted);
-
-		if (FormType == ISNamespace::OFT_Edit)
+		ISQuery qSelect(QueryModel.GetQueryText());
+		if (qSelect.ExecuteFirst())
 		{
-			SetValueFieldID(ObjectID);
-		}
-
-		for (int i = 0; i < SqlRecord.count(); ++i) //Обход полей записи
-		{
-			QString FieldName = SqlRecord.fieldName(i);
-			QVariant Value = SqlRecord.value(FieldName);
-			if (Value.isNull()) //Если значение пустое, перейти на следующий шаг цикла
+			if (qSelect.GetCountResultRows() == 1)
 			{
-				BeginValues.insert(FieldName, QVariant());
-				continue;
-			}
+				QSqlRecord SqlRecord = qSelect.GetRecord();
+				RecordIsDeleted = SqlRecord.value("IsDeleted").toBool();
+				LabelIsDeleted->setVisible(RecordIsDeleted);
 
-			if (FieldsMap.count(FieldName))
-			{
-				ISFieldEditBase *FieldEditWidget = FieldsMap[FieldName];
-				disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
-
-				if (MetaTable->GetField(FieldName)->Foreign)
+				if (FormType == ISNamespace::OFT_Edit)
 				{
-					QVariant ListObjectID = ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID);
-					FieldEditWidget->SetValue(ListObjectID);
-					BeginValues.insert(FieldName, ListObjectID);
-				}
-				else
-				{
-					FieldEditWidget->SetValue(Value);
-					BeginValues.insert(FieldName, Value);
+					SetValueFieldID(ObjectID);
 				}
 
-				//Если формы открывается для создания копии
-				FieldEditWidget->SetModificationFlag(FormType == ISNamespace::OFT_Copy);
-				connect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
+				for (int i = 0; i < SqlRecord.count(); ++i) //Обход полей записи
+				{
+					QString FieldName = SqlRecord.fieldName(i);
+					QVariant Value = SqlRecord.value(FieldName);
+					if (Value.isNull()) //Если значение пустое, перейти на следующий шаг цикла
+					{
+						BeginValues.insert(FieldName, QVariant());
+						continue;
+					}
+
+					if (FieldsMap.count(FieldName))
+					{
+						ISFieldEditBase *FieldEditWidget = FieldsMap[FieldName];
+						disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
+
+						if (MetaTable->GetField(FieldName)->Foreign)
+						{
+							QVariant ListObjectID = ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID);
+							FieldEditWidget->SetValue(ListObjectID);
+							BeginValues.insert(FieldName, ListObjectID);
+						}
+						else
+						{
+							FieldEditWidget->SetValue(Value);
+							BeginValues.insert(FieldName, Value);
+						}
+
+						//Если формы открывается для создания копии
+						FieldEditWidget->SetModificationFlag(FormType == ISNamespace::OFT_Copy);
+						connect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
+					}
+				}
+				ISCore::AddHistory(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.QueryRecordIsNull"));
 			}
 		}
-		ISCore::AddHistory(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.QueryRecord"), qSelect.GetErrorString());
+		}
 	}
 }
 //-----------------------------------------------------------------------------
@@ -612,7 +622,6 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		else
 		{
 			LayoutHorizontal->setProperty("Inserted", true);
-
 			FormLayout->addRow(LabelField, LayoutHorizontal);
 			LayoutHorizontal->addWidget(FieldEditBase);
 		}
@@ -719,7 +728,6 @@ void ISObjectFormBase::SaveCreate()
 			ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
 			ObjectFormBase->show();
 		}
-
 		close();
 		emit CloseTab(CurrentIndexTab);
 	}
