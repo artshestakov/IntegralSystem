@@ -11,6 +11,7 @@ QString ISDefines::Core::PATH_CRASH_DIR;
 QString ISDefines::Core::PATH_TRANSLATIONS_DIR;
 QString ISDefines::Core::PATH_CONFIG_FILE;
 QString ISDefines::Core::PATH_PID_FILE;
+QString ISDefines::Core::PATH_LAST_DIRECTORY;
 QString ISDefines::Core::SYMBOL_CIRCLE;
 QString ISDefines::Core::SYMBOL_MULTIPLY;
 QString ISDefines::Core::SYMBOL_DIVIDE;
@@ -30,6 +31,7 @@ void ISDefines::Core::Init(bool IsGui)
 	PATH_TRANSLATIONS_DIR = PATH_APPLICATION_DIR + "/translations";
 	PATH_CONFIG_FILE = PATH_APPLICATION_DIR + '/' + (ISDefines::Core::IS_GUI ? "Client" : "Server") + SYMBOL_POINT + EXTENSION_INI;
     PATH_PID_FILE = PATH_TEMP_DIR + PATH_SEPARATOR + APPLICATION_NAME + '.' + EXTENSION_PID;
+	PATH_LAST_DIRECTORY = QDir::homePath();
 	SYMBOL_CIRCLE = QString(QChar(9679));
 	SYMBOL_MULTIPLY = QString(QChar(215));
 	SYMBOL_DIVIDE = QString(QChar(247));

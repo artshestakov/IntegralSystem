@@ -192,7 +192,7 @@ void ISChatMessageWidget::OpenImage()
 void ISChatMessageWidget::SaveImage()
 {
 	QString ImagePath = ISFileDialog::GetSaveFileNameImage(this);
-	if (ImagePath.length())
+	if (!ImagePath.isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(true);
 
@@ -210,7 +210,6 @@ void ISChatMessageWidget::SaveImage()
 				}
 			}
 		}
-
 		ISGui::SetWaitGlobalCursor(false);
 	}
 }
@@ -234,11 +233,9 @@ void ISChatMessageWidget::OpenFile()
 			{
 				File.write(ByteArray);
 				File.close();
-
 				ISGui::OpenFile(File.fileName());
 			}
 		}
-
 		ISGui::SetWaitGlobalCursor(false);
 	}
 }
@@ -272,7 +269,6 @@ void ISChatMessageWidget::SaveFile()
 					}
 				}
 			}
-
 			ISGui::SetWaitGlobalCursor(false);
 		}
 	}

@@ -9,6 +9,7 @@
 #include "ISMetaViewQuery.h"
 #include "ISDatabaseHelper.h"
 #include "ISGui.h"
+#include "ISFileDialog.h"
 //-----------------------------------------------------------------------------
 ISPrintingHtml::ISPrintingHtml(ISPrintMetaReport *meta_report, int object_id, QObject *parent)
 	: ISPrintingBase(meta_report, object_id, parent),
@@ -127,7 +128,7 @@ bool ISPrintingHtml::Print()
 	if (PDF)
 	{
 		emit SetVisibleDialog(false);
-		QString Path = QFileDialog::getSaveFileName(nullptr, LANG("PrintSavePDF"), PathPDF, LANG("File.Filter.Pdf"));
+		QString Path = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Pdf"), PathPDF);
 		emit SetVisibleDialog(true);
 
 		if (Path.length())

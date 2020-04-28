@@ -57,7 +57,6 @@ void ISImageWidget::dragEnterEvent(QDragEnterEvent *e)
 		{
 			return;
 		}
-
 		e->acceptProposedAction();
 	}
 }
@@ -74,8 +73,7 @@ void ISImageWidget::dropEvent(QDropEvent *e)
 //-----------------------------------------------------------------------------
 void ISImageWidget::dragMoveEvent(QDragMoveEvent *e)
 {
-	const QMimeData *MimeData = e->mimeData();
-	if (MimeData->hasUrls())
+	if (e->mimeData()->hasUrls())
 	{
 		e->acceptProposedAction();
 	}
@@ -86,14 +84,7 @@ void ISImageWidget::mouseDoubleClickEvent(QMouseEvent *e)
 	QLabel::mouseDoubleClickEvent(e);
 	if (e->button() == Qt::LeftButton)
 	{
-		if (CurrentPixmap.isNull())
-		{
-			Select();
-		}
-		else
-		{
-			OpenView();
-		}
+		CurrentPixmap.isNull() ? Select() : OpenView();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -121,7 +112,6 @@ void ISImageWidget::SetPixmap(const QPixmap &Pixmap)
 	{
 		setFocus();
 	}
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -147,7 +137,7 @@ void ISImageWidget::Clear()
 void ISImageWidget::Select()
 {
 	QString Path = ISFileDialog::GetOpenFileNameImage(this);
-	if (Path.length())
+	if (!Path.isEmpty())
 	{
 		SetPixmap(Path);
 	}
@@ -174,7 +164,7 @@ void ISImageWidget::Paste()
 void ISImageWidget::PasteFromLink()
 {
 	QString Url = QApplication::clipboard()->text();
-	if (Url.length())
+	if (!Url.isEmpty())
 	{
 		if (ISGui::IsStringUrl(Url))
 		{
@@ -217,7 +207,7 @@ void ISImageWidget::PasteFromLink()
 void ISImageWidget::Save()
 {
 	QString Path = ISFileDialog::GetSaveFileNameImage(this);
-	if (Path.length())
+	if (!Path.isEmpty())
 	{
         CurrentPixmap.save(Path);
 	}
@@ -226,8 +216,7 @@ void ISImageWidget::Save()
 void ISImageWidget::OpenView()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISImageViewerForm *ImageViewForm = new ISImageViewerForm(CurrentPixmap);
-	ImageViewForm->show();
+	(new ISImageViewerForm(CurrentPixmap))->show();
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

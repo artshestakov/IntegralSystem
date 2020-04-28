@@ -191,25 +191,24 @@ void ISAsteriskCallsListForm::SaveRecord()
 
 	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
 	{
-		QString AsteriskFileRecordName = LANG("AsteriskFileRecordName").arg(GetCurrentRecordValue("Subscriber").toString()).arg(GetCurrentRecordValue("DialBegin").toDateTime().toString(FORMAT_DATE_TIME_V6));
-		QString SavedPath = ISFileDialog::GetSaveFileNameAsteriskRecord(this, AsteriskFileRecordName);
-		if (SavedPath.length())
+		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("FileDialog.AsteriskRecord.Save.Title"), LANG("AsteriskFileRecordName").arg(GetCurrentRecordValue("Subscriber").toString()).arg(GetCurrentRecordValue("DialBegin").toDateTime().toString(FORMAT_DATE_TIME_V6)));
+		if (!FilePath.isEmpty())
 		{
 			ISAsteriskRecordWaitForm AsteriskRecordWaitForm(GetCurrentRecordValueDB("UniqueID").toString());
 			if (AsteriskRecordWaitForm.Exec())
 			{
-				if (QFile::exists(SavedPath))
+				if (QFile::exists(FilePath))
 				{
-					QFile::remove(SavedPath);
+					QFile::remove(FilePath);
 				}
 
 				QFile FileRecord(AsteriskRecordWaitForm.GetFilePath());
-				if (FileRecord.copy(SavedPath))
+				if (FileRecord.copy(FilePath))
 				{
 					ISProtocol::Insert(true, CONST_UID_PROTOCOL_ASTERISK_RECORD_SAVE, QString(), QString(), QVariant(), QString::number(GetObjectID()));
 					if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.FileRecordSaved")))
 					{
-						Play(SavedPath);
+						Play(FilePath);
 					}
 				}
 				else

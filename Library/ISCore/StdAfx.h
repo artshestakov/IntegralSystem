@@ -89,7 +89,6 @@
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QItemSelectionModel>
 #include <QtCore/QPropertyAnimation>
-#include <QtCore/QStandardPaths>
 //-----------------------------------------------------------------------------
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQueryModel>
