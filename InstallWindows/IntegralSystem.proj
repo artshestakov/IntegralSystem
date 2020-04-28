@@ -35,7 +35,6 @@
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratMail $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratMedTech $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratNotification $(Configuration) $(Platform) $(PlatformToolset)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratScheduler $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratSMS $(Configuration) $(Platform) $(PlatformToolset)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratTelephony $(Configuration) $(Platform) $(PlatformToolset)"/>
 	</Target>
@@ -60,7 +59,6 @@
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratMail.exe $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratMedTech.exe $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratNotification.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratScheduler.exe $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratSMS.exe $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratTelephony.exe $(Configuration) $(Platform)"/>
 	</Target>

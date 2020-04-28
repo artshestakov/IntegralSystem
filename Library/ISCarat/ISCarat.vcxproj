@@ -97,7 +97,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtMoc Include="ISCoreNotification.h" />
-    <QtMoc Include="ISCoreScheduler.h" />
     <QtMoc Include="ISCoreSMS.h" />
     <QtMoc Include="ISCaratCoreApplication.h" />
     <QtMoc Include="ISCoreTelephony.h" />
@@ -124,7 +123,6 @@
     <ClCompile Include="ISCoreMail.cpp" />
     <ClCompile Include="ISCoreMedTech.cpp" />
     <ClCompile Include="ISCoreNotification.cpp" />
-    <ClCompile Include="ISCoreScheduler.cpp" />
     <ClCompile Include="ISCoreSMS.cpp" />
     <ClCompile Include="ISCoreTelephony.cpp" />
   </ItemGroup>
