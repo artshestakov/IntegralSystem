@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISFILEEDIT_H_INCLUDED
+#define _ISFILEEDIT_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
@@ -16,19 +18,17 @@ public:
 	QVariant GetValue() const override;
 	void Clear() override;
 
-protected:
-	void SelectFile(); //Выбор файла через проводник
-	void HandlingFile(const QString &FilePath); //Обработка файла
-	void Open(); //Открытие файла
-	void Rename(); //Переименование файла
-	void Save(); //Сохранение файла на диск
-
-	bool UpdateFile(const QString &FileName, const QString &FileExtension, const QIcon &FileIcon, const QByteArray &FileData) const; //Обновление файла в базе
-	bool InsertFile(const QString &FileName, const QString &FileExtension, const QIcon &FileIcon, const QByteArray &FileData); //Добавление файла в базу
-	
 private:
-	ISButtonFile *ButtonFile;
-	QMenu *MenuFile;
-	QVariant FileID;
+	void SelectFile();
+	void Save();
+	void Rename();
+
+private:
+	QVariantMap VariantMap;
+
+	ISPushButton *ButtonFile;
+	QAction *ActionSave;
+	QAction *ActionRename;
 };
 //-----------------------------------------------------------------------------
+#endif

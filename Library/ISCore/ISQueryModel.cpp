@@ -270,7 +270,12 @@ void ISQueryModel::CreateQuerySelectFields()
 			}
 			else
 			{
-				QuerySelectFields += ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower() + " AS \"" + Field->Name + "\", \n";
+				QuerySelectFields += ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower();
+				if (Field->Type == ISNamespace::FT_File && ModelType == ISNamespace::QMT_List)
+				{
+					QuerySelectFields += " IS NULL";
+				}
+				QuerySelectFields += " AS \"" + Field->Name + "\", \n";
 			}
 		}
 	}

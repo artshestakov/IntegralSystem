@@ -148,7 +148,7 @@ void ISDelegateFile::paint(QPainter *Painter, const QStyleOptionViewItem &Option
 	QStyle *Style = Widget ? Widget->style() : QApplication::style();
 	Style->drawControl(QStyle::CE_ItemViewItem, &OptionViewItem, Painter, Widget);
 
-	if (Index.data().isValid())
+	if (!Index.data().toBool())
 	{
 		QImage Image = Option.state & QStyle::State_Selected ? ImageSelected : ImageNotSelected;
 		const int x = Option.rect.center().x() - Image.rect().width() / 2;

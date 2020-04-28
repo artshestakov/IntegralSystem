@@ -170,6 +170,9 @@ const int		QUERY_POOL_TIMEOUT = 1000; //Таймаут выполнения запросов из очереди
 const size_t	EDIT_BLINK_COUNT = (3) * 2; //Количество миганий поля редактирования. Где 3 - количество миганий.
 const char		UUID_PLACEHOLDER_TEXT[] = "{00000000-0000-0000-0000-000000000000}";
 const size_t	NPOS = std::string::npos;
+const char		FILE_EDIT_PROPERTY_NAME[] = "Name";
+const char		FILE_EDIT_PROPERTY_LOGO[] = "Logo";
+const char		FILE_EDIT_PROPERTY_DATA[] = "Data";
 //LOGGER-----------------------------------------------------------------------
 const char		LOGGER_NAME_DEFAULT[] = "Log";
 const int		LOGGER_TIMEOUT = 1000;

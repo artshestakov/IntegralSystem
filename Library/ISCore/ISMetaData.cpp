@@ -49,7 +49,7 @@ ISMetaData::ISMetaData()
 		{ "Percent", ISNamespace::FT_Percent, "NUMERIC", "ISPercentEdit", "ISComboSearchNumber", true },
 		{ "Address", ISNamespace::FT_Address, "CHARACTER VARYING", "ISAddressEdit", "ISComboSearchString", true },
 		{ "Url", ISNamespace::FT_Url, "CHARACTER VARYING", "ISUrlEdit", "ISComboSearchString", true },
-		{ "File", ISNamespace::FT_File, "INTEGER", "ISFileEdit", QString(), false }
+		{ "File", ISNamespace::FT_File, "CHARACTER VARYING", "ISFileEdit", QString(), false }
 	};
 }
 //-----------------------------------------------------------------------------

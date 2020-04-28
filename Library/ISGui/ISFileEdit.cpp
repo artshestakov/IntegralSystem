@@ -1,63 +1,35 @@
 #include "ISFileEdit.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
-#include "ISLocalization.h"
 #include "ISFileDialog.h"
 #include "ISMessageBox.h"
+#include "ISLocalization.h"
 #include "ISSystem.h"
-#include "ISInputDialog.h"
-#include "ISQuery.h"
+#include "ISBuffer.h"
 #include "ISGui.h"
-//-----------------------------------------------------------------------------
-static QString QS_FILE = PREPARE_QUERY("SELECT file_name, file_extension, file_icon "
-									   "FROM _file "
-									   "WHERE file_id = :FileID");
-//-----------------------------------------------------------------------------
-static QString QU_FILE = PREPARE_QUERY("UPDATE _file SET "
-									   "file_name = :Name, "
-									   "file_extension = :Extension, "
-									   "file_icon = :Icon, "
-									   "file_data = :Data "
-									   "WHERE file_id = :FileID");
-//-----------------------------------------------------------------------------
-static QString QI_FILE = PREPARE_QUERY("INSERT INTO _file(file_name, file_extension, file_icon, file_data) "
-									   "VALUES(:Name, :Extension, :Icon, :Data) "
-									   "RETURNING file_id");
-//-----------------------------------------------------------------------------
-static QString QU_FILE_NAME = PREPARE_QUERY("UPDATE _file SET "
-											"file_name = :Name "
-											"WHERE file_id = :FileID");
-//-----------------------------------------------------------------------------
-static QString QS_FILE_OPEN = PREPARE_QUERY("SELECT file_extension, file_data FROM _file WHERE file_id = :FileID");
-//-----------------------------------------------------------------------------
-static QString QS_FILE_SAVE = PREPARE_QUERY("SELECT file_name, file_extension FROM _file WHERE file_id = :FileID");
-//-----------------------------------------------------------------------------
-static QString QS_FILE_DATA = PREPARE_QUERY("SELECT file_data FROM _file WHERE file_id = :FileID");
+#include "ISInputDialog.h"
+#include "ISDefinesGui.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 ISFileEdit::ISFileEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	CreateButtonClear();
 
-	ButtonFile = new ISButtonFile(this);
-	ButtonFile->setFlat(true);
-	ButtonFile->setText(LANG("FileNotSelected"));
-	ButtonFile->setToolTip(LANG("ClickOverviewFromSelectFile"));
+	ButtonFile = new ISPushButton(this);
 	ButtonFile->setCursor(CURSOR_POINTING_HAND);
-	connect(ButtonFile, &ISButtonFile::DragAndDropFile, this, &ISFileEdit::HandlingFile);
+	ButtonFile->setText(LANG("FileNotSelected"));
+	ButtonFile->setToolTip(LANG("ClickFromSelectFile"));
+	ButtonFile->setMenu(new QMenu(ButtonFile));
+	connect(ButtonFile, &ISPushButton::clicked, this, &ISFileEdit::SelectFile);
 	AddWidgetEdit(ButtonFile, this);
 
-	MenuFile = new QMenu(ButtonFile);
-	MenuFile->addAction(LANG("Open"), this, &ISFileEdit::Open);
-	MenuFile->addAction(LANG("Rename"), this, &ISFileEdit::Rename);
-	MenuFile->addAction(LANG("SaveToDisk"), this, &ISFileEdit::Save);
+	ButtonFile->menu()->addAction(BUFFER_ICONS("Select"), LANG("Overview"), this, &ISFileEdit::SelectFile);
+	
+	ActionSave = ButtonFile->menu()->addAction(BUFFER_ICONS("Save"), LANG("SaveToDisk"), this, &ISFileEdit::Save);
+	ActionSave->setEnabled(false);
 
-	ISPushButton *ButtonSelect = new ISPushButton(this);
-	ButtonSelect->setText(LANG("Overview"));
-	ButtonSelect->setToolTip(LANG("SelectFile"));
-	ButtonSelect->setCursor(CURSOR_POINTING_HAND);
-	connect(ButtonSelect, &ISPushButton::clicked, this, &ISFileEdit::SelectFile);
-	AddWidgetToRight(ButtonSelect);
+	ActionRename = ButtonFile->menu()->addAction(BUFFER_ICONS("Edit"), LANG("Rename"), this, &ISFileEdit::Rename);
+	ActionRename->setEnabled(false);
 }
 //-----------------------------------------------------------------------------
 ISFileEdit::~ISFileEdit()
@@ -67,209 +39,103 @@ ISFileEdit::~ISFileEdit()
 //-----------------------------------------------------------------------------
 void ISFileEdit::SetValue(const QVariant &value)
 {
-	if (value.isValid())
+	VariantMap = ISSystem::JsonStringToVariantMap(value.toString());
+	ButtonFile->setText(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
+	ActionSave->setEnabled(true);
+	ActionRename->setEnabled(true);
+
+	QPixmap Pixmap;
+	if (Pixmap.loadFromData(QByteArray::fromBase64(VariantMap[FILE_EDIT_PROPERTY_LOGO].toString().toUtf8())))
 	{
-		FileID = value;
-		ISQuery qSelectFile(QS_FILE);
-		qSelectFile.BindValue(":FileID", FileID);
-		if (qSelectFile.ExecuteFirst())
-		{
-			ButtonFile->setText(qSelectFile.ReadColumn("file_name").toString() + SYMBOL_POINT + qSelectFile.ReadColumn("file_extension").toString());
-			ButtonFile->setToolTip(QString());
-			ButtonFile->setIcon(ISGui::ByteArrayToIcon(qSelectFile.ReadColumn("file_icon").toByteArray()));
-		}
+		ButtonFile->setIcon(QIcon(Pixmap));
 	}
 }
 //-----------------------------------------------------------------------------
 QVariant ISFileEdit::GetValue() const
 {
-	return FileID;
+	return VariantMap.isEmpty() ? QVariant() : ISSystem::VariantMapToJsonString(VariantMap).simplified();
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::Clear()
 {
-	ISGui::SetWaitGlobalCursor(true);
-	if (FileID.isValid())
-	{
-		FileID.clear();
-		ButtonFile->setMenu(nullptr);
-		ButtonFile->setText(LANG("FileNotSelected"));
-		ButtonFile->setToolTip(LANG("ClickOverviewFromSelectFile"));
-		ButtonFile->setIcon(QIcon());
-		ValueChanged();
-	}
-	ISGui::SetWaitGlobalCursor(false);
+	VariantMap.clear();
+	ButtonFile->setText(LANG("FileNotSelected"));
+	ActionSave->setEnabled(false);
+	ActionRename->setEnabled(false);
+	emit ValueChanged();
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::SelectFile()
 {
 	QString FilePath = ISFileDialog::GetOpenFileName(this);
-	if (FilePath.length()) //Пользователь не выбрал файл
+	if (!FilePath.isEmpty())
 	{
-		HandlingFile(FilePath);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISFileEdit::HandlingFile(const QString &FilePath)
-{
-	QFileInfo FileInfo(FilePath);
-	if (FileInfo.size() > MAX_FILE_SIZE_FIELD) //Если размер файла больше установленного ограничения
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.FileSizeExceedsLimit").arg(MAX_FILE_SIZE_FIELD / 1024 / 1000));
-		return;
-	}
-
-	QFile File(FilePath);
-	if (!File.open(QIODevice::ReadOnly)) //Если файл не удалось открыть на чтение
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FilePath));
-		return;
-	}
-
-	QString FileName = FileInfo.baseName();
-	QString FileExtension = FileInfo.suffix();
-	QIcon FileIcon = ISGui::GetIconFile(FilePath);
-	QByteArray FileData = File.readAll();
-	File.close();
-
-	if (!FileData.size())
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Error.FileEmptyOrInvalid").arg(FilePath));
-		return;
-	}
-
-	ISGui::SetWaitGlobalCursor(true);
-	ButtonFile->setText(LANG("Adding"));
-	ISGui::RepaintWidget(ButtonFile);
-
-	if (FileID.isValid())
-	{
-		if (UpdateFile(FileName, FileExtension, FileIcon, FileData))
+		QFileInfo FileInfo(FilePath);
+		QFile File(FilePath);
+		if (File.size() > (((1000 * 1024) * SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE))))
 		{
-			ButtonFile->setMenu(MenuFile);
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.InsertingFileSizeVeryBig").arg(FileInfo.fileName()).arg(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE)));
+			return;
+		}
+
+		if (File.open(QIODevice::ReadOnly))
+		{
+			ISGui::SetWaitGlobalCursor(true);
+			QIcon IconFile = ISGui::GetIconFile(FilePath);
+			VariantMap[FILE_EDIT_PROPERTY_NAME] = FileInfo.fileName();
+			VariantMap[FILE_EDIT_PROPERTY_LOGO] = ISGui::PixmapToByteArray(IconFile.pixmap(ISDefines::Gui::SIZE_32_32)).toBase64();
+			VariantMap[FILE_EDIT_PROPERTY_DATA] = File.readAll().toBase64();
+			File.close();
+			ButtonFile->setIcon(IconFile);
 			ButtonFile->setText(FileInfo.fileName());
-			ButtonFile->setToolTip(QString());
-			ButtonFile->setIcon(FileIcon);
-			ValueChanged();
+			ActionSave->setEnabled(true);
+			ActionRename->setEnabled(true);
+			emit ValueChanged();
+			ISGui::SetWaitGlobalCursor(false);
 		}
-	}
-	else
-	{
-		if (InsertFile(FileName, FileExtension, FileIcon, FileData))
+		else
 		{
-			ButtonFile->setMenu(MenuFile);
-			ButtonFile->setText(FileInfo.fileName());
-			ButtonFile->setToolTip(QString());
-			ButtonFile->setIcon(FileIcon);
-			ValueChanged();
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FileInfo.fileName()), File.errorString());
 		}
-	}
-	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISFileEdit::Open()
-{
-	ISGui::SetWaitGlobalCursor(true);
-
-	ISQuery qSelect(QS_FILE_OPEN);
-	qSelect.BindValue(":FileID", FileID);
-	if (qSelect.ExecuteFirst())
-	{
-		QString Extension = qSelect.ReadColumn("file_extension").toString();
-		QByteArray Data = qSelect.ReadColumn("file_data").toByteArray();
-		QString FilePathTemp = ISDefines::Core::PATH_TEMP_DIR + '/' + ISSystem::GenerateUuid() + SYMBOL_POINT + Extension;
-		QFile FileTemp(FilePathTemp);
-		if (FileTemp.open(QIODevice::WriteOnly))
-		{
-			FileTemp.write(Data);
-			FileTemp.close();
-
-			ISGui::OpenFile(FilePathTemp);
-		}
-	}
-
-	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISFileEdit::Rename()
-{
-	QFileInfo FileInfo(ButtonFile->text());
-	QVariant NewName = ISInputDialog::GetString(LANG("Renaming"), LANG("NewFileName"), FileInfo.baseName());
-	if (NewName.isValid())
-	{
-		ISGui::SetWaitGlobalCursor(true);
-
-		ISQuery qUpdateName(QU_FILE_NAME);
-		qUpdateName.BindValue(":Name", NewName);
-		qUpdateName.BindValue(":FileID", FileID);
-		if (qUpdateName.Execute())
-		{
-			ButtonFile->setText(NewName.toString() + SYMBOL_POINT + FileInfo.suffix());
-			ValueChanged();
-		}
-
-		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::Save()
 {
-	ISQuery qSelectFile(QS_FILE_SAVE);
-	qSelectFile.BindValue(":FileID", FileID);
-	if (qSelectFile.ExecuteFirst())
+	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).suffix()), QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).baseName());
+	if (!FilePath.isEmpty())
 	{
-		QString Name = qSelectFile.ReadColumn("file_name").toString();
-		QString Extension = qSelectFile.ReadColumn("file_extension").toString();
-		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(Extension), Name);
-		if (FilePath.length())
+		QFile File(FilePath);
+		if (File.open(QIODevice::WriteOnly))
 		{
-			QFile File(FilePath);
-			if (File.exists())
-			{
-				if (!File.remove())
-				{
-					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeletedFile").arg(FilePath));
-				}
-			}
+			File.write(QByteArray::fromBase64(VariantMap[FILE_EDIT_PROPERTY_DATA].toString().toUtf8()));
+			File.close();
 
-			ISQuery qSelectData(QS_FILE_DATA);
-			qSelectData.BindValue(":FileID", FileID);
-			if (qSelectData.ExecuteFirst())
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.FileSaved")))
 			{
-				if (File.open(QIODevice::WriteOnly))
+				if (!ISGui::OpenFile(FilePath))
 				{
-					File.write(qSelectData.ReadColumn("file_data").toByteArray());
-					File.close();
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FilePath));
 				}
 			}
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(File.fileName()), File.errorString());
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISFileEdit::UpdateFile(const QString &FileName, const QString &FileExtension, const QIcon &FileIcon, const QByteArray &FileData) const
+void ISFileEdit::Rename()
 {
-	ISQuery qUpdateFile(QU_FILE);
-	qUpdateFile.BindValue(":Name", FileName);
-	qUpdateFile.BindValue(":Extension", FileExtension);
-	qUpdateFile.BindValue(":Icon", ISGui::IconToByteArray(FileIcon));
-	qUpdateFile.BindValue(":Data", FileData);
-	qUpdateFile.BindValue(":FileID", FileID);
-	return qUpdateFile.Execute();
-}
-//-----------------------------------------------------------------------------
-bool ISFileEdit::InsertFile(const QString &FileName, const QString &FileExtension, const QIcon &FileIcon, const QByteArray &FileData)
-{
-	ISQuery qInsertFile(QI_FILE);
-	qInsertFile.BindValue(":Name", FileName);
-	qInsertFile.BindValue(":Extension", FileExtension);
-	qInsertFile.BindValue(":Icon", ISGui::IconToByteArray(FileIcon));
-	qInsertFile.BindValue(":Data", FileData);
-	bool Result = qInsertFile.ExecuteFirst();
-	if (Result)
+	QFileInfo FileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
+	QString FileName = ISInputDialog::GetString(LANG("Renaming"), LANG("EnterFileName"), FileInfo.baseName());
+	if (!FileName.isEmpty())
 	{
-		FileID = qInsertFile.ReadColumn("file_id");
+		FileName += SYMBOL_POINT + FileInfo.suffix();
+		ButtonFile->setText(FileName);
+		VariantMap[FILE_EDIT_PROPERTY_NAME] = FileName;
+		emit ValueChanged();
 	}
-
-	return Result;
 }
 //-----------------------------------------------------------------------------

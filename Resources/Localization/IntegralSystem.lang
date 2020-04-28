@@ -89,7 +89,6 @@
   <Local Name="Message.Error.NotFoundFile" Russian="Файл &quot;%1&quot; не найден."/>
   <Local Name="Message.Error.NotOpenedFile" Russian="Не удалось открыть файл &quot;%1&quot;."/>
   <Local Name="Message.Error.ErrorInsertFileToStorage" Russian="Не удалось добавить файл &quot;%1&quot; в хранилище."/>
-  <Local Name="Message.Error.FileEmptyOrInvalid" Russian="Файл &quot;%1&quot; пустой или невалидный."/>
   <Local Name="Message.Error.ErrorOpenedFolderPath" Russian="Не удалось открыть директорию &quot;%1&quot;."/>
   <Local Name="Message.Error.ErrorOpenedFileTemplatePrinting" Russian="Не удалось открыть файл шаблона печати."/>
   <Local Name="Message.Error.ErrorFillTemplateData" Russian="Произошла ошибка при заполнении шаблона данными."/>
@@ -120,6 +119,8 @@
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
   <Local Name="Message.Error.InstallPasswordStorageFile" Russian="Ошибка установки пароля."/>
   <Local Name="Message.Error.IncorrectPassword" Russian="Неверный пароль."/>
+  <Local Name="Message.Error.QueryRecord" Russian="Ошибка запроса данных."/>
+  <Local Name="Message.Error.QueryRecordIsNull" Russian="Запрос ничего не вернул."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -156,7 +157,6 @@
   <Local Name="Message.Warning.TableAlreadyExistList" Russian="Таблица &quot;%1&quot; уже есть в списке!"/>
   <Local Name="Message.Warning.NotifyNotInserted" Russian="Не удалось добавить напоминание!"/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
-  <Local Name="Message.Warning.NotDeletedFile" Russian="Не удалось удалить файл &quot;%1&quot;."/>
   <Local Name="Message.Warning.AccountLifetimeNotStarted" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи ещё не начался."/>
   <Local Name="Message.Warning.AccountLifetimeLeftLastDay" Russian="ВНИМАНИЕ! Сегодня истекает срок действия Вашей учётной записи."/>
   <Local Name="Message.Warning.AccountLifetimeLeftLastDayTwo" Russian="ВНИМАНИЕ! Завтра истекает срок действия Вашей учётной записи."/>
@@ -185,7 +185,6 @@
   <Local Name="Message.Warning.FailedConnectionToPostgreSQL" Russian="Ошибка подключения к серверу базы данных: %1"/>
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
-  <Local Name="Message.Warning.FileSizeExceedsLimit" Russian="Размер выбранного файла превышает установленное ограничение в %1 мегабайт"/>
   <Local Name="Message.Warning.QueryExceptionSyntax" Russian="ВНИМАНИЕ! Произошла ошибка SQL-запроса. Нажмите кнопку &quot;Показать подробности...&quot; и отправьте текст разработчику программы. Программа будет закрыта."/>
   <Local Name="Message.Warning.EMailIsEmpty" Russian="Адрес электронной почты не указан, отправка невозможна."/>
   <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Такая связь уже существует."/>
@@ -246,7 +245,7 @@
   <Local Name="Message.Question.RecoveryThisRecord" Russian="Восстановить эту запись?"/>
   <Local Name="Message.Question.CalendarEventFormClose" Russian="Закрытие окна привезет к автомтическому завернею события. Закрыть окно?"/>
   <Local Name="Message.Question.SaveDist" Russian="Сохранить этот дистрибутив на диск?"/>
-  <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его программой по умолчанию?"/>
+  <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
   <Local Name="Message.Question.ImportedSettings" Russian="Настройки успешно импортированы! Для того чтобы все импортированные настройки вступили в силу, рекомендуется перезапустить программу. Сделать это сейчас?"/>
   <Local Name="Message.Question.ShareRecordFromChat" Russian="Поделиться ссылкой на эту запись в общий чат?"/>
   <Local Name="Message.Question.AttachRecordFromTask" Russian="Прикрепить выбранную запись к задаче?"/>
@@ -522,7 +521,6 @@
   <Local Name="EnteringSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="Edit" Russian="Изменить"/>
   <Local Name="SaveToStorage" Russian="Сохранить в хранилище"/>
-  <Local Name="SaveToDisk" Russian="Сохранить на диск"/>
   <Local Name="CallDetails" Russian="Подробности звонка"/>
   <Local Name="ReproductionAsteriskRecord" Russian="Прослушивание записи разговора"/>
   <Local Name="Tasks" Russian="Задачи"/>
@@ -530,10 +528,8 @@
   <Local Name="NoteToRecord" Russian="Примечание к записи"/>
   <Local Name="Comment" Russian="Комментарий"/>
   <Local Name="OpenUrlLink" Russian="Посетить ссылку"/>
-  <Local Name="FileNotSelected" Russian="Файл не выбран"/>
   <Local Name="Rename" Russian="Переименовать"/>
   <Local Name="Renaming" Russian="Переименование"/>
-  <Local Name="NewFileName" Russian="Новое имя файла"/>
   <Local Name="CallStatuses" Russian="Статусы звонка"/>
   <Local Name="CallingOrganization" Russian="Вызывает организация"/>
   <Local Name="ClearStatus" Russian="Очистить статус"/>
@@ -563,6 +559,8 @@
   <Local Name="InsertingFiles" Russian="Добавление файла(ов)..."/>
   <Local Name="Banner.StartupSystem" Russian="Запуск системы..."/>
   <Local Name="Banner.ShutdownSystem" Russian="Завершение работы системы..."/>
+  <Local Name="FileNotSelected" Russian="Файл не выбран"/>
+  <Local Name="SaveToDisk" Russian="Сохранить на диск"/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
@@ -667,7 +665,6 @@
   <Local Name="ClickDoneFromFilter" Russian="Нажмите кнопку &quot;Применить&quot; для получения сводных данных за период."/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
   <Local Name="OutcomingCall" Russian="Исходщяий вызов на номер: %1"/>
-  <Local Name="ClickOverviewFromSelectFile" Russian="Нажмите &quot;Обзор&quot; чтобы выбрать файл"/>
   <Local Name="InputTheTaskNumber" Russian="Введите номер задачи"/>
   <Local Name="AsteriskFileRecordName" Russian="Запись разговора абонента %1 от %2"/>
   <Local Name="AutoCloseIncomingForm" Russian="Окно будет автоматически закрыто через: %1 сек."/>
@@ -685,6 +682,8 @@
   <Local Name="ClickFromShowUserList" Russian="Нажмите, чтобы показать список пользователей"/>
   <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
   <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
+  <Local Name="ClickFromSelectFile" Russian="Нажмите, чтобы выбрать файл"/>
+  <Local Name="EnterFileName" Russian="Введите имя файла"/>
   
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>

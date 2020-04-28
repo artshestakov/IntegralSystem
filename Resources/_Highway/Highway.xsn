@@ -118,7 +118,6 @@
       <Index Field="PhoneOther"/>
       <Index Field="EMail"/>
       <Index Field="Url"/>
-      <Index Field="File"/>
       <Index Field="Comment"/>
     </Indexes>
     <Foreigns>

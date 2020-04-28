@@ -455,19 +455,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_File" UID="{FE070794-7865-4060-B6E2-764911F835C6}" Alias="file" LocalName="Файл" LocalListName="Файлы" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{82D5A45B-8FB7-47AF-A99E-C172713D1CCF}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{BF6E0BCC-AFC0-4A79-9C2E-EA189F386C19}" Name="Extension" Type="String" LabelName="Расширение" LocalListName="Расширение" NotNull="true"/>
-      <Field UID="{EDC663D6-00D7-487A-9F89-E4A3992BAE50}" Name="Icon" Type="ByteArray" LabelName="Изображение" LocalListName="Изображение"/>
-      <Field UID="{3B6D8CB3-BA2A-443B-B006-D27AF292677B}" Name="Data" Type="ByteArray" LabelName="Данные файла" LocalListName="Данные файла" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name"/>
-      <Index Field="Extension"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_EMailQueue" UID="{CC1ADE7F-A135-4691-BA77-BE83F2451AE2}" Alias="mail" ShowOnly="true" LocalName="Сообщение в очереди" LocalListName="Сообщения в очереди" TitleName="Subject" IsSystem="true">
     <Fields>
       <Field UID="{F7294171-C6F5-4603-BFCD-4949D3447097}" Name="Server" Type="String" LabelName="Сервер" LocalListName="Сервер" NotNull="true" HideFromList="true"/>
