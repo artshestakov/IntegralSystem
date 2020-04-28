@@ -15,9 +15,6 @@ public:
 protected:
 	void Timeout();
 
-protected:
-	void ClearFiles(); //Очистка не привязанных файлов
-
 private:
 	QTimer *Timer;
 };
