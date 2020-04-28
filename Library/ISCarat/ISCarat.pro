@@ -43,7 +43,6 @@ HEADERS += \
     ISCoreMedTech.h \
     ISCoreNotification.h \
     ISCoreSMS.h \
-    ISCoreScheduler.h \
     ISCoreTelephony.h \
     iscarat_global.h
 
@@ -60,5 +59,4 @@ SOURCES += \
     ISCoreMedTech.cpp \
     ISCoreNotification.cpp \
     ISCoreSMS.cpp \
-    ISCoreScheduler.cpp \
     ISCoreTelephony.cpp
