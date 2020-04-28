@@ -24,11 +24,10 @@ ISFileEdit::ISFileEdit(QWidget *parent) : ISFieldEditBase(parent)
 	AddWidgetEdit(ButtonFile, this);
 
 	ButtonFile->menu()->addAction(BUFFER_ICONS("Select"), LANG("Overview"), this, &ISFileEdit::SelectFile);
-	
 	ActionSave = ButtonFile->menu()->addAction(BUFFER_ICONS("Save"), LANG("SaveToDisk"), this, &ISFileEdit::Save);
-	ActionSave->setEnabled(false);
-
 	ActionRename = ButtonFile->menu()->addAction(BUFFER_ICONS("Edit"), LANG("Rename"), this, &ISFileEdit::Rename);
+
+	ActionSave->setEnabled(false);
 	ActionRename->setEnabled(false);
 }
 //-----------------------------------------------------------------------------
