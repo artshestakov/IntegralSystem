@@ -6,11 +6,12 @@
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISProcessForm::ISProcessForm(const QString &Text, QWidget *parent) : ISInterfaceForm(parent)
+ISProcessForm::ISProcessForm(const QString &LabelText, QWidget *parent)
+	: ISInterfaceForm(parent, Qt::Window | Qt::MSWindowsFixedSizeDialogHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint)
 {
 	setCursor(CURSOR_WAIT);
 	setWindowTitle(LANG("PleaseWait"));
-	setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::MSWindowsFixedSizeDialogHint);
+	setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
 
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
@@ -21,8 +22,10 @@ ISProcessForm::ISProcessForm(const QString &Text, QWidget *parent) : ISInterface
 	LabelImage->setPixmap(BUFFER_ICONS("Wait").pixmap(ISDefines::Gui::SIZE_32_32));
 	Layout->addWidget(LabelImage);
 
-	LabelText = new QLabel(this);
-	Layout->addWidget(LabelText);
+	Label = new QLabel(this);
+	Label->setText(LabelText);
+	Label->setSizePolicy(QSizePolicy::Maximum, Label->sizePolicy().verticalPolicy());
+	Layout->addWidget(Label);
 
 	Layout->addStretch();
 }
@@ -32,22 +35,25 @@ ISProcessForm::~ISProcessForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISProcessForm::SetText(const QString &Text)
+void ISProcessForm::SetText(const QString &LabelText)
 {
-	LabelText->setText(ISDefines::Core::SYMBOL_CIRCLE + SYMBOL_SPACE + Text + "...");
-	ISGui::RepaintWidget(LabelText);
-	adjustSize();
-	ISGui::ProcessEvents();
-}
-//-----------------------------------------------------------------------------
-void ISProcessForm::showEvent(QShowEvent *e)
-{
-	Q_UNUSED(e);
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
-	ISInterfaceForm::show();
-	update();
-	ISGui::ProcessEvents();
+	//ѕоследовательность вызова функций ниже ни в коем случае не мен€ть, иначе
+	//возникнут проблемы с изменением размера формы после изменени€ текста в QLabel
+	Label->setText(LabelText);
+	Label->adjustSize();
+	ISGui::RepaintWidget(Label);
 	adjustSize();
 	ISGui::RepaintWidget(this);
+	ISGui::ProcessEvents();
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+}
+//-----------------------------------------------------------------------------
+void ISProcessForm::showEvent(QShowEvent *ShowEvent)
+{
+	adjustSize();
+	ISGui::RepaintWidget(this);
+	ISGui::ProcessEvents();
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+	ISInterfaceForm::showEvent(ShowEvent);
 }
 //-----------------------------------------------------------------------------
