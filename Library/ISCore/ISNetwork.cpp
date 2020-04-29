@@ -14,7 +14,6 @@ ISNetwork::~ISNetwork()
 //-----------------------------------------------------------------------------
 bool ISNetwork::CheckAccessInternet(QString &ErrorString) const
 {
-	bool Result = true;
 	QEventLoop EventLoop;
 	QNetworkAccessManager NetworkAccessManager;
 	connect(&NetworkAccessManager, &QNetworkAccessManager::finished, &EventLoop, &QEventLoop::quit);
@@ -23,21 +22,16 @@ bool ISNetwork::CheckAccessInternet(QString &ErrorString) const
 	QNetworkReply *NetworkReply = NetworkAccessManager.get(NetworkRequest);
 	EventLoop.exec();
 
-	if (NetworkReply)
+	bool Result = NetworkReply ? true : false;
+	if (Result)
 	{
 		if (NetworkReply->error() != QNetworkReply::NoError)
 		{
 			ErrorString = NetworkReply->errorString();
 			ISLOGGER_W(NetworkReply->errorString());
 		}
-
 		delete NetworkReply;
 	}
-	else
-	{
-		Result = false;
-	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -56,7 +50,6 @@ QString ISNetwork::ParseIPAddress(const QString &IPAddress) const
 //-----------------------------------------------------------------------------
 bool ISNetwork::DownloadFile(const QString &Url, QByteArray &ByteArray, QString &ErrorString) const
 {
-	bool Result = true;
 	QEventLoop EventLoop;
 	QNetworkAccessManager NetworkAccessManager;
 	connect(&NetworkAccessManager, &QNetworkAccessManager::finished, &EventLoop, &QEventLoop::quit);
@@ -65,7 +58,8 @@ bool ISNetwork::DownloadFile(const QString &Url, QByteArray &ByteArray, QString 
 	QNetworkReply *NetworkReply = NetworkAccessManager.get(NetworkRequest);
 	EventLoop.exec();
 
-	if (NetworkReply)
+	bool Result = NetworkReply ? true : false;
+	if (Result)
 	{
 		if (NetworkReply->error() == QNetworkReply::NoError)
 		{
@@ -77,11 +71,6 @@ bool ISNetwork::DownloadFile(const QString &Url, QByteArray &ByteArray, QString 
 		}
 		delete NetworkReply;
 	}
-	else
-	{
-		Result = false;
-	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

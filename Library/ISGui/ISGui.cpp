@@ -347,8 +347,7 @@ QColor ISGui::StringToColor(const QString &String)
 bool ISGui::IsStringUrl(const QString &Url)
 {
 	int Pos = 0;
-	QString Temp = Url;
-	return QRegExpValidator(QRegExp(REG_EXP_URL)).validate(Temp, Pos) == QValidator::Acceptable;
+	return QRegExpValidator(QRegExp(REG_EXP_URL)).validate(/*Temp*/QString(Url), Pos) == QValidator::Acceptable;
 }
 //-----------------------------------------------------------------------------
 bool ISGui::OpenFolder(const QString &FolderPath)

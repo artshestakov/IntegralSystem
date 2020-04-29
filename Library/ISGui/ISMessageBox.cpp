@@ -19,29 +19,41 @@ ISMessageBox::~ISMessageBox()
 void ISMessageBox::ShowInformation(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
 	ISMessageBox MessageBox(QMessageBox::Information, LANG("Information"), Message, QMessageBox::Ok, parent);
-	MessageBox.setDetailedText(DetailedText);
+	if (!DetailedText.isEmpty())
+	{
+		MessageBox.setDetailedText(DetailedText);
+	}
 	MessageBox.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMessageBox::ShowWarning(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
 	ISMessageBox MessageBox(QMessageBox::Warning, LANG("Warning"), Message, QMessageBox::Ok, parent);
-	MessageBox.setDetailedText(DetailedText);
+	if (!DetailedText.isEmpty())
+	{
+		MessageBox.setDetailedText(DetailedText);
+	}
 	MessageBox.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMessageBox::ShowCritical(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
 	ISMessageBox MessageBox(QMessageBox::Critical, LANG("Error"), Message, QMessageBox::Ok, parent);
-	MessageBox.setDetailedText(DetailedText);
+	if (!DetailedText.isEmpty())
+	{
+		MessageBox.setDetailedText(DetailedText);
+	}
 	MessageBox.Exec();
 }
 //-----------------------------------------------------------------------------
 bool ISMessageBox::ShowQuestion(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
 	ISMessageBox MessageBox(QMessageBox::Question, LANG("Question"), Message, QMessageBox::Yes | QMessageBox::No, parent);
-	MessageBox.setDetailedText(DetailedText);
 	MessageBox.setDefaultButton(QMessageBox::No);
+	if (!DetailedText.isEmpty())
+	{
+		MessageBox.setDetailedText(DetailedText);
+	}
 	return MessageBox.Exec() == QMessageBox::Yes ? true : false;
 }
 //-----------------------------------------------------------------------------

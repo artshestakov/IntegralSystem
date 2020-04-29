@@ -168,9 +168,8 @@ void ISImageWidget::PasteFromLink()
 	{
 		if (ISGui::IsStringUrl(Url))
 		{
-			ISProcessForm ProcessForm;
+			ISProcessForm ProcessForm(LANG("DownloadingImage"));
 			ProcessForm.show();
-			ProcessForm.SetText(LANG("DownloadingImage"));
 
 			QByteArray ByteArray;
 			QString ErrorString;
@@ -185,11 +184,13 @@ void ISImageWidget::PasteFromLink()
 				}
 				else
 				{
+					ProcessForm.hide();
 					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotOpenedImage"));
 				}
 			}
 			else
 			{
+				ProcessForm.hide();
 				ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDownloadedImage"));
 			}
 		}

@@ -673,8 +673,8 @@
   <Local Name="OpeningLargeFilesMayTakeSomeTime" Russian="Открытие больших файлов может занять некоторое время."/>
   <Local Name="MessageCopyToClipboard" Russian="Сообщение из общего чата скопировано в буфер обмена"/>
   <Local Name="ClickFromOpenUrlInBrowser" Russian="Нажмите, чтобы открыть ссылку в браузере"/>
-  <Local Name="DownloadingImage" Russian="Пожалуйста подождите, изображение скачивается"/>
-  <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается"/>
+  <Local Name="DownloadingImage" Russian="Пожалуйста подождите, изображение скачивается..."/>
+  <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается..."/>
   <Local Name="YouHaveExpiredTasks" Russian="У Вас есть просроченные задачи: %1"/>
   <Local Name="InputThisSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="OpeningUrl" Russian="Открытие ссылки..."/>
