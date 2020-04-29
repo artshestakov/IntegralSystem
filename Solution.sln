@@ -19,7 +19,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{EE400866-0550-461D-BF40-8BF3ABEF7E41}"
 	ProjectSection(SolutionItems) = preProject
 		Resources\Other\ClassTemplateFields.xml = Resources\Other\ClassTemplateFields.xml
-		Resources\Other\Configuration.xml = Resources\Other\Configuration.xml
+		Resources\Other\Configurations.xml = Resources\Other\Configurations.xml
 		Resources\Other\Configurator.xml = Resources\Other\Configurator.xml
 	EndProjectSection
 EndProject
@@ -304,7 +304,7 @@ Global
 		{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36} = {04D21698-EEDE-414A-9D4F-62C37E85A4A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

@@ -44,12 +44,16 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign,
 	return SqlQuery;
 }
 //-----------------------------------------------------------------------------
-QString ISMetaDataHelper::GetConfigurationName()
+QString ISMetaDataHelper::GetConfigurationName(QString &ErrorString)
 {
 	ISQuery qSelect(QS_CONFIGURATION);
 	if (qSelect.ExecuteFirst())
 	{
 		return qSelect.ReadColumn("get_configuration_name").toString();
+	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
 	}
 	return QString();
 }

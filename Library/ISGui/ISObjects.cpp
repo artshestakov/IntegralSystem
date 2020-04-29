@@ -55,9 +55,13 @@ bool ISObjects::IsInitialized() const
 //-----------------------------------------------------------------------------
 bool ISObjects::Initialize()
 {
-	ConfigurationName = ISMetaDataHelper::GetConfigurationName();
+	ConfigurationName = ISMetaDataHelper::GetConfigurationName(ErrorString);
+	if (ConfigurationName.isEmpty())
+	{
+		return false;
+	}
 
-	QFile File(PATH_CONFIGURATION_SCHEME);
+	QFile File(PATH_CONFIGURATIONS_SCHEME);
 	bool Result = File.open(QIODevice::ReadOnly);
 	if (Result)
 	{

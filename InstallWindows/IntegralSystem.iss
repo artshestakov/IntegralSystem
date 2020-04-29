@@ -77,7 +77,6 @@ Source: ..\Deploy\.Configuration.-.Platform.\CaratInformResource.exe; DestDir: {
 Source: ..\Deploy\.Configuration.-.Platform.\CaratMail.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratMedTech.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratNotification.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratScheduler.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratSMS.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratTelephony.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 

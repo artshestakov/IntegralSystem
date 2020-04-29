@@ -82,7 +82,14 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	Result = ISMetaData::GetInstanse().Initialize(ISMetaDataHelper::GetConfigurationName(), true, true);
+	QString ConfigurationName = ISMetaDataHelper::GetConfigurationName(ErrorString);
+	if (ConfigurationName.isEmpty())
+	{
+		ISLOGGER_E("Error getting configuration name: " + ErrorString);
+		return EXIT_FAILURE;
+	}
+
+	Result = ISMetaData::GetInstanse().Initialize(ConfigurationName, true, true);
 	if (!Result)
 	{
 		ISLOGGER_E("Initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
