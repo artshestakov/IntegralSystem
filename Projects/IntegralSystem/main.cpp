@@ -23,30 +23,28 @@ int main(int argc, char *argv[])
 
 	ISAuthForm AuthForm;
 	Result = AuthForm.Exec();
-	if (!Result) //Форма авторизации была закрыта
+	if (Result) //Форма авторизации была закрыта
 	{
-		return EXIT_SUCCESS;
-	}
-
-	ISSplashScreen SplashScreen;
-	SplashScreen.show();
-	SplashScreen.SetMessage(LANG("Banner.StartupSystem"));
-
-	Result = ISStartup::Startup(&SplashScreen);
-	SplashScreen.hide();
-
-	if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()
-	{
-		ISMainWindow MainWindow;
-		MainWindow.showMaximized();
-		Result = Applicaton.exec() == EXIT_SUCCESS;
-
-		SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
+		ISSplashScreen SplashScreen(LANG("Banner.StartupSystem"));
 		SplashScreen.show();
 
-		ISStartup::Shutdown(&SplashScreen);
-		ISGui::ExitApplication();
+		Result = ISStartup::Startup(&SplashScreen);
+		SplashScreen.hide();
+
+		if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()
+		{
+			ISMainWindow MainWindow;
+			MainWindow.showMaximized();
+			Result = Applicaton.exec() == EXIT_SUCCESS;
+
+			SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
+			SplashScreen.show();
+
+			ISStartup::Shutdown(&SplashScreen);
+		}
 	}
+
+	ISGui::ExitApplication();
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

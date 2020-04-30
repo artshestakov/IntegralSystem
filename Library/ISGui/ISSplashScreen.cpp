@@ -7,7 +7,7 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISSplashScreen::ISSplashScreen()
+ISSplashScreen::ISSplashScreen(const QString &Message)
 	: QWidget(nullptr, Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint)
 {
 	setFont(ISDefines::Gui::FONT_TAHOMA_12);
@@ -26,6 +26,7 @@ ISSplashScreen::ISSplashScreen()
 	setLayout(MainLayout);
 
 	LabelText = new QLabel(this);
+	LabelText->setText(Message);
 	MainLayout->addWidget(LabelText, 0, Qt::AlignCenter);
 
 	QPalette PaletteLabel = LabelText->palette();

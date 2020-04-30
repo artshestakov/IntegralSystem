@@ -49,7 +49,6 @@ ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
 	CheckRememberUser = new ISCheckEdit(this);
 	CheckRememberUser->SetText(LANG("RememberMe"));
 	CheckRememberUser->SetValue(CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE));
-	//CheckRememberUser->setCursor(CURSOR_POINTING_HAND);
 	LayoutLabels->addWidget(CheckRememberUser);
 
 	LabelCapsLook = new QLabel(this);

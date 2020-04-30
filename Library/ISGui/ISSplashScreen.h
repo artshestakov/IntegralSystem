@@ -7,7 +7,7 @@ class ISGUI_EXPORT ISSplashScreen : public QWidget
 	Q_OBJECT
 
 public:
-	ISSplashScreen();
+	ISSplashScreen(const QString &Message = QString());
 	virtual ~ISSplashScreen();
 	
 	void SetMessage(const QString &Message); //Изменить текст сообщения
