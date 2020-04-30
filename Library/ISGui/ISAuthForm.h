@@ -6,6 +6,7 @@
 #include "ISWaitWidget.h"
 #include "ISAuthConnector.h"
 #include "ISFieldEdits.h"
+#include "ISCheckEdit.h"
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT	ISAuthForm : public ISInterfaceDialogForm
 {
@@ -35,7 +36,7 @@ private:
 private:
 	ISLineEdit *EditLogin;
 	ISPasswordEdit *EditPassword;
-	QCheckBox *CheckRememberUser;
+	ISCheckEdit *CheckRememberUser;
 	QLabel *LabelCapsLook;
 	QLabel *LabelLang;
 	QLabel *LabelConnectToDatabase;

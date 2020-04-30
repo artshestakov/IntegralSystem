@@ -94,6 +94,10 @@ bool ISObjects::Initialize()
 			ErrorString = "Not found configuration";
 		}
 	}
+	else
+	{
+		ErrorString = QString("Error read file \"%1\": %2").arg(File.fileName()).arg(File.errorString());
+	}
 
 	if (Result)
 	{

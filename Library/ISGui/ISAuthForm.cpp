@@ -46,9 +46,10 @@ ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
 	LayoutLabels->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	Layout->addLayout(LayoutLabels);
 
-	CheckRememberUser = new QCheckBox(LANG("RememberMe"), this);
-	CheckRememberUser->setChecked(CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE));
-	CheckRememberUser->setCursor(CURSOR_POINTING_HAND);
+	CheckRememberUser = new ISCheckEdit(this);
+	CheckRememberUser->SetText(LANG("RememberMe"));
+	CheckRememberUser->SetValue(CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE));
+	//CheckRememberUser->setCursor(CURSOR_POINTING_HAND);
 	LayoutLabels->addWidget(CheckRememberUser);
 
 	LabelCapsLook = new QLabel(this);
@@ -206,8 +207,8 @@ void ISAuthForm::ConnectedDone()
 		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
 		EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Если подключение к базе данных установлено
 	{
-		ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_INCLUDE, CheckRememberUser->isChecked());
-		CheckRememberUser->isChecked() ?
+		ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_INCLUDE, CheckRememberUser->GetValue());
+		CheckRememberUser->GetValue().toBool() ?
 			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, EditLogin->GetValue()) :
 			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, QString());
 
