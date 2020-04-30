@@ -27,10 +27,10 @@ static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT gast_uid, g
 													   "WHERE gast_parent = :ParentUID "
 													   "ORDER BY gast_order");
 //-----------------------------------------------------------------------------
-ISUserGroupWidget::ISUserGroupWidget(int group_id, const QString &group_name, QWidget *parent) : QWidget(parent)
+ISUserGroupWidget::ISUserGroupWidget(int group_id, const QString &group_name, QWidget *parent)
+	: QWidget(parent),
+	GroupID(group_id)
 {
-	GroupID = group_id;
-
 	QVBoxLayout *Layout = new QVBoxLayout();
 	setLayout(Layout);
 
@@ -67,8 +67,7 @@ void ISUserGroupWidget::CreateSubSystems()
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.SubSystems"));
 
-	QVector<ISMetaSystem*> Systems = ISMetaSystemsEntity::GetInstance().GetSystems();
-	for (ISMetaSystem *MetaSystem : Systems) //Обход всех систем
+	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::GetInstance().GetSystems()) //Обход всех систем
 	{
 		QFormLayout *FormLayout = new QFormLayout();
 
@@ -78,8 +77,7 @@ void ISUserGroupWidget::CreateSubSystems()
 		GroupBox->setStyleSheet(STYLE_SHEET("QGroupBoxAccessSubSystem"));
 		ScrollArea->widget()->layout()->addWidget(GroupBox);
 
-		QVector<ISMetaSubSystem*> SubSystems = MetaSystem->SubSystems;
-		for (ISMetaSubSystem *SubSystem : SubSystems) //Обход всех подсистем текущей системы
+		for (ISMetaSubSystem *SubSystem : MetaSystem->SubSystems) //Обход всех подсистем текущей системы
 		{
 			ISCheckEdit *CheckEdit = new ISCheckEdit(GroupBox);
 			CheckEdit->SetValue(ISUserRoleEntity::CheckExistSubSystemAccess(GroupID, SubSystem->UID));
@@ -100,8 +98,7 @@ void ISUserGroupWidget::CreateTables()
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.Tables"));
 
 	QMap<QString, ISUuid> Map;
-	std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
-	for (PMetaTable *MetaTable : Tables)
+	for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables())
 	{
 		if (!MetaTable->IsSystem) //Если таблица является системной - пропускать
 		{
@@ -129,11 +126,7 @@ void ISUserGroupWidget::CreateSpecial()
 	{
 		while (qSelectSpecialGroup.Next())
 		{
-			ISUuid SpecialGroupUID = qSelectSpecialGroup.ReadColumn("gast_uid");
-			QString SpecialGroupName = qSelectSpecialGroup.ReadColumn("gast_name").toString();
-
-			QLabel *LabelSpecialGroup = new QLabel(ScrollArea);
-			LabelSpecialGroup->setText(SpecialGroupName + ':');
+			QLabel *LabelSpecialGroup = new QLabel(qSelectSpecialGroup.ReadColumn("gast_name").toString() + ':', ScrollArea);
 			LabelSpecialGroup->setSizePolicy(QSizePolicy::Maximum, LabelSpecialGroup->sizePolicy().verticalPolicy());
 			LabelSpecialGroup->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 			
@@ -143,7 +136,7 @@ void ISUserGroupWidget::CreateSpecial()
 			FormLayout->addRow(Layout);
 
 			ISQuery qSelectSpecial(QS_GROUP_ACCESS_SPECIAL_CHECK);
-			qSelectSpecial.BindValue(":ParentUID", SpecialGroupUID);
+			qSelectSpecial.BindValue(":ParentUID", qSelectSpecialGroup.ReadColumn("gast_uid"));
 			if (qSelectSpecial.Execute())
 			{
 				while (qSelectSpecial.Next())
@@ -168,10 +161,8 @@ void ISUserGroupWidget::CreateSpecial()
 void ISUserGroupWidget::SubSystemClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
-
-	ISCheckEdit *CheckEdit = dynamic_cast<ISCheckEdit*>(sender());
-	ISUuid SubSystemUID = CheckEdit->property("SubSystemUID"); //Идентификатор подсистемы
-	QString SubSystemName = CheckEdit->property("SubSystemName").toString();
+	ISUuid SubSystemUID = sender()->property("SubSystemUID"); //Идентификатор подсистемы
+	QString SubSystemName = sender()->property("SubSystemName").toString();
 
 	if (value.toBool()) //Если право было включено
 	{
@@ -183,7 +174,6 @@ void ISUserGroupWidget::SubSystemClicked(const QVariant &value)
 		ISUserRoleEntity::DeleteSubSystemAccess(GroupID, SubSystemUID);
 		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->LocalListName, GroupID, SubSystemName);
 	}
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -204,17 +194,14 @@ void ISUserGroupWidget::TableClicked(QAction *Action)
 		ISUserRoleEntity::DeleteTableAccess(GroupID, TableUID, AccessUID);
 		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->LocalListName, GroupID, TableName + " (" + Action->toolTip() + ')');
 	}
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISUserGroupWidget::SpecialClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
-
-	ISCheckEdit *CheckEdit = dynamic_cast<ISCheckEdit*>(sender());
-	ISUuid SpecialAccessUID = CheckEdit->property("SpecialAccessUID");
-	QString SpecialAccessName = CheckEdit->property("SpecialAccessName").toString();
+	ISUuid SpecialAccessUID = sender()->property("SpecialAccessUID");
+	QString SpecialAccessName = sender()->property("SpecialAccessName").toString();
 
 	if (value.toBool())
 	{
