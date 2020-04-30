@@ -1,1 +1,1 @@
-call Build.cmd Release Win32 v140
+call Build.cmd Release Win32

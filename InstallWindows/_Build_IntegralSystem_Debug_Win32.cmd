@@ -1,1 +1,1 @@
-call Build.cmd Debug Win32 v140
+call Build.cmd Debug Win32

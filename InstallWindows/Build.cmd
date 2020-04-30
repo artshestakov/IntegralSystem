@@ -19,7 +19,7 @@ REM Если шаблон скрипта InnoSetup уже сущесвует - удаляем его
 IF EXIST IntegralSystem.iss.tmp DEL IntegralSystem.iss.tmp
 
 REM Запуск сборки
-MSBuild IntegralSystem.proj /p:Configuration=%1 /p:Platform=%2 /p:PlatformToolset=%3 /p:Version=%MAJOR%.%MINOR%.%REVISION%
+MSBuild IntegralSystem.proj /p:Configuration=%1 /p:Platform=%2 /p:Version=%MAJOR%.%MINOR%.%REVISION%
 IF ERRORLEVEL 1 GOTO ERROR
 GOTO OK
 :ERROR
