@@ -231,8 +231,6 @@
     <ClCompile Include="ISMainWindow.cpp" />
     <ClCompile Include="ISMediaPlayer.cpp" />
     <ClCompile Include="ISMedTech.cpp" />
-    <ClCompile Include="ISMedTechRatingListForm.cpp" />
-    <ClCompile Include="ISMedTechRatingSubSystem.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
     <ClCompile Include="ISMenuFastAccess.cpp" />
     <ClCompile Include="ISMessageBox.cpp" />
@@ -665,8 +663,6 @@
     <QtMoc Include="ISInformResource.h" />
     <QtMoc Include="ISIncomingCallInformResourceForm.h" />
     <QtMoc Include="ISMedTech.h" />
-    <QtMoc Include="ISMedTechRatingListForm.h" />
-    <QtMoc Include="ISMedTechRatingSubSystem.h" />
     <QtMoc Include="ISObjectInterface.h" />
     <QtMoc Include="ISIntegralSystem.h" />
     <QtMoc Include="ISMediaPlayer.h" />

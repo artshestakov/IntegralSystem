@@ -94,9 +94,6 @@
     <Filter Include="Objects\MedTech">
       <UniqueIdentifier>{0297f9dc-b7f0-402d-b59c-2b2d4a744388}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\MedTech\Forms">
-      <UniqueIdentifier>{ded0dedd-eabe-490f-8165-d166bccdaf39}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\OilSphere">
       <UniqueIdentifier>{e220ef6b-fb3a-4917-8a8d-85226b13b23a}</UniqueIdentifier>
     </Filter>
@@ -473,12 +470,6 @@
     </ClCompile>
     <ClCompile Include="ISMedTech.cpp">
       <Filter>Objects\MedTech</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMedTechRatingListForm.cpp">
-      <Filter>Objects\MedTech\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMedTechRatingSubSystem.cpp">
-      <Filter>Objects\MedTech\Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISPatriot.cpp">
       <Filter>Objects\Patriot</Filter>
@@ -1294,12 +1285,6 @@
     </QtMoc>
     <QtMoc Include="ISMedTech.h">
       <Filter>Objects\MedTech</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMedTechRatingListForm.h">
-      <Filter>Objects\MedTech\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMedTechRatingSubSystem.h">
-      <Filter>Objects\MedTech\Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISPatriot.h">
       <Filter>Objects\Patriot</Filter>

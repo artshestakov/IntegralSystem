@@ -23,7 +23,7 @@ ISObjects::ISObjects()
 	qRegisterMetaType<ISDemo*>("ISDemo");
 	qRegisterMetaType<ISHighway*>("ISHighway");
 	qRegisterMetaType<ISInformResource*>("ISInformResource");
-	qRegisterMetaType<ISMedTech*>("ISMedTech");
+	qRegisterMetaType<ISMedTech::Object*>("ISMedTech::Object");
 	qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
 	qRegisterMetaType<ISPatriot*>("ISPatriot");
 	qRegisterMetaType<ISSirona*>("ISSirona");
