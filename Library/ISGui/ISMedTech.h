@@ -21,26 +21,26 @@ namespace ISMedTech
 	};
 
 	//Форма списка оценок
-	class ISRatingListForm : public ISListBaseForm
+	class RatingListForm : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE ISRatingListForm(QWidget *parent = 0);
-		virtual ~ISRatingListForm();
+		Q_INVOKABLE RatingListForm(QWidget *parent = 0);
+		virtual ~RatingListForm();
 
 	protected:
 		void FilterClicked();
 	};
 
 	//Виджет подсистемы оценок
-	class ISRatingSubSystem : public ISInterfaceMetaForm
+	class RatingSubSystem : public ISInterfaceMetaForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE ISRatingSubSystem(QWidget *parent = 0);
-		virtual ~ISRatingSubSystem();
+		Q_INVOKABLE RatingSubSystem(QWidget *parent = 0);
+		virtual ~RatingSubSystem();
 
 		void LoadData() override;
 
@@ -49,7 +49,7 @@ namespace ISMedTech
 		void ClearCDR();
 
 	private:
-		ISRatingListForm *RatingListForm;
+		RatingListForm *RatingListForm;
 		ISAsteriskCallsListForm *AsteriskCallsListForm;
 		bool CDRLoadData;
 	};

@@ -17,8 +17,8 @@ ISMedTech::Object::~Object()
 //-----------------------------------------------------------------------------
 void ISMedTech::Object::RegisterMetaTypes() const
 {
-	qRegisterMetaType<ISMedTech::ISRatingListForm*>("ISMedTech::ISRatingListForm");
-	qRegisterMetaType<ISMedTech::ISRatingSubSystem*>("ISMedTech::ISRatingSubSystem");
+	qRegisterMetaType<ISMedTech::RatingListForm*>("ISMedTech::RatingListForm");
+	qRegisterMetaType<ISMedTech::RatingSubSystem*>("ISMedTech::RatingSubSystem");
 }
 //-----------------------------------------------------------------------------
 void ISMedTech::Object::BeforeShowMainWindow() const
@@ -33,7 +33,7 @@ void ISMedTech::Object::InitializePlugin() const
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISMedTech::ISRatingListForm::ISRatingListForm(QWidget *parent) : ISListBaseForm("Rating", parent)
+ISMedTech::RatingListForm::RatingListForm(QWidget *parent) : ISListBaseForm("Rating", parent)
 {
 	QAction *ActionFilterAll = new QAction(this);
 	ActionFilterAll->setCheckable(true);
@@ -42,7 +42,7 @@ ISMedTech::ISRatingListForm::ISRatingListForm(QWidget *parent) : ISListBaseForm(
 	ActionFilterAll->setToolTip(LANG("Rating.Filter.All"));
 	ActionFilterAll->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.All"));
 	ActionFilterAll->setProperty("Filter", QVariant());
-	connect(ActionFilterAll, &QAction::triggered, this, &ISMedTech::ISRatingListForm::FilterClicked);
+	connect(ActionFilterAll, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilterAll, false);
 
 	QAction *ActionFilter5 = new QAction(this);
@@ -51,7 +51,7 @@ ISMedTech::ISRatingListForm::ISRatingListForm(QWidget *parent) : ISListBaseForm(
 	ActionFilter5->setToolTip("5");
 	ActionFilter5->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.5"));
 	ActionFilter5->setProperty("Filter", 5);
-	connect(ActionFilter5, &QAction::triggered, this, &ISMedTech::ISRatingListForm::FilterClicked);
+	connect(ActionFilter5, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter5, false);
 
 	QAction *ActionFilter4 = new QAction(this);
@@ -60,7 +60,7 @@ ISMedTech::ISRatingListForm::ISRatingListForm(QWidget *parent) : ISListBaseForm(
 	ActionFilter4->setToolTip("4");
 	ActionFilter4->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.4"));
 	ActionFilter4->setProperty("Filter", 4);
-	connect(ActionFilter4, &QAction::triggered, this, &ISMedTech::ISRatingListForm::FilterClicked);
+	connect(ActionFilter4, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter4, false);
 
 	QAction *ActionFilter3 = new QAction(this);
@@ -69,7 +69,7 @@ ISMedTech::ISRatingListForm::ISRatingListForm(QWidget *parent) : ISListBaseForm(
 	ActionFilter3->setToolTip("3");
 	ActionFilter3->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.3"));
 	ActionFilter3->setProperty("Filter", 3);
-	connect(ActionFilter3, &QAction::triggered, this, &ISMedTech::ISRatingListForm::FilterClicked);
+	connect(ActionFilter3, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter3, false);
 
 	QAction *ActionFilter2 = new QAction(this);
@@ -78,7 +78,7 @@ ISMedTech::ISRatingListForm::ISRatingListForm(QWidget *parent) : ISListBaseForm(
 	ActionFilter2->setToolTip("2");
 	ActionFilter2->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.2"));
 	ActionFilter2->setProperty("Filter", 2);
-	connect(ActionFilter2, &QAction::triggered, this, &ISMedTech::ISRatingListForm::FilterClicked);
+	connect(ActionFilter2, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter2, false);
 
 	QAction *ActionFilter1 = new QAction(this);
@@ -87,7 +87,7 @@ ISMedTech::ISRatingListForm::ISRatingListForm(QWidget *parent) : ISListBaseForm(
 	ActionFilter1->setToolTip("1");
 	ActionFilter1->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.1"));
 	ActionFilter1->setProperty("Filter", 1);
-	connect(ActionFilter1, &QAction::triggered, this, &ISMedTech::ISRatingListForm::FilterClicked);
+	connect(ActionFilter1, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter1, false);
 
 	QActionGroup *ActionGroup = new QActionGroup(this);
@@ -99,12 +99,12 @@ ISMedTech::ISRatingListForm::ISRatingListForm(QWidget *parent) : ISListBaseForm(
 	ActionGroup->addAction(ActionFilter1);
 }
 //-----------------------------------------------------------------------------
-ISMedTech::ISRatingListForm::~ISRatingListForm()
+ISMedTech::RatingListForm::~RatingListForm()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISMedTech::ISRatingListForm::FilterClicked()
+void ISMedTech::RatingListForm::FilterClicked()
 {
 	QVariant SelectedFilter = sender()->property("Filter");
 	if (SelectedFilter.isValid())
@@ -123,16 +123,16 @@ void ISMedTech::ISRatingListForm::FilterClicked()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISMedTech::ISRatingSubSystem::ISRatingSubSystem(QWidget *parent)
+ISMedTech::RatingSubSystem::RatingSubSystem(QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	CDRLoadData(false)
 {
 	QSplitter *Splitter = new QSplitter(Qt::Horizontal, this);
 	GetMainLayout()->addWidget(Splitter);
 
-	RatingListForm = new ISMedTech::ISRatingListForm(this);
-	connect(RatingListForm, &ISMedTech::ISRatingListForm::Updated, this, &ISMedTech::ISRatingSubSystem::ClearCDR);
-	connect(RatingListForm, &ISMedTech::ISRatingListForm::SelectedRowSignal, this, &ISMedTech::ISRatingSubSystem::SelectedRating);
+	RatingListForm = new ISMedTech::RatingListForm(this);
+	connect(RatingListForm, &ISMedTech::RatingListForm::Updated, this, &ISMedTech::RatingSubSystem::ClearCDR);
+	connect(RatingListForm, &ISMedTech::RatingListForm::SelectedRowSignal, this, &ISMedTech::RatingSubSystem::SelectedRating);
 	Splitter->addWidget(RatingListForm);
 
 	AsteriskCallsListForm = new ISAsteriskCallsListForm(this);
@@ -141,17 +141,17 @@ ISMedTech::ISRatingSubSystem::ISRatingSubSystem(QWidget *parent)
 	Splitter->addWidget(AsteriskCallsListForm);
 }
 //-----------------------------------------------------------------------------
-ISMedTech::ISRatingSubSystem::~ISRatingSubSystem()
+ISMedTech::RatingSubSystem::~RatingSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISMedTech::ISRatingSubSystem::LoadData()
+void ISMedTech::RatingSubSystem::LoadData()
 {
 	RatingListForm->LoadData();
 }
 //-----------------------------------------------------------------------------
-void ISMedTech::ISRatingSubSystem::SelectedRating()
+void ISMedTech::RatingSubSystem::SelectedRating()
 {
 	if (RatingListForm->GetSelectedIDs().size() == 1)
 	{
@@ -178,7 +178,7 @@ void ISMedTech::ISRatingSubSystem::SelectedRating()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISMedTech::ISRatingSubSystem::ClearCDR()
+void ISMedTech::RatingSubSystem::ClearCDR()
 {
 	AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_id = 0");
 	AsteriskCallsListForm->Update();
