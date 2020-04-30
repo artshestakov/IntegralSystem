@@ -310,13 +310,6 @@
     <ClCompile Include="ISSettingsForm.cpp" />
     <ClCompile Include="ISSettingTableNameFieldsForm.cpp" />
     <ClCompile Include="ISSirona.cpp" />
-    <ClCompile Include="ISSironaAppointmentListForm.cpp" />
-    <ClCompile Include="ISSironaCostListForm.cpp" />
-    <ClCompile Include="ISSironaCostObjectForm.cpp" />
-    <ClCompile Include="ISSironaReportForm.cpp" />
-    <ClCompile Include="ISSironaResearchListForm.cpp" />
-    <ClCompile Include="ISSironaResearchObjectForm.cpp" />
-    <ClCompile Include="ISSironaResearchTypeObjectForm.cpp" />
     <ClCompile Include="ISSliderDuration.cpp" />
     <ClCompile Include="ISSortingBuffer.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
@@ -702,13 +695,6 @@
     <QtMoc Include="ISPrintingHtml.h" />
     <QtMoc Include="ISScoreObjectForm.h" />
     <QtMoc Include="ISSirona.h" />
-    <QtMoc Include="ISSironaAppointmentListForm.h" />
-    <QtMoc Include="ISSironaCostListForm.h" />
-    <QtMoc Include="ISSironaCostObjectForm.h" />
-    <QtMoc Include="ISSironaReportForm.h" />
-    <QtMoc Include="ISSironaResearchListForm.h" />
-    <QtMoc Include="ISSironaResearchObjectForm.h" />
-    <QtMoc Include="ISSironaResearchTypeObjectForm.h" />
     <ClInclude Include="ISRegisterMetaType.h" />
     <ClInclude Include="ISSortingBuffer.h" />
     <ClInclude Include="ISStartup.h" />

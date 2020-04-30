@@ -2,10 +2,10 @@
 <XSR Name="Sirona.xsr">
 
   <_Systems IsSystem="false" UID="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="3" LocalName="Картотека" Icon="Lists"/>
-  <_SubSystems UID="{6637D5A9-7D2F-4FE1-8205-43D3FCA84324}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="1" LocalName="Запись на приём" Icon="Lists" ClassName="ISSironaAppointmentListForm"/>
-  <_SubSystems UID="{3C2BE270-B406-4A79-BB81-83A16B004069}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="2" LocalName="Исследования" Icon="Lists" ClassName="ISSironaResearchListForm"/>
-  <_SubSystems UID="{3A9B701D-515B-4324-929B-A4FE1B7081E1}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="3" LocalName="Отчёт по врачам" Icon="Lists" ClassName="ISSironaReportForm"/>
-  <_SubSystems UID="{6490D145-4F5A-436B-AB67-EDF3F60752A8}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="4" LocalName="Расходы" Icon="Lists" ClassName="ISSironaCostListForm"/>
+  <_SubSystems UID="{6637D5A9-7D2F-4FE1-8205-43D3FCA84324}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="1" LocalName="Запись на приём" Icon="Lists" ClassName="ISSirona::AppointmentListForm"/>
+  <_SubSystems UID="{3C2BE270-B406-4A79-BB81-83A16B004069}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="2" LocalName="Исследования" Icon="Lists" ClassName="ISSirona::ResearchListForm"/>
+  <_SubSystems UID="{3A9B701D-515B-4324-929B-A4FE1B7081E1}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="3" LocalName="Отчёт по врачам" Icon="Lists" ClassName="ISSirona::ReportForm"/>
+  <_SubSystems UID="{6490D145-4F5A-436B-AB67-EDF3F60752A8}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="4" LocalName="Расходы" Icon="Lists" ClassName="ISSirona::CostListForm"/>
   <_SubSystems UID="{0E99454A-A364-4A5D-918F-723C618BC7D9}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="5" LocalName="Отчётные периоды" Icon="Lists" TableName="ReportPeriod"/>
   <_SubSystems UID="{D168FE55-BC06-4332-9938-B08029344CD7}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="6" LocalName="Типы исследований" Icon="Lists" TableName="ResearchType"/>
   <_SubSystems UID="{5366F960-9D19-4124-895F-26438BB71597}" System="{D760A059-6B09-4F87-B50C-F9983D1D2489}" OrderID="7" LocalName="Типы расходов" Icon="Lists" TableName="CostType"/>

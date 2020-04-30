@@ -23,7 +23,7 @@
     </Foreigns>
   </Table>
   
-  <Table Name="Research" UID="{AE813B7D-A5AC-43B3-B6EF-0FF1F94A0F3E}" Alias="resr" LocalName="Исследование" LocalListName="Исследования" ObjectForm="ISSironaResearchObjectForm" TitleName="Patient">
+  <Table Name="Research" UID="{AE813B7D-A5AC-43B3-B6EF-0FF1F94A0F3E}" Alias="resr" LocalName="Исследование" LocalListName="Исследования" ObjectForm="ISSirona::ResearchObjectForm" TitleName="Patient">
     <Fields>
       <Field UID="{CD0F80D0-DF65-4005-A746-9BE49313B0B5}" Name="Date" Type="Date" DefaultValue="CURRENT_DATE" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
       <Field UID="{D008E3B9-E16A-4881-A154-5D1E52AC6037}" Name="Doctor" Type="Int" LabelName="Доктор" LocalListName="Доктор" NotNull="true" LayoutName="Doctor"/>
@@ -54,7 +54,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="ResearchType" UID="{42FA2EE0-B74F-4B6E-A2FA-1BBC67F6CBBE}" Alias="rstp" LocalName="Тип исследования" LocalListName="Типы исследований" ObjectForm="ISSironaResearchTypeObjectForm" TitleName="Name">
+  <Table Name="ResearchType" UID="{42FA2EE0-B74F-4B6E-A2FA-1BBC67F6CBBE}" Alias="rstp" LocalName="Тип исследования" LocalListName="Типы исследований" ObjectForm="ISSirona::ResearchTypeObjectForm" TitleName="Name">
     <Fields>
       <Field UID="{AD63C7F0-A5CD-495E-8B10-EB5B6E9997BC}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
       <Field UID="{3F6334EB-7D46-4355-94F6-0EE41555778A}" Name="Value" Type="Double" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="Value"/>
@@ -114,7 +114,7 @@
     </Indexes>
   </Table>
   
-  <Table Name="Cost" UID="{B9844F41-76E1-4FB3-ADB8-6B5C0F6F61FF}" Alias="cost" LocalName="Расход" LocalListName="Расходы" ObjectForm="ISSironaCostObjectForm" TitleName="Name">
+  <Table Name="Cost" UID="{B9844F41-76E1-4FB3-ADB8-6B5C0F6F61FF}" Alias="cost" LocalName="Расход" LocalListName="Расходы" ObjectForm="ISSirona::CostObjectForm" TitleName="Name">
     <Fields>
       <Field UID="{BE570CE9-5BF6-46DE-A7B4-D91CAFB57A54}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
       <Field UID="{A0B32D3B-8385-45A4-AE6A-71E39F74CDE0}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>

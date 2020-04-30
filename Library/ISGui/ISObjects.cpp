@@ -26,7 +26,7 @@ ISObjects::ISObjects()
 	qRegisterMetaType<ISMedTech::Object*>("ISMedTech::Object");
 	qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
 	qRegisterMetaType<ISPatriot*>("ISPatriot");
-	qRegisterMetaType<ISSirona*>("ISSirona");
+	qRegisterMetaType<ISSirona::Object*>("ISSirona::Object");
 }
 //-----------------------------------------------------------------------------
 ISObjects::~ISObjects()

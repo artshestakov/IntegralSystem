@@ -106,9 +106,6 @@
     <Filter Include="Objects\Sirona">
       <UniqueIdentifier>{006cc689-9a3d-432d-ba03-bf4ad28ef303}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Sirona\Forms">
-      <UniqueIdentifier>{9611cf7f-da6f-48fd-aef9-b27e0a0856ba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{ee6c4721-bedb-4a2f-a405-e0f0b86927bf}</UniqueIdentifier>
     </Filter>
@@ -500,27 +497,6 @@
     </ClCompile>
     <ClCompile Include="ISSirona.cpp">
       <Filter>Objects\Sirona</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSironaAppointmentListForm.cpp">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSironaCostListForm.cpp">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSironaCostObjectForm.cpp">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSironaReportForm.cpp">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSironaResearchListForm.cpp">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSironaResearchObjectForm.cpp">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSironaResearchTypeObjectForm.cpp">
-      <Filter>Objects\Sirona\Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISObjectInterface.cpp">
       <Filter>Objects</Filter>
@@ -1312,27 +1288,6 @@
     </QtMoc>
     <QtMoc Include="ISSirona.h">
       <Filter>Objects\Sirona</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSironaAppointmentListForm.h">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSironaCostListForm.h">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSironaCostObjectForm.h">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSironaReportForm.h">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSironaResearchListForm.h">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSironaResearchObjectForm.h">
-      <Filter>Objects\Sirona\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSironaResearchTypeObjectForm.h">
-      <Filter>Objects\Sirona\Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISObjectInterface.h">
       <Filter>Objects</Filter>
