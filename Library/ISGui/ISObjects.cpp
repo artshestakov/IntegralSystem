@@ -24,7 +24,7 @@ ISObjects::ISObjects()
 	qRegisterMetaType<ISHighway*>("ISHighway");
 	qRegisterMetaType<ISInformResource*>("ISInformResource");
 	qRegisterMetaType<ISMedTech*>("ISMedTech");
-	qRegisterMetaType<ISOilSphere*>("ISOilSphere");
+	qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
 	qRegisterMetaType<ISPatriot*>("ISPatriot");
 	qRegisterMetaType<ISSirona*>("ISSirona");
 }
@@ -80,7 +80,6 @@ bool ISObjects::Initialize()
 				Info.UID = DomNamedNodeMap.namedItem("UID").nodeValue();
 				Info.Name = configuration_name;
 				Info.LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
-				Info.ClassName = DomNamedNodeMap.namedItem("ClassName").nodeValue();
 				Info.DesktopForm = DomNamedNodeMap.namedItem("DesktopForm").nodeValue();
 				Info.IncomingCallForm = DomNamedNodeMap.namedItem("IncomingCallForm").nodeValue();
 				break;
@@ -101,7 +100,7 @@ bool ISObjects::Initialize()
 
 	if (Result)
 	{
-		ObjectInterface = ISAlgorithm::CreatePointer<ISObjectInterface *>(Info.ClassName);
+		ObjectInterface = ISAlgorithm::CreatePointer<ISObjectInterface *>("IS" + Info.Name + "::Object");
 		ObjectInterface->SetConfigurationName(ConfigurationName);
 		ObjectInterface->RegisterMetaTypes();
 	}

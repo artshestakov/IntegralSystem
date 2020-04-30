@@ -265,7 +265,6 @@ struct ISCORE_EXPORT ISConfigurationItem
     ISUuid UID; //Идентификатор
     QString Name; //Наименование
     QString LocalName; //Локальное наименование
-    QString ClassName; //Имя класса ядра конфигурации
     QString DesktopForm; //Имя класса рабочего стола
     QString IncomingCallForm; //Имя класса формы входящего звонка
 };

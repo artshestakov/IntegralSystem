@@ -252,9 +252,6 @@
     <ClCompile Include="ISObjectModel.cpp" />
     <ClCompile Include="ISObjects.cpp" />
     <ClCompile Include="ISOilSphere.cpp" />
-    <ClCompile Include="ISOilSphereCounterpartyObjectForm.cpp" />
-    <ClCompile Include="ISOilSphereImplementationDetailObjectForm.cpp" />
-    <ClCompile Include="ISOilSphereImplementationObjectForm.cpp" />
     <ClCompile Include="ISOrganizationListForm.cpp" />
     <ClCompile Include="ISOrganizationMyListForm.cpp" />
     <ClCompile Include="ISOrganizationObjectForm.cpp" />
@@ -690,9 +687,6 @@
     <QtMoc Include="ISOrganizationScoreObjectForm.h" />
     <QtMoc Include="ISOrganizationWorkListForm.h" />
     <QtMoc Include="ISOilSphere.h" />
-    <QtMoc Include="ISOilSphereCounterpartyObjectForm.h" />
-    <QtMoc Include="ISOilSphereImplementationDetailObjectForm.h" />
-    <QtMoc Include="ISOilSphereImplementationObjectForm.h" />
     <ClInclude Include="ISObjects.h" />
     <ClInclude Include="ISPageMetrics.h" />
     <QtMoc Include="ISPrintingBase.h" />

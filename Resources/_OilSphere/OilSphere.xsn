@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="OilSphere.xsn">
   
-  <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphereCounterpartyObjectForm">
+  <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphere::CounterpartyObjectForm">
     <Fields>
       <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
       <Field UID="{3B7EB4F8-CFEB-40C8-99E9-22150ED555B9}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
@@ -72,7 +72,7 @@
     </Indexes>
   </Table>
 
-  <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="DateLoad" ObjectForm="ISOilSphereImplementationObjectForm">
+  <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="DateLoad" ObjectForm="ISOilSphere::ImplementationObjectForm">
     <Fields>
       <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки" NotNull="true"/>
       <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта" NotNull="true"/>
@@ -88,7 +88,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="LoadCounterparty" ClassFilterField="Implementation" ObjectForm="ISOilSphereImplementationDetailObjectForm">
+  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="LoadCounterparty" ClassFilterField="Implementation" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
     <Fields>
       <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="Int" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент (загрузка)" LocalListName="Контрагент" NotNull="true" SeparatorName="Загрузка"/>

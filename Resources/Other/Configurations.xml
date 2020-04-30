@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configurations>
 
-  <Configuration UID="{45662D03-7680-4C07-965E-B7D6CD93668A}" Name="CenterSeven" LocalName="ООО «Центр 7»" ClassName="ISCenterSeven" DesktopForm="ISCenterSevenDesktop" IncomingCallForm="ISCenterSevenIncomingCallForm"/>
-  <Configuration UID="{5F65B2D5-D77D-4D41-A749-F59B46FFD76A}" Name="Demo" LocalName="Демонстрационная версия" ClassName="ISDemo"/>
-  <Configuration UID="{23DE116A-60B8-4DD8-9F80-FEA5BBB3D445}" Name="Highway" LocalName="ООО «Магистраль-ЮГ»" ClassName="ISHighway" IncomingCallForm="ISHighwayIncomingCallForm"/>
-  <Configuration UID="{4AB46AAA-FCF9-49E7-BCE3-463435F8E166}" Name="InformResource" LocalName="ООО «Информ Ресурс МИР»" ClassName="ISInformResource" DesktopForm="ISDesktopInformResource" IncomingCallForm="ISIncomingCallInformResourceForm"/>
-  <Configuration UID="{744D107A-6BAD-4038-8E9D-D33A1C62C537}" Name="MedTech" LocalName="ООО «Медицинские технологии»" ClassName="ISMedTech"/>
-  <Configuration UID="{B2003F73-0DD2-4359-AC96-FA7CABB53049}" Name="OilSphere" LocalName="ООО «Нефтесфера»" ClassName="ISOilSphere"/>
-  <Configuration UID="{76478BDD-0C4A-46B8-9AB2-973F6BA6F3FD}" Name="Milex" LocalName="Сервисный центр «Милекс»" ClassName="ISMilex"/>
-  <Configuration UID="{2A5AD154-6313-48C7-94B1-0C746AD1EBAB}" Name="Patriot" LocalName="Спорт клуб «Патриот»" ClassName="ISPatriot"/>
-  <Configuration UID="{0B082B32-7DC3-49F4-A988-17BBC035C694}" Name="ShakShak" LocalName="Стоматологическая клиника «Шакшак»" ClassName="ISShakShak"/>
-  <Configuration UID="{B6FB8EC8-0770-443F-A2A9-2FD6D662748F}" Name="Sirona" LocalName="Независимый рентгенологический центр «Sirona+»" ClassName="ISSirona"/>
+  <Configuration UID="{45662D03-7680-4C07-965E-B7D6CD93668A}" Name="CenterSeven" LocalName="ООО «Центр 7»" DesktopForm="ISCenterSevenDesktop" IncomingCallForm="ISCenterSevenIncomingCallForm"/>
+  <Configuration UID="{5F65B2D5-D77D-4D41-A749-F59B46FFD76A}" Name="Demo" LocalName="Демонстрационная версия"/>
+  <Configuration UID="{23DE116A-60B8-4DD8-9F80-FEA5BBB3D445}" Name="Highway" LocalName="ООО «Магистраль-ЮГ»" IncomingCallForm="ISHighwayIncomingCallForm"/>
+  <Configuration UID="{4AB46AAA-FCF9-49E7-BCE3-463435F8E166}" Name="InformResource" LocalName="ООО «Информ Ресурс МИР»" DesktopForm="ISDesktopInformResource" IncomingCallForm="ISIncomingCallInformResourceForm"/>
+  <Configuration UID="{744D107A-6BAD-4038-8E9D-D33A1C62C537}" Name="MedTech" LocalName="ООО «Медицинские технологии»"/>
+  <Configuration UID="{B2003F73-0DD2-4359-AC96-FA7CABB53049}" Name="OilSphere" LocalName="ООО «Нефтесфера»"/>
+  <Configuration UID="{76478BDD-0C4A-46B8-9AB2-973F6BA6F3FD}" Name="Milex" LocalName="Сервисный центр «Милекс»"/>
+  <Configuration UID="{2A5AD154-6313-48C7-94B1-0C746AD1EBAB}" Name="Patriot" LocalName="Спорт клуб «Патриот»"/>
+  <Configuration UID="{0B082B32-7DC3-49F4-A988-17BBC035C694}" Name="ShakShak" LocalName="Стоматологическая клиника «Шакшак»"/>
+  <Configuration UID="{B6FB8EC8-0770-443F-A2A9-2FD6D662748F}" Name="Sirona" LocalName="Независимый рентгенологический центр «Sirona+»"/>
 
 </Configurations>
