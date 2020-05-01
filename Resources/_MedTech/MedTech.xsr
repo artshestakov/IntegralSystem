@@ -6,5 +6,5 @@
   <_SubSystems UID="{B327C18A-2824-4A42-9594-E39C629E1502}" System="{3C28399E-B3CE-4A63-837E-354C07DA008E}" OrderID="2" LocalName="Оценки" Icon="Lists" ClassName="ISMedTech::RatingSubSystem"/>
 
   <_CaratCore UID="{4ECFDE68-2A6A-4394-A98D-8ED4D4A56B11}" Name="MedTech" FileName="CaratMedTech" LocalName="ООО Медицинские технологии"/>
-  
+
 </XSR>
