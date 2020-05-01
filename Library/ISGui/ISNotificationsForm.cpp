@@ -3,10 +3,10 @@
 #include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISControls.h"
 #include "ISNotifyWidgetItem.h"
 #include "ISMessageBox.h"
 #include "ISQuery.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_NOTIFICATION = PREPARE_QUERY("SELECT ntfu_id, ntfn_uid, ntfu_creationdate, ntfu_payload "
 											   "FROM _notificationuser "
@@ -18,30 +18,34 @@ static QString QD_NOTIFICATION = PREPARE_QUERY("DELETE FROM _notificationuser WH
 //-----------------------------------------------------------------------------
 static QString QD_NOTIFICATION_CLEAR = PREPARE_QUERY("DELETE FROM _notificationuser WHERE ntfu_userto = currentuserid()");
 //-----------------------------------------------------------------------------
-ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(parent)
+ISNotificationsForm::ISNotificationsForm(QWidget *parent)
+	: ISInterfaceForm(parent, Qt::Popup)
 {
-	setWindowFlags(Qt::Popup);
-	
-	QVBoxLayout *LayoutFrame = new QVBoxLayout();
-	LayoutFrame->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
+	QVBoxLayout *LayoutFrame = new QVBoxLayout();
+	LayoutFrame->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	
 	QFrame *Frame = new QFrame(this);
 	Frame->setFrameShape(QFrame::Box);
 	Frame->setFrameShadow(QFrame::Raised);
 	Frame->setLayout(LayoutFrame);
 	GetMainLayout()->addWidget(Frame);
 
-	LayoutFrame->addWidget(new QLabel(LANG("Notifications") + ':', this));
+	QVBoxLayout *Layout = new QVBoxLayout();
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+	LayoutFrame->addLayout(Layout);
+
+	Layout->addWidget(new QLabel(LANG("Notifications") + ':', this));
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setVerticalScrollMode(ISListWidget::ScrollPerPixel);
-	LayoutFrame->addWidget(ListWidget);
-
-	LayoutFrame->addWidget(ISControls::CreateHorizontalLine(this));
+	ListWidget->setAlternatingRowColors(true);
+	Layout->addWidget(ListWidget);
 
 	QHBoxLayout *LayoutButtons = new QHBoxLayout();
 	LayoutButtons->addStretch();
-	LayoutFrame->addLayout(LayoutButtons);
+	Layout->addLayout(LayoutButtons);
 
 	ButtonClear = new ISPushButton(this);
 	ButtonClear->setEnabled(false);
@@ -51,8 +55,10 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(pare
 
 	ISPushButton *ButtonHide = new ISPushButton(this);
 	ButtonHide->setText(LANG("Hide"));
-	connect(ButtonHide, &ISPushButton::clicked, [=] { HideAnimation(350); });
+	connect(ButtonHide, &ISPushButton::clicked, this, &ISNotificationsForm::close);
 	LayoutButtons->addWidget(ButtonHide);
+
+	LayoutFrame->addWidget(new QStatusBar(this));
 
 	LabelEmpty = new QLabel(this);
 	LabelEmpty->setVisible(false);
@@ -67,17 +73,28 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent) : ISInterfaceForm(pare
 //-----------------------------------------------------------------------------
 ISNotificationsForm::~ISNotificationsForm()
 {
-
+	ISConfig::Instance().SetValue("Other/NotificationFormSizeWidth", width());
+	ISConfig::Instance().SetValue("Other/NotificationFormSizeHeight", height());
+	ISConfig::Instance().SaveForce();
+}
+//-----------------------------------------------------------------------------
+void ISNotificationsForm::showEvent(QShowEvent *ShowEvent)
+{
+	ISInterfaceForm::showEvent(ShowEvent);
+	int Width = CONFIG_INT("Other/NotificationFormSizeWidth");
+	int Height = CONFIG_INT("Other/NotificationFormSizeHeight");
+	if (Width && Height)
+	{
+		resize(Width, Height);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISNotificationsForm::paintEvent(QPaintEvent *e)
 {
 	QWidget::paintEvent(e);
-
 	if (LabelEmpty->isVisible())
 	{
-		QRect Rect = ListWidget->frameGeometry();
-		QPoint CenterPoint = Rect.center();
+		QPoint CenterPoint = ListWidget->frameGeometry().center();
 		CenterPoint.setX(CenterPoint.x() - (LabelEmpty->width() / 2));
 		CenterPoint.setY(CenterPoint.y() - (LabelEmpty->height() / 2));
 		LabelEmpty->move(CenterPoint);

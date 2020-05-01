@@ -17,8 +17,12 @@ public:
 	ISNotificationsForm(QWidget *parent = 0);
 	virtual ~ISNotificationsForm();
 
+	void showEvent(QShowEvent *ShowEvent);
+
 protected:
 	void paintEvent(QPaintEvent *e);
+
+private:
 	void ReloadNotify();
 	void Clear();
 	void DeleteNotifyUser(int ID);

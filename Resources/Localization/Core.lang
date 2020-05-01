@@ -323,7 +323,9 @@
   <Local Name="SmtpClient.Error.AuthenticationFailedError" Russian="Ошибка аутентификации"/>
   
   <!--Other-->
+  <Local Name="Yesterday" Russian="Вчера"/>
   <Local Name="Today" Russian="Сегодня"/>
+  <Local Name="Tomorrow" Russian="Завтра"/>
   <Local Name="SaveAndCreate" Russian="Сохранить и создать новую запись"/>
   <Local Name="SaveClose" Russian="Сохранить и закрыть"/>
   <Local Name="Save" Russian="Сохранить"/>

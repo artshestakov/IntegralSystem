@@ -8,10 +8,10 @@
 #include "ISNotifySender.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id, const ISUuid &NotificationUID, const QDateTime &DateTime, const QString &PayloadString) : QWidget(parent)
+ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id, const ISUuid &NotificationUID, const QDateTime &DateTime, const QString &PayloadString)
+	: QWidget(parent),
+	ID(notification_user_id)
 {
-	ID = notification_user_id;
-
 	QHBoxLayout *Layout = new QHBoxLayout();
 	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	setLayout(Layout);
@@ -29,7 +29,7 @@ ISNotifyWidgetItem::ISNotifyWidgetItem(QWidget *parent, int notification_user_id
 	LabelMessage->setWordWrap(true);
 	LayoutLeft->addWidget(LabelMessage);
 
-	if (PayloadString.length())
+	if (!PayloadString.isEmpty())
 	{
 		LabelMessage->setText(LabelMessage->text() + "\n" + PayloadString);
 	}
