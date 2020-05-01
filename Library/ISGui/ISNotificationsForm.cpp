@@ -73,16 +73,16 @@ ISNotificationsForm::ISNotificationsForm(QWidget *parent)
 //-----------------------------------------------------------------------------
 ISNotificationsForm::~ISNotificationsForm()
 {
-	ISConfig::Instance().SetValue("Other/NotificationFormSizeWidth", width());
-	ISConfig::Instance().SetValue("Other/NotificationFormSizeHeight", height());
+	ISConfig::Instance().SetValue(CONST_CONFIG_OTHER_NOTIFICATIONFORMSIZEWIDTH, width());
+	ISConfig::Instance().SetValue(CONST_CONFIG_OTHER_NOTIFICATIONFORMSIZEHEIGHT, height());
 	ISConfig::Instance().SaveForce();
 }
 //-----------------------------------------------------------------------------
 void ISNotificationsForm::showEvent(QShowEvent *ShowEvent)
 {
 	ISInterfaceForm::showEvent(ShowEvent);
-	int Width = CONFIG_INT("Other/NotificationFormSizeWidth");
-	int Height = CONFIG_INT("Other/NotificationFormSizeHeight");
+	int Width = CONFIG_INT(CONST_CONFIG_OTHER_NOTIFICATIONFORMSIZEWIDTH);
+	int Height = CONFIG_INT(CONST_CONFIG_OTHER_NOTIFICATIONFORMSIZEHEIGHT);
 	if (Width && Height)
 	{
 		resize(Width, Height);
@@ -107,7 +107,7 @@ void ISNotificationsForm::ReloadNotify()
 	ISQuery qSelect(QS_NOTIFICATION);
 	if (qSelect.Execute())
 	{
-		if (qSelect.GetCountResultRows()) //≈сли есть уведомлений - заполнить список
+		if (qSelect.GetCountResultRows()) //≈сли есть уведомлени€ - заполнить список
 		{
 			LabelEmpty->setVisible(false);
 			ButtonClear->setEnabled(true);

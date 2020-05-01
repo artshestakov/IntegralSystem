@@ -422,5 +422,7 @@ const char CONST_CONFIG_CONNECTION_LOGIN[] = "Connection/Login";
 const char CONST_CONFIG_CONNECTION_PASSWORD[] = "Connection/Password";
 const char CONST_CONFIG_REMEMBER_USER_INCLUDE[] = "RememberUser/Include";
 const char CONST_CONFIG_REMEMBER_USER_LOGIN[] = "RememberUser/Login";
+const char CONST_CONFIG_OTHER_NOTIFICATIONFORMSIZEWIDTH[] = "Other/NotificationFormSizeWidth";
+const char CONST_CONFIG_OTHER_NOTIFICATIONFORMSIZEHEIGHT[] = "Other/NotificationFormSizeHeight";
 //-----------------------------------------------------------------------------
 #endif
