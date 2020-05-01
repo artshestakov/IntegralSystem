@@ -37,9 +37,6 @@
     <Filter Include="Resources\_CenterSeven">
       <UniqueIdentifier>{53d92222-dd29-4263-b13d-52b2a1788b06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\_Demo">
-      <UniqueIdentifier>{2a230b61-4445-4d72-b33d-87c62205d753}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\_Highway">
       <UniqueIdentifier>{42fa687e-da46-4d83-a845-62a5924d17a5}</UniqueIdentifier>
     </Filter>
@@ -443,21 +440,6 @@
     </None>
     <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsr">
       <Filter>Resources\_CenterSeven</Filter>
-    </None>
-    <None Include="..\..\Resources\_Demo\Autoservice.xsn">
-      <Filter>Resources\_Demo</Filter>
-    </None>
-    <None Include="..\..\Resources\_Demo\Demo.xsn">
-      <Filter>Resources\_Demo</Filter>
-    </None>
-    <None Include="..\..\Resources\_Demo\Demo.xsr">
-      <Filter>Resources\_Demo</Filter>
-    </None>
-    <None Include="..\..\Resources\_Demo\Denta.xsn">
-      <Filter>Resources\_Demo</Filter>
-    </None>
-    <None Include="..\..\Resources\_Demo\ServiceCenter.xsn">
-      <Filter>Resources\_Demo</Filter>
     </None>
     <None Include="..\..\Resources\_Highway\Highway.xsn">
       <Filter>Resources\_Highway</Filter>

@@ -73,9 +73,6 @@
     <Filter Include="Objects\CenterSeven\Forms">
       <UniqueIdentifier>{a257c5d3-0c4a-44e7-afe7-55cf0abbd11b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Demo">
-      <UniqueIdentifier>{ef603f6c-57ac-4a82-adde-016a0ebec3c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Highway">
       <UniqueIdentifier>{b206525a-aa45-4410-be23-44fe77b49628}</UniqueIdentifier>
     </Filter>
@@ -386,9 +383,6 @@
     </ClCompile>
     <ClCompile Include="ISCenterSevenWaitAdmissionListForm.cpp">
       <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDemo.cpp">
-      <Filter>Objects\Demo</Filter>
     </ClCompile>
     <ClCompile Include="ISHighwayIncomingCallForm.cpp">
       <Filter>Objects\Highway\Forms</Filter>
@@ -1180,9 +1174,6 @@
     </QtMoc>
     <QtMoc Include="ISCenterSevenWaitAdmissionListForm.h">
       <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDemo.h">
-      <Filter>Objects\Demo</Filter>
     </QtMoc>
     <QtMoc Include="ISHighwayIncomingCallForm.h">
       <Filter>Objects\Highway\Forms</Filter>

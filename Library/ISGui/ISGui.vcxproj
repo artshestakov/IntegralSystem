@@ -151,7 +151,6 @@
     <ClCompile Include="ISDateTimeEdit.cpp" />
     <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
-    <ClCompile Include="ISDemo.cpp" />
     <ClCompile Include="ISDemoAccessesListForm.cpp" />
     <ClCompile Include="ISDemoAccessesMyCreatedListForm.cpp" />
     <ClCompile Include="ISDemoAccessesMyListForm.cpp" />
@@ -623,7 +622,6 @@
     <QtMoc Include="ISCenterSevenSelectBranchForm.h" />
     <QtMoc Include="ISCenterSevenStatusAdmissionForm.h" />
     <QtMoc Include="ISCenterSevenWaitAdmissionListForm.h" />
-    <QtMoc Include="ISDemo.h" />
     <QtMoc Include="ISHighwayIncomingCallForm.h" />
     <QtMoc Include="ISHighwayOrganizationListForm.h" />
     <QtMoc Include="ISHighwayOrganizationMyListForm.h" />
