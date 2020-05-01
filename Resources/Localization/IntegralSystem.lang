@@ -246,7 +246,6 @@
   <Local Name="Message.Question.CalendarEventFormClose" Russian="Закрытие окна привезет к автомтическому завернею события. Закрыть окно?"/>
   <Local Name="Message.Question.SaveDist" Russian="Сохранить этот дистрибутив на диск?"/>
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
-  <Local Name="Message.Question.ImportedSettings" Russian="Настройки успешно импортированы! Для того чтобы все импортированные настройки вступили в силу, рекомендуется перезапустить программу. Сделать это сейчас?"/>
   <Local Name="Message.Question.ShareRecordFromChat" Russian="Поделиться ссылкой на эту запись в общий чат?"/>
   <Local Name="Message.Question.AttachRecordFromTask" Russian="Прикрепить выбранную запись к задаче?"/>
   <Local Name="Message.Question.ClearListNotifications" Russian="Очистить список уведомлений?"/>
@@ -483,8 +482,6 @@
   <Local Name="Reply" Russian="Ответить"/>
   <Local Name="NotificationEmpty" Russian="Уведомлений нет."/>
   <Local Name="NotificationEmpty.DetailedText" Russian="Как только Вам придут уведомления, они появятся здесь."/>
-  <Local Name="Settings.Export" Russian="Экспорт"/>
-  <Local Name="Settings.Import" Russian="Импорт"/>
   <Local Name="Cores" Russian="Ядра"/>
   <Local Name="Share" Russian="Поделиться"/>
   <Local Name="AttachTask" Russian="Прикрепить к задаче"/>
@@ -623,7 +620,6 @@
   <Local Name="EscortRecordsInNextTables" Russian="Эскортные записи из следующих таблиц"/>
   <Local Name="WhatDoYouWantToSay" Russian="Что Вы хотите сказать?"/>
   <Local Name="SavedSetting" Russian="Сохранение настроек..."/>
-  <Local Name="ImportSetting" Russian="Импорт настроек..."/>
   <Local Name="ProgramWillExit" Russian="Программа будет закрыта."/>
   <Local Name="PressEscapeToExit" Russian="Нажмите клавишу Escape для выхода из программы."/>
   <Local Name="ClickRightButtonMouseForCallContextMenu" Russian="Кликните правой клавишей мыши чтобы вызвать контекстное меню."/>

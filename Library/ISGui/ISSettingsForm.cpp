@@ -17,8 +17,6 @@
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue, stgs_localname FROM _settings WHERE NOT stgs_isdeleted ORDER BY stgs_id");
 //-----------------------------------------------------------------------------
-static QString QS_SETTING_EXPORT = PREPARE_QUERY("SELECT usst_setting, usst_value FROM _usersettings WHERE NOT usst_isdeleted ORDER BY usst_id");
-//-----------------------------------------------------------------------------
 static QString QU_SETTINGS_DEFAULT = PREPARE_QUERY("UPDATE _usersettings SET usst_value = :SettingValue WHERE usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
 ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDialogForm()
@@ -53,18 +51,6 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDial
 	ButtonDefault->setIcon(BUFFER_ICONS("SettingsDefault"));
 	connect(ButtonDefault, &ISPushButton::clicked, this, &ISSettingsForm::DefaultSettings);
 	LayoutBottom->addWidget(ButtonDefault);
-
-	ISPushButton *ButtonExport = new ISPushButton(this);
-	ButtonExport->setText(LANG("Settings.Export"));
-	ButtonExport->setIcon(BUFFER_ICONS("Arrow.Up"));
-	connect(ButtonExport, &ISPushButton::clicked, this, &ISSettingsForm::Export);
-	LayoutBottom->addWidget(ButtonExport);
-
-	ISPushButton *ButtonImport = new ISPushButton(this);
-	ButtonImport->setText(LANG("Settings.Import"));
-	ButtonImport->setIcon(BUFFER_ICONS("Arrow.Down"));
-	connect(ButtonImport, &ISPushButton::clicked, this, &ISSettingsForm::Import);
-	LayoutBottom->addWidget(ButtonImport);
 
 	LayoutBottom->addStretch();
 
@@ -186,7 +172,7 @@ void ISSettingsForm::Save()
 
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SettingsSaved")))
 	{
-		Restart();
+		ISGui::ChangeUser();
 	}
 	else
 	{
@@ -219,83 +205,9 @@ void ISSettingsForm::DefaultSettings()
 			ProgressForm.hide();
 
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.AppliocationWillBeRestart"));
-			Restart();
+			ISGui::ChangeUser();
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-void ISSettingsForm::Export()
-{
-	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.SettingsIntegralSystem"));
-	if (FilePath.length())
-	{
-		QFile FileSettings(FilePath);
-
-		if (FileSettings.exists())
-		{
-			FileSettings.remove();
-		}
-
-		if (FileSettings.open(QIODevice::WriteOnly))
-		{
-			FileSettings.close();
-		}
-
-		QSettings Settings(FilePath, QSettings::IniFormat, this);
-		
-		ISQuery qSelect(QS_SETTING_EXPORT);
-		if (qSelect.Execute())
-		{
-			while (qSelect.Next())
-			{
-				QString SettingUID = '{' + qSelect.ReadColumn("usst_setting").toString().toUpper() + '}';
-				QString SettingValue = qSelect.ReadColumn("usst_value").toString();
-
-				Settings.setValue("Settings/" + SettingUID, SettingValue);
-			}
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISSettingsForm::Import()
-{
-	QString FilePath = ISFileDialog::GetOpenFileName(this, QString(), LANG("File.Filter.SettingsIntegralSystem"));
-	if (FilePath.length())
-	{
-		QSettings Settings(FilePath, QSettings::IniFormat);
-		QStringList AllKeys = Settings.allKeys();
-
-		ISProgressForm ProgressForm(AllKeys.count(), LANG("ImportSetting"), this);
-		ProgressForm.show();
-
-		for (int i = 0; i < AllKeys.count(); ++i)
-		{
-			ProgressForm.IncrementValue();
-
-			QString SettingKey = AllKeys[i];
-
-			QString SettingUID = SettingKey.split('/')[1];
-			QString SettingValue = Settings.value(SettingKey).toString();
-
-			ISSettings::GetInstance().SaveValue(SettingUID, SettingValue);
-		}
-
-		ProgressForm.close();
-
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ImportedSettings")))
-		{
-			Restart();
-		}
-		else
-		{
-			close();
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISSettingsForm::Restart()
-{
-	ISGui::ChangeUser();
 }
 //-----------------------------------------------------------------------------
 QListWidgetItem* ISSettingsForm::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)

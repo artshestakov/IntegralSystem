@@ -51,7 +51,6 @@
   <Local Name="File.Filter.Log" Russian="Лог-файлы (*.log)"/>
   <Local Name="File.Filter.AsteriskRecord" Russian="Файл записи разговора (*.wav)"/>
   <Local Name="File.Filter.Serial" Russian="Файлы серийных номеров (*.serial)"/>
-  <Local Name="File.Filter.SettingsIntegralSystem" Russian="Файлы настроек IntegralSystem (*.sis)"/>
   <Local Name="File.Filter.File" Russian="Файл (*.%1)"/>
 
   <!--Password Width-->

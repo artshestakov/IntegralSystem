@@ -20,9 +20,6 @@ protected:
 	void CreateSettings();
 	void Save();
 	void DefaultSettings(); //Установить настройки по умолчанию
-	void Export();
-	void Import();
-	void Restart();
 	QListWidgetItem* CreateItemGroup(ISMetaSettingsGroup *MetaGroup);
 	void ItemSelectionChanged();
 	void LabelRowClicked();
