@@ -1,0 +1,31 @@
+#pragma once
+#ifndef _ISTCPCONNECTOR_H_INCLUDED
+#define _ISTCPCONNECTOR_H_INCLUDED
+//-----------------------------------------------------------------------------
+#include "iscore_global.h"
+//-----------------------------------------------------------------------------
+class ISCORE_EXPORT ISTcpConnector : public QObject
+{
+	Q_OBJECT
+
+public:
+	static ISTcpConnector& Instance();
+	
+	QString GetErrorString() const;
+	QTcpSocket* GetSocket();
+	bool Connect(const QString &host, quint16 port);
+	void Disconnect();
+
+private:
+	ISTcpConnector();
+	~ISTcpConnector();
+	ISTcpConnector(ISTcpConnector const &) {};
+	ISTcpConnector& operator=(ISTcpConnector const&) { return *this; };
+
+private:
+	QString ErrorString;
+	QTcpSocket *TcpSocket;
+	QEventLoop EventLoop;
+};
+//-----------------------------------------------------------------------------
+#endif

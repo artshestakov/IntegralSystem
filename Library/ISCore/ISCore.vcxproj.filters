@@ -64,6 +64,9 @@
     <Filter Include="System">
       <UniqueIdentifier>{058f6e61-3fee-4c74-8f53-c52804ffc704}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{a1892984-fec4-4959-954d-64dc25248b0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISDatabase.cpp">
@@ -230,6 +233,12 @@
     </ClCompile>
     <ClCompile Include="ISProtocol.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpQuery.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpConnector.cpp">
+      <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -399,6 +408,9 @@
     <ClInclude Include="ISProtocol.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISTcpQuery.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISQueryModel.h">
@@ -424,6 +436,9 @@
     </QtMoc>
     <QtMoc Include="ISSMS.h">
       <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpConnector.h">
+      <Filter>Protocol</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
