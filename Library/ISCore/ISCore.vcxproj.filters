@@ -240,6 +240,9 @@
     <ClCompile Include="ISTcpConnector.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpServer.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -438,6 +441,9 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISTcpConnector.h">
+      <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpServer.h">
       <Filter>Protocol</Filter>
     </QtMoc>
   </ItemGroup>

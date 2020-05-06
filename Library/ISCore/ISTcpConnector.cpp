@@ -3,11 +3,10 @@
 //-----------------------------------------------------------------------------
 ISTcpConnector::ISTcpConnector()
 	: QObject(),
-	ErrorString(NO_ERROR_STRING)
+	ErrorString(NO_ERROR_STRING),
+	TcpSocket(new QTcpSocket(this))
 {
-	TcpSocket = new QTcpSocket(this);
-	connect(TcpSocket, &QTcpSocket::connected, &EventLoop, &QEventLoop::quit);
-	connect(TcpSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), &EventLoop, &QEventLoop::quit);
+	
 }
 //-----------------------------------------------------------------------------
 ISTcpConnector::~ISTcpConnector()
@@ -33,17 +32,18 @@ ISTcpConnector& ISTcpConnector::Instance()
 //-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &host, quint16 port)
 {
-	QTimer Timer;
-	Timer.setSingleShot(true);
-	connect(&Timer, &QTimer::timeout, [=] { TcpSocket->connectToHost(host, port); });
-	Timer.start(50);
-	EventLoop.exec();
-	if (TcpSocket->state() == QTcpSocket::ConnectedState)
+	TcpSocket->connectToHost(host, port);
+	bool Result = TcpSocket->waitForConnected(CARAT_TIMEOUT_CONNECT);
+	if (Result)
 	{
-		return true;
+		Result = TcpSocket->state() == QTcpSocket::ConnectedState;
 	}
-	ErrorString = TcpSocket->errorString();
-	return false;
+	
+	if (!Result)
+	{
+		ErrorString = TcpSocket->errorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISTcpConnector::Disconnect()

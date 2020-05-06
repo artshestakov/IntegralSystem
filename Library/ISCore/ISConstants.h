@@ -184,6 +184,8 @@ const int	CARAT_CORE_START_TIMEOUT = 5000; //Таймаут ожидания первого собщения о
 const char	CARAT_DEBUGGER_PORT[] = "{381A6F7D-1E01-438E-B7B4-3B0F9881EB8F}"; //Условный порт для отладчика
 const int	CARAT_DEBUGGER_MAX_CLIENTS = 1; //Максимальное количество клиентов для режима отладчика
 const int	CARAT_DEBUGGER_CONNECT_TIMEOUT = 2000; //Таймаут попытки подключения к карату в режиме отладчика
+const char	CARAT_PACKET_SEPARATOR[] = ":end:"; //Разделитель для определения конца пакета
+const int	CARAT_TIMEOUT_CONNECT = 5000; //Таймаут для ожидания подключения
 //-----------------------------------------------------------------------------
 const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных

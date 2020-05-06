@@ -32,7 +32,7 @@ bool ISTcpQuery::Execute(bool Async)
 	{
 		{ "Type", QueryType },
 		{ "Parameters", Parameters }
-	}).simplified() + ":end:";
+	}).simplified() + CARAT_PACKET_SEPARATOR;
 	
 	QTcpSocket *TcpSocket = ISTcpConnector::Instance().GetSocket();
 	bool Result = TcpSocket->write(String.toUtf8()) == String.size();

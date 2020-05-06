@@ -25,7 +25,6 @@ private:
 private:
 	QString ErrorString;
 	QTcpSocket *TcpSocket;
-	QEventLoop EventLoop;
 };
 //-----------------------------------------------------------------------------
 #endif
