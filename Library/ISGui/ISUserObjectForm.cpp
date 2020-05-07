@@ -52,6 +52,13 @@ void ISUserObjectForm::AfterShowEvent()
 bool ISUserObjectForm::Save()
 {
 	bool Result = true;
+
+	if (!GetFieldValue("Group").isValid())
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.UserNotLinkedToGroup"));
+		GetFieldWidget("Group")->BlinkRed();
+	}
+
 	if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
 	{
 		Result = ISObjectFormBase::Save();
@@ -59,7 +66,6 @@ bool ISUserObjectForm::Save()
 		{
 			QString UserFullName = GetFieldValue("Surname").toString() + SYMBOL_SPACE + GetFieldValue("Name").toString() + SYMBOL_SPACE + GetFieldValue("Patronymic").toString();
 			ISSystem::RemoveLastSymbolLoop(UserFullName, SYMBOL_SPACE);
-
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreatePasswordUser").arg(UserFullName)))
 			{
 				if (ISGui::ShowUserPasswordForm(GetObjectID()))

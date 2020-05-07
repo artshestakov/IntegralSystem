@@ -210,6 +210,7 @@
   <Local Name="Message.Warning.InsertingFileSizeVeryBig" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Message.Warning.NotEditAlienStorageFiles" Russian="Редактировать чужие файлы запрещено."/>
   <Local Name="Message.Warning.NotCopyAlienStorageFiles" Russian="Создавать копии чужих файлов запрещено."/>
+  <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
   <Local Name="Message.Question.Reconnect" Russian="Соединение к базе данных потеряно. Произвести переподключение?"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
