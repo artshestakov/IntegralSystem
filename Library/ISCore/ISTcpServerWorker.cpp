@@ -32,6 +32,8 @@ void ISTcpServerWorker::ReadyRead()
 	{
 		return;
 	}
+
+	//Удаляем сепаратор
 	Buffer.remove(Buffer.size() - CARAT_PACKET_SEPARATOR_SIZE, CARAT_PACKET_SEPARATOR_SIZE);
 
 	//Объект ответа
@@ -57,6 +59,7 @@ void ISTcpServerWorker::ReadyRead()
 		TcpAnswer.SetError(ErrorString);
 	}
 	Send(TcpSocket, TcpAnswer);
+	Buffer.clear();
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::Disconnected()

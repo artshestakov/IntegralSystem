@@ -87,28 +87,31 @@ void ISCaratService::StartService()
 	{
 		ISLOGGER_W("Not listen port for local server");
 	}
+
+	TcpServer = new ISTcpServerCarat(this);
+	if (!TcpServer->Run(CARAT_DEFAULT_PORT))
+	{
+		ISLOGGER_W(QString("Not started TCP-server with port %1: %2").arg(CARAT_DEFAULT_PORT).arg(TcpServer->GetErrorString()));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::Finished(int ExitCode, QProcess::ExitStatus Status)
 {
-	QProcess *Process = dynamic_cast<QProcess*>(sender());
-	OutputString(Process->objectName(), QString("Core finished with code %1 and %2 status").arg(ExitCode).arg(Status == QProcess::NormalExit ? "normal" : "crash"));
+	OutputString(sender()->objectName(), QString("Core finished with code %1 and %2 status").arg(ExitCode).arg(Status == QProcess::NormalExit ? "normal" : "crash"));
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::Error(QProcess::ProcessError ErrorType)
 {
     Q_UNUSED(ErrorType);
-	QProcess *Process = dynamic_cast<QProcess*>(sender());
-	OutputString(Process->objectName(), Process->errorString());
+	OutputString(sender()->objectName(), dynamic_cast<QProcess*>(sender())->errorString());
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::ReadyReadStandartOutput()
 {
-	QProcess *Process = dynamic_cast<QProcess*>(sender());
-	QByteArray ByteArray = Process->readAllStandardOutput();
+	QByteArray ByteArray = dynamic_cast<QProcess*>(sender())->readAllStandardOutput();
 	if (!ByteArray.isEmpty())
 	{
-		OutputString(Process->objectName(), ByteArray);
+		OutputString(sender()->objectName(), ByteArray);
 	}
 }
 //-----------------------------------------------------------------------------

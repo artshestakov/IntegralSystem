@@ -150,7 +150,7 @@ bool ISStartup::IsValidUser(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	//Если такой логин в БД не сузествует
+	//Если такой логин в БД не существует
 	if (!qSelectUser.ReadColumn("count").toInt())
 	{
 		ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.NotFoundUserWithLogin").arg(ISMetaUser::Instance().UserData->Login));

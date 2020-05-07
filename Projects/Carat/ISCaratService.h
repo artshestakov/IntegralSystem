@@ -3,6 +3,7 @@
 #define _ISCARATSERVICE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISTcpServerCarat.h"
 //-----------------------------------------------------------------------------
 class ISCaratService : public QObject
 {
@@ -28,6 +29,7 @@ private:
 	QLocalServer *LocalServer;
 	QLocalSocket *LocalSocket;
 	bool IsConnectedDebugger;
+	ISTcpServerCarat *TcpServer;
 };
 //-----------------------------------------------------------------------------
 #endif

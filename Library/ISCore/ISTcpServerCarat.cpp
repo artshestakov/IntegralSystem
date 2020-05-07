@@ -2,6 +2,19 @@
 #include "ISTcp.h"
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
+#include "ISQuery.h"
+//-----------------------------------------------------------------------------
+static QString QS_AUTH = PREPARE_QUERY("SELECT "
+									   "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
+									   "usrs_issystem, "
+									   "usrs_isdeleted, "
+									   "(usrs_group != 0)::BOOLEAN AS usrs_group, "
+									   "usrs_accessallowed, "
+									   "usrs_accountlifetime, "
+									   "usrs_accountlifetimestart, "
+									   "usrs_accountlifetimeend "
+									   "FROM _users "
+									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
 ISTcpServerCarat::ISTcpServerCarat(QObject *parent) : ISTcpServerBase(parent)
 {
@@ -53,18 +66,85 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	}
 
 	VariantMap = VariantMap["Parameters"].toMap();
+
+	if (!VariantMap.contains("Login")) //Если поле с логином отсутствует
+	{
+		SendError(TcpSocket, "Not found field \"Login\"");
+		return;
+	}
+
+	if (!VariantMap.contains("Password")) //Если поле с паролем отсутствует
+	{
+		SendError(TcpSocket, "Not found field \"Password\"");
+		return;
+	}
+
 	QString Login = VariantMap["Login"].toString();
 	QString Password = VariantMap["Password"].toString();
 
-	//Тестовая авторизация
-	ISTcpAnswer TcpAnswer;
-	if (Login == "postgres" && Password == "adm777") //Логин и пароль верные
+	if (Login.isEmpty()) //Если поле с логином пустое
 	{
-		Send(TcpSocket, TcpAnswer);
+		SendError(TcpSocket, "Field \"Login\" is empty");
+		return;
 	}
-	else //Логин и пароль неверные
+
+	if (Password.isEmpty()) //Если поле с паролем пустое
 	{
-		SendError(TcpSocket, "Invalid login or password");
+		SendError(TcpSocket, "Field \"Password\" is empty");
+		return;
+	}
+
+	//Проверка введенных данных пользователем
+	ISQuery qSelectAuth(QS_AUTH);
+	qSelectAuth.BindValue(":Login", Login);
+
+	//Если такой логин в БД не существует
+	if (!qSelectAuth.ExecuteFirst() && !qSelectAuth.GetCountResultRows())
+	{
+		SendError(TcpSocket, "Message.Error.LoginNotExist");
+		return;
+	}
+
+	//Если такой логин помечен на удаление
+	if (qSelectAuth.ReadColumn("usrs_isdeleted").toBool())
+	{
+		SendError(TcpSocket, "Message.Error.CurrentUserIsDeleted");
+		return;
+	}
+
+	//Если у пользователя нет права доступа
+	if (!qSelectAuth.ReadColumn("usrs_accessallowed").toBool())
+	{
+		SendError(TcpSocket, "Message.Error.User.NotAccessAllowed");
+		return;
+	}
+
+	//Проверка наличия привязки пользователя к группе
+	if (!qSelectAuth.ReadColumn("usrs_issystem").toBool()) //Если пользователь не системный - проверяем привязку
+	{
+		if (!qSelectAuth.ReadColumn("usrs_group").toBool()) //Привязка отсутствует
+		{
+			SendError(TcpSocket, "Message.Error.User.NotLinkWithGroup");
+			return;
+		}
+	}
+
+	//Если для пользователя настроено ограничение срока действия учётной записи
+	if (qSelectAuth.ReadColumn("usrs_accountlifetime").toBool())
+	{
+		QDate CurrentDate = QDate::currentDate();
+		QDate DateStart = qSelectAuth.ReadColumn("usrs_accountlifetimestart").toDate();
+		QDate DateEnd = qSelectAuth.ReadColumn("usrs_accountlifetimeend").toDate();
+		if (CurrentDate < DateStart)
+		{
+			SendError(TcpSocket, "Message.Warning.AccountLifetimeNotStarted");
+			return;
+		}
+		else if (CurrentDate > DateEnd)
+		{
+			SendError(TcpSocket, "Message.Warning.AccountLifetimeEnded");
+			return;
+		}
 	}
 }
 //-----------------------------------------------------------------------------

@@ -7,9 +7,9 @@ int main(int argc, char *argv[])
 	QCoreApplication Application(argc, argv);
 	if (ISTcpConnector::Instance().Connect("127.0.0.1", CARAT_DEFAULT_PORT))
 	{
-		ISTcpQuery TcpQuery(API_SLEEP);
-		TcpQuery.BindValue("MSec", "500");
-		//TcpQuery.BindValue("Password", "adm7771");
+		ISTcpQuery TcpQuery(API_AUTH);
+		TcpQuery.BindValue("Login", "shestakov");
+		TcpQuery.BindValue("Password", "454Trendy");
 		if (TcpQuery.Execute())
 		{
 			qDebug() << "Ok";
