@@ -7,6 +7,7 @@
 /Output
 /Projects/**/*-*
 /Tools/**/*-*
+/.vs
 
 *.ilk
 *.iobj
