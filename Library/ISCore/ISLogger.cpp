@@ -1,18 +1,17 @@
 #include "ISLogger.h"
 #include "ISDefinesCore.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define INIT_CRITICAL_SECTION(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
 #define LOCK_CRITICAL_SECTION(CRITICAL_SECTION) EnterCriticalSection(CRITICAL_SECTION)
 #define UNLOCK_CRITICAL_SECTION(CRITICAL_SECTION) LeaveCriticalSection(CRITICAL_SECTION)
 #define GET_CURRENT_THREAD_ID GetCurrentThreadId
-#define SLEEP(x) Sleep(x)
 #else
 #define INIT_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_init(CRITICAL_SECTION, NULL)
 #define LOCK_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_lock(CRITICAL_SECTION)
 #define UNLOCK_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_unlock(CRITICAL_SECTION)
 #define GET_CURRENT_THREAD_ID pthread_self
-#define SLEEP(x) usleep(x)
 #endif
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
@@ -76,7 +75,7 @@ void ISLogger::Shutdown()
 	//Ждём когда он остановится и закрываем файл
 	while (!IsFinished)
 	{
-        SLEEP(50);
+        ISSleep(50);
 	}
 	File.close();
 }
@@ -143,7 +142,7 @@ void ISLogger::Worker()
 {
 	while (IsRunning)
 	{
-        SLEEP(50);
+		ISSleep(50);
         LOCK_CRITICAL_SECTION(&CriticalSection);
 		if (LastIndex) //Если в очереди есть сообщения
 		{
@@ -165,7 +164,7 @@ void ISLogger::Worker()
 			while (!CreateLogDirectory(CurrentDate))
 			{
 				std::cerr << ErrorString.toStdString() << std::endl;
-                SLEEP(50);
+				ISSleep(50);
 			}
 		}
 
@@ -187,7 +186,7 @@ void ISLogger::Worker()
 				else //Файл не удалось открыть пытаемся сделать это ещё раз через секунду
 				{
 					std::cerr << "Error open file \"" + path_file.toStdString() + "\": " + strerror(errno) << std::endl;
-                    SLEEP(50);
+					ISSleep(50);
 				}
 			}
 		}
