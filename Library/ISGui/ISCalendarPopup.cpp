@@ -8,10 +8,9 @@ ISCalendarPopup::ISCalendarPopup(QWidget *parent) : ISCalendarWidget(parent)
 {
 	setWindowFlags(Qt::Popup);
 
-	QToolButton *ButtonToday = new QToolButton(this);
+	ButtonToday = new QToolButton(this);
 	ButtonToday->setAutoRaise(true);
 	ButtonToday->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	ButtonToday->setText(LANG("Today") + ": " + QDate::currentDate().toString(FORMAT_DATE_V2));
 	ButtonToday->setToolTip(LANG("ClickFromSelectCurrentDay"));
 	ButtonToday->setIcon(BUFFER_ICONS("Today"));
 	ButtonToday->setCursor(CURSOR_POINTING_HAND);
@@ -26,5 +25,11 @@ ISCalendarPopup::ISCalendarPopup(QWidget *parent) : ISCalendarWidget(parent)
 ISCalendarPopup::~ISCalendarPopup()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISCalendarPopup::showEvent(QShowEvent *ShowEvent)
+{
+	ISCalendarWidget::showEvent(ShowEvent);
+	ButtonToday->setText(LANG("Today") + ": " + QDate::currentDate().toString(FORMAT_DATE_V2));
 }
 //-----------------------------------------------------------------------------

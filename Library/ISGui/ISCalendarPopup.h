@@ -10,5 +10,10 @@ class ISCalendarPopup : public ISCalendarWidget
 public:
 	ISCalendarPopup(QWidget *parent = 0);
 	virtual ~ISCalendarPopup();
+
+	void showEvent(QShowEvent *ShowEvent);
+
+private:
+	QToolButton *ButtonToday;
 };
 //-----------------------------------------------------------------------------
