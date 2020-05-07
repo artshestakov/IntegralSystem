@@ -53,10 +53,24 @@ bool ISUserObjectForm::Save()
 {
 	bool Result = true;
 
+	//Проверка привязки учётной записи к группе
 	if (!GetFieldValue("Group").isValid())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.UserNotLinkedToGroup"));
 		GetFieldWidget("Group")->BlinkRed();
+	}
+
+	//Проверка корректности ввода диапазона срока действия учётной записи
+	if (EditAccountLifeTime->GetValue().toBool())
+	{
+		QDate DateStart = EditAccountLifeTimeStart->GetValue().toDate();
+		QDate DateEnd = EditAccountLifeTimeEnd->GetValue().toDate();
+		if (DateStart > DateEnd || DateEnd < DateStart || !DateStart.isValid() || !DateEnd.isValid())
+		{
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.InvalidAccountLifeTimeDatesUser"));
+			EditAccountLifeTimeStart->BlinkRed();
+			EditAccountLifeTimeEnd->BlinkRed();
+		}
 	}
 
 	if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
@@ -122,10 +136,8 @@ void ISUserObjectForm::PasswordChange()
 void ISUserObjectForm::AccountLifeTimeChanged()
 {
 	bool Enabled = EditAccountLifeTime->GetValue().toBool();
-	
 	EditAccountLifeTimeStart->setEnabled(Enabled);
 	EditAccountLifeTimeEnd->setEnabled(Enabled);
-
 	if (!Enabled)
 	{
 		EditAccountLifeTimeStart->Clear();
