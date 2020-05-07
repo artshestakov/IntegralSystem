@@ -1,32 +1,22 @@
 #pragma once
-#ifndef _ISTCPSERVER_H_INCLUDED
-#define _ISTCPSERVER_H_INCLUDED
+#ifndef _ISTCPSERVERCARAT_H_INCLUDED
+#define _ISTCPSERVERCARAT_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
-#include "ISTcpApi.h"
+#include "ISTcpServerBase.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISTcpServer : public QTcpServer
+class ISCORE_EXPORT ISTcpServerCarat : public ISTcpServerBase
 {
 	Q_OBJECT
 
 public:
-	ISTcpServer(QObject *parent = 0);
-	virtual ~ISTcpServer();
-
-	QString GetErrorString() const;
-	bool Run(quint16 Port);
+	ISTcpServerCarat(QObject *parent = 0);
+	virtual ~ISTcpServerCarat();
 
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
 
 private:
-	void AcceptError(QAbstractSocket::SocketError socket_error);
 	void SendError(QTcpSocket *TcpSocket, const QString &ErrorString); //Отправка ошибки
-	void Send(QTcpSocket *TcpSocket, const QVariantMap &Data); //Отправка данных
-
-private:
-	QString ErrorString;
-	ISTcpApi *TcpApi;
 };
 //-----------------------------------------------------------------------------
 

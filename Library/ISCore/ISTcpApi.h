@@ -19,7 +19,8 @@ private:
 	bool CheckField(const QVariantMap &Parameters, const ISVectorString &Fields, ISTcpAnswer &TcpAnswer); //Проверка поля параметров на валидность
 
 private:
-	void Auth(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Авторизация
+	void TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Авторизация
+	void Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Ожидание
 
 private:
 	std::map<QString, std::function<void(ISTcpApi &TcpServer, const QVariantMap &, ISTcpAnswer &TcpAnswer)>> Functions;

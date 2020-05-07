@@ -1,9 +1,10 @@
 #include "ISTcpAnswer.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISTcpAnswer::ISTcpAnswer() : QVariantMap()
 {
 	insert("IsError", false);
-	insert("ErrorDescription", QString());
+	insert("ErrorDescription", NO_ERROR_STRING);
 }
 //-----------------------------------------------------------------------------
 ISTcpAnswer::~ISTcpAnswer()

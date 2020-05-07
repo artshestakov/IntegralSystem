@@ -240,9 +240,6 @@
     <ClCompile Include="ISTcpConnector.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="ISTcpServer.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="ISTcp.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
@@ -250,6 +247,15 @@
       <Filter>Protocol</Filter>
     </ClCompile>
     <ClCompile Include="ISTcpApi.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpServerBase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpServerCarat.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpServerWorker.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
@@ -461,7 +467,13 @@
     <QtMoc Include="ISTcpConnector.h">
       <Filter>Protocol</Filter>
     </QtMoc>
-    <QtMoc Include="ISTcpServer.h">
+    <QtMoc Include="ISTcpServerBase.h">
+      <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpServerCarat.h">
+      <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpServerWorker.h">
       <Filter>Protocol</Filter>
     </QtMoc>
   </ItemGroup>

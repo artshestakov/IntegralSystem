@@ -5,9 +5,9 @@
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
-#define ISSleep(x) Sleep(x)
+#define ISSleep(MSec) ::Sleep(MSec)
 #else
-#define ISSleep(x) usleep(x)
+#define ISSleep(MSec) usleep(MSec)
 #endif
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm

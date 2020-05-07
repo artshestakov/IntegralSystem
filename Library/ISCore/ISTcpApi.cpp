@@ -1,9 +1,11 @@
 #include "ISTcpApi.h"
 #include "ISConstants.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISTcpApi::ISTcpApi()
 {
-	Functions[API_AUTH] = std::mem_fn(&ISTcpApi::Auth);
+	Functions[API_TEST_QUERY] = std::mem_fn(&ISTcpApi::TestQuery);
+	Functions[API_SLEEP] = std::mem_fn(&ISTcpApi::Sleep);
 }
 //-----------------------------------------------------------------------------
 ISTcpApi::~ISTcpApi()
@@ -13,7 +15,7 @@ ISTcpApi::~ISTcpApi()
 //-----------------------------------------------------------------------------
 bool ISTcpApi::Has(const QString &QueryType)
 {
-	return Functions.count(QueryType) > 0 ? true : false;
+	return Functions.count(QueryType) == 1 ? true : false;
 }
 //-----------------------------------------------------------------------------
 void ISTcpApi::Execute(const QString &QueryType, const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
@@ -40,16 +42,32 @@ bool ISTcpApi::CheckField(const QVariantMap &Parameters, const ISVectorString &F
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISTcpApi::Auth(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
+void ISTcpApi::TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
-	if (!CheckField(Parameters, { "Login", "Password" }, TcpAnswer))
+	
+}
+//-----------------------------------------------------------------------------
+void ISTcpApi::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
+{
+	if (!CheckField(Parameters, { "MSec" }, TcpAnswer))
 	{
 		return;
 	}
-	
-	if (Parameters["Login"].toString() != "postgres" || Parameters["Password"].toString() != "adm777")
+
+	bool Result = true;
+	int MSec = Parameters["MSec"].toInt(&Result);
+	if (Result)
 	{
-		TcpAnswer.SetError("Invalid login or password");
+		Result = MSec > 0;
+	}
+
+	if (Result)
+	{
+		ISSleep(MSec);
+	}
+	else
+	{
+		TcpAnswer.SetError("Invalid value msec");
 	}
 }
 //-----------------------------------------------------------------------------
