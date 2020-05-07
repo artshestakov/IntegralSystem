@@ -3,6 +3,7 @@
 #define _ISTCPSERVER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
+#include "ISTcpApi.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISTcpServer : public QTcpServer
 {
@@ -20,10 +21,13 @@ protected:
 
 private:
 	void AcceptError(QAbstractSocket::SocketError socket_error);
-	void SendError(QTcpSocket *TcpSocket, QString ErrorString);
+	void SendError(QTcpSocket *TcpSocket, const QString &ErrorString); //Отправка ошибки
+	void Send(QTcpSocket *TcpSocket, const QVariantMap &Data); //Отправка данных
 
 private:
 	QString ErrorString;
+	ISTcpApi *TcpApi;
 };
 //-----------------------------------------------------------------------------
+
 #endif

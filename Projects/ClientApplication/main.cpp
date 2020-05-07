@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	QCoreApplication Application(argc, argv);
 	if (ISTcpConnector::Instance().Connect("127.0.0.1", CARAT_DEFAULT_PORT))
 	{
-		ISTcpQuery TcpQuery("Auth1");
+		ISTcpQuery TcpQuery("Auth");
 		TcpQuery.BindValue("Login", "postgres");
 		TcpQuery.BindValue("Password", "adm777");
 		if (TcpQuery.Execute())

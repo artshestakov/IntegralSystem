@@ -246,6 +246,12 @@
     <ClCompile Include="ISTcp.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpAnswer.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpApi.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -418,6 +424,12 @@
       <Filter>Protocol</Filter>
     </ClInclude>
     <ClInclude Include="ISTcp.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpAnswer.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpApi.h">
       <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>

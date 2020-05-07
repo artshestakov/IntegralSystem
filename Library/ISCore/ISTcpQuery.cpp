@@ -71,7 +71,7 @@ bool ISTcpQuery::Execute(bool Async)
 
 	if (VariantMap["IsError"].toBool())
 	{
-		ErrorString = VariantMap["Description"].toString();
+		ErrorString = VariantMap["ErrorDescription"].toString();
 		return false;
 	}
 

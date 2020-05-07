@@ -1,19 +1,21 @@
 #include "ISTcpServer.h"
 #include "ISTcp.h"
+#include "ISTcpAnswer.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer(QObject *parent)
 	: QTcpServer(parent),
-	ErrorString(NO_ERROR_STRING)
+	ErrorString(NO_ERROR_STRING),
+	TcpApi(new ISTcpApi())
 {
 	
 }
 //-----------------------------------------------------------------------------
 ISTcpServer::~ISTcpServer()
 {
-
+	delete TcpApi;
 }
 //-----------------------------------------------------------------------------
 QString ISTcpServer::GetErrorString() const
@@ -41,7 +43,7 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	QTcpSocket *TcpSocket = nextPendingConnection();
 	connect(TcpSocket, &QTcpSocket::disconnected, TcpSocket, &QTcpSocket::deleteLater);
 
-	//Ждём запроса на авторизацию
+	//Ждём пока не придёт запрос
 	QByteArray ByteArray;
 	while (true)
 	{
@@ -65,10 +67,23 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 		return;
 	}
 
-	if (VariantMap["Type"].toString() != "Auth")
+	//Проверка типа запроса
+	QString QueryType = VariantMap["Type"].toString();
+	if (QueryType != API_AUTH) //Если не авторизация - ошибка
 	{
-		SendError(TcpSocket, "Invalid query type");
+		SendError(TcpSocket, QString("Invalid query type \"%1\"").arg(QueryType));
 		return;
+	}
+
+	ISTcpAnswer TcpAnswer;
+	TcpApi->Execute(API_AUTH, VariantMap["Parameters"].toMap(), TcpAnswer);
+	if (TcpAnswer.IsError()) //Ошибка авторизации
+	{
+		SendError(TcpSocket, TcpAnswer.GetErrorString());
+	}
+	else //Авторизация прошла успешно
+	{
+
 	}
 }
 //-----------------------------------------------------------------------------
@@ -77,18 +92,24 @@ void ISTcpServer::AcceptError(QAbstractSocket::SocketError socket_error)
 	ErrorString = errorString();
 }
 //-----------------------------------------------------------------------------
-void ISTcpServer::SendError(QTcpSocket *TcpSocket, QString ErrorString)
+void ISTcpServer::SendError(QTcpSocket *TcpSocket, const QString &ErrorString)
 {
-	//Отправляем ошибку
-	qint64 WriteSize = TcpSocket->write(ISSystem::VariantMapToJsonString(
-	{
-		{ "IsError", true },
-		{ "Description", ErrorString }
-	}).simplified().toUtf8() + CARAT_PACKET_SEPARATOR);
+	//Формируем ответ с ошибкой
+	ISTcpAnswer TcpAnswer;
+	TcpAnswer.SetError(ErrorString);
+
+	//Отправляем
+	Send(TcpSocket, TcpAnswer);
+	TcpSocket->abort();
+}
+//-----------------------------------------------------------------------------
+void ISTcpServer::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
+{
+	//Отправка данных
+	TcpSocket->write(ISSystem::VariantMapToJsonString(Data).simplified().toUtf8() + CARAT_PACKET_SEPARATOR);
 	TcpSocket->flush();
 
 	//Ждём пока данные уйдут
 	TcpSocket->waitForBytesWritten();
-	TcpSocket->abort();
 }
 //-----------------------------------------------------------------------------

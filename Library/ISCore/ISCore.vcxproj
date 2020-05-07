@@ -155,6 +155,8 @@
     <ClCompile Include="ISStackWalker.cpp" />
     <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISTcp.cpp" />
+    <ClCompile Include="ISTcpAnswer.cpp" />
+    <ClCompile Include="ISTcpApi.cpp" />
     <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
     <ClCompile Include="ISTcpServer.cpp" />
@@ -192,6 +194,8 @@
     <ClInclude Include="ISSystem.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <ClInclude Include="ISTcp.h" />
+    <ClInclude Include="ISTcpAnswer.h" />
+    <ClInclude Include="ISTcpApi.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <QtMoc Include="ISTcpServer.h" />
     <ClInclude Include="ISTrace.h" />

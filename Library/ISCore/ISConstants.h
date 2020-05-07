@@ -189,6 +189,8 @@ const size_t	CARAT_PACKET_SEPARATOR_SIZE = strlen(CARAT_PACKET_SEPARATOR); //Раз
 const int		CARAT_TIMEOUT_CONNECT = 5000; //Таймаут для ожидания подключения
 const quint16	CARAT_DEFAULT_PORT = 50000; //Стандартный порт
 //-----------------------------------------------------------------------------
+const char		API_AUTH[] = "Auth"; //Авторизация
+//-----------------------------------------------------------------------------
 const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
 const char CONST_UID_SEX_MALE[] = "{601C7C32-7413-45DA-AAAC-926A77C824F8}"; //Мужской

@@ -27,6 +27,7 @@
 #include <iomanip>
 #include <thread>
 #include <mutex>
+#include <functional>
 //-----------------------------------------------------------------------------
 #include <stdlib.h>
 #include <stdio.h>

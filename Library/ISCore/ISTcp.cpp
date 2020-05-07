@@ -43,9 +43,9 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 		return false;
 	}
 
-	if (!VariantMap.contains("Description"))
+	if (!VariantMap.contains("ErrorDescription"))
 	{
-		ErrorString = "Not found field \"Description\"";
+		ErrorString = "Not found field \"ErrorDescription\"";
 		return false;
 	}
 
@@ -55,9 +55,9 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 		return false;
 	}
 
-	if (!VariantMap["Description"].isValid())
+	if (!VariantMap["ErrorDescription"].isValid())
 	{
-		ErrorString = "Empty field \"Description\"";
+		ErrorString = "Empty field \"ErrorDescription\"";
 		return false;
 	}
 	return true;
