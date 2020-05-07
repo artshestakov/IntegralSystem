@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
 #include "ISConstants.h"
@@ -8,9 +7,9 @@ int main(int argc, char *argv[])
 	QCoreApplication Application(argc, argv);
 	if (ISTcpConnector::Instance().Connect("127.0.0.1", CARAT_DEFAULT_PORT))
 	{
-		ISTcpQuery TcpQuery("Auth");
-		TcpQuery.BindValue("Login", "postgres");
-		TcpQuery.BindValue("Password", "adm777");
+		ISTcpQuery TcpQuery(API_SLEEP);
+		TcpQuery.BindValue("MSec", "500");
+		//TcpQuery.BindValue("Password", "adm7771");
 		if (TcpQuery.Execute())
 		{
 			qDebug() << "Ok";
@@ -19,7 +18,6 @@ int main(int argc, char *argv[])
 		{
 			qDebug() << TcpQuery.GetErrorString();
 		}
-		return Application.exec();
 		ISTcpConnector::Instance().Disconnect();
 	}
 	else
