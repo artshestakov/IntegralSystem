@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISLogger.h"
 #include "ISConfig.h"
 #include "ISApplicationRunning.h"

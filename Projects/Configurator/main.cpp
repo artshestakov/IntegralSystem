@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "CGConfigurator.h"
 #include "ISNamespace.h"
 #include "ISConfig.h"

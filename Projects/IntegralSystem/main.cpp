@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISSplashScreen.h"
