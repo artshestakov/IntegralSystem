@@ -15,6 +15,7 @@ public:
 	QTcpSocket* GetSocket();
 	bool Connect(const QString &host, quint16 port);
 	void Disconnect();
+	void Error(QTcpSocket::SocketError socket_error);
 
 private:
 	ISTcpConnector();

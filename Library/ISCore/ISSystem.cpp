@@ -236,14 +236,33 @@ double ISSystem::MillisecondToSecond(int Milliseconds)
 	return Milliseconds / 1000;
 }
 //-----------------------------------------------------------------------------
-QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString)
+QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QString &ErrorString)
 {
-	return QJsonDocument::fromJson(JsonString.toUtf8()).object().toVariantMap();
+	QVariantMap VariantMap;
+	if (!JsonString.isEmpty())
+	{
+		QJsonParseError JsonParseError;
+		QJsonDocument JsonDocument = QJsonDocument::fromJson(JsonString.toUtf8(), &JsonParseError);
+		if (JsonParseError.error == QJsonParseError::NoError)
+		{
+			QJsonObject JsonObject = JsonDocument.object();
+			VariantMap = JsonObject.toVariantMap();
+		}
+		else
+		{
+			ErrorString = JsonParseError.errorString();
+		}
+	}
+	else
+	{
+		ErrorString = "Empty string";
+	}
+	return VariantMap;
 }
 //-----------------------------------------------------------------------------
-ISStringMap ISSystem::JsonStringToStringMap(const QString &JsonString)
+ISStringMap ISSystem::JsonStringToStringMap(const QString &JsonString, QString &ErrorString)
 {
-	QVariantMap VariantMap = JsonStringToVariantMap(JsonString);
+	QVariantMap VariantMap = JsonStringToVariantMap(JsonString, ErrorString);
 	ISStringMap StringMap;
 	for (const auto &MapItem : VariantMap.toStdMap())
 	{

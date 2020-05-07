@@ -4,25 +4,26 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISTcpServer : public QObject
+class ISCORE_EXPORT ISTcpServer : public QTcpServer
 {
 	Q_OBJECT
 
 public:
-	ISTcpServer(QObject *parent);
+	ISTcpServer(QObject *parent = 0);
 	virtual ~ISTcpServer();
 
 	QString GetErrorString() const;
 	bool Run(quint16 Port);
 
+protected:
+	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
+
 private:
-	void NewConnection();
 	void AcceptError(QAbstractSocket::SocketError socket_error);
-	void Disconnect();
+	void SendError(QTcpSocket *TcpSocket, QString ErrorString);
 
 private:
 	QString ErrorString;
-	QTcpServer *TcpServer;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -243,6 +243,9 @@
     <ClCompile Include="ISTcpServer.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcp.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -412,6 +415,9 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISTcpQuery.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcp.h">
       <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>

@@ -54,3 +54,8 @@ void ISTcpConnector::Disconnect()
 	}
 }
 //-----------------------------------------------------------------------------
+void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
+{
+	ErrorString = TcpSocket->errorString();
+}
+//-----------------------------------------------------------------------------
