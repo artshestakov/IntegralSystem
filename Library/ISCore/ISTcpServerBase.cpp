@@ -19,7 +19,7 @@ QString ISTcpServerBase::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpServerBase::Run(qint16 Port)
+bool ISTcpServerBase::Run(quint16 Port)
 {
 	bool Result = listen(QHostAddress::AnyIPv4, Port);
 	if (Result)
@@ -35,12 +35,20 @@ bool ISTcpServerBase::Run(qint16 Port)
 //-----------------------------------------------------------------------------
 void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 {
-	//Отправка данных
-	TcpSocket->write(ISSystem::VariantMapToJsonString(Data).simplified().toUtf8() + CARAT_PACKET_SEPARATOR);
-	TcpSocket->flush();
+	//Если сокет все ещё подключен - отправляем
+	if (TcpSocket->state() == QAbstractSocket::ConnectedState)
+	{
+		//Сборка запроса
+		QString String = ISSystem::VariantMapToJsonString(Data).simplified();
+		String.insert(0, QString::number(String.size()));
 
-	//Ждём пока данные уйдут
-	TcpSocket->waitForBytesWritten();
+		//Отправка запроса
+		TcpSocket->write(String.toUtf8());
+		TcpSocket->flush();
+
+		//Ждём пока данные уйдут
+		TcpSocket->waitForBytesWritten();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerBase::AcceptError(QAbstractSocket::SocketError)

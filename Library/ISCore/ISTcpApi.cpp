@@ -44,7 +44,7 @@ bool ISTcpApi::CheckField(const QVariantMap &Parameters, const ISVectorString &F
 //-----------------------------------------------------------------------------
 void ISTcpApi::TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
-	
+	TcpAnswer["DateTime"] = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V1);
 }
 //-----------------------------------------------------------------------------
 void ISTcpApi::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)

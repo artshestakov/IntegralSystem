@@ -22,8 +22,12 @@ int main(int argc, char *argv[])
 		if (Result) //Порт валидный
 		{
 			ISTcpServerWorker TcpServerWorker;
-			Result = TcpServerWorker.Run(CARAT_DEFAULT_PORT);
-			if (!Result) //Не удалось запустить сервер
+			Result = TcpServerWorker.Run(static_cast<quint16>(Port));
+			if (Result) //Не удалось запустить сервер
+			{
+				Result = Application.exec() == EXIT_SUCCESS ? true : false;
+			}
+			else
 			{
 				ISLOGGER_E(TcpServerWorker.GetErrorString());
 			}
@@ -37,6 +41,6 @@ int main(int argc, char *argv[])
 	{
 		ISLOGGER_E("Port not specified");
 	}
-	return Result ? Application.exec() : EXIT_FAILURE;
+	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

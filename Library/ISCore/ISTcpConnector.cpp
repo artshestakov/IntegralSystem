@@ -32,7 +32,7 @@ ISTcpConnector& ISTcpConnector::Instance()
 //-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &host, quint16 port)
 {
-	TcpSocket->connectToHost(host, port);
+	TcpSocket->connectToHost(QHostAddress(host), port);
 	bool Result = TcpSocket->waitForConnected(CARAT_TIMEOUT_CONNECT);
 	if (Result)
 	{

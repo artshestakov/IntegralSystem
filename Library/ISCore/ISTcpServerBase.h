@@ -13,7 +13,7 @@ public:
 	virtual ~ISTcpServerBase();
 
 	QString GetErrorString() const;
-	bool Run(qint16 Port);
+	bool Run(quint16 Port);
 
 protected:
 	void Send(QTcpSocket *TcpSocket, const QVariantMap &Data); //Отправка данных

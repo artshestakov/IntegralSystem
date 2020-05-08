@@ -1,6 +1,7 @@
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
 #include "ISConstants.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -18,6 +19,8 @@ int main(int argc, char *argv[])
 		{
 			qDebug() << TcpQuery.GetErrorString();
 		}
+		Application.exec();
+		ISSleep(5000);
 		ISTcpConnector::Instance().Disconnect();
 	}
 	else
