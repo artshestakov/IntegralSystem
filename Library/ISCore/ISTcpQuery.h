@@ -3,7 +3,6 @@
 #define _ISTCPQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
-#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISTcpQuery
 {
@@ -19,6 +18,7 @@ private:
 	QString ErrorString;
 	QString QueryType;
 	QVariantMap Parameters;
+	QVariantMap TcpAnswer;
 };
 //-----------------------------------------------------------------------------
 #endif

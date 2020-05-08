@@ -3,9 +3,11 @@
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
+									   "right(passwd, length(passwd) - 3) AS passwd, "
 									   "usrs_issystem, "
 									   "usrs_isdeleted, "
 									   "(usrs_group != 0)::BOOLEAN AS usrs_group, "
@@ -14,6 +16,7 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "usrs_accountlifetimestart, "
 									   "usrs_accountlifetimeend "
 									   "FROM _users "
+									   "LEFT JOIN pg_shadow ON usename = usrs_login "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
 ISTcpServerCarat::ISTcpServerCarat(QObject *parent) : ISTcpServerBase(parent)
@@ -32,17 +35,27 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	QTcpSocket *TcpSocket = nextPendingConnection();
 	connect(TcpSocket, &QTcpSocket::disconnected, TcpSocket, &QTcpSocket::deleteLater);
 
-	//Ждём пока не придёт запрос
 	QByteArray ByteArray;
-	while (true)
+	long Size = 0;
+
+	while (true) //Ждём пока не придёт запрос
 	{
-		TcpSocket->waitForReadyRead();
+		if (!TcpSocket->waitForReadyRead(CARAT_TIMEOUT_INCOMING_QUERY)) //Если запрос так и не пришёл - отключаем клиента
+		{
+			SendError(TcpSocket, "Query not received");
+			return;
+		}
+
 		if (TcpSocket->bytesAvailable() > 0)
 		{
 			ByteArray.append(TcpSocket->readAll());
-			if (ByteArray.right(CARAT_PACKET_SEPARATOR_SIZE) == CARAT_PACKET_SEPARATOR)
+			if (!Size) //Размер ещё не известен - вытаскиваем его
 			{
-				ByteArray.remove(ByteArray.size() - CARAT_PACKET_SEPARATOR_SIZE, CARAT_PACKET_SEPARATOR_SIZE);
+				Size = ISTcp::GetPacketSizeFromBuffer(ByteArray);
+			}
+
+			if (ByteArray.size() == Size) //Запрос пришёл полностью - выходим из цикла
+			{
 				break;
 			}
 		}
@@ -105,6 +118,13 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		return;
 	}
 
+	//Если пароль неправильный
+	if (qSelectAuth.ReadColumn("passwd").toString() != ISSystem::StringToMD5(Password + Login))
+	{
+		SendError(TcpSocket, "Message.Error.InvalidPassword");
+		return;
+	}
+
 	//Если такой логин помечен на удаление
 	if (qSelectAuth.ReadColumn("usrs_isdeleted").toBool())
 	{
@@ -146,6 +166,22 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 			return;
 		}
 	}
+
+	//Ищем свободный порт
+	QTcpServer TcpServer;
+	quint16 Port = serverPort() + 1;
+	for (Port; Port < USHRT_MAX; ++Port)
+	{
+		if (TcpServer.listen(QHostAddress::AnyIPv4, Port)) //Если удалось захватить порт - закрываем его и выходим из цикла
+		{
+			TcpServer.close();
+			break;
+		}
+	}
+
+	ISTcpAnswer TcpAnswer;
+	TcpAnswer["Port"] = QString::number(Port);
+	Send(TcpSocket, TcpAnswer);
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::SendError(QTcpSocket *TcpSocket, const QString &ErrorString)

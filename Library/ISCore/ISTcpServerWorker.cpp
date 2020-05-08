@@ -7,7 +7,8 @@
 ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	: ISTcpServerBase(parent),
 	TcpApi(new ISTcpApi()),
-	TcpSocket(nullptr)
+	TcpSocket(nullptr),
+	BufferSize(0)
 {
 	
 }
@@ -28,13 +29,18 @@ void ISTcpServerWorker::incomingConnection(qintptr SocketDescriptor)
 void ISTcpServerWorker::ReadyRead()
 {
 	Buffer.append(TcpSocket->readAll());
-	if (Buffer.right(CARAT_PACKET_SEPARATOR_SIZE) != CARAT_PACKET_SEPARATOR)
+
+	//Если размер пакета ещё неизвестен - получаем его
+	if (!BufferSize)
+	{
+		BufferSize = ISTcp::GetPacketSizeFromBuffer(Buffer);
+	}
+
+	//Если пакет пришёл не весь - выходим из функции
+	if (Buffer.size() != BufferSize)
 	{
 		return;
 	}
-
-	//Удаляем сепаратор
-	Buffer.remove(Buffer.size() - CARAT_PACKET_SEPARATOR_SIZE, CARAT_PACKET_SEPARATOR_SIZE);
 
 	//Объект ответа
 	ISTcpAnswer TcpAnswer;

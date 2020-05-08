@@ -63,3 +63,30 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 	return true;
 }
 //-----------------------------------------------------------------------------
+long ISTcp::GetPacketSizeFromBuffer(QByteArray &ByteArray)
+{
+	QString Temp;
+	char Char;
+	while (true)
+	{
+		Char = ByteArray.front();
+		if (std::isdigit(Char)) //Если символ является цифрой - добавляем его в массив
+		{
+			Temp.push_back(Char);
+			ByteArray.remove(0, 1);
+		}
+		else //Символ не является цифрой - закончили поиск размера и выходим
+		{
+			break;
+		}
+	}
+
+	bool Ok = true;
+	long Result = Temp.toInt(&Ok);
+	if (Ok)
+	{
+		return Result;
+	}
+	return 0;
+}
+//-----------------------------------------------------------------------------

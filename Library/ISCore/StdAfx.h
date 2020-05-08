@@ -1,7 +1,7 @@
 #pragma once
 #ifndef _STDAFX_H_INCLUDED
 #define _STDAFX_H_INCLUDED
-//-----------------------------------------------------------------------------
+//Cross-platform-includes------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>
 #include <ShlObj.h>
@@ -14,7 +14,7 @@
 #include <sys/types.h>
 #include <sys/file.h>
 #endif
-//-----------------------------------------------------------------------------
+//STD-includes-----------------------------------------------------------------
 #include <cstdio>
 #include <iostream>
 #include <csignal>
@@ -28,13 +28,14 @@
 #include <thread>
 #include <mutex>
 #include <functional>
-//-----------------------------------------------------------------------------
+#include <cctype>
+//C-includes-------------------------------------------------------------------
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <math.h>
-//-----------------------------------------------------------------------------
+//QT-includes------------------------------------------------------------------
 #include <QtCore/QtGlobal>
 #include <QtCore/QObject>
 #include <QtCore/QCoreApplication>

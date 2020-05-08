@@ -24,6 +24,7 @@ private:
 	ISTcpApi *TcpApi;
 	QTcpSocket *TcpSocket;
 	QByteArray Buffer;
+	long BufferSize;
 };
 //-----------------------------------------------------------------------------
 

@@ -33,8 +33,10 @@ bool ISTcpQuery::Execute(bool Async)
 	{
 		{ "Type", QueryType },
 		{ "Parameters", Parameters }
-	}).simplified() + CARAT_PACKET_SEPARATOR;
-	
+	}).simplified();
+	String.insert(0, QString::number(String.size())); //Вставляем в начало размер запроса
+
+	//Получаем сокет и отправляем запрос
 	QTcpSocket *TcpSocket = ISTcpConnector::Instance().GetSocket();
 	if (TcpSocket->write(String.toUtf8()) != String.size())
 	{
@@ -42,39 +44,49 @@ bool ISTcpQuery::Execute(bool Async)
 		return false;
 	}
 
+	//Принудительно отправляем
 	if (!TcpSocket->flush())
 	{
 		ErrorString = "Error flush: " + TcpSocket->errorString();
 		return false;
 	}
 
-	QByteArray ByteArray; //Ответ
-	while (true)
+	QByteArray ByteArray;
+	long Size = 0;
+
+	while (true) //Ждём пока не придёт ответ
 	{
 		TcpSocket->waitForReadyRead();
 		if (TcpSocket->bytesAvailable() > 0)
 		{
 			ByteArray.append(TcpSocket->readAll());
-			if (ByteArray.right(CARAT_PACKET_SEPARATOR_SIZE) == CARAT_PACKET_SEPARATOR)
+			if (!Size) //Размер ещё не известен - вытаскиваем его
 			{
-				ByteArray.remove(ByteArray.size() - CARAT_PACKET_SEPARATOR_SIZE, CARAT_PACKET_SEPARATOR_SIZE);
+				Size = ISTcp::GetPacketSizeFromBuffer(ByteArray);
+			}
+
+			if (ByteArray.size() == Size) //Запрос пришёл полностью - выходим из цикла
+			{
 				break;
 			}
 		}
 	}
 
-	QVariantMap VariantMap;
-	if (!ISTcp::IsValidAnswer(ByteArray, VariantMap, ErrorString))
+	//Проверяем валидность ответа
+	if (!ISTcp::IsValidAnswer(ByteArray, TcpAnswer, ErrorString))
 	{
 		return false;
 	}
 
-	if (VariantMap["IsError"].toBool())
+	//Проверяем запрос на ошибку
+	if (TcpAnswer["IsError"].toBool())
 	{
-		ErrorString = VariantMap["ErrorDescription"].toString();
+		ErrorString = TcpAnswer["ErrorDescription"].toString();
 		return false;
 	}
 
+	TcpAnswer.remove("IsError");
+	TcpAnswer.remove("ErrorDescription");
 	return true;
 }
 //-----------------------------------------------------------------------------
