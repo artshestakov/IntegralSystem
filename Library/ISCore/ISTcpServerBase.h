@@ -17,6 +17,7 @@ public:
 
 protected:
 	void Send(QTcpSocket *TcpSocket, const QVariantMap &Data); //Отправка данных
+	void SendError(QTcpSocket *TcpSocket, const QString &ErrorString); //Отправка ошибки
 
 private:
 	void AcceptError(QAbstractSocket::SocketError);

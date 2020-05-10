@@ -6,27 +6,37 @@
 int main(int argc, char *argv[])
 {
 	QCoreApplication Application(argc, argv);
-	if (ISTcpConnector::Instance().Connect("127.0.0.1", CARAT_DEFAULT_PORT))
+
+	quint16 Port = CARAT_DEFAULT_PORT;
+	if (ISTcpConnector::Instance().Connect("127.0.0.1", Port))
 	{
-		ISTcpQuery TcpQuery(API_AUTH);
-		TcpQuery.BindValue("Login", "shestakov");
-		TcpQuery.BindValue("Password", "454Trendy");
-		if (TcpQuery.Execute())
+		ISTcpQuery qAuth(API_AUTH);
+		qAuth.BindValue("Login", "shestakov");
+		qAuth.BindValue("Password", "454Trendy");
+		if (qAuth.Execute())
 		{
-			qDebug() << "Ok";
+			Port = qAuth.GetAnswer()["Port"].toInt();
 		}
 		else
 		{
-			qDebug() << TcpQuery.GetErrorString();
+			qDebug() << qAuth.GetErrorString();
 		}
-		Application.exec();
-		ISSleep(5000);
 		ISTcpConnector::Instance().Disconnect();
 	}
 	else
 	{
 		qDebug() << ISTcpConnector::Instance().GetErrorString();
 	}
+
+	if (ISTcpConnector::Instance().Connect("127.0.0.1", Port))
+	{
+		ISTcpQuery qTestQuery(API_TEST_QUERY);
+		if (qTestQuery.Execute())
+		{
+			qDebug() << qTestQuery.GetAnswer()["DateTime"].toString();
+		}
+	}
+
 	return Application.exec();
 }
 //-----------------------------------------------------------------------------

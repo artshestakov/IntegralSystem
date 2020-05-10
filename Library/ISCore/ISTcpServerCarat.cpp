@@ -4,6 +4,7 @@
 #include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
@@ -40,7 +41,8 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	while (true) //Ждём пока не придёт запрос
 	{
-		if (!TcpSocket->waitForReadyRead(CARAT_TIMEOUT_INCOMING_QUERY)) //Если запрос так и не пришёл - отключаем клиента
+		//Если запрос так и не пришёл - отключаем клиента
+		if (!TcpSocket->waitForReadyRead(CARAT_TIMEOUT_INCOMING_QUERY))
 		{
 			SendError(TcpSocket, "Query not received");
 			return;
@@ -51,7 +53,13 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 			ByteArray.append(TcpSocket->readAll());
 			if (!Size) //Размер ещё не известен - вытаскиваем его
 			{
-				Size = ISTcp::GetPacketSizeFromBuffer(ByteArray);
+				Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
+			}
+
+			if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отключаем клиента
+			{
+				SendError(TcpSocket, "Query is not a valid");
+				return;
 			}
 
 			if (ByteArray.size() == Size) //Запрос пришёл полностью - выходим из цикла
@@ -180,18 +188,16 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	}
 
 	ISTcpAnswer TcpAnswer;
-	TcpAnswer["Port"] = QString::number(Port);
+	QString StringPort = QString::number(Port);
+	bool Started = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker.exe", QStringList() << StringPort, ISDefines::Core::PATH_APPLICATION_DIR);
+	if (Started)
+	{
+		TcpAnswer["Port"] = StringPort;
+	}
+	else
+	{
+		TcpAnswer.SetError("Error started worker");
+	}
 	Send(TcpSocket, TcpAnswer);
-}
-//-----------------------------------------------------------------------------
-void ISTcpServerCarat::SendError(QTcpSocket *TcpSocket, const QString &ErrorString)
-{
-	//Формируем ответ с ошибкой
-	ISTcpAnswer TcpAnswer;
-	TcpAnswer.SetError(ErrorString);
-
-	//Отправляем и обрываем соединение
-	Send(TcpSocket, TcpAnswer);
-	TcpSocket->abort();
 }
 //-----------------------------------------------------------------------------

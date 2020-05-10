@@ -63,7 +63,7 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 	return true;
 }
 //-----------------------------------------------------------------------------
-long ISTcp::GetPacketSizeFromBuffer(QByteArray &ByteArray)
+long ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 {
 	QString Temp;
 	char Char;
@@ -81,11 +81,14 @@ long ISTcp::GetPacketSizeFromBuffer(QByteArray &ByteArray)
 		}
 	}
 
-	bool Ok = true;
-	long Result = Temp.toInt(&Ok);
-	if (Ok)
+	if (!Temp.isEmpty())
 	{
-		return Result;
+		bool Ok = true;
+		long Result = Temp.toInt(&Ok);
+		if (Ok)
+		{
+			return Result;
+		}
 	}
 	return 0;
 }

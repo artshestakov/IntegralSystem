@@ -9,7 +9,7 @@ class ISTcp
 public:
 	static bool IsValidQuery(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString); //ѕроверить валидность запроса
 	static bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString); //ѕроверить валидность ответа на запрос
-	static long GetPacketSizeFromBuffer(QByteArray &ByteArray); //ѕолучить размер пакета из его содержимого
+	static long GetQuerySizeFromBuffer(QByteArray &ByteArray); //ѕолучить размер запроса из его содержимого
 };
 //-----------------------------------------------------------------------------
 #endif

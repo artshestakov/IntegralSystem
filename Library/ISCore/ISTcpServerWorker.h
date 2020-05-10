@@ -3,7 +3,8 @@
 #define _ISTCPSERVERWORKER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISTcpServerBase.h"
-#include "ISTcpApi.h"
+#include "ISTcpAnswer.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISTcpServerWorker : public ISTcpServerBase
 {
@@ -19,12 +20,17 @@ protected:
 private:
 	void ReadyRead(); //Событие чтения данных от клиента
 	void Disconnected(); //Событие отключения клиента
+	bool CheckField(const QVariantMap &Parameters, const ISVectorString &Fields, ISTcpAnswer &TcpAnswer); //Проверка поля параметров на валидность
 
 private:
-	ISTcpApi *TcpApi;
+	void TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Тестовый запрос
+	void Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Ожидание
+
+private:
 	QTcpSocket *TcpSocket;
 	QByteArray Buffer;
 	long BufferSize;
+	std::map<QString, std::function<void(ISTcpServerWorker &TcpServer, const QVariantMap &, ISTcpAnswer &TcpAnswer)>> Functions;
 };
 //-----------------------------------------------------------------------------
 

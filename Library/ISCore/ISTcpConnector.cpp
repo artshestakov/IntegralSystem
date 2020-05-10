@@ -50,7 +50,7 @@ void ISTcpConnector::Disconnect()
 {
 	if (TcpSocket->state() == QTcpSocket::ConnectedState)
 	{
-		TcpSocket->disconnect();
+		TcpSocket->disconnectFromHost();
 	}
 }
 //-----------------------------------------------------------------------------

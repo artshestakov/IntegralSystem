@@ -14,9 +14,6 @@ public:
 
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
-
-private:
-	void SendError(QTcpSocket *TcpSocket, const QString &ErrorString); //Отправка ошибки
 };
 //-----------------------------------------------------------------------------
 

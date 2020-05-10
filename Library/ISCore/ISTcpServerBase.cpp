@@ -1,12 +1,13 @@
 #include "ISTcpServerBase.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
+#include "ISTcpAnswer.h"
 //-----------------------------------------------------------------------------
 ISTcpServerBase::ISTcpServerBase(QObject *parent)
 	: QTcpServer(parent),
 	ErrorString(NO_ERROR_STRING)
 {
-
+	setMaxPendingConnections(1);
 }
 //-----------------------------------------------------------------------------
 ISTcpServerBase::~ISTcpServerBase()
@@ -49,6 +50,17 @@ void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 		//Ждём пока данные уйдут
 		TcpSocket->waitForBytesWritten();
 	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerBase::SendError(QTcpSocket *TcpSocket, const QString &ErrorString)
+{
+	//Формируем ответ с ошибкой
+	ISTcpAnswer TcpAnswer;
+	TcpAnswer.SetError(ErrorString);
+
+	//Отправляем и обрываем соединение
+	Send(TcpSocket, TcpAnswer);
+	TcpSocket->abort();
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerBase::AcceptError(QAbstractSocket::SocketError)

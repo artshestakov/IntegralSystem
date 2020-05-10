@@ -62,7 +62,7 @@ bool ISTcpQuery::Execute(bool Async)
 			ByteArray.append(TcpSocket->readAll());
 			if (!Size) //Размер ещё не известен - вытаскиваем его
 			{
-				Size = ISTcp::GetPacketSizeFromBuffer(ByteArray);
+				Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
 			}
 
 			if (ByteArray.size() == Size) //Запрос пришёл полностью - выходим из цикла
@@ -88,5 +88,10 @@ bool ISTcpQuery::Execute(bool Async)
 	TcpAnswer.remove("IsError");
 	TcpAnswer.remove("ErrorDescription");
 	return true;
+}
+//-----------------------------------------------------------------------------
+QVariantMap& ISTcpQuery::GetAnswer()
+{
+	return TcpAnswer;
 }
 //-----------------------------------------------------------------------------

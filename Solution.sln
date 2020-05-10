@@ -169,6 +169,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerApplication", "Projec
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratWorker", "Projects\CaratWorker\CaratWorker.vcxproj", "{07117845-DDF6-4F2A-B2D9-93A670AB36DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DF96E239-1BB5-402B-B4F4-BF01D4A168BF} = {DF96E239-1BB5-402B-B4F4-BF01D4A168BF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -337,7 +340,7 @@ Global
 		{07117845-DDF6-4F2A-B2D9-93A670AB36DD} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal
