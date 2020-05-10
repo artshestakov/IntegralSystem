@@ -23,7 +23,7 @@ void ISTcpServerWorker::incomingConnection(qintptr SocketDescriptor)
 	if (TcpSocket) //Если уже есть активное подключение - выбрасываем новое с ошибкой
 	{
 		QTcpSocket *SocketExcess = nextPendingConnection();
-		SendError(SocketExcess, "ERROR");
+		SendError(SocketExcess, "The port is already in use by another connection");
 		SocketExcess->deleteLater();
 	}
 	else //Активного подключения нет - принимаем его
