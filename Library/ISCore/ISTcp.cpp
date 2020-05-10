@@ -67,7 +67,7 @@ long ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 {
 	QString Temp;
 	char Char;
-	while (true)
+	while (true) //Ищем размер
 	{
 		Char = ByteArray.front();
 		if (std::isdigit(Char)) //Если символ является цифрой - добавляем его в массив

@@ -60,11 +60,11 @@ void ISTcpServerWorker::ReadyRead()
 		if (ISTcp::IsValidQuery(Buffer, VariantMap, ErrorString))
 		{
 			QString QueryType = VariantMap["Type"].toString();
-			if (!Functions.count(QueryType) == 1) //Если такой запрос существует
+			if (Functions.count(QueryType)) //Если такой запрос существует - выполняем его
 			{
 				Functions[QueryType](*this, VariantMap["Parameters"].toMap(), TcpAnswer);
 			}
-			else
+			else //Запрос не существует - отправляем ошибку
 			{
 				TcpAnswer.SetError(QString("Unknown query \"%1\"").arg(QueryType));
 			}
