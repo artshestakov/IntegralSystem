@@ -1,7 +1,7 @@
 QT += core network sql xml
 QT -= gui
 
-TARGET = CaratCenterCeven
+TARGET = CaratCenterSeven
 TEMPLATE = app
 CONFIG += c++11
 
