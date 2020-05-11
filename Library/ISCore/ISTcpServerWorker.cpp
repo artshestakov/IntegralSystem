@@ -2,6 +2,7 @@
 #include "ISTcp.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	: ISTcpServerBase(parent),
@@ -31,6 +32,7 @@ void ISTcpServerWorker::incomingConnection(qintptr SocketDescriptor)
 		TcpSocket = nextPendingConnection();
 		connect(TcpSocket, &QTcpSocket::readyRead, this, &ISTcpServerWorker::ReadyRead);
 		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerWorker::Disconnected);
+		ISLOGGER_I(QString("Connected. Address: %1 Port: %2").arg(TcpSocket->peerAddress().toString()).arg(TcpSocket->peerPort()));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -79,11 +81,15 @@ void ISTcpServerWorker::ReadyRead()
 		TcpAnswer.SetError("Query is not a valid");
 	}
 	Send(TcpSocket, TcpAnswer);
+
+	//Очищаем буфер и его размер
 	Buffer.clear();
+	BufferSize = 0;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::Disconnected()
 {
+	ISLOGGER_I(QString("Disconnected. Address: %1 Port: %2").arg(TcpSocket->peerAddress().toString()).arg(TcpSocket->peerPort()));
 	TcpSocket->deleteLater();
 	close();
 	QCoreApplication::quit();
