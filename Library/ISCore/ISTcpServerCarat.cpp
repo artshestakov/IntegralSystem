@@ -189,7 +189,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	ISTcpAnswer TcpAnswer;
 	QString StringPort = QString::number(Port);
-	bool Started = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker.exe", QStringList() << StringPort, ISDefines::Core::PATH_APPLICATION_DIR);
+    bool Started = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort, ISDefines::Core::PATH_APPLICATION_DIR);
 	if (Started)
 	{
 		TcpAnswer["Port"] = StringPort;
