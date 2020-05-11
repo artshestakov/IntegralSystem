@@ -178,7 +178,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	//»щем свободный порт
 	QTcpServer TcpServer;
 	quint16 Port = serverPort() + 1;
-	for (Port; Port < USHRT_MAX; ++Port)
+    for (; Port < USHRT_MAX; ++Port)
 	{
 		if (TcpServer.listen(QHostAddress::AnyIPv4, Port)) //≈сли удалось захватить порт - закрываем его и выходим из цикла
 		{

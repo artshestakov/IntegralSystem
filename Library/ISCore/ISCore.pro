@@ -35,6 +35,13 @@ HEADERS += \
     ISConsole.h \
     ISConstants.h \
     ISCore.h \
+    ISTcp.h \
+    ISTcpAnswer.h \
+    ISTcpConnector.h \
+    ISTcpQuery.h \
+    ISTcpServerBase.h \
+    ISTcpServerCarat.h \
+    ISTcpServerWorker.h \
     iscore_global.h \
     ISCountingTime.h \
     ISCrashDumper.h \
@@ -139,6 +146,13 @@ SOURCES += \
     ISSettingsDatabase.cpp \
     ISSmtpClient.cpp \
     ISSystem.cpp \
+    ISTcp.cpp \
+    ISTcpAnswer.cpp \
+    ISTcpConnector.cpp \
+    ISTcpQuery.cpp \
+    ISTcpServerBase.cpp \
+    ISTcpServerCarat.cpp \
+    ISTcpServerWorker.cpp \
     ISTrace.cpp \
     ISUuid.cpp \
     ISVersion.cpp \

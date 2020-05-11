@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 bool ISTcp::IsValidQuery(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString)
 {
-	VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, ErrorString);
+    VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, &ErrorString);
 	if (VariantMap.isEmpty() && !ErrorString.isEmpty())
 	{
 		return false;
@@ -31,7 +31,7 @@ bool ISTcp::IsValidQuery(const QByteArray &ByteArray, QVariantMap &VariantMap, Q
 //-----------------------------------------------------------------------------
 bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString)
 {
-	VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, ErrorString);
+    VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, &ErrorString);
 	if (VariantMap.isEmpty() && !ErrorString.isEmpty())
 	{
 		return false;

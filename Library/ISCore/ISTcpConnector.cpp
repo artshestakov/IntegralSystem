@@ -14,6 +14,12 @@ ISTcpConnector::~ISTcpConnector()
 	
 }
 //-----------------------------------------------------------------------------
+ISTcpConnector& ISTcpConnector::Instance()
+{
+    static ISTcpConnector TcpConnector;
+    return TcpConnector;
+}
+//-----------------------------------------------------------------------------
 QString ISTcpConnector::GetErrorString() const
 {
 	return ErrorString;
@@ -22,12 +28,6 @@ QString ISTcpConnector::GetErrorString() const
 QTcpSocket* ISTcpConnector::GetSocket()
 {
 	return TcpSocket;
-}
-//-----------------------------------------------------------------------------
-ISTcpConnector& ISTcpConnector::Instance()
-{
-	static ISTcpConnector TcpConnector;
-	return TcpConnector;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &host, quint16 port)
@@ -56,6 +56,7 @@ void ISTcpConnector::Disconnect()
 //-----------------------------------------------------------------------------
 void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
 {
+    Q_UNUSED(socket_error);
 	ErrorString = TcpSocket->errorString();
 }
 //-----------------------------------------------------------------------------

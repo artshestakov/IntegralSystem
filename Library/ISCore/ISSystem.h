@@ -41,8 +41,8 @@ public:
 	static QString Base64ToString(const QString &Base64); //Конвертация Base64 в строку
 	static QString SizeToString(const QSize &Size); //Конвертация размера в строку
 	static double MillisecondToSecond(int Milliseconds); //Конвертация милисекунд в секунды
-	static QVariantMap JsonStringToVariantMap(const QString &JsonString, QString &ErrorString = QString()); //Конвертация JSON-строки в список ключ-значение
-	static ISStringMap JsonStringToStringMap(const QString &JsonString, QString &ErrorString = QString()); //Конвертация JSON-строки в список ключ-значение
+    static QVariantMap JsonStringToVariantMap(const QString &JsonString, QString *ErrorString = nullptr); //Конвертация JSON-строки в список ключ-значение
+    static ISStringMap JsonStringToStringMap(const QString &JsonString, QString *ErrorString = nullptr); //Конвертация JSON-строки в список ключ-значение
 	static QString VariantMapToJsonString(const QVariantMap &VariantMap); //Конвертация списка ключ-значение в JSON-строку
 	static QString StringToMD5(const QString &String); //Получить MD5 строки
 

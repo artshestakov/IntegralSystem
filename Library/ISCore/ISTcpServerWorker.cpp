@@ -110,6 +110,7 @@ bool ISTcpServerWorker::CheckField(const QVariantMap &Parameters, const ISVector
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
+    Q_UNUSED(Parameters);
 	TcpAnswer["DateTime"] = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V2);
 }
 //-----------------------------------------------------------------------------
