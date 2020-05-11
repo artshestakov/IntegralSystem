@@ -236,7 +236,7 @@ double ISSystem::MillisecondToSecond(int Milliseconds)
 	return Milliseconds / 1000;
 }
 //-----------------------------------------------------------------------------
-QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QString &ErrorString)
+QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QString *ErrorString)
 {
 	QVariantMap VariantMap;
 	if (!JsonString.isEmpty())
@@ -250,17 +250,17 @@ QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QString 
 		}
 		else
 		{
-			ErrorString = JsonParseError.errorString();
+            *ErrorString = JsonParseError.errorString();
 		}
 	}
 	else
 	{
-		ErrorString = "Empty string";
+        *ErrorString = "Empty string";
 	}
 	return VariantMap;
 }
 //-----------------------------------------------------------------------------
-ISStringMap ISSystem::JsonStringToStringMap(const QString &JsonString, QString &ErrorString)
+ISStringMap ISSystem::JsonStringToStringMap(const QString &JsonString, QString *ErrorString)
 {
 	QVariantMap VariantMap = JsonStringToVariantMap(JsonString, ErrorString);
 	ISStringMap StringMap;
