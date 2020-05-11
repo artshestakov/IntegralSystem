@@ -85,7 +85,7 @@ void ISCaratService::StartService()
 	}
 	else
 	{
-		ISLOGGER_W("Not listen port for local server");
+        ISLOGGER_W("Not listen port for local server: " + LocalServer->errorString());
 	}
 
 	TcpServer = new ISTcpServerCarat(this);
