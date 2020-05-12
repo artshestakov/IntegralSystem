@@ -13,7 +13,6 @@
 #include "ISAboutForm.h"
 #include "ISSettingsDatabase.h"
 #include "ISControls.h"
-#include "ISNoteForm.h"
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
@@ -27,7 +26,6 @@
 #include "ISDeviceSettingsForm.h"
 #include "ISTelephony.h"
 #include "ISObjects.h"
-#include "ISAddressBookListForm.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
@@ -124,8 +122,6 @@ void ISMainWindow::CreateMenuBar()
 	connect(MenuBar, &ISMenuBar::DeviceSettings, this, &ISMainWindow::ShowDeviceSettings);
 	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
 	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
-	connect(MenuBar, &ISMenuBar::Notebook, this, &ISMainWindow::ShowNoteForm);
-	connect(MenuBar, &ISMenuBar::AddressBook, this, &ISMainWindow::ShowAddressBook);
 	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
 	connect(MenuBar, &ISMenuBar::AboutQt, this, &ISMainWindow::ShowAboutQt);
 	GetMainLayout()->addWidget(MenuBar);
@@ -287,20 +283,6 @@ void ISMainWindow::ShowChangePasswordForm()
 	{
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.YouPasswordDoneChanged"));
 	}
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowNoteForm()
-{
-	ISGui::SetWaitGlobalCursor(true);
-	(new ISNoteForm())->show();
-	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowAddressBook()
-{
-	ISAddressBookListForm *AddressBookListForm = new ISAddressBookListForm();
-	AddressBookListForm->LoadData();
-	AddressBookListForm->showMaximized();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowSettingsForm()

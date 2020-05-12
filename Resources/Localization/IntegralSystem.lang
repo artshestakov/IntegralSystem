@@ -230,8 +230,6 @@
   <Local Name="Message.Question.SettingsImport" Russian="Импортировать все настройки?"/>
   <Local Name="Message.Question.SettingsImportCurrentGroup" Russian="Импортировать выделенную группу настроек?"/>
   <Local Name="Message.Question.RestartApplication" Russian="Перезапустить программу?"/>
-  <Local Name="Message.Question.SaveNote" Russian="Сохранить изменения записи &quot;%1&quot;?"/>
-  <Local Name="Message.Question.DeleteNote" Russian="Удалить выбранную запись?"/>
   <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
   <Local Name="Message.Question.ReReadCard" Russian="Перечитать информацию?"/>
@@ -386,7 +384,6 @@
   <Local Name="InetServerAddress" Russian="Адрес удаленного соединения (Сервер)"/>
   <Local Name="DefaultSorting" Russian="Установить сортировку по умолчанию"/>
   <Local Name="Debug" Russian="Отладка"/>
-  <Local Name="Notebook" Russian="Блокнот"/>
   <Local Name="NewRecord" Russian="Новая запись"/>
   <Local Name="EditRecord" Russian="Изменение записи"/>
   <Local Name="TerminateAllUsers" Russian="Отключить всех пользователей"/>
@@ -425,7 +422,6 @@
   <Local Name="ObjectOther" Russian="Другое"/>
   <Local Name="Searching" Russian="Идет поиск"/>
   <Local Name="Founded" Russian="Найдено"/>
-  <Local Name="AddressBook" Russian="Адресная книга"/>
   <Local Name="WithoutIcon" Russian="Без значка"/>
   <Local Name="Reminder" Russian="Напоминание"/>
   <Local Name="CalendarCloseEvent" Russian="Завершить событие"/>

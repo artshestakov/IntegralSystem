@@ -31,7 +31,6 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 
 	CreateMenuFile();
 	CreateMenuService();
-	CreateMenuAddition();
 	CreateMenuHelp();
 
 	//Выход
@@ -94,17 +93,6 @@ void ISMenuBar::CreateMenuService()
 
 	//Смена пароля
 	MenuService->addAction(LANG("ChangePassword"), this, &ISMenuBar::ChangePassword);
-}
-//-----------------------------------------------------------------------------
-void ISMenuBar::CreateMenuAddition()
-{
-	QMenu *MenuAddition = MainMenu->addMenu(BUFFER_ICONS("MainMenuItem"), LANG("Additionally"));
-
-	//Блокнот
-	MenuAddition->addAction(BUFFER_ICONS("Note"), LANG("Notebook"), this, &ISMenuBar::Notebook);
-
-	//Адресная книга
-	MenuAddition->addAction(BUFFER_ICONS("AddressBook"), LANG("AddressBook"), this, &ISMenuBar::AddressBook);
 }
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateMenuHelp()

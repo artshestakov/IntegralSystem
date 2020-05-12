@@ -121,22 +121,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="_Note" UID="{63078185-1C7D-4350-9ACD-6430E1807BD3}" Alias="note" LocalName="Запись" LocalListName="Записи" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{F0D54FCA-BAA7-4001-BF43-C31DC6C50177}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromObject="true" HideFromList="true"/>
-      <Field UID="{CD711A24-C5B4-4A17-A9F9-C0A3C5A8C764}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{571149B5-3A4B-4931-8216-6F38686548A8}" Name="Text" Type="Text" LabelName="Текст" LocalListName="Текст"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="Name"/>
-      <Index Field="Text"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_NoteObject" UID="{0C7A4B07-A8B5-4657-8C84-A1D89284EA56}" Alias="nobj" LocalName="Примечание объекта" LocalListName="Примечания объекта" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{381B8185-C734-4C2E-8C8B-1854578E6DCD}" Name="TableName" Type="String" LabelName="Наименование таблицы" LocalListName="Наименование таблицы" NotNull="true"/>
@@ -527,48 +511,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="_AddressBook" UID="{2041DE95-867A-4D5C-AFEB-9F51043DE390}" Alias="abok" LocalName="Контакт" LocalListName="Контакты" TitleName="FIO">
-    <Fields>
-      <Field UID="{2944CCAC-3D24-460C-9B32-1D6FED8E9995}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" HideFromList="true" HideFromObject="true" NotNull="true"/>
-      <Field UID="{D6C223CC-C1B2-470F-95E7-E5E7B38A6024}" Name="FIO" Type="String" LabelName="Полное имя" LocalListName="Полное имя" NotNull="true" LayoutName="FIO"/>
-      <Field UID="{EFBB8BD0-9EF3-4985-9559-997CB43B0587}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" LayoutName="FIO" HideFromList="true"/>
-      <Field UID="{865843A2-9E3A-42BC-93B6-5A4ED95B7EED}" Name="Organization" Type="String" LabelName="Организация" LocalListName="Организация" LayoutName="Organization"/>
-      <Field UID="{6F5EA833-93CA-4A74-B75A-17DFFA7B8C71}" Name="Position" Type="String" LabelName="Должность" LocalListName="Должность" LayoutName="Organization"/>
-      <Field UID="{22D48898-B768-4DD0-A861-B41AB1A808A4}" Name="EMailMain" Type="EMail" LabelName="Электронная почта (основная)" LocalListName="Электронная почта (основная)" HideFromList="true" LayoutName="EMail"/>
-      <Field UID="{E399B90A-2BD7-44B3-AC0D-00C719101BAD}" Name="EMailOther" Type="EMail" LabelName="Электронная почта (дополнительная)" LocalListName="Электронная почта (дополнительная)" HideFromList="true" LayoutName="EMail"/>
-      <Field UID="{A0830BAE-91F0-4F1D-B70A-A014B2FF31CA}" Name="WebPage" Type="Url" LabelName="Веб-страница" LocalListName="Веб-страница" HideFromList="true"/>
-      <Field UID="{0CB8E234-AA70-4864-8499-C93B459F017D}" Name="PhoneMain" Type="Phone" LabelName="Телефон (основной)" LocalListName="Телефон (основной)" HideFromList="true" LayoutName="Phone"/>
-      <Field UID="{2DDF4CCC-241E-4264-A7AF-C342EE07924B}" Name="PhoneMobile" Type="Phone" LabelName="Мобильный" LocalListName="Мобильный" HideFromList="true" LayoutName="Phone"/>
-      <Field UID="{EF77A06E-16A3-46D0-9F86-7F0F786D509E}" Name="PhoneWork" Type="Phone" LabelName="Рабочий" LocalListName="Рабочий" HideFromList="true" LayoutName="Phone"/>
-      <Field UID="{1DE18892-847F-45BD-97B1-7D0F791E3A1D}" Name="PhoneHome" Type="Phone" LabelName="Домашний" LocalListName="Домашний" HideFromList="true" LayoutName="Phone"/>
-      <Field UID="{5BE04AE7-EB36-4E61-9C5D-18C089B7219E}" Name="AddressMain" Type="Address" LabelName="Адрес (основной)" LocalListName="Адрес (основной)" HideFromList="true"/>
-      <Field UID="{C0CA2665-87B4-4581-9898-9441DE197FA0}" Name="AddressWork" Type="Address" LabelName="Адрес (рабочий)" LocalListName="Адрес (рабочий)" HideFromList="true"/>
-      <Field UID="{F9F80B56-D2AA-40DF-8E6C-AC1D16CAB651}" Name="AddressHome" Type="Address" LabelName="Адрес (домашний)" LocalListName="Адрес (домашний)" HideFromList="true"/>
-      <Field UID="{102CCC64-0D5B-4193-B0E3-8D624C26750F}" Name="Notes" Type="Text" LabelName="Заметки" LocalListName="Заметки" HideFromList="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="FIO"/>
-      <Index Field="Birthday"/>
-      <Index Field="Organization"/>
-      <Index Field="Position"/>
-      <Index Field="EMailMain"/>
-      <Index Field="EMailOther"/>
-      <Index Field="WebPage"/>
-      <Index Field="PhoneMain"/>
-      <Index Field="PhoneMobile"/>
-      <Index Field="PhoneWork"/>
-      <Index Field="PhoneHome"/>
-      <Index Field="AddressMain"/>
-      <Index Field="AddressWork"/>
-      <Index Field="AddressHome"/>
-      <Index Field="Notes"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-  
   <Table Name="_SortingTables" UID="{FDE07704-8804-4950-A4A8-8220F0C54B5F}" Alias="sgts" LocalName="Сортировка таблицы" LocalListName="Сортировки таблиц" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{207AC648-13DF-46A1-9DDA-84C0AAB794EF}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>

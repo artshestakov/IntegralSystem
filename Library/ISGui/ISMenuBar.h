@@ -19,8 +19,6 @@ signals:
 	void DeviceSettings();
 	void ChangePassword();
 	void Settings();
-	void Notebook();
-	void AddressBook();
 	void HelpSystem();
 	void AboutApplication();
 	void AboutQt();
@@ -37,7 +35,6 @@ public:
 protected:
 	void CreateMenuFile(); //Создание меню "Файл"
 	void CreateMenuService(); //Создание меню "Сервис"
-	void CreateMenuAddition(); //Создание меню "Утилиты"
 	void CreateMenuHelp(); //Создание меню "Справка"
 	
 	void CreateButtonsPanel(); //Создание панели с кнопками

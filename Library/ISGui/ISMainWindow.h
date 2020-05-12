@@ -47,8 +47,6 @@ protected:
 	void ShowHistoryForm(); //Открыть форму истории
 	void ShowDeviceSettings(); //Открыть форму настройки устройств
 	void ShowChangePasswordForm(); //Открыть форму смены пароля
-	void ShowNoteForm(); //Открыть форму "Блокнот"
-	void ShowAddressBook(); //Открыть адресную книгу
 	void ShowSettingsForm(); //Открыть форму "Настройки"
 	void ShowAboutForm(); //Открыть форму "О программе"
 	void ShowAboutQt(); //Открыть форму "О Qt"
