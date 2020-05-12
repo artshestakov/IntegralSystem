@@ -16,6 +16,9 @@ public:
 	ISAuthForm();
 	virtual ~ISAuthForm();
 
+protected:
+	void closeEvent(QCloseEvent *CloseEvent);
+
 private:
 	void AfterShowEvent() override;
 	void EnterClicked() override;
@@ -45,5 +48,6 @@ private:
 	ISPushButton *ButtonInput;
 	ISPushButton *ButtonExit;
 	ISAuthConnector *AuthConnector;
+	bool ConnectingState;
 };
 //-----------------------------------------------------------------------------

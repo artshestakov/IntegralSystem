@@ -11,13 +11,17 @@ class ISCORE_EXPORT ISTcpConnector : public QObject
 public:
 	static ISTcpConnector& Instance();
 	
-	QString GetErrorString() const;
-	QTcpSocket* GetSocket();
-	bool IsConnected() const;
-	bool Reconnect(const QString &host, quint16 port);
-	bool Connect(const QString &host, quint16 port);
-	void Disconnect();
+	QString GetErrorString() const; //Получить текствоое описание ошибки
+	QTcpSocket* GetSocket(); //Получить указатель на сокет
+	bool IsConnected() const; //Проверить наличие соединения
+	bool Reconnect(const QString &host, quint16 port); //Переподключение
+	bool Connect(const QString &host, quint16 port); //Подключение
+	void Disconnect(); //Отключение
+
+private:
+	void Timeout();
 	void Error(QTcpSocket::SocketError socket_error);
+	void StateChanged(QTcpSocket::SocketState socket_state);
 
 private:
 	ISTcpConnector();
@@ -28,6 +32,8 @@ private:
 private:
 	QString ErrorString;
 	QTcpSocket *TcpSocket;
+	QEventLoop EventLoop;
+	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------
 #endif

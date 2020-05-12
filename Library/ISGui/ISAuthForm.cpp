@@ -15,7 +15,9 @@
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
-ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
+ISAuthForm::ISAuthForm()
+	: ISInterfaceDialogForm(),
+	ConnectingState(false)
 {
 	setWindowTitle(LANG("InputInSystem"));
 	ForbidResize();
@@ -107,7 +109,8 @@ ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
 	ButtonExit = new ISPushButton(BUFFER_ICONS("Auth.Exit"), LANG("Exit"), this);
 	ButtonExit->setCursor(CURSOR_POINTING_HAND);
 	ButtonExit->setToolTip(LANG("Exit.ToolTip"));
-	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
+	//connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
+	connect(ButtonExit, &ISPushButton::clicked, &ISTcpConnector::Instance(), &ISTcpConnector::Disconnect);
 	LayoutBottom->addWidget(ButtonExit);
 
 	QAction *ActionClearFields = new QAction(this);
@@ -133,6 +136,11 @@ ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
 ISAuthForm::~ISAuthForm()
 {
 	
+}
+//-----------------------------------------------------------------------------
+void ISAuthForm::closeEvent(QCloseEvent *CloseEvent)
+{
+	ConnectingState ? CloseEvent->ignore() : ISInterfaceDialogForm::closeEvent(CloseEvent);
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::AfterShowEvent()
@@ -193,39 +201,40 @@ void ISAuthForm::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISAuthForm::Input()
 {
-	if (CONFIG_BOOL("Protocol/Use")) //Если используется протокол
+	if (Check())
 	{
-		QString Host = CONFIG_STRING("Protocol/Host");
-		quint16 Port = CONFIG_INT("Protocol/Port");
-		if (ISTcpConnector::Instance().Connect(Host, Port))
+		SetConnecting(true);
+		if (CONFIG_BOOL("Protocol/Use")) //Если используется протокол
 		{
-			ISTcpQuery qAuth(API_AUTH);
-			qAuth.BindValue("Login", EditLogin->GetValue().toString());
-			qAuth.BindValue("Password", EditPassword->GetValue().toString());
-			if (qAuth.Execute())
+			QString Host = CONFIG_STRING("Protocol/Host");
+			quint16 Port = CONFIG_INT("Protocol/Port");
+			if (ISTcpConnector::Instance().Connect(Host, Port))
 			{
-				Port = qAuth.GetAnswer()["Port"].toInt();
+				ISTcpQuery qAuth(API_AUTH);
+				qAuth.BindValue("Login", EditLogin->GetValue().toString());
+				qAuth.BindValue("Password", EditPassword->GetValue().toString());
+				if (qAuth.Execute())
+				{
+					Port = qAuth.GetAnswer()["Port"].toInt();
+				}
+				else
+				{
+					ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
+				}
+
+				if (!ISTcpConnector::Instance().Reconnect(Host, Port))
+				{
+					ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
+				}
 			}
 			else
 			{
-				ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
-			}
-
-			if (!ISTcpConnector::Instance().Reconnect(Host, Port))
-			{
 				ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
 			}
+			SetConnecting(false);
 		}
-		else
+		else //Используется классическое подключение
 		{
-			ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
-		}
-	}
-	else //Используется классическое подключение
-	{
-		if (Check())
-		{
-			SetConnecting(true);
 			AuthConnector->Connect();
 		}
 	}
@@ -287,14 +296,16 @@ void ISAuthForm::ConnectedFailed()
 //-----------------------------------------------------------------------------
 void ISAuthForm::SetConnecting(bool Connecting)
 {
-	Connecting ? WaitWidget->Start() : WaitWidget->Stop();
-	Connecting ? LabelConnectToDatabase->setText(LANG("ConnectingToServer")) : LabelConnectToDatabase->clear();
-	ISGui::SetWaitGlobalCursor(Connecting);
-	EditLogin->setEnabled(!Connecting);
-	EditPassword->setEnabled(!Connecting);
-	ButtonMenu->setEnabled(!Connecting);
-	ButtonInput->setEnabled(!Connecting);
-	ButtonExit->setEnabled(!Connecting);
+	ConnectingState = Connecting;
+	ConnectingState ? WaitWidget->Start() : WaitWidget->Stop();
+	ConnectingState ? LabelConnectToDatabase->setText(LANG("ConnectingToServer")) : LabelConnectToDatabase->clear();
+	ISGui::SetWaitGlobalCursor(ConnectingState);
+	EditLogin->setEnabled(!ConnectingState);
+	EditPassword->setEnabled(!ConnectingState);
+	CheckRememberUser->setEnabled(!ConnectingState);
+	ButtonMenu->setEnabled(!ConnectingState);
+	ButtonInput->setEnabled(!ConnectingState);
+	ButtonExit->setEnabled(!ConnectingState);
 }
 //-----------------------------------------------------------------------------
 bool ISAuthForm::Check()
