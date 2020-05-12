@@ -12,15 +12,6 @@ const char PATH_SEPARATOR = '/';
 #endif
 //EXTENSIONS-------------------------------------------------------------------
 const char EXTENSION_DLL[] = "dll";
-const char EXTENSION_SO[] = "so";
-const char EXTENSION_XLS[] = "xls";
-const char EXTENSION_XLSX[] = "xlsx";
-const char EXTENSION_CSV[] = "csv";
-const char EXTENSION_TXT[] = "txt";
-const char EXTENSION_HTML[] = "html";
-const char EXTENSION_HTM[] = "htm";
-const char EXTENSION_DBF[] = "dbf";
-const char EXTENSION_PDF[] = "pdf";
 const char EXTENSION_LOG[] = "log";
 const char EXTENSION_PNG[] = "png";
 const char EXTENSION_JPEG[] = "jpeg";
@@ -36,8 +27,6 @@ const char EXTENSION_WBMP[] = "wbmp";
 const char EXTENSION_BMP[] = "bmp";
 const char EXTENSION_WEBP[] = "webp";
 const char EXTENSION_LANG[] = "lang";
-const char EXTENSION_DMP[] = "dmp";
-const char EXTENSION_SQL[] = "sql";
 const char EXTENSION_WAV[] = "wav";
 const char EXTENSION_XML[] = "xml";
 const char EXTENSION_INI[] = "ini";
@@ -66,9 +55,7 @@ const char LOCALIZATION_FILE_OBJECTS[] = "Objects";
 //REG_EXP----------------------------------------------------------------------
 const char REG_EXP_IP_ADDRESS[] = "([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?"; //IP-адресс
 const char REG_EXP_UID[] = "UID=\"\\{\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}\\}\""; //Уникальный идентфикатор из мета-данных
-const char REG_EXP_DEBUG[] = "[0-9]{2}.[0-9]{2}.[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3} \\[[A-Za-z]+\\]: ";
 const char REG_EXP_LOGIN[] = "^([a-z]+)$";
-const char REG_EXP_BACKUP_FILE_DATE[] = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}";
 const char REG_EXP_PASSWORD_ALT_SYMBOL[] = "^[^а-яА-ЯёЁa-zA-Z0-9_]+$";
 const char REG_EXP_PASSWORD_UPPER[] = "^[А-ЯA-Z]+$";
 const char REG_EXP_URL[] = "^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$"; //Ссылка на сайт или страницу в интернете
@@ -106,8 +93,6 @@ const char PATH_BUILD_INFO[] = ":Build/Build.ini.tmp";
 //REPORT_TYPE------------------------------------------------------------------
 const char REPORT_TYPE_HTML[] = "Html";
 const char REPORT_TYPE_WORD[] = "Word";
-//TEXT_CODECS------------------------------------------------------------------
-const char TEXT_CODEC_IBM866[] = "IBM 866";
 //CURSORS----------------------------------------------------------------------
 const Qt::CursorShape CURSOR_ARROW = Qt::ArrowCursor;
 const Qt::CursorShape CURSOR_POINTING_HAND = Qt::PointingHandCursor;
