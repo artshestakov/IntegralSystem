@@ -42,6 +42,18 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 	EditDatabase->SetValue(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 	FormLayout->addRow(LabelDatabase, EditDatabase);
 
+	EditProtocolUse = new ISCheckEdit(this);
+	EditProtocolUse->SetValue(CONFIG_BOOL("Protocol/Use"));
+	FormLayout->addRow("Use", EditProtocolUse);
+
+	EditProtocolHost = new ISLineEdit(this);
+	EditProtocolHost->SetValue(CONFIG_STRING("Protocol/Host"));
+	FormLayout->addRow("Host", EditProtocolHost);
+
+	EditProtocolPort = new ISIntegerEdit(this);
+	EditProtocolPort->SetValue(CONFIG_INT("Protocol/Port"));
+	FormLayout->addRow("Port", EditProtocolPort);
+
 	ISPushButton *ButtonSave = new ISPushButton(this);
 	ButtonSave->setText(LANG("Save"));
 	ButtonSave->setIcon(BUFFER_ICONS("Save"));
@@ -71,6 +83,9 @@ void ISConnectionForm::SaveSettings()
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
+		ISConfig::Instance().SetValue("Protocol/Use", EditProtocolUse->GetValue());
+		ISConfig::Instance().SetValue("Protocol/Host", EditProtocolHost->GetValue());
+		ISConfig::Instance().SetValue("Protocol/Port", EditProtocolPort->GetValue());
 		close();
 	}
 }

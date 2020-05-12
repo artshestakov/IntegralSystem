@@ -2,6 +2,7 @@
 #include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISTcpAnswer.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISTcpServerBase::ISTcpServerBase(QObject *parent)
 	: QTcpServer(parent),
@@ -37,7 +38,7 @@ bool ISTcpServerBase::Run(quint16 Port)
 void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 {
 	//Если сокет все ещё подключен - отправляем
-	if (TcpSocket->state() == QAbstractSocket::ConnectedState)
+	if (TcpSocket->state() == QTcpSocket::ConnectedState)
 	{
 		//Сборка запроса
 		QString String = ISSystem::VariantMapToJsonString(Data).simplified();
@@ -61,9 +62,10 @@ void ISTcpServerBase::SendError(QTcpSocket *TcpSocket, const QString &ErrorStrin
 	//Отправляем и обрываем соединение
 	Send(TcpSocket, TcpAnswer);
 	TcpSocket->abort();
+	ISLOGGER_E(ErrorString);
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerBase::AcceptError(QAbstractSocket::SocketError)
+void ISTcpServerBase::AcceptError(QTcpSocket::SocketError)
 {
 	ErrorString = errorString();
 }

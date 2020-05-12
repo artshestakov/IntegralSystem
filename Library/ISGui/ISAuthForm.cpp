@@ -12,6 +12,9 @@
 #include "ISGui.h"
 #include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
+#include "ISTcpConnector.h"
+#include "ISTcpQuery.h"
+//-----------------------------------------------------------------------------
 ISAuthForm::ISAuthForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("InputInSystem"));
@@ -190,10 +193,41 @@ void ISAuthForm::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISAuthForm::Input()
 {
-	if (Check())
+	if (CONFIG_BOOL("Protocol/Use")) //Если используется протокол
 	{
-		SetConnecting(true);
-		AuthConnector->Connect();
+		QString Host = CONFIG_STRING("Protocol/Host");
+		quint16 Port = CONFIG_INT("Protocol/Port");
+		if (ISTcpConnector::Instance().Connect(Host, Port))
+		{
+			ISTcpQuery qAuth(API_AUTH);
+			qAuth.BindValue("Login", EditLogin->GetValue().toString());
+			qAuth.BindValue("Password", EditPassword->GetValue().toString());
+			if (qAuth.Execute())
+			{
+				Port = qAuth.GetAnswer()["Port"].toInt();
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
+			}
+
+			if (!ISTcpConnector::Instance().Reconnect(Host, Port))
+			{
+				ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
+			}
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
+		}
+	}
+	else //Используется классическое подключение
+	{
+		if (Check())
+		{
+			SetConnecting(true);
+			AuthConnector->Connect();
+		}
 	}
 }
 //-----------------------------------------------------------------------------

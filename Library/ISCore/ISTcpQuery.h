@@ -11,7 +11,7 @@ public:
 	~ISTcpQuery();
 
 	QString GetErrorString() const;
-	void BindValue(const QString &ParamterName, const QString &ParameterValue);
+	void BindValue(const QString &ParamterName, const QVariant &ParameterValue);
 	bool Execute(bool Async = false);
 	QVariantMap& GetAnswer();
 

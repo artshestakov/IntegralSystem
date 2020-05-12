@@ -21,7 +21,7 @@ QString ISTcpQuery::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-void ISTcpQuery::BindValue(const QString &ParamterName, const QString &ParameterValue)
+void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &ParameterValue)
 {
 	Parameters.insert(ParamterName, ParameterValue);
 }

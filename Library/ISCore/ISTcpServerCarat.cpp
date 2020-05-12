@@ -5,6 +5,7 @@
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISDefinesCore.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
@@ -34,6 +35,10 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 {
 	ISTcpServerBase::incomingConnection(SocketDescriptor);
 	QTcpSocket *TcpSocket = nextPendingConnection();
+	if (!TcpSocket)
+	{
+		ISLOGGER_E("nextPendingConnection return null QTcpSocket");
+	}
 	connect(TcpSocket, &QTcpSocket::disconnected, TcpSocket, &QTcpSocket::deleteLater);
 
 	QByteArray ByteArray;
@@ -187,17 +192,16 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		}
 	}
 
-	ISTcpAnswer TcpAnswer;
+	
 	QString StringPort = QString::number(Port);
-    bool Started = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort, ISDefines::Core::PATH_APPLICATION_DIR);
-	if (Started)
+	if (!QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort, ISDefines::Core::PATH_APPLICATION_DIR))
 	{
-		TcpAnswer["Port"] = StringPort;
+		SendError(TcpSocket, "Error started worker");
+		return;	
 	}
-	else
-	{
-		TcpAnswer.SetError("Error started worker");
-	}
+
+	ISTcpAnswer TcpAnswer;
+	TcpAnswer["Port"] = StringPort;
 	Send(TcpSocket, TcpAnswer);
 }
 //-----------------------------------------------------------------------------

@@ -20,7 +20,7 @@ protected:
 	void SendError(QTcpSocket *TcpSocket, const QString &ErrorString); //Отправка ошибки
 
 private:
-	void AcceptError(QAbstractSocket::SocketError);
+	void AcceptError(QTcpSocket::SocketError);
 
 private:
 	QString ErrorString;

@@ -13,6 +13,8 @@ public:
 	
 	QString GetErrorString() const;
 	QTcpSocket* GetSocket();
+	bool IsConnected() const;
+	bool Reconnect(const QString &host, quint16 port);
 	bool Connect(const QString &host, quint16 port);
 	void Disconnect();
 	void Error(QTcpSocket::SocketError socket_error);

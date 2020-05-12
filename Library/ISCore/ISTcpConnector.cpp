@@ -30,6 +30,20 @@ QTcpSocket* ISTcpConnector::GetSocket()
 	return TcpSocket;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpConnector::IsConnected() const
+{
+	return TcpSocket->state() == QTcpSocket::ConnectedState;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpConnector::Reconnect(const QString &host, quint16 port)
+{
+	if (IsConnected())
+	{
+		Disconnect();
+	}
+	return Connect(host, port);
+}
+//-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &host, quint16 port)
 {
 	TcpSocket->connectToHost(QHostAddress(host), port);

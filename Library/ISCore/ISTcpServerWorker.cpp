@@ -2,7 +2,6 @@
 #include "ISTcp.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
-#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	: ISTcpServerBase(parent),
@@ -32,7 +31,6 @@ void ISTcpServerWorker::incomingConnection(qintptr SocketDescriptor)
 		TcpSocket = nextPendingConnection();
 		connect(TcpSocket, &QTcpSocket::readyRead, this, &ISTcpServerWorker::ReadyRead);
 		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerWorker::Disconnected);
-		ISLOGGER_I(QString("%1 Connected. Address: %2 Port: %3").arg(serverPort()).arg(TcpSocket->peerAddress().toString()).arg(TcpSocket->peerPort()));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -64,7 +62,6 @@ void ISTcpServerWorker::ReadyRead()
 			QString QueryType = VariantMap["Type"].toString();
 			if (Functions.count(QueryType)) //Если такой запрос существует - выполняем его
 			{
-				ISLOGGER_I(QString::number(serverPort()) + " Executing");
 				Functions[QueryType](*this, VariantMap["Parameters"].toMap(), TcpAnswer);
 			}
 			else //Запрос не существует - отправляем ошибку
@@ -90,7 +87,6 @@ void ISTcpServerWorker::ReadyRead()
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::Disconnected()
 {
-	ISLOGGER_I(QString("%1 Disconnected. Address: %2 Port: %3").arg(serverPort()).arg(TcpSocket->peerAddress().toString()).arg(TcpSocket->peerPort()));
 	TcpSocket->deleteLater();
 	close();
 	QCoreApplication::quit();
