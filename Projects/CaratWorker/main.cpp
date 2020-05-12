@@ -3,12 +3,10 @@
 #include "ISLogger.h"
 #include "ISDatabase.h"
 #include "ISConfig.h"
-#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
 	QCoreApplication Application(argc, argv);
-	ISSleep(30000);
 
 	QString ErrorString;
 	bool Result = ISCore::Startup(false, ErrorString);

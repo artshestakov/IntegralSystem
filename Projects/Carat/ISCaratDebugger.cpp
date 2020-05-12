@@ -24,18 +24,18 @@ ISCaratDebugger::~ISCaratDebugger()
 //-----------------------------------------------------------------------------
 void ISCaratDebugger::ReadyRead()
 {
-	printf("%s\n", LocalSocket->readAll().constData());
+	ISLOGGER_L(LocalSocket->readAll());
 }
 //-----------------------------------------------------------------------------
 void ISCaratDebugger::Disconnected()
 {
-	printf("Carat completed its work\n");
+	ISLOGGER_L("Carat completed its work");
 }
 //-----------------------------------------------------------------------------
 void ISCaratDebugger::Error(QLocalSocket::LocalSocketError ErrorType)
 {
     Q_UNUSED(ErrorType);
-	printf("Error connection: %s\n", LocalSocket->errorString().toStdString().c_str());
+	ISLOGGER_L("Error connection: " + LocalSocket->errorString());
 }
 //-----------------------------------------------------------------------------
 void ISCaratDebugger::StateChanged(QLocalSocket::LocalSocketState NewState)
