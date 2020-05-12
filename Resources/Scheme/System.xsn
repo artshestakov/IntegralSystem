@@ -362,40 +362,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_FastCreateObject" UID="{84585151-0402-4BD2-82F4-813F03DB279A}" Alias="fcob" LocalName="Быстрое создание записи" LocalListName="Быстрое создание записей" TitleName="Table" IsSystem="true">
-    <Fields>
-      <Field UID="{CFF58B31-7458-40CE-B1E2-9E8002E18716}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Автор" LocalListName="Автор" NotNull="true"/>
-      <Field UID="{C29AFC92-21BF-4806-98DF-4001FD8AC321}" Name="Table" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="Table"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-
-  <Table Name="_ExternalTools" UID="{6B4A350D-2CA8-4F12-9D31-F1A8AEFDBB29}" Alias="extl" LocalName="Внешний инструмент" LocalListName="Внешние инструменты" TitleName="LocalName" IsSystem="true">
-    <Fields>
-      <Field UID="{FEFE0A65-B0C5-4EB3-A5AC-B22D0209950F}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Автор" LocalListName="Автор" NotNull="true"/>
-      <Field UID="{582A6DE8-2B32-4890-8419-4F47ACA72D6B}" Name="LocalName" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{1B89F4DF-74D0-4B4E-B330-742A1BCF89AD}" Name="Command" Type="String" LabelName="Команда" LocalListName="Команда" NotNull="true"/>
-      <Field UID="{B2491381-4B47-4F30-9B8A-1026BA195F98}" Name="Icon" Type="ByteArray" LabelName="Иконка" LocalListName="Иконка"/>
-      <Field UID="{268F1925-0C84-49BD-88A4-6359A6ED2CBB}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="LocalName"/>
-      <Index Field="Command"/>
-      <Index Field="Icon"/>
-      <Index Field="User;LocalName"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_KeyboardShortcuts" UID="{F43A1F9C-3497-44C6-9A64-85C95CD94AAD}" Alias="kbsc" ShowOnly="true" LocalName="Сочетание клавиш" LocalListName="Сочетания клавиш" TitleName="Shortcut" IsSystem="true">
     <Fields>
       <Field UID="{448BE945-C1A4-47DE-83F9-AB5F8448D01B}" Name="Shortcut" Type="String" LabelName="Сочетание клавиш" LocalListName="Сочетание клавиш" NotNull="true"/>

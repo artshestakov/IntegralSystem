@@ -369,7 +369,6 @@
   <Local Name="CopyToBuffer" Russian="Копировать в буфер обмена"/>
   <Local Name="SaveToBuffer" Russian="Сохранить в буфер обмена"/>
   <Local Name="Details" Russian="Подробности"/>
-  <Local Name="Addition" Russian="Добавить"/>
   <Local Name="File" Russian="Файл"/>
   <Local Name="Help" Russian="Помощь"/>
   <Local Name="Setting" Russian="Настройка"/>
@@ -413,7 +412,6 @@
   <Local Name="FileName" Russian="Имя файла"/>
   <Local Name="Text" Russian="Текст"/>
   <Local Name="StartCommand" Russian="Запуск команды"/>
-  <Local Name="Command" Russian="Команда"/>
   <Local Name="TimeWork" Russian="Время работы"/>
   <Local Name="Overview" Russian="Обзор..."/>
   <Local Name="Hide" Russian="Скрыть"/>

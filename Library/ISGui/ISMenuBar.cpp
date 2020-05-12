@@ -5,13 +5,10 @@
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISSettings.h"
-#include "ISMenuFastAccess.h"
 #include "ISParagraphEntity.h"
 //-----------------------------------------------------------------------------
 ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 {
-	CurrentButton = nullptr;
-
 	setAutoFillBackground(true);
 
 	QPalette Palette(palette());
@@ -31,11 +28,6 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 
 	ButtonNotify = new ISButtonNotify(this);
 	MainLayout->addWidget(ButtonNotify);
-
-	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_MENUFASTACCESS))
-	{
-		CreateFastAccessMenu();
-	}
 
 	CreateMenuFile();
 	CreateMenuService();
@@ -78,29 +70,6 @@ void ISMenuBar::ButtonParagraphClicked(const ISUuid &ClickedParagraphUID)
 ISButtonNotify* ISMenuBar::GetbuttonNotify()
 {
 	return ButtonNotify;
-}
-//-----------------------------------------------------------------------------
-void ISMenuBar::CreateFastAccessMenu()
-{
-	QIcon Icon = BUFFER_ICONS("MainPanel.FastAccess");
-	Icon.addPixmap(BUFFER_ICONS("MainPanel.FastAccess.Active").pixmap(ISDefines::Gui::SIZE_24_24), QIcon::Active);
-
-	QToolButton *ButtonFastMenu = new QToolButton(this);
-	ButtonFastMenu->setText(LANG("FastAccess"));
-	ButtonFastMenu->setFont(ISDefines::Gui::FONT_TAHOMA_10);
-	ButtonFastMenu->setAutoRaise(true);
-	ButtonFastMenu->setIcon(Icon);
-	ButtonFastMenu->setIconSize(ISDefines::Gui::SIZE_25_25);
-	ButtonFastMenu->setCursor(CURSOR_POINTING_HAND);
-	ButtonFastMenu->setPopupMode(QToolButton::InstantPopup);
-	ButtonFastMenu->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	ButtonFastMenu->setStyleSheet(STYLE_SHEET("QToolButtonMainMenu"));
-	MainLayout->addWidget(ButtonFastMenu);
-
-	ISMenuFastAccess *MenuFastAccess = new ISMenuFastAccess(ButtonFastMenu);
-	connect(MenuFastAccess, &ISMenuFastAccess::CreateRecords, this, &ISMenuBar::CreateRecords);
-	connect(MenuFastAccess, &ISMenuFastAccess::ExternalTools, this, &ISMenuBar::ExternalTools);
-	ButtonFastMenu->setMenu(MenuFastAccess);
 }
 //-----------------------------------------------------------------------------
 void ISMenuBar::CreateMenuFile()

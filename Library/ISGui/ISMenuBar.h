@@ -11,8 +11,6 @@ class ISMenuBar : public QWidget
 	Q_OBJECT
 
 signals:
-	void CreateRecords();
-	void ExternalTools();
 	void ParagraphClicked(const ISUuid &ParagraphUID);
 	void ChangeUser();
 	void Exit();
@@ -37,7 +35,6 @@ public:
 	ISButtonNotify* GetbuttonNotify(); //Получить указатель на кнопку уведомлений
 
 protected:
-	void CreateFastAccessMenu(); //Создание быстрого доступа
 	void CreateMenuFile(); //Создание меню "Файл"
 	void CreateMenuService(); //Создание меню "Сервис"
 	void CreateMenuAddition(); //Создание меню "Утилиты"
@@ -62,7 +59,6 @@ private:
 	ISButtonMainMenu *ButtonMenu;
 	ISMainMenu *MainMenu;
 	ISButtonNotify *ButtonNotify;
-	QAbstractButton *CurrentButton;
 
 	QMap<ISUuid, ISParagraphButton*> ParagraphButtons;
 };

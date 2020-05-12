@@ -522,9 +522,6 @@
     <ClCompile Include="ISDictionaryWord.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISFastAccessEntity.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISFavorites.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -628,12 +625,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISEditObjectListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISExternalToolsForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISFastCreateObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISFavoritesForm.cpp">
@@ -901,9 +892,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISMenuBar.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMenuFastAccess.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISMonitorUserWidget.cpp">
@@ -1367,12 +1355,6 @@
     <QtMoc Include="ISEditObjectListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISExternalToolsForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISFastCreateObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISFavoritesForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -1640,9 +1622,6 @@
     <QtMoc Include="ISMenuBar.h">
       <Filter>Controls</Filter>
     </QtMoc>
-    <QtMoc Include="ISMenuFastAccess.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
     <QtMoc Include="ISMonitorUserWidget.h">
       <Filter>Controls</Filter>
     </QtMoc>
@@ -1733,9 +1712,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDictionaryWord.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISFastAccessEntity.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISFavorites.h">

@@ -10,7 +10,6 @@
 #include "ISColumnSizer.h"
 #include "ISUserRoleEntity.h"
 #include "ISSettingsDatabase.h"
-#include "ISFastAccessEntity.h"
 #include "ISSettings.h"
 #include "ISProtocol.h"
 #include "ISGui.h"
@@ -113,12 +112,6 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 
 	//Инициализация параграфов
 	ISParagraphEntity::GetInstance();
-
-	//Инициализация внешних инструментов
-	ISFastAccessEntity::GetInstance().LoadExternalTools();
-
-	//Инициализация создания записей
-	ISFastAccessEntity::GetInstance().LoadCreateRecords();
 
 	//Иницилазация устройств
 	ISDeviceEntity::GetInstance().Initialize();

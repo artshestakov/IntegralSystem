@@ -18,8 +18,6 @@
 #include "ISAssert.h"
 #include "ISConstants.h"
 #include "ISHistoryForm.h"
-#include "ISFastCreateObjectForm.h"
-#include "ISExternalToolsForm.h"
 #include "ISParagraphEntity.h"
 #include "ISNotifyRecipient.h"
 #include "ISNotifySender.h"
@@ -119,8 +117,6 @@ void ISMainWindow::CreateMenuBar()
 {
 	MenuBar = new ISMenuBar(this);
 	connect(MenuBar, &ISMenuBar::ParagraphClicked, this, &ISMainWindow::ParagraphClicked);
-	connect(MenuBar, &ISMenuBar::CreateRecords, this, &ISMainWindow::ShowCreateRecords);
-	connect(MenuBar, &ISMenuBar::ExternalTools, this, &ISMainWindow::ShowExternalTools);
 	connect(MenuBar, &ISMenuBar::ChangeUser, this, &ISMainWindow::ChangeUser);
 	connect(MenuBar, &ISMenuBar::Exit, this, &ISMainWindow::close);
 	connect(MenuBar, &ISMenuBar::Favorites, this, &ISMainWindow::ShowFavoritesForm);
@@ -176,16 +172,6 @@ void ISMainWindow::CreateStatusBar()
 		StatusBar->setVisible(false);
 		GetMainLayout()->addWidget(StatusBar);
 	}
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowCreateRecords()
-{
-	ISFastCreateRecordsForm().Exec();
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowExternalTools()
-{
-	ISExternalToolsForm().Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)

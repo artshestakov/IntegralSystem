@@ -86,7 +86,6 @@
   <Local Name="Message.Error.Unload.TemplateFileNotCopy" Russian="Не удалось скопировать файл шаблона."/>
   <Local Name="Message.Error.DeleteFileLastLogins" Russian="Не удалось очистить список."/>
   <Local Name="Message.Error.FileNameNotFound" Russian="Имя файла не указано."/>
-  <Local Name="Message.Error.NotFoundFile" Russian="Файл &quot;%1&quot; не найден."/>
   <Local Name="Message.Error.NotOpenedFile" Russian="Не удалось открыть файл &quot;%1&quot;."/>
   <Local Name="Message.Error.ErrorInsertFileToStorage" Russian="Не удалось добавить файл &quot;%1&quot; в хранилище."/>
   <Local Name="Message.Error.ErrorOpenedFolderPath" Russian="Не удалось открыть директорию &quot;%1&quot;."/>
@@ -153,10 +152,6 @@
   <Local Name="Message.Warning.FileNameIsNull" Russian="Вы не ввели имя файла."/>
   <Local Name="Message.Warning.ChatImageSizeConstraint" Russian="Ограничение на размер загружаемого изображения - 5 мегабайт."/>
   <Local Name="Message.Warning.ChatFileSizeConstraint" Russian="Ограничение на размер загружаемого файла - 15 мегабайт."/>
-  <Local Name="Message.Warning.SelectNamedTools" Russian="Укажите наименование инструмента!"/>
-  <Local Name="Message.Warning.SelectCommandTools" Russian="Укажите действительный исполняемый файл этого инструмента!"/>
-  <Local Name="Message.Warning.NotStartedExternalTool" Russian="Не удалось запустить инструмент &quot;%1&quot;."/>
-  <Local Name="Message.Warning.TableAlreadyExistList" Russian="Таблица &quot;%1&quot; уже есть в списке!"/>
   <Local Name="Message.Warning.NotifyNotInserted" Russian="Не удалось добавить напоминание!"/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
   <Local Name="Message.Warning.AccountLifetimeNotStarted" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи ещё не начался."/>
@@ -448,13 +443,8 @@
   <Local Name="MyEventsFromCurrentWeek" Russian="Мои события на этой недели"/>
   <Local Name="InputInSystem" Russian="Вход в систему"/>
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
-  <Local Name="FastAccess" Russian="Быстрый доступ"/>
   <Local Name="FastAccessSettings" Russian="Настройки быстрого доступа"/>
-  <Local Name="ExternalTools" Russian="Внешние инструменты"/>
-  <Local Name="MenuStructure" Russian="Состав меню"/>
   <Local Name="Add" Russian="Добавить"/>
-  <Local Name="NewTools" Russian="Новый инструмент"/>
-  <Local Name="CreateRecords" Russian="Создание записей"/>
   <Local Name="CreateRecord" Russian="Создать запись"/>
   <Local Name="CopyText" Russian="Копировать текст"/>
   <Local Name="Continue" Russian="Продолжить"/>

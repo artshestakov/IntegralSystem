@@ -97,14 +97,6 @@ struct ISCORE_EXPORT ISMetaSettingsGroup
     QVector<ISMetaSetting*> Settings;
 };
 //-----------------------------------------------------------------------------
-struct ISMetaExternalTool
-{
-    QString LocalName;
-    QString Command;
-    ISUuid UID;
-    QIcon Icon;
-};
-//-----------------------------------------------------------------------------
 struct ISMetaParagraph
 {
     ISMetaParagraph(const ISUuid &uid, const QString &name, const QString &local_name, const QString &tool_tip, const QString &icon, const QString &class_name, bool _default)

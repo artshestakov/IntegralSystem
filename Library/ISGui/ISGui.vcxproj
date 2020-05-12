@@ -181,9 +181,6 @@
     <ClCompile Include="ISExportHTML.cpp" />
     <ClCompile Include="ISExportWorker.cpp" />
     <ClCompile Include="ISExportXML.cpp" />
-    <ClCompile Include="ISExternalToolsForm.cpp" />
-    <ClCompile Include="ISFastAccessEntity.cpp" />
-    <ClCompile Include="ISFastCreateObjectForm.cpp" />
     <ClCompile Include="ISFavorites.cpp" />
     <ClCompile Include="ISFavoritesForm.cpp" />
     <ClCompile Include="ISFieldEditBase.cpp" />
@@ -231,7 +228,6 @@
     <ClCompile Include="ISMediaPlayer.cpp" />
     <ClCompile Include="ISMedTech.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
-    <ClCompile Include="ISMenuFastAccess.cpp" />
     <ClCompile Include="ISMessageBox.cpp" />
     <ClCompile Include="ISMetaSystemsEntity.cpp" />
     <ClCompile Include="ISModelThreadQuery.cpp" />
@@ -485,8 +481,6 @@
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISDiscussionObjectForm.h" />
     <QtMoc Include="ISEditObjectListForm.h" />
-    <QtMoc Include="ISExternalToolsForm.h" />
-    <QtMoc Include="ISFastCreateObjectForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
     <QtMoc Include="ISFullTextSearchForm.h" />
     <QtMoc Include="ISHistoryForm.h" />
@@ -574,7 +568,6 @@
     <QtMoc Include="ISListWidget.h" />
     <QtMoc Include="ISMainMenu.h" />
     <QtMoc Include="ISMenuBar.h" />
-    <QtMoc Include="ISMenuFastAccess.h" />
     <QtMoc Include="ISMonitorUserWidget.h" />
     <QtMoc Include="ISNotifyWidgetItem.h" />
     <QtMoc Include="ISPageNavigation.h" />
@@ -645,7 +638,6 @@
     <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesGui.h" />
     <ClInclude Include="ISDictionaryWord.h" />
-    <ClInclude Include="ISFastAccessEntity.h" />
     <ClInclude Include="ISFavorites.h" />
     <ClInclude Include="ISGui.h" />
     <ClInclude Include="ISHTML.h" />

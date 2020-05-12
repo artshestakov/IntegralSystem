@@ -33,8 +33,6 @@ protected:
 	void CreateStackWidget(); //Создание начальной страницы и рабочей области
 	void CreateStatusBar(); //Создание статус-бара
 
-	void ShowCreateRecords(); //Показать форму настроек быстрого создания записей
-	void ShowExternalTools(); //Показать форму настроек быстрого доступа
 	void ParagraphClicked(const ISUuid &ParagraphUID); //Событие нажатия на кнопку-параграф
 	
 	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
