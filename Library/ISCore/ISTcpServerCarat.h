@@ -12,8 +12,13 @@ public:
 	ISTcpServerCarat(QObject *parent = 0);
 	virtual ~ISTcpServerCarat();
 
+	bool Run(quint16 Port) override;
+
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
+
+private:
+	QLocalServer *ServerController;
 };
 //-----------------------------------------------------------------------------
 

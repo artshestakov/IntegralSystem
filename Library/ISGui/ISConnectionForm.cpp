@@ -46,6 +46,10 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 	EditProtocolUse->SetValue(CONFIG_BOOL("Protocol/Use"));
 	FormLayout->addRow("Use", EditProtocolUse);
 
+	EditProtocolAuth = new ISCheckEdit(this);
+	EditProtocolAuth->SetValue(CONFIG_BOOL("Protocol/Auth"));
+	FormLayout->addRow("Auth", EditProtocolAuth);
+
 	EditProtocolHost = new ISLineEdit(this);
 	EditProtocolHost->SetValue(CONFIG_STRING("Protocol/Host"));
 	FormLayout->addRow("Host", EditProtocolHost);
@@ -84,6 +88,7 @@ void ISConnectionForm::SaveSettings()
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Use", EditProtocolUse->GetValue());
+		ISConfig::Instance().SetValue("Protocol/Auth", EditProtocolAuth->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Host", EditProtocolHost->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Port", EditProtocolPort->GetValue());
 		close();

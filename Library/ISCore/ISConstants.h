@@ -187,7 +187,9 @@ const int		CARAT_DEBUGGER_MAX_CLIENTS = 1; //Максимальное количество клиентов дл
 const int		CARAT_DEBUGGER_CONNECT_TIMEOUT = 2000; //Таймаут попытки подключения к карату в режиме отладчика
 const int		CARAT_TIMEOUT_CONNECT = 5000; //Таймаут ожидания принятия подключения
 const int		CARAT_TIMEOUT_INCOMING_QUERY = 5000; //Таймаут ожидания входящего запроса от клиента
+const int		CARAT_TIMEOUT_STARTED_WORKER = 5000; //Таймаут ожидания запуска воркера
 const quint16	CARAT_DEFAULT_PORT = 50000; //Стандартный порт
+const char		CARAT_CONTROLLER_PORT[] = "{9C3430ED-17E2-49C6-AD58-83140981C3C5}"; //Порт для контроллера воркеров
 //-----------------------------------------------------------------------------
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_TEST_QUERY[] = "TestQuery"; //Тестовый запрос

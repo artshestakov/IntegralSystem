@@ -23,7 +23,9 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN pg_shadow ON usename = usrs_login "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
-ISTcpServerCarat::ISTcpServerCarat(QObject *parent) : ISTcpServerBase(parent)
+ISTcpServerCarat::ISTcpServerCarat(QObject *parent)
+	: ISTcpServerBase(parent),
+	ServerController(nullptr)
 {
 	
 }
@@ -31,6 +33,23 @@ ISTcpServerCarat::ISTcpServerCarat(QObject *parent) : ISTcpServerBase(parent)
 ISTcpServerCarat::~ISTcpServerCarat()
 {
 	
+}
+//-----------------------------------------------------------------------------
+bool ISTcpServerCarat::Run(quint16 Port)
+{
+	//Запуск локального сервера для контроля воркеров
+	ServerController = new QLocalServer(this);
+	ServerController->setMaxPendingConnections(1);
+	bool Result = ServerController->listen(CARAT_CONTROLLER_PORT);
+	if (Result)
+	{
+		Result = ISTcpServerBase::Run(Port);
+	}
+	else
+	{
+		SetErrorString(ServerController->errorString());
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
@@ -205,13 +224,21 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		}
 	}
 
+	//Запуск воркера
 	QString StringPort = QString::number(Port);
-	if (!QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort << Login << Password, ISDefines::Core::PATH_APPLICATION_DIR))
+	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort << Login << Password, ISDefines::Core::PATH_APPLICATION_DIR);
+	if (Result)
 	{
-		SendError(TcpSocket, "Error started worker");
-		return;	
+		Result = ServerController->waitForNewConnection(CARAT_TIMEOUT_STARTED_WORKER); //Ожидаем подтверждение запуска от воркера
+	}
+	
+	if (!Result) //Не удалось запустить воркер
+	{
+		SendError(TcpSocket, "Message.Error.StartedWorker");
+		return;
 	}
 
+	//Формируем ответ с портом и отправляем его
 	ISTcpAnswer TcpAnswer;
 	TcpAnswer["Port"] = StringPort;
 	Send(TcpSocket, TcpAnswer);

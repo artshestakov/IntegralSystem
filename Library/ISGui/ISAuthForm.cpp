@@ -233,24 +233,25 @@ void ISAuthForm::ConnectedDone()
 			quint16 Port = CONFIG_INT("Protocol/Port");
 			if (ISTcpConnector::Instance().Connect(Host, Port))
 			{
-#ifndef DEBUG
-				ISTcpQuery qAuth(API_AUTH);
-				qAuth.BindValue("Login", EditLogin->GetValue().toString());
-				qAuth.BindValue("Password", EditPassword->GetValue().toString());
-				if (qAuth.Execute())
+				if (CONFIG_BOOL("Protocol/Auth"))
 				{
-					Port = qAuth.GetAnswer()["Port"].toInt();
-				}
-				else
-				{
-					ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
-				}
+					ISTcpQuery qAuth(API_AUTH);
+					qAuth.BindValue("Login", EditLogin->GetValue().toString());
+					qAuth.BindValue("Password", EditPassword->GetValue().toString());
+					if (qAuth.Execute())
+					{
+						Port = qAuth.GetAnswer()["Port"].toInt();
+					}
+					else
+					{
+						ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
+					}
 
-				if (!ISTcpConnector::Instance().Reconnect(Host, Port))
-				{
-					ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
+					if (!ISTcpConnector::Instance().Reconnect(Host, Port))
+					{
+						ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
+					}
 				}
-#endif
 			}
 			else
 			{

@@ -35,6 +35,11 @@ bool ISTcpServerBase::Run(quint16 Port)
 	return Result;
 }
 //-----------------------------------------------------------------------------
+void ISTcpServerBase::SetErrorString(const QString &error_string)
+{
+	ErrorString = error_string;
+}
+//-----------------------------------------------------------------------------
 void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 {
 	//Если сокет все ещё подключен - отправляем

@@ -14,6 +14,8 @@ public:
 	ISTcpServerWorker(QObject *parent = 0);
 	virtual ~ISTcpServerWorker();
 
+	bool Run(quint16 Port) override;
+
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
 

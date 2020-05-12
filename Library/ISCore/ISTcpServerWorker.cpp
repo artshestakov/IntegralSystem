@@ -23,6 +23,27 @@ ISTcpServerWorker::~ISTcpServerWorker()
 	
 }
 //-----------------------------------------------------------------------------
+bool ISTcpServerWorker::Run(quint16 Port)
+{
+	bool Result = ISTcpServerBase::Run(Port);
+	if (Result) //Базовый сокет запустился
+	{
+		//Пытаемся подключиться к карату и сообщить что запуск воркера произошёл
+		QLocalSocket LocalSocket;
+		LocalSocket.connectToServer(CARAT_CONTROLLER_PORT, QIODevice::WriteOnly);
+		Result = LocalSocket.waitForConnected();
+		if (Result) //Подключение к карату есть - отключаемся
+		{
+			LocalSocket.disconnectFromServer();
+		}
+		else //Подключиться к карату не удалось - ошибка
+		{
+			SetErrorString("Error connecting to carat: " + LocalSocket.errorString());
+		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
 void ISTcpServerWorker::incomingConnection(qintptr SocketDescriptor)
 {
 	ISTcpServerBase::incomingConnection(SocketDescriptor);

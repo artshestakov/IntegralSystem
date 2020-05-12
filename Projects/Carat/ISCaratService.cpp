@@ -77,6 +77,7 @@ void ISCaratService::StartService()
 		}
 	}
 
+	//«апуск локального сервера дл€ отладки
 	LocalServer = new QLocalServer(this);
 	LocalServer->setMaxPendingConnections(CARAT_DEBUGGER_MAX_CLIENTS);
 	if (LocalServer->listen(CARAT_DEBUGGER_PORT))
@@ -85,7 +86,7 @@ void ISCaratService::StartService()
 	}
 	else
 	{
-        ISLOGGER_W("Not listen port for local server: " + LocalServer->errorString());
+        ISLOGGER_W("Error listen port for local server: " + LocalServer->errorString());
 	}
 
 	TcpServer = new ISTcpServerCarat(this);

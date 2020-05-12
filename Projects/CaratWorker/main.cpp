@@ -3,11 +3,13 @@
 #include "ISLogger.h"
 #include "ISDatabase.h"
 #include "ISConfig.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
 	QCoreApplication Application(argc, argv);
-	
+	ISSleep(30000);
+
 	QString ErrorString;
 	bool Result = ISCore::Startup(false, ErrorString);
 	if (!Result)
@@ -32,11 +34,11 @@ int main(int argc, char *argv[])
 
 			ISTcpServerWorker TcpServerWorker;
 			Result = TcpServerWorker.Run(static_cast<quint16>(Port));
-			if (Result) //Не удалось запустить сервер
+			if (Result) //Сервер запущен - сообщаем об этом карату
 			{
 				Result = Application.exec() == EXIT_SUCCESS ? true : false;
 			}
-			else
+			else //Не удалось запустить сервер
 			{
 				ISLOGGER_E(TcpServerWorker.GetErrorString());
 			}
