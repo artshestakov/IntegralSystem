@@ -1,6 +1,7 @@
 #include "ISTcpServerWorker.h"
 #include "ISCore.h"
 #include "ISLogger.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,13 @@ int main(int argc, char *argv[])
 	if (!Result)
 	{
 		ISLOGGER_E(ErrorString);
+		return EXIT_FAILURE;
+	}
+
+	Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT, "127.0.0.1", 5432, "oilsphere_db", "postgres", "adm777");
+	if (!Result)
+	{
+		ISLOGGER_E(ISDatabase::Instance().GetErrorString());
 		return EXIT_FAILURE;
 	}
 

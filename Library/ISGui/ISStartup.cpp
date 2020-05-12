@@ -25,6 +25,7 @@
 #include "ISObjects.h"
 #include "ISQueryPool.h"
 #include "ISProperty.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_CHECK = PREPARE_QUERY("SELECT "
 											 "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
@@ -37,10 +38,15 @@ static QString QS_LOCAL_NAME = PREPARE_QUERY("SELECT lcnm_tablename, lcnm_fieldn
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
+	bool UseProtocol = CONFIG_BOOL("Protocol/Use");
+
 	//Проверка всех запросов
-	if (!ISQueryText::Instance().CheckAllQueries())
+	if (!UseProtocol)
 	{
-		return false;
+		if (!ISQueryText::Instance().CheckAllQueries())
+		{
+			return false;
+		}
 	}
 
 	ISObjects::GetInstance().Initialize();
@@ -90,7 +96,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	ISSortingBuffer::Instance();
 
 	//Инициализация размеров колонок
-	if (!ISColumnSizer::Instance().Initialize())
+	if (!ISColumnSizer::Instance().Initialize(UseProtocol))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
 		return false;

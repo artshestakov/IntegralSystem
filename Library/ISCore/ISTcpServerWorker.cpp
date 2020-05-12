@@ -2,6 +2,11 @@
 #include "ISTcp.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
+#include "ISQuery.h"
+//-----------------------------------------------------------------------------
+static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
+											  "FROM _columnsize "
+											  "WHERE clsz_user = currentuserid()");
 //-----------------------------------------------------------------------------
 ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	: ISTcpServerBase(parent),
@@ -10,6 +15,7 @@ ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 {
 	Functions[API_TEST_QUERY] = std::mem_fn(&ISTcpServerWorker::TestQuery);
 	Functions[API_SLEEP] = std::mem_fn(&ISTcpServerWorker::Sleep);
+	Functions[API_COLUMN_SIZER] = std::mem_fn(&ISTcpServerWorker::ColumnSizer);
 }
 //-----------------------------------------------------------------------------
 ISTcpServerWorker::~ISTcpServerWorker()
@@ -138,6 +144,29 @@ void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAns
 	else
 	{
 		TcpAnswer.SetError("Invalid value msec");
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerWorker::ColumnSizer(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
+{
+	ISQuery qSelect(QS_COLUMN_SIZE);
+	if (qSelect.Execute())
+	{
+		QVariantList Tables;
+		while (qSelect.Next())
+		{
+			Tables.push_back(QVariantMap
+			{
+				{ "TableName", qSelect.ReadColumn("clsz_tablename") },
+				{ "FieldName", qSelect.ReadColumn("clsz_fieldname") },
+				{ "Size", qSelect.ReadColumn("clsz_size") }
+			});
+		}
+		TcpAnswer["Tables"] = Tables;
+	}
+	else
+	{
+		TcpAnswer.SetError(qSelect.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

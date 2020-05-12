@@ -1,6 +1,7 @@
 #include "ISColumnSizer.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
@@ -49,32 +50,66 @@ QString ISColumnSizer::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISColumnSizer::Initialize()
+bool ISColumnSizer::Initialize(bool UseProtocol)
 {
-	ISQuery qSelect(QS_COLUMN_SIZE);
-	bool Result = qSelect.Execute();
-	if (Result)
+	bool Result = true;
+	if (UseProtocol)
 	{
-		while (qSelect.Next())
+		ISTcpQuery qColumnSizer(API_COLUMN_SIZER);
+		Result = qColumnSizer.Execute();
+		if (Result)
 		{
-			QString TableName = qSelect.ReadColumn("clsz_tablename").toString();
-			QString FieldName = qSelect.ReadColumn("clsz_fieldname").toString();
-			int FieldSize = qSelect.ReadColumn("clsz_size").toInt();
-			if (Tables.count(TableName))
+			QVariantList TableList = qColumnSizer.GetAnswer()["Tables"].toList();
+			for (const QVariant &Table : TableList)
 			{
-				Tables[TableName]->Fields[FieldName] = FieldSize;
+				QVariantMap VariantMap = Table.toMap();
+				QString TableName = VariantMap["TableName"].toString();
+				QString FieldName = VariantMap["FieldName"].toString();
+				int Size = VariantMap["Size"].toInt();
+				if (Tables.count(TableName))
+				{
+					Tables[TableName]->Fields[FieldName] = Size;
+				}
+				else
+				{
+					ISColumnSizeItem *ColumnSizeItem = new ISColumnSizeItem();
+					ColumnSizeItem->Fields[FieldName] = Size;
+					Tables.emplace(TableName, ColumnSizeItem);
+				}
 			}
-			else
-			{
-				ISColumnSizeItem *ColumnSizeItem = new ISColumnSizeItem();
-				ColumnSizeItem->Fields[FieldName] = FieldSize;
-				Tables.emplace(TableName, ColumnSizeItem);
-			}
+		}
+		else
+		{
+			ErrorString = qColumnSizer.GetErrorString();
 		}
 	}
 	else
 	{
-		ErrorString = qSelect.GetErrorString();
+		ISQuery qSelect(QS_COLUMN_SIZE);
+		bool Result = qSelect.Execute();
+		if (Result)
+		{
+			while (qSelect.Next())
+			{
+				QString TableName = qSelect.ReadColumn("clsz_tablename").toString();
+				QString FieldName = qSelect.ReadColumn("clsz_fieldname").toString();
+				int FieldSize = qSelect.ReadColumn("clsz_size").toInt();
+				if (Tables.count(TableName))
+				{
+					Tables[TableName]->Fields[FieldName] = FieldSize;
+				}
+				else
+				{
+					ISColumnSizeItem *ColumnSizeItem = new ISColumnSizeItem();
+					ColumnSizeItem->Fields[FieldName] = FieldSize;
+					Tables.emplace(TableName, ColumnSizeItem);
+				}
+			}
+		}
+		else
+		{
+			ErrorString = qSelect.GetErrorString();
+		}
 	}
 	return Result;
 }
