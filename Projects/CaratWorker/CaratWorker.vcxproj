@@ -67,7 +67,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISCore\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Library\ISCore\;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -75,7 +75,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib</AdditionalDependencies>
+      <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Sqld.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

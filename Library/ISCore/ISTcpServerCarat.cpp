@@ -206,7 +206,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	}
 
 	QString StringPort = QString::number(Port);
-	if (!QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort, ISDefines::Core::PATH_APPLICATION_DIR))
+	if (!QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort << Login << Password, ISDefines::Core::PATH_APPLICATION_DIR))
 	{
 		SendError(TcpSocket, "Error started worker");
 		return;	

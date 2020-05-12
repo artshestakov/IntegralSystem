@@ -2,6 +2,7 @@
 #include "ISCore.h"
 #include "ISLogger.h"
 #include "ISDatabase.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -15,20 +16,20 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT, "127.0.0.1", 5432, "oilsphere_db", "postgres", "adm777");
-	if (!Result)
-	{
-		ISLOGGER_E(ISDatabase::Instance().GetErrorString());
-		return EXIT_FAILURE;
-	}
-
-	Result = argc == 2;
-	if (Result) //Порт указан
+	Result = argc == 4;
+	if (Result) //Порт указан, логин и пароль указаны
 	{
 		int Port = std::atoi(argv[1]);
 		Result = Port > 0;
 		if (Result) //Порт валидный
 		{
+			Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT, CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), argv[2], argv[3]);
+			if (!Result)
+			{
+				ISLOGGER_E(ISDatabase::Instance().GetErrorString());
+				return EXIT_FAILURE;
+			}
+
 			ISTcpServerWorker TcpServerWorker;
 			Result = TcpServerWorker.Run(static_cast<quint16>(Port));
 			if (Result) //Не удалось запустить сервер
