@@ -6,6 +6,8 @@
 #include "ISSystem.h"
 #include "ISDefinesCore.h"
 #include "ISLogger.h"
+#include "ISDatabase.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
@@ -179,6 +181,17 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 			return;
 		}
 	}
+	
+	//Проверка соединения с БД по логину и паролю
+	if (ISDatabase::Instance().Connect(CONNECTION_USER, CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), Login, Password))
+	{
+		ISDatabase::Instance().Disconnect(CONNECTION_USER);
+	}
+	else //Если соединение к БД произошло с ошибкой
+	{
+		SendError(TcpSocket, ISDatabase::Instance().GetErrorString());
+		return;
+	}
 
 	//Ищем свободный порт
 	QTcpServer TcpServer;
@@ -192,7 +205,6 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		}
 	}
 
-	
 	QString StringPort = QString::number(Port);
 	if (!QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort, ISDefines::Core::PATH_APPLICATION_DIR))
 	{

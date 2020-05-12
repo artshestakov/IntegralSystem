@@ -142,6 +142,7 @@ const char AMI_ORIGINATE_RESPONSE[] = "OriginateResponse";
 const char AMI_EXTENSION_STATUS[] = "ExtensionStatus";
 //DATABASE_CONNECTIONS---------------------------------------------------------
 const char CONNECTION_DEFAULT[] = "DefaultDB";
+const char CONNECTION_USER[] = "UserDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_PATTERN_ACITIVITY[] = "PatternActivityDB";
 const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearchDB";
