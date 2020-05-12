@@ -204,39 +204,7 @@ void ISAuthForm::Input()
 	if (Check())
 	{
 		SetConnecting(true);
-		if (CONFIG_BOOL("Protocol/Use")) //Если используется протокол
-		{
-			QString Host = CONFIG_STRING("Protocol/Host");
-			quint16 Port = CONFIG_INT("Protocol/Port");
-			if (ISTcpConnector::Instance().Connect(Host, Port))
-			{
-				ISTcpQuery qAuth(API_AUTH);
-				qAuth.BindValue("Login", EditLogin->GetValue().toString());
-				qAuth.BindValue("Password", EditPassword->GetValue().toString());
-				if (qAuth.Execute())
-				{
-					Port = qAuth.GetAnswer()["Port"].toInt();
-				}
-				else
-				{
-					ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
-				}
-
-				if (!ISTcpConnector::Instance().Reconnect(Host, Port))
-				{
-					ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
-				}
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
-			}
-			SetConnecting(false);
-		}
-		else //Используется классическое подключение
-		{
-			AuthConnector->Connect();
-		}
+		AuthConnector->Connect();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -258,6 +226,39 @@ void ISAuthForm::ConnectedDone()
 		SetResult(true);
 		ISMetaUser::Instance().UserData->Login = EditLogin->GetValue().toString();
 		ISMetaUser::Instance().UserData->Password = EditPassword->GetValue().toString();
+
+		if (CONFIG_BOOL("Protocol/Use")) //Если используется протокол
+		{
+			QString Host = CONFIG_STRING("Protocol/Host");
+			quint16 Port = CONFIG_INT("Protocol/Port");
+			if (ISTcpConnector::Instance().Connect(Host, Port))
+			{
+#ifndef DEBUG
+				ISTcpQuery qAuth(API_AUTH);
+				qAuth.BindValue("Login", EditLogin->GetValue().toString());
+				qAuth.BindValue("Password", EditPassword->GetValue().toString());
+				if (qAuth.Execute())
+				{
+					Port = qAuth.GetAnswer()["Port"].toInt();
+				}
+				else
+				{
+					ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
+				}
+
+				if (!ISTcpConnector::Instance().Reconnect(Host, Port))
+				{
+					ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
+				}
+#endif
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
+			}
+			SetConnecting(false);
+		}
+
 		close();
 	}
 	else //Ошибка подключения к базе данных

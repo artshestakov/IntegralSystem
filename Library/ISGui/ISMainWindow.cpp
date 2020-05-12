@@ -33,7 +33,7 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	setAttribute(Qt::WA_DeleteOnClose, false);
-	setWindowIcon(BUFFER_PIXMAPS("Logo"));
+	setWindowIcon(BUFFER_ICONS("Logo"));
 	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::GetInstance().GetInfo().LocalName).arg(ISMetaUser::Instance().UserData->FullName));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
 	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);

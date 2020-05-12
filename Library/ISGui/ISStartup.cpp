@@ -68,7 +68,6 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 
 	//«агрузка мета-данных о пользователе
 	ISMetaUser::Instance().Initialize();
-
 	if (!IsValidUser(SplashScreen))
 	{
 		return false;
