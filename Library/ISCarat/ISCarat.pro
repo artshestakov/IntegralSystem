@@ -4,7 +4,7 @@ QT -= gui
 TARGET = ISCarat
 TEMPLATE = lib
 CONFIG += c++11
-DEFINES += ISCORE_LIBRARY
+DEFINES += ISCARAT_LIBRARY
 
 CONFIG(debug, debug|release){
     CONFIGURATION = Debug

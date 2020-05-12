@@ -26,7 +26,7 @@ void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &Paramete
 	Parameters.insert(ParamterName, ParameterValue);
 }
 //-----------------------------------------------------------------------------
-bool ISTcpQuery::Execute(bool Async)
+bool ISTcpQuery::Execute()
 {
 	//Формируем запрос
 	QString String = ISSystem::VariantMapToJsonString(

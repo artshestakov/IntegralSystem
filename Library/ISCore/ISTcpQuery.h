@@ -12,7 +12,7 @@ public:
 
 	QString GetErrorString() const;
 	void BindValue(const QString &ParamterName, const QVariant &ParameterValue);
-	bool Execute(bool Async = false);
+	bool Execute();
 	QVariantMap& GetAnswer();
 
 private:
