@@ -8,6 +8,7 @@
 #include "ISLogger.h"
 #include "ISDatabase.h"
 #include "ISConfig.h"
+#include "ISNetwork.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
@@ -56,11 +57,16 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 {
 	ISTcpServerBase::incomingConnection(SocketDescriptor);
 	QTcpSocket *TcpSocket = nextPendingConnection();
-	if (!TcpSocket)
+	if (TcpSocket)
+	{
+		ISLOGGER_I(QString("Incoming auth from ") + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
+		connect(TcpSocket, &QTcpSocket::disconnected, TcpSocket, &QTcpSocket::deleteLater);
+	}
+	else
 	{
 		ISLOGGER_E("nextPendingConnection return null QTcpSocket");
+		return;
 	}
-	connect(TcpSocket, &QTcpSocket::disconnected, TcpSocket, &QTcpSocket::deleteLater);
 
 	QByteArray ByteArray;
 	long Size = 0;
@@ -212,6 +218,8 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		return;
 	}
 
+	ISLOGGER_I("Auth is done");
+
 	//»щем свободный порт
 	QTcpServer TcpServer;
 	quint16 Port = serverPort() + 1;
@@ -242,5 +250,6 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	ISTcpAnswer TcpAnswer;
 	TcpAnswer["Port"] = StringPort;
 	Send(TcpSocket, TcpAnswer);
+	
 }
 //-----------------------------------------------------------------------------

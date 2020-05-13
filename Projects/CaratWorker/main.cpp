@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 			Result = TcpServerWorker.Run(static_cast<quint16>(Port));
 			if (Result) //Сервер запущен - сообщаем об этом карату
 			{
+				ISLOGGER_I("Worker is started with port " + QString::number(Port));
 				Result = Application.exec() == EXIT_SUCCESS ? true : false;
 			}
 			else //Не удалось запустить сервер

@@ -4,6 +4,8 @@
 #include "ISAlgorithm.h"
 #include "ISQuery.h"
 #include "ISCore.h"
+#include "ISLogger.h"
+#include "ISNetwork.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
@@ -65,9 +67,7 @@ void ISTcpServerWorker::incomingConnection(qintptr SocketDescriptor)
 void ISTcpServerWorker::ReadyRead()
 {
 	Buffer.append(TcpSocket->readAll());
-
-	//Если размер запроса ещё неизвестен - получаем его
-	if (!BufferSize)
+	if (!BufferSize) //Если размер запроса ещё неизвестен - получаем его
 	{
 		BufferSize = ISTcp::GetQuerySizeFromBuffer(Buffer);
 	}
@@ -76,8 +76,7 @@ void ISTcpServerWorker::ReadyRead()
 	ISTcpAnswer TcpAnswer;
 	if (BufferSize && !Buffer.isEmpty()) //Размер запроса получен - все в порядке
 	{
-		//Если запрос пришёл не весь - выходим из функции
-		if (Buffer.size() != BufferSize)
+		if (Buffer.size() != BufferSize) //Если запрос пришёл не весь - выходим из функции
 		{
 			return;
 		}
@@ -90,21 +89,25 @@ void ISTcpServerWorker::ReadyRead()
 			QString QueryType = VariantMap["Type"].toString();
 			if (Functions.count(QueryType)) //Если такой запрос существует - выполняем его
 			{
+				ISLOGGER_I("Incoming query \"" + QueryType + "\"");
 				Functions[QueryType](*this, VariantMap["Parameters"].toMap(), TcpAnswer);
 			}
 			else //Запрос не существует - отправляем ошибку
 			{
 				TcpAnswer.SetError(QString("Unknown query \"%1\"").arg(QueryType));
+				ISLOGGER_E(QString("Unknown query \"%1\"").arg(QueryType));
 			}
 		}
 		else
 		{
 			TcpAnswer.SetError(ErrorString);
+			ISLOGGER_E(ErrorString);
 		}
 	}
 	else //Не удалось извлечь размер запроса - возвращаем ошибку
 	{
 		TcpAnswer.SetError("Query is not a valid");
+		ISLOGGER_E("Query is not a valid");
 	}
 	Send(TcpSocket, TcpAnswer);
 
@@ -115,6 +118,7 @@ void ISTcpServerWorker::ReadyRead()
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::Disconnected()
 {
+	ISLOGGER_I("Disconnected " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
 	TcpSocket->deleteLater();
 	close();
 	ISCore::ExitApplication();
