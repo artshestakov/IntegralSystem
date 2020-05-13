@@ -100,7 +100,6 @@ void ISQueryPool::StartWorker()
 			break;
 		}
 	}
-	ISDatabase::Instance().Disconnect(CONNECTION_QUERY_POOL);
 	IsFinished = true;
 }
 //-----------------------------------------------------------------------------
