@@ -105,7 +105,9 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 		string_complete = QString::fromStdString(string_stream.str());
 	}
 
+#ifdef DEBUG
 	std::cout << string_complete.toStdString() << std::endl;
+#endif
     LOCK_CRITICAL_SECTION(&CriticalSection);
     Array[LastIndex] = string_complete;
     ++LastIndex;
