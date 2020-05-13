@@ -3,6 +3,7 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISQuery.h"
+#include "ISCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
@@ -116,7 +117,7 @@ void ISTcpServerWorker::Disconnected()
 {
 	TcpSocket->deleteLater();
 	close();
-	QCoreApplication::quit();
+	ISCore::ExitApplication();
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServerWorker::CheckField(const QVariantMap &Parameters, const ISVectorString &Fields, ISTcpAnswer &TcpAnswer)

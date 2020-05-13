@@ -126,10 +126,10 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 //-----------------------------------------------------------------------------
 void ISCore::ExitApplication()
 {
-	ISLogger::Instance().Shutdown();
 	ISQueryPool::Instance().Shutdown();
 	ISDatabase::Instance().DisconnectAll();
 	ISTcpConnector::Instance().Disconnect();
+	ISLogger::Instance().Shutdown();
 	QCoreApplication::quit();
 }
 //-----------------------------------------------------------------------------
