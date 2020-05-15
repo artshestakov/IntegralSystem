@@ -29,6 +29,7 @@
 #include <mutex>
 #include <functional>
 #include <cctype>
+#include <vector>
 //C-includes-------------------------------------------------------------------
 #include <stdlib.h>
 #include <stdio.h>

@@ -104,6 +104,7 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ISAes256.cpp" />
     <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
@@ -171,6 +172,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ISAes256.h" />
     <ClInclude Include="call_stack.hpp" />
     <ClInclude Include="ISAlgorithm.h" />
     <ClInclude Include="ISApplicationRunning.h" />

@@ -255,6 +255,9 @@
     <ClCompile Include="ISTcpServerWorker.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISAes256.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -431,6 +434,9 @@
     </ClInclude>
     <ClInclude Include="ISTcpAnswer.h">
       <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ISAes256.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
