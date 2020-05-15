@@ -29,28 +29,16 @@ void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &Paramete
 //-----------------------------------------------------------------------------
 bool ISTcpQuery::Execute()
 {
-	//Формируем запрос
-	std::string String = ISSystem::VariantMapToJsonString(
+	//Шифруем запрос
+	QByteArray Encripted = ISTcp::Crypt(ISTcpConnector::Instance().GetToken(),
 	{
 		{ "Type", QueryType },
 		{ "Parameters", Parameters }
-	}).simplified().toStdString();
+	});
 
-	const std::vector<unsigned char> PlainVector(String.begin(), String.end());
-	std::vector<unsigned char> EncryptedVector;
-
-	//Шифруем
-	size_t EncryptedSize = ISAes256::encrypt(ISTcpConnector::Instance().GetToken(), PlainVector, EncryptedVector);
-
-	//Формируем вектор с размером шифрованного пакета и вставляем его в итоговый вектор
-	std::string TempString = std::to_string(EncryptedSize);
-	std::vector<char> TempVector = std::vector<char>(TempString.begin(), TempString.end());
-	EncryptedVector.insert(EncryptedVector.begin(), SYMBOL_POINT);
-	EncryptedVector.insert(EncryptedVector.begin(), TempVector.begin(), TempVector.end());
-
-	//Получаем сокет и отправляем запрос
+	//Получаем сокет и отправляем на него запрос
 	QTcpSocket *TcpSocket = ISTcpConnector::Instance().GetSocket();
-	if (TcpSocket->write((char *)EncryptedVector.data(), EncryptedVector.size()) != EncryptedSize)
+	if (TcpSocket->write(Encripted) != Encripted.size())
 	{
 		ErrorString = TcpSocket->errorString();
 		return false;

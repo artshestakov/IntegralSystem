@@ -10,6 +10,7 @@ public:
 	static bool IsValidQuery(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString); //Проверить валидность запроса
 	static bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString); //Проверить валидность ответа на запрос
 	static long GetQuerySizeFromBuffer(QByteArray &ByteArray); //Получить размер запроса из его содержимого
+	static QByteArray Crypt(const std::vector<unsigned char> &Key, const QVariantMap &VariantMap); //Шифрование данных
 };
 //-----------------------------------------------------------------------------
 #endif
