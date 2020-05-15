@@ -13,15 +13,16 @@ public:
 	
 	QString GetErrorString() const; //Получить текствоое описание ошибки
 	QTcpSocket* GetSocket(); //Получить указатель на сокет
+	const std::vector<unsigned char> GetToken() const; //Получить токен
 	bool IsConnected() const; //Проверить наличие соединения
-	bool Reconnect(const QString &host, quint16 port); //Переподключение
-	bool Connect(const QString &host, quint16 port); //Подключение
+	bool Reconnect(const QString &Host, quint16 Port, const QString &Login, const QString &Password); //Переподключение
+	bool Connect(const QString &Host, quint16 Port, const QString &Login, const QString &Password); //Подключение
 	void Disconnect(); //Отключение
 
 private:
 	void Timeout();
 	void Error(QTcpSocket::SocketError socket_error);
-	void StateChanged(QTcpSocket::SocketState socket_state);
+	void CreateToken(const QString &Login, const QString &Password);
 
 private:
 	ISTcpConnector();
@@ -34,6 +35,7 @@ private:
 	QTcpSocket *TcpSocket;
 	QEventLoop EventLoop;
 	QTimer *Timer;
+	std::vector<unsigned char> Token;
 };
 //-----------------------------------------------------------------------------
 #endif

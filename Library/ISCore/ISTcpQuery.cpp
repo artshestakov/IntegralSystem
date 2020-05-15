@@ -3,6 +3,7 @@
 #include "ISTcp.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
+#include "ISAes256.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
 	: ErrorString(NO_ERROR_STRING),
@@ -29,16 +30,27 @@ void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &Paramete
 bool ISTcpQuery::Execute()
 {
 	//Формируем запрос
-	QString String = ISSystem::VariantMapToJsonString(
+	std::string String = ISSystem::VariantMapToJsonString(
 	{
 		{ "Type", QueryType },
 		{ "Parameters", Parameters }
-	}).simplified();
-	String.insert(0, QString::number(String.size())); //Вставляем в начало размер запроса
+	}).simplified().toStdString();
+
+	const std::vector<unsigned char> PlainVector(String.begin(), String.end());
+	std::vector<unsigned char> EncryptedVector;
+
+	//Шифруем
+	size_t EncryptedSize = ISAes256::encrypt(ISTcpConnector::Instance().GetToken(), PlainVector, EncryptedVector);
+
+	//Формируем вектор с размером шифрованного пакета и вставляем его в итоговый вектор
+	std::string TempString = std::to_string(EncryptedSize);
+	std::vector<char> TempVector = std::vector<char>(TempString.begin(), TempString.end());
+	EncryptedVector.insert(EncryptedVector.begin(), SYMBOL_POINT);
+	EncryptedVector.insert(EncryptedVector.begin(), TempVector.begin(), TempVector.end());
 
 	//Получаем сокет и отправляем запрос
 	QTcpSocket *TcpSocket = ISTcpConnector::Instance().GetSocket();
-	if (TcpSocket->write(String.toUtf8()) != String.size())
+	if (TcpSocket->write((char *)EncryptedVector.data(), EncryptedVector.size()) != EncryptedSize)
 	{
 		ErrorString = TcpSocket->errorString();
 		return false;

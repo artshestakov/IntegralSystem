@@ -231,7 +231,7 @@ void ISAuthForm::ConnectedDone()
 		{
 			QString Host = CONFIG_STRING("Protocol/Host");
 			quint16 Port = CONFIG_INT("Protocol/Port");
-			if (ISTcpConnector::Instance().Connect(Host, Port))
+			if (ISTcpConnector::Instance().Connect(Host, Port, EditLogin->GetValue().toString(), EditPassword->GetValue().toString()))
 			{
 				if (CONFIG_BOOL("Protocol/Auth"))
 				{
@@ -247,7 +247,7 @@ void ISAuthForm::ConnectedDone()
 						ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
 					}
 
-					if (!ISTcpConnector::Instance().Reconnect(Host, Port))
+					if (!ISTcpConnector::Instance().Reconnect(Host, Port, EditLogin->GetValue().toString(), EditPassword->GetValue().toString()))
 					{
 						ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
 					}

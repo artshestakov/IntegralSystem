@@ -9,10 +9,9 @@ int main(int argc, char *argv[])
 
 	QString Host = argv[1];
 	quint16 Port = CARAT_DEFAULT_PORT;
-	if (ISTcpConnector::Instance().Connect(Host, Port))
+	if (ISTcpConnector::Instance().Connect(Host, Port, "postgres", "adm777"))
 	{
 		ISTcpQuery qAuth(API_AUTH);
-		qAuth.BindValue("Login", "postgres");
 		qAuth.BindValue("Password", "adm777");
 		if (qAuth.Execute())
 		{
@@ -23,7 +22,7 @@ int main(int argc, char *argv[])
 			qDebug() << qAuth.GetErrorString();
 		}
 
-		if (ISTcpConnector::Instance().Reconnect(Host, Port))
+		if (ISTcpConnector::Instance().Reconnect(Host, Port, "postgres", "adm777"))
 		{
 			ISTcpQuery qTestQuery(API_TEST_QUERY);
 			if (qTestQuery.Execute())

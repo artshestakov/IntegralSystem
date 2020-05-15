@@ -1,5 +1,6 @@
 #include "ISTcp.h"
 #include "ISSystem.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 bool ISTcp::IsValidQuery(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString)
 {
@@ -75,8 +76,9 @@ long ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 			Temp.push_back(Char);
 			ByteArray.remove(0, 1);
 		}
-		else //Символ не является цифрой - закончили поиск размера и выходим
+		else if (Char == SYMBOL_POINT) //Символ является точкой - закончили поиск размера и выходим
 		{
+			ByteArray.remove(0, 1); //Удаляем точку
 			break;
 		}
 	}

@@ -9,10 +9,17 @@
 #include "ISDatabase.h"
 #include "ISConfig.h"
 #include "ISNetwork.h"
+#include "ISAes256.h"
+#include "ISTrace.h"
+//-----------------------------------------------------------------------------
+static QString QS_KEYS = PREPARE_QUERY("SELECT usename, md5(usename || :Port) || right(passwd, length(passwd) - 3) AS Keys "
+									   "FROM pg_shadow "
+									   "WHERE passwd IS NOT NULL "
+									   "ORDER BY usename");
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
-									   "right(passwd, length(passwd) - 3) AS passwd, "
+									   "(right(passwd, length(passwd) - 3) = md5(:Password || :Login))::BOOLEAN AS password, "
 									   "usrs_issystem, "
 									   "usrs_isdeleted, "
 									   "(usrs_group != 0)::BOOLEAN AS usrs_group, "
@@ -55,6 +62,7 @@ bool ISTcpServerCarat::Run(quint16 Port)
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 {
+	ISTRACE();
 	ISTcpServerBase::incomingConnection(SocketDescriptor);
 	QTcpSocket *TcpSocket = nextPendingConnection();
 	if (TcpSocket)
@@ -83,7 +91,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		if (TcpSocket->bytesAvailable() > 0)
 		{
 			ByteArray.append(TcpSocket->readAll());
-			if (!Size) //Размер ещё не известен - вытаскиваем его
+			if (!Size) //Размеры ещё не известены - вытаскиваем их
 			{
 				Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
 			}
@@ -100,19 +108,59 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 			}
 		}
 	}
-	
-	//Проверка валидности запроса
-	QVariantMap VariantMap;
-	QString ErrorString;
-	if (!ISTcp::IsValidQuery(ByteArray, VariantMap, ErrorString))
+
+	//Запрашиваем все ключи
+	ISQuery qSelectKeys(QS_KEYS);
+	qSelectKeys.BindValue(":Port", TcpSocket->peerPort());
+	if (!qSelectKeys.Execute()) //Ошибка запроса
 	{
-		SendError(TcpSocket, ErrorString);
+		SendError(TcpSocket, qSelectKeys.GetErrorString());
 		return;
 	}
 
-	//Проверка типа запроса
+	QString Login;
+	QVariantMap VariantMap;
+	while (qSelectKeys.Next()) //Перебираем ключи
+	{
+		//Получаем очередной ключ
+		std::string Key = qSelectKeys.ReadColumn("Keys").toString().toStdString();
+		std::vector<unsigned char> VectorKey(Key.begin(), Key.end());
+
+		std::vector<unsigned char> Vector;
+		ISAes256::decrypt(VectorKey, std::vector<unsigned char>(ByteArray.begin(), ByteArray.end()), Vector);
+
+		//Проверка валидности запроса
+		QString ErrorString;
+		if (ISTcp::IsValidQuery(QString::fromStdString(std::string(Vector.begin(), Vector.end())).toUtf8(), VariantMap, ErrorString)) //Валидация прошла успешно
+		{
+			Login = qSelectKeys.ReadColumn("usename").toString();
+			break;
+		}
+	}
+
+	if (Login.isEmpty()) //Если не удалось подобрать ключ
+	{
+		SendError(TcpSocket, "Failed to find decryption key");
+		return;
+	}
+
+	//Если поле с типом запроса отсутствует
+	if (!VariantMap.contains("Type"))
+	{
+		SendError(TcpSocket, "Not found field \"Type\"");
+		return;
+	}
+	
+	//Если поле с типом запроса пустое
 	QString QueryType = VariantMap["Type"].toString();
-	if (QueryType != API_AUTH) //Если не авторизация - ошибка
+	if (QueryType.isEmpty())
+	{
+		SendError(TcpSocket, "Query type not specified");
+		return;
+	}
+
+	//Проверка типа запроса, если не авторизация - ошибка
+	if (QueryType != API_AUTH)
 	{
 		SendError(TcpSocket, QString("Invalid query type \"%1\"").arg(QueryType));
 		return;
@@ -120,36 +168,23 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	VariantMap = VariantMap["Parameters"].toMap();
 
-	if (!VariantMap.contains("Login")) //Если поле с логином отсутствует
-	{
-		SendError(TcpSocket, "Not found field \"Login\"");
-		return;
-	}
-
 	if (!VariantMap.contains("Password")) //Если поле с паролем отсутствует
 	{
 		SendError(TcpSocket, "Not found field \"Password\"");
 		return;
 	}
 
-	QString Login = VariantMap["Login"].toString();
 	QString Password = VariantMap["Password"].toString();
-
-	if (Login.isEmpty()) //Если поле с логином пустое
-	{
-		SendError(TcpSocket, "Field \"Login\" is empty");
-		return;
-	}
-
 	if (Password.isEmpty()) //Если поле с паролем пустое
 	{
 		SendError(TcpSocket, "Field \"Password\" is empty");
 		return;
 	}
 
-	//Проверка введенных данных пользователем
+	//Проверка пользователя
 	ISQuery qSelectAuth(QS_AUTH);
 	qSelectAuth.BindValue(":Login", Login);
+	qSelectAuth.BindValue(":Password", Password);
 
 	//Если такой логин в БД не существует
 	if (!qSelectAuth.ExecuteFirst() && !qSelectAuth.GetCountResultRows())
@@ -159,7 +194,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	}
 
 	//Если пароль неправильный
-	if (qSelectAuth.ReadColumn("passwd").toString() != ISSystem::StringToMD5(Password + Login))
+	if (!qSelectAuth.ReadColumn("password").toBool())
 	{
 		SendError(TcpSocket, "Message.Error.InvalidPassword");
 		return;
