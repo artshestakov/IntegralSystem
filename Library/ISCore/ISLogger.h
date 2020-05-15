@@ -13,6 +13,7 @@ public:
 		MT_Null, //Пустое сообщение
 		MT_Lite, //Упрощенное сообщение (без даты, потока и источника в коде)
 		MT_Debug, //Отладка
+		MT_Trace, //Трассировка
 		MT_Info, //Информация
 		MT_Warning, //Предупреждение
 		MT_Error //Ошибка
@@ -74,6 +75,7 @@ private:
 #define ISLOGGER_N() ISLogger::Instance().Log(ISLogger::MT_Null, QString(), __FILE__, __LINE__) //Логирование пустой строки
 #define ISLOGGER_L(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Lite, MESSAGE, __FILE__, __LINE__) //Логирование упрощенного сообщения
 #define ISLOGGER_D(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
+#define ISLOGGER_T(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Trace, MESSAGE, __FILE__, __LINE__) //Трассировка
 #define ISLOGGER_I(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
 #define ISLOGGER_W(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Warning, MESSAGE, __FILE__, __LINE__) //Логировние предупреждающего сообщения
 #define ISLOGGER_E(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Error, MESSAGE, __FILE__, __LINE__) //Логирование сообщения об ошибке

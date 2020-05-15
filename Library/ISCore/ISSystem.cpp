@@ -47,33 +47,6 @@ QString ISSystem::GetSizeDir(const QString &DirPath)
 	return FileSizeFromString(Size);
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::FormatQFuncInfo(const QString &QFuncInfo, ISNamespace::FunctionNameFormat Format)
-{
-	QString Result;
-	QString Temp = QFuncInfo;
-
-	switch (Format)
-	{
-	case ISNamespace::FNF_All:
-		Result = QFuncInfo;
-		break;
-
-	case ISNamespace::FNF_TypeAndFunction:
-		Result = Temp.replace("__thiscall ", QString());
-		break;
-
-	case ISNamespace::FNF_Type:
-		Result = Temp.replace("__thiscall ", QString()).split("::").front();
-		break;
-
-	case ISNamespace::FNF_Function:
-		Result = Temp.split("::").at(1);
-		break;
-	}
-
-	return Result;
-}
-//-----------------------------------------------------------------------------
 QString ISSystem::GetCurrentDayOfWeekName()
 {
 	return GetDayOfWeekName(static_cast<Qt::DayOfWeek>(QDate::currentDate().dayOfWeek()));

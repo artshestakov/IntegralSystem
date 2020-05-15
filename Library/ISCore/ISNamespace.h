@@ -167,14 +167,6 @@ public:
         QMT_List,
     };
 
-    enum FunctionNameFormat //Тип форматирования информации о функции
-    {
-        FNF_All, //Полный
-        FNF_TypeAndFunction, //Тип и функция
-        FNF_Type, //Тип
-        FNF_Function, //Функция
-    };
-
     enum PhoneIconType //Тип иконки
     {
         PIT_Standart, //Стандартная
@@ -255,7 +247,6 @@ Q_DECLARE_METATYPE(ISNamespace::ObjectActionType);
 Q_DECLARE_METATYPE(ISNamespace::AttachChatType);
 Q_DECLARE_METATYPE(ISNamespace::ReportType);
 Q_DECLARE_METATYPE(ISNamespace::QueryModelType);
-Q_DECLARE_METATYPE(ISNamespace::FunctionNameFormat);
 Q_DECLARE_METATYPE(ISNamespace::PhoneIconType);
 Q_DECLARE_METATYPE(ISNamespace::PeriodType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);

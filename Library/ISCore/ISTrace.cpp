@@ -2,23 +2,21 @@
 #include "ISSystem.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISTrace::ISTrace(const QString &q_func_info, const QString &message_text)
+ISTrace::ISTrace(const QString &function_name, const QString &message_text)
+	: FunctionName(function_name)
 {
-	Q_FUNC_INFO_STRING = ISSystem::FormatQFuncInfo(q_func_info, ISNamespace::FNF_TypeAndFunction);
-	QString MessageText = "START TRACE: " + Q_FUNC_INFO_STRING;
-
-	if (message_text.length())
+	QString MessageText = "Start " + function_name;
+	if (!message_text.isEmpty())
 	{
 		MessageText += " | " + message_text;
 	}
-
-	ISLOGGER_D(MessageText);
+	ISLOGGER_T(MessageText);
 	Time = new ISCountingTime();
 }
 //-----------------------------------------------------------------------------
 ISTrace::~ISTrace()
 {
-	ISLOGGER_D("END TRACE (" + QString::number(Time->Elapsed()) + " msec): " + Q_FUNC_INFO_STRING);
+	ISLOGGER_T("End " + FunctionName + " " + QString::number(Time->Elapsed()) + " msec");
 	delete Time;
 }
 //-----------------------------------------------------------------------------

@@ -18,7 +18,6 @@ public:
 	static void SleepMilliseconds(unsigned long Milliseconds); //Задержка потока (в миллисекундах)
 	static void SleepSeconds(unsigned long Seconds); //Задержка потока (в секундах)
 	static QString GetSizeDir(const QString &DirPath); //Получить размер файлов в папке
-	static QString FormatQFuncInfo(const QString &QFuncInfo, ISNamespace::FunctionNameFormat Format); //Форматировать результат макроса Q_FUNC_INFO
 	static QString GetCurrentDayOfWeekName(); //Получить название текущего дня недели
 	static QString GetDayOfWeekName(Qt::DayOfWeek Day); //Получить название дня
 	static QString GetConfigurationName(); //Получить текущую конфигурацию

@@ -97,6 +97,7 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 		case MessageType::MT_Null: break;
 		case MessageType::MT_Lite: break;
 		case MessageType::MT_Debug: string_stream << "Debug"; break;
+		case MessageType::MT_Trace: string_stream << "Trace"; break;
 		case MessageType::MT_Info: string_stream << "Info"; break;
 		case MessageType::MT_Warning: string_stream << "Warning"; break;
 		case MessageType::MT_Error: string_stream << "Error"; break;
