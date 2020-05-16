@@ -30,6 +30,7 @@ public:
 	static bool AddressIsList(const QString &AddressString); //Проверка строки адреса на ввод по справочнику
 	static bool CreateDir(const QString &DirPath);
 	static bool CreateDir(const QString &DirPath, QString &ErrorString);
+	static void ProcessEvents();
 
 //ДАТА И ВРЕМЯ
 	static int TimeFromMinutes(const QTime &Time); //Перевести время в минуты

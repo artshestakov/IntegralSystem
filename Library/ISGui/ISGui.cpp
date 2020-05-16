@@ -143,11 +143,6 @@ void ISGui::RepaintWidget(QWidget *Widget, bool AdjustSize)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISGui::ProcessEvents()
-{
-	qApp->processEvents();
-}
-//-----------------------------------------------------------------------------
 void ISGui::MoveWidgetToDesktop(QWidget *Widget, ISNamespace::MoveWidgetDesktop MovePosition)
 {
 	int X = 0;

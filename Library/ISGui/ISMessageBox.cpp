@@ -2,7 +2,7 @@
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
-#include "ISGui.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISMessageBox::ISMessageBox(QMessageBox::Icon Icon, const QString &Title, const QString &Message, QMessageBox::StandardButtons Buttons, QWidget *parent)
 	: QMessageBox(Icon, Title, Message, Buttons, parent),
@@ -86,7 +86,7 @@ int ISMessageBox::Exec()
 		Button->setFixedHeight(23);
 	}
 	QApplication::beep();
-	ISGui::ProcessEvents();
+	ISSystem::ProcessEvents();
 	return exec();
 }
 //-----------------------------------------------------------------------------

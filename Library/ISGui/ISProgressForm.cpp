@@ -3,7 +3,7 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
-#include "ISGui.h"
+#include "ISSystem.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
 ISProgressForm::ISProgressForm(int Maximum, const QString &LabelText, QWidget *parent, const QString &TitleText)
@@ -33,7 +33,7 @@ ISProgressForm::~ISProgressForm()
 void ISProgressForm::IncrementValue()
 {
 	setValue(++Value);
-	ISGui::ProcessEvents();
+	ISSystem::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
 bool ISProgressForm::WasCanceled() const
@@ -49,7 +49,7 @@ void ISProgressForm::SetCanceled(bool canceled)
 void ISProgressForm::showEvent(QShowEvent *e)
 {
 	QProgressDialog::showEvent(e);
-	ISGui::ProcessEvents();
+	ISSystem::ProcessEvents();
 }
 //-----------------------------------------------------------------------------
 void ISProgressForm::CancelClicked()

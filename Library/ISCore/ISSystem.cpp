@@ -163,6 +163,11 @@ bool ISSystem::CreateDir(const QString &DirPath, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
+void ISSystem::ProcessEvents()
+{
+	qApp->processEvents();
+}
+//-----------------------------------------------------------------------------
 int ISSystem::TimeFromMinutes(const QTime &Time)
 {
 	int Minute = 0;

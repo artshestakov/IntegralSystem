@@ -218,7 +218,7 @@ void ISChatMessageWidget::OpenFile()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.OpenFileInChat"), LANG("OpeningLargeFilesMayTakeSomeTime")))
 	{
-		ISGui::ProcessEvents();
+		ISSystem::ProcessEvents();
 		ISGui::SetWaitGlobalCursor(true);
 
 		ISQuery qSelectFile(QS_MESSAGE_FILE);

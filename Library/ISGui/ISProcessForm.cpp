@@ -5,6 +5,7 @@
 #include "ISGui.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISProcessForm::ISProcessForm(const QString &LabelText, QWidget *parent)
 	: ISInterfaceForm(parent, Qt::Window | Qt::MSWindowsFixedSizeDialogHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint)
@@ -12,7 +13,6 @@ ISProcessForm::ISProcessForm(const QString &LabelText, QWidget *parent)
 	setCursor(CURSOR_WAIT);
 	setWindowTitle(LANG("PleaseWait"));
 	setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
-
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
@@ -44,7 +44,7 @@ void ISProcessForm::SetText(const QString &LabelText)
 	ISGui::RepaintWidget(Label);
 	adjustSize();
 	ISGui::RepaintWidget(this);
-	ISGui::ProcessEvents();
+	ISSystem::ProcessEvents();
 	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 }
 //-----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ void ISProcessForm::showEvent(QShowEvent *ShowEvent)
 {
 	adjustSize();
 	ISGui::RepaintWidget(this);
-	ISGui::ProcessEvents();
+	ISSystem::ProcessEvents();
 	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	ISInterfaceForm::showEvent(ShowEvent);
 }
