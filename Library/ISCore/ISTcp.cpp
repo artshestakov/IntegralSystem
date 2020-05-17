@@ -67,27 +67,22 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 //-----------------------------------------------------------------------------
 long ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 {
-	QString Temp;
-	char Char;
-	while (true) //Ищем размер
+	QString Digits;
+	for (int i = 0;i < ByteArray.size(); ++i) //Обходим весь массив
 	{
-		Char = ByteArray.front();
-		if (std::isdigit(Char)) //Если символ является цифрой - добавляем его в массив
+		if (ByteArray[i] == SYMBOL_POINT && i) //Нашли точку и её индекс не нулевой - вытаскиваем левую часть и удаляем её из массива
 		{
-			Temp.push_back(Char);
-			ByteArray.remove(0, 1);
-		}
-		else if (Char == SYMBOL_POINT) //Символ является точкой - закончили поиск размера и выходим
-		{
-			ByteArray.remove(0, 1); //Удаляем точку
+			Digits = ByteArray.left(i);
+			ByteArray.remove(0, i + 1);
 			break;
 		}
 	}
 
-	if (!Temp.isEmpty())
+	//Цифры нашлись и массив не пустой - конвертируем строку с цифрами в целое число
+	if (!Digits.isEmpty() && !ByteArray.isEmpty())
 	{
 		bool Ok = true;
-		long Result = Temp.toInt(&Ok);
+		long Result = Digits.toInt(&Ok);
 		if (Ok)
 		{
 			return Result;

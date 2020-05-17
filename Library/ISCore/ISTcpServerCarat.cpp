@@ -11,6 +11,7 @@
 #include "ISNetwork.h"
 #include "ISAes256.h"
 #include "ISTrace.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_KEYS = PREPARE_QUERY("SELECT usename, md5(usename || :Port) || right(passwd, length(passwd) - 3) AS Keys "
 									   "FROM pg_shadow "
@@ -81,16 +82,11 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	while (true) //Ждём пока не придёт запрос
 	{
-		//Если запрос так и не пришёл - отключаем клиента
-		if (!TcpSocket->waitForReadyRead(CARAT_TIMEOUT_INCOMING_QUERY))
+		ISSleep(50);
+		ISSystem::ProcessEvents();
+		if (TcpSocket->bytesAvailable() > 0) //Если есть данные, которые можно прочитать
 		{
-			SendError(TcpSocket, "Query not received");
-			return;
-		}
-
-		if (TcpSocket->bytesAvailable() > 0)
-		{
-			ByteArray.append(TcpSocket->readAll());
+			ByteArray.append(TcpSocket->readAll()); //Читаем данные
 			if (!Size) //Размеры ещё не известены - вытаскиваем их
 			{
 				Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
@@ -98,7 +94,8 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 			if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отключаем клиента
 			{
-				SendError(TcpSocket, "Query is not a valid");
+				ISLOGGER_E("Not getting query size. Disconnecting client " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()) );
+				TcpSocket->abort();
 				return;
 			}
 
@@ -112,9 +109,10 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	//Запрашиваем все ключи
 	ISQuery qSelectKeys(QS_KEYS);
 	qSelectKeys.BindValue(":Port", TcpSocket->peerPort());
-	if (!qSelectKeys.Execute()) //Ошибка запроса
+	if (!qSelectKeys.Execute()) //Ошибка запроса - отключаем клиента
 	{
-		SendError(TcpSocket, qSelectKeys.GetErrorString());
+		ISLOGGER_E("Not getting keys: " + qSelectKeys.GetErrorString());
+		TcpSocket->abort();
 		return;
 	}
 
