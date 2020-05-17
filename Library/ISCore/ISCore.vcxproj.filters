@@ -258,6 +258,9 @@
     <ClCompile Include="ISAes256.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpQueryAuth.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -437,6 +440,9 @@
     </ClInclude>
     <ClInclude Include="ISAes256.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpQueryAuth.h">
+      <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,8 @@
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
 	: ErrorString(NO_ERROR_STRING),
-	QueryType(query_type)
+	QueryType(query_type),
+	DecryptAnswer(true)
 {
 	
 }
@@ -21,6 +22,11 @@ ISTcpQuery::~ISTcpQuery()
 QString ISTcpQuery::GetErrorString() const
 {
 	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+void ISTcpQuery::SetDecryptAnswer(bool decrypt_answer)
+{
+	DecryptAnswer = decrypt_answer;
 }
 //-----------------------------------------------------------------------------
 void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &ParameterValue)

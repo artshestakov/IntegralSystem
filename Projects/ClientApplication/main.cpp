@@ -1,5 +1,5 @@
 #include "ISTcpConnector.h"
-#include "ISTcpQuery.h"
+#include "ISTcpQueryAuth.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
@@ -7,12 +7,14 @@ int main(int argc, char *argv[])
 {
 	QCoreApplication Application(argc, argv);
 
+	QString Login = "postgres1";
+	QString Password = "adm7771";
+
 	QString Host = argv[1];
 	quint16 Port = CARAT_DEFAULT_PORT;
-	if (ISTcpConnector::Instance().Connect(Host, Port, "postgres", "adm777"))
+	if (ISTcpConnector::Instance().Connect(Host, Port, Login, Password))
 	{
-		ISTcpQuery qAuth(API_AUTH);
-		qAuth.BindValue("Password", "adm777");
+		ISTcpQueryAuth qAuth(Login, Password);
 		if (qAuth.Execute())
 		{
 			Port = qAuth.GetAnswer()["Port"].toInt();

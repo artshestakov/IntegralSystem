@@ -11,6 +11,7 @@ public:
 	~ISTcpQuery();
 
 	QString GetErrorString() const;
+	void SetDecryptAnswer(bool decrypt_answer);
 	void BindValue(const QString &ParamterName, const QVariant &ParameterValue);
 	bool Execute();
 	QVariantMap& GetAnswer();
@@ -20,6 +21,7 @@ private:
 	QString QueryType;
 	QVariantMap Parameters;
 	QVariantMap TcpAnswer;
+	bool DecryptAnswer; //Флаг отвечающий за дешифрацию ответа
 };
 //-----------------------------------------------------------------------------
 #endif
