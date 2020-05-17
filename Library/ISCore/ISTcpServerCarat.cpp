@@ -13,7 +13,7 @@
 #include "ISTrace.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_KEYS = PREPARE_QUERY("SELECT usename, md5(usename || :Port) || right(passwd, length(passwd) - 3) AS Keys "
+static QString QS_KEYS = PREPARE_QUERY("SELECT md5(md5(usename || :Port) || right(passwd, length(passwd) - 3)) AS Keys "
 									   "FROM pg_shadow "
 									   "WHERE passwd IS NOT NULL "
 									   "ORDER BY usename");
@@ -78,7 +78,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	}
 
 	QByteArray ByteArray;
-	long Size = 0;
+	int Size = 0;
 
 	while (true) //Ждём пока не придёт запрос
 	{
@@ -116,7 +116,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		return;
 	}
 
-	QString Login;
+	bool Decrypted = false;
 	QVariantMap VariantMap;
 	while (qSelectKeys.Next()) //Перебираем ключи
 	{
@@ -129,16 +129,16 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 		//Проверка валидности запроса
 		QString ErrorString;
-		if (ISTcp::IsValidQuery(QString::fromStdString(std::string(Vector.begin(), Vector.end())).toUtf8(), VariantMap, ErrorString)) //Валидация прошла успешно
+		Decrypted = ISTcp::IsValidQuery(QString::fromStdString(std::string(Vector.begin(), Vector.end())).toUtf8(), VariantMap, ErrorString);
+		if (Decrypted) //Валидация прошла успешно
 		{
-			Login = qSelectKeys.ReadColumn("usename").toString();
 			break;
 		}
 	}
 
-	if (Login.isEmpty()) //Если не удалось подобрать ключ
+	if (!Decrypted)
 	{
-		SendError(TcpSocket, "Failed to find decryption key");
+		SendError(TcpSocket, "Invalid login or password");
 		return;
 	}
 
@@ -165,6 +165,19 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	}
 
 	VariantMap = VariantMap["Parameters"].toMap();
+
+	if (!VariantMap.contains("Login")) //Если поле с логином отсутствует
+	{
+		SendError(TcpSocket, "Not found field \"Login\"");
+		return;
+	}
+
+	QString Login = VariantMap["Login"].toString();
+	if (Login.isEmpty()) //Если поле с логином пустое
+	{
+		SendError(TcpSocket, "Field \"Login\" is empty");
+		return;
+	}
 
 	if (!VariantMap.contains("Password")) //Если поле с паролем отсутствует
 	{

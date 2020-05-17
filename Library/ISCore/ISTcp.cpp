@@ -65,7 +65,7 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 	return true;
 }
 //-----------------------------------------------------------------------------
-long ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
+int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 {
 	QString Digits;
 	for (int i = 0;i < ByteArray.size(); ++i) //Обходим весь массив
@@ -82,7 +82,7 @@ long ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 	if (!Digits.isEmpty() && !ByteArray.isEmpty())
 	{
 		bool Ok = true;
-		long Result = Digits.toInt(&Ok);
+		int Result = Digits.toInt(&Ok);
 		if (Ok)
 		{
 			if (Result == ByteArray.size()) //Если найденный размер соответствует реальному размеру пакета - возвращаем его, иначе - ошибка

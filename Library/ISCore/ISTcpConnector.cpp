@@ -98,7 +98,7 @@ void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
 //-----------------------------------------------------------------------------
 void ISTcpConnector::CreateToken(const QString &Login, const QString &Password)
 {
-	QString TokenString = ISSystem::StringToMD5(Login + QString::number(TcpSocket->localPort())) + ISSystem::StringToMD5(Password + Login);
+	QString TokenString = ISSystem::StringToMD5(ISSystem::StringToMD5(Login + QString::number(TcpSocket->localPort())) + ISSystem::StringToMD5(Password + Login));
 	std::string TokenSTD = TokenString.toStdString();
 	Token = std::vector<unsigned char>(TokenSTD.begin(), TokenSTD.end());
 }

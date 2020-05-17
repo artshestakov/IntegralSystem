@@ -47,7 +47,8 @@ void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 	{
 		//Сборка запроса
 		QString String = ISSystem::VariantMapToJsonString(Data).simplified();
-		String.insert(0, QString::number(String.size()));
+		String.insert(0, SYMBOL_POINT);
+		String.insert(0, QString::number(String.size() - 1));
 
 		//Отправка запроса
 		TcpSocket->write(String.toUtf8());
