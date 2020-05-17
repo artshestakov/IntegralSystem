@@ -4,6 +4,7 @@
 #include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAes256.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
 	: ErrorString(NO_ERROR_STRING),
@@ -56,7 +57,8 @@ bool ISTcpQuery::Execute()
 
 	while (true) //∆дЄм пока не придЄт ответ
 	{
-		TcpSocket->waitForReadyRead();
+		ISSleep(50);
+		ISSystem::ProcessEvents();
 		if (TcpSocket->bytesAvailable() > 0)
 		{
 			ByteArray.append(TcpSocket->readAll());
