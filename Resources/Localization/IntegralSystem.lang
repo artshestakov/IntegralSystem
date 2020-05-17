@@ -113,7 +113,6 @@
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
   <Local Name="Message.Error.SelectStorageFileData" Russian="Не удалось получить файл из базы данных."/>
   <Local Name="Message.Error.CheckValidUser" Russian="Не удалось получить информацию о пользователе."/>
-  <Local Name="Message.Error.LoginNotExist" Russian="Такая учётная запись не существует."/>
   <Local Name="Message.Error.InvalidPassword" Russian="Неверный пароль."/>
   <Local Name="Message.Error.CurrentUserIsDeleted" Russian="Ваша учётная запись помечена на удаление, обратитесь к системному администратору."/>
   <Local Name="Message.Error.OverrideLocalListName" Russian="Не удалось получить переопределённые имена полей."/>

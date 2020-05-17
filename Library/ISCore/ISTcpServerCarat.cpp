@@ -19,8 +19,6 @@ static QString QS_KEYS = PREPARE_QUERY("SELECT md5(md5(usename || :Port) || righ
 									   "ORDER BY usename");
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
-									   "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
-									   "(right(passwd, length(passwd) - 3) = md5(:Password || :Login))::BOOLEAN AS password, "
 									   "usrs_issystem, "
 									   "usrs_isdeleted, "
 									   "(usrs_group != 0)::BOOLEAN AS usrs_group, "
@@ -29,7 +27,6 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "usrs_accountlifetimestart, "
 									   "usrs_accountlifetimeend "
 									   "FROM _users "
-									   "LEFT JOIN pg_shadow ON usename = usrs_login "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
 ISTcpServerCarat::ISTcpServerCarat(QObject *parent)
@@ -195,19 +192,9 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	//Проверка пользователя
 	ISQuery qSelectAuth(QS_AUTH);
 	qSelectAuth.BindValue(":Login", Login);
-	qSelectAuth.BindValue(":Password", Password);
-
-	//Если такой логин в БД не существует
-	if (!qSelectAuth.ExecuteFirst() && !qSelectAuth.GetCountResultRows())
+	if (!qSelectAuth.ExecuteFirst())
 	{
-		SendError(TcpSocket, "Message.Error.LoginNotExist");
-		return;
-	}
-
-	//Если пароль неправильный
-	if (!qSelectAuth.ReadColumn("password").toBool())
-	{
-		SendError(TcpSocket, "Message.Error.InvalidPassword");
+		SendError(TcpSocket, "Unknown error checking user login");
 		return;
 	}
 
