@@ -11,7 +11,7 @@ class ISCORE_EXPORT ISTcpServerWorker : public ISTcpServerBase
 	Q_OBJECT
 
 public:
-	ISTcpServerWorker(QObject *parent = 0);
+	ISTcpServerWorker(const std::string &token, QObject *parent = 0);
 	virtual ~ISTcpServerWorker();
 
 	bool Run(quint16 Port) override;
@@ -34,6 +34,7 @@ private:
 	QByteArray Buffer;
 	long BufferSize;
 	std::map<QString, std::function<void(ISTcpServerWorker &TcpServer, const QVariantMap &, ISTcpAnswer &TcpAnswer)>> Functions;
+	std::vector<unsigned char> Token;
 };
 //-----------------------------------------------------------------------------
 

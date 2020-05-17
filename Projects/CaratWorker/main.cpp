@@ -16,21 +16,23 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	Result = argc == 4;
-	if (Result) //Порт указан, логин и пароль указаны
+	Result = argc == 5;
+	if (Result) //Порт указан, логин и пароль указаны, токен тоже указан
 	{
 		int Port = std::atoi(argv[1]);
 		Result = Port > 0;
 		if (Result) //Порт валидный
 		{
-			Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT, CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), argv[2], argv[3]);
-			if (!Result)
+			Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+				CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+				argv[2], argv[3]);
+			if (!Result) //Не удалось подключиться к БД
 			{
 				ISLOGGER_E(ISDatabase::Instance().GetErrorString());
 				return EXIT_FAILURE;
 			}
 
-			ISTcpServerWorker TcpServerWorker;
+			ISTcpServerWorker TcpServerWorker(argv[4]);
 			Result = TcpServerWorker.Run(static_cast<quint16>(Port));
 			if (Result) //Сервер запущен - сообщаем об этом карату
 			{
@@ -49,7 +51,7 @@ int main(int argc, char *argv[])
 	}
 	else //Порт не указан
 	{
-		ISLOGGER_E("Port not specified");
+		ISLOGGER_E("Invalid arguments");
 	}
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }

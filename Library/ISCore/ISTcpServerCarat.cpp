@@ -115,10 +115,11 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	bool Decrypted = false;
 	QVariantMap VariantMap;
+	std::string Key;
 	while (qSelectKeys.Next()) //Перебираем ключи
 	{
 		//Получаем очередной ключ
-		std::string Key = qSelectKeys.ReadColumn("Keys").toString().toStdString();
+		Key = qSelectKeys.ReadColumn("Keys").toString().toStdString();
 		std::vector<unsigned char> VectorKey(Key.begin(), Key.end());
 
 		std::vector<unsigned char> Vector;
@@ -267,7 +268,9 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	//Запуск воркера
 	QString StringPort = QString::number(Port);
-	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY, QStringList() << StringPort << Login << Password, ISDefines::Core::PATH_APPLICATION_DIR);
+	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY,
+		QStringList() << StringPort << Login << Password << QString::fromStdString(Key),
+		ISDefines::Core::PATH_APPLICATION_DIR);
 	if (Result)
 	{
 		Result = ServerController->waitForNewConnection(CARAT_TIMEOUT_STARTED_WORKER); //Ожидаем подтверждение запуска от воркера
