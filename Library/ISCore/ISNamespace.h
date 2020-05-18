@@ -219,19 +219,6 @@ public:
         RDP_Other, //Другой
     };
 
-    enum SMSErrorType //Типы ошибок отправки смс-сообщений
-    {
-        SET_NoError = 0,
-        SET_Paramters = 1,
-        SET_Auth = 2,
-        SET_FewMoney = 3,
-        SET_LockIP = 4,
-        SET_InvalidDateFormat = 5,
-        SET_MessageBan = 6,
-        SET_InvalidPhone = 7,
-        SET_SendingCanNot = 8,
-        SET_SystemBan = 9,
-    };
 };
 //-----------------------------------------------------------------------------
 Q_DECLARE_METATYPE(ISNamespace::FieldType);
@@ -253,6 +240,5 @@ Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::TelephonyForm);
 Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
 Q_DECLARE_METATYPE(ISNamespace::RangeDatePeriod);
-Q_DECLARE_METATYPE(ISNamespace::SMSErrorType);
 //-----------------------------------------------------------------------------
 #endif

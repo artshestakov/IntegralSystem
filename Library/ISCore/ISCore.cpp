@@ -30,9 +30,6 @@ static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_clos
 static QString QI_EMAIL = PREPARE_QUERY("INSERT INTO _emailqueue(mail_server, mail_port, mail_connectiontype, mail_senderlogin, mail_senderpassword, mail_sendername, mail_recipientlogin, mail_subject, mail_message, mail_status) "
 										"VALUES(:Server, :Port, (SELECT ectp_id FROM _emailconnectiontype WHERE ectp_uid = :ConnectionUID), :SenderLogin, :SenderPassword, :SenderName, :RecipientLogin, :Subject, :Message, (SELECT eqst_id FROM _emailqueuestatus WHERE eqst_uid = :StatusUID))");
 //-----------------------------------------------------------------------------
-static QString QI_SMS = PREPARE_QUERY("INSERT INTO _smsqueue(smsq_login, smsq_password, smsq_phone, smsq_message, smsq_charset, smsq_status) "
-									  "VALUES(:Login, :Password, :Phone, :Message, :Charset, (SELECT smss_id FROM _smsstatus WHERE smss_uid = :StatusUID))");
-//-----------------------------------------------------------------------------
 static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_uid "
 											  "FROM _task "
 											  "LEFT JOIN _taskstatus ON tsst_id = task_status "
@@ -260,30 +257,6 @@ void ISCore::EMailSend(const QString &RecipientLogin, const QString &Subject, co
 	QString SenderPassword = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_EMAIL_PASSWORD);
 	QString SenderName = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_EMAIL_NAME);
 	EMailSend(Server, Port, CONST_UID_EMAIL_CONNECTION_SSL, SenderLogin, SenderPassword, SenderName, RecipientLogin, Subject, Message);
-}
-//-----------------------------------------------------------------------------
-void ISCore::SMSSend(const QString &Login, const QString &Password, const QString &Phone, const QString &Message, const QString &Charset)
-{
-	ISQuery qInsertSMS(QI_SMS);
-	qInsertSMS.BindValue(":Login", Login);
-	qInsertSMS.BindValue(":Password", Password);
-	qInsertSMS.BindValue(":Phone", Phone);
-	qInsertSMS.BindValue(":Message", Message);
-	qInsertSMS.BindValue(":Charset", Charset);
-	qInsertSMS.BindValue(":StatusUID", CONST_UID_SMS_STATUS_PENDING);
-	qInsertSMS.Execute();
-}
-//-----------------------------------------------------------------------------
-void ISCore::SMSSend(const QString &Phone, const QString &Message)
-{
-	SMSSend
-	(
-		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_LOGIN),
-		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_PASSWORD),
-		Phone,
-		Message,
-		SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_SMSSERVICE_ENCODING)
-	);
 }
 //-----------------------------------------------------------------------------
 ISUuid ISCore::TaskGetStatusUID(int TaskID)

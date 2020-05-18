@@ -10,8 +10,4 @@
   <_AsteriskRecordsExtension IsSystem="true" UID="{397DE476-8301-407C-BF8E-03070A3E0A80}" Name="flac"/>
   <_AsteriskRecordsExtension IsSystem="true" UID="{EA62490F-30BB-4C0F-A14C-6889FB221A81}" Name="midi"/>
   
-  <_SMSEncodingType IsSystem="true" UID="{4B36E9AD-B61C-4DB5-9C45-56383DC7C393}" Name="windows-1251"/>
-  <_SMSEncodingType IsSystem="true" UID="{D4A23995-5083-491D-AE1D-D9E0ACDB1526}" Name="utf-8"/>
-  <_SMSEncodingType IsSystem="true" UID="{DD9CC421-B963-4020-B3EA-A5E9ADD8A1A6}" Name="koi8-r"/>
-
 </XSR>

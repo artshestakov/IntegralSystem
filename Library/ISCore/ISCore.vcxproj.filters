@@ -213,9 +213,6 @@
     <ClCompile Include="ISRandom.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISSMS.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISSystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -465,9 +462,6 @@
       <Filter>Notify</Filter>
     </QtMoc>
     <QtMoc Include="ISEMail.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSMS.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISTcpConnector.h">

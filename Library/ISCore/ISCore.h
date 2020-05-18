@@ -22,10 +22,6 @@ public:
 	static void EMailSend(const QString &Server, int Port, const ISUuid &ConnectionUID, const QString &SenderLogin, const QString &SenderPassword, const QString &SenderName, const QString &RecipientLogin, const QString &Subject, const QString &Message);
 	static void EMailSend(const QString &RecipientLogin, const QString &Subject, const QString &Message);
 
-	//СМС
-	static void SMSSend(const QString &Login, const QString &Password, const QString &Phone, const QString &Message, const QString &Charset);
-	static void SMSSend(const QString &Phone, const QString &Message);
-
 	//Задачи
 	static ISUuid TaskGetStatusUID(int TaskID); //Получить статус задачи по её идентификатору
 	static void TaskSetStatus(int TaskID, const ISUuid &StatusUID, const QVariant &Resolution = QVariant()); //Обновиь статус задачи

@@ -12,8 +12,6 @@ public:
 	virtual ~ISCenterSevenPatientsListForm();
 
 protected:
-	void Send();
 	void AddWaitAdmission();
-	QString GetSMSTemplate(int TemplateID) const;
 };
 //-----------------------------------------------------------------------------

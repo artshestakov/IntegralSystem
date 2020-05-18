@@ -259,15 +259,4 @@
     </Indexes>
   </Table>
   
-  <Table Name="SMSTemplate" UID="{BAB5F7BF-7C9A-4751-A027-79EB95373392}" Alias="stmp" LocalName="Шаблон СМС-сообщения" LocalListName="Шаблоны СМС-сообщений" TitleName="Name">
-    <Fields>
-      <Field UID="{45802C96-1BE5-4265-97E4-865A9584FD3C}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{224CEF1F-BB86-4360-BED7-8C3729122500}" Name="Text" Type="Text" LabelName="Текст сообщения" LocalListName="Текст сообщения" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Text" Unique="true"/>
-    </Indexes>
-  </Table>
-  
 </XSN>

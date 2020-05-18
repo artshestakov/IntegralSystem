@@ -54,11 +54,6 @@
       <Field UID="{8B033986-082A-490A-97BF-08D5480AF027}" Name="EMailPassword" Type="Password" LabelName="Пароль" LocalListName="Пароль"/>
       <Field UID="{226CCBD2-8B15-4F40-8D5B-2421A39C5DCD}" Name="EMailName" Type="String" LabelName="Имя отправителя" LocalListName="Имя отправителя" Hint="Имя отправителя будет отображаться у получателя электронного письма."/>
       
-      <!--СМС-сервис-->
-      <Field UID="{791AEF32-1B1E-447F-8888-D4CF4FF938D2}" Name="SMSLogin" Type="String" LabelName="Логин" LocalListName="Логин" SeparatorName="СМС-сервис"/>
-      <Field UID="{ACF6E0A3-64D3-45F0-8F48-B2EC47D9F494}" Name="SMSPassword" Type="String" LabelName="Пароль" LocalListName="Пароль"/>
-      <Field UID="{B844C2C3-42E7-4AAC-B7DF-DC64EA6E10E2}" Name="SMSEncoding" Type="UID" LabelName="Кодировка" LocalListName="Кодировка"/>
-
       <!--Логотип-->
       <Field UID="{9684C2D8-B880-4C38-A3AD-33663F1CA706}" Name="Logo" Type="Image" LabelName="Логотип организации" LocalListName="Логотип организации" ControlWidget="ISImageEdit" SeparatorName="Логотип"/>
       <Field UID="{B9F6C7D2-3D4F-477D-B4D2-E7F287337FF4}" Name="LogoSmall" Type="Image" LabelName="Логотип организации (уменьшенный)" LocalListName="Логотип организации (уменьшенный)" ControlWidget="ISImageEdit"/>
@@ -108,9 +103,6 @@
       <Index Field="EMailPort"/>
       <Index Field="EMailLogin"/>
       <Index Field="EMailPassword"/>
-      <Index Field="SMSLogin"/>
-      <Index Field="SMSPassword"/>
-      <Index Field="SMSEncoding"/>
       <Index Field="Logo"/>
       <Index Field="LogoSmall"/>
       <Index Field="InformationMessage"/>
@@ -121,7 +113,6 @@
     <Foreigns>
       <Foreign Field="AccountCurrency" ForeignClass="_Currency" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="AsteriskRecordsExtension" ForeignClass="_AsteriskRecordsExtension" ForeignField="UID" ForeignViewNameField="Name"/>
-      <Foreign Field="SMSEncoding" ForeignClass="_SMSEncodingType" ForeignField="UID" ForeignViewNameField="Name"/>
       <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
   </Table>
@@ -135,13 +126,4 @@
     </Indexes>
   </Table>
   
-  <Table Name="_SMSEncodingType" UID="{68FE312A-77F5-4FAC-A993-F4752C2AB844}" Alias="smse" LocalName="Кодировка сообщения" LocalListName="Кодировки сообщений" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{1E4084F2-3615-4256-A03A-4E8787AE9B21}" Name="Name" Type="String" LabelName="Кодировка" LocalListName="Кодировка" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name"/>
-    </Indexes>
-  </Table>
-    
 </XSN>

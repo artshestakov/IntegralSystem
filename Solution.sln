@@ -142,6 +142,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClientApplication", "Projects\ClientApplication\ClientApplication.vcxproj", "{B82F87A5-A0E7-44BA-9098-E9970D7FE928}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProtocolTest", "Projects\ProtocolTest\ProtocolTest.vcxproj", "{FDF19A2E-1E18-4DBF-8842-C11DFA6FD39F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DF96E239-1BB5-402B-B4F4-BF01D4A168BF} = {DF96E239-1BB5-402B-B4F4-BF01D4A168BF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

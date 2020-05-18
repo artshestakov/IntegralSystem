@@ -463,54 +463,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="_SMSQueue" UID="{5B05C628-6F39-4AEE-A046-643FDA8AE407}" Alias="smsq" ShowOnly="true" LocalName="СМС-сообщение" LocalListName="СМС-сообщение" TitleName="Phone" IsSystem="true">
-    <Fields>
-      <Field UID="{3C39C76D-5534-4344-A7F7-047E606C1572}" Name="Login" Type="String" LabelName="Логин" LocalListName="Логин" NotNull="true"/>
-      <Field UID="{F9FF8C31-2C59-4DE8-8DFF-2A93BD798834}" Name="Password" Type="String" LabelName="Пароль" LocalListName="Пароль" NotNull="true"/>
-      <Field UID="{25DA6AC3-F73B-4B98-95A4-66E782B4B729}" Name="Phone" Type="String" LabelName="Телефон" LocalListName="Телефон" NotNull="true"/>
-      <Field UID="{42284C2D-BE0C-4EC8-A501-20A267F66939}" Name="Message" Type="String" LabelName="Сообщение" LocalListName="Сообщение" NotNull="true"/>
-      <Field UID="{BB671A1F-EC22-4B8C-9D95-3516A51C78B2}" Name="Charset" Type="String" LabelName="Кодировка" LocalListName="Кодировка" NotNull="true"/>
-      <Field UID="{75938693-EFF1-4E33-B0D6-1C45BABB8650}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус" NotNull="true"/>
-      <Field UID="{569A98DB-6D22-42D6-8C4D-903A81906CF5}" Name="Sended" Type="Bool" DefaultValue="false" LabelName="Отправлено" LocalListName="Отправлено" NotNull="true"/>
-      <Field UID="{7B3920F2-712E-41C9-BD9D-3D74A073A422}" Name="ErrorString" Type="String" LabelName="Текст ошибки" LocalListName="Текст ошибки"/>
-      <Field UID="{2F8DFD8E-29B9-432B-A05E-88823A1CBD4F}" Name="MessageID" Type="Int" LabelName="Идентификатор сообщения" LocalListName="Идентификатор сообщения"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Login"/>
-      <Index Field="Password"/>
-      <Index Field="Phone"/>
-      <Index Field="Message"/>
-      <Index Field="Charset"/>
-      <Index Field="Status"/>
-      <Index Field="Sended"/>
-      <Index Field="ErrorString"/>
-      <Index Field="MessageID"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Status" ForeignClass="_SMSStatus" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-
-  <Table Name="_SMSStatus" UID="{5D46F5B1-0A28-425B-940F-2559E8A4017F}" Alias="smss" LocalName="Статус сообщения" LocalListName="Статусы сообщений" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{7B622161-2EE9-4C83-91FA-AE55AB597F7A}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-
-  <Table Name="_SMSErrorType" UID="{DA7A7071-3F84-43B9-B5F2-65695BF622EE}" Alias="smet" LocalName="Тип ошибки" LocalListName="Типы ошибок" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{62918269-C930-42A9-8303-6E2AB6016E94}" Name="ErrorCode" Type="Int" LabelName="Код ошибки" LocalListName="Код ошибки" NotNull="true"/>
-      <Field UID="{31B437F3-9AE0-47A5-A469-32A98D55460B}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="ErrorCode" Unique="true"/>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_SortingTables" UID="{FDE07704-8804-4950-A4A8-8220F0C54B5F}" Alias="sgts" LocalName="Сортировка таблицы" LocalListName="Сортировки таблиц" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{207AC648-13DF-46A1-9DDA-84C0AAB794EF}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>

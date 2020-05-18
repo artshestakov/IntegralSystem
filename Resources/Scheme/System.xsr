@@ -107,19 +107,4 @@
   <_EMailQueueStatus IsSystem="true" UID="{2DACEE6A-FDC2-4244-B05D-742C99FB7834}" Name="Ошибка"/>
   <_EMailQueueStatus IsSystem="true" UID="{4FE64146-606E-4946-9405-3BE6638C53BA}" Name="Отправка"/>
 
-  <_SMSStatus IsSystem="true" UID="{25C79A48-7096-4379-A525-635D0E8FEA12}" Name="Отправлено"/>
-  <_SMSStatus IsSystem="true" UID="{58DE4E9F-D2AE-4145-AD16-5398E1E68565}" Name="Ошибка"/>
-  <_SMSStatus IsSystem="true" UID="{0508798D-205C-4A66-80D6-3257B99936AF}" Name="Отправка"/>
-  <_SMSStatus IsSystem="true" UID="{CC19A95A-FE22-42F3-BCA3-84099318596F}" Name="Ожидает отправки"/>
-
-  <_SMSErrorType IsSystem="true" UID="{CCBAD275-F3D8-40B0-AFFC-F2215F4EA189}" ErrorCode="1" Name="Ошибка в параметрах"/>
-  <_SMSErrorType IsSystem="true" UID="{D8CBC2D1-F1BF-499C-99CA-9AF24DB2022A}" ErrorCode="2" Name="Неверный логин или пароль"/>
-  <_SMSErrorType IsSystem="true" UID="{E0BC8174-DEA8-4EF7-B890-121EE81014E7}" ErrorCode="3" Name="Недостаточно средств на счете Клиента"/>
-  <_SMSErrorType IsSystem="true" UID="{C833BE84-57A2-4052-ACF5-E30356F03FD6}" ErrorCode="4" Name="IP-адрес временно заблокирован из-за частых ошибок в запросах на отправку смс-сообщения"/>
-  <_SMSErrorType IsSystem="true" UID="{EF84CBC3-D5C5-47AE-B037-2F53DC0AF386}" ErrorCode="5" Name="Неверный формат даты"/>
-  <_SMSErrorType IsSystem="true" UID="{F2D55398-E3CD-46CB-AF95-1E6DA7BA70E2}" ErrorCode="6" Name="Сообщение запрещено (по тексту или по имени отправителя)"/>
-  <_SMSErrorType IsSystem="true" UID="{C4C88CD7-C25A-4063-8467-2F754DB67714}" ErrorCode="7" Name="Неверный формат номера телефона"/>
-  <_SMSErrorType IsSystem="true" UID="{5066CB43-2771-4F3E-9182-033063DFE9B3}" ErrorCode="8" Name="Сообщение на указанный номер не может быть доставлено"/>
-  <_SMSErrorType IsSystem="true" UID="{CB812E54-5D28-46F1-B228-EFB41DD89F81}" ErrorCode="9" Name="Отправка более одного одинакового запроса на передачу SMS-сообщения либо более пяти одинаковых запросов на получение стоимости сообщения в течение минуты. Данная ошибка возникает также при попытке отправки более 15 любых запросов одновременно"/>
-  
 </XSR>

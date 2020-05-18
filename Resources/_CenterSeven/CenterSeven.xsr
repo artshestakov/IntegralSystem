@@ -6,7 +6,6 @@
   <_SubSystems UID="{F088E12E-3629-4419-8D4E-3E17096B9ACB}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="2" LocalName="Зубы" Icon="Lists" TableName="Teeth"/>
   <_SubSystems UID="{8124E7A9-9808-4211-B9E3-3452EC6BF374}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="3" LocalName="Типы лечения" Icon="Lists" TableName="TreatmentType"/>
   <_SubSystems UID="{EED12134-495A-443E-8345-7092ECA8EB82}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="4" LocalName="Диагнозы" Icon="Lists" TableName="Diagnosis"/>
-  <_SubSystems UID="{90B8A267-4350-4338-A349-AE408CC3E330}" System="{802CBCFC-0064-4625-9DB8-9CA4F6277262}" OrderID="5" LocalName="Шаблоны СМС-сообщений" Icon="Lists" TableName="SMSTemplate"/>
   
   <_Systems IsSystem="false" UID="{7D53BE83-E532-4EDD-81B5-E8DC996F9A64}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
   <_SubSystems UID="{EEA73BD4-8523-4BB2-BD56-59975802005F}" System="{7D53BE83-E532-4EDD-81B5-E8DC996F9A64}" OrderID="1" LocalName="Пациенты" Icon="Lists" ClassName="ISCenterSevenPatientsListForm"/>

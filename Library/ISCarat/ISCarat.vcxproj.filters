@@ -32,9 +32,6 @@
     <Filter Include="Notification">
       <UniqueIdentifier>{c1b11f5f-1b90-483f-a65f-6846e5e6ce59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SMS">
-      <UniqueIdentifier>{bb9eee5e-d64f-4942-b1b5-e697ea2a4fe9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{b51414ae-710e-4832-9498-8006aea58d8a}</UniqueIdentifier>
     </Filter>
@@ -79,9 +76,6 @@
     <ClCompile Include="ISCaratCoreApplication.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISCoreSMS.cpp">
-      <Filter>SMS</Filter>
-    </ClCompile>
     <ClCompile Include="ISCoreNotification.cpp">
       <Filter>Notification</Filter>
     </ClCompile>
@@ -119,9 +113,6 @@
     </QtMoc>
     <QtMoc Include="ISCaratCoreApplication.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCoreSMS.h">
-      <Filter>SMS</Filter>
     </QtMoc>
     <QtMoc Include="ISCoreNotification.h">
       <Filter>Notification</Filter>

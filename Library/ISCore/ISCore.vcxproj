@@ -151,7 +151,6 @@
     <ClCompile Include="ISSearchModel.cpp" />
     <ClCompile Include="ISSettings.cpp" />
     <ClCompile Include="ISSettingsDatabase.cpp" />
-    <ClCompile Include="ISSMS.cpp" />
     <ClCompile Include="ISSmtpClient.cpp" />
     <ClCompile Include="ISStackWalker.cpp" />
     <ClCompile Include="ISSystem.cpp" />
@@ -210,7 +209,6 @@
     <ClInclude Include="ISUuid.h" />
     <ClInclude Include="ISVersion.h" />
     <ClInclude Include="StdAfx.h" />
-    <QtMoc Include="ISSMS.h" />
     <QtMoc Include="ISEMail.h" />
     <ClInclude Include="ISEmailAddress.h" />
     <ClInclude Include="ISMimeAttachment.h" />
