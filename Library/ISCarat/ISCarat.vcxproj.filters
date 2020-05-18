@@ -23,9 +23,6 @@
     <Filter Include="InformResource">
       <UniqueIdentifier>{c4ab335a-4d37-4545-a174-18a3f9dba564}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mail">
-      <UniqueIdentifier>{c638e21a-5cc8-437e-8f18-84d7e177b6e2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MedTech">
       <UniqueIdentifier>{b52abdd0-80a6-49d5-ad05-759b5b475cb6}</UniqueIdentifier>
     </Filter>
@@ -61,9 +58,6 @@
     <ClCompile Include="ISCoreInformResource.cpp">
       <Filter>InformResource</Filter>
     </ClCompile>
-    <ClCompile Include="ISCoreMail.cpp">
-      <Filter>Mail</Filter>
-    </ClCompile>
     <ClCompile Include="ISCoreMedTech.cpp">
       <Filter>MedTech</Filter>
     </ClCompile>
@@ -98,9 +92,6 @@
     </QtMoc>
     <QtMoc Include="ISCoreInformResource.h">
       <Filter>InformResource</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCoreMail.h">
-      <Filter>Mail</Filter>
     </QtMoc>
     <QtMoc Include="ISCoreMedTech.h">
       <Filter>MedTech</Filter>

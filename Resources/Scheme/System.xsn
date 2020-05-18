@@ -405,64 +405,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_EMailQueue" UID="{CC1ADE7F-A135-4691-BA77-BE83F2451AE2}" Alias="mail" ShowOnly="true" LocalName="Сообщение в очереди" LocalListName="Сообщения в очереди" TitleName="Subject" IsSystem="true">
-    <Fields>
-      <Field UID="{F7294171-C6F5-4603-BFCD-4949D3447097}" Name="Server" Type="String" LabelName="Сервер" LocalListName="Сервер" NotNull="true" HideFromList="true"/>
-      <Field UID="{BD908C21-42E7-45E3-9E8F-BFC5D693C1B3}" Name="Port" Type="Int" LabelName="Порт" LocalListName="Порт" NotNull="true" HideFromList="true"/>
-      <Field UID="{1830FCED-8CD5-4B4E-93A7-CB3748DC225A}" Name="ConnectionType" Type="Int" LabelName="Тип соединения" LocalListName="Тип соединения" NotNull="true" HideFromList="true"/>
-      <Field UID="{525C903C-DB86-4FE3-93F8-D9DD36540A90}" Name="SenderLogin" Type="String" LabelName="Отправитель" LocalListName="Отправитель" NotNull="true"/>
-      <Field UID="{460D82D3-3A53-45EF-A13D-E6DABB3FB7E4}" Name="SenderPassword" Type="String" LabelName="Пароль отправителя" LocalListName="Пароль отправителя" NotNull="true" HideFromList="true"/>
-      <Field UID="{D46183A2-A9BD-4750-9CED-CF33DC95D65D}" Name="SenderName" Type="String" LabelName="Имя отправителя" LocalListName="Имя отправителя" NotNull="true"/>
-      <Field UID="{6F308F81-4CCC-46ED-9BB0-5E3CF6262567}" Name="RecipientLogin" Type="String" LabelName="Почта получателя" LocalListName="Почта получателя" NotNull="true"/>
-      <Field UID="{DE1235E9-8A07-49AE-881D-61B960BDC473}" Name="Subject" Type="String" LabelName="Тема" LocalListName="Тема" NotNull="true"/>
-      <Field UID="{491BCB1A-3C25-4D6A-A5E3-1C2544C7A6A5}" Name="Message" Type="Text" LabelName="Текст сообщения" LocalListName="Текст сообщения" HideFromList="true"/>
-      <Field UID="{80B74443-70DA-4D80-9191-3403BCF1EF1B}" Name="Status" Type="Int" LabelName="Статус отправки" LocalListName="Статус отправки" NotNull="true"/>
-      <Field UID="{36475D66-5B35-44A4-B851-26C8E92F55E8}" Name="Sended" Type="Bool" DefaultValue="false" LabelName="Отправлено" LocalListName="Отправлено" HideFromList="true"/>
-      <Field UID="{1B5D075F-DB44-4E86-A763-F2EC75A5519F}" Name="ErrorString" Type="String" LabelName="Текст ошибки" LocalListName="Текст ошибки"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Server"/>
-      <Index Field="Port"/>
-      <Index Field="ConnectionType"/>
-      <Index Field="SenderLogin"/>
-      <Index Field="SenderPassword"/>
-      <Index Field="SenderName"/>
-      <Index Field="RecipientLogin"/>
-      <Index Field="Subject"/>
-      <Index Field="Message"/>
-      <Index Field="Status"/>
-      <Index Field="Sended"/>
-      <Index Field="ErrorString"/>
-      <Index Field="Sended;Status"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="ConnectionType" ForeignClass="_EMailConnectionType" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Status" ForeignClass="_EMailQueueStatus" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-
-  <Table Name="_EMailConnectionType" UID="{4D763E16-CFEC-4E00-B6F0-910DC6236907}" Alias="ectp" LocalName="Тип подключения" LocalListName="Типы подключения" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{0D3F780F-C5F6-4D1A-BF63-2D32B0AC5DE5}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{5E9A49E4-800F-4495-87D8-6B14C98F69EC}" Name="FullName" Type="String" LabelName="Полное наименование" LocalListName="Полное наименование" NotNull="true"/>
-      <Field UID="{4D66B59E-8DFA-44AD-A0ED-59CBC50CCAD4}" Name="LocalName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="FullName"/>
-      <Index Field="LocalName"/>
-    </Indexes>
-  </Table>
-
-  <Table Name="_EMailQueueStatus" UID="{D4DB4E33-8E00-42D4-9722-3CB9F5059099}" Alias="eqst" LocalName="Статус сообщения" LocalListName="Статусы сообщений" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{3BBB7D5D-F6A7-450C-A8DD-9A59AAA9F1D0}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_SortingTables" UID="{FDE07704-8804-4950-A4A8-8220F0C54B5F}" Alias="sgts" LocalName="Сортировка таблицы" LocalListName="Сортировки таблиц" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{207AC648-13DF-46A1-9DDA-84C0AAB794EF}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>

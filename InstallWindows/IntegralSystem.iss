@@ -74,7 +74,6 @@ Source: ..\Deploy\.Configuration.-.Platform.\CaratCalendar.exe; DestDir: {app}; 
 Source: ..\Deploy\.Configuration.-.Platform.\CaratCenterSeven.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratHighway.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratInformResource.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratMail.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratMedTech.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratNotification.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\CaratTelephony.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;

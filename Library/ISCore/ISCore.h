@@ -18,10 +18,6 @@ public:
 	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName = QString(), int ObjectID = 0); //Добавить событие в календарь
 	static bool CalendarCloseEvent(int CalendarID); //Завершить событие календаря
 
-	//EMail
-	static void EMailSend(const QString &Server, int Port, const ISUuid &ConnectionUID, const QString &SenderLogin, const QString &SenderPassword, const QString &SenderName, const QString &RecipientLogin, const QString &Subject, const QString &Message);
-	static void EMailSend(const QString &RecipientLogin, const QString &Subject, const QString &Message);
-
 	//Задачи
 	static ISUuid TaskGetStatusUID(int TaskID); //Получить статус задачи по её идентификатору
 	static void TaskSetStatus(int TaskID, const ISUuid &StatusUID, const QVariant &Resolution = QVariant()); //Обновиь статус задачи

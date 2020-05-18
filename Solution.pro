@@ -15,7 +15,6 @@ SUBDIRS += Projects/CaratCalendar
 SUBDIRS += Projects/CaratCenterSeven
 SUBDIRS += Projects/CaratHighway
 SUBDIRS += Projects/CaratInformResource
-SUBDIRS += Projects/CaratMail
 SUBDIRS += Projects/CaratMedTech
 SUBDIRS += Projects/CaratNotification
 SUBDIRS += Projects/CaratTelephony

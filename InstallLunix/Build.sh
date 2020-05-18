@@ -22,7 +22,6 @@ $QT_DIR_BIN/lconvert -o ../Deploy/$1-Linux64/translations/qt_ru.qm $QT_DIR_BIN/.
 ./BuildProject.sh CaratAsteriskRecord $1
 ./BuildProject.sh CaratCalendar $1
 ./BuildProject.sh CaratCenterSeven $1
-./BuildProject.sh CaratMail $1
 ./BuildProject.sh CaratNotification $1
 ./BuildProject.sh CaratScheduler $1
 ./BuildProject.sh CaratTelephony $1

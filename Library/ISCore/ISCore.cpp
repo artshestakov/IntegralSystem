@@ -27,9 +27,6 @@ static QString QI_CALENDAR = PREPARE_QUERY("INSERT INTO _calendar(cldr_date, cld
 //-----------------------------------------------------------------------------
 static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_closed = true WHERE cldr_id = :CalendarID");
 //-----------------------------------------------------------------------------
-static QString QI_EMAIL = PREPARE_QUERY("INSERT INTO _emailqueue(mail_server, mail_port, mail_connectiontype, mail_senderlogin, mail_senderpassword, mail_sendername, mail_recipientlogin, mail_subject, mail_message, mail_status) "
-										"VALUES(:Server, :Port, (SELECT ectp_id FROM _emailconnectiontype WHERE ectp_uid = :ConnectionUID), :SenderLogin, :SenderPassword, :SenderName, :RecipientLogin, :Subject, :Message, (SELECT eqst_id FROM _emailqueuestatus WHERE eqst_uid = :StatusUID))");
-//-----------------------------------------------------------------------------
 static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_uid "
 											  "FROM _task "
 											  "LEFT JOIN _taskstatus ON tsst_id = task_status "
@@ -231,32 +228,6 @@ bool ISCore::CalendarCloseEvent(int CalendarID)
 	ISQuery qCloseEvent(QU_CALENDAR_CLOSE);
 	qCloseEvent.BindValue(":CalendarID", CalendarID);
 	return qCloseEvent.Execute();
-}
-//-----------------------------------------------------------------------------
-void ISCore::EMailSend(const QString &Server, int Port, const ISUuid &ConnectionUID, const QString &SenderLogin, const QString &SenderPassword, const QString &SenderName, const QString &RecipientLogin, const QString &Subject, const QString &Message)
-{
-	ISQuery qInsert(QI_EMAIL);
-	qInsert.BindValue(":Server", Server);
-	qInsert.BindValue(":Port", Port);
-	qInsert.BindValue(":ConnectionUID", ConnectionUID);
-	qInsert.BindValue(":SenderLogin", SenderLogin);
-	qInsert.BindValue(":SenderPassword", SenderPassword);
-	qInsert.BindValue(":SenderName", SenderName);
-	qInsert.BindValue(":RecipientLogin", RecipientLogin);
-	qInsert.BindValue(":Subject", Subject);
-	qInsert.BindValue(":Message", Message);
-	qInsert.BindValue(":StatusUID", CONST_UID_EMAIL_STATUS_SENDING);
-	qInsert.Execute();
-}
-//-----------------------------------------------------------------------------
-void ISCore::EMailSend(const QString &RecipientLogin, const QString &Subject, const QString &Message)
-{
-	QString Server = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_EMAIL_SERVER);
-	int Port = SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_EMAIL_PORT);
-	QString SenderLogin = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_EMAIL_LOGIN);
-	QString SenderPassword = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_EMAIL_PASSWORD);
-	QString SenderName = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_EMAIL_NAME);
-	EMailSend(Server, Port, CONST_UID_EMAIL_CONNECTION_SSL, SenderLogin, SenderPassword, SenderName, RecipientLogin, Subject, Message);
 }
 //-----------------------------------------------------------------------------
 ISUuid ISCore::TaskGetStatusUID(int TaskID)

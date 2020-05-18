@@ -115,7 +115,6 @@
     <ClCompile Include="ISCrashDumper.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISDefinesCore.cpp" />
-    <ClCompile Include="ISEMail.cpp" />
     <ClCompile Include="ISEmailAddress.cpp" />
     <ClCompile Include="ISException.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
@@ -209,7 +208,6 @@
     <ClInclude Include="ISUuid.h" />
     <ClInclude Include="ISVersion.h" />
     <ClInclude Include="StdAfx.h" />
-    <QtMoc Include="ISEMail.h" />
     <ClInclude Include="ISEmailAddress.h" />
     <ClInclude Include="ISMimeAttachment.h" />
     <ClInclude Include="ISMimeContentFormatter.h" />

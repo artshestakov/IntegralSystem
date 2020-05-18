@@ -46,13 +46,6 @@
       <Field UID="{737F4AA6-B06D-4357-A479-FC8D1557BF4E}" Name="AsteriskRepositoryRecords" Type="String" LabelName="Хранилище записей разговоров" LocalListName="Хранилище записей разговоров" Hint="Укажите путь к хранилищу с записями разговоров на сервере Asterisk."/>
       <Field UID="{0350F566-7FD3-4BE4-B650-EA162109AE92}" Name="AsteriskRecordsPort" Type="Int" LabelName="Порт службы записей разговоров" LocalListName="Порт службы записей разговоров" Hint="Порт по которому будут происходить трансляция записей разговров."/>
       <Field UID="{EC5BFFE4-75D1-4E90-B7F7-C078CC7C5956}" Name="AsteriskRecordsExtension" Type="UID" LabelName="Расширение записей разговоров" LocalListName="Расширение записей разговоров" Hint="Выберите расширение записей разговоров."/>
-
-      <!--Рассылка электронной почты-->
-      <Field UID="{2F55F059-9D14-4106-8013-E717DD66C5B1}" Name="EMailServer" Type="String" LabelName="Почтовый сервер исходящей почты" LocalListName="Почтовый сервер исходящей почты" SeparatorName="Рассылка электронной почты"/>
-      <Field UID="{A1A9D5D7-23B0-4149-924C-DA89B333E46B}" Name="EMailPort" Type="Int" LabelName="Порт" LocalListName="Порт"/>
-      <Field UID="{BB4EC33B-628D-4334-9D54-ABCB6C73B343}" Name="EMailLogin" Type="String" LabelName="Логин" LocalListName="Логин" Hint="Формат логина - ivanov@example.ru"/>
-      <Field UID="{8B033986-082A-490A-97BF-08D5480AF027}" Name="EMailPassword" Type="Password" LabelName="Пароль" LocalListName="Пароль"/>
-      <Field UID="{226CCBD2-8B15-4F40-8D5B-2421A39C5DCD}" Name="EMailName" Type="String" LabelName="Имя отправителя" LocalListName="Имя отправителя" Hint="Имя отправителя будет отображаться у получателя электронного письма."/>
       
       <!--Логотип-->
       <Field UID="{9684C2D8-B880-4C38-A3AD-33663F1CA706}" Name="Logo" Type="Image" LabelName="Логотип организации" LocalListName="Логотип организации" ControlWidget="ISImageEdit" SeparatorName="Логотип"/>
@@ -99,10 +92,6 @@
       <Index Field="AsteriskPassword"/>
       <Index Field="AsteriskDigitNumbers"/>
       <Index Field="AsteriskRepositoryRecords"/>
-      <Index Field="EMailServer"/>
-      <Index Field="EMailPort"/>
-      <Index Field="EMailLogin"/>
-      <Index Field="EMailPassword"/>
       <Index Field="Logo"/>
       <Index Field="LogoSmall"/>
       <Index Field="InformationMessage"/>

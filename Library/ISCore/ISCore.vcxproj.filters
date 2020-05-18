@@ -189,9 +189,6 @@
     <ClCompile Include="ISDefinesCore.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISEMail.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISException.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -460,9 +457,6 @@
     </QtMoc>
     <QtMoc Include="ISNotifySender.h">
       <Filter>Notify</Filter>
-    </QtMoc>
-    <QtMoc Include="ISEMail.h">
-      <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISTcpConnector.h">
       <Filter>Protocol</Filter>

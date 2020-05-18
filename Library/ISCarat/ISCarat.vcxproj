@@ -102,7 +102,6 @@
     <QtMoc Include="ISAsteriskSocket.h" />
     <ClInclude Include="iscarat_global.h" />
     <QtMoc Include="ISCoreMedTech.h" />
-    <QtMoc Include="ISCoreMail.h" />
     <QtMoc Include="ISCoreInformResource.h" />
     <QtMoc Include="ISCoreHighway.h" />
     <QtMoc Include="ISCoreCenterSeven.h" />
@@ -119,7 +118,6 @@
     <ClCompile Include="ISCoreCenterSeven.cpp" />
     <ClCompile Include="ISCoreHighway.cpp" />
     <ClCompile Include="ISCoreInformResource.cpp" />
-    <ClCompile Include="ISCoreMail.cpp" />
     <ClCompile Include="ISCoreMedTech.cpp" />
     <ClCompile Include="ISCoreNotification.cpp" />
     <ClCompile Include="ISCoreTelephony.cpp" />

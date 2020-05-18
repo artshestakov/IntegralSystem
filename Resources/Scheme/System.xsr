@@ -19,13 +19,12 @@
 
   <_Systems IsSystem="true" UID="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="Внутреннее" Icon="System.Internal" Hint="Управление системными справочниками и внутренними функциями программы."/>
   <_SubSystems UID="{D55AE0AD-D609-48FF-BDAF-02279CBE146E}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="1" LocalName="Файловое хранилище" Icon="SubSystem.StorageFiles" ClassName="ISStorageFilesListForm" Hint="Предметно-ориентированная информационная база данных файлов. Данные, поступающие в хранилище, доступны только для чтения."/>
-  <_SubSystems UID="{C4A0FF77-AED6-411F-962C-942655960F07}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="Электронная почта" Icon="SubSystem.EMail" TableName="_EMailQueue"/>
-  <_SubSystems UID="{BBC746E2-C9CD-451E-BF1A-0FC5A3D1FFF3}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="3" LocalName="База знаний" Icon="SubSystem.QuestionAnswer" ClassName="ISKnowledgeBaseSubSystem" Hint="База знаний."/>
-  <_SubSystems UID="{1B59B2AF-A27A-415C-A844-AEF1F24226CF}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Типы задач" Icon="Lists" TableName="_TaskType"/>
-  <_SubSystems UID="{044F9718-23AA-45E6-98BA-D0292AF74325}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="5" LocalName="Банки данных" Icon="SubSystem.Database" TableName="_Database"/>
-  <_SubSystems UID="{22669BBC-FA2B-456D-81C9-DEE48F997BAE}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="6" LocalName="Подразделения" Icon="SubSystem.Subdivision" TableName="_Subdivision"/>
-  <_SubSystems UID="{B8E43757-67D5-4B8B-A840-7BCA3245F845}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="7" LocalName="Полнотекстовый поиск" Icon="SubSystem.SearchFullText" ClassName="ISFullTextSearchForm"/>
-  <_SubSystems UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="8" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
+  <_SubSystems UID="{BBC746E2-C9CD-451E-BF1A-0FC5A3D1FFF3}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="База знаний" Icon="SubSystem.QuestionAnswer" ClassName="ISKnowledgeBaseSubSystem" Hint="База знаний."/>
+  <_SubSystems UID="{1B59B2AF-A27A-415C-A844-AEF1F24226CF}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="3" LocalName="Типы задач" Icon="Lists" TableName="_TaskType"/>
+  <_SubSystems UID="{044F9718-23AA-45E6-98BA-D0292AF74325}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Банки данных" Icon="SubSystem.Database" TableName="_Database"/>
+  <_SubSystems UID="{22669BBC-FA2B-456D-81C9-DEE48F997BAE}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="5" LocalName="Подразделения" Icon="SubSystem.Subdivision" TableName="_Subdivision"/>
+  <_SubSystems UID="{B8E43757-67D5-4B8B-A840-7BCA3245F845}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="6" LocalName="Полнотекстовый поиск" Icon="SubSystem.SearchFullText" ClassName="ISFullTextSearchForm"/>
+  <_SubSystems UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="7" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
 
   <_InternalDirectories UID="{F09346EB-8B35-4673-BEA1-8357661482E7}" TableName="_Countries" Order="1"/>
   <_InternalDirectories UID="{484906E2-8F17-4388-9E88-0B26511F1212}" TableName="_Currency" Order="2"/>
@@ -98,13 +97,5 @@
 
   <_KeyboardShortcuts IsSystem="true" UID="{F1A235BC-B6A3-4705-8594-65183A8CA64C}" Shortcut="F11" Description="Развернуть окно на весь экран"/>
   <_KeyboardShortcuts IsSystem="true" UID="{112A7CCC-6605-479D-9DFA-D9DE6A403EF3}" Shortcut="Alt + F12" Description="Скриншот активного окна"/>
-
-  <_EMailConnectionType IsSystem="true" UID="{8B16B1CF-4B56-4690-9C83-A13D4188A112}" Name="Tcp" FullName="Transmission Control Protocol" LocalName="Протокол управления передачей"/>
-  <_EMailConnectionType IsSystem="true" UID="{FFC462B0-B076-4009-938F-D9E1AFB81484}" Name="Ssl" FullName="Secure sockets layer" LocalName="Уровень защищённых cокетов"/>
-  <_EMailConnectionType IsSystem="true" UID="{E1741E99-C75B-4045-ACC1-D1AF889325C2}" Name="Tls" FullName="Transport layer security" LocalName="Протокол защиты транспортного уровня"/>
-
-  <_EMailQueueStatus IsSystem="true" UID="{15A7D4A6-65F6-411E-BAD6-A057764F84FD}" Name="Отправлено"/>
-  <_EMailQueueStatus IsSystem="true" UID="{2DACEE6A-FDC2-4244-B05D-742C99FB7834}" Name="Ошибка"/>
-  <_EMailQueueStatus IsSystem="true" UID="{4FE64146-606E-4946-9405-3BE6638C53BA}" Name="Отправка"/>
 
 </XSR>
