@@ -114,7 +114,7 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 		ISLOGGER_W("Error changed console encoding");
 	}
 
-	Result = ISConfig::Instance().Initialize();
+	Result = ISConfig::Instance().Initialize(IsGui ? "Client" : "Server");
 	if (!Result)
 	{
 		ErrorString = ISConfig::Instance().GetErrorString();

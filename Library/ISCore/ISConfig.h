@@ -10,7 +10,7 @@ public:
 	static ISConfig& Instance();
 
 	QString GetErrorString() const;
-	bool Initialize();
+	bool Initialize(const QString &TemplateName);
 	
 	QVariant GetValue(const QString &ParameterName); //Получить значение параметра
 	void SetValue(const QString &ParameterName, const QVariant &Value); //Изменить значение параметра
@@ -32,16 +32,9 @@ private:
 	QString PathConfigTemplate;
 };
 //-----------------------------------------------------------------------------
-//Получить значение параметра из конфигурационного файла
-#define CONFIG_VALUE(PARAMETER_NAME) ISConfig::Instance().GetValue(PARAMETER_NAME)
-
-//Получить значение типа bool
-#define CONFIG_BOOL(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toBool()
-
-//Получить значение типа QString
-#define CONFIG_STRING(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toString()
-
-//Получить значение типа int
-#define CONFIG_INT(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toInt()
+#define CONFIG_VALUE(PARAMETER_NAME) ISConfig::Instance().GetValue(PARAMETER_NAME) //Получить значение параметра из конфигурационного файла
+#define CONFIG_BOOL(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toBool() //Получить значение типа bool
+#define CONFIG_STRING(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toString() //Получить значение типа QString
+#define CONFIG_INT(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toInt() //Получить значение типа int
 //-----------------------------------------------------------------------------
 #endif

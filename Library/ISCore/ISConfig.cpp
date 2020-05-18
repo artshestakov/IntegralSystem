@@ -5,8 +5,7 @@
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
 	: ErrorString(NO_ERROR_STRING),
-	Settings(nullptr),
-	PathConfigTemplate(QString(":/ConfigTemplate/%1").arg(ISDefines::Core::IS_GUI ? "Client" : "Server") + SYMBOL_POINT + EXTENSION_INI)
+	Settings(nullptr)
 {
 	
 }
@@ -30,13 +29,14 @@ QString ISConfig::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Initialize()
+bool ISConfig::Initialize(const QString &TemplateName)
 {
 	if (Settings)
 	{
 		return true;
 	}
 
+	PathConfigTemplate = ":ConfigTemplate/" + TemplateName + SYMBOL_POINT + EXTENSION_INI;
 	bool Result = QFile::exists(PathConfigTemplate);
 	if (Result)
 	{
