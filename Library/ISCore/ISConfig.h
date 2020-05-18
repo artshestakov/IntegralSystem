@@ -10,6 +10,7 @@ public:
 	static ISConfig& Instance();
 
 	QString GetErrorString() const;
+	QString GetConfigPath() const;
 	bool Initialize(const QString &TemplateName);
 	
 	QVariant GetValue(const QString &ParameterName); //Получить значение параметра
@@ -30,6 +31,7 @@ private:
 	QString ErrorString;
 	QSettings *Settings;
 	QString PathConfigTemplate;
+	QString PathConfigFile;
 };
 //-----------------------------------------------------------------------------
 #define CONFIG_VALUE(PARAMETER_NAME) ISConfig::Instance().GetValue(PARAMETER_NAME) //Получить значение параметра из конфигурационного файла

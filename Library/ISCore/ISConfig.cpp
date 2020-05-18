@@ -29,6 +29,11 @@ QString ISConfig::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+QString ISConfig::GetConfigPath() const
+{
+	return PathConfigFile;
+}
+//-----------------------------------------------------------------------------
 bool ISConfig::Initialize(const QString &TemplateName)
 {
 	if (Settings)
@@ -40,12 +45,13 @@ bool ISConfig::Initialize(const QString &TemplateName)
 	bool Result = QFile::exists(PathConfigTemplate);
 	if (Result)
 	{
-		Settings = new QSettings(ISDefines::Core::PATH_CONFIG_FILE, QSettings::IniFormat);
+		PathConfigFile = ISDefines::Core::PATH_APPLICATION_DIR + '/' + TemplateName + SYMBOL_POINT + EXTENSION_INI;
+		Settings = new QSettings(PathConfigFile, QSettings::IniFormat);
 		QSettings::Status SettingsStatus = Settings->status();
 		Result = SettingsStatus == QSettings::NoError;
 		if (Result)
 		{
-			if (QFile::exists(ISDefines::Core::PATH_CONFIG_FILE)) //Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления
+			if (QFile::exists(PathConfigFile)) //Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления
 			{
 				Result = Update();
 			}
@@ -59,7 +65,7 @@ bool ISConfig::Initialize(const QString &TemplateName)
 			switch (SettingsStatus)
 			{
             case QSettings::NoError: break;
-			case QSettings::AccessError: ErrorString = "access error with path " + ISDefines::Core::PATH_CONFIG_FILE; break;
+			case QSettings::AccessError: ErrorString = "access error with path " + PathConfigFile; break;
 			case QSettings::FormatError: ErrorString = "format error"; break;
 			}
 		}

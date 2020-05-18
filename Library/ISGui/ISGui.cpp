@@ -39,7 +39,7 @@ static QString QU_OBJECT = "UPDATE %1 SET %2_deletiondate = now(), %2_deletionus
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
-	bool Result = ISCore::Startup(true, ErrorString);
+	bool Result = ISCore::Startup(true, "Client", ErrorString);
 	if (!Result)
 	{
 		return Result;

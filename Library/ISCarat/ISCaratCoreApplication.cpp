@@ -24,7 +24,7 @@ QString ISCaratCoreApplication::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISCaratCoreApplication::Invoke()
 {
-	bool Result = ISCore::Startup(false, ErrorString);
+	bool Result = ISCore::Startup(false, "Server", ErrorString);
 	if (Result)
 	{
 		Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,

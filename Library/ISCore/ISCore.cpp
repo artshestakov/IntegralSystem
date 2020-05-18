@@ -70,7 +70,7 @@ static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 												"AND task_executor = currentuserid() "
 												"AND task_deadline < CURRENT_DATE");
 //-----------------------------------------------------------------------------
-bool ISCore::Startup(bool IsGui, QString &ErrorString)
+bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &ErrorString)
 {
 	ISDefines::Core::Init(IsGui);
 
@@ -108,7 +108,7 @@ bool ISCore::Startup(bool IsGui, QString &ErrorString)
 		ISLOGGER_W("Error changed console encoding");
 	}
 
-	Result = ISConfig::Instance().Initialize(IsGui ? "Client" : "Server");
+	Result = ISConfig::Instance().Initialize(ConfigTemplateName);
 	if (!Result)
 	{
 		ErrorString = ISConfig::Instance().GetErrorString();

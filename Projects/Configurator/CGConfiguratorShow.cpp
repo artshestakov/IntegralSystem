@@ -211,7 +211,7 @@ bool CGConfiguratorShow::obsoletesequence()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::config()
 {
-	QFile FileConfig(ISDefines::Core::PATH_CONFIG_FILE);
+	QFile FileConfig(ISConfig::Instance().GetConfigPath());
 	bool Result = FileConfig.exists();
 	if (Result)
 	{

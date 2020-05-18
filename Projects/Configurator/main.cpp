@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 	QCoreApplication CoreArralication(argc, argv);
 
 	QString ErrorString;
-	bool Result = ISCore::Startup(false, ErrorString);
+	bool Result = ISCore::Startup(false, "Server", ErrorString);
 	if (!Result)
 	{
 		ISLOGGER_E(ErrorString);
