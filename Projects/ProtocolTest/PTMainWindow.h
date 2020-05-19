@@ -13,8 +13,9 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QTextEdit>
 //-----------------------------------------------------------------------------
-#include "ISTcpServerCarat.h"
+#include "PTThreadCarat.h"
 //-----------------------------------------------------------------------------
 class PTMainWindow : public QWidget
 {
@@ -24,17 +25,31 @@ public:
 	PTMainWindow(QWidget *parent = 0);
 	virtual ~PTMainWindow();
 
+protected:
+	void closeEvent(QCloseEvent *CloseEvent);
+
 private:
 	void Listen();
 	void Unlisten();
+	void Connect();
+	void Disconnect();
 
 private:
-	ISTcpServerCarat *Server;
+	void ServerStateChanged(bool Running);
+
+private:
+	PTThreadCarat *ThreadCarat;
 
 private:
 	QSpinBox *EditListenPort;
 	QPushButton *ButtonListen;
 	QPushButton *ButtonUnlisten;
+	QGroupBox *GroupBoxClient;
+	QLineEdit *EditLogin;
+	QLineEdit *EditPassword;
+	QPushButton *ButtonConnect;
+	QPushButton *ButtonDisconnect;
+	QTextEdit *TextEdit;
 };
 //-----------------------------------------------------------------------------
 #endif

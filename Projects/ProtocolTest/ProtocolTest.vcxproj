@@ -96,9 +96,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PTMainWindow.cpp" />
+    <ClCompile Include="PTThreadCarat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="PTMainWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="PTThreadCarat.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
