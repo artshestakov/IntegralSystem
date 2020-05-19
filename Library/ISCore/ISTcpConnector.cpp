@@ -73,7 +73,7 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port, const QString &L
 //-----------------------------------------------------------------------------
 void ISTcpConnector::Disconnect()
 {
-	if (TcpSocket->state() == QTcpSocket::ConnectedState)
+	if (IsConnected())
 	{
 		TcpSocket->disconnectFromHost();
 	}
