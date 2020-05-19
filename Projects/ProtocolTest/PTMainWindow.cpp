@@ -144,8 +144,16 @@ void PTMainWindow::Connect()
 		ISTcpQueryAuth qAuth(Login, Password);
 		if (qAuth.Execute())
 		{
-			ButtonConnect->setEnabled(!Result);
-			ButtonDisconnect->setEnabled(Result);
+			quint16 Port = qAuth.GetAnswer()["Port"].toInt();
+			if (ISTcpConnector::Instance().Reconnect("127.0.0.1", Port, Login, Password))
+			{
+				ButtonConnect->setEnabled(!Result);
+				ButtonDisconnect->setEnabled(Result);
+			}
+			else
+			{
+				QMessageBox::critical(this, "Error", ISTcpConnector::Instance().GetErrorString());
+			}
 		}
 		else
 		{
@@ -161,6 +169,8 @@ void PTMainWindow::Connect()
 void PTMainWindow::Disconnect()
 {
 	ISTcpConnector::Instance().Disconnect();
+	ButtonConnect->setEnabled(true);
+	ButtonDisconnect->setEnabled(false);
 }
 //-----------------------------------------------------------------------------
 void PTMainWindow::ServerStateChanged(bool Running)

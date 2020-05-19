@@ -13,12 +13,19 @@ public:
 	virtual ~ISTcpServerCarat();
 
 	bool Run(quint16 Port) override;
+	void SetDBHost(const QString &db_host);
+	void SetDBPort(int db_port);
+	void SetDBName(const QString &db_name);
 
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
+	virtual bool StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password, const QString &Key);
 
 private:
 	QLocalServer *ServerController;
+	QString DBHost;
+	int DBPort;
+	QString DBName;
 };
 //-----------------------------------------------------------------------------
 #endif

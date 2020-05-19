@@ -65,6 +65,17 @@ void ISTcpServerWorker::incomingConnection(qintptr SocketDescriptor)
 	}
 }
 //-----------------------------------------------------------------------------
+void ISTcpServerWorker::Disconnected()
+{
+	ISLOGGER_I("Disconnected " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
+	TcpSocket->deleteLater();
+	close();
+	if (!IsModeTest()) //Если текущий режим не тестовый - закрываем приложение
+	{
+		ISCore::ExitApplication();
+	}
+}
+//-----------------------------------------------------------------------------
 void ISTcpServerWorker::ReadyRead()
 {
 	Buffer.append(TcpSocket->readAll());
@@ -115,14 +126,6 @@ void ISTcpServerWorker::ReadyRead()
 	//Очищаем буфер и его размер
 	Buffer.clear();
 	BufferSize = 0;
-}
-//-----------------------------------------------------------------------------
-void ISTcpServerWorker::Disconnected()
-{
-	ISLOGGER_I("Disconnected " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
-	TcpSocket->deleteLater();
-	close();
-	ISCore::ExitApplication();
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServerWorker::CheckField(const QVariantMap &Parameters, const ISVectorString &Fields, ISTcpAnswer &TcpAnswer)

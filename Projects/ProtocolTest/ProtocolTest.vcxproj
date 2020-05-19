@@ -96,13 +96,21 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PTMainWindow.cpp" />
+    <ClCompile Include="PTServerCarat.cpp" />
     <ClCompile Include="PTThreadCarat.cpp" />
+    <ClCompile Include="PTThreadWorker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="PTMainWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="PTThreadCarat.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="PTServerCarat.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="PTThreadWorker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

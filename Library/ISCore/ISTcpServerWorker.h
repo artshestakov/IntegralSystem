@@ -20,8 +20,8 @@ protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
 
 private:
-	void ReadyRead(); //Событие чтения данных от клиента
 	void Disconnected(); //Событие отключения клиента
+	void ReadyRead(); //Событие чтения данных от клиента
 	bool CheckField(const QVariantMap &Parameters, const ISVectorString &Fields, ISTcpAnswer &TcpAnswer); //Проверка поля параметров на валидность
 
 private:

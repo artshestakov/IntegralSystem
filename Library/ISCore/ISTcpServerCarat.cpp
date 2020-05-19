@@ -43,6 +43,13 @@ ISTcpServerCarat::~ISTcpServerCarat()
 //-----------------------------------------------------------------------------
 bool ISTcpServerCarat::Run(quint16 Port)
 {
+	if (!IsModeTest()) //Если тестовый режим - настройки не читаем
+	{
+		DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
+		DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
+		DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
+	}
+
 	//Запуск локального сервера для контроля воркеров
 	ServerController = new QLocalServer(this);
 	ServerController->setMaxPendingConnections(1);
@@ -58,6 +65,21 @@ bool ISTcpServerCarat::Run(quint16 Port)
 	return Result;
 }
 //-----------------------------------------------------------------------------
+void ISTcpServerCarat::SetDBHost(const QString &db_host)
+{
+	DBHost = db_host;
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerCarat::SetDBPort(int db_port)
+{
+	DBPort = db_port;
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerCarat::SetDBName(const QString &db_name)
+{
+	DBName = db_name;
+}
+//-----------------------------------------------------------------------------
 void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 {
 	ISTRACE();
@@ -67,6 +89,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	{
 		ISLOGGER_I(QString("Incoming auth from ") + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
 		connect(TcpSocket, &QTcpSocket::disconnected, TcpSocket, &QTcpSocket::deleteLater);
+		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::DisconnectedClient);
 	}
 	else
 	{
@@ -91,7 +114,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 			if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отключаем клиента
 			{
-				ISLOGGER_E("Not getting query size. Disconnecting client " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()) );
+				ISLOGGER_E("Not getting query size. Disconnecting client " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
 				TcpSocket->abort();
 				return;
 			}
@@ -146,7 +169,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		SendError(TcpSocket, "Not found field \"Type\"");
 		return;
 	}
-	
+
 	//Если поле с типом запроса пустое
 	QString QueryType = VariantMap["Type"].toString();
 	if (QueryType.isEmpty())
@@ -240,9 +263,9 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 			return;
 		}
 	}
-	
+
 	//Проверка соединения с БД по логину и паролю
-	if (ISDatabase::Instance().Connect(CONNECTION_USER, CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE), Login, Password))
+	if (ISDatabase::Instance().Connect(CONNECTION_USER, DBHost, DBPort, DBName, Login, Password))
 	{
 		ISDatabase::Instance().Disconnect(CONNECTION_USER);
 	}
@@ -257,7 +280,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	//Ищем свободный порт
 	QTcpServer TcpServer;
 	quint16 Port = serverPort() + 1;
-    for (; Port < USHRT_MAX; ++Port)
+	for (; Port < USHRT_MAX; ++Port)
 	{
 		if (TcpServer.listen(QHostAddress::AnyIPv4, Port)) //Если удалось захватить порт - закрываем его и выходим из цикла
 		{
@@ -268,15 +291,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	//Запуск воркера
 	QString StringPort = QString::number(Port);
-	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY,
-		QStringList() << StringPort << Login << Password << QString::fromStdString(Key),
-		ISDefines::Core::PATH_APPLICATION_DIR);
-	if (Result)
-	{
-		Result = ServerController->waitForNewConnection(CARAT_TIMEOUT_STARTED_WORKER); //Ожидаем подтверждение запуска от воркера
-	}
-	
-	if (!Result) //Не удалось запустить воркер
+	if (!StartWorker(TcpSocket, StringPort, Login, Password, QString::fromStdString(Key))) //Не удалось запустить воркер
 	{
 		SendError(TcpSocket, "Message.Error.StartedWorker");
 		return;
@@ -286,6 +301,17 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	ISTcpAnswer TcpAnswer;
 	TcpAnswer["Port"] = StringPort;
 	Send(TcpSocket, TcpAnswer);
-	
+}
+//-----------------------------------------------------------------------------
+bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password, const QString &Key)
+{
+	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY,
+		QStringList() << Port << Login << Password << Key,
+		ISDefines::Core::PATH_APPLICATION_DIR);
+	if (Result)
+	{
+		Result = ServerController->waitForNewConnection(CARAT_TIMEOUT_STARTED_WORKER); //Ожидаем подтверждение запуска от воркера
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

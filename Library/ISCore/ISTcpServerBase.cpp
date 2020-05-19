@@ -6,7 +6,8 @@
 //-----------------------------------------------------------------------------
 ISTcpServerBase::ISTcpServerBase(QObject *parent)
 	: QTcpServer(parent),
-	ErrorString(NO_ERROR_STRING)
+	ErrorString(NO_ERROR_STRING),
+	ModeTest(false)
 {
 	setMaxPendingConnections(1);
 }
@@ -19,6 +20,11 @@ ISTcpServerBase::~ISTcpServerBase()
 QString ISTcpServerBase::GetErrorString() const
 {
 	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerBase::SetModeTest(bool mode_test)
+{
+	ModeTest = mode_test;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServerBase::Run(quint16 Port)
@@ -69,6 +75,11 @@ void ISTcpServerBase::SendError(QTcpSocket *TcpSocket, const QString &ErrorStrin
 	Send(TcpSocket, TcpAnswer);
 	TcpSocket->abort();
 	ISLOGGER_E(ErrorString);
+}
+//-----------------------------------------------------------------------------
+bool ISTcpServerBase::IsModeTest() const
+{
+	return ModeTest;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerBase::AcceptError(QTcpSocket::SocketError)

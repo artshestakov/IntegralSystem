@@ -1,5 +1,7 @@
 #include "PTThreadCarat.h"
-#include "ISTcpServerCarat.h"
+#include "PTServerCarat.h"
+#include "ISDatabase.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 PTThreadCarat::PTThreadCarat(QObject *parent)
 	: QThread(parent),
@@ -26,13 +28,30 @@ void PTThreadCarat::Start(quint16 port)
 //-----------------------------------------------------------------------------
 void PTThreadCarat::run()
 {
-	ISTcpServerCarat ServerCarat;
-	bool Result = ServerCarat.Run(Port);
+	bool Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT, "127.0.0.1", 5432, "oilsphere_db", "postgres", "adm777");
 	if (!Result)
 	{
-		ErrorString = ServerCarat.GetErrorString();
+		ErrorString = ISDatabase::Instance().GetErrorString();
+	}
+
+	PTServerCarat ServerCarat;
+	ServerCarat.SetModeTest(true);
+	if (Result)
+	{
+		Result = ServerCarat.Run(Port);
+		if (Result)
+		{
+			ServerCarat.SetDBHost("127.0.0.1");
+			ServerCarat.SetDBPort(5432);
+			ServerCarat.SetDBName("oilsphere_db");
+		}
+		else
+		{
+			ErrorString = ServerCarat.GetErrorString();
+		}
 	}
 	emit StateChanged(Result);
 	exec();
+	ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
 }
 //-----------------------------------------------------------------------------
