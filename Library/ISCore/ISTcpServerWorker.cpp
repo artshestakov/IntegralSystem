@@ -6,6 +6,7 @@
 #include "ISCore.h"
 #include "ISLogger.h"
 #include "ISNetwork.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
@@ -93,6 +94,8 @@ void ISTcpServerWorker::ReadyRead()
 			return;
 		}
 
+		Buffer = ISTcp::Decrypt(Token, Buffer);
+
 		//Проверка валидности запроса
 		QVariantMap VariantMap;
 		QString ErrorString;
@@ -179,7 +182,7 @@ void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAns
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::ColumnSizer(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
-	ISQuery qSelect(QS_COLUMN_SIZE);
+	ISQuery qSelect(ISDatabase::Instance().GetDB(IsModeTest() ? CONNECTION_TESTING : CONNECTION_DEFAULT), QS_COLUMN_SIZE);
 	if (qSelect.Execute())
 	{
 		QVariantList Tables;

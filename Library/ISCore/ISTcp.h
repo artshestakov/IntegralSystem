@@ -11,6 +11,7 @@ public:
 	static bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString); //Проверить валидность ответа на запрос
 	static int GetQuerySizeFromBuffer(QByteArray &ByteArray); //Получить размер запроса из его содержимого
 	static QByteArray Crypt(const std::vector<unsigned char> &Key, const QVariantMap &VariantMap); //Шифрование данных
+	static QByteArray Decrypt(const std::vector<unsigned char> &Key, const QByteArray &ByteArray); //Расшифровать данные
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -120,3 +120,22 @@ QByteArray ISTcp::Crypt(const std::vector<unsigned char> &Key, const QVariantMap
 	return Encrypted;
 }
 //-----------------------------------------------------------------------------
+QByteArray ISTcp::Decrypt(const std::vector<unsigned char> &Key, const QByteArray &ByteArray)
+{
+	int Size = ByteArray.size();
+	std::vector<unsigned char> Vector(Size);
+	for (size_t i = 0; i < Size; ++i)
+	{
+		Vector[i] = ByteArray[i];
+	}
+
+	std::vector<unsigned char> Decrypted;
+	size_t DecryptedSize = ISAes256::decrypt(Key, Vector, Decrypted);
+	QByteArray Result(DecryptedSize, Qt::Uninitialized);
+	for (size_t i = 0; i < DecryptedSize; ++i)
+	{
+		Result[i] = Decrypted[i];
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
