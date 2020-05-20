@@ -33,6 +33,7 @@ private:
 	void Unlisten();
 	void Connect();
 	void Disconnect();
+	void Send();
 
 private:
 	void ServerStateChanged(bool Running);
@@ -49,6 +50,8 @@ private:
 	QLineEdit *EditPassword;
 	QPushButton *ButtonConnect;
 	QPushButton *ButtonDisconnect;
+	QComboBox *ComboBox;
+	QPushButton *ButtonSend;
 	QTextEdit *TextEdit;
 };
 //-----------------------------------------------------------------------------

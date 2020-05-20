@@ -1,7 +1,11 @@
 #include "PTMainWindow.h"
 #include "ISConfig.h"
 #include "ISTcpConnector.h"
+#include "ISTcpQuery.h"
 #include "ISTcpQueryAuth.h"
+#include "ISConstants.h"
+#include "ISSystem.h"
+#include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
 PTMainWindow::PTMainWindow(QWidget *parent)
 	: QWidget(parent),
@@ -77,6 +81,26 @@ PTMainWindow::PTMainWindow(QWidget *parent)
 
 	LayoutClientTop->addStretch();
 
+	QHBoxLayout *LayoutQuery = new QHBoxLayout();
+	LayoutClient->addLayout(LayoutQuery);
+
+	LayoutQuery->addWidget(new QLabel("Query:", GroupBoxClient));
+
+	ComboBox = new QComboBox(GroupBoxClient);
+	ComboBox->setEnabled(false);
+	ComboBox->addItem(API_TEST_QUERY, API_TEST_QUERY);
+	ComboBox->addItem(API_SLEEP, API_SLEEP);
+	ComboBox->addItem(API_COLUMN_SIZER, API_COLUMN_SIZER);
+	ComboBox->setCurrentText(CONFIG_STRING("Client/LastQuery"));
+	LayoutQuery->addWidget(ComboBox);
+
+	ButtonSend = new QPushButton("Send", GroupBoxClient);
+	ButtonSend->setEnabled(false);
+	connect(ButtonSend, &QPushButton::clicked, this, &PTMainWindow::Send);
+	LayoutQuery->addWidget(ButtonSend);
+
+	LayoutQuery->addStretch();
+
 	TextEdit = new QTextEdit(GroupBoxClient);
 	TextEdit->setReadOnly(true);
 	LayoutClient->addWidget(TextEdit);
@@ -142,15 +166,11 @@ void PTMainWindow::Connect()
 	if (Result)
 	{
 		ISTcpQueryAuth qAuth(Login, Password);
-		if (qAuth.Execute())
+		Result = qAuth.Execute();
+		if (Result)
 		{
-			quint16 Port = qAuth.GetAnswer()["Port"].toInt();
-			if (ISTcpConnector::Instance().Reconnect("127.0.0.1", Port, Login, Password))
-			{
-				ButtonConnect->setEnabled(!Result);
-				ButtonDisconnect->setEnabled(Result);
-			}
-			else
+			Result = ISTcpConnector::Instance().Reconnect("127.0.0.1", qAuth.GetAnswer()["Port"].toInt(), Login, Password);
+			if (!Result)
 			{
 				QMessageBox::critical(this, "Error", ISTcpConnector::Instance().GetErrorString());
 			}
@@ -164,6 +184,11 @@ void PTMainWindow::Connect()
 	{
 		QMessageBox::critical(this, "Error", ISTcpConnector::Instance().GetErrorString());
 	}
+
+	ButtonConnect->setEnabled(!Result);
+	ButtonDisconnect->setEnabled(Result);
+	ComboBox->setEnabled(Result);
+	ButtonSend->setEnabled(Result);
 }
 //-----------------------------------------------------------------------------
 void PTMainWindow::Disconnect()
@@ -171,6 +196,26 @@ void PTMainWindow::Disconnect()
 	ISTcpConnector::Instance().Disconnect();
 	ButtonConnect->setEnabled(true);
 	ButtonDisconnect->setEnabled(false);
+	ComboBox->setEnabled(false);
+	ButtonSend->setEnabled(false);
+}
+//-----------------------------------------------------------------------------
+void PTMainWindow::Send()
+{
+	QString QueryType = ComboBox->currentData().toString();
+	ISConfig::Instance().SetValue("Client/LastQuery", QueryType);
+	ISTcpQuery qQuery(QueryType);
+	ISCountingTime CountingTime;
+	bool Result = qQuery.Execute();
+	if (Result)
+	{
+		TextEdit->append(ISSystem::VariantMapToJsonString(qQuery.GetAnswer()));
+		TextEdit->append("Query OK: " + QString::number(CountingTime.Elapsed()) + " msec");
+	}
+	else
+	{
+		QMessageBox::critical(this, "Error", qQuery.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 void PTMainWindow::ServerStateChanged(bool Running)
