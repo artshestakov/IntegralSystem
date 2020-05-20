@@ -53,7 +53,6 @@
   <Local Name="AboutForm.Tab.Other.ApplicationDir" Russian="Папка программы"/>
 
   <!--Messages-->
-  <Local Name="Message.Information.Reconnect.Done" Russian="Подключение к базе данных восстановлено и Вы можете продолжать работу."/>
   <Local Name="Message.Information.UpdateDownloaded" Russian="Обновление загружено!"/>
   <Local Name="Message.Information.CreatedPasswordUser" Russian="Пароль пользователя успешно изменен!"/>
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
@@ -182,7 +181,6 @@
   <Local Name="Message.Warning.FailedConnectionToPostgreSQL" Russian="Ошибка подключения к серверу базы данных: %1"/>
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
-  <Local Name="Message.Warning.QueryExceptionSyntax" Russian="ВНИМАНИЕ! Произошла ошибка SQL-запроса. Нажмите кнопку &quot;Показать подробности...&quot; и отправьте текст разработчику программы. Программа будет закрыта."/>
   <Local Name="Message.Warning.EMailIsEmpty" Russian="Адрес электронной почты не указан, отправка невозможна."/>
   <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Такая связь уже существует."/>
   <Local Name="Message.Warning.NotAccess.Create" Russian="У Вас нет прав на добавление данных в таблицу &quot;%1&quot;."/>
@@ -208,7 +206,6 @@
   <Local Name="Message.Warning.NotCopyAlienStorageFiles" Russian="Создавать копии чужих файлов запрещено."/>
   <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
   <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
-  <Local Name="Message.Question.Reconnect" Russian="Соединение к базе данных потеряно. Произвести переподключение?"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
@@ -349,9 +346,6 @@
   <Local Name="ProtocolCard" Russian="Протокол карточки"/>
   <Local Name="ProtocolUser" Russian="Протокол пользователя"/>
   <Local Name="HistoryEditing" Russian="История изменений"/>
-  <Local Name="ConnectionDatabaseLost" Russian="Связь с базой данных потеряна."/>
-  <Local Name="ReconnectText" Russian="Попытка подключиться %1..."/>
-  <Local Name="ReconnectToDatabase" Russian="Переподключение к базе данных"/>
   <Local Name="DatabaseSize" Russian="Размер базы данных"/>
   <Local Name="TableSize" Russian="Размер таблицы"/>
   <Local Name="ConnectingToServer" Russian="Подключение к серверу..."/>
@@ -610,7 +604,6 @@
   <Local Name="EscortRecordsInNextTables" Russian="Эскортные записи из следующих таблиц"/>
   <Local Name="WhatDoYouWantToSay" Russian="Что Вы хотите сказать?"/>
   <Local Name="SavedSetting" Russian="Сохранение настроек..."/>
-  <Local Name="ProgramWillExit" Russian="Программа будет закрыта."/>
   <Local Name="PressEscapeToExit" Russian="Нажмите клавишу Escape для выхода из программы."/>
   <Local Name="ClickRightButtonMouseForCallContextMenu" Russian="Кликните правой клавишей мыши чтобы вызвать контекстное меню."/>
   <Local Name="RegisterHasValue" Russian="Регистр вводимых символов имеет значение."/>
@@ -730,14 +723,6 @@
   <Local Name="TelephonyForm.Activity.Sign.Free" Russian="Свободен"/>
   <Local Name="TelephonyForm.Activity.Sign.Busy" Russian="Занят"/>
   <Local Name="TelephonyForm.Activity.Sign.NotRegistered" Russian="Не зарегистрирован"/>
-
-  <!--CausesReconnect-->
-  <Local Name="CausesReconnect" Russian="Причины потери связи"/>
-  <Local Name="ReconnectWaitFor" Russian="Ожидание подключения с"/>
-  <Local Name="Causes.Server.NotLocalNet" Russian="Сервер, на котором находится база данных не в локальной сети"/>
-  <Local Name="Causes.Server.NotEntered" Russian="Сервер, на котором находится база данных не включен"/>
-  <Local Name="Causes.PatchCord.NotConnected" Russian="Не подключен сетевой кабель (LAN)"/>
-  <Local Name="Causes.Service.NotEntered" Russian="Сервис базы данных на сервере отключен"/>
 
   <!--Search-->
   <Local Name="Search" Russian="Поиск"/>

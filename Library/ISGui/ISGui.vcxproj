@@ -289,7 +289,6 @@
     <ClCompile Include="ISRangeDateEdit.cpp" />
     <ClCompile Include="ISRangeDateTimeEdit.cpp" />
     <ClCompile Include="ISRangeEditBase.cpp" />
-    <ClCompile Include="ISReconnectForm.cpp" />
     <ClCompile Include="ISRecordInfoForm.cpp" />
     <ClCompile Include="ISRegisterMetaType.cpp" />
     <ClCompile Include="ISScoreObjectForm.cpp" />
@@ -494,7 +493,6 @@
     <QtMoc Include="ISPGSettingsForm.h" />
     <QtMoc Include="ISPrintForm.h" />
     <QtMoc Include="ISProtocolObjectListForm.h" />
-    <QtMoc Include="ISReconnectForm.h" />
     <QtMoc Include="ISRecordInfoForm.h" />
     <QtMoc Include="ISSearchForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />

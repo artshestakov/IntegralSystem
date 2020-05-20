@@ -1,7 +1,6 @@
 #include "ISIntegralSystem.h"
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
-#include "ISReconnectForm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISIntegralSystem::ISIntegralSystem(int &argc, char **argv) : QApplication(argc,	argv)
