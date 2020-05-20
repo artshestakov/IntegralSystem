@@ -66,7 +66,10 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port, const QString &L
 	bool Result = IsConnected();
 	if (Result)
 	{
-		CreateToken(Login, Password);
+		if (Token.empty())
+		{
+			CreateToken(Login, Password);
+		}
 	}
 	return Result;
 }

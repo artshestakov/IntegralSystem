@@ -30,7 +30,7 @@ void PTThreadWorker::Start(quint16 port)
 //-----------------------------------------------------------------------------
 void PTThreadWorker::run()
 {
-	bool Result = ISDatabase::Instance().Connect("TestingConnection", "127.0.0.1", 5432, "oilsphere_db", Login, Password);
+	bool Result = ISDatabase::Instance().Connect(CONNECTION_TESTING, "127.0.0.1", 5432, "oilsphere_db", Login, Password);
 	if (!Result)
 	{
 		ErrorString = ISDatabase::Instance().GetErrorString();
@@ -49,6 +49,6 @@ void PTThreadWorker::run()
 	}
 	emit StateChanged(Result);
 	exec();
-	ISDatabase::Instance().Disconnect("TestingConnection");
+	ISDatabase::Instance().Disconnect(CONNECTION_TESTING);
 }
 //-----------------------------------------------------------------------------

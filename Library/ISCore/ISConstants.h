@@ -132,6 +132,7 @@ const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_PATTERN_ACITIVITY[] = "PatternActivityDB";
 const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearchDB";
 const char CONNECTION_QUERY_POOL[] = "QueryPoolDB";
+const char CONNECTION_TESTING[] = "TestingDB";
 //-----------------------------------------------------------------------------
 const char		SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char		FIGURES_STRING[] = "0123456789";
@@ -173,7 +174,7 @@ const int		CARAT_TIMEOUT_INCOMING_QUERY = 5000; //Таймаут ожидания входящего зап
 const int		CARAT_TIMEOUT_STARTED_WORKER = 5000; //Таймаут ожидания запуска воркера
 const quint16	CARAT_DEFAULT_PORT = 50000; //Стандартный порт
 const char		CARAT_CONTROLLER_PORT[] = "{9C3430ED-17E2-49C6-AD58-83140981C3C5}"; //Порт для контроллера воркеров
-//-----------------------------------------------------------------------------
+//CARAT_API--------------------------------------------------------------------
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_TEST_QUERY[] = "TestQuery"; //Тестовый запрос
 const char		API_SLEEP[] = "Sleep"; //Ожидание

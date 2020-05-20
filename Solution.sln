@@ -120,6 +120,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigTemplate", "ConfigTemplate", "{0E0DF063-6722-4FD3-9334-A6AF7BBD2C14}"
 	ProjectSection(SolutionItems) = preProject
 		Resources\ConfigTemplate\Client.ini = Resources\ConfigTemplate\Client.ini
+		Resources\ConfigTemplate\ProtocolTest.ini = Resources\ConfigTemplate\ProtocolTest.ini
 		Resources\ConfigTemplate\Server.ini = Resources\ConfigTemplate\Server.ini
 	EndProjectSection
 EndProject
