@@ -124,7 +124,7 @@ void ISTcpServerWorker::ReadyRead()
 		TcpAnswer.SetError("Query is not a valid");
 		ISLOGGER_E("Query is not a valid");
 	}
-	Send(TcpSocket, TcpAnswer);
+	Send(TcpSocket, Token, TcpAnswer);
 
 	//Очищаем буфер и его размер
 	Buffer.clear();
@@ -153,7 +153,16 @@ bool ISTcpServerWorker::CheckField(const QVariantMap &Parameters, const ISVector
 void ISTcpServerWorker::TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
     Q_UNUSED(Parameters);
-	TcpAnswer["DateTime"] = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V2);
+	QFile File("C:/Shara/book.txt");
+	if (File.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		TcpAnswer["Data"] = File.readAll();
+		File.close();
+	}
+	else
+	{
+		TcpAnswer.SetError(File.errorString());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)

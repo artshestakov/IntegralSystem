@@ -85,10 +85,7 @@ int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 		int Result = Digits.toInt(&Ok);
 		if (Ok)
 		{
-			if (Result == ByteArray.size()) //Если найденный размер соответствует реальному размеру пакета - возвращаем его, иначе - ошибка
-			{
-				return Result;
-			}
+			return Result;
 		}
 	}
 	return 0;

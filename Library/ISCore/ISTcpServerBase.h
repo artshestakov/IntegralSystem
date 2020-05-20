@@ -21,7 +21,7 @@ public:
 
 protected:
 	void SetErrorString(const QString &error_string);
-	void Send(QTcpSocket *TcpSocket, const QVariantMap &Data); //Отправка данных
+	void Send(QTcpSocket *TcpSocket, std::vector<unsigned char> &Token, const QVariantMap &Data); //Отправка данных
 	void SendError(QTcpSocket *TcpSocket, const QString &ErrorString); //Отправка ошибки
 	bool IsModeTest() const;
 

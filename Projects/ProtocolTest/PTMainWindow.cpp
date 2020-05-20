@@ -209,8 +209,9 @@ void PTMainWindow::Send()
 	bool Result = qQuery.Execute();
 	if (Result)
 	{
+		int Msec = CountingTime.Elapsed();
 		TextEdit->append(ISSystem::VariantMapToJsonString(qQuery.GetAnswer()));
-		TextEdit->append("Query OK: " + QString::number(CountingTime.Elapsed()) + " msec");
+		TextEdit->append("Query OK: " + QString::number(Msec) + " msec");
 	}
 	else
 	{

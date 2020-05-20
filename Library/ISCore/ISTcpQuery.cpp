@@ -80,6 +80,11 @@ bool ISTcpQuery::Execute()
 		}
 	}
 
+	if (DecryptAnswer)
+	{
+		ByteArray = ISTcp::Decrypt(ISTcpConnector::Instance().GetToken(), ByteArray);
+	}
+
 	//Проверяем валидность ответа
 	if (!ISTcp::IsValidAnswer(ByteArray, TcpAnswer, ErrorString))
 	{

@@ -300,7 +300,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	//Формируем ответ с портом и отправляем его
 	ISTcpAnswer TcpAnswer;
 	TcpAnswer["Port"] = StringPort;
-	Send(TcpSocket, TcpAnswer);
+	Send(TcpSocket, std::vector<unsigned char>(), TcpAnswer);
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password, const QString &Key)

@@ -3,6 +3,7 @@
 #include "ISSystem.h"
 #include "ISTcpAnswer.h"
 #include "ISLogger.h"
+#include "ISTcp.h"
 //-----------------------------------------------------------------------------
 ISTcpServerBase::ISTcpServerBase(QObject *parent)
 	: QTcpServer(parent),
@@ -46,18 +47,26 @@ void ISTcpServerBase::SetErrorString(const QString &error_string)
 	ErrorString = error_string;
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
+void ISTcpServerBase::Send(QTcpSocket *TcpSocket, std::vector<unsigned char> &Token, const QVariantMap &Data)
 {
 	//Если сокет все ещё подключен - отправляем
 	if (TcpSocket->state() == QTcpSocket::ConnectedState)
 	{
-		//Сборка запроса
-		QString String = ISSystem::VariantMapToJsonString(Data).simplified();
-		String.insert(0, SYMBOL_POINT);
-		String.insert(0, QString::number(String.size() - 1));
+		QByteArray ByteArray;
+		if (Token.empty()) //Если ключа нет - не шифруем
+		{
+			ByteArray = ISSystem::VariantMapToJsonString(Data).toUtf8();
+			int Size = ByteArray.size();
+			ByteArray.insert(0, SYMBOL_POINT);
+			ByteArray.insert(0, QString::number(Size));
+		}
+		else //Иначе шифруем
+		{
+			ByteArray = ISTcp::Crypt(Token, Data);
+		}
 
 		//Отправка запроса
-		TcpSocket->write(String.toUtf8());
+		TcpSocket->write(ByteArray);
 		TcpSocket->flush();
 
 		//Ждём пока данные уйдут
@@ -72,7 +81,7 @@ void ISTcpServerBase::SendError(QTcpSocket *TcpSocket, const QString &ErrorStrin
 	TcpAnswer.SetError(ErrorString);
 
 	//Отправляем и обрываем соединение
-	Send(TcpSocket, TcpAnswer);
+	Send(TcpSocket, std::vector<unsigned char>(), TcpAnswer);
 	TcpSocket->abort();
 	ISLOGGER_E(ErrorString);
 }
