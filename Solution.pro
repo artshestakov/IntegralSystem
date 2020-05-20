@@ -7,7 +7,6 @@ SUBDIRS += Library/ISCarat
 SUBDIRS += Projects/Carat
 SUBDIRS += Projects/CaratWorker
 SUBDIRS += Projects/Configurator
-SUBDIRS += Projects/ClientApplication
 
 SUBDIRS += Projects/CaratAsteriskQueue
 SUBDIRS += Projects/CaratAsteriskRecord
