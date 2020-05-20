@@ -6,7 +6,6 @@
 #include "ISLogger.h"
 #include "ISCountingTime.h"
 #include "ISAssert.h"
-#include "ISException.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(const QString &sql_text, bool prepare)
@@ -55,7 +54,7 @@ bool ISQuery::Prepare(const QString &sql_text)
     Prepared = SqlQuery.prepare(sql_text);
     if (!Prepared)
     {
-        Raise();
+        ErrorString = SqlQuery.lastError().databaseText();
     }
     return Prepared;
 }
@@ -84,7 +83,7 @@ bool ISQuery::Execute()
 
     if (!Result)
     {
-        Raise();
+		ErrorString = SqlQuery.lastError().databaseText();
     }
     return Result;
 }
@@ -106,7 +105,7 @@ bool ISQuery::Execute(const QString &sql_text)
 
     if (!Result)
     {
-        Raise();
+		ErrorString = SqlQuery.lastError().databaseText();
     }
     return Result;
 }
@@ -125,8 +124,12 @@ bool ISQuery::Execute(QSqlDatabase &sql_database, const QString &sql_text)
             ISLOGGER_W(QString("Long query %1 msec: %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
-    Raise();
-    return SqlQuery.lastError().type() == QSqlError::NoError;
+	bool Result = SqlQuery.lastError().type() == QSqlError::NoError;
+	if (!Result)
+	{
+		ErrorString = SqlQuery.lastError().databaseText();
+	}
+    return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::ExecuteFirst()
@@ -178,7 +181,7 @@ bool ISQuery::Next()
     bool Result = SqlQuery.next();
     if (!Result)
     {
-        Raise();
+		ErrorString = SqlQuery.lastError().databaseText();
     }
     return Result;
 }
@@ -188,7 +191,7 @@ bool ISQuery::First()
     bool Result = SqlQuery.first();
     if (!Result)
     {
-        Raise();
+		ErrorString = SqlQuery.lastError().databaseText();
     }
     return Result;
 }
@@ -199,7 +202,10 @@ QSqlRecord ISQuery::GetRecord()
     {
         return SqlQuery.record();
     }
-    Raise();
+	else
+	{
+		ErrorString = SqlQuery.lastError().databaseText();
+	}
     return QSqlRecord();
 }
 //-----------------------------------------------------------------------------
@@ -252,27 +258,6 @@ int ISQuery::GetCountAffected() const
 void ISQuery::SetShowLongQuery(bool show_long_query)
 {
     ShowLongQuery = show_long_query;
-}
-//-----------------------------------------------------------------------------
-void ISQuery::Raise()
-{
-    if (SqlQuery.lastError().type() != QSqlError::NoError)
-    {
-		ErrorString = SqlQuery.lastError().databaseText();
-        ISLOGGER_E(ErrorString);
-
-        //Если в данный момент запущен графический интерфейс - выбрасываем исключения
-        //потому они будут в дальнейшем перехвачены
-        //Посылать исключения в конфигураторе или карате смысла нет, потому что они
-        //консольные и достаточно просто их залогировать
-        if (ISDefines::Core::IS_GUI)
-        {
-            if (SqlQuery.lastError().type() == QSqlError::ConnectionError)
-            {
-				throw ISExceptionConnectionDB();
-            }
-        }
-    }
 }
 //-----------------------------------------------------------------------------
 void ISQuery::PrepareColumnIndices()

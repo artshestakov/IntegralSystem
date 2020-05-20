@@ -189,9 +189,6 @@
     <ClCompile Include="ISDefinesCore.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISException.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISLocalization.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -370,9 +367,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDefinesCore.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISException.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISLocalization.h">

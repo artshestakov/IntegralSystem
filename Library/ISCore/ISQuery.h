@@ -45,7 +45,6 @@ public:
     void SetShowLongQuery(bool show_long_query);
 
 private:
-    void Raise();
     void PrepareColumnIndices();
 
 private:

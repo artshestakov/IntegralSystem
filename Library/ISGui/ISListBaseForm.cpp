@@ -40,7 +40,6 @@
 #include "ISPeriodForm.h"
 #include "ISQueryPool.h"
 #include "ISGui.h"
-#include "ISException.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
@@ -798,15 +797,8 @@ void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
 	ListIndicatorWidget->hide();
 	ToolBar->setEnabled(true);
 
-	if (SqlError.type() == QSqlError::ConnectionError)
-	{
-		throw ISExceptionConnectionDB(SqlError.text());
-	}
-	else
-	{
-		ISLOGGER_W(SqlError.text());
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text());
-	}
+	ISLOGGER_W(SqlError.text());
+	ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QString &QueryText)
@@ -816,15 +808,8 @@ void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QStr
 	ListIndicatorWidget->hide();
 	ToolBar->setEnabled(true);
 
-	if (SqlError.type() == QSqlError::ConnectionError)
-	{
-		throw ISExceptionConnectionDB(SqlError.text());
-	}
-	else
-	{
-		ISLOGGER_W(SqlError.text());
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text(), QueryText);
-	}
+	ISLOGGER_W(SqlError.text());
+	ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text(), QueryText);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Create()
