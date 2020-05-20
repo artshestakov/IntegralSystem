@@ -13,6 +13,7 @@ EVMainWindow::EVMainWindow(const QString &PathCrashFile, QWidget *parent) : QWid
 {
 	setWindowFlags(Qt::WindowStaysOnTopHint);
 	setMinimumSize(QSize(700, 500));
+	setWindowTitle("IntegralSystem");
 
 	QVBoxLayout *MainLayout = new QVBoxLayout();
 	setLayout(MainLayout);

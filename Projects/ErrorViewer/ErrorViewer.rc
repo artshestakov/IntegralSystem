@@ -26,7 +26,7 @@ END
 
 #endif
 
-IDI_ICON1 ICON "..\..\Resources\Icons\ErrorViewer.ico"
+IDI_ICON1 ICON "..\..\Resources\Icons\IntegralSystem.ico"
 
 VS_VERSION_INFO VERSIONINFO
  FILEFLAGSMASK 0x3fL
