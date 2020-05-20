@@ -22,7 +22,6 @@ protected:
 	void closeEvent(QCloseEvent *e) override;
 	void EscapeClicked() override;
 	void EnterClicked() override;
-	void Hide();
 	
 	bool CheckExistField(const QString &FieldName) const;
 	void LoadFields(); //«агрузка доступных полей дл€ поиск в список

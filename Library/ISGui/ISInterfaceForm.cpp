@@ -8,7 +8,6 @@
 ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	: QWidget(parent, Flags),
 	LabelShadow(nullptr),
-	AnimationShow(nullptr),
 	FlashingTimer(nullptr),
 	ShowedFlag(false),
 	FormUID(ISSystem::GenerateUuid())
@@ -51,64 +50,11 @@ ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	ActionControlReturn->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
 	connect(ActionControlReturn, &QAction::triggered, this, &ISInterfaceForm::ControlEnterClicked);
 	addAction(ActionControlReturn);
-
-	AnimationShow = new QPropertyAnimation(this, "windowOpacity", this);
-	connect(AnimationShow, &QPropertyAnimation::finished, this, &ISInterfaceForm::show);
-
-	AnimationHide = new QPropertyAnimation(this, "windowOpacity", this);
-	connect(AnimationHide, &QPropertyAnimation::finished, this, &ISInterfaceForm::hide);
 }
 //-----------------------------------------------------------------------------
 ISInterfaceForm::~ISInterfaceForm()
 {
 	
-}
-//-----------------------------------------------------------------------------
-void ISInterfaceForm::ShowAnimated(bool maximized, int duration)
-{
-	setWindowOpacity(0.0);
-	
-	if (maximized)
-	{
-		showMaximized();
-	}
-	else
-	{
-		show();
-	}
-
-	AnimationShow->setStartValue(windowOpacity());
-	AnimationShow->setEndValue(1.0);
-
-	if (duration)
-	{
-		AnimationShow->setDuration(duration);
-	}
-	else
-	{
-		AnimationShow->setDuration(DURATION_SHOW_HIDE_ANIMATION);
-	}
-
-	AnimationShow->start();
-}
-//-----------------------------------------------------------------------------
-void ISInterfaceForm::HideAnimation(int duration)
-{
-	setWindowOpacity(1.0);
-
-	AnimationHide->setStartValue(windowOpacity());
-	AnimationHide->setEndValue(0.0);
-
-	if (duration)
-	{
-		AnimationHide->setDuration(duration);
-	}
-	else
-	{
-		AnimationHide->setDuration(DURATION_SHOW_HIDE_ANIMATION);
-	}
-
-	AnimationHide->start();
 }
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::SetVisibleShadow(bool Visible)
@@ -146,7 +92,6 @@ void ISInterfaceForm::showEvent(QShowEvent *e)
 		ShowedFlag = true;
 		AfterShowEvent();
 	}
-	emit Showed();
 }
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::resizeEvent(QResizeEvent *e)

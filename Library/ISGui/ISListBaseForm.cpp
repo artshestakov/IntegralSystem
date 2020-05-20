@@ -1074,7 +1074,7 @@ void ISListBaseForm::Search()
 			ISProtocol::Insert(true, CONST_UID_PROTOCOL_SEARCH, MetaTable->Name, MetaTable->LocalListName, QVariant());
 		});
 	}
-	SearchForm->ShowAnimated(false, DURATION_SHOW_HIDE_SEARCH_FORM);
+	SearchForm->show();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SearchClear()

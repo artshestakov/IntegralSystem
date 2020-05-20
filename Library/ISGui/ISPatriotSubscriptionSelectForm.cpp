@@ -16,14 +16,14 @@ static QString QS_SUBSCRIPTION = PREPARE_QUERY2("SELECT sbsr_id, sbtp_name, sbtp
 											   "AND sbsr_client = (SELECT card_client FROM card WHERE card_barcode = :Barcode) "
 											   "ORDER BY sbsr_id");
 //-----------------------------------------------------------------------------
-ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &Barcode) : ISInterfaceDialogForm()
+ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &Barcode)
+	: ISInterfaceDialogForm(),
+	ButtonGroup(new QButtonGroup(this))
 {
 	setWindowTitle(LANG("Patriot.SubscriptionSelect"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
 	GetMainLayout()->addWidget(new QLabel(LANG("Patriot.SelectSebscriptionClientForVisit") + ':', this));
-
-	ButtonGroup = new QButtonGroup(this);
 
 	QFormLayout *FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);
@@ -58,7 +58,6 @@ ISPatriotSubscriptionSelectForm::ISPatriotSubscriptionSelectForm(const QString &
 				PushButton->setText(LANG("Patriot.OpenVisit"));
 				connect(PushButton, &ISPushButton::clicked, this, &ISPatriotSubscriptionSelectForm::OpenVisit);
 			}
-			
 			FormLayout->addRow(Label, PushButton);
 			ButtonGroup->addButton(PushButton, ID);
 		}

@@ -33,12 +33,6 @@ bool ISInterfaceDialogForm::Exec()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISInterfaceDialogForm::ExecAnimated()
-{
-	ShowAnimated();
-	return Exec();
-}
-//-----------------------------------------------------------------------------
 void ISInterfaceDialogForm::closeEvent(QCloseEvent *CloseEvent)
 {
 	ISInterfaceForm::closeEvent(CloseEvent);

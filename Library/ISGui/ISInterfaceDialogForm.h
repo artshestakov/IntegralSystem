@@ -16,7 +16,6 @@ public:
 	virtual ~ISInterfaceDialogForm();
 	
 	virtual bool Exec();
-	virtual bool ExecAnimated();
 
 protected:
 	virtual void closeEvent(QCloseEvent *CloseEvent);

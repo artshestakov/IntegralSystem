@@ -195,7 +195,7 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 	ISGui::SetWaitGlobalCursor(true);
 	ISIncomingCallBaseForm *IncomingCallForm = ISAlgorithm::CreatePointer<ISIncomingCallBaseForm *>(ISObjects::GetInstance().GetInfo().IncomingCallForm, Q_ARG(const QVariantMap &, VariantMap));
 	ISGui::SetWaitGlobalCursor(false);
-	IncomingCallForm->ExecAnimated();
+	IncomingCallForm->Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)

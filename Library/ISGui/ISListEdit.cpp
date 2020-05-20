@@ -196,7 +196,7 @@ void ISListEdit::ShowPopup()
 	}
 
 	ListEditPopup->move(PointNew);
-	ListEditPopup->ShowAnimated(false, 300);
+	ListEditPopup->show();
 }
 //-----------------------------------------------------------------------------
 void ISListEdit::HidedPopup()

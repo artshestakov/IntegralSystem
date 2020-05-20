@@ -33,7 +33,6 @@ protected:
 	void ItemClicked(QListWidgetItem *ListWidgetItem); //Выбор позиции
 	void Add(); //Добавить запись
 	void LoadDataFromQuery(); //Загрузка справочника
-	void Hide();
 	void EnterClicked() override;
 	void EscapeClicked() override;
 

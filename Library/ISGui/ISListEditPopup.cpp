@@ -13,9 +13,10 @@
 #include "ISGui.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox) : ISInterfaceForm(ComboBox)
+ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
+	: ISInterfaceForm(ComboBox),
+	MetaForeign(meta_foreign)
 {
-	MetaForeign = meta_foreign;
 	MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);
 
 	setWindowFlags(Qt::Popup);
@@ -71,7 +72,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox) 
 	ButtonHide->setText(LANG("Hide"));
 	ButtonHide->setIcon(BUFFER_ICONS("ArrowUp"));
 	ButtonHide->setFlat(true);
-	connect(ButtonHide, &ISPushButton::clicked, this, &ISListEditPopup::Hide);
+	connect(ButtonHide, &ISPushButton::clicked, this, &ISListEditPopup::hide);
 	StatusBar->addPermanentWidget(ButtonHide);
 
 	LabelEmpty = new QLabel(this);
@@ -89,11 +90,9 @@ ISListEditPopup::~ISListEditPopup()
 void ISListEditPopup::showEvent(QShowEvent *e)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	
 	LoadDataFromQuery();
 	LineEdit->SetFocus();
 	ISInterfaceForm::showEvent(e);
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
@@ -114,8 +113,7 @@ void ISListEditPopup::paintEvent(QPaintEvent *e)
 
 	if (LabelEmpty->isVisible())
 	{
-		QRect Rect = ListWidget->frameGeometry();
-		QPoint CenterPoint = Rect.center();
+		QPoint CenterPoint = ListWidget->frameGeometry().center();
 		CenterPoint.setX(CenterPoint.x() - (LabelEmpty->width() / 2));
 		CenterPoint.setY(CenterPoint.y() - (LabelEmpty->height() / 2));
 		LabelEmpty->move(CenterPoint);
@@ -146,9 +144,17 @@ void ISListEditPopup::ClearSqlFilter()
 void ISListEditPopup::Search(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
-
 	QString SearchValue = value.toString().toLower();
-	if (SearchValue.length())
+	if (SearchValue.isEmpty())
+	{
+		for (int i = 0; i < ListWidget->count(); ++i)
+		{
+			ListWidget->setItemHidden(ListWidget->item(i), false);
+		}
+		LabelSearch->setVisible(false);
+		LabelSearch->clear();
+	}
+	else
 	{
 		int Founded = 0;
 		for (int i = 0; i < ListWidget->count(); ++i)
@@ -171,33 +177,21 @@ void ISListEditPopup::Search(const QVariant &value)
 			ListWidget->setItemSelected(ListWidgetItem, true);
 			ListWidget->setCurrentItem(ListWidgetItem);
 		}
-
 		LabelSearch->setVisible(true);
 		LabelSearch->setText(LANG("Founded") + ": " + QString::number(Founded));
 	}
-	else
-	{
-		for (int i = 0; i < ListWidget->count(); ++i)
-		{
-			ListWidget->setItemHidden(ListWidget->item(i), false);
-		}
-
-		LabelSearch->setVisible(false);
-		LabelSearch->clear();
-	}
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::ItemClicked(QListWidgetItem *ListWidgetItem)
 {
 	emit Selected(ListWidgetItem->data(Qt::UserRole), ListWidgetItem->text());
-	Hide();
+	hide();
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::Add()
 {
-	Hide();
+	hide();
 	ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTableForeign->Name)->show();
 }
 //-----------------------------------------------------------------------------
@@ -213,7 +207,6 @@ void ISListEditPopup::LoadDataFromQuery()
 	if (qSelect.Execute())
 	{
 		QListWidgetItem *CurrentItem = nullptr;
-
 		while (qSelect.Next())
 		{
 			QVariant ID = qSelect.ReadColumn("ID");
@@ -237,16 +230,10 @@ void ISListEditPopup::LoadDataFromQuery()
 			CurrentItem->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 			CurrentItem->setSelected(true);
 		}
-
 		LabelCountRow->setText(LANG("RecordsCount") + ": " + QString::number(ListWidget->count()));
 	}
 
 	LabelEmpty->setVisible(!ListWidget->count());
-}
-//-----------------------------------------------------------------------------
-void ISListEditPopup::Hide()
-{
-	HideAnimation(300);
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::EnterClicked()
@@ -260,6 +247,6 @@ void ISListEditPopup::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISListEditPopup::EscapeClicked()
 {
-	Hide();
+	hide();
 }
 //-----------------------------------------------------------------------------

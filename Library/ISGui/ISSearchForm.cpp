@@ -70,7 +70,7 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent) : ISInterfac
 
 	ButtonHide = new ISPushButton(this);
 	ButtonHide->setText(LANG("Search.HideForm"));
-	connect(ButtonHide, &ISPushButton::clicked, this, &ISSearchForm::Hide);
+	connect(ButtonHide, &ISPushButton::clicked, this, &ISSearchForm::hide);
 	LayoutBottom->addWidget(ButtonHide);
 
 	LoadFields();
@@ -84,12 +84,12 @@ ISSearchForm::~ISSearchForm()
 void ISSearchForm::closeEvent(QCloseEvent *e)
 {
 	e->ignore();
-	Hide();
+	hide();
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::EscapeClicked()
 {
-	Hide();
+	hide();
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::EnterClicked()
@@ -98,11 +98,6 @@ void ISSearchForm::EnterClicked()
 	{
 		Search();
 	}
-}
-//-----------------------------------------------------------------------------
-void ISSearchForm::Hide()
-{
-	HideAnimation(DURATION_SHOW_HIDE_SEARCH_FORM);
 }
 //-----------------------------------------------------------------------------
 bool ISSearchForm::CheckExistField(const QString &FieldName) const

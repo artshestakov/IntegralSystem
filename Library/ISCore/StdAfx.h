@@ -93,7 +93,6 @@
 #include <QtCore/QTranslator>
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QItemSelectionModel>
-#include <QtCore/QPropertyAnimation>
 //-----------------------------------------------------------------------------
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQueryModel>

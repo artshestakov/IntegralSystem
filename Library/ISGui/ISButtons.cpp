@@ -211,7 +211,7 @@ void ISButtonNotify::Clicked()
 	NotificationsForm->adjustSize();
 	NotificationsForm->move(QPoint(mapToGlobal(QPoint()).x(), mapToGlobal(QPoint()).y() + height()));
 	connect(NotificationsForm, &ISNotificationsForm::CountChanged, this, &ISButtonNotify::SetCountNotify);
-	NotificationsForm->ShowAnimated(false, 400);
+	NotificationsForm->show();
 
 	ISGui::SetWaitGlobalCursor(false);
 }

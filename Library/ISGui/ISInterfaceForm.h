@@ -12,19 +12,11 @@ class ISGUI_EXPORT	ISInterfaceForm : public QWidget
 
 	Q_PROPERTY(ISUuid FormUID READ GetFormUID)
 
-signals:
-	void AnimationFinished();
-	void Showed();
-
 public:
 	ISInterfaceForm(QWidget *parent = 0, Qt::WindowFlags Flags = 0);
 	virtual ~ISInterfaceForm();
 
-	void ShowAnimated(bool maximized = false, int duration = 0);
-	void HideAnimation(int duration = 0);
-
 	void SetVisibleShadow(bool Visible); //Изменить видимость тени
-
 	ISUuid GetFormUID() const; //Получить уникальный идентификатор формы
 
 protected:
@@ -49,12 +41,7 @@ protected:
 private:
 	QVBoxLayout *MainLayout;
 	QLabel *LabelShadow;
-
-	QPropertyAnimation *AnimationShow;
-	QPropertyAnimation *AnimationHide;
-	
 	QTimer *FlashingTimer;
-
 	bool ShowedFlag;
 	ISUuid FormUID;
 };
