@@ -164,7 +164,6 @@ COPY $(SolutionDir)Components\Crypter\$(Configuration)-$(Platform)\libCrypter.dl
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
-    <ClCompile Include="ISTcpQueryAuth.cpp" />
     <ClCompile Include="ISTcpServerCarat.cpp" />
     <ClCompile Include="ISTcpServerBase.cpp" />
     <ClCompile Include="ISTcpServerWorker.cpp" />
@@ -207,7 +206,6 @@ COPY $(SolutionDir)Components\Crypter\$(Configuration)-$(Platform)\libCrypter.dl
     <ClInclude Include="ISTcpQuery.h" />
     <QtMoc Include="ISTcpServerCarat.h" />
     <QtMoc Include="ISTcpServerWorker.h" />
-    <ClInclude Include="ISTcpQueryAuth.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="ISTypes.h" />

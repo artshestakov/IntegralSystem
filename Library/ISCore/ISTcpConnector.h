@@ -15,14 +15,14 @@ public:
 	QTcpSocket* GetSocket(); //Получить указатель на сокет
 	const std::vector<unsigned char> GetToken() const; //Получить токен
 	bool IsConnected() const; //Проверить наличие соединения
-	bool Reconnect(const QString &Host, quint16 Port, const QString &Login, const QString &Password); //Переподключение
-	bool Connect(const QString &Host, quint16 Port, const QString &Login, const QString &Password); //Подключение
+	bool Reconnect(const QString &Host, quint16 Port); //Переподключение
+	bool Connect(const QString &Host, quint16 Port); //Подключение
 	void Disconnect(); //Отключение
 
 private:
 	void Timeout();
 	void Error(QTcpSocket::SocketError socket_error);
-	bool CreateToken(const QString &Login, const QString &Password); //Создание токена
+	bool CreateToken(); //Создание токена
 	bool SendToken(); //Отправка токена
 
 private:

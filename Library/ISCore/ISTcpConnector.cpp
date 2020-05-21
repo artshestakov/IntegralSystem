@@ -51,16 +51,16 @@ bool ISTcpConnector::IsConnected() const
 	return TcpSocket->state() == QTcpSocket::ConnectedState;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpConnector::Reconnect(const QString &Host, quint16 Port, const QString &Login, const QString &Password)
+bool ISTcpConnector::Reconnect(const QString &Host, quint16 Port)
 {
 	if (IsConnected())
 	{
 		Disconnect();
 	}
-	return Connect(Host, Port, Login, Password);
+	return Connect(Host, Port);
 }
 //-----------------------------------------------------------------------------
-bool ISTcpConnector::Connect(const QString &Host, quint16 Port, const QString &Login, const QString &Password)
+bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 {
 	Timer->start();
 	TcpSocket->connectToHost(Host, Port);
@@ -70,7 +70,7 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port, const QString &L
 	{
 		if (Token.empty()) //Если токен ещё не существует - генерируем его
 		{
-			Result = CreateToken(Login, Password);
+			Result = CreateToken();
 			if (Result) //Токен успешно сгенерирован
 			{
 				Result = SendToken();
@@ -109,12 +109,8 @@ void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
 	EventLoop.quit();
 }
 //-----------------------------------------------------------------------------
-bool ISTcpConnector::CreateToken(const QString &Login, const QString &Password)
+bool ISTcpConnector::CreateToken()
 {
-	//QString TokenString = ISSystem::StringToMD5(ISSystem::StringToMD5(Login + QString::number(TcpSocket->localPort())) + ISSystem::StringToMD5(Password + Login));
-	//std::string TokenSTD = TokenString.toStdString();
-	//Token = std::vector<unsigned char>(TokenSTD.begin(), TokenSTD.end());
-
 	HINSTANCE HModule = LoadLibrary(ISDefines::Core::PATH_LIB_CRYPTER.toStdString().c_str());
 	if (HModule == NULL) //Ошибка загрузки библиотеки
 	{
@@ -162,8 +158,18 @@ bool ISTcpConnector::SendToken()
 	QByteArray TokenData = File.readAll();
 	File.close();
 
-	TcpSocket->write(TokenData);
-	TcpSocket->flush();
+	quint64 WritedSize = TcpSocket->write(TokenData);
+	if (WritedSize != TokenData.size())
+	{
+		ErrorString = "Error sending token: sended size not equal token data size";
+		return false;
+	}
+
+	if (!TcpSocket->flush())
+	{
+		ErrorString = "Error flush sending data";
+		return false;
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

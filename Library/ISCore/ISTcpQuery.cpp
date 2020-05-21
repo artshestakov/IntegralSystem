@@ -8,8 +8,7 @@
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
 	: ErrorString(NO_ERROR_STRING),
-	QueryType(query_type),
-	DecryptAnswer(true)
+	QueryType(query_type)
 {
 	
 }
@@ -22,11 +21,6 @@ ISTcpQuery::~ISTcpQuery()
 QString ISTcpQuery::GetErrorString() const
 {
 	return ErrorString;
-}
-//-----------------------------------------------------------------------------
-void ISTcpQuery::SetDecryptAnswer(bool decrypt_answer)
-{
-	DecryptAnswer = decrypt_answer;
 }
 //-----------------------------------------------------------------------------
 void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &ParameterValue)
@@ -80,10 +74,7 @@ bool ISTcpQuery::Execute()
 		}
 	}
 
-	if (DecryptAnswer)
-	{
-		ByteArray = ISTcp::Decrypt(ISTcpConnector::Instance().GetToken(), ByteArray);
-	}
+	ByteArray = ISTcp::Decrypt(ISTcpConnector::Instance().GetToken(), ByteArray);
 
 	//Проверяем валидность ответа
 	if (!ISTcp::IsValidAnswer(ByteArray, TcpAnswer, ErrorString))

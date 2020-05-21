@@ -21,7 +21,6 @@ private:
 	QString QueryType;
 	QVariantMap Parameters;
 	QVariantMap TcpAnswer;
-	bool DecryptAnswer; //Флаг отвечающий за дешифрацию ответа
 };
 //-----------------------------------------------------------------------------
 #endif
