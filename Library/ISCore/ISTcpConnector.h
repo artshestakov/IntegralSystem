@@ -22,7 +22,7 @@ public:
 private:
 	void Timeout();
 	void Error(QTcpSocket::SocketError socket_error);
-	void CreateToken(const QString &Login, const QString &Password);
+	bool CreateToken(const QString &Login, const QString &Password);
 
 private:
 	ISTcpConnector();
@@ -36,6 +36,7 @@ private:
 	QEventLoop EventLoop;
 	QTimer *Timer;
 	std::vector<unsigned char> Token;
+	QString Token2;
 };
 //-----------------------------------------------------------------------------
 #endif

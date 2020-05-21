@@ -3,6 +3,8 @@
 #include "ISCountingTime.h"
 #include "ISAes256.h"
 #include "ISSystem.h"
+#include "ISDefinesCore.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISTcpConnector::ISTcpConnector()
 	: QObject(),
@@ -20,13 +22,13 @@ ISTcpConnector::ISTcpConnector()
 //-----------------------------------------------------------------------------
 ISTcpConnector::~ISTcpConnector()
 {
-	
+
 }
 //-----------------------------------------------------------------------------
 ISTcpConnector& ISTcpConnector::Instance()
 {
-    static ISTcpConnector TcpConnector;
-    return TcpConnector;
+	static ISTcpConnector TcpConnector;
+	return TcpConnector;
 }
 //-----------------------------------------------------------------------------
 QString ISTcpConnector::GetErrorString() const
@@ -94,15 +96,47 @@ void ISTcpConnector::Timeout()
 //-----------------------------------------------------------------------------
 void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
 {
-    Q_UNUSED(socket_error);
+	Q_UNUSED(socket_error);
 	ErrorString = TcpSocket->errorString();
 	EventLoop.quit();
 }
 //-----------------------------------------------------------------------------
-void ISTcpConnector::CreateToken(const QString &Login, const QString &Password)
+bool ISTcpConnector::CreateToken(const QString &Login, const QString &Password)
 {
 	QString TokenString = ISSystem::StringToMD5(ISSystem::StringToMD5(Login + QString::number(TcpSocket->localPort())) + ISSystem::StringToMD5(Password + Login));
 	std::string TokenSTD = TokenString.toStdString();
 	Token = std::vector<unsigned char>(TokenSTD.begin(), TokenSTD.end());
+
+	HINSTANCE HModule = LoadLibrary("C:\\Github\\Crypter\\Bin\\Release-Win32\\libCrypter.dll");
+	if (HModule == NULL) //Ошибка загрузки библиотеки
+	{
+		ErrorString = "Error loading crypt module";
+		return false;
+	}
+
+	//Определение функций шифрования и получения ошибки
+	typedef int(__stdcall *GenerateImage)(const char *, const char *);
+	typedef const char *(__stdcall *GetError)(void);
+
+	//Создание экземпляров функций
+	GenerateImage generate_image = (GenerateImage)GetProcAddress(HModule, "GenerateImage");
+	GetError get_error = (GetError)GetProcAddress(HModule, "GetError");
+
+	if (!generate_image || !get_error) //Функции библиотеки определены неправильно
+	{
+		ErrorString = "Error function name";
+		return false;
+	}
+
+	//Генерируем второй токен
+	Token2 = ISSystem::GenerateUuid().toLower();
+	Token2 = Token2.mid(1, Token2.size() - 2);
+
+	if (generate_image((ISDefines::Core::PATH_APPLICATION_DIR + "/token").toStdString().c_str(), Token2.toStdString().c_str()) == 0) //Ошибка шифрования
+	{
+		ErrorString = get_error();
+	}
+	FreeLibrary(HModule);
+	return true;
 }
 //-----------------------------------------------------------------------------
