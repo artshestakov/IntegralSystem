@@ -28,6 +28,11 @@ void ISTcpServerBase::SetModeTest(bool mode_test)
 	ModeTest = mode_test;
 }
 //-----------------------------------------------------------------------------
+void ISTcpServerBase::SetToken(const std::string &token)
+{
+	Token = std::vector<unsigned char>(token.begin(), token.end());
+}
+//-----------------------------------------------------------------------------
 bool ISTcpServerBase::Run(quint16 Port)
 {
 	bool Result = listen(QHostAddress::AnyIPv4, Port);
@@ -47,30 +52,19 @@ void ISTcpServerBase::SetErrorString(const QString &error_string)
 	ErrorString = error_string;
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerBase::Send(QTcpSocket *TcpSocket, std::vector<unsigned char> &Token, const QVariantMap &Data)
+void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 {
 	//Если сокет все ещё подключен - отправляем
 	if (TcpSocket->state() == QTcpSocket::ConnectedState)
 	{
-		QByteArray ByteArray;
-		if (Token.empty()) //Если ключа нет - не шифруем
-		{
-			ByteArray = ISSystem::VariantMapToJsonString(Data).toUtf8();
-			int Size = ByteArray.size();
-			ByteArray.insert(0, SYMBOL_POINT);
-			ByteArray.insert(0, QString::number(Size));
-		}
-		else //Иначе шифруем
-		{
-			ByteArray = ISTcp::Crypt(Token, Data);
-		}
+		//Шифруем запрос
+		QByteArray ByteArray = ISTcp::Crypt(Token, Data);
 
 		//Отправка запроса
 		TcpSocket->write(ByteArray);
-		TcpSocket->flush();
 
-		//Ждём пока данные уйдут
-		TcpSocket->waitForBytesWritten();
+		//Ждём пока данные не будут полностью записаны в сокет
+		ISTcp::WaitForBytesWritten(TcpSocket);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -81,7 +75,7 @@ void ISTcpServerBase::SendError(QTcpSocket *TcpSocket, const QString &ErrorStrin
 	TcpAnswer.SetError(ErrorString);
 
 	//Отправляем и обрываем соединение
-	Send(TcpSocket, std::vector<unsigned char>(), TcpAnswer);
+	Send(TcpSocket, TcpAnswer);
 	TcpSocket->abort();
 	ISLOGGER_E(ErrorString);
 }
@@ -89,6 +83,21 @@ void ISTcpServerBase::SendError(QTcpSocket *TcpSocket, const QString &ErrorStrin
 bool ISTcpServerBase::IsModeTest() const
 {
 	return ModeTest;
+}
+//-----------------------------------------------------------------------------
+std::vector<unsigned char>& ISTcpServerBase::GetToken()
+{
+	return Token;
+}
+//-----------------------------------------------------------------------------
+QString ISTcpServerBase::GetTokenString() const
+{
+	QString TokenString(CARAT_TOKEN_SIZE, Qt::Uninitialized);
+	for (size_t i = 0; i < CARAT_TOKEN_SIZE; ++i)
+	{
+		TokenString[i] = Token[i];
+	}
+	return TokenString;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerBase::AcceptError(QTcpSocket::SocketError)

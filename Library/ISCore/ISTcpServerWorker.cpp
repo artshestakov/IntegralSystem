@@ -12,11 +12,10 @@ static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_field
 											  "FROM _columnsize "
 											  "WHERE clsz_user = currentuserid()");
 //-----------------------------------------------------------------------------
-ISTcpServerWorker::ISTcpServerWorker(const std::string &token, QObject *parent)
+ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	: ISTcpServerBase(parent),
 	TcpSocket(nullptr),
-	BufferSize(0),
-	Token(std::vector<unsigned char>(token.begin(), token.end()))
+	BufferSize(0)
 {
 	Functions[API_TEST_QUERY] = std::mem_fn(&ISTcpServerWorker::TestQuery);
 	Functions[API_SLEEP] = std::mem_fn(&ISTcpServerWorker::Sleep);
@@ -124,7 +123,7 @@ void ISTcpServerWorker::ReadyRead()
 		TcpAnswer.SetError("Query is not a valid");
 		ISLOGGER_E("Query is not a valid");
 	}
-	Send(TcpSocket, Token, TcpAnswer);
+	Send(TcpSocket, TcpAnswer);
 
 	//Очищаем буфер и его размер
 	Buffer.clear();

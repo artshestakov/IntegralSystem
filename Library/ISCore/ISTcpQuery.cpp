@@ -45,12 +45,7 @@ bool ISTcpQuery::Execute()
 		return false;
 	}
 
-	//Принудительно отправляем
-	if (!TcpSocket->flush())
-	{
-		ErrorString = "Error flush: " + TcpSocket->errorString();
-		return false;
-	}
+	ISTcp::WaitForBytesWritten(TcpSocket);
 
 	QByteArray ByteArray;
 	long Size = 0;

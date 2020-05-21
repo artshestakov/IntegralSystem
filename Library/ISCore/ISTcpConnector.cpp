@@ -5,6 +5,7 @@
 #include "ISSystem.h"
 #include "ISDefinesCore.h"
 #include "ISSystem.h"
+#include "ISTcp.h"
 //-----------------------------------------------------------------------------
 ISTcpConnector::ISTcpConnector()
 	: QObject(),
@@ -164,12 +165,9 @@ bool ISTcpConnector::SendToken()
 		ErrorString = "Error sending token: sended size not equal token data size";
 		return false;
 	}
-
-	if (!TcpSocket->flush())
-	{
-		ErrorString = "Error flush sending data";
-		return false;
-	}
+	
+	//∆дЄм пока данные не будут полностью записаны в сокет
+	ISTcp::WaitForBytesWritten(TcpSocket);
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -20,10 +20,10 @@ public:
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
 	void Disconnected(); //Событие отключения клиента
-	virtual bool StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password, const QString &Key);
+	virtual bool StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password);
 
 private:
-	bool WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer, QString &Token); //Ожидание токена
+	bool WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer); //Ожидание токена
 	bool InitCrypter(); //Инициализация криптера
 
 private:

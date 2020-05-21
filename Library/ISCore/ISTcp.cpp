@@ -2,6 +2,7 @@
 #include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAes256.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 bool ISTcp::IsValidQuery(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString)
 {
@@ -134,5 +135,14 @@ QByteArray ISTcp::Decrypt(const std::vector<unsigned char> &Key, const QByteArra
 		Result[i] = Decrypted[i];
 	}
 	return Result;
+}
+//-----------------------------------------------------------------------------
+void ISTcp::WaitForBytesWritten(QTcpSocket *TcpSocket)
+{
+	while (TcpSocket->bytesToWrite() > 0)
+	{
+		ISSystem::ProcessEvents();
+		ISSleep(10);
+	}
 }
 //-----------------------------------------------------------------------------

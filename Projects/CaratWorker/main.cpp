@@ -32,7 +32,8 @@ int main(int argc, char *argv[])
 				return EXIT_FAILURE;
 			}
 
-			ISTcpServerWorker TcpServerWorker(argv[4]);
+			ISTcpServerWorker TcpServerWorker;
+			TcpServerWorker.SetToken(argv[4]);
 			Result = TcpServerWorker.Run(static_cast<quint16>(Port));
 			if (Result) //—ервер запущен - сообщаем об этом карату
 			{

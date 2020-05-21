@@ -13,11 +13,6 @@
 #include "ISTrace.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_KEYS = PREPARE_QUERY("SELECT md5(md5(usename || :Port) || right(passwd, length(passwd) - 3)) AS Keys "
-									   "FROM pg_shadow "
-									   "WHERE passwd IS NOT NULL "
-									   "ORDER BY usename");
-//-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "usrs_issystem, "
 									   "usrs_isdeleted, "
@@ -114,8 +109,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	QByteArray Buffer;
 	int Size = 0;
 
-	QString Token;
-	if (!WaitToken(TcpSocket, Buffer, Token)) //Ошибка ожидания токена
+	if (!WaitToken(TcpSocket, Buffer)) //Ошибка ожидания токена
 	{
 		return;
 	}
@@ -149,40 +143,16 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		}
 	}
 
-	//Запрашиваем все ключи
-	ISQuery qSelectKeys(QS_KEYS);
-	qSelectKeys.BindValue(":Port", TcpSocket->peerPort());
-	if (!qSelectKeys.Execute()) //Ошибка запроса - отключаем клиента
-	{
-		ISLOGGER_E("Not getting keys: " + qSelectKeys.GetErrorString());
-		TcpSocket->abort();
-		return;
-	}
+	//Дешифруем запрос
+	std::vector<unsigned char> Vector;
+	ISAes256::decrypt(GetToken(), std::vector<unsigned char>(Buffer.begin(), Buffer.end()), Vector);
 
-	bool Decrypted = false;
+	//Проверка валидности запроса
 	QVariantMap VariantMap;
-	std::string Key;
-	while (qSelectKeys.Next()) //Перебираем ключи
+	QString ErrorString;
+	if (!ISTcp::IsValidQuery(QString::fromStdString(std::string(Vector.begin(), Vector.end())).toUtf8(), VariantMap, ErrorString)) //Ошибка парсинга
 	{
-		//Получаем очередной ключ
-		Key = qSelectKeys.ReadColumn("Keys").toString().toStdString();
-		std::vector<unsigned char> VectorKey(Key.begin(), Key.end());
-
-		std::vector<unsigned char> Vector;
-		ISAes256::decrypt(VectorKey, std::vector<unsigned char>(Buffer.begin(), Buffer.end()), Vector);
-
-		//Проверка валидности запроса
-		QString ErrorString;
-		Decrypted = ISTcp::IsValidQuery(QString::fromStdString(std::string(Vector.begin(), Vector.end())).toUtf8(), VariantMap, ErrorString);
-		if (Decrypted) //Валидация прошла успешно
-		{
-			break;
-		}
-	}
-
-	if (!Decrypted)
-	{
-		SendError(TcpSocket, "Invalid login or password");
+		SendError(TcpSocket, "Error parse query: " + ErrorString);
 		return;
 	}
 
@@ -314,7 +284,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	//Запуск воркера
 	QString StringPort = QString::number(Port);
-	if (!StartWorker(TcpSocket, StringPort, Login, Password, QString::fromStdString(Key))) //Не удалось запустить воркер
+	if (!StartWorker(TcpSocket, StringPort, Login, Password)) //Не удалось запустить воркер
 	{
 		SendError(TcpSocket, "Message.Error.StartedWorker");
 		return;
@@ -323,7 +293,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	//Формируем ответ с портом и отправляем его
 	ISTcpAnswer TcpAnswer;
 	TcpAnswer["Port"] = StringPort;
-	Send(TcpSocket, std::vector<unsigned char>(), TcpAnswer);
+	Send(TcpSocket, TcpAnswer);
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::Disconnected()
@@ -332,10 +302,11 @@ void ISTcpServerCarat::Disconnected()
 	IsDisconnected = true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password, const QString &Key)
+bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password)
 {
+
 	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY,
-		QStringList() << Port << Login << Password << Key,
+		QStringList() << Port << Login << Password << GetTokenString(),
 		ISDefines::Core::PATH_APPLICATION_DIR);
 	if (Result)
 	{
@@ -344,7 +315,7 @@ bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, c
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpServerCarat::WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer, QString &Token)
+bool ISTcpServerCarat::WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer)
 {
 	while (true) //Ожидаем приход токена
 	{
@@ -373,8 +344,12 @@ bool ISTcpServerCarat::WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer, QStr
 				FileToken.close();
 
 				//Дешифруем изображение с токеном
-				Token = decrypt_message(PathTempToken.toStdString().c_str());
-				if (Token.isEmpty()) //Ошибка дешифрования токена
+				const char *Message = decrypt_message(PathTempToken.toStdString().c_str());
+				if (strlen(Message) == CARAT_TOKEN_SIZE)
+				{
+					SetToken(Message);
+				}
+				else //Ошибка дешифрования токена
 				{
 					ISLOGGER_E(QString("Error decrypt image token. File: %1. Error: %2").arg(PathTempToken).arg(get_error()));
 					return false;

@@ -12,6 +12,7 @@ public:
 	static int GetQuerySizeFromBuffer(QByteArray &ByteArray); //Получить размер запроса из его содержимого
 	static QByteArray Crypt(const std::vector<unsigned char> &Key, const QVariantMap &VariantMap); //Шифрование данных
 	static QByteArray Decrypt(const std::vector<unsigned char> &Key, const QByteArray &ByteArray); //Расшифровать данные
+	static void WaitForBytesWritten(QTcpSocket *TcpSocket); //Ожидание записи данных в сокет
 };
 //-----------------------------------------------------------------------------
 #endif
