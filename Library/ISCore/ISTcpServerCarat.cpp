@@ -31,7 +31,8 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 //-----------------------------------------------------------------------------
 ISTcpServerCarat::ISTcpServerCarat(QObject *parent)
 	: ISTcpServerBase(parent),
-	ServerController(nullptr)
+	ServerController(nullptr),
+	IsDisconnected(false)
 {
 	
 }
@@ -83,12 +84,13 @@ void ISTcpServerCarat::SetDBName(const QString &db_name)
 void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 {
 	ISTRACE();
+	IsDisconnected = false;
 	ISTcpServerBase::incomingConnection(SocketDescriptor);
 	QTcpSocket *TcpSocket = nextPendingConnection();
 	if (TcpSocket)
 	{
 		ISLOGGER_I(QString("Incoming auth from ") + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
-		connect(TcpSocket, &QTcpSocket::disconnected, TcpSocket, &QTcpSocket::deleteLater);
+		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::Disconnected);
 		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::DisconnectedClient);
 	}
 	else
@@ -104,6 +106,11 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	{
 		ISSleep(50);
 		ISSystem::ProcessEvents();
+		if (IsDisconnected) //Если сокет отключился - выходим из функции
+		{
+			return;
+		}
+
 		if (TcpSocket->bytesAvailable() > 0) //Если есть данные, которые можно прочитать
 		{
 			ByteArray.append(TcpSocket->readAll()); //Читаем данные
@@ -301,6 +308,12 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	ISTcpAnswer TcpAnswer;
 	TcpAnswer["Port"] = StringPort;
 	Send(TcpSocket, std::vector<unsigned char>(), TcpAnswer);
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerCarat::Disconnected()
+{
+	sender()->deleteLater();
+	IsDisconnected = true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password, const QString &Key)
