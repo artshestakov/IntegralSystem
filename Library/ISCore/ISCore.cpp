@@ -86,6 +86,16 @@ bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &Err
 		return Result;
 	}
 
+	//Если запускается сервер - создаём папку для токенов
+	if (!IsGui)
+	{
+		Result = ISSystem::CreateDir(ISDefines::Core::PATH_DIR_TOKENS, ErrorString);
+		if (!Result)
+		{
+			return Result;
+		}
+	}
+
 	ISCrashDumper::Init();
 
 	Result = ISLogger::Instance().Initialize();

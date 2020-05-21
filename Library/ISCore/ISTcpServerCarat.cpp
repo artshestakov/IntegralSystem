@@ -32,14 +32,20 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 ISTcpServerCarat::ISTcpServerCarat(QObject *parent)
 	: ISTcpServerBase(parent),
 	ServerController(nullptr),
-	IsDisconnected(false)
+	IsDisconnected(false),
+	HModuleCrypter(NULL),
+	decrypt_message(NULL),
+	get_error(NULL)
 {
 	
 }
 //-----------------------------------------------------------------------------
 ISTcpServerCarat::~ISTcpServerCarat()
 {
-	
+	if (HModuleCrypter)
+	{
+		FreeLibrary(HModuleCrypter);
+	}
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServerCarat::Run(quint16 Port)
@@ -54,16 +60,22 @@ bool ISTcpServerCarat::Run(quint16 Port)
 	//Запуск локального сервера для контроля воркеров
 	ServerController = new QLocalServer(this);
 	ServerController->setMaxPendingConnections(1);
-	bool Result = ServerController->listen(CARAT_CONTROLLER_PORT);
-	if (Result)
-	{
-		Result = ISTcpServerBase::Run(Port);
-	}
-	else
+	if (!ServerController->listen(CARAT_CONTROLLER_PORT)) //Ошибка при запуске локального сервера
 	{
 		SetErrorString(ServerController->errorString());
+		return false;
 	}
-	return Result;
+	
+	if (!ISTcpServerBase::Run(Port)) //Ошибка запуска основного сервера
+	{
+		return false;
+	}
+
+	if (!InitCrypter())
+	{
+		return false;
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::SetDBHost(const QString &db_host)
@@ -102,6 +114,42 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	QByteArray ByteArray;
 	int Size = 0;
 
+	while (true) //Ждём пока не придёт токен
+	{
+		ISSleep(50);
+		ISSystem::ProcessEvents();
+		if (IsDisconnected) //Если сокет отключился - выходим из функции
+		{
+			return;
+		}
+
+		if (TcpSocket->bytesAvailable() > 0)
+		{
+			ByteArray.append(TcpSocket->readAll());
+			if (ByteArray.contains("IEND"))
+			{
+				QString PathTempToken = ISDefines::Core::PATH_TEMP_DIR + "/TempToken";
+				QFile FileToken(PathTempToken);
+				if (FileToken.open(QIODevice::WriteOnly))
+				{
+					FileToken.write(ByteArray);
+					FileToken.close();
+					const char *Token = decrypt_message(PathTempToken.toStdString().c_str());
+					Token = NULL;
+				}
+				else
+				{
+					ISLOGGER_E("Error write temp token: " + FileToken.errorString());
+					TcpSocket->abort();
+					return;
+				}
+				break;
+			}
+		}
+	}
+	
+	Size = 0; //Обнуляем переменную с размером
+
 	while (true) //Ждём пока не придёт запрос
 	{
 		ISSleep(50);
@@ -117,15 +165,13 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 			if (!Size) //Размеры ещё не известены - вытаскиваем их
 			{
 				Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
+				if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отключаем клиента
+				{
+					ISLOGGER_E("Not getting query size. Disconnecting client " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
+					TcpSocket->abort();
+					return;
+				}
 			}
-
-			if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отключаем клиента
-			{
-				ISLOGGER_E("Not getting query size. Disconnecting client " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
-				TcpSocket->abort();
-				return;
-			}
-
 			if (ByteArray.size() == Size) //Запрос пришёл полностью - выходим из цикла
 			{
 				break;
@@ -326,5 +372,26 @@ bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, c
 		Result = ServerController->waitForNewConnection(CARAT_TIMEOUT_STARTED_WORKER); //Ожидаем подтверждение запуска от воркера
 	}
 	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpServerCarat::InitCrypter()
+{
+	HModuleCrypter = LoadLibrary(ISDefines::Core::PATH_LIB_CRYPTER.toStdString().c_str());
+	if (HModuleCrypter == NULL) //Ошибка загрузки библиотеки
+	{
+		SetErrorString("Error loading crypt module");
+		return false;
+	}
+	
+	//Создание экземпляров функций
+	decrypt_message = (DecryptMessage)GetProcAddress(HModuleCrypter, "DecryptMessage");
+	get_error = (GetError)GetProcAddress(HModuleCrypter, "GetError");
+
+	if (!decrypt_message || !get_error) //Функции библиотеки определены неправильно
+	{
+		SetErrorString("Error function address with name");
+		return false;
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------

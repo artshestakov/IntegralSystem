@@ -23,11 +23,20 @@ protected:
 	virtual bool StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password, const QString &Key);
 
 private:
+	bool InitCrypter(); //Инициализация криптера
+
+private:
 	QLocalServer *ServerController;
 	QString DBHost;
 	int DBPort;
 	QString DBName;
 	bool IsDisconnected;
+
+	HINSTANCE HModuleCrypter;
+	typedef const char *(__stdcall *DecryptMessage)(const char *);
+	typedef const char *(__stdcall *GetError)(void);
+	DecryptMessage decrypt_message;
+	GetError get_error;
 };
 //-----------------------------------------------------------------------------
 #endif

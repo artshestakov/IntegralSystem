@@ -21,6 +21,8 @@ namespace ISDefines
 		static QString PATH_TRANSLATIONS_DIR;
         static QString PATH_PID_FILE;
 		static QString PATH_LAST_DIRECTORY; //Последний использованный путь в классе ISFileDialog
+		static QString PATH_LIB_CRYPTER; //Путь к библиотеке шифрования
+		static QString PATH_DIR_TOKENS; //Путь хранения токенов
 		static QString SYMBOL_CIRCLE; //Символ "Круг"
 		static QString SYMBOL_MULTIPLY; //Символ "Умножение"
 		static QString SYMBOL_DIVIDE; //Символ "Деление"

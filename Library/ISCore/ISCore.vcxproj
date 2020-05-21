@@ -81,6 +81,10 @@
       <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
       <Compression>level9</Compression>
     </QtRcc>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)Bin\$(Configuration)-$(Platform)\libCrypter.dll (DEL $(SolutionDir)Bin\$(Configuration)-$(Platform)\libCrypter.dll)
+COPY $(SolutionDir)Components\Crypter\$(Configuration)-$(Platform)\libCrypter.dll $(SolutionDir)Bin\$(Configuration)-$(Platform)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -102,6 +106,10 @@
       <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
       <Compression>level9</Compression>
     </QtRcc>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)Bin\$(Configuration)-$(Platform)\libCrypter.dll (DEL $(SolutionDir)Bin\$(Configuration)-$(Platform)\libCrypter.dll)
+COPY $(SolutionDir)Components\Crypter\$(Configuration)-$(Platform)\libCrypter.dll $(SolutionDir)Bin\$(Configuration)-$(Platform)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISAes256.cpp" />

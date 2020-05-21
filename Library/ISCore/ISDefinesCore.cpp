@@ -11,6 +11,8 @@ QString ISDefines::Core::PATH_CRASH_DIR;
 QString ISDefines::Core::PATH_TRANSLATIONS_DIR;
 QString ISDefines::Core::PATH_PID_FILE;
 QString ISDefines::Core::PATH_LAST_DIRECTORY;
+QString ISDefines::Core::PATH_LIB_CRYPTER;
+QString ISDefines::Core::PATH_DIR_TOKENS;
 QString ISDefines::Core::SYMBOL_CIRCLE;
 QString ISDefines::Core::SYMBOL_MULTIPLY;
 QString ISDefines::Core::SYMBOL_DIVIDE;
@@ -30,6 +32,8 @@ void ISDefines::Core::Init(bool IsGui)
 	PATH_TRANSLATIONS_DIR = PATH_APPLICATION_DIR + "/translations";
     PATH_PID_FILE = PATH_TEMP_DIR + PATH_SEPARATOR + APPLICATION_NAME + '.' + EXTENSION_PID;
 	PATH_LAST_DIRECTORY = QDir::homePath();
+	PATH_LIB_CRYPTER = PATH_APPLICATION_DIR + "/libCrypter" + EXTENSION_LIBRARY;
+	PATH_DIR_TOKENS = PATH_APPLICATION_DIR + "/Tokens";
 	SYMBOL_CIRCLE = QString(QChar(9679));
 	SYMBOL_MULTIPLY = QString(QChar(215));
 	SYMBOL_DIVIDE = QString(QChar(247));

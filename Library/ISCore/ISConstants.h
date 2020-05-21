@@ -35,8 +35,10 @@ const char EXTENSION_EXE[] = "exe";
 const char EXTENSION_PID[] = "pid";
 #ifdef WIN32
 const char EXTENSION_BINARY[] = ".exe"; //Расширение исполняемого файла для текущей операционной системы
+const char EXTENSION_LIBRARY[] = ".dll"; //Расширение динамической библиотеки для текущей операционной системы
 #else
 const char EXTENSION_BINARY[] = ""; //Расширение исполняемого файла для текущей операционной системы
+const char EXTENSION_LIBRARY[] = ".so"; //Расширение динамической библиотеки для текущей операционной системы
 #endif
 //OS_TYPES---------------------------------------------------------------------
 #if defined(Q_OS_WIN)
@@ -174,6 +176,8 @@ const int		CARAT_TIMEOUT_INCOMING_QUERY = 5000; //Таймаут ожидания входящего зап
 const int		CARAT_TIMEOUT_STARTED_WORKER = 5000; //Таймаут ожидания запуска воркера
 const quint16	CARAT_DEFAULT_PORT = 50000; //Стандартный порт
 const char		CARAT_CONTROLLER_PORT[] = "{9C3430ED-17E2-49C6-AD58-83140981C3C5}"; //Порт для контроллера воркеров
+const int		CARAT_TOKEN_WIDTH = 50; //Ширина токена
+const int		CARAT_TOKEN_HEIGHT = 50; //Высота токена
 //CARAT_API--------------------------------------------------------------------
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_TEST_QUERY[] = "TestQuery"; //Тестовый запрос

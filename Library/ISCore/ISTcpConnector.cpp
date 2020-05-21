@@ -68,9 +68,17 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port, const QString &L
 	bool Result = IsConnected();
 	if (Result)
 	{
-		if (Token.empty())
+		if (Token.empty()) //Если токен ещё не существует - генерируем его
 		{
-			CreateToken(Login, Password);
+			Result = CreateToken(Login, Password);
+			if (Result) //Токен успешно сгенерирован
+			{
+				Result = SendToken();
+			}
+			else //Ошибка генерации токена - обрываем соединение
+			{
+				Disconnect();
+			}
 		}
 	}
 	return Result;
@@ -103,11 +111,11 @@ void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
 //-----------------------------------------------------------------------------
 bool ISTcpConnector::CreateToken(const QString &Login, const QString &Password)
 {
-	QString TokenString = ISSystem::StringToMD5(ISSystem::StringToMD5(Login + QString::number(TcpSocket->localPort())) + ISSystem::StringToMD5(Password + Login));
-	std::string TokenSTD = TokenString.toStdString();
-	Token = std::vector<unsigned char>(TokenSTD.begin(), TokenSTD.end());
+	//QString TokenString = ISSystem::StringToMD5(ISSystem::StringToMD5(Login + QString::number(TcpSocket->localPort())) + ISSystem::StringToMD5(Password + Login));
+	//std::string TokenSTD = TokenString.toStdString();
+	//Token = std::vector<unsigned char>(TokenSTD.begin(), TokenSTD.end());
 
-	HINSTANCE HModule = LoadLibrary("C:\\Github\\Crypter\\Bin\\Release-Win32\\libCrypter.dll");
+	HINSTANCE HModule = LoadLibrary(ISDefines::Core::PATH_LIB_CRYPTER.toStdString().c_str());
 	if (HModule == NULL) //Ошибка загрузки библиотеки
 	{
 		ErrorString = "Error loading crypt module";
@@ -115,7 +123,7 @@ bool ISTcpConnector::CreateToken(const QString &Login, const QString &Password)
 	}
 
 	//Определение функций шифрования и получения ошибки
-	typedef int(__stdcall *GenerateImage)(const char *, const char *);
+	typedef int(__stdcall *GenerateImage)(const char *, int, int, const char *);
 	typedef const char *(__stdcall *GetError)(void);
 
 	//Создание экземпляров функций
@@ -124,19 +132,38 @@ bool ISTcpConnector::CreateToken(const QString &Login, const QString &Password)
 
 	if (!generate_image || !get_error) //Функции библиотеки определены неправильно
 	{
-		ErrorString = "Error function name";
+		ErrorString = "Error function address with name";
 		return false;
 	}
 
 	//Генерируем второй токен
-	Token2 = ISSystem::GenerateUuid().toLower();
-	Token2 = Token2.mid(1, Token2.size() - 2);
+	std::string TokenString = ISSystem::GenerateUuid().remove('-').toLower().toStdString();
+	TokenString = TokenString.substr(1, TokenString.size() - 2);
+	Token = std::vector<unsigned char>(TokenString.begin(), TokenString.end());
 
-	if (generate_image((ISDefines::Core::PATH_APPLICATION_DIR + "/token").toStdString().c_str(), Token2.toStdString().c_str()) == 0) //Ошибка шифрования
+	PathToken = ISDefines::Core::PATH_APPLICATION_DIR + "/token";
+	if (generate_image(PathToken.toStdString().c_str(), CARAT_TOKEN_WIDTH, CARAT_TOKEN_HEIGHT, TokenString.c_str()) == 0) //Ошибка шифрования
 	{
 		ErrorString = get_error();
 	}
 	FreeLibrary(HModule);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpConnector::SendToken()
+{
+	QFile File(PathToken);
+	if (!File.open(QIODevice::ReadOnly))
+	{
+		ErrorString = "Error read token: " + File.errorString();
+		return false;
+	}
+
+	QByteArray TokenData = File.readAll();
+	File.close();
+
+	TcpSocket->write(TokenData);
+	TcpSocket->flush();
 	return true;
 }
 //-----------------------------------------------------------------------------
