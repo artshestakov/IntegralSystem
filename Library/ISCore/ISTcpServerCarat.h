@@ -23,6 +23,7 @@ protected:
 	virtual bool StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password, const QString &Key);
 
 private:
+	bool WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer, QString &Token); //Ожидание токена
 	bool InitCrypter(); //Инициализация криптера
 
 private:
@@ -32,11 +33,11 @@ private:
 	QString DBName;
 	bool IsDisconnected;
 
-	HINSTANCE HModuleCrypter;
-	typedef const char *(__stdcall *DecryptMessage)(const char *);
-	typedef const char *(__stdcall *GetError)(void);
-	DecryptMessage decrypt_message;
-	GetError get_error;
+	typedef const char *(__stdcall *DecryptMessage)(const char *); //Определение функции дешифрования изображения
+	typedef const char *(__stdcall *GetError)(void); //Определение функции получения ошибки при дешифровании изображения
+	HINSTANCE HModuleCrypter; //Модуль криптера
+	DecryptMessage decrypt_message; //Указатель на функцию дешифрования изображения
+	GetError get_error; //Указатель на функцию получения ошибки при дешифровании изображения
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -42,7 +42,7 @@ ISTcpServerCarat::ISTcpServerCarat(QObject *parent)
 //-----------------------------------------------------------------------------
 ISTcpServerCarat::~ISTcpServerCarat()
 {
-	if (HModuleCrypter)
+	if (HModuleCrypter) //Если модуль криптера загружен - выгружаем его из памяти
 	{
 		FreeLibrary(HModuleCrypter);
 	}
@@ -71,7 +71,7 @@ bool ISTcpServerCarat::Run(quint16 Port)
 		return false;
 	}
 
-	if (!InitCrypter())
+	if (!InitCrypter()) //Ошибка инициализации криптера
 	{
 		return false;
 	}
@@ -103,7 +103,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	{
 		ISLOGGER_I(QString("Incoming auth from ") + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
 		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::Disconnected);
-		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::DisconnectedClient);
+		//connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::DisconnectedClient); //???
 	}
 	else
 	{
@@ -111,45 +111,15 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		return;
 	}
 
-	QByteArray ByteArray;
+	QByteArray Buffer;
 	int Size = 0;
 
-	while (true) //Ждём пока не придёт токен
+	QString Token;
+	if (!WaitToken(TcpSocket, Buffer, Token)) //Ошибка ожидания токена
 	{
-		ISSleep(50);
-		ISSystem::ProcessEvents();
-		if (IsDisconnected) //Если сокет отключился - выходим из функции
-		{
-			return;
-		}
-
-		if (TcpSocket->bytesAvailable() > 0)
-		{
-			ByteArray.append(TcpSocket->readAll());
-			if (ByteArray.contains("IEND"))
-			{
-				QString PathTempToken = ISDefines::Core::PATH_TEMP_DIR + "/TempToken";
-				QFile FileToken(PathTempToken);
-				if (FileToken.open(QIODevice::WriteOnly))
-				{
-					FileToken.write(ByteArray);
-					FileToken.close();
-					const char *Token = decrypt_message(PathTempToken.toStdString().c_str());
-					Token = NULL;
-				}
-				else
-				{
-					ISLOGGER_E("Error write temp token: " + FileToken.errorString());
-					TcpSocket->abort();
-					return;
-				}
-				break;
-			}
-		}
+		return;
 	}
 	
-	Size = 0; //Обнуляем переменную с размером
-
 	while (true) //Ждём пока не придёт запрос
 	{
 		ISSleep(50);
@@ -161,10 +131,10 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 		if (TcpSocket->bytesAvailable() > 0) //Если есть данные, которые можно прочитать
 		{
-			ByteArray.append(TcpSocket->readAll()); //Читаем данные
-			if (!Size) //Размеры ещё не известены - вытаскиваем их
+			Buffer.append(TcpSocket->readAll()); //Читаем данные
+			if (!Size) //Размеры ещё не известны - вытаскиваем их
 			{
-				Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
+				Size = ISTcp::GetQuerySizeFromBuffer(Buffer);
 				if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отключаем клиента
 				{
 					ISLOGGER_E("Not getting query size. Disconnecting client " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
@@ -172,7 +142,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 					return;
 				}
 			}
-			if (ByteArray.size() == Size) //Запрос пришёл полностью - выходим из цикла
+			if (Buffer.size() == Size) //Запрос пришёл полностью - выходим из цикла
 			{
 				break;
 			}
@@ -199,7 +169,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		std::vector<unsigned char> VectorKey(Key.begin(), Key.end());
 
 		std::vector<unsigned char> Vector;
-		ISAes256::decrypt(VectorKey, std::vector<unsigned char>(ByteArray.begin(), ByteArray.end()), Vector);
+		ISAes256::decrypt(VectorKey, std::vector<unsigned char>(Buffer.begin(), Buffer.end()), Vector);
 
 		//Проверка валидности запроса
 		QString ErrorString;
@@ -374,6 +344,56 @@ bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, c
 	return Result;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpServerCarat::WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer, QString &Token)
+{
+	while (true) //Ожидаем приход токена
+	{
+		ISSleep(50);
+		ISSystem::ProcessEvents();
+		if (IsDisconnected) //Если сокет отключился - выходим из функции
+		{
+			return false;
+		}
+
+		if (TcpSocket->bytesAvailable() > 0) //Пришли данные - добавляем их в буфер
+		{
+			Buffer.append(TcpSocket->readAll());
+			if (!Buffer.contains("IEND")) //Если изображение с токеном пришло не полностью - продолжаем ждать
+			{
+				continue;
+			}
+
+			//Изображение с токеном пришло - записываем его в файл и пытаемся расшифровать
+			QString PathTempToken = ISDefines::Core::PATH_TEMP_DIR + "/TempToken";
+			QFile FileToken(PathTempToken);
+			if (FileToken.open(QIODevice::WriteOnly)) //Файл для записи открылся успешно
+			{
+				//Записываем изображение с токеном в файл и закрываем его
+				FileToken.write(Buffer);
+				FileToken.close();
+
+				//Дешифруем изображение с токеном
+				Token = decrypt_message(PathTempToken.toStdString().c_str());
+				if (Token.isEmpty()) //Ошибка дешифрования токена
+				{
+					ISLOGGER_E(QString("Error decrypt image token. File: %1. Error: %2").arg(PathTempToken).arg(get_error()));
+					return false;
+				}
+				break;
+			}
+			else //Ошибка открытия файла
+			{
+				ISLOGGER_E(QString("Error write temp token. File: %1. Error: %2").arg(PathTempToken).arg(FileToken.errorString()));
+				TcpSocket->abort();
+				return false;
+			}
+			break;
+		}
+	}
+	Buffer.clear();
+	return true;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpServerCarat::InitCrypter()
 {
 	HModuleCrypter = LoadLibrary(ISDefines::Core::PATH_LIB_CRYPTER.toStdString().c_str());
@@ -383,10 +403,9 @@ bool ISTcpServerCarat::InitCrypter()
 		return false;
 	}
 	
-	//Создание экземпляров функций
+	//Получение экземпляров функций
 	decrypt_message = (DecryptMessage)GetProcAddress(HModuleCrypter, "DecryptMessage");
 	get_error = (GetError)GetProcAddress(HModuleCrypter, "GetError");
-
 	if (!decrypt_message || !get_error) //Функции библиотеки определены неправильно
 	{
 		SetErrorString("Error function address with name");
