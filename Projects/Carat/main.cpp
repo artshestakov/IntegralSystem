@@ -8,6 +8,7 @@
 #include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 void Usage(); //Вывод инструкции по запуску
+bool CheckConfigValues(); //Проверка значений в конфигурационном файле
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -46,20 +47,24 @@ int main(int argc, char **argv)
 		Result = ISApplicationRunning(CARAT_UID).IsRunning();
 		if (Result) //Если приложение можно запускать
 		{
-			Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
-				CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-				CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD));
+			Result = CheckConfigValues();
 			if (Result)
 			{
-				Result = ISQueryText::Instance().CheckAllQueries();
+				Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+					CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+					CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD));
 				if (Result)
 				{
-					(new ISCaratService(&CoreApplication))->StartService();
+					Result = ISQueryText::Instance().CheckAllQueries();
+					if (Result)
+					{
+						(new ISCaratService(&CoreApplication))->StartService();
+					}
 				}
-			}
-			else
-			{
-				ISLOGGER_E("Not connected to database: " + ISDatabase::Instance().GetErrorString());
+				else
+				{
+					ISLOGGER_E("Not connected to database: " + ISDatabase::Instance().GetErrorString());
+				}
 			}
 		}
 		else
@@ -95,5 +100,39 @@ void Usage()
 	ISLOGGER_L("Example: ./Carat (service mode)");
 #endif
 	ISLOGGER_L("* No arguments needed to start in service mode");
+}
+//-----------------------------------------------------------------------------
+bool CheckConfigValues()
+{
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
+	{
+		ISLOGGER_E("Config file: server not specified");
+		return false;
+	}
+
+	if (CONFIG_INT(CONST_CONFIG_CONNECTION_PORT) == 0)
+	{
+		ISLOGGER_E("Config file: port not specified");
+		return false;
+	}
+
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
+	{
+		ISLOGGER_E("Config file: database name not specified");
+		return false;
+	}
+
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).isEmpty())
+	{
+		ISLOGGER_E("Config file: login not specified");
+		return false;
+	}
+
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).isEmpty())
+	{
+		ISLOGGER_E("Config file: password not specified");
+		return false;
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------
