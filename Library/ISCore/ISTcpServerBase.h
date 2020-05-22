@@ -8,9 +8,6 @@ class ISCORE_EXPORT ISTcpServerBase : public QTcpServer
 {
 	Q_OBJECT
 
-signals:
-	void DisconnectedClient();
-
 public:
 	ISTcpServerBase(QObject *parent = 0);
 	virtual ~ISTcpServerBase();

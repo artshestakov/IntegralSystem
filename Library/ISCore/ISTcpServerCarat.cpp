@@ -16,7 +16,7 @@
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "usrs_issystem, "
 									   "usrs_isdeleted, "
-									   "(usrs_group != 0)::BOOLEAN AS usrs_group, "
+									   "usrs_group, "
 									   "usrs_accessallowed, "
 									   "usrs_accountlifetime, "
 									   "usrs_accountlifetimestart, "
@@ -98,7 +98,6 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	{
 		ISLOGGER_I(QString("Incoming auth from ") + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
 		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::Disconnected);
-		//connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::DisconnectedClient); //???
 	}
 	else
 	{
@@ -232,7 +231,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	//Проверка наличия привязки пользователя к группе
 	if (!qSelectAuth.ReadColumn("usrs_issystem").toBool()) //Если пользователь не системный - проверяем привязку
 	{
-		if (!qSelectAuth.ReadColumn("usrs_group").toBool()) //Привязка отсутствует
+		if (qSelectAuth.ReadColumn("usrs_group").toInt() == 0) //Привязка отсутствует
 		{
 			SendError(TcpSocket, "Message.Error.User.NotLinkWithGroup");
 			return;
@@ -304,7 +303,6 @@ void ISTcpServerCarat::Disconnected()
 //-----------------------------------------------------------------------------
 bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password)
 {
-
 	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY,
 		QStringList() << Port << Login << Password << GetTokenString(),
 		ISDefines::Core::PATH_APPLICATION_DIR);
@@ -317,13 +315,14 @@ bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, c
 //-----------------------------------------------------------------------------
 bool ISTcpServerCarat::WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer)
 {
-	while (true) //Ожидаем приход токена
+	bool Result = true;
+	while (Result) //Ожидаем приход токена
 	{
 		ISSleep(50);
 		ISSystem::ProcessEvents();
 		if (IsDisconnected) //Если сокет отключился - выходим из функции
 		{
-			return false;
+			break;
 		}
 
 		if (TcpSocket->bytesAvailable() > 0) //Пришли данные - добавляем их в буфер
@@ -337,36 +336,50 @@ bool ISTcpServerCarat::WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer)
 			//Изображение с токеном пришло - записываем его в файл и пытаемся расшифровать
 			QString PathTempToken = ISDefines::Core::PATH_TEMP_DIR + "/TempToken";
 			QFile FileToken(PathTempToken);
-			if (FileToken.open(QIODevice::WriteOnly)) //Файл для записи открылся успешно
+			Result = FileToken.open(QIODevice::WriteOnly);
+			if (Result) //Файл успешно открыт - записываем в него данные
 			{
-				//Записываем изображение с токеном в файл и закрываем его
-				FileToken.write(Buffer);
+				Result = FileToken.write(Buffer) == Buffer.size();
 				FileToken.close();
-
-				//Дешифруем изображение с токеном
-				const char *Message = decrypt_message(PathTempToken.toStdString().c_str());
-				if (strlen(Message) == CARAT_TOKEN_SIZE)
+				if (Result) //Запись файла прошла успешно - дешифруем его криптером
 				{
-					SetToken(Message);
+					const char *Message = decrypt_message(PathTempToken.toStdString().c_str());
+					if (Message) //Криптер вернул сообщение - проверяем его размер
+					{
+						size_t MessageSize = strlen(Message);
+						if (MessageSize == CARAT_TOKEN_SIZE) //Размер правильный - сохраняем токен
+						{
+							SetToken(Message);
+						}
+						else //Размер токена неправильный
+						{
+							ISLOGGER_E(QString("Token size invalid. Size: %1. Done size: %2").arg(MessageSize).arg(CARAT_TOKEN_SIZE));
+						}
+					}
+					else //Криптер ничего не вернул
+					{
+						ISLOGGER_E(QString("Error decrypt image token. File: %1. Error: %2").arg(PathTempToken).arg(get_error()));
+					}
 				}
-				else //Ошибка дешифрования токена
+				else //Размер записанных данных не соответствует размеру буфера - ошибка
 				{
-					ISLOGGER_E(QString("Error decrypt image token. File: %1. Error: %2").arg(PathTempToken).arg(get_error()));
-					return false;
+					ISLOGGER_E("Writed size not equal buffer size");
 				}
-				break;
 			}
 			else //Ошибка открытия файла
 			{
 				ISLOGGER_E(QString("Error write temp token. File: %1. Error: %2").arg(PathTempToken).arg(FileToken.errorString()));
+			}
+
+			if (!Result) //Где-то выше произошла ошибка - отключаем клиента
+			{
 				TcpSocket->abort();
-				return false;
 			}
 			break;
 		}
 	}
 	Buffer.clear();
-	return true;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServerCarat::InitCrypter()

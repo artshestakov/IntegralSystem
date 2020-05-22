@@ -142,7 +142,7 @@ void ISTcp::WaitForBytesWritten(QTcpSocket *TcpSocket)
 	while (TcpSocket->bytesToWrite() > 0)
 	{
 		ISSystem::ProcessEvents();
-		ISSleep(10);
+		ISSleep(1);
 	}
 }
 //-----------------------------------------------------------------------------

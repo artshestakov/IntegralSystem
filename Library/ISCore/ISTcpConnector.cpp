@@ -72,9 +72,15 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 		if (Token.empty()) //Если токен ещё не существует - генерируем его
 		{
 			Result = CreateToken();
-			if (Result) //Токен успешно сгенерирован
+			if (Result) //Токен успешно сгенерирован - отправляем его
 			{
 				Result = SendToken();
+				if (Result) //Если токен отправлен - немного ждём
+				{
+					QEventLoop EventLoop;
+					QTimer::singleShot(500, &EventLoop, &QEventLoop::quit);
+					EventLoop.exec();
+				}
 			}
 			else //Ошибка генерации токена - обрываем соединение
 			{

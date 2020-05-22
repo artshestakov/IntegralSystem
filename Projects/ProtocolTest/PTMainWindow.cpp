@@ -2,7 +2,6 @@
 #include "ISConfig.h"
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
-#include "ISTcpQueryAuth.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISCountingTime.h"
@@ -162,14 +161,14 @@ void PTMainWindow::Connect()
 
 	ISConfig::Instance().SetValue("Client/Login", Login);
 	ISConfig::Instance().SetValue("Client/Password", Password);
-	bool Result = ISTcpConnector::Instance().Connect("127.0.0.1", EditListenPort->value(), Login, Password);
+	bool Result = ISTcpConnector::Instance().Connect("127.0.0.1", EditListenPort->value()/*, Login, Password*/);
 	if (Result)
 	{
 		ISTcpQueryAuth qAuth(Login, Password);
 		Result = qAuth.Execute();
 		if (Result)
 		{
-			Result = ISTcpConnector::Instance().Reconnect("127.0.0.1", qAuth.GetAnswer()["Port"].toInt(), Login, Password);
+			Result = ISTcpConnector::Instance().Reconnect("127.0.0.1", qAuth.GetAnswer()["Port"].toInt()/*, Login, Password*/);
 			if (!Result)
 			{
 				QMessageBox::critical(this, "Error", ISTcpConnector::Instance().GetErrorString());
