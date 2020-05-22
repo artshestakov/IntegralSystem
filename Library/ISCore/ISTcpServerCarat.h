@@ -13,9 +13,6 @@ public:
 	virtual ~ISTcpServerCarat();
 
 	bool Run(quint16 Port) override;
-	void SetDBHost(const QString &db_host);
-	void SetDBPort(int db_port);
-	void SetDBName(const QString &db_name);
 
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения

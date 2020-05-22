@@ -70,10 +70,7 @@ void ISTcpServerWorker::Disconnected()
 	ISLOGGER_I("Disconnected " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
 	TcpSocket->deleteLater();
 	close();
-	if (!IsModeTest()) //Если текущий режим не тестовый - закрываем приложение
-	{
-		ISCore::ExitApplication();
-	}
+	ISCore::ExitApplication();
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::ReadyRead()
@@ -190,7 +187,7 @@ void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAns
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::ColumnSizer(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
-	ISQuery qSelect(ISDatabase::Instance().GetDB(IsModeTest() ? CONNECTION_TESTING : CONNECTION_DEFAULT), QS_COLUMN_SIZE);
+	ISQuery qSelect(QS_COLUMN_SIZE);
 	if (qSelect.Execute())
 	{
 		QVariantList Tables;
