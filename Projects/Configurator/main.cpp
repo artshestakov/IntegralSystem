@@ -44,7 +44,7 @@ QString GetClassName(const QString &Argument); //Получить имя класса
 QStringList ParseInputCommand(const QString &Command); //Парсинг введенной команды
 void FillConfig(); //Заполнение конфигурационного файла
 //-----------------------------------------------------------------------------
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
 	RegisterMetatype();
 	QCoreApplication CoreArralication(argc, argv);

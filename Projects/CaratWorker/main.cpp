@@ -4,8 +4,16 @@
 #include "ISDatabase.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-int main(int argc, char *argv[])
+const char *Port = NULL; //Прослушиваемый порт
+const char *Login = NULL; //Логин
+const char *Password = NULL; //Пароль
+const char *Token = NULL; //Токен
+//-----------------------------------------------------------------------------
+bool ParseArgs(int argc, char **argv); //Парсинг аргументов коммандной строки
+//-----------------------------------------------------------------------------
+int main(int argc, char **argv)
 {
+	ParseArgs(argc, argv);
 	QCoreApplication Application(argc, argv);
 
 	QString ErrorString;
@@ -15,6 +23,8 @@ int main(int argc, char *argv[])
 		ISLOGGER_E(ErrorString);
 		return EXIT_FAILURE;
 	}
+
+	const char *Token = argv[4];
 
 	Result = argc == 5;
 	if (Result) //Порт указан, логин и пароль указаны, токен тоже указан
@@ -55,5 +65,46 @@ int main(int argc, char *argv[])
 		ISLOGGER_E("Invalid arguments");
 	}
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+//-----------------------------------------------------------------------------
+bool ParseArgs(int argc, char **argv)
+{
+	//Проверка порта
+	Port = argv[1];
+	if (!Port)
+	{
+		printf("Error: port not specified.");
+		return false;
+	}
+
+	//Проверка логина
+	Login = argv[2];
+	if (!Login)
+	{
+		printf("Error: login not specified.");
+		return false;
+	}
+
+	//Проверка пароля
+	Password = argv[3];
+	if (!Password)
+	{
+		printf("Error: password not specified.");
+		return false;
+	}
+
+	//Проверка токена
+	Token = argv[4];
+	if (!Token)
+	{
+		Token = getenv("CARAT_WORKER_TOKEN");
+		if (!Token)
+		{
+			printf("Error: environment variable CARAT_WORKER_TOKEN not exist");
+			return false;
+		}
+	}
+
+	return true;
 }
 //-----------------------------------------------------------------------------
