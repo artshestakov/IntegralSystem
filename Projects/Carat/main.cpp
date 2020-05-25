@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 		if (Result) //Если приложение можно запускать
 		{
 			Result = CheckConfigValues();
-			if (Result)
+			if (Result) //Если все необходимые параметры заполнены - продолжаем запуск
 			{
 				Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
 					CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
