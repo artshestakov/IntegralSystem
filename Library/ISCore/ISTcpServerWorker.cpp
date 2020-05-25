@@ -30,6 +30,9 @@ ISTcpServerWorker::~ISTcpServerWorker()
 bool ISTcpServerWorker::Run(quint16 Port)
 {
 	bool Result = ISTcpServerBase::Run(Port);
+
+	//Сообщаем карату об успешном запуске только в релизной версии
+#ifndef DEBUG
 	if (Result) //Базовый сокет запустился
 	{
 		//Пытаемся подключиться к карату и сообщить что запуск воркера произошёл
@@ -45,6 +48,7 @@ bool ISTcpServerWorker::Run(quint16 Port)
 			SetErrorString("Error connecting to carat: " + LocalSocket.errorString());
 		}
 	}
+#endif
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -90,7 +94,7 @@ void ISTcpServerWorker::ReadyRead()
 			return;
 		}
 
-		Buffer = ISTcp::Decrypt(Token, Buffer);
+		Buffer = ISTcp::Decrypt(GetToken(), Buffer);
 
 		//Проверка валидности запроса
 		QVariantMap VariantMap;

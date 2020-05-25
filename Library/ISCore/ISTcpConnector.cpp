@@ -6,6 +6,7 @@
 #include "ISDefinesCore.h"
 #include "ISSystem.h"
 #include "ISTcp.h"
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISTcpConnector::ISTcpConnector()
 	: QObject(),
@@ -71,6 +72,9 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 	{
 		if (Token.empty()) //Если токен ещё не существует - генерируем его
 		{
+#ifdef DEBUG
+			Token = std::vector<unsigned char>(CARAT_TOKEN_TEST, CARAT_TOKEN_TEST + CARAT_TOKEN_SIZE);
+#else
 			Result = CreateToken();
 			if (Result) //Токен успешно сгенерирован - отправляем его
 			{
@@ -86,6 +90,7 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 			{
 				Disconnect();
 			}
+#endif
 		}
 	}
 	return Result;

@@ -3,8 +3,9 @@
 #include "ISLogger.h"
 #include "ISDatabase.h"
 #include "ISConfig.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
-const char *Port = NULL; //Прослушиваемый порт
+quint16 Port = 0; //Прослушиваемый порт
 const char *Login = NULL; //Логин
 const char *Password = NULL; //Пароль
 const char *Token = NULL; //Токен
@@ -13,7 +14,6 @@ bool ParseArgs(int argc, char **argv); //Парсинг аргументов коммандной строки
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	ParseArgs(argc, argv);
 	QCoreApplication Application(argc, argv);
 
 	QString ErrorString;
@@ -24,45 +24,32 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	const char *Token = argv[4];
-
-	Result = argc == 5;
-	if (Result) //Порт указан, логин и пароль указаны, токен тоже указан
+	Result = ParseArgs(argc, argv);
+	if (!Result)
 	{
-		int Port = std::atoi(argv[1]);
-		Result = Port > 0;
-		if (Result) //Порт валидный
-		{
-			Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
-				CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-				argv[2], argv[3]);
-			if (!Result) //Не удалось подключиться к БД
-			{
-				ISLOGGER_E(ISDatabase::Instance().GetErrorString());
-				return EXIT_FAILURE;
-			}
-
-			ISTcpServerWorker TcpServerWorker;
-			TcpServerWorker.SetToken(argv[4]);
-			Result = TcpServerWorker.Run(static_cast<quint16>(Port));
-			if (Result) //Сервер запущен - сообщаем об этом карату
-			{
-				ISLOGGER_I("Worker is started with port " + QString::number(Port));
-				Result = Application.exec() == EXIT_SUCCESS ? true : false;
-			}
-			else //Не удалось запустить сервер
-			{
-				ISLOGGER_E(TcpServerWorker.GetErrorString());
-			}
-		}
-		else //Порт не валидный
-		{
-			ISLOGGER_E(QString("Invalid port %1").arg(Port));
-		}
+		return EXIT_FAILURE;
 	}
-	else //Порт не указан
+
+	Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		argv[2], argv[3]);
+	if (!Result) //Не удалось подключиться к БД
 	{
-		ISLOGGER_E("Invalid arguments");
+		ISLOGGER_E(ISDatabase::Instance().GetErrorString());
+		return EXIT_FAILURE;
+	}
+
+	ISTcpServerWorker TcpServerWorker;
+	TcpServerWorker.SetToken(Token);
+	Result = TcpServerWorker.Run(static_cast<quint16>(Port));
+	if (Result) //Сервер запущен - сообщаем об этом карату
+	{
+		ISLOGGER_I(QString("Worker is started. Port: %1 Login: %2 Password: %3").arg(Port).arg(Login).arg(Password));
+		Result = Application.exec() == EXIT_SUCCESS ? true : false;
+	}
+	else //Не удалось запустить сервер
+	{
+		ISLOGGER_E(TcpServerWorker.GetErrorString());
 	}
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
@@ -70,10 +57,16 @@ int main(int argc, char **argv)
 bool ParseArgs(int argc, char **argv)
 {
 	//Проверка порта
-	Port = argv[1];
-	if (!Port)
+	if (!argv[1])
 	{
-		printf("Error: port not specified.");
+		ISLOGGER_E("Port not specified");
+		return false;
+	}
+
+	Port = std::atoi(argv[1]);
+	if (Port == 0)
+	{
+		ISLOGGER_E("Port invalid value");
 		return false;
 	}
 
@@ -81,7 +74,7 @@ bool ParseArgs(int argc, char **argv)
 	Login = argv[2];
 	if (!Login)
 	{
-		printf("Error: login not specified.");
+		ISLOGGER_E("Login not specified");
 		return false;
 	}
 
@@ -89,22 +82,21 @@ bool ParseArgs(int argc, char **argv)
 	Password = argv[3];
 	if (!Password)
 	{
-		printf("Error: password not specified.");
+		ISLOGGER_E("Password not specified");
 		return false;
 	}
 
-	//Проверка токена
+	//Проверка токена (в отладочной версии используем тестовый токен)
+#ifdef DEBUG
+	Token = CARAT_TOKEN_TEST;
+#else
 	Token = argv[4];
 	if (!Token)
 	{
-		Token = getenv("CARAT_WORKER_TOKEN");
-		if (!Token)
-		{
-			printf("Error: environment variable CARAT_WORKER_TOKEN not exist");
-			return false;
-		}
+		ISLOGGER_E("Token not specified");
+		return false;
 	}
-
+#endif
 	return true;
 }
 //-----------------------------------------------------------------------------

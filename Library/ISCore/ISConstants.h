@@ -178,6 +178,7 @@ const char		CARAT_CONTROLLER_PORT[] = "{9C3430ED-17E2-49C6-AD58-83140981C3C5}"; 
 const int		CARAT_TOKEN_WIDTH = 50; //Ширина токена
 const int		CARAT_TOKEN_HEIGHT = 50; //Высота токена
 const size_t	CARAT_TOKEN_SIZE = 32; //Размер токена
+const char		CARAT_TOKEN_TEST[] = "52aabbef168b48afa0489a9a8c9a8b81";
 //CARAT_API--------------------------------------------------------------------
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_TEST_QUERY[] = "TestQuery"; //Тестовый запрос

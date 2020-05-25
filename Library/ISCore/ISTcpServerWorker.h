@@ -34,7 +34,6 @@ private:
 	QByteArray Buffer;
 	long BufferSize;
 	std::map<QString, std::function<void(ISTcpServerWorker &TcpServer, const QVariantMap &, ISTcpAnswer &TcpAnswer)>> Functions;
-	std::vector<unsigned char> Token;
 };
 //-----------------------------------------------------------------------------
 
