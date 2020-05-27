@@ -2,7 +2,6 @@
 #include "ISGui.h"
 #include "ISSplashScreen.h"
 #include "ISAuthForm.h"
-#include "ISIntegralSystem.h"
 #include "ISStartup.h"
 #include "ISLogger.h"
 #include "ISMainWindow.h"
@@ -10,7 +9,14 @@
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	ISIntegralSystem Applicaton(argc, argv);
+	QApplication Applicaton(argc, argv);
+	Applicaton.setEffectEnabled(Qt::UI_General);
+	Applicaton.setEffectEnabled(Qt::UI_AnimateMenu);
+	Applicaton.setEffectEnabled(Qt::UI_FadeMenu);
+	Applicaton.setEffectEnabled(Qt::UI_AnimateCombo);
+	Applicaton.setEffectEnabled(Qt::UI_AnimateTooltip);
+	Applicaton.setEffectEnabled(Qt::UI_FadeTooltip);
+	Applicaton.setEffectEnabled(Qt::UI_AnimateToolBox);
 
 	QString ErrorString;
 	bool Result = ISGui::Startup(ErrorString);

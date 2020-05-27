@@ -528,9 +528,6 @@
     <ClCompile Include="ISGui.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISIntegralSystem.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISMediaPlayer.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -1266,9 +1263,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISDaDataService.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISIntegralSystem.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISMediaPlayer.h">

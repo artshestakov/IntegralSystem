@@ -206,7 +206,6 @@
     <ClCompile Include="ISInformResource.cpp" />
     <ClCompile Include="ISInputDialog.cpp" />
     <ClCompile Include="ISIntegerEdit.cpp" />
-    <ClCompile Include="ISIntegralSystem.cpp" />
     <ClCompile Include="ISInterfaceDialogForm.cpp" />
     <ClCompile Include="ISInterfaceForm.cpp" />
     <ClCompile Include="ISInterfaceMetaForm.cpp" />
@@ -641,7 +640,6 @@
     <QtMoc Include="ISIncomingCallInformResourceForm.h" />
     <QtMoc Include="ISMedTech.h" />
     <QtMoc Include="ISObjectInterface.h" />
-    <QtMoc Include="ISIntegralSystem.h" />
     <QtMoc Include="ISMediaPlayer.h" />
     <ClInclude Include="ISMetaSystemsEntity.h" />
     <QtMoc Include="ISNotificationService.h" />
