@@ -17,6 +17,11 @@ static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_l
 											 "WHERE NOT prhs_isdeleted "
 											 "ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
+static QString QS_SORTING_COLUMN = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
+												 "FROM _sortingtables "
+												 "WHERE NOT sgts_isdeleted "
+												 "AND sgts_user = currentuserid()");
+//-----------------------------------------------------------------------------
 ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	: ISTcpServerBase(parent),
 	TcpSocket(nullptr),
@@ -226,6 +231,28 @@ void ISTcpServerWorker::GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &
 	else
 	{
 		TcpAnswer.SetError("Error getting paragraphs: " + qSelectParagraph.GetErrorString());
+		return;
+	}
+
+	//Получаем сортировки
+	ISQuery qSelectSortingColumn(QS_SORTING_COLUMN);
+	if (qSelectSortingColumn.Execute())
+	{
+		QVariantList SortingColumns;
+		while (qSelectSortingColumn.Next())
+		{
+			SortingColumns.push_back(QVariantMap
+			{
+				{ "TableName", qSelectSortingColumn.ReadColumn("sgts_tablename") },
+				{ "FieldName", qSelectSortingColumn.ReadColumn("sgts_fieldname") },
+				{ "Sorting", qSelectSortingColumn.ReadColumn("sgts_sorting") }
+			});
+		}
+		TcpAnswer["SortingColumns"] = SortingColumns;
+	}
+	else
+	{
+		TcpAnswer.SetError("Error getting sorting columns: " + qSelectParagraph.GetErrorString());
 		return;
 	}
 }
