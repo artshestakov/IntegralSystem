@@ -109,8 +109,7 @@ ISAuthForm::ISAuthForm()
 	ButtonExit = new ISPushButton(BUFFER_ICONS("Auth.Exit"), LANG("Exit"), this);
 	ButtonExit->setCursor(CURSOR_POINTING_HAND);
 	ButtonExit->setToolTip(LANG("Exit.ToolTip"));
-	//connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
-	connect(ButtonExit, &ISPushButton::clicked, &ISTcpConnector::Instance(), &ISTcpConnector::Disconnect);
+	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
 	LayoutBottom->addWidget(ButtonExit);
 
 	QAction *ActionClearFields = new QAction(this);
@@ -204,7 +203,42 @@ void ISAuthForm::Input()
 	if (Check())
 	{
 		SetConnecting(true);
-		AuthConnector->Connect();
+		if (CONFIG_BOOL("Protocol/Use")) //Используем протокол
+		{
+			QString Host = CONFIG_STRING("Protocol/Host");
+			quint16 Port = CONFIG_INT("Protocol/Port");
+			if (!ISTcpConnector::Instance().Connect(Host, Port)) //Ошибка подключения к карату
+			{
+				SetConnecting(false);
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectToServer"), ISTcpConnector::Instance().GetErrorString());
+				return;
+			}
+
+			if (CONFIG_BOOL("Protocol/Auth")) //Используем авторизацию
+			{
+				ISTcpQuery qAuth(API_AUTH);
+				qAuth.BindValue("Login", EditLogin->GetValue().toString());
+				qAuth.BindValue("Password", EditPassword->GetValue().toString());
+				if (qAuth.Execute()) //Запрос на авторизацию прошёл успешно
+				{
+					Port = qAuth.GetAnswer()["Port"].toInt();
+					if (!ISTcpConnector::Instance().Reconnect(Host, Port)) //Подключение в воркеру прошло успешно
+					{
+						SetConnecting(false);
+						ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectToWorker"), ISTcpConnector::Instance().GetErrorString());
+					}
+				}
+				else //Ошибка авторизации
+				{
+					SetConnecting(false);
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth").arg(LANG(qAuth.GetErrorString())));
+				}
+			}
+		}
+		else //Стандартное подключение
+		{
+			AuthConnector->Connect();
+		}
 	}
 }
 //-----------------------------------------------------------------------------
@@ -226,40 +260,6 @@ void ISAuthForm::ConnectedDone()
 		SetResult(true);
 		ISMetaUser::Instance().UserData->Login = EditLogin->GetValue().toString();
 		ISMetaUser::Instance().UserData->Password = EditPassword->GetValue().toString();
-
-		if (CONFIG_BOOL("Protocol/Use")) //Если используется протокол
-		{
-			QString Host = CONFIG_STRING("Protocol/Host");
-			quint16 Port = CONFIG_INT("Protocol/Port");
-			if (ISTcpConnector::Instance().Connect(Host, Port))
-			{
-				if (CONFIG_BOOL("Protocol/Auth"))
-				{
-					ISTcpQuery qAuth(API_AUTH);
-					qAuth.BindValue("Login", EditLogin->GetValue().toString());
-					qAuth.BindValue("Password", EditPassword->GetValue().toString());
-					if (qAuth.Execute())
-					{
-						Port = qAuth.GetAnswer()["Port"].toInt();
-					}
-					else
-					{
-						ISMessageBox::ShowCritical(this, qAuth.GetErrorString());
-					}
-
-					if (!ISTcpConnector::Instance().Reconnect(Host, Port))
-					{
-						ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
-					}
-				}
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, ISTcpConnector::Instance().GetErrorString());
-			}
-			SetConnecting(false);
-		}
-
 		close();
 	}
 	else //Ошибка подключения к базе данных
