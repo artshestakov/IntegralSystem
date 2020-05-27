@@ -906,9 +906,6 @@
     <ClCompile Include="ISStackedWidget.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="ISStatusBar.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISSystemsPanel.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -1620,9 +1617,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISStackedWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISStatusBar.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISSystemsPanel.h">

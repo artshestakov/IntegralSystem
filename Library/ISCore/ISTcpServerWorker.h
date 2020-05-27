@@ -27,7 +27,7 @@ private:
 private:
 	void TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Тестовый запрос
 	void Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Ожидание
-	void ColumnSizer(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Получение размеров колонок
+	void GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer); //Получение размеров колонок
 
 private:
 	QTcpSocket *TcpSocket;

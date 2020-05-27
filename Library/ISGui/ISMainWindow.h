@@ -6,7 +6,6 @@
 #include "ISInterfaceForm.h"
 #include "ISDesktopForm.h"
 #include "ISMenuBar.h"
-#include "ISStatusBar.h"
 #include "ISCalendarForm.h"
 #include "ISChatForm.h"
 #include "ISWorkspaceForm.h"
@@ -31,7 +30,6 @@ protected:
 	void CreateMenuBar(); //Создание главного тулбара
 	void CreateInformationMessage(); //Создание информационного сообщения
 	void CreateStackWidget(); //Создание начальной страницы и рабочей области
-	void CreateStatusBar(); //Создание статус-бара
 
 	void ParagraphClicked(const ISUuid &ParagraphUID); //Событие нажатия на кнопку-параграф
 	
@@ -60,7 +58,6 @@ private:
 	ISWorkspaceForm *WorkspaceForm; //Виджет рабочей области
 	ISCalendarForm *CalendarForm; //Виджет календаря
 	ISChatForm *ChatForm; //Виджет чата
-	ISStatusBar *StatusBar;
 	
 	QString CurrentParagraphUID;
 };

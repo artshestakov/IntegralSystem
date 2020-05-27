@@ -42,7 +42,6 @@ ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
 	CreateMenuBar();
 	CreateInformationMessage();
 	CreateStackWidget();
-	CreateStatusBar();
 
 	//¬ход€щий звонок
 	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::IncomingCall, this, &ISMainWindow::IncomingCall);
@@ -158,16 +157,6 @@ void ISMainWindow::CreateStackWidget()
 		Paragraphs.emplace(MetaParagraph->UID, StackedWidget->addWidget(ParagraphBaseForm));
 	}
 	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::CreateStatusBar()
-{
-	if (SETTING_BOOL(CONST_UID_SETTING_STATUS_BAR_SHOWSTATUSBAR))
-	{
-		StatusBar = new ISStatusBar(this);
-		StatusBar->setVisible(false);
-		GetMainLayout()->addWidget(StatusBar);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)

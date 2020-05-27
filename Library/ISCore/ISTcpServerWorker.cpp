@@ -19,7 +19,7 @@ ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 {
 	Functions[API_TEST_QUERY] = std::mem_fn(&ISTcpServerWorker::TestQuery);
 	Functions[API_SLEEP] = std::mem_fn(&ISTcpServerWorker::Sleep);
-	Functions[API_COLUMN_SIZER] = std::mem_fn(&ISTcpServerWorker::ColumnSizer);
+	Functions[API_GET_META_DATA] = std::mem_fn(&ISTcpServerWorker::GetMetaData);
 }
 //-----------------------------------------------------------------------------
 ISTcpServerWorker::~ISTcpServerWorker()
@@ -30,10 +30,7 @@ ISTcpServerWorker::~ISTcpServerWorker()
 bool ISTcpServerWorker::Run(quint16 Port)
 {
 	bool Result = ISTcpServerBase::Run(Port);
-
-	//Сообщаем карату об успешном запуске только в релизной версии
-#ifndef DEBUG
-	if (Result) //Базовый сокет запустился
+	if (Result) //Базовый сервер запустился
 	{
 		//Пытаемся подключиться к карату и сообщить что запуск воркера произошёл
 		QLocalSocket LocalSocket;
@@ -43,12 +40,12 @@ bool ISTcpServerWorker::Run(quint16 Port)
 		{
 			LocalSocket.disconnectFromServer();
 		}
-		else //Подключиться к карату не удалось - ошибка
+		else //Подключиться к карату не удалось - выкатываем предупреждение и за ошибку не считаем
 		{
-			SetErrorString("Error connecting to carat: " + LocalSocket.errorString());
+			ISLOGGER_W("Connecting to carat: " + LocalSocket.errorString());
+			Result = true;
 		}
 	}
-#endif
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -177,8 +174,9 @@ void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAns
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerWorker::ColumnSizer(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
+void ISTcpServerWorker::GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
+	//Получаем размеры полей
 	ISQuery qSelect(QS_COLUMN_SIZE);
 	if (qSelect.Execute())
 	{
@@ -196,7 +194,10 @@ void ISTcpServerWorker::ColumnSizer(const QVariantMap &Parameters, ISTcpAnswer &
 	}
 	else
 	{
-		TcpAnswer.SetError(qSelect.GetErrorString());
+		TcpAnswer.SetError("Error getting column size: " + qSelect.GetErrorString());
 	}
+
+	//Получаем параграфы
+	
 }
 //-----------------------------------------------------------------------------

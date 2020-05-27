@@ -311,7 +311,6 @@
     <ClCompile Include="ISStackedWidget.cpp" />
     <ClCompile Include="ISStartup.cpp" />
     <ClCompile Include="ISStatisticTablesForm.cpp" />
-    <ClCompile Include="ISStatusBar.cpp" />
     <ClCompile Include="ISStorageFilesListForm.cpp" />
     <ClCompile Include="ISStyleSheet.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
@@ -569,7 +568,6 @@
     <QtMoc Include="ISSplashScreen.h" />
     <QtMoc Include="ISSplashWidget.h" />
     <QtMoc Include="ISStackedWidget.h" />
-    <QtMoc Include="ISStatusBar.h" />
     <QtMoc Include="ISSystemsPanel.h" />
     <QtMoc Include="ISToolBarAccessTable.h" />
     <QtMoc Include="ISUserGroupWidget.h" />

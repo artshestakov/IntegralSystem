@@ -55,7 +55,7 @@ bool ISColumnSizer::Initialize(bool UseProtocol)
 	bool Result = true;
 	if (UseProtocol)
 	{
-		ISTcpQuery qColumnSizer(API_COLUMN_SIZER);
+		ISTcpQuery qColumnSizer(API_GET_META_DATA);
 		Result = qColumnSizer.Execute();
 		if (Result)
 		{

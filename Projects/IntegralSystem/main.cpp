@@ -32,7 +32,6 @@ int main(int argc, char **argv)
 	{
 		ISSplashScreen SplashScreen(LANG("Banner.StartupSystem"));
 		SplashScreen.show();
-
 		Result = ISStartup::Startup(&SplashScreen);
 		SplashScreen.hide();
 
@@ -44,11 +43,9 @@ int main(int argc, char **argv)
 
 			SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
 			SplashScreen.show();
-
 			ISStartup::Shutdown(&SplashScreen);
 		}
 	}
-
 	ISGui::ExitApplication();
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
