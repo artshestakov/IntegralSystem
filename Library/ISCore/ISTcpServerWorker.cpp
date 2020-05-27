@@ -12,6 +12,11 @@ static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_field
 											  "FROM _columnsize "
 											  "WHERE clsz_user = currentuserid()");
 //-----------------------------------------------------------------------------
+static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname, prhs_default "
+											 "FROM _paragraphs "
+											 "WHERE NOT prhs_isdeleted "
+											 "ORDER BY prhs_orderid");
+//-----------------------------------------------------------------------------
 ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	: ISTcpServerBase(parent),
 	TcpSocket(nullptr),
@@ -177,27 +182,51 @@ void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAns
 void ISTcpServerWorker::GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
 	//Получаем размеры полей
-	ISQuery qSelect(QS_COLUMN_SIZE);
-	if (qSelect.Execute())
+	ISQuery qSelectColumnSize(QS_COLUMN_SIZE);
+	if (qSelectColumnSize.Execute())
 	{
 		QVariantList Tables;
-		while (qSelect.Next())
+		while (qSelectColumnSize.Next())
 		{
 			Tables.push_back(QVariantMap
 			{
-				{ "TableName", qSelect.ReadColumn("clsz_tablename") },
-				{ "FieldName", qSelect.ReadColumn("clsz_fieldname") },
-				{ "Size", qSelect.ReadColumn("clsz_size") }
+				{ "TableName", qSelectColumnSize.ReadColumn("clsz_tablename") },
+				{ "FieldName", qSelectColumnSize.ReadColumn("clsz_fieldname") },
+				{ "Size", qSelectColumnSize.ReadColumn("clsz_size") }
 			});
 		}
 		TcpAnswer["Tables"] = Tables;
 	}
 	else
 	{
-		TcpAnswer.SetError("Error getting column size: " + qSelect.GetErrorString());
+		TcpAnswer.SetError("Error getting column size: " + qSelectColumnSize.GetErrorString());
+		return;
 	}
 
 	//Получаем параграфы
-	
+	ISQuery qSelectParagraph(QS_PARAGRAPHS);
+	if (qSelectParagraph.Execute())
+	{
+		QVariantList Paragraphs;
+		while (qSelectParagraph.Next())
+		{
+			Paragraphs.push_back(QVariantMap
+			{
+				{ "UID", qSelectParagraph.ReadColumn("prhs_uid") },
+				{ "Name", qSelectParagraph.ReadColumn("prhs_name") },
+				{ "LocalName", qSelectParagraph.ReadColumn("prhs_localname") },
+				{ "ToolTip", qSelectParagraph.ReadColumn("prhs_tooltip") },
+				{ "Icon", qSelectParagraph.ReadColumn("prhs_icon") },
+				{ "ClassName", qSelectParagraph.ReadColumn("prhs_classname") },
+				{ "Default", qSelectParagraph.ReadColumn("prhs_default") }
+			});
+		}
+		TcpAnswer["Paragraphs"] = Paragraphs;
+	}
+	else
+	{
+		TcpAnswer.SetError("Error getting paragraphs: " + qSelectParagraph.GetErrorString());
+		return;
+	}
 }
 //-----------------------------------------------------------------------------
