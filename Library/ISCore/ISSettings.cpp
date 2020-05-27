@@ -93,7 +93,7 @@ void ISSettings::Initialize()
 		{
 			ISUuid GroupUID = qSelectSettings.ReadColumn("stgp_uid");
 			ISMetaSettingsGroup *MetaGroup = CheckExistGroup(GroupUID);
-			if (!MetaGroup) //Если группа настроек уже содержится в памяти (была создана при первой итерации обхода результатов запрос)
+			if (!MetaGroup) //Если группа настроек уже содержится в памяти (была создана при первой итерации обхода результатов запроса)
 			{
 				MetaGroup = new ISMetaSettingsGroup();
 				MetaGroup->UID = GroupUID;

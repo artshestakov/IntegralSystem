@@ -69,7 +69,6 @@ ISMetaParagraph* ISParagraphEntity::GetParagraph(const QString &ParagraphUID)
 			return MetaParagraph;
 		}
 	}
-
 	IS_ASSERT(false, QString("Not found meta paragraph from uid: %1").arg(ParagraphUID));
 	return nullptr;
 }

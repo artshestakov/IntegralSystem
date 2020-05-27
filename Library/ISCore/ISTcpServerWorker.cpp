@@ -252,7 +252,7 @@ void ISTcpServerWorker::GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &
 	}
 	else
 	{
-		TcpAnswer.SetError("Error getting sorting columns: " + qSelectParagraph.GetErrorString());
+		TcpAnswer.SetError("Error getting sorting columns: " + qSelectSortingColumn.GetErrorString());
 		return;
 	}
 }

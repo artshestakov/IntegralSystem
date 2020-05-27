@@ -234,6 +234,7 @@ void ISAuthForm::Input()
 					ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth").arg(LANG(qAuth.GetErrorString())));
 				}
 			}
+			ConnectedDone();
 		}
 		else //Стандартное подключение
 		{
