@@ -20,21 +20,11 @@ protected:
 	virtual bool StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password);
 
 private:
-	bool WaitToken(QTcpSocket *TcpSocket, QByteArray &Buffer); //Ожидание токена
-	bool InitCrypter(); //Инициализация криптера
-
-private:
 	QLocalServer *ServerController;
 	QString DBHost;
 	int DBPort;
 	QString DBName;
 	bool IsDisconnected;
-
-	typedef const char *(__stdcall *DecryptMessage)(const char *); //Определение функции дешифрования изображения
-	typedef const char *(__stdcall *GetError)(void); //Определение функции получения ошибки при дешифровании изображения
-	HINSTANCE HModuleCrypter; //Модуль криптера
-	DecryptMessage decrypt_message; //Указатель на функцию дешифрования изображения
-	GetError get_error; //Указатель на функцию получения ошибки при дешифровании изображения
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -82,8 +82,8 @@
       <Compression>level9</Compression>
     </QtRcc>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Bin\$(Configuration)-$(Platform)\libCrypter.dll (DEL $(SolutionDir)Bin\$(Configuration)-$(Platform)\libCrypter.dll)
-COPY $(SolutionDir)Components\Crypter\$(Configuration)-$(Platform)\libCrypter.dll $(SolutionDir)Bin\$(Configuration)-$(Platform)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -107,12 +107,11 @@ COPY $(SolutionDir)Components\Crypter\$(Configuration)-$(Platform)\libCrypter.dl
       <Compression>level9</Compression>
     </QtRcc>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)Bin\$(Configuration)-$(Platform)\libCrypter.dll (DEL $(SolutionDir)Bin\$(Configuration)-$(Platform)\libCrypter.dll)
-COPY $(SolutionDir)Components\Crypter\$(Configuration)-$(Platform)\libCrypter.dll $(SolutionDir)Bin\$(Configuration)-$(Platform)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ISAes256.cpp" />
     <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
@@ -177,7 +176,6 @@ COPY $(SolutionDir)Components\Crypter\$(Configuration)-$(Platform)\libCrypter.dl
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISAes256.h" />
     <ClInclude Include="call_stack.hpp" />
     <ClInclude Include="ISAlgorithm.h" />
     <ClInclude Include="ISApplicationRunning.h" />

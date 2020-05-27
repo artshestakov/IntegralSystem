@@ -13,22 +13,18 @@ public:
 	virtual ~ISTcpServerBase();
 
 	QString GetErrorString() const;
-	void SetToken(const std::string &token);
 	virtual bool Run(quint16 Port);
 
 protected:
 	void SetErrorString(const QString &error_string);
 	void Send(QTcpSocket *TcpSocket, const QVariantMap &Data); //Отправка данных
 	void SendError(QTcpSocket *TcpSocket, const QString &ErrorString); //Отправка ошибки
-	std::vector<unsigned char>& GetToken();
-	QString GetTokenString() const;
 
 private:
 	void AcceptError(QTcpSocket::SocketError);
 
 private:
 	QString ErrorString;
-	std::vector<unsigned char> Token;
 };
 //-----------------------------------------------------------------------------
 #endif

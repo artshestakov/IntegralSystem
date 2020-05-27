@@ -3,7 +3,6 @@
 #include "ISTcp.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
-#include "ISAes256.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
@@ -31,25 +30,25 @@ void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &Paramete
 bool ISTcpQuery::Execute()
 {
 	//Шифруем запрос
-	QByteArray Encripted = ISTcp::Crypt(ISTcpConnector::Instance().GetToken(),
+	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
 	{
 		{ "Type", QueryType },
 		{ "Parameters", Parameters }
-	});
+	}).toUtf8();
+	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
 
 	//Получаем сокет и отправляем на него запрос
 	QTcpSocket *TcpSocket = ISTcpConnector::Instance().GetSocket();
-	if (TcpSocket->write(Encripted) != Encripted.size())
+	if (TcpSocket->write(ByteArray) != ByteArray.size())
 	{
 		ErrorString = TcpSocket->errorString();
 		return false;
 	}
+	ISTcp::WaitForBytesWritten(TcpSocket); //Ждём пока данные уйдут
 
-	ISTcp::WaitForBytesWritten(TcpSocket);
-
-	QByteArray ByteArray;
+	ByteArray.clear();
 	long Size = 0;
-
+	
 	while (true) //Ждём пока не придёт ответ
 	{
 		ISSleep(50);
@@ -68,8 +67,6 @@ bool ISTcpQuery::Execute()
 			}
 		}
 	}
-
-	ByteArray = ISTcp::Decrypt(ISTcpConnector::Instance().GetToken(), ByteArray);
 
 	//Проверяем валидность ответа
 	if (!ISTcp::IsValidAnswer(ByteArray, TcpAnswer, ErrorString))

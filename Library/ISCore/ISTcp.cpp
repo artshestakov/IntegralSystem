@@ -1,7 +1,6 @@
 #include "ISTcp.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
-#include "ISAes256.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 bool ISTcp::IsValidQuery(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString)
@@ -66,7 +65,7 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 	return true;
 }
 //-----------------------------------------------------------------------------
-int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
+long ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 {
 	QString Digits;
 	for (int i = 0;i < ByteArray.size(); ++i) //Обходим весь массив
@@ -83,58 +82,13 @@ int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
 	if (!Digits.isEmpty() && !ByteArray.isEmpty())
 	{
 		bool Ok = true;
-		int Result = Digits.toInt(&Ok);
+		long Result = Digits.toInt(&Ok);
 		if (Ok)
 		{
 			return Result;
 		}
 	}
 	return 0;
-}
-//-----------------------------------------------------------------------------
-QByteArray ISTcp::Crypt(const std::vector<unsigned char> &Key, const QVariantMap &VariantMap)
-{
-	//Формируем вектор для шифрования
-	std::string String = ISSystem::VariantMapToJsonString(VariantMap).simplified().toStdString();
-	const std::vector<unsigned char> VectorPlain(String.begin(), String.end());
-
-	//Шифруем
-	std::vector<unsigned char> VectorEncrypted;
-	size_t EncryptedSize = ISAes256::encrypt(Key, VectorPlain, VectorEncrypted);
-
-	//Формируем размер зашифрованных данных и вставляем его в итоговый вектор
-	String = std::to_string(EncryptedSize);
-	std::vector<char> TempVector = std::vector<char>(String.begin(), String.end());
-	VectorEncrypted.insert(VectorEncrypted.begin(), SYMBOL_POINT); //Разделитель размера и данных - точка
-	VectorEncrypted.insert(VectorEncrypted.begin(), TempVector.begin(), TempVector.end());
-	EncryptedSize += (String.size() + 1);
-
-	//Заполняем
-	QByteArray Encrypted(EncryptedSize, '\0');
-	for (size_t i = 0; i < EncryptedSize; ++i)
-	{
-		Encrypted[i] = VectorEncrypted[i];
-	}
-	return Encrypted;
-}
-//-----------------------------------------------------------------------------
-QByteArray ISTcp::Decrypt(const std::vector<unsigned char> &Key, const QByteArray &ByteArray)
-{
-	int Size = ByteArray.size();
-	std::vector<unsigned char> Vector(Size);
-	for (size_t i = 0; i < Size; ++i)
-	{
-		Vector[i] = ByteArray[i];
-	}
-
-	std::vector<unsigned char> Decrypted;
-	size_t DecryptedSize = ISAes256::decrypt(Key, Vector, Decrypted);
-	QByteArray Result(DecryptedSize, Qt::Uninitialized);
-	for (size_t i = 0; i < DecryptedSize; ++i)
-	{
-		Result[i] = Decrypted[i];
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISTcp::WaitForBytesWritten(QTcpSocket *TcpSocket)

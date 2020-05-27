@@ -8,7 +8,6 @@
 quint16 Port = 0; //Прослушиваемый порт
 const char *Login = NULL; //Логин
 const char *Password = NULL; //Пароль
-const char *Token = NULL; //Токен
 //-----------------------------------------------------------------------------
 bool ParseArgs(int argc, char **argv); //Парсинг аргументов коммандной строки
 //-----------------------------------------------------------------------------
@@ -40,7 +39,6 @@ int main(int argc, char **argv)
 	}
 
 	ISTcpServerWorker TcpServerWorker;
-	TcpServerWorker.SetToken(Token);
 	Result = TcpServerWorker.Run(static_cast<quint16>(Port));
 	if (Result) //Сервер запущен - сообщаем об этом карату
 	{
@@ -85,18 +83,6 @@ bool ParseArgs(int argc, char **argv)
 		ISLOGGER_E("Password not specified");
 		return false;
 	}
-
-	//Проверка токена (в отладочной версии используем тестовый токен)
-#ifdef DEBUG
-	Token = CARAT_TOKEN_TEST;
-#else
-	Token = argv[4];
-	if (!Token)
-	{
-		ISLOGGER_E("Token not specified");
-		return false;
-	}
-#endif
 	return true;
 }
 //-----------------------------------------------------------------------------

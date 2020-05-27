@@ -94,8 +94,6 @@ void ISTcpServerWorker::ReadyRead()
 			return;
 		}
 
-		Buffer = ISTcp::Decrypt(GetToken(), Buffer);
-
 		//Проверка валидности запроса
 		QVariantMap VariantMap;
 		QString ErrorString;
@@ -153,16 +151,6 @@ bool ISTcpServerWorker::CheckField(const QVariantMap &Parameters, const ISVector
 void ISTcpServerWorker::TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
     Q_UNUSED(Parameters);
-	QFile File("C:/Shara/book.txt");
-	if (File.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		TcpAnswer["Data"] = File.readAll();
-		File.close();
-	}
-	else
-	{
-		TcpAnswer.SetError(File.errorString());
-	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
