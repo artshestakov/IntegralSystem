@@ -6,7 +6,7 @@ export QT_DIR_PLUGINS="$QT_DIR/5.11.3/gcc_64/plugins"
 
 Configuration=$1
 
-#Создание директории сборки
+#Создание директорий сборки
 mkdir -p ../Deploy
 mkdir -p ../Deploy/$1-Linux64
 rm -R -f ../Deploy/$1-Linux64/*
