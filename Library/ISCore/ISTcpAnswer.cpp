@@ -4,7 +4,6 @@
 ISTcpAnswer::ISTcpAnswer() : QVariantMap()
 {
 	insert("IsError", false);
-	insert("ErrorDescription", NO_ERROR_STRING);
 }
 //-----------------------------------------------------------------------------
 ISTcpAnswer::~ISTcpAnswer()
@@ -25,6 +24,6 @@ QString ISTcpAnswer::GetErrorString()
 void ISTcpAnswer::SetError(const QString &ErrorString)
 {
 	(*this)["IsError"] = true;
-	(*this)["ErrorDescription"] = ErrorString;
+	insert("ErrorDescription", ErrorString);
 }
 //-----------------------------------------------------------------------------

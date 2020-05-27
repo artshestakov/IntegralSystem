@@ -39,28 +39,31 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 		return false;
 	}
 
-	if (!VariantMap.contains("IsError"))
+	if (!VariantMap.contains("IsError")) //Если поле с флагом ошибки отсутствует
 	{
 		ErrorString = "Not found field \"IsError\"";
 		return false;
 	}
 
-	if (!VariantMap.contains("ErrorDescription"))
-	{
-		ErrorString = "Not found field \"ErrorDescription\"";
-		return false;
-	}
-
-	if (!VariantMap["IsError"].isValid())
+	if (!VariantMap["IsError"].isValid()) //Если поле с флагом ошибки невалидное
 	{
 		ErrorString = "Empty field \"IsError\"";
 		return false;
 	}
 
-	if (!VariantMap["ErrorDescription"].isValid())
+	if (VariantMap["IsError"].toBool()) //Если ошибка действительно есть, только тогда проверяем наличие её описания
 	{
-		ErrorString = "Empty field \"ErrorDescription\"";
-		return false;
+		if (!VariantMap.contains("ErrorDescription")) //Если поле с описанием ошибки отсутствует
+		{
+			ErrorString = "Not found field \"ErrorDescription\"";
+			return false;
+		}
+
+		if (VariantMap["ErrorDescription"].toString().isEmpty()) //Если поле с описанием ошибки пустое
+		{
+			ErrorString = "Empty field \"ErrorDescription\"";
+			return false;
+		}
 	}
 	return true;
 }

@@ -82,7 +82,6 @@ bool ISTcpQuery::Execute()
 	}
 
 	TcpAnswer.remove("IsError");
-	TcpAnswer.remove("ErrorDescription");
 	return true;
 }
 //-----------------------------------------------------------------------------
