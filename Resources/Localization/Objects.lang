@@ -19,10 +19,6 @@
   <Local Name="CenterSeven.ChangeStatus" Russian="Сменить статус"/>
   <Local Name="CenterSeven.ChangeStatusComment" Russian="Введите комментарий"/>
 	
-	<!--Demo-->
-	
-	<!--Frame-->
-	
 	<!--Highway-->
 	<Local Name="Highway.Core.Search" Russian="Входящий звонок с номера %1, поиск организации..."/>
   <Local Name="Highway.Core.SearchComplete" Russian="Найдена организация %1 по номеру %2. Осуществляется перевод звонка абоненту %3"/>
@@ -84,34 +80,6 @@
 	
 	<!--MedTech-->
 	<Local Name="Rating.Filter.All" Russian="Все оценки"/>
-	
-	<!--Patriot-->
-  <Local Name="Patriot.Message.Information.CancelVisit" Russian="Посещение успешно отменено!"/>
-	<Local Name="Patriot.Message.Warning.CardDeactivate" Russian="Карта &quot;%1&quot; зарегистрирована как не активная!"/>
-  <Local Name="Patriot.Message.Warning.ClientNotFound" Russian="Клиент по карточке &quot;%1&quot; не найден. Добавить нового клиента?"/>
-	<Local Name="Patriot.Message.Warning.OneVisitLeft" Russian="ВНИМАНИЕ! У клиента &quot;%1&quot; по абонементу &quot;%2&quot; осталось одно посещение, предупредите клиента."/>
-	<Local Name="Patriot.Message.Question.CreateSubscription" Russian="У клиента &quot;%1&quot; абонементы отсутствуют. Добавить новый абонемент?"/>
-	<Local Name="Patriot.Message.Question.CreateCard" Russian="Карта &quot;%1&quot; отсутствует в системе. Привязать её к клиенту?"/>
-  <Local Name="Patriot.Message.Question.CancelVisit" Russian="Отменить выбранное посещение?"/>
-  <Local Name="Patriot.Message.Question.DeactivateCard" Russian="Деактивировать карту %1?"/>
-	<Local Name="Patriot.BirthdayCurrentDate" Russian="Сегодня празднуют день рождения"/>
-	<Local Name="Patriot.Birthdays" Russian="Дни рождения"/>
-	<Local Name="Patriot.WasFulfilled" Russian="Исполнилось %1 лет"/>
-	<Local Name="Patriot.SubscriptionSelect" Russian="Выбор абонемента"/>
-	<Local Name="Patriot.OpenVisit" Russian="Открыть посещение"/>
-	<Local Name="Patriot.CloseVisit" Russian="Закрыть посещение"/>
-	<Local Name="Patriot.Register" Russian="Регистрация посещения"/>
-	<Local Name="Patriot.Trainer" Russian="Тренер"/>
-	<Local Name="Patriot.LabelReport" Russian="Абонементы: %1р. Расходы: %2р."/>
-	<Local Name="Patriot.SubscriptionForVisits" Russian="на %1 посещений. Осталось: %2"/>
-	<Local Name="Patriot.SelectSebscriptionClientForVisit" Russian="Выберите абонемент клиента для посещения"/>
-	<Local Name="Patriot.InputBarcode" Russian="Введите штрих-код"/>
-	<Local Name="Patriot.Notify.OpenVisit" Russian="Открыто посещение. Осталось %1"/>
-	<Local Name="Patriot.Notify.CloseVisit" Russian="Закрыто посещение"/>
-  <Local Name="Patriot.CancelVisit" Russian="Отменить посещение"/>
-  <Local Name="Patriot.Deactivating" Russian="Деактивация"/>
-  <Local Name="Patriot.DeactivatingReason" Russian="Укажите причину деактивации"/>
-  <Local Name="Patriot.DeactivateCard" Russian="Деактивация карты"/>
 	
 	<!--Sirona-->
 	<Local Name="Sirona.Message.Information.AdmissionAlreadyFinished" Russian="Приёи пациента &quot;%1&quot; уже завершен."/>

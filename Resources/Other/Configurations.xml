@@ -7,7 +7,6 @@
   <Configuration UID="{744D107A-6BAD-4038-8E9D-D33A1C62C537}" Name="MedTech" LocalName="ООО «Медицинские технологии»"/>
   <Configuration UID="{B2003F73-0DD2-4359-AC96-FA7CABB53049}" Name="OilSphere" LocalName="ООО «Нефтесфера»"/>
   <Configuration UID="{76478BDD-0C4A-46B8-9AB2-973F6BA6F3FD}" Name="Milex" LocalName="Сервисный центр «Милекс»"/>
-  <Configuration UID="{2A5AD154-6313-48C7-94B1-0C746AD1EBAB}" Name="Patriot" LocalName="Спорт клуб «Патриот»"/>
   <Configuration UID="{B6FB8EC8-0770-443F-A2A9-2FD6D662748F}" Name="Sirona" LocalName="Независимый рентгенологический центр «Sirona+»"/>
 
 </Configurations>

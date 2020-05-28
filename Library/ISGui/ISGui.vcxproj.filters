@@ -94,12 +94,6 @@
     <Filter Include="Objects\OilSphere">
       <UniqueIdentifier>{e220ef6b-fb3a-4917-8a8d-85226b13b23a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Patriot">
-      <UniqueIdentifier>{d05638a9-abe3-4a67-aabf-039cfd729e18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Patriot\Forms">
-      <UniqueIdentifier>{5058b604-1001-4376-966a-a4e7c3eaebf5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Sirona">
       <UniqueIdentifier>{006cc689-9a3d-432d-ba03-bf4ad28ef303}</UniqueIdentifier>
     </Filter>
@@ -461,33 +455,6 @@
     </ClCompile>
     <ClCompile Include="ISMedTech.cpp">
       <Filter>Objects\MedTech</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriot.cpp">
-      <Filter>Objects\Patriot</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriotHelper.cpp">
-      <Filter>Objects\Patriot</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriotCardListForm.cpp">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriotClientsBirthdayForm.cpp">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriotSubscriptionListForm.cpp">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriotSubscriptionObjectForm.cpp">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriotSubscriptionSelectForm.cpp">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriotTrainerReportForm.cpp">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatriotVisitListForm.cpp">
-      <Filter>Objects\Patriot\Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISSirona.cpp">
       <Filter>Objects\Sirona</Filter>
@@ -1226,30 +1193,6 @@
     <QtMoc Include="ISMedTech.h">
       <Filter>Objects\MedTech</Filter>
     </QtMoc>
-    <QtMoc Include="ISPatriot.h">
-      <Filter>Objects\Patriot</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPatriotCardListForm.h">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPatriotClientsBirthdayForm.h">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPatriotSubscriptionListForm.h">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPatriotSubscriptionObjectForm.h">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPatriotSubscriptionSelectForm.h">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPatriotTrainerReportForm.h">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPatriotVisitListForm.h">
-      <Filter>Objects\Patriot\Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISSirona.h">
       <Filter>Objects\Sirona</Filter>
     </QtMoc>
@@ -1659,9 +1602,6 @@
     </ClInclude>
     <ClInclude Include="ISPrintingEntity.h">
       <Filter>Printing</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPatriotHelper.h">
-      <Filter>Objects\Patriot</Filter>
     </ClInclude>
     <ClInclude Include="ISObjects.h">
       <Filter>Objects</Filter>

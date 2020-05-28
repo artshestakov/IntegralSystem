@@ -11,7 +11,6 @@
 #include "ISInformResource.h"
 #include "ISMedTech.h"
 #include "ISOilSphere.h"
-#include "ISPatriot.h"
 #include "ISSirona.h"
 //-----------------------------------------------------------------------------
 ISObjects::ISObjects()
@@ -23,7 +22,6 @@ ISObjects::ISObjects()
 	qRegisterMetaType<ISInformResource*>("ISInformResource");
 	qRegisterMetaType<ISMedTech::Object*>("ISMedTech::Object");
 	qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
-	qRegisterMetaType<ISPatriot*>("ISPatriot");
 	qRegisterMetaType<ISSirona::Object*>("ISSirona::Object");
 }
 //-----------------------------------------------------------------------------
