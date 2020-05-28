@@ -43,7 +43,6 @@ protected:
 	void ActivateWorkspace(); //Активация рабочей области
 	void ShowFavoritesForm(); //Открыть форму избранного
 	void ShowHistoryForm(); //Открыть форму истории
-	void ShowDeviceSettings(); //Открыть форму настройки устройств
 	void ShowChangePasswordForm(); //Открыть форму смены пароля
 	void ShowSettingsForm(); //Открыть форму "Настройки"
 	void ShowAboutForm(); //Открыть форму "О программе"

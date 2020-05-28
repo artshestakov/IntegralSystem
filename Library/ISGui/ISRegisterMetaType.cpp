@@ -27,7 +27,6 @@
 #include "ISTaskOverdueListForm.h"
 #include "ISTaskObjectForm.h"
 #include "ISTelephonyForm.h"
-#include "ISDeviceUserObjectForm.h"
 #include "ISUserGroupListForm.h"
 #include "ISMonitorActivityForm.h"
 #include "ISFullTextSearchForm.h"
@@ -58,10 +57,6 @@
 #include "ISFileEdit.h"
 #include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
-//-----------------------------------------------------------------------------
-#include "ISDevice_Atol1101.h"
-#include "ISDevice_Atol1101Plus.h"
-#include "ISDevice_Atol30F.h"
 //-----------------------------------------------------------------------------
 void ISRegisterMetaType::RegisterMetaType()
 {
@@ -96,7 +91,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISTaskOverdueListForm*>("ISTaskOverdueListForm");
 	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
 	qRegisterMetaType<ISTelephonyForm*>("ISTelephonyForm");
-	qRegisterMetaType<ISDeviceUserObjectForm*>("ISDeviceUserObjectForm");
 	qRegisterMetaType<ISUserGroupListForm*>("ISUserGroupListForm");
 	qRegisterMetaType<ISMonitorActivityForm*>("ISMonitorActivityForm");
 	qRegisterMetaType<ISFullTextSearchForm*>("ISFullTextSearchForm");
@@ -164,9 +158,5 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISComboTabBarSelectionBehavior*>("ISComboTabBarSelectionBehavior");
 	qRegisterMetaType<ISComboIncomingFormPosition*>("ISComboIncomingFormPosition");
 	qRegisterMetaType<ISCheckViewParagraph*>("ISCheckViewParagraph");
-
-	qRegisterMetaType<ISDevice_Atol1101*>("ISDevice_Atol1101");
-	qRegisterMetaType<ISDevice_Atol1101Plus*>("ISDevice_Atol1101Plus");
-	qRegisterMetaType<ISDevice_Atol30F*>("ISDevice_Atol30F");
 }
 //-----------------------------------------------------------------------------

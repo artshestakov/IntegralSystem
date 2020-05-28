@@ -23,7 +23,6 @@
 #include "ISNotificationService.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISIncomingCallBaseForm.h"
-#include "ISDeviceSettingsForm.h"
 #include "ISTelephony.h"
 #include "ISObjects.h"
 #include "ISAlgorithm.h"
@@ -118,7 +117,6 @@ void ISMainWindow::CreateMenuBar()
 	connect(MenuBar, &ISMenuBar::Exit, this, &ISMainWindow::close);
 	connect(MenuBar, &ISMenuBar::Favorites, this, &ISMainWindow::ShowFavoritesForm);
 	connect(MenuBar, &ISMenuBar::History, this, &ISMainWindow::ShowHistoryForm);
-	connect(MenuBar, &ISMenuBar::DeviceSettings, this, &ISMainWindow::ShowDeviceSettings);
 	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
 	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
 	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
@@ -247,11 +245,6 @@ void ISMainWindow::ShowHistoryForm()
 	connect(HistoryForm, &ISHistoryForm::OpenObject, this, &ISMainWindow::OpenHistoryObject);
 	HistoryForm->show();
 	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowDeviceSettings()
-{
-	(new ISDeviceSettingsForm())->show();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()

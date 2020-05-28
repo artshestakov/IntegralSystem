@@ -174,7 +174,6 @@
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
   <Local Name="Message.Warning.SelectCorrectTimeCalendarEvent" Russian="Укажите корректное время."/>
   <Local Name="Message.Warning.SqlQueryError" Russian="Ошибка SQL-запроса. Некоторые функции программы могут работать некорректно."/>
-  <Local Name="Message.Warning.DeviceAlreadyExist" Russian="Такое устройство уже существует."/>
   <Local Name="Message.Warning.TaskDeadlineOverdue" Russian="Создавать задачи задним числом запрещено!"/>
   <Local Name="Message.Warning.TaskSaveBeforeTakeToWork" Russian="Задача должна быть сохранена перед взятием в работу!"/>
   <Local Name="Message.Warning.TaskExecutorEmpty" Russian="У задачи не назначен исполнитель."/>
@@ -245,7 +244,6 @@
   <Local Name="Message.Question.ShareRecordFromChat" Russian="Поделиться ссылкой на эту запись в общий чат?"/>
   <Local Name="Message.Question.AttachRecordFromTask" Russian="Прикрепить выбранную запись к задаче?"/>
   <Local Name="Message.Question.ClearListNotifications" Russian="Очистить список уведомлений?"/>
-  <Local Name="Message.Question.DeleteDeviceUser" Russian="Удалить выбранное устройство?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.FileRecordSaved" Russian="Запись разговора успешно сохранена! Воспроизвести её?"/>
   <Local Name="Message.Question.SaveChangedBeforeTaskTakeToWork" Russian="Сохранить изменения перед взятием в работу?"/>
@@ -675,16 +673,6 @@
   <Local Name="CalendarForm.Events" Russian="События на %1"/>
   <Local Name="CalendarForm.EnteringSearchQuery" Russian="Введите поисковый запрос (F8)"/>
   <Local Name="CalendarForm.SearchResults" Russian="Результаты поиска"/>
-  
-  <!--Device-->
-  <Local Name="Device.Initialize.Process" Russian="Инициализация устройства: %1"/>
-  <Local Name="Device.Initialize.Done" Russian="Инициализация устройства %1 прошла успешно"/>
-  <Local Name="Device.Initialize.Error" Russian="Инициализация устройства %1 завершилась с ошибкой"/>
-  <Local Name="Device.Settings" Russian="Настройка устройств"/>
-  <Local Name="Device.My" Russian="Мои устройства"/>
-  <Local Name="Device.Error" Russian="Ошибка устройства"/>
-  <Local Name="Device.NotConnected" Russian="Устройство не подключено"/>
-  <Local Name="Device.RestartSystem" Russian="Устройство будет работать после перезапуска системы"/>
   
   <!--ChatForm-->
   <Local Name="ChatForm.ShowMessages" Russian="Показывать"/>

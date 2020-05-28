@@ -16,7 +16,6 @@ signals:
 	void Exit();
 	void Favorites();
 	void History();
-	void DeviceSettings();
 	void ChangePassword();
 	void Settings();
 	void HelpSystem();

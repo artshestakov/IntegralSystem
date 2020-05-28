@@ -20,7 +20,6 @@
 #include "ISMetaSystemsEntity.h"
 #include "ISProperty.h"
 #include "ISMediaPlayer.h"
-#include "ISDeviceEntity.h"
 #include "ISObjects.h"
 #include "ISQueryPool.h"
 #include "ISProperty.h"
@@ -111,9 +110,6 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 
 	//Инициализация параграфов
 	ISParagraphEntity::GetInstance();
-
-	//Иницилазация устройств
-	ISDeviceEntity::GetInstance().Initialize();
 
 	//Фиксация входа в протоколе
 	ISProtocol::EnterApplication();

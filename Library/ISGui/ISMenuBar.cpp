@@ -88,9 +88,6 @@ void ISMenuBar::CreateMenuService()
 	
 	MenuService->addSeparator();
 
-	//Настройка устройств
-	MenuService->addAction(BUFFER_ICONS("Device.Settings"), LANG("Device.Settings"), this, &ISMenuBar::DeviceSettings);
-
 	//Смена пароля
 	MenuService->addAction(LANG("ChangePassword"), this, &ISMenuBar::ChangePassword);
 }

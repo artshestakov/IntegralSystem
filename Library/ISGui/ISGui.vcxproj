@@ -156,14 +156,6 @@
     <ClCompile Include="ISDemoAccessesObjectForm.cpp" />
     <ClCompile Include="ISDesktopForm.cpp" />
     <ClCompile Include="ISDesktopInformResource.cpp" />
-    <ClCompile Include="ISDeviceComObject.cpp" />
-    <ClCompile Include="ISDeviceEntity.cpp" />
-    <ClCompile Include="ISDeviceObjectBase.cpp" />
-    <ClCompile Include="ISDeviceSettingsForm.cpp" />
-    <ClCompile Include="ISDeviceUserObjectForm.cpp" />
-    <ClCompile Include="ISDevice_Atol1101.cpp" />
-    <ClCompile Include="ISDevice_Atol1101Plus.cpp" />
-    <ClCompile Include="ISDevice_Atol30F.cpp" />
     <ClCompile Include="ISDictionaryWord.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
     <ClCompile Include="ISDiscussionObjectForm.cpp" />
@@ -402,24 +394,6 @@
     <QtMoc Include="ISSelectListForm.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISDevice_Atol30F.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISDevice_Atol1101.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISDevice_Atol1101Plus.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISDeviceComObject.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISDeviceEntity.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISDeviceObjectBase.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="ISFileDialog.h" />
   </ItemGroup>
   <ItemGroup>
@@ -461,8 +435,6 @@
     <QtMoc Include="ISConnectionForm.h" />
     <QtMoc Include="ISControlDatabaseForm.h" />
     <QtMoc Include="ISDesktopForm.h" />
-    <QtMoc Include="ISDeviceSettingsForm.h" />
-    <QtMoc Include="ISDeviceUserObjectForm.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISDiscussionObjectForm.h" />
     <QtMoc Include="ISEditObjectListForm.h" />

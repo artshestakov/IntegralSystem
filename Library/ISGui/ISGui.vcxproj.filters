@@ -14,9 +14,6 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Device">
-      <UniqueIdentifier>{6b8efe69-4263-453d-95ac-f107188dc095}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dialogs">
       <UniqueIdentifier>{dffb62ef-e48f-49d7-93f7-e1f2348ff642}</UniqueIdentifier>
     </Filter>
@@ -182,24 +179,6 @@
     </ClCompile>
     <ClCompile Include="ISSelectListForm.cpp">
       <Filter>Common Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDevice_Atol30F.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDevice_Atol1101.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDevice_Atol1101Plus.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDeviceComObject.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDeviceEntity.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDeviceObjectBase.cpp">
-      <Filter>Device</Filter>
     </ClCompile>
     <ClCompile Include="ISFileDialog.cpp">
       <Filter>Dialogs</Filter>
@@ -573,12 +552,6 @@
     <ClCompile Include="ISDesktopForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISDeviceSettingsForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDeviceUserObjectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISDiscussionListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -944,24 +917,6 @@
     <QtMoc Include="ISSelectListForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISDevice_Atol30F.h">
-      <Filter>Device</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDevice_Atol1101.h">
-      <Filter>Device</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDevice_Atol1101Plus.h">
-      <Filter>Device</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceComObject.h">
-      <Filter>Device</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceEntity.h">
-      <Filter>Device</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceObjectBase.h">
-      <Filter>Device</Filter>
-    </QtMoc>
     <QtMoc Include="ISFileDialog.h">
       <Filter>Dialogs</Filter>
     </QtMoc>
@@ -1260,12 +1215,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISDesktopForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceSettingsForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceUserObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISDiscussionListForm.h">

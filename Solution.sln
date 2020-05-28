@@ -80,8 +80,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheme", "Scheme", "{EDC6FC
 		Resources\Scheme\Carat.xsr = Resources\Scheme\Carat.xsr
 		Resources\Scheme\Countries.xsr = Resources\Scheme\Countries.xsr
 		Resources\Scheme\Currency.xsr = Resources\Scheme\Currency.xsr
-		Resources\Scheme\Device.xsn = Resources\Scheme\Device.xsn
-		Resources\Scheme\Device.xsr = Resources\Scheme\Device.xsr
 		Resources\Scheme\FIAS.xsn = Resources\Scheme\FIAS.xsn
 		Resources\Scheme\FIAS.xsr = Resources\Scheme\FIAS.xsr
 		Resources\Scheme\Functions.xsf = Resources\Scheme\Functions.xsf
@@ -216,7 +214,7 @@ Global
 		{07117845-DDF6-4F2A-B2D9-93A670AB36DD} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal
