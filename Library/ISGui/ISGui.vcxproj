@@ -283,7 +283,6 @@
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
     <ClCompile Include="ISSettingTableNameFieldsForm.cpp" />
-    <ClCompile Include="ISSirona.cpp" />
     <ClCompile Include="ISSliderDuration.cpp" />
     <ClCompile Include="ISSortingBuffer.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
@@ -628,7 +627,6 @@
     <ClInclude Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
     <QtMoc Include="ISScoreObjectForm.h" />
-    <QtMoc Include="ISSirona.h" />
     <ClInclude Include="ISRegisterMetaType.h" />
     <ClInclude Include="ISSortingBuffer.h" />
     <ClInclude Include="ISStartup.h" />

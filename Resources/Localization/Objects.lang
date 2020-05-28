@@ -81,22 +81,4 @@
 	<!--MedTech-->
 	<Local Name="Rating.Filter.All" Russian="Все оценки"/>
 	
-	<!--Sirona-->
-	<Local Name="Sirona.Message.Information.AdmissionAlreadyFinished" Russian="Приёи пациента &quot;%1&quot; уже завершен."/>
-  <Local Name="Sirona.Message.Question.OutputListDone" Russian="Вывод списка завершен! Открыть его?"/>
-  <Local Name="Sirona.Message.Question.AdmissionFinished" Russian="Завершить приём пациента &quot;%1&quot; на %2?"/>
-  <Local Name="Sirona.AdmissionFinished" Russian="Завершить приём"/>
-  <Local Name="Sirona.Admission.Filter.All" Russian="Все приёмы"/>
-  <Local Name="Sirona.Admission.Filter.Actial" Russian="Актуальные"/>
-  <Local Name="Sirona.Admission.Filter.Finished" Russian="Завершенные"/>
-  <Local Name="Sirona.SelectFromPeriod" Russian="Выборка по периоду"/>
-  <Local Name="Sirona.TotalMoney.Research" Russian="Наличные: %1р. Безналичные: %2р. Всего: %3р."/>
-  <Local Name="Sirona.TotalMoney.Cost" Russian="Итоговая сумма: %1р."/>
-  <Local Name="Sirona.DoctorBonus" Russian="%1р."/>
-  <Local Name="Sirona.DoctorNotWorkBonus" Russian="По бонусу не работает"/>
-  <Local Name="Sirona.Doctor" Russian="Доктор"/>
-  <Local Name="Sirona.Bonus" Russian="Бонус"/>
-  <Local Name="Sirona.OutputList" Russian="Вывести список"/>
-  <Local Name="Sirona.ReportDoctors" Russian="Отчёт по врачам"/>
-	
 </Localization>

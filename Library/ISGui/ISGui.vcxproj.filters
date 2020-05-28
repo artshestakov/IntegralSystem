@@ -91,9 +91,6 @@
     <Filter Include="Objects\OilSphere">
       <UniqueIdentifier>{e220ef6b-fb3a-4917-8a8d-85226b13b23a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Sirona">
-      <UniqueIdentifier>{006cc689-9a3d-432d-ba03-bf4ad28ef303}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{ee6c4721-bedb-4a2f-a405-e0f0b86927bf}</UniqueIdentifier>
     </Filter>
@@ -434,9 +431,6 @@
     </ClCompile>
     <ClCompile Include="ISMedTech.cpp">
       <Filter>Objects\MedTech</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSirona.cpp">
-      <Filter>Objects\Sirona</Filter>
     </ClCompile>
     <ClCompile Include="ISObjectInterface.cpp">
       <Filter>Objects</Filter>
@@ -1147,9 +1141,6 @@
     </QtMoc>
     <QtMoc Include="ISMedTech.h">
       <Filter>Objects\MedTech</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSirona.h">
-      <Filter>Objects\Sirona</Filter>
     </QtMoc>
     <QtMoc Include="ISObjectInterface.h">
       <Filter>Objects</Filter>
