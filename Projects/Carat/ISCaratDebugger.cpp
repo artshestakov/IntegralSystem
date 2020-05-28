@@ -5,10 +5,9 @@
 ISCaratDebugger::ISCaratDebugger(QObject *parent) : QObject(parent)
 {
 	Timer = new QTimer(this);
-	Timer->setInterval(CARAT_DEBUGGER_CONNECT_TIMEOUT);
 	Timer->setSingleShot(true);
 	connect(Timer, &QTimer::timeout, this, &ISCaratDebugger::TimeoutConnect);
-	Timer->start();
+	Timer->start(CARAT_DEBUGGER_CONNECT_TIMEOUT);
 
 	LocalSocket = new QLocalSocket(this);
 	connect(LocalSocket, &QLocalSocket::readyRead, this, &ISCaratDebugger::ReadyRead);

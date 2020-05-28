@@ -14,7 +14,6 @@ namespace ISDefines
 
 		static QStringList AVIABLE_IMAGE_EXTENSION;
 		static QMargins MARGINS_LAYOUT_NULL;
-		static QMargins MARGINS_LAYOUT_1_PX;
 		static QMargins MARGINS_LAYOUT_2_PX;
 		static QMargins MARGINS_LAYOUT_4_PX;
 		static QMargins MARGINS_LAYOUT_5_PX;
@@ -22,11 +21,8 @@ namespace ISDefines
 		static QSize SIZE_MAIN_WINDOW;
 		static QSize SIZE_MAIN_WINDOW_MINIMUM;
 		static QSize SIZE_TASK_OBJECT_FORM;
-		static QSize SIZE_AUTHORIZATION_FORM;
 		static QSize SIZE_PROGRESS_FORM;
 		static QSize SIZE_640_480;
-		static QSize SIZE_500_90;
-		static QSize SIZE_450_450;
 		static QSize SIZE_550_300;
 		static QSize SIZE_200_200;
 		static QSize SIZE_100_100;
@@ -43,7 +39,6 @@ namespace ISDefines
 		static QColor EDIT_WIDGET_COLOR_RED; //Цвет рамки вокруг незаполненного поля реадктирования информации
 		static QColor COLOR_BACKGROUND_INTERFACE; //Цвет фона форм интерфейса
 		static QColor COLOR_MAIN_MENU_BAR;
-		static QColor COLOR_WIDGET_BOX_TITLE;
 		static QColor COLOR_CALENDAR_SELECTED_DATE_BACKGROUND;
 		static QColor COLOR_CALENDAR_EVENT_FORM_FLASH;
 		static QColor COLOR_CALENDAR_CELL_BACKGROUP;
@@ -55,9 +50,6 @@ namespace ISDefines
 		static QColor COLOR_WHITE;
 		static QColor COLOR_RED;
 		static QColor COLOR_BLUE;
-		static QColor COLOR_BLACK;
-		static QColor COLOR_DARK_GREEN;
-		static QColor COLOR_LIGHT_GRAY;
 		static QColor COLOR_MONITOR_USER;
 		static QColor COLOR_NULL;
 		static QFont FONT_COURIER_12;

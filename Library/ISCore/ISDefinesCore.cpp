@@ -12,8 +12,6 @@ QString ISDefines::Core::PATH_TRANSLATIONS_DIR;
 QString ISDefines::Core::PATH_PID_FILE;
 QString ISDefines::Core::PATH_LAST_DIRECTORY;
 QString ISDefines::Core::SYMBOL_CIRCLE;
-QString ISDefines::Core::SYMBOL_MULTIPLY;
-QString ISDefines::Core::SYMBOL_DIVIDE;
 QString ISDefines::Core::SYMBOL_OBJECT_CHANGED;
 QString ISDefines::Core::SYMBOL_SPACE_HIDE;
 QString ISDefines::Core::SYMBOL_FIAS_SPLIT;
@@ -31,8 +29,6 @@ void ISDefines::Core::Init(bool IsGui)
     PATH_PID_FILE = PATH_TEMP_DIR + PATH_SEPARATOR + APPLICATION_NAME + '.' + EXTENSION_PID;
 	PATH_LAST_DIRECTORY = QDir::homePath();
 	SYMBOL_CIRCLE = QString(QChar(9679));
-	SYMBOL_MULTIPLY = QString(QChar(215));
-	SYMBOL_DIVIDE = QString(QChar(247));
 	SYMBOL_OBJECT_CHANGED = QString(" {*}");
 	SYMBOL_SPACE_HIDE = QString::fromLocal8Bit(" ");
 	SYMBOL_FIAS_SPLIT = QString(SYMBOL_COMMA + SYMBOL_SPACE_HIDE);

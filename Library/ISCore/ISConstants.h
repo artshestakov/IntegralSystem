@@ -11,7 +11,6 @@ const size_t MAX_PATH = 260;
 const char PATH_SEPARATOR = '/';
 #endif
 //EXTENSIONS-------------------------------------------------------------------
-const char EXTENSION_DLL[] = "dll";
 const char EXTENSION_LOG[] = "log";
 const char EXTENSION_PNG[] = "png";
 const char EXTENSION_JPEG[] = "jpeg";
@@ -31,7 +30,6 @@ const char EXTENSION_WAV[] = "wav";
 const char EXTENSION_XML[] = "xml";
 const char EXTENSION_INI[] = "ini";
 const char EXTENSION_CRASH[] = "crash";
-const char EXTENSION_EXE[] = "exe";
 const char EXTENSION_PID[] = "pid";
 #ifdef WIN32
 const char EXTENSION_BINARY[] = ".exe"; //Расширение исполняемого файла для текущей операционной системы
@@ -39,16 +37,6 @@ const char EXTENSION_LIBRARY[] = ".dll"; //Расширение динамической библиотеки дл
 #else
 const char EXTENSION_BINARY[] = ""; //Расширение исполняемого файла для текущей операционной системы
 const char EXTENSION_LIBRARY[] = ".so"; //Расширение динамической библиотеки для текущей операционной системы
-#endif
-//OS_TYPES---------------------------------------------------------------------
-#if defined(Q_OS_WIN)
-const char CURRENT_OS_NAME[] = "Windows";
-#elif defined(Q_OS_LINUX)
-const char CURRENT_OS_NAME[] = "Linux";
-#elif defined(Q_OS_MACX)
-const char CURRENT_OS_NAME[] = "Mac OS";
-#else
-const char CURRENT_OS_NAME[] = "Unknown";
 #endif
 //LOCALIZATION-----------------------------------------------------------------
 const char LOCALIZATION_FILE_CORE[] = "Core";
@@ -111,10 +99,7 @@ const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
 const int CALENDAR_POPUP_ANIMATION_DURATION = 500; //Таймаут анимации виджета календаря
 //SYMBOLS----------------------------------------------------------------------
 const char SYMBOL_SPACE = ' '; //Символ пробела
-const char SYMBOL_NUMBER = '#'; //Символ "Номер"
-const char SYMBOL_PLUS = '+'; //Символ "Плюс"
 const char SYMBOL_MINUS = '-'; //Символ "Минус"
-const char SYMBOL_PERCENT = '%'; //Символ "Процент"
 const char SYMBOL_COMMA = ','; //Символ "Запятая"
 const char SYMBOL_POINT = '.'; //Символ "Точка"
 const char SYMBOL_STAR = '*'; //Символ звездочка
@@ -160,9 +145,8 @@ const char		FILE_EDIT_PROPERTY_NAME[] = "Name";
 const char		FILE_EDIT_PROPERTY_LOGO[] = "Logo";
 const char		FILE_EDIT_PROPERTY_DATA[] = "Data";
 //LOGGER-----------------------------------------------------------------------
-const char		LOGGER_NAME_DEFAULT[] = "Log";
-const int		LOGGER_TIMEOUT = 1000;
-const size_t	LOGGER_ARRAY_SIZE = 20000;
+const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
+const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
 //CARAT------------------------------------------------------------------------
 const char		CARAT_UID[] = "{88DD90C4-2DFF-4515-8C32-7371C39C598A}"; //Уникальный идентификатор для контроля единого запущенного экземпляра
 const char		CARAT_CORE_START_FLAG[] = "exec"; //Посылаемое сообщение от ядра означающее успешный запуск ядра
@@ -171,7 +155,6 @@ const char		CARAT_DEBUGGER_PORT[] = "{381A6F7D-1E01-438E-B7B4-3B0F9881EB8F}"; //
 const int		CARAT_DEBUGGER_MAX_CLIENTS = 1; //Максимальное количество клиентов для режима отладчика
 const int		CARAT_DEBUGGER_CONNECT_TIMEOUT = 2000; //Таймаут попытки подключения к карату в режиме отладчика
 const int		CARAT_TIMEOUT_CONNECT = 2000; //Таймаут ожидания принятия подключения
-const int		CARAT_TIMEOUT_INCOMING_QUERY = 5000; //Таймаут ожидания входящего запроса от клиента
 const int		CARAT_TIMEOUT_STARTED_WORKER = 3000; //Таймаут ожидания запуска воркера
 const quint16	CARAT_DEFAULT_PORT = 50000; //Стандартный порт
 const char		CARAT_CONTROLLER_PORT[] = "{9C3430ED-17E2-49C6-AD58-83140981C3C5}"; //Порт для контроллера воркеров

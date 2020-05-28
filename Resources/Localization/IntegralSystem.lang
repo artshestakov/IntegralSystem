@@ -17,7 +17,6 @@
   <Local Name="AboutForm.Tab.Common" Russian="Общие"/>
   <Local Name="AboutForm.Tab.Common.ProductName" Russian="Название продукта"/>
   <Local Name="AboutForm.Tab.Common.Cofiguration" Russian="Конфигурация"/>
-  <Local Name="AboutForm.Tab.Common.OS" Russian="Операционная система"/>
   <Local Name="AboutForm.Tab.Common.Platform" Russian="Целевая платформа"/>
   <Local Name="AboutForm.Tab.Common.ProductVersion" Russian="Версия продукта"/>
   <Local Name="AboutForm.Tab.Common.QtVersion" Russian="Версия Qt"/>

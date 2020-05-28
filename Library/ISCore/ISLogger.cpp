@@ -63,7 +63,7 @@ void ISLogger::Shutdown()
 	//Ждём когда он остановится и закрываем файл
 	while (!IsFinished)
 	{
-        ISSleep(50);
+        ISSleep(LOGGER_TIMEOUT);
 	}
 	File.close();
 }
@@ -133,7 +133,7 @@ void ISLogger::Worker()
 {
 	while (IsRunning)
 	{
-		ISSleep(50);
+		ISSleep(LOGGER_TIMEOUT);
         LOCK_CRITICAL_SECTION(&CriticalSection);
 		if (LastIndex) //Если в очереди есть сообщения
 		{
@@ -155,7 +155,7 @@ void ISLogger::Worker()
 			while (!CreateLogDirectory(CurrentDate))
 			{
 				std::cerr << ErrorString.toStdString() << std::endl;
-				ISSleep(50);
+				ISSleep(LOGGER_TIMEOUT);
 			}
 		}
 
@@ -177,7 +177,7 @@ void ISLogger::Worker()
 				else //Файл не удалось открыть пытаемся сделать это ещё раз через секунду
 				{
 					std::cerr << "Error open file \"" + path_file.toStdString() + "\": " + strerror(errno) << std::endl;
-					ISSleep(50);
+					ISSleep(LOGGER_TIMEOUT);
 				}
 			}
 		}
