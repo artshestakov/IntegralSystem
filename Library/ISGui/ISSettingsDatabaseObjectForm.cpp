@@ -22,12 +22,8 @@ bool ISSettingsDatabaseObjectForm::Save()
 	if (Result)
 	{
 		ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_SETTINGS_DATABASE_CHANGED, QVariant(), QString(), false);
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SettingsDatabaseSaved")))
-		{
-			ISGui::ChangeUser();
-		}
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.SettingsDatabaseSaved"));
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------

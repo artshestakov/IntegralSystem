@@ -27,7 +27,9 @@
 #include "ISObjects.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISMainWindow::ISMainWindow(QWidget *parent) : ISInterfaceForm(parent)
+ISMainWindow::ISMainWindow(QWidget *parent)
+	: ISInterfaceForm(parent),
+	ExitConfirm(true)
 {
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
@@ -65,17 +67,14 @@ void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
 {
 	if (ISCreatedObjectsEntity::Instance().CheckExistForms())
 	{
-		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_CONFIRMEXITAPPLICATION))
+		bool Answer = true;
+		if (ExitConfirm)
 		{
 			SetVisibleShadow(true);
-			bool Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication"));
+			Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication"));
 			SetVisibleShadow(false);
-			Answer ? CloseEvent->accept() : CloseEvent->ignore();
 		}
-		else
-		{
-			ISGui::ExitApplication();
-		}
+		Answer ? CloseEvent->accept() : CloseEvent->ignore();
 	}
 	else
 	{
@@ -215,12 +214,15 @@ void ISMainWindow::InitializePlugin()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ChangeUser()
 {
+	ExitConfirm = false;
 	SetVisibleShadow(true);
 	bool Change = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser"));
 	SetVisibleShadow(false);
 	if (Change)
 	{
-		ISGui::ChangeUser();
+		ExitConfirm = false;
+		close();
+		QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
 	}
 }
 //-----------------------------------------------------------------------------

@@ -377,17 +377,6 @@ QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISGui::ChangeUser()
-{
-	RestartApplication();
-}
-//-----------------------------------------------------------------------------
-void ISGui::RestartApplication()
-{
-	ISGui::ExitApplication();
-	QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
-}
-//-----------------------------------------------------------------------------
 void ISGui::ExitApplication()
 {
 	qApp->closeAllWindows();

@@ -3,7 +3,6 @@
 
   <_SettingsGroup IsSystem="true" UID="{152517C5-B081-42E5-98E4-0BA102EF7FF8}" Name="General" LocalName="Основные" IconName="Settings.General" Order="1" System="true"/>
   <_Settings IsSystem="true" UID="{98F5F993-7647-422A-8C81-340C065F58FE}" Group="{152517C5-B081-42E5-98E4-0BA102EF7FF8}" Order="1" Name="ShowNotificationForm" Type="Bool" LocalName="Отображать форму нотификации" Hint="При создании, изменении и удалении записей в таблицах, будет отображаться окно с уведомлением в правом нижнем углу экрана." DefaultValue="true"/>
-  <_Settings IsSystem="true" UID="{39FDDD7F-3E4C-441C-96E9-75C4CB6380AE}" Group="{152517C5-B081-42E5-98E4-0BA102EF7FF8}" Order="2" Name="ConfirmExitApplication" Type="Bool" LocalName="Подтверждение при выходе" Hint="При закрытии программы будет всплывать сообщение с подтверждением выхода." DefaultValue="true"/>
 
   <_SettingsGroup IsSystem="true" UID="{3AECBF8A-531F-4484-B507-1269A10B5F2F}" Name="View" LocalName="Вид" IconName="Settings.View" Order="2" System="true"/>
   <_Settings IsSystem="true" UID="{6AB8CD71-06BA-4059-A795-F9BCA5255634}" Group="{3AECBF8A-531F-4484-B507-1269A10B5F2F}" Order="1" Name="FullScreen" Type="Bool" LocalName="Полноэкранный режим" Hint="Главное окно будет разворачиваться на весь экран." DefaultValue="false"/>

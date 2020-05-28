@@ -131,6 +131,7 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
 	}
+	ISGui::ExitApplication();
 }
 //-----------------------------------------------------------------------------
 bool ISStartup::IsValidUser(ISSplashScreen *SplashScreen)

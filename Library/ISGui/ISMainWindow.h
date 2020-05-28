@@ -59,6 +59,7 @@ private:
 	ISChatForm *ChatForm; //Виджет чата
 	
 	QString CurrentParagraphUID;
+	bool ExitConfirm;
 };
 //-----------------------------------------------------------------------------
 #endif

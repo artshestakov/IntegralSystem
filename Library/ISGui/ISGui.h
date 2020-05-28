@@ -38,8 +38,6 @@ public:
 	static QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	static QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
 
-	static void ChangeUser(); //Смена пользователя
-	static void RestartApplication(); //Перезапуск программы
 	static void ExitApplication(); //Выход из программы
 	static bool DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName); //Удалить/Восстановить запись
 	static bool DeleteCascadeObject(const QString &TableName, const QString &TableAlias, int ObjectID); //Удалить объект каскадом

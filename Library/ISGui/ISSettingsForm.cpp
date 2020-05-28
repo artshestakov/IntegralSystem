@@ -170,14 +170,8 @@ void ISSettingsForm::Save()
 	}
 	ProgressForm.hide();
 
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SettingsSaved")))
-	{
-		ISGui::ChangeUser();
-	}
-	else
-	{
-		close();
-	}
+	ISMessageBox::ShowInformation(this, LANG("Message.Information.SettingsSaved"));
+	close();
 }
 //-----------------------------------------------------------------------------
 void ISSettingsForm::DefaultSettings()
@@ -204,8 +198,8 @@ void ISSettingsForm::DefaultSettings()
 			}
 			ProgressForm.hide();
 
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.AppliocationWillBeRestart"));
-			ISGui::ChangeUser();
+			ISMessageBox::ShowInformation(this, LANG("Message.Information.AppliocationWillBeRestart"));
+			close();
 		}
 	}
 }

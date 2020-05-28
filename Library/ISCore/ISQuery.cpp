@@ -152,10 +152,10 @@ bool ISQuery::ExecuteFirst(QSqlDatabase &sql_database, const QString &sql_text)
     return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::BindValue(const QString& name, const QVariant& value)
+bool ISQuery::BindValue(const QString &ParameterName, const QVariant &ParameterValue)
 {
-    IS_ASSERT(SqlQuery.boundValues().contains(name), QString("Parameter \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
-    SqlQuery.bindValue(name, value);
+    IS_ASSERT(SqlQuery.boundValues().contains(ParameterName), QString("Parameter \"%1\" not found in sql-query: %2").arg(ParameterName).arg(SqlText));
+    SqlQuery.bindValue(ParameterName, ParameterValue);
     return true;
 }
 //-----------------------------------------------------------------------------

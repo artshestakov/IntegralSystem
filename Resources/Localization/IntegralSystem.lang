@@ -71,6 +71,9 @@
   <Local Name="Message.Information.AttachedObjectTask" Russian="Запись успешно прикреплена к задаче."/>
   <Local Name="Message.Information.DetachedObjectTask" Russian="Запись успешно откреплена от задачи."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
+  <Local Name="Message.Information.SettingsDatabaseSaved" Russian="Для того чтобы все настройки базы данных вступили в силу, рекомендуется перезапустить программу."/>
+  <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
+  <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
   <Local Name="Message.Error.Login.IsEmpty" Russian="Поле ввода логина обязательно для заполнения."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
@@ -137,7 +140,6 @@
   <Local Name="Message.Warning.NotUnload" Russian="Выгрузка не была произведена."/>
   <Local Name="Message.Warning.NotCreateCopyThisUser" Russian="Запрещено создавать копию пользователя под которым Вы авторизованны."/>
   <Local Name="Message.Warning.NotEditThisUser" Russian="Запрещено редактировать пользователя под которым Вы авторизованны."/>
-  <Local Name="Message.Warning.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, сейчас программа будет перезапущена в обязательном порядке. Нажмите ОК для продолжения..."/>
   <Local Name="Message.Warning.NotImageInBuffer" Russian="Изображение в буфере обмена не найдено."/>
   <Local Name="Message.Warning.ImageISNull" Russian="Изображение отсутствует."/>
   <Local Name="Message.Warning.ConnectionError" Russian="Ошибка подключения к базе данных."/>
@@ -212,8 +214,6 @@
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
   <Local Name="Message.Question.SaveObjectChanged" Russian="Карточка объекта &quot;%1&quot; была изменена, сохранить изменения?"/>
-  <Local Name="Message.Question.SettingsDatabaseSaved" Russian="Для того чтобы все настройки базы данных вступили в силу, рекомендуется перезапустить программу. Сделать это сейчас?"/>
-  <Local Name="Message.Question.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу. Сделать это сейчас?"/>
   <Local Name="Message.Question.ChangeSettingsToDefault" Russian="Установить все настройки по умолчанию?"/>
   <Local Name="Message.Question.CopyEscortObjects" Russian="У копируемой записи есть эскортные записи. Скопировать их?"/>
   <Local Name="Message.Question.DeleteFavorite" Russian="Удалить выделенную запись из избранного?"/>
