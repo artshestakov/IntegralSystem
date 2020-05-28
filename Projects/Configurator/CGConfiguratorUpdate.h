@@ -23,7 +23,7 @@ public slots:
 	bool foreigns(); //Обновление внешних ключей
 	bool resources(); //Обновление ресурсов
 	bool systemuser(); //Обновление системного пользователя
-	bool databasesettings();
+	bool databasesettings(); //Обновление настроек БД
 };
 //-----------------------------------------------------------------------------
 #endif

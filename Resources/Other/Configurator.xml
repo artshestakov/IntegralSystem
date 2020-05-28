@@ -2,8 +2,6 @@
 <Scheme>
 
   <Section Name="Create" ClassName="CGConfiguratorCreate">
-    <Function FunctionName="SystemUser" LocalName="Создание пользователя postgres" Description="Создание системного пользователя postgres на уровне IntegralSystem."/>
-    <Function FunctionName="DatabaseSettings" LocalName="Создание стандартных настроек базы" Description="Создание стандартных настроек базы данных IntegralSystem."/>
     <Function FunctionName="Resources" LocalName="Ресурсы" Description="Добавление новых ресурсов и заполнение существующих справочников."/>
   </Section>
 
