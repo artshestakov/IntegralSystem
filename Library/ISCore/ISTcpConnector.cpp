@@ -17,7 +17,6 @@ ISTcpConnector::ISTcpConnector()
 	connect(TcpSocket, &QTcpSocket::connected, Timer, &QTimer::stop);
 
 	Timer->setSingleShot(true);
-	Timer->setInterval(CARAT_TIMEOUT_CONNECT);
 	connect(Timer, &QTimer::timeout, this, &ISTcpConnector::Timeout);
 }
 //-----------------------------------------------------------------------------
@@ -58,7 +57,7 @@ bool ISTcpConnector::Reconnect(const QString &Host, quint16 Port)
 //-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 {
-	Timer->start();
+	Timer->start(CARAT_TIMEOUT_CONNECT);
 	TcpSocket->connectToHost(Host, Port);
 	EventLoop.exec();
 	return IsConnected();
