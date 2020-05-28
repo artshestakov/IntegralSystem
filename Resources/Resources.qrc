@@ -1,12 +1,10 @@
 <RCC>
   <qresource>
 
-    <file>_CenterSeven/</file>
     <file>_Highway/</file>
     <file>_InformResource/</file>
     <file>_MedTech/</file>
     <file>_OilSphere/</file>
-    <file>_Sirona/</file>
 
     <file>Animation/</file>
     <file>Audio/</file>

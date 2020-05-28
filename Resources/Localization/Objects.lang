@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Localization Name="Objects">
 	
-	<!--CenterSeven-->
-	<Local Name="CenterSeven.CallingPatient" Russian="Вызывает пациент"/>
-  <Local Name="CenterSeven.CallingPatient.Unknown" Russian="неизвестен (%1)"/>
-	<Local Name="CenterSeven.IncomingCallAbonentFromBranch" Russian="Входящий звонок от абонента &quot;%1&quot; в филиал &quot;%2&quot;"/>
-	<Local Name="CenterSeven.Message.Warning.AdmissionTimeInvalid" Russian="Выберите правильное время. С 9:00 до 20:00"/>
-  <Local Name="CenterSeven.Message.Warning.AlreadyCloseWait" Russian="Выбранное ожидание уже закрыто."/>
-  <Local Name="CenterSeven.Message.Question.CloseWait" Russian="Закрыть ожидание?"/>
-  <Local Name="CenterSeven.SelectBranch" Russian="Выбор филиала"/>
-  <Local Name="CenterSeven.SelectYouCurrentBranch" Russian="Выбери филиал, в котором Вы находитесь сейчас территориально"/>
-  <Local Name="CenterSeven.Branch" Russian="Филиал"/>
-  <Local Name="CenterSeven.CurrentBranch" Russian="Текущий филиал"/>
-  <Local Name="CenterSeven.AllDoctors" Russian="Все врачи"/>
-  <Local Name="CenterSeven.AddWaitAdmission" Russian="Добавить ожидание приёма"/>
-  <Local Name="CenterSeven.CloseWait" Russian="Закрыть ожидание"/>
-  <Local Name="CenterSeven.ChangeStatusAdmission" Russian="Смена статуса приёма"/>
-  <Local Name="CenterSeven.ChangeStatus" Russian="Сменить статус"/>
-  <Local Name="CenterSeven.ChangeStatusComment" Russian="Введите комментарий"/>
-	
 	<!--Highway-->
 	<Local Name="Highway.Core.Search" Russian="Входящий звонок с номера %1, поиск организации..."/>
   <Local Name="Highway.Core.SearchComplete" Russian="Найдена организация %1 по номеру %2. Осуществляется перевод звонка абоненту %3"/>

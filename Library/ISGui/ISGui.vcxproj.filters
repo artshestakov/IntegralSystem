@@ -64,12 +64,6 @@
     <Filter Include="Objects">
       <UniqueIdentifier>{a144289a-5f56-46d9-987e-11f5ddbde600}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\CenterSeven">
-      <UniqueIdentifier>{0edd24dc-e13b-41d2-8857-82ab46d949d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\CenterSeven\Forms">
-      <UniqueIdentifier>{a257c5d3-0c4a-44e7-afe7-55cf0abbd11b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Highway">
       <UniqueIdentifier>{b206525a-aa45-4410-be23-44fe77b49628}</UniqueIdentifier>
     </Filter>
@@ -323,36 +317,6 @@
     </ClCompile>
     <ClCompile Include="ISPrintingHtml.cpp">
       <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSeven.cpp">
-      <Filter>Objects\CenterSeven</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenAdmissionListForm.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenAdmissionObjectForm.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenDesktop.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenIncomingCallForm.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenPatientsListForm.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenPatientsObjectForm.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenSelectBranchForm.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenStatusAdmissionForm.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCenterSevenWaitAdmissionListForm.cpp">
-      <Filter>Objects\CenterSeven\Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISHighwayIncomingCallForm.cpp">
       <Filter>Objects\Highway\Forms</Filter>
@@ -1033,36 +997,6 @@
     </QtMoc>
     <QtMoc Include="ISPrintingHtml.h">
       <Filter>Printing</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSeven.h">
-      <Filter>Objects\CenterSeven</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenAdmissionListForm.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenAdmissionObjectForm.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenDesktop.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenIncomingCallForm.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenPatientsListForm.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenPatientsObjectForm.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenSelectBranchForm.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenStatusAdmissionForm.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCenterSevenWaitAdmissionListForm.h">
-      <Filter>Objects\CenterSeven\Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISHighwayIncomingCallForm.h">
       <Filter>Objects\Highway\Forms</Filter>
