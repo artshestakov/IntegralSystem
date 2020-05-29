@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="ISCaratDebugger.cpp" />
     <ClCompile Include="ISCaratService.cpp" />
+    <ClCompile Include="ISServiceController.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -23,6 +24,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCaratDebugger.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISServiceController.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0E5C4046-F164-4AEA-91E1-E0B899A28F3D}</ProjectGuid>
