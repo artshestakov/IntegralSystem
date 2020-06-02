@@ -249,21 +249,12 @@
     <QtRcc Include="..\..\Resources\Resources.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsf" />
-    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsn" />
-    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsr" />
     <None Include="..\..\Resources\_Highway\Highway.xsn" />
     <None Include="..\..\Resources\_Highway\Highway.xsr" />
-    <None Include="..\..\Resources\_InformResource\InformResource.xsn" />
-    <None Include="..\..\Resources\_InformResource\InformResource.xsr" />
     <None Include="..\..\Resources\_MedTech\MedTech.xsn" />
     <None Include="..\..\Resources\_MedTech\MedTech.xsr" />
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsn" />
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsr" />
-    <None Include="..\..\Resources\_Patriot\Patriot.xsn" />
-    <None Include="..\..\Resources\_Patriot\Patriot.xsr" />
-    <None Include="..\..\Resources\_Sirona\Sirona.xsn" />
-    <None Include="..\..\Resources\_Sirona\Sirona.xsr" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

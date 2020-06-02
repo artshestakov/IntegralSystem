@@ -34,26 +34,14 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{3c8bb7e9-794e-4dbf-a0c9-e51c3f514b88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\_CenterSeven">
-      <UniqueIdentifier>{53d92222-dd29-4263-b13d-52b2a1788b06}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\_Highway">
       <UniqueIdentifier>{42fa687e-da46-4d83-a845-62a5924d17a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\_InformResource">
-      <UniqueIdentifier>{d9606321-9afe-476b-a8da-5b3917507990}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\_MedTech">
       <UniqueIdentifier>{b999f67a-ea02-4a79-86ea-9eeac1589d1e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\_OilSphere">
       <UniqueIdentifier>{922d7d9c-d456-48a0-864f-b5de44c10fc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\_Patriot">
-      <UniqueIdentifier>{e76aa580-3a49-49ce-93d5-a66890a6835f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\_Sirona">
-      <UniqueIdentifier>{f78db7c1-b6ab-4346-a785-39ae9e4ab602}</UniqueIdentifier>
     </Filter>
     <Filter Include="Settings">
       <UniqueIdentifier>{c2230eda-9c5a-49e6-bb10-cf55dc2c5a61}</UniqueIdentifier>
@@ -459,26 +447,11 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsf">
-      <Filter>Resources\_CenterSeven</Filter>
-    </None>
-    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsn">
-      <Filter>Resources\_CenterSeven</Filter>
-    </None>
-    <None Include="..\..\Resources\_CenterSeven\CenterSeven.xsr">
-      <Filter>Resources\_CenterSeven</Filter>
-    </None>
     <None Include="..\..\Resources\_Highway\Highway.xsn">
       <Filter>Resources\_Highway</Filter>
     </None>
     <None Include="..\..\Resources\_Highway\Highway.xsr">
       <Filter>Resources\_Highway</Filter>
-    </None>
-    <None Include="..\..\Resources\_InformResource\InformResource.xsn">
-      <Filter>Resources\_InformResource</Filter>
-    </None>
-    <None Include="..\..\Resources\_InformResource\InformResource.xsr">
-      <Filter>Resources\_InformResource</Filter>
     </None>
     <None Include="..\..\Resources\_MedTech\MedTech.xsn">
       <Filter>Resources\_MedTech</Filter>
@@ -491,18 +464,6 @@
     </None>
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsr">
       <Filter>Resources\_OilSphere</Filter>
-    </None>
-    <None Include="..\..\Resources\_Patriot\Patriot.xsn">
-      <Filter>Resources\_Patriot</Filter>
-    </None>
-    <None Include="..\..\Resources\_Patriot\Patriot.xsr">
-      <Filter>Resources\_Patriot</Filter>
-    </None>
-    <None Include="..\..\Resources\_Sirona\Sirona.xsn">
-      <Filter>Resources\_Sirona</Filter>
-    </None>
-    <None Include="..\..\Resources\_Sirona\Sirona.xsr">
-      <Filter>Resources\_Sirona</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -2,7 +2,6 @@
   <qresource>
 
     <file>_Highway/</file>
-    <file>_InformResource/</file>
     <file>_MedTech/</file>
     <file>_OilSphere/</file>
 
@@ -11,7 +10,6 @@
     <file>Build/</file>
     <file>ConfigTemplate/</file>
     <file>CSS/</file>
-    <!--<file>Dictionary/</file>-->
     <file>ImageIcons/</file>
     <file>Images/</file>
     <file>ImageSpecial/</file>
