@@ -39,10 +39,8 @@ HEADERS += \
     ISCoreCenterSeven.h \
     ISCoreHighway.h \
     ISCoreInformResource.h \
-    ISCoreMail.h \
     ISCoreMedTech.h \
     ISCoreNotification.h \
-    ISCoreSMS.h \
     ISCoreTelephony.h \
     iscarat_global.h
 
@@ -55,8 +53,6 @@ SOURCES += \
     ISCoreCenterSeven.cpp \
     ISCoreHighway.cpp \
     ISCoreInformResource.cpp \
-    ISCoreMail.cpp \
     ISCoreMedTech.cpp \
     ISCoreNotification.cpp \
-    ISCoreSMS.cpp \
     ISCoreTelephony.cpp

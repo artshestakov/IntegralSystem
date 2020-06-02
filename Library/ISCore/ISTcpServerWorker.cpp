@@ -158,6 +158,7 @@ bool ISTcpServerWorker::CheckField(const QVariantMap &Parameters, const ISVector
 void ISTcpServerWorker::TestQuery(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
     Q_UNUSED(Parameters);
+    Q_UNUSED(TcpAnswer);
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
@@ -186,6 +187,8 @@ void ISTcpServerWorker::Sleep(const QVariantMap &Parameters, ISTcpAnswer &TcpAns
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
+    Q_UNUSED(Parameters);
+
 	//Получаем размеры полей
 	ISQuery qSelectColumnSize(QS_COLUMN_SIZE);
 	if (qSelectColumnSize.Execute())

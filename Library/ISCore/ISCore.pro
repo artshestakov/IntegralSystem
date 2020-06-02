@@ -47,9 +47,7 @@ HEADERS += \
     ISCrashDumper.h \
     ISDatabase.h \
     ISDefinesCore.h \
-    ISEMail.h \
     ISEmailAddress.h \
-    ISException.h \
     ISLocalization.h \
     ISLogger.h \
     ISMemoryObjects.h \
@@ -81,7 +79,6 @@ HEADERS += \
     ISQuotedPrintable.h \
     ISRandom.h \
     ISRestWorker.h \
-    ISSMS.h \
     ISSearchModel.h \
     ISSettings.h \
     ISSettingsDatabase.h \
@@ -107,9 +104,7 @@ SOURCES += \
     ISCrashDumper.cpp \
     ISDatabase.cpp \
     ISDefinesCore.cpp \
-    ISEMail.cpp \
     ISEmailAddress.cpp \
-    ISException.cpp \
     ISLocalization.cpp \
     ISLogger.cpp \
     ISMemoryObjects.cpp \
@@ -140,7 +135,6 @@ SOURCES += \
     ISQuotedPrintable.cpp \
     ISRandom.cpp \
     ISRestWorker.cpp \
-    ISSMS.cpp \
     ISSearchModel.cpp \
     ISSettings.cpp \
     ISSettingsDatabase.cpp \

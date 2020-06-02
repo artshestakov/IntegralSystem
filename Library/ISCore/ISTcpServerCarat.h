@@ -17,7 +17,7 @@ public:
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
 	void Disconnected(); //Событие отключения клиента
-	virtual bool StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password);
+    virtual bool StartWorker(const QString &Port, const QString &Login, const QString &Password);
 
 private:
 	QLocalServer *ServerController;

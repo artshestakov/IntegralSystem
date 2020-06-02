@@ -244,7 +244,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	//Запуск воркера
 	QString StringPort = QString::number(Port);
-	if (!StartWorker(TcpSocket, StringPort, Login, Password)) //Не удалось запустить воркер
+    if (!StartWorker(StringPort, Login, Password)) //Не удалось запустить воркер
 	{
 		SendError(TcpSocket, "Message.Error.StartedWorker");
 		return;
@@ -262,7 +262,7 @@ void ISTcpServerCarat::Disconnected()
 	IsDisconnected = true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpServerCarat::StartWorker(QTcpSocket *TcpSocket, const QString &Port, const QString &Login, const QString &Password)
+bool ISTcpServerCarat::StartWorker(const QString &Port, const QString &Login, const QString &Password)
 {
 	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY,
 		QStringList() << Port << Login << Password,

@@ -9,7 +9,7 @@ quint16 Port = 0; //Прослушиваемый порт
 const char *Login = NULL; //Логин
 const char *Password = NULL; //Пароль
 //-----------------------------------------------------------------------------
-bool ParseArgs(int argc, char **argv); //Парсинг аргументов коммандной строки
+bool ParseArgs(char **argv); //Парсинг аргументов коммандной строки
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	Result = ParseArgs(argc, argv);
+    Result = ParseArgs(argv);
 	if (!Result)
 	{
 		return EXIT_FAILURE;
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------
-bool ParseArgs(int argc, char **argv)
+bool ParseArgs(char **argv)
 {
 	//Проверка порта
 	if (!argv[1])
