@@ -7,15 +7,6 @@ static QString QU_RESULT_COUNT = PREPARE_QUERY2("UPDATE implementation SET "
 											   "WHERE impl_id = :ObjectID "
 											   "RETURNING impl_resultcount");
 //-----------------------------------------------------------------------------
-static QString QU_LAST_CHANGE = PREPARE_QUERY2("UPDATE gasstation "
-											   "SET gsst_lastchange = gsst_lastchange + 1 "
-											   "WHERE gsst_id = :GasStation "
-											   "RETURNING gsst_lastchange");
-//-----------------------------------------------------------------------------
-static QString QU_CHANGE = PREPARE_QUERY2("UPDATE gasstationstatement SET "
-										  "gsts_change = (SELECT gsst_lastchange FROM gasstation WHERE gsst_id = :GasStation) "
-										  "WHERE gsts_id = :ID");
-//-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
 
@@ -264,28 +255,5 @@ ISOilSphere::GasStationStatementObjectForm::GasStationStatementObjectForm(ISName
 ISOilSphere::GasStationStatementObjectForm::~GasStationStatementObjectForm()
 {
 
-}
-//-----------------------------------------------------------------------------
-bool ISOilSphere::GasStationStatementObjectForm::Save()
-{
-	bool Result = ISObjectFormBase::Save();
-	if (Result)
-	{
-		//Расчёт смены справедлив только для создания новой записи и создания копии существутющей
-		if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
-		{
-			QVariant GasStation = GetFieldValue("GasStation");
-
-			ISQuery qSelectChange(QU_LAST_CHANGE);
-			qSelectChange.BindValue(":GasStation", GasStation);
-			if (qSelectChange.ExecuteFirst()) //Последнюю смену получили - инкрементируем её
-			{
-				ISQuery q(QU_CHANGE);
-				q.BindValue(":GasStation", GasStation);
-				q.Execute();
-			}
-		}
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
