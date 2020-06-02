@@ -96,7 +96,6 @@ private:
 private:
 	ISServiceButton *ButtonCalendar;
 	ISCalendarPopup *CalendarWidget;
-	QPropertyAnimation *AnimationCalendar;
 	bool IsShow;
 };
 //-----------------------------------------------------------------------------

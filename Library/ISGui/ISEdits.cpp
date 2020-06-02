@@ -234,9 +234,6 @@ ISQDateEdit::ISQDateEdit(QWidget *parent)
 	CalendarWidget->setVisible(false);
 	connect(CalendarWidget, &ISCalendarWidget::clicked, this, &ISQDateEdit::SetDate);
 	connect(CalendarWidget, &ISCalendarWidget::Hide, this, &ISQDateEdit::HideCalendar);
-
-	AnimationCalendar = new QPropertyAnimation(CalendarWidget, "windowOpacity", this);
-	AnimationCalendar->setDuration(CALENDAR_POPUP_ANIMATION_DURATION);
 }
 //-----------------------------------------------------------------------------
 ISQDateEdit::~ISQDateEdit()
@@ -314,25 +311,16 @@ void ISQDateEdit::ShowCalendar()
 	QPoint Point = mapToGlobal(QPoint());
 	Point.setY(Point.y() + height());
 
-	AnimationCalendar->setStartValue(0.0);
-	AnimationCalendar->setEndValue(1.0);
-
 	CalendarWidget->move(Point);
 	CalendarWidget->setSelectedDate(GetDate());
-	CalendarWidget->setWindowOpacity(0.0);
 	CalendarWidget->show();
 	CalendarWidget->setFocus();
-	AnimationCalendar->start();
 }
 //-----------------------------------------------------------------------------
 void ISQDateEdit::HideCalendar()
 {
-	AnimationCalendar->setStartValue(1.0);
-	AnimationCalendar->setEndValue(0.0);
-
+	CalendarWidget->hide();
 	setFocus();
-	AnimationCalendar->start();
-	QTimer::singleShot(CALENDAR_POPUP_ANIMATION_DURATION, CalendarWidget, &ISCalendarPopup::hide);
 }
 //-----------------------------------------------------------------------------
 void ISQDateEdit::SelectionChanged()
