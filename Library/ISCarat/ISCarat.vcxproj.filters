@@ -14,15 +14,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="CenterCeven">
-      <UniqueIdentifier>{a41c2a4c-04da-4502-a2ab-383872da361f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Highway">
-      <UniqueIdentifier>{4f15f45b-db08-4e18-8545-9837f6b91f6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InformResource">
-      <UniqueIdentifier>{c4ab335a-4d37-4545-a174-18a3f9dba564}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MedTech">
       <UniqueIdentifier>{b52abdd0-80a6-49d5-ad05-759b5b475cb6}</UniqueIdentifier>
     </Filter>
@@ -49,15 +40,6 @@
     <ClCompile Include="ISCoreCalendar.cpp">
       <Filter>Calendar</Filter>
     </ClCompile>
-    <ClCompile Include="ISCoreCenterSeven.cpp">
-      <Filter>CenterCeven</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCoreHighway.cpp">
-      <Filter>Highway</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCoreInformResource.cpp">
-      <Filter>InformResource</Filter>
-    </ClCompile>
     <ClCompile Include="ISCoreMedTech.cpp">
       <Filter>MedTech</Filter>
     </ClCompile>
@@ -83,15 +65,6 @@
     </QtMoc>
     <QtMoc Include="ISCoreCalendar.h">
       <Filter>Calendar</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCoreCenterSeven.h">
-      <Filter>CenterCeven</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCoreHighway.h">
-      <Filter>Highway</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCoreInformResource.h">
-      <Filter>InformResource</Filter>
     </QtMoc>
     <QtMoc Include="ISCoreMedTech.h">
       <Filter>MedTech</Filter>

@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configurations>
 
-  <Configuration UID="{45662D03-7680-4C07-965E-B7D6CD93668A}" Name="CenterSeven" LocalName="ООО «Центр 7»" DesktopForm="ISCenterSevenDesktop" IncomingCallForm="ISCenterSevenIncomingCallForm"/>
-  <Configuration UID="{23DE116A-60B8-4DD8-9F80-FEA5BBB3D445}" Name="Highway" LocalName="ООО «Магистраль-ЮГ»" IncomingCallForm="ISHighwayIncomingCallForm"/>
-  <Configuration UID="{4AB46AAA-FCF9-49E7-BCE3-463435F8E166}" Name="InformResource" LocalName="ООО «Информ Ресурс МИР»" DesktopForm="ISDesktopInformResource" IncomingCallForm="ISIncomingCallInformResourceForm"/>
   <Configuration UID="{744D107A-6BAD-4038-8E9D-D33A1C62C537}" Name="MedTech" LocalName="ООО «Медицинские технологии»"/>
   <Configuration UID="{B2003F73-0DD2-4359-AC96-FA7CABB53049}" Name="OilSphere" LocalName="ООО «Нефтесфера»"/>
 
