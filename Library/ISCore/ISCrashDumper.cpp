@@ -44,39 +44,7 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
 {
     ISStackWalker stack_walker;
     stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
-
-    std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V8) + "." + EXTENSION_CRASH).toStdString();
-    FILE *File = fopen(FilePath.c_str(), "w");
-    if (File)
-    {
-        std::string Content = stack_walker.GetCallStack();
-
-        if (!Message.empty())
-        {
-            Content.insert(0, "\n================================\n");
-            Content.insert(0, Message);
-        }
-
-        if (AssertMessage)
-        {
-            Content.insert(0, "\n================================\n");
-            Content.insert(0, AssertMessage);
-        }
-
-        if (fwrite(Content.c_str(), sizeof(char), Content.size(), File) == Content.size())
-        {
-            printf("Write crash file (%s) - done\n", FilePath.c_str());
-        }
-        else
-        {
-            printf("Write crash file (%s) - error\n", FilePath.c_str());
-        }
-        fclose(File);
-    }
-    else
-    {
-        printf("Error open crash file (%s): %s\n", FilePath.c_str(), strerror(errno));
-    }
+	WriteCrashFile(stack_walker.GetCallStack(), Message);
 
     if (ISDefines::Core::IS_GUI)
     {
@@ -87,7 +55,7 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
         printf("Crash: %s\n", Message.empty() ? "Unknown reason" : Message.c_str());
         if (AssertMessage)
         {
-            printf("%s", AssertMessage);
+            printf("%s\n", AssertMessage);
         }
     }
 }
@@ -133,10 +101,44 @@ void ISCrashDumper::OnSystemSignal(int SigNum)
         printf("Crash with signal: %d\n", SigNum);
         if (AssertMessage)
         {
-            printf("%s", AssertMessage);
+            printf("%s\n", AssertMessage);
         }
     }
 }
 //-----------------------------------------------------------------------------
 #endif
+//-----------------------------------------------------------------------------
+void ISCrashDumper::WriteCrashFile(const std::string &Content, const std::string &Message)
+{
+	std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V8) + "." + EXTENSION_CRASH).toStdString();
+	FILE *File = fopen(FilePath.c_str(), "w");
+	if (File)
+	{
+		std::string content = Content;
+		if (!Message.empty())
+		{
+			content.insert(0, "\n================================\n");
+			content.insert(0, Message);
+		}
+		if (AssertMessage)
+		{
+			content.insert(0, "\n================================\n");
+			content.insert(0, AssertMessage);
+		}
+
+		if (fwrite(content.c_str(), sizeof(char), content.size(), File) == content.size())
+		{
+			printf("Write crash file (%s) - done\n", FilePath.c_str());
+		}
+		else
+		{
+			printf("Write crash file (%s) - error\n", FilePath.c_str());
+		}
+		fclose(File);
+	}
+	else
+	{
+		printf("Error open crash file (%s): %s\n", FilePath.c_str(), strerror(errno));
+	}
+}
 //-----------------------------------------------------------------------------

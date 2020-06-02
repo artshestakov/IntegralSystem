@@ -18,5 +18,8 @@ private:
 #else
     static void OnSystemSignal(int Signum);
 #endif
+
+private:
+	static void WriteCrashFile(const std::string &Content, const std::string &Message);
 };
 //-----------------------------------------------------------------------------
