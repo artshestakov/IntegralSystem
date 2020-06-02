@@ -26,33 +26,30 @@
   <_Settings IsSystem="true" UID="{D5CC8283-1C21-4FFC-8D4F-B9671C854271}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="14" Name="SearchFastRemember" Type="Bool" LocalName="Запоминанить значения быстрого поиска" Hint="Каждый поисковый запрос будет запоминаться." DefaultValue="false"/>
   <_Settings IsSystem="true" UID="{A07AA634-F553-4C05-8EEC-CC8A5AE7DC18}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="15" Name="SearchFastView" Type="Int" LocalName="Показывать количество последних запросов быстрого поиска" Hint="Сколько последних запросов быстрого поиска будет отображаться." DefaultValue="10"/>
   <_Settings IsSystem="true" UID="{2876F177-B30F-41A0-8643-F2BCA583726F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="16" Name="VisibleFieldID" Type="Bool" LocalName="Отображать системную информацию" Hint="Показывать поле &quot;Код&quot;" DefaultValue="true"/>
-  
-  <_SettingsGroup IsSystem="true" UID="{44F9C562-D8CA-4D01-AF83-D26B40499923}" Name="EditRecord" LocalName="Редактирование записей" IconName="Settings.EditRecord" Order="4" System="true"/>
-  <_Settings IsSystem="true" UID="{8407C4D3-C031-44CB-BC3D-7F4074EEBF0F}" Group="{44F9C562-D8CA-4D01-AF83-D26B40499923}" Order="1" Name="SaveCloseNew" Type="Bool" LocalName="Функция сохранить, закрыть и создать" Hint="Функция позволяет сохранить, закрыть и создать новую запись." DefaultValue="false"/>
 
-  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{B523692A-F837-46CC-B278-0862280917D0}" Name="Desktop" LocalName="Рабочий стол" IconName="Settings.Desktop" Order="5" System="true"/>
+  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{B523692A-F837-46CC-B278-0862280917D0}" Name="Desktop" LocalName="Рабочий стол" IconName="Settings.Desktop" Order="4" System="true"/>
   
-  <_SettingsGroup IsSystem="true" UID="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Name="Tabs" LocalName="Вкладки" IconName="Settings.Tabs" Order="6" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Name="Tabs" LocalName="Вкладки" IconName="Settings.Tabs" Order="5" System="true"/>
   <_Settings IsSystem="true" UID="{3398D347-6B46-465E-BB58-2B93B92C85EF}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="1" Name="WheelScrollingTabs" Type="Bool" LocalName="Навигация по вкладкам с использованием колеса мыши" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{307693A2-BD35-41AE-8F83-016CD340AD43}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="2" Name="ViewUsesScrollButtons" Type="Bool" LocalName="Отображать кнопки перемещения между вкладками" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{8C96BF79-A7FB-4562-ABAB-A9C520B4B68D}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="3" Name="SelectionBehavior" Type="String" WidgetEditName="ISComboTabBarSelectionBehavior" LocalName="Поведение при закрытии вкладки" DefaultValue="SelectLeftTab"/>
 
-  <_SettingsGroup IsSystem="true" UID="{8460DB7A-90FB-459E-8343-7A67529414C0}" Name="Sound" LocalName="Звуки" IconName="Settings.Sound" Hint="Использование звуков может повлиять на производительность программы." Order="7" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{8460DB7A-90FB-459E-8343-7A67529414C0}" Name="Sound" LocalName="Звуки" IconName="Settings.Sound" Hint="Использование звуков может повлиять на производительность программы." Order="6" System="true"/>
   <_Settings IsSystem="true" UID="{203F8364-B041-4C20-A7EF-E1FBA8CDB68B}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="1" Name="Volume" Type="Volume" LocalName="Громкость" DefaultValue="50"/>
   <_Settings IsSystem="true" UID="{D2CACFDF-F703-4351-824D-34FDC05A3F17}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="2" Name="ChatMessage" Type="Bool" LocalName="Сообщение общего чата" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{70680EED-160D-45E9-8F79-D6CBDE8AA875}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="3" Name="CalendarEvent" Type="Bool" LocalName="Напоминание календаря" DefaultValue="true"/>
 
-  <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="8" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="7" System="true"/>
   <_Settings IsSystem="true" UID="{B03FBAC5-F793-4565-92A3-821C87AE3B56}" Group="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Order="1" Name="NoteViewType" Type="String" WidgetEditName="ISComboCalendarNoteType" LocalName="Отображение примечаний" DefaultValue="ToolTip"/>
 
-  <_SettingsGroup IsSystem="true" UID="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Name="Telephony" LocalName="Телефония" IconName="Settings.Telephony" Order="9" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Name="Telephony" LocalName="Телефония" IconName="Settings.Telephony" Order="8" System="true"/>
   <_Settings IsSystem="true" UID="{BDB8F660-4014-4A16-913C-94E8C02B7630}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="1" Name="IncomingFormPosition" Type="String" WidgetEditName="ISComboIncomingFormPosition" LocalName="Расположение формы входящего звонка" DefaultValue="Center"/>
   <_Settings IsSystem="true" UID="{10FDBAF9-2E4D-4480-9CFF-ED87E8B31A59}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="2" Name="AutoCloseIncomingForm" Type="Bool" LocalName="Автоматически закрывать форму входящего звонка" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{0C9AAC0D-1BDD-4FD9-BEB8-80FAF90D5FDE}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="3" Name="AutoCloseIncomingFormTimeout" Type="Int" LocalName="Таймаут закрытия формы входящего звонка (сек.)" DefaultValue="15"/>
   
-  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="Device" LocalName="Устройства" IconName="Settings.Device" Order="10" System="true"/>
+  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="Device" LocalName="Устройства" IconName="Settings.Device" Order="9" System="true"/>
   
-  <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="11" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="10" System="true"/>
   <_Settings IsSystem="true" UID="{97D72002-CEF4-4D2A-B00F-7A3E9F1B8DA2}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="1" Name="MaximumViewHistory" Type="Int" LocalName="Отображаемое количество открытых объектов в истории" DefaultValue="10"/>
   <_Settings IsSystem="true" UID="{118A02D4-4437-496C-BC89-BB81B6CD2391}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="2" Name="AutoCleanTempDir" Type="Bool" LocalName="Автоматическая очистка временного хранилища" Hint="При выходе из программы, хранилище временных файлов будет очищаться автоматически." DefaultValue="false"/>
   <_Settings IsSystem="true" UID="{3AD4888F-EDC7-4D69-A97F-F9678B6AAC44}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="3" Name="SelectedMenu" Type="Bool" LocalName="Включить всплывающее меню при выборе текста" Hint="При выделении текста в полях редактирования текста будет всплывать меню, через которое Вы сможете вырезать или скопировать выбранный текст." DefaultValue="false"/>

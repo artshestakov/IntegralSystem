@@ -1,3 +1,4 @@
+
 #pragma once
 #ifndef _ISOBJECTFORMBASE_H_INCLUDED
 #define _ISOBJECTFORMBASE_H_INCLUDED
@@ -75,7 +76,6 @@ protected:
 	void SetValueFieldID(int object_id); //Изменить значение поля "Код"
 
 protected:
-	void SaveCreate(); //Сохранить и создать новую запись
 	void SaveClose(); //Сохранить и закрыть
 	virtual bool Save(); //Сохранить
 	virtual void SavedEvent(); //Событие при сохранении объекта
@@ -123,7 +123,6 @@ private:
 	QLabel *LabelIsDeleted;
 	QActionGroup *ActionGroup;
 
-	QAction *ActionSaveAndNew;
 	QAction *ActionSaveClose;
 	QAction *ActionSave;
 	QAction *ActionClose;

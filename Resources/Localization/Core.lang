@@ -325,12 +325,10 @@
   <Local Name="Yesterday" Russian="Вчера"/>
   <Local Name="Today" Russian="Сегодня"/>
   <Local Name="Tomorrow" Russian="Завтра"/>
-  <Local Name="SaveAndCreate" Russian="Сохранить и создать новую запись"/>
   <Local Name="SaveClose" Russian="Сохранить и закрыть"/>
   <Local Name="Save" Russian="Сохранить"/>
   <Local Name="SaveChange" Russian="Сохранить изменения"/>
   <Local Name="SaveChangeClose" Russian="Сохранить изменения и закрыть карточку"/>
-  <Local Name="SaveChangeCloseAndCreateNew" Russian="Сохранить изменения и создать новую запись"/>
   <Local Name="Close" Russian="Закрыть"/>
   <Local Name="Clear" Russian="Очистить"/>
   <Local Name="Clear.Field" Russian="Очистить поле"/>

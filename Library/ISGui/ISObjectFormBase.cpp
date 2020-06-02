@@ -306,15 +306,6 @@ void ISObjectFormBase::CreateToolBar()
 	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
 	WidgetObjectLayout->addWidget(LabelIsDeleted, 0, Qt::AlignHCenter);
 
-	//Сохранить и создать новую запись
-	ActionSaveAndNew = new QAction(ToolBar);
-	ActionSaveAndNew->setText(LANG("SaveAndCreate"));
-	ActionSaveAndNew->setToolTip(LANG("SaveChangeCloseAndCreateNew"));
-	ActionSaveAndNew->setIcon(BUFFER_ICONS("SaveAndNew"));
-	ActionSaveAndNew->setVisible(SETTING_BOOL(CONST_UID_SETTING_OBJECTS_SAVECLOSENEW));
-	connect(ActionSaveAndNew, &QAction::triggered, this, &ISObjectFormBase::SaveCreate);
-	ToolBar->addAction(ActionSaveAndNew);
-
 	//Сохранить и закрыть карточку
 	ActionSaveClose = ISControls::CreateActionSaveAndClose(ToolBar);
 	ActionSaveClose->setToolTip(LANG("SaveChangeClose"));
@@ -709,30 +700,6 @@ void ISObjectFormBase::SetValueFieldID(int object_id)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::SaveCreate()
-{
-	bool Result = true;
-	if (ModificationFlag)
-	{
-		Result = Save();
-	}
-
-	if (Result)
-	{
-		if (parent())
-		{
-			emit SaveAndCreate(MetaTable);
-		}
-		else
-		{
-			ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
-			ObjectFormBase->show();
-		}
-		close();
-		emit CloseTab(CurrentIndexTab);
-	}
-}
-//-----------------------------------------------------------------------------
 void ISObjectFormBase::SaveClose()
 {
 	if (ModificationFlag)
@@ -920,7 +887,6 @@ void ISObjectFormBase::DataChanged()
 void ISObjectFormBase::SetModificationFlag(bool modification)
 {
 	ModificationFlag = modification;
-	ActionSaveAndNew->setEnabled(ModificationFlag);
 	ActionSave->setEnabled(ModificationFlag);
 	ActionCancelChange->setEnabled(ModificationFlag);
 
@@ -966,13 +932,11 @@ void ISObjectFormBase::UpdateObjectActions()
 	else if (FormType == ISNamespace::OFT_Copy)
 	{
 		SetEnabledActions(false);
-		ActionSaveAndNew->setEnabled(true);
 		ActionSave->setEnabled(true);
 	}
 	else if (FormType == ISNamespace::OFT_Edit)
 	{
 		SetEnabledActions(true);
-		ActionSaveAndNew->setEnabled(false);
 		ActionSave->setEnabled(false);
 		ActionReRead->setEnabled(true);
 		ActionFavorites->setChecked(ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID));
