@@ -2,10 +2,19 @@
 #include "ISQuery.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-static QString QU_RESULT_COUNT = PREPARE_QUERY("UPDATE implementation SET "
+static QString QU_RESULT_COUNT = PREPARE_QUERY2("UPDATE implementation SET "
 											   "impl_resultcount = (SELECT COUNT(*) FROM implementationdetail WHERE imdt_implementation = :ObjectID AND NOT imdt_isdeleted) "
 											   "WHERE impl_id = :ObjectID "
 											   "RETURNING impl_resultcount");
+//-----------------------------------------------------------------------------
+static QString QU_LAST_CHANGE = PREPARE_QUERY2("UPDATE gasstation "
+											   "SET gsst_lastchange = gsst_lastchange + 1 "
+											   "WHERE gsst_id = :GasStation "
+											   "RETURNING gsst_lastchange");
+//-----------------------------------------------------------------------------
+static QString QU_CHANGE = PREPARE_QUERY2("UPDATE gasstationstatement SET "
+										  "gsts_change = (SELECT gsst_lastchange FROM gasstation WHERE gsst_id = :GasStation) "
+										  "WHERE gsts_id = :ID");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -22,6 +31,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::CounterpartyObjectForm*>("ISOilSphere::CounterpartyObjectForm");
 	qRegisterMetaType<ISOilSphere::ImplementationObjectForm*>("ISOilSphere::ImplementationObjectForm");
 	qRegisterMetaType<ISOilSphere::ImplementationDetailObjectForm*>("ISOilSphere::ImplementationDetailObjectForm");
+	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -241,5 +251,41 @@ void ISOilSphere::ImplementationDetailObjectForm::CalculateWeightDifference()
 		Result = UnloadWeightNet - LoadWeightNet;
 	}
 	EditWeightDifference->SetValue(Result);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::GasStationStatementObjectForm::GasStationStatementObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+	: ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::GasStationStatementObjectForm::~GasStationStatementObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::GasStationStatementObjectForm::Save()
+{
+	bool Result = ISObjectFormBase::Save();
+	if (Result)
+	{
+		//Расчёт смены справедлив только для создания новой записи и создания копии существутющей
+		if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
+		{
+			QVariant GasStation = GetFieldValue("GasStation");
+
+			ISQuery qSelectChange(QU_LAST_CHANGE);
+			qSelectChange.BindValue(":GasStation", GasStation);
+			if (qSelectChange.ExecuteFirst()) //Последнюю смену получили - инкрементируем её
+			{
+				ISQuery q(QU_CHANGE);
+				q.BindValue(":GasStation", GasStation);
+				q.Execute();
+			}
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

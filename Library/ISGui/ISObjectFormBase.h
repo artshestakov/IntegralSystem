@@ -42,7 +42,7 @@ public:
 	bool GetModificationFlag() const; //Получить флаг модицикации данных 
 
 	void SetFieldValue(const QString &FieldName, const QVariant &value); //Изменить значение поля
-	QVariant GetFieldValue(const QString &FieldName) const; //Получить значение поля
+	QVariant GetFieldValue(const QString &FieldName); //Получить значение поля
 
 	void SetCurrentIndexTab(int current_index_tab);
 	void SetVisibleNavigationBar(bool Visible); //Изменить видимость у талбара эскортов

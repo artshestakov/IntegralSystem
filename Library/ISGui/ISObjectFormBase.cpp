@@ -89,12 +89,12 @@ bool ISObjectFormBase::GetModificationFlag() const
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetFieldValue(const QString &FieldName, const QVariant &value)
 {
-	FieldsMap[FieldName]->SetValue(value);
+	GetFieldWidget(FieldName)->SetValue(value);
 }
 //-----------------------------------------------------------------------------
-QVariant ISObjectFormBase::GetFieldValue(const QString &FieldName) const
+QVariant ISObjectFormBase::GetFieldValue(const QString &FieldName)
 {
-	return FieldsMap.at(FieldName)->GetValue();
+	return GetFieldWidget(FieldName)->GetValue();
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetCurrentIndexTab(int current_index_tab)
