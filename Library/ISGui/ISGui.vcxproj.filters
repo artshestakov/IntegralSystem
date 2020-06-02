@@ -70,15 +70,6 @@
     <Filter Include="Objects\Highway\Forms">
       <UniqueIdentifier>{e6fa5479-378d-4e09-9fb6-d1f24047bee3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\InformResource">
-      <UniqueIdentifier>{a1920568-fa4c-4f97-be69-0dbf611c425f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\InformResource\Controls">
-      <UniqueIdentifier>{801f6472-94a6-47a2-90c3-cda530feb0fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\InformResource\Forms">
-      <UniqueIdentifier>{42f78a57-9b8c-44c0-97e9-02539c56568d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\MedTech">
       <UniqueIdentifier>{0297f9dc-b7f0-402d-b59c-2b2d4a744388}</UniqueIdentifier>
     </Filter>
@@ -332,66 +323,6 @@
     </ClCompile>
     <ClCompile Include="ISHighway.cpp">
       <Filter>Objects\Highway</Filter>
-    </ClCompile>
-    <ClCompile Include="ISEMailSelectEdit.cpp">
-      <Filter>Objects\InformResource\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISInformResource.cpp">
-      <Filter>Objects\InformResource</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCallHistoryObjectForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCallUserStatisticsForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDemoAccessesListForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDemoAccessesMyCreatedListForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDemoAccessesMyListForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDemoAccessesObjectForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDesktopInformResource.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDispatchListForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDispatchOrganizationListForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISIncomingCallInformResourceForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISOrganizationListForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISOrganizationMyListForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISOrganizationObjectForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISOrganizationScoreObjectForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISOrganizationWorkListForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPriceListObjectForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISScoreObjectForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTransferOrganizationForm.cpp">
-      <Filter>Objects\InformResource\Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISMedTech.cpp">
       <Filter>Objects\MedTech</Filter>
@@ -1012,66 +943,6 @@
     </QtMoc>
     <QtMoc Include="ISHighway.h">
       <Filter>Objects\Highway</Filter>
-    </QtMoc>
-    <QtMoc Include="ISEMailSelectEdit.h">
-      <Filter>Objects\InformResource\Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISInformResource.h">
-      <Filter>Objects\InformResource</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCallHistoryObjectForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCallUserStatisticsForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDemoAccessesListForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDemoAccessesMyCreatedListForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDemoAccessesMyListForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDemoAccessesObjectForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDesktopInformResource.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDispatchListForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDispatchOrganizationListForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISIncomingCallInformResourceForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISOrganizationListForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISOrganizationMyListForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISOrganizationObjectForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISOrganizationScoreObjectForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISOrganizationWorkListForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPriceListObjectForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISScoreObjectForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTransferOrganizationForm.h">
-      <Filter>Objects\InformResource\Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISMedTech.h">
       <Filter>Objects\MedTech</Filter>
