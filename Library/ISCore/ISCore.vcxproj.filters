@@ -34,9 +34,6 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{3c8bb7e9-794e-4dbf-a0c9-e51c3f514b88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\_Highway">
-      <UniqueIdentifier>{42fa687e-da46-4d83-a845-62a5924d17a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\_MedTech">
       <UniqueIdentifier>{b999f67a-ea02-4a79-86ea-9eeac1589d1e}</UniqueIdentifier>
     </Filter>
@@ -447,12 +444,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\_Highway\Highway.xsn">
-      <Filter>Resources\_Highway</Filter>
-    </None>
-    <None Include="..\..\Resources\_Highway\Highway.xsr">
-      <Filter>Resources\_Highway</Filter>
-    </None>
     <None Include="..\..\Resources\_MedTech\MedTech.xsn">
       <Filter>Resources\_MedTech</Filter>
     </None>

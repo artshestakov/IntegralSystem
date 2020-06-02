@@ -6,7 +6,6 @@
 #include "ISMetaDataHelper.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-#include "ISHighway.h"
 #include "ISMedTech.h"
 #include "ISOilSphere.h"
 //-----------------------------------------------------------------------------
@@ -14,7 +13,6 @@ ISObjects::ISObjects()
 	: ErrorString(NO_ERROR_STRING),
 	ObjectInterface(nullptr)
 {
-	qRegisterMetaType<ISHighway*>("ISHighway");
 	qRegisterMetaType<ISMedTech::Object*>("ISMedTech::Object");
 	qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
 }

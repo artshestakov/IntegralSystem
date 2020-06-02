@@ -64,12 +64,6 @@
     <Filter Include="Objects">
       <UniqueIdentifier>{a144289a-5f56-46d9-987e-11f5ddbde600}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Highway">
-      <UniqueIdentifier>{b206525a-aa45-4410-be23-44fe77b49628}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Highway\Forms">
-      <UniqueIdentifier>{e6fa5479-378d-4e09-9fb6-d1f24047bee3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\MedTech">
       <UniqueIdentifier>{0297f9dc-b7f0-402d-b59c-2b2d4a744388}</UniqueIdentifier>
     </Filter>
@@ -308,21 +302,6 @@
     </ClCompile>
     <ClCompile Include="ISPrintingHtml.cpp">
       <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHighwayIncomingCallForm.cpp">
-      <Filter>Objects\Highway\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHighwayOrganizationListForm.cpp">
-      <Filter>Objects\Highway\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHighwayOrganizationMyListForm.cpp">
-      <Filter>Objects\Highway\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHighwayOrganizationObjectForm.cpp">
-      <Filter>Objects\Highway\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHighway.cpp">
-      <Filter>Objects\Highway</Filter>
     </ClCompile>
     <ClCompile Include="ISMedTech.cpp">
       <Filter>Objects\MedTech</Filter>
@@ -928,21 +907,6 @@
     </QtMoc>
     <QtMoc Include="ISPrintingHtml.h">
       <Filter>Printing</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHighwayIncomingCallForm.h">
-      <Filter>Objects\Highway\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHighwayOrganizationListForm.h">
-      <Filter>Objects\Highway\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHighwayOrganizationMyListForm.h">
-      <Filter>Objects\Highway\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHighwayOrganizationObjectForm.h">
-      <Filter>Objects\Highway\Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISHighway.h">
-      <Filter>Objects\Highway</Filter>
     </QtMoc>
     <QtMoc Include="ISMedTech.h">
       <Filter>Objects\MedTech</Filter>

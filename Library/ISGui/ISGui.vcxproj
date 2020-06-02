@@ -161,11 +161,6 @@
     <ClCompile Include="ISFlowLayout.cpp" />
     <ClCompile Include="ISFullTextSearchForm.cpp" />
     <ClCompile Include="ISGui.cpp" />
-    <ClCompile Include="ISHighway.cpp" />
-    <ClCompile Include="ISHighwayIncomingCallForm.cpp" />
-    <ClCompile Include="ISHighwayOrganizationListForm.cpp" />
-    <ClCompile Include="ISHighwayOrganizationMyListForm.cpp" />
-    <ClCompile Include="ISHighwayOrganizationObjectForm.cpp" />
     <ClCompile Include="ISHistoryForm.cpp" />
     <ClCompile Include="ISHTML.cpp" />
     <ClCompile Include="ISHTMLHelper.cpp" />
@@ -527,11 +522,6 @@
     <QtMoc Include="ISImageEdit.h" />
     <QtMoc Include="ISIntegerEdit.h" />
     <QtMoc Include="ISMessageBox.h" />
-    <QtMoc Include="ISHighwayIncomingCallForm.h" />
-    <QtMoc Include="ISHighwayOrganizationListForm.h" />
-    <QtMoc Include="ISHighwayOrganizationMyListForm.h" />
-    <QtMoc Include="ISHighwayOrganizationObjectForm.h" />
-    <QtMoc Include="ISHighway.h" />
     <ClInclude Include="ISBuffer.h" />
     <ClInclude Include="ISColumnSizer.h" />
     <ClInclude Include="ISControls.h" />
