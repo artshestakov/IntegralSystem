@@ -45,11 +45,12 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
     ISStackWalker stack_walker;
     stack_walker.ShowCallstack(GetCurrentThread(), ExceptionInfo ? ExceptionInfo->ContextRecord : NULL);
 
-    std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + SYMBOL_MINUS + QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V8) + "." + EXTENSION_CRASH).toStdString();
+    std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V8) + "." + EXTENSION_CRASH).toStdString();
     FILE *File = fopen(FilePath.c_str(), "w");
     if (File)
     {
         std::string Content = stack_walker.GetCallStack();
+
         if (!Message.empty())
         {
             Content.insert(0, "\n================================\n");
@@ -79,7 +80,7 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
 
     if (ISDefines::Core::IS_GUI)
     {
-        QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << QString::fromStdString(FilePath));
+		MessageBox(NULL, Message.empty() ? "Unknown reason" : Message.c_str(), "Crash", MB_OK | MB_ICONERROR | MB_DEFBUTTON1 | MB_SYSTEMMODAL);
     }
     else
     {
@@ -97,7 +98,7 @@ void ISCrashDumper::OnSystemSignal(int SigNum)
 {
     stacktrace::call_stack stack_trace;
 
-    std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + SYMBOL_MINUS + QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V8) + "." + EXTENSION_CRASH).toStdString();
+    std::string FilePath = QString(ISDefines::Core::PATH_CRASH_DIR + "/" + ISDefines::Core::APPLICATION_NAME + '_' + QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V8) + "." + EXTENSION_CRASH).toStdString();
     FILE *File = fopen(FilePath.c_str(), "w");
     if (File)
     {

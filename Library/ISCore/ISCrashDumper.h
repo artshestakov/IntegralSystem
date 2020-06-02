@@ -10,6 +10,7 @@ public:
 	static void SetAssertMessage(const char *assert_message);
 
 private:
+
 #ifdef WIN32
 	static int ReportHook(int ReportType, char *Message, int *ReturnValue);
 	static LONG ExceptionHandling(_EXCEPTION_POINTERS *ExceptionInfo);
