@@ -64,19 +64,9 @@ Source: ..\Deploy\.Configuration.-.Platform.\ISCore.dll; DestDir: {app}; Flags: 
 Source: ..\Deploy\.Configuration.-.Platform.\ISGui.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Client;
 
 Source: ..\Deploy\.Configuration.-.Platform.\Carat.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
+Source: ..\Deploy\.Configuration.-.Platform.\CaratWorker.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 Source: ..\Deploy\.Configuration.-.Platform.\Configurator.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\ErrorViewer.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
 Source: ..\Deploy\.Configuration.-.Platform.\IntegralSystem.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
-
-Source: ..\Deploy\.Configuration.-.Platform.\CaratAsteriskQueue.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratAsteriskRecord.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratCalendar.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratCenterSeven.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratHighway.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratInformResource.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratMedTech.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratNotification.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratTelephony.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
 
 Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
 Source: ..\Components\PostgreSQL\9.4\Bin-.Platform.\*; DestDir: {app}; Flags: ignoreversion;
