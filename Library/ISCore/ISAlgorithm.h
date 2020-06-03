@@ -138,6 +138,30 @@ namespace ISAlgorithm
 		}
 		return Pointer;
 	}
+
+	//! Обрезание числа с плавающей запятой.
+	//! \param Double число с плавающей запятой
+	//! \param Precision количество цифр после запятой
+	//! \return возращает обрезанное число с плаващей запятой
+	template<typename T>
+	T PrepareDouble(T Double, size_t Precision)
+	{
+		char Char[MAX_PATH];
+		sprintf(Char, "%.*f", Precision, Double); //Конвертируем дробное число в строку.
+		while (true) //Обрезаем возможные нули в конце
+		{
+			size_t Index = strlen(Char) - 1; //Индекс последнего символа
+			if (Char[Index] == '0' || Char[Index] == SYMBOL_POINT) //Если последний символ является нулем - обрезаем его
+			{
+				Char[Index] = '\0';
+			}
+			else //Иначе выходим из цикла
+			{
+				break;
+			}
+		}
+		return atof(Char); //Преобразовываем строку обратно в число с плавающей запятой и возвращаем
+	}
 }
 //-----------------------------------------------------------------------------
 #endif

@@ -1,6 +1,7 @@
 #include "ISDoubleEdit.h"
 #include "ISDefinesCore.h"
 #include "ISSettingsDatabase.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISDoubleEdit::ISDoubleEdit(QWidget *parent) : ISLineEdit(parent)
 {
@@ -21,10 +22,7 @@ void ISDoubleEdit::SetValue(const QVariant &value)
 	double Double = value.toDouble(&Ok);
 	if (Ok)
 	{
-		std::stringstream StringStream;
-		StringStream << std::setprecision(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA) + 1) << Double;
-		std::string String = StringStream.str();
-		ISLineEdit::SetValue(String.c_str());
+		ISLineEdit::SetValue(ISAlgorithm::PrepareDouble<double>(Double, SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)));
 	}
 }
 //-----------------------------------------------------------------------------

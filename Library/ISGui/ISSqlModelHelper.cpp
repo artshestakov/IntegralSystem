@@ -5,6 +5,7 @@
 #include "ISGui.h"
 #include "ISDefinesCore.h"
 #include "ISSettingsDatabase.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::FieldType Type)
 {
@@ -48,7 +49,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_Double)
 	{
-		Result.setValue<QString>(QString::number(Value.toDouble(), 'g', SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA) + 1));
+		Result.setValue<double>(ISAlgorithm::PrepareDouble<double>(Value.toDouble(), SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)));
 	}
 	return Result;
 }
