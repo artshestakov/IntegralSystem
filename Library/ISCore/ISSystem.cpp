@@ -2,14 +2,6 @@
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-void ISSystem::SetObjectProperty(QObject *Object, const char *PropertyName, const QVariant &PropertyValue)
-{
-	if (Object)
-	{
-		Object->setProperty(PropertyName, PropertyValue);
-	}
-}
-//-----------------------------------------------------------------------------
 QDomElement ISSystem::GetDomElement(QFile &File)
 {
 	QDomDocument XmlDocument;
@@ -26,16 +18,6 @@ QDomElement ISSystem::GetDomElement(const QString &Content)
 	return DomElement;
 }
 //-----------------------------------------------------------------------------
-void ISSystem::SleepMilliseconds(unsigned long Milliseconds)
-{
-	QThread::msleep(Milliseconds);
-}
-//-----------------------------------------------------------------------------
-void ISSystem::SleepSeconds(unsigned long Seconds)
-{
-	QThread::sleep(Seconds);
-}
-//-----------------------------------------------------------------------------
 QString ISSystem::GetSizeDir(const QString &DirPath)
 {
 	qint64 Size = 0;
@@ -45,11 +27,6 @@ QString ISSystem::GetSizeDir(const QString &DirPath)
 		Size += GetFileSize(FileInfo.absoluteFilePath());
 	}
 	return FileSizeFromString(Size);
-}
-//-----------------------------------------------------------------------------
-QString ISSystem::GetCurrentDayOfWeekName()
-{
-	return GetDayOfWeekName(static_cast<Qt::DayOfWeek>(QDate::currentDate().dayOfWeek()));
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::GetDayOfWeekName(Qt::DayOfWeek Day)
@@ -204,16 +181,6 @@ QString ISSystem::Base64ToString(const QString &Base64)
 	return String;
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::SizeToString(const QSize &Size)
-{
-	return QString(QString::number(Size.height()) + " x " + QString::number(Size.width()));
-}
-//-----------------------------------------------------------------------------
-double ISSystem::MillisecondToSecond(int Milliseconds)
-{
-	return Milliseconds / 1000;
-}
-//-----------------------------------------------------------------------------
 QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QString *ErrorString)
 {
 	QVariantMap VariantMap;
@@ -297,36 +264,8 @@ QString ISSystem::FileSizeFromString(qint64 FileSize)
 	return String;
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::GetCompleteBaseFileName(const QString &FilePath)
-{
-	return QFileInfo(FilePath).completeBaseName();
-}
-//-----------------------------------------------------------------------------
 QString ISSystem::GetFileName(const QString &FilePath)
 {
 	return QFileInfo(FilePath).fileName();
-}
-//-----------------------------------------------------------------------------
-QByteArray ISSystem::GetFileMD5(const QString &FilePath)
-{
-	QFile File(FilePath);
-	if (File.open(QIODevice::ReadOnly))
-	{
-		QCryptographicHash MD5(QCryptographicHash::Md5);
-		MD5.addData(File.readAll());
-		File.close();
-		return MD5.result();
-	}
-	return QByteArray();
-}
-//-----------------------------------------------------------------------------
-QDateTime ISSystem::GetCreatedDateFile(const QString &FilePath)
-{
-	return QFileInfo(FilePath).created();
-}
-//-----------------------------------------------------------------------------
-QDateTime ISSystem::GetLastModifiedFile(const QString &FilePath)
-{
-	return QFileInfo(FilePath).lastModified();
 }
 //-----------------------------------------------------------------------------
