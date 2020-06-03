@@ -99,7 +99,7 @@ namespace ISOilSphere
 		virtual ~GasStationStatementObjectForm();
 
 	protected:
-		void SavedObject(int ObjectID);
+		void SaveBefore() override;
 	};
 }
 //-----------------------------------------------------------------------------

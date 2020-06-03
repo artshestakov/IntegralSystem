@@ -716,8 +716,14 @@ void ISObjectFormBase::SaveClose()
 	emit CloseTab(CurrentIndexTab);
 }
 //-----------------------------------------------------------------------------
+void ISObjectFormBase::SaveBefore()
+{
+
+}
+//-----------------------------------------------------------------------------
 bool ISObjectFormBase::Save()
 {
+	SaveBefore();
 	QVariantMap ValuesMap;
 	ISVectorString FieldsVector;
 	QString QueryText;
@@ -816,22 +822,22 @@ bool ISObjectFormBase::Save()
 		}
 
 		ObjectName = ISCore::GetObjectName(MetaTable, ObjectID);
-		if (FormType == ISNamespace::OFT_New)
+		switch (FormType)
 		{
+		case ISNamespace::OFT_New:
 			FormType = ISNamespace::OFT_Edit;
 			ISNotificationService::ShowNotification(ISNamespace::NFT_Create, MetaTable->LocalName, ObjectName);
 			ISProtocol::CreateObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-		}
-		else if (FormType == ISNamespace::OFT_Copy)
-		{
+			break;
+		case ISNamespace::OFT_Copy:
 			FormType = ISNamespace::OFT_Edit;
 			ISNotificationService::ShowNotification(ISNamespace::NFT_CreateCopy, MetaTable->LocalName, ObjectName);
 			ISProtocol::CreateCopyObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-		}
-		else if (FormType == ISNamespace::OFT_Edit)
-		{
+			break;
+		case ISNamespace::OFT_Edit:
 			ISNotificationService::ShowNotification(ISNamespace::NFT_Edit, MetaTable->LocalName, ObjectName);
 			ISProtocol::EditObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+			break;
 		}
 
 		RenameReiconForm();
@@ -843,6 +849,7 @@ bool ISObjectFormBase::Save()
 
 		emit SavedObject(ObjectID);
 		emit UpdateList();
+		SaveAfter();
 		return true;
 	}
 	else
@@ -858,6 +865,11 @@ void ISObjectFormBase::SavedEvent()
 	
 }
 //-----------------------------------------------------------------------------
+void ISObjectFormBase::SaveAfter()
+{
+
+}
+//-----------------------------------------------------------------------------
 void ISObjectFormBase::RenameReiconForm()
 {
 	switch (FormType)
@@ -866,12 +878,10 @@ void ISObjectFormBase::RenameReiconForm()
 		setWindowTitle(LANG("Creating") + " (" + MetaTable->LocalName + ')');
 		setWindowIcon(BUFFER_ICONS("Add"));
 		break;
-
 	case ISNamespace::OFT_Edit:
 		setWindowTitle(MetaTable->LocalName + ": " + ObjectName);
 		setWindowIcon(BUFFER_ICONS("Edit"));
 		break;
-
 	case ISNamespace::OFT_Copy:
 		setWindowTitle(LANG("Coping") + " (" + MetaTable->LocalName + "): " + ObjectName);
 		setWindowIcon(BUFFER_ICONS("AddCopy"));

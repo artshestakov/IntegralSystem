@@ -77,8 +77,10 @@ protected:
 
 protected:
 	void SaveClose(); //Сохранить и закрыть
+	virtual void SaveBefore(); //Событие перед сохранением
 	virtual bool Save(); //Сохранить
 	virtual void SavedEvent(); //Событие при сохранении объекта
+	virtual void SaveAfter(); //Событие после сохранения
 	void RenameReiconForm(); //Переименование формы
 	void DataChanged(); //Собыие при изменении значения одного из полей
 	void SetModificationFlag(bool modification); //Изменить флаг модицикации данных

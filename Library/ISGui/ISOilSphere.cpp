@@ -7,9 +7,7 @@ static QString QU_RESULT_COUNT = PREPARE_QUERY2("UPDATE implementation SET "
 											   "WHERE impl_id = :ObjectID "
 											   "RETURNING impl_resultcount");
 //-----------------------------------------------------------------------------
-static QString QU_CHANGE = PREPARE_QUERY2("UPDATE gasstationstatement SET "
-										  "gsts_change = (SELECT COALESCE(max(gsts_change) + 1, 1) FROM gasstationstatement WHERE gsts_gasstation = :GasStation) "
-										  "WHERE gsts_id = :ID");
+static QString QS_CHANGE = PREPARE_QUERY2("SELECT COALESCE(max(gsts_change) + 1, 1) AS gsts_change FROM gasstationstatement WHERE gsts_gasstation = :GasStation");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -253,7 +251,7 @@ void ISOilSphere::ImplementationDetailObjectForm::CalculateWeightDifference()
 ISOilSphere::GasStationStatementObjectForm::GasStationStatementObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
-	connect(this, &ISObjectFormBase::SavedObject, this, &ISOilSphere::GasStationStatementObjectForm::SavedObject);
+	
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::GasStationStatementObjectForm::~GasStationStatementObjectForm()
@@ -261,11 +259,13 @@ ISOilSphere::GasStationStatementObjectForm::~GasStationStatementObjectForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::GasStationStatementObjectForm::SavedObject(int ObjectID)
+void ISOilSphere::GasStationStatementObjectForm::SaveBefore()
 {
-	ISQuery qUpdateChange(QU_CHANGE);
-	qUpdateChange.BindValue(":GasStation", GetFieldValue("GasStation"));
-	qUpdateChange.BindValue(":ID", ObjectID);
-	qUpdateChange.Execute();
+	ISQuery qSelect(QS_CHANGE);
+	qSelect.BindValue(":GasStation", GetFieldValue("GasStation"));
+	if (qSelect.ExecuteFirst())
+	{
+		SetFieldValue("Change", qSelect.ReadColumn("gsts_change"));
+	}
 }
 //-----------------------------------------------------------------------------
