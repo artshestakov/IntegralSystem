@@ -242,7 +242,7 @@
       <Field UID="{0912634C-ACA7-408A-9761-872E88FF99E7}" Name="GasStation" Type="Int" LabelName="АЗС" LocalListName="АЗС" NotNull="true" LayoutName="Title"/>
       <Field UID="{64DC2A84-C906-4F46-AE3E-3D32E273E236}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Title"/>
       <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="Int" LabelName="Оператор" LocalListName="Оператор" NotNull="true" LayoutName="Title"/>
-      <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="Int" LabelName="Смена" LocalListName="Смена" NotNull="true" LayoutName="Title" HideFromObject="true"/>
+      <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="Int" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>
       
       <Field UID="{79298632-AE9B-4DFF-B0EF-EE23CD9A6914}" Name="BalanceBeginChange" Type="Double" LabelName="Остаток на начало смены" LocalListName="Остаток на начало смены" LayoutName="Layout1"/>
       <Field UID="{6E0C3D58-C0B2-4BA7-B62E-AB0EA597317A}" Name="VolumeIncome" Type="Double" LabelName="Объём прихода" LocalListName="Объём прихода" LayoutName="Layout1"/>

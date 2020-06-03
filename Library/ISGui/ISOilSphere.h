@@ -97,6 +97,9 @@ namespace ISOilSphere
 	public:
 		Q_INVOKABLE GasStationStatementObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
 		virtual ~GasStationStatementObjectForm();
+
+	protected:
+		void SavedObject(int ObjectID);
 	};
 }
 //-----------------------------------------------------------------------------
