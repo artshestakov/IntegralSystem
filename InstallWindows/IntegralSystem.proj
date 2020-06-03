@@ -7,7 +7,6 @@
 		<SolutionDir>$(MSBuildProjectDirectory)\..\</SolutionDir>
 		<IssScriptTmp>$(SolutionDir)InstallWindows\IntegralSystem.iss.tmp</IssScriptTmp>
 		<ReplacerPath>$(SolutionDir)Components\Replacer\Release-Win32\Replacer.exe</ReplacerPath>
-		<CurrentDate>$([System.DateTime]::Now.ToString(dd.MM.yyyy))</CurrentDate>
 	</PropertyGroup>
 	
 	<!-- Сборка проектов решения -->
@@ -20,20 +19,9 @@
 		
 		<!-- Сборка проектов -->
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd Carat $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratWorker $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd Configurator $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd ErrorViewer $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd IntegralSystem $(Configuration) $(Platform)"/>
-		
-		<!-- Сборка ядер -->
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratAsteriskQueue $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratAsteriskRecord $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratCalendar $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratCenterSeven $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratHighway $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratInformResource $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratMedTech $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratNotification $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\BuildProject.cmd CaratTelephony $(Configuration) $(Platform)"/>
 	</Target>
 	
 	<!-- Сборка зависимостей -->
@@ -43,19 +31,9 @@
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ISCarat.dll $(Configuration) $(Platform)"/>
 		
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd Carat.exe $(Configuration) $(Platform)"/>
+		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratWorker.exe $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd Configurator.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd ErrorViewer.exe $(Configuration) $(Platform)"/>
 		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd IntegralSystem.exe $(Configuration) $(Platform)"/>
-		
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratAsteriskQueue.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratAsteriskRecord.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratCalendar.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratCenterSeven.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratHighway.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratInformResource.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratMedTech.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratNotification.exe $(Configuration) $(Platform)"/>
-		<Exec Command="$(SolutionDir)InstallWindows\WinDeploy.cmd CaratTelephony.exe $(Configuration) $(Platform)"/>
 	</Target>
 	
 	<!-- Подготовка скрипта -->
