@@ -37,6 +37,11 @@ static QString QD_OBJECT_CASCADE = "DELETE FROM %1 WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
 static QString QU_OBJECT = "UPDATE %1 SET %2_deletiondate = now(), %2_deletionuser = CURRENT_USER WHERE %2_id = %3";
 //-----------------------------------------------------------------------------
+static QString QS_TELEPHONY = PREPARE_QUERY("SELECT COUNT(*) "
+											"FROM _asteriskpattern "
+											"WHERE NOT aspt_isdeleted "
+											"AND aspt_user = currentuserid()");
+//-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
 	bool Result = ISCore::Startup(true, "Client", ErrorString);
@@ -569,6 +574,19 @@ void ISGui::ShowTaskViewForm(int TaskID)
 void ISGui::ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID)
 {
 	ShowObjectForm(CreateObjectForm(FormType, "_Task", TaskID));
+}
+//-----------------------------------------------------------------------------
+bool ISGui::CheckSetupTelephony()
+{
+	ISQuery qSelect(QS_TELEPHONY);
+	if (qSelect.ExecuteFirst())
+	{
+		if (qSelect.ReadColumn("count").toInt())
+		{
+			return true;
+		}
+	}
+	return false;
 }
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)

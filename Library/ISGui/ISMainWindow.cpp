@@ -23,7 +23,6 @@
 #include "ISNotificationService.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISIncomingCallBaseForm.h"
-#include "ISTelephony.h"
 #include "ISObjects.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------

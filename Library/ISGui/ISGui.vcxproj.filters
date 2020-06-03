@@ -195,9 +195,6 @@
     <ClCompile Include="ISObjectModel.cpp">
       <Filter>ObjectModel</Filter>
     </ClCompile>
-    <ClCompile Include="ISTelephony.cpp">
-      <Filter>Telephony</Filter>
-    </ClCompile>
     <ClCompile Include="ISTelephonySummary.cpp">
       <Filter>Telephony</Filter>
     </ClCompile>
@@ -817,9 +814,6 @@
     </QtMoc>
     <QtMoc Include="ISModelThreadWorker.h">
       <Filter>ModelThread</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTelephony.h">
-      <Filter>Telephony</Filter>
     </QtMoc>
     <QtMoc Include="ISBaseTableView.h">
       <Filter>Widgets</Filter>

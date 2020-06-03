@@ -66,6 +66,8 @@ public:
 	static void ShowTaskViewForm(int TaskID); //Показать карточку просмотра задачи
 	static void ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID = 0); //Показать форму объекта задачи
 
+	static bool CheckSetupTelephony(); //Проверка настроена ли телефония
+
 private:
 	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());
 };

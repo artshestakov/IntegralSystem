@@ -4,7 +4,6 @@
 #include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISQuery.h"
-#include "ISTelephony.h"
 #include "ISNotificationService.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
@@ -14,8 +13,7 @@ static QString QI_ASTERISK_QUEUE = PREPARE_QUERY("INSERT INTO _asteriskqueue(ast
 ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISPhoneBaseEdit(parent)
 {
 	SetVisibleCall(true);
-	
-	if (!ISTelephony::CheckSetup())
+	if (!ISGui::CheckSetupTelephony())
 	{
 		SetToolTipCall(LANG("NotSettingTelephonyForCurrentUser"));
 		SetCursorCall(CURSOR_FORBIDDEN);
@@ -29,7 +27,7 @@ ISPhoneEdit::~ISPhoneEdit()
 //-----------------------------------------------------------------------------
 void ISPhoneEdit::Call()
 {
-	if (ISTelephony::CheckSetup())
+	if (ISGui::CheckSetupTelephony())
 	{
 		ISGui::SetWaitGlobalCursor(true);
 		
