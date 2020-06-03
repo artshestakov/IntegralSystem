@@ -6,6 +6,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 	: QWidget(parent),
@@ -141,7 +142,7 @@ void ISFieldEditBase::Blink(const QColor &Color)
 	{
 		IsBlinkBorder = IsBlinkBorder ? false : true;
 		repaint();
-		ISSystem::SleepMilliseconds(100);
+		ISSleep(100);
 	}
 	SetFocus();
 }
