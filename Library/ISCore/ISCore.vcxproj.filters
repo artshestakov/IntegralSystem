@@ -25,9 +25,6 @@
     <Filter Include="Network">
       <UniqueIdentifier>{e4784d47-59e4-4c39-956f-f5725430d28f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Network\SMTP">
-      <UniqueIdentifier>{936c47ab-f591-435b-a4c7-d08d8a9259a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Notify">
       <UniqueIdentifier>{fc7646d5-fb0e-4e1e-8d25-5b5305ac79fc}</UniqueIdentifier>
     </Filter>
@@ -98,42 +95,6 @@
     </ClCompile>
     <ClCompile Include="ISRestWorker.cpp">
       <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="ISEmailAddress.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimeAttachment.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimeContentFormatter.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimeFile.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimeHtml.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimeInlineFile.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimeMessage.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimeMultipart.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimePart.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMimeText.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISQuotedPrintable.cpp">
-      <Filter>Network\SMTP</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSmtpClient.cpp">
-      <Filter>Network\SMTP</Filter>
     </ClCompile>
     <ClCompile Include="ISNotifySender.cpp">
       <Filter>Notify</Filter>
@@ -269,39 +230,6 @@
     <ClInclude Include="ISMetaUser.h">
       <Filter>MetaUser</Filter>
     </ClInclude>
-    <ClInclude Include="ISEmailAddress.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimeAttachment.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimeContentFormatter.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimeFile.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimeHtml.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimeInlineFile.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimeMessage.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimeMultipart.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimePart.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMimeText.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
-    <ClInclude Include="ISQuotedPrintable.h">
-      <Filter>Network\SMTP</Filter>
-    </ClInclude>
     <ClInclude Include="ISSettings.h">
       <Filter>Settings</Filter>
     </ClInclude>
@@ -418,9 +346,6 @@
     </QtMoc>
     <QtMoc Include="ISRestWorker.h">
       <Filter>Network</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSmtpClient.h">
-      <Filter>Network\SMTP</Filter>
     </QtMoc>
     <QtMoc Include="ISNotifySender.h">
       <Filter>Notify</Filter>
