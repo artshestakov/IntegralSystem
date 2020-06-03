@@ -256,7 +256,6 @@
     <ClCompile Include="ISSqlModelCore.cpp" />
     <ClCompile Include="ISSqlModelHelper.cpp" />
     <ClCompile Include="ISSqlModelView.cpp" />
-    <ClCompile Include="ISStackedWidget.cpp" />
     <ClCompile Include="ISStartup.cpp" />
     <ClCompile Include="ISStatisticTablesForm.cpp" />
     <ClCompile Include="ISStorageFilesListForm.cpp" />
@@ -493,7 +492,6 @@
     <QtMoc Include="ISPopupMessage.h" />
     <QtMoc Include="ISSplashScreen.h" />
     <QtMoc Include="ISSplashWidget.h" />
-    <QtMoc Include="ISStackedWidget.h" />
     <QtMoc Include="ISSystemsPanel.h" />
     <QtMoc Include="ISToolBarAccessTable.h" />
     <QtMoc Include="ISUserGroupWidget.h" />
