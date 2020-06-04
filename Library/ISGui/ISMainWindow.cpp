@@ -167,7 +167,6 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 	ISParagraphBaseForm *ParagraphWidget = dynamic_cast<ISParagraphBaseForm*>(StackedWidget->widget(Paragraphs[ParagraphUID]));
 	StackedWidget->setCurrentWidget(ParagraphWidget);
 	ParagraphWidget->Invoke();
-	
 	ParagraphWidget->setFocus();
 	SetCurrentParagraphUID(ParagraphUID);
 

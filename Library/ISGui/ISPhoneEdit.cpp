@@ -30,7 +30,6 @@ void ISPhoneEdit::Call()
 	if (ISGui::CheckSetupTelephony())
 	{
 		ISGui::SetWaitGlobalCursor(true);
-		
 		QString Phone = GetValue().toString();
 
 		QVariantMap VariantMap;
@@ -44,7 +43,6 @@ void ISPhoneEdit::Call()
 			ISNotificationService::ShowNotification(LANG("OutcomingCall").arg(Phone));
 			emit Called();
 		}
-
 		ISGui::SetWaitGlobalCursor(false);
 	}
 	else

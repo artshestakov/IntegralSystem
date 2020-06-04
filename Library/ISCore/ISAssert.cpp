@@ -25,7 +25,7 @@ void ISASSERT::Assert(int Integer, const QString &FalseMessage, const char *Func
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(QString String, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
+void ISASSERT::Assert(const QString &String, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
 {
 	if (!String.length())
 	{

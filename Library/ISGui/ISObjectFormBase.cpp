@@ -847,9 +847,9 @@ bool ISObjectFormBase::Save()
 		ActionFavorites->setEnabled(true);
 		SetValueFieldID(ObjectID);
 
+		SaveAfter();
 		emit SavedObject(ObjectID);
 		emit UpdateList();
-		SaveAfter();
 		return true;
 	}
 	else
