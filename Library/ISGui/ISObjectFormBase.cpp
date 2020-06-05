@@ -35,6 +35,7 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	WidgetEscort(nullptr),
 	EditObjectID(nullptr),
 	BeginFieldEdit(nullptr),
+	FocusFieldEdit(nullptr),
 	ModificationFlag(false),
 	RecordIsDeleted(false),
 	CurrentIndexTab(-1),
@@ -727,14 +728,14 @@ bool ISObjectFormBase::Save()
 	QVariantMap ValuesMap;
 	ISVectorString FieldsVector;
 	QString QueryText;
+	FocusFieldEdit = dynamic_cast<ISFieldEditBase*>(QApplication::focusWidget()->parentWidget()); //Запоминаем поле в фокусе
 
 	for (const auto &Field : FieldsMap) //Обход существующих полей на форме
 	{
-		QString FieldName = Field.first;
-		PMetaField *MetaField = MetaTable->GetField(FieldName);
-		ISFieldEditBase *FieldEditBase = Field.second;
-
-		QVariant Value = FieldEditBase->GetValue();
+		QString FieldName = Field.first; //Имя поля
+		PMetaField *MetaField = MetaTable->GetField(FieldName); //Мета-поле
+		ISFieldEditBase *FieldEditBase = Field.second; //Указатель на виджет редактирования поля
+		QVariant Value = FieldEditBase->GetValue(); //Значение поля
 		if (Value.isNull()) //Если значение в поле отсутствует, проверить обязательно ли поле для заполнения
 		{
 			if (MetaField->NotNull && !MetaField->HideFromObject && MetaField->DefaultValue.toString().isEmpty()) //Если поле обязательно для заполнения
@@ -753,7 +754,7 @@ bool ISObjectFormBase::Save()
 			}
 		}
 
-		if (!FieldEditBase->IsValid())
+		if (!FieldEditBase->IsValid()) //Если поле не прошло валидацию
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.ValueFieldEditInvalid").arg(MetaField->LabelName));
 			FieldEditBase->BlinkRed();
@@ -850,6 +851,7 @@ bool ISObjectFormBase::Save()
 		SaveAfter();
 		emit SavedObject(ObjectID);
 		emit UpdateList();
+		QTimer::singleShot(50, FocusFieldEdit, &ISFieldEditBase::SetFocus); //Вызывать установку фокуса нужно именно так, и никак иначе
 		return true;
 	}
 	else
