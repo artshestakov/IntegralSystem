@@ -159,7 +159,7 @@ void ISQueryModel::ClearPeriod()
 //-----------------------------------------------------------------------------
 void ISQueryModel::SetClassFilter(const QString &class_filter)
 {
-	if (class_filter.length())
+	if (!class_filter.isEmpty())
 	{
 		ClassFilter = class_filter;
 	}
@@ -195,7 +195,7 @@ void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &Fi
 {
 	PMetaField *MetaField = MetaTable->GetField(FieldName);
 	QString FieldQueryText = MetaField->QueryText;
-	if (FieldQueryText.length()) //≈сли сортируемое поле €вл€етс€ виртуальным - сортировать по запросу пол€
+	if (!FieldQueryText.isEmpty()) //≈сли сортируемое поле €вл€етс€ виртуальным - сортировать по запросу пол€
 	{
 		OrderField = '(' + FieldQueryText + ')';
 	}
