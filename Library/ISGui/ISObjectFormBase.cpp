@@ -551,14 +551,17 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		LabelField->setToolTip(LANG("FieldNotNull"));
 		LabelField->setCursor(CURSOR_WHATS_THIS);
 	}
+	else if (MetaField->ReadOnly) //Если доступно только для просмотра
+	{
+		LabelField->setTextFormat(Qt::RichText);
+		LabelField->setText(QString("<font>%1:</font><font color=#808080 size=4>*</font>").arg(MetaField->LabelName));
+		LabelField->setToolTip(LANG("FieldReadOnly"));
+		LabelField->setCursor(CURSOR_WHATS_THIS);
+		FieldEditBase->SetReadOnly(MetaField->ReadOnly);
+	}
 	else
 	{
 		LabelField->setText(MetaField->LabelName + ':');
-	}
-
-	if (MetaField->ReadOnly) //Если доступно только для просмотра
-	{
-		FieldEditBase->SetReadOnly(MetaField->ReadOnly);
 	}
 
 	if (!MetaField->PlaceholderText.isEmpty()) //Если есть текст-заполнитель
