@@ -151,6 +151,13 @@ void ISLineEdit::SetIcon(const QIcon &Icon)
 	LineEdit->SetIcon(Icon);
 }
 //-----------------------------------------------------------------------------
+void ISLineEdit::SetColorText(const QColor &Color)
+{
+	QPalette Palette = LineEdit->palette();
+	Palette.setColor(QPalette::Text, Color);
+	LineEdit->setPalette(Palette);
+}
+//-----------------------------------------------------------------------------
 void ISLineEdit::SelectAll()
 {
 	QTimer::singleShot(10, GetLineEdit(), &ISQLineEdit::selectAll);
