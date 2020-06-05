@@ -8,11 +8,11 @@
       <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="Int" LabelName="Тип" LocalListName="Тип"/>
       <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус"/>
       <Field UID="{4514E2E7-18C5-4B1B-8052-AEFCBF4626E8}" Name="Director" Type="String" LabelName="Директор" LocalListName="Директор"/>
-      <Field UID="{3CB172A8-590C-462B-AB70-F6A4BABF3A24}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН"/>
-      <Field UID="{4459AAC7-F885-4120-A1D8-13C7E84179B0}" Name="Kpp" Type="Kpp" LabelName="КПП" LocalListName="КПП"/>
-      <Field UID="{2BF964F2-20F0-44C6-91D6-CB436DBFFE67}" Name="Ogrn" Type="Ogrn" LabelName="ОГРН" LocalListName="ОГРН"/>
-      <Field UID="{6A63EE11-4F3E-4C72-BBE6-454AF87E2BD6}" Name="Phone" Type="PhoneBase" LabelName="Телефон" LocalListName="Телефон"/>
-      <Field UID="{AB52855E-A2E9-4DA8-BFBE-1885CCCA13EF}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
+      <Field UID="{3CB172A8-590C-462B-AB70-F6A4BABF3A24}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН" LayoutName="INN"/>
+      <Field UID="{4459AAC7-F885-4120-A1D8-13C7E84179B0}" Name="Kpp" Type="Kpp" LabelName="КПП" LocalListName="КПП" LayoutName="INN"/>
+      <Field UID="{2BF964F2-20F0-44C6-91D6-CB436DBFFE67}" Name="Ogrn" Type="Ogrn" LabelName="ОГРН" LocalListName="ОГРН" LayoutName="INN"/>
+      <Field UID="{6A63EE11-4F3E-4C72-BBE6-454AF87E2BD6}" Name="Phone" Type="PhoneBase" LabelName="Телефон" LocalListName="Телефон" LayoutName="Phone"/>
+      <Field UID="{AB52855E-A2E9-4DA8-BFBE-1885CCCA13EF}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта" LayoutName="Phone"/>
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
@@ -239,9 +239,9 @@
 
   <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
     <Fields>
-      <Field UID="{0912634C-ACA7-408A-9761-872E88FF99E7}" Name="GasStation" Type="Int" LabelName="АЗС" LocalListName="АЗС" NotNull="true" LayoutName="Title"/>
+      <Field UID="{0912634C-ACA7-408A-9761-872E88FF99E7}" Name="GasStation" Type="Int" LabelName="АЗС" LocalListName="АЗС" NotNull="true" HideFromList="true" LayoutName="Title"/>
       <Field UID="{64DC2A84-C906-4F46-AE3E-3D32E273E236}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Title"/>
-      <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="Int" LabelName="Оператор" LocalListName="Оператор" NotNull="true" LayoutName="Title"/>
+      <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="Int" LabelName="Оператор" LocalListName="Оператор" LayoutName="Title"/>
       <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="Int" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>
       
       <Field UID="{79298632-AE9B-4DFF-B0EF-EE23CD9A6914}" Name="BalanceBeginChange" Type="Double" LabelName="Остаток на начало смены" LocalListName="Остаток на начало смены" LayoutName="Layout1"/>
@@ -262,8 +262,8 @@
 
       <Field UID="{34E1380C-9677-40CC-8050-03C793B0C64A}" Name="CashboxBalancePayment" Type="Double" LabelName="Остаток в кассе, расчёт" LocalListName="Остаток в кассе, расчёт" SeparatorName="Касса" LayoutName="Layout4"/>
       <Field UID="{735E9E17-F729-440D-AD30-3B36984E4D6F}" Name="CashboxBalanceActually" Type="Double" LabelName="Остаток в кассе, фактический" LocalListName="Остаток в кассе, фактический" LayoutName="Layout4"/>
-      <Field UID="{CE7603C4-ABF4-4745-BA70-F2F62746789D}" Name="CashboxDiscrepancies" Type="Double" LabelName="Расхождения" LocalListName="Расхождения" LayoutName="Layout4"/>
-      <Field UID="{0D0A420B-6BBF-4482-8861-5DB54CB6BA24}" Name="CashboxKKMCash" Type="Double" LabelName="Наличные по ККМ" LocalListName="Наличные по ККМ" LayoutName="Layout4"/>
+      <Field UID="{CE7603C4-ABF4-4745-BA70-F2F62746789D}" Name="CashboxDiscrepancies" Type="Double" ReadOnly="true" LabelName="Расхождения" LocalListName="Расхождения" LayoutName="Layout4"/>
+      <Field UID="{0D0A420B-6BBF-4482-8861-5DB54CB6BA24}" Name="CashboxKKMCash" Type="Double" ReadOnly="true" LabelName="Наличные по ККМ" LocalListName="Наличные по ККМ" LayoutName="Layout4"/>
       <Field UID="{CD7622A3-1F45-4662-B390-3C2EF10841B5}" Name="CashboxTotalPayment" Type="Double" LabelName="Накопительный итог, расчёт" LocalListName="Накопительный итог, расчёт" LayoutName="Layout5"/>
       <Field UID="{353092C3-F451-4F54-ACA1-6C9A8297FBD5}" Name="CashboxTotalActually" Type="Double" LabelName="Накопительный итог, фактический" LocalListName="Накопительный итог, фактический" LayoutName="Layout5"/>
       <Field UID="{01E8D88F-213C-4617-A079-4E65AA65A099}" Name="CashboxDiscrepanciesTotals" Type="Double" LabelName="Расхождения итогов" LocalListName="Расхождения итогов" LayoutName="Layout5"/>
@@ -278,6 +278,7 @@
       <Index Field="Date"/>
       <Index Field="Operator"/>
       <Index Field="Change"/>
+      <Index Field="GasStation;Date" Unique="true"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="GasStation" ForeignClass="GasStation" ForeignField="ID" ForeignViewNameField="Name"/>

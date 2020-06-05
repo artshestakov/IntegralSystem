@@ -8,6 +8,7 @@
 #include "ISFieldEdits.h"
 #include "ISDaDataService.h"
 #include "ISListBaseForm.h"
+#include "ISListEdit.h"
 //-----------------------------------------------------------------------------
 namespace ISOilSphere
 {
@@ -89,6 +90,24 @@ namespace ISOilSphere
 		ISFieldEditBase *EditWeightDifference; //Разница весов
 	};
 
+	//Форма списка ведомости АЗС
+	class GasStationStatementListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE GasStationStatementListForm(QWidget *parent = 0);
+		virtual ~GasStationStatementListForm();
+
+		void Create() override;
+
+	private:
+		void GasStationChanged();
+
+	private:
+		ISListEdit *EditGasStation;
+	};
+
 	//Форма объекта ведомости АЗС
 	class GasStationStatementObjectForm : public ISObjectFormBase
 	{
@@ -98,8 +117,23 @@ namespace ISOilSphere
 		Q_INVOKABLE GasStationStatementObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
 		virtual ~GasStationStatementObjectForm();
 
-	protected:
-		void SaveBefore() override;
+	private:
+		void CalculateBalanceEndChange(); //Расчёт поля "Остаток на конец смены"
+		void CalculateCashboxBalancePayment(); //Расчёт поля "Остаток в кассе, расчёт"
+		void CalculateCashboxBalanceActually(); //Расчёт поля "Остаток в кассе, фактический"
+		void CalculateCashboxDiscrepancies(); //Расчёт поля "Расхождения по кассе"
+		void CalculateCashboxKKMCash(); //Расчёт поля "Наличные по ККМ (касса)"
+		void CalculateCashboxTotalPayment(); //Расчёт поля "Накопительный итог, расчёт"
+		void CalculateCashboxTotalActually(); //Расчёт поля "Накопительный итог, фактический"
+		void CaclulateCashboxDiscrepanciesTotals(); //Расчёт поля "Расхождения итогов"
+		void CalculateCashboxKKMTotal(); //Расчёт поля "Накопительный итог по ККМ"
+
+	private:
+		//Данные за прошлую смену (для расчётов)
+		double BeforeBalanceBeginChange;
+		double BeforeCashboxTotalPayment;
+		double BeforeCashboxTotalActually;
+		double BeforeCashboxKKMTotal;
 	};
 }
 //-----------------------------------------------------------------------------

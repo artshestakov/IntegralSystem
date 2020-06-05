@@ -62,5 +62,10 @@
 	
 	<!--MedTech-->
 	<Local Name="Rating.Filter.All" Russian="Все оценки"/>
+  
+  <!--OilSphere-->
+  <Local Name="OilSphere.SelectGasStation" Russian="Выбор АЗС:"/>
+  <Local Name="OilSphere.NotSelectedGasStation" Russian="Чтобы создать запись выберите АЗС."/>
+  <Local Name="OilSphere.ChangeAlreadyExist" Russian="Смена на дату %1 по выбранной АЗС уже существует."/>
 	
 </Localization>
