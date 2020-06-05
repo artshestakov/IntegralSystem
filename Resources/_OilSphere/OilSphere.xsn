@@ -260,14 +260,14 @@
       <Field UID="{1CC47F68-0A72-4548-AEFB-CA872A40C11F}" Name="PresenceDebt" Type="Double" LabelName="Наличие долга" LocalListName="Наличие долга" LayoutName="Layout3"/>
       <Field UID="{423037B5-20A4-47B3-ADBF-E59BD172CCBC}" Name="DebtNote" Type="String" LabelName="Пояснение долга" LocalListName="Пояснение долга" LayoutName="Layout3"/>
 
-      <Field UID="{34E1380C-9677-40CC-8050-03C793B0C64A}" Name="CashboxBalancePayment" Type="Double" LabelName="Остаток в кассе, расчёт" LocalListName="Остаток в кассе, расчёт" SeparatorName="Касса" LayoutName="Layout4"/>
-      <Field UID="{735E9E17-F729-440D-AD30-3B36984E4D6F}" Name="CashboxBalanceActually" Type="Double" LabelName="Остаток в кассе, фактический" LocalListName="Остаток в кассе, фактический" LayoutName="Layout4"/>
+      <Field UID="{34E1380C-9677-40CC-8050-03C793B0C64A}" Name="CashboxBalancePayment" Type="Double" ReadOnly="true" LabelName="Остаток в кассе, расчёт" LocalListName="Остаток в кассе, расчёт" SeparatorName="Касса" LayoutName="Layout4"/>
+      <Field UID="{735E9E17-F729-440D-AD30-3B36984E4D6F}" Name="CashboxBalanceActually" Type="Double" ReadOnly="true" LabelName="Остаток в кассе, фактический" LocalListName="Остаток в кассе, фактический" LayoutName="Layout4"/>
       <Field UID="{CE7603C4-ABF4-4745-BA70-F2F62746789D}" Name="CashboxDiscrepancies" Type="Double" ReadOnly="true" LabelName="Расхождения" LocalListName="Расхождения" LayoutName="Layout4"/>
       <Field UID="{0D0A420B-6BBF-4482-8861-5DB54CB6BA24}" Name="CashboxKKMCash" Type="Double" ReadOnly="true" LabelName="Наличные по ККМ" LocalListName="Наличные по ККМ" LayoutName="Layout4"/>
-      <Field UID="{CD7622A3-1F45-4662-B390-3C2EF10841B5}" Name="CashboxTotalPayment" Type="Double" LabelName="Накопительный итог, расчёт" LocalListName="Накопительный итог, расчёт" LayoutName="Layout5"/>
-      <Field UID="{353092C3-F451-4F54-ACA1-6C9A8297FBD5}" Name="CashboxTotalActually" Type="Double" LabelName="Накопительный итог, фактический" LocalListName="Накопительный итог, фактический" LayoutName="Layout5"/>
-      <Field UID="{01E8D88F-213C-4617-A079-4E65AA65A099}" Name="CashboxDiscrepanciesTotals" Type="Double" LabelName="Расхождения итогов" LocalListName="Расхождения итогов" LayoutName="Layout5"/>
-      <Field UID="{64D434CD-5E32-4F6F-A7C2-E7F6E5E1D526}" Name="CashboxKKMTotal" Type="Double" LabelName="Накопительный итог по ККМ" LocalListName="Накопительный итог по ККМ"/>
+      <Field UID="{CD7622A3-1F45-4662-B390-3C2EF10841B5}" Name="CashboxTotalPayment" Type="Double" ReadOnly="true" LabelName="Накопительный итог, расчёт" LocalListName="Накопительный итог, расчёт" LayoutName="Layout5"/>
+      <Field UID="{353092C3-F451-4F54-ACA1-6C9A8297FBD5}" Name="CashboxTotalActually" Type="Double" ReadOnly="true" LabelName="Накопительный итог, фактический" LocalListName="Накопительный итог, фактический" LayoutName="Layout5"/>
+      <Field UID="{01E8D88F-213C-4617-A079-4E65AA65A099}" Name="CashboxDiscrepanciesTotals" Type="Double" ReadOnly="true" LabelName="Расхождения итогов" LocalListName="Расхождения итогов" LayoutName="Layout5"/>
+      <Field UID="{64D434CD-5E32-4F6F-A7C2-E7F6E5E1D526}" Name="CashboxKKMTotal" Type="Double" ReadOnly="true" LabelName="Накопительный итог по ККМ" LocalListName="Накопительный итог по ККМ"/>
       <Field UID="{91D0DB88-3EB3-4E09-91A8-FE2B421B820B}" Name="CashboxCollectionAmount" Type="Double" LabelName="Сумма инкассации" LocalListName="Сумма инкассации"/>
       <Field UID="{C0E5DFC2-41FF-4C0A-BD3E-B91FB00E4601}" Name="CashboxCollectionAmountKKM" Type="Double" LabelName="Сумма инкассации ККМ" LocalListName="Сумма инкассации ККМ"/>
       <Field UID="{D3501D71-2A4D-4E42-B435-C58511CC074F}" Name="CashboxAdministrativeExpenses" Type="Double" LabelName="Административные расходы с кассы" LocalListName="Административные расходы с кассы" LayoutName="Layout6"/>
