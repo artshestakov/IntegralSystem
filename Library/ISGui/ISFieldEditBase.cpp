@@ -96,6 +96,11 @@ void ISFieldEditBase::SetRegExp(const QString &RegExp)
 
 }
 //-----------------------------------------------------------------------------
+void ISFieldEditBase::SetColorText(const QColor &Color)
+{
+
+}
+//-----------------------------------------------------------------------------
 void ISFieldEditBase::SetCursor(const QCursor &Cursor)
 {
 	EditWidget->setCursor(Cursor);

@@ -38,6 +38,7 @@ QColor ISDefines::Gui::COLOR_POPUP_BRUSH;
 QColor ISDefines::Gui::COLOR_FLASH_INCOMING_FORM;
 QColor ISDefines::Gui::COLOR_WHITE;
 QColor ISDefines::Gui::COLOR_RED;
+QColor ISDefines::Gui::COLOR_BLACK;
 QColor ISDefines::Gui::COLOR_BLUE;
 QColor ISDefines::Gui::COLOR_MONITOR_USER;
 QColor ISDefines::Gui::COLOR_NULL;
@@ -99,6 +100,7 @@ void ISDefines::Gui::Init()
 	COLOR_FLASH_INCOMING_FORM = QColor(226, 235, 255);
 	COLOR_WHITE = QColor(Qt::white);
 	COLOR_RED = QColor(Qt::red);
+	COLOR_BLACK = QColor(Qt::black);
 	COLOR_BLUE = QColor(Qt::blue);
 	COLOR_MONITOR_USER = QColor(210, 210, 210);
 	COLOR_NULL = QColor();

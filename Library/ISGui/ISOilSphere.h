@@ -117,6 +117,9 @@ namespace ISOilSphere
 		Q_INVOKABLE GasStationStatementObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
 		virtual ~GasStationStatementObjectForm();
 
+	protected:
+		void AfterShowEvent() override;
+
 	private:
 		void CalculateBalanceEndChange(); //Расчёт поля "Остаток на конец смены"
 		void CalculateCashboxBalancePayment(); //Расчёт поля "Остаток в кассе, расчёт"

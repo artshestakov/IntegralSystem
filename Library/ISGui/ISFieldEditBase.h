@@ -28,6 +28,7 @@ public:
 	virtual void SetReadOnly(bool read_only);
 	virtual void SetPlaceholderText(const QString &placeholder_text);
 	virtual void SetRegExp(const QString &RegExp);
+	virtual void SetColorText(const QColor &Color);
 	
 	void SetCursor(const QCursor &Cursor); //Изменить курсор
 	void SetToolTip(const QString &ToolTip); //Изменить всплывающее сообщение-подсказку

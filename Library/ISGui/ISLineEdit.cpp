@@ -36,6 +36,13 @@ void ISLineEdit::SetRegExp(const QString &RegExp)
 	SetValidator(new QRegExpValidator(QRegExp(RegExp), this));
 }
 //-----------------------------------------------------------------------------
+void ISLineEdit::SetColorText(const QColor &Color)
+{
+	QPalette Palette = LineEdit->palette();
+	Palette.setColor(QPalette::Text, Color);
+	LineEdit->setPalette(Palette);
+}
+//-----------------------------------------------------------------------------
 void ISLineEdit::SetValidator(QValidator *Validator)
 {
 	LineEdit->setValidator(Validator);
@@ -149,13 +156,6 @@ void ISLineEdit::SetMaxLength(int Length)
 void ISLineEdit::SetIcon(const QIcon &Icon)
 {
 	LineEdit->SetIcon(Icon);
-}
-//-----------------------------------------------------------------------------
-void ISLineEdit::SetColorText(const QColor &Color)
-{
-	QPalette Palette = LineEdit->palette();
-	Palette.setColor(QPalette::Text, Color);
-	LineEdit->setPalette(Palette);
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::SelectAll()

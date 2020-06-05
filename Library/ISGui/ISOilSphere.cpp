@@ -4,6 +4,7 @@
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISInputDialog.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 static QString QU_RESULT_COUNT = PREPARE_QUERY2("UPDATE implementation SET "
 												"impl_resultcount = (SELECT COUNT(*) FROM implementationdetail WHERE imdt_implementation = :ObjectID AND NOT imdt_isdeleted) "
@@ -404,6 +405,13 @@ ISOilSphere::GasStationStatementObjectForm::~GasStationStatementObjectForm()
 
 }
 //-----------------------------------------------------------------------------
+void ISOilSphere::GasStationStatementObjectForm::AfterShowEvent()
+{
+	ISObjectFormBase::AfterShowEvent();
+	CalculateCashboxDiscrepancies();
+	CaclulateCashboxDiscrepanciesTotals();
+}
+//-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange()
 {
 	double BalanceEndChange =
@@ -456,6 +464,7 @@ void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxDiscrepancies()
 	if (CashboxDiscrepancies)
 	{
 		SetFieldValue("CashboxDiscrepancies", CashboxDiscrepancies);
+		GetFieldWidget("CashboxDiscrepancies")->SetColorText(CashboxDiscrepancies > 0 ? ISDefines::Gui::COLOR_BLACK : ISDefines::Gui::COLOR_RED);
 	}
 	else
 	{
@@ -506,6 +515,7 @@ void ISOilSphere::GasStationStatementObjectForm::CaclulateCashboxDiscrepanciesTo
 	if (CashboxDiscrepanciesTotals)
 	{
 		SetFieldValue("CashboxDiscrepanciesTotals", CashboxDiscrepanciesTotals);
+		GetFieldWidget("CashboxDiscrepanciesTotals")->SetColorText(CashboxDiscrepanciesTotals > 0 ? ISDefines::Gui::COLOR_BLACK : ISDefines::Gui::COLOR_RED);
 	}
 	else
 	{

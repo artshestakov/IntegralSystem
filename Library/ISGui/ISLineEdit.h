@@ -22,6 +22,7 @@ public:
 	void SetReadOnly(bool read_only) override;
 	void SetPlaceholderText(const QString &placeholder_text) override;
 	void SetRegExp(const QString &RegExp) override;
+	void SetColorText(const QColor &Color) override;
 
 	void SetValidator(QValidator *Validator);
 	void SetEchoMode(QLineEdit::EchoMode EchoMode);
@@ -31,7 +32,6 @@ public:
 	void SetFocusPolicy(Qt::FocusPolicy focus_policy);
 	void SetMaxLength(int Length);
 	void SetIcon(const QIcon &Icon);
-	void SetColorText(const QColor &Color);
 	void SelectAll();
 
 	void SetUppercase(bool uppercase);
