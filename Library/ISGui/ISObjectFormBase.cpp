@@ -35,7 +35,6 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	WidgetEscort(nullptr),
 	EditObjectID(nullptr),
 	BeginFieldEdit(nullptr),
-	FocusFieldEdit(nullptr),
 	ModificationFlag(false),
 	RecordIsDeleted(false),
 	CurrentIndexTab(-1),
@@ -731,7 +730,6 @@ bool ISObjectFormBase::Save()
 	QVariantMap ValuesMap;
 	ISVectorString FieldsVector;
 	QString QueryText;
-	FocusFieldEdit = dynamic_cast<ISFieldEditBase*>(QApplication::focusWidget()->parentWidget()); //Запоминаем поле в фокусе
 
 	for (const auto &Field : FieldsMap) //Обход существующих полей на форме
 	{
@@ -854,7 +852,6 @@ bool ISObjectFormBase::Save()
 		SaveAfter();
 		emit SavedObject(ObjectID);
 		emit UpdateList();
-		QTimer::singleShot(50, FocusFieldEdit, &ISFieldEditBase::SetFocus); //Вызывать установку фокуса нужно именно так, и никак иначе
 		return true;
 	}
 	else

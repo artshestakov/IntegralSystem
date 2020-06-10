@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSR Name="System.xsr">
 
+  <_Sex IsSystem="true" UID="{601C7C32-7413-45DA-AAAC-926A77C824F8}" Name="Мужской"/>
+  <_Sex IsSystem="true" UID="{38A3AE76-2D27-4EEB-9AC7-AE4BCFC030FF}" Name="Женский"/>
+  <_Sex IsSystem="true" UID="{7446B115-AED2-4D5B-89D7-16F367B0CF13}" Name="Не определено"/>
+
   <_Paragraphs IsSystem="true" UID="{9A36AD64-5A2F-4B62-9DA7-4FC545B6AB5F}" Name="Desktop" OrderID="1" LocalName="Рабочий стол" ToolTip="Рабочий стол" Icon="MainPanel.Desktop" ClassName="ISDesktopForm"/>
   <_Paragraphs IsSystem="true" UID="{18A90F8B-1D99-420E-BA60-C3EBF60D595E}" Name="Workspace" OrderID="2" LocalName="Рабочая область" ToolTip="Рабочая область" Icon="MainPanel.Workspace" ClassName="ISWorkspaceForm" Default="true"/>
   <_Paragraphs IsSystem="true" UID="{1BA7F467-32AA-4719-B8F0-BCD8BC678CAB}" Name="Calendar" OrderID="3" LocalName="Календарь" ToolTip="Календарь" Icon="MainPanel.Calendar" ClassName="ISCalendarForm"/>

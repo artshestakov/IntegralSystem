@@ -139,7 +139,6 @@ private:
 
 	ISLineEdit *EditObjectID;
 	ISFieldEditBase *BeginFieldEdit; //”казатель на первое поле редактировани€ информации
-	ISFieldEditBase *FocusFieldEdit; //”казатель на поле редактировани€, имеющее фокус перед сохранением карточки
 	std::map<QString, ISFieldEditBase*> FieldsMap;
 	std::map<QString, QLabel*> LabelsMap;
 	std::map<QString, QHBoxLayout*> Layouts;
