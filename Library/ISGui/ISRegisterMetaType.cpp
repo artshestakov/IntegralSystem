@@ -55,6 +55,7 @@
 #include "ISLoginEdit.h"
 #include "ISAddressEdit.h"
 #include "ISFileEdit.h"
+#include "ISSexEdit.h"
 #include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
 //-----------------------------------------------------------------------------
@@ -144,6 +145,7 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISAddressEdit*>("ISAddressEdit");
 	qRegisterMetaType<ISUrlEdit*>("ISUrlEdit");
 	qRegisterMetaType<ISFileEdit*>("ISFileEdit");
+	qRegisterMetaType<ISSexEdit*>("ISSexEdit");
 
 	qRegisterMetaType<ISComboSearchBase*>("ISComboSearchBase");
 	qRegisterMetaType<ISComboSearchString*>("ISComboSearchString");

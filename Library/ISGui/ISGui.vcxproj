@@ -249,6 +249,7 @@
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
     <ClCompile Include="ISSettingTableNameFieldsForm.cpp" />
+    <ClCompile Include="ISSexEdit.cpp" />
     <ClCompile Include="ISSliderDuration.cpp" />
     <ClCompile Include="ISSortingBuffer.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
@@ -497,6 +498,7 @@
     <QtMoc Include="ISUserGroupWidget.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
+    <QtMoc Include="ISSexEdit.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISValidators.h" />
     <QtMoc Include="ISTextEdit.h" />

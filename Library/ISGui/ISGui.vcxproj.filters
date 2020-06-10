@@ -726,6 +726,9 @@
     <ClCompile Include="ISOilSphere.cpp">
       <Filter>Objects\OilSphere</Filter>
     </ClCompile>
+    <ClCompile Include="ISSexEdit.cpp">
+      <Filter>Fields\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -1273,6 +1276,9 @@
     </QtMoc>
     <QtMoc Include="ISOilSphere.h">
       <Filter>Objects\OilSphere</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSexEdit.h">
+      <Filter>Fields\Base</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

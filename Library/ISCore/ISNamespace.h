@@ -45,6 +45,7 @@ public:
         FT_Address, //Адрес
         FT_Url, //Ссылка
         FT_File, //Файл
+		FT_Sex, //Пол
     };
 
     enum ObjectFormType //Типы формы объекта

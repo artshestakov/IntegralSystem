@@ -184,8 +184,10 @@ void ISFieldEditBase::CreateHint(const QString &Hint)
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetFocus()
 {
-	IS_ASSERT(EditWidget, "Null EditWidget");
-	EditWidget->setFocus();
+	if (EditWidget)
+	{
+		EditWidget->setFocus();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::paintEvent(QPaintEvent *PaintEvent)
