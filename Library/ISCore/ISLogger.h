@@ -44,6 +44,9 @@ private:
 	//Получить путь к текущему файлу
 	QString GetPathFile(const QDate &Date) const;
 
+	//Вывод строки в консоль
+	void OutputToConsole(const QString &String);
+
 	//Обработчик очереди сообщений
 	void Worker();
 

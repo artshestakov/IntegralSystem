@@ -145,6 +145,11 @@ void ISSystem::ProcessEvents()
 	qApp->processEvents();
 }
 //-----------------------------------------------------------------------------
+bool ISSystem::IsConfigurator()
+{
+	return ISDefines::Core::APPLICATION_NAME == "Configurator";
+}
+//-----------------------------------------------------------------------------
 int ISSystem::TimeFromMinutes(const QTime &Time)
 {
 	int Minute = 0;

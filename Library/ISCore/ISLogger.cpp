@@ -1,6 +1,7 @@
 #include "ISLogger.h"
 #include "ISDefinesCore.h"
 #include "ISAlgorithm.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
 	: ErrorString(NO_ERROR_STRING),
@@ -94,9 +95,15 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 		string_complete = QString::fromStdString(string_stream.str());
 	}
 
-#ifdef DEBUG
-	std::cout << string_complete.toStdString() << std::endl;
+#ifdef DEBUG //¬ отладочной версии выводим строку в консоль
+	OutputToConsole(string_complete);
+#else //¬ релизной версии выводим в консоль только в случае если запущен конфигуратор
+	if (ISSystem::IsConfigurator())
+	{
+		OutputToConsole(string_complete);
+	}
 #endif
+
     LOCK_CRITICAL_SECTION(&CriticalSection);
     Array[LastIndex] = string_complete;
     ++LastIndex;
@@ -127,6 +134,11 @@ bool ISLogger::CreateLogDirectory(const QDate &Date)
 QString ISLogger::GetPathFile(const QDate &Date) const
 {
 	return PathLogsDir + ISDefines::Core::APPLICATION_NAME + '_' + Date.toString(FORMAT_DATE_V2) + SYMBOL_POINT + EXTENSION_LOG;
+}
+//-----------------------------------------------------------------------------
+void ISLogger::OutputToConsole(const QString &String)
+{
+	std::cout << String.toStdString() << std::endl;
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Worker()

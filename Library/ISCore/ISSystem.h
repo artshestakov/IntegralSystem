@@ -27,6 +27,7 @@ public:
 	static bool CreateDir(const QString &DirPath);
 	static bool CreateDir(const QString &DirPath, QString &ErrorString);
 	static void ProcessEvents();
+	static bool IsConfigurator(); //Проверка того, что сейчас запущен конфигуратор
 
 //ДАТА И ВРЕМЯ
 	static int TimeFromMinutes(const QTime &Time); //Перевести время в минуты
