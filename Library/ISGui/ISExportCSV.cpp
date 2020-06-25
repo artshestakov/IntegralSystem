@@ -1,7 +1,6 @@
 #include "ISExportCSV.h"
 #include "ISLocalization.h"
 #include "ISFileDialog.h"
-#include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------

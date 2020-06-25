@@ -7,7 +7,6 @@
 #include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISControls.h"
-#include "ISSystem.h"
 #include "ISCore.h"
 #include "ISGui.h"
 #include "ISMessageBox.h"

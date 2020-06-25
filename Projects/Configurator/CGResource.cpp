@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"
-#include "ISSystem.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_RESOURCE = "SELECT COUNT(*) FROM %1 WHERE %2_uid = :ResourceUID";

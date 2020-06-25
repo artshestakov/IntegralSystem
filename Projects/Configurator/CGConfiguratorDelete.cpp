@@ -1,7 +1,6 @@
 #include "CGConfiguratorDelete.h"
 #include "ISQuery.h"
 #include "ISLogger.h"
-#include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
 #include "ISConsole.h"

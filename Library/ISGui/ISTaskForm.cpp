@@ -6,7 +6,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "ISSystem.h"
 #include "ISControls.h"
 #include "ISCore.h"
 #include "ISGui.h"

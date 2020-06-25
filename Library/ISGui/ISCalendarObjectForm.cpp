@@ -2,7 +2,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
-#include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISDateEdit.h"
 #include "ISTimeEdit.h"

@@ -6,7 +6,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISFlowLayout.h"
-#include "ISSystem.h"
 #include "ISGui.h"
 #include "ISProtocolListForm.h"
 #include "ISLineEdit.h"

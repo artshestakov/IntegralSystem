@@ -8,7 +8,6 @@
 #include "ISScrollArea.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
 #include "ISToolBarAccessTable.h"
 #include "ISMetaData.h"
 #include "ISCheckEdit.h"

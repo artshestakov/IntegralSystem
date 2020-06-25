@@ -4,7 +4,6 @@
 #include "CGTemplateField.h"
 #include "CGHelper.h"
 #include "CGSequence.h"
-#include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISConsole.h"
 #include "ISLogger.h"

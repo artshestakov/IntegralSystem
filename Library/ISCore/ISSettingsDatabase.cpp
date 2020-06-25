@@ -1,7 +1,6 @@
 #include "ISSettingsDatabase.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
 #include "ISAssert.h"
 #include "ISMetaData.h"
 #include "ISLogger.h"

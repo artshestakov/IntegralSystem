@@ -1,5 +1,4 @@
 #include "ISPrintingHtml.h"
-#include "ISSystem.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISPrintPreviewDialog.h"

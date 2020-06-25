@@ -1,6 +1,5 @@
 #include "ISMetaUser.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
 #include "ISDatabase.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------

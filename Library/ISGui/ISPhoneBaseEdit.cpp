@@ -1,7 +1,6 @@
 #include "ISPhoneBaseEdit.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
 #include "ISPhoneNumberParser.h"
 //-----------------------------------------------------------------------------
 ISPhoneBaseEdit::ISPhoneBaseEdit(QWidget *parent) : ISFieldEditBase(parent)

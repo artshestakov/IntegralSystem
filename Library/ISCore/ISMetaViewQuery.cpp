@@ -1,6 +1,5 @@
 #include "ISMetaViewQuery.h"
 #include "ISMetaData.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISMetaViewQuery::ISMetaViewQuery(const QString &QueryName)
 	: MetaQuery(ISMetaData::GetInstanse().GetMetaQuery(QueryName)),

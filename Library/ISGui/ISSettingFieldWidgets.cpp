@@ -1,7 +1,6 @@
 #include "ISSettingFIeldWidgets.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARAGPAPH = PREPARE_QUERY("SELECT prhs_localname, prhs_uid "
 											 "FROM _paragraphs "

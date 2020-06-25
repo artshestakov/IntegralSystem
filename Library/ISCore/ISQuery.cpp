@@ -1,5 +1,4 @@
 #include "ISQuery.h"
-#include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISDatabase.h"

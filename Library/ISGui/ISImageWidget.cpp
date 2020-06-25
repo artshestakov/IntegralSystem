@@ -3,7 +3,6 @@
 #include "ISContextMenu.h"
 #include "ISStyleSheet.h"
 #include "ISFileDialog.h"
-#include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISImageViewerForm.h"

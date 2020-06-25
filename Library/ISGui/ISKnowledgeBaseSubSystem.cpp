@@ -5,7 +5,6 @@
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISGui.h"
-#include "ISSystem.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_TOP = PREPARE_QUERY("SELECT qagr_id, qagr_name "

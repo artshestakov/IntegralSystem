@@ -4,7 +4,6 @@
 #include "ISDatabase.h"
 #include "ISMetaUser.h"
 #include "ISQueryPool.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QS_NOTIFICATIONS = PREPARE_QUERY("SELECT ntfn_uid, ntfn_name, ntfn_message, ntfn_soundfilename, ntfn_signalname, ntfn_showpopup "
 												"FROM _notification "

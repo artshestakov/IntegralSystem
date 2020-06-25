@@ -7,7 +7,6 @@
 #include "ISDatabase.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
 #include "ISLabels.h"
 #include "ISCore.h"
 #include "ISGui.h"

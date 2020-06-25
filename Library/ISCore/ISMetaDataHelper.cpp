@@ -1,6 +1,5 @@
 #include "ISMetaDataHelper.h"
 #include "ISMetaData.h"
-#include "ISSystem.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
 static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT get_configuration_name()");

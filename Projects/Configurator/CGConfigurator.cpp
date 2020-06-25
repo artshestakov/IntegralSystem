@@ -1,5 +1,4 @@
 #include "CGConfigurator.h"
-#include "ISSystem.h"
 #include "ISLogger.h"
 #include "CGConfiguratorBase.h"
 #include "ISConstants.h"

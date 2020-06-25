@@ -1,5 +1,4 @@
 #include "ISQueryModelHelper.h"
-#include "ISSystem.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 QString ISQueryModelHelper::GetForeignViewNameField(const QString &MetaTableForeignAlias, PMetaForeign *MetaForeign, int Iterator)

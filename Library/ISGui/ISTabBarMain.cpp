@@ -1,7 +1,6 @@
 #include "ISTabBarMain.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
 #include "ISSettings.h"
 #include "ISConstants.h"
 #include "ISGui.h"

@@ -1,6 +1,5 @@
 #include "CGConfiguratorFIAS.h"
 #include "ISLogger.h"
-#include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISConstants.h"

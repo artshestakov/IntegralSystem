@@ -1,5 +1,4 @@
 #include "ISSearchModel.h"
-#include "ISSystem.h"
 #include "ISRandom.h"
 //-----------------------------------------------------------------------------
 ISSearchModel::ISSearchModel()

@@ -3,7 +3,6 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 #include "ISQuery.h"
-#include "ISSystem.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_filename "

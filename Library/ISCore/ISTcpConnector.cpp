@@ -1,9 +1,7 @@
 #include "ISTcpConnector.h"
 #include "ISConstants.h"
 #include "ISCountingTime.h"
-#include "ISSystem.h"
 #include "ISDefinesCore.h"
-#include "ISSystem.h"
 #include "ISTcp.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------

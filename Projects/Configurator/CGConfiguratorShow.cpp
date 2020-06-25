@@ -3,7 +3,6 @@
 #include "ISLogger.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "ISSystem.h"
 #include "ISDatabase.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
