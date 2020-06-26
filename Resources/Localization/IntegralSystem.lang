@@ -209,6 +209,7 @@
   <Local Name="Message.Warning.NotCopyAlienStorageFiles" Russian="Создавать копии чужих файлов запрещено."/>
   <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
   <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
+  <Local Name="Message.Warning.NotCreatedUserPassword" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет авторизоваться в программе!"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
@@ -233,7 +234,7 @@
   <Local Name="Message.Question.ReReadCard" Russian="Перечитать информацию?"/>
   <Local Name="Message.Question.ResetWidthColumn" Russian="Сбросить ширину всех колонок?"/>
   <Local Name="Message.Question.DeleteCalendarEvent" Russian="Удалить это событие?"/>
-  <Local Name="Message.Question.CreatePasswordUser" Russian="Вы желаете присвоить пароль пользователю %1?"/>
+  <Local Name="Message.Question.CreatePasswordUser" Russian="Вы хотите присвоить пароль пользователю %1?"/>
   <Local Name="Message.Question.DeleteSelectedRecord" Russian="Удалить выбранную запись?"/>
   <Local Name="Message.Question.RecoveryObjectSelected" Russian="Восстановить выбранную запись?"/>
   <Local Name="Message.Question.DeleteThisRecord" Russian="Удалить эту запись?"/>

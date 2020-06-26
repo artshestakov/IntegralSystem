@@ -87,6 +87,10 @@ bool ISUserObjectForm::Save()
 					ISMessageBox::ShowInformation(this, LANG("Message.Information.CreatedPasswordUser"));
 				}
 			}
+			else
+			{
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCreatedUserPassword"));
+			}
 		}
 	}
 	else
