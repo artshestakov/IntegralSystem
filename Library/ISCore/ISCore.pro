@@ -47,7 +47,6 @@ HEADERS += \
     ISCrashDumper.h \
     ISDatabase.h \
     ISDefinesCore.h \
-    ISEmailAddress.h \
     ISLocalization.h \
     ISLogger.h \
     ISMemoryObjects.h \
@@ -56,15 +55,6 @@ HEADERS += \
     ISMetaUser.h \
     ISMetaUuidCheckeder.h \
     ISMetaViewQuery.h \
-    ISMimeAttachment.h \
-    ISMimeContentFormatter.h \
-    ISMimeFile.h \
-    ISMimeHtml.h \
-    ISMimeInlineFile.h \
-    ISMimeMessage.h \
-    ISMimeMultipart.h \
-    ISMimePart.h \
-    ISMimeText.h \
     ISNamespace.h \
     ISNetwork.h \
     ISNotifySender.h \
@@ -76,13 +66,11 @@ HEADERS += \
     ISQueryModelHelper.h \
     ISQueryPool.h \
     ISQueryText.h \
-    ISQuotedPrintable.h \
     ISRandom.h \
     ISRestWorker.h \
     ISSearchModel.h \
     ISSettings.h \
     ISSettingsDatabase.h \
-    ISSmtpClient.h \
     ISStructs.h \
     ISSystem.h \
     ISTrace.h \
@@ -104,7 +92,6 @@ SOURCES += \
     ISCrashDumper.cpp \
     ISDatabase.cpp \
     ISDefinesCore.cpp \
-    ISEmailAddress.cpp \
     ISLocalization.cpp \
     ISLogger.cpp \
     ISMemoryObjects.cpp \
@@ -113,15 +100,6 @@ SOURCES += \
     ISMetaUser.cpp \
     ISMetaUuidCheckeder.cpp \
     ISMetaViewQuery.cpp \
-    ISMimeAttachment.cpp \
-    ISMimeContentFormatter.cpp \
-    ISMimeFile.cpp \
-    ISMimeHtml.cpp \
-    ISMimeInlineFile.cpp \
-    ISMimeMessage.cpp \
-    ISMimeMultipart.cpp \
-    ISMimePart.cpp \
-    ISMimeText.cpp \
     ISNetwork.cpp \
     ISNotifySender.cpp \
     ISPhoneNumberParser.cpp \
@@ -132,13 +110,11 @@ SOURCES += \
     ISQueryModelHelper.cpp \
     ISQueryPool.cpp \
     ISQueryText.cpp \
-    ISQuotedPrintable.cpp \
     ISRandom.cpp \
     ISRestWorker.cpp \
     ISSearchModel.cpp \
     ISSettings.cpp \
     ISSettingsDatabase.cpp \
-    ISSmtpClient.cpp \
     ISSystem.cpp \
     ISTcp.cpp \
     ISTcpAnswer.cpp \

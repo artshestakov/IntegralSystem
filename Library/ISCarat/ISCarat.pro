@@ -36,9 +36,6 @@ HEADERS += \
     ISCoreAsteriskQueue.h \
     ISCoreAsteriskRecord.h \
     ISCoreCalendar.h \
-    ISCoreCenterSeven.h \
-    ISCoreHighway.h \
-    ISCoreInformResource.h \
     ISCoreMedTech.h \
     ISCoreNotification.h \
     ISCoreTelephony.h \
@@ -50,9 +47,6 @@ SOURCES += \
     ISCoreAsteriskQueue.cpp \
     ISCoreAsteriskRecord.cpp \
     ISCoreCalendar.cpp \
-    ISCoreCenterSeven.cpp \
-    ISCoreHighway.cpp \
-    ISCoreInformResource.cpp \
     ISCoreMedTech.cpp \
     ISCoreNotification.cpp \
     ISCoreTelephony.cpp
