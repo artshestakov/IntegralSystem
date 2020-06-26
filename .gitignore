@@ -1,9 +1,6 @@
 /Bin
 /Deploy
-/ipch
 /Library/**/*-*
-/Logger/Bin
-/Logger/**/*-*
 /Output
 /Projects/**/*-*
 /Tools/**/*-*
