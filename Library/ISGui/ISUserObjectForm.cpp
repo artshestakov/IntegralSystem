@@ -100,7 +100,7 @@ bool ISUserObjectForm::Save()
 
 	if (Result)
 	{
-		ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_CHANGED, GetObjectID(), QVariant(), QString(), false);
+		//ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_CHANGED, GetObjectID(), QVariant(), QString(), false);
 	}
 	return Result;
 }

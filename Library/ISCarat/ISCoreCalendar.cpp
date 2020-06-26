@@ -49,7 +49,7 @@ void ISCoreCalendar::Timeout()
 			QString UserName = qSelectEvents.ReadColumn("userfullname").toString();
 			QString Name = qSelectEvents.ReadColumn("cldr_name").toString();
 
-			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_CALENDAR_EVENT, UserID, EventID, Name, false);
+			//ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_CALENDAR_EVENT, UserID, EventID, Name, false);
 			ISLOGGER_L("Sended reminder \"" + QString::number(EventID) + "\" for: " + UserName);
 		}
 	}

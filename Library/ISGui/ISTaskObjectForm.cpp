@@ -91,7 +91,7 @@ bool ISTaskObjectForm::Save()
 
 		if (ExecutorID && ExecutorID != CURRENT_USER_ID) //Если исполнитель не является создателем - отправить уведомление
 		{
-			ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TASK_CREATE_OR_UPDATE, ExecutorID, QVariant(), TaskName);
+			//ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_TASK_CREATE_OR_UPDATE, ExecutorID, QVariant(), TaskName);
 		}
 
 		if (BeginFormType == ISNamespace::OFT_New || BeginFormType == ISNamespace::OFT_Copy)
