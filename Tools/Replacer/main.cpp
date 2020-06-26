@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <cstring>
 //-----------------------------------------------------------------------------
 std::string FilePath; //Путь к файлу
 std::string StringTemplate; //Поисковое значение (шаблон)
