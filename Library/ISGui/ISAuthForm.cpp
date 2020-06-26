@@ -53,6 +53,7 @@ ISAuthForm::ISAuthForm()
 
 	CheckRememberUser = new ISCheckEdit(this);
 	CheckRememberUser->SetText(LANG("RememberMe"));
+	CheckRememberUser->SetToolTip(LANG("RememberMe.ToolTip"));
 	CheckRememberUser->SetValue(CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE));
 	LayoutLabels->addWidget(CheckRememberUser);
 

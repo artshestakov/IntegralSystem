@@ -80,6 +80,11 @@ bool CGConfiguratorUpdate::database()
 		Result = systemuser();
 	}
 
+	if (Result)
+	{
+		Result = databasesettings();
+	}
+
 	return Result;
 }
 //-----------------------------------------------------------------------------

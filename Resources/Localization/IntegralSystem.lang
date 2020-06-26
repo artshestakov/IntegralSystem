@@ -537,6 +537,7 @@
   <Local Name="SendNotify" Russian="Отправить уведомление"/>
   <Local Name="NotifyText" Russian="Текст уведмления"/>
   <Local Name="RememberMe" Russian="Запомнить меня"/>
+  <Local Name="RememberMe.ToolTip" Russian="Программа не запоминает пароль в целях безопастности."/>
   <Local Name="InsertingFiles" Russian="Добавление файла(ов)..."/>
   <Local Name="Banner.StartupSystem" Russian="Запуск системы..."/>
   <Local Name="Banner.ShutdownSystem" Russian="Завершение работы системы..."/>
