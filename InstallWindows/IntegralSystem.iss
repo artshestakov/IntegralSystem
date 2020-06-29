@@ -2,12 +2,12 @@
 AppId={{757D746C-0676-404E-BC4C-40246AB5E38}
 AppName=IntegralSystem
 AppVerName=IntegralSystem
-AppVersion=.Version.
-VersionInfoVersion=.Version.
+AppVersion=${VERSION}
+VersionInfoVersion=${VERSION}
 DefaultDirName={sd}\IntegralSystem
 DefaultGroupName=IntegralSystem
 OutputDir=..\Output
-OutputBaseFilename=IntegralSystem_.Configuration._.Platform._.Version.
+OutputBaseFilename=IntegralSystem_${CONFIGURATION}_${PLATFORM}_${VERSION}
 AlwaysShowDirOnReadyPage=yes
 ShowLanguageDialog=yes
 DisableProgramGroupPage=no
@@ -31,57 +31,69 @@ DisableWelcomePage=no
 [Languages]
 Name: "Russian"; MessagesFile: "compiler:Languages\Russian.isl";
 
-[Types]
-Name: Installation; Description: "Тип установки"; Flags: iscustom;
-
-[Components]
-Name: Server; Description: "Сервер"; Types: Installation; Flags: exclusive;
-Name: Client; Description: "Клиент"; Types: Installation; Flags: exclusive;
+[Tasks]
+Name: "IconDesktop"; Description: "Создать значок «IntegralSystem» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Icons]
-Name: "{userdesktop}\Carat"; Filename: "{app}\Carat.exe"; WorkingDir: "{app}"; Tasks: DesktopIconServer; Comment: "Серверный процесс Carat";
-Name: "{userdesktop}\Integral System"; Filename: "{app}\IntegralSystem.exe"; WorkingDir: "{app}"; Tasks: DesktopIconClient; Comment: "Система управления данными «IntegralSystem»";
-Name: "{userdesktop}\Configurator"; Filename: "{app}\Configurator.exe"; WorkingDir: "{app}"; Tasks: DesktopIconConfigurator; Comment: "Утилита управления базой данных «IntegralSystem»";
-Name: "{group}\Carat"; Filename: "{app}\Carat.exe"; WorkingDir: "{app}"; Tasks: DesktopIconServer; Comment: "Серверный процесс Carat";
+Name: "{userdesktop}\Integral System"; Filename: "{app}\IntegralSystem.exe"; WorkingDir: "{app}"; Tasks: IconDesktop; Comment: "Система управления данными «IntegralSystem»";
 Name: "{group}\Integral System"; Filename: "{app}\IntegralSystem.exe"; WorkingDir: "{app}"; Comment: "Система управления данными IntegralSystem";
-Name: "{group}\Конфигуратор"; Filename: "{app}\Configurator.exe"; WorkingDir: "{app}"; Tasks: DesktopIconServer; Comment: "Интерпретатор базы данных IntegralSystem";
 Name: "{group}\Удалить Integral System"; Filename: "{app}\unins000.exe"; WorkingDir: "{app}"; Comment: "Удаление Integral System";
 
-[Tasks]
-Name: "DesktopIconServer"; Description: "Создать значок «Carat» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server;
-Name: "DesktopIconConfigurator"; Description: "Создать значок «Configurator» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server;
-Name: "DesktopIconClient"; Description: "Создать значок «IntegralSystem» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}"; Components: Server Client;
-
 [Run]
-Filename: "{app}\Carat.exe"; Description: "Запустить сервер после выхода из установщика"; Flags: postinstall shellexec skipifsilent; Components: Server;
-Filename: "{app}\IntegralSystem.exe"; Description: "Запустить программу после выхода из установщика"; Flags: postinstall shellexec skipifsilent; Components: Server Client;
+Filename: "{app}\IntegralSystem.exe"; Description: "Запустить программу после выхода из установщика"; Flags: postinstall shellexec skipifsilent;
 
 [Files]
-Source: ..\Deploy\.Configuration.-.Platform.\*; Excludes: "*.exp, *.ilk, *.lib, *.pdb"; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISGui.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\IntegralSystem.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
-Source: ..\Deploy\.Configuration.-.Platform.\ISCarat.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
-Source: ..\Deploy\.Configuration.-.Platform.\ISGui.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Client;
+Source: ${QTDIR}\bin\d3dcompiler_47.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\libEGL${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\libGLESV2${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\opengl32sw.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5Core${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5Gui${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5Multimedia${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5Network${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5PrintSupport${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5Sql${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5Widgets${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5Xml${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
-Source: ..\Deploy\.Configuration.-.Platform.\Carat.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\CaratWorker.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\Configurator.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server;
-Source: ..\Deploy\.Configuration.-.Platform.\IntegralSystem.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs; Components: Server Client;
+Source: ${QTDIR}\plugins\audio\qtaudio_wasapi${IS_DEBUG}.dll; DestDir: {app}\audio; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\audio\qtaudio_windows${IS_DEBUG}.dll; DestDir: {app}\audio; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\bearer\qgenericbearer${IS_DEBUG}.dll; DestDir: {app}\bearer; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\iconengines\qsvgicon${IS_DEBUG}.dll; DestDir: {app}\iconengines; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qgif${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qicns${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qico${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qjpeg${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qsvg${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qtga${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qtiff${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qwbmp${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\imageformats\qwebp${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\mediaservice\dsengine${IS_DEBUG}.dll; DestDir: {app}\mediaservice; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\mediaservice\qtmedia_audioengine${IS_DEBUG}.dll; DestDir: {app}\mediaservice; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\mediaservice\wmfengine${IS_DEBUG}.dll; DestDir: {app}\mediaservice; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\platforms\qwindows${IS_DEBUG}.dll; DestDir: {app}\platforms; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\playlistformats\qtmultimedia_m3u${IS_DEBUG}.dll; DestDir: {app}\playlistformats; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\printsupport\windowsprintersupport${IS_DEBUG}.dll; DestDir: {app}\printsupport; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\sqldrivers\qsqlpsql${IS_DEBUG}.dll; DestDir: {app}\sqldrivers; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\plugins\styles\qwindowsvistastyle${IS_DEBUG}.dll; DestDir: {app}\styles; Flags: ignoreversion recursesubdirs;
 
-Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion; Components: Server Client;
-Source: ..\Components\PostgreSQL\9.4\Bin-.Platform.\*; DestDir: {app}; Flags: ignoreversion;
-Source: ..\Components\Redistributable\Redistributable_2013_.Platform..exe; DestDir: {app}; Flags: ignoreversion;
-Source: ..\Components\Redistributable\Redistributable_2015_.Platform..exe; DestDir: {app}; Flags: ignoreversion;
-
-[Run]
-Filename: {app}\Redistributable_2013_.Platform..exe; Description: "Установка VC++ Redistributable 2013"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2013...";
-Filename: {app}\Redistributable_2015_.Platform..exe; Description: "Установка VC++ Redistributable 2015"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015...";
+Source: ..\Components\PostgreSQL\9.4\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Components\Redistributable\${CONFIGURATION}-${PLATFORM}\msvcp140${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Components\Redistributable\${CONFIGURATION}-${PLATFORM}\ucrtbase${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Components\Redistributable\${CONFIGURATION}-${PLATFORM}\vcruntime140${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\translations\qt_ru.qm; DestDir: {app}\translations; Flags: ignoreversion recursesubdirs;
 
 [Code]
 procedure InitializeWizard();
 begin
   WizardForm.WelcomeLabel2.Caption := WizardForm.WelcomeLabel2.Caption + #13#10#13#10 + 
-  'Конфигурация: .Configuration.' + #13#10 +
-  'Платформа: .Platform.' + #13#10 +
-  'Версия устанавливаемой программы: .Version.';
+  'Конфигурация: ${CONFIGURATION}' + #13#10 +
+  'Платформа: ${PLATFORM}' + #13#10 +
+  'Версия устанавливаемой программы: ${VERSION}';
 end;
