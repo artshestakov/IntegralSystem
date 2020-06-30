@@ -1,1 +1,1 @@
-call Build.cmd Debug Win32
+call Build.cmd Debug Win32 IntegralSystem

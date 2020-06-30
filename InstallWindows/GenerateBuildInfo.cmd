@@ -2,17 +2,18 @@
 
 REM Путь к файлу
 SET FilePath=..\Resources\Build\Build.ini.tmp
+SET GetUtilPath=..\Components\GET\Release-Win32\GET.exe
 
 REM Если такой файл уже существует - удаляем его
 IF EXIST %FilePath% (DEL %FilePath%)
 
 REM Получаем текущую дату
-..\Components\GET\Release-Win32\GET.exe --getdate > temp.tmp
+%GetUtilPath% --getdate > temp.tmp
 SET /p CURRENT_DATE=<temp.tmp
 DEL temp.tmp
 
 REM Получаем текущее время
-..\Components\GET\Release-Win32\GET.exe --gettime > temp.tmp
+%GetUtilPath% --gettime > temp.tmp
 SET /p CURRENT_TIME=<temp.tmp
 DEL temp.tmp
 
