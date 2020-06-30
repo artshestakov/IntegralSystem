@@ -34,9 +34,9 @@ int main(int argc, char ** argv)
     else
     {
         std::cout << "Error: not specified arguments." << std::endl;
-        std::cout << "Using: GET" << std::endl;
+        std::cout << "Using: GET";
 #ifdef WIN32
-        std::cout << ".exe" << std::endl;
+        std::cout << ".exe";
 #endif
         std::cout << " [ARGUMENT]" << std::endl;
         std::cout << "Arguments:" << std::endl;
