@@ -6,6 +6,7 @@
 #include "ISCaratService.h"
 #include "ISCaratDebugger.h"
 #include "ISQueryText.h"
+#include "ISVersion.h"
 //-----------------------------------------------------------------------------
 void Usage(); //Вывод инструкции по запуску
 bool CheckConfigValues(); //Проверка значений в конфигурационном файле
@@ -30,6 +31,11 @@ int main(int argc, char **argv)
 		{
 			new ISCaratDebugger(&CoreApplication);
 		}
+        else if (Argument == "-v" || Argument == "--version")
+        {
+            std::cout << "Carat (" << ISVersion::Instance().ToString().toStdString() << ")" << std::endl;
+            return EXIT_SUCCESS;
+        }
 		else if (Argument == "-h" || Argument == "--help")
 		{
 			Usage();
@@ -90,7 +96,8 @@ void Usage()
 	ISLOGGER_L(QString());
 	ISLOGGER_L("Arguments:");
 	ISLOGGER_L("  -d, --debug\t\tdebug mode");
-	ISLOGGER_L("  -h, --help\t\tshow this help");
+    ISLOGGER_L("  -v, --version\t\tshow version and exit");
+    ISLOGGER_L("  -h, --help\t\tshow this help and exit");
 	ISLOGGER_L(QString());
 #ifdef WIN32
 	ISLOGGER_L("Example: Carat.exe -d (debug mode)");
