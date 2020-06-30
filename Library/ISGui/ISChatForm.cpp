@@ -16,6 +16,7 @@
 #include "ISMainWindow.h"
 #include "ISUserRoleEntity.h"
 #include "ISGui.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_CHAT_MESSAGES = PREPARE_QUERY("SELECT chat_id "
 												"FROM _chatmessages "
@@ -241,10 +242,10 @@ void ISChatForm::SendMessage()
 void ISChatForm::AttachImage()
 {
 	QString ImagePath = ISFileDialog::GetOpenFileNameImage(this);
-	if (ImagePath.length())
+	if (!ImagePath.isEmpty())
 	{
-		qint64 Kbytes = ISSystem::GetFileSize(ImagePath) / 1024;
-		if (Kbytes > 5120) //5mb
+		__int64 FileSize = ISAlgorithm::GetFileSize(ImagePath.toStdString()) / 1024;
+		if (FileSize > 5120) //5mb
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.ChatImageSizeConstraint"));
 		}
@@ -252,7 +253,6 @@ void ISChatForm::AttachImage()
 		{
 			LabelAttachPath->setText(ImagePath);
 			ActionClearAttach->setEnabled(true);
-
 			CurrentAttach = ISNamespace::ACT_Image;
 		}
 	}
@@ -263,8 +263,8 @@ void ISChatForm::AttachFile()
 	QString FilePath = ISFileDialog::GetOpenFileName(this);
 	if (FilePath.length())
 	{
-		qint64 Kbytes = ISSystem::GetFileSize(FilePath) / 1024;
-		if (Kbytes > 15360) //15mb
+		__int64 FileSize = ISAlgorithm::GetFileSize(FilePath.toStdString()) / 1024;
+		if (FileSize > 15360) //15mb
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.ChatFileSizeConstraint"));
 		}
@@ -373,9 +373,8 @@ QString ISChatForm::GetFileName() const
 {
 	if (CurrentAttach == ISNamespace::ACT_File)
 	{
-		return ISSystem::GetFileName(LabelAttachPath->text());
+		return QString::fromStdString(ISAlgorithm::GetFileNameFromPath(LabelAttachPath->text().toStdString()));
 	}
-
 	return QString();
 }
 //-----------------------------------------------------------------------------

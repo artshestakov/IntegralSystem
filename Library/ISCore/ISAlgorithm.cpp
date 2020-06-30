@@ -11,6 +11,29 @@ std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 	return FilePath;
 }
 //-----------------------------------------------------------------------------
+__int64 ISAlgorithm::GetFileSize(const std::string &FilePath)
+{
+	std::string ErrorString;
+	return ISAlgorithm::GetFileSize(FilePath, ErrorString);
+}
+//-----------------------------------------------------------------------------
+__int64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorString)
+{
+	FILE *File = fopen(FilePath.c_str(), "r");
+	if (File)
+	{
+		fseek(File, 0L, SEEK_END);
+		__int64 FileSize = ftell(File);
+		fclose(File);
+		return FileSize;
+	}
+	else
+	{
+		ErrorString = strerror(errno);
+	}
+	return -1;
+}
+//-----------------------------------------------------------------------------
 double ISAlgorithm::PrepareDouble(double Double, size_t Precision)
 {
 	char Char[MAX_PATH];

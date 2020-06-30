@@ -1,6 +1,7 @@
 #include "ISSystem.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 QDomElement ISSystem::GetDomElement(QFile &File)
 {
@@ -24,7 +25,7 @@ QString ISSystem::GetSizeDir(const QString &DirPath)
 	QFileInfoList FileInfoList = QDir(DirPath).entryInfoList(QDir::Files);
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
-		Size += GetFileSize(FileInfo.absoluteFilePath());
+		Size += ISAlgorithm::GetFileSize(FileInfo.absoluteFilePath().toStdString());
 	}
 	return FileSizeFromString(Size);
 }
@@ -233,11 +234,6 @@ QString ISSystem::StringToMD5(const QString &String)
 	return QString(CryptographicHash.result().toHex());
 }
 //-----------------------------------------------------------------------------
-qint64 ISSystem::GetFileSize(const QString &FilePath)
-{
-	return QFileInfo(FilePath).size();
-}
-//-----------------------------------------------------------------------------
 QString ISSystem::FileSizeFromString(qint64 FileSize)
 {
 	qint64 Size = FileSize;
@@ -267,10 +263,5 @@ QString ISSystem::FileSizeFromString(qint64 FileSize)
 	}
 
 	return String;
-}
-//-----------------------------------------------------------------------------
-QString ISSystem::GetFileName(const QString &FilePath)
-{
-	return QFileInfo(FilePath).fileName();
 }
 //-----------------------------------------------------------------------------

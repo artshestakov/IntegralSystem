@@ -42,9 +42,7 @@ public:
 	static QString StringToMD5(const QString &String); //Получить MD5 строки
 
 //ФАЙЛЫ
-	static qint64 GetFileSize(const QString &FilePath); //Получить размер файла
 	static QString FileSizeFromString(qint64 FileSize); //Получить размер файла
-	static QString GetFileName(const QString &FilePath); //Получить полное имя файла с расширением
 };
 //-----------------------------------------------------------------------------
 #endif

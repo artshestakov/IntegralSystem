@@ -5,6 +5,7 @@
 #include "ISQuery.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_user, tfls_filename, tfls_size, tfls_icon, tfls_note) "
 									   "VALUES(:TaskID, currentuserid(), :FileName, :Size, :Icon, :Note) "
@@ -51,7 +52,7 @@ ISTaskFileInsertForm::~ISTaskFileInsertForm()
 //-----------------------------------------------------------------------------
 QString ISTaskFileInsertForm::GetFileName() const
 {
-	return ISSystem::GetFileName(PathEditFile->GetValue().toString());
+	return QString::fromStdString(ISAlgorithm::GetFileNameFromPath(PathEditFile->GetValue().toString().toStdString()));
 }
 //-----------------------------------------------------------------------------
 void ISTaskFileInsertForm::EnterClicked()
@@ -82,8 +83,8 @@ void ISTaskFileInsertForm::Insert()
 	{
 		ISQuery qInsertFile(QI_FILE);
 		qInsertFile.BindValue(":TaskID", TaskID);
-		qInsertFile.BindValue(":FileName", ISSystem::GetFileName(FilePath));
-		qInsertFile.BindValue(":Size", ISSystem::FileSizeFromString(ISSystem::GetFileSize(FilePath)));
+		qInsertFile.BindValue(":FileName", QString::fromStdString(ISAlgorithm::GetFileNameFromPath(FilePath.toStdString())));
+		qInsertFile.BindValue(":Size", ISSystem::FileSizeFromString(ISAlgorithm::GetFileSize(FilePath.toStdString())));
 		qInsertFile.BindValue(":Icon", ISGui::IconToByteArray(ISGui::GetIconFile(FilePath)));
 
 		if (EditNote->GetValue().toString().length())
