@@ -1,5 +1,5 @@
 QT -= core gui
-TARGET = Replacer
+TARGET = Sleep
 TEMPLATE = app
 CONFIG += c++11
 

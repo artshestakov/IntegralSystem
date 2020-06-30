@@ -1,9 +1,13 @@
 #include <iostream>
 #include <cstdlib>
+#include <climits>
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>
-#define SLEEP(x) ::Sleep(x)
+#define SLEEP(x) ::Sleep(x * 1000)
+#else
+#include <unistd.h>
+#define SLEEP(x) sleep(x)
 #endif
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -14,7 +18,7 @@ int main(int argc, char **argv)
 		unsigned long Seconds = std::atol(argv[1]);
 		if (Seconds > 0 && Seconds + 1 != ULONG_MAX)
 		{
-			SLEEP(Seconds * 1000);
+            SLEEP(Seconds);
 		}
 		else
 		{
