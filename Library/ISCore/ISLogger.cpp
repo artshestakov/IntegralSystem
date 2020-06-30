@@ -117,7 +117,7 @@ bool ISLogger::CreateLogDirectory(const QDate &Date)
 	CurrentYear = Date.year();
 
 	//Формируем путь к текущей папке
-	PathLogsDir = ISDefines::Core::PATH_APPLICATION_DIR + "/Logs/" + QString::number(CurrentYear) + '/' + QString::number(CurrentMonth) + '/';
+    PathLogsDir = ISDefines::Core::PATH_APPLICATION_DIR + "/Logs/" + QString::number(CurrentYear) + '/' + QString("%1").arg(CurrentMonth, 2, 'g', -1, '0') + '/';
 	
 	QDir Dir;
 	if (!Dir.exists(PathLogsDir)) //Если папка с текущим месяцем не существует - создаём её
