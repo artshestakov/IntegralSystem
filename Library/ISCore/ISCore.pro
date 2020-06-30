@@ -82,6 +82,7 @@ HEADERS += \
     StdAfx.h
 
 SOURCES += \
+    ISAlgorithm.cpp \
     ISApplicationRunning.cpp \
     ISAssert.cpp \
     ISAuthConnector.cpp \

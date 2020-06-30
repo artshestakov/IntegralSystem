@@ -91,7 +91,7 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 		case MessageType::MT_Warning: string_stream << "Warning"; break;
 		case MessageType::MT_Error: string_stream << "Error"; break;
 		}
-		string_stream << "][" << source_name << ':' << source_line << "] " << string_message.toStdString();
+        string_stream << "][" << ISAlgorithm::GetFileNameFromPath(source_name) << ':' << source_line << "] " << string_message.toStdString();
 		string_complete = QString::fromStdString(string_stream.str());
 	}
 

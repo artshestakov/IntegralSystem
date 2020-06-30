@@ -30,13 +30,13 @@ namespace ISAlgorithm
 	//! Получить размер файла
 	//! \param FilePath путь к файлу
 	//! \return возвращает размер файла в байтах. В случае ошибки возвращается -1
-	ISCORE_EXPORT __int64 GetFileSize(const std::string &FilePath);
+    ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath);
 
 	//! Получить размер файла
 	//! \param FilePath путь к файлу
 	//! \param ErrorString текстовое описание ошибки
 	//! \return возвращает размер файла в байтах. В случае ошибки возвращается -1, а ErrorString заполняется описанием ошибки
-	ISCORE_EXPORT __int64 GetFileSize(const std::string &FilePath, std::string &ErrorString);
+    ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath, std::string &ErrorString);
 
 	//! Обрезание числа с плавающей запятой.
 	//! \param Double число с плавающей запятой
