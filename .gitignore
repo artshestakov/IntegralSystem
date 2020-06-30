@@ -24,6 +24,7 @@
 *.iss.tmp
 *.spec.tmp
 *.pro.user
+*.vcxproj.user
 
 Build.ini.tmp
 .qmake.stash
