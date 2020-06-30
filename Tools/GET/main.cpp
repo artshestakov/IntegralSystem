@@ -1,6 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
+#include <iostream>
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>
@@ -14,33 +12,37 @@ int main(int argc, char ** argv)
 		char *Argument = argv[1];
 		if (strcmp(Argument, "--getdate") == 0)
 		{
+#ifdef WIN32
 			SYSTEMTIME ST;
 			GetLocalTime(&ST);
 			printf("%02d.%02d.%02d", ST.wDay, ST.wMonth, ST.wYear);
+#endif
 		}
 		else if (strcmp(Argument, "--gettime") == 0)
 		{
+#ifdef WIN32
 			SYSTEMTIME ST;
 			GetLocalTime(&ST);
 			printf("%02d:%02d", ST.wHour, ST.wMinute);
+#endif
 		}
 		else
 		{
-			printf("Error: invalid argument\n");
+			std::cout << "Error: invalid argument\n" << std::endl;
 			Result = false;
 		}
 	}
 	else
 	{
-		printf("Error: not specified arguments.\n");
-		printf("Using: GET");
+		std::cout << "Error: not specified arguments." << std::endl;
+		std::cout << "Using: GET" << std::endl;
 #ifdef WIN32
-		printf(".exe");
+		std::cout << ".exe" << std::endl;
 #endif
-		printf(" [ARGUMENT]\n");
-		printf("Arguments:\n");
-		printf("--getdate - get current date\n");
-		printf("--gettime - get current time\n");
+		std::cout << " [ARGUMENT]\n" << std::endl;
+		std::cout << "Arguments:\n" << std::endl;
+		std::cout << "--getdate - get current date\n" << std::endl;
+		std::cout << "--gettime - get current time\n" << std::endl;
 	}
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
