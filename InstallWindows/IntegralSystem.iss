@@ -84,10 +84,13 @@ Source: ${QTDIR}\plugins\styles\qwindowsvistastyle${IS_DEBUG}.dll; DestDir: {app
 
 Source: ..\Components\PostgreSQL\9.4\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Components\Redistributable\${CONFIGURATION}-${PLATFORM}\msvcp140${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Components\Redistributable\${CONFIGURATION}-${PLATFORM}\ucrtbase${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Components\Redistributable\${CONFIGURATION}-${PLATFORM}\vcruntime140${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Components\Redistributable\Redistributable_2013_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Components\Redistributable\Redistributable_2015_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\translations\qt_ru.qm; DestDir: {app}\translations; Flags: ignoreversion recursesubdirs;
+
+[Run]
+Filename: {app}\Redistributable_2013_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2013"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2013...";
+Filename: {app}\Redistributable_2015_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2015"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015...";
 
 [Code]
 procedure InitializeWizard();
