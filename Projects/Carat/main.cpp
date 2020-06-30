@@ -33,20 +33,19 @@ int main(int argc, char **argv)
 		}
         else if (Argument == "-v" || Argument == "--version")
         {
-            std::cout << "Carat (" << ISVersion::Instance().ToString().toStdString() << ")" << std::endl;
-            return EXIT_SUCCESS;
+			ISLOGGER_L(QString("Carat (%1)").arg(ISVersion::Instance().ToString()));
         }
 		else if (Argument == "-h" || Argument == "--help")
 		{
 			Usage();
-			return EXIT_SUCCESS;
 		}
 		else
 		{
 			ISLOGGER_W("Invalid argument \"" + Argument + "\"");
 			Usage();
-			return EXIT_SUCCESS;
 		}
+		ISCore::ExitApplication();
+		return EXIT_SUCCESS;
 	}
 	else //јргументы не указаны - стартуем в обычном режиме
 	{
@@ -93,12 +92,12 @@ void Usage()
 #else
 	ISLOGGER_L("Usage: ./Carat [argument]");
 #endif
-	ISLOGGER_L(QString());
+	ISLOGGER_N();
 	ISLOGGER_L("Arguments:");
 	ISLOGGER_L("  -d, --debug\t\tdebug mode");
     ISLOGGER_L("  -v, --version\t\tshow version and exit");
     ISLOGGER_L("  -h, --help\t\tshow this help and exit");
-	ISLOGGER_L(QString());
+	ISLOGGER_N();
 #ifdef WIN32
 	ISLOGGER_L("Example: Carat.exe -d (debug mode)");
 	ISLOGGER_L("Example: Carat.exe (service mode)");
