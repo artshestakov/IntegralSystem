@@ -90,6 +90,7 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 		case MessageType::MT_Info: string_stream << "Info"; break;
 		case MessageType::MT_Warning: string_stream << "Warning"; break;
 		case MessageType::MT_Error: string_stream << "Error"; break;
+        case MessageType::MT_Assert: string_stream << "Assert"; break;
 		}
         string_stream << "][" << ISAlgorithm::GetFileNameFromPath(source_name) << ':' << source_line << "] " << string_message.toStdString();
 		string_complete = QString::fromStdString(string_stream.str());

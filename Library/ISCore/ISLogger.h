@@ -16,7 +16,8 @@ public:
 		MT_Trace, //Трассировка
 		MT_Info, //Информация
 		MT_Warning, //Предупреждение
-		MT_Error //Ошибка
+        MT_Error, //Ошибка
+        MT_Assert //Ассерт
 	};
 
 public:
@@ -82,5 +83,6 @@ private:
 #define ISLOGGER_I(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
 #define ISLOGGER_W(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Warning, MESSAGE, __FILE__, __LINE__) //Логировние предупреждающего сообщения
 #define ISLOGGER_E(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Error, MESSAGE, __FILE__, __LINE__) //Логирование сообщения об ошибке
+#define ISLOGGER_A(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Assert, MESSAGE, __FILE__, __LINE__) //Логирование сообщения об ассерте
 //-----------------------------------------------------------------------------
 #endif

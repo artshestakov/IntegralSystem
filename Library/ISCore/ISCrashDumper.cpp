@@ -65,7 +65,7 @@ void ISCrashDumper::CreateReport(_EXCEPTION_POINTERS *ExceptionInfo, const std::
 void ISCrashDumper::OnSystemSignal(int SigNum)
 {
     stacktrace::call_stack stack_trace;
-    WriteCrashFile(stack_trace.to_string(), std::to_string(SigNum));
+    WriteCrashFile(stack_trace.to_string(), "Crash with signal " + std::to_string(SigNum) + " (" + strsignal(SigNum) + ")");
     printf("Crash with signal: %d\n", SigNum);
     if (AssertMessage)
     {

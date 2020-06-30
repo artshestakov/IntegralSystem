@@ -1,5 +1,6 @@
 #include "ISAssert.h"
 #include "ISCrashDumper.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 void ISASSERT::Assert(QObject *Object, const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
 {
@@ -43,6 +44,8 @@ void ISASSERT::Assert(size_t SizeT, const QString &FalseMessage, const char *Fun
 //-----------------------------------------------------------------------------
 void ISASSERT::ShowAssert(const QString &FalseMessage, const char *FunctionName, int Line, const char *FileName)
 {
+    ISLOGGER_A(FalseMessage);
+
 	std::stringstream StringStream;
 	StringStream << "Assert: " << FalseMessage.toStdString() << std::endl;
 	StringStream << "Source file: " << FileName << std::endl;
