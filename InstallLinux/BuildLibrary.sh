@@ -1,3 +1,5 @@
+#!/bin/bash
+
 Configuration=$2
 echo -e "\033[1m"Сборка библиотеки $1 в конфигурации $Configuration..."\033[0m"
 

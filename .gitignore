@@ -4,6 +4,7 @@
 /Output
 /Projects/**/*-*
 /Tools/**/*-*
+/x86_64
 /.vs
 
 *.ilk
@@ -21,6 +22,7 @@
 *moc_*.cpp
 *qrc_*.cpp
 *.iss.tmp
+*.spec.tmp
 *.pro.user
 
 Build.ini.tmp
