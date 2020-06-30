@@ -49,7 +49,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_Double)
 	{
-		Result.setValue<double>(ISAlgorithm::PrepareDouble<double>(Value.toDouble(), SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)));
+		Result.setValue<double>(ISAlgorithm::PrepareDouble(Value.toDouble(), SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)));
 	}
 	return Result;
 }

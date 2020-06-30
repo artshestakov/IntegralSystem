@@ -231,7 +231,4 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtMultimedia/QSound>
 //-----------------------------------------------------------------------------
-#include <QtSerialPort/QSerialPort>
-#include <QtSerialPort/QSerialPortInfo>
-//-----------------------------------------------------------------------------
 #endif

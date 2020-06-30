@@ -112,6 +112,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ISAlgorithm.cpp" />
     <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />

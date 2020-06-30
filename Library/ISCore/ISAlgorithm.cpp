@@ -1,0 +1,37 @@
+#include "ISAlgorithm.h"
+#include "ISConstants.h"
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
+{
+	size_t Pos = FilePath.rfind(PATH_SEPARATOR);
+	if (Pos != std::string::npos)
+	{
+		return std::string(FilePath).erase(0, Pos + 1);
+	}
+	return FilePath;
+}
+//-----------------------------------------------------------------------------
+double ISAlgorithm::PrepareDouble(double Double, size_t Precision)
+{
+	char Char[MAX_PATH];
+	sprintf(Char, "%.*f", Precision, Double); //Конвертируем дробное число в строку.
+	while (true) //Обрезаем возможные нули в конце
+	{
+		size_t Index = strlen(Char) - 1; //Индекс последнего символа
+		if (Char[Index] == '0') //Если последний символ является нулем - обрезаем его
+		{
+			Char[Index] = '\0';
+		}
+		else if (Char[Index] == SYMBOL_POINT) //Если последний символ является точкой - обрезаем его и выходим
+		{
+			Char[Index] = '\0';
+			break;
+		}
+		else //Иначе выходим из цикла
+		{
+			break;
+		}
+	}
+	return atof(Char); //Преобразовываем строку обратно в число с плавающей запятой и возвращаем
+}
+//-----------------------------------------------------------------------------

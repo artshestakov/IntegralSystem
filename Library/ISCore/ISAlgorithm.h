@@ -2,7 +2,7 @@
 #ifndef _ISALGORITHM_H_INCLUDED
 #define _ISALGORITHM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "iscore_global.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define ISSleep(MSec) ::Sleep(MSec)
@@ -22,7 +22,18 @@
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
 {
-    //Поиск значения в векторе
+	//! Вытаскивание имени файла из пути к нему.
+	//! \param FilePath путь к файлу
+	//! \return возвращаем имя файла
+	ISCORE_EXPORT std::string GetFileNameFromPath(const std::string &FilePath);
+
+	//! Обрезание числа с плавающей запятой.
+	//! \param Double число с плавающей запятой
+	//! \param Precision количество цифр после запятой
+	//! \return возращает обрезанное число с плаващей запятой
+	ISCORE_EXPORT double PrepareDouble(double Double, size_t Precision);
+
+	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {
         return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
@@ -137,35 +148,6 @@ namespace ISAlgorithm
 			IS_ASSERT(Pointer, "Not created pointer with class name \"" + ClassName + "\"");
 		}
 		return Pointer;
-	}
-
-	//! Обрезание числа с плавающей запятой.
-	//! \param Double число с плавающей запятой
-	//! \param Precision количество цифр после запятой
-	//! \return возращает обрезанное число с плаващей запятой
-	template<typename T>
-	T PrepareDouble(T Double, size_t Precision)
-	{
-		char Char[MAX_PATH];
-		sprintf(Char, "%.*f", Precision, Double); //Конвертируем дробное число в строку.
-		while (true) //Обрезаем возможные нули в конце
-		{
-			size_t Index = strlen(Char) - 1; //Индекс последнего символа
-			if (Char[Index] == '0') //Если последний символ является нулем - обрезаем его
-			{
-				Char[Index] = '\0';
-			}
-			else if (Char[Index] == SYMBOL_POINT) //Если последний символ является точкой - обрезаем его и выходим
-			{
-				Char[Index] = '\0';
-				break;
-			}
-			else //Иначе выходим из цикла
-			{
-				break;
-			}
-		}
-		return atof(Char); //Преобразовываем строку обратно в число с плавающей запятой и возвращаем
 	}
 }
 //-----------------------------------------------------------------------------

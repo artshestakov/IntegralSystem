@@ -192,6 +192,9 @@
     <ClCompile Include="ISTcpServerWorker.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISAlgorithm.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">

@@ -20,7 +20,7 @@ void ISDoubleEdit::SetValue(const QVariant &value)
 {
 	bool Ok = true;
 	double Double = value.toDouble(&Ok);
-	Ok ? ISLineEdit::SetValue(ISAlgorithm::PrepareDouble<double>(Double, SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))) :
+	Ok ? ISLineEdit::SetValue(ISAlgorithm::PrepareDouble(Double, SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))) :
 		ISLineEdit::SetValue(QString());
 }
 //-----------------------------------------------------------------------------
