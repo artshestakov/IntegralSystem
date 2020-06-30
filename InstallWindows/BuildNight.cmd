@@ -15,18 +15,29 @@ REM Клонируем репозиторий из master-ветки и пере
 git clone -b master https://github.com/artshestakov/IntegralSystem.git %1
 
 REM Затем переходим в папку InstallWindows
-cd %1\InstallWindows
+CD %1\InstallWindows
 
 REM Делаем текущую папку рабочей (Working dir)
-pushd %1\InstallWindows
+PUSHD %1\InstallWindows
 
 REM Запускаем сборку в обоих конфигурациях
-call _Build_IntegralSystem_Debug_Win32.cmd
-call _Build_IntegralSystem_Release_Win32.cmd
+CALL _Build_IntegralSystem_Release_Win32.cmd
+CALL _Build_Carat_Release_Win32.cmd
+
+REM Получение текущей даты в переменную CURRENT_DATE
+DATE /T > temp.tmp
+SET /p CURRENT_DATE=<temp.tmp
+DEL temp.tmp
+
+REM Создание папки с текущей датой в облаке
+IF NOT EXIST %USERPROFILE%\iCloudDrive\IntegralSystem\%CURRENT_DATE% (MKDIR %USERPROFILE%\iCloudDrive\IntegralSystem\%CURRENT_DATE%)
+
+REM Копирование дистрибутивов в облако
+COPY ..\Output\* %USERPROFILE%\iCloudDrive\IntegralSystem\%CURRENT_DATE%
 
 REM После сборки выходим из папки репозитория (чтобы можно было удалить за собой папку)
-cd ..
-cd ..
+CD ..
+CD ..
 
 REM После сборки удаляем за собой временную папку
 IF EXIST %1 (RMDIR /S /Q %1)
