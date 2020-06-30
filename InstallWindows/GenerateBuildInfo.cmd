@@ -1,4 +1,7 @@
 @ECHO OFF
+SetLocal
+
+REM Скрипт преназначен для генерации информации о сборке
 
 REM Путь к файлу
 SET FilePath=..\Resources\Build\Build.ini.tmp

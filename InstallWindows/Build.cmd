@@ -27,15 +27,15 @@ DEL revision.tmp
 CALL GenerateBuildInfo.cmd %CONFIGURATION% %PLATFORM% %MAJOR% %MINOR% %REVISION%
 
 REM Компиляция библиотек
-CALL BuildLibrary.cmd ISCore %CONFIGURATION% %PLATFORM%
-CALL BuildLibrary.cmd ISGui %CONFIGURATION% %PLATFORM%
-CALL BuildLibrary.cmd ISCarat %CONFIGURATION% %PLATFORM%
+CALL BuildItem.cmd Library ISCore %CONFIGURATION% %PLATFORM%
+CALL BuildItem.cmd Library ISGui %CONFIGURATION% %PLATFORM%
+CALL BuildItem.cmd Library ISCarat %CONFIGURATION% %PLATFORM%
 
 REM Компиляция проектов
-CALL BuildProject.cmd Carat %CONFIGURATION% %PLATFORM%
-CALL BuildProject.cmd CaratWorker %CONFIGURATION% %PLATFORM%
-CALL BuildProject.cmd Configurator %CONFIGURATION% %PLATFORM%
-CALL BuildProject.cmd IntegralSystem %CONFIGURATION% %PLATFORM%
+CALL BuildItem.cmd Projects Carat %CONFIGURATION% %PLATFORM%
+CALL BuildItem.cmd Projects CaratWorker %CONFIGURATION% %PLATFORM%
+CALL BuildItem.cmd Projects Configurator %CONFIGURATION% %PLATFORM%
+CALL BuildItem.cmd Projects IntegralSystem %CONFIGURATION% %PLATFORM%
 
 REM Формируем шаблон скрипта сборки (удаляем предыдущий, генерируем новый и производим замены)
 IF EXIST %SCRIPT_NAME%.iss.tmp (DEL %SCRIPT_NAME%.iss.tmp)
