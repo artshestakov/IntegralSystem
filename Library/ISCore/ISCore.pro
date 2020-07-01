@@ -1,4 +1,4 @@
-QT += core network xml
+QT += core network xml sql
 QT -= gui
 
 TARGET = ISCore
@@ -14,10 +14,6 @@ CONFIG(debug, debug|release){
 
 unix {
     PLATFORM = Linux64
-}
-
-win32 {
-    PLATFORM = Win32
 }
 
 DESTDIR = $$PWD/../../Bin/$${CONFIGURATION}-$${PLATFORM}
