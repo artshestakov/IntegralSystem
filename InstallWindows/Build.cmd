@@ -1,6 +1,8 @@
 @ECHO off
 SetLocal
 
+REM Главный скрипт сборки
+
 REM Настройка переменных среды
 CALL vcvars32.bat
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Главный скрипт сборки
+
 export INTEGRAL_SYSTEM_DIR="$(pwd)"/..
 export QT_DIR="/home/artem/Qt/5.11.3/gcc_64"
 
