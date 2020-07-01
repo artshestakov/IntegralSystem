@@ -122,7 +122,6 @@ int main(int argc, char **argv)
 	{
 		Result = Execute(Arguments[0].toLower(), Arguments[1].toLower());
 	}
-	
 	ISCore::ExitApplication();
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }

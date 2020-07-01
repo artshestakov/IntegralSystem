@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 		}
         else if (Argument == "-v" || Argument == "--version")
         {
-			ISLOGGER_L(QString("Carat (%1)").arg(ISVersion::Instance().ToString()));
+			std::cout << "Carat (" << ISVersion::Instance().ToString().toStdString() << ")" << std::endl;
         }
 		else if (Argument == "-h" || Argument == "--help")
 		{
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			ISLOGGER_W("Invalid argument \"" + Argument + "\"");
+			std::cout << "Invalid argument \"" << Argument.toStdString() << "\"" << std::endl;
 			Usage();
 		}
 		ISCore::ExitApplication();
@@ -88,24 +88,24 @@ int main(int argc, char **argv)
 void Usage()
 {
 #ifdef WIN32
-	ISLOGGER_L("Usage: Carat [argument]");
+	std::cout << "Usage: Carat [argument]" << std::endl;
 #else
-	ISLOGGER_L("Usage: ./Carat [argument]");
+	std::cout << "Usage: ./Carat [argument]" << std::endl;
 #endif
-	ISLOGGER_N();
-	ISLOGGER_L("Arguments:");
-	ISLOGGER_L("  -d, --debug\t\tdebug mode");
-    ISLOGGER_L("  -v, --version\t\tshow version and exit");
-    ISLOGGER_L("  -h, --help\t\tshow this help and exit");
-	ISLOGGER_N();
+	std::cout << std::endl;
+	std::cout << "Arguments:" << std::endl;
+	std::cout << "  -d, --debug\t\tdebug mode" << std::endl;
+    std::cout << "  -v, --version\t\tshow version and exit" << std::endl;
+    std::cout << "  -h, --help\t\tshow this help and exit" << std::endl;
+	std::cout << std::endl;
 #ifdef WIN32
-	ISLOGGER_L("Example: Carat.exe -d (debug mode)");
-	ISLOGGER_L("Example: Carat.exe (service mode)");
+	std::cout << "Example: Carat.exe -d (debug mode)" << std::endl;
+	std::cout << "Example: Carat.exe (service mode)" << std::endl;
 #else
-	ISLOGGER_L("Example: ./Carat -d (debug mode)");
-	ISLOGGER_L("Example: ./Carat (service mode)");
+	std::cout << "Example: ./Carat -d (debug mode)" << std::endl;
+	std::cout << "Example: ./Carat (service mode)" << std::endl;
 #endif
-	ISLOGGER_L("* No arguments needed to start in service mode");
+	std::cout << "* No arguments needed to start in service mode" << std::endl;
 }
 //-----------------------------------------------------------------------------
 bool CheckConfigValues()
