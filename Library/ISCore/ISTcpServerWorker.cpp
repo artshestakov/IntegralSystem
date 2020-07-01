@@ -30,6 +30,7 @@ ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	Functions[API_TEST_QUERY] = std::mem_fn(&ISTcpServerWorker::TestQuery);
 	Functions[API_SLEEP] = std::mem_fn(&ISTcpServerWorker::Sleep);
 	Functions[API_GET_META_DATA] = std::mem_fn(&ISTcpServerWorker::GetMetaData);
+	Functions[API_FUNCTION_LIST] = std::mem_fn(&ISTcpServerWorker::FunctionList);
 }
 //-----------------------------------------------------------------------------
 ISTcpServerWorker::~ISTcpServerWorker()
@@ -258,5 +259,15 @@ void ISTcpServerWorker::GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &
 		TcpAnswer.SetError("Error getting sorting columns: " + qSelectSortingColumn.GetErrorString());
 		return;
 	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerWorker::FunctionList(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
+{
+	QVariantList VariantList;
+	for (const auto &MapItem : Functions)
+	{
+		VariantList.push_back(MapItem.first);
+	}
+	TcpAnswer["Functions"] = VariantList;
 }
 //-----------------------------------------------------------------------------
