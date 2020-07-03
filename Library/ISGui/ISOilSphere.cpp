@@ -31,7 +31,8 @@ static QString QS_STATEMENT = PREPARE_QUERY2("SELECT COUNT(*) "
 											 "AND gsts_date = :Date");
 //-----------------------------------------------------------------------------
 static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gsts_gasstation, gsts_date, gsts_change) "
-											 "VALUES(:GasStation, :Date, (SELECT COALESCE(max(gsts_change) + 1, 1) FROM gasstationstatement WHERE gsts_gasstation = :GasStation))");
+											 "VALUES(:GasStation, :Date, (SELECT COALESCE(max(gsts_change) + 1, 1) FROM gasstationstatement WHERE gsts_gasstation = :GasStation)) "
+											 "RETURNING gsts_id");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -312,8 +313,9 @@ void ISOilSphere::GasStationStatementListForm::Create()
 					ISQuery qInsert(QI_STATEMENT);
 					qInsert.BindValue(":GasStation", GasStationID);
 					qInsert.BindValue(":Date", Date);
-					if (qInsert.Execute())
+					if (qInsert.ExecuteFirst())
 					{
+						SetSelectObjectAfterUpdate(qInsert.ReadColumn("gsts_id").toInt());
 						Update();
 					}
 				}
