@@ -26,6 +26,8 @@
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------
+static QString QS_DATABASE = "SELECT datname FROM pg_database ORDER BY datname";
+//-----------------------------------------------------------------------------
 static QString QS_FUNCTION = "SELECT COUNT(*) "
 							 "FROM information_schema.routines "
 							 "WHERE routines.routine_name = 'get_configuration_name'";
@@ -43,6 +45,7 @@ bool Execute(const QString &Argument, const QString &SubArgument); //Выполнить д
 QString GetClassName(const QString &Argument); //Получить имя класса
 QStringList ParseInputCommand(const QString &Command); //Парсинг введенной команды
 void FillConfig(); //Заполнение конфигурационного файла
+bool GetDatabaseList(QStringList &StringList); //Получить список баз на сервере
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -67,13 +70,6 @@ int main(int argc, char **argv)
 	}
 
 	FillConfig();
-	if (DBLogin.isEmpty() || DBPassword.isEmpty())
-	{
-		ISLOGGER_E("Not specified server or password in config file");
-		ISConsole::Pause();
-		return EXIT_FAILURE;
-	}
-
     Result = CreateDatabase();
 	if (!Result)
 	{
@@ -410,17 +406,6 @@ void FillConfig()
 		}
 	}
 
-	//Получаем имя БД
-	DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
-	while (DBName.isEmpty())
-	{
-		DBName = ISConsole::GetString("Enter the database name: ");
-		if (DBName.isEmpty())
-		{
-			ISLOGGER_L("Database name is empty!");
-		}
-	}
-
 	//Получаем логин
 	DBLogin = CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN);
 	while (DBLogin.isEmpty())
@@ -443,11 +428,66 @@ void FillConfig()
 		}
 	}
 
+	//Получаем имя БД
+	DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
+	if (DBName.isEmpty()) //Если база данных не указана
+	{
+		if (ISConsole::Question("Show database list?")) //Предлагаем показать список всех баз на сервере
+		{
+			QStringList StringList;
+			if (GetDatabaseList(StringList)) //Если удалось запросить список баз - выводим его в консоль
+			{
+				for (int i = 0; i < StringList.size(); ++i)
+				{
+					ISLOGGER_L(QString("%1. %2").arg(i + 1).arg(StringList[i]));
+				}
+			}
+		}
+
+		while (DBName.isEmpty())
+		{
+			DBName = ISConsole::GetString("Enter the database name: ");
+			if (DBName.isEmpty())
+			{
+				ISLOGGER_L("Database name is empty!");
+			}
+		}
+	}
+
 	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, DBHost);
 	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, DBPort);
 	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, DBName);
 	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_LOGIN, DBLogin);
 	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PASSWORD, DBPassword);
 	ISConfig::Instance().SaveForce();
+}
+//-----------------------------------------------------------------------------
+bool GetDatabaseList(QStringList &StringList)
+{
+	bool Result = ISDatabase::Instance().Connect(CONNECTION_SYSTEM, DBHost, DBPort, SYSTEM_DATABASE_NAME, DBLogin, DBPassword);
+	if (Result)
+	{
+		{
+			ISQuery qSelect(ISDatabase::Instance().GetDB(CONNECTION_SYSTEM), QS_DATABASE);
+			Result = qSelect.Execute();
+			if (Result)
+			{
+				while (qSelect.Next())
+				{
+					StringList.push_back(qSelect.ReadColumn("datname").toString());
+				}
+			}
+			else
+			{
+				ISLOGGER_E("Error getting database list: " + qSelect.GetErrorString());
+			}
+		}
+		ISDatabase::Instance().Disconnect(CONNECTION_SYSTEM);
+	}
+	else
+	{
+		ISLOGGER_E("Not connected to system database: " + ISDatabase::Instance().GetErrorString());
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
