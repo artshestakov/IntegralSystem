@@ -14,7 +14,6 @@
 #include "ISConsole.h"
 #include "ISVersion.h"
 #include "ISQuery.h"
-#include "ISLocalization.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorCreate.h"
@@ -91,8 +90,6 @@ int main(int argc, char **argv)
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
-
-	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 
 	ISVectorString Arguments = CoreArralication.arguments().toVector().toStdVector();
 	Arguments.erase(Arguments.begin());
