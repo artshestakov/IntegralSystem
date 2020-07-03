@@ -107,6 +107,7 @@ int main(int argc, char **argv)
 		ISLOGGER_L("DBHost: " + DBHost);
 		ISLOGGER_L("DBName: " + DBName);
 		ISLOGGER_L("DBPort: " + QString::number(DBPort));
+		ISLOGGER_L("Configuration: " + ConfigurationName);
 		ISLOGGER_L("Enter the \"help\" command to get help");
 		
 		while (Result)
