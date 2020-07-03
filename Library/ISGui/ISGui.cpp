@@ -54,10 +54,29 @@ bool ISGui::Startup(QString &ErrorString)
 	ISSplashWidget SplashWidget;
 	SplashWidget.show();
 
-	//Загрузка локализации
-	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
-	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
-	ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);
+	//Загрузка локализации ядра
+	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
+	if (!Result)
+	{
+		ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CORE).arg(ISLocalization::Instance().GetErrorString());
+		return Result;
+	}
+
+	//Загрузка локализации клиента
+	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
+	if (!Result)
+	{
+		ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_INTEGRAL_SYSTEM).arg(ISLocalization::Instance().GetErrorString());
+		return Result;
+	}
+
+	//Загрузка локализации объектов
+	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);
+	if (!Result)
+	{
+		ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_OBJECTS).arg(ISLocalization::Instance().GetErrorString());
+		return Result;
+	}
 
 	//Загрузка стилей интерфейса
 	SplashWidget.SetText(LANG("SplashWidget.Styles"));

@@ -7,6 +7,7 @@
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
+	: ErrorString(NO_ERROR_STRING)
 {
 	QString TranslatorFilePath = ISDefines::Core::PATH_TRANSLATIONS_DIR + '/' + "qt_ru.qm";
 	if (QFile::exists(TranslatorFilePath))
@@ -41,71 +42,100 @@ ISLocalization& ISLocalization::Instance()
 	return Localization;
 }
 //-----------------------------------------------------------------------------
+QString ISLocalization::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
 QString ISLocalization::GetString(const QString &ParameterName) const
 {
 	std::map<QString, QString>::const_iterator It = Dictionary.find(ParameterName);
-	if (It == Dictionary.end())
-	{
-		return ParameterName;
-	}
-	return It->second;
+	return It == Dictionary.end() ? ParameterName : It->second;
 }
 //-----------------------------------------------------------------------------
-void ISLocalization::LoadResourceFile(const QString &FileName)
+bool ISLocalization::LoadResourceFile(const QString &FileName)
 {
 	QFile File(":Localization/" + FileName + SYMBOL_POINT + EXTENSION_LANG);
-	if (File.open(QIODevice::ReadOnly))
+	bool Result = File.open(QIODevice::ReadOnly);
+	if (Result) //Если файл локализации успешно открыт
 	{
-		InitializeContent(File.readAll());
+		Result = InitializeContent(File.readAll());
 		File.close();
 	}
-	else
+	else //Не удалось открыть файл локализации
 	{
-		ISLOGGER_W(QString("Not opened localization file \"%1\". Error: %2").arg(File.fileName()).arg(File.errorString()));
+		ErrorString = QString("not open localization file \"%1\". Error: %2.").arg(File.fileName()).arg(File.errorString());
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISLocalization::InitializeContent(const QString &Content)
+bool ISLocalization::InitializeContent(const QString &Content)
 {
-	if (!Content.isEmpty())
+	bool Result = !Content.isEmpty();
+	if (Result) //Если содержимое файла не пустое
 	{
 		QDomElement DomElement = ISSystem::GetDomElement(Content);
 		QDomNode NodeLocalization = DomElement.firstChild();
 
 		QString LocalizationName = DomElement.attributes().namedItem("Name").nodeValue();
-		if (!LocalizationName.isEmpty())
+		Result = !LocalizationName.isEmpty();
+		if (Result) //Если имя локализации указано
 		{
-			if (!ISAlgorithm::VectorContains(LoadedFiles, LocalizationName))
+			Result = !ISAlgorithm::VectorContains(LoadedFiles, LocalizationName);
+			if (Result) //Этот файл ещё не инициализирован
 			{
-				while (!NodeLocalization.isNull())
+				while (!NodeLocalization.isNull() && Result)
 				{
 					if (!NodeLocalization.isComment())
 					{
+						//Получаем ключ и значение перевода
 						QString LocalKey = NodeLocalization.attributes().namedItem("Name").nodeValue();
 						QString Value = NodeLocalization.attributes().namedItem("Russian").nodeValue();
-						if (!LocalKey.isEmpty())
+
+						Result = !LocalKey.isEmpty();
+						if (Result) //Если ключ перевода не пустой
 						{
-							IS_ASSERT(Dictionary.find(LocalKey) == Dictionary.end(), QString("Key \"%1\" already exist in localization map. File: %2. Line: %3").arg(LocalKey).arg(LocalizationName).arg(NodeLocalization.lineNumber()))
-								Dictionary.emplace(LocalKey, Value);
+							Result = !Value.isEmpty();
+							if (Result) //Значение перевода не пустое
+							{
+								Result = Dictionary.find(LocalKey) == Dictionary.end();
+								if (Result) //Проверяем наличие такого ключа. Если его нет - добавляем в словарь, иначе - ошибка
+								{
+									Dictionary.emplace(LocalKey, Value);
+								}
+								else
+								{
+									ErrorString = QString("Key \"%1\" already exist in localization map. File: %2. Line: %3.").arg(LocalKey).arg(LocalizationName).arg(NodeLocalization.lineNumber());
+								}									
+							}
+							else //Значение перевода пустое
+							{
+								ErrorString = QString("localization value is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber());
+							}
 						}
-						else
+						else //Ключ перевода пустой
 						{
-							ISLOGGER_W(QString("Localization key is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber()));
+							ErrorString = QString("localization key is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber());
 						}
 					}
 					NodeLocalization = NodeLocalization.nextSibling();
 				}
 				LoadedFiles.emplace_back(LocalizationName);
 			}
-			else
+			else //Этот файл уже инициализирован
 			{
-				ISLOGGER_W(QString("Localization file \"%1\" already initialized.").arg(LocalizationName));
+				ErrorString = "already initialized.";
 			}
 		}
-		else
+		else //Имя локализации не указано
 		{
-			ISLOGGER_W(QString("Invalid name file localization. Name: %1").arg(LocalizationName));
+			ErrorString = "empty localization name.";
 		}
 	}
+	else //Содержимое файла пустое
+	{
+		ErrorString = "empty content.";
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

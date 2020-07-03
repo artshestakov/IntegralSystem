@@ -10,9 +10,12 @@ class ISCORE_EXPORT ISLocalization
 public:
 	static ISLocalization& Instance();
 
+	QString GetErrorString() const;
 	QString GetString(const QString &ParameterName) const; //Получить локализованную строку
-	void LoadResourceFile(const QString &FileName); //Инициализация файла из ресурсов
-	void InitializeContent(const QString &Content); //Загрузка структуры локализации в буфер
+	bool LoadResourceFile(const QString &FileName); //Инициализация файла из ресурсов
+
+private:
+	bool InitializeContent(const QString &Content); //Загрузка структуры локализации в буфер
 
 private:
 	ISLocalization();
@@ -21,6 +24,7 @@ private:
 	ISLocalization& operator=(ISLocalization const&) { return *this; };
 
 private:
+	QString ErrorString;
 	std::map<QString, QString> Dictionary;
 	ISVectorString LoadedFiles;
 };
