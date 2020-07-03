@@ -21,7 +21,6 @@ FlatComponentsList=no
 ShowComponentSizes=yes
 Compression=lzma2/ultra64
 SolidCompression=yes
-PrivilegesRequired=admin
 UninstallDisplayIcon={app}\Carat.ico
 UninstallDisplayName=Carat
 DisableWelcomePage=no
@@ -57,6 +56,8 @@ Source: ${QTDIR}\plugins\sqldrivers\qsqlpsql${IS_DEBUG}.dll; DestDir: {app}\sqld
 
 Source: ..\Components\PostgreSQL\9.4\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Carat.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Resources\Icons\CaratWorker.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Resources\Icons\Configurator.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Components\Redistributable\Redistributable_2013_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Components\Redistributable\Redistributable_2015_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\translations\qt_ru.qm; DestDir: {app}\translations; Flags: ignoreversion recursesubdirs;

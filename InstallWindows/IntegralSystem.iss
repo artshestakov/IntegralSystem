@@ -21,7 +21,6 @@ FlatComponentsList=no
 ShowComponentSizes=yes
 Compression=lzma2/ultra64
 SolidCompression=yes
-PrivilegesRequired=admin
 UninstallDisplayIcon={app}\IntegralSystem.ico
 UninstallDisplayName=IntegralSystem
 DisableWelcomePage=no
