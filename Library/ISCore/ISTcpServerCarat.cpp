@@ -139,7 +139,6 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	}
 
 	VariantMap = VariantMap["Parameters"].toMap();
-
 	if (!VariantMap.contains("Login")) //Если поле с логином отсутствует
 	{
 		SendError(TcpSocket, "Not found field \"Login\"");
