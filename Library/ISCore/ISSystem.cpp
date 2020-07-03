@@ -39,7 +39,7 @@ QString ISSystem::GetDayOfWeekName(Qt::DayOfWeek Day)
 //-----------------------------------------------------------------------------
 QString ISSystem::GetConfigurationName()
 {
-#ifdef QT_DEBUG
+#ifdef DEBUG
 	return "Debug";
 #else
 	return "Release";
