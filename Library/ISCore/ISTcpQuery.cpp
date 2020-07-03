@@ -4,6 +4,7 @@
 #include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
+#include "ISVersion.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
 	: ErrorString(NO_ERROR_STRING),
@@ -29,11 +30,17 @@ void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &Paramete
 //-----------------------------------------------------------------------------
 bool ISTcpQuery::Execute()
 {
-	//Шифруем запрос
+	//Формирууем запрос (тип запроса, его параметры и системные поля
 	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
 	{
 		{ "Type", QueryType },
-		{ "Parameters", Parameters }
+		{ "Parameters", Parameters },
+		{
+			"System", QVariantMap
+			{
+				{ "Version", ISVersion::Instance().ToString() }
+			}
+		}
 	}).toUtf8();
 	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
 
