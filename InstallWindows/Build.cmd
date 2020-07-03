@@ -14,6 +14,7 @@ SET MAJOR="4"
 SET MINOR="9"
 SET DEPLOY_DIR=..\Deploy\%CONFIGURATION%-%PLATFORM%
 SET IS_DEBUG=""
+SET /a CPU_CORE_COUNT=%NUMBER_OF_PROCESSORS% * 2
 
 REM Если текущая сборка отладочная - заполняем переменную IS_DEBUG символом "d"
 IF "%CONFIGURATION%" == "Debug" (SET "IS_DEBUG=d")
