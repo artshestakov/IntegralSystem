@@ -1,1 +1,1 @@
-call Build.cmd Release Win32 IntegralSystem
+CALL Build.cmd Release Win32 IntegralSystem

@@ -1,1 +1,1 @@
-call Build.cmd Debug Win32 Carat
+CALL Build.cmd Debug Win32 Carat
