@@ -9,31 +9,12 @@
 ISLocalization::ISLocalization()
 	: ErrorString(NO_ERROR_STRING)
 {
-	QString TranslatorFilePath = ISDefines::Core::PATH_TRANSLATIONS_DIR + '/' + "qt_ru.qm";
-	if (QFile::exists(TranslatorFilePath))
-	{
-		QTranslator *Translator = new QTranslator(qApp);
-		if (Translator->load(TranslatorFilePath))
-		{
-			if (!qApp->installTranslator(Translator))
-			{
-				ISLOGGER_W(QString("Translator \"%1\" not installing").arg(TranslatorFilePath));
-			}
-		}
-		else
-		{
-			ISLOGGER_W("Not load translator file " + TranslatorFilePath);
-		}
-	}
-	else
-	{
-		ISLOGGER_W(QString("Not found translator file: %1").arg(TranslatorFilePath));
-	}
+	
 }
 //-----------------------------------------------------------------------------
 ISLocalization::~ISLocalization()
 {
-	
+	Dictionary.clear(); //ќчищаем словарь
 }
 //-----------------------------------------------------------------------------
 ISLocalization& ISLocalization::Instance()
@@ -51,6 +32,35 @@ QString ISLocalization::GetString(const QString &ParameterName) const
 {
 	std::map<QString, QString>::const_iterator It = Dictionary.find(ParameterName);
 	return It == Dictionary.end() ? ParameterName : It->second;
+}
+//-----------------------------------------------------------------------------
+bool ISLocalization::LoadTraslatorQT()
+{
+	QString FilePath = ISDefines::Core::PATH_TRANSLATIONS_DIR + '/' + "qt_ru.qm";
+	bool Result = QFile::exists(FilePath);
+	if (Result) //‘айл трансл€ций существует
+	{
+		QTranslator *Translator = new QTranslator(qApp);
+		Result = Translator->load(FilePath);
+		if (Result) //«агрузка трансл€ций прошла успешно
+		{
+			Result = qApp->installTranslator(Translator);
+			if (!Result) //Ќе удалось установить трансл€ции
+			{
+				ErrorString = "not installing translator file: " + FilePath;
+			}
+		}
+		else //«агрузка трансл€ций была завершена с ошибкой
+		{
+			ErrorString = "not load translator file: " + FilePath;
+			delete Translator;
+		}
+	}
+	else //‘айл трансл€ций не существует
+	{
+		ErrorString = "Not found translator file: " + FilePath;
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISLocalization::LoadResourceFile(const QString &FileName)

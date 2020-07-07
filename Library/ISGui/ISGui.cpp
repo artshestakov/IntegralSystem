@@ -54,6 +54,12 @@ bool ISGui::Startup(QString &ErrorString)
 	ISSplashWidget SplashWidget;
 	SplashWidget.show();
 
+	//Загрузка трансляций QT
+	if (!ISLocalization::Instance().LoadTraslatorQT())
+	{
+		ISLOGGER_W(ISLocalization::Instance().GetErrorString());
+	}
+
 	//Загрузка локализации ядра
 	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
 	if (!Result)
