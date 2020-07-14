@@ -6,6 +6,7 @@ ISRadioEdit::ISRadioEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	LayoutPanel = new QHBoxLayout();
 	LayoutPanel->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	LayoutPanel->addStretch();
 
 	WidgetPanel = new QWidget(this);
 	WidgetPanel->setLayout(LayoutPanel);
@@ -45,10 +46,11 @@ void ISRadioEdit::AddButton(QRadioButton *RadioButton, const QVariant &Value)
 {
 	RadioButton->setParent(WidgetPanel);
 	RadioButton->setCursor(CURSOR_POINTING_HAND);
-	LayoutPanel->addWidget(RadioButton);
 
 	int ButtonID = ButtonGroup->buttons().count();
 	ButtonGroup->addButton(RadioButton, ButtonID);
 	MapButtons.insert(ButtonID, Value);
+
+	LayoutPanel->insertWidget(ButtonID, RadioButton);
 }
 //-----------------------------------------------------------------------------

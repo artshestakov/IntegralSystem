@@ -303,7 +303,7 @@ void ISQDateEdit::showEvent(QShowEvent *ShowEvent)
 void ISQDateEdit::resizeEvent(QResizeEvent *ResizeEvent)
 {
 	ISQLineEdit::resizeEvent(ResizeEvent);
-	ButtonCalendar->move(QPoint(width() - ButtonCalendar->width() - 1, 2));
+	ButtonCalendar->move(QPoint(width() - ButtonCalendar->width() - 2, 2));
 }
 //-----------------------------------------------------------------------------
 void ISQDateEdit::ShowCalendar()

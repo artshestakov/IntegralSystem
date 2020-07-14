@@ -715,7 +715,7 @@ void ISTaskImportantEdit::ImportantChanged(const QVariant &value)
 //-----------------------------------------------------------------------------
 ISTaskDescriptionEdit::ISTaskDescriptionEdit(QWidget *parent) : ISTextEdit(parent)
 {
-	GetTextEdit()->setMaximumHeight(75);
+	GetTextEdit()->setMaximumHeight(125);
 }
 //-----------------------------------------------------------------------------
 ISTaskDescriptionEdit::~ISTaskDescriptionEdit()
