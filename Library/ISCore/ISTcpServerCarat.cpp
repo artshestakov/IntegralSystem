@@ -11,6 +11,7 @@
 #include "ISNetwork.h"
 #include "ISTrace.h"
 #include "ISAlgorithm.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "usrs_issystem, "
@@ -112,14 +113,14 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	QString ErrorString;
 	if (!ISTcp::IsValidQuery(Buffer, VariantMap, ErrorString)) //Ошибка парсинга
 	{
-		SendError(TcpSocket, "Error parse query: " + ErrorString);
+		SendError(TcpSocket, LANG("CaratError.ParseQuery").arg(ErrorString));
 		return;
 	}
 
 	//Если поле с типом запроса отсутствует
 	if (!VariantMap.contains("Type"))
 	{
-		SendError(TcpSocket, "Not found field \"Type\"");
+		SendError(TcpSocket, LANG("CaratError.NotFoundField").arg("Type"));
 		return;
 	}
 
@@ -127,41 +128,41 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	QString QueryType = VariantMap["Type"].toString();
 	if (QueryType.isEmpty())
 	{
-		SendError(TcpSocket, "Query type not specified");
+		SendError(TcpSocket, LANG("CaratError.FieldIsEmpty").arg("Type"));
 		return;
 	}
 
 	//Проверка типа запроса, если не авторизация - ошибка
 	if (QueryType != API_AUTH)
 	{
-		SendError(TcpSocket, QString("Invalid query type \"%1\"").arg(QueryType));
+		SendError(TcpSocket, LANG("CaratError.InvalidQueryType").arg(QueryType));
 		return;
 	}
 
 	VariantMap = VariantMap["Parameters"].toMap();
 	if (!VariantMap.contains("Login")) //Если поле с логином отсутствует
 	{
-		SendError(TcpSocket, "Not found field \"Login\"");
+		SendError(TcpSocket, LANG("CaratError.NotFoundField").arg("Login"));
 		return;
 	}
 
 	QString Login = VariantMap["Login"].toString();
 	if (Login.isEmpty()) //Если поле с логином пустое
 	{
-		SendError(TcpSocket, "Field \"Login\" is empty");
+		SendError(TcpSocket, LANG("CaratError.FieldIsEmpty").arg("Login"));
 		return;
 	}
 
 	if (!VariantMap.contains("Password")) //Если поле с паролем отсутствует
 	{
-		SendError(TcpSocket, "Not found field \"Password\"");
+		SendError(TcpSocket, LANG("CaratError.NotFoundField").arg("Password"));
 		return;
 	}
 
 	QString Password = VariantMap["Password"].toString();
 	if (Password.isEmpty()) //Если поле с паролем пустое
 	{
-		SendError(TcpSocket, "Field \"Password\" is empty");
+		SendError(TcpSocket, LANG("CaratError.FieldIsEmpty").arg("Password"));
 		return;
 	}
 
@@ -170,7 +171,7 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	qSelectAuth.BindValue(":Login", Login);
 	if (!qSelectAuth.ExecuteFirst())
 	{
-		SendError(TcpSocket, "Unknown error checking user login");
+		SendError(TcpSocket, LANG("CaratError.CheckingLogin"));
 		return;
 	}
 

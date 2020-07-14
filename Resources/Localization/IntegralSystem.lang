@@ -263,6 +263,13 @@
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
   <Local Name="Message.Question.DeleteInsetedFiles" Russian="Удалить добавленные файлы?"/>
   <Local Name="Message.Question.InstallPasswordToStorageFile" Russian="Установить пароль на файл &quot;%1&quot;?"/>
+  
+  <!--Carat error-->
+  <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>
+  <Local Name="CaratError.FieldNotFound" Russian="В запросе отсутствует поле &quot;%1&quot;"/>
+  <Local Name="CaratError.FieldIsEmpty" Russian="Поле &quot;%1&quot; не заполнено (пустое)"/>
+  <Local Name="CaratError.InvalidQueryType" Russian="Неверный тип запроса: %1"/>
+  <Local Name="CaratError.CheckingLogin" Russian="Ошибка при проверке логина пользователя: %!"/>
 
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
