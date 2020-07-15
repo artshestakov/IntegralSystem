@@ -301,15 +301,7 @@ void ISPathEditDir::SetValue(const QVariant &value)
 {
 	ISLineEdit::SetValue(value);
 	SetToolTip(value.toString());
-
-	if (value.toString().length())
-	{
-		ButtonOpenDir->setEnabled(true);
-	}
-	else
-	{
-		ButtonOpenDir->setEnabled(false);
-	}
+	ButtonOpenDir->setEnabled(!value.toString().isEmpty());
 }
 //-----------------------------------------------------------------------------
 void ISPathEditDir::Clear()
@@ -321,7 +313,7 @@ void ISPathEditDir::Clear()
 void ISPathEditDir::SelectDir()
 {
 	QString FolderPath = ISFileDialog::GetDirectoryPath(this);
-	if (FolderPath.length())
+	if (!FolderPath.isEmpty())
 	{
 		SetValue(FolderPath);
 	}
@@ -372,7 +364,7 @@ void ISPathEditFile::SetFilterFile(const QString &filter_file)
 void ISPathEditFile::SelectFile()
 {
 	QString Path = ISFileDialog::GetOpenFileName(this, GetValue().toString(), FilterFile);
-	if (Path.length())
+	if (!Path.isEmpty())
 	{
 		SetValue(Path);
 	}
@@ -424,7 +416,6 @@ void ISPasswordEdit::PasswordVisibleChanged(int State)
 	case Qt::Checked: SetEchoMode(QLineEdit::Normal); break;
 	case Qt::Unchecked: SetEchoMode(QLineEdit::Password); break;
 	}
-
 	SetFocus();
 }
 //-----------------------------------------------------------------------------
@@ -455,7 +446,7 @@ ISUrlEdit::~ISUrlEdit()
 void ISUrlEdit::OpenUrl()
 {
 	QString UrlString = GetValue().toString();
-	if (UrlString.length())
+	if (!UrlString.isEmpty())
 	{
 		if (ISGui::OpenUrl(UrlString))
 		{
@@ -478,14 +469,7 @@ void ISUrlEdit::OpenUrl()
 //-----------------------------------------------------------------------------
 void ISUrlEdit::UrlChanged()
 {
-	if (GetValue().toString().length())
-	{
-		ButtonUrl->setEnabled(true);
-	}
-	else
-	{
-		ButtonUrl->setEnabled(false);
-	}
+	ButtonUrl->setEnabled(!GetValue().toString().isEmpty());
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -681,7 +665,6 @@ void ISTaskNameEdit::Invoke()
 		}
 		File.close();
 	}
-
 	CreateCompleter(StringList);
 }
 //-----------------------------------------------------------------------------
@@ -701,14 +684,7 @@ ISTaskImportantEdit::~ISTaskImportantEdit()
 //-----------------------------------------------------------------------------
 void ISTaskImportantEdit::ImportantChanged(const QVariant &value)
 {
-	if (value.toBool())
-	{
-		GetCheckBox()->setIcon(BUFFER_ICONS("Task.Important.Checked"));
-	}
-	else
-	{
-		GetCheckBox()->setIcon(BUFFER_ICONS("Task.Important.Unchecked"));
-	}
+	GetCheckBox()->setIcon(BUFFER_ICONS(value.toBool() ? "Task.Important.Checked" : "Task.Important.Unchecked"));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
