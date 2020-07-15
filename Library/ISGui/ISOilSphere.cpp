@@ -421,43 +421,19 @@ void ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange()
 		GetFieldValue("VolumeIncome").toDouble() -
 		GetFieldValue("VolumeHolidaysCounters").toDouble() -
 		GetFieldValue("TechnicalStraitDeviation").toDouble();
-	if (BalanceEndChange)
-	{
-		SetFieldValue("BalanceEndChange", BalanceEndChange);
-	}
-	else
-	{
-		GetFieldWidget("BalanceEndChange")->Clear();
-	}
+	BalanceEndChange ? SetFieldValue("BalanceEndChange", BalanceEndChange) : GetFieldWidget("BalanceEndChange")->Clear();
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalancePayment()
 {
-	double CashboxBalancePayment =
-		GetFieldValue("SalesAmount").toDouble() -
-		GetFieldValue("KKMCashless").toDouble() -
-		GetFieldValue("PaySoldVolume").toDouble();
-	if (CashboxBalancePayment)
-	{
-		SetFieldValue("CashboxBalancePayment", CashboxBalancePayment);
-	}
-	else
-	{
-		GetFieldWidget("CashboxBalancePayment")->Clear();
-	}
+	double CashboxBalancePayment = GetFieldValue("SalesAmount").toDouble() - (GetFieldValue("KKMCashless").toDouble() + GetFieldValue("Statements").toDouble());
+	CashboxBalancePayment ? SetFieldValue("CashboxBalancePayment", CashboxBalancePayment) : GetFieldWidget("CashboxBalancePayment")->Clear();
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalanceActually()
 {
 	double CashboxBalanceActually = GetFieldValue("CashboxBalancePayment").toDouble() - GetFieldValue("PresenceDebt").toDouble();
-	if (CashboxBalanceActually)
-	{
-		SetFieldValue("CashboxBalanceActually", CashboxBalanceActually);
-	}
-	else
-	{
-		GetFieldWidget("CashboxBalanceActually")->Clear();
-	}
+	CashboxBalanceActually ? SetFieldValue("CashboxBalanceActually", CashboxBalanceActually) : GetFieldWidget("CashboxBalanceActually")->Clear();
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxDiscrepancies()
@@ -485,14 +461,7 @@ void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalPayment()
 		GetFieldValue("CashboxBalancePayment").toDouble() -
 		GetFieldValue("CashboxCollectionAmount").toDouble() -
 		GetFieldValue("CashboxAdministrativeExpenses").toDouble();
-	if (CashboxTotalPayment)
-	{
-		SetFieldValue("CashboxTotalPayment", CashboxTotalPayment);
-	}
-	else
-	{
-		GetFieldWidget("CashboxTotalPayment")->Clear();
-	}
+	CashboxTotalPayment ? SetFieldValue("CashboxTotalPayment", CashboxTotalPayment) : GetFieldWidget("CashboxTotalPayment")->Clear();
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalActually()
@@ -501,14 +470,7 @@ void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalActually()
 		BeforeCashboxTotalActually -
 		GetFieldValue("CashboxCollectionAmount").toDouble() -
 		GetFieldValue("CashboxAdministrativeExpenses").toDouble();
-	if (CashboxTotalActually)
-	{
-		SetFieldValue("CashboxTotalActually", CashboxTotalActually);
-	}
-	else
-	{
-		GetFieldWidget("CashboxTotalActually")->Clear();
-	}
+	CashboxTotalActually ? SetFieldValue("CashboxTotalActually", CashboxTotalActually) : GetFieldWidget("CashboxTotalActually")->Clear();
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::CaclulateCashboxDiscrepanciesTotals()
@@ -528,13 +490,6 @@ void ISOilSphere::GasStationStatementObjectForm::CaclulateCashboxDiscrepanciesTo
 void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxKKMTotal()
 {
 	double CashboxKKMTotal = BeforeCashboxKKMTotal + GetFieldValue("KKMCash").toDouble() - GetFieldValue("CashboxCollectionAmountKKM").toDouble();
-	if (CashboxKKMTotal)
-	{
-		SetFieldValue("CashboxKKMTotal", CashboxKKMTotal);
-	}
-	else
-	{
-		GetFieldWidget("CashboxKKMTotal")->Clear();
-	}
+	CashboxKKMTotal ? SetFieldValue("CashboxKKMTotal", CashboxKKMTotal) : GetFieldWidget("CashboxKKMTotal")->Clear();
 }
 //-----------------------------------------------------------------------------
