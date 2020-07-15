@@ -7,7 +7,7 @@ ISLineEdit::ISLineEdit(QWidget *parent)
 	LineEdit = new ISQLineEdit(this);
 	connect(LineEdit, &ISQLineEdit::ClearClicked, this, &ISLineEdit::Clear);
 	connect(LineEdit, &ISQLineEdit::returnPressed, this, &ISLineEdit::EnterClicked);
-	connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::ValueChanged);
+	connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::TextChanged);
 	AddWidgetEdit(LineEdit, this);
 }
 //-----------------------------------------------------------------------------
@@ -138,6 +138,26 @@ void ISLineEdit::OnLowerText(const QString &Text)
 	LineEdit->setCursorPosition(LineEdit->cursorPosition());
 }
 //-----------------------------------------------------------------------------
+void ISLineEdit::TextChanged(const QString &Text)
+{
+	emit ValueChanged();
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::TextChangedConnect()
+{
+	connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::TextChanged);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::TextChangedDisconnect()
+{
+	disconnect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::TextChanged);
+}
+//-----------------------------------------------------------------------------
+ISQLineEdit* ISLineEdit::GetLineEdit()
+{
+	return LineEdit;
+}
+//-----------------------------------------------------------------------------
 void ISLineEdit::SetInputMask(const QString &InputMask)
 {
 	LineEdit->setInputMask(InputMask);
@@ -161,10 +181,5 @@ void ISLineEdit::SetIcon(const QIcon &Icon)
 void ISLineEdit::SelectAll()
 {
 	QTimer::singleShot(10, GetLineEdit(), &ISQLineEdit::selectAll);
-}
-//-----------------------------------------------------------------------------
-ISQLineEdit* ISLineEdit::GetLineEdit()
-{
-	return LineEdit;
 }
 //-----------------------------------------------------------------------------

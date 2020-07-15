@@ -5,9 +5,6 @@
 //-----------------------------------------------------------------------------
 ISDoubleEdit::ISDoubleEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	DoubleValidator = new ISDoubleValidator(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA), this);
-	SetValidator(DoubleValidator);
-
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 }
 //-----------------------------------------------------------------------------
@@ -24,9 +21,16 @@ void ISDoubleEdit::SetValue(const QVariant &value)
 		ISLineEdit::SetValue(QString());
 }
 //-----------------------------------------------------------------------------
-void ISDoubleEdit::SetRange(double Minimum, double Maximum)
+void ISDoubleEdit::TextChanged(const QString &Text)
 {
-	DoubleValidator->setBottom(Minimum);
-	DoubleValidator->setTop(Maximum);
+	QString String = Text;
+	ISAlgorithm::PrepareStringDouble(String, SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
+	if (String != Text)
+	{
+		ISLineEdit::TextChangedDisconnect();
+		ISLineEdit::SetValue(String);
+		ISLineEdit::TextChangedConnect();
+	}
+	ISLineEdit::TextChanged(String);
 }
 //-----------------------------------------------------------------------------

@@ -141,7 +141,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISTaskDescriptionEdit*>("ISTaskDescriptionEdit");
 	qRegisterMetaType<ISExecutorEdit*>("ISExecutorEdit");
 	qRegisterMetaType<ISLoginEdit*>("ISLoginEdit");
-	qRegisterMetaType<ISPercentEdit*>("ISPercentEdit");
 	qRegisterMetaType<ISAddressEdit*>("ISAddressEdit");
 	qRegisterMetaType<ISUrlEdit*>("ISUrlEdit");
 	qRegisterMetaType<ISFileEdit*>("ISFileEdit");

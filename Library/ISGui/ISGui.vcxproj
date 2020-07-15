@@ -300,7 +300,6 @@
     <ClCompile Include="ISUserOnlineDetailsForm.cpp" />
     <ClCompile Include="ISUserPasswordForm.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
-    <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISVolumeEdit.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="ISWorkspaceForm.cpp" />
@@ -500,7 +499,6 @@
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISSexEdit.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
-    <QtMoc Include="ISValidators.h" />
     <QtMoc Include="ISTextEdit.h" />
     <QtMoc Include="ISTimeEdit.h" />
     <QtMoc Include="ISWaitWidget.h" />

@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 #include "ISLineEdit.h"
 #include "ISEdits.h"
-#include "ISValidators.h"
 //-----------------------------------------------------------------------------
 class ISDoubleEdit : public ISLineEdit
 {
@@ -15,10 +14,9 @@ public:
 	virtual ~ISDoubleEdit();
 
 	void SetValue(const QVariant &value) override;
-	void SetRange(double Minimum, double Maximum);
 
-private:
-	ISDoubleValidator *DoubleValidator;
+protected:
+	void TextChanged(const QString &Text) override;
 };
 //-----------------------------------------------------------------------------
 #endif

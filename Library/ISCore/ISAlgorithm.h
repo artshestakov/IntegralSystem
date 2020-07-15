@@ -44,6 +44,10 @@ namespace ISAlgorithm
 	//! \return возращает обрезанное число с плаващей зап€той
 	ISCORE_EXPORT double PrepareDouble(double Double, size_t Precision);
 
+	//! »сключить все буквы из дробного числа в виде строки
+	//! \param String дробное число в виде строки
+	ISCORE_EXPORT void PrepareStringDouble(QString &String, size_t Precision);
+
 	//ѕоиск значени€ в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {

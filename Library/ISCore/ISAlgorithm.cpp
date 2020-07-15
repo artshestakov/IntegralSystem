@@ -58,3 +58,50 @@ double ISAlgorithm::PrepareDouble(double Double, size_t Precision)
 	return atof(Char); //Преобразовываем строку обратно в число с плавающей запятой и возвращаем
 }
 //-----------------------------------------------------------------------------
+void ISAlgorithm::PrepareStringDouble(QString &String, size_t Precision)
+{
+	int Index = 0;
+	while (!String.isEmpty())
+	{
+		QChar Char = String[Index]; //Получаем текущий символ
+
+		//Если текущий символ не цифра, не точка и не запятая - удаляем этот символ
+		if (Char.isDigit() || Char == SYMBOL_POINT || Char == SYMBOL_COMMA)
+		{
+			//continue;
+		}
+		else if (Char == '\0') //Конец строки - можно выходить из цикла
+		{
+			break;
+		}
+		else //Попался символ отличный от цифры, точки или запятой - удаляем его и переходим на начало итерации
+		{
+			String.remove(Index, 1);
+			//Index = 0;
+			continue;
+		}
+		++Index;
+	}
+
+	//Заменяем все запятые на точки
+	String.replace(SYMBOL_COMMA, SYMBOL_POINT);
+
+	//Если количество запятых больше одной - удаляем все оставшиеся
+	while (String.count(SYMBOL_POINT) > 1)
+	{
+		int Pos = String.indexOf(SYMBOL_POINT);
+		String.remove(String.indexOf(SYMBOL_POINT, Pos + 1), 1);
+	}
+
+	//Обрезаем количество цифр после точки
+	int Pos = String.indexOf(SYMBOL_POINT);
+	if (Pos != -1) //Нашли точку
+	{
+		Pos += 1 + Precision;
+		if (Pos < String.size())
+		{
+			String.remove(Pos, String.size() - Pos);
+		}
+	}
+}
+//-----------------------------------------------------------------------------

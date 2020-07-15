@@ -372,9 +372,6 @@
     <ClCompile Include="ISUserRoleEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISValidators.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISAddressForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -921,9 +918,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISNotifyRecipient.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISValidators.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISAboutForm.h">

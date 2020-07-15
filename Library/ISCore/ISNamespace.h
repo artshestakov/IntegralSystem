@@ -41,7 +41,6 @@ public:
         FT_CallDetails, //Подробности звонка
         FT_Month, //Месяц
         FT_Login, //Логин пользователя системы
-        FT_Percent, //Процент
         FT_Address, //Адрес
         FT_Url, //Ссылка
         FT_File, //Файл

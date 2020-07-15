@@ -46,6 +46,9 @@ public:
 protected:
 	void OnUpperText(const QString &Text);
 	void OnLowerText(const QString &Text);
+	virtual void TextChanged(const QString &Text);
+	void TextChangedConnect();
+	void TextChangedDisconnect();
 	ISQLineEdit* GetLineEdit();
 
 private:

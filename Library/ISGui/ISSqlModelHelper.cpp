@@ -43,10 +43,6 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	{
 		Result = QTime(0, 0).addSecs(Value.toInt()).toString(FORMAT_TIME_V3);
 	}
-	else if (Type == ISNamespace::FT_Percent)
-	{
-		Result = Value.toString() + '%';
-	}
 	else if (Type == ISNamespace::FT_Double)
 	{
 		Result.setValue<double>(ISAlgorithm::PrepareDouble(Value.toDouble(), SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)));
@@ -64,8 +60,7 @@ QVariant ISSqlModelHelper::ValueFromTextAlignment(ISNamespace::FieldType FieldTy
 		FieldType == ISNamespace::FT_Seconds ||
 		FieldType == ISNamespace::FT_Year ||
 		FieldType == ISNamespace::FT_Phone ||
-		FieldType == ISNamespace::FT_PhoneBase ||
-		FieldType == ISNamespace::FT_Percent)
+		FieldType == ISNamespace::FT_PhoneBase)
 	{
 		Result = Qt::AlignCenter;
 	}
