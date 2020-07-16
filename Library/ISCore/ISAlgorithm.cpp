@@ -37,7 +37,7 @@ qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorS
 double ISAlgorithm::PrepareDouble(double Double, size_t Precision)
 {
 	char Char[MAX_PATH];
-	sprintf(Char, "%.*f", Precision, Double); //Конвертируем дробное число в строку.
+	sprintf(Char, "%.*f", (int)Precision, Double); //Конвертируем дробное число в строку.
 	while (true) //Обрезаем возможные нули в конце
 	{
 		size_t Index = strlen(Char) - 1; //Индекс последнего символа
