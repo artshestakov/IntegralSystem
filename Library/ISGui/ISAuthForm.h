@@ -49,5 +49,7 @@ private:
 	ISPushButton *ButtonExit;
 	ISAuthConnector *AuthConnector;
 	bool ConnectingState;
+	QTimer *TimerCapsLook;
+	QTimer *TimerLang;
 };
 //-----------------------------------------------------------------------------

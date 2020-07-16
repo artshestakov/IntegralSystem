@@ -141,18 +141,27 @@ ISAuthForm::~ISAuthForm()
 //-----------------------------------------------------------------------------
 void ISAuthForm::closeEvent(QCloseEvent *CloseEvent)
 {
-	ConnectingState ? CloseEvent->ignore() : ISInterfaceDialogForm::closeEvent(CloseEvent);
+	if (ConnectingState)
+	{
+		CloseEvent->ignore();
+	}
+	else
+	{
+		TimerCapsLook->stop();
+		TimerLang->stop();
+		ISInterfaceDialogForm::closeEvent(CloseEvent);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
 
-	QTimer *TimerCapsLook = new QTimer(this);
+	TimerCapsLook = new QTimer(this);
 	connect(TimerCapsLook, &QTimer::timeout, this, &ISAuthForm::TimeoutCapsLook);
 	TimerCapsLook->start(200);
 
-	QTimer *TimerLang = new QTimer(this);
+	TimerLang = new QTimer(this);
 	connect(TimerLang, &QTimer::timeout, this, &ISAuthForm::TimeoutLang);
 	TimerLang->start(200);
 }
