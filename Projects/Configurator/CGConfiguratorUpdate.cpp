@@ -110,7 +110,7 @@ bool CGConfiguratorUpdate::tables()
 	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().size(); i < CountTables; ++i) //Обход таблиц
 	{
 		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetTables()[i];
-		Progress("Table " + MetaTable->Name, i, CountTables);
+		Progress("Table", i, CountTables, "TableName: " + MetaTable->Name);
 		Result = CGTable::CheckExistTable(MetaTable, Exist, ErrorString);
 		if (Result)
 		{
@@ -166,8 +166,8 @@ bool CGConfiguratorUpdate::systemindexes()
 	bool Result = true, Exist = true;
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
-		Progress("System index", i, CountIndexes);
 		PMetaIndex *MetaIndex = ISMetaData::GetInstanse().GetSystemIndexes()[i];
+		Progress("System index", i, CountIndexes, "Table: " + MetaIndex->TableName);
 		if (CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString))
 		{
 			if (Exist)
@@ -204,8 +204,8 @@ bool CGConfiguratorUpdate::indexes()
 	bool Result = true, Exist = true;
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
-		Progress("Index", i, CountIndexes);
 		PMetaIndex *MetaIndex = ISMetaData::GetInstanse().GetIndexes()[i];
+		Progress("Index", i, CountIndexes, "Table: " + MetaIndex->TableName);
 		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
 		if (Result)
 		{
@@ -225,8 +225,8 @@ bool CGConfiguratorUpdate::compoundindexes()
 	bool Result = true, Exist = true;
 	for (int i = 0, CountIndexes = ISMetaData::GetInstanse().GetCompoundIndexes().size(); i < CountIndexes; ++i)
 	{
-		Progress("Compound index", i, CountIndexes);
 		PMetaIndex *MetaIndex = ISMetaData::GetInstanse().GetCompoundIndexes()[i];
+		Progress("Compound index", i, CountIndexes, "Table: " + MetaIndex->TableName);
 		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
 		if (Result)
 		{
@@ -267,8 +267,8 @@ bool CGConfiguratorUpdate::resources()
 	bool Result = true, Exist = true;
 	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().size(); i < CountResources; ++i)
 	{
-		Progress("Resource", i, CountResources);
 		PMetaResource *MetaResource = ISMetaData::GetInstanse().GetResources()[i];
+		Progress("Resource", i, CountResources, "ResourceUID: " + MetaResource->UID);
 		
 		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))
 		{

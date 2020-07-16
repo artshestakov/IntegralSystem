@@ -15,7 +15,7 @@ public:
 	QString GetErrorString() const;
 
 protected:
-	void Progress(const QString &ObjectTypeName, int Step, int Steps);
+	void Progress(const QString &ObjectTypeName, int Step, int TotalStep, const QString &Description = QString());
 
 protected:
 	QString ErrorString;

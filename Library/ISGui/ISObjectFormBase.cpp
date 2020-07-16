@@ -382,11 +382,6 @@ void ISObjectFormBase::CreateToolBar()
 	ActionReRead->setPriority(QAction::LowPriority);
 	connect(ActionReRead, &QAction::triggered, this, &ISObjectFormBase::ReRead);
 	AddActionMenu(ActionReRead);
-
-	QAction *ActionSettings = new QAction(ToolBar);
-	ActionSettings->setText(LANG("Settings"));
-	connect(ActionSettings, &QAction::triggered, this, &ISObjectFormBase::ShowSettingsForm);
-	AddActionMenu(ActionSettings);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateFieldsWidget()
@@ -1086,11 +1081,6 @@ void ISObjectFormBase::ReRead()
 		BeginFieldEdit->SetFocus();
 		ISGui::SetWaitGlobalCursor(false);
 	}
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::ShowSettingsForm()
-{
-	ISGui::ShowSettingsForm(CONST_UID_SETTING_GROUP_OBJECTS);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddActionToolBar(QAction *Action, bool AddingToActionGroup)
