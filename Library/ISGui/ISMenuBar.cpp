@@ -174,7 +174,7 @@ void ISMenuBar::CreateParagraphs()
 	LayoutParagraphs = new QHBoxLayout();
 	MainLayout->addLayout(LayoutParagraphs);
 
-	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::GetInstance().GetParagraphs())
+	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
 	{
 		ISParagraphButton *ParagraphButton = new ISParagraphButton(MetaParagraph, this);
 		connect(ParagraphButton, &ISParagraphButton::Clicked, this, static_cast<void(ISMenuBar::*)()>(&ISMenuBar::ButtonParagraphClicked));

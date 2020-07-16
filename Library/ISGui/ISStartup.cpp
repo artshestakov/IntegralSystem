@@ -113,7 +113,11 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	}
 
 	//Инициализация параграфов
-	ISParagraphEntity::GetInstance();
+	if (!ISParagraphEntity::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeParagraphs"), ISSettings::Instance().GetErrorString());
+		return false;
+	}
 
 	//Фиксация входа в протоколе
 	ISProtocol::EnterApplication();

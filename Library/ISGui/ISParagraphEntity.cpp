@@ -3,6 +3,7 @@
 #include "ISQuery.h"
 #include "ISSettings.h"
 #include "ISAssert.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname, prhs_default "
 											 "FROM _paragraphs "
@@ -10,12 +11,38 @@ static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_l
 											 "ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
 ISParagraphEntity::ISParagraphEntity()
+	: ErrorString(NO_ERROR_STRING)
+{
+	
+}
+//-----------------------------------------------------------------------------
+ISParagraphEntity::~ISParagraphEntity()
+{
+	while (!Paragraphs.empty())
+	{
+		delete ISAlgorithm::VectorTakeBack(Paragraphs);
+	}
+}
+//-----------------------------------------------------------------------------
+ISParagraphEntity& ISParagraphEntity::Instance()
+{
+	static ISParagraphEntity ParagraphEntity;
+	return ParagraphEntity;
+}
+//-----------------------------------------------------------------------------
+QString ISParagraphEntity::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISParagraphEntity::Initialize()
 {
 	QString ParagraphView = SETTING_STRING(CONST_UID_SETTING_VIEW_PARAGRAPHVIEW);
 	QStringList EnabledParagraphs = ParagraphView.split(SYMBOL_COMMA);
 
 	ISQuery qSelect(QS_PARAGRAPHS);
-	if (qSelect.Execute())
+	bool Result = qSelect.Execute();
+	if (Result)
 	{
 		while (qSelect.Next())
 		{
@@ -30,8 +57,7 @@ ISParagraphEntity::ISParagraphEntity()
 			if (ParagraphView == "All" || EnabledParagraphs.contains(UID))
 			{
 				ISMetaParagraph *MetaParagraph = new ISMetaParagraph(UID, Name, LocalName, ToolTip, Icon, ClassName, Default);
-				Paragraphs.append(MetaParagraph);
-
+				Paragraphs.push_back(MetaParagraph);
 				if (Default || SETTING_STRING(CONST_UID_SETTING_VIEW_STARTEDPARAGRAPH) == UID)
 				{
 					DefaultParagraph = UID;
@@ -39,20 +65,11 @@ ISParagraphEntity::ISParagraphEntity()
 			}
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-ISParagraphEntity::~ISParagraphEntity()
-{
-	while (!Paragraphs.isEmpty())
+	else
 	{
-		delete Paragraphs.takeLast();
+		ErrorString = qSelect.GetErrorString();
 	}
-}
-//-----------------------------------------------------------------------------
-ISParagraphEntity& ISParagraphEntity::GetInstance()
-{
-	static ISParagraphEntity ParagraphEntity;
-	return ParagraphEntity;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 ISUuid ISParagraphEntity::GetDefaultParagraph() const
@@ -73,7 +90,7 @@ ISMetaParagraph* ISParagraphEntity::GetParagraph(const QString &ParagraphUID)
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-QVector<ISMetaParagraph*> ISParagraphEntity::GetParagraphs()
+std::vector<ISMetaParagraph*> ISParagraphEntity::GetParagraphs()
 {
 	return Paragraphs;
 }

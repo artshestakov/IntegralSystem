@@ -146,13 +146,13 @@ void ISMainWindow::CreateStackWidget()
 {
 	StackedWidget = new QStackedWidget(this);
 	GetMainLayout()->addWidget(StackedWidget);
-	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::GetInstance().GetParagraphs())
+	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
 	{
 		ISParagraphBaseForm *ParagraphBaseForm = ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this));
 		ParagraphBaseForm->SetButtonParagraph(MenuBar->GetParagraphButton(MetaParagraph->UID));
 		Paragraphs.emplace(MetaParagraph->UID, StackedWidget->addWidget(ParagraphBaseForm));
 	}
-	MenuBar->ButtonParagraphClicked(ISParagraphEntity::GetInstance().GetDefaultParagraph());
+	MenuBar->ButtonParagraphClicked(ISParagraphEntity::Instance().GetDefaultParagraph());
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
@@ -170,7 +170,7 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 	ParagraphWidget->setFocus();
 	SetCurrentParagraphUID(ParagraphUID);
 
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_PARAGRAPH, QString(), QString(), QVariant(), ISParagraphEntity::GetInstance().GetParagraph(ParagraphUID)->LocalName);
+	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_PARAGRAPH, QString(), QString(), QVariant(), ISParagraphEntity::Instance().GetParagraph(ParagraphUID)->LocalName);
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

@@ -6,22 +6,23 @@
 class ISParagraphEntity
 {
 public:
-	ISParagraphEntity(const ISParagraphEntity &) = delete;
-	ISParagraphEntity(ISParagraphEntity &&) = delete;
-	ISParagraphEntity &operator=(const ISParagraphEntity &) = delete;
-	ISParagraphEntity &operator=(ISParagraphEntity &&) = delete;
-	~ISParagraphEntity();
-
-	static ISParagraphEntity& GetInstance();
+	static ISParagraphEntity& Instance();
 	
+	QString GetErrorString() const;
+	bool Initialize();
 	ISUuid GetDefaultParagraph() const;
 	ISMetaParagraph* GetParagraph(const QString &ParagraphUID); //Получить параграф
-	QVector<ISMetaParagraph*> GetParagraphs(); //Получить список параграфов
+	std::vector<ISMetaParagraph*> GetParagraphs(); //Получить список параграфов
 
 private:
 	ISParagraphEntity();
+	~ISParagraphEntity();
+	ISParagraphEntity(ISParagraphEntity const &) {};
+	ISParagraphEntity& operator=(ISParagraphEntity const&) { return *this; };
 
-	QVector<ISMetaParagraph*> Paragraphs;
+private:
+	QString ErrorString;
+	std::vector<ISMetaParagraph*> Paragraphs;
 	ISUuid DefaultParagraph;
 };
 //-----------------------------------------------------------------------------
