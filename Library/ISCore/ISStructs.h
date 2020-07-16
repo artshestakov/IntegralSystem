@@ -8,6 +8,7 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISTypedefs.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 struct ISMetaDataType
 {
@@ -82,9 +83,9 @@ struct ISCORE_EXPORT ISMetaSettingsGroup
     ISMetaSettingsGroup() : System(true) { }
     ~ISMetaSettingsGroup()
     {
-        while (!Settings.isEmpty())
+        while (!Settings.empty())
         {
-            delete Settings.takeLast();
+			delete ISAlgorithm::VectorTakeBack(Settings);
         }
     }
 
@@ -94,7 +95,7 @@ struct ISCORE_EXPORT ISMetaSettingsGroup
     QString IconName;
     bool System;
     QString Hint;
-    QVector<ISMetaSetting*> Settings;
+    std::vector<ISMetaSetting*> Settings;
 };
 //-----------------------------------------------------------------------------
 struct ISMetaParagraph

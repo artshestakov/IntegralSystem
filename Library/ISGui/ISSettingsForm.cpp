@@ -109,9 +109,9 @@ void ISSettingsForm::CreateCentralPanel()
 //-----------------------------------------------------------------------------
 void ISSettingsForm::CreateSettings()
 {
-	for (int i = 0; i < ISSettings::GetInstance().GetSettingGroups().count(); ++i)
+	for (ISMetaSettingsGroup *MetaGroup : ISSettings::Instance().GetSettingGroups())
 	{
-		ISMetaSettingsGroup *MetaGroup = ISSettings::GetInstance().GetSettingGroups()[i];
+		//ISMetaSettingsGroup *MetaGroup = ISSettings::Instance().GetSettingGroups()[i];
 		QListWidgetItem* ListWidgetItem = CreateItemGroup(MetaGroup);
 
 		QFormLayout *FormLayout = new QFormLayout();
@@ -120,9 +120,9 @@ void ISSettingsForm::CreateSettings()
 		ScrollArea->widget()->setLayout(FormLayout);
 		TabWidget->addTab(ScrollArea, QString());
 
-		for (int j = 0; j < MetaGroup->Settings.count(); ++j)
+		for (ISMetaSetting *MetaSetting : MetaGroup->Settings)
 		{
-			ISMetaSetting *MetaSetting = MetaGroup->Settings[j];
+			//ISMetaSetting *MetaSetting = MetaGroup->Settings[j];
 			
 			ISQLabel *LabelRow = new ISQLabel(ScrollArea);
 			LabelRow->setText(MetaSetting->LocalName + ':');
@@ -165,7 +165,7 @@ void ISSettingsForm::Save()
 		ISFieldEditBase *FieldEditBase = MapItem.second;
 		if (FieldEditBase)
 		{
-			ISSettings::GetInstance().SaveValue(SettingUID, FieldEditBase->GetValue());
+			ISSettings::Instance().SaveValue(SettingUID, FieldEditBase->GetValue());
 		}
 	}
 	ProgressForm.hide();

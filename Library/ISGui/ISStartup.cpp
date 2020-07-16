@@ -79,7 +79,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	ISMetaSystemsEntity::GetInstance().Initialize();
 
 	ISQueryPool::Instance().Start();
-
+	
 	//Инициалищация печати
 	ISPrintingEntity::GetInstance();
 
@@ -105,8 +105,12 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	//Инициализация настроек
-	ISSettings::GetInstance();
+	//Инициализация настроек пользователя
+	if (!ISSettings::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeUserSettings"), ISSettings::Instance().GetErrorString());
+		return false;
+	}
 
 	//Инициализация параграфов
 	ISParagraphEntity::GetInstance();
