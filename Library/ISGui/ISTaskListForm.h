@@ -1,12 +1,14 @@
-#include "ISTaskTodayListForm.h"
+#pragma once
 //-----------------------------------------------------------------------------
-ISTaskTodayListForm::ISTaskTodayListForm(QWidget *parent) : ISTaskBaseListForm(parent)
-{
-	//GetQueryModel()->SetClassFilter("task_deadline = CURRENT_DATE");
-}
+#include "StdAfx.h"
+#include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
-ISTaskTodayListForm::~ISTaskTodayListForm()
+class ISTaskListForm : public ISListBaseForm
 {
+	Q_OBJECT
 
-}
+public:
+	Q_INVOKABLE ISTaskListForm(QWidget *parent = 0);
+	virtual ~ISTaskListForm();
+};
 //-----------------------------------------------------------------------------

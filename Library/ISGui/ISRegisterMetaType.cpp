@@ -20,6 +20,7 @@
 #include "ISInternalDirectoriesForm.h"
 #include "ISAsteriskCallsListForm.h"
 #include "ISTaskAllListForm.h"
+#include "ISTaskListForm.h"
 #include "ISTaskMyListForm.h"
 #include "ISTaskFromListForm.h"
 #include "ISTaskFavoriteListForm.h"
@@ -85,6 +86,7 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISInternalDirectoriesForm*>("ISInternalDirectoriesForm");
 	qRegisterMetaType<ISAsteriskCallsListForm*>("ISAsteriskCallsListForm");
 	qRegisterMetaType<ISTaskAllListForm*>("ISTaskAllListForm");
+	qRegisterMetaType<ISTaskListForm*>("ISTaskListForm");
 	qRegisterMetaType<ISTaskMyListForm*>("ISTaskMyListForm");
 	qRegisterMetaType<ISTaskFromListForm*>("ISTaskFromListForm");
 	qRegisterMetaType<ISTaskFavoriteListForm*>("ISTaskFavoriteListForm");

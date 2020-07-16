@@ -10,11 +10,11 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "tsst_name, "
 									   "tsst_stylesheet, "
 									   "tspr_name, "
-									   "task_deadline, "
+									   //"task_deadline, "
 									   "userfullname(task_owner) as owner, "
-									   "userfullname(task_executor) as executor, "
-									   "task_datetime, "
-									   "task_resolution "
+									   "userfullname(task_executor) as executor "
+									   //"task_datetime "
+									   //"task_resolution "
 									   "FROM _task "
 									   "LEFT JOIN _taskstatus ON tsst_id = task_status "
 									   "LEFT JOIN _taskpriority ON tspr_id = task_priority "
@@ -57,11 +57,11 @@ void ISTaskInfoWidget::Update()
 		QString TaskStatus = qSelectTask.ReadColumn("tsst_name").toString();
 		QString TaskStatusStyleSheet = qSelectTask.ReadColumn("tsst_stylesheet").toString();
 		QString TaskPriority = qSelectTask.ReadColumn("tspr_name").toString();
-		QString TaskDeadline = qSelectTask.ReadColumn("task_deadline").toDate().toString(FORMAT_DATE_V2);
+		//QString TaskDeadline = qSelectTask.ReadColumn("task_deadline").toDate().toString(FORMAT_DATE_V2);
 		QString TaskOwner = qSelectTask.ReadColumn("owner").toString();
 		QString TaskExecutor = qSelectTask.ReadColumn("executor").toString();
-		QString TaskDateTime = qSelectTask.ReadColumn("task_datetime").toDateTime().toString(FORMAT_DATE_TIME_V2);
-		QString TaskResolution = qSelectTask.ReadColumn("task_resolution").toString();
+		//QString TaskDateTime = qSelectTask.ReadColumn("task_datetime").toDateTime().toString(FORMAT_DATE_TIME_V2);
+		//QString TaskResolution = qSelectTask.ReadColumn("task_resolution").toString();
 
 		LabelNumber->setText(TaskNumber);
 		LabelStatus->setText(TaskStatus);
@@ -73,28 +73,28 @@ void ISTaskInfoWidget::Update()
 
 		LabelPriority->setText(TaskPriority);
 
-		if (TaskDeadline.length())
+		/*if (TaskDeadline.length())
 		{
 			LabelDeadline->setText(TaskDeadline);
 		}
 		else
 		{
 			LabelDeadline->setText("-");
-		}
+		}*/
 
 		LabelOwner->setText(TaskOwner);
 		LabelExecutor->setText(TaskExecutor);
-		LabelDateTime->setText(TaskDateTime);
+		//LabelDateTime->setText(TaskDateTime);
 
 		
-		if (TaskResolution.length())
+		/*if (TaskResolution.length())
 		{
 			LabelResolution->setText(TaskResolution);
 		}
 		else
 		{
 			LabelResolution->setText("-");
-		}
+		}*/
 	}
 }
 //-----------------------------------------------------------------------------

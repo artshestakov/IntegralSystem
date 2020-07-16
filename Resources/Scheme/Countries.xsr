@@ -1,256 +1,256 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="Countries.xsr">
   
-  <_Countries UID="{292208D9-8AF3-47FA-B7F4-F4D8199457B9}" Name="Абхазия" FullName="Республика Абхазия" CodeTwo="AB" CodeThree="ABH" CodeNumber="895"/>
-  <_Countries UID="{6DDBE4A5-6784-4594-9FEA-B74165F7DCEF}" Name="Австралия" FullName="" CodeTwo="AU" CodeThree="AUS" CodeNumber="36"/>
-  <_Countries UID="{8599F034-0B6D-4B62-9373-C4F5E2D3AD18}" Name="Австрия" FullName="Австрийская Республика" CodeTwo="AT" CodeThree="AUT" CodeNumber="40"/>
-  <_Countries UID="{BBBDEE6F-8192-4ABD-AC1E-CA4C0A33CBBE}" Name="Азербайджан" FullName="Республика Азербайджан" CodeTwo="AZ" CodeThree="AZE" CodeNumber="31"/>
-  <_Countries UID="{593D6E3E-8D12-4D37-B5AB-E3B24A5C9061}" Name="Албания" FullName="Республика Албания" CodeTwo="AL" CodeThree="ALB" CodeNumber="8"/>
-  <_Countries UID="{2C6414EE-C3C6-4A9E-92D2-C7DDBAC45307}" Name="Алжир" FullName="Алжирская Народная Демократическая Республика" CodeTwo="DZ" CodeThree="DZA" CodeNumber="12"/>
-  <_Countries UID="{791B45AE-4328-45EF-9971-633B41C0E367}" Name="Американское самоа" FullName="" CodeTwo="AS" CodeThree="ASM" CodeNumber="16"/>
-  <_Countries UID="{B7E07E2A-4808-4586-BD5F-473E26A15EB3}" Name="Ангилья" FullName="" CodeTwo="AI" CodeThree="AIA" CodeNumber="660"/>
-  <_Countries UID="{ACB366D4-1663-4EA2-85CD-6FC8E8568EFE}" Name="Ангола" FullName="Республика Ангола" CodeTwo="AO" CodeThree="AGO" CodeNumber="24"/>
-  <_Countries UID="{3D7A8636-57DB-4EFB-B7EE-B1EF7A061431}" Name="Андорра" FullName="Княжество Андорра" CodeTwo="AD" CodeThree="AND" CodeNumber="20"/>
-  <_Countries UID="{2076BC40-2D1A-41B3-B9E1-1EC7AB668314}" Name="Антарктида" FullName="" CodeTwo="AQ" CodeThree="ATA" CodeNumber="10"/>
-  <_Countries UID="{115D965C-1E43-417A-A049-5FC89FBC7BFE}" Name="Антигуа и барбуда" FullName="" CodeTwo="AG" CodeThree="ATG" CodeNumber="28"/>
-  <_Countries UID="{44D3185A-C061-4115-A95C-8810A412CBF3}" Name="Аргентина" FullName="Аргентинская Республика" CodeTwo="AR" CodeThree="ARG" CodeNumber="32"/>
-  <_Countries UID="{A940F665-416D-4977-AFF7-BE2EF4FE7863}" Name="Армения" FullName="Республика Армения" CodeTwo="AM" CodeThree="ARM" CodeNumber="51"/>
-  <_Countries UID="{B831FC7F-F878-4357-AB73-60E866C1F297}" Name="Аруба" FullName="" CodeTwo="AW" CodeThree="ABW" CodeNumber="533"/>
-  <_Countries UID="{185B0284-577D-433E-938C-FE6484310B3D}" Name="Афганистан" FullName="Переходное Исламское Государство Афганистан" CodeTwo="AF" CodeThree="AFG" CodeNumber="4"/>
-  <_Countries UID="{06B61913-93A1-4B11-A39D-4637A410E9A2}" Name="Багамы" FullName="Содружество Багамы" CodeTwo="BS" CodeThree="BHS" CodeNumber="44"/>
-  <_Countries UID="{07A54A84-7711-4342-84E3-498BDF7310D2}" Name="Бангладеш" FullName="Народная Республика Бангладеш" CodeTwo="BD" CodeThree="BGD" CodeNumber="50"/>
-  <_Countries UID="{058A969E-CE01-44ED-A22A-F85D94305358}" Name="Барбадос" FullName="" CodeTwo="BB" CodeThree="BRB" CodeNumber="52"/>
-  <_Countries UID="{8CC6BDF9-19FA-4C33-9093-0E9B66CBAA0E}" Name="Бахрейн" FullName="Королевство Бахрейн" CodeTwo="BH" CodeThree="BHR" CodeNumber="48"/>
-  <_Countries UID="{5E56AB51-01B4-4E3E-B95F-1FFE3EB9A3FB}" Name="Беларусь" FullName="Республика Беларусь" CodeTwo="BY" CodeThree="BLR" CodeNumber="112"/>
-  <_Countries UID="{CC42E686-238C-4E06-BB81-C6387CF7E3D8}" Name="Белиз" FullName="" CodeTwo="BZ" CodeThree="BLZ" CodeNumber="84"/>
-  <_Countries UID="{2E2E22C3-1342-43D3-9556-B48B5DE98A75}" Name="Бельгия" FullName="Королевство Бельгии" CodeTwo="BE" CodeThree="BEL" CodeNumber="56"/>
-  <_Countries UID="{3E90E5E3-D8B5-4E32-B028-11BD76FBE567}" Name="Бенин" FullName="Республика Бенин" CodeTwo="BJ" CodeThree="BEN" CodeNumber="204"/>
-  <_Countries UID="{0AE7CC79-3090-4A16-BD1F-25AAF1DA52A4}" Name="Бермуды" FullName="" CodeTwo="BM" CodeThree="BMU" CodeNumber="60"/>
-  <_Countries UID="{BD6F41CA-BEF5-4FCD-93D6-4158F2E31090}" Name="Болгария" FullName="Республика Болгария" CodeTwo="BG" CodeThree="BGR" CodeNumber="100"/>
-  <_Countries UID="{F72072C8-1E08-4FAD-945E-C691531CA9E1}" Name="Боливия, многонациональное государство" FullName="Многонациональное Государство Боливия" CodeTwo="BO" CodeThree="BOL" CodeNumber="68"/>
-  <_Countries UID="{C1971BF8-62AD-4D03-95B4-48AB3318B6FA}" Name="Бонэйр, синт-эстатиус и саба" FullName="" CodeTwo="BQ" CodeThree="BES" CodeNumber="535"/>
-  <_Countries UID="{84B24C2F-E169-496E-91C2-BB2986B6066A}" Name="Босния и герцеговина" FullName="" CodeTwo="BA" CodeThree="BIH" CodeNumber="70"/>
-  <_Countries UID="{22C9B8F0-E0A6-4459-845B-460BA4B48FEF}" Name="Ботсвана" FullName="Республика Ботсвана" CodeTwo="BW" CodeThree="BWA" CodeNumber="72"/>
-  <_Countries UID="{F4A9D06E-0105-4222-A273-84BD2733FD82}" Name="Бразилия" FullName="Федеративная Республика Бразилия" CodeTwo="BR" CodeThree="BRA" CodeNumber="76"/>
-  <_Countries UID="{D64D91DC-B623-4077-BC5F-056F8BDDB646}" Name="Британская территория в индийском океане" FullName="" CodeTwo="IO" CodeThree="IOT" CodeNumber="86"/>
-  <_Countries UID="{4485A7B0-D085-4929-84C2-697415A2927A}" Name="Бруней-даруссалам" FullName="" CodeTwo="BN" CodeThree="BRN" CodeNumber="96"/>
-  <_Countries UID="{571DF128-DC6C-4A83-B8D5-DCD402260A87}" Name="Буркина-фасо" FullName="" CodeTwo="BF" CodeThree="BFA" CodeNumber="854"/>
-  <_Countries UID="{544394B3-F957-4B2A-AD5F-B59D3CEEEBA1}" Name="Бурунди" FullName="Республика Бурунди" CodeTwo="BI" CodeThree="BDI" CodeNumber="108"/>
-  <_Countries UID="{C99A1D29-7251-445F-8C92-42E8B541E251}" Name="Бутан" FullName="Королевство Бутан" CodeTwo="BT" CodeThree="BTN" CodeNumber="64"/>
-  <_Countries UID="{4727FA67-6D96-42F3-995E-346B60FE1E89}" Name="Вануату" FullName="Республика Вануату" CodeTwo="VU" CodeThree="VUT" CodeNumber="548"/>
-  <_Countries UID="{071B054D-81F6-45E6-8875-610377FABC86}" Name="Венгрия" FullName="" CodeTwo="HU" CodeThree="HUN" CodeNumber="348"/>
-  <_Countries UID="{52D9326F-9A49-4619-8D1D-5E62F98C283C}" Name="Венесуэла боливарианская республика" FullName="Боливарианская Республика Венесуэла" CodeTwo="VE" CodeThree="VEN" CodeNumber="862"/>
-  <_Countries UID="{BBA40A8D-7B60-46CA-B019-512D919CECCB}" Name="Виргинские острова, британские" FullName="Британские Виргинские острова" CodeTwo="VG" CodeThree="VGB" CodeNumber="92"/>
-  <_Countries UID="{73C920DE-528A-464F-A0FA-9D9EFCE257B6}" Name="Виргинские острова, сша" FullName="Виргинские острова Соединенных Штатов" CodeTwo="VI" CodeThree="VIR" CodeNumber="850"/>
-  <_Countries UID="{7EDEF8B5-0FEE-461C-BF5E-F010D6303F48}" Name="Вьетнам" FullName="Социалистическая Республика Вьетнам" CodeTwo="VN" CodeThree="VNM" CodeNumber="704"/>
-  <_Countries UID="{A70622E8-59A8-4013-BAE1-B24685FCD521}" Name="Габон" FullName="Габонская Республика" CodeTwo="GA" CodeThree="GAB" CodeNumber="266"/>
-  <_Countries UID="{4329ADA3-34BB-4C83-89B0-B2ADDB4439C8}" Name="Гаити" FullName="Республика Гаити" CodeTwo="HT" CodeThree="HTI" CodeNumber="332"/>
-  <_Countries UID="{6520007C-28E7-415B-89C3-64B59623033A}" Name="Гайана" FullName="Республика Гайана" CodeTwo="GY" CodeThree="GUY" CodeNumber="328"/>
-  <_Countries UID="{18C88B08-EF33-42BB-B3F0-B62DA687886F}" Name="Гамбия" FullName="Республика Гамбия" CodeTwo="GM" CodeThree="GMB" CodeNumber="270"/>
-  <_Countries UID="{6923FC7B-A07C-4545-9F44-FB977A4464CE}" Name="Гана" FullName="Республика Гана" CodeTwo="GH" CodeThree="GHA" CodeNumber="288"/>
-  <_Countries UID="{2EFB786C-DE5D-4CC5-8A71-0FF5C267B1A0}" Name="Гваделупа" FullName="" CodeTwo="GP" CodeThree="GLP" CodeNumber="312"/>
-  <_Countries UID="{B3B147E0-3AB0-4B39-B112-E08EB87EFE1A}" Name="Гватемала" FullName="Республика Гватемала" CodeTwo="GT" CodeThree="GTM" CodeNumber="320"/>
-  <_Countries UID="{CFB75C73-AC02-4238-9807-EBF1596972A4}" Name="Гвинея" FullName="Гвинейская Республика" CodeTwo="GN" CodeThree="GIN" CodeNumber="324"/>
-  <_Countries UID="{500F546F-380B-46DF-9BC8-8571057B1969}" Name="Гвинея-бисау" FullName="Республика Гвинея-Бисау" CodeTwo="GW" CodeThree="GNB" CodeNumber="624"/>
-  <_Countries UID="{763243D0-BC73-4323-9D7C-E1E680F20EB6}" Name="Германия" FullName="Федеративная Республика Германия" CodeTwo="DE" CodeThree="DEU" CodeNumber="276"/>
-  <_Countries UID="{549EB881-BA1B-430E-8699-43BCDA6D85DF}" Name="Гернси" FullName="" CodeTwo="GG" CodeThree="GGY" CodeNumber="831"/>
-  <_Countries UID="{9958063A-3DE9-46CE-9096-9A32FC0D7F55}" Name="Гибралтар" FullName="" CodeTwo="GI" CodeThree="GIB" CodeNumber="292"/>
-  <_Countries UID="{8CC06D03-63B2-42E1-BEE5-609AC70EFE87}" Name="Гондурас" FullName="Республика Гондурас" CodeTwo="HN" CodeThree="HND" CodeNumber="340"/>
-  <_Countries UID="{9E74B19B-C0D3-4615-AC25-47532C107FB4}" Name="Гонконг" FullName="Специальный административный регион Китая Гонконг" CodeTwo="HK" CodeThree="HKG" CodeNumber="344"/>
-  <_Countries UID="{B5DC4E4C-A536-4C60-9B12-D9FD11CD8C5C}" Name="Гренада" FullName="" CodeTwo="GD" CodeThree="GRD" CodeNumber="308"/>
-  <_Countries UID="{1F1928BD-F249-41CE-B063-747F4B244FEF}" Name="Гренландия" FullName="" CodeTwo="GL" CodeThree="GRL" CodeNumber="304"/>
-  <_Countries UID="{3B75511A-D413-443F-98E8-0381B8422F11}" Name="Греция" FullName="Греческая Республика" CodeTwo="GR" CodeThree="GRC" CodeNumber="300"/>
-  <_Countries UID="{D66BB8A1-914E-4364-A8EB-44C90DEF9E62}" Name="Грузия" FullName="" CodeTwo="GE" CodeThree="GEO" CodeNumber="268"/>
-  <_Countries UID="{8D7000F6-4B8E-4762-8D76-AFFA21B45C54}" Name="Гуам" FullName="" CodeTwo="GU" CodeThree="GUM" CodeNumber="316"/>
-  <_Countries UID="{5CE75790-F909-49EB-B76A-D46CE14DC2BB}" Name="Дания" FullName="Королевство Дания" CodeTwo="DK" CodeThree="DNK" CodeNumber="208"/>
-  <_Countries UID="{DA74F29A-8DE9-4603-A2D4-27D421582993}" Name="Джерси" FullName="" CodeTwo="JE" CodeThree="JEY" CodeNumber="832"/>
-  <_Countries UID="{DD0C7D3F-3D12-4EEB-99B9-DFDF9C0EBF59}" Name="Джибути" FullName="Республика Джибути" CodeTwo="DJ" CodeThree="DJI" CodeNumber="262"/>
-  <_Countries UID="{67FD3ECA-5182-40AB-9CC9-092B6CE3E997}" Name="Доминика" FullName="Содружество Доминики" CodeTwo="DM" CodeThree="DMA" CodeNumber="212"/>
-  <_Countries UID="{E6002074-115B-447C-9C87-AD1F7D491B57}" Name="Доминиканская республика" FullName="" CodeTwo="DO" CodeThree="DOM" CodeNumber="214"/>
-  <_Countries UID="{F8B73CC2-2D6B-4C66-BBB9-84D9C17C361E}" Name="Египет" FullName="Арабская Республика Египет" CodeTwo="EG" CodeThree="EGY" CodeNumber="818"/>
-  <_Countries UID="{991247A7-7E53-4038-B666-6A467A906BD2}" Name="Замбия" FullName="Республика Замбия" CodeTwo="ZM" CodeThree="ZMB" CodeNumber="894"/>
-  <_Countries UID="{436993C2-C8D4-44C3-8078-5B42E1EFCB4C}" Name="Западная сахара" FullName="" CodeTwo="EH" CodeThree="ESH" CodeNumber="732"/>
-  <_Countries UID="{8B5D5001-6FAF-4073-BF77-AFE11B4F18EE}" Name="Зимбабве" FullName="Республика Зимбабве" CodeTwo="ZW" CodeThree="ZWE" CodeNumber="716"/>
-  <_Countries UID="{4DD77DEC-547A-43EC-B410-5393ACDBD9AB}" Name="Израиль" FullName="Государство Израиль" CodeTwo="IL" CodeThree="ISR" CodeNumber="376"/>
-  <_Countries UID="{168D19ED-3F01-4090-B910-C56E560DC088}" Name="Индия" FullName="Республика Индия" CodeTwo="IN" CodeThree="IND" CodeNumber="356"/>
-  <_Countries UID="{B5257E2D-5256-4BFB-AB29-D2D1A9F6FB18}" Name="Индонезия" FullName="Республика Индонезия" CodeTwo="ID" CodeThree="IDN" CodeNumber="360"/>
-  <_Countries UID="{2685BB2B-A193-40BC-BE51-0E7C5C79474A}" Name="Иордания" FullName="Иорданское Хашимитское Королевство" CodeTwo="JO" CodeThree="JOR" CodeNumber="400"/>
-  <_Countries UID="{BC6BC4A8-908A-47D5-8D67-65B7F3B38198}" Name="Ирак" FullName="Республика Ирак" CodeTwo="IQ" CodeThree="IRQ" CodeNumber="368"/>
-  <_Countries UID="{26C34D5F-4D19-4888-AA71-4C8038626E1E}" Name="Иран, исламская республика" FullName="Исламская Республика Иран" CodeTwo="IR" CodeThree="IRN" CodeNumber="364"/>
-  <_Countries UID="{9FF5C1FA-AF6E-42EE-AE89-D6325DDB25F2}" Name="Ирландия" FullName="" CodeTwo="IE" CodeThree="IRL" CodeNumber="372"/>
-  <_Countries UID="{F54202E5-6E14-4D69-A636-8B0D961CEAD0}" Name="Исландия" FullName="Республика Исландия" CodeTwo="IS" CodeThree="ISL" CodeNumber="352"/>
-  <_Countries UID="{D6C8050D-84B0-4D25-ABA2-5536624E1B61}" Name="Испания" FullName="Королевство Испания" CodeTwo="ES" CodeThree="ESP" CodeNumber="724"/>
-  <_Countries UID="{98A5E724-ECA3-4973-95D9-F1F4FB56A899}" Name="Италия" FullName="Итальянская Республика" CodeTwo="IT" CodeThree="ITA" CodeNumber="380"/>
-  <_Countries UID="{85E13498-1ADF-403D-BF2F-9E1AC37EE0B8}" Name="Йемен" FullName="Йеменская Республика" CodeTwo="YE" CodeThree="YEM" CodeNumber="887"/>
-  <_Countries UID="{EDFDD2BB-B448-4C6D-AA02-1C12DE32493E}" Name="Кабо-верде" FullName="Республика Кабо-Верде" CodeTwo="CV" CodeThree="CPV" CodeNumber="132"/>
-  <_Countries UID="{A9995D7D-62E7-462B-B4ED-DE5418BC45AF}" Name="Казахстан" FullName="Республика Казахстан" CodeTwo="KZ" CodeThree="KAZ" CodeNumber="398"/>
-  <_Countries UID="{0A9F9235-8D3B-43C7-A073-CE33C4628147}" Name="Камбоджа" FullName="Королевство Камбоджа" CodeTwo="KH" CodeThree="KHM" CodeNumber="116"/>
-  <_Countries UID="{94062044-DB86-4493-AF45-9569C4B4F5D7}" Name="Камерун" FullName="Республика Камерун" CodeTwo="CM" CodeThree="CMR" CodeNumber="120"/>
-  <_Countries UID="{029A8752-CDD6-4A24-BCEF-E168E62004FB}" Name="Канада" FullName="" CodeTwo="CA" CodeThree="CAN" CodeNumber="124"/>
-  <_Countries UID="{8325D573-33F3-46FD-BBF2-049AAE3B6670}" Name="Катар" FullName="Государство Катар" CodeTwo="QA" CodeThree="QAT" CodeNumber="634"/>
-  <_Countries UID="{2F14BD76-1C28-4E63-8B08-F1C08F831983}" Name="Кения" FullName="Республика Кения" CodeTwo="KE" CodeThree="KEN" CodeNumber="404"/>
-  <_Countries UID="{064EA32E-AF96-4280-A4A7-3A25BC3292B3}" Name="Кипр" FullName="Республика Кипр" CodeTwo="CY" CodeThree="CYP" CodeNumber="196"/>
-  <_Countries UID="{4E7E1726-91B0-4F45-9E58-2F1541EC9AC7}" Name="Киргизия" FullName="Киргизская Республика" CodeTwo="KG" CodeThree="KGZ" CodeNumber="417"/>
-  <_Countries UID="{79982BAD-512E-4085-B038-77076B152F02}" Name="Кирибати" FullName="Республика Кирибати" CodeTwo="KI" CodeThree="KIR" CodeNumber="296"/>
-  <_Countries UID="{9AC5ECB0-367A-487A-BFA0-46760E72C70A}" Name="Китай" FullName="Китайская Народная Республика" CodeTwo="CN" CodeThree="CHN" CodeNumber="156"/>
-  <_Countries UID="{E9054859-FB18-48EE-8356-C4760168D01C}" Name="Кокосовые (килинг) острова" FullName="" CodeTwo="CC" CodeThree="CCK" CodeNumber="166"/>
-  <_Countries UID="{D5F16299-6590-47CF-95CB-C9509AF5557C}" Name="Колумбия" FullName="Республика Колумбия" CodeTwo="CO" CodeThree="COL" CodeNumber="170"/>
-  <_Countries UID="{FA92277F-FFD3-41FC-A15C-614AA5180643}" Name="Коморы" FullName="Союз Коморы" CodeTwo="KM" CodeThree="COM" CodeNumber="174"/>
-  <_Countries UID="{E464AC6E-1BD3-4245-AA85-21F518DC655F}" Name="Конго" FullName="Республика Конго" CodeTwo="CG" CodeThree="COG" CodeNumber="178"/>
-  <_Countries UID="{6A04557E-BF69-416C-8CD6-FDAA44757A42}" Name="Конго, демократическая республика" FullName="" CodeTwo="CD" CodeThree="COD" CodeNumber="180"/>
-  <_Countries UID="{58B4F888-9E0F-4D84-B56D-EC9C6665022A}" Name="Корея, народно-демократическая республика" FullName="Корейская Народно-Демократическая Республика" CodeTwo="KP" CodeThree="PRK" CodeNumber="408"/>
-  <_Countries UID="{900CF3E1-C15A-40F8-84AE-283D8D60A9B3}" Name="Корея, республика" FullName="Республика Корея" CodeTwo="KR" CodeThree="KOR" CodeNumber="410"/>
-  <_Countries UID="{CBFA5E18-0A0A-4B32-AF93-86965FE0892C}" Name="Коста-рика" FullName="Республика Коста-Рика" CodeTwo="CR" CodeThree="CRI" CodeNumber="188"/>
-  <_Countries UID="{140FDE1E-DC9E-418D-9D34-0E79C36609A9}" Name="Кот д’ивуар" FullName="Республика Кот д’Ивуар" CodeTwo="CI" CodeThree="CIV" CodeNumber="384"/>
-  <_Countries UID="{C228543F-3E18-456F-A1D6-CADF332CB330}" Name="Куба" FullName="Республика Куба" CodeTwo="CU" CodeThree="CUB" CodeNumber="192"/>
-  <_Countries UID="{66B2CB0F-31EE-47EF-8535-DA4D0C5B1741}" Name="Кувейт" FullName="Государство Кувейт" CodeTwo="KW" CodeThree="KWT" CodeNumber="414"/>
-  <_Countries UID="{14BCD067-5BF9-44E1-B676-62392708013A}" Name="Кюрасао" FullName="" CodeTwo="CW" CodeThree="CUW" CodeNumber="531"/>
-  <_Countries UID="{25CA9658-EBD9-4F2C-9824-8C03DCA1207E}" Name="Лаосская народно-демократическая республика" FullName="" CodeTwo="LA" CodeThree="LAO" CodeNumber="418"/>
-  <_Countries UID="{27DA75A6-8AF6-4A6A-A308-847B32736998}" Name="Латвия" FullName="Латвийская Республика" CodeTwo="LV" CodeThree="LVA" CodeNumber="428"/>
-  <_Countries UID="{047B4FCE-5BB0-4AA7-890F-F757C68D75E0}" Name="Лесото" FullName="Королевство Лесото" CodeTwo="LS" CodeThree="LSO" CodeNumber="426"/>
-  <_Countries UID="{88D01235-19BC-4249-ACBC-B9378DEBFE64}" Name="Либерия" FullName="Республика Либерия" CodeTwo="LR" CodeThree="LBR" CodeNumber="430"/>
-  <_Countries UID="{00A08CE7-769F-496C-8023-75BCD5268C66}" Name="Ливан" FullName="Ливанская Республика" CodeTwo="LB" CodeThree="LBN" CodeNumber="422"/>
-  <_Countries UID="{B2D3D617-12B4-4D00-9772-5F02CBF11407}" Name="Ливия" FullName="Ливия" CodeTwo="LY" CodeThree="LBY" CodeNumber="434"/>
-  <_Countries UID="{91FECBCB-A55F-465F-9422-9C7059042284}" Name="Литва" FullName="Литовская Республика" CodeTwo="LT" CodeThree="LTU" CodeNumber="440"/>
-  <_Countries UID="{336712AD-21F4-41F1-BA8F-350FECD425D4}" Name="Лихтенштейн" FullName="Княжество Лихтенштейн" CodeTwo="LI" CodeThree="LIE" CodeNumber="438"/>
-  <_Countries UID="{8F45555C-CABA-4882-8E6F-930482C1AA68}" Name="Люксембург" FullName="Великое Герцогство Люксембург" CodeTwo="LU" CodeThree="LUX" CodeNumber="442"/>
-  <_Countries UID="{56467695-9633-4D6A-9E08-D93AE81D39EA}" Name="Маврикий" FullName="Республика Маврикий" CodeTwo="MU" CodeThree="MUS" CodeNumber="480"/>
-  <_Countries UID="{E67D9EC8-D158-4904-A3AF-36C1478299F5}" Name="Мавритания" FullName="Исламская Республика Мавритания" CodeTwo="MR" CodeThree="MRT" CodeNumber="478"/>
-  <_Countries UID="{AE95D52B-D622-4BCD-831F-677F5F4A0AA6}" Name="Мадагаскар" FullName="Республика Мадагаскар" CodeTwo="MG" CodeThree="MDG" CodeNumber="450"/>
-  <_Countries UID="{90F9179F-8604-40BE-AD73-E6B33006B724}" Name="Майотта" FullName="" CodeTwo="YT" CodeThree="MYT" CodeNumber="175"/>
-  <_Countries UID="{0DFA0577-7DC0-4E61-A40C-2F5620E7D5EC}" Name="Макао" FullName="Специальный административный регион Китая Макао" CodeTwo="MO" CodeThree="MAC" CodeNumber="446"/>
-  <_Countries UID="{08616078-7407-4EED-9EA4-3FF5CB493D4F}" Name="Республика македония[2]" FullName="" CodeTwo="MK" CodeThree="MKD" CodeNumber="807"/>
-  <_Countries UID="{B08953F6-8376-47A2-A016-2A1FB6BF5AAA}" Name="Малави" FullName="Республика Малави" CodeTwo="MW" CodeThree="MWI" CodeNumber="454"/>
-  <_Countries UID="{E3509EF0-67EA-4AB7-9AF5-21B9A8B63CB4}" Name="Малайзия" FullName="" CodeTwo="MY" CodeThree="MYS" CodeNumber="458"/>
-  <_Countries UID="{50D461A6-83AF-47CB-A515-7A3181727BAA}" Name="Мали" FullName="Республика Мали" CodeTwo="ML" CodeThree="MLI" CodeNumber="466"/>
-  <_Countries UID="{EDD3DC3E-3EBE-44F4-BE8C-BD10AF5F066D}" Name="Малые тихоокеанские отдаленные острова соединенных штатов" FullName="" CodeTwo="UM" CodeThree="UMI" CodeNumber="581"/>
-  <_Countries UID="{7C808063-4338-427A-9C5A-D713095792C9}" Name="Мальдивы" FullName="Мальдивская Республика" CodeTwo="MV" CodeThree="MDV" CodeNumber="462"/>
-  <_Countries UID="{100FF261-2ACF-4CC5-A423-35517BCDD73A}" Name="Мальта" FullName="Республика Мальта" CodeTwo="MT" CodeThree="MLT" CodeNumber="470"/>
-  <_Countries UID="{C5A63076-1791-4267-AE61-9E0AE63AA8B7}" Name="Марокко" FullName="Королевство Марокко" CodeTwo="MA" CodeThree="MAR" CodeNumber="504"/>
-  <_Countries UID="{B4100635-E766-4C49-8BB8-9B364706D5B7}" Name="Мартиника" FullName="" CodeTwo="MQ" CodeThree="MTQ" CodeNumber="474"/>
-  <_Countries UID="{5631608C-6A08-4CF2-9997-51753ED683C3}" Name="Маршалловы острова" FullName="Республика Маршалловы Острова" CodeTwo="MH" CodeThree="MHL" CodeNumber="584"/>
-  <_Countries UID="{F3150165-02FE-4E4A-BDD9-3D8DC25C258D}" Name="Мексика" FullName="Мексиканские Соединенные Штаты" CodeTwo="MX" CodeThree="MEX" CodeNumber="484"/>
-  <_Countries UID="{549C406D-DB42-4A90-9225-798FDA6BF395}" Name="Микронезия, федеративные штаты" FullName="Федеративные Штаты Микронезии" CodeTwo="FM" CodeThree="FSM" CodeNumber="583"/>
-  <_Countries UID="{46EF5436-17F6-4B26-9A76-97D9FF6C76B8}" Name="Мозамбик" FullName="Республика Мозамбик" CodeTwo="MZ" CodeThree="MOZ" CodeNumber="508"/>
-  <_Countries UID="{347AC4BE-9118-4512-BE57-0647963D0723}" Name="Молдова, республика" FullName="Республика Молдова" CodeTwo="MD" CodeThree="MDA" CodeNumber="498"/>
-  <_Countries UID="{25D558B8-880D-499E-8013-3E2CBEC38F01}" Name="Монако" FullName="Княжество Монако" CodeTwo="MC" CodeThree="MCO" CodeNumber="492"/>
-  <_Countries UID="{B1C690B4-10F7-4D0F-AB3D-06F61ACF18CD}" Name="Монголия" FullName="" CodeTwo="MN" CodeThree="MNG" CodeNumber="496"/>
-  <_Countries UID="{ED52E361-8678-48F7-95CF-AA3FD75C9EC8}" Name="Монтсеррат" FullName="" CodeTwo="MS" CodeThree="MSR" CodeNumber="500"/>
-  <_Countries UID="{9A875803-624A-4D1D-89AF-44B0D590B571}" Name="Мьянма" FullName="Республика Союза Мьянма" CodeTwo="MM" CodeThree="MMR" CodeNumber="104"/>
-  <_Countries UID="{3F1D997E-E4DB-4737-957F-FA36BF342D75}" Name="Намибия" FullName="Республика Намибия" CodeTwo="NA" CodeThree="NAM" CodeNumber="516"/>
-  <_Countries UID="{84EF921C-7E28-4087-BCEE-92D1EC724FAF}" Name="Науру" FullName="Республика Науру" CodeTwo="NR" CodeThree="NRU" CodeNumber="520"/>
-  <_Countries UID="{0763FE5C-91DE-4D83-90FC-48B762DA7368}" Name="Непал" FullName="Федеративная Демократическая Республика Непал" CodeTwo="NP" CodeThree="NPL" CodeNumber="524"/>
-  <_Countries UID="{5F5674D7-6C3D-47A6-B52C-A4AB0380ACA9}" Name="Нигер" FullName="Республика Нигер" CodeTwo="NE" CodeThree="NER" CodeNumber="562"/>
-  <_Countries UID="{37567545-751F-4481-87EB-75C62BC6B7FF}" Name="Нигерия" FullName="Федеративная Республика Нигерия" CodeTwo="NG" CodeThree="NGA" CodeNumber="566"/>
-  <_Countries UID="{B9F2A040-0058-4CD5-A8FA-E0226367B2B3}" Name="Нидерланды" FullName="Королевство Нидерландов" CodeTwo="NL" CodeThree="NLD" CodeNumber="528"/>
-  <_Countries UID="{2D778212-5C0D-4EE0-B909-8DDB7FF175B7}" Name="Никарагуа" FullName="Республика Никарагуа" CodeTwo="NI" CodeThree="NIC" CodeNumber="558"/>
-  <_Countries UID="{3F2CBAB6-F107-4809-B929-DD23201DB681}" Name="Ниуэ" FullName="Ниуэ" CodeTwo="NU" CodeThree="NIU" CodeNumber="570"/>
-  <_Countries UID="{F1D80457-8C92-4344-9F31-F2E93F7732AA}" Name="Новая зеландия" FullName="" CodeTwo="NZ" CodeThree="NZL" CodeNumber="554"/>
-  <_Countries UID="{FEFB89EE-0438-4E62-B908-1FA5A3950BE5}" Name="Новая каледония" FullName="" CodeTwo="NC" CodeThree="NCL" CodeNumber="540"/>
-  <_Countries UID="{F5345433-FF7B-41B3-960D-3555C39746F1}" Name="Норвегия" FullName="Королевство Норвегия" CodeTwo="NO" CodeThree="NOR" CodeNumber="578"/>
-  <_Countries UID="{62360D5B-9B85-4E5E-915F-32C38674D119}" Name="Объединенные арабские эмираты" FullName="" CodeTwo="AE" CodeThree="ARE" CodeNumber="784"/>
-  <_Countries UID="{58C2BA85-5256-43F3-BF1D-EA889F771869}" Name="Оман" FullName="Султанат Оман" CodeTwo="OM" CodeThree="OMN" CodeNumber="512"/>
-  <_Countries UID="{8AAEB425-DE15-4098-BD36-6ACA10343B94}" Name="Острова кайман" FullName="" CodeTwo="KY" CodeThree="CYM" CodeNumber="136"/>
-  <_Countries UID="{5009FF3E-00BE-472E-BAD9-FBFB8B562055}" Name="Острова кука" FullName="" CodeTwo="CK" CodeThree="COK" CodeNumber="184"/>
-  <_Countries UID="{0E84CCCB-A9E6-4D94-833F-4A00101C956A}" Name="Острова теркс и кайкос" FullName="" CodeTwo="TC" CodeThree="TCA" CodeNumber="796"/>
-  <_Countries UID="{9DA85DA5-EC09-44E8-A34A-A7A6EE005D84}" Name="Остров буве" FullName="" CodeTwo="BV" CodeThree="BVT" CodeNumber="74"/>
-  <_Countries UID="{60EFDCBB-CCA0-41B4-B185-B75FFB673E88}" Name="Остров мэн" FullName="" CodeTwo="IM" CodeThree="IMN" CodeNumber="833"/>
-  <_Countries UID="{E444BEDB-627C-4FE7-88D9-8A82D5B0C7F6}" Name="Остров норфолк" FullName="" CodeTwo="NF" CodeThree="NFK" CodeNumber="574"/>
-  <_Countries UID="{D26CF9E9-DB93-4254-8565-DC13B5D5FB27}" Name="Остров рождества" FullName="" CodeTwo="CX" CodeThree="CXR" CodeNumber="162"/>
-  <_Countries UID="{B3905CE3-AEAD-4491-AE83-EBF6F85585DB}" Name="Остров херд и острова макдональд" FullName="" CodeTwo="HM" CodeThree="HMD" CodeNumber="334"/>
-  <_Countries UID="{EEC4E179-D78E-4F85-8465-2B1EAB0DBDAE}" Name="Пакистан" FullName="Исламская Республика Пакистан" CodeTwo="PK" CodeThree="PAK" CodeNumber="586"/>
-  <_Countries UID="{3C5A866D-B73A-4904-AD9D-3E3C25039FCE}" Name="Палау" FullName="Республика Палау" CodeTwo="PW" CodeThree="PLW" CodeNumber="585"/>
-  <_Countries UID="{7F443218-F807-4562-9921-DA9A48B991E8}" Name="Палестина, государство" FullName="Государство Палестина" CodeTwo="PS" CodeThree="PSE" CodeNumber="275"/>
-  <_Countries UID="{3ECADB0B-3CB5-4A71-BD60-1483EB69D396}" Name="Панама" FullName="Республика Панама" CodeTwo="PA" CodeThree="PAN" CodeNumber="591"/>
-  <_Countries UID="{377D83A1-7BE4-4166-B3C3-AFA0EC8BDA6B}" Name="Папский престол (государство — город ватикан)" FullName="" CodeTwo="VA" CodeThree="VAT" CodeNumber="336"/>
-  <_Countries UID="{79BDAFB5-2889-4093-A48D-EDDA1147A76E}" Name="Папуа-новая гвинея" FullName="" CodeTwo="PG" CodeThree="PNG" CodeNumber="598"/>
-  <_Countries UID="{54ACFED6-927A-4AC7-AC49-EB8E0100BD3D}" Name="Парагвай" FullName="Республика Парагвай" CodeTwo="PY" CodeThree="PRY" CodeNumber="600"/>
-  <_Countries UID="{FEE10165-4977-48FD-A7AA-65EE58795250}" Name="Перу" FullName="Республика Перу" CodeTwo="PE" CodeThree="PER" CodeNumber="604"/>
-  <_Countries UID="{FD7E8C3A-0F12-4F2D-93D0-30568848A1C1}" Name="Питкерн" FullName="" CodeTwo="PN" CodeThree="PCN" CodeNumber="612"/>
-  <_Countries UID="{9C592861-CED9-47B9-B1E0-EFCB944DFE8B}" Name="Польша" FullName="Республика Польша" CodeTwo="PL" CodeThree="POL" CodeNumber="616"/>
-  <_Countries UID="{A0291423-BEB6-4813-85A4-F7FC1FBE1DC1}" Name="Португалия" FullName="Португальская Республика" CodeTwo="PT" CodeThree="PRT" CodeNumber="620"/>
-  <_Countries UID="{E874E8F6-6F75-4A78-A092-3505310E2B64}" Name="Пуэрто-рико" FullName="" CodeTwo="PR" CodeThree="PRI" CodeNumber="630"/>
-  <_Countries UID="{040F1499-5DCF-465D-941F-ED2336AA20C3}" Name="Реюньон" FullName="" CodeTwo="RE" CodeThree="REU" CodeNumber="638"/>
-  <_Countries UID="{EC95273A-8027-4F87-BCB1-3A539F83AB0E}" Name="Россия" FullName="Российская Федерация" CodeTwo="RU" CodeThree="RUS" CodeNumber="643"/>
-  <_Countries UID="{70F242D0-E5FB-4D51-8F21-270DE46220D3}" Name="Руанда" FullName="Руандийская Республика" CodeTwo="RW" CodeThree="RWA" CodeNumber="646"/>
-  <_Countries UID="{616A1AE1-6CC5-4EED-ACCE-8A4EF832440E}" Name="Румыния" FullName="" CodeTwo="RO" CodeThree="ROU" CodeNumber="642"/>
-  <_Countries UID="{DFB9AE56-3516-4ABC-A05C-49C9CBA4BC2F}" Name="Самоа" FullName="Независимое Государство Самоа" CodeTwo="WS" CodeThree="WSM" CodeNumber="882"/>
-  <_Countries UID="{16F9BAB5-8E9E-47D7-A671-C92164C74E5B}" Name="Сан-марино" FullName="Республика Сан-Марино" CodeTwo="SM" CodeThree="SMR" CodeNumber="674"/>
-  <_Countries UID="{8458A5C2-8CC9-4739-876B-CA6776B28705}" Name="Сан-томе и принсипи" FullName="Демократическая Республика Сан-Томе и Принсипи" CodeTwo="ST" CodeThree="STP" CodeNumber="678"/>
-  <_Countries UID="{1EC26F53-B28F-4A30-BBED-BF1C4E2AEF86}" Name="Саудовская аравия" FullName="Королевство Саудовская Аравия" CodeTwo="SA" CodeThree="SAU" CodeNumber="682"/>
-  <_Countries UID="{E5633954-A9B4-4FD3-8D33-013D7595EE28}" Name="Свазиленд" FullName="Королевство Свазиленд" CodeTwo="SZ" CodeThree="SWZ" CodeNumber="748"/>
-  <_Countries UID="{270154DF-EB65-4247-BCF0-CA01B049945A}" Name="Святая елена, остров вознесения, тристан-да-кунья" FullName="" CodeTwo="SH" CodeThree="SHN" CodeNumber="654"/>
-  <_Countries UID="{33CBA6B9-4985-4409-8622-B8DCF250B54E}" Name="Северные марианские острова" FullName="Содружество Северных Марианских островов" CodeTwo="MP" CodeThree="MNP" CodeNumber="580"/>
-  <_Countries UID="{7F84373F-8A62-4C95-AD42-96A8A5CB6FA8}" Name="Сейшелы" FullName="Республика Сейшелы" CodeTwo="SC" CodeThree="SYC" CodeNumber="690"/>
-  <_Countries UID="{328D6D26-7CD0-4A25-BC86-2A325EC2B3E5}" Name="Сен-бартелеми" FullName="" CodeTwo="BL" CodeThree="BLM" CodeNumber="652"/>
-  <_Countries UID="{D9FCEAA0-B112-443B-8226-CF11A5553C76}" Name="Сен-мартен" FullName="" CodeTwo="MF" CodeThree="MAF" CodeNumber="663"/>
-  <_Countries UID="{C6299CB2-7F51-45C0-A3A9-AFF2A3A39493}" Name="Сен-мартен (нидерландская часть)" FullName="" CodeTwo="SX" CodeThree="SXM" CodeNumber="534"/>
-  <_Countries UID="{1B95BB09-A799-41A5-9BFA-DFC90D17C773}" Name="Сенегал" FullName="Республика Сенегал" CodeTwo="SN" CodeThree="SEN" CodeNumber="686"/>
-  <_Countries UID="{C812FE09-F293-474D-A685-9D59D3B16203}" Name="Сент-винсент и гренадины" FullName="" CodeTwo="VC" CodeThree="VCT" CodeNumber="670"/>
-  <_Countries UID="{CC31B623-489E-4241-B7B8-C4885C5CB8F7}" Name="Сент-китс и невис" FullName="" CodeTwo="KN" CodeThree="KNA" CodeNumber="659"/>
-  <_Countries UID="{2C669551-8D35-4657-BA44-3736622A2780}" Name="Сент-люсия" FullName="" CodeTwo="LC" CodeThree="LCA" CodeNumber="662"/>
-  <_Countries UID="{052A6578-D4B7-472F-8DBF-8008915558B1}" Name="Сен-пьер и микелон" FullName="" CodeTwo="PM" CodeThree="SPM" CodeNumber="666"/>
-  <_Countries UID="{A9B52B99-2712-48DF-84CB-D6772DFB2095}" Name="Сербия" FullName="Республика Сербия" CodeTwo="RS" CodeThree="SRB" CodeNumber="688"/>
-  <_Countries UID="{ACA1B20D-9888-40EB-9EBD-0FBBE0164D78}" Name="Сингапур" FullName="Республика Сингапур" CodeTwo="SG" CodeThree="SGP" CodeNumber="702"/>
-  <_Countries UID="{C7686F2B-9FCC-4491-BB31-75C637344A26}" Name="Сирийская арабская республика" FullName="" CodeTwo="SY" CodeThree="SYR" CodeNumber="760"/>
-  <_Countries UID="{A38610CA-7CA0-4B3A-A719-56A9DF36116C}" Name="Словакия" FullName="Словацкая Республика" CodeTwo="SK" CodeThree="SVK" CodeNumber="703"/>
-  <_Countries UID="{AB03BF97-BCE9-480B-9D95-3BCC40A2F8DD}" Name="Словения" FullName="Республика Словения" CodeTwo="SI" CodeThree="SVN" CodeNumber="705"/>
-  <_Countries UID="{9C8F32BF-19C5-4E7E-A599-54F7AF3074A0}" Name="Соединенное королевство" FullName="Соединенное Королевство Великобритании и Северной Ирландии" CodeTwo="GB" CodeThree="GBR" CodeNumber="826"/>
-  <_Countries UID="{AE7D5604-65D9-426F-98D9-47548EB21D56}" Name="Соединенные штаты" FullName="Соединенные Штаты Америки" CodeTwo="US" CodeThree="USA" CodeNumber="840"/>
-  <_Countries UID="{7104B75A-8D3F-47ED-ACFA-542EEB139B28}" Name="Соломоновы острова" FullName="" CodeTwo="SB" CodeThree="SLB" CodeNumber="90"/>
-  <_Countries UID="{8479B54B-A21B-4C95-9159-0ABCB1F407AF}" Name="Сомали" FullName="Федеративная Республика Сомали" CodeTwo="SO" CodeThree="SOM" CodeNumber="706"/>
-  <_Countries UID="{85A453BD-30A7-4AA3-9B66-8C7CA92DBCAF}" Name="Судан" FullName="Республика Судан" CodeTwo="SD" CodeThree="SDN" CodeNumber="729"/>
-  <_Countries UID="{1D087CB9-73D0-4213-BCC5-53FFB1D7D530}" Name="Суринам" FullName="Республика Суринам" CodeTwo="SR" CodeThree="SUR" CodeNumber="740"/>
-  <_Countries UID="{2CE0BEF0-E51C-4983-A373-9CE65B659F6D}" Name="Сьерра-леоне" FullName="Республика Сьерра-Леоне" CodeTwo="SL" CodeThree="SLE" CodeNumber="694"/>
-  <_Countries UID="{5103F463-2213-4D9F-8637-FA29AD947A9B}" Name="Таджикистан" FullName="Республика Таджикистан" CodeTwo="TJ" CodeThree="TJK" CodeNumber="762"/>
-  <_Countries UID="{1760225B-3C7F-445E-BF73-D090B8A391FA}" Name="Таиланд" FullName="Королевство Таиланд" CodeTwo="TH" CodeThree="THA" CodeNumber="764"/>
-  <_Countries UID="{31454DDC-EE97-41CC-92BC-DB9A0F91F7A6}" Name="Тайвань (китай)" FullName="" CodeTwo="TW" CodeThree="TWN" CodeNumber="158"/>
-  <_Countries UID="{EEC22D34-E5EE-4EA2-8375-1104264A5E7A}" Name="Танзания, объединенная республика" FullName="Объединенная Республика Танзания" CodeTwo="TZ" CodeThree="TZA" CodeNumber="834"/>
-  <_Countries UID="{1567CC5A-D5BB-42E1-81C5-3EEAD5D83DDD}" Name="Тимор-лесте" FullName="Демократическая Республика Тимор-Лесте" CodeTwo="TL" CodeThree="TLS" CodeNumber="626"/>
-  <_Countries UID="{B17A6CBA-C2F4-4FFA-AD53-A9B095D63574}" Name="Того" FullName="Тоголезская Республика" CodeTwo="TG" CodeThree="TGO" CodeNumber="768"/>
-  <_Countries UID="{C5AFDA8E-581B-4D05-92BB-96055771DE12}" Name="Токелау" FullName="" CodeTwo="TK" CodeThree="TKL" CodeNumber="772"/>
-  <_Countries UID="{649B5929-6BA4-4799-A0C1-EF20B84E8C11}" Name="Тонга" FullName="Королевство Тонга" CodeTwo="TO" CodeThree="TON" CodeNumber="776"/>
-  <_Countries UID="{5E9136FB-BECE-47CE-B069-D879BE3501F4}" Name="Тринидад и тобаго" FullName="Республика Тринидад и Тобаго" CodeTwo="TT" CodeThree="TTO" CodeNumber="780"/>
-  <_Countries UID="{21CA9B3F-C028-487F-8AD9-D5D555098E0C}" Name="Тувалу" FullName="" CodeTwo="TV" CodeThree="TUV" CodeNumber="798"/>
-  <_Countries UID="{C5D1D695-8BFC-4DF7-A27B-DBF604524047}" Name="Тунис" FullName="Тунисская Республика" CodeTwo="TN" CodeThree="TUN" CodeNumber="788"/>
-  <_Countries UID="{CB8AACB9-4709-4ED3-9FDB-DF68FB941E61}" Name="Туркмения" FullName="Туркменистан" CodeTwo="TM" CodeThree="TKM" CodeNumber="795"/>
-  <_Countries UID="{14EF9E5D-3206-4C2D-9363-6DF0FBC3B1C0}" Name="Турция" FullName="Турецкая Республика" CodeTwo="TR" CodeThree="TUR" CodeNumber="792"/>
-  <_Countries UID="{825E4D0B-0FC4-4CA1-94CD-1184F6CA5B99}" Name="Уганда" FullName="Республика Уганда" CodeTwo="UG" CodeThree="UGA" CodeNumber="800"/>
-  <_Countries UID="{41387267-60AA-487A-AF07-0A8D6BE38841}" Name="Узбекистан" FullName="Республика Узбекистан" CodeTwo="UZ" CodeThree="UZB" CodeNumber="860"/>
-  <_Countries UID="{ADDE81C7-DE73-48E8-86BD-6AC870624132}" Name="Украина" FullName="" CodeTwo="UA" CodeThree="UKR" CodeNumber="804"/>
-  <_Countries UID="{255B2B49-09AA-4D15-87A6-44A48D326D10}" Name="Уоллис и футуна" FullName="" CodeTwo="WF" CodeThree="WLF" CodeNumber="876"/>
-  <_Countries UID="{6C6C11B1-C8AD-415E-8D46-7B96818EAC7D}" Name="Уругвай" FullName="Восточная Республика Уругвай" CodeTwo="UY" CodeThree="URY" CodeNumber="858"/>
-  <_Countries UID="{47D7DA10-98FD-4B65-9FCD-0DAB2A35474E}" Name="Фарерские острова" FullName="" CodeTwo="FO" CodeThree="FRO" CodeNumber="234"/>
-  <_Countries UID="{B598BB0B-F030-4061-AE61-35CA64F46475}" Name="Фиджи" FullName="Республика Фиджи" CodeTwo="FJ" CodeThree="FJI" CodeNumber="242"/>
-  <_Countries UID="{4B25B561-5114-4D66-A319-B7CE6B264EEA}" Name="Филиппины" FullName="Республика Филиппины" CodeTwo="PH" CodeThree="PHL" CodeNumber="608"/>
-  <_Countries UID="{05E76CA5-68D3-4BF3-BC20-7E19B79AB2D8}" Name="Финляндия" FullName="Финляндская Республика" CodeTwo="FI" CodeThree="FIN" CodeNumber="246"/>
-  <_Countries UID="{29F9890A-FDAD-457E-AB93-CD368DFE8677}" Name="Фолклендские острова (мальвинские)" FullName="" CodeTwo="FK" CodeThree="FLK" CodeNumber="238"/>
-  <_Countries UID="{2D6B62AE-D887-4A7C-9140-0065A88F7999}" Name="Франция" FullName="Французская Республика" CodeTwo="FR" CodeThree="FRA" CodeNumber="250"/>
-  <_Countries UID="{BD61568B-1B65-40CF-9482-4BF13D00325B}" Name="Французская гвиана" FullName="" CodeTwo="GF" CodeThree="GUF" CodeNumber="254"/>
-  <_Countries UID="{308F5C09-F0C7-41F1-90FC-DDEFB96C31FB}" Name="Французская полинезия" FullName="" CodeTwo="PF" CodeThree="PYF" CodeNumber="258"/>
-  <_Countries UID="{47E1CD67-F359-447A-9B37-5B9A217DAF97}" Name="Французские южные территории" FullName="" CodeTwo="TF" CodeThree="ATF" CodeNumber="260"/>
-  <_Countries UID="{82E2462A-E1FF-44FC-8143-DC0D0BDF071D}" Name="Хорватия" FullName="Республика Хорватия" CodeTwo="HR" CodeThree="HRV" CodeNumber="191"/>
-  <_Countries UID="{AB22D4A7-29F3-43B9-A8DC-68929A88DCBE}" Name="Центрально-африканская республика" FullName="" CodeTwo="CF" CodeThree="CAF" CodeNumber="140"/>
-  <_Countries UID="{A94DD746-8E23-41C1-BDF5-EC29BD120F09}" Name="Чад" FullName="Республика Чад" CodeTwo="TD" CodeThree="TCD" CodeNumber="148"/>
-  <_Countries UID="{3F871357-477A-4795-B669-ED91ED817E05}" Name="Черногория" FullName="" CodeTwo="ME" CodeThree="MNE" CodeNumber="499"/>
-  <_Countries UID="{C81F4A89-BE95-44F7-8A96-7352ADFD1715}" Name="Чешская республика" FullName="" CodeTwo="CZ" CodeThree="CZE" CodeNumber="203"/>
-  <_Countries UID="{EC936572-7082-4695-AC98-8D8A9F65BF7F}" Name="Чили" FullName="Республика Чили" CodeTwo="CL" CodeThree="CHL" CodeNumber="152"/>
-  <_Countries UID="{13F4C420-C012-4D78-998D-BE8A6AABA49E}" Name="Швейцария" FullName="Швейцарская Конфедерация" CodeTwo="CH" CodeThree="CHE" CodeNumber="756"/>
-  <_Countries UID="{94DA0EFF-9F8A-413F-8B07-CED0D64A1340}" Name="Швеция" FullName="Королевство Швеция" CodeTwo="SE" CodeThree="SWE" CodeNumber="752"/>
-  <_Countries UID="{D88E0BAE-C7D1-4110-B4FA-7AD91E5C1106}" Name="Шпицберген и ян майен" FullName="" CodeTwo="SJ" CodeThree="SJM" CodeNumber="744"/>
-  <_Countries UID="{FD7FD78B-3597-49D2-9BD5-0BE34377AE87}" Name="Шри-ланка" FullName="Демократическая Социалистическая Республика Шри-Ланка" CodeTwo="LK" CodeThree="LKA" CodeNumber="144"/>
-  <_Countries UID="{1AB0C2B9-E0C9-45D0-AF8A-463E2823804E}" Name="Эквадор" FullName="Республика Эквадор" CodeTwo="EC" CodeThree="ECU" CodeNumber="218"/>
-  <_Countries UID="{077FDB0D-30D9-40D7-9696-4575E2F7A2A2}" Name="Экваториальная гвинея" FullName="Республика Экваториальная Гвинея" CodeTwo="GQ" CodeThree="GNQ" CodeNumber="226"/>
-  <_Countries UID="{E6329424-1C09-4F11-BC16-29BEEBBFB1BB}" Name="Эландские острова" FullName="" CodeTwo="AX" CodeThree="ALA" CodeNumber="248"/>
-  <_Countries UID="{C9420848-C154-4C91-8A21-4B8648536660}" Name="Эль-сальвадор" FullName="Республика Эль-Сальвадор" CodeTwo="SV" CodeThree="SLV" CodeNumber="222"/>
-  <_Countries UID="{B90E6893-DA95-48DB-AA6D-31A93A34B70B}" Name="Эритрея" FullName="" CodeTwo="ER" CodeThree="ERI" CodeNumber="232"/>
-  <_Countries UID="{A7A97421-6501-496B-BA6A-DC4B3E5E0741}" Name="Эстония" FullName="Эстонская Республика" CodeTwo="EE" CodeThree="EST" CodeNumber="233"/>
-  <_Countries UID="{726E5A29-9A48-4DB8-8BE1-786FE81D009B}" Name="Эфиопия" FullName="Федеративная Демократическая Республика Эфиопия" CodeTwo="ET" CodeThree="ETH" CodeNumber="231"/>
-  <_Countries UID="{B6B71747-A6A1-4A6E-BF98-95DEBD99554D}" Name="Южная африка" FullName="Южно-Африканская Республика" CodeTwo="ZA" CodeThree="ZAF" CodeNumber="710"/>
-  <_Countries UID="{29945522-3588-42E2-AB84-12C58DF0BC09}" Name="Южная джорджия и южные сандвичевы острова" FullName="" CodeTwo="GS" CodeThree="SGS" CodeNumber="239"/>
-  <_Countries UID="{2E2662C8-9425-49A0-8AAC-CC712B2CA272}" Name="Южная осетия" FullName="Республика Южная Осетия" CodeTwo="OS" CodeThree="OST" CodeNumber="896"/>
-  <_Countries UID="{685C2C7C-30CF-4076-9EDC-06FBF98F6D1E}" Name="Южный судан" FullName="Республика Южный Судан" CodeTwo="SS" CodeThree="SSD" CodeNumber="728"/>
-  <_Countries UID="{272C4663-4319-40DA-A17B-805DA60514D1}" Name="Ямайка" FullName="" CodeTwo="JM" CodeThree="JAM" CodeNumber="388"/>
-  <_Countries UID="{846B6525-6A86-43BF-9B1D-92139840960D}" Name="Япония" FullName="" CodeTwo="JP" CodeThree="JPN" CodeNumber="392"/>
+  <_Countries IsSystem="true" UID="{292208D9-8AF3-47FA-B7F4-F4D8199457B9}" Name="Абхазия" FullName="Республика Абхазия" CodeTwo="AB" CodeThree="ABH" CodeNumber="895"/>
+  <_Countries IsSystem="true" UID="{6DDBE4A5-6784-4594-9FEA-B74165F7DCEF}" Name="Австралия" FullName="" CodeTwo="AU" CodeThree="AUS" CodeNumber="36"/>
+  <_Countries IsSystem="true" UID="{8599F034-0B6D-4B62-9373-C4F5E2D3AD18}" Name="Австрия" FullName="Австрийская Республика" CodeTwo="AT" CodeThree="AUT" CodeNumber="40"/>
+  <_Countries IsSystem="true" UID="{BBBDEE6F-8192-4ABD-AC1E-CA4C0A33CBBE}" Name="Азербайджан" FullName="Республика Азербайджан" CodeTwo="AZ" CodeThree="AZE" CodeNumber="31"/>
+  <_Countries IsSystem="true" UID="{593D6E3E-8D12-4D37-B5AB-E3B24A5C9061}" Name="Албания" FullName="Республика Албания" CodeTwo="AL" CodeThree="ALB" CodeNumber="8"/>
+  <_Countries IsSystem="true" UID="{2C6414EE-C3C6-4A9E-92D2-C7DDBAC45307}" Name="Алжир" FullName="Алжирская Народная Демократическая Республика" CodeTwo="DZ" CodeThree="DZA" CodeNumber="12"/>
+  <_Countries IsSystem="true" UID="{791B45AE-4328-45EF-9971-633B41C0E367}" Name="Американское самоа" FullName="" CodeTwo="AS" CodeThree="ASM" CodeNumber="16"/>
+  <_Countries IsSystem="true" UID="{B7E07E2A-4808-4586-BD5F-473E26A15EB3}" Name="Ангилья" FullName="" CodeTwo="AI" CodeThree="AIA" CodeNumber="660"/>
+  <_Countries IsSystem="true" UID="{ACB366D4-1663-4EA2-85CD-6FC8E8568EFE}" Name="Ангола" FullName="Республика Ангола" CodeTwo="AO" CodeThree="AGO" CodeNumber="24"/>
+  <_Countries IsSystem="true" UID="{3D7A8636-57DB-4EFB-B7EE-B1EF7A061431}" Name="Андорра" FullName="Княжество Андорра" CodeTwo="AD" CodeThree="AND" CodeNumber="20"/>
+  <_Countries IsSystem="true" UID="{2076BC40-2D1A-41B3-B9E1-1EC7AB668314}" Name="Антарктида" FullName="" CodeTwo="AQ" CodeThree="ATA" CodeNumber="10"/>
+  <_Countries IsSystem="true" UID="{115D965C-1E43-417A-A049-5FC89FBC7BFE}" Name="Антигуа и барбуда" FullName="" CodeTwo="AG" CodeThree="ATG" CodeNumber="28"/>
+  <_Countries IsSystem="true" UID="{44D3185A-C061-4115-A95C-8810A412CBF3}" Name="Аргентина" FullName="Аргентинская Республика" CodeTwo="AR" CodeThree="ARG" CodeNumber="32"/>
+  <_Countries IsSystem="true" UID="{A940F665-416D-4977-AFF7-BE2EF4FE7863}" Name="Армения" FullName="Республика Армения" CodeTwo="AM" CodeThree="ARM" CodeNumber="51"/>
+  <_Countries IsSystem="true" UID="{B831FC7F-F878-4357-AB73-60E866C1F297}" Name="Аруба" FullName="" CodeTwo="AW" CodeThree="ABW" CodeNumber="533"/>
+  <_Countries IsSystem="true" UID="{185B0284-577D-433E-938C-FE6484310B3D}" Name="Афганистан" FullName="Переходное Исламское Государство Афганистан" CodeTwo="AF" CodeThree="AFG" CodeNumber="4"/>
+  <_Countries IsSystem="true" UID="{06B61913-93A1-4B11-A39D-4637A410E9A2}" Name="Багамы" FullName="Содружество Багамы" CodeTwo="BS" CodeThree="BHS" CodeNumber="44"/>
+  <_Countries IsSystem="true" UID="{07A54A84-7711-4342-84E3-498BDF7310D2}" Name="Бангладеш" FullName="Народная Республика Бангладеш" CodeTwo="BD" CodeThree="BGD" CodeNumber="50"/>
+  <_Countries IsSystem="true" UID="{058A969E-CE01-44ED-A22A-F85D94305358}" Name="Барбадос" FullName="" CodeTwo="BB" CodeThree="BRB" CodeNumber="52"/>
+  <_Countries IsSystem="true" UID="{8CC6BDF9-19FA-4C33-9093-0E9B66CBAA0E}" Name="Бахрейн" FullName="Королевство Бахрейн" CodeTwo="BH" CodeThree="BHR" CodeNumber="48"/>
+  <_Countries IsSystem="true" UID="{5E56AB51-01B4-4E3E-B95F-1FFE3EB9A3FB}" Name="Беларусь" FullName="Республика Беларусь" CodeTwo="BY" CodeThree="BLR" CodeNumber="112"/>
+  <_Countries IsSystem="true" UID="{CC42E686-238C-4E06-BB81-C6387CF7E3D8}" Name="Белиз" FullName="" CodeTwo="BZ" CodeThree="BLZ" CodeNumber="84"/>
+  <_Countries IsSystem="true" UID="{2E2E22C3-1342-43D3-9556-B48B5DE98A75}" Name="Бельгия" FullName="Королевство Бельгии" CodeTwo="BE" CodeThree="BEL" CodeNumber="56"/>
+  <_Countries IsSystem="true" UID="{3E90E5E3-D8B5-4E32-B028-11BD76FBE567}" Name="Бенин" FullName="Республика Бенин" CodeTwo="BJ" CodeThree="BEN" CodeNumber="204"/>
+  <_Countries IsSystem="true" UID="{0AE7CC79-3090-4A16-BD1F-25AAF1DA52A4}" Name="Бермуды" FullName="" CodeTwo="BM" CodeThree="BMU" CodeNumber="60"/>
+  <_Countries IsSystem="true" UID="{BD6F41CA-BEF5-4FCD-93D6-4158F2E31090}" Name="Болгария" FullName="Республика Болгария" CodeTwo="BG" CodeThree="BGR" CodeNumber="100"/>
+  <_Countries IsSystem="true" UID="{F72072C8-1E08-4FAD-945E-C691531CA9E1}" Name="Боливия, многонациональное государство" FullName="Многонациональное Государство Боливия" CodeTwo="BO" CodeThree="BOL" CodeNumber="68"/>
+  <_Countries IsSystem="true" UID="{C1971BF8-62AD-4D03-95B4-48AB3318B6FA}" Name="Бонэйр, синт-эстатиус и саба" FullName="" CodeTwo="BQ" CodeThree="BES" CodeNumber="535"/>
+  <_Countries IsSystem="true" UID="{84B24C2F-E169-496E-91C2-BB2986B6066A}" Name="Босния и герцеговина" FullName="" CodeTwo="BA" CodeThree="BIH" CodeNumber="70"/>
+  <_Countries IsSystem="true" UID="{22C9B8F0-E0A6-4459-845B-460BA4B48FEF}" Name="Ботсвана" FullName="Республика Ботсвана" CodeTwo="BW" CodeThree="BWA" CodeNumber="72"/>
+  <_Countries IsSystem="true" UID="{F4A9D06E-0105-4222-A273-84BD2733FD82}" Name="Бразилия" FullName="Федеративная Республика Бразилия" CodeTwo="BR" CodeThree="BRA" CodeNumber="76"/>
+  <_Countries IsSystem="true" UID="{D64D91DC-B623-4077-BC5F-056F8BDDB646}" Name="Британская территория в индийском океане" FullName="" CodeTwo="IO" CodeThree="IOT" CodeNumber="86"/>
+  <_Countries IsSystem="true" UID="{4485A7B0-D085-4929-84C2-697415A2927A}" Name="Бруней-даруссалам" FullName="" CodeTwo="BN" CodeThree="BRN" CodeNumber="96"/>
+  <_Countries IsSystem="true" UID="{571DF128-DC6C-4A83-B8D5-DCD402260A87}" Name="Буркина-фасо" FullName="" CodeTwo="BF" CodeThree="BFA" CodeNumber="854"/>
+  <_Countries IsSystem="true" UID="{544394B3-F957-4B2A-AD5F-B59D3CEEEBA1}" Name="Бурунди" FullName="Республика Бурунди" CodeTwo="BI" CodeThree="BDI" CodeNumber="108"/>
+  <_Countries IsSystem="true" UID="{C99A1D29-7251-445F-8C92-42E8B541E251}" Name="Бутан" FullName="Королевство Бутан" CodeTwo="BT" CodeThree="BTN" CodeNumber="64"/>
+  <_Countries IsSystem="true" UID="{4727FA67-6D96-42F3-995E-346B60FE1E89}" Name="Вануату" FullName="Республика Вануату" CodeTwo="VU" CodeThree="VUT" CodeNumber="548"/>
+  <_Countries IsSystem="true" UID="{071B054D-81F6-45E6-8875-610377FABC86}" Name="Венгрия" FullName="" CodeTwo="HU" CodeThree="HUN" CodeNumber="348"/>
+  <_Countries IsSystem="true" UID="{52D9326F-9A49-4619-8D1D-5E62F98C283C}" Name="Венесуэла боливарианская республика" FullName="Боливарианская Республика Венесуэла" CodeTwo="VE" CodeThree="VEN" CodeNumber="862"/>
+  <_Countries IsSystem="true" UID="{BBA40A8D-7B60-46CA-B019-512D919CECCB}" Name="Виргинские острова, британские" FullName="Британские Виргинские острова" CodeTwo="VG" CodeThree="VGB" CodeNumber="92"/>
+  <_Countries IsSystem="true" UID="{73C920DE-528A-464F-A0FA-9D9EFCE257B6}" Name="Виргинские острова, сша" FullName="Виргинские острова Соединенных Штатов" CodeTwo="VI" CodeThree="VIR" CodeNumber="850"/>
+  <_Countries IsSystem="true" UID="{7EDEF8B5-0FEE-461C-BF5E-F010D6303F48}" Name="Вьетнам" FullName="Социалистическая Республика Вьетнам" CodeTwo="VN" CodeThree="VNM" CodeNumber="704"/>
+  <_Countries IsSystem="true" UID="{A70622E8-59A8-4013-BAE1-B24685FCD521}" Name="Габон" FullName="Габонская Республика" CodeTwo="GA" CodeThree="GAB" CodeNumber="266"/>
+  <_Countries IsSystem="true" UID="{4329ADA3-34BB-4C83-89B0-B2ADDB4439C8}" Name="Гаити" FullName="Республика Гаити" CodeTwo="HT" CodeThree="HTI" CodeNumber="332"/>
+  <_Countries IsSystem="true" UID="{6520007C-28E7-415B-89C3-64B59623033A}" Name="Гайана" FullName="Республика Гайана" CodeTwo="GY" CodeThree="GUY" CodeNumber="328"/>
+  <_Countries IsSystem="true" UID="{18C88B08-EF33-42BB-B3F0-B62DA687886F}" Name="Гамбия" FullName="Республика Гамбия" CodeTwo="GM" CodeThree="GMB" CodeNumber="270"/>
+  <_Countries IsSystem="true" UID="{6923FC7B-A07C-4545-9F44-FB977A4464CE}" Name="Гана" FullName="Республика Гана" CodeTwo="GH" CodeThree="GHA" CodeNumber="288"/>
+  <_Countries IsSystem="true" UID="{2EFB786C-DE5D-4CC5-8A71-0FF5C267B1A0}" Name="Гваделупа" FullName="" CodeTwo="GP" CodeThree="GLP" CodeNumber="312"/>
+  <_Countries IsSystem="true" UID="{B3B147E0-3AB0-4B39-B112-E08EB87EFE1A}" Name="Гватемала" FullName="Республика Гватемала" CodeTwo="GT" CodeThree="GTM" CodeNumber="320"/>
+  <_Countries IsSystem="true" UID="{CFB75C73-AC02-4238-9807-EBF1596972A4}" Name="Гвинея" FullName="Гвинейская Республика" CodeTwo="GN" CodeThree="GIN" CodeNumber="324"/>
+  <_Countries IsSystem="true" UID="{500F546F-380B-46DF-9BC8-8571057B1969}" Name="Гвинея-бисау" FullName="Республика Гвинея-Бисау" CodeTwo="GW" CodeThree="GNB" CodeNumber="624"/>
+  <_Countries IsSystem="true" UID="{763243D0-BC73-4323-9D7C-E1E680F20EB6}" Name="Германия" FullName="Федеративная Республика Германия" CodeTwo="DE" CodeThree="DEU" CodeNumber="276"/>
+  <_Countries IsSystem="true" UID="{549EB881-BA1B-430E-8699-43BCDA6D85DF}" Name="Гернси" FullName="" CodeTwo="GG" CodeThree="GGY" CodeNumber="831"/>
+  <_Countries IsSystem="true" UID="{9958063A-3DE9-46CE-9096-9A32FC0D7F55}" Name="Гибралтар" FullName="" CodeTwo="GI" CodeThree="GIB" CodeNumber="292"/>
+  <_Countries IsSystem="true" UID="{8CC06D03-63B2-42E1-BEE5-609AC70EFE87}" Name="Гондурас" FullName="Республика Гондурас" CodeTwo="HN" CodeThree="HND" CodeNumber="340"/>
+  <_Countries IsSystem="true" UID="{9E74B19B-C0D3-4615-AC25-47532C107FB4}" Name="Гонконг" FullName="Специальный административный регион Китая Гонконг" CodeTwo="HK" CodeThree="HKG" CodeNumber="344"/>
+  <_Countries IsSystem="true" UID="{B5DC4E4C-A536-4C60-9B12-D9FD11CD8C5C}" Name="Гренада" FullName="" CodeTwo="GD" CodeThree="GRD" CodeNumber="308"/>
+  <_Countries IsSystem="true" UID="{1F1928BD-F249-41CE-B063-747F4B244FEF}" Name="Гренландия" FullName="" CodeTwo="GL" CodeThree="GRL" CodeNumber="304"/>
+  <_Countries IsSystem="true" UID="{3B75511A-D413-443F-98E8-0381B8422F11}" Name="Греция" FullName="Греческая Республика" CodeTwo="GR" CodeThree="GRC" CodeNumber="300"/>
+  <_Countries IsSystem="true" UID="{D66BB8A1-914E-4364-A8EB-44C90DEF9E62}" Name="Грузия" FullName="" CodeTwo="GE" CodeThree="GEO" CodeNumber="268"/>
+  <_Countries IsSystem="true" UID="{8D7000F6-4B8E-4762-8D76-AFFA21B45C54}" Name="Гуам" FullName="" CodeTwo="GU" CodeThree="GUM" CodeNumber="316"/>
+  <_Countries IsSystem="true" UID="{5CE75790-F909-49EB-B76A-D46CE14DC2BB}" Name="Дания" FullName="Королевство Дания" CodeTwo="DK" CodeThree="DNK" CodeNumber="208"/>
+  <_Countries IsSystem="true" UID="{DA74F29A-8DE9-4603-A2D4-27D421582993}" Name="Джерси" FullName="" CodeTwo="JE" CodeThree="JEY" CodeNumber="832"/>
+  <_Countries IsSystem="true" UID="{DD0C7D3F-3D12-4EEB-99B9-DFDF9C0EBF59}" Name="Джибути" FullName="Республика Джибути" CodeTwo="DJ" CodeThree="DJI" CodeNumber="262"/>
+  <_Countries IsSystem="true" UID="{67FD3ECA-5182-40AB-9CC9-092B6CE3E997}" Name="Доминика" FullName="Содружество Доминики" CodeTwo="DM" CodeThree="DMA" CodeNumber="212"/>
+  <_Countries IsSystem="true" UID="{E6002074-115B-447C-9C87-AD1F7D491B57}" Name="Доминиканская республика" FullName="" CodeTwo="DO" CodeThree="DOM" CodeNumber="214"/>
+  <_Countries IsSystem="true" UID="{F8B73CC2-2D6B-4C66-BBB9-84D9C17C361E}" Name="Египет" FullName="Арабская Республика Египет" CodeTwo="EG" CodeThree="EGY" CodeNumber="818"/>
+  <_Countries IsSystem="true" UID="{991247A7-7E53-4038-B666-6A467A906BD2}" Name="Замбия" FullName="Республика Замбия" CodeTwo="ZM" CodeThree="ZMB" CodeNumber="894"/>
+  <_Countries IsSystem="true" UID="{436993C2-C8D4-44C3-8078-5B42E1EFCB4C}" Name="Западная сахара" FullName="" CodeTwo="EH" CodeThree="ESH" CodeNumber="732"/>
+  <_Countries IsSystem="true" UID="{8B5D5001-6FAF-4073-BF77-AFE11B4F18EE}" Name="Зимбабве" FullName="Республика Зимбабве" CodeTwo="ZW" CodeThree="ZWE" CodeNumber="716"/>
+  <_Countries IsSystem="true" UID="{4DD77DEC-547A-43EC-B410-5393ACDBD9AB}" Name="Израиль" FullName="Государство Израиль" CodeTwo="IL" CodeThree="ISR" CodeNumber="376"/>
+  <_Countries IsSystem="true" UID="{168D19ED-3F01-4090-B910-C56E560DC088}" Name="Индия" FullName="Республика Индия" CodeTwo="IN" CodeThree="IND" CodeNumber="356"/>
+  <_Countries IsSystem="true" UID="{B5257E2D-5256-4BFB-AB29-D2D1A9F6FB18}" Name="Индонезия" FullName="Республика Индонезия" CodeTwo="ID" CodeThree="IDN" CodeNumber="360"/>
+  <_Countries IsSystem="true" UID="{2685BB2B-A193-40BC-BE51-0E7C5C79474A}" Name="Иордания" FullName="Иорданское Хашимитское Королевство" CodeTwo="JO" CodeThree="JOR" CodeNumber="400"/>
+  <_Countries IsSystem="true" UID="{BC6BC4A8-908A-47D5-8D67-65B7F3B38198}" Name="Ирак" FullName="Республика Ирак" CodeTwo="IQ" CodeThree="IRQ" CodeNumber="368"/>
+  <_Countries IsSystem="true" UID="{26C34D5F-4D19-4888-AA71-4C8038626E1E}" Name="Иран, исламская республика" FullName="Исламская Республика Иран" CodeTwo="IR" CodeThree="IRN" CodeNumber="364"/>
+  <_Countries IsSystem="true" UID="{9FF5C1FA-AF6E-42EE-AE89-D6325DDB25F2}" Name="Ирландия" FullName="" CodeTwo="IE" CodeThree="IRL" CodeNumber="372"/>
+  <_Countries IsSystem="true" UID="{F54202E5-6E14-4D69-A636-8B0D961CEAD0}" Name="Исландия" FullName="Республика Исландия" CodeTwo="IS" CodeThree="ISL" CodeNumber="352"/>
+  <_Countries IsSystem="true" UID="{D6C8050D-84B0-4D25-ABA2-5536624E1B61}" Name="Испания" FullName="Королевство Испания" CodeTwo="ES" CodeThree="ESP" CodeNumber="724"/>
+  <_Countries IsSystem="true" UID="{98A5E724-ECA3-4973-95D9-F1F4FB56A899}" Name="Италия" FullName="Итальянская Республика" CodeTwo="IT" CodeThree="ITA" CodeNumber="380"/>
+  <_Countries IsSystem="true" UID="{85E13498-1ADF-403D-BF2F-9E1AC37EE0B8}" Name="Йемен" FullName="Йеменская Республика" CodeTwo="YE" CodeThree="YEM" CodeNumber="887"/>
+  <_Countries IsSystem="true" UID="{EDFDD2BB-B448-4C6D-AA02-1C12DE32493E}" Name="Кабо-верде" FullName="Республика Кабо-Верде" CodeTwo="CV" CodeThree="CPV" CodeNumber="132"/>
+  <_Countries IsSystem="true" UID="{A9995D7D-62E7-462B-B4ED-DE5418BC45AF}" Name="Казахстан" FullName="Республика Казахстан" CodeTwo="KZ" CodeThree="KAZ" CodeNumber="398"/>
+  <_Countries IsSystem="true" UID="{0A9F9235-8D3B-43C7-A073-CE33C4628147}" Name="Камбоджа" FullName="Королевство Камбоджа" CodeTwo="KH" CodeThree="KHM" CodeNumber="116"/>
+  <_Countries IsSystem="true" UID="{94062044-DB86-4493-AF45-9569C4B4F5D7}" Name="Камерун" FullName="Республика Камерун" CodeTwo="CM" CodeThree="CMR" CodeNumber="120"/>
+  <_Countries IsSystem="true" UID="{029A8752-CDD6-4A24-BCEF-E168E62004FB}" Name="Канада" FullName="" CodeTwo="CA" CodeThree="CAN" CodeNumber="124"/>
+  <_Countries IsSystem="true" UID="{8325D573-33F3-46FD-BBF2-049AAE3B6670}" Name="Катар" FullName="Государство Катар" CodeTwo="QA" CodeThree="QAT" CodeNumber="634"/>
+  <_Countries IsSystem="true" UID="{2F14BD76-1C28-4E63-8B08-F1C08F831983}" Name="Кения" FullName="Республика Кения" CodeTwo="KE" CodeThree="KEN" CodeNumber="404"/>
+  <_Countries IsSystem="true" UID="{064EA32E-AF96-4280-A4A7-3A25BC3292B3}" Name="Кипр" FullName="Республика Кипр" CodeTwo="CY" CodeThree="CYP" CodeNumber="196"/>
+  <_Countries IsSystem="true" UID="{4E7E1726-91B0-4F45-9E58-2F1541EC9AC7}" Name="Киргизия" FullName="Киргизская Республика" CodeTwo="KG" CodeThree="KGZ" CodeNumber="417"/>
+  <_Countries IsSystem="true" UID="{79982BAD-512E-4085-B038-77076B152F02}" Name="Кирибати" FullName="Республика Кирибати" CodeTwo="KI" CodeThree="KIR" CodeNumber="296"/>
+  <_Countries IsSystem="true" UID="{9AC5ECB0-367A-487A-BFA0-46760E72C70A}" Name="Китай" FullName="Китайская Народная Республика" CodeTwo="CN" CodeThree="CHN" CodeNumber="156"/>
+  <_Countries IsSystem="true" UID="{E9054859-FB18-48EE-8356-C4760168D01C}" Name="Кокосовые (килинг) острова" FullName="" CodeTwo="CC" CodeThree="CCK" CodeNumber="166"/>
+  <_Countries IsSystem="true" UID="{D5F16299-6590-47CF-95CB-C9509AF5557C}" Name="Колумбия" FullName="Республика Колумбия" CodeTwo="CO" CodeThree="COL" CodeNumber="170"/>
+  <_Countries IsSystem="true" UID="{FA92277F-FFD3-41FC-A15C-614AA5180643}" Name="Коморы" FullName="Союз Коморы" CodeTwo="KM" CodeThree="COM" CodeNumber="174"/>
+  <_Countries IsSystem="true" UID="{E464AC6E-1BD3-4245-AA85-21F518DC655F}" Name="Конго" FullName="Республика Конго" CodeTwo="CG" CodeThree="COG" CodeNumber="178"/>
+  <_Countries IsSystem="true" UID="{6A04557E-BF69-416C-8CD6-FDAA44757A42}" Name="Конго, демократическая республика" FullName="" CodeTwo="CD" CodeThree="COD" CodeNumber="180"/>
+  <_Countries IsSystem="true" UID="{58B4F888-9E0F-4D84-B56D-EC9C6665022A}" Name="Корея, народно-демократическая республика" FullName="Корейская Народно-Демократическая Республика" CodeTwo="KP" CodeThree="PRK" CodeNumber="408"/>
+  <_Countries IsSystem="true" UID="{900CF3E1-C15A-40F8-84AE-283D8D60A9B3}" Name="Корея, республика" FullName="Республика Корея" CodeTwo="KR" CodeThree="KOR" CodeNumber="410"/>
+  <_Countries IsSystem="true" UID="{CBFA5E18-0A0A-4B32-AF93-86965FE0892C}" Name="Коста-рика" FullName="Республика Коста-Рика" CodeTwo="CR" CodeThree="CRI" CodeNumber="188"/>
+  <_Countries IsSystem="true" UID="{140FDE1E-DC9E-418D-9D34-0E79C36609A9}" Name="Кот д’ивуар" FullName="Республика Кот д’Ивуар" CodeTwo="CI" CodeThree="CIV" CodeNumber="384"/>
+  <_Countries IsSystem="true" UID="{C228543F-3E18-456F-A1D6-CADF332CB330}" Name="Куба" FullName="Республика Куба" CodeTwo="CU" CodeThree="CUB" CodeNumber="192"/>
+  <_Countries IsSystem="true" UID="{66B2CB0F-31EE-47EF-8535-DA4D0C5B1741}" Name="Кувейт" FullName="Государство Кувейт" CodeTwo="KW" CodeThree="KWT" CodeNumber="414"/>
+  <_Countries IsSystem="true" UID="{14BCD067-5BF9-44E1-B676-62392708013A}" Name="Кюрасао" FullName="" CodeTwo="CW" CodeThree="CUW" CodeNumber="531"/>
+  <_Countries IsSystem="true" UID="{25CA9658-EBD9-4F2C-9824-8C03DCA1207E}" Name="Лаосская народно-демократическая республика" FullName="" CodeTwo="LA" CodeThree="LAO" CodeNumber="418"/>
+  <_Countries IsSystem="true" UID="{27DA75A6-8AF6-4A6A-A308-847B32736998}" Name="Латвия" FullName="Латвийская Республика" CodeTwo="LV" CodeThree="LVA" CodeNumber="428"/>
+  <_Countries IsSystem="true" UID="{047B4FCE-5BB0-4AA7-890F-F757C68D75E0}" Name="Лесото" FullName="Королевство Лесото" CodeTwo="LS" CodeThree="LSO" CodeNumber="426"/>
+  <_Countries IsSystem="true" UID="{88D01235-19BC-4249-ACBC-B9378DEBFE64}" Name="Либерия" FullName="Республика Либерия" CodeTwo="LR" CodeThree="LBR" CodeNumber="430"/>
+  <_Countries IsSystem="true" UID="{00A08CE7-769F-496C-8023-75BCD5268C66}" Name="Ливан" FullName="Ливанская Республика" CodeTwo="LB" CodeThree="LBN" CodeNumber="422"/>
+  <_Countries IsSystem="true" UID="{B2D3D617-12B4-4D00-9772-5F02CBF11407}" Name="Ливия" FullName="Ливия" CodeTwo="LY" CodeThree="LBY" CodeNumber="434"/>
+  <_Countries IsSystem="true" UID="{91FECBCB-A55F-465F-9422-9C7059042284}" Name="Литва" FullName="Литовская Республика" CodeTwo="LT" CodeThree="LTU" CodeNumber="440"/>
+  <_Countries IsSystem="true" UID="{336712AD-21F4-41F1-BA8F-350FECD425D4}" Name="Лихтенштейн" FullName="Княжество Лихтенштейн" CodeTwo="LI" CodeThree="LIE" CodeNumber="438"/>
+  <_Countries IsSystem="true" UID="{8F45555C-CABA-4882-8E6F-930482C1AA68}" Name="Люксембург" FullName="Великое Герцогство Люксембург" CodeTwo="LU" CodeThree="LUX" CodeNumber="442"/>
+  <_Countries IsSystem="true" UID="{56467695-9633-4D6A-9E08-D93AE81D39EA}" Name="Маврикий" FullName="Республика Маврикий" CodeTwo="MU" CodeThree="MUS" CodeNumber="480"/>
+  <_Countries IsSystem="true" UID="{E67D9EC8-D158-4904-A3AF-36C1478299F5}" Name="Мавритания" FullName="Исламская Республика Мавритания" CodeTwo="MR" CodeThree="MRT" CodeNumber="478"/>
+  <_Countries IsSystem="true" UID="{AE95D52B-D622-4BCD-831F-677F5F4A0AA6}" Name="Мадагаскар" FullName="Республика Мадагаскар" CodeTwo="MG" CodeThree="MDG" CodeNumber="450"/>
+  <_Countries IsSystem="true" UID="{90F9179F-8604-40BE-AD73-E6B33006B724}" Name="Майотта" FullName="" CodeTwo="YT" CodeThree="MYT" CodeNumber="175"/>
+  <_Countries IsSystem="true" UID="{0DFA0577-7DC0-4E61-A40C-2F5620E7D5EC}" Name="Макао" FullName="Специальный административный регион Китая Макао" CodeTwo="MO" CodeThree="MAC" CodeNumber="446"/>
+  <_Countries IsSystem="true" UID="{08616078-7407-4EED-9EA4-3FF5CB493D4F}" Name="Республика македония[2]" FullName="" CodeTwo="MK" CodeThree="MKD" CodeNumber="807"/>
+  <_Countries IsSystem="true" UID="{B08953F6-8376-47A2-A016-2A1FB6BF5AAA}" Name="Малави" FullName="Республика Малави" CodeTwo="MW" CodeThree="MWI" CodeNumber="454"/>
+  <_Countries IsSystem="true" UID="{E3509EF0-67EA-4AB7-9AF5-21B9A8B63CB4}" Name="Малайзия" FullName="" CodeTwo="MY" CodeThree="MYS" CodeNumber="458"/>
+  <_Countries IsSystem="true" UID="{50D461A6-83AF-47CB-A515-7A3181727BAA}" Name="Мали" FullName="Республика Мали" CodeTwo="ML" CodeThree="MLI" CodeNumber="466"/>
+  <_Countries IsSystem="true" UID="{EDD3DC3E-3EBE-44F4-BE8C-BD10AF5F066D}" Name="Малые тихоокеанские отдаленные острова соединенных штатов" FullName="" CodeTwo="UM" CodeThree="UMI" CodeNumber="581"/>
+  <_Countries IsSystem="true" UID="{7C808063-4338-427A-9C5A-D713095792C9}" Name="Мальдивы" FullName="Мальдивская Республика" CodeTwo="MV" CodeThree="MDV" CodeNumber="462"/>
+  <_Countries IsSystem="true" UID="{100FF261-2ACF-4CC5-A423-35517BCDD73A}" Name="Мальта" FullName="Республика Мальта" CodeTwo="MT" CodeThree="MLT" CodeNumber="470"/>
+  <_Countries IsSystem="true" UID="{C5A63076-1791-4267-AE61-9E0AE63AA8B7}" Name="Марокко" FullName="Королевство Марокко" CodeTwo="MA" CodeThree="MAR" CodeNumber="504"/>
+  <_Countries IsSystem="true" UID="{B4100635-E766-4C49-8BB8-9B364706D5B7}" Name="Мартиника" FullName="" CodeTwo="MQ" CodeThree="MTQ" CodeNumber="474"/>
+  <_Countries IsSystem="true" UID="{5631608C-6A08-4CF2-9997-51753ED683C3}" Name="Маршалловы острова" FullName="Республика Маршалловы Острова" CodeTwo="MH" CodeThree="MHL" CodeNumber="584"/>
+  <_Countries IsSystem="true" UID="{F3150165-02FE-4E4A-BDD9-3D8DC25C258D}" Name="Мексика" FullName="Мексиканские Соединенные Штаты" CodeTwo="MX" CodeThree="MEX" CodeNumber="484"/>
+  <_Countries IsSystem="true" UID="{549C406D-DB42-4A90-9225-798FDA6BF395}" Name="Микронезия, федеративные штаты" FullName="Федеративные Штаты Микронезии" CodeTwo="FM" CodeThree="FSM" CodeNumber="583"/>
+  <_Countries IsSystem="true" UID="{46EF5436-17F6-4B26-9A76-97D9FF6C76B8}" Name="Мозамбик" FullName="Республика Мозамбик" CodeTwo="MZ" CodeThree="MOZ" CodeNumber="508"/>
+  <_Countries IsSystem="true" UID="{347AC4BE-9118-4512-BE57-0647963D0723}" Name="Молдова, республика" FullName="Республика Молдова" CodeTwo="MD" CodeThree="MDA" CodeNumber="498"/>
+  <_Countries IsSystem="true" UID="{25D558B8-880D-499E-8013-3E2CBEC38F01}" Name="Монако" FullName="Княжество Монако" CodeTwo="MC" CodeThree="MCO" CodeNumber="492"/>
+  <_Countries IsSystem="true" UID="{B1C690B4-10F7-4D0F-AB3D-06F61ACF18CD}" Name="Монголия" FullName="" CodeTwo="MN" CodeThree="MNG" CodeNumber="496"/>
+  <_Countries IsSystem="true" UID="{ED52E361-8678-48F7-95CF-AA3FD75C9EC8}" Name="Монтсеррат" FullName="" CodeTwo="MS" CodeThree="MSR" CodeNumber="500"/>
+  <_Countries IsSystem="true" UID="{9A875803-624A-4D1D-89AF-44B0D590B571}" Name="Мьянма" FullName="Республика Союза Мьянма" CodeTwo="MM" CodeThree="MMR" CodeNumber="104"/>
+  <_Countries IsSystem="true" UID="{3F1D997E-E4DB-4737-957F-FA36BF342D75}" Name="Намибия" FullName="Республика Намибия" CodeTwo="NA" CodeThree="NAM" CodeNumber="516"/>
+  <_Countries IsSystem="true" UID="{84EF921C-7E28-4087-BCEE-92D1EC724FAF}" Name="Науру" FullName="Республика Науру" CodeTwo="NR" CodeThree="NRU" CodeNumber="520"/>
+  <_Countries IsSystem="true" UID="{0763FE5C-91DE-4D83-90FC-48B762DA7368}" Name="Непал" FullName="Федеративная Демократическая Республика Непал" CodeTwo="NP" CodeThree="NPL" CodeNumber="524"/>
+  <_Countries IsSystem="true" UID="{5F5674D7-6C3D-47A6-B52C-A4AB0380ACA9}" Name="Нигер" FullName="Республика Нигер" CodeTwo="NE" CodeThree="NER" CodeNumber="562"/>
+  <_Countries IsSystem="true" UID="{37567545-751F-4481-87EB-75C62BC6B7FF}" Name="Нигерия" FullName="Федеративная Республика Нигерия" CodeTwo="NG" CodeThree="NGA" CodeNumber="566"/>
+  <_Countries IsSystem="true" UID="{B9F2A040-0058-4CD5-A8FA-E0226367B2B3}" Name="Нидерланды" FullName="Королевство Нидерландов" CodeTwo="NL" CodeThree="NLD" CodeNumber="528"/>
+  <_Countries IsSystem="true" UID="{2D778212-5C0D-4EE0-B909-8DDB7FF175B7}" Name="Никарагуа" FullName="Республика Никарагуа" CodeTwo="NI" CodeThree="NIC" CodeNumber="558"/>
+  <_Countries IsSystem="true" UID="{3F2CBAB6-F107-4809-B929-DD23201DB681}" Name="Ниуэ" FullName="Ниуэ" CodeTwo="NU" CodeThree="NIU" CodeNumber="570"/>
+  <_Countries IsSystem="true" UID="{F1D80457-8C92-4344-9F31-F2E93F7732AA}" Name="Новая зеландия" FullName="" CodeTwo="NZ" CodeThree="NZL" CodeNumber="554"/>
+  <_Countries IsSystem="true" UID="{FEFB89EE-0438-4E62-B908-1FA5A3950BE5}" Name="Новая каледония" FullName="" CodeTwo="NC" CodeThree="NCL" CodeNumber="540"/>
+  <_Countries IsSystem="true" UID="{F5345433-FF7B-41B3-960D-3555C39746F1}" Name="Норвегия" FullName="Королевство Норвегия" CodeTwo="NO" CodeThree="NOR" CodeNumber="578"/>
+  <_Countries IsSystem="true" UID="{62360D5B-9B85-4E5E-915F-32C38674D119}" Name="Объединенные арабские эмираты" FullName="" CodeTwo="AE" CodeThree="ARE" CodeNumber="784"/>
+  <_Countries IsSystem="true" UID="{58C2BA85-5256-43F3-BF1D-EA889F771869}" Name="Оман" FullName="Султанат Оман" CodeTwo="OM" CodeThree="OMN" CodeNumber="512"/>
+  <_Countries IsSystem="true" UID="{8AAEB425-DE15-4098-BD36-6ACA10343B94}" Name="Острова кайман" FullName="" CodeTwo="KY" CodeThree="CYM" CodeNumber="136"/>
+  <_Countries IsSystem="true" UID="{5009FF3E-00BE-472E-BAD9-FBFB8B562055}" Name="Острова кука" FullName="" CodeTwo="CK" CodeThree="COK" CodeNumber="184"/>
+  <_Countries IsSystem="true" UID="{0E84CCCB-A9E6-4D94-833F-4A00101C956A}" Name="Острова теркс и кайкос" FullName="" CodeTwo="TC" CodeThree="TCA" CodeNumber="796"/>
+  <_Countries IsSystem="true" UID="{9DA85DA5-EC09-44E8-A34A-A7A6EE005D84}" Name="Остров буве" FullName="" CodeTwo="BV" CodeThree="BVT" CodeNumber="74"/>
+  <_Countries IsSystem="true" UID="{60EFDCBB-CCA0-41B4-B185-B75FFB673E88}" Name="Остров мэн" FullName="" CodeTwo="IM" CodeThree="IMN" CodeNumber="833"/>
+  <_Countries IsSystem="true" UID="{E444BEDB-627C-4FE7-88D9-8A82D5B0C7F6}" Name="Остров норфолк" FullName="" CodeTwo="NF" CodeThree="NFK" CodeNumber="574"/>
+  <_Countries IsSystem="true" UID="{D26CF9E9-DB93-4254-8565-DC13B5D5FB27}" Name="Остров рождества" FullName="" CodeTwo="CX" CodeThree="CXR" CodeNumber="162"/>
+  <_Countries IsSystem="true" UID="{B3905CE3-AEAD-4491-AE83-EBF6F85585DB}" Name="Остров херд и острова макдональд" FullName="" CodeTwo="HM" CodeThree="HMD" CodeNumber="334"/>
+  <_Countries IsSystem="true" UID="{EEC4E179-D78E-4F85-8465-2B1EAB0DBDAE}" Name="Пакистан" FullName="Исламская Республика Пакистан" CodeTwo="PK" CodeThree="PAK" CodeNumber="586"/>
+  <_Countries IsSystem="true" UID="{3C5A866D-B73A-4904-AD9D-3E3C25039FCE}" Name="Палау" FullName="Республика Палау" CodeTwo="PW" CodeThree="PLW" CodeNumber="585"/>
+  <_Countries IsSystem="true" UID="{7F443218-F807-4562-9921-DA9A48B991E8}" Name="Палестина, государство" FullName="Государство Палестина" CodeTwo="PS" CodeThree="PSE" CodeNumber="275"/>
+  <_Countries IsSystem="true" UID="{3ECADB0B-3CB5-4A71-BD60-1483EB69D396}" Name="Панама" FullName="Республика Панама" CodeTwo="PA" CodeThree="PAN" CodeNumber="591"/>
+  <_Countries IsSystem="true" UID="{377D83A1-7BE4-4166-B3C3-AFA0EC8BDA6B}" Name="Папский престол (государство — город ватикан)" FullName="" CodeTwo="VA" CodeThree="VAT" CodeNumber="336"/>
+  <_Countries IsSystem="true" UID="{79BDAFB5-2889-4093-A48D-EDDA1147A76E}" Name="Папуа-новая гвинея" FullName="" CodeTwo="PG" CodeThree="PNG" CodeNumber="598"/>
+  <_Countries IsSystem="true" UID="{54ACFED6-927A-4AC7-AC49-EB8E0100BD3D}" Name="Парагвай" FullName="Республика Парагвай" CodeTwo="PY" CodeThree="PRY" CodeNumber="600"/>
+  <_Countries IsSystem="true" UID="{FEE10165-4977-48FD-A7AA-65EE58795250}" Name="Перу" FullName="Республика Перу" CodeTwo="PE" CodeThree="PER" CodeNumber="604"/>
+  <_Countries IsSystem="true" UID="{FD7E8C3A-0F12-4F2D-93D0-30568848A1C1}" Name="Питкерн" FullName="" CodeTwo="PN" CodeThree="PCN" CodeNumber="612"/>
+  <_Countries IsSystem="true" UID="{9C592861-CED9-47B9-B1E0-EFCB944DFE8B}" Name="Польша" FullName="Республика Польша" CodeTwo="PL" CodeThree="POL" CodeNumber="616"/>
+  <_Countries IsSystem="true" UID="{A0291423-BEB6-4813-85A4-F7FC1FBE1DC1}" Name="Португалия" FullName="Португальская Республика" CodeTwo="PT" CodeThree="PRT" CodeNumber="620"/>
+  <_Countries IsSystem="true" UID="{E874E8F6-6F75-4A78-A092-3505310E2B64}" Name="Пуэрто-рико" FullName="" CodeTwo="PR" CodeThree="PRI" CodeNumber="630"/>
+  <_Countries IsSystem="true" UID="{040F1499-5DCF-465D-941F-ED2336AA20C3}" Name="Реюньон" FullName="" CodeTwo="RE" CodeThree="REU" CodeNumber="638"/>
+  <_Countries IsSystem="true" UID="{EC95273A-8027-4F87-BCB1-3A539F83AB0E}" Name="Россия" FullName="Российская Федерация" CodeTwo="RU" CodeThree="RUS" CodeNumber="643"/>
+  <_Countries IsSystem="true" UID="{70F242D0-E5FB-4D51-8F21-270DE46220D3}" Name="Руанда" FullName="Руандийская Республика" CodeTwo="RW" CodeThree="RWA" CodeNumber="646"/>
+  <_Countries IsSystem="true" UID="{616A1AE1-6CC5-4EED-ACCE-8A4EF832440E}" Name="Румыния" FullName="" CodeTwo="RO" CodeThree="ROU" CodeNumber="642"/>
+  <_Countries IsSystem="true" UID="{DFB9AE56-3516-4ABC-A05C-49C9CBA4BC2F}" Name="Самоа" FullName="Независимое Государство Самоа" CodeTwo="WS" CodeThree="WSM" CodeNumber="882"/>
+  <_Countries IsSystem="true" UID="{16F9BAB5-8E9E-47D7-A671-C92164C74E5B}" Name="Сан-марино" FullName="Республика Сан-Марино" CodeTwo="SM" CodeThree="SMR" CodeNumber="674"/>
+  <_Countries IsSystem="true" UID="{8458A5C2-8CC9-4739-876B-CA6776B28705}" Name="Сан-томе и принсипи" FullName="Демократическая Республика Сан-Томе и Принсипи" CodeTwo="ST" CodeThree="STP" CodeNumber="678"/>
+  <_Countries IsSystem="true" UID="{1EC26F53-B28F-4A30-BBED-BF1C4E2AEF86}" Name="Саудовская аравия" FullName="Королевство Саудовская Аравия" CodeTwo="SA" CodeThree="SAU" CodeNumber="682"/>
+  <_Countries IsSystem="true" UID="{E5633954-A9B4-4FD3-8D33-013D7595EE28}" Name="Свазиленд" FullName="Королевство Свазиленд" CodeTwo="SZ" CodeThree="SWZ" CodeNumber="748"/>
+  <_Countries IsSystem="true" UID="{270154DF-EB65-4247-BCF0-CA01B049945A}" Name="Святая елена, остров вознесения, тристан-да-кунья" FullName="" CodeTwo="SH" CodeThree="SHN" CodeNumber="654"/>
+  <_Countries IsSystem="true" UID="{33CBA6B9-4985-4409-8622-B8DCF250B54E}" Name="Северные марианские острова" FullName="Содружество Северных Марианских островов" CodeTwo="MP" CodeThree="MNP" CodeNumber="580"/>
+  <_Countries IsSystem="true" UID="{7F84373F-8A62-4C95-AD42-96A8A5CB6FA8}" Name="Сейшелы" FullName="Республика Сейшелы" CodeTwo="SC" CodeThree="SYC" CodeNumber="690"/>
+  <_Countries IsSystem="true" UID="{328D6D26-7CD0-4A25-BC86-2A325EC2B3E5}" Name="Сен-бартелеми" FullName="" CodeTwo="BL" CodeThree="BLM" CodeNumber="652"/>
+  <_Countries IsSystem="true" UID="{D9FCEAA0-B112-443B-8226-CF11A5553C76}" Name="Сен-мартен" FullName="" CodeTwo="MF" CodeThree="MAF" CodeNumber="663"/>
+  <_Countries IsSystem="true" UID="{C6299CB2-7F51-45C0-A3A9-AFF2A3A39493}" Name="Сен-мартен (нидерландская часть)" FullName="" CodeTwo="SX" CodeThree="SXM" CodeNumber="534"/>
+  <_Countries IsSystem="true" UID="{1B95BB09-A799-41A5-9BFA-DFC90D17C773}" Name="Сенегал" FullName="Республика Сенегал" CodeTwo="SN" CodeThree="SEN" CodeNumber="686"/>
+  <_Countries IsSystem="true" UID="{C812FE09-F293-474D-A685-9D59D3B16203}" Name="Сент-винсент и гренадины" FullName="" CodeTwo="VC" CodeThree="VCT" CodeNumber="670"/>
+  <_Countries IsSystem="true" UID="{CC31B623-489E-4241-B7B8-C4885C5CB8F7}" Name="Сент-китс и невис" FullName="" CodeTwo="KN" CodeThree="KNA" CodeNumber="659"/>
+  <_Countries IsSystem="true" UID="{2C669551-8D35-4657-BA44-3736622A2780}" Name="Сент-люсия" FullName="" CodeTwo="LC" CodeThree="LCA" CodeNumber="662"/>
+  <_Countries IsSystem="true" UID="{052A6578-D4B7-472F-8DBF-8008915558B1}" Name="Сен-пьер и микелон" FullName="" CodeTwo="PM" CodeThree="SPM" CodeNumber="666"/>
+  <_Countries IsSystem="true" UID="{A9B52B99-2712-48DF-84CB-D6772DFB2095}" Name="Сербия" FullName="Республика Сербия" CodeTwo="RS" CodeThree="SRB" CodeNumber="688"/>
+  <_Countries IsSystem="true" UID="{ACA1B20D-9888-40EB-9EBD-0FBBE0164D78}" Name="Сингапур" FullName="Республика Сингапур" CodeTwo="SG" CodeThree="SGP" CodeNumber="702"/>
+  <_Countries IsSystem="true" UID="{C7686F2B-9FCC-4491-BB31-75C637344A26}" Name="Сирийская арабская республика" FullName="" CodeTwo="SY" CodeThree="SYR" CodeNumber="760"/>
+  <_Countries IsSystem="true" UID="{A38610CA-7CA0-4B3A-A719-56A9DF36116C}" Name="Словакия" FullName="Словацкая Республика" CodeTwo="SK" CodeThree="SVK" CodeNumber="703"/>
+  <_Countries IsSystem="true" UID="{AB03BF97-BCE9-480B-9D95-3BCC40A2F8DD}" Name="Словения" FullName="Республика Словения" CodeTwo="SI" CodeThree="SVN" CodeNumber="705"/>
+  <_Countries IsSystem="true" UID="{9C8F32BF-19C5-4E7E-A599-54F7AF3074A0}" Name="Соединенное королевство" FullName="Соединенное Королевство Великобритании и Северной Ирландии" CodeTwo="GB" CodeThree="GBR" CodeNumber="826"/>
+  <_Countries IsSystem="true" UID="{AE7D5604-65D9-426F-98D9-47548EB21D56}" Name="Соединенные штаты" FullName="Соединенные Штаты Америки" CodeTwo="US" CodeThree="USA" CodeNumber="840"/>
+  <_Countries IsSystem="true" UID="{7104B75A-8D3F-47ED-ACFA-542EEB139B28}" Name="Соломоновы острова" FullName="" CodeTwo="SB" CodeThree="SLB" CodeNumber="90"/>
+  <_Countries IsSystem="true" UID="{8479B54B-A21B-4C95-9159-0ABCB1F407AF}" Name="Сомали" FullName="Федеративная Республика Сомали" CodeTwo="SO" CodeThree="SOM" CodeNumber="706"/>
+  <_Countries IsSystem="true" UID="{85A453BD-30A7-4AA3-9B66-8C7CA92DBCAF}" Name="Судан" FullName="Республика Судан" CodeTwo="SD" CodeThree="SDN" CodeNumber="729"/>
+  <_Countries IsSystem="true" UID="{1D087CB9-73D0-4213-BCC5-53FFB1D7D530}" Name="Суринам" FullName="Республика Суринам" CodeTwo="SR" CodeThree="SUR" CodeNumber="740"/>
+  <_Countries IsSystem="true" UID="{2CE0BEF0-E51C-4983-A373-9CE65B659F6D}" Name="Сьерра-леоне" FullName="Республика Сьерра-Леоне" CodeTwo="SL" CodeThree="SLE" CodeNumber="694"/>
+  <_Countries IsSystem="true" UID="{5103F463-2213-4D9F-8637-FA29AD947A9B}" Name="Таджикистан" FullName="Республика Таджикистан" CodeTwo="TJ" CodeThree="TJK" CodeNumber="762"/>
+  <_Countries IsSystem="true" UID="{1760225B-3C7F-445E-BF73-D090B8A391FA}" Name="Таиланд" FullName="Королевство Таиланд" CodeTwo="TH" CodeThree="THA" CodeNumber="764"/>
+  <_Countries IsSystem="true" UID="{31454DDC-EE97-41CC-92BC-DB9A0F91F7A6}" Name="Тайвань (китай)" FullName="" CodeTwo="TW" CodeThree="TWN" CodeNumber="158"/>
+  <_Countries IsSystem="true" UID="{EEC22D34-E5EE-4EA2-8375-1104264A5E7A}" Name="Танзания, объединенная республика" FullName="Объединенная Республика Танзания" CodeTwo="TZ" CodeThree="TZA" CodeNumber="834"/>
+  <_Countries IsSystem="true" UID="{1567CC5A-D5BB-42E1-81C5-3EEAD5D83DDD}" Name="Тимор-лесте" FullName="Демократическая Республика Тимор-Лесте" CodeTwo="TL" CodeThree="TLS" CodeNumber="626"/>
+  <_Countries IsSystem="true" UID="{B17A6CBA-C2F4-4FFA-AD53-A9B095D63574}" Name="Того" FullName="Тоголезская Республика" CodeTwo="TG" CodeThree="TGO" CodeNumber="768"/>
+  <_Countries IsSystem="true" UID="{C5AFDA8E-581B-4D05-92BB-96055771DE12}" Name="Токелау" FullName="" CodeTwo="TK" CodeThree="TKL" CodeNumber="772"/>
+  <_Countries IsSystem="true" UID="{649B5929-6BA4-4799-A0C1-EF20B84E8C11}" Name="Тонга" FullName="Королевство Тонга" CodeTwo="TO" CodeThree="TON" CodeNumber="776"/>
+  <_Countries IsSystem="true" UID="{5E9136FB-BECE-47CE-B069-D879BE3501F4}" Name="Тринидад и тобаго" FullName="Республика Тринидад и Тобаго" CodeTwo="TT" CodeThree="TTO" CodeNumber="780"/>
+  <_Countries IsSystem="true" UID="{21CA9B3F-C028-487F-8AD9-D5D555098E0C}" Name="Тувалу" FullName="" CodeTwo="TV" CodeThree="TUV" CodeNumber="798"/>
+  <_Countries IsSystem="true" UID="{C5D1D695-8BFC-4DF7-A27B-DBF604524047}" Name="Тунис" FullName="Тунисская Республика" CodeTwo="TN" CodeThree="TUN" CodeNumber="788"/>
+  <_Countries IsSystem="true" UID="{CB8AACB9-4709-4ED3-9FDB-DF68FB941E61}" Name="Туркмения" FullName="Туркменистан" CodeTwo="TM" CodeThree="TKM" CodeNumber="795"/>
+  <_Countries IsSystem="true" UID="{14EF9E5D-3206-4C2D-9363-6DF0FBC3B1C0}" Name="Турция" FullName="Турецкая Республика" CodeTwo="TR" CodeThree="TUR" CodeNumber="792"/>
+  <_Countries IsSystem="true" UID="{825E4D0B-0FC4-4CA1-94CD-1184F6CA5B99}" Name="Уганда" FullName="Республика Уганда" CodeTwo="UG" CodeThree="UGA" CodeNumber="800"/>
+  <_Countries IsSystem="true" UID="{41387267-60AA-487A-AF07-0A8D6BE38841}" Name="Узбекистан" FullName="Республика Узбекистан" CodeTwo="UZ" CodeThree="UZB" CodeNumber="860"/>
+  <_Countries IsSystem="true" UID="{ADDE81C7-DE73-48E8-86BD-6AC870624132}" Name="Украина" FullName="" CodeTwo="UA" CodeThree="UKR" CodeNumber="804"/>
+  <_Countries IsSystem="true" UID="{255B2B49-09AA-4D15-87A6-44A48D326D10}" Name="Уоллис и футуна" FullName="" CodeTwo="WF" CodeThree="WLF" CodeNumber="876"/>
+  <_Countries IsSystem="true" UID="{6C6C11B1-C8AD-415E-8D46-7B96818EAC7D}" Name="Уругвай" FullName="Восточная Республика Уругвай" CodeTwo="UY" CodeThree="URY" CodeNumber="858"/>
+  <_Countries IsSystem="true" UID="{47D7DA10-98FD-4B65-9FCD-0DAB2A35474E}" Name="Фарерские острова" FullName="" CodeTwo="FO" CodeThree="FRO" CodeNumber="234"/>
+  <_Countries IsSystem="true" UID="{B598BB0B-F030-4061-AE61-35CA64F46475}" Name="Фиджи" FullName="Республика Фиджи" CodeTwo="FJ" CodeThree="FJI" CodeNumber="242"/>
+  <_Countries IsSystem="true" UID="{4B25B561-5114-4D66-A319-B7CE6B264EEA}" Name="Филиппины" FullName="Республика Филиппины" CodeTwo="PH" CodeThree="PHL" CodeNumber="608"/>
+  <_Countries IsSystem="true" UID="{05E76CA5-68D3-4BF3-BC20-7E19B79AB2D8}" Name="Финляндия" FullName="Финляндская Республика" CodeTwo="FI" CodeThree="FIN" CodeNumber="246"/>
+  <_Countries IsSystem="true" UID="{29F9890A-FDAD-457E-AB93-CD368DFE8677}" Name="Фолклендские острова (мальвинские)" FullName="" CodeTwo="FK" CodeThree="FLK" CodeNumber="238"/>
+  <_Countries IsSystem="true" UID="{2D6B62AE-D887-4A7C-9140-0065A88F7999}" Name="Франция" FullName="Французская Республика" CodeTwo="FR" CodeThree="FRA" CodeNumber="250"/>
+  <_Countries IsSystem="true" UID="{BD61568B-1B65-40CF-9482-4BF13D00325B}" Name="Французская гвиана" FullName="" CodeTwo="GF" CodeThree="GUF" CodeNumber="254"/>
+  <_Countries IsSystem="true" UID="{308F5C09-F0C7-41F1-90FC-DDEFB96C31FB}" Name="Французская полинезия" FullName="" CodeTwo="PF" CodeThree="PYF" CodeNumber="258"/>
+  <_Countries IsSystem="true" UID="{47E1CD67-F359-447A-9B37-5B9A217DAF97}" Name="Французские южные территории" FullName="" CodeTwo="TF" CodeThree="ATF" CodeNumber="260"/>
+  <_Countries IsSystem="true" UID="{82E2462A-E1FF-44FC-8143-DC0D0BDF071D}" Name="Хорватия" FullName="Республика Хорватия" CodeTwo="HR" CodeThree="HRV" CodeNumber="191"/>
+  <_Countries IsSystem="true" UID="{AB22D4A7-29F3-43B9-A8DC-68929A88DCBE}" Name="Центрально-африканская республика" FullName="" CodeTwo="CF" CodeThree="CAF" CodeNumber="140"/>
+  <_Countries IsSystem="true" UID="{A94DD746-8E23-41C1-BDF5-EC29BD120F09}" Name="Чад" FullName="Республика Чад" CodeTwo="TD" CodeThree="TCD" CodeNumber="148"/>
+  <_Countries IsSystem="true" UID="{3F871357-477A-4795-B669-ED91ED817E05}" Name="Черногория" FullName="" CodeTwo="ME" CodeThree="MNE" CodeNumber="499"/>
+  <_Countries IsSystem="true" UID="{C81F4A89-BE95-44F7-8A96-7352ADFD1715}" Name="Чешская республика" FullName="" CodeTwo="CZ" CodeThree="CZE" CodeNumber="203"/>
+  <_Countries IsSystem="true" UID="{EC936572-7082-4695-AC98-8D8A9F65BF7F}" Name="Чили" FullName="Республика Чили" CodeTwo="CL" CodeThree="CHL" CodeNumber="152"/>
+  <_Countries IsSystem="true" UID="{13F4C420-C012-4D78-998D-BE8A6AABA49E}" Name="Швейцария" FullName="Швейцарская Конфедерация" CodeTwo="CH" CodeThree="CHE" CodeNumber="756"/>
+  <_Countries IsSystem="true" UID="{94DA0EFF-9F8A-413F-8B07-CED0D64A1340}" Name="Швеция" FullName="Королевство Швеция" CodeTwo="SE" CodeThree="SWE" CodeNumber="752"/>
+  <_Countries IsSystem="true" UID="{D88E0BAE-C7D1-4110-B4FA-7AD91E5C1106}" Name="Шпицберген и ян майен" FullName="" CodeTwo="SJ" CodeThree="SJM" CodeNumber="744"/>
+  <_Countries IsSystem="true" UID="{FD7FD78B-3597-49D2-9BD5-0BE34377AE87}" Name="Шри-ланка" FullName="Демократическая Социалистическая Республика Шри-Ланка" CodeTwo="LK" CodeThree="LKA" CodeNumber="144"/>
+  <_Countries IsSystem="true" UID="{1AB0C2B9-E0C9-45D0-AF8A-463E2823804E}" Name="Эквадор" FullName="Республика Эквадор" CodeTwo="EC" CodeThree="ECU" CodeNumber="218"/>
+  <_Countries IsSystem="true" UID="{077FDB0D-30D9-40D7-9696-4575E2F7A2A2}" Name="Экваториальная гвинея" FullName="Республика Экваториальная Гвинея" CodeTwo="GQ" CodeThree="GNQ" CodeNumber="226"/>
+  <_Countries IsSystem="true" UID="{E6329424-1C09-4F11-BC16-29BEEBBFB1BB}" Name="Эландские острова" FullName="" CodeTwo="AX" CodeThree="ALA" CodeNumber="248"/>
+  <_Countries IsSystem="true" UID="{C9420848-C154-4C91-8A21-4B8648536660}" Name="Эль-сальвадор" FullName="Республика Эль-Сальвадор" CodeTwo="SV" CodeThree="SLV" CodeNumber="222"/>
+  <_Countries IsSystem="true" UID="{B90E6893-DA95-48DB-AA6D-31A93A34B70B}" Name="Эритрея" FullName="" CodeTwo="ER" CodeThree="ERI" CodeNumber="232"/>
+  <_Countries IsSystem="true" UID="{A7A97421-6501-496B-BA6A-DC4B3E5E0741}" Name="Эстония" FullName="Эстонская Республика" CodeTwo="EE" CodeThree="EST" CodeNumber="233"/>
+  <_Countries IsSystem="true" UID="{726E5A29-9A48-4DB8-8BE1-786FE81D009B}" Name="Эфиопия" FullName="Федеративная Демократическая Республика Эфиопия" CodeTwo="ET" CodeThree="ETH" CodeNumber="231"/>
+  <_Countries IsSystem="true" UID="{B6B71747-A6A1-4A6E-BF98-95DEBD99554D}" Name="Южная африка" FullName="Южно-Африканская Республика" CodeTwo="ZA" CodeThree="ZAF" CodeNumber="710"/>
+  <_Countries IsSystem="true" UID="{29945522-3588-42E2-AB84-12C58DF0BC09}" Name="Южная джорджия и южные сандвичевы острова" FullName="" CodeTwo="GS" CodeThree="SGS" CodeNumber="239"/>
+  <_Countries IsSystem="true" UID="{2E2662C8-9425-49A0-8AAC-CC712B2CA272}" Name="Южная осетия" FullName="Республика Южная Осетия" CodeTwo="OS" CodeThree="OST" CodeNumber="896"/>
+  <_Countries IsSystem="true" UID="{685C2C7C-30CF-4076-9EDC-06FBF98F6D1E}" Name="Южный судан" FullName="Республика Южный Судан" CodeTwo="SS" CodeThree="SSD" CodeNumber="728"/>
+  <_Countries IsSystem="true" UID="{272C4663-4319-40DA-A17B-805DA60514D1}" Name="Ямайка" FullName="" CodeTwo="JM" CodeThree="JAM" CodeNumber="388"/>
+  <_Countries IsSystem="true" UID="{846B6525-6A86-43BF-9B1D-92139840960D}" Name="Япония" FullName="" CodeTwo="JP" CodeThree="JPN" CodeNumber="392"/>
   
 </XSR>

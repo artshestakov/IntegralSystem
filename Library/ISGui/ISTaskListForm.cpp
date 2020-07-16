@@ -1,11 +1,11 @@
-#include "ISTaskTodayListForm.h"
+#include "ISTaskListForm.h"
 //-----------------------------------------------------------------------------
-ISTaskTodayListForm::ISTaskTodayListForm(QWidget *parent) : ISTaskBaseListForm(parent)
+ISTaskListForm::ISTaskListForm(QWidget *parent) : ISListBaseForm("_Task", parent)
 {
-	//GetQueryModel()->SetClassFilter("task_deadline = CURRENT_DATE");
+
 }
 //-----------------------------------------------------------------------------
-ISTaskTodayListForm::~ISTaskTodayListForm()
+ISTaskListForm::~ISTaskListForm()
 {
 
 }

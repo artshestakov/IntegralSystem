@@ -3,38 +3,66 @@
 
   <Table Name="_Task" UID="{0C4396AF-BD65-482C-BFE0-D46C072341AC}" Alias="task" LocalName="Задача" LocalListName="Задачи" ObjectForm="ISTaskObjectForm" TitleName="Name">
     <Fields>
-      <Field UID="{F63B875D-BE30-40BF-B627-BB64943F6249}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата создания" LocalListName="Дата создания" HideFromObject="true" NotNull="true"/>
-      <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="Int" LabelName="Статус задачи" LocalListName="Статус задачи" HideFromObject="true" NotNull="true"/>
-      <Field UID="{8436ADEA-14D0-43FC-90EC-ADD4AF905A7E}" Name="Owner" Type="Int" DefaultValue="currentuserid()" LabelName="Автор" LocalListName="Автор" HideFromObject="true" NotNull="true"/>
-      <Field UID="{9A1F7E8D-004D-4E4B-955C-5FCAFEDE2F32}" Name="Name" Type="String" ControlWidget="ISTaskNameEdit" LabelName="Задача" LocalListName="Задача" PlaceholderText="Что необходимо сделать?" NotNull="true" LayoutName="Title"/>
-      <Field UID="{9D4228B1-3DBB-4918-AA5B-A5B36189A2D8}" Name="Important" Type="Bool" DefaultValue="false" ControlWidget="ISTaskImportantEdit" LabelName="Это важная задача" LocalListName="Это важная задача" LayoutName="Title"/>
+      <Field UID="{9A1F7E8D-004D-4E4B-955C-5FCAFEDE2F32}" Name="Name" Type="String" ControlWidget="ISTaskNameEdit" LabelName="Заголовок" LocalListName="Заголовок" PlaceholderText="Что необходимо сделать?" NotNull="true"/>
       <Field UID="{660CEB99-2D94-4013-A805-E43E47BDA030}" Name="Description" Type="Text" ControlWidget="ISTaskDescriptionEdit" LabelName="Описание задачи" LocalListName="Описание задачи" PlaceholderText="Введите описание задачи" HideFromList="true"/>
-      <Field UID="{9708C094-D404-4FDD-A17F-C7278D10B0B2}" Name="Type" Type="Int" LabelName="Тип задачи" LocalListName="Тип задачи"/>
       <Field UID="{FBF65264-BCA0-4882-86FD-AFF5A991B645}" Name="Executor" Type="Int" ControlWidget="ISExecutorEdit" LabelName="Исполнитель" LocalListName="Исполнитель"/>
-      <Field UID="{0EE97076-AA58-413E-9C24-8BC920E05AB8}" Name="Deadline" Type="Date" LabelName="Срок исполнения" LocalListName="Срок исполнения" LayoutName="Deadline"/>
-      <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="Int" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет" LayoutName="Deadline"/>
-      <Field UID="{627B85E0-AFF2-4EBC-BE63-1D3315E6FEE4}" Name="Resolution" Type="Text" LabelName="Резолюция" LocalListName="Резолюция" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{9708C094-D404-4FDD-A17F-C7278D10B0B2}" Name="Type" Type="Int" LabelName="Тип задачи" LocalListName="Тип задачи"/>
+      <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="Int" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true"/>
+      <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="Int" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет"/>
+      
+      <Field UID="{8436ADEA-14D0-43FC-90EC-ADD4AF905A7E}" Name="Owner" Type="Int" DefaultValue="currentuserid()" LabelName="Автор" LocalListName="Автор" NotNull="true"/>
+      <Field UID="{9D4228B1-3DBB-4918-AA5B-A5B36189A2D8}" Name="Important" Type="Bool" DefaultValue="false" ControlWidget="ISTaskImportantEdit" LabelName="Это важная задача" LocalListName="Это важная задача"/>
     </Fields>
     <Indexes>
-      <Index Field="DateTime"/>
-      <Index Field="Status"/>
-      <Index Field="Owner"/>
       <Index Field="Name"/>
-      <Index Field="Important"/>
       <Index Field="Description"/>
-      <Index Field="Type"/>
       <Index Field="Executor"/>
-      <Index Field="Deadline"/>
+      <Index Field="Type"/>
+      <Index Field="Status"/>
       <Index Field="Priority"/>
-      <Index Field="Resolution"/>
+      
+      <Index Field="Owner"/>
+      <Index Field="Important"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Status" ForeignClass="_TaskStatus" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-      <Foreign Field="Type" ForeignClass="_TaskType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Executor" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Type" ForeignClass="_TaskType" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Status" ForeignClass="_TaskStatus" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Priority" ForeignClass="_TaskPriority" ForeignField="ID" ForeignViewNameField="Name"/>
+      
+      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
+  </Table>
+
+  <Table Name="_TaskType" UID="{F108B63C-E175-44E7-A67E-C896BE348266}" Alias="tstp" LocalName="Тип задачи" LocalListName="Типы задач" TitleName="Name">
+    <Fields>
+      <Field UID="{04B778F8-8045-46EE-B387-71DDD1DB335C}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_TaskStatus" UID="{79619A77-8385-4AD9-BCB5-3E2B08479166}" Alias="tsst" ShowOnly="true" LocalName="Статус задачи" LocalListName="Статусы задач" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{0E0D9E42-AFD9-4798-8B7B-F98237FE72F4}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{FE6CFF9F-9038-46E6-A153-C212D3BD6528}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок"/>
+      <Field UID="{9D9C0CE8-BF92-43BA-A8D5-8ABF38020C87}" Name="StyleSheet" Type="String" LabelName="Стиль" LocalListName="Стиль"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="Order"/>
+      <Index Field="StyleSheet"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="_TaskPriority" UID="{BD3CB96B-C467-4818-85B5-3EF73389736A}" Alias="tspr" ShowOnly="true" LocalName="Приоритет задачи" LocalListName="Приоритеты задач" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{FE34E605-10A3-47A3-8DC2-A3C99EFF707D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
   </Table>
 
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
@@ -87,37 +115,6 @@
     <Foreigns>
       <Foreign Field="TaskFile" ForeignClass="_TaskFile" ForeignField="ID" ForeignViewNameField="FileName"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="_TaskType" UID="{F108B63C-E175-44E7-A67E-C896BE348266}" Alias="tstp" LocalName="Тип задачи" LocalListName="Типы задач" TitleName="Name">
-    <Fields>
-      <Field UID="{04B778F8-8045-46EE-B387-71DDD1DB335C}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-  
-  <Table Name="_TaskPriority" UID="{BD3CB96B-C467-4818-85B5-3EF73389736A}" Alias="tspr" ShowOnly="true" LocalName="Приоритет задачи" LocalListName="Приоритеты задач" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{FE34E605-10A3-47A3-8DC2-A3C99EFF707D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-
-  <Table Name="_TaskStatus" UID="{79619A77-8385-4AD9-BCB5-3E2B08479166}" Alias="tsst" ShowOnly="true" LocalName="Статус задачи" LocalListName="Статусы задач" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{0E0D9E42-AFD9-4798-8B7B-F98237FE72F4}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{FE6CFF9F-9038-46E6-A153-C212D3BD6528}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок"/>
-      <Field UID="{9D9C0CE8-BF92-43BA-A8D5-8ABF38020C87}" Name="StyleSheet" Type="String" LabelName="Стиль" LocalListName="Стиль"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Order"/>
-      <Index Field="StyleSheet"/>
-    </Indexes>
   </Table>
 
   <Table Name="_TaskDuplicate" UID="{3CC4AC97-2EFD-44A8-B613-86EB9770D61A}" Alias="tsdp" LocalName="Дубликат задачи" LocalListName="Дубликаты задач" TitleName="Original" IsSystem="true">

@@ -117,6 +117,7 @@
   <Local Name="Message.Error.InvalidPassword" Russian="Неверный пароль."/>
   <Local Name="Message.Error.CurrentUserIsDeleted" Russian="Ваша учётная запись помечена на удаление, обратитесь к системному администратору."/>
   <Local Name="Message.Error.OverrideLocalListName" Russian="Не удалось получить переопределённые имена полей."/>
+  <Local Name="Message.Error.CheckAllQuery" Russian="Ошибка в SQL-запросе!"/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
   <Local Name="Message.Error.InitializeUserSettings" Russian="Не удалось загрузить пользовательские настройки."/>
   <Local Name="Message.Error.InitializeParagraphs" Russian="Не удалось загрузить параграфы."/>

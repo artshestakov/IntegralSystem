@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISParagraphBaseForm.h"
-#include "ISTaskBaseListForm.h"
+#include "ISTaskListForm.h"
 //-----------------------------------------------------------------------------
 class ISTaskForm : public ISParagraphBaseForm
 {
@@ -28,7 +28,7 @@ private:
 	QActionGroup *ActionGroup;
 	QWidget *TempWidget;
 
-	ISTaskBaseListForm *TaskListForm;
+	ISTaskListForm *TaskListForm;
 	QString CurrentListForm;
 };
 //-----------------------------------------------------------------------------

@@ -25,10 +25,6 @@ ISTaskForm::ISTaskForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	MainLayout->addWidget(ToolBar);
 
-	MainLayout->addWidget(ISControls::CreateHorizontalLine(this));
-
-	CreateTempWidget();
-	
 	QAction *ActionCreate = new QAction(ToolBar);
 	ActionCreate->setText(LANG("Task.CreateTask"));
 	ActionCreate->setToolTip(LANG("Task.CreateTask"));
@@ -46,12 +42,22 @@ ISTaskForm::ISTaskForm(QWidget *parent) : ISParagraphBaseForm(parent)
 
 	ToolBar->addSeparator();
 
-	CreateActionFilter(LANG("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), "ISTaskAllListForm");
-	CreateActionFilter(LANG("Task.Filter.My"), BUFFER_ICONS("Task.Filters.My"), "ISTaskMyListForm");
-	CreateActionFilter(LANG("Task.Filter.From"), BUFFER_ICONS("Task.Filters.From"), "ISTaskFromListForm");
-	CreateActionFilter(LANG("Task.Filter.Favorite"), BUFFER_ICONS("Task.Filters.Favorite"), "ISTaskFavoriteListForm");
-	CreateActionFilter(LANG("Task.Filter.Deadline"), BUFFER_ICONS("Task.Filters.Deadline"), "ISTaskTodayListForm");
-	CreateActionFilter(LANG("Task.Filter.Overdue"), BUFFER_ICONS("Task.Filter.Overdue"), "ISTaskOverdueListForm");
+	CreateActionFilter(LANG("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), "ISTaskListForm");
+	//CreateActionFilter(LANG("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), "ISTaskAllListForm");
+	//CreateActionFilter(LANG("Task.Filter.My"), BUFFER_ICONS("Task.Filters.My"), "ISTaskMyListForm");
+	//CreateActionFilter(LANG("Task.Filter.From"), BUFFER_ICONS("Task.Filters.From"), "ISTaskFromListForm");
+	//CreateActionFilter(LANG("Task.Filter.Favorite"), BUFFER_ICONS("Task.Filters.Favorite"), "ISTaskFavoriteListForm");
+	//CreateActionFilter(LANG("Task.Filter.Deadline"), BUFFER_ICONS("Task.Filters.Deadline"), "ISTaskTodayListForm");
+	//CreateActionFilter(LANG("Task.Filter.Overdue"), BUFFER_ICONS("Task.Filter.Overdue"), "ISTaskOverdueListForm");
+
+	MainLayout->addWidget(ISControls::CreateHorizontalLine(this));
+
+	CreateTempWidget();
+
+	TaskListForm = new ISTaskListForm(this);
+	TaskListForm->setVisible(false);
+	connect(TaskListForm, &ISTaskListForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
+	MainLayout->addWidget(TaskListForm);
 }
 //-----------------------------------------------------------------------------
 ISTaskForm::~ISTaskForm()
@@ -104,7 +110,6 @@ QAction* ISTaskForm::CreateActionFilter(const QString &Text, const QIcon &Icon, 
 	ActionFilter->setCheckable(true);
 	connect(ActionFilter, &QAction::triggered, this, &ISTaskForm::FilterClicked);
 	ToolBar->addAction(ActionFilter);
-
 	ActionGroup->addAction(ActionFilter);
 	return ActionFilter;
 }
@@ -112,8 +117,7 @@ QAction* ISTaskForm::CreateActionFilter(const QString &Text, const QIcon &Icon, 
 void ISTaskForm::FilterClicked()
 {
 	QString ListFormName = dynamic_cast<QAction*>(sender())->data().toString();
-
-	if (CurrentListForm == ListFormName)
+	if (ListFormName == CurrentListForm)
 	{
 		return;
 	}
@@ -124,18 +128,9 @@ void ISTaskForm::FilterClicked()
 		TempWidget = nullptr;
 	}
 
-	if (TaskListForm)
-	{
-		delete TaskListForm;
-		TaskListForm = nullptr;
-	}
-
-	TaskListForm = ISAlgorithm::CreatePointer<ISTaskBaseListForm *>(ListFormName, Q_ARG(QWidget *, this));
-	connect(TaskListForm, &ISTaskBaseListForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
-	MainLayout->addWidget(TaskListForm);
-	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, TaskListForm, &ISTaskBaseListForm::LoadData);
-
 	CurrentListForm = ListFormName;
+	TaskListForm->setVisible(true);
+	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, TaskListForm, &ISTaskListForm::LoadData);
 
 	for (QAction *Action : ActionGroup->actions())
 	{

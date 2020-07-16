@@ -43,6 +43,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	{
 		if (!ISQueryText::Instance().CheckAllQueries())
 		{
+			ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.CheckAllQuery"), ISQueryText::Instance().GetErrorString());
 			return false;
 		}
 	}

@@ -33,8 +33,8 @@ static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_uid "
 											  "WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
 static QString QU_TASK_STATUS = PREPARE_QUERY("UPDATE _task SET "
-											  "task_status = (SELECT tsst_id FROM _taskstatus WHERE tsst_uid = :StatusUID), "
-											  "task_resolution = :Resolution "
+											  "task_status = (SELECT tsst_id FROM _taskstatus WHERE tsst_uid = :StatusUID) "
+											  //"task_resolution = :Resolution "
 											  "WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
 static QString QS_TASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_id = :TaskID");
@@ -67,8 +67,7 @@ static QString QD_TASK_DETACH = PREPARE_QUERY("DELETE FROM _taskobject "
 static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
 												"FROM _task "
 												"WHERE NOT task_isdeleted "
-												"AND task_executor = currentuserid() "
-												"AND task_deadline < CURRENT_DATE");
+												"AND task_executor = currentuserid()");
 //-----------------------------------------------------------------------------
 bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &ErrorString)
 {

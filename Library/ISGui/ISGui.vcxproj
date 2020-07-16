@@ -354,6 +354,7 @@
     <ClCompile Include="ISTaskFromListForm.cpp" />
     <ClCompile Include="ISTaskHistoryTab.cpp" />
     <ClCompile Include="ISTaskInfoWidget.cpp" />
+    <ClCompile Include="ISTaskListForm.cpp" />
     <ClCompile Include="ISTaskMyListForm.cpp" />
     <ClCompile Include="ISTaskObjectForm.cpp" />
     <ClCompile Include="ISTaskOverdueListForm.cpp" />
@@ -572,6 +573,7 @@
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISSexEdit.h" />
+    <QtMoc Include="ISTaskListForm.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISTextEdit.h" />
     <QtMoc Include="ISTimeEdit.h" />
