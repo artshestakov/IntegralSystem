@@ -10,6 +10,7 @@
 #include "ISLogger.h"
 #include "ISLocalization.h"
 #include "CGHelper.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEM_USER = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _users "
@@ -278,6 +279,49 @@ bool CGConfiguratorUpdate::resources()
 		if (!Result)
 		{
 			break;
+		}
+	}
+
+	if (Result) //Если обновление ресурсов прошло успешно - удаляем устаревшие
+	{
+		std::vector<QString> Tables; //Таблицы, ресурсы которых присутствуют в мета-данных
+		for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
+		{
+			if (!ISAlgorithm::VectorContains(Tables, MetaResource->TableName))
+			{
+				Tables.push_back(MetaResource->TableName);
+			}
+		}
+		
+		for (const QString &TableName : Tables) //Обходим таблицы
+		{
+			QString TableAlias = ISMetaData::Instance().GetMetaTable(TableName)->Alias;
+
+			ISQuery qSelectResources(QString("SELECT %1_uid AS uid FROM %2 WHERE %1_issystem").arg(TableAlias).arg(TableName));
+			Result = qSelectResources.Execute();
+			if (Result)
+			{
+				while (qSelectResources.Next()) //Обходим ресурсы конкретной таблицы
+				{
+					ISUuid ResourceUID = qSelectResources.ReadColumn("uid");
+					if (!ISMetaData::Instance().CheckExistResource(ResourceUID)) //Если ресурс не существует в мета-данных - предлагаем удалить его из БД
+					{
+						if (ISConsole::Question(QString("Delete old resource %1 in table %2?").arg(ResourceUID).arg(TableName))) //Пользователь согласился удалить ресурс из БД
+						{
+							ISQuery qDeleteResource;
+							if (!qDeleteResource.Execute(QString("DELETE FROM %1 WHERE %2_uid = '%3'").arg(TableName).arg(TableAlias).arg(ResourceUID)))
+							{
+								ISLOGGER_L(QString("Error delete resource %1: %2").arg(ResourceUID).arg(qDeleteResource.GetErrorString()));
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				ErrorString = "Error select resources: " + qSelectResources.GetErrorString();
+				break;
+			}
 		}
 	}
 	return Result;

@@ -11,10 +11,11 @@ public:
 	ISUuid(const QVariant &UID);
 	ISUuid(const QUuid &UID);
 	ISUuid(const char *UID);
+	ISUuid(const std::string &UID);
 	ISUuid();
 	virtual ~ISUuid();
 
-	bool IsValid() const;
+	bool IsValid() const; //Проверка валидности идентификатора
 };
 //-----------------------------------------------------------------------------
 #endif

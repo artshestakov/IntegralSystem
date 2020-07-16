@@ -246,6 +246,18 @@ bool ISMetaData::CheckExitField(PMetaTable *MetaTable, const QString &FieldName)
 	return false;
 }
 //-----------------------------------------------------------------------------
+bool ISMetaData::CheckExistResource(const ISUuid &ResourceUID) const
+{
+	for (PMetaResource *MetaResource : Resources)
+	{
+		if (MetaResource->UID == ResourceUID)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+//-----------------------------------------------------------------------------
 ISNamespace::FieldType ISMetaData::GetTypeField(const QString &type_name)
 {
 	for (const ISMetaDataType &Type : VectorTypes)
