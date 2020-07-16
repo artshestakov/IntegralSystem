@@ -15,7 +15,7 @@ public:
     ISMetaData &operator=(ISMetaData &&) = delete;
     ~ISMetaData();
 
-    static ISMetaData& GetInstanse();
+    static ISMetaData& Instance();
 
     QString GetErrorString() const;
     bool Initialize(const QString &configuration_name, bool InitXSR, bool InitXSF); //Инициализация

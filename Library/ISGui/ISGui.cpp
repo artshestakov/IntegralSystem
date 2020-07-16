@@ -468,7 +468,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 {
 	SetWaitGlobalCursor(true);
 	ISObjectFormBase *ObjectForm = nullptr;
-	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
 	if (!MetaTable->ObjectForm.isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
 	{
 		ObjectForm = ISAlgorithm::CreatePointer<ISObjectFormBase *>(MetaTable->ObjectForm, Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID));
@@ -483,7 +483,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 //-----------------------------------------------------------------------------
 ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaForeign *MetaForeign)
 {
-	QString SearchOperatorWidget = DataType == ISNamespace::FT_Int && MetaForeign ? "ISComboSearchBase" : ISMetaData::GetInstanse().GetSearchWidget(DataType);
+	QString SearchOperatorWidget = DataType == ISNamespace::FT_Int && MetaForeign ? "ISComboSearchBase" : ISMetaData::Instance().GetSearchWidget(DataType);
 	ISComboSearchBase *ComboSearchBase = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, parent));
 	return ComboSearchBase;
 }
@@ -635,12 +635,12 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
 			}
 			else
 			{
-				Temp = ISMetaData::GetInstanse().GetNameFieldEdit(MetaField->Type);
+				Temp = ISMetaData::Instance().GetNameFieldEdit(MetaField->Type);
 			}
 		}
 		else
 		{
-			Temp = ISMetaData::GetInstanse().GetNameFieldEdit(DataType);
+			Temp = ISMetaData::Instance().GetNameFieldEdit(DataType);
 		}
 		FieldEditBase = CreateFieldEditBase(ParentWidget, MetaField, DataType, Temp);
 	}

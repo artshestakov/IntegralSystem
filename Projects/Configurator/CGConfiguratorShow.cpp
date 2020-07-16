@@ -120,7 +120,7 @@ bool CGConfiguratorShow::obsoleteresources()
 	ISLOGGER_L("Searching not needed resources...");
 
 	std::map<QString, ISVectorString> Map, MapOutput;
-	for (PMetaResource *MetaResource : ISMetaData::GetInstanse().GetResources())
+	for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
 	{
 		QString TableName = MetaResource->TableName;
 		QString ResourceUID = MetaResource->UID.toLower();
@@ -135,7 +135,7 @@ bool CGConfiguratorShow::obsoleteresources()
 		QString TableName = MapItem.first;
 		ISVectorString Vector = MapItem.second;
 
-		QString SqlText = QString("SELECT %1_uid FROM %2 WHERE %1_uid NOT IN(%3)").arg(ISMetaData::GetInstanse().GetMetaTable(TableName)->Alias).arg(TableName);
+		QString SqlText = QString("SELECT %1_uid FROM %2 WHERE %1_uid NOT IN(%3)").arg(ISMetaData::Instance().GetMetaTable(TableName)->Alias).arg(TableName);
 		QString NotIN;
 		for (const QString &String : Vector)
 		{
@@ -185,7 +185,7 @@ bool CGConfiguratorShow::obsoletesequence()
 	ISLOGGER_L("Searching not needed sequences...");
 
 	QString Where;
-    for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables())
+    for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
         Where += '\'' + MetaTable->Name.toLower() + "_sequence" + "', ";
 	}
@@ -244,7 +244,7 @@ bool CGConfiguratorShow::databasesize()
 //-----------------------------------------------------------------------------
 PMetaTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 {
-    for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables())
+    for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
 		if (MetaTable->Name.toLower() == TableName)
 		{

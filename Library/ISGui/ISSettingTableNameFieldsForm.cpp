@@ -30,7 +30,7 @@ ISSettingTableNameFieldsForm::ISSettingTableNameFieldsForm(QWidget *parent) : IS
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
 	GetMainLayout()->addWidget(ScrollArea);
 
-	for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables())
+	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
 		if (MetaTable->IsSystem)
 		{
@@ -100,7 +100,7 @@ ISSettingTableNameFieldsForm::~ISSettingTableNameFieldsForm()
 						qInsert.Execute();
 					}
 				}
-				PMetaField *MetaField = ISMetaData::GetInstanse().GetMetaTable(TableName)->GetField(FieldName);
+				PMetaField *MetaField = ISMetaData::Instance().GetMetaTable(TableName)->GetField(FieldName);
 				MetaField->LabelName = Value.toString();
 				MetaField->LocalListName = MetaField->LabelName;
 			}

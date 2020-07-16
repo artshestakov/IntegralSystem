@@ -61,7 +61,7 @@ ISMetaData::~ISMetaData()
 	}
 }
 //-----------------------------------------------------------------------------
-ISMetaData& ISMetaData::GetInstanse()
+ISMetaData& ISMetaData::Instance()
 {
 	static ISMetaData MetaData;
 	return MetaData;
@@ -834,7 +834,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 			PMetaField *MetaField = new PMetaField();
 			MetaField->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
 			MetaField->Name = FieldName;
-			MetaField->Type = ISMetaData::GetInstanse().GetTypeField(DomNamedNodeMap.namedItem("Type").nodeValue());
+			MetaField->Type = ISMetaData::Instance().GetTypeField(DomNamedNodeMap.namedItem("Type").nodeValue());
 			MetaField->Size = DomNamedNodeMap.namedItem("Size").nodeValue().toInt();
 			MetaField->Upper = QVariant(DomNamedNodeMap.namedItem("LocalListName").nodeValue()).toBool();
 			MetaField->Lower = QVariant(DomNamedNodeMap.namedItem("TitleName").nodeValue()).toBool();

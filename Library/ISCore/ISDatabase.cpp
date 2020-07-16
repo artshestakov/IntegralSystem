@@ -265,7 +265,7 @@ bool ISDatabase::IsUserOnline(const QString &UserLogin) const
 //-----------------------------------------------------------------------------
 QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName, int ObjectID) const
 {
-    PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+    PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
     PMetaField *MetaField = MetaTable->GetField(FieldName);
     QString SqlText = "SELECT " + MetaTable->Alias + '_' + MetaField->Name.toLower() + " FROM " + MetaTable->Name.toLower() + " WHERE " + MetaTable->Alias + "_id = :ObjectID";
     ISQuery qSelect(SqlText);

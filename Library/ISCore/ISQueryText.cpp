@@ -62,7 +62,7 @@ bool ISQueryText::CheckAllQueries()
 
 			if (Result)
 			{
-				for (const QString &SqlText : ISMetaData::GetInstanse().GetMetaQueries())
+				for (const QString &SqlText : ISMetaData::Instance().GetMetaQueries())
 				{
 					QSqlQuery SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
 					Result = SqlQuery.prepare(SqlText);

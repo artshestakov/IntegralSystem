@@ -157,7 +157,7 @@ bool CGConfiguratorDelete::subsystems()
 bool CGConfiguratorDelete::tables()
 {
     ISVectorString VectorString;
-    std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
+    std::vector<PMetaTable*> Tables = ISMetaData::Instance().GetTables();
     for (PMetaTable *MetaTable : Tables)
     {
         VectorString.emplace_back(MetaTable->Name.toLower());
@@ -211,7 +211,7 @@ bool CGConfiguratorDelete::tables()
 bool CGConfiguratorDelete::fields()
 {
     QMap<QString, ISVectorString> Map;
-    std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
+    std::vector<PMetaTable*> Tables = ISMetaData::Instance().GetTables();
     for (PMetaTable *MetaTable : Tables)
     {
         QString TableName = MetaTable->Name.toLower();
@@ -276,7 +276,7 @@ bool CGConfiguratorDelete::fields()
 bool CGConfiguratorDelete::resources()
 {
     QMap<QString, ISVectorString> Map;
-    for (PMetaResource *MetaResource : ISMetaData::GetInstanse().GetResources())
+    for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
     {
         if (Map.contains(MetaResource->TableName))
         {
@@ -293,7 +293,7 @@ bool CGConfiguratorDelete::resources()
     {
         QString TableName = MapItem.first;
         ISVectorString UIDs = MapItem.second;
-        PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+        PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
 
         //?????? ? ??????? ??????? ????????
         ISQuery qSelect("SELECT " + MetaTable->Alias + "_uid FROM " + TableName);

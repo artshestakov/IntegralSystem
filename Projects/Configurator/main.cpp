@@ -83,10 +83,10 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	Result = ISMetaData::GetInstanse().Initialize(ConfigurationName, true, true);
+	Result = ISMetaData::Instance().Initialize(ConfigurationName, true, true);
 	if (!Result)
 	{
-		ISLOGGER_E("Initialize meta data: " + ISMetaData::GetInstanse().GetErrorString());
+		ISLOGGER_E("Initialize meta data: " + ISMetaData::Instance().GetErrorString());
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}

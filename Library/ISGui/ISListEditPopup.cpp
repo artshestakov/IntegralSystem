@@ -16,7 +16,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
 	: ISInterfaceForm(ComboBox),
 	MetaForeign(meta_foreign)
 {
-	MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);
+	MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
 
 	setWindowFlags(Qt::Popup);
 	setAttribute(Qt::WA_DeleteOnClose, false);

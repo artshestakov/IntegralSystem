@@ -21,8 +21,8 @@ static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT; 
 //-----------------------------------------------------------------------------
 bool CGForeign::CreateForeign(PMetaForeign *MetaForeign, QString &ErrorString)
 {
-	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
-	PMetaTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
+	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
 
 	QString SqlText;
 	SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
@@ -44,7 +44,7 @@ bool CGForeign::CreateForeign(PMetaForeign *MetaForeign, QString &ErrorString)
 //-----------------------------------------------------------------------------
 bool CGForeign::UpdateForeign(PMetaForeign *MetaForeign, QString &ErrorString)
 {
-	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
 
 	ISQuery qDeleteForeign;
 	qDeleteForeign.SetShowLongQuery(false);
@@ -79,7 +79,7 @@ bool CGForeign::CheckExistForeign(PMetaForeign *MetaForeign, bool &Exist, QStrin
 //-----------------------------------------------------------------------------
 QString CGForeign::GetForeignName(PMetaForeign *MetaForeign)
 {
-	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->TableName);
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
 	return MetaTable->Name.toLower() + '_' + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + "_foreign";
 }
 //-----------------------------------------------------------------------------

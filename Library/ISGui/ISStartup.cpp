@@ -50,9 +50,9 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	ISObjects::GetInstance().Initialize();
 
 	//Инициализация мета-данных
-	if (!ISMetaData::GetInstanse().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false))
+	if (!ISMetaData::Instance().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false))
 	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::GetInstanse().GetErrorString());
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
 		return false;
 	}
 
@@ -231,7 +231,7 @@ bool ISStartup::LoadLocalNames(ISSplashScreen *SplashScreen)
 	{
 		while (qSelect.Next())
 		{
-			PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(qSelect.ReadColumn("lcnm_tablename").toString());
+			PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(qSelect.ReadColumn("lcnm_tablename").toString());
 			if (MetaTable)
 			{
 				PMetaField *MetaField = MetaTable->GetField(qSelect.ReadColumn("lcnm_fieldname").toString());

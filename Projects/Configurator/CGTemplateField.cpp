@@ -19,7 +19,7 @@ QString CGTemplateField::GetSqlTextForTemplateSystemFields(const QString &ClassN
 	while (!NodeTemplateFields.isNull())
 	{
 		QString FieldName = NodeTemplateFields.attributes().namedItem("Name").nodeValue();
-		QString FieldType = ISMetaData::GetInstanse().GetTypeDB(NodeTemplateFields.attributes().namedItem("Type").nodeValue());
+		QString FieldType = ISMetaData::Instance().GetTypeDB(NodeTemplateFields.attributes().namedItem("Type").nodeValue());
 		QString FieldLocalListName = NodeTemplateFields.attributes().namedItem("LocalListName").nodeValue();
 		QString FieldSequence = NodeTemplateFields.attributes().namedItem("Sequence").nodeValue();
 		QString FieldDefaultValue = NodeTemplateFields.attributes().namedItem("DefaultValue").nodeValue();

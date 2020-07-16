@@ -7,7 +7,7 @@
 ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID) : ISInterfaceDialogForm()
 {
 	resize(ISDefines::Gui::SIZE_640_480);
-	setWindowTitle(ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName);
+	setWindowTitle(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelInfo = new QLabel(this);

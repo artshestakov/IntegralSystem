@@ -56,7 +56,7 @@ static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_user
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
-	MetaTable(ISMetaData::GetInstanse().GetMetaTable(TableName)),
+	MetaTable(ISMetaData::Instance().GetMetaTable(TableName)),
 	SqlModel(nullptr),
 	PageNavigation(nullptr),
 	QueryModel(nullptr),
@@ -666,7 +666,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 		for (int Column = 0; Column < SqlModel->columnCount(); ++Column) //Обход полей записи
 		{
 			PMetaField *MetaField = SqlModel->GetField(Column);
-			if (!ISMetaData::GetInstanse().GetSearch(MetaField->Type))
+			if (!ISMetaData::Instance().GetSearch(MetaField->Type))
 			{
 				continue;
 			}
@@ -679,7 +679,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 			{
 				if (MetaField->Foreign) //Если на поле установлен внешний ключ
 				{
-					PMetaTable *MetaForeignTable = ISMetaData::GetInstanse().GetMetaTable(MetaField->Foreign->ForeignClass);
+					PMetaTable *MetaForeignTable = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass);
 					WhereText += "(SELECT concat(";
 					for (const QString &FieldName : MetaField->Foreign->ForeignViewNameField.split(';'))
 					{

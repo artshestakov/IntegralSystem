@@ -161,7 +161,7 @@ void ISFullTextSearchForm::Search()
 	{
 		QString TableName = MapItem.first;
 		ISVectorInt VectorInt = MapItem.second;
-		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+		PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
 
 		for (int ObjectID : VectorInt) //Обход объектов
 		{
@@ -195,7 +195,7 @@ void ISFullTextSearchForm::Execute(const QVariant &SearchValue)
 	bool Result = ISDatabase::Instance().Connect(CONNECTION_FULL_TEXT_SEARCH, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password);
 	if (Result)
 	{
-		std::vector<PMetaTable*> Tables = ISMetaData::GetInstanse().GetTables();
+		std::vector<PMetaTable*> Tables = ISMetaData::Instance().GetTables();
 		emit SetProgressMaximum(Tables.size());
 
 		int ProgressValue = 0;
@@ -238,7 +238,7 @@ QString ISFullTextSearchForm::CreateQuery(PMetaTable *MetaTable) const
 	QueryText += "SELECT " + MetaTable->Alias + "_id AS ID, concat(";
 	for (PMetaField *MetaField : MetaTable->Fields)
 	{
-		if (!ISMetaData::GetInstanse().GetSearch(MetaField->Type)) //Если разрешение по поиск по типу поля есть
+		if (!ISMetaData::Instance().GetSearch(MetaField->Type)) //Если разрешение по поиск по типу поля есть
 		{
 			continue;
 		}
@@ -250,7 +250,7 @@ QString ISFullTextSearchForm::CreateQuery(PMetaTable *MetaTable) const
 
 		if (MetaField->Foreign)
 		{
-			PMetaTable *MetaForeignTable = ISMetaData::GetInstanse().GetMetaTable(MetaField->Foreign->ForeignClass);
+			PMetaTable *MetaForeignTable = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass);
 			QueryText += "(SELECT concat(";
 			for (const QString &FieldName : MetaField->Foreign->ForeignViewNameField.split(';'))
 			{

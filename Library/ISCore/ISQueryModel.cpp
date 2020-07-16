@@ -253,7 +253,7 @@ void ISQueryModel::CreateQuerySelectFields()
 
 		if (Field->Foreign) //Если на поле установлен внешний ключ
 		{
-			PMetaTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(Field->Foreign->ForeignClass);
+			PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(Field->Foreign->ForeignClass);
 			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->Name.toLower() + SYMBOL_SPACE + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + " ON " + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower() + " = " + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + SYMBOL_POINT + MetaTableForeign->Alias + '_' + Field->Foreign->ForeignField.toLower() + " \n";
 			
 			QString Temp = ISQueryModelHelper::GetForeignViewNameField(MetaTableForeign->Alias, Field->Foreign, i).toLower();

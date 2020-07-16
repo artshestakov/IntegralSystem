@@ -6,7 +6,7 @@ static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT get_configuration_name()
 //-----------------------------------------------------------------------------
 QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign, const QString &SqlFilter, const QVariant &ObjectID)
 {
-	PMetaTable *MetaTableForeign = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass); //Таблица на которую ссылается внешний ключ
+	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass); //Таблица на которую ссылается внешний ключ
 	QStringList FieldList = MetaForeign->ForeignViewNameField.split(';');
 
 	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField.toLower() + " AS ID, concat(";

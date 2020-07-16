@@ -47,7 +47,7 @@ void ISSettingsDatabase::Initialize()
 	}
 
 	QString SqlText = "SELECT \n";
-	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable("_SettingsDatabase");
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable("_SettingsDatabase");
 	for (PMetaField *MetaField : MetaTable->AllFields)
 	{
 		QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();

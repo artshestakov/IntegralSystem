@@ -35,7 +35,7 @@ ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent) : ISInterf
 			QString TableName = qSelect.ReadColumn("intd_tablename").toString();
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-			ListWidgetItem->setText(ISMetaData::GetInstanse().GetMetaTable(TableName)->LocalListName);
+			ListWidgetItem->setText(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName);
 			ListWidgetItem->setData(Qt::UserRole, TableName);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 			ListWidgetItem->setFont(ISDefines::Gui::FONT_APPLICATION);

@@ -97,7 +97,7 @@ void ISUserGroupWidget::CreateTables()
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.Tables"));
 
 	QMap<QString, ISUuid> Map;
-	for (PMetaTable *MetaTable : ISMetaData::GetInstanse().GetTables())
+	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
 		if (!MetaTable->IsSystem) //Если таблица является системной - пропускать
 		{
@@ -166,12 +166,12 @@ void ISUserGroupWidget::SubSystemClicked(const QVariant &value)
 	if (value.toBool()) //Если право было включено
 	{
 		ISUserRoleEntity::InsertSubSystemAccess(GroupID, SubSystemUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->LocalListName, GroupID, SubSystemName);
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SubSystemName);
 	}
 	else
 	{
 		ISUserRoleEntity::DeleteSubSystemAccess(GroupID, SubSystemUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->LocalListName, GroupID, SubSystemName);
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SubSystemName);
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }
@@ -186,12 +186,12 @@ void ISUserGroupWidget::TableClicked(QAction *Action)
 	if (Action->isChecked()) //Если право было включено
 	{
 		ISUserRoleEntity::InsertTableAccess(GroupID, TableUID, AccessUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->LocalListName, GroupID, TableName + " (" + Action->toolTip() + ')');
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, TableName + " (" + Action->toolTip() + ')');
 	}
 	else
 	{
 		ISUserRoleEntity::DeleteTableAccess(GroupID, TableUID, AccessUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->LocalListName, GroupID, TableName + " (" + Action->toolTip() + ')');
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, TableName + " (" + Action->toolTip() + ')');
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }
@@ -205,12 +205,12 @@ void ISUserGroupWidget::SpecialClicked(const QVariant &value)
 	if (value.toBool())
 	{
 		ISUserRoleEntity::InsertSpecialAccess(GroupID, SpecialAccessUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->LocalListName, GroupID, SpecialAccessName);
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SpecialAccessName);
 	}
 	else
 	{
 		ISUserRoleEntity::DeleteSpecialAccess(GroupID, SpecialAccessUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::GetInstanse().GetMetaTable("_UserGroup")->LocalListName, GroupID, SpecialAccessName);
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SpecialAccessName);
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }

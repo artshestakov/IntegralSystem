@@ -146,7 +146,7 @@ void ISSearchForm::LoadFields()
 			continue;
 		}
 
-		if (ISMetaData::GetInstanse().GetSearch(MetaField->Type))
+		if (ISMetaData::Instance().GetSearch(MetaField->Type))
 		{
 			AddFieldFromList(MetaField->LabelName, MetaField->Name);
 		}

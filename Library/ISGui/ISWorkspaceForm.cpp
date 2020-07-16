@@ -125,7 +125,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 
 	if (!MetaSubSystem->TableName.isEmpty()) //Открытие таблицы
 	{
-		ISProtocol::OpenSubSystem(MetaSubSystem->TableName, ISMetaData::GetInstanse().GetMetaTable(MetaSubSystem->TableName)->LocalListName);
+		ISProtocol::OpenSubSystem(MetaSubSystem->TableName, ISMetaData::Instance().GetMetaTable(MetaSubSystem->TableName)->LocalListName);
 		CentralForm = new ISListBaseForm(MetaSubSystem->TableName, this);
 	}
 	else if (!MetaSubSystem->ClassName.isEmpty()) //Открытие класса (виджета)

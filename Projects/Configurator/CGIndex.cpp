@@ -75,7 +75,7 @@ bool CGIndex::CheckExistIndex(PMetaIndex *Index, bool &Exist, QString &ErrorStri
 bool CGIndex::CheckIndexForeign(PMetaIndex *Index)
 {
 	bool Result = true;
-	std::vector<PMetaForeign*> Foreigns = ISMetaData::GetInstanse().GetForeigns();
+	std::vector<PMetaForeign*> Foreigns = ISMetaData::Instance().GetForeigns();
     for (PMetaForeign *MetaForeign : Foreigns)
 	{
 		Result = Index->TableName.toLower() == MetaForeign->ForeignClass.toLower();

@@ -2,7 +2,7 @@
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 ISMetaViewQuery::ISMetaViewQuery(const QString &QueryName)
-	: MetaQuery(ISMetaData::GetInstanse().GetMetaQuery(QueryName)),
+	: MetaQuery(ISMetaData::Instance().GetMetaQuery(QueryName)),
 	OrderSort(Qt::AscendingOrder)
 {
 	

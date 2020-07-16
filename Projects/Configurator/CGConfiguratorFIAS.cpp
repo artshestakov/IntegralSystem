@@ -181,7 +181,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 	ISLOGGER_I("File processing started: " + FileInfo.baseName());
 
 	QString TableName = "_FIAS_" + GetTableName(FileInfo.absoluteFilePath());
-	if (!ISMetaData::GetInstanse().CheckExistTable(TableName))
+	if (!ISMetaData::Instance().CheckExistTable(TableName))
 	{
 		ISLOGGER_W("Table \"" + TableName + "\" not exist");
 		return false;
@@ -208,7 +208,7 @@ bool CGConfiguratorFIAS::FileUpload(const QFileInfo &FileInfo)
 
 		QString StringXML = File.readLine();
 		ISStringMap StringMap = ParseLine(StringXML);
-		PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(TableName);
+		PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
 		if (Select(MetaTable, StringMap))
 		{
 			Update(MetaTable, StringMap);

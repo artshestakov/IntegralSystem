@@ -106,7 +106,7 @@ void ISListEdit::SetReadOnly(bool read_only)
 void ISListEdit::InvokeList(PMetaForeign *meta_foreign)
 {
 	MetaForeign = meta_foreign;
-	MetaTable = ISMetaData::GetInstanse().GetMetaTable(MetaForeign->ForeignClass);
+	MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
 
 	ListEditPopup = new ISListEditPopup(MetaForeign, this);
 	connect(ListEditPopup, &ISListEditPopup::Selected, this, &ISListEdit::SelectedValue);

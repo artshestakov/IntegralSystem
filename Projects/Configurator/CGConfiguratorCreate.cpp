@@ -24,9 +24,9 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
 bool CGConfiguratorCreate::resources()
 {
 	bool Result = true, Exist = true;
-	for (int i = 0, CountResources = ISMetaData::GetInstanse().GetResources().size(); i < CountResources; ++i)
+	for (int i = 0, CountResources = ISMetaData::Instance().GetResources().size(); i < CountResources; ++i)
 	{
-		PMetaResource *MetaResource = ISMetaData::GetInstanse().GetResources().at(i);
+		PMetaResource *MetaResource = ISMetaData::Instance().GetResources().at(i);
 		Progress("Resources for " + MetaResource->TableName, i, CountResources);
 
 		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))

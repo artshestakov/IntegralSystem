@@ -62,7 +62,7 @@ bool CGTable::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 		QString FieldDefalutValue = MetaField->DefaultValue.toString(); //Значение по умолчанию для поля
 		bool FieldNotNull = MetaField->NotNull; //Статус обязательного заполнения поля
 
-		SqlText += "\t" + TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::GetInstanse().GetTypeDB(FieldType);
+		SqlText += "\t" + TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::Instance().GetTypeDB(FieldType);
 
 		if (FieldSize > 0) //Если указан размер поля
 		{
@@ -150,13 +150,13 @@ bool CGTable::AlterExistFields(PMetaTable *MetaTable, QString &ErrorString)
 			QString ColumnType = qSelectColumns.ReadColumn("data_type").toString().toUpper();
 			int ColumnSize = qSelectColumns.ReadColumn("character_maximum_length").toInt();
 
-			if (!ISMetaData::GetInstanse().CheckExitField(MetaTable, ColumnName))
+			if (!ISMetaData::Instance().CheckExitField(MetaTable, ColumnName))
 			{
 				continue;
 			}
 
-			PMetaField *MetaField = ISMetaData::GetInstanse().GetMetaField(MetaTable, ColumnName);
-			QString MetaType = ISMetaData::GetInstanse().GetTypeDB(MetaField->Type);
+			PMetaField *MetaField = ISMetaData::Instance().GetMetaField(MetaTable, ColumnName);
+			QString MetaType = ISMetaData::Instance().GetTypeDB(MetaField->Type);
 			QString MetaDefaultValue = MetaField->DefaultValue.toString();
 			bool MetaNotNull = MetaField->NotNull;
 			int MetaSize = MetaField->Size;
@@ -273,7 +273,7 @@ bool CGTable::CreateNewFields(PMetaTable *MetaTable, QString &ErrorString)
 			if (!Exist)//Если поле не существует
 			{
 				QString AddColumn = "ALTER TABLE public." + MetaTable->Name + " \n" +
-					"ADD COLUMN \"" + FieldName + "\"" + SYMBOL_SPACE + ISMetaData::GetInstanse().GetTypeDB(MetaField->Type);
+					"ADD COLUMN \"" + FieldName + "\"" + SYMBOL_SPACE + ISMetaData::Instance().GetTypeDB(MetaField->Type);
 
 				if (MetaField->Size) //Если указан размер поля
 				{

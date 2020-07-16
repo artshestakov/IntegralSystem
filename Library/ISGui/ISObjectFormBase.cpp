@@ -670,7 +670,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		else //Открытие таблицы
 		{
 			ISListObjectForm *ListForm = new ISListObjectForm(TableName, ObjectID, WidgetTabEscort);
-			ListForm->SetUID(ISMetaData::GetInstanse().GetMetaTable(TableName)->UID);
+			ListForm->SetUID(ISMetaData::Instance().GetMetaTable(TableName)->UID);
 			
 			if (!ClassFilter.isEmpty())
 			{

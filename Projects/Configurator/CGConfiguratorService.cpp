@@ -30,11 +30,11 @@ bool CGConfiguratorService::reindex()
 	ISLOGGER_L("Reindex...");
 
 	bool Result = true;
-	for (int i = 0, CountTables = ISMetaData::GetInstanse().GetTables().size(); i < CountTables; ++i)
+	for (int i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i)
 	{
 		Progress("Reindex", i, CountTables);
 
-		QString TableName = ISMetaData::GetInstanse().GetTables()[i]->Name;
+		QString TableName = ISMetaData::Instance().GetTables()[i]->Name;
 		ISLOGGER_L("Reindex table: " + TableName);
 
 		ISQuery qReindexTable;
@@ -122,7 +122,7 @@ bool CGConfiguratorService::cleartable()
 		return false;
 	}
 
-	PMetaTable *MetaTable = ISMetaData::GetInstanse().GetMetaTable(InputName);
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(InputName);
 	if (!MetaTable) //Если таблица не найдена
 	{
 		ISLOGGER_L(QString("Table \"%1\" not found").arg(InputName));
