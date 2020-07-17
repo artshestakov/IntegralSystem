@@ -7,6 +7,7 @@
 #include "ISCaratDebugger.h"
 #include "ISQueryText.h"
 #include "ISVersion.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 void Usage(); //Вывод инструкции по запуску
 bool CheckConfigValues(); //Проверка значений в конфигурационном файле
@@ -33,7 +34,7 @@ int main(int argc, char **argv)
 		}
         else if (Argument == "-v" || Argument == "--version")
         {
-			std::cout << "Carat (" << ISVersion::Instance().ToString().toStdString() << ")" << std::endl;
+			std::cout << "Carat (" << ISVersion::Instance().ToString().toStdString() << ") " << ISSystem::GetConfigurationName().toStdString() << " " << ISVersion::Instance().Info.Platform.toStdString() << std::endl;
         }
 		else if (Argument == "-h" || Argument == "--help")
 		{
