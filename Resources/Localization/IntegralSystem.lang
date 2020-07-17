@@ -34,11 +34,9 @@
   <Local Name="AboutForm.Tab.Contacts.ProductAuthor.FullName" Russian="Шестаков Артём Андреевич"/>
   <Local Name="AboutForm.Tab.Contacts.ProductAuthorPhone" Russian="Телефон для связи"/>
   <Local Name="AboutForm.Tab.Contacts.Telegram" Russian="Telegram"/>
-  <Local Name="AboutForm.Tab.Contacts.WhatsApp" Russian="Whats's App"/>
   <Local Name="AboutForm.Tab.Contacts.ProductAuthorMail" Russian="Электронная почта"/>
   <Local Name="AboutForm.Tab.Contacts.Address" Russian="Адрес"/>
-  <Local Name="AboutForm.Tab.Contacts.Address.Text" Russian="г. Москва, ул. Беговая 26, 125284"/>
-  <Local Name="AboutForm.Tab.Contacts.SaveAuthorInformation" Russian="Сохранить информацию об авторе"/>
+  <Local Name="AboutForm.Tab.Contacts.Address.Text" Russian="г. Москва"/>
   <Local Name="AboutForm.Tab.Configuration" Russian="Конфигурация"/>
   <Local Name="AboutForm.Tab.Configuration.Name" Russian="Наименование модуля"/>
   <Local Name="AboutForm.Tab.Configuration.LocalName" Russian="Локальное название"/>

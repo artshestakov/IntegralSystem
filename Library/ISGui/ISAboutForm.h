@@ -21,7 +21,6 @@ protected:
 	void CreateOtherTab(); //Прочее
 
 	void AddLabel(QWidget *parent, const QString &LabelText, const QString &Text);
-	void SaveAuthorInfo(); //Сохранить информацию о разработчике
 
 private:
 	QVBoxLayout *LayoutRight;

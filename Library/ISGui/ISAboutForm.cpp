@@ -6,7 +6,6 @@
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
 #include "ISButtons.h"
-#include "ISButtons.h"
 #include "ISTextEdit.h"
 #include "ISQuery.h"
 #include "ISVersion.h"
@@ -96,17 +95,10 @@ void ISAboutForm::CreateContactsTab()
 	AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.ProductAuthor"), LANG("AboutForm.Tab.Contacts.ProductAuthor.FullName"));
     AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.ProductAuthorPhone"), "+7 (918) 412-55-10");
 	AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.Telegram"), "@artem_shestakov");
-    AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.WhatsApp"), "+7 (918) 412-55-10");
 	AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.ProductAuthorMail"), "art.shestakov@icloud.com");
 	AddLabel(TabContacts, LANG("AboutForm.Tab.Contacts.Address"), LANG("AboutForm.Tab.Contacts.Address.Text"));
 
 	LayoutContacts->addStretch();
-
-	ISPushButton *ButtonSaveInfo = new ISPushButton(TabContacts);
-	ButtonSaveInfo->setText(LANG("AboutForm.Tab.Contacts.SaveAuthorInformation"));
-	ButtonSaveInfo->setIcon(BUFFER_ICONS("Save"));
-	connect(ButtonSaveInfo, &ISPushButton::clicked, this, &ISAboutForm::SaveAuthorInfo);
-	LayoutContacts->addWidget(ButtonSaveInfo, 0, Qt::AlignRight);
 }
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateModuleTab()
@@ -140,6 +132,7 @@ void ISAboutForm::CreateDescriptionTab()
 	ISTextEdit *TextEdit = new ISTextEdit(TabDescription);
 	TextEdit->SetValue(LANG("DescriptionApplication"));
 	TextEdit->SetReadOnly(true);
+	TextEdit->SetSizePolicyVertical(QSizePolicy::Minimum);
 	TabDescription->layout()->addWidget(TextEdit);
 }
 //-----------------------------------------------------------------------------
@@ -153,6 +146,7 @@ void ISAboutForm::CreateLicenseTab()
 
 	ISTextEdit *TextEdit = new ISTextEdit(TabLicense);
 	TextEdit->SetReadOnly(true);
+	TextEdit->SetSizePolicyVertical(QSizePolicy::Minimum);
 	TabLicense->layout()->addWidget(TextEdit);
 
 	QFile FileLicense(":Licenses/IntegralSystem.txt");
@@ -229,28 +223,5 @@ void ISAboutForm::AddLabel(QWidget *parent, const QString &LabelText, const QStr
 	LayoutRow->addStretch();
 
 	parent->layout()->addWidget(WidgetRow);
-}
-//-----------------------------------------------------------------------------
-void ISAboutForm::SaveAuthorInfo()
-{
-	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.Txt"));
-	if (FilePath.length())
-	{
-		QFile File(FilePath);
-		if (File.open(QIODevice::WriteOnly | QIODevice::Text))
-		{
-			QString String;
-			String += LANG("AboutForm.Tab.Contacts.ProductAuthor") + ": " + LANG("AboutForm.Tab.Contacts.ProductAuthor.FullName") + "\n";
-			String += LANG("AboutForm.Tab.Contacts.ProductAuthorPhone") + ": +7 (918) 412-55-10\n";
-			String += LANG("AboutForm.Tab.Contacts.Telegram") + ": @artem_shestakov\n";
-			String += LANG("AboutForm.Tab.Contacts.WhatsApp") + ": +7 (918) 412-55-10\n";
-			String += LANG("AboutForm.Tab.Contacts.ProductAuthorMail") + ": art.shestakov@icloud.com";
-
-			File.write(String.toUtf8());
-			File.close();
-
-			ISMessageBox::ShowInformation(this, LANG("Message.Information.FileSaved"));
-		}
-	}
 }
 //-----------------------------------------------------------------------------
