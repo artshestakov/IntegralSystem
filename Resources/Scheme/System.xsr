@@ -56,9 +56,6 @@
   <_DaysWeek IsSystem="true" UID="{AFFE23A7-8990-47C8-BAF2-2600F2F44B01}" Name="Суббота" Number="6"/>
   <_DaysWeek IsSystem="true" UID="{6DBF2B0A-818E-47E9-B049-A75F8288CBCE}" Name="Воскресенье" Number="7"/>
   
-  <_Notification IsSystem="true" UID="{6D29E4DA-7BC0-44AD-BF03-6897C3C403F9}" Name="Task.CreateOrUpdate" Message="Добавлена/изменена Ваша задача" SoundFileName="Tasks.CreateUpdate" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{C47A81C4-C61A-45A3-8D43-A55846C61E8C}" Name="Task.AddComment" Message="К Вашей задаче добавлен комменарий" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{8DB698E7-B1FE-4A7D-813E-3FA555FE4FB7}" Name="Task.AddFile" Message="К Вашей задаче прикреплен файл" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{77A232D0-6A44-4A9B-833E-2C55E73E0FA2}" Name="ChatMessage" Message="Новое сообщение в общем чате" SoundFileName="Chat.NewMessage" SignalName="ChatMessage" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{C1141CF5-8E95-4793-841A-2E1E8270A2F3}" Name="UserChanged" Message="Данные Вашей учётной записи были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
   <_Notification IsSystem="true" UID="{721777DC-65D9-43DE-97F0-D50DAED2F4C2}" Name="SettingsDatabaseChanged" Message="Настройки базы данных были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
@@ -90,7 +87,6 @@
   <_ProtocolType IsSystem="true" UID="{C20634AF-EF58-4D96-9215-8085C2B8C416}" Name="Изменение примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{A0115A19-05CC-4AFD-8568-F9AE970E7157}" Name="Просмотр информации о программе"/>
   <_ProtocolType IsSystem="true" UID="{CDCB7490-C975-4ECA-AC3A-4532A32ECC4D}" Name="Изменение пароля от своей учётной записи"/>
-  <_ProtocolType IsSystem="true" UID="{898A6F59-4BAB-4D9A-BF4B-B0CAFDF2072B}" Name="Прикрепление записи к задаче"/>
   <_ProtocolType IsSystem="true" UID="{EA765447-6811-43AD-8CFC-9B2E758A5B4E}" Name="Добавление права на подсистему"/>
   <_ProtocolType IsSystem="true" UID="{5E5EC969-0D11-41FB-9652-7E2ADD466782}" Name="Удаление права на подсистему"/>
   <_ProtocolType IsSystem="true" UID="{44FDDA11-9F7B-4006-8178-944DA65FB7AA}" Name="Добавление права на таблицу"/>

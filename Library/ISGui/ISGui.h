@@ -63,9 +63,6 @@ public:
 	static ISImageViewerForm* ShowImageForm(const QString &FilePath); //Показать изображение
 	static ISImageViewerForm* ShowImageForm(const QByteArray &ByteArray); //Показать изображение
 
-	static void ShowTaskViewForm(int TaskID); //Показать карточку просмотра задачи
-	static void ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID = 0); //Показать форму объекта задачи
-
 	static bool CheckSetupTelephony(); //Проверка настроена ли телефония
 
 private:

@@ -27,47 +27,7 @@ static QString QI_CALENDAR = PREPARE_QUERY("INSERT INTO _calendar(cldr_date, cld
 //-----------------------------------------------------------------------------
 static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_closed = true WHERE cldr_id = :CalendarID");
 //-----------------------------------------------------------------------------
-static QString QS_TASK_STATUS = PREPARE_QUERY("SELECT tsst_uid "
-											  "FROM _task "
-											  "LEFT JOIN _taskstatus ON tsst_id = task_status "
-											  "WHERE task_id = :TaskID");
-//-----------------------------------------------------------------------------
-static QString QU_TASK_STATUS = PREPARE_QUERY("UPDATE _task SET "
-											  "task_status = (SELECT tsst_id FROM _taskstatus WHERE tsst_uid = :StatusUID) "
-											  //"task_resolution = :Resolution "
-											  "WHERE task_id = :TaskID");
-//-----------------------------------------------------------------------------
 static QString QS_TASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_id = :TaskID");
-//-----------------------------------------------------------------------------
-static QString QS_TASK_DUPLICATE = PREPARE_QUERY("SELECT COUNT(*) "
-												 "FROM _taskduplicate "
-												 "WHERE tsdp_original = :OriginalID "
-												 "AND tsdp_duplicate = :DuplicateID");
-//-----------------------------------------------------------------------------
-static QString QI_TASK_DUPLICATE = PREPARE_QUERY("INSERT INTO _taskduplicate(tsdp_original, tsdp_duplicate) "
-												 "VALUES(:OriginalID, :DuplicateID)");
-//-----------------------------------------------------------------------------
-static QString QI_TASK_HISTORY = PREPARE_QUERY("INSERT INTO _taskhistory(thst_task, thst_user, thst_action, thst_information) "
-											   "VALUES(:TaskID, :UserID, (SELECT thac_id FROM _TaskHistoryAction WHERE thac_uid = :ActionUID), :Information)");
-//-----------------------------------------------------------------------------
-static QString QS_TASK_ATTACH = PREPARE_QUERY("SELECT COUNT(*) "
-											  "FROM _taskobject "
-											  "WHERE tobj_task = :TaskID "
-											  "AND tobj_tablename = :TableName "
-											  "AND tobj_objectid = :ObjectID");
-//-----------------------------------------------------------------------------
-static QString QI_TASK_ATTACH = PREPARE_QUERY("INSERT INTO _taskobject(tobj_task, tobj_tablename, tobj_objectid) "
-											  "VALUES(:TaskID, :TableName, :ObjectID)");
-//-----------------------------------------------------------------------------
-static QString QD_TASK_DETACH = PREPARE_QUERY("DELETE FROM _taskobject "
-											  "WHERE tobj_task = :TaskID "
-											  "AND tobj_tablename = :TableName "
-											  "AND tobj_objectid = :ObjectID");
-//-----------------------------------------------------------------------------
-static QString QS_COUNT_OVERDUE = PREPARE_QUERY("SELECT COUNT(*) "
-												"FROM _task "
-												"WHERE NOT task_isdeleted "
-												"AND task_executor = currentuserid()");
 //-----------------------------------------------------------------------------
 bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &ErrorString)
 {
@@ -229,26 +189,6 @@ bool ISCore::CalendarCloseEvent(int CalendarID)
 	return qCloseEvent.Execute();
 }
 //-----------------------------------------------------------------------------
-ISUuid ISCore::TaskGetStatusUID(int TaskID)
-{
-	ISQuery qSelectStatus(QS_TASK_STATUS);
-	qSelectStatus.BindValue(":TaskID", TaskID);
-	if (qSelectStatus.ExecuteFirst())
-	{
-		return qSelectStatus.ReadColumn("tsst_uid");
-	}
-	return ISUuid();
-}
-//-----------------------------------------------------------------------------
-void ISCore::TaskSetStatus(int TaskID, const ISUuid &StatusUID, const QVariant &Resolution)
-{
-	ISQuery qUpdateStatus(QU_TASK_STATUS);
-	qUpdateStatus.BindValue(":StatusUID", StatusUID);
-	qUpdateStatus.BindValue(":Resolution", Resolution);
-	qUpdateStatus.BindValue(":TaskID", TaskID);
-	qUpdateStatus.Execute();
-}
-//-----------------------------------------------------------------------------
 bool ISCore::TaskCheckExist(int TaskID)
 {
 	ISQuery qSelect(QS_TASK_COUNT);
@@ -257,85 +197,6 @@ bool ISCore::TaskCheckExist(int TaskID)
 	if (Result)
 	{
 		Result = qSelect.ReadColumn("count").toInt() > 0;
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISCore::TaskIsDuplicate(int TaskOriginalID, int TaskDuplicateID)
-{
-	ISQuery qSelectDuplicate(QS_TASK_DUPLICATE);
-	qSelectDuplicate.BindValue(":OriginalID", TaskOriginalID);
-	qSelectDuplicate.BindValue(":DuplicateID", TaskDuplicateID);
-	bool Result = qSelectDuplicate.ExecuteFirst();
-	if (Result)
-	{
-		Result = qSelectDuplicate.ReadColumn("count").toInt();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-void ISCore::TaskInsertDuplicate(int TaskOriginalID, int TaskDuplicateID)
-{
-	ISQuery qInsertDuplicate(QI_TASK_DUPLICATE);
-	qInsertDuplicate.BindValue(":OriginalID", TaskOriginalID);
-	qInsertDuplicate.BindValue(":DuplicateID", TaskDuplicateID);
-	qInsertDuplicate.Execute();
-}
-//-----------------------------------------------------------------------------
-void ISCore::TaskInsertHistory(int TaskID, int UserID, const ISUuid &HistoryUID, const QString &Information)
-{
-	ISQueryPool::Instance().AddQuery(QI_TASK_HISTORY,
-	{
-		{ ":TaskID", TaskID },
-		{ ":UserID", UserID },
-		{ ":ActionUID", HistoryUID },
-		{ ":Information", Information.isEmpty() ? QVariant() : Information }
-	});
-}
-//-----------------------------------------------------------------------------
-void ISCore::TaskInsertHistory(int TaskID, const ISUuid &HistoryUID, const QString &Information)
-{
-	TaskInsertHistory(TaskID, CURRENT_USER_ID, HistoryUID, Information);
-}
-//-----------------------------------------------------------------------------
-bool ISCore::TaskIsAttachedObject(int TaskID, const QString &TableName, int ObjectID)
-{
-	ISQuery qSelect(QS_TASK_ATTACH);
-	qSelect.BindValue(":TaskID", TaskID);
-	qSelect.BindValue(":TableName", TableName);
-	qSelect.BindValue(":ObjectID", ObjectID);
-	if (qSelect.ExecuteFirst())
-	{
-		return qSelect.ReadColumn("count").toInt() > 0;
-	}
-	return false;
-}
-//-----------------------------------------------------------------------------
-bool ISCore::TaskAttachObject(int TaskID, const QString &TableName, int ObjectID)
-{
-	ISQuery qInsert(QI_TASK_ATTACH);
-	qInsert.BindValue(":TaskID", TaskID);
-	qInsert.BindValue(":TableName", TableName);
-	qInsert.BindValue(":ObjectID", ObjectID);
-	return qInsert.Execute();
-}
-//-----------------------------------------------------------------------------
-bool ISCore::TaskDetachObject(int TaskID, const QString &TableName, int ObjectID)
-{
-	ISQuery qDelete(QD_TASK_DETACH);
-	qDelete.BindValue(":TaskID", TaskID);
-	qDelete.BindValue(":TableName", TableName);
-	qDelete.BindValue(":ObjectID", ObjectID);
-	return qDelete.Execute();
-}
-//-----------------------------------------------------------------------------
-int ISCore::TaskCountOverdue()
-{
-	int Result = 0;
-	ISQuery qSelect(QS_COUNT_OVERDUE);
-	if (qSelect.ExecuteFirst())
-	{
-		Result = qSelect.ReadColumn("count").toInt();
 	}
 	return Result;
 }

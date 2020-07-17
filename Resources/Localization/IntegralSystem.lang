@@ -62,14 +62,10 @@
   <Local Name="Message.Information.FileRecordSavedToStorage" Russian="Запись разговора успешно сохранена в хранилище."/>
   <Local Name="Message.Information.TakeAlreadyInWorkYou" Russian="Задача уже в работе у вас!"/>
   <Local Name="Message.Information.TakeAlreadyInWorkUser" Russian="Задача уже в работе у пользователя: %1."/>
-  <Local Name="Message.Information.TaskWithNumberNotFound" Russian="Задача под номером %1 не найдена."/>
   <Local Name="Message.Information.PlayRecordOnlyAnswer" Russian="Вы можете прослушивать записи разговоров только со статусом &quot;Отвечен&quot;."/>
   <Local Name="Message.Information.SaveRecordOnlyAnswer" Russian="Вы можете сохранять записи разговоров только со статусом &quot;Отвечен&quot;."/>
   <Local Name="Message.Information.SelectAtLeastOneRecord" Russian="Выберите хотя бы одну запись в списке."/>
-  <Local Name="Message.Information.TaskLinkedDone" Russian="Задача &quot;%1&quot; была успешно привязана к задаче &quot;%2&quot;"/>
   <Local Name="Message.Information.NotFoundPrintFormFromMetaTable" Russian="Для таблицы &quot;%1&quot; нет доступных печатных форм."/>
-  <Local Name="Message.Information.AttachedObjectTask" Russian="Запись успешно прикреплена к задаче."/>
-  <Local Name="Message.Information.DetachedObjectTask" Russian="Запись успешно откреплена от задачи."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.SettingsDatabaseSaved" Russian="Для того чтобы все настройки базы данных вступили в силу, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
@@ -179,16 +175,10 @@
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
   <Local Name="Message.Warning.SelectCorrectTimeCalendarEvent" Russian="Укажите корректное время."/>
   <Local Name="Message.Warning.SqlQueryError" Russian="Ошибка SQL-запроса. Некоторые функции программы могут работать некорректно."/>
-  <Local Name="Message.Warning.TaskDeadlineOverdue" Russian="Создавать задачи задним числом запрещено!"/>
-  <Local Name="Message.Warning.TaskSaveBeforeTakeToWork" Russian="Задача должна быть сохранена перед взятием в работу!"/>
-  <Local Name="Message.Warning.TaskExecutorEmpty" Russian="У задачи не назначен исполнитель."/>
-  <Local Name="Message.Warning.AlienTask" Russian="Вы не можете взять в работу чужую задачу!"/>
-  <Local Name="Message.Warning.TaskAlreadyCheckDuplicate" Russian="Задача #%1 уже отмечена как дубликат задачи #%2."/>
   <Local Name="Message.Warning.FailedConnectionToPostgreSQL" Russian="Ошибка подключения к серверу базы данных: %1"/>
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
   <Local Name="Message.Warning.EMailIsEmpty" Russian="Адрес электронной почты не указан, отправка невозможна."/>
-  <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Такая связь уже существует."/>
   <Local Name="Message.Warning.NotAccess.Create" Russian="У Вас нет прав на добавление данных в таблицу &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.CreateCopy" Russian="У Вас нет прав на создание копий записей в таблице &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Edit" Russian="У Вас нет прав на изменение данных в таблице &quot;%1&quot;."/>
@@ -199,8 +189,6 @@
   <Local Name="Message.Warning.NotAccess.Special.PlayAsteriskRecord" Russian="У Вас нет прав на прослушивание записей разговоров."/>
   <Local Name="Message.Warning.NotAccess.Special.SaveAsteriskRecord" Russian="У Вас нет прав на сохранение записей разговоров."/>
   <Local Name="Message.Warning.NotAccess.Special.SendMessageToChat" Russian="У Вас нет прав на отправку сообщений в общий чат."/>
-  <Local Name="Message.Warning.NotAccess.Special.AttachObjectTask" Russian="У Вас нет права на прикрепление записей к задачам."/>
-  <Local Name="Message.Warning.NotLinkTaskCurrentForCurrent" Russian="Вы не можете связать задачу саму с собой."/>
   <Local Name="Message.Warning.LinkInBufferInvalid" Russian="Ссылка в буфере не является корректной, загрузка невозможна."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
@@ -246,17 +234,9 @@
   <Local Name="Message.Question.SaveDist" Russian="Сохранить этот дистрибутив на диск?"/>
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
   <Local Name="Message.Question.ShareRecordFromChat" Russian="Поделиться ссылкой на эту запись в общий чат?"/>
-  <Local Name="Message.Question.AttachRecordFromTask" Russian="Прикрепить выбранную запись к задаче?"/>
   <Local Name="Message.Question.ClearListNotifications" Russian="Очистить список уведомлений?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.FileRecordSaved" Russian="Запись разговора успешно сохранена! Воспроизвести её?"/>
-  <Local Name="Message.Question.SaveChangedBeforeTaskTakeToWork" Russian="Сохранить изменения перед взятием в работу?"/>
-  <Local Name="Message.Question.TaskTakeToWork" Russian="Взять задачу в работу?"/>
-  <Local Name="Message.Question.TaskDone" Russian="Выполнить задачу?"/>
-  <Local Name="Message.Question.TaskClose" Russian="Закрыть задачу?"/>
-  <Local Name="Message.Question.CloneThisTask" Russian="Клонировать эту задачу?"/>
-  <Local Name="Message.Question.CheckThisTaskAsDuplicate" Russian="Отметить эту задачу как дубликат?"/>
-  <Local Name="Message.Question.DetachObjectTask" Russian="Эта запись уже привязанна к выбранной задаче, открепить её?"/>
   <Local Name="Message.Question.OpenFileInChat" Russian="Открыть файл?"/>
   <Local Name="Message.Question.StopFullTextSearch" Russian="Остановить поиск?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
@@ -479,7 +459,6 @@
   <Local Name="NotificationEmpty.DetailedText" Russian="Как только Вам придут уведомления, они появятся здесь."/>
   <Local Name="Cores" Russian="Ядра"/>
   <Local Name="Share" Russian="Поделиться"/>
-  <Local Name="AttachTask" Russian="Прикрепить к задаче"/>
   <Local Name="IncorrectPassword" Russian="Неверный пароль"/>
   <Local Name="NewNotifications" Russian="У Вас есть непросмотренные уведомления: %1"/>
   <Local Name="IncomingCall" Russian="Входящий звонок"/>
@@ -515,7 +494,6 @@
   <Local Name="SaveToStorage" Russian="Сохранить в хранилище"/>
   <Local Name="CallDetails" Russian="Подробности звонка"/>
   <Local Name="ReproductionAsteriskRecord" Russian="Прослушивание записи разговора"/>
-  <Local Name="Tasks" Russian="Задачи"/>
   <Local Name="ListIsEmpty" Russian="Справочник пуст"/>
   <Local Name="NoteToRecord" Russian="Примечание к записи"/>
   <Local Name="Comment" Russian="Комментарий"/>
@@ -656,7 +634,6 @@
   <Local Name="ClickDoneFromFilter" Russian="Нажмите кнопку &quot;Применить&quot; для получения сводных данных за период."/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
   <Local Name="OutcomingCall" Russian="Исходщяий вызов на номер: %1"/>
-  <Local Name="InputTheTaskNumber" Russian="Введите номер задачи"/>
   <Local Name="AsteriskFileRecordName" Russian="Запись разговора абонента %1 от %2"/>
   <Local Name="AutoCloseIncomingForm" Russian="Окно будет автоматически закрыто через: %1 сек."/>
   <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
@@ -666,7 +643,6 @@
   <Local Name="ClickFromOpenUrlInBrowser" Russian="Нажмите, чтобы открыть ссылку в браузере"/>
   <Local Name="DownloadingImage" Russian="Пожалуйста подождите, изображение скачивается..."/>
   <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается..."/>
-  <Local Name="YouHaveExpiredTasks" Russian="У Вас есть просроченные задачи: %1"/>
   <Local Name="InputThisSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="OpeningUrl" Russian="Открытие ссылки..."/>
   <Local Name="NotifyUserMessage" Russian="Отправитель: %1. Сообщение: %2"/>
@@ -809,19 +785,9 @@
   <Local Name="Telephony.CallError" Russian="Во время вызова абонента произошла ошибка!"/>
   
   <!--Task-->
-  <Local Name="Task.Favorite" Russian="Добавить задачу в избранное после сохранения"/>
-  <Local Name="Task.Favorite.ToolTip" Russian="Задача будет добавлена в избранные после сохранения"/>
   <Local Name="Task.LabelCentral" Russian="Чтобы отобразить список задач, выберите фильтр сверху."/>
-  <Local Name="Task.Rename" Russian="Переименовать"/>
-  <Local Name="Task.Rename.Description" Russian="Введите новое имя задачи"/>
-  <Local Name="Task.CreateTask" Russian="Создать новую задачу"/>
   <Local Name="Task.DesignateMe" Russian="Назначить меня"/>
   <Local Name="Task.Filter.All" Russian="Все задачи"/>
-  <Local Name="Task.Filter.My" Russian="Мои задачи"/>
-  <Local Name="Task.Filter.From" Russian="Задачи от меня"/>
-  <Local Name="Task.Filter.Favorite" Russian="Избранные задачи"/>
-  <Local Name="Task.Filter.Deadline" Russian="Истекают сегодня"/>
-  <Local Name="Task.Filter.Overdue" Russian="Просроченные"/>
   <Local Name="Task.Priority" Russian="Приоритет"/>
   <Local Name="Task.Priority.Low" Russian="Низкий"/>
   <Local Name="Task.Priority.Low.ToolTip" Russian="Несрочная, низкоприоритетная задача (выполняется, когда нет других задач)"/>
@@ -829,48 +795,6 @@
   <Local Name="Task.Priority.Average.ToolTip" Russian="Срочная, высокоприоритетная задача (выполняется когда нет аварийных задач, при появлении &quot;зеленой&quot; задачи текущая задача не откладывается, а доделывается)"/>
   <Local Name="Task.Priority.Tall" Russian="Высокий"/>
   <Local Name="Task.Priority.Tall.ToolTip" Russian="Аварийная задача (выполняется как можно быстрее, при ее появлении текущая задача более низкого уровня откладывается и начинается выполнение аварийной задачи)"/>
-  <Local Name="Task.TakeToWork" Russian="Взять в работу"/>
-  <Local Name="Task.Done" Russian="Выполнить"/>
-  <Local Name="Task.Close" Russian="Закрыть задачу"/>
-  <Local Name="Task.Process" Russian="Процесс"/>
-  <Local Name="Task.CardTask" Russian="Карточка задачи"/>
-  <Local Name="Task.Status" Russian="Статус"/>
-  <Local Name="Task.Number" Russian="Номер"/>
-  <Local Name="Task.Deadline" Russian="Срок исполнения"/>
-  <Local Name="Task.Deadline.NotAppointed" Russian="не назначен"/>
-  <Local Name="Task.Owner" Russian="Автор"/>
-  <Local Name="Task.Executor" Russian="Исполнитель"/>
-  <Local Name="Task.DateTime" Russian="Дата создания"/>
-  <Local Name="Task.Resolution" Russian="Резолюция"/>
   <Local Name="Task.Description" Russian="Описание задачи"/>
-  <Local Name="Task.Description.Empty" Russian="Описание не предусмотрено."/>
-  <Local Name="Task.Linked" Russian="Связанные"/>
-  <Local Name="Task.LinkedUser" Russian="Связал пользователь: %1"/>
-  <Local Name="Task.Comments" Russian="Комментарии (%1)"/>
-  <Local Name="Task.Files" Russian="Файлы (%1)"/>
-  <Local Name="Task.Duplicates" Russian="Дубликаты (%1)"/>
-  <Local Name="Task.History" Russian="История задачи"/>
-  <Local Name="Task.Important.ToolTip" Russian="Это важная задача"/>
-  <Local Name="Task.CommentTask" Russian="Комментарий к задаче"/>
-  <Local Name="Task.InputTheComment" Russian="Введите комментарий"/>
-  <Local Name="Task.CreateComment" Russian="Добавить комментарий"/>
-  <Local Name="Task.AttachingFile" Russian="Прикрепление файла"/>
-  <Local Name="Task.FileNote" Russian="Введите примечание к файлу (не обязательно)"/>
-  <Local Name="Task.AttachFile" Russian="Прикрепить"/>
-  <Local Name="Task.CreateFile" Russian="Прикрепить файл"/>
-  <Local Name="Task.ResolutionTask" Russian="Резолюция задачи"/>
-  <Local Name="Task.ResolutionComment" Russian="Введите комментарий к резолюции (не обязательно)"/>
-  <Local Name="Task.SelectResolution" Russian="Выберите резолюцию"/>
-  <Local Name="Task.SelectResolution.Done" Russian="Выполнено"/>
-  <Local Name="Task.SelectResolution.NotDone" Russian="Не будет выполнено"/>
-  <Local Name="Task.SelectResolution.Canceled" Russian="Отменено"/>
-  <Local Name="Task.CloneTask" Russian="Клонировать задачу"/>
-  <Local Name="Task.CloneTask.Copy" Russian="копия"/>
-  <Local Name="Task.Duplicate" Russian="Дубликат"/>
-  <Local Name="Task.Link" Russian="Связать с задачей"/>
-  <Local Name="Task.NumberTask" Russian="Введите номер задачи"/>
-  <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
-  <Local Name="Task.ReRead" Russian="Перечитать"/>
-  <Local Name="Task.ReRead.ToolTip" Russian="Перечитать карточку задачи"/>
   
 </Localization>

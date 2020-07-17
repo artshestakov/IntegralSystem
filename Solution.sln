@@ -56,12 +56,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{33F902D5-EB7
 		Resources\CSS\Task.Priority.Average.css = Resources\CSS\Task.Priority.Average.css
 		Resources\CSS\Task.Priority.Low.css = Resources\CSS\Task.Priority.Low.css
 		Resources\CSS\Task.Priority.Tall.css = Resources\CSS\Task.Priority.Tall.css
-		Resources\CSS\Task.Status.Canceled.css = Resources\CSS\Task.Status.Canceled.css
-		Resources\CSS\Task.Status.Close.css = Resources\CSS\Task.Status.Close.css
-		Resources\CSS\Task.Status.Done.css = Resources\CSS\Task.Status.Done.css
-		Resources\CSS\Task.Status.Duplicate.css = Resources\CSS\Task.Status.Duplicate.css
-		Resources\CSS\Task.Status.InWork.css = Resources\CSS\Task.Status.InWork.css
-		Resources\CSS\Task.Status.NotDone.css = Resources\CSS\Task.Status.NotDone.css
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{3C2C83C7-48D1-42BE-9A46-7DF17884D161}"
@@ -219,7 +213,7 @@ Global
 		{07117845-DDF6-4F2A-B2D9-93A670AB36DD} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 		Qt5Version = 58_msvc2015
+		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 	EndGlobalSection
 EndGlobal

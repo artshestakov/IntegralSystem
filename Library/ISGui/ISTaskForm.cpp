@@ -13,11 +13,10 @@
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISTaskForm::ISTaskForm(QWidget *parent) : ISParagraphBaseForm(parent)
+ISTaskForm::ISTaskForm(QWidget *parent)
+	: ISParagraphBaseForm(parent),
+	ActionGroup(new QActionGroup(this))
 {
-	TaskListForm = nullptr;
-	ActionGroup = new QActionGroup(this);
-
 	MainLayout = new QVBoxLayout();
 	setLayout(MainLayout);
 
@@ -43,12 +42,6 @@ ISTaskForm::ISTaskForm(QWidget *parent) : ISParagraphBaseForm(parent)
 	ToolBar->addSeparator();
 
 	CreateActionFilter(LANG("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), "ISTaskListForm");
-	//CreateActionFilter(LANG("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), "ISTaskAllListForm");
-	//CreateActionFilter(LANG("Task.Filter.My"), BUFFER_ICONS("Task.Filters.My"), "ISTaskMyListForm");
-	//CreateActionFilter(LANG("Task.Filter.From"), BUFFER_ICONS("Task.Filters.From"), "ISTaskFromListForm");
-	//CreateActionFilter(LANG("Task.Filter.Favorite"), BUFFER_ICONS("Task.Filters.Favorite"), "ISTaskFavoriteListForm");
-	//CreateActionFilter(LANG("Task.Filter.Deadline"), BUFFER_ICONS("Task.Filters.Deadline"), "ISTaskTodayListForm");
-	//CreateActionFilter(LANG("Task.Filter.Overdue"), BUFFER_ICONS("Task.Filter.Overdue"), "ISTaskOverdueListForm");
 
 	MainLayout->addWidget(ISControls::CreateHorizontalLine(this));
 
@@ -146,29 +139,29 @@ void ISTaskForm::FilterClicked()
 //-----------------------------------------------------------------------------
 void ISTaskForm::CreateTask()
 {
-	ISGui::ShowTaskObjectForm(ISNamespace::OFT_New);
+	
 }
 //-----------------------------------------------------------------------------
 void ISTaskForm::SearchByNumber()
 {
 	while (true)
 	{
-		int TaskID = ISInputDialog::GetInteger(LANG("Search"), LANG("InputTheTaskNumber") + ':', 0, INT_MAX);
+		int TaskID = 0;// ISInputDialog::GetInteger(LANG("Search"), LANG("InputTheTaskNumber") + ':', 0, INT_MAX);
 		if (TaskID != NPOS)
 		{
 			if (ISCore::TaskCheckExist(TaskID))
 			{
-				ISCore::TaskGetStatusUID(TaskID) == CONST_UID_TASK_STATUS_NEW ? ISGui::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID) : ISGui::ShowTaskViewForm(TaskID);
-				break;
+				//ISCore::TaskGetStatusUID(TaskID) == CONST_UID_TASK_STATUS_NEW ? ISGui::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID) : ISGui::ShowTaskViewForm(TaskID);
+				//break;
 			}
 			else
 			{
-				ISMessageBox::ShowInformation(this, LANG("Message.Information.TaskWithNumberNotFound").arg(TaskID));
+				//ISMessageBox::ShowInformation(this, LANG("Message.Information.TaskWithNumberNotFound").arg(TaskID));
 			}
 		}
 		else
 		{
-			break;
+			//break;
 		}
 	}
 }

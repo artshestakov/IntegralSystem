@@ -1256,47 +1256,6 @@ void ISListBaseForm::Share()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::AttachTask()
-{
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_ATTACH_OBEJCT_TASK))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.AttachObjectTask"));
-		return;
-	}
-
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.AttachRecordFromTask")))
-	{
-		int TaskID = ISGui::SelectObject("_Task");
-		if (TaskID)
-		{
-			ISGui::SetWaitGlobalCursor(true);
-			if (ISCore::TaskIsAttachedObject(TaskID, MetaTable->Name, GetObjectID())) //Если запись уже прикреплена к выбранной задаче
-			{
-				ISGui::SetWaitGlobalCursor(false);
-				if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DetachObjectTask")))
-				{
-					ISGui::SetWaitGlobalCursor(true);
-					if (ISCore::TaskDetachObject(TaskID, MetaTable->Name, GetObjectID()))
-					{
-						ISGui::SetWaitGlobalCursor(false);
-						ISMessageBox::ShowInformation(this, LANG("Message.Information.DetachedObjectTask"));
-					}
-				}
-			}
-			else //Запись не прикреплена к выбранной задаче
-			{
-				ISGui::SetWaitGlobalCursor(true);
-				if (ISCore::TaskAttachObject(TaskID, MetaTable->Name, GetObjectID()))
-				{
-					ISGui::SetWaitGlobalCursor(false);
-					ISProtocol::Insert(true, CONST_UID_PROTOCOL_ATTACH_OBJECT_TASK, MetaTable->Name, MetaTable->LocalListName, GetObjectID());
-					ISMessageBox::ShowInformation(this, LANG("Message.Information.AttachedObjectTask"));
-				}
-			}
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::ShowFavorites()
 {
 	ISGui::SetWaitGlobalCursor(true);
@@ -1464,10 +1423,6 @@ void ISListBaseForm::CreateActions()
 	connect(ActionShare, &QAction::triggered, this, &ISListBaseForm::Share);
 	Actions.emplace(ISNamespace::AT_Share, ActionShare);
 
-	QAction *ActionAttachTask = ISControls::CreateActionAttachTask(this);
-	connect(ActionAttachTask, &QAction::triggered, this, &ISListBaseForm::AttachTask);
-	Actions.emplace(ISNamespace::AT_AttachTask, ActionAttachTask);
-
 	//Первая запись
 	QAction *ActionNavigationBegin = ISControls::CreateActionNavigationBegin(this);
 	connect(ActionNavigationBegin, &QAction::triggered, this, &ISListBaseForm::NavigationSelectBeginRecord);
@@ -1606,7 +1561,6 @@ void ISListBaseForm::CreateToolBar()
 	if (GetAction(ISNamespace::AT_DeleteCascade)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_DeleteCascade));
 	if (GetAction(ISNamespace::AT_SystemInfo)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_SystemInfo));
 	if (GetAction(ISNamespace::AT_Share)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Share));
-	if (GetAction(ISNamespace::AT_AttachTask)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_AttachTask));
 	if (GetAction(ISNamespace::AT_Print)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Print));
 }
 //-----------------------------------------------------------------------------
@@ -1660,7 +1614,6 @@ void ISListBaseForm::CreateContextMenu()
 	if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
 	if (GetAction(ISNamespace::AT_SystemInfo)) ContextMenu->addAction(GetAction(ISNamespace::AT_SystemInfo));
 	if (GetAction(ISNamespace::AT_Share)) ContextMenu->addAction(GetAction(ISNamespace::AT_Share));
-	if (GetAction(ISNamespace::AT_AttachTask)) ContextMenu->addAction(GetAction(ISNamespace::AT_AttachTask));
 	ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
 }
 //-----------------------------------------------------------------------------

@@ -99,12 +99,6 @@ void ISMainWindow::AfterShowEvent()
 		ISNotificationService::ShowNotification(LANG("NewNotifications").arg(NewNotifyCount));
 		QApplication::beep();
 	}
-
-	int CountOverdue = ISCore::TaskCountOverdue();
-	if (CountOverdue)
-	{
-		ISNotificationService::ShowNotification(LANG("YouHaveExpiredTasks").arg(CountOverdue));
-	}
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::CreateMenuBar()

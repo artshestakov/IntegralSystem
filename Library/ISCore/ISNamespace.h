@@ -121,7 +121,6 @@ public:
         AT_Print,
         AT_SystemInfo,
         AT_Share,
-        AT_AttachTask,
         AT_Favorites,
         AT_Reference,
         AT_NavigationBegin,

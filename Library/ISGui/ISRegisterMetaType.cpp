@@ -19,13 +19,7 @@
 #include "ISCaratForm.h"
 #include "ISInternalDirectoriesForm.h"
 #include "ISAsteriskCallsListForm.h"
-#include "ISTaskAllListForm.h"
 #include "ISTaskListForm.h"
-#include "ISTaskMyListForm.h"
-#include "ISTaskFromListForm.h"
-#include "ISTaskFavoriteListForm.h"
-#include "ISTaskTodayListForm.h"
-#include "ISTaskOverdueListForm.h"
 #include "ISTaskObjectForm.h"
 #include "ISTelephonyForm.h"
 #include "ISUserGroupListForm.h"
@@ -85,13 +79,7 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISCaratForm*>("ISCaratForm");
 	qRegisterMetaType<ISInternalDirectoriesForm*>("ISInternalDirectoriesForm");
 	qRegisterMetaType<ISAsteriskCallsListForm*>("ISAsteriskCallsListForm");
-	qRegisterMetaType<ISTaskAllListForm*>("ISTaskAllListForm");
 	qRegisterMetaType<ISTaskListForm*>("ISTaskListForm");
-	qRegisterMetaType<ISTaskMyListForm*>("ISTaskMyListForm");
-	qRegisterMetaType<ISTaskFromListForm*>("ISTaskFromListForm");
-	qRegisterMetaType<ISTaskFavoriteListForm*>("ISTaskFavoriteListForm");
-	qRegisterMetaType<ISTaskTodayListForm*>("ISTaskTodayListForm");
-	qRegisterMetaType<ISTaskOverdueListForm*>("ISTaskOverdueListForm");
 	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
 	qRegisterMetaType<ISTelephonyForm*>("ISTelephonyForm");
 	qRegisterMetaType<ISUserGroupListForm*>("ISUserGroupListForm");

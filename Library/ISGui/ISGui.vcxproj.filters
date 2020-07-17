@@ -100,9 +100,6 @@
     <Filter Include="Controls\TabNavigation">
       <UniqueIdentifier>{55eb325b-7656-478e-859d-3038016d710b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Controls\Task">
-      <UniqueIdentifier>{44cd66d5-4c9b-4a54-a7a9-9da9f85662cb}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISExportForm.cpp">
@@ -495,37 +492,10 @@
     <ClCompile Include="ISTableDetailsForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISTaskAllListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskBaseListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskDoneForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskFavoriteListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskFileInsertForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISTaskForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISTaskFromListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskMyListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISTaskObjectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskOverdueListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskTodayListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISTaskViewForm.cpp">
@@ -623,30 +593,6 @@
     </ClCompile>
     <ClCompile Include="ISTabWidgetMain.cpp">
       <Filter>Controls\TabNavigation</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskCommentsTab.cpp">
-      <Filter>Controls\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskCommentWidget.cpp">
-      <Filter>Controls\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskDuplicatesTab.cpp">
-      <Filter>Controls\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskFilesTab.cpp">
-      <Filter>Controls\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskFileWidget.cpp">
-      <Filter>Controls\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskHistoryTab.cpp">
-      <Filter>Controls\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskInfoWidget.cpp">
-      <Filter>Controls\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskTabBase.cpp">
-      <Filter>Controls\Task</Filter>
     </ClCompile>
     <ClCompile Include="ISAddressBox.cpp">
       <Filter>Controls</Filter>
@@ -1049,37 +995,10 @@
     <QtMoc Include="ISTableDetailsForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISTaskAllListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskBaseListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskDoneForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskFavoriteListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskFileInsertForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISTaskForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISTaskFromListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskMyListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISTaskObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskOverdueListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskTodayListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskViewForm.h">
@@ -1177,30 +1096,6 @@
     </QtMoc>
     <QtMoc Include="ISTabWidgetMain.h">
       <Filter>Controls\TabNavigation</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskCommentsTab.h">
-      <Filter>Controls\Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskCommentWidget.h">
-      <Filter>Controls\Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskDuplicatesTab.h">
-      <Filter>Controls\Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskFilesTab.h">
-      <Filter>Controls\Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskFileWidget.h">
-      <Filter>Controls\Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskHistoryTab.h">
-      <Filter>Controls\Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskInfoWidget.h">
-      <Filter>Controls\Task</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskTabBase.h">
-      <Filter>Controls\Task</Filter>
     </QtMoc>
     <QtMoc Include="ISAddressBox.h">
       <Filter>Controls</Filter>

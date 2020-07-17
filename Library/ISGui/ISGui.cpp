@@ -587,19 +587,6 @@ ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 	return ShowImageForm(ByteArrayToPixmap(ByteArray));
 }
 //-----------------------------------------------------------------------------
-void ISGui::ShowTaskViewForm(int TaskID)
-{
-	SetWaitGlobalCursor(true);
-	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(TaskID);
-	TaskViewForm->showMaximized();
-	SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISGui::ShowTaskObjectForm(ISNamespace::ObjectFormType FormType, int TaskID)
-{
-	ShowObjectForm(CreateObjectForm(FormType, "_Task", TaskID));
-}
-//-----------------------------------------------------------------------------
 bool ISGui::CheckSetupTelephony()
 {
 	ISQuery qSelect(QS_TELEPHONY);

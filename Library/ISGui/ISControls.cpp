@@ -378,25 +378,6 @@ QAction* ISControls::CreateActionShare(QObject *ParentObject)
 	return ActionShare;
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionAttachTask(QObject *ParentObject)
-{
-	QAction *ActionAttachTask = new QAction(ParentObject);
-	ActionAttachTask->setText(LANG("AttachTask"));
-	ActionAttachTask->setToolTip(LANG("AttachTask"));
-	ActionAttachTask->setIcon(BUFFER_ICONS("Task"));
-	return ActionAttachTask;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionDetachTask(QObject *ParentObject)
-{
-	QAction *ActionDetachTask = new QAction(ParentObject);
-	ActionDetachTask->setText(LANG("Task.DetachFromTask"));
-	ActionDetachTask->setToolTip(LANG("Task.DetachFromTask"));
-	ActionDetachTask->setIcon(BUFFER_ICONS("Task.Detach"));
-	ActionDetachTask->setShortcut(QKeySequence(Qt::Key_F10));
-	return ActionDetachTask;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionNavigationBegin(QObject *ParentObject)
 {
 	QAction *ActionTableNavigationBegin = new QAction(ParentObject);

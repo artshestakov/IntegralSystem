@@ -14,9 +14,6 @@
   <_GroupAccessSpecialType IsSystem="true" UID="{39D835DA-EDF9-448E-9ECC-19E273829C90}" Name="IP-Телефония" Order="2"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{F01161DE-42D5-4649-9892-1170E9CBEFE8}" Parent="{39D835DA-EDF9-448E-9ECC-19E273829C90}" Name="Прослушивание записей разговоров" Order="1"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{8E2E4FD2-AE08-4468-B54F-99CB883501D2}" Parent="{39D835DA-EDF9-448E-9ECC-19E273829C90}" Name="Скачивание записей разговоров" Order="2"/>
-
-  <_GroupAccessSpecialType IsSystem="true" UID="{12E4D67B-1247-4EB6-8327-F49990EB8290}" Name="Трекер задач" Order="3"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{846B097E-D9BA-4CCA-B408-2E5379E1C539}" Parent="{12E4D67B-1247-4EB6-8327-F49990EB8290}" Name="Прикрепление записей к задачам" Hint="Возможность прикреплять записи из таблиц к задачам" Order="1"/>
   
   <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="4"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Редактирование печатных форм" Hint="Возможность редактировать печатные формы в режиме предпросмотра" Order="1"/>

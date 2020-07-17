@@ -5,17 +5,4 @@
   <_TaskPriority ID="2" IsSystem="true" UID="{87AC0B68-9348-4A39-8466-B84DC641FE8B}" Name="Средний"/>
   <_TaskPriority ID="3" IsSystem="true" UID="{5B4C2BDB-758B-49F3-B172-7351AAA51C58}" Name="Высокий"/>
 
-  <_TaskStatus IsSystem="true" UID="{B90580A0-59BC-4B06-9A70-C37EEB626598}" Name="Новая" Order="1"/>
-  <_TaskStatus IsSystem="true" UID="{498971F6-31A9-41CE-87F9-10113ACFEB18}" Name="В работе" Order="2" StyleSheet="Task.Status.InWork"/>
-  <_TaskStatus IsSystem="true" UID="{C79486E2-28F0-437F-98F5-B0C0A27D0EAF}" Name="Выполнена" Order="3" StyleSheet="Task.Status.Done"/>
-  <_TaskStatus IsSystem="true" UID="{64F0707B-C9B7-44A8-A419-41B4ACB95DD7}" Name="Закрыта" Order="4" StyleSheet="Task.Status.Close"/>
-  <_TaskStatus IsSystem="true" UID="{3E689068-B44E-4854-B761-CD4822EA0B9C}" Name="Выполнение невозможно" Order="5" StyleSheet="Task.Status.NotDone"/>
-  <_TaskStatus IsSystem="true" UID="{533492DE-D996-4369-A904-84654BA6AF4D}" Name="Отменена" Order="6" StyleSheet="Task.Status.Brown"/>
-  <_TaskStatus IsSystem="true" UID="{1708A6D0-191F-4807-A069-8D6715246EE6}" Name="Дубликат" Order="7" StyleSheet="Task.Status.Duplicate"/>
-
-  <_TaskHistoryAction IsSystem="true" UID="{B28DF99A-35C1-4C3A-BD90-DA2A7C34C218}" Name="Переименование задачи"/>
-  <_TaskHistoryAction IsSystem="true" UID="{FA0E37E8-EAB5-450F-BBB5-B0138B20BC79}" Name="Добавление комментария"/>
-  <_TaskHistoryAction IsSystem="true" UID="{A6845758-0AFA-4838-917F-D27A6BF2063A}" Name="Добавление файла"/>
-  <_TaskHistoryAction IsSystem="true" UID="{FE00BB7D-20ED-4AE7-B24A-FC857A7606E9}" Name="Добавление связанной задачи"/>
-
 </XSR>
