@@ -16,7 +16,6 @@ public:
 	static QDomElement GetDomElement(const QString &Content); //Получить элемент файла схемы из контента
 	static QString GetSizeDir(const QString &DirPath); //Получить размер файлов в папке
 	static QString GetDayOfWeekName(Qt::DayOfWeek Day); //Получить название дня
-	static QString GetConfigurationName(); //Получить текущую конфигурацию
 	static void ClearDirRecursive(const QString &DirPath); //Очистить папку рекурсивно (с подпапками)
 	static void RemoveLastSymbolLoop(QString &String, char Char); //Удалить символ в конце если существует
 	static ISUuid GenerateUuid(); //Сгенерировать новый UID

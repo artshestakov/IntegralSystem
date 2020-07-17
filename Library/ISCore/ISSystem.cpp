@@ -37,15 +37,6 @@ QString ISSystem::GetDayOfWeekName(Qt::DayOfWeek Day)
 	return DayOfWeekName;
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::GetConfigurationName()
-{
-#ifdef DEBUG
-	return "Debug";
-#else
-	return "Release";
-#endif
-}
-//-----------------------------------------------------------------------------
 void ISSystem::ClearDirRecursive(const QString &DirPath)
 {
 	QDir Dir(DirPath);

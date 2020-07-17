@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 		}
         else if (Argument == "-v" || Argument == "--version")
         {
-			std::cout << "Carat (" << ISVersion::Instance().ToString().toStdString() << ") " << ISSystem::GetConfigurationName().toStdString() << " " << ISVersion::Instance().Info.Platform.toStdString() << std::endl;
+			std::cout << "Carat (" << ISVersion::Instance().ToString().toStdString() << ") " << ISVersion::Instance().Info.Configuration << " " << ISVersion::Instance().Info.Platform.toStdString() << std::endl;
         }
 		else if (Argument == "-h" || Argument == "--help")
 		{

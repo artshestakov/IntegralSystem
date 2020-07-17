@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 	Arguments.erase(Arguments.begin());
 	if (Arguments.size() == 0)
 	{
-		ISLOGGER_L(QString("Configurator [Version %1] %2 %3").arg(ISVersion::Instance().ToString()).arg(ISSystem::GetConfigurationName()).arg(ISVersion::Instance().Info.Platform));
+		ISLOGGER_L(QString("Configurator [Version %1] %2 %3").arg(ISVersion::Instance().ToString()).arg(ISVersion::Instance().Info.Configuration).arg(ISVersion::Instance().Info.Platform));
 		ISLOGGER_L("Welcome to the Configurator.");
 		ISLOGGER_L("DBHost: " + DBHost);
 		ISLOGGER_L("DBName: " + DBName);

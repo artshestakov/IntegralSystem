@@ -68,7 +68,7 @@ void ISAboutForm::CreateCommonTab()
 	TabWidget->addTab(TabCommon, LANG("AboutForm.Tab.Common"));
 
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), ISDefines::Core::APPLICATION_NAME);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISSystem::GetConfigurationName());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISVersion::Instance().Info.Configuration);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersion::Instance().Info.Platform);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersion::Instance().ToString());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersion::Instance().Info.Revision));

@@ -277,12 +277,12 @@ struct ISCORE_EXPORT ISVersionStruct
     int Minor;
     int Revision;
 
-    QString Date;
-    QString Time;
-    QString Hash;
-    QString Branch;
-    QString Configuration;
-    QString Platform;
+	const char* Date;
+	const char* Time;
+	const char* Hash;
+	const char* Branch;
+    const char* Configuration;
+	const char* Platform;
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISDaDataOrganizationBranch
