@@ -369,15 +369,6 @@ QAction* ISControls::CreateActionRecordInformartion(QObject *ParentObject)
 	return ActionSystemInformation;
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionShare(QObject *ParentObject)
-{
-	QAction *ActionShare = new QAction(ParentObject);
-	ActionShare->setText(LANG("Share"));
-	ActionShare->setToolTip(LANG("Share"));
-	ActionShare->setIcon(BUFFER_ICONS("Share"));
-	return ActionShare;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionNavigationBegin(QObject *ParentObject)
 {
 	QAction *ActionTableNavigationBegin = new QAction(ParentObject);

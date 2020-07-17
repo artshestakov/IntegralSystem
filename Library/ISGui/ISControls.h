@@ -55,7 +55,6 @@ public:
 	static QAction* CreateActionExport(QObject *ParentObject);
 	static QAction* CreateActionPrint(QObject *ParentObject);
 	static QAction* CreateActionRecordInformartion(QObject *ParentObject);
-	static QAction* CreateActionShare(QObject *ParentObject);
 	static QAction* CreateActionNavigationBegin(QObject *ParentObject);
 	static QAction* CreateActionNavigationPrevious(QObject *ParentObject);
 	static QAction* CreateActionNavigationNext(QObject *ParentObject);

@@ -56,7 +56,6 @@
   <Local Name="Message.Information.CreatedPasswordUser" Russian="Пароль пользователя успешно изменен!"/>
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
-  <Local Name="Message.Information.SharedRecord" Russian="Ссылка на запись успешно отправлена в общий чат."/>
   <Local Name="Message.Information.FileSaved" Russian="Файл успешно сохранен."/>
   <Local Name="Message.Information.NotFoundChildCalls" Russian="Подробностей по выбранному звонку нет."/>
   <Local Name="Message.Information.FileRecordSavedToStorage" Russian="Запись разговора успешно сохранена в хранилище."/>
@@ -233,7 +232,6 @@
   <Local Name="Message.Question.CalendarEventFormClose" Russian="Закрытие окна привезет к автомтическому завернею события. Закрыть окно?"/>
   <Local Name="Message.Question.SaveDist" Russian="Сохранить этот дистрибутив на диск?"/>
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
-  <Local Name="Message.Question.ShareRecordFromChat" Russian="Поделиться ссылкой на эту запись в общий чат?"/>
   <Local Name="Message.Question.ClearListNotifications" Russian="Очистить список уведомлений?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.FileRecordSaved" Russian="Запись разговора успешно сохранена! Воспроизвести её?"/>
@@ -458,7 +456,6 @@
   <Local Name="NotificationEmpty" Russian="Уведомлений нет."/>
   <Local Name="NotificationEmpty.DetailedText" Russian="Как только Вам придут уведомления, они появятся здесь."/>
   <Local Name="Cores" Russian="Ядра"/>
-  <Local Name="Share" Russian="Поделиться"/>
   <Local Name="IncorrectPassword" Russian="Неверный пароль"/>
   <Local Name="NewNotifications" Russian="У Вас есть непросмотренные уведомления: %1"/>
   <Local Name="IncomingCall" Russian="Входящий звонок"/>
@@ -612,7 +609,6 @@
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
   <Local Name="ClickFromIncludeAndExcludeCore" Russian="Нажмите, чтобы включить или отключить ядро."/>
-  <Local Name="InputMessageFromLinkToRecord" Russian="Прикрепите сообщение к ссылке на запись"/>
   <Local Name="LinkToRecordInTable" Russian="Ссылка на запись из таблицы &quot;%1&quot;"/>
   <Local Name="ClickFromOpenRecord" Russian="Нажмите, чтобы открыть запись"/>
   <Local Name="ClickFromOpenImage" Russian="Нажмите, чтобы открыть изображение"/>

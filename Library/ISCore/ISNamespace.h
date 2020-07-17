@@ -120,7 +120,6 @@ public:
         AT_Export,
         AT_Print,
         AT_SystemInfo,
-        AT_Share,
         AT_Favorites,
         AT_Reference,
         AT_NavigationBegin,

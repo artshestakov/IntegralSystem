@@ -46,10 +46,6 @@
 #include "ISPrintingWord.h"
 #endif
 //-----------------------------------------------------------------------------
-static QString QI_SHARE_RECORD = PREPARE_QUERY("INSERT INTO _chatmessages(chat_message, chat_tablename, chat_objectid) "
-											   "VALUES(:Message, :TableName, :ObjectID) "
-											   "RETURNING chat_id");
-//-----------------------------------------------------------------------------
 static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_user, srfs_value) "
 											  "VALUES(:UserID, :Value)");
 //-----------------------------------------------------------------------------
@@ -1236,26 +1232,6 @@ void ISListBaseForm::ShowSystemInfo()
 	ISGui::ShowSystemInfoRecord(MetaTable, GetObjectID());
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::Share()
-{
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ShareRecordFromChat")))
-	{
-		QVariant MessageText = ISInputDialog::GetString(LANG("Share"), LANG("InputMessageFromLinkToRecord"));
-
-		ISQuery qShare(QI_SHARE_RECORD);
-		qShare.BindValue(":Message", MessageText);
-		qShare.BindValue(":TableName", MetaTable->Name);
-		qShare.BindValue(":ObjectID", GetObjectID());
-		if (qShare.ExecuteFirst())
-		{
-			int MessageID = qShare.ReadColumn("chat_id").toInt();
-			ISNotifySender::GetInstance().SendToAll(CONST_UID_NOTIFY_NEW_CHAT_MESSAGE, MessageID, QString(), false);
-			ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHARE_RECORD, MetaTable->Name, MetaTable->LocalListName, GetObjectID());
-			ISMessageBox::ShowInformation(this, LANG("Message.Information.SharedRecord"));
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::ShowFavorites()
 {
 	ISGui::SetWaitGlobalCursor(true);
@@ -1418,11 +1394,6 @@ void ISListBaseForm::CreateActions()
 	connect(ActionSystemInformation, &QAction::triggered, this, &ISListBaseForm::ShowSystemInfo);
 	Actions.emplace(ISNamespace::AT_SystemInfo, ActionSystemInformation);
 
-	//Поделиться
-	QAction *ActionShare = ISControls::CreateActionShare(this);
-	connect(ActionShare, &QAction::triggered, this, &ISListBaseForm::Share);
-	Actions.emplace(ISNamespace::AT_Share, ActionShare);
-
 	//Первая запись
 	QAction *ActionNavigationBegin = ISControls::CreateActionNavigationBegin(this);
 	connect(ActionNavigationBegin, &QAction::triggered, this, &ISListBaseForm::NavigationSelectBeginRecord);
@@ -1560,7 +1531,6 @@ void ISListBaseForm::CreateToolBar()
 	if (GetAction(ISNamespace::AT_Delete)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Delete));
 	if (GetAction(ISNamespace::AT_DeleteCascade)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_DeleteCascade));
 	if (GetAction(ISNamespace::AT_SystemInfo)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_SystemInfo));
-	if (GetAction(ISNamespace::AT_Share)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Share));
 	if (GetAction(ISNamespace::AT_Print)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Print));
 }
 //-----------------------------------------------------------------------------
@@ -1613,7 +1583,6 @@ void ISListBaseForm::CreateContextMenu()
 	if (GetAction(ISNamespace::AT_DeleteCascade)) ContextMenu->addAction(GetAction(ISNamespace::AT_DeleteCascade));
 	if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
 	if (GetAction(ISNamespace::AT_SystemInfo)) ContextMenu->addAction(GetAction(ISNamespace::AT_SystemInfo));
-	if (GetAction(ISNamespace::AT_Share)) ContextMenu->addAction(GetAction(ISNamespace::AT_Share));
 	ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
 }
 //-----------------------------------------------------------------------------

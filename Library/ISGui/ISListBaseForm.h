@@ -56,7 +56,6 @@ public:
 	virtual void Export(); //Выгрузить таблицу
 	virtual void Print(); //Печать
 	virtual void ShowSystemInfo(); //Показать форму с системной информацией об объекте
-	virtual void Share(); //Поделиться
 	virtual void ShowFavorites(); //Показать форму с избранными объектами
 	virtual void NavigationSelectBeginRecord(); //Выделение первой записи в списке
 	virtual void NavigationSelectPreviousRecord(); //Выделение предыдущей записи
