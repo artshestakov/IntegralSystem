@@ -86,8 +86,8 @@ Source: ..\Components\Redistributable\Redistributable_2015_${PLATFORM}.exe; Dest
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\translations\qt_ru.qm; DestDir: {app}\translations; Flags: ignoreversion recursesubdirs;
 
 [Run]
-Filename: {app}\Redistributable_2013_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2013"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2013...";
-Filename: {app}\Redistributable_2015_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2015"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015...";
+Filename: {app}\Redistributable_2013_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2013 ${PLATFORM}"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2013 ${PLATFORM}...";
+Filename: {app}\Redistributable_2015_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2015 ${PLATFORM}"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015 ${PLATFORM}...";
 
 [Code]
 procedure InitializeWizard();

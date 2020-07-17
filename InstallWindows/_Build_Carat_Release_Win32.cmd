@@ -1,4 +1,4 @@
 @ECHO off
 SetLocal
 
-CALL Build.cmd Release Win32 Carat
+CALL Build.cmd Release Win32 Carat %QTDIR%
