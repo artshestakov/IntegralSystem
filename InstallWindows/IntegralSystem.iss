@@ -32,7 +32,7 @@ Name: "Russian"; MessagesFile: "compiler:Languages\Russian.isl";
 Name: "IconDesktop"; Description: "Создать значок «IntegralSystem» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Icons]
-Name: "{userdesktop}\Integral System"; Filename: "{app}\IntegralSystem.exe"; WorkingDir: "{app}"; Tasks: IconDesktop; Comment: "Система управления данными «IntegralSystem»";
+Name: "{commondesktop}\Integral System"; Filename: "{app}\IntegralSystem.exe"; WorkingDir: "{app}"; Tasks: IconDesktop; Comment: "Система управления данными «IntegralSystem»";
 Name: "{group}\Integral System"; Filename: "{app}\IntegralSystem.exe"; WorkingDir: "{app}"; Comment: "Система управления данными IntegralSystem";
 Name: "{group}\Удалить Integral System"; Filename: "{app}\unins000.exe"; WorkingDir: "{app}"; Comment: "Удаление Integral System";
 

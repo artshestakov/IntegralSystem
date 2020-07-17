@@ -32,7 +32,7 @@ Name: "Russian"; MessagesFile: "compiler:Languages\Russian.isl";
 Name: "IconDesktop"; Description: "Создать значок «Configurator» на рабочем столе"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Icons]
-Name: "{userdesktop}\Configurator"; Filename: "{app}\Configurator.exe"; WorkingDir: "{app}"; Tasks: IconDesktop; Comment: "Конфигуратор базы данных";
+Name: "{commondesktop}\Configurator"; Filename: "{app}\Configurator.exe"; WorkingDir: "{app}"; Tasks: IconDesktop; Comment: "Конфигуратор базы данных";
 Name: "{group}\Configurator"; Filename: "{app}\Configurator.exe"; WorkingDir: "{app}"; Comment: "Конфигуратор базы данных";
 Name: "{group}\Удалить Carat"; Filename: "{app}\unins000.exe"; WorkingDir: "{app}"; Comment: "Удаление Carat";
 
