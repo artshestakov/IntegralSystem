@@ -14,7 +14,8 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 	FieldEditPointer(nullptr),
 	ModificationFlag(false),
 	IsBlinkBorder(false),
-	ButtonClear(nullptr)
+	ButtonClear(nullptr),
+	ReadOnly(false)
 {
 	SetSizePolicyHorizontal(QSizePolicy::Minimum);
 	SetSizePolicyVertical(QSizePolicy::Maximum);
@@ -76,8 +77,9 @@ void ISFieldEditBase::SetFont(const QFont &Font)
 	EditWidget->setFont(Font);
 }
 //-----------------------------------------------------------------------------
-void ISFieldEditBase::SetReadOnly(bool ReadOnly)
+void ISFieldEditBase::SetReadOnly(bool read_only)
 {
+	ReadOnly = read_only;
 	SetVisibleClear(!ReadOnly);
 	if (ReadOnly)
 	{
@@ -98,6 +100,11 @@ void ISFieldEditBase::SetRegExp(const QString &RegExp)
 void ISFieldEditBase::SetColorText(const QColor &Color)
 {
 
+}
+//-----------------------------------------------------------------------------
+bool ISFieldEditBase::IsReadOnly() const
+{
+	return ReadOnly;
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetCursor(const QCursor &Cursor)

@@ -29,6 +29,8 @@ public:
 	virtual void SetPlaceholderText(const QString &placeholder_text);
 	virtual void SetRegExp(const QString &RegExp);
 	virtual void SetColorText(const QColor &Color);
+
+	bool IsReadOnly() const;
 	
 	void SetCursor(const QCursor &Cursor); //Изменить курсор
 	void SetToolTip(const QString &ToolTip); //Изменить всплывающее сообщение-подсказку
@@ -74,6 +76,8 @@ private:
 	bool ModificationFlag;
 	bool IsBlinkBorder;
 	QColor BlinkColor;
+
+	bool ReadOnly;
 };
 //-----------------------------------------------------------------------------
 #endif
