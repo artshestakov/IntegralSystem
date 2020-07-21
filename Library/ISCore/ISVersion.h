@@ -10,6 +10,7 @@ class ISCORE_EXPORT ISVersion
 public:
 	static ISVersion& Instance();
 	QString ToString() const;
+	std::string ToStdString() const;
 	ISVersionStruct Info;
 
 private:
