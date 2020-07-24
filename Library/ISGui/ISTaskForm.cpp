@@ -139,7 +139,7 @@ void ISTaskForm::FilterClicked()
 //-----------------------------------------------------------------------------
 void ISTaskForm::CreateTask()
 {
-	
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Task"));
 }
 //-----------------------------------------------------------------------------
 void ISTaskForm::SearchByNumber()
