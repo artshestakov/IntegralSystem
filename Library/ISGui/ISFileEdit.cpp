@@ -52,7 +52,7 @@ void ISFileEdit::SetValue(const QVariant &value)
 //-----------------------------------------------------------------------------
 QVariant ISFileEdit::GetValue() const
 {
-	return VariantMap.isEmpty() ? QVariant() : ISSystem::VariantMapToJsonString(VariantMap).simplified();
+	return VariantMap.isEmpty() ? QVariant() : ISSystem::VariantMapToJsonString(VariantMap, QJsonDocument::Compact).simplified();
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::Clear()
