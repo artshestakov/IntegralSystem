@@ -213,9 +213,9 @@ ISStringMap ISSystem::JsonStringToStringMap(const QString &JsonString, QString *
 	return StringMap;
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::VariantMapToJsonString(const QVariantMap &VariantMap)
+QString ISSystem::VariantMapToJsonString(const QVariantMap &VariantMap, QJsonDocument::JsonFormat Format)
 {
-	return QJsonDocument(QJsonObject::fromVariantMap(VariantMap)).toJson();
+	return QJsonDocument(QJsonObject::fromVariantMap(VariantMap)).toJson(Format);
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::StringToMD5(const QString &String)

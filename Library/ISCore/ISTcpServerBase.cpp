@@ -47,7 +47,7 @@ void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 	if (TcpSocket->state() == QTcpSocket::ConnectedState)
 	{
 		//Формируем ответ
-		QByteArray ByteArray = ISSystem::VariantMapToJsonString(Data).toUtf8();
+		QByteArray ByteArray = ISSystem::VariantMapToJsonString(Data, QJsonDocument::Compact).toUtf8();
 		ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
 
 		//Отправляем запрос и ждём окончания его отправки

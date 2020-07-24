@@ -41,7 +41,7 @@ bool ISTcpQuery::Execute()
 				{ "Version", ISVersion::Instance().ToString() }
 			}
 		}
-	}).toUtf8();
+	}, QJsonDocument::Compact).toUtf8();
 	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
 
 	//Получаем сокет и отправляем на него запрос
