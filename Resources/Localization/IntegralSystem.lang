@@ -198,6 +198,7 @@
   <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
   <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
   <Local Name="Message.Warning.NotCreatedUserPassword" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет авторизоваться в программе!"/>
+  <Local Name="Message.Warning.TaskWithNumberNotFound" Russian="Задача с номером #%1 не найдена!"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
@@ -645,7 +646,8 @@
   <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
   <Local Name="ClickFromSelectFile" Russian="Нажмите, чтобы выбрать файл"/>
   <Local Name="EnterFileName" Russian="Введите имя файла"/>
-  
+  <Local Name="InputTheTaskNumber" Russian="Введите номер задачи"/>
+
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>
   <Local Name="CalendarForm.CreateEvent.ToolTip" Russian="Создать новое событие календаря"/>
@@ -790,5 +792,9 @@
   <Local Name="Task.Priority.Tall" Russian="Высокий"/>
   <Local Name="Task.Priority.Tall.ToolTip" Russian="Аварийная задача (выполняется как можно быстрее, при ее появлении текущая задача более низкого уровня откладывается и начинается выполнение аварийной задачи)"/>
   <Local Name="Task.Description" Russian="Описание задачи"/>
-  
+  <Local Name="Task.CreateTask" Russian="Создать задачу"/>
+  <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
+  <Local Name="Task.Search" Russian="Поиск задачи"/>
+  <Local Name="Task.InputTaskNumber" Russian="Введите номер задачи"/>
+
 </Localization>

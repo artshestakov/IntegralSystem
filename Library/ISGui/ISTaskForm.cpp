@@ -146,22 +146,22 @@ void ISTaskForm::SearchByNumber()
 {
 	while (true)
 	{
-		int TaskID = 0;// ISInputDialog::GetInteger(LANG("Search"), LANG("InputTheTaskNumber") + ':', 0, INT_MAX);
+		int TaskID = ISInputDialog::GetInteger(LANG("Task.Search"), LANG("Task.InputTaskNumber") + ':', 0, INT_MAX);
 		if (TaskID != NPOS)
 		{
 			if (ISCore::TaskCheckExist(TaskID))
 			{
-				//ISCore::TaskGetStatusUID(TaskID) == CONST_UID_TASK_STATUS_NEW ? ISGui::ShowTaskObjectForm(ISNamespace::OFT_Edit, TaskID) : ISGui::ShowTaskViewForm(TaskID);
-				//break;
+				ISGui::ShowTaskViewForm(TaskID);
+				break;
 			}
 			else
 			{
-				//ISMessageBox::ShowInformation(this, LANG("Message.Information.TaskWithNumberNotFound").arg(TaskID));
+				ISMessageBox::ShowInformation(this, LANG("Message.Warning.TaskWithNumberNotFound").arg(TaskID));
 			}
 		}
 		else
 		{
-			//break;
+			break;
 		}
 	}
 }

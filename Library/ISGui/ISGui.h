@@ -65,6 +65,8 @@ public:
 
 	static bool CheckSetupTelephony(); //Проверка настроена ли телефония
 
+	static void ShowTaskViewForm(int TaskID); //Показать форму просмотра задачи
+
 private:
 	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());
 };
