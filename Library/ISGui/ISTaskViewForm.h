@@ -12,6 +12,11 @@ public:
 	virtual ~ISTaskViewForm();
 
 private:
+	QHBoxLayout *LayoutHorizontal;
+	QVBoxLayout *LayoutLeft;
+	QVBoxLayout *LayoutRight;
+
+private:
 	int TaskID;
 };
 //-----------------------------------------------------------------------------

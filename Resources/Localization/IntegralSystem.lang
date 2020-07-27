@@ -791,10 +791,22 @@
   <Local Name="Task.Priority.Average.ToolTip" Russian="Срочная, высокоприоритетная задача (выполняется когда нет аварийных задач, при появлении &quot;зеленой&quot; задачи текущая задача не откладывается, а доделывается)"/>
   <Local Name="Task.Priority.Tall" Russian="Высокий"/>
   <Local Name="Task.Priority.Tall.ToolTip" Russian="Аварийная задача (выполняется как можно быстрее, при ее появлении текущая задача более низкого уровня откладывается и начинается выполнение аварийной задачи)"/>
-  <Local Name="Task.Description" Russian="Описание задачи"/>
   <Local Name="Task.CreateTask" Russian="Создать задачу"/>
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
   <Local Name="Task.Search" Russian="Поиск задачи"/>
   <Local Name="Task.InputTaskNumber" Russian="Введите номер задачи"/>
+  <Local Name="Task.ViewFormTitle" Russian="Задача #%1: %2"/>
+  <Local Name="Task.Description" Russian="Описание задачи"/>
+  <Local Name="Task.Description.Empty" Russian="Описание отсутствует"/>
+  <Local Name="Task.Files" Russian="Файлы"/>
+  <Local Name="Task.LinkTask" Russian="Связанные задачи"/>
+  <Local Name="Task.Comments" Russian="Комментарии"/>
+  <Local Name="Task.Details" Russian="Подробности"/>
+  <Local Name="Task.Right.Executor" Russian="Исполнитель"/>
+  <Local Name="Task.Right.Executor.Empty" Russian="Не назначен"/>
+  <Local Name="Task.Right.Type" Russian="Тип задачи"/>
+  <Local Name="Task.Right.Type.Empty" Russian="Не выбран"/>
+  <Local Name="Task.Right.Priority" Russian="Приоритет"/>
+  <Local Name="Task.ThisIsImportantTask" Russian="Это важная задача"/>
 
 </Localization>

@@ -10,5 +10,7 @@ class ISTaskListForm : public ISListBaseForm
 public:
 	Q_INVOKABLE ISTaskListForm(QWidget *parent = 0);
 	virtual ~ISTaskListForm();
+
+	void Edit() override;
 };
 //-----------------------------------------------------------------------------

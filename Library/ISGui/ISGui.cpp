@@ -603,7 +603,7 @@ bool ISGui::CheckSetupTelephony()
 void ISGui::ShowTaskViewForm(int TaskID)
 {
 	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(TaskID);
-	TaskViewForm->show();
+	TaskViewForm->showMaximized();
 }
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)
