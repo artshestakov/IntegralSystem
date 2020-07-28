@@ -42,6 +42,7 @@ const char EXTENSION_LIBRARY[] = ".so"; //Расширение динамической библиотеки для
 const char LOCALIZATION_FILE_CORE[] = "Core";
 const char LOCALIZATION_FILE_INTEGRAL_SYSTEM[] = "IntegralSystem";
 const char LOCALIZATION_FILE_OBJECTS[] = "Objects";
+const char LOCALIZATION_FILE_CONFIGURATOR[] = "Configurator";
 //REG_EXP----------------------------------------------------------------------
 const char REG_EXP_IP_ADDRESS[] = "([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?"; //IP-адресс
 const char REG_EXP_UID[] = "UID=\"\\{\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}\\}\""; //Уникальный идентфикатор из мета-данных

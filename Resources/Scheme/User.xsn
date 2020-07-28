@@ -5,9 +5,9 @@
     <Fields>
       <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="Int" LabelName="Группа" LocalListName="Группа" LayoutName="GroupSubdivision"/>
       <Field UID="{4ED0AB79-0ECC-4CDA-9FEF-970813028FCB}" Name="Subdivision" Type="Int" LabelName="Подразделение" LocalListName="Подразделение" LayoutName="GroupSubdivision"/>
-      <Field UID="{861223FE-18B5-4557-99D1-AEA74D42483E}" Name="Surname" Type="String" Size="20" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Фамилия" LocalListName="Фамилия" NotNull="true" LayoutName="FIO"/>
-      <Field UID="{7FC68D04-457E-405A-AB43-75E960148742}" Name="Name" Type="String" Size="20" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Имя" LocalListName="Имя" NotNull="true" LayoutName="FIO"/>
-      <Field UID="{FDDA65F7-0C37-4B42-BC43-E8D889DBADA2}" Name="Patronymic" Type="String" Size="20" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Отчество" LocalListName="Отчество" LayoutName="FIO"/>
+      <Field UID="{861223FE-18B5-4557-99D1-AEA74D42483E}" Name="Surname" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Фамилия" LocalListName="Фамилия" NotNull="true" LayoutName="FIO"/>
+      <Field UID="{7FC68D04-457E-405A-AB43-75E960148742}" Name="Name" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Имя" LocalListName="Имя" NotNull="true" LayoutName="FIO"/>
+      <Field UID="{FDDA65F7-0C37-4B42-BC43-E8D889DBADA2}" Name="Patronymic" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Отчество" LocalListName="Отчество" LayoutName="FIO"/>
       <Field UID="{194CC7C5-E4FB-46AA-B6BE-EE8420A5BB9D}" Name="Sex" Type="Sex" ControlWidget="ISSexEdit" LabelName="Пол" LocalListName="Пол" NotNull="true"/>
       <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true"/>
       <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="Login" Size="16" Lower="true" RegExp="^([a-z]+)$" LabelName="Логин" LocalListName="Логин" Hint="Логин должен быть в нижнем регистре и на английском языке." NotNull="true"/>

@@ -15,6 +15,8 @@
 #include "ISVersion.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
+#include "ISLocalization.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 #include "CGConfiguratorCreate.h"
 #include "CGConfiguratorUpdate.h"
@@ -57,6 +59,20 @@ int main(int argc, char **argv)
 	{
 		ISLOGGER_E(ErrorString);
 		ISConsole::Pause();
+		return EXIT_FAILURE;
+	}
+
+	//Загрузка трансляций QT
+	if (!ISLocalization::Instance().LoadTraslatorQT())
+	{
+		ISLOGGER_W(ISLocalization::Instance().GetErrorString());
+	}
+
+	//Загрузка локализации ядра
+	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
+	if (!Result)
+	{
+		ISLOGGER_E(QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CORE).arg(ISLocalization::Instance().GetErrorString()));
 		return EXIT_FAILURE;
 	}
 
