@@ -14,15 +14,19 @@ void ISListWidget::Clear()
 {
 	while (count())
 	{
-		RemoveBeginItem();
+		RemoveLastItem();
 	}
-
 	clear();
 }
 //-----------------------------------------------------------------------------
 void ISListWidget::RemoveBeginItem()
 {
 	RemoveItem(item(0));
+}
+//-----------------------------------------------------------------------------
+void ISListWidget::RemoveLastItem()
+{
+	RemoveItem(item(count() - 1));
 }
 //-----------------------------------------------------------------------------
 void ISListWidget::RemoveItem(int Row)
@@ -36,7 +40,6 @@ void ISListWidget::RemoveItem(QListWidgetItem *ListWidgetItem)
 	{
 		removeItemWidget(ListWidgetItem);
 	}
-
 	takeItem(indexFromItem(ListWidgetItem).row());
 	delete ListWidgetItem;
 }

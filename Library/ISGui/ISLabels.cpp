@@ -38,14 +38,14 @@ void ISQLabel::mouseDoubleClickEvent(QMouseEvent *e)
 //-----------------------------------------------------------------------------
 ISLabelLink::ISLabelLink(const QString &Text, QWidget *parent) : ISQLabel(Text, parent)
 {
-
-}
-//-----------------------------------------------------------------------------
-ISLabelLink::ISLabelLink(QWidget *parent) : ISQLabel(parent)
-{
 	setFocusPolicy(Qt::StrongFocus);
 	setStyleSheet(STYLE_SHEET("ISLabelLink"));
 	setCursor(CURSOR_POINTING_HAND);
+}
+//-----------------------------------------------------------------------------
+ISLabelLink::ISLabelLink(QWidget *parent) : ISLabelLink(QString(), parent)
+{
+	
 }
 //-----------------------------------------------------------------------------
 ISLabelLink::~ISLabelLink()

@@ -7,7 +7,8 @@
 #include "ISMessageBox.h"
 #include "ISGui.h"
 #include "ISControls.h"
-#include "ISListWidget.h"
+#include "ISInputDialog.h"
+#include "ISLabels.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "task_name, "
@@ -23,6 +24,21 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _taskstatus ON tsst_id = task_status "
 									   "LEFT JOIN _taskpriority ON tspr_id = task_priority "
 									   "WHERE task_id = :TaskID");
+//-----------------------------------------------------------------------------
+static QString QS_COMMENT = PREPARE_QUERY("SELECT tcom_id, userphoto(tcom_user), userfullname(tcom_user), (tcom_user = task_owner)::BOOLEAN AS is_user_owner, tcom_comment, tcom_creationdate "
+										  "FROM _taskcomment "
+										  "LEFT JOIN _task ON tcom_user = task_owner "
+										  "WHERE tcom_task = :TaskID "
+										  "ORDER BY tcom_id");
+//-----------------------------------------------------------------------------
+static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, tcom_comment) "
+										  "VALUES(:TaskID, :Comment)");
+//-----------------------------------------------------------------------------
+static QString QU_COMMENT = PREPARE_QUERY("UPDATE _taskcomment SET "
+										  "tcom_comment = :Comment "
+										  "WHERE tcom_id = :CommentID");
+//-----------------------------------------------------------------------------
+static QString QD_COMMENT = PREPARE_QUERY("DELETE FROM _taskcomment WHERE tcom_id = :CommentID");
 //-----------------------------------------------------------------------------
 ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	: ISInterfaceForm(parent),
@@ -40,14 +56,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 		return;
 	}
 
-	QString TaskName = qSelect.ReadColumn("task_name").toString();
-	QString TaskDescription = qSelect.ReadColumn("task_description").toString();
-	QString TaskExecutor = qSelect.ReadColumn("task_executor").toString();
-	QString TaskType = qSelect.ReadColumn("task_type").toString();
-	QString TaskStatus = qSelect.ReadColumn("task_status").toString();
-	QString TaskPriority = qSelect.ReadColumn("task_priority").toString();
-	QString TaskOwner = qSelect.ReadColumn("task_owner").toString();
-	bool TaskImportant = qSelect.ReadColumn("task_important").toBool();
+	TaskName = qSelect.ReadColumn("task_name").toString();
+	TaskDescription = qSelect.ReadColumn("task_description").toString();
+	TaskExecutor = qSelect.ReadColumn("task_executor").toString();
+	TaskType = qSelect.ReadColumn("task_type").toString();
+	TaskStatus = qSelect.ReadColumn("task_status").toString();
+	TaskPriority = qSelect.ReadColumn("task_priority").toString();
+	TaskOwner = qSelect.ReadColumn("task_owner").toString();
+	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 
 	setWindowTitle(LANG("Task.ViewFormTitle").arg(TaskID).arg(TaskName));
 
@@ -95,15 +111,25 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	GroupBoxLinkTask->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxLinkTask);
 
-	QGroupBox *GroupBoxComments = new QGroupBox(LANG("Task.Comments"), this);
+	GroupBoxComments = new QGroupBox(LANG("Task.Comments").arg(0), this);
 	GroupBoxComments->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxComments);
 
-	ISListWidget *ListWidgetComments = new ISListWidget(GroupBoxComments);
-	ListWidgetComments->setAlternatingRowColors(true);
+	ListWidgetComments = new ISListWidget(GroupBoxComments);
+	//ListWidgetComments->setAlternatingRowColors(true);
+	ListWidgetComments->setCursor(CURSOR_POINTING_HAND);
+	ListWidgetComments->setContextMenuPolicy(Qt::ActionsContextMenu);
+	ListWidgetComments->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	GroupBoxComments->layout()->addWidget(ListWidgetComments);
+	LoadComments();
 
-	LayoutLeft->addStretch();
+	QAction *ActionAddComment = new QAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), ListWidgetComments);
+	connect(ActionAddComment, &QAction::triggered, this, &ISTaskViewForm::AddComment);
+	ListWidgetComments->addAction(ActionAddComment);
+
+	QAction *ActionUpdateComments = new QAction(BUFFER_ICONS("Update"), LANG("Task.UpdateComments"), ListWidgetComments);
+	connect(ActionUpdateComments, &QAction::triggered, this, &ISTaskViewForm::LoadComments);
+	ListWidgetComments->addAction(ActionUpdateComments);
 
 	LayoutRight = new QVBoxLayout();
 
@@ -117,6 +143,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	QLabel *LabelExecutor = new QLabel(TaskExecutor.isEmpty() ? LANG("Task.Right.Executor.Empty") : TaskExecutor, GroupBoxDetails);
 	ISGui::SetFontWidgetBold(LabelExecutor, true);
 	LayoutRight->addWidget(LabelExecutor);
+
+	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
+
+	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Owner") + ':', GroupBoxDetails));
+
+	QLabel *LabelOwner = new QLabel(TaskOwner.isEmpty() ? LANG("Task.Right.Owner.Empty") : TaskOwner, GroupBoxDetails);
+	ISGui::SetFontWidgetBold(LabelOwner, true);
+	LayoutRight->addWidget(LabelOwner);
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
@@ -142,5 +176,147 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 ISTaskViewForm::~ISTaskViewForm()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::EscapeClicked()
+{
+	close();
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::LoadComments()
+{
+	ListWidgetComments->Clear();
+
+	ISQuery qSelectComments(QS_COMMENT);
+	qSelectComments.BindValue(":TaskID", TaskID);
+	if (qSelectComments.Execute())
+	{
+		while (qSelectComments.Next())
+		{
+			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
+			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphoto").toByteArray());
+			QString UserFullName = qSelectComments.ReadColumn("userfullname").toString();
+			bool IsUserOwner = qSelectComments.ReadColumn("is_user_owner").toBool();
+			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
+			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
+
+			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetComments);
+			ListWidgetComments->setItemWidget(ListWidgetItem, CreateCommentWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate));
+			ListWidgetItem->setSizeHint(ListWidgetComments->itemWidget(ListWidgetItem)->sizeHint());
+		}
+		GroupBoxComments->setTitle(LANG("Task.Comments").arg(ListWidgetComments->count()));
+	}
+}
+//-----------------------------------------------------------------------------
+QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime)
+{
+	QHBoxLayout *LayoutWidget = new QHBoxLayout();
+	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+
+	QWidget *Widget = new QWidget(ListWidgetComments);
+	Widget->setLayout(LayoutWidget);
+
+	QVBoxLayout *LayoutUserAvatar = new QVBoxLayout();
+	LayoutWidget->addLayout(LayoutUserAvatar);
+
+	QLabel *LabelAvatar = new QLabel(Widget);
+	LabelAvatar->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_45_45) : UserPhoto.scaled(ISDefines::Gui::SIZE_45_45));
+	LayoutUserAvatar->addWidget(LabelAvatar);
+
+	LayoutUserAvatar->addStretch();
+
+	QVBoxLayout *LayoutComment = new QVBoxLayout();
+	LayoutWidget->addLayout(LayoutComment);
+
+	QLabel *LabelUser = new QLabel(UserFullName, Widget);
+	LabelUser->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	ISGui::SetFontWidgetBold(LabelUser, true);
+	LayoutComment->addWidget(LabelUser);
+
+	QHBoxLayout *LayoutLabelComment = new QHBoxLayout();
+	LayoutComment->addLayout(LayoutLabelComment);
+
+	QLabel *LabelComment = new QLabel(Comment, Widget);
+	LabelComment->setTextInteractionFlags(Qt::TextSelectableByMouse);
+	LabelComment->setWordWrap(true);
+	LayoutLabelComment->addWidget(LabelComment);
+
+	QHBoxLayout *LayoutButtons = new QHBoxLayout();
+	LayoutComment->addLayout(LayoutButtons);
+
+	ISLabelLink *LabelEdit = new ISLabelLink(LANG("Edit"), Widget);
+	LabelEdit->setProperty("Comment", Comment);
+	LabelEdit->setProperty("CommentID", CommentID);
+	connect(LabelEdit, &ISLabelLink::Clicked, this, &ISTaskViewForm::EditComment);
+	LayoutButtons->addWidget(LabelEdit);
+
+	ISLabelLink *LabelDelete = new ISLabelLink(LANG("Delete"), Widget);
+	LabelDelete->setProperty("CommentID", CommentID);
+	connect(LabelDelete, &ISLabelLink::Clicked, this, &ISTaskViewForm::DeleteComment);
+	LayoutButtons->addWidget(LabelDelete);
+
+	LayoutButtons->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V3), Widget));
+
+	LayoutButtons->addStretch();
+
+	LayoutWidget->addStretch();
+
+	return Widget;
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::AddComment()
+{
+	QString Comment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment"));
+	if (!Comment.isEmpty())
+	{
+		ISQuery qInsertComment(QI_COMMENT);
+		qInsertComment.BindValue(":TaskID", TaskID);
+		qInsertComment.BindValue(":Comment", Comment);
+		if (qInsertComment.Execute())
+		{
+			LoadComments();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertTaskComment"), qInsertComment.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::EditComment()
+{
+	QString Comment = sender()->property("Comment").toString();
+	QString NewComment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment"), Comment);
+	if (NewComment != Comment)
+	{
+		ISQuery qUpdateComment(QU_COMMENT);
+		qUpdateComment.BindValue(":Comment", NewComment);
+		qUpdateComment.BindValue(":CommentID", sender()->property("CommentID"));
+		if (qUpdateComment.Execute())
+		{
+			LoadComments();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.UpdateTaskComment"), qUpdateComment.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::DeleteComment()
+{
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskComment")))
+	{
+		ISQuery qDeleteComment(QD_COMMENT);
+		qDeleteComment.BindValue(":CommentID", sender()->property("CommentID"));
+		if (qDeleteComment.Execute())
+		{
+			LoadComments();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteTaskComment"), qDeleteComment.GetErrorString());
+		}
+	}
 }
 //-----------------------------------------------------------------------------

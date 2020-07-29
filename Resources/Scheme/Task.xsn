@@ -66,7 +66,7 @@
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
     <Fields>
       <Field UID="{47664BE4-308A-4B69-8E8E-76E8111F0110}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-      <Field UID="{4CD5CB3E-4E7E-44F4-8D42-BDE4565BA975}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{4CD5CB3E-4E7E-44F4-8D42-BDE4565BA975}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{2B8CFE09-5BF7-4AAA-B206-CA646868E322}" Name="Comment" Type="Text" LabelName="Комментарий" LocalListName="Комментарий" NotNull="true"/>
     </Fields>
     <Indexes>

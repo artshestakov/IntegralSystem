@@ -40,8 +40,7 @@ QVariant ISImageEdit::GetValue() const
 	if (!ByteArray.isNull())
 	{
 		return ByteArray;
-	}
-	
+	}	
 	return QVariant();
 }
 //-----------------------------------------------------------------------------

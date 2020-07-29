@@ -45,6 +45,21 @@
     SECURITY INVOKER
     COST 100;
   </Function>
+  
+  <Function Name="userphoto">
+    CREATE OR REPLACE FUNCTION public.userphoto(id bigint)
+    RETURNS varchar AS
+    $body$
+      BEGIN
+        RETURN usrs_photo FROM _users WHERE usrs_id = id;
+      END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
 
   <Function Name="databasesize">
     CREATE OR REPLACE FUNCTION public.databasesize()

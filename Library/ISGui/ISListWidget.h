@@ -13,6 +13,7 @@ public:
 	void Clear(); //Очистка списока
 
 	void RemoveBeginItem(); //Удалить первый элемент
+	void RemoveLastItem(); //Удалить последний элемент
 	void RemoveItem(int Row); //Удалить элемент по индексу
 	void RemoveItem(QListWidgetItem *ListWidgetItem); //Удалить элемент
 

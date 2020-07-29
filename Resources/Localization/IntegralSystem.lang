@@ -123,6 +123,9 @@
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации: %1"/>
   <Local Name="Message.Error.ConnectToWorker" Russian="Ошибка подключения к рабочему процессу!"/>
   <Local Name="Message.Error.GettingStatusID" Russian="Не удалось получить идентификатор статуса задачи!"/>
+  <Local Name="Message.Error.InsertTaskComment" Russian="Не удалось добавить комментарий к задаче!"/>
+  <Local Name="Message.Error.UpdateTaskComment" Russian="Не удалось изменить комментарий к задаче!"/>
+  <Local Name="Message.Error.DeleteTaskComment" Russian="Не удалось удалить комментарий!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -243,6 +246,7 @@
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
   <Local Name="Message.Question.DeleteInsetedFiles" Russian="Удалить добавленные файлы?"/>
   <Local Name="Message.Question.InstallPasswordToStorageFile" Russian="Установить пароль на файл &quot;%1&quot;?"/>
+  <Local Name="Message.Question.DeleteTaskComment" Russian="Удалить комментарий?"/>
   
   <!--Carat error-->
   <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>
@@ -796,10 +800,17 @@
   <Local Name="Task.Description.Empty" Russian="Описание отсутствует"/>
   <Local Name="Task.Files" Russian="Файлы"/>
   <Local Name="Task.LinkTask" Russian="Связанные задачи"/>
-  <Local Name="Task.Comments" Russian="Комментарии"/>
+  <Local Name="Task.Comments" Russian="Комментарии (%1)"/>
+  <Local Name="Task.Comment" Russian="Комментарий"/>
+  <Local Name="Task.InputComment" Russian="Введите комментарий"/>
+  <Local Name="Task.AddComment" Russian="Добавить комментарий"/>
+  <Local Name="Task.UpdateComments" Russian="Обновить список"/>
+  <Local Name="Task.CommentUserOwner" Russian="%1 (автор задачи)"/>
   <Local Name="Task.Details" Russian="Подробности"/>
   <Local Name="Task.Right.Executor" Russian="Исполнитель"/>
   <Local Name="Task.Right.Executor.Empty" Russian="Не назначен"/>
+  <Local Name="Task.Right.Owner" Russian="Автор"/>
+  <Local Name="Task.Right.Owner.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Type" Russian="Тип задачи"/>
   <Local Name="Task.Right.Type.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Priority" Russian="Приоритет"/>
@@ -1083,7 +1094,7 @@
 
   <!--PlaceholderText-->
   <Local Name="Field.Bik.PlaceholderText" Russian="9 цифр"/>
-  <Local Name="Field.Inn.PlaceholderText" Russian="10/12 цифр"/>
+  <Local Name="Field.Inn.PlaceholderText" Russian="10 или 12 цифр"/>
   <Local Name="Field.Kpp.PlaceholderText" Russian="9 цифр"/>
   <Local Name="Field.Vin.PlaceholderText" Russian="17 цифр"/>
   <Local Name="Field.Ogrn.PlaceholderText" Russian="13 цифр"/>
