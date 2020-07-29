@@ -168,7 +168,7 @@ bool CGConfiguratorUpdate::systemindexes()
 	for (int i = 0, CountIndexes = ISMetaData::Instance().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetSystemIndexes()[i];
-		Progress("System index", i, CountIndexes, "Table: " + MetaIndex->TableName);
+		Progress("System index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
 		if (CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString))
 		{
 			if (Exist)
@@ -206,7 +206,7 @@ bool CGConfiguratorUpdate::indexes()
 	for (int i = 0, CountIndexes = ISMetaData::Instance().GetIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetIndexes()[i];
-		Progress("Index", i, CountIndexes, "Table: " + MetaIndex->TableName);
+		Progress("Index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
 		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
 		if (Result)
 		{
@@ -227,7 +227,7 @@ bool CGConfiguratorUpdate::compoundindexes()
 	for (int i = 0, CountIndexes = ISMetaData::Instance().GetCompoundIndexes().size(); i < CountIndexes; ++i)
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetCompoundIndexes()[i];
-		Progress("Compound index", i, CountIndexes, "Table: " + MetaIndex->TableName);
+		Progress("Compound index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
 		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
 		if (Result)
 		{
@@ -269,7 +269,7 @@ bool CGConfiguratorUpdate::resources()
 	for (int i = 0, CountResources = ISMetaData::Instance().GetResources().size(); i < CountResources; ++i)
 	{
 		PMetaResource *MetaResource = ISMetaData::Instance().GetResources()[i];
-		Progress("Resource", i, CountResources, "ResourceUID: " + MetaResource->UID);
+		Progress("Resource", i, CountResources, "UID: " + MetaResource->UID);
 		
 		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))
 		{

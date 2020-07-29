@@ -10,8 +10,5 @@ public:
 	static bool CheckExistIndex(PMetaIndex *Index, bool &Exist, QString &ErrorString); //Проверка существования индекса
 	static bool CheckIndexForeign(PMetaIndex *Index); //Проверить ссылается ли на этого индекс внешний ключ
 	static bool ReindexIndex(PMetaIndex *Index, QString &ErrorString); //Перестроить индекс
-
-private:
-	static QString GetIndexName(PMetaIndex *Index); //Получение имени индекса
 };
 //-----------------------------------------------------------------------------

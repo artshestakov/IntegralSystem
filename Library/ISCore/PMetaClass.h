@@ -19,6 +19,25 @@ struct PMetaIndex : public PMetaBase
 	PMetaIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name) 
 		: PMetaBase("Index"), Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
 
+	QString GetName() //Получить имя индекса
+	{
+		QString IndexName;
+		if (!Fields.empty())
+		{
+			IndexName += TableName + '_';
+			for (const QString &String : Fields)
+			{
+				IndexName += String + '_';
+			}
+			IndexName.chop(1);
+		}
+		else
+		{
+			IndexName = TableName + '_' + Alias + '_' + FieldName + "_index";
+		}
+		return IndexName.toLower();
+	}
+
 	bool Unique;
 	QString Alias;
 	QString TableName;

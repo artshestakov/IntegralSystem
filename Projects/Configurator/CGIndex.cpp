@@ -13,7 +13,7 @@ static QString Q_REINDEX = "REINDEX INDEX %1";
 bool CGIndex::CreateIndex(PMetaIndex *Index, QString &ErrorString)
 {
 	QString IndexUnique = Index->Unique ? "UNIQUE" : QString();
-	QString Fields, SqlText = QC_INDEX.arg(IndexUnique).arg(GetIndexName(Index)).arg(Index->TableName);
+	QString Fields, SqlText = QC_INDEX.arg(IndexUnique).arg(Index->GetName()).arg(Index->TableName);
 	if (!Index->Fields.empty())
 	{
         for (const QString &String : Index->Fields)
@@ -42,7 +42,7 @@ bool CGIndex::UpdateIndex(PMetaIndex *Index, QString &ErrorString)
 {
 	ISQuery qDelete;
 	qDelete.SetShowLongQuery(false);
-	bool Result = qDelete.Execute(QD_INDEX.arg(GetIndexName(Index)));
+	bool Result = qDelete.Execute(QD_INDEX.arg(Index->GetName()));
 	if (Result)
 	{
 		Result = CreateIndex(Index, ErrorString);
@@ -59,7 +59,7 @@ bool CGIndex::CheckExistIndex(PMetaIndex *Index, bool &Exist, QString &ErrorStri
 	ISQuery qSelectIndex(QS_INDEXES);
 	qSelectIndex.SetShowLongQuery(false);
 	qSelectIndex.BindValue(":TableName", Index->TableName.toLower());
-	qSelectIndex.BindValue(":IndexName", GetIndexName(Index));
+	qSelectIndex.BindValue(":IndexName", Index->GetName());
 	bool Result = qSelectIndex.ExecuteFirst();
 	if (Result)
 	{
@@ -95,30 +95,11 @@ bool CGIndex::ReindexIndex(PMetaIndex *Index, QString &ErrorString)
 {
 	ISQuery qReindex;
 	qReindex.SetShowLongQuery(false);
-	bool Result = qReindex.Execute(Q_REINDEX.arg(GetIndexName(Index)));
+	bool Result = qReindex.Execute(Q_REINDEX.arg(Index->GetName()));
 	if (!Result)
 	{
 		ErrorString = qReindex.GetErrorString();
 	}
 	return Result;
-}
-//-----------------------------------------------------------------------------
-QString CGIndex::GetIndexName(PMetaIndex *Index)
-{
-	QString IndexName;
-	if (!Index->Fields.empty())
-	{
-		IndexName += Index->TableName + '_';
-        for (const QString &String : Index->Fields)
-		{
-            IndexName += String + '_';
-		}
-		IndexName.chop(1);
-	}
-	else
-	{
-		IndexName = Index->TableName + '_' + Index->Alias + '_' + Index->FieldName + "_index";
-	}
-	return IndexName.toLower();
 }
 //-----------------------------------------------------------------------------
