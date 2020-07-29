@@ -12,7 +12,6 @@ ISCalendarObjectForm::ISCalendarObjectForm(ISNamespace::ObjectFormType form_type
 	SetVisibleFavorites(false);
 	SetVisibleDelete(false);
 	SetVisibleDeleteCascade(false);
-	SetVisibleReRead(false);
 
 	GetTabWidget()->tabBar()->setAutoHide(true);
 

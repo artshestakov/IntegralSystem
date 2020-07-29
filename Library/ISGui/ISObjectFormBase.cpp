@@ -133,11 +133,6 @@ void ISObjectFormBase::SetVisibleDeleteCascade(bool Visible)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::SetVisibleReRead(bool Visible)
-{
-	ActionReRead->setVisible(Visible);
-}
-//-----------------------------------------------------------------------------
 void ISObjectFormBase::closeEvent(QCloseEvent *e)
 {
 	if (ModificationFlag)
@@ -372,16 +367,6 @@ void ISObjectFormBase::CreateToolBar()
 	ActionCancelChange->setPriority(QAction::LowPriority);
 	connect(ActionCancelChange, &QAction::triggered, this, &ISObjectFormBase::CancelChanged);
 	AddActionMenu(ActionCancelChange);
-
-	//Перечитать
-	ActionReRead = new QAction(ToolBar);
-	ActionReRead->setEnabled(false);
-	ActionReRead->setText(LANG("ReReadCard"));
-	ActionReRead->setToolTip(LANG("ReReadCard"));
-	ActionReRead->setIcon(BUFFER_ICONS("Update"));
-	ActionReRead->setPriority(QAction::LowPriority);
-	connect(ActionReRead, &QAction::triggered, this, &ISObjectFormBase::ReRead);
-	AddActionMenu(ActionReRead);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateFieldsWidget()
@@ -944,7 +929,6 @@ void ISObjectFormBase::UpdateObjectActions()
 	{
 		SetEnabledActions(true);
 		ActionSave->setEnabled(false);
-		ActionReRead->setEnabled(true);
 		ActionFavorites->setChecked(ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID));
 	}
 }
@@ -1052,34 +1036,6 @@ void ISObjectFormBase::CancelChanged()
 		ISGui::SetWaitGlobalCursor(false);
 		SetModificationFlag(false);
 		BeginFieldEdit->SetFocus();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::ReRead()
-{
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ReReadCard")))
-	{
-		ISGui::SetWaitGlobalCursor(true);
-		for (const auto &FieldItem : FieldsMap)
-		{
-			QString FieldName = FieldItem.first;
-			ISFieldEditBase *FieldWidget = FieldItem.second;
-
-			ISQuery qSelect("SELECT " + MetaTable->Alias + '_' + FieldName + " FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id = :ObjectID");
-			qSelect.BindValue(":ObjectID", ObjectID);
-			if (qSelect.ExecuteFirst())
-			{
-				QVariant ValueDB = qSelect.ReadColumn(MetaTable->Alias + '_' + FieldName);
-				disconnect(FieldWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
-				FieldWidget->SetValue(ValueDB);
-				FieldWidget->SetModificationFlag(false);
-				connect(FieldWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
-			}
-		}
-
-		RenameReiconForm();
-		BeginFieldEdit->SetFocus();
-		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------

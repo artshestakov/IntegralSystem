@@ -50,7 +50,6 @@ public:
 	void SetVisibleFavorites(bool Visible); //Изменить видимость кнопки "Избранное"
 	void SetVisibleDelete(bool Visible); //Изменить видимость кнопки "Удалить"
 	void SetVisibleDeleteCascade(bool Visible); //Изменить видимость кнопки "Удалить каскадом"
-	void SetVisibleReRead(bool Visible); //Изменить видимость кнопки "Перечитать карточку"
 
 protected:
 	virtual void closeEvent(QCloseEvent *e);
@@ -91,7 +90,6 @@ protected:
 	void Delete();
 	void DeleteCascade();
 	void CancelChanged(); //Отмена изменений
-	void ReRead(); //Перечитать
 
 	void AddActionToolBar(QAction *Action, bool AddingToActionGroup = true); //Добавить кнопку-действие на тулбар
 	void AddActionMenu(QAction *Action, bool AddingToActionGroup = true); //Добавить кнопку-действие в меню
@@ -133,8 +131,6 @@ private:
 	QAction *ActionDelete;
 	QAction *ActionDeleteCascade;
 	QAction *ActionCancelChange;
-	QAction *ActionReRead;
-
 
 	ISLineEdit *EditObjectID;
 	ISFieldEditBase *BeginFieldEdit; //Указатель на первое поле редактирования информации

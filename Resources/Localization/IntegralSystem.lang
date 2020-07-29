@@ -221,7 +221,6 @@
   <Local Name="Message.Question.RestartApplication" Russian="Перезапустить программу?"/>
   <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
-  <Local Name="Message.Question.ReReadCard" Russian="Перечитать информацию?"/>
   <Local Name="Message.Question.ResetWidthColumn" Russian="Сбросить ширину всех колонок?"/>
   <Local Name="Message.Question.DeleteCalendarEvent" Russian="Удалить это событие?"/>
   <Local Name="Message.Question.CreatePasswordUser" Russian="Вы хотите присвоить пароль пользователю %1?"/>
@@ -449,7 +448,6 @@
   <Local Name="Page.Select" Russian="Страница: %1 из %2"/>
   <Local Name="Page" Russian="Страница"/>
   <Local Name="InputNumberPage" Russian="Введите номер страницы"/>
-  <Local Name="ReReadCard" Russian="Перечитать карточку"/>
   <Local Name="Filter" Russian="Фильтр"/>
   <Local Name="Send" Russian="Отправить"/>
   <Local Name="Reply" Russian="Ответить"/>
