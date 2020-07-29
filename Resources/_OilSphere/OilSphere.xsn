@@ -88,10 +88,10 @@
     </Foreigns>
   </Table>
 
-  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="LoadCounterparty" ClassFilterField="Implementation" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
+  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="Counterparty" ClassFilterField="Implementation" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
     <Fields>
       <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="Int" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент (загрузка)" LocalListName="Контрагент" NotNull="true" SeparatorName="Загрузка"/>
+      <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" SeparatorName="Загрузка"/>
       <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="LoadContainer" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="LoadContainer"/>
       <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="LoadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="LoadContainer"/>
       <Field UID="{F6E17298-F970-4E8F-92AC-1560184CB2DE}" Name="LoadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="LoadContainer"/>
@@ -112,7 +112,7 @@
     </Fields>
     <Indexes>
       <Index Field="Implementation"/>
-      <Index Field="LoadCounterparty"/>
+      <Index Field="Counterparty"/>
       <Index Field="LoadContainer"/>
       <Index Field="LoadWeightGross"/>
       <Index Field="LoadWeightNet"/>
@@ -133,12 +133,30 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="DateLoad"/>
-      <Foreign Field="LoadCounterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="UnloadPlace" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Organization" ForeignClass="Organization" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Debt" UID="{7F887E87-839D-4949-BC31-1C1990FF97CE}" Alias="debt" LocalName="Долг" LocalListName="Долги" TitleName="ImplementationDetail">
+    <Fields>
+      <Field UID="{F9458805-BDED-4DE3-A0A3-07AB3ED58F49}" Name="ImplementationDetail" Type="Int" LabelName="Подробность реализации" LocalListName="Подробность реализации" NotNull="true" HideFromObject="true"/>
+      <Field UID="{9B45A7FA-8526-4C5B-B404-34831E3B6A35}" Name="Accrued" Type="Int" LabelName="Начислено" LocalListName="Начислено" NotNull="true"/>
+      <Field UID="{53A98EA2-EF89-452D-804A-13B1161BAAD1}" Name="Date" Type="Date" LabelName="Дата начисления" LocalListName="Дата начисления" NotNull="true"/>
+      <Field UID="{238642CF-C16C-49D2-94F8-047EE8D23892}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="ImplementationDetail"/>
+      <Index Field="Accrued"/>
+      <Index Field="Date"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="ImplementationDetail" ForeignClass="ImplementationDetail" ForeignField="ID" ForeignViewNameField="ID"/>
     </Foreigns>
   </Table>
 

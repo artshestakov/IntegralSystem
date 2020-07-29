@@ -138,6 +138,29 @@ namespace ISOilSphere
 		double BeforeCashboxTotalActually;
 		double BeforeCashboxKKMTotal;
 	};
+
+	//Форма для подсистемы долгов
+	class DebtSubSystemForm : public ISInterfaceMetaForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE DebtSubSystemForm(QWidget *parent = 0);
+		virtual ~DebtSubSystemForm();
+
+		void LoadData() override;
+
+	private:
+		void AddAccrued();
+		void ShowImplementation();
+		void ShowImplementationDetails();
+
+	private:
+		QWidget* CreateItemWidget(int ImplementationID, int ImplementationDetailID, const QString &CounterpartyName, const QDate &DateLoad, const QString &ProductTypeName, double UnloadCost, int Accrued);
+
+	private:
+		QTreeWidget *TreeWidget;
+	};
 }
 //-----------------------------------------------------------------------------
 #endif
