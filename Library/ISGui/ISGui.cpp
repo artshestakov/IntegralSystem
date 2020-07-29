@@ -60,14 +60,6 @@ bool ISGui::Startup(QString &ErrorString)
 		ISLOGGER_W(ISLocalization::Instance().GetErrorString());
 	}
 
-	//Загрузка локализации ядра
-	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CORE);
-	if (!Result)
-	{
-		ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CORE).arg(ISLocalization::Instance().GetErrorString());
-		return Result;
-	}
-
 	//Загрузка локализации клиента
 	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
 	if (!Result)

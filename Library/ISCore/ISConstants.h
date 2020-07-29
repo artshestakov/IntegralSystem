@@ -39,7 +39,6 @@ const char EXTENSION_BINARY[] = ""; //Расширение исполняемого файла для текущей 
 const char EXTENSION_LIBRARY[] = ".so"; //Расширение динамической библиотеки для текущей операционной системы
 #endif
 //LOCALIZATION-----------------------------------------------------------------
-const char LOCALIZATION_FILE_CORE[] = "Core";
 const char LOCALIZATION_FILE_INTEGRAL_SYSTEM[] = "IntegralSystem";
 const char LOCALIZATION_FILE_OBJECTS[] = "Objects";
 const char LOCALIZATION_FILE_CONFIGURATOR[] = "Configurator";

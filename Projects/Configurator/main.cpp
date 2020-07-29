@@ -72,7 +72,7 @@ int main(int argc, char **argv)
 	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
 	if (!Result)
 	{
-		ISLOGGER_E(QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CORE).arg(ISLocalization::Instance().GetErrorString()));
+		ISLOGGER_E(QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_INTEGRAL_SYSTEM).arg(ISLocalization::Instance().GetErrorString()));
 		return EXIT_FAILURE;
 	}
 

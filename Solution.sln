@@ -12,7 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localization", "Localization", "{EAFD2DAF-1A32-4503-8314-9A1E942ABBCA}"
 	ProjectSection(SolutionItems) = preProject
 		Resources\Localization\Configurator.lang = Resources\Localization\Configurator.lang
-		Resources\Localization\Core.lang = Resources\Localization\Core.lang
 		Resources\Localization\IntegralSystem.lang = Resources\Localization\IntegralSystem.lang
 		Resources\Localization\Objects.lang = Resources\Localization\Objects.lang
 	EndProjectSection
@@ -220,7 +219,7 @@ Global
 		{3BE791E4-23C3-4D11-A390-9964ED39A461} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 		Qt5Version = 58_msvc2015
+		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 	EndGlobalSection
 EndGlobal
