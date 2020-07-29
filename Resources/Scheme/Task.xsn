@@ -80,41 +80,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_TaskFile" UID="{648DE93D-3610-4259-99BD-B6BACA4027EF}" Alias="tfls" LocalName="Прекрепленный файл к задаче" LocalListName="Прекрепленные файлы к задачам" TitleName="FileName" IsSystem="true">
-    <Fields>
-      <Field UID="{D187B5F7-4BE2-4090-9DE9-A0F0F2C7A6CC}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-      <Field UID="{76AB72DF-EA51-4EC0-A871-5CDB3309DC44}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{AB906A09-04C4-489A-9FE4-C99073208C38}" Name="FileName" Type="String" LabelName="Наименование файла" LocalListName="Наименование файла" NotNull="true"/>
-      <Field UID="{FC64142E-513C-4FEB-8C7A-7CC6F4B81AAA}" Name="Size" Type="String" LabelName="Размер файла" LocalListName="Размер файла" NotNull="true"/>
-      <Field UID="{C83CD8CA-4201-456E-9A00-89AE8897950E}" Name="Icon" Type="ByteArray" LabelName="Иконка" LocalListName="Иконка" NotNull="true"/>
-      <Field UID="{45F25D94-2A21-411D-A9FC-74EBBFE60BED}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Task"/>
-      <Index Field="User"/>
-      <Index Field="FileName"/>
-      <Index Field="Size"/>
-      <Index Field="Note"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-
-  <Table Name="_TaskFileData" UID="{23649101-5ACE-4EE0-92B5-53DC4DB05402}" Alias="tfdt" LocalName="Данные прекрепленного файла к задаче" LocalListName="Данные прекрепленных файлов к задачам" TitleName="TaskFile" IsSystem="true">
-    <Fields>
-      <Field UID="{E9F0E15B-6662-48D6-9322-1F26ABEBD760}" Name="TaskFile" Type="Int" LabelName="Файл" LocalListName="Файл" NotNull="true"/>
-      <Field UID="{6FE47E22-1AF9-4081-B26A-618641FC6304}" Name="Data" Type="ByteArray" LabelName="Данные" LocalListName="Данные" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="TaskFile"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="TaskFile" ForeignClass="_TaskFile" ForeignField="ID" ForeignViewNameField="FileName"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="LinkTask" IsSystem="true">
     <Fields>
       <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
