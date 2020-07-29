@@ -8,18 +8,11 @@
 #include "ISQuery.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS_ONLINE = PREPARE_QUERY("SELECT COUNT(*) "
-											   "FROM _users "
-											   "WHERE useronline(usrs_login)");
-//-----------------------------------------------------------------------------
 ISUserListForm::ISUserListForm(QWidget *parent) : ISListBaseForm("_Users", parent)
 {
 	QAction *ActionChangePassword = ISControls::CreateActionPasswordChange(this);
 	connect(ActionChangePassword, &QAction::triggered, this, &ISUserListForm::ChangePassword);
 	AddAction(ActionChangePassword, true, true);
-
-	LabelOnline = new QLabel(this);
-	GetToolBar()->addWidget(LabelOnline);
 }
 //-----------------------------------------------------------------------------
 ISUserListForm::~ISUserListForm()
@@ -51,12 +44,6 @@ void ISUserListForm::Edit()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserListForm::LoadDataAfterEvent()
-{
-	ISListBaseForm::LoadDataAfterEvent();
-	UpdateLabelOnline();
-}
-//-----------------------------------------------------------------------------
 void ISUserListForm::ChangePassword()
 {
 	if (CheckThisUser())
@@ -75,15 +62,6 @@ void ISUserListForm::ChangePassword()
 	{
 		QString FullName = GetCurrentRecordValue("Surname").toString() + SYMBOL_SPACE + GetCurrentRecordValue("Name").toString() + SYMBOL_SPACE + GetCurrentRecordValue("Patronymic").toString();
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.ChangePasswordUser").arg(FullName));
-	}
-}
-//-----------------------------------------------------------------------------
-void ISUserListForm::UpdateLabelOnline()
-{
-	ISQuery qSelect(QS_USERS_ONLINE);
-	if (qSelect.ExecuteFirst())
-	{
-		LabelOnline->setText(LANG("OnlineUsers") + ": " + qSelect.ReadColumn("count").toString());
 	}
 }
 //-----------------------------------------------------------------------------

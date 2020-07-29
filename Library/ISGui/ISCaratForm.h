@@ -11,7 +11,7 @@ public:
 	Q_INVOKABLE ISCaratForm(QWidget *parent = 0);
 	virtual ~ISCaratForm();
 
-	void LoadData();
+	void LoadData() override;
 
 protected:
 	void CoreChecked(const QVariant &value);

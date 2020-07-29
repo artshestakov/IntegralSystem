@@ -343,7 +343,6 @@
   <Local Name="Desktop" Russian="Рабочий стол"/>
   <Local Name="CloseRightTabs" Russian="Закрыть вкладки справа"/>
   <Local Name="AutoUpdateList" Russian="Автообновление списка"/>
-  <Local Name="OnlineUsers" Russian="Пользователей онлайн"/>
   <Local Name="DisconnectUser" Russian="Отключить пользователя"/>
   <Local Name="DisconnectAllUsers" Russian="Отключить всех пользователей"/>
   <Local Name="CurrentUser" Russian="Текущий пользователь"/>
@@ -672,8 +671,6 @@
   <Local Name="ChatForm.InputMessage" Russian="Введите сообщение..."/>
   <Local Name="ChatForm.Sending" Russian="Отправка сообщения..."/>
   <Local Name="ChatForm.UnreadMessages" Russian="Имеются непрочитанные сообщения."/>
-  <Local Name="ChatForm.User.Online" Russian="Пользователь в сети"/>
-  <Local Name="ChatForm.User.Offline" Russian="Пользователь не в сети"/>
   
   <!--TelephonyForm-->
   <Local Name="TelephonyForm.Journal" Russian="Журнал звонков"/>

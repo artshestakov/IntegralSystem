@@ -19,7 +19,6 @@
 static QString QS_CHAT_MESSAGE = PREPARE_QUERY("SELECT "
 											   "chat_creationdate, "
 											   "userfullname(chat_user), "
-											   "useronline(userlogin(chat_user)), "
 											   "chat_message, "
 											   "length(chat_image) AS chat_image, "
 											   "chat_filename, "
@@ -42,7 +41,6 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	
 	QDateTime DateTime = qSelectMessage.ReadColumn("chat_creationdate").toDateTime();
 	QString UserFullName = qSelectMessage.ReadColumn("userfullname").toString();
-	bool UserOnline = qSelectMessage.ReadColumn("useronline").toBool();
 	QString Message = qSelectMessage.ReadColumn("chat_message").toString();
 	int ImageSize = qSelectMessage.ReadColumn("chat_image").toInt();
 	QString FileName = qSelectMessage.ReadColumn("chat_filename").toString();
@@ -68,20 +66,6 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	ButtonIcon->menu()->addAction(LANG("CiteCurrentMessage"), this, &ISChatMessageWidget::Cite);
 	ButtonIcon->menu()->addAction(LANG("SelectMessage"), this, &ISChatMessageWidget::SelectMessage);
 	ButtonIcon->menu()->addAction(LANG("CopyMessage"), this, &ISChatMessageWidget::CopyMessage);
-
-	QLabel *LabelOnline = new QLabel(this);
-	LayoutTop->addWidget(LabelOnline);
-
-	if (UserOnline)
-	{
-		LabelOnline->setPixmap(BUFFER_ICONS("ChatUser.Online").pixmap(ISDefines::Gui::SIZE_10_10));
-		LabelOnline->setToolTip(LANG("ChatForm.User.Online"));
-	}
-	else
-	{
-		LabelOnline->setPixmap(BUFFER_ICONS("ChatUser.Offline").pixmap(ISDefines::Gui::SIZE_10_10));
-		LabelOnline->setToolTip(LANG("ChatForm.User.Offline"));
-	}
 
 	QLabel *LabelUser = new QLabel(UserFullName + ':', this);
 	LabelUser->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);

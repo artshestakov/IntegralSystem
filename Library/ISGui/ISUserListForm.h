@@ -15,13 +15,8 @@ public:
 protected:
 	void CreateCopy() override;
 	void Edit() override;
-	void LoadDataAfterEvent() override;
 	void ChangePassword();
-	void UpdateLabelOnline();
 
 	bool CheckThisUser(); //ѕроверка редактировани€ текущего пользовател€
-
-private:
-	QLabel *LabelOnline;
 };
 //-----------------------------------------------------------------------------

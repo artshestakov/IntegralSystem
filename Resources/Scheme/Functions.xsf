@@ -110,21 +110,6 @@
     COST 100;
   </Function>
 
-  <Function Name="useronline">
-    CREATE OR REPLACE FUNCTION public.useronline(login varchar)
-    RETURNS boolean AS
-    $body$
-      BEGIN
-        RETURN COUNT(*)::INTEGER::BOOLEAN FROM pg_stat_activity WHERE usename = login;
-      END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-
   <Function Name="userlogin">
     CREATE OR REPLACE FUNCTION public.userlogin(id bigint)
     RETURNS varchar AS

@@ -28,8 +28,6 @@ public:
 	QString GetDatabaseCType() const; //Получить CType базы данных
 	QString GetDatabaseDataDirectory() const; //Получить путь к кластеру базы данных
 	QString GetAge(const QDateTime &DateTime) const;
-	bool IsUserOnline(int UserID) const;
-	bool IsUserOnline(const QString &UserLogin) const;
 	QVariant GetValue(const QString &TableName, const QString &FieldName, int ObjectID) const; //Получить значение поля из таблицы по идентификатору записи
 
 	bool Connect(const QString &ConnectionName, const QString &Host, int Port, const QString &Database, const QString &Login, const QString &Password); //Подключение к базе данных

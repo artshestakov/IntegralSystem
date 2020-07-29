@@ -17,7 +17,6 @@
       <Field UID="{196BD860-208E-4DF7-8E4D-A65F7A9E8F35}" Name="AccountLifeTimeEnd" Type="Date" LabelName="Дата окончания действия" LocalListName="Дата окончания действия" HideFromList="true"/>
       <Field UID="{18F6BFE0-0770-4F2F-A8DE-973416F41CEA}" Name="LastEnter" Type="DateTime" LabelName="Последний вход" LocalListName="Последний вход" HideFromObject="true"/>
       <Field UID="{852CB655-75AF-4515-BBDC-149F08BB82AE}" Name="LastAddress" Type="String" LabelName="Последний адрес" LocalListName="Последний адрес" HideFromObject="true"/>
-      <Field UID="{402CD7B9-B765-4177-9C2B-9495F7B3D405}" Name="Online" Type="Bool" LabelName="Онлайн" LocalListName="Онлайн" QueryText="useronline(usrs.usrs_login)"/>
       <Field UID="{C19191C0-9398-4FEB-9BED-BA1C3F8C0979}" Name="Photo" Type="Image" LabelName="Фотография" LocalListName="Фотография" HideFromList="true"/>
     </Fields>
     <Indexes>

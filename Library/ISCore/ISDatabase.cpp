@@ -33,10 +33,6 @@ static QString QS_C_TYPE = PREPARE_QUERY("SELECT datctype FROM pg_database WHERE
 //-----------------------------------------------------------------------------
 static QString QS_DATA_DIRECTORY = PREPARE_QUERY("SELECT setting FROM pg_settings WHERE name = 'data_directory'");
 //-----------------------------------------------------------------------------
-static QString QS_USER_ONLINE_FROM_ID = PREPARE_QUERY("SELECT useronline(userlogin(:UserID))");
-//-----------------------------------------------------------------------------
-static QString QS_USER_ONLINE_FROM_LOGIN = PREPARE_QUERY("SELECT useronline(:UserLogin)");
-//-----------------------------------------------------------------------------
 ISDatabase::ISDatabase()
     : ErrorString(NO_ERROR_STRING)
 {
@@ -237,30 +233,6 @@ QString ISDatabase::GetAge(const QDateTime &DateTime) const
         return qAge.ReadColumn("age").toString();
     }
     return QString();
-}
-//-----------------------------------------------------------------------------
-bool ISDatabase::IsUserOnline(int UserID) const
-{
-    ISQuery qSelect(QS_USER_ONLINE_FROM_ID);
-    qSelect.BindValue(":UserID", UserID);
-    bool Result = qSelect.ExecuteFirst();
-    if (Result)
-    {
-        Result = qSelect.ReadColumn("useronline").toBool();
-    }
-    return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISDatabase::IsUserOnline(const QString &UserLogin) const
-{
-    ISQuery qSelect(QS_USER_ONLINE_FROM_LOGIN);
-    qSelect.BindValue(":UserLogin", UserLogin);
-    bool Result = qSelect.ExecuteFirst();
-    if (Result)
-    {
-        Result = qSelect.ReadColumn("useronline").toBool();
-    }
-    return Result;
 }
 //-----------------------------------------------------------------------------
 QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName, int ObjectID) const
