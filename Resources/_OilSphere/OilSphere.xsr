@@ -18,6 +18,7 @@
   <_SubSystems UID="{EDF8F5FF-F776-4D65-A72D-3149644D74C8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Поставщики" Icon="Lists" TableName="Suppliers"/>
   <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
   <_SubSystems UID="{703589B9-0408-42C2-826D-F34C3596C4BB}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="5" LocalName="Долги" Icon="Lists" ClassName="ISOilSphere::DebtSubSystemForm"/>
-  <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="6" LocalName="Ведомость АЗС" Icon="Lists" ClassName="ISOilSphere::GasStationStatementListForm"/>
+  <_SubSystems UID="{8B580716-152A-4313-BB0E-2006E666451B}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="6" LocalName="Долги (старые)" Icon="Lists" TableName="DebtOld"/>
+  <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="7" LocalName="Ведомость АЗС" Icon="Lists" ClassName="ISOilSphere::GasStationStatementListForm"/>
 
 </XSR>
