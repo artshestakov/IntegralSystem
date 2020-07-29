@@ -116,6 +116,7 @@ QStringList ISLineEdit::GetCompleterList() const
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetReadOnly(bool read_only)
 {
+	ISFieldEditBase::SetReadOnly(read_only);
 	SetVisibleClear(!read_only);
 	LineEdit->setReadOnly(read_only);
 	LineEdit->SetVisibleClear(!read_only);

@@ -81,10 +81,7 @@ void ISFieldEditBase::SetReadOnly(bool read_only)
 {
 	ReadOnly = read_only;
 	SetVisibleClear(!ReadOnly);
-	if (ReadOnly)
-	{
-		EditWidget->setFocusPolicy(Qt::NoFocus);
-	}
+	EditWidget->setFocusPolicy(ReadOnly ? Qt::NoFocus : Qt::StrongFocus);
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetPlaceholderText(const QString &placeholder_text)
