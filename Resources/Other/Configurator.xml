@@ -45,9 +45,4 @@
     <Function FunctionName="DatabaseSize" LocalName="Показать размер базы данных" Description="Показать размер базы данных"/>
   </Section>
 
-  <Section Name="FIAS" ClassName="CGConfiguratorFIAS">
-    <Function FunctionName="Prepare" LocalName="Подготовка" Description="Подготовка ФИАС"/>
-    <Function FunctionName="Update" LocalName="Обновление" Description="Обновление ФИАС"/>
-  </Section>
-
 </Scheme>

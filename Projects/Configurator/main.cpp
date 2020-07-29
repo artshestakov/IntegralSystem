@@ -23,7 +23,6 @@
 #include "CGConfiguratorDelete.h"
 #include "CGConfiguratorService.h"
 #include "CGConfiguratorShow.h"
-#include "CGConfiguratorFIAS.h"
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------
@@ -143,7 +142,6 @@ void RegisterMetatype()
 	qRegisterMetaType<CGConfiguratorDelete*>("CGConfiguratorDelete");
 	qRegisterMetaType<CGConfiguratorService*>("CGConfiguratorService");
 	qRegisterMetaType<CGConfiguratorShow*>("CGConfiguratorShow");
-	qRegisterMetaType<CGConfiguratorFIAS*>("CGConfiguratorFIAS");
 }
 //-----------------------------------------------------------------------------
 bool InitConfiguratorScheme(QString &ErrorString)

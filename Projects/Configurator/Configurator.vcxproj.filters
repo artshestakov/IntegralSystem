@@ -40,9 +40,6 @@
     <ClCompile Include="CGConfiguratorDelete.cpp">
       <Filter>Command</Filter>
     </ClCompile>
-    <ClCompile Include="CGConfiguratorFIAS.cpp">
-      <Filter>Command</Filter>
-    </ClCompile>
     <ClCompile Include="CGConfiguratorService.cpp">
       <Filter>Command</Filter>
     </ClCompile>
@@ -88,9 +85,6 @@
       <Filter>Command</Filter>
     </QtMoc>
     <QtMoc Include="CGConfiguratorDelete.h">
-      <Filter>Command</Filter>
-    </QtMoc>
-    <QtMoc Include="CGConfiguratorFIAS.h">
       <Filter>Command</Filter>
     </QtMoc>
     <QtMoc Include="CGConfiguratorService.h">
