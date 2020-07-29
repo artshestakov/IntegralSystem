@@ -115,43 +115,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_TaskDuplicate" UID="{3CC4AC97-2EFD-44A8-B613-86EB9770D61A}" Alias="tsdp" LocalName="Дубликат задачи" LocalListName="Дубликаты задач" TitleName="Original" IsSystem="true">
-    <Fields>
-      <Field UID="{8CB4CAD8-E673-498A-901E-9C3D978C81FA}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{97E6D312-E804-47FE-BB7F-D8AF5C700382}" Name="Original" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-      <Field UID="{F56D152A-8254-4312-8CD9-E1D866113AF1}" Name="Duplicate" Type="Int" LabelName="Дубликат" LocalListName="Дубликат" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Original"/>
-      <Index Field="Duplicate"/>
-      <Index Field="Original;Duplicate"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-      <Foreign Field="Original" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Duplicate" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-
-  <Table Name="_TaskObject" UID="{A05DB1B2-4F5B-4512-84B3-ED3C80DB1203}" Alias="tobj" LocalName="Объект" LocalListName="Объекты" TitleName="Task" IsSystem="true">
-    <Fields>
-      <Field UID="{6CE7C9D0-87BF-4045-9983-DA98C1B59CBA}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-      <Field UID="{2519DD27-50EA-482C-B1EE-DD22F26879EB}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{C59C485A-B902-4D12-84F4-668C1CE953C7}" Name="TableName" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
-      <Field UID="{537AE156-CE3E-4D60-8512-66113BA72015}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Task"/>
-      <Index Field="User"/>
-      <Index Field="TableName"/>
-      <Index Field="ObjectID"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="LinkTask" IsSystem="true">
     <Fields>
       <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
@@ -169,35 +132,6 @@
       <Foreign Field="LinkTask" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="UserLink" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="_TaskHistory" UID="{C4BD7978-F51F-4318-8EDA-E64047AD3252}" Alias="thst" LocalName="История задачи" LocalListName="История задач" TitleName="Task" IsSystem="true">
-    <Fields>
-      <Field UID="{1D9C530A-B01A-4E74-BFEB-DB3E7145D278}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-      <Field UID="{A71AA891-60F4-45D2-8D90-2C6A1BDC8A24}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{0FF59AAC-91EF-413B-BD94-E2C2785A3956}" Name="Action" Type="Int" LabelName="Действие" LocalListName="Действие" NotNull="true"/>
-      <Field UID="{1CD9B0F2-F657-496F-A9D1-92B9BD5DA5E0}" Name="Information" Type="String" LabelName="Дополнительная информация" LocalListName="Дополнительная информация"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Task"/>
-      <Index Field="User"/>
-      <Index Field="Action"/>
-      <Index Field="Information"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-      <Foreign Field="Action" ForeignClass="_TaskHistoryAction" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-
-  <Table Name="_TaskHistoryAction" UID="{8D534AD4-C45C-465F-A681-C8599AAE2FA1}" Alias="thac" LocalName="Действие истории задачи" LocalListName="Действия истории задач" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{F2183980-5C41-4F2E-AB3D-37DB9A3F47EE}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
   </Table>
 
 </XSN>
