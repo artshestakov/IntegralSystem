@@ -116,7 +116,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutLeft->addWidget(GroupBoxComments);
 
 	ListWidgetComments = new ISListWidget(GroupBoxComments);
-	//ListWidgetComments->setAlternatingRowColors(true);
 	ListWidgetComments->setCursor(CURSOR_POINTING_HAND);
 	ListWidgetComments->setContextMenuPolicy(Qt::ActionsContextMenu);
 	ListWidgetComments->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
