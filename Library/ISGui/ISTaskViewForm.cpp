@@ -9,6 +9,7 @@
 #include "ISControls.h"
 #include "ISInputDialog.h"
 #include "ISLabels.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "task_name, "
@@ -25,9 +26,14 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _taskpriority ON tspr_id = task_priority "
 									   "WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
-static QString QS_COMMENT = PREPARE_QUERY("SELECT tcom_id, userphoto(tcom_user), userfullname(tcom_user), (tcom_user = task_owner)::BOOLEAN AS is_user_owner, tcom_comment, tcom_creationdate "
+static QString QS_COMMENT = PREPARE_QUERY("SELECT "
+										  "tcom_id, "
+										  "userphoto(tcom_user), "
+										  "userfullname(tcom_user), "
+										  "(SELECT task_owner = tcom_user AS is_user_owner FROM _task WHERE task_id = tcom_task), "
+										  "tcom_comment, "
+										  "tcom_creationdate "
 										  "FROM _taskcomment "
-										  "LEFT JOIN _task ON tcom_user = task_owner "
 										  "WHERE tcom_task = :TaskID "
 										  "ORDER BY tcom_id");
 //-----------------------------------------------------------------------------
@@ -73,6 +79,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ISPushButton *ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
 	ButtonMenu->setFlat(true);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::AddComment);
+	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen);
 	LayoutTitle->addWidget(ButtonMenu);
 
@@ -121,20 +129,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	GroupBoxComments->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxComments);
 
-	ListWidgetComments = new ISListWidget(GroupBoxComments);
-	ListWidgetComments->setCursor(CURSOR_POINTING_HAND);
-	ListWidgetComments->setContextMenuPolicy(Qt::ActionsContextMenu);
-	ListWidgetComments->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-	GroupBoxComments->layout()->addWidget(ListWidgetComments);
+	LayoutComments = new QVBoxLayout();
+	LayoutComments->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	LayoutComments->addStretch();
+
+	ScrollAreaComments = new ISScrollArea(GroupBoxComments);
+	ScrollAreaComments->widget()->setLayout(LayoutComments);
+	GroupBoxComments->layout()->addWidget(ScrollAreaComments);
 	LoadComments();
-
-	QAction *ActionAddComment = new QAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), ListWidgetComments);
-	connect(ActionAddComment, &QAction::triggered, this, &ISTaskViewForm::AddComment);
-	ListWidgetComments->addAction(ActionAddComment);
-
-	QAction *ActionUpdateComments = new QAction(BUFFER_ICONS("Update"), LANG("Task.UpdateComments"), ListWidgetComments);
-	connect(ActionUpdateComments, &QAction::triggered, this, &ISTaskViewForm::LoadComments);
-	ListWidgetComments->addAction(ActionUpdateComments);
 
 	LayoutRight = new QVBoxLayout();
 
@@ -196,12 +198,16 @@ void ISTaskViewForm::Reopen()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LoadComments()
 {
-	ListWidgetComments->Clear();
+	while (!VectorComments.empty())
+	{
+		delete ISAlgorithm::VectorTakeBack(VectorComments);
+	}
 
 	ISQuery qSelectComments(QS_COMMENT);
 	qSelectComments.BindValue(":TaskID", TaskID);
 	if (qSelectComments.Execute())
 	{
+		int Rows = qSelectComments.GetCountResultRows(), Index = 0;
 		while (qSelectComments.Next())
 		{
 			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
@@ -211,66 +217,74 @@ void ISTaskViewForm::LoadComments()
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
 
-			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetComments);
-			ListWidgetComments->setItemWidget(ListWidgetItem, CreateCommentWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate));
-			ListWidgetItem->setSizeHint(ListWidgetComments->itemWidget(ListWidgetItem)->sizeHint());
+			QWidget *WidgetComment = CreateCommentWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
+			LayoutComments->insertWidget(LayoutComments->count() - 1, WidgetComment);
+			VectorComments.push_back(WidgetComment);
+
+			if (Index != Rows - 1)
+			{
+				QFrame *FrameSeparator = ISControls::CreateHorizontalLine(ScrollAreaComments);
+				LayoutComments->insertWidget(LayoutComments->count() - 1, FrameSeparator);
+				VectorComments.push_back(FrameSeparator);
+			}
+			++Index;
 		}
-		GroupBoxComments->setTitle(LANG("Task.Comments").arg(ListWidgetComments->count()));
+		GroupBoxComments->setTitle(LANG("Task.Comments").arg(Rows));
 	}
 }
 //-----------------------------------------------------------------------------
 QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime)
 {
-	QHBoxLayout *LayoutWidget = new QHBoxLayout();
-	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+	QVBoxLayout *LayoutWidget = new QVBoxLayout();
+	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
-	QWidget *Widget = new QWidget(ListWidgetComments);
+	QWidget *Widget = new QWidget(ScrollAreaComments);
 	Widget->setLayout(LayoutWidget);
 
-	QVBoxLayout *LayoutUserAvatar = new QVBoxLayout();
-	LayoutWidget->addLayout(LayoutUserAvatar);
+	QHBoxLayout *LayoutTitle = new QHBoxLayout();
+	LayoutTitle->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
-	QLabel *LabelAvatar = new QLabel(Widget);
+	QWidget *WidgetTitle = new QWidget(Widget);
+	WidgetTitle->setLayout(LayoutTitle);
+	LayoutWidget->addWidget(WidgetTitle);
+
+	QLabel *LabelAvatar = new QLabel(WidgetTitle);
 	LabelAvatar->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_45_45) : UserPhoto.scaled(ISDefines::Gui::SIZE_45_45, Qt::KeepAspectRatio));
-	LayoutUserAvatar->addWidget(LabelAvatar);
+	LayoutTitle->addWidget(LabelAvatar);
 
-	LayoutUserAvatar->addStretch();
-
-	QVBoxLayout *LayoutComment = new QVBoxLayout();
-	LayoutWidget->addLayout(LayoutComment);
-
-	QLabel *LabelUser = new QLabel(UserFullName, Widget);
+	QLabel *LabelUser = new QLabel(UserFullName, WidgetTitle);
 	LabelUser->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	ISGui::SetFontWidgetBold(LabelUser, true);
-	LayoutComment->addWidget(LabelUser);
+	LayoutTitle->addWidget(LabelUser);
 
-	QHBoxLayout *LayoutLabelComment = new QHBoxLayout();
-	LayoutComment->addLayout(LayoutLabelComment);
+	LayoutTitle->addStretch();
 
 	QLabel *LabelComment = new QLabel(Comment, Widget);
 	LabelComment->setTextInteractionFlags(Qt::TextSelectableByMouse);
 	LabelComment->setWordWrap(true);
-	LayoutLabelComment->addWidget(LabelComment);
+	LayoutWidget->addWidget(LabelComment);
 
-	QHBoxLayout *LayoutButtons = new QHBoxLayout();
-	LayoutComment->addLayout(LayoutButtons);
+	QHBoxLayout *LayoutBottom = new QHBoxLayout();
+	LayoutBottom->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
-	ISLabelLink *LabelEdit = new ISLabelLink(LANG("Edit"), Widget);
+	QWidget *WidgetBottom = new QWidget(Widget);
+	WidgetBottom->setLayout(LayoutBottom);
+	LayoutWidget->addWidget(WidgetBottom);
+
+	ISLabelLink *LabelEdit = new ISLabelLink(LANG("Edit"), WidgetBottom);
 	LabelEdit->setProperty("Comment", Comment);
 	LabelEdit->setProperty("CommentID", CommentID);
 	connect(LabelEdit, &ISLabelLink::Clicked, this, &ISTaskViewForm::EditComment);
-	LayoutButtons->addWidget(LabelEdit);
+	LayoutBottom->addWidget(LabelEdit);
 
-	ISLabelLink *LabelDelete = new ISLabelLink(LANG("Delete"), Widget);
+	ISLabelLink *LabelDelete = new ISLabelLink(LANG("Delete"), WidgetBottom);
 	LabelDelete->setProperty("CommentID", CommentID);
 	connect(LabelDelete, &ISLabelLink::Clicked, this, &ISTaskViewForm::DeleteComment);
-	LayoutButtons->addWidget(LabelDelete);
+	LayoutBottom->addWidget(LabelDelete);
 
-	LayoutButtons->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V3), Widget));
+	LayoutBottom->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V3), WidgetBottom));
 
-	LayoutButtons->addStretch();
-
-	LayoutWidget->addStretch();
+	LayoutBottom->addStretch();
 
 	return Widget;
 }

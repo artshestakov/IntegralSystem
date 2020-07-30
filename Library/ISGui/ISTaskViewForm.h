@@ -1,8 +1,10 @@
 #pragma once
+#ifndef _ISTASKVIEWFORM_H_INCLUDED
+#define _ISTASKVIEWFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISListWidget.h"
+#include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
 class ISTaskViewForm : public ISInterfaceForm
 {
@@ -29,7 +31,9 @@ private:
 	QHBoxLayout *LayoutHorizontal;
 	QVBoxLayout *LayoutLeft;
 	QGroupBox *GroupBoxComments;
-	ISListWidget *ListWidgetComments;
+	QVBoxLayout *LayoutComments;
+	ISScrollArea *ScrollAreaComments;
+	std::vector<QWidget *> VectorComments;
 	QVBoxLayout *LayoutRight;
 
 private:
@@ -44,3 +48,4 @@ private:
 	bool TaskImportant;
 };
 //-----------------------------------------------------------------------------
+#endif
