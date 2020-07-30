@@ -46,7 +46,10 @@ int main(int argc, char **argv)
 			ISStartup::Shutdown(&SplashScreen);
 		}
 	}
-	ISGui::ExitApplication();
+	else //Если не захотели входить в систему (или что-то ещё) - завершаем работу системы
+	{
+		ISGui::ExitApplication();
+	}
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

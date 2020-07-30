@@ -73,7 +73,8 @@ void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
 			Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication"));
 			SetVisibleShadow(false);
 		}
-		Answer ? CloseEvent->accept() : CloseEvent->ignore();
+		//ѕри подтверждении выхода об€зательно вызывать quit(), иначе основной поток событий будет висеть и программа не закроетс€
+		Answer ? qApp->quit() : CloseEvent->ignore();
 	}
 	else
 	{

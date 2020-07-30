@@ -400,8 +400,8 @@ QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 //-----------------------------------------------------------------------------
 void ISGui::ExitApplication()
 {
-	qApp->closeAllWindows();
 	ISCore::ExitApplication();
+	qApp->closeAllWindows();
 }
 //-----------------------------------------------------------------------------
 bool ISGui::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName)
