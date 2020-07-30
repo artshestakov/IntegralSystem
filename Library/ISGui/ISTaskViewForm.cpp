@@ -70,6 +70,12 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
 
+	ISPushButton *ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
+	ButtonMenu->setFlat(true);
+	ButtonMenu->setMenu(new QMenu(ButtonMenu));
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen);
+	LayoutTitle->addWidget(ButtonMenu);
+
 	QLabel *LabelName = new QLabel(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
@@ -179,6 +185,12 @@ ISTaskViewForm::~ISTaskViewForm()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::EscapeClicked()
 {
+	close();
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::Reopen()
+{
+	ISGui::ShowTaskViewForm(TaskID);
 	close();
 }
 //-----------------------------------------------------------------------------

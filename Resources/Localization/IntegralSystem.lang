@@ -815,6 +815,7 @@
   <Local Name="Task.Right.Type.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Priority" Russian="Приоритет"/>
   <Local Name="Task.ThisIsImportantTask" Russian="Это важная задача"/>
+  <Local Name="Task.ReopenTaskViewForm" Russian="Перечитать задачу"/>
 
   <!--File Dialog-->
   <Local Name="FileDialog.Image.Select.Title" Russian="Выбор изображения"/>

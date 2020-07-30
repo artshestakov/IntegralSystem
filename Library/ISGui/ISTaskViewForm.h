@@ -16,6 +16,9 @@ protected:
 	void EscapeClicked() override;
 
 private:
+	void Reopen();
+
+private:
 	void LoadComments();
 	QWidget* CreateCommentWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime);
 	void AddComment();
