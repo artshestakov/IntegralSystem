@@ -80,9 +80,8 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
 	MainLayout->addLayout(LayoutBottom);
 
-	if (Message.length()) //Если есть текст сообщения
+	if (!Message.isEmpty()) //Если есть текст сообщения
 	{
-		int Pos = 0;
 		if (ISGui::IsStringUrl(Message))
 		{
 			LabelMessage = new ISLabelLink(this);
@@ -92,8 +91,7 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 		}
 		else
 		{
-			LabelMessage = new QLabel(this);
-			LabelMessage->setTextInteractionFlags(Qt::TextSelectableByMouse);
+			LabelMessage = new ISLabelSelectionText(this);
 			LabelMessage->setCursor(CURSOR_I_BEAM);
 			LabelMessage->setFont(ISDefines::Gui::FONT_TAHOMA_10);
 		}

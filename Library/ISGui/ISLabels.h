@@ -18,8 +18,8 @@ public:
 	virtual ~ISQLabel();
 
 protected:
-	void mousePressEvent(QMouseEvent *e);
-	void mouseDoubleClickEvent(QMouseEvent *e);
+	void mousePressEvent(QMouseEvent *MouseEvent);
+	void mouseDoubleClickEvent(QMouseEvent *MouseEvent);
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -34,9 +34,27 @@ public:
 	virtual ~ISLabelLink();
 
 protected:
-	void keyPressEvent(QKeyEvent *e);
-	void enterEvent(QEvent *e);
-	void leaveEvent(QEvent *e);
+	void keyPressEvent(QKeyEvent *KeyEvent);
+	void enterEvent(QEvent *Event);
+	void leaveEvent(QEvent *Event);
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISLabelSelectionText : public ISQLabel
+{
+	Q_OBJECT
+
+public:
+	ISLabelSelectionText(const QString &Text, QWidget *parent = 0);
+	ISLabelSelectionText(QWidget *parent = 0);
+	~ISLabelSelectionText();
+
+protected:
+	void mouseReleaseEvent(QMouseEvent *MouseEvent) override;
+
+private:
+	void CopySelectedText();
 };
 //-----------------------------------------------------------------------------
 #endif

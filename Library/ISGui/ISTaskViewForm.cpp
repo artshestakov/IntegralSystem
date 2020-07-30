@@ -84,7 +84,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen);
 	LayoutTitle->addWidget(ButtonMenu);
 
-	QLabel *LabelName = new QLabel(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
+	ISLabelSelectionText *LabelName = new ISLabelSelectionText(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutTitle->addWidget(LabelName);
@@ -112,9 +112,10 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	GroupBoxDescription->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxDescription);
 
-	QLabel *LabelDescription = new QLabel(TaskDescription.isEmpty() ? LANG("Task.Description.Empty") : TaskDescription, GroupBoxDescription);
+	QLabel *LabelDescription = TaskDescription.isEmpty() ?
+		(new QLabel(LANG("Task.Description.Empty"), GroupBoxDescription)) :
+		(new ISLabelSelectionText(TaskDescription, GroupBoxDescription));
 	LabelDescription->setWordWrap(true);
-	LabelDescription->setTextInteractionFlags(TaskDescription.isEmpty() ? Qt::LinksAccessibleByMouse : Qt::TextSelectableByMouse);
 	GroupBoxDescription->layout()->addWidget(LabelDescription);
 
 	QGroupBox *GroupBoxFiles = new QGroupBox(LANG("Task.Files"), this);
@@ -266,8 +267,7 @@ QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserP
 
 	LayoutTitle->addStretch();
 
-	QLabel *LabelComment = new QLabel(Comment, Widget);
-	LabelComment->setTextInteractionFlags(Qt::TextSelectableByMouse);
+	ISLabelSelectionText *LabelComment = new ISLabelSelectionText(Comment, Widget);
 	LabelComment->setWordWrap(true);
 	LayoutWidget->addWidget(LabelComment);
 
