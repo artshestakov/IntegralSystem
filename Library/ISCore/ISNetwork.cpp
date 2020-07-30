@@ -2,7 +2,9 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISNetwork::ISNetwork(QObject *parent) : QObject(parent)
+ISNetwork::ISNetwork(QObject *parent)
+	: QObject(parent),
+	ErrorString(NO_ERROR_STRING)
 {
 
 }
@@ -10,6 +12,11 @@ ISNetwork::ISNetwork(QObject *parent) : QObject(parent)
 ISNetwork::~ISNetwork()
 {
 
+}
+//-----------------------------------------------------------------------------
+QString ISNetwork::GetErrorString() const
+{
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 bool ISNetwork::CheckAccessInternet(QString &ErrorString) const
@@ -48,7 +55,7 @@ QString ISNetwork::ParseIPAddress(const QString &IPAddress) const
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISNetwork::DownloadFile(const QString &Url, QByteArray &ByteArray, QString &ErrorString) const
+bool ISNetwork::DownloadFile(const QString &Url, QByteArray &ByteArray)
 {
 	QEventLoop EventLoop;
 	QNetworkAccessManager NetworkAccessManager;

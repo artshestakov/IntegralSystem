@@ -18,7 +18,7 @@ ISImageWidget::ISImageWidget(QWidget *parent) : QLabel(parent)
 	setMouseTracking(true);
 	setAutoFillBackground(true);
 	setAcceptDrops(true);
-	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(ISDefines::Gui::SIZE_64_64));
+	setPixmap(BUFFER_PIXMAPS("ImageEditBackgroup"));
 }
 //-----------------------------------------------------------------------------
 ISImageWidget::~ISImageWidget()
@@ -29,7 +29,7 @@ ISImageWidget::~ISImageWidget()
 void ISImageWidget::contextMenuEvent(QContextMenuEvent *e)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISContextMenuImage ContextMenu(this, CurrentPixmap.isNull());
+	ISContextMenuImage ContextMenu(this, ByteArray.isNull());
 	connect(&ContextMenu, &ISContextMenuImage::Select, this, &ISImageWidget::Select);
 	connect(&ContextMenu, &ISContextMenuImage::Cut, this, &ISImageWidget::Cut);
 	connect(&ContextMenu, &ISContextMenuImage::Copy, this, &ISImageWidget::Copy);
@@ -51,7 +51,7 @@ void ISImageWidget::dragEnterEvent(QDragEnterEvent *e)
 			return;
 		}
 
-		QString FilePath = MimeData->urls()[0].toString();
+		QString FilePath = MimeData->urls().first().toString();
 		if (!QStringList(ISDefines::Gui::AVIABLE_IMAGE_EXTENSION).contains(QFileInfo(FilePath).suffix().toLower())) //≈сли происходит перетаскивание не изображени€
 		{
 			return;
@@ -65,8 +65,11 @@ void ISImageWidget::dropEvent(QDropEvent *e)
 	const QMimeData* MimeData = e->mimeData();
 	if (MimeData->hasUrls())
 	{
-		QString FilePath = MimeData->urls()[0].toString(QUrl::PreferLocalFile);
-		SetPixmap(FilePath);
+		QString FilePath = MimeData->urls().first().toString(QUrl::PreferLocalFile);
+		if (ReadFile(FilePath))
+		{
+			SetPixmap();
+		}
 	}
 }
 //-----------------------------------------------------------------------------
@@ -83,54 +86,47 @@ void ISImageWidget::mouseDoubleClickEvent(QMouseEvent *e)
 	QLabel::mouseDoubleClickEvent(e);
 	if (e->button() == Qt::LeftButton)
 	{
-		CurrentPixmap.isNull() ? Select() : OpenView();
+		ByteArray.isNull() ? Select() : OpenView();
 	}
 }
 //-----------------------------------------------------------------------------
-void ISImageWidget::SetBackgroundImage(const QPixmap &Pixmap)
+QByteArray ISImageWidget::GetImage() const
 {
-	setPixmap(Pixmap);
+	return ByteArray;
 }
 //-----------------------------------------------------------------------------
-QPixmap ISImageWidget::GetPixmap() const
+void ISImageWidget::SetByteArray(const QByteArray &byte_array)
 {
-	return CurrentPixmap;
+	ByteArray = byte_array;
+	SetPixmap();
+}
+//-----------------------------------------------------------------------------
+void ISImageWidget::SetPixmap()
+{
+	QPixmap Pixmap;
+	if (Pixmap.loadFromData(ByteArray, "PNG"))
+	{
+		SetPixmap(Pixmap.scaled(size(), Qt::KeepAspectRatio));
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadPixmapFromBuffer"));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::SetPixmap(const QPixmap &Pixmap)
 {
-	ISGui::SetWaitGlobalCursor(true);
-
-	Clear();
-	CurrentPixmap = Pixmap;
-	QPixmap CompletePixmap = Pixmap.scaled(ISDefines::Gui::SIZE_200_200, Qt::KeepAspectRatio);
-	setPixmap(CompletePixmap);
+	setPixmap(Pixmap.scaled(size(), Qt::KeepAspectRatio));
 	emit ImageChanged();
-
-	if (!Pixmap.isNull())
-	{
-		setFocus();
-	}
-	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISImageWidget::SetPixmap(const QString &Path)
-{
-	QPixmap Pixmap;
-	if (Pixmap.load(Path))
-	{
-		SetPixmap(Pixmap);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::Clear()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	CurrentPixmap = QPixmap();
-	setPixmap(QPixmap());
-	emit ImageChanged();
-	SetBackgroundImage(BUFFER_ICONS("ImageEditBackgroup").pixmap(ISDefines::Gui::SIZE_64_64));
+	ByteArray.clear();
+	setPixmap(BUFFER_PIXMAPS("ImageEditBackgroup"));
 	ISGui::SetWaitGlobalCursor(false);
+	emit ImageChanged();
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::Select()
@@ -138,7 +134,10 @@ void ISImageWidget::Select()
 	QString Path = ISFileDialog::GetOpenFileNameImage(this);
 	if (!Path.isEmpty())
 	{
-		SetPixmap(Path);
+		if (ReadFile(Path))
+		{
+			SetPixmap();
+		}
 	}
 }
 //-----------------------------------------------------------------------------
@@ -150,14 +149,17 @@ void ISImageWidget::Cut()
 //-----------------------------------------------------------------------------
 void ISImageWidget::Copy()
 {
-	QApplication::clipboard()->setPixmap(CurrentPixmap);
+	QApplication::clipboard()->setPixmap(ByteArrayToPixmap());
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::Paste()
 {
-	ISGui::SetWaitGlobalCursor(true);
-	SetPixmap(QApplication::clipboard()->pixmap());
-	ISGui::SetWaitGlobalCursor(false);
+	QPixmap Pixmap = QApplication::clipboard()->pixmap();
+	if (!Pixmap.isNull())
+	{
+		ByteArray = ISGui::PixmapToByteArray(Pixmap);
+		SetPixmap(Pixmap);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::PasteFromLink()
@@ -165,37 +167,29 @@ void ISImageWidget::PasteFromLink()
 	QString Url = QApplication::clipboard()->text();
 	if (!Url.isEmpty())
 	{
-		if (ISGui::IsStringUrl(Url))
+		ISProcessForm ProcessForm(LANG("DownloadingImage"));
+		ProcessForm.show();
+
+		ISNetwork Network;
+		if (Network.DownloadFile(Url, ByteArray))
 		{
-			ISProcessForm ProcessForm(LANG("DownloadingImage"));
-			ProcessForm.show();
+			ProcessForm.SetText(LANG("ImageOpening"));
 
-			QByteArray ByteArray;
-			QString ErrorString;
-			if (ISNetwork().DownloadFile(Url, ByteArray, ErrorString))
+			QPixmap Pixmap;
+			if (Pixmap.loadFromData(ByteArray))
 			{
-				ProcessForm.SetText(LANG("ImageOpening"));
-
-				QPixmap Pixmap;
-				if (Pixmap.loadFromData(ByteArray))
-				{
-					SetPixmap(Pixmap);
-				}
-				else
-				{
-					ProcessForm.hide();
-					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotOpenedImage"));
-				}
+				SetPixmap(Pixmap);
 			}
 			else
 			{
 				ProcessForm.hide();
-				ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDownloadedImage"));
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotOpenedImage"));
 			}
 		}
 		else
 		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.LinkInBufferInvalid"));
+			ProcessForm.hide();
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDownloadedImage"), Network.GetErrorString());
 		}
 	}
 	else
@@ -209,14 +203,50 @@ void ISImageWidget::Save()
 	QString Path = ISFileDialog::GetSaveFileNameImage(this);
 	if (!Path.isEmpty())
 	{
-        CurrentPixmap.save(Path);
+		QFile File(Path);
+		if (File.open(QIODevice::WriteOnly))
+		{
+			File.write(ByteArray);
+			File.close();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.SaveImageFile"), File.errorString());
+		}
 	}
 }
 //-----------------------------------------------------------------------------
 void ISImageWidget::OpenView()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	(new ISImageViewerForm(CurrentPixmap))->show();
+	(new ISImageViewerForm(ISGui::ByteArrayToPixmap(ByteArray)))->show();
 	ISGui::SetWaitGlobalCursor(false);
+}
+//-----------------------------------------------------------------------------
+bool ISImageWidget::ReadFile(const QString &FilePath)
+{
+	QFile File(FilePath);
+	bool Result = File.open(QIODevice::ReadOnly);
+	if (Result)
+	{
+		ByteArray = File.readAll();
+		File.close();
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.OpenImageFile"), File.errorString());
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+QPixmap ISImageWidget::ByteArrayToPixmap()
+{
+	QPixmap Pixmap;
+	if (!Pixmap.loadFromData(ByteArray, "PNG"))
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadPixmapFromBuffer"));
+	}
+	return Pixmap;
+
 }
 //-----------------------------------------------------------------------------

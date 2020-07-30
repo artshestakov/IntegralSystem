@@ -18,12 +18,11 @@ public:
 	void dropEvent(QDropEvent *e);
 	void dragMoveEvent(QDragMoveEvent *e);
 	void mouseDoubleClickEvent(QMouseEvent *e);
-	
-	void SetBackgroundImage(const QPixmap &Pixmap);
 
-	QPixmap GetPixmap() const;
+	QByteArray GetImage() const;
+	void SetByteArray(const QByteArray &byte_array);
+	void SetPixmap();
 	void SetPixmap(const QPixmap &Pixmap);
-	void SetPixmap(const QString &Path);
 
 	void Clear();
 
@@ -37,6 +36,10 @@ protected:
 	void OpenView();
 
 private:
-	QPixmap CurrentPixmap;
+	bool ReadFile(const QString &FilePath); //Чтение файла в буфер
+	QPixmap ByteArrayToPixmap();
+
+private:
+	QByteArray ByteArray;
 };
 //-----------------------------------------------------------------------------

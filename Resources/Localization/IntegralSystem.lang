@@ -126,6 +126,9 @@
   <Local Name="Message.Error.InsertTaskComment" Russian="Не удалось добавить комментарий к задаче!"/>
   <Local Name="Message.Error.UpdateTaskComment" Russian="Не удалось изменить комментарий к задаче!"/>
   <Local Name="Message.Error.DeleteTaskComment" Russian="Не удалось удалить комментарий!"/>
+  <Local Name="Message.Error.OpenImageFile" Russian="Не удалось открыть файл с изображением!"/>
+  <Local Name="Message.Error.SaveImageFile" Russian="Не удалось открыть файл для записи изображения!"/>
+  <Local Name="Message.Error.LoadPixmapFromBuffer" Russian="Не удалось прочитать изображение!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -190,7 +193,6 @@
   <Local Name="Message.Warning.NotAccess.Special.PlayAsteriskRecord" Russian="У Вас нет прав на прослушивание записей разговоров."/>
   <Local Name="Message.Warning.NotAccess.Special.SaveAsteriskRecord" Russian="У Вас нет прав на сохранение записей разговоров."/>
   <Local Name="Message.Warning.NotAccess.Special.SendMessageToChat" Russian="У Вас нет прав на отправку сообщений в общий чат."/>
-  <Local Name="Message.Warning.LinkInBufferInvalid" Russian="Ссылка в буфере не является корректной, загрузка невозможна."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>

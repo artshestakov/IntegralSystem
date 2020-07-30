@@ -23,25 +23,13 @@ ISImageEdit::~ISImageEdit()
 //-----------------------------------------------------------------------------
 void ISImageEdit::SetValue(const QVariant &value)
 {
-	if (value.isValid())
-	{
-		QPixmap Pixmap = ISGui::ByteArrayToPixmap(value.toByteArray());
-		ImageWidget->SetPixmap(Pixmap);
-	}
-	else
-	{
-		ImageWidget->Clear();
-	}
+	value.isValid() ? ImageWidget->SetByteArray(value.toByteArray()) : ImageWidget->Clear();
 }
 //-----------------------------------------------------------------------------
 QVariant ISImageEdit::GetValue() const
 {
-	QByteArray ByteArray = ISGui::PixmapToByteArray(ImageWidget->GetPixmap());
-	if (!ByteArray.isNull())
-	{
-		return ByteArray;
-	}	
-	return QVariant();
+	QByteArray ByteArray = ImageWidget->GetImage();
+	return ByteArray.isEmpty() ? QVariant() : ByteArray;
 }
 //-----------------------------------------------------------------------------
 void ISImageEdit::Clear()
