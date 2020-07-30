@@ -231,7 +231,7 @@ QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserP
 	LayoutWidget->addLayout(LayoutUserAvatar);
 
 	QLabel *LabelAvatar = new QLabel(Widget);
-	LabelAvatar->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_45_45) : UserPhoto.scaled(ISDefines::Gui::SIZE_45_45));
+	LabelAvatar->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_45_45) : UserPhoto.scaled(ISDefines::Gui::SIZE_45_45, Qt::KeepAspectRatio));
 	LayoutUserAvatar->addWidget(LabelAvatar);
 
 	LayoutUserAvatar->addStretch();
