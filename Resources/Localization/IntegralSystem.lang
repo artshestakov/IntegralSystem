@@ -129,6 +129,7 @@
   <Local Name="Message.Error.OpenImageFile" Russian="Не удалось открыть файл с изображением!"/>
   <Local Name="Message.Error.SaveImageFile" Russian="Не удалось открыть файл для записи изображения!"/>
   <Local Name="Message.Error.LoadPixmapFromBuffer" Russian="Не удалось прочитать изображение!"/>
+  <Local Name="Message.Error.LoadTaskComments" Russian="Не удалось загрузить комментарии к этой задаче!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>

@@ -198,6 +198,7 @@ void ISTaskViewForm::Reopen()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LoadComments()
 {
+	ISGui::SetWaitGlobalCursor(true);
 	while (!VectorComments.empty())
 	{
 		delete ISAlgorithm::VectorTakeBack(VectorComments);
@@ -220,7 +221,7 @@ void ISTaskViewForm::LoadComments()
 			QWidget *WidgetComment = CreateCommentWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
 			LayoutComments->insertWidget(LayoutComments->count() - 1, WidgetComment);
 			VectorComments.push_back(WidgetComment);
-
+			
 			if (Index != Rows - 1)
 			{
 				QFrame *FrameSeparator = ISControls::CreateHorizontalLine(ScrollAreaComments);
@@ -231,6 +232,12 @@ void ISTaskViewForm::LoadComments()
 		}
 		GroupBoxComments->setTitle(LANG("Task.Comments").arg(Rows));
 	}
+	else
+	{
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadTaskComments"), qSelectComments.GetErrorString());
+	}
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime)
@@ -312,7 +319,7 @@ void ISTaskViewForm::EditComment()
 {
 	QString Comment = sender()->property("Comment").toString();
 	QString NewComment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment"), Comment);
-	if (NewComment != Comment)
+	if (!NewComment.isEmpty() && NewComment != Comment)
 	{
 		ISQuery qUpdateComment(QU_COMMENT);
 		qUpdateComment.BindValue(":Comment", NewComment);
