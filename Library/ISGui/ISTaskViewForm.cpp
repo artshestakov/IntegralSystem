@@ -307,6 +307,8 @@ void ISTaskViewForm::AddComment()
 		if (qInsertComment.Execute())
 		{
 			LoadComments();
+			//После загрузки списка комментариев вызываем прокрутку в самый низ
+			QTimer::singleShot(50, [=]() { ScrollAreaComments->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
 		}
 		else
 		{
