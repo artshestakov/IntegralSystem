@@ -663,27 +663,27 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 											}
 											else
 											{
-												ErrorString = QString("Empty table \"%1\" title name.").arg(MetaTable->Name);
+												ErrorString = QString("Empty table title name \"%1\".").arg(MetaTable->Name);
 											}
 										}
 										else
 										{
-											ErrorString = QString("Empty table \"%1\" local list name.").arg(MetaTable->Name);
+											ErrorString = QString("Empty table local list name \"%1\".").arg(MetaTable->Name);
 										}
 									}
 									else
 									{
-										ErrorString = QString("Empty table \"%1\" local name.").arg(MetaTable->Name);
+										ErrorString = QString("Empty table local name \"%1\".").arg(MetaTable->Name);
 									}
 								}
 								else
 								{
-									ErrorString = QString("Empty table \"%1\" alias.").arg(MetaTable->Name);
+									ErrorString = QString("Empty table alias \"%1\".").arg(MetaTable->Name);
 								}
 							}
 							else
 							{
-								ErrorString = QString("Empty table \"%1\" uid.").arg(MetaTable->Name);
+								ErrorString = QString("Empty uid table \"%1\".").arg(MetaTable->Name);
 							}
 						}
 						else

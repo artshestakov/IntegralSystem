@@ -209,7 +209,7 @@ ISINNEdit::ISINNEdit(QWidget *parent) : ISLineEdit(parent)
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetPlaceholderText(LANG("Field.Inn.PlaceholderText"));
 	SetMaxLength(12);
-	SetFixedWidth(ISGui::GetStringWidth("123456789012", ISDefines::Gui::FONT_APPLICATION) + 35);
+	SetFixedWidth(ISGui::GetStringWidth("123456789012", ISDefines::Gui::FONT_APPLICATION) + 50);
 
 	ButtonSearch = new ISServiceButton(this);
 	ButtonSearch->setVisible(false);
