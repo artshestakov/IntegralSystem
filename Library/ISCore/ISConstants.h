@@ -61,15 +61,15 @@ const char FORMAT_TIME_V2[] = "hh.mm"; //Формат времени: 10.16
 const char FORMAT_TIME_V3[] = "hh:mm:ss"; //Формат времени: 10:16:13
 const char FORMAT_TIME_V4[] = "mm:ss"; //Формат времени: 16:13
 const char FORMAT_TIME_V5[] = "hh.mm.ss"; //Формат времени: 10.16.13
-const char FORMAT_DATE_TIME_V1[] = "d MMMM yyyy hh:mm"; //Формат даты и времени: 
-const char FORMAT_DATE_TIME_V2[] = "dd.MM.yyyy hh:mm"; //Формат даты и времени: 
-const char FORMAT_DATE_TIME_V3[] = "d MMMM yyyy hh:mm:ss"; //Формат даты и времени: 
-const char FORMAT_DATE_TIME_V4[] = "dd.MM.yyyy hh:mm:ss.zzz"; //Формат даты и времени: 
-const char FORMAT_DATE_TIME_V5[] = "d MMMM yy hh:mm:ss.zzz"; //Формат даты и времени: 
-const char FORMAT_DATE_TIME_V6[] = "dd.MM.yyyy hh.mm"; //Формат даты и времени: 
-const char FORMAT_DATE_TIME_V7[] = "yyyy-MM-dd hh:mm:ss"; //Формат даты и времени: 
-const char FORMAT_DATE_TIME_V8[] = "dd.MM.yyyy_hh.mm.ss"; //Формат даты и времени: 
-const char FORMAT_DATE_TIME_V9[] = "dd.MM.yy hh:mm:ss.zzz"; //Формат даты и времени: 
+const char FORMAT_DATE_TIME_V1[] = "d MMMM yyyy hh:mm"; //Формат даты и времени: 4 Август 2020 12:59
+const char FORMAT_DATE_TIME_V2[] = "dd.MM.yyyy hh:mm"; //Формат даты и времени: 04.08.2020 12:59
+const char FORMAT_DATE_TIME_V3[] = "d MMMM yyyy hh:mm:ss"; //Формат даты и времени: 4 Август 2020 12:59:52
+const char FORMAT_DATE_TIME_V4[] = "dd.MM.yyyy hh:mm:ss.zzz"; //Формат даты и времени: 04.08.2020 12:59:52.459
+const char FORMAT_DATE_TIME_V5[] = "d MMMM yy hh:mm:ss.zzz"; //Формат даты и времени: 4 Август 20 12:59:52.459
+const char FORMAT_DATE_TIME_V6[] = "dd.MM.yyyy hh.mm"; //Формат даты и времени: 04.08.2020 12.59
+const char FORMAT_DATE_TIME_V7[] = "yyyy-MM-dd hh:mm:ss"; //Формат даты и времени: 2020-08-04 12:59:52
+const char FORMAT_DATE_TIME_V8[] = "dd.MM.yyyy_hh.mm.ss"; //Формат даты и времени: 04.08.2020_12.59.52
+const char FORMAT_DATE_TIME_V9[] = "dd.MM.yy hh:mm:ss.zzz"; //Формат даты и времени: 04.08.20 12:59:52.459
 //TOKENS-----------------------------------------------------------------------
 const char TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 //PROPERTY---------------------------------------------------------------------
