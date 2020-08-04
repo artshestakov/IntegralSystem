@@ -27,6 +27,11 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _taskpriority ON tspr_id = task_priority "
 									   "WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
+static QString QU_NAME = PREPARE_QUERY("UPDATE _task SET "
+									   "task_name = :TaskName, "
+									   "task_updationdate = now() "
+									   "WHERE task_id = :TaskID");
+//-----------------------------------------------------------------------------
 static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, task_id, task_name, task_description, userfullname(tlnk_user), tlnk_creationdate "
 									   "FROM _tasklink "
 									   "LEFT JOIN _task ON tlnk_link = task_id "
@@ -95,13 +100,15 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ISPushButton *ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
 	ButtonMenu->setFlat(true);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen);
+	ButtonMenu->menu()->addSeparator();
+	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
+	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::AddComment);
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::AddLink);
-	ButtonMenu->menu()->addSeparator();
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen);
 	LayoutTitle->addWidget(ButtonMenu);
 
-	ISLabelSelectionText *LabelName = new ISLabelSelectionText(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
+	LabelName = new ISLabelSelectionText(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutTitle->addWidget(LabelName);
@@ -232,6 +239,32 @@ void ISTaskViewForm::Reopen()
 {
 	ISGui::ShowTaskViewForm(TaskID);
 	close();
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::Rename()
+{
+	QString NewName = ISInputDialog::GetString(LANG("Renaming"), LANG("Task.Rename.LabelText"), TaskName);
+	if (NewName.isEmpty())
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NewTaskNameIsEmpty"));
+		return;
+	}
+
+	if (NewName != TaskName)
+	{
+		ISQuery qRenameTask(QU_NAME);
+		qRenameTask.BindValue(":TaskName", NewName);
+		qRenameTask.BindValue(":TaskID", TaskID);
+		if (qRenameTask.Execute())
+		{
+			LabelName->setText(QString("#%1: %2").arg(TaskID).arg(NewName));
+			TaskName = NewName;
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.RenameTask"), qRenameTask.GetErrorString());
+		}
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LoadLinks()

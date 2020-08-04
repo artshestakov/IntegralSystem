@@ -20,6 +20,7 @@ protected:
 
 private:
 	void Reopen();
+	void Rename();
 
 private:
 	void LoadLinks();
@@ -37,6 +38,7 @@ private:
 private:
 	QHBoxLayout *LayoutHorizontal;
 	QVBoxLayout *LayoutLeft;
+	ISLabelSelectionText *LabelName;
 	QGroupBox *GroupBoxLinkTask;
 	std::vector<ISLabelLink *> VectorLinks;
 	QGroupBox *GroupBoxComments;
