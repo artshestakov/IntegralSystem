@@ -80,22 +80,22 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="LinkTask" IsSystem="true">
+  <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="Link" IsSystem="true">
     <Fields>
       <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-      <Field UID="{3615E923-9B37-4E47-927B-738218705DDD}" Name="LinkTask" Type="Int" LabelName="Связанная задача" LocalListName="Связанная задача" NotNull="true"/>
-      <Field UID="{91C50C07-D313-456C-96F9-E464FB09A238}" Name="UserLink" Type="Int" DefaultValue="currentuserid()" LabelName="Связал" LocalListName="Связал" NotNull="true"/>
+      <Field UID="{3615E923-9B37-4E47-927B-738218705DDD}" Name="Link" Type="Int" LabelName="Связанная задача" LocalListName="Связанная задача" NotNull="true"/>
+      <Field UID="{91C50C07-D313-456C-96F9-E464FB09A238}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Связал" LocalListName="Связал" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Task"/>
-      <Index Field="LinkTask"/>
-      <Index Field="UserLink"/>
-      <Index Field="Task;LinkTask"/>
+      <Index Field="Link"/>
+      <Index Field="User"/>
+      <Index Field="Task;Link" Unique="true"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="LinkTask" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="UserLink" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Link" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
   </Table>
 

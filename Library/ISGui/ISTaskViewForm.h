@@ -5,6 +5,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "ISScrollArea.h"
+#include "ISLabels.h"
 //-----------------------------------------------------------------------------
 class ISTaskViewForm : public ISInterfaceForm
 {
@@ -21,6 +22,12 @@ private:
 	void Reopen();
 
 private:
+	void LoadLinks();
+	void AddLink();
+	void OpenLink();
+	void DeleteLink();
+
+private:
 	void LoadComments();
 	QWidget* CreateCommentWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime);
 	void AddComment();
@@ -30,6 +37,8 @@ private:
 private:
 	QHBoxLayout *LayoutHorizontal;
 	QVBoxLayout *LayoutLeft;
+	QGroupBox *GroupBoxLinkTask;
+	std::vector<ISLabelLink *> VectorLinks;
 	QGroupBox *GroupBoxComments;
 	QVBoxLayout *LayoutComments;
 	ISScrollArea *ScrollAreaComments;

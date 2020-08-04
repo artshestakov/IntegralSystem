@@ -8,7 +8,6 @@
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISInputDialog.h"
-#include "ISLabels.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
@@ -25,6 +24,19 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _taskstatus ON tsst_id = task_status "
 									   "LEFT JOIN _taskpriority ON tspr_id = task_priority "
 									   "WHERE task_id = :TaskID");
+//-----------------------------------------------------------------------------
+static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, task_id, task_name, task_description, userfullname(tlnk_user), tlnk_creationdate "
+									   "FROM _tasklink "
+									   "LEFT JOIN _task ON tlnk_link = task_id "
+									   "WHERE NOT tlnk_isdeleted "
+									   "AND tlnk_task = :TaskID "
+									   "ORDER BY tlnk_id");
+//-----------------------------------------------------------------------------
+static QString QI_LINK = PREPARE_QUERY("INSERT INTO _tasklink(tlnk_task, tlnk_link) "
+									   "VALUES(:CurrentTaskID, :LinkTaskID)");
+//-----------------------------------------------------------------------------
+static QString QD_LINK = PREPARE_QUERY("DELETE FROM _tasklink "
+									   "WHERE tlnk_id = :LinkID");
 //-----------------------------------------------------------------------------
 static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "tcom_id, "
@@ -80,6 +92,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->setFlat(true);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::AddComment);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::AddLink);
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen);
 	LayoutTitle->addWidget(ButtonMenu);
@@ -122,9 +135,10 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	GroupBoxFiles->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxFiles);
 
-	QGroupBox *GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
+	GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
 	GroupBoxLinkTask->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxLinkTask);
+	LoadLinks();
 
 	GroupBoxComments = new QGroupBox(LANG("Task.Comments").arg(0), this);
 	GroupBoxComments->setLayout(new QVBoxLayout());
@@ -195,6 +209,106 @@ void ISTaskViewForm::Reopen()
 {
 	ISGui::ShowTaskViewForm(TaskID);
 	close();
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::LoadLinks()
+{
+	while (!VectorLinks.empty())
+	{
+		delete ISAlgorithm::VectorTakeBack(VectorLinks);
+	}
+
+	ISQuery qSelectLink(QS_LINK);
+	qSelectLink.BindValue(":TaskID", TaskID);
+	if (qSelectLink.Execute())
+	{
+		while (qSelectLink.Next())
+		{
+			int LinkID = qSelectLink.ReadColumn("tlnk_id").toInt();
+			int LinkTaskID = qSelectLink.ReadColumn("task_id").toInt();
+			QString LinkTaskName = qSelectLink.ReadColumn("task_name").toString();
+			QString LinkTaskDescription = qSelectLink.ReadColumn("task_description").toString();
+			QString LinkUser = qSelectLink.ReadColumn("userfullname").toString();
+			QString LinkCreationDate = qSelectLink.ReadColumn("tlnk_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+			
+			ISLabelLink *LabelLink = new ISLabelLink(QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName), GroupBoxLinkTask);
+			LabelLink->setProperty("TaskID", LinkTaskID);
+			LabelLink->setProperty("LinkID", LinkID);
+			LabelLink->setToolTip(LANG("Task.LinkToolTip").arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
+			LabelLink->setWordWrap(true);
+			LabelLink->setContextMenuPolicy(Qt::ActionsContextMenu);
+			connect(LabelLink, &ISLabelLink::Clicked, this, &ISTaskViewForm::OpenLink);
+			GroupBoxLinkTask->layout()->addWidget(LabelLink);
+			VectorLinks.push_back(LabelLink);
+
+			QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), LabelLink);
+			connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::DeleteLink);
+			LabelLink->addAction(ActionDelete);
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadTaskLink"), qSelectLink.GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::AddLink()
+{
+	int LinkTaskID = ISGui::SelectObject("_Task");
+	if (LinkTaskID)
+	{
+		if (LinkTaskID == TaskID)
+		{
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskLinkToByMyself"));
+		}
+		else
+		{
+			//Проверяем, есть ли уже связь с выбранной задачей
+			for (ISLabelLink *LabelLink : VectorLinks)
+			{
+				if (LabelLink->property("TaskID").toInt() == LinkTaskID)
+				{
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskLinkAlreadyExist"));
+					return;
+				}
+			}
+
+			ISQuery qInsertLink(QI_LINK);
+			qInsertLink.BindValue(":CurrentTaskID", TaskID);
+			qInsertLink.BindValue(":LinkTaskID", LinkTaskID);
+			if (qInsertLink.Execute())
+			{
+				LoadLinks();
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertTaskLink"));
+			}
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::OpenLink()
+{
+	ISGui::ShowTaskViewForm(sender()->property("TaskID").toInt());
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::DeleteLink()
+{
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskLink")))
+	{
+		ISQuery qDeleteLink(QD_LINK);
+		qDeleteLink.BindValue(":LinkID", sender()->parent()->property("LinkID"));
+		if (qDeleteLink.Execute())
+		{
+			//Если вызывать напрямую обновление списка связей, то происходит падение. Причина неизвестна.
+			QTimer::singleShot(10, this, &ISTaskViewForm::LoadLinks);
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteTaskLink"), qDeleteLink.GetErrorString());
+		}
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LoadComments()
