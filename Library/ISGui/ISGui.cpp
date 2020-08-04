@@ -482,15 +482,10 @@ ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::Fie
 //-----------------------------------------------------------------------------
 int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 {
-	int SelectedObjectID = 0;
 	SetWaitGlobalCursor(true);
 	ISSelectDialogForm SelectDialogForm(ISNamespace::SLM_Single, TableName, SelectObjectID);
 	SetWaitGlobalCursor(false);
-	if (SelectDialogForm.Exec())
-	{
-		SelectedObjectID = SelectDialogForm.GetSelectedObject();
-	}
-	return SelectedObjectID;
+	return SelectDialogForm.Exec() ? SelectDialogForm.GetSelectedObject() : 0;
 }
 //-----------------------------------------------------------------------------
 ISVectorInt ISGui::SelectObjects(const QString &TableName)

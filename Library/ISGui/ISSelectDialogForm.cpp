@@ -19,19 +19,12 @@ ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, c
 	connect(SelectListForm, &ISSelectListForm::Select, this, &ISSelectDialogForm::Selected);
 	GetMainLayout()->addWidget(SelectListForm);
 
-	if (SelectObjectID)
+	if (SelectObjectID > 0)
 	{
 		SelectListForm->SetSelectObjectAfterUpdate(SelectObjectID);
 	}
 
-	if (SelectMode == ISNamespace::SLM_Single)
-	{
-		LabelInfo->setText(LANG("SelectDialog.Title.Single") + ':');
-	}
-	else if (SelectMode == ISNamespace::SLM_Multi)
-	{
-		LabelInfo->setText(LANG("SelectDialog.Title.Multi") + ':');
-	}
+	LabelInfo->setText(LANG(SelectMode == ISNamespace::SLM_Single ? "SelectDialog.Title.Single" : "SelectDialog.Title.Multi") + ':');
 }
 //-----------------------------------------------------------------------------
 ISSelectDialogForm::~ISSelectDialogForm()
