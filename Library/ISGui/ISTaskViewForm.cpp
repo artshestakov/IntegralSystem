@@ -328,7 +328,8 @@ void ISTaskViewForm::EditComment()
 		qUpdateComment.BindValue(":CommentID", sender()->property("CommentID"));
 		if (qUpdateComment.Execute())
 		{
-			LoadComments();
+			//Если вызывать напрямую обновление списка комментариев, то происходит падение. Причина неизвестна.
+			QTimer::singleShot(10, this, &ISTaskViewForm::LoadComments);
 		}
 		else
 		{
@@ -345,7 +346,8 @@ void ISTaskViewForm::DeleteComment()
 		qDeleteComment.BindValue(":CommentID", sender()->property("CommentID"));
 		if (qDeleteComment.Execute())
 		{
-			LoadComments();
+			//Если вызывать напрямую обновление списка комментариев, то происходит падение. Причина неизвестна.
+			QTimer::singleShot(10, this, &ISTaskViewForm::LoadComments);
 		}
 		else
 		{
