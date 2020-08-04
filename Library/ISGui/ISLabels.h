@@ -18,7 +18,7 @@ public:
 	virtual ~ISQLabel();
 
 protected:
-	void mousePressEvent(QMouseEvent *MouseEvent);
+	void mouseReleaseEvent(QMouseEvent *MouseEvent);
 	void mouseDoubleClickEvent(QMouseEvent *MouseEvent);
 };
 //-----------------------------------------------------------------------------

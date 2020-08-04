@@ -21,9 +21,9 @@ ISQLabel::~ISQLabel()
 
 }
 //-----------------------------------------------------------------------------
-void ISQLabel::mousePressEvent(QMouseEvent *MouseEvent)
+void ISQLabel::mouseReleaseEvent(QMouseEvent *MouseEvent)
 {
-	QLabel::mousePressEvent(MouseEvent);
+	QLabel::mouseReleaseEvent(MouseEvent);
 	if (MouseEvent->button() == Qt::LeftButton)
 	{
 		emit Clicked();
