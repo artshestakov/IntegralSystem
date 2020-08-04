@@ -55,6 +55,8 @@ private:
 	QString TaskPriority;
 	QString TaskOwner;
 	bool TaskImportant;
+	QString TaskCreationDate;
+	QString TaskUpdationDate;
 };
 //-----------------------------------------------------------------------------
 #endif

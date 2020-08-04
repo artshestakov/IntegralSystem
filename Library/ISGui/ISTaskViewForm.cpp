@@ -18,7 +18,9 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "tsst_name AS task_status, "
 									   "tspr_name AS task_priority, "
 									   "userfullname(task_owner) AS task_owner, "
-									   "task_important "
+									   "task_important, "
+									   "task_creationdate, "
+									   "task_updationdate "
 									   "FROM _task "
 									   "LEFT JOIN _tasktype ON tstp_id = task_type "
 									   "LEFT JOIN _taskstatus ON tsst_id = task_status "
@@ -82,6 +84,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskPriority = qSelect.ReadColumn("task_priority").toString();
 	TaskOwner = qSelect.ReadColumn("task_owner").toString();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
+	TaskCreationDate = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+	TaskUpdationDate = qSelect.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
 
 	setWindowTitle(LANG("Task.ViewFormTitle").arg(TaskID).arg(TaskName));
 
@@ -191,6 +195,25 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutRight->addWidget(LabelPriority);
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
+
+	LayoutRight->addWidget(new QLabel(LANG("Task.Right.CreationDate") + ':', GroupBoxDetails));
+
+	QLabel *LabelCreationDate = new QLabel(TaskCreationDate, GroupBoxDetails);
+	ISGui::SetFontWidgetBold(LabelCreationDate, true);
+	LayoutRight->addWidget(LabelCreationDate);
+
+	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
+
+	if (!TaskUpdationDate.isEmpty())
+	{
+		LayoutRight->addWidget(new QLabel(LANG("Task.Right.UpdationDate") + ':', GroupBoxDetails));
+
+		QLabel *LabelUpdationDate = new QLabel(TaskUpdationDate, GroupBoxDetails);
+		ISGui::SetFontWidgetBold(LabelUpdationDate, true);
+		LayoutRight->addWidget(LabelUpdationDate);
+
+		LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
+	}
 
 	LayoutRight->addStretch();
 }
