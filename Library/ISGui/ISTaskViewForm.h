@@ -21,6 +21,7 @@ protected:
 private:
 	void Reopen();
 	void Rename();
+	void SetDescription();
 
 private:
 	void LoadLinks();
@@ -37,6 +38,7 @@ private:
 
 private:
 	QHBoxLayout *LayoutHorizontal;
+	QLabel *LabelDescription;
 	QVBoxLayout *LayoutLeft;
 	ISLabelSelectionText *LabelName;
 	QGroupBox *GroupBoxLinkTask;
@@ -46,6 +48,7 @@ private:
 	ISScrollArea *ScrollAreaComments;
 	std::vector<QWidget *> VectorComments;
 	QVBoxLayout *LayoutRight;
+	QLabel *LabelUpdationDate;
 
 private:
 	int TaskID;

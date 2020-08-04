@@ -30,7 +30,14 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 static QString QU_NAME = PREPARE_QUERY("UPDATE _task SET "
 									   "task_name = :TaskName, "
 									   "task_updationdate = now() "
-									   "WHERE task_id = :TaskID");
+									   "WHERE task_id = :TaskID "
+									   "RETURNING task_updationdate");
+//-----------------------------------------------------------------------------
+static QString QU_DESCRIPTION = PREPARE_QUERY("UPDATE _task SET "
+											  "task_description = :TaskDescription, "
+											  "task_updationdate = now() "
+											  "WHERE task_id = :TaskID "
+											  "RETURNING task_updationdate");
 //-----------------------------------------------------------------------------
 static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, task_id, task_name, task_description, userfullname(tlnk_user), tlnk_creationdate "
 									   "FROM _tasklink "
@@ -103,6 +110,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen);
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
+	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::AddComment);
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::AddLink);
@@ -136,9 +144,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	GroupBoxDescription->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxDescription);
 
-	QLabel *LabelDescription = TaskDescription.isEmpty() ?
-		(new QLabel(LANG("Task.Description.Empty"), GroupBoxDescription)) :
-		(new ISLabelSelectionText(TaskDescription, GroupBoxDescription));
+	LabelDescription = new ISLabelSelectionText(TaskDescription.isEmpty() ? LANG("Task.Description.Empty") : TaskDescription, GroupBoxDescription);
 	LabelDescription->setWordWrap(true);
 	GroupBoxDescription->layout()->addWidget(LabelDescription);
 
@@ -211,16 +217,13 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
-	if (!TaskUpdationDate.isEmpty())
-	{
-		LayoutRight->addWidget(new QLabel(LANG("Task.Right.UpdationDate") + ':', GroupBoxDetails));
+	LayoutRight->addWidget(new QLabel(LANG("Task.Right.UpdationDate") + ':', GroupBoxDetails));
 
-		QLabel *LabelUpdationDate = new QLabel(TaskUpdationDate, GroupBoxDetails);
-		ISGui::SetFontWidgetBold(LabelUpdationDate, true);
-		LayoutRight->addWidget(LabelUpdationDate);
+	LabelUpdationDate = new QLabel(TaskUpdationDate.isEmpty() ? LANG("Task.Right.UpdationDate.Empty") : TaskUpdationDate, GroupBoxDetails);
+	ISGui::SetFontWidgetBold(LabelUpdationDate, true);
+	LayoutRight->addWidget(LabelUpdationDate);
 
-		LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
-	}
+	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
 	LayoutRight->addStretch();
 }
@@ -255,14 +258,40 @@ void ISTaskViewForm::Rename()
 		ISQuery qRenameTask(QU_NAME);
 		qRenameTask.BindValue(":TaskName", NewName);
 		qRenameTask.BindValue(":TaskID", TaskID);
-		if (qRenameTask.Execute())
+		if (qRenameTask.ExecuteFirst())
 		{
-			LabelName->setText(QString("#%1: %2").arg(TaskID).arg(NewName));
+			TaskUpdationDate = qRenameTask.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
 			TaskName = NewName;
+
+			LabelName->setText(QString("#%1: %2").arg(TaskID).arg(TaskName));
+			LabelUpdationDate->setText(TaskUpdationDate);
 		}
 		else
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.RenameTask"), qRenameTask.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::SetDescription()
+{
+	QString NewDescription = ISInputDialog::GetText(LANG("Task.SetDescription.Title"), LANG("Task.SetDescription.LabelText"), TaskDescription);
+	if (NewDescription != TaskDescription)
+	{
+		ISQuery qSetDescription(QU_DESCRIPTION);
+		qSetDescription.BindValue(":TaskDescription", NewDescription);
+		qSetDescription.BindValue(":TaskID", TaskID);
+		if (qSetDescription.ExecuteFirst())
+		{
+			TaskUpdationDate = qSetDescription.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+			TaskDescription = NewDescription;
+
+			LabelDescription->setText(TaskDescription.isEmpty() ? LANG("Task.Description.Empty") : TaskDescription);
+			LabelUpdationDate->setText(TaskUpdationDate);
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.SetDescriptionTask"), qSetDescription.GetErrorString());
 		}
 	}
 }
