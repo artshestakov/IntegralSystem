@@ -99,7 +99,7 @@ ISLabelSelectionText::~ISLabelSelectionText()
 void ISLabelSelectionText::mouseReleaseEvent(QMouseEvent *MouseEvent)
 {
 	ISQLabel::mouseReleaseEvent(MouseEvent);
-	if (hasSelectedText()) //Если текст был выбран - вызываем меню для предложения копирования
+	if (hasSelectedText() && MouseEvent->button() == Qt::LeftButton) //Если текст был выбран - вызываем меню для предложения копирования
 	{
 		QMenu Menu;
 

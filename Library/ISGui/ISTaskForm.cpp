@@ -18,6 +18,7 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 	ActionGroup(new QActionGroup(this))
 {
 	MainLayout = new QVBoxLayout();
+	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	setLayout(MainLayout);
 
 	ToolBar = new QToolBar(this);
