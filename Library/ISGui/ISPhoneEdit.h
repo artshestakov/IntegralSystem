@@ -11,7 +11,7 @@ signals:
 	void Called();
 
 public:
-	Q_INVOKABLE ISPhoneEdit(QWidget *parent);
+	Q_INVOKABLE ISPhoneEdit(QWidget *parent = 0);
 	virtual ~ISPhoneEdit();
 
 protected:

@@ -8,7 +8,7 @@ class ISCheckEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISCheckEdit(QWidget *parent);
+	Q_INVOKABLE ISCheckEdit(QWidget *parent = 0);
 	virtual ~ISCheckEdit();
 
 	void SetValue(const QVariant &value) override;

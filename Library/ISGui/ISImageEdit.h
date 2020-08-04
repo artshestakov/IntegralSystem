@@ -9,7 +9,7 @@ class ISImageEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISImageEdit(QWidget *parent);
+	Q_INVOKABLE ISImageEdit(QWidget *parent = 0);
 	virtual ~ISImageEdit();
 
 	virtual void SetValue(const QVariant &value) override;

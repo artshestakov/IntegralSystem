@@ -8,7 +8,7 @@ class ISSexEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISSexEdit(QWidget *parent);
+	Q_INVOKABLE ISSexEdit(QWidget *parent = 0);
 	virtual ~ISSexEdit();
 
 	void SetValue(const QVariant &value) override;

@@ -12,7 +12,7 @@ signals:
 	void EnterClicked();
 
 public:
-	Q_INVOKABLE ISLineEdit(QWidget *parent);
+	Q_INVOKABLE ISLineEdit(QWidget *parent = 0);
 	virtual ~ISLineEdit();
 
 	virtual void SetValue(const QVariant &value) override;

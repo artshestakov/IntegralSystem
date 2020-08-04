@@ -8,7 +8,7 @@ class ISGUI_EXPORT ISDateEdit : public ISDateTimeEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDateEdit(QWidget *parent);
+	Q_INVOKABLE ISDateEdit(QWidget *parent = 0);
 	virtual ~ISDateEdit();
 
 	void SetValue(const QVariant &value) override;

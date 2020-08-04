@@ -10,7 +10,7 @@ class ISPhoneBaseEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISPhoneBaseEdit(QWidget *parent);
+	Q_INVOKABLE ISPhoneBaseEdit(QWidget *parent = 0);
 	virtual ~ISPhoneBaseEdit();
 
 	void SetValue(const QVariant &value) override;

@@ -8,7 +8,7 @@ class ISComboEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboEdit(QWidget *parent);
+	Q_INVOKABLE ISComboEdit(QWidget *parent = 0);
 	virtual ~ISComboEdit();
 
 	void SetValue(const QVariant &value) override;

@@ -8,7 +8,7 @@ class ISRadioEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISRadioEdit(QWidget *parent);
+	Q_INVOKABLE ISRadioEdit(QWidget *parent = 0);
 	virtual ~ISRadioEdit();
 
 	void SetValue(const QVariant &value) override;

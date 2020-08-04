@@ -7,7 +7,7 @@ class ISIntegerEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISIntegerEdit(QWidget *parent);
+	Q_INVOKABLE ISIntegerEdit(QWidget *parent = 0);
 	virtual ~ISIntegerEdit();
 
 	void SetValue(const QVariant &value) override;

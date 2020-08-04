@@ -16,7 +16,7 @@ class ISBIKEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISBIKEdit(QWidget *parent);
+	Q_INVOKABLE ISBIKEdit(QWidget *parent = 0);
 	virtual ~ISBIKEdit();
 
 	bool IsValid() const override;
@@ -29,7 +29,7 @@ class ISKPPEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISKPPEdit(QWidget *parent);
+	Q_INVOKABLE ISKPPEdit(QWidget *parent = 0);
 	virtual ~ISKPPEdit();
 
 	bool IsValid() const override;
@@ -42,7 +42,7 @@ class ISOGRNEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISOGRNEdit(QWidget *parent);
+	Q_INVOKABLE ISOGRNEdit(QWidget *parent = 0);
 	virtual ~ISOGRNEdit();
 
 	bool IsValid() const override;
@@ -55,7 +55,7 @@ class ISOKPOEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISOKPOEdit(QWidget *parent);
+	Q_INVOKABLE ISOKPOEdit(QWidget *parent = 0);
 	virtual ~ISOKPOEdit();
 
 	bool IsValid() const override;
@@ -89,7 +89,7 @@ class ISVINEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISVINEdit(QWidget *parent);
+	Q_INVOKABLE ISVINEdit(QWidget *parent = 0);
 	~ISVINEdit();
 
 	bool IsValid() const override;
@@ -102,7 +102,7 @@ class ISBirthdayEdit : public ISDateEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISBirthdayEdit(QWidget *parent);
+	Q_INVOKABLE ISBirthdayEdit(QWidget *parent = 0);
 	virtual ~ISBirthdayEdit();
 
 	void SetValue(const QVariant &value) override;
@@ -120,11 +120,11 @@ class ISINNEdit : public ISLineEdit
 {
 	Q_OBJECT
 
-		signals :
+signals:
 	void SearchFromINN();
 
 public:
-	Q_INVOKABLE ISINNEdit(QWidget *parent);
+	Q_INVOKABLE ISINNEdit(QWidget *parent = 0);
 	virtual ~ISINNEdit();
 
 	bool IsValid() const override;
@@ -141,7 +141,7 @@ class ISWeekDayEdit : public ISComboEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISWeekDayEdit(QWidget *parent);
+	Q_INVOKABLE ISWeekDayEdit(QWidget *parent = 0);
 	virtual ~ISWeekDayEdit();
 };
 //-----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ class ISPathEditDir : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISPathEditDir(QWidget *parent);
+	Q_INVOKABLE ISPathEditDir(QWidget *parent = 0);
 	virtual ~ISPathEditDir();
 
 	void SetValue(const QVariant &value) override;
@@ -173,7 +173,7 @@ class ISPathEditFile : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISPathEditFile(QWidget *parent);
+	Q_INVOKABLE ISPathEditFile(QWidget *parent = 0);
 	virtual ~ISPathEditFile();
 
 	void SetValue(const QVariant &value) override;
@@ -193,7 +193,7 @@ class ISPasswordEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISPasswordEdit(QWidget *parent);
+	Q_INVOKABLE ISPasswordEdit(QWidget *parent = 0);
 	virtual ~ISPasswordEdit();
 
 	void SetVisibleGenerate(bool Visible); //Показывать/непоказывать кнопку генерации пароля
@@ -233,7 +233,7 @@ class ISYearEdit : public ISIntegerEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISYearEdit(QWidget *parent);
+	Q_INVOKABLE ISYearEdit(QWidget *parent = 0);
 	virtual ~ISYearEdit();
 
 	void SelectCurrentYear();
@@ -246,7 +246,7 @@ class ISMonthEdit : public ISComboEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISMonthEdit(QWidget *parent);
+	Q_INVOKABLE ISMonthEdit(QWidget *parent = 0);
 	virtual ~ISMonthEdit();
 
 	void SelectCurrentMonth();
@@ -259,7 +259,7 @@ class ISEMailEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISEMailEdit(QWidget *parent);
+	Q_INVOKABLE ISEMailEdit(QWidget *parent = 0);
 	virtual ~ISEMailEdit();
 
 private:
@@ -273,7 +273,7 @@ class ISDivisionCodeEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDivisionCodeEdit(QWidget *parent);
+	Q_INVOKABLE ISDivisionCodeEdit(QWidget *parent = 0);
 	virtual ~ISDivisionCodeEdit();
 
 	bool IsValid() const override;
@@ -286,7 +286,7 @@ class ISTaskPriorityEdit : public ISRadioEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISTaskPriorityEdit(QWidget *parent);
+	Q_INVOKABLE ISTaskPriorityEdit(QWidget *parent = 0);
 	virtual ~ISTaskPriorityEdit();
 };
 //-----------------------------------------------------------------------------
@@ -313,7 +313,7 @@ class ISTaskImportantEdit : public ISCheckEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISTaskImportantEdit(QWidget *parent);
+	Q_INVOKABLE ISTaskImportantEdit(QWidget *parent = 0);
 	virtual ~ISTaskImportantEdit();
 
 private:

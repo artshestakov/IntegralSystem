@@ -8,7 +8,7 @@ class ISLoginEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISLoginEdit(QWidget *parent);
+	Q_INVOKABLE ISLoginEdit(QWidget *parent = 0);
 	virtual ~ISLoginEdit();
 
 	bool IsValid() const override;

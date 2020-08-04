@@ -8,7 +8,7 @@ class ISColorEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISColorEdit(QWidget *parent);
+	Q_INVOKABLE ISColorEdit(QWidget *parent = 0);
 	virtual ~ISColorEdit();
 
 	void SetValue(const QVariant &value) override;

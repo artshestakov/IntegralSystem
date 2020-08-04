@@ -8,7 +8,7 @@ class ISPassportEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISPassportEdit(QWidget *parent);
+	Q_INVOKABLE ISPassportEdit(QWidget *parent = 0);
 	virtual ~ISPassportEdit();
 
 	void SetValue(const QVariant &value);

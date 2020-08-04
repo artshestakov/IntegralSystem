@@ -9,7 +9,7 @@ class ISCheckViewParagraph : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISCheckViewParagraph(QWidget *parent);
+	Q_INVOKABLE ISCheckViewParagraph(QWidget *parent = 0);
 	virtual ~ISCheckViewParagraph();
 
 	void SetValue(const QVariant &value) override;
@@ -27,7 +27,7 @@ class ISComboSettingEdit : public ISComboEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboSettingEdit(QWidget *parent);
+	Q_INVOKABLE ISComboSettingEdit(QWidget *parent = 0);
 	virtual ~ISComboSettingEdit();
 };
 //-----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ class ISComboCalendarNoteType : public ISComboSettingEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboCalendarNoteType(QWidget *parent);
+	Q_INVOKABLE ISComboCalendarNoteType(QWidget *parent = 0);
 	virtual ~ISComboCalendarNoteType();
 };
 //-----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ class ISComboIncomingFormPosition : public ISComboSettingEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboIncomingFormPosition(QWidget *parent);
+	Q_INVOKABLE ISComboIncomingFormPosition(QWidget *parent = 0);
 	virtual ~ISComboIncomingFormPosition();
 };
 //-----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class ISComboStartedParagraph : public ISComboSettingEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboStartedParagraph(QWidget *parent);
+	Q_INVOKABLE ISComboStartedParagraph(QWidget *parent = 0);
 	virtual ~ISComboStartedParagraph();
 };
 //-----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ class ISComboTabBarSelectionBehavior : public ISComboSettingEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboTabBarSelectionBehavior(QWidget *parent);
+	Q_INVOKABLE ISComboTabBarSelectionBehavior(QWidget *parent = 0);
 	virtual ~ISComboTabBarSelectionBehavior();
 };
 //-----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ class ISComboTableDateFormat : public ISComboSettingEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboTableDateFormat(QWidget *parent);
+	Q_INVOKABLE ISComboTableDateFormat(QWidget *parent = 0);
 	virtual ~ISComboTableDateFormat();
 };
 //-----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ class ISComboTableTimeFormat : public ISComboSettingEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboTableTimeFormat(QWidget *parent);
+	Q_INVOKABLE ISComboTableTimeFormat(QWidget *parent = 0);
 	virtual ~ISComboTableTimeFormat();
 };
 //-----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ class ISComboTableDoubleClickEvent : public ISComboSettingEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboTableDoubleClickEvent(QWidget *parent);
+	Q_INVOKABLE ISComboTableDoubleClickEvent(QWidget *parent = 0);
 	virtual ~ISComboTableDoubleClickEvent();
 };
 //-----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ class ISComboTableSelectionBehavior : public ISComboSettingEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboTableSelectionBehavior(QWidget *parent);
+	Q_INVOKABLE ISComboTableSelectionBehavior(QWidget *parent = 0);
 	virtual ~ISComboTableSelectionBehavior();
 };
 //-----------------------------------------------------------------------------

@@ -9,7 +9,7 @@ class ISVolumeEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISVolumeEdit(QWidget *parent);
+	Q_INVOKABLE ISVolumeEdit(QWidget *parent = 0);
 	virtual ~ISVolumeEdit();
 
 	void SetValue(const QVariant &value) override;

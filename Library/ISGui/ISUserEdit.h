@@ -8,7 +8,7 @@ class ISUserEdit : public ISComboEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISUserEdit(QWidget *parent);
+	Q_INVOKABLE ISUserEdit(QWidget *parent = 0);
 	virtual ~ISUserEdit();
 };
 //-----------------------------------------------------------------------------

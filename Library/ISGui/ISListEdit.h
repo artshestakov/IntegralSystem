@@ -11,7 +11,7 @@ class ISListEdit : public ISFieldEditBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISListEdit(QWidget *parent);
+	Q_INVOKABLE ISListEdit(QWidget *parent = 0);
 	virtual ~ISListEdit();
 
 	void SetValue(const QVariant &value) override; //Приходит идентификатор
