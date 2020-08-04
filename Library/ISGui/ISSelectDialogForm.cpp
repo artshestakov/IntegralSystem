@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------------
 ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID) : ISInterfaceDialogForm()
 {
-	resize(ISDefines::Gui::SIZE_640_480);
 	setWindowTitle(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
@@ -46,6 +45,15 @@ int ISSelectDialogForm::GetSelectedObject() const
 ISVectorInt ISSelectDialogForm::GetSelectedObjects() const
 {
 	return SelectListForm->GetSelectedIDs();
+}
+//-----------------------------------------------------------------------------
+void ISSelectDialogForm::AfterShowEvent()
+{
+	ISInterfaceDialogForm::AfterShowEvent();
+
+	//Изменение размера из конструктора поочему-то не работает, пришлось сделать так
+	resize(1000, 700);
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 }
 //-----------------------------------------------------------------------------
 void ISSelectDialogForm::Selected()

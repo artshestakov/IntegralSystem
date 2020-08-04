@@ -2,9 +2,10 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, const QString &table_name, QWidget *parent) : ISListBaseForm(table_name, parent)
+ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, const QString &table_name, QWidget *parent)
+	: ISListBaseForm(table_name, parent),
+	SelectMode(select_mode)
 {
-	SelectMode = select_mode;
 	GetToolBar()->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	GetTableView()->setContextMenuPolicy(Qt::NoContextMenu);
 
@@ -44,27 +45,13 @@ ISSelectListForm::~ISSelectListForm()
 void ISSelectListForm::SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected)
 {
 	ISListBaseForm::SelectedRowEvent(ItemSelected, ItemDeSelected);
-
+	
 	int SelectedRows = GetTableView()->selectionModel()->selectedRows().count();
-	if (SelectedRows)
-	{
-		ActionSelect->setEnabled(true);
-	}
-	else
-	{
-		ActionSelect->setEnabled(false);
-	}
+	ActionSelect->setEnabled(SelectedRows > 0);
 
 	if (SelectMode == ISNamespace::SLM_Multi)
 	{
-		if (SelectedRows)
-		{
-			ActionSelect->setText(LANG("Select") + " (" + QString::number(SelectedRows) + ')');
-		}
-		else
-		{
-			ActionSelect->setText(LANG("Select"));
-		}
+		ActionSelect->setText(LANG("Select") + SelectedRows > 0 ? " (" + QString::number(SelectedRows) + ')' : QString());
 	}
 }
 //-----------------------------------------------------------------------------

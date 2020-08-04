@@ -17,6 +17,9 @@ public:
 	ISVectorInt GetSelectedObjects() const;
 
 protected:
+	void AfterShowEvent() override;
+
+private:
 	void Selected();
 
 private:
