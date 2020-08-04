@@ -134,6 +134,7 @@
   <Local Name="Message.Error.DeleteTaskLink" Russian="Не удалось удалить связь!"/>
   <Local Name="Message.Error.LoadTaskLink" Russian="Не удалось загрузить список связей!"/>
   <Local Name="Message.Error.RenameTask" Russian="Не удалось переименовать задачу!"/>
+  <Local Name="Message.Error.SetDescriptionTask" Russian="Не удалось изменить описание задачи!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -828,10 +829,14 @@
   <Local Name="Task.Right.Priority" Russian="Приоритет"/>
   <Local Name="Task.Right.CreationDate" Russian="Задача создана"/>
   <Local Name="Task.Right.UpdationDate" Russian="Задача изменена"/>
+  <Local Name="Task.Right.UpdationDate.Empty" Russian="Задача не менялась"/>
   <Local Name="Task.ThisIsImportantTask" Russian="Это важная задача"/>
   <Local Name="Task.ReopenTaskViewForm" Russian="Перечитать задачу"/>
   <Local Name="Task.Rename" Russian="Переименовать задачу"/>
   <Local Name="Task.Rename.LabelText" Russian="Введите новое имя задачи:"/>
+  <Local Name="Task.SetDescription" Russian="Изменить описание"/>
+  <Local Name="Task.SetDescription.Title" Russian="Изменение описания"/>
+  <Local Name="Task.SetDescription.LabelText" Russian="Введите новое описание задачи:"/>
 
   <!--File Dialog-->
   <Local Name="FileDialog.Image.Select.Title" Russian="Выбор изображения"/>
