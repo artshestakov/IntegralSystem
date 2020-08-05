@@ -179,13 +179,22 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ListWidgetFiles->setContextMenuPolicy(Qt::ActionsContextMenu);
 	LayoutFiles->addWidget(ListWidgetFiles);
 
-	QAction *ActionSave = ISControls::CreateActionSave(ListWidgetFiles);
-	connect(ActionSave, &QAction::triggered, this, &ISTaskViewForm::SaveFile);
-	ListWidgetFiles->addAction(ActionSave);
+	QAction *ActionFileSave = ISControls::CreateActionSave(ListWidgetFiles);
+	ActionFileSave->setEnabled(false);
+	connect(ActionFileSave, &QAction::triggered, this, &ISTaskViewForm::SaveFile);
+	ListWidgetFiles->addAction(ActionFileSave);
 
-	QAction *ActionDelete = ISControls::CreateActionDelete(ListWidgetFiles);
-	connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::DeleteFile);
-	ListWidgetFiles->addAction(ActionDelete);
+	QAction *ActionFileDelete = ISControls::CreateActionDelete(ListWidgetFiles);
+	ActionFileDelete->setEnabled(false);
+	connect(ActionFileDelete, &QAction::triggered, this, &ISTaskViewForm::DeleteFile);
+	ListWidgetFiles->addAction(ActionFileDelete);
+	
+	connect(ListWidgetFiles, &ISListWidget::itemSelectionChanged, [=]
+	{
+		bool is_enabled = ListWidgetFiles->currentItem();
+		ActionFileSave->setEnabled(is_enabled);
+		ActionFileDelete->setEnabled(is_enabled);
+	});
 
 	LoadFiles();
 
@@ -427,24 +436,27 @@ void ISTaskViewForm::SaveFile()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskFileSave")))
 	{
 		QString FilePath = ISFileDialog::GetSaveFileName(this, Extension.isEmpty() ? QString() : LANG("File.Filter.File").arg(Extension), Name);
-		QFile File(FilePath);
-		if (File.open(QIODevice::WriteOnly))
+		if (!FilePath.isEmpty())
 		{
-			ISQuery qSelectFileData(QS_FILE_DATA);
-			qSelectFileData.BindValue(":TaskFileID", ID);
-			if (qSelectFileData.ExecuteFirst())
+			QFile File(FilePath);
+			if (File.open(QIODevice::WriteOnly))
 			{
-				File.write(qSelectFileData.ReadColumn("tfls_data").toByteArray());
+				ISQuery qSelectFileData(QS_FILE_DATA);
+				qSelectFileData.BindValue(":TaskFileID", ID);
+				if (qSelectFileData.ExecuteFirst())
+				{
+					File.write(qSelectFileData.ReadColumn("tfls_data").toByteArray());
+				}
+				else
+				{
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectTaskFileData"), qSelectFileData.GetErrorString());
+				}
+				File.close();
 			}
 			else
 			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectTaskFileData"), qSelectFileData.GetErrorString());
+				ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile"), File.errorString());
 			}
-			File.close();
-		}
-		else
-		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile"), File.errorString());
 		}
 	}
 }
