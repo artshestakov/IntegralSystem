@@ -260,10 +260,10 @@
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
   <Local Name="Message.Question.DeleteInsetedFiles" Russian="Удалить добавленные файлы?"/>
   <Local Name="Message.Question.InstallPasswordToStorageFile" Russian="Установить пароль на файл &quot;%1&quot;?"/>
-  <Local Name="Message.Question.DeleteTaskComment" Russian="Удалить комментарий?"/>
-  <Local Name="Message.Question.DeleteTaskLink" Russian="Удалить связь?"/>
+  <Local Name="Message.Question.DeleteTaskComment" Russian="Удалить комментарий? Это действие нельзя отменить."/>
+  <Local Name="Message.Question.DeleteTaskLink" Russian="Удалить связь? Это действие нельзя отменить."/>
   <Local Name="Message.Question.TaskFileSave" Russian="Сохранить файл?"/>
-  <Local Name="Message.Question.DeleteTaskFile" Russian="Удалить файл?"/>
+  <Local Name="Message.Question.DeleteTaskFile" Russian="Удалить файл? Это действие нельзя отменить."/>
   
   <!--Carat error-->
   <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>
@@ -810,6 +810,7 @@
   <Local Name="Task.Priority.Tall.ToolTip" Russian="Аварийная задача (выполняется как можно быстрее, при ее появлении текущая задача более низкого уровня откладывается и начинается выполнение аварийной задачи)"/>
   <Local Name="Task.CreateTask" Russian="Создать задачу"/>
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
+  <Local Name="Task.SearchByNumber.ToolTip" Russian="Поиск по номеру задачи"/>
   <Local Name="Task.Search" Russian="Поиск задачи"/>
   <Local Name="Task.InputTaskNumber" Russian="Введите номер задачи"/>
   <Local Name="Task.ViewFormTitle" Russian="Задача #%1: %2"/>

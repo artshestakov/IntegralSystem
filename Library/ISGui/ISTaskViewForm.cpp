@@ -658,7 +658,7 @@ QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserP
 	connect(LabelDelete, &ISLabelLink::Clicked, this, &ISTaskViewForm::DeleteComment);
 	LayoutBottom->addWidget(LabelDelete);
 
-	LayoutBottom->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V3), WidgetBottom));
+	LayoutBottom->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V10), WidgetBottom));
 
 	LayoutBottom->addStretch();
 

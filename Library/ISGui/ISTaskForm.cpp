@@ -35,7 +35,7 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 
 	QAction *ActionSearchByNumber = new QAction(ToolBar);
 	ActionSearchByNumber->setText(LANG("Task.SearchByNumber"));
-	ActionSearchByNumber->setToolTip(LANG("Task.SearchByNumber"));
+	ActionSearchByNumber->setToolTip(LANG("Task.SearchByNumber.ToolTip"));
 	ActionSearchByNumber->setIcon(BUFFER_ICONS("Search"));
 	connect(ActionSearchByNumber, &QAction::triggered, this, &ISTaskForm::SearchByNumber);
 	ToolBar->addAction(ActionSearchByNumber);
