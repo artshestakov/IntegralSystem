@@ -138,6 +138,7 @@
   <Local Name="Message.Error.InsertTaskFile" Russian="При добавлении файла &quot;%1&quot; произошла ошибка!"/>
   <Local Name="Message.Error.SelectTaskFileData" Russian="Не удалось получить данные файла!"/>
   <Local Name="Message.Error.DeleteTaskFile" Russian="Не удалось удалить файл!"/>
+  <Local Name="Message.Error.TaskSearchByText" Russian="При поиске возникла ошибка!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -811,6 +812,10 @@
   <Local Name="Task.CreateTask" Russian="Создать задачу"/>
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
   <Local Name="Task.SearchByNumber.ToolTip" Russian="Поиск по номеру задачи"/>
+  <Local Name="Task.SearchByText" Russian="Поиск по тексту"/>
+  <Local Name="Task.SearchByText.Title" Russian="Поиск задач по тексту"/>
+  <Local Name="Task.SearchByText.PlaceholderText" Russian="Введите поисковое значение"/>
+  <Local Name="Task.SearchByText.ResultLabel" Russian="Найдено: %1"/>
   <Local Name="Task.Search" Russian="Поиск задачи"/>
   <Local Name="Task.InputTaskNumber" Russian="Введите номер задачи"/>
   <Local Name="Task.ViewFormTitle" Russian="Задача #%1: %2"/>

@@ -675,6 +675,9 @@
     <ClCompile Include="ISTaskListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISTaskSearchByTextForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -1173,6 +1176,9 @@
       <Filter>Fields\Base</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskSearchByTextForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>

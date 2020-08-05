@@ -343,6 +343,7 @@
     <ClCompile Include="ISTaskForm.cpp" />
     <ClCompile Include="ISTaskListForm.cpp" />
     <ClCompile Include="ISTaskObjectForm.cpp" />
+    <ClCompile Include="ISTaskSearchByTextForm.cpp" />
     <ClCompile Include="ISTaskViewForm.cpp" />
     <ClCompile Include="ISTelephonyForm.cpp" />
     <ClCompile Include="ISTelephonySummary.cpp" />
@@ -540,6 +541,7 @@
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISSexEdit.h" />
     <QtMoc Include="ISTaskListForm.h" />
+    <QtMoc Include="ISTaskSearchByTextForm.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISTextEdit.h" />
     <QtMoc Include="ISTimeEdit.h" />

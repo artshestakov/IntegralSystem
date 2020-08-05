@@ -14,13 +14,14 @@ public:
 
 	void Invoke() override;
 
-protected:
+private:
 	void CreateTempWidget();
 	QAction* CreateActionFilter(const QString &Text, const QIcon &Icon, const QString &ListFormName);
 	void FilterClicked();
 
 	void CreateTask();
 	void SearchByNumber();
+	void SearchByText();
 
 private:
 	QVBoxLayout *MainLayout;

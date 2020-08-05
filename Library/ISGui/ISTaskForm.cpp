@@ -12,6 +12,7 @@
 #include "ISInputDialog.h"
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
+#include "ISTaskSearchByTextForm.h"
 //-----------------------------------------------------------------------------
 ISTaskForm::ISTaskForm(QWidget *parent)
 	: ISParagraphBaseForm(parent),
@@ -25,20 +26,19 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	MainLayout->addWidget(ToolBar);
 
-	QAction *ActionCreate = new QAction(ToolBar);
-	ActionCreate->setText(LANG("Task.CreateTask"));
-	ActionCreate->setToolTip(LANG("Task.CreateTask"));
-	ActionCreate->setIcon(BUFFER_ICONS("Add"));
+	QAction *ActionCreate = new QAction(BUFFER_ICONS("Add"), LANG("Task.CreateTask"), ToolBar);
 	connect(ActionCreate, &QAction::triggered, this, &ISTaskForm::CreateTask);
 	ToolBar->addAction(ActionCreate);
 	ISGui::SetFontWidgetUnderline(ToolBar->widgetForAction(ActionCreate), true);
 
-	QAction *ActionSearchByNumber = new QAction(ToolBar);
-	ActionSearchByNumber->setText(LANG("Task.SearchByNumber"));
+	QAction *ActionSearchByNumber = new QAction(BUFFER_ICONS("Search"), LANG("Task.SearchByNumber"), ToolBar);
 	ActionSearchByNumber->setToolTip(LANG("Task.SearchByNumber.ToolTip"));
-	ActionSearchByNumber->setIcon(BUFFER_ICONS("Search"));
 	connect(ActionSearchByNumber, &QAction::triggered, this, &ISTaskForm::SearchByNumber);
 	ToolBar->addAction(ActionSearchByNumber);
+
+	QAction *ActionSearchByText = new QAction(BUFFER_ICONS("Search"), LANG("Task.SearchByText"), ToolBar);
+	connect(ActionSearchByText, &QAction::triggered, this, &ISTaskForm::SearchByText);
+	ToolBar->addAction(ActionSearchByText);
 
 	ToolBar->addSeparator();
 
@@ -165,5 +165,10 @@ void ISTaskForm::SearchByNumber()
 			break;
 		}
 	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskForm::SearchByText()
+{
+	(new ISTaskSearchByTextForm())->show();
 }
 //-----------------------------------------------------------------------------
