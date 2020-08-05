@@ -135,6 +135,9 @@
   <Local Name="Message.Error.LoadTaskLink" Russian="Не удалось загрузить список связей!"/>
   <Local Name="Message.Error.RenameTask" Russian="Не удалось переименовать задачу!"/>
   <Local Name="Message.Error.SetDescriptionTask" Russian="Не удалось изменить описание задачи!"/>
+  <Local Name="Message.Error.InsertTaskFile" Russian="При добавлении файла &quot;%1&quot; произошла ошибка!"/>
+  <Local Name="Message.Error.SelectTaskFileData" Russian="Не удалось получить данные файла!"/>
+  <Local Name="Message.Error.DeleteTaskFile" Russian="Не удалось удалить файл!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -259,6 +262,8 @@
   <Local Name="Message.Question.InstallPasswordToStorageFile" Russian="Установить пароль на файл &quot;%1&quot;?"/>
   <Local Name="Message.Question.DeleteTaskComment" Russian="Удалить комментарий?"/>
   <Local Name="Message.Question.DeleteTaskLink" Russian="Удалить связь?"/>
+  <Local Name="Message.Question.TaskFileSave" Russian="Сохранить файл?"/>
+  <Local Name="Message.Question.DeleteTaskFile" Russian="Удалить файл?"/>
   
   <!--Carat error-->
   <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>
@@ -814,9 +819,12 @@
   <Local Name="Task.LinkTask" Russian="Связанные задачи"/>
   <Local Name="Task.Comments" Russian="Комментарии (%1)"/>
   <Local Name="Task.Comment" Russian="Комментарий"/>
-  <Local Name="Task.InputComment" Russian="Введите комментарий"/>
-  <Local Name="Task.AddComment" Russian="Добавить комментарий"/>
+  <Local Name="Task.AddFile" Russian="Добавить файл"/>
+  <Local Name="Task.AddFile.LabelText" Russian="Добавление файла: %1"/>
+  <Local Name="Task.FileToolTip" Russian="Добавил:&#10;%1&#10;&#10;Дата добавления:&#10;%2&#10;&#10;Размер файла:&#10;%3"/>
   <Local Name="Task.AddLink" Russian="Добавить связанную задачу"/>
+  <Local Name="Task.AddComment" Russian="Добавить комментарий"/>
+  <Local Name="Task.InputComment" Russian="Введите комментарий"/>
   <Local Name="Task.LinkToolTip" Russian="Описание задачи:&#10;%1&#10;&#10;Связал:&#10;%2&#10;&#10;Связь создана:&#10;%3"/>
   <Local Name="Task.CommentUserOwner" Russian="%1 (автор)"/>
   <Local Name="Task.Details" Russian="Подробности"/>

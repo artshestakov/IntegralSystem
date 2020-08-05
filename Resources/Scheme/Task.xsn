@@ -103,13 +103,16 @@
     <Fields>
       <Field UID="{F783C6B9-FF78-45B4-9937-23A3790D1A45}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{328A0009-8165-4728-9979-39E93701EC78}" Name="Name" Type="String" LabelName="Имя файла" LocalListName="Имя файла" NotNull="true"/>
+      <Field UID="{03FEC638-031C-439E-8A4C-2C811274E178}" Name="Extension" Type="String" LabelName="Расширение файла" LocalListName="Расширение файла"/>
       <Field UID="{AC4F0DB9-2FF1-41F7-A9E0-85D3891E6374}" Name="Data" Type="ByteArray" LabelName="Данные файла" LocalListName="Данные файла" NotNull="true"/>
       <Field UID="{8C778428-EC0E-400C-8C48-CE9A939EE5E3}" Name="Size" Type="BigInt" LabelName="Размер файла" LocalListName="Размер файла" NotNull="true"/>
+      <Field UID="{3C0B727A-AF36-4A31-BB1A-AFC640F6D850}" Name="Icon" Type="ByteArray" LabelName="Иконка файла" LocalListName="Иконка файла"/>
       <Field UID="{415ACAB3-731C-4BD5-9DCF-588E8EE6D6AA}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Добавил" LocalListName="Добавил" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Task"/>
       <Index Field="Name"/>
+      <Index Field="Extension"/>
       <Index Field="Size"/>
       <Index Field="User"/>
     </Indexes>

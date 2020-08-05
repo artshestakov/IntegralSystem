@@ -1104,7 +1104,7 @@ void ISListBaseForm::Export()
 
 	ISProgressForm ProgressForm(SqlModel->rowCount(), LANG("Export.Process.Prepare"), this);
 	connect(&ProgressForm, &ISProgressForm::canceled, ExportWorker, &ISExportWorker::Cancel);
-	connect(ExportWorker, &ISExportWorker::ExportedRow, &ProgressForm, &ISProgressForm::IncrementValue);
+	connect(ExportWorker, &ISExportWorker::ExportedRow, &ProgressForm, static_cast<void(ISProgressForm::*)(void)>(&ISProgressForm::IncrementValue));
 	//connect(ExportWorker, &ISExportWorker::Message, &ProgressForm, &ISProgressForm::SetText);
 	ProgressForm.show();
 

@@ -30,6 +30,15 @@ ISProgressForm::~ISProgressForm()
 
 }
 //-----------------------------------------------------------------------------
+void ISProgressForm::IncrementValue(const QString &LabelText)
+{
+	if (!LabelText.isEmpty())
+	{
+		setLabelText(LabelText);
+	}
+	IncrementValue();
+}
+//-----------------------------------------------------------------------------
 void ISProgressForm::IncrementValue()
 {
 	setValue(++Value);

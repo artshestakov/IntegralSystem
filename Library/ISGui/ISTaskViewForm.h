@@ -6,6 +6,7 @@
 #include "ISInterfaceForm.h"
 #include "ISScrollArea.h"
 #include "ISLabels.h"
+#include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISTaskViewForm : public ISInterfaceForm
 {
@@ -22,6 +23,12 @@ private:
 	void Reopen();
 	void Rename();
 	void SetDescription();
+
+private:
+	void LoadFiles();
+	void AddFile();
+	void SaveFile();
+	void DeleteFile();
 
 private:
 	void LoadLinks();
@@ -41,6 +48,8 @@ private:
 	QLabel *LabelDescription;
 	QVBoxLayout *LayoutLeft;
 	ISLabelSelectionText *LabelName;
+	QGroupBox *GroupBoxFiles;
+	ISListWidget *ListWidgetFiles;
 	QGroupBox *GroupBoxLinkTask;
 	std::vector<ISLabelLink *> VectorLinks;
 	QGroupBox *GroupBoxComments;

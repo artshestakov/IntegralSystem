@@ -69,7 +69,7 @@ ISStorageFilesListForm::~ISStorageFilesListForm()
 //-----------------------------------------------------------------------------
 void ISStorageFilesListForm::Create()
 {
-	QStringList StringList = ISFileDialog::GetOpenFilesName(this);
+	QStringList StringList = ISFileDialog::GetOpenFileNames(this);
 	if (!StringList.isEmpty())
 	{
 		bool Private = ISMessageBox::ShowQuestion(this, StringList.size() > 1 ? LANG("Message.Question.AllStorageFileIsPrivate").arg(StringList.size()) : LANG("Message.Question.StorageFileIsPrivate")),

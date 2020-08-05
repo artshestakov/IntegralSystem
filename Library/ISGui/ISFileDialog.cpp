@@ -94,7 +94,7 @@ QString ISFileDialog::GetDirectoryPath(QWidget *parent)
 	return Path;
 }
 //-----------------------------------------------------------------------------
-QStringList ISFileDialog::GetOpenFilesName(QWidget *parent, const QString &FilterName)
+QStringList ISFileDialog::GetOpenFileNames(QWidget *parent, const QString &FilterName)
 {
 	QStringList StringList = ISFileDialog::getOpenFileNames(parent, LANG("FileDialog.Files.Open.Title"), ISDefines::Core::PATH_LAST_DIRECTORY, FilterName);
 	if (!StringList.isEmpty())

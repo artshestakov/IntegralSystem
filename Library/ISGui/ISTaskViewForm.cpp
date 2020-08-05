@@ -9,6 +9,9 @@
 #include "ISControls.h"
 #include "ISInputDialog.h"
 #include "ISAlgorithm.h"
+#include "ISFileDialog.h"
+#include "ISProgressForm.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "task_name, "
@@ -38,6 +41,21 @@ static QString QU_DESCRIPTION = PREPARE_QUERY("UPDATE _task SET "
 											  "task_updationdate = now() "
 											  "WHERE task_id = :TaskID "
 											  "RETURNING task_updationdate");
+//-----------------------------------------------------------------------------
+static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_name, tfls_extension, tfls_size, tfls_icon, userfullname(tfls_user) "
+									   "FROM _taskfile "
+									   "WHERE NOT tfls_isdeleted "
+									   "AND tfls_task = :TaskID "
+									   "ORDER BY tfls_id");
+//-----------------------------------------------------------------------------
+static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_name, tfls_extension, tfls_data, tfls_size, tfls_icon) "
+									   "VALUES(:TaskID, :Name, :Extension, :Data, :Size, :Icon)");
+//-----------------------------------------------------------------------------
+static QString QS_FILE_DATA = PREPARE_QUERY("SELECT tfls_data "
+											"FROM _taskfile "
+											"WHERE tfls_id = :TaskFileID");
+//-----------------------------------------------------------------------------
+static QString QD_FILE = PREPARE_QUERY("DELETE FROM _taskfile WHERE tfls_id = :TaskFileID");
 //-----------------------------------------------------------------------------
 static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, task_id, task_name, task_description, userfullname(tlnk_user), tlnk_creationdate "
 									   "FROM _tasklink "
@@ -107,13 +125,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ISPushButton *ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
 	ButtonMenu->setFlat(true);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen, QKeySequence(Qt::Key_F5));
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
 	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
 	ButtonMenu->menu()->addSeparator();
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::AddComment);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddFile"), this, &ISTaskViewForm::AddFile);
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::AddLink);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::AddComment);
 	LayoutTitle->addWidget(ButtonMenu);
 
 	LabelName = new ISLabelSelectionText(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
@@ -148,9 +167,27 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LabelDescription->setWordWrap(true);
 	GroupBoxDescription->layout()->addWidget(LabelDescription);
 
-	QGroupBox *GroupBoxFiles = new QGroupBox(LANG("Task.Files"), this);
-	GroupBoxFiles->setLayout(new QVBoxLayout());
+	GroupBoxFiles = new QGroupBox(LANG("Task.Files"), this);
 	LayoutLeft->addWidget(GroupBoxFiles);
+
+	QVBoxLayout *LayoutFiles = new QVBoxLayout();
+	LayoutFiles->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	GroupBoxFiles->setLayout(LayoutFiles);
+
+	ListWidgetFiles = new ISListWidget(GroupBoxFiles);
+	ListWidgetFiles->setSizePolicy(ListWidgetFiles->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+	ListWidgetFiles->setContextMenuPolicy(Qt::ActionsContextMenu);
+	LayoutFiles->addWidget(ListWidgetFiles);
+
+	QAction *ActionSave = ISControls::CreateActionSave(ListWidgetFiles);
+	connect(ActionSave, &QAction::triggered, this, &ISTaskViewForm::SaveFile);
+	ListWidgetFiles->addAction(ActionSave);
+
+	QAction *ActionDelete = ISControls::CreateActionDelete(ListWidgetFiles);
+	connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::DeleteFile);
+	ListWidgetFiles->addAction(ActionDelete);
+
+	LoadFiles();
 
 	GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
 	GroupBoxLinkTask->setLayout(new QVBoxLayout());
@@ -296,6 +333,139 @@ void ISTaskViewForm::SetDescription()
 	}
 }
 //-----------------------------------------------------------------------------
+void ISTaskViewForm::LoadFiles()
+{
+	ListWidgetFiles->Clear();
+
+	ISQuery qSelectFiles(QS_FILE);
+	qSelectFiles.BindValue(":TaskID", TaskID);
+	if (qSelectFiles.Execute())
+	{
+		while (qSelectFiles.Next())
+		{
+			int ID = qSelectFiles.ReadColumn("tfls_id").toInt();
+			QString CreationDate = qSelectFiles.ReadColumn("tfls_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+			QString Name = qSelectFiles.ReadColumn("tfls_name").toString();
+			QString Extension = qSelectFiles.ReadColumn("tfls_extension").toString();
+			qint64 Size = qSelectFiles.ReadColumn("tfls_size").toLongLong();
+			QByteArray Icon = qSelectFiles.ReadColumn("tfls_icon").toByteArray();
+			QString UserFullname = qSelectFiles.ReadColumn("userfullname").toString();
+
+			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetFiles);
+			ListWidgetItem->setText(Name);
+			ListWidgetItem->setIcon(ISGui::ByteArrayToIcon(Icon));
+			ListWidgetItem->setToolTip(LANG("Task.FileToolTip").arg(UserFullname).arg(CreationDate).arg(ISSystem::FileSizeFromString(Size)));
+			ListWidgetItem->setData(Qt::UserRole, ID);
+			ListWidgetItem->setData(Qt::UserRole * 2, Extension);
+			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::AddFile()
+{
+	QStringList FileList = ISFileDialog::GetOpenFileNames(this);
+	if (!FileList.isEmpty())
+	{
+		int Inserted = 0;
+		ISProgressForm ProgressForm(FileList.size(), QString(), nullptr, "TitleText");
+		ProgressForm.show();
+		for (int i = 0; i < FileList.size(); ++i)
+		{
+			QString FilePath = FileList[i], FileName = QFileInfo(FilePath).fileName(), FileExtension = QFileInfo(FilePath).suffix();
+			ProgressForm.IncrementValue(LANG("Task.AddFile.LabelText").arg(FileName));
+
+			QFile File(FileList[i]);
+			if (File.open(QIODevice::ReadOnly))
+			{
+				QByteArray FileData = File.readAll();
+				qint64 FileSize = File.size();
+				QByteArray FileIcon = ISGui::IconToByteArray(ISGui::GetIconFile(FilePath));
+				File.close();
+
+				ISQuery qInsertFile(QI_FILE);
+				qInsertFile.BindValue(":TaskID", TaskID);
+				qInsertFile.BindValue(":Name", FileName);
+				qInsertFile.BindValue(":Extension", FileExtension);
+				qInsertFile.BindValue(":Data", FileData);
+				qInsertFile.BindValue(":Size", FileSize);
+				qInsertFile.BindValue(":Icon", FileIcon);
+				if (qInsertFile.Execute())
+				{
+					++Inserted;
+				}
+				else
+				{
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertTaskFile").arg(FilePath), qInsertFile.GetErrorString());
+				}
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
+			}
+
+			if (ProgressForm.WasCanceled())
+			{
+
+			}
+		}
+
+		if (Inserted)
+		{
+			LoadFiles();
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::SaveFile()
+{
+	QListWidgetItem *ListWidgetItem = ListWidgetFiles->currentItem();
+	int ID = ListWidgetItem->data(Qt::UserRole).toInt();
+	QString Name = ListWidgetItem->text();
+	QString Extension = ListWidgetItem->data(Qt::UserRole * 2).toString();
+
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskFileSave")))
+	{
+		QString FilePath = ISFileDialog::GetSaveFileName(this, Extension.isEmpty() ? QString() : LANG("File.Filter.File").arg(Extension), Name);
+		QFile File(FilePath);
+		if (File.open(QIODevice::WriteOnly))
+		{
+			ISQuery qSelectFileData(QS_FILE_DATA);
+			qSelectFileData.BindValue(":TaskFileID", ID);
+			if (qSelectFileData.ExecuteFirst())
+			{
+				File.write(qSelectFileData.ReadColumn("tfls_data").toByteArray());
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectTaskFileData"), qSelectFileData.GetErrorString());
+			}
+			File.close();
+		}
+		else
+		{
+			ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile"), File.errorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::DeleteFile()
+{
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskFile")))
+	{
+		ISQuery qDeleteFile(QD_FILE);
+		qDeleteFile.BindValue(":TaskFileID", ListWidgetFiles->currentItem()->data(Qt::UserRole));
+		if (qDeleteFile.Execute())
+		{
+			LoadFiles();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteTaskFile"), qDeleteFile.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
 void ISTaskViewForm::LoadLinks()
 {
 	while (!VectorLinks.empty())
@@ -326,7 +496,7 @@ void ISTaskViewForm::LoadLinks()
 			GroupBoxLinkTask->layout()->addWidget(LabelLink);
 			VectorLinks.push_back(LabelLink);
 
-			QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), LabelLink);
+			QAction *ActionDelete = ISControls::CreateActionDelete(LabelLink);
 			connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::DeleteLink);
 			LabelLink->addAction(ActionDelete);
 		}

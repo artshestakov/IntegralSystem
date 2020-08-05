@@ -17,7 +17,7 @@ public:
 	static QString GetOpenFileName(QWidget *parent, const QString &FilePath = QString(), const QString &FilterName = QString()); //Получить путь к открываемому файлу
 	static QString GetSaveFileName(QWidget *parent, const QString &FilterName, const QString &FileName = QString()); //Получить путь к сохраняемому файлу
 	static QString GetDirectoryPath(QWidget *parent); //Получить путь к директории
-	static QStringList GetOpenFilesName(QWidget *parent, const QString &FilterName = QString()); //Получить путь к открываемым файлам
+	static QStringList GetOpenFileNames(QWidget *parent, const QString &FilterName = QString()); //Получить путь к открываемым файлам
 };
 //-----------------------------------------------------------------------------
 #endif
