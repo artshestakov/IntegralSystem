@@ -610,54 +610,6 @@ ISTaskPriorityEdit::~ISTaskPriorityEdit()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISTaskNameEdit::ISTaskNameEdit(QWidget *parent) : ISLineEdit(parent)
-{
-	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/TaskNameLog");
-	if (File.exists())
-	{
-		if (File.open(QIODevice::ReadOnly))
-		{
-			QString String = File.readAll();
-			StringList = String.split("\n");
-			StringList.removeOne(QString());
-			File.close();
-
-			CreateCompleter(StringList);
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-ISTaskNameEdit::~ISTaskNameEdit()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISTaskNameEdit::Invoke()
-{
-	QString TaskName = GetValue().toString();
-	if (!StringList.contains(TaskName))
-	{
-		StringList.append(TaskName);
-	}
-
-	StringList.removeDuplicates();
-	StringList.sort();
-
-	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/TaskNameLog");
-	if (File.open(QIODevice::Truncate | QIODevice::Append))
-	{
-		QTextStream TextStream(&File);
-		for (const QString &String : StringList)
-		{
-			TextStream << String << endl;
-		}
-		File.close();
-	}
-	CreateCompleter(StringList);
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISTaskImportantEdit::ISTaskImportantEdit(QWidget *parent) : ISCheckEdit(parent)
 {
 	GetCheckBox()->setIcon(BUFFER_ICONS("Task.Important.Unchecked"));

@@ -11,18 +11,18 @@
 QPushButton:hover
 {
 	background-color: rgb(72, 157, 242);
-    border-color: rgb(100, 100, 100);
+    border-color: rgb(72, 174, 174);
 }
 
 QPushButton:pressed
 {
 	background-color: rgb(38, 123, 208);
-    border-color: rgb(136, 136, 136);
+    border-color: rgb(72, 174, 174);
 }
 
 QPushButton:focus
 {
-	border-color: rgb(70, 70, 70);
+	border-color: rgb(72, 174, 174);
     outline: none;
 }
 
@@ -47,7 +47,7 @@ QPushButton::menu-button
 {
 	background-color: rgb(235, 235, 235);
     border-width: 1px;
-    border-color: rgb(187, 187, 187);
+    border-color: rgb(72, 174, 174);
     border-style: solid;
 	width: 15px;
 }
@@ -55,5 +55,5 @@ QPushButton::menu-button
 QPushButton::menu-button:hover
 {
 	background-color: rgb(187, 187, 187);
-    border-color: rgb(100, 100, 100);
+    border-color: rgb(72, 174, 174);
 }
