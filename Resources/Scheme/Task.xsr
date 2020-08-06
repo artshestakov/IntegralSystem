@@ -5,9 +5,8 @@
   <_TaskPriority ID="2" IsSystem="true" UID="{87AC0B68-9348-4A39-8466-B84DC641FE8B}" Name="Средний"/>
   <_TaskPriority ID="3" IsSystem="true" UID="{5B4C2BDB-758B-49F3-B172-7351AAA51C58}" Name="Высокий"/>
 
-  <_TaskStatus IsSystem="true" UID="{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}" Name="Новая"/>
-  <_TaskStatus IsSystem="true" UID="{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}" Name="В работе"/>
-  <_TaskStatus IsSystem="true" UID="{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}" Name="Выполнено"/>
-  <_TaskStatus IsSystem="true" UID="{38663444-57E0-451C-8C46-65DA507BDD9C}" Name="Закрыто"/>
+  <_TaskStatus IsSystem="true" UID="{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}" Name="Новая" StyleSheet="ISPushButton.TaskProcess.New" Order="1"/>
+  <_TaskStatus IsSystem="true" UID="{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}" Name="В работе" StyleSheet="ISPushButton.TaskProcess.InWork" Order="2"/>
+  <_TaskStatus IsSystem="true" UID="{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}" Name="Выполнено" StyleSheet="ISPushButton.TaskProcess.Done" Order="3"/>
 
 </XSR>

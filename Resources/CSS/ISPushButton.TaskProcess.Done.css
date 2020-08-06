@@ -1,0 +1,59 @@
+﻿QPushButton
+{
+	background-color: rgb(85, 255, 127);
+    border-width: 1px;
+    border-color: rgb(72, 242, 114);
+    border-style: solid;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+QPushButton:hover
+{
+	background-color: rgb(72, 242, 114);
+    border-color: rgb(100, 100, 100);
+}
+
+QPushButton:pressed
+{
+	background-color: rgb(38, 208, 80);
+    border-color: rgb(136, 136, 136);
+}
+
+QPushButton:focus
+{
+	border-color: rgb(70, 70, 70);
+    outline: none;
+}
+
+QPushButton::menu-indicator
+{
+    image: none;
+    width: 0px;
+}
+
+QPushButton::menu-arrow
+{
+    top: 1px;
+    left: 1px;
+}
+
+QPushButton[popupMode="1"]
+{
+    padding-right: 20px;
+}
+
+QPushButton::menu-button
+{
+	background-color: rgb(235, 235, 235);
+    border-width: 1px;
+    border-color: rgb(187, 187, 187);
+    border-style: solid;
+	width: 15px;
+}
+
+QPushButton::menu-button:hover
+{
+	background-color: rgb(187, 187, 187);
+    border-color: rgb(100, 100, 100);
+}

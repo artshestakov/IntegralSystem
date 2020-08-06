@@ -18,7 +18,8 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "task_description, "
 									   "userfullname(task_executor) AS task_executor, "
 									   "tstp_name AS task_type, "
-									   "tsst_name AS task_status, "
+									   "tsst_uid AS task_status_uid, "
+									   "tsst_name AS task_status_name, "
 									   "tspr_name AS task_priority, "
 									   "userfullname(task_owner) AS task_owner, "
 									   "task_important, "
@@ -29,6 +30,11 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _taskstatus ON tsst_id = task_status "
 									   "LEFT JOIN _taskpriority ON tspr_id = task_priority "
 									   "WHERE task_id = :TaskID");
+//-----------------------------------------------------------------------------
+static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_name, tsst_stylesheet "
+										   "FROM _taskstatus "
+										   "WHERE NOT tsst_isdeleted "
+										   "ORDER BY tsst_order");
 //-----------------------------------------------------------------------------
 static QString QU_NAME = PREPARE_QUERY("UPDATE _task SET "
 									   "task_name = :TaskName, "
@@ -41,6 +47,13 @@ static QString QU_DESCRIPTION = PREPARE_QUERY("UPDATE _task SET "
 											  "task_updationdate = now() "
 											  "WHERE task_id = :TaskID "
 											  "RETURNING task_updationdate");
+//-----------------------------------------------------------------------------
+static QString QU_STATUS = PREPARE_QUERY("UPDATE _task SET "
+										 "task_status = (SELECT tsst_id FROM _taskstatus WHERE tsst_uid = :StatusUID) "
+										 "WHERE task_id = :TaskID "
+										 "RETURNING "
+										 "(SELECT tsst_name FROM _taskstatus WHERE tsst_uid = :StatusUID), "
+										 "(SELECT tsst_stylesheet FROM _taskstatus WHERE tsst_uid = :StatusUID)");
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_name, tfls_extension, tfls_size, tfls_icon, userfullname(tfls_user) "
 									   "FROM _taskfile "
@@ -110,7 +123,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskDescription = qSelect.ReadColumn("task_description").toString();
 	TaskExecutor = qSelect.ReadColumn("task_executor").toString();
 	TaskType = qSelect.ReadColumn("task_type").toString();
-	TaskStatus = qSelect.ReadColumn("task_status").toString();
+	TaskStatusUID = qSelect.ReadColumn("task_status_uid").toString();
+	TaskStatusName = qSelect.ReadColumn("task_status_name").toString();
 	TaskPriority = qSelect.ReadColumn("task_priority").toString();
 	TaskOwner = qSelect.ReadColumn("task_owner").toString();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
@@ -124,16 +138,47 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	ISPushButton *ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
 	ButtonMenu->setFlat(true);
+	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen, QKeySequence(Qt::Key_F5));
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
 	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
 	ButtonMenu->menu()->addSeparator();
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddFile"), this, &ISTaskViewForm::AddFile);
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::AddLink);
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::AddComment);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddFile"), this, &ISTaskViewForm::FileAdd);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::LinkAdd);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::CommentAdd);
 	LayoutTitle->addWidget(ButtonMenu);
+
+	ButtonProcess = new ISPushButton(BUFFER_ICONS("Task.Process"), this);
+	ButtonProcess->setToolTip(LANG("Task.Process.ToolTip"));
+	ButtonProcess->setCursor(CURSOR_POINTING_HAND);
+	ButtonProcess->setMenu(new QMenu(ButtonProcess));
+	LayoutTitle->addWidget(ButtonProcess);
+
+	ISQuery qSelectStatuses(QS_STATUSES);
+	if (qSelectStatuses.Execute())
+	{
+		while (qSelectStatuses.Next())
+		{
+			ISUuid StatusUID = qSelectStatuses.ReadColumn("tsst_uid");
+			QString StatusName = qSelectStatuses.ReadColumn("tsst_name").toString();
+			
+			QAction *ActionStatus = ButtonProcess->menu()->addAction(StatusName, this, &ISTaskViewForm::TaskStatusClicked);
+			ActionStatus->setProperty("StatusUID", StatusUID);
+			if (StatusUID == TaskStatusUID)
+			{
+				ButtonProcess->setText(LANG("Task.Process").arg(StatusName));
+				ButtonProcess->setStyleSheet(STYLE_SHEET(qSelectStatuses.ReadColumn("tsst_stylesheet").toString()));
+				ActionStatus->setIcon(BUFFER_ICONS("Task.Status.Current"));
+				ActionStatus->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+			}
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectTaskStatuses"), qSelectStatuses.GetErrorString());
+	}
 
 	LabelName = new ISLabelSelectionText(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
@@ -181,12 +226,12 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	QAction *ActionFileSave = ISControls::CreateActionSave(ListWidgetFiles);
 	ActionFileSave->setEnabled(false);
-	connect(ActionFileSave, &QAction::triggered, this, &ISTaskViewForm::SaveFile);
+	connect(ActionFileSave, &QAction::triggered, this, &ISTaskViewForm::FileSave);
 	ListWidgetFiles->addAction(ActionFileSave);
 
 	QAction *ActionFileDelete = ISControls::CreateActionDelete(ListWidgetFiles);
 	ActionFileDelete->setEnabled(false);
-	connect(ActionFileDelete, &QAction::triggered, this, &ISTaskViewForm::DeleteFile);
+	connect(ActionFileDelete, &QAction::triggered, this, &ISTaskViewForm::FileDelete);
 	ListWidgetFiles->addAction(ActionFileDelete);
 	
 	connect(ListWidgetFiles, &ISListWidget::itemSelectionChanged, [=]
@@ -196,12 +241,12 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 		ActionFileDelete->setEnabled(is_enabled);
 	});
 
-	LoadFiles();
+	FileLoadList();
 
 	GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
 	GroupBoxLinkTask->setLayout(new QVBoxLayout());
 	LayoutLeft->addWidget(GroupBoxLinkTask);
-	LoadLinks();
+	LinkLoadList();
 
 	GroupBoxComments = new QGroupBox(LANG("Task.Comments").arg(0), this);
 	GroupBoxComments->setLayout(new QVBoxLayout());
@@ -214,7 +259,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ScrollAreaComments = new ISScrollArea(GroupBoxComments);
 	ScrollAreaComments->widget()->setLayout(LayoutComments);
 	GroupBoxComments->layout()->addWidget(ScrollAreaComments);
-	LoadComments();
+	CommentLoadList();
 
 	LayoutRight = new QVBoxLayout();
 
@@ -244,6 +289,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	QLabel *LabelType = new QLabel(TaskType.isEmpty() ? LANG("Task.Right.Type.Empty") : TaskType, GroupBoxDetails);
 	ISGui::SetFontWidgetBold(LabelType, true);
 	LayoutRight->addWidget(LabelType);
+
+	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
+
+	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Status") + ':', GroupBoxDetails));
+
+	LabelStatus = new QLabel(TaskStatusName, GroupBoxDetails);
+	ISGui::SetFontWidgetBold(LabelStatus, true);
+	LayoutRight->addWidget(LabelStatus);
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
@@ -342,7 +395,39 @@ void ISTaskViewForm::SetDescription()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::LoadFiles()
+void ISTaskViewForm::TaskStatusClicked()
+{
+	ISUuid NewTaskStatusUID = sender()->property("StatusUID");
+	if (NewTaskStatusUID == TaskStatusUID)
+	{
+		return;
+	}
+
+	ISQuery qUpdateStatus(QU_STATUS);
+	qUpdateStatus.BindValue(":StatusUID", NewTaskStatusUID);
+	qUpdateStatus.BindValue(":TaskID", TaskID);
+	if (qUpdateStatus.ExecuteFirst())
+	{
+		TaskStatusUID = NewTaskStatusUID;
+		TaskStatusName = qUpdateStatus.ReadColumn("tsst_name").toString();
+
+		for (QAction *ActionStatus : ButtonProcess->menu()->actions())
+		{
+			bool IsCurrent = ActionStatus->property("StatusUID") == TaskStatusUID;
+			ActionStatus->setIcon(IsCurrent ? BUFFER_ICONS("Task.Status.Current") : QIcon());
+			ActionStatus->setFont(IsCurrent ? ISDefines::Gui::FONT_APPLICATION_BOLD : ISDefines::Gui::FONT_APPLICATION);
+		}
+		ButtonProcess->setText(LANG("Task.Process").arg(TaskStatusName));
+		ButtonProcess->setStyleSheet(STYLE_SHEET(qUpdateStatus.ReadColumn("tsst_stylesheet").toString()));
+		LabelStatus->setText(TaskStatusName);
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.UpdateTaskStatus"), qUpdateStatus.GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::FileLoadList()
 {
 	ListWidgetFiles->Clear();
 
@@ -371,7 +456,7 @@ void ISTaskViewForm::LoadFiles()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::AddFile()
+void ISTaskViewForm::FileAdd()
 {
 	QStringList FileList = ISFileDialog::GetOpenFileNames(this);
 	if (!FileList.isEmpty())
@@ -421,12 +506,12 @@ void ISTaskViewForm::AddFile()
 
 		if (Inserted)
 		{
-			LoadFiles();
+			FileLoadList();
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::SaveFile()
+void ISTaskViewForm::FileSave()
 {
 	QListWidgetItem *ListWidgetItem = ListWidgetFiles->currentItem();
 	int ID = ListWidgetItem->data(Qt::UserRole).toInt();
@@ -461,7 +546,7 @@ void ISTaskViewForm::SaveFile()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::DeleteFile()
+void ISTaskViewForm::FileDelete()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskFile")))
 	{
@@ -469,7 +554,7 @@ void ISTaskViewForm::DeleteFile()
 		qDeleteFile.BindValue(":TaskFileID", ListWidgetFiles->currentItem()->data(Qt::UserRole));
 		if (qDeleteFile.Execute())
 		{
-			LoadFiles();
+			FileLoadList();
 		}
 		else
 		{
@@ -478,7 +563,7 @@ void ISTaskViewForm::DeleteFile()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::LoadLinks()
+void ISTaskViewForm::LinkLoadList()
 {
 	while (!VectorLinks.empty())
 	{
@@ -504,12 +589,12 @@ void ISTaskViewForm::LoadLinks()
 			LabelLink->setToolTip(LANG("Task.LinkToolTip").arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
 			LabelLink->setWordWrap(true);
 			LabelLink->setContextMenuPolicy(Qt::ActionsContextMenu);
-			connect(LabelLink, &ISLabelLink::Clicked, this, &ISTaskViewForm::OpenLink);
+			connect(LabelLink, &ISLabelLink::Clicked, this, &ISTaskViewForm::LinkOpen);
 			GroupBoxLinkTask->layout()->addWidget(LabelLink);
 			VectorLinks.push_back(LabelLink);
 
 			QAction *ActionDelete = ISControls::CreateActionDelete(LabelLink);
-			connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::DeleteLink);
+			connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::LinkDelete);
 			LabelLink->addAction(ActionDelete);
 		}
 	}
@@ -519,7 +604,7 @@ void ISTaskViewForm::LoadLinks()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::AddLink()
+void ISTaskViewForm::LinkAdd()
 {
 	int LinkTaskID = ISGui::SelectObject("_Task");
 	if (LinkTaskID)
@@ -545,7 +630,7 @@ void ISTaskViewForm::AddLink()
 			qInsertLink.BindValue(":LinkTaskID", LinkTaskID);
 			if (qInsertLink.Execute())
 			{
-				LoadLinks();
+				LinkLoadList();
 			}
 			else
 			{
@@ -555,12 +640,12 @@ void ISTaskViewForm::AddLink()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::OpenLink()
+void ISTaskViewForm::LinkOpen()
 {
 	ISGui::ShowTaskViewForm(sender()->property("TaskID").toInt());
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::DeleteLink()
+void ISTaskViewForm::LinkDelete()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskLink")))
 	{
@@ -569,7 +654,7 @@ void ISTaskViewForm::DeleteLink()
 		if (qDeleteLink.Execute())
 		{
 			//Если вызывать напрямую обновление списка связей, то происходит падение. Причина неизвестна.
-			QTimer::singleShot(10, this, &ISTaskViewForm::LoadLinks);
+			QTimer::singleShot(10, this, &ISTaskViewForm::LinkLoadList);
 		}
 		else
 		{
@@ -578,7 +663,7 @@ void ISTaskViewForm::DeleteLink()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::LoadComments()
+void ISTaskViewForm::CommentLoadList()
 {
 	ISGui::SetWaitGlobalCursor(true);
 	while (!VectorComments.empty())
@@ -600,7 +685,7 @@ void ISTaskViewForm::LoadComments()
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
 
-			QWidget *WidgetComment = CreateCommentWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
+			QWidget *WidgetComment = CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
 			LayoutComments->insertWidget(LayoutComments->count() - 1, WidgetComment);
 			VectorComments.push_back(WidgetComment);
 			
@@ -622,7 +707,7 @@ void ISTaskViewForm::LoadComments()
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime)
+QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
@@ -662,12 +747,12 @@ QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserP
 	ISLabelLink *LabelEdit = new ISLabelLink(LANG("Edit"), WidgetBottom);
 	LabelEdit->setProperty("Comment", Comment);
 	LabelEdit->setProperty("CommentID", CommentID);
-	connect(LabelEdit, &ISLabelLink::Clicked, this, &ISTaskViewForm::EditComment);
+	connect(LabelEdit, &ISLabelLink::Clicked, this, &ISTaskViewForm::CommentEdit);
 	LayoutBottom->addWidget(LabelEdit);
 
 	ISLabelLink *LabelDelete = new ISLabelLink(LANG("Delete"), WidgetBottom);
 	LabelDelete->setProperty("CommentID", CommentID);
-	connect(LabelDelete, &ISLabelLink::Clicked, this, &ISTaskViewForm::DeleteComment);
+	connect(LabelDelete, &ISLabelLink::Clicked, this, &ISTaskViewForm::CommentDelete);
 	LayoutBottom->addWidget(LabelDelete);
 
 	LayoutBottom->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V10), WidgetBottom));
@@ -677,7 +762,7 @@ QWidget* ISTaskViewForm::CreateCommentWidget(int CommentID, const QPixmap &UserP
 	return Widget;
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::AddComment()
+void ISTaskViewForm::CommentAdd()
 {
 	QString Comment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment"));
 	if (!Comment.isEmpty())
@@ -687,7 +772,7 @@ void ISTaskViewForm::AddComment()
 		qInsertComment.BindValue(":Comment", Comment);
 		if (qInsertComment.Execute())
 		{
-			LoadComments();
+			CommentLoadList();
 			//После загрузки списка комментариев вызываем прокрутку в самый низ
 			QTimer::singleShot(50, [=]() { ScrollAreaComments->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
 		}
@@ -698,7 +783,7 @@ void ISTaskViewForm::AddComment()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::EditComment()
+void ISTaskViewForm::CommentEdit()
 {
 	QString Comment = sender()->property("Comment").toString();
 	QString NewComment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment"), Comment);
@@ -710,7 +795,7 @@ void ISTaskViewForm::EditComment()
 		if (qUpdateComment.Execute())
 		{
 			//Если вызывать напрямую обновление списка комментариев, то происходит падение. Причина неизвестна.
-			QTimer::singleShot(10, this, &ISTaskViewForm::LoadComments);
+			QTimer::singleShot(10, this, &ISTaskViewForm::CommentLoadList);
 		}
 		else
 		{
@@ -719,7 +804,7 @@ void ISTaskViewForm::EditComment()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::DeleteComment()
+void ISTaskViewForm::CommentDelete()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskComment")))
 	{
@@ -728,7 +813,7 @@ void ISTaskViewForm::DeleteComment()
 		if (qDeleteComment.Execute())
 		{
 			//Если вызывать напрямую обновление списка комментариев, то происходит падение. Причина неизвестна.
-			QTimer::singleShot(10, this, &ISTaskViewForm::LoadComments);
+			QTimer::singleShot(10, this, &ISTaskViewForm::CommentLoadList);
 		}
 		else
 		{

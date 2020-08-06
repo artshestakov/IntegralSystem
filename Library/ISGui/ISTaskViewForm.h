@@ -7,6 +7,7 @@
 #include "ISScrollArea.h"
 #include "ISLabels.h"
 #include "ISListWidget.h"
+#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISTaskViewForm : public ISInterfaceForm
 {
@@ -23,30 +24,32 @@ private:
 	void Reopen();
 	void Rename();
 	void SetDescription();
+	void TaskStatusClicked();
 
 private:
-	void LoadFiles();
-	void AddFile();
-	void SaveFile();
-	void DeleteFile();
+	void FileLoadList();
+	void FileAdd();
+	void FileSave();
+	void FileDelete();
 
 private:
-	void LoadLinks();
-	void AddLink();
-	void OpenLink();
-	void DeleteLink();
+	void LinkLoadList();
+	void LinkAdd();
+	void LinkOpen();
+	void LinkDelete();
 
 private:
-	void LoadComments();
-	QWidget* CreateCommentWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime);
-	void AddComment();
-	void EditComment();
-	void DeleteComment();
+	void CommentLoadList();
+	QWidget* CommentCreateWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime);
+	void CommentAdd();
+	void CommentEdit();
+	void CommentDelete();
 
 private:
 	QHBoxLayout *LayoutHorizontal;
 	QLabel *LabelDescription;
 	QVBoxLayout *LayoutLeft;
+	ISPushButton *ButtonProcess;
 	ISLabelSelectionText *LabelName;
 	QGroupBox *GroupBoxFiles;
 	ISListWidget *ListWidgetFiles;
@@ -57,6 +60,7 @@ private:
 	ISScrollArea *ScrollAreaComments;
 	std::vector<QWidget *> VectorComments;
 	QVBoxLayout *LayoutRight;
+	QLabel *LabelStatus;
 	QLabel *LabelUpdationDate;
 
 private:
@@ -65,7 +69,8 @@ private:
 	QString TaskDescription;
 	QString TaskExecutor;
 	QString TaskType;
-	QString TaskStatus;
+	ISUuid TaskStatusUID;
+	QString TaskStatusName;
 	QString TaskPriority;
 	QString TaskOwner;
 	bool TaskImportant;

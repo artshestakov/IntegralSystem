@@ -139,6 +139,8 @@
   <Local Name="Message.Error.SelectTaskFileData" Russian="Не удалось получить данные файла!"/>
   <Local Name="Message.Error.DeleteTaskFile" Russian="Не удалось удалить файл!"/>
   <Local Name="Message.Error.TaskSearchByText" Russian="При поиске возникла ошибка!"/>
+  <Local Name="Message.Error.SelectTaskStatuses" Russian="Не удалось получить статусы задачи!"/>
+  <Local Name="Message.Error.UpdateTaskStatus" Russian="Не удалось изменить статус задачи!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -840,6 +842,7 @@
   <Local Name="Task.Right.Owner.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Type" Russian="Тип задачи"/>
   <Local Name="Task.Right.Type.Empty" Russian="Не выбран"/>
+  <Local Name="Task.Right.Status" Russian="Статус задачи"/>
   <Local Name="Task.Right.Priority" Russian="Приоритет"/>
   <Local Name="Task.Right.CreationDate" Russian="Задача создана"/>
   <Local Name="Task.Right.UpdationDate" Russian="Задача изменена"/>
@@ -851,6 +854,8 @@
   <Local Name="Task.SetDescription" Russian="Изменить описание"/>
   <Local Name="Task.SetDescription.Title" Russian="Изменение описания"/>
   <Local Name="Task.SetDescription.LabelText" Russian="Введите новое описание задачи:"/>
+  <Local Name="Task.Process" Russian="Процесс: %1"/>
+  <Local Name="Task.Process.ToolTip" Russian="Нажмите, чтобы изменить статус задачи"/>
 
   <!--File Dialog-->
   <Local Name="FileDialog.Image.Select.Title" Russian="Выбор изображения"/>
