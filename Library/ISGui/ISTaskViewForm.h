@@ -72,7 +72,8 @@ private:
 	QString TaskType;
 	ISUuid TaskStatusUID;
 	QString TaskStatusName;
-	QString TaskPriority;
+	ISUuid TaskPriorityUID;
+	QString TaskPriorityName;
 	QString TaskOwner;
 	bool TaskImportant;
 	QString TaskCreationDate;

@@ -21,7 +21,8 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "tstp_name AS task_type, "
 									   "tsst_uid AS task_status_uid, "
 									   "tsst_name AS task_status_name, "
-									   "tspr_name AS task_priority, "
+									   "tspr_uid AS task_priority_uid, "
+									   "tspr_name AS task_priority_name, "
 									   "userfullname(task_owner) AS task_owner, "
 									   "task_important, "
 									   "task_creationdate, "
@@ -128,9 +129,10 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskDescription = qSelect.ReadColumn("task_description").toString();
 	TaskExecutor = qSelect.ReadColumn("task_executor").toString();
 	TaskType = qSelect.ReadColumn("task_type").toString();
-	TaskStatusUID = qSelect.ReadColumn("task_status_uid").toString();
+	TaskStatusUID = qSelect.ReadColumn("task_status_uid");
 	TaskStatusName = qSelect.ReadColumn("task_status_name").toString();
-	TaskPriority = qSelect.ReadColumn("task_priority").toString();
+	TaskPriorityUID = qSelect.ReadColumn("task_priority_uid");
+	TaskPriorityName = qSelect.ReadColumn("task_priority_name").toString();
 	TaskOwner = qSelect.ReadColumn("task_owner").toString();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskCreationDate = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
@@ -310,9 +312,24 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Priority") + ':', GroupBoxDetails));
 
-	QLabel *LabelPriority = new QLabel(TaskPriority, GroupBoxDetails);
-	ISGui::SetFontWidgetBold(LabelPriority, true);
+	ISLabelPixmapText *LabelPriority = new ISLabelPixmapText(TaskPriorityName, GroupBoxDetails);
+	LabelPriority->SetDirection(QBoxLayout::RightToLeft);
+	ISGui::SetFontWidgetBold(LabelPriority->GetLabelText(), true);
 	LayoutRight->addWidget(LabelPriority);
+
+	//Устанавливаем иконку в зависимости от приоритета
+	if (TaskPriorityUID == CONST_UID_TASK_PRIORITY_LOW)
+	{
+		LabelPriority->SetPixmap(BUFFER_ICONS("Task.Priority.Low").pixmap(ISDefines::Gui::SIZE_25_25));
+	}
+	else if (TaskPriorityUID == CONST_UID_TASK_PRIORITY_AVERAGE)
+	{
+		LabelPriority->SetPixmap(BUFFER_ICONS("Task.Priority.Average").pixmap(ISDefines::Gui::SIZE_25_25));
+	}
+	else if (TaskPriorityUID == CONST_UID_TASK_PRIORITY_HIGH)
+	{
+		LabelPriority->SetPixmap(BUFFER_ICONS("Task.Priority.Tall").pixmap(ISDefines::Gui::SIZE_25_25));
+	}
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 

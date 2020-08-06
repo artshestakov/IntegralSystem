@@ -125,7 +125,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISVolumeEdit*>("ISVolumeEdit");
 	qRegisterMetaType<ISBirthdayEdit*>("ISBirthdayEdit");
 	qRegisterMetaType<ISMonthEdit*>("ISMonthEdit");
-	qRegisterMetaType<ISTaskNameEdit*>("ISTaskNameEdit");
 	qRegisterMetaType<ISTaskPriorityEdit*>("ISTaskPriorityEdit");
 	qRegisterMetaType<ISTaskImportantEdit*>("ISTaskImportantEdit");
 	qRegisterMetaType<ISTaskDescriptionEdit*>("ISTaskDescriptionEdit");

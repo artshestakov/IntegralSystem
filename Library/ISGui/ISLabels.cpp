@@ -5,6 +5,7 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISQLabel::ISQLabel(const QString &Text, QWidget *parent) : QLabel(Text, parent)
 {
@@ -115,5 +116,99 @@ void ISLabelSelectionText::CopySelectedText()
 {
 	QApplication::clipboard()->setText(selectedText());
 	setSelection(0, 0);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISLabelPixmapText::ISLabelPixmapText(const QPixmap &Pixmap, const QString &Text, QWidget *parent) : QWidget(parent)
+{
+	setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+
+	Layout = new QBoxLayout(QBoxLayout::Direction::LeftToRight);
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	setLayout(Layout);
+
+	LabelPixmap = new QLabel(this);
+	LabelPixmap->setPixmap(Pixmap);
+	Layout->addWidget(LabelPixmap);
+
+	LabelText = new QLabel(Text, this);
+	Layout->addWidget(LabelText);
+}
+//-----------------------------------------------------------------------------
+ISLabelPixmapText::ISLabelPixmapText(const QPixmap &Pixmap, QWidget *parent) : ISLabelPixmapText(Pixmap, QString(), parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISLabelPixmapText::ISLabelPixmapText(const QString &Text, QWidget *parent) : ISLabelPixmapText(QPixmap(), Text, parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISLabelPixmapText::ISLabelPixmapText(QWidget *parent) : ISLabelPixmapText(QPixmap(), QString(), parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISLabelPixmapText::~ISLabelPixmapText()
+{
+
+}
+//-----------------------------------------------------------------------------
+QLabel* ISLabelPixmapText::GetLabelPixmap() const
+{
+	return LabelPixmap;
+}
+//-----------------------------------------------------------------------------
+QLabel* ISLabelPixmapText::GetLabelText() const
+{
+	return LabelText;
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::SetDirection(QBoxLayout::Direction Direction)
+{
+	Layout->setDirection(Direction);
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::SetPixmapText(const QPixmap &Pixmap, const QString &Text)
+{
+	LabelPixmap->setPixmap(Pixmap);
+	LabelText->setText(Text);
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::SetPixmap(const QPixmap &Pixmap)
+{
+	LabelPixmap->setPixmap(Pixmap);
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::SetText(const QString &Text)
+{
+	LabelText->setText(Text);
+}
+//-----------------------------------------------------------------------------
+QFont ISLabelPixmapText::GetFont() const
+{
+	return LabelText->font();
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::SetFont(const QFont &Font)
+{
+	LabelText->setFont(Font);
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::Clear()
+{
+	SetPixmapText(QPixmap(), QString());
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::ClearPixmap()
+{
+	SetPixmap(QPixmap());
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::ClearText()
+{
+	SetText(QString());
 }
 //-----------------------------------------------------------------------------

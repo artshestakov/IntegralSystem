@@ -48,13 +48,48 @@ class ISLabelSelectionText : public ISQLabel
 public:
 	ISLabelSelectionText(const QString &Text, QWidget *parent = 0);
 	ISLabelSelectionText(QWidget *parent = 0);
-	~ISLabelSelectionText();
+	virtual ~ISLabelSelectionText();
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *MouseEvent) override;
 
 private:
 	void CopySelectedText();
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//!Виджет представляющий из себя картинку и текст одновременно
+class ISLabelPixmapText : public QWidget
+{
+	Q_OBJECT
+
+public:
+	ISLabelPixmapText(const QPixmap &Pixmap, const QString &Text, QWidget *parent = 0);
+	ISLabelPixmapText(const QPixmap &Pixmap, QWidget *parent = 0);
+	ISLabelPixmapText(const QString &Text, QWidget *parent = 0);
+	ISLabelPixmapText(QWidget *parent = 0);
+	virtual ~ISLabelPixmapText();
+
+	QLabel* GetLabelPixmap() const;
+	QLabel *GetLabelText() const;
+
+	void SetDirection(QBoxLayout::Direction Direction);
+	void SetPixmapText(const QPixmap &Pixmap, const QString &Text);
+	void SetPixmap(const QPixmap &Pixmap);
+	void SetText(const QString &Text);
+
+	QFont GetFont() const;
+	void SetFont(const QFont &Font);
+
+	void Clear();
+	void ClearPixmap();
+	void ClearText();
+
+private:
+	QBoxLayout *Layout;
+	QLabel *LabelPixmap;
+	QLabel *LabelText;
 };
 //-----------------------------------------------------------------------------
 #endif
