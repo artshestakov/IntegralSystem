@@ -1310,15 +1310,12 @@ void ISListBaseForm::AutoFitColumnWidth()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ResetWidthColumn()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ResetWidthColumn")))
+	ISGui::SetWaitGlobalCursor(true);
+	for (int i = 0; i < SqlModel->columnCount(); ++i)
 	{
-		ISGui::SetWaitGlobalCursor(true);
-		for (int i = 0; i < SqlModel->columnCount(); ++i)
-		{
-			TableView->setColumnWidth(i, 100);
-		}
-		ISGui::SetWaitGlobalCursor(false);
+		TableView->setColumnWidth(i, 100);
 	}
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CopyRecord()

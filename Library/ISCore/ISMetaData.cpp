@@ -859,7 +859,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 			MetaField->HideFromObject = QVariant(DomNamedNodeMap.namedItem("HideFromObject").nodeValue()).toBool();
 			MetaField->HideFromList = QVariant(DomNamedNodeMap.namedItem("HideFromList").nodeValue()).toBool();
 			MetaField->NotSearch = QVariant(DomNamedNodeMap.namedItem("NotSearch").nodeValue()).toBool();
-			MetaField->Hint = DomNamedNodeMap.namedItem("OrderField").nodeValue();
+			MetaField->Hint = DomNamedNodeMap.namedItem("Hint").nodeValue();
 			MetaField->PlaceholderText = DomNamedNodeMap.namedItem("PlaceholderText").nodeValue();
 			MetaField->ControlWidget = DomNamedNodeMap.namedItem("ControlWidget").nodeValue();
 			MetaField->RegExp = DomNamedNodeMap.namedItem("RegExp").nodeValue();

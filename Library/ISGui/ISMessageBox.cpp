@@ -1,6 +1,7 @@
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
 #include "ISStyleSheet.h"
+#include "ISBuffer.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
@@ -8,7 +9,7 @@ ISMessageBox::ISMessageBox(QMessageBox::Icon Icon, const QString &Title, const Q
 	: QMessageBox(Icon, Title, Message, Buttons, parent),
 	AdditionalButtonClicked(ISNamespace::MBB_Unknown)
 {
-	
+	setWindowIcon(BUFFER_ICONS("Logo"));
 }
 //-----------------------------------------------------------------------------
 ISMessageBox::~ISMessageBox()

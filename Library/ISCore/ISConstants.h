@@ -223,6 +223,10 @@ const char CONST_UID_GROUP_ACCESS_SPECIAL_SEND_MESSAGE_TO_CHAT[] = "{6423FC8B-38
 const char CONST_UID_TELEPHONY_ASTERISK[] = "{AAF1708E-B224-441C-B4E9-7569267F3B55}";
 const char CONST_UID_TELEPHONY_BEELINE[] = "{CA82CCF7-D66B-4415-BE7B-DC02006DFABF}";
 //-----------------------------------------------------------------------------
+const char CONST_UID_TASK_PRIORITY_LOW[] = "{CD620874-5069-48E4-BDEA-2D5AEBF8ABA7}"; //Низкий
+const char CONST_UID_TASK_PRIORITY_AVERAGE[] = "{87AC0B68-9348-4A39-8466-B84DC641FE8B}"; //Средний
+const char CONST_UID_TASK_PRIORITY_HIGH[] = "{5B4C2BDB-758B-49F3-B172-7351AAA51C58}"; //Высокий
+//-----------------------------------------------------------------------------
 const char CONST_UID_TASK_STATUS_NEW[] = "{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}"; //Новая
 const char CONST_UID_TASK_STATUS_IN_WORK[] = "{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}"; //В работе
 const char CONST_UID_TASK_STATUS_DONE[] = "{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}"; //Выполнена
