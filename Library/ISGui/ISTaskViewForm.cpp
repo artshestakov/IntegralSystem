@@ -12,6 +12,7 @@
 #include "ISFileDialog.h"
 #include "ISProgressForm.h"
 #include "ISSystem.h"
+#include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "task_name, "
@@ -52,8 +53,12 @@ static QString QU_STATUS = PREPARE_QUERY("UPDATE _task SET "
 										 "task_status = (SELECT tsst_id FROM _taskstatus WHERE tsst_uid = :StatusUID) "
 										 "WHERE task_id = :TaskID "
 										 "RETURNING "
+										 "task_status, "
 										 "(SELECT tsst_name FROM _taskstatus WHERE tsst_uid = :StatusUID), "
 										 "(SELECT tsst_stylesheet FROM _taskstatus WHERE tsst_uid = :StatusUID)");
+//-----------------------------------------------------------------------------
+static QString QI_STATUS_HISTORY = PREPARE_QUERY("INSERT INTO _taskstatushistory(tshr_task, tshr_status) "
+												 "VALUES(:TaskID, :StatusID)");
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_name, tfls_extension, tfls_size, tfls_icon, userfullname(tfls_user) "
 									   "FROM _taskfile "
@@ -179,6 +184,9 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	{
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectTaskStatuses"), qSelectStatuses.GetErrorString());
 	}
+
+	ButtonProcess->menu()->addSeparator();
+	ButtonProcess->menu()->addAction(LANG("Task.Process.History"), this, &ISTaskViewForm::ShowStatusHistory);
 
 	LabelName = new ISLabelSelectionText(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
@@ -420,11 +428,28 @@ void ISTaskViewForm::TaskStatusClicked()
 		ButtonProcess->setText(LANG("Task.Process").arg(TaskStatusName));
 		ButtonProcess->setStyleSheet(STYLE_SHEET(qUpdateStatus.ReadColumn("tsst_stylesheet").toString()));
 		LabelStatus->setText(TaskStatusName);
+
+		ISQuery qInsertStatusHistory(QI_STATUS_HISTORY);
+		qInsertStatusHistory.BindValue(":TaskID", TaskID);
+		qInsertStatusHistory.BindValue(":StatusID", qUpdateStatus.ReadColumn("task_status").toInt());
+		if (!qInsertStatusHistory.Execute())
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertTaskStatusHistory"), qInsertStatusHistory.GetErrorString());
+		}
 	}
 	else
 	{
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.UpdateTaskStatus"), qUpdateStatus.GetErrorString());
 	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::ShowStatusHistory()
+{
+	ISListBaseForm *ListBaseForm = new ISListBaseForm("_TaskStatusHistory");
+	ListBaseForm->setWindowTitle(LANG("Task.Process.History.Title").arg(TaskName));
+	ListBaseForm->resize(800, 600);
+	ListBaseForm->show();
+	ListBaseForm->LoadData();
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::FileLoadList()

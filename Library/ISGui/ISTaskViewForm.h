@@ -25,6 +25,7 @@ private:
 	void Rename();
 	void SetDescription();
 	void TaskStatusClicked();
+	void ShowStatusHistory();
 
 private:
 	void FileLoadList();

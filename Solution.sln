@@ -37,6 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{33F902D5-EB7
 		Resources\CSS\ISParagraphButton.css = Resources\CSS\ISParagraphButton.css
 		Resources\CSS\ISPopup.css = Resources\CSS\ISPopup.css
 		Resources\CSS\ISPushButton.css = Resources\CSS\ISPushButton.css
+		Resources\CSS\ISPushButton.TaskProcess.Close.css = Resources\CSS\ISPushButton.TaskProcess.Close.css
 		Resources\CSS\ISPushButton.TaskProcess.Done.css = Resources\CSS\ISPushButton.TaskProcess.Done.css
 		Resources\CSS\ISPushButton.TaskProcess.InWork.css = Resources\CSS\ISPushButton.TaskProcess.InWork.css
 		Resources\CSS\ISPushButton.TaskProcess.New.css = Resources\CSS\ISPushButton.TaskProcess.New.css

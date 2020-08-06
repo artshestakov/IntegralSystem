@@ -79,7 +79,8 @@ public:
 	void PeriodClear(); //Очистка периода
 
 protected:
-	void paintEvent(QPaintEvent *e);
+	void paintEvent(QPaintEvent *e) override;
+	void EscapeClicked() override;
 
 	ISBaseTableView* GetTableView(); //Получить указатель на виджет списка
 	QToolBar* GetToolBar(); //Получить указатель на виджет тулбара

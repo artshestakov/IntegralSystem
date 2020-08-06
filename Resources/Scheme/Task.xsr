@@ -7,6 +7,7 @@
 
   <_TaskStatus IsSystem="true" UID="{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}" Name="Новая" StyleSheet="ISPushButton.TaskProcess.New" Order="1"/>
   <_TaskStatus IsSystem="true" UID="{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}" Name="В работе" StyleSheet="ISPushButton.TaskProcess.InWork" Order="2"/>
-  <_TaskStatus IsSystem="true" UID="{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}" Name="Выполнено" StyleSheet="ISPushButton.TaskProcess.Done" Order="3"/>
+  <_TaskStatus IsSystem="true" UID="{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}" Name="Выполнена" StyleSheet="ISPushButton.TaskProcess.Done" Order="3"/>
+  <_TaskStatus IsSystem="true" UID="{1617EC4F-50F6-4912-8143-4D702E1F5F8F}" Name="Закрыта" StyleSheet="ISPushButton.TaskProcess.Close" Order="4"/>
 
 </XSR>

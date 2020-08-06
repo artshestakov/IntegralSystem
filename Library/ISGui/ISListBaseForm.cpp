@@ -442,6 +442,14 @@ void ISListBaseForm::paintEvent(QPaintEvent *e)
 	}
 }
 //-----------------------------------------------------------------------------
+void ISListBaseForm::EscapeClicked()
+{
+	if (!parentWidget())
+	{
+		close();
+	}
+}
+//-----------------------------------------------------------------------------
 ISBaseTableView* ISListBaseForm::GetTableView()
 {
 	return TableView;
