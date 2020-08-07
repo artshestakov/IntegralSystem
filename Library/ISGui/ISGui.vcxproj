@@ -350,7 +350,6 @@
     <ClCompile Include="ISTextEdit.cpp" />
     <ClCompile Include="ISTimeEdit.cpp" />
     <ClCompile Include="ISToolBarAccessTable.cpp" />
-    <ClCompile Include="ISToolBarObject.cpp" />
     <ClCompile Include="ISUserEdit.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
     <ClCompile Include="ISUserGroupWidget.cpp" />
@@ -509,7 +508,6 @@
     <QtMoc Include="ISCalendarEventsWidget.h" />
     <QtMoc Include="ISCalendarPanel.h" />
     <QtMoc Include="ISTabWidgetObject.h" />
-    <QtMoc Include="ISToolBarObject.h" />
     <QtMoc Include="ISPlayerWidget.h" />
     <QtMoc Include="ISSliderDuration.h" />
     <QtMoc Include="ISComboSearchWidgets.h" />

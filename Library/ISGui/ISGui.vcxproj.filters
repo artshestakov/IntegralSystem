@@ -576,9 +576,6 @@
     <ClCompile Include="ISTabWidgetObject.cpp">
       <Filter>Controls\ObjectForm</Filter>
     </ClCompile>
-    <ClCompile Include="ISToolBarObject.cpp">
-      <Filter>Controls\ObjectForm</Filter>
-    </ClCompile>
     <ClCompile Include="ISPlayerWidget.cpp">
       <Filter>Controls\Player</Filter>
     </ClCompile>
@@ -1080,9 +1077,6 @@
       <Filter>Controls\MailCalendar</Filter>
     </QtMoc>
     <QtMoc Include="ISTabWidgetObject.h">
-      <Filter>Controls\ObjectForm</Filter>
-    </QtMoc>
-    <QtMoc Include="ISToolBarObject.h">
       <Filter>Controls\ObjectForm</Filter>
     </QtMoc>
     <QtMoc Include="ISPlayerWidget.h">

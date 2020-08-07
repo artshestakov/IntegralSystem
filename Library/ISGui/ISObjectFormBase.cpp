@@ -200,13 +200,10 @@ void ISObjectFormBase::AfterShowEvent()
 {
 	ISInterfaceForm::AfterShowEvent();
 
-	if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
+	//По умолчанию все действия навигации эскортов должны быть отключены (кроме первого действия - карточки)
+	for (int i = 1; i < ToolBarNavigation->actions().size(); ++i)
 	{
-		ToolBarNavigation->UpdateEnabledActionsList(false);
-	}
-	else
-	{
-		ToolBarNavigation->UpdateEnabledActionsList(true);
+		ToolBarNavigation->actions()[i]->setEnabled(!(FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy));
 	}
 
 	if (FormType == ISNamespace::OFT_Edit)
@@ -232,38 +229,52 @@ void ISObjectFormBase::AfterShowEvent()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateToolBarEscorts()
 {
-	ToolBarNavigation = new ISToolBarObject(this);
+	ToolBarNavigation = new QToolBar(this);
 	ToolBarNavigation->setIconSize(ISDefines::Gui::SIZE_20_20);
+	ToolBarNavigation->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	connect(ToolBarNavigation, &QToolBar::actionTriggered, this, &ISObjectFormBase::ToolBarClicked);
 	GetMainLayout()->addWidget(ToolBarNavigation);
 
+	QActionGroup *g = new QActionGroup(this);
+
 	//Действие объекта
-	QAction *ActionObject = ToolBarNavigation->CreateAction(BUFFER_ICONS("Document"), MetaTable->LocalName, ISNamespace::OAT_Object);
+	QAction *ActionObject = ToolBarNavigation->addAction(BUFFER_ICONS("Document"), MetaTable->LocalName);
+	ActionObject->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+	ActionObject->setCheckable(true);
 	ActionObject->setChecked(true);
-	ToolBarNavigation->addAction(ActionObject);
-	ToolBarNavigation->actionTriggered(ActionObject);
+	ActionObject->setProperty("IsChecked", true);
+	ActionObject->setProperty("Type", ISNamespace::OAT_Object);
+	g->addAction(ActionObject);
 
-	//Список системных эскортов
-	QAction *ActionOther = ToolBarNavigation->CreateAction(BUFFER_ICONS("AdditionallyActions"), LANG("ObjectOther"), ISNamespace::OAT_Other);
-	ToolBarNavigation->addAction(ActionOther);
+	ToolBarNavigation->addSeparator();
 
-	QToolButton *ToolButtonOther = dynamic_cast<QToolButton*>(ToolBarNavigation->widgetForAction(ActionOther));
-	ToolButtonOther->setPopupMode(QToolButton::InstantPopup);
-	ToolButtonOther->setMenu(new QMenu(ToolButtonOther));
-	ToolButtonOther->setCursor(CURSOR_POINTING_HAND);
-	ToolButtonOther->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"), ISNamespace::OAT_Service, QString(), "ISProtocolObjectListForm"));
-	ToolButtonOther->menu()->addAction(ToolBarNavigation->CreateAction(BUFFER_ICONS("Discussion"), LANG("Discussion"), ISNamespace::OAT_Service, QString(), "ISDiscussionListForm"));
+	QAction *ActionProtocol = ToolBarNavigation->addAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"));
+	ActionProtocol->setCheckable(true);
+	ActionProtocol->setProperty("IsChecked", false);
+	ActionProtocol->setProperty("Type", ISNamespace::OAT_Service);
+	ActionProtocol->setProperty("ClassName", "ISProtocolObjectListForm");
+	g->addAction(ActionProtocol);
 
-	for (int i = 0; i < MetaTable->Escorts.size(); ++i) //Обход эскортных мета-таблиц
-	{
-		PMetaEscort *MetaEscort = MetaTable->Escorts[i];
-		
-		QAction *ActionEscort = ToolBarNavigation->CreateAction(BUFFER_ICONS("Table"), MetaEscort->LocalName, ISNamespace::OAT_Escort, MetaEscort->TableName, MetaEscort->ClassName);
+	QAction *ActionDiscussion = ToolBarNavigation->addAction(BUFFER_ICONS("Discussion"), LANG("Discussion"));
+	ActionDiscussion->setCheckable(true);
+	ActionDiscussion->setProperty("IsChecked", false);
+	ActionDiscussion->setProperty("Type", ISNamespace::OAT_Service);
+	ActionDiscussion->setProperty("ClassName", "ISDiscussionListForm");
+	g->addAction(ActionDiscussion);
+
+	ToolBarNavigation->addSeparator();
+
+	for (PMetaEscort *MetaEscort : MetaTable->Escorts) //Обход эскортных мета-таблиц
+	{		
+		QAction *ActionEscort = ToolBarNavigation->addAction(BUFFER_ICONS("Table"), MetaEscort->LocalName);
+		ActionEscort->setCheckable(true);
+		ActionEscort->setProperty("IsChecked", false);
+		ActionEscort->setProperty("Type", ISNamespace::OAT_Escort);
+		ActionEscort->setProperty("TableName", MetaEscort->TableName);
+		ActionEscort->setProperty("ClassName", MetaEscort->ClassName);
 		ActionEscort->setProperty("ClassFilter", MetaEscort->ClassFilter);
-		ToolBarNavigation->addAction(ActionEscort);
+		g->addAction(ActionEscort);
 	}
-
-	connect(ToolBarNavigation, &ISToolBarObject::ActionClicked, this, &ISObjectFormBase::ToolBarClicked);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateMainTabWidget()
@@ -626,6 +637,29 @@ void ISObjectFormBase::AddObjectEscort(QWidget *ObjectForm)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 {
+	//Обходим все эскортные действия
+	for (QAction *Action: ToolBarNavigation->actions())
+	{
+		if (Action == ActionClicked) //Текущее действие
+		{
+			if (Action->property("IsChecked").toBool()) //Если оно уже выделено - выходим из фукнции
+			{
+				return;
+			}
+			else //Иначе - устанавливаем жирный шрифт
+			{
+				Action->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+				Action->setProperty("IsChecked", true);
+			}
+		}
+		else //Другое действие - отключаем выдлеение и устанавливаем обычный шрифт
+		{
+			Action->setFont(ISDefines::Gui::FONT_APPLICATION);
+			Action->setChecked(false);
+			Action->setProperty("IsChecked", false);
+		}
+	}
+
 	if (WidgetEscort)
 	{
 		delete WidgetEscort;
@@ -654,14 +688,14 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		}
 		else //Открытие таблицы
 		{
-			ISListObjectForm *ListForm = new ISListObjectForm(TableName, ObjectID, WidgetTabEscort);
-			ListForm->SetUID(ISMetaData::Instance().GetMetaTable(TableName)->UID);
+			ISListObjectForm *ListObjectForm = new ISListObjectForm(TableName, ObjectID, WidgetTabEscort);
+			ListObjectForm->SetUID(ISMetaData::Instance().GetMetaTable(TableName)->UID);
 			
 			if (!ClassFilter.isEmpty())
 			{
-				ListForm->GetQueryModel()->SetClassFilter(ClassFilter);
+				ListObjectForm->GetQueryModel()->SetClassFilter(ClassFilter);
 			}
-			WidgetEscort = ListForm;
+			WidgetEscort = ListObjectForm;
 		}
 
 		connect(WidgetEscort, &ISInterfaceMetaForm::AddFormFromTab, this, &ISObjectFormBase::AddObjectEscort);
@@ -824,7 +858,7 @@ bool ISObjectFormBase::Save()
 		RenameReiconForm();
 		SetModificationFlag(false);
 		UpdateObjectActions();
-		ToolBarNavigation->UpdateEnabledActionsList(true);
+		//ToolBarNavigation->UpdateEnabledActionsList(true);
 		ActionFavorites->setEnabled(true);
 		SetValueFieldID(ObjectID);
 

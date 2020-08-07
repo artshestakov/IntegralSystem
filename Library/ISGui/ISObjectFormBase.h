@@ -1,4 +1,3 @@
-
 #pragma once
 #ifndef _ISOBJECTFORMBASE_H_INCLUDED
 #define _ISOBJECTFORMBASE_H_INCLUDED
@@ -7,7 +6,6 @@
 #include "ISInterfaceForm.h"
 #include "ISNamespace.h"
 #include "PMetaClass.h"
-#include "ISToolBarObject.h"
 #include "ISFieldEditBase.h"
 #include "ISLineEdit.h"
 #include "ISInterfaceMetaForm.h"
@@ -109,7 +107,7 @@ private:
 	int ObjectID; //Идентификатор текущего объекта
 	int ParentObjectID; //Идентификатор родителя
 
-	ISToolBarObject *ToolBarNavigation; //Тулбар эскортов
+	QToolBar *ToolBarNavigation; //Тулбар эскортов
 	ISTabWidgetObject *TabWidgetMain; //Главный таб
 	QStackedWidget *StackedWidget;
 	QWidget *WidgetObject; //Виджет объекта

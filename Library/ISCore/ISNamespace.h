@@ -142,7 +142,6 @@ public:
         OAT_Object, //Карточка объекта
         OAT_Escort, //Эскортная форма (список/виджет)
         OAT_Service, //Сервисный эскорт (протокол и т.д.)
-        OAT_Other, //Прочее (например, меню)
     };
 
     enum AttachChatType
