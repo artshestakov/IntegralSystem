@@ -129,7 +129,7 @@ bool CGConfiguratorUpdate::tables()
 			{
 				if (MetaField->QueryText.isEmpty()) //Если поле является обычным полем - комментируем его
 				{
-					Result = CGHelper::CommentField(MetaTable->Name.toLower(), MetaTable->Alias + '_' + MetaField->Name.toLower(), MetaField->LocalListName, ErrorString);
+					Result = CGHelper::CommentField(MetaTable, MetaField, ErrorString);
 				}
 
 				if (!Result)

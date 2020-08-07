@@ -1,6 +1,7 @@
 #include "CGHelper.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
+#include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 										 "FROM information_schema.columns "
@@ -40,11 +41,11 @@ bool CGHelper::CommentTable(PMetaTable *MetaTable, QString &ErrorString)
 		{ "ObjectForm", MetaTable->ObjectForm },
 		{ "ShowOnly", MetaTable->ShowOnly },
 		{ "IsSystem", MetaTable->IsSystem }
-	}).toUtf8();
+	});
 
 	ISQuery qComment;
 	qComment.SetShowLongQuery(false);
-	bool Result = qComment.Execute(QString("COMMENT ON TABLE public.%1 IS '%2'").arg(MetaTable->Name).arg(CommentText));
+	bool Result = qComment.Execute(QString("COMMENT ON TABLE public.%1 IS '%2'").arg(MetaTable->Name.toLower()).arg(CommentText));
 	if (!Result)
 	{
 		ErrorString = qComment.GetErrorString();
@@ -52,11 +53,28 @@ bool CGHelper::CommentTable(PMetaTable *MetaTable, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGHelper::CommentField(const QString &TableName, const QString &FieldName, const QString &Description, QString &ErrorString)
+bool CGHelper::CommentField(PMetaTable *MetaTable, PMetaField *MetaField, QString &ErrorString)
 {
+	QString CommentText = ISSystem::VariantMapToJsonString(
+	{
+		{ "UID", MetaField->UID },
+		{ "Name", MetaField->Name },
+		{ "Type", ISMetaData::Instance().GetTypeDB(MetaField->Type) },
+		{ "Size", MetaField->Size },
+		{ "DefaultValue", MetaField->DefaultValue },
+		{ "LabelName", MetaField->LabelName },
+		{ "LocalListName", MetaField->LocalListName },
+		{ "NotNull", MetaField->NotNull },
+		{ "ReadOnly", MetaField->ReadOnly },
+		{ "HideFromObject", MetaField->HideFromObject },
+		{ "HideFromList", MetaField->HideFromList },
+		{ "Hint", MetaField->Hint },
+		{ "IsSystem", MetaField->IsSystem }
+	});
+
 	ISQuery qComment;
 	qComment.SetShowLongQuery(false);
-	bool Result = qComment.Execute(QString("COMMENT ON COLUMN public.%1.%2 IS '%3'").arg(TableName).arg(FieldName).arg(Description));
+	bool Result = qComment.Execute(QString("COMMENT ON COLUMN public.%1.%2 IS '%3'").arg(MetaTable->Name.toLower()).arg(MetaTable->Alias + '_' + MetaField->Name.toLower()).arg(CommentText));
 	if (!Result)
 	{
 		ErrorString = qComment.GetErrorString();
