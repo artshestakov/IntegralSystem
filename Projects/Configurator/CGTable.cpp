@@ -303,7 +303,11 @@ bool CGTable::CreateNewFields(PMetaTable *MetaTable, QString &ErrorString)
 				ISQuery qAddColumn;
 				qAddColumn.SetShowLongQuery(false);
 				Result = qAddColumn.Execute(AddColumn);
-				if (!Result)
+				if (Result)
+				{
+					ISLOGGER_L(QString("Add field: %1_%2").arg(MetaTable->Alias).arg(MetaField->Name));
+				}
+				else
 				{
 					ErrorString = qAddColumn.GetErrorString();
 					break;
