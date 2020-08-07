@@ -22,6 +22,7 @@ public:
 	static void SetFontWidgetUnderline(QWidget *Widget, bool Underline);
 	static void SetFontWidgetItalic(QWidget *Widget, bool Italic);
 	static void SetFontWidgetBold(QWidget *Widget, bool Bold);
+	static void SetFontWidgetStrikeOut(QWidget *Widget, bool StrikeOut);
 	static QFont StringToFont(const QString &FontText); //Конвертация строки в шрифт, если передается пустая строка, возвращается глобальный шрифт приложения
 	static QByteArray IconToByteArray(const QIcon &Icon); //Конвертация икноки в массив байт
 	static QIcon ByteArrayToIcon(const QByteArray &ByteArray); //Конвертация массива байт в икноку

@@ -76,7 +76,14 @@ static QString QS_FILE_DATA = PREPARE_QUERY("SELECT tfls_data "
 //-----------------------------------------------------------------------------
 static QString QD_FILE = PREPARE_QUERY("DELETE FROM _taskfile WHERE tfls_id = :TaskFileID");
 //-----------------------------------------------------------------------------
-static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, task_id, task_name, task_description, userfullname(tlnk_user), tlnk_creationdate "
+static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
+									   "task_id, "
+									   "task_name, "
+									   "task_description, "
+									   "userfullname(tlnk_user), "
+									   "tlnk_creationdate, "
+									   "(SELECT tsst_uid FROM _taskstatus WHERE tsst_id = task_status) AS task_status_uid, "
+									   "(SELECT tsst_name FROM _taskstatus WHERE tsst_id = task_status) AS task_status_name "
 									   "FROM _tasklink "
 									   "LEFT JOIN _task ON tlnk_link = task_id "
 									   "WHERE NOT tlnk_isdeleted "
@@ -626,11 +633,13 @@ void ISTaskViewForm::LinkLoadList()
 			QString LinkTaskDescription = qSelectLink.ReadColumn("task_description").toString();
 			QString LinkUser = qSelectLink.ReadColumn("userfullname").toString();
 			QString LinkCreationDate = qSelectLink.ReadColumn("tlnk_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+			ISUuid TaskStatusUID = qSelectLink.ReadColumn("task_status_uid");
+			QString TaskStatusName = qSelectLink.ReadColumn("task_status_name").toString();
 			
 			ISLabelLink *LabelLink = new ISLabelLink(QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName), GroupBoxLinkTask);
 			LabelLink->setProperty("TaskID", LinkTaskID);
 			LabelLink->setProperty("LinkID", LinkID);
-			LabelLink->setToolTip(LANG("Task.LinkToolTip").arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
+			LabelLink->setToolTip(LANG("Task.LinkToolTip").arg(TaskStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
 			LabelLink->setWordWrap(true);
 			LabelLink->setContextMenuPolicy(Qt::ActionsContextMenu);
 			connect(LabelLink, &ISLabelLink::Clicked, this, &ISTaskViewForm::LinkOpen);
@@ -640,6 +649,11 @@ void ISTaskViewForm::LinkLoadList()
 			QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), LabelLink);
 			connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::LinkDelete);
 			LabelLink->addAction(ActionDelete);
+
+			if (TaskStatusUID == CONST_UID_TASK_STATUS_DONE || TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE)
+			{
+				ISGui::SetFontWidgetStrikeOut(LabelLink, true);
+			}
 		}
 		GroupBoxLinkTask->setVisible(qSelectLink.GetCountResultRows());
 	}

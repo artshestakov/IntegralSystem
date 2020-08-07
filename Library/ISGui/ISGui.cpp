@@ -250,6 +250,13 @@ void ISGui::SetFontWidgetBold(QWidget *Widget, bool Bold)
 	Widget->setFont(Font);
 }
 //-----------------------------------------------------------------------------
+void ISGui::SetFontWidgetStrikeOut(QWidget *Widget, bool StrikeOut)
+{
+	QFont Font = Widget->font();
+	Font.setStrikeOut(StrikeOut);
+	Widget->setFont(Font);
+}
+//-----------------------------------------------------------------------------
 QFont ISGui::StringToFont(const QString &FontText)
 {
 	return !FontText.isEmpty() ? qvariant_cast<QFont>(FontText) : QApplication::font().toString();
@@ -519,8 +526,8 @@ bool ISGui::ShowUserPasswordForm(int UserID)
 //-----------------------------------------------------------------------------
 void ISGui::ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID)
 {
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_SYSTEM_INFO_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID);
 	SetWaitGlobalCursor(true);
+	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_SYSTEM_INFO_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID);
 	ISRecordInfoForm RecordInfoForm(MetaTable, ObjectID);
 	SetWaitGlobalCursor(false);
 	RecordInfoForm.Exec();

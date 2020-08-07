@@ -833,7 +833,7 @@
   <Local Name="Task.AddLink" Russian="Добавить связанную задачу"/>
   <Local Name="Task.AddComment" Russian="Добавить комментарий"/>
   <Local Name="Task.InputComment" Russian="Введите комментарий"/>
-  <Local Name="Task.LinkToolTip" Russian="Описание задачи:&#10;%1&#10;&#10;Связал:&#10;%2&#10;&#10;Связь создана:&#10;%3"/>
+  <Local Name="Task.LinkToolTip" Russian="Статус:&#10;%1&#10;&#10;Описание задачи:&#10;%2&#10;&#10;Связал:&#10;%3&#10;&#10;Связь создана:&#10;%4"/>
   <Local Name="Task.CommentUserOwner" Russian="%1 (автор)"/>
   <Local Name="Task.Details" Russian="Подробности"/>
   <Local Name="Task.Right.Executor" Russian="Исполнитель"/>
