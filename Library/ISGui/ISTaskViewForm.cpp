@@ -216,7 +216,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	QGroupBox *GroupBoxDescription = new QGroupBox(LANG("Task.Description"), this);
 	GroupBoxDescription->setLayout(new QVBoxLayout());
-	LayoutLeft->addWidget(GroupBoxDescription);
+	GroupBoxDescription->setSizePolicy(GroupBoxDescription->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+	LayoutLeft->addWidget(GroupBoxDescription, 0, Qt::AlignTop);
 
 	LabelDescription = new ISLabelSelectionText(TaskDescription.isEmpty() ? LANG("Task.Description.Empty") : TaskDescription, GroupBoxDescription);
 	LabelDescription->setWordWrap(true);
@@ -239,7 +240,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	connect(ActionFileSave, &QAction::triggered, this, &ISTaskViewForm::FileSave);
 	ListWidgetFiles->addAction(ActionFileSave);
 
-	QAction *ActionFileDelete = ISControls::CreateActionDelete(ListWidgetFiles);
+	QAction *ActionFileDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), ListWidgetFiles);
 	ActionFileDelete->setEnabled(false);
 	connect(ActionFileDelete, &QAction::triggered, this, &ISTaskViewForm::FileDelete);
 	ListWidgetFiles->addAction(ActionFileDelete);
@@ -495,6 +496,7 @@ void ISTaskViewForm::FileLoadList()
 			ListWidgetItem->setData(Qt::UserRole * 2, Extension);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
 		}
+		GroupBoxFiles->setVisible(qSelectFiles.GetCountResultRows());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -635,10 +637,11 @@ void ISTaskViewForm::LinkLoadList()
 			GroupBoxLinkTask->layout()->addWidget(LabelLink);
 			VectorLinks.push_back(LabelLink);
 
-			QAction *ActionDelete = ISControls::CreateActionDelete(LabelLink);
+			QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), LabelLink);
 			connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::LinkDelete);
 			LabelLink->addAction(ActionDelete);
 		}
+		GroupBoxLinkTask->setVisible(qSelectLink.GetCountResultRows());
 	}
 	else
 	{
@@ -740,6 +743,7 @@ void ISTaskViewForm::CommentLoadList()
 			++Index;
 		}
 		GroupBoxComments->setTitle(LANG("Task.Comments").arg(Rows));
+		//GroupBoxComments->setVisible(Rows);
 	}
 	else
 	{
