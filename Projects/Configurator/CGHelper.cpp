@@ -1,5 +1,6 @@
 #include "CGHelper.h"
 #include "ISQuery.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 										 "FROM information_schema.columns "
@@ -26,11 +27,24 @@ bool CGHelper::CheckExistColumn(PMetaTable *MetaTable, const QString &ColumnName
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGHelper::CommentTable(const QString &TableName, const QString &Description, QString &ErrorString)
+bool CGHelper::CommentTable(PMetaTable *MetaTable, QString &ErrorString)
 {
+	QString CommentText = ISSystem::VariantMapToJsonString(
+	{
+		{ "Name", MetaTable->Name },
+		{ "UID", MetaTable->UID },
+		{ "Alias", MetaTable->Alias },
+		{ "LocalName", MetaTable->LocalName },
+		{ "LocalListName", MetaTable->LocalListName },
+		{ "TitleName", MetaTable->TitleName },
+		{ "ObjectForm", MetaTable->ObjectForm },
+		{ "ShowOnly", MetaTable->ShowOnly },
+		{ "IsSystem", MetaTable->IsSystem }
+	}).toUtf8();
+
 	ISQuery qComment;
 	qComment.SetShowLongQuery(false);
-	bool Result = qComment.Execute(QString("COMMENT ON TABLE public.%1 IS '%2'").arg(TableName).arg(Description));
+	bool Result = qComment.Execute(QString("COMMENT ON TABLE public.%1 IS '%2'").arg(MetaTable->Name).arg(CommentText));
 	if (!Result)
 	{
 		ErrorString = qComment.GetErrorString();

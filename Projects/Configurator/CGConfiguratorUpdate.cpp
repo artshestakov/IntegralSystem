@@ -120,7 +120,7 @@ bool CGConfiguratorUpdate::tables()
 
 		if (Result) //Создание/обновление таблицы прошло успешно - комментируем таблицу
 		{
-			Result = CGHelper::CommentTable(MetaTable->Name.toLower(), MetaTable->LocalListName, ErrorString);
+			Result = CGHelper::CommentTable(MetaTable, ErrorString);
 		}
 
 		if (Result) //Комментируем поля таблицы
