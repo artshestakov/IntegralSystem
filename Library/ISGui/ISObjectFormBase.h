@@ -114,10 +114,10 @@ private:
 	QVBoxLayout *WidgetObjectLayout;
 	QWidget *WidgetTabEscort;
 	ISInterfaceMetaForm *WidgetEscort;
-	QToolBar *ToolBar;
+	QToolBar *ToolBar; //Тулбар действий на объектом
 	QFormLayout *FormLayout;
 	ISScrollArea *ScrollAreaMain;
-	QLabel *LabelIsDeleted;
+	QLabel *LabelIsDeleted; //Надпись указывающая на то, что объект помечен на удаление
 	QActionGroup *ActionGroup;
 
 	QAction *ActionSaveClose;
@@ -130,7 +130,7 @@ private:
 	QAction *ActionDeleteCascade;
 	QAction *ActionCancelChange;
 
-	ISLineEdit *EditObjectID;
+	ISLineEdit *EditObjectID; //Виджет отображения идентификатора объекта
 	ISFieldEditBase *BeginFieldEdit; //Указатель на первое поле редактирования информации
 	std::map<QString, ISFieldEditBase*> FieldsMap;
 	std::map<QString, QLabel*> LabelsMap;
