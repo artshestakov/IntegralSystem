@@ -21,7 +21,6 @@ public:
 protected:
 	void tabInserted(int Index) override;
 	void tabRemoved(int Index) override;
-	void FixedTab(int Index);
 	void DuplicateWindow(int Index);
 	void SeparateWindow(int Index);
 	void CloseCliciked();

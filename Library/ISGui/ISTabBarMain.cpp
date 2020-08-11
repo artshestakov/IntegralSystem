@@ -34,21 +34,6 @@ ISTabBarMain::~ISTabBarMain()
 
 }
 //-----------------------------------------------------------------------------
-void ISTabBarMain::AddFixedTab(const QString &TabUID)
-{
-	FixedTabs.append(TabUID);
-}
-//-----------------------------------------------------------------------------
-void ISTabBarMain::RemoveFixedTab(const QString &TabUID)
-{
-	FixedTabs.removeOne(TabUID);
-}
-//-----------------------------------------------------------------------------
-bool ISTabBarMain::CheckFixedTab(const QString &TabUID)
-{
-	return FixedTabs.contains(TabUID);
-}
-//-----------------------------------------------------------------------------
 void ISTabBarMain::mousePressEvent(QMouseEvent *e)
 {
 	QTabBar::mousePressEvent(e);
@@ -69,23 +54,13 @@ void ISTabBarMain::mousePressEvent(QMouseEvent *e)
 		SetVisibleContextActions(true);
 		if (MouseRightClickTabIndex) //Контекстное меню вызывается для вкладок объектов
 		{
-			if (FixedTabs.contains(tabData(MouseRightClickTabIndex).toString()))
-			{
-				ActionFixedTab->setText(LANG("UnfixedTab"));
-				ActionFixedTab->setIcon(BUFFER_ICONS("Tab.Unfixed"));
-			}
-			else
-			{
-				ActionFixedTab->setText(LANG("FixedTab"));
-				ActionFixedTab->setIcon(BUFFER_ICONS("Tab.Fixed"));
-			}
+
 		}
 		else //Контекстное меню вызывается для главной вкладки
 		{
 			ActionCloseTab->setVisible(false);
 			ActionCloseRightTabs->setVisible(false);
 			ActionSeparateWindow->setVisible(false);
-			ActionFixedTab->setVisible(false);
 		}
 		ContextMenu->exec(e->globalPos());
 	}
@@ -95,11 +70,6 @@ void ISTabBarMain::mouseMoveEvent(QMouseEvent *e)
 {
 	if (MouseClick)
 	{
-		if (FixedTabs.contains(tabData(MouseRightClickTabIndex).toString())) //Если вкладка является закрепленной
-		{
-			return;
-		}
-
 		if (currentIndex() >= 1)
 		{
 			if (currentIndex() == 1)
@@ -194,16 +164,6 @@ void ISTabBarMain::CreateContextMenu()
 	connect(ActionSeparateWindow, &QAction::triggered, [=]
 	{
 		emit SeparateWindow(MouseRightClickTabIndex);
-		MouseRightClickTabIndex = 0;
-	});
-
-	ActionFixedTab = new QAction(ContextMenu);
-	ActionFixedTab->setText(LANG("FixedTab"));
-	ActionFixedTab->setIcon(BUFFER_ICONS("Tab.Fixed"));
-	ContextMenu->addAction(ActionFixedTab);
-	connect(ActionFixedTab, &QAction::triggered, [=]
-	{
-		emit FixedTab(MouseRightClickTabIndex);
 		MouseRightClickTabIndex = 0;
 	});
 }

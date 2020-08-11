@@ -420,8 +420,6 @@
   <Local Name="AllTabs" Russian="Все вкладки"/>
   <Local Name="DuplicateTab" Russian="Дублировать вкладку"/>
   <Local Name="InSeparateWindow" Russian="В отдельное окно"/>
-  <Local Name="FixedTab" Russian="Закрепить вкладку"/>
-  <Local Name="UnfixedTab" Russian="Открепить вкладку"/>
   <Local Name="Workspace" Russian="Рабочая область"/>
   <Local Name="ShowHideMenu" Russian="Показать/скрыть меню"/>
   <Local Name="ObjectOther" Russian="Другое"/>

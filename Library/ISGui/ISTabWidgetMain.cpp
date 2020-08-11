@@ -15,7 +15,6 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	setObjectName(metaObject()->className());
 
 	TabBar = new ISTabBarMain(this);
-	connect(TabBar, &ISTabBarMain::FixedTab, this, &ISTabWidgetMain::FixedTab);
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
 	connect(TabBar, &ISTabBarMain::DuplicateWindow, this, &ISTabWidgetMain::DuplicateWindow);
 	connect(TabBar, &ISTabBarMain::SeparateWindow, this, &ISTabWidgetMain::SeparateWindow);
@@ -120,24 +119,6 @@ void ISTabWidgetMain::tabRemoved(int Index)
 	QTabWidget::tabRemoved(Index);
 	RemoveActionTab(Index);
 	DocumentMode();
-}
-//-----------------------------------------------------------------------------
-void ISTabWidgetMain::FixedTab(int Index)
-{
-	QString TabUID = TabBar->tabData(Index).toString();
-	if (TabBar->CheckFixedTab(TabUID)) //Если вкладка уже закреплена
-	{
-		TabBar->RemoveFixedTab(TabUID);
-		TabBar->setTabTextColor(Index, ISDefines::Gui::COLOR_NULL);
-		TabBar->tabButton(Index, QTabBar::RightSide)->setEnabled(true);
-	}
-	else //Если вкладка не закреплена - закрепить
-	{
-		TabBar->AddFixedTab(TabUID);
-		TabBar->setTabTextColor(Index, Qt::red);
-		TabBar->tabButton(Index, QTabBar::RightSide)->setEnabled(false);
-		TabBar->moveTab(Index, 1);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::DuplicateWindow(int Index)
