@@ -20,7 +20,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *e);
 	void wheelEvent(QWheelEvent *e);
 	void CreateContextMenu();
-	void SetVisibleContextActions(bool Visible); //Отобразить все кнопки контекстного меню
 	
 	void CloseAllTabs();
 	void ShowSettingsForm();

@@ -51,7 +51,6 @@ void ISTabBarMain::mousePressEvent(QMouseEvent *e)
 	}
 	else if (e->button() == Qt::RightButton) //Вызов контекстного меню
 	{
-		SetVisibleContextActions(true);
 		if (MouseRightClickTabIndex) //Контекстное меню вызывается для вкладок объектов
 		{
 
@@ -112,58 +111,39 @@ void ISTabBarMain::CreateContextMenu()
 {
 	ContextMenu = new QMenu(this);
 	
-	ActionCloseTab = new QAction(ContextMenu);
-	ActionCloseTab->setText(LANG("CloseTab"));
-	ActionCloseTab->setIcon(BUFFER_ICONS("Tab.Close"));
-	ContextMenu->addAction(ActionCloseTab);
+	ActionCloseTab = new QAction(BUFFER_ICONS("Tab.Close"), LANG("CloseTab"), ContextMenu);
 	connect(ActionCloseTab, &QAction::triggered, this, [=] 
 	{ 
 		emit MidButtonClicked(MouseRightClickTabIndex);
 		MouseRightClickTabIndex = 0;
 	});
+	ContextMenu->addAction(ActionCloseTab);
 
-	ActionCloseRightTabs = new QAction(ContextMenu);
-	ActionCloseRightTabs->setText(LANG("CloseRightTabs"));
-	ActionCloseRightTabs->setIcon(BUFFER_ICONS("Tab.CloseRightTabs"));
+	ActionCloseRightTabs = new QAction(BUFFER_ICONS("Tab.CloseRightTabs"), LANG("CloseRightTabs"), ContextMenu);
 	connect(ActionCloseRightTabs, &QAction::triggered, this, &ISTabBarMain::CloseRightTabs);
 	ContextMenu->addAction(ActionCloseRightTabs);
 
-	ActionCloseOtherTabs = new QAction(ContextMenu);
-	ActionCloseOtherTabs->setText(LANG("CloseOtherTabs"));
-	ActionCloseOtherTabs->setIcon(BUFFER_ICONS("Tab.CloseOtherTabs"));
+	ActionCloseOtherTabs = new QAction(BUFFER_ICONS("Tab.CloseOtherTabs"), LANG("CloseOtherTabs"), ContextMenu);
 	connect(ActionCloseOtherTabs, &QAction::triggered, this, &ISTabBarMain::CloseOtherTabs);
 	ContextMenu->addAction(ActionCloseOtherTabs);
 
-	ActionCloseAllTabs = new QAction(ContextMenu);
-	ActionCloseAllTabs->setText(LANG("CloseAllTabs"));
-	ActionCloseAllTabs->setIcon(BUFFER_ICONS("Tab.CloseAllTabs"));
+	ActionCloseAllTabs = new QAction(BUFFER_ICONS("Tab.CloseAllTabs"), LANG("CloseAllTabs"), ContextMenu);
 	connect(ActionCloseAllTabs, &QAction::triggered, this, &ISTabBarMain::CloseAllTabs);
 	ContextMenu->addAction(ActionCloseAllTabs);
 
-	ActionSettings = new QAction(ContextMenu);
-	ActionSettings->setText(LANG("Settings"));
+	ActionSettings = new QAction(BUFFER_ICONS("Settings.Tabs"), LANG("Settings"), ContextMenu);
 	connect(ActionSettings, &QAction::triggered, this, &ISTabBarMain::ShowSettingsForm);
 	ContextMenu->addAction(ActionSettings);
 
 	ContextMenu->addSeparator();
 
-	ActionSeparateWindow = new QAction(ContextMenu);
-	ActionSeparateWindow->setText(LANG("InSeparateWindow"));
-	ActionSeparateWindow->setIcon(BUFFER_ICONS("Tab.Separated"));
-	ContextMenu->addAction(ActionSeparateWindow);
+	ActionSeparateWindow = new QAction(BUFFER_ICONS("Tab.Separated"), LANG("InSeparateWindow"), ContextMenu);
 	connect(ActionSeparateWindow, &QAction::triggered, [=]
 	{
 		emit SeparateWindow(MouseRightClickTabIndex);
 		MouseRightClickTabIndex = 0;
 	});
-}
-//-----------------------------------------------------------------------------
-void ISTabBarMain::SetVisibleContextActions(bool Visible)
-{
-	for (QAction *Action : ContextMenu->actions())
-	{
-		Action->setVisible(Visible);
-	}
+	ContextMenu->addAction(ActionSeparateWindow);
 }
 //-----------------------------------------------------------------------------
 void ISTabBarMain::CloseAllTabs()
