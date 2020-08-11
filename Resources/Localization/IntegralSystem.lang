@@ -177,7 +177,6 @@
   <Local Name="Message.Warning.AccountLifetimeLeftLastDay" Russian="ВНИМАНИЕ! Сегодня истекает срок действия Вашей учётной записи."/>
   <Local Name="Message.Warning.AccountLifetimeLeftLastDayTwo" Russian="ВНИМАНИЕ! Завтра истекает срок действия Вашей учётной записи."/>
   <Local Name="Message.Warning.AccountLifetimeEnded" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи закончился. Обратитесь к администратору системы за подробностями для восстановления доступа."/>
-  <Local Name="Message.Warning.DuplicateFormNotObjectFormBase" Russian="Дублируемая вкладка не является базовой формой объекта."/>
   <Local Name="Message.Warning.RecipientIsNull" Russian="Заполните поле &quot;Отправитель&quot;!"/>
   <Local Name="Message.Warning.TypeDispatchIsNull" Russian="Выберите тип отправки письма!"/>
   <Local Name="Message.Warning.CreateCopyMessageNotDrafts" Russian="Разрешено создавать копию сообщения только со статусом &quot;Черновик&quot;."/>
@@ -418,7 +417,6 @@
   <Local Name="Card" Russian="Карточка"/>
   <Local Name="CloseCard" Russian="Закрыть карточку"/>
   <Local Name="AllTabs" Russian="Все вкладки"/>
-  <Local Name="DuplicateTab" Russian="Дублировать вкладку"/>
   <Local Name="InSeparateWindow" Russian="В отдельное окно"/>
   <Local Name="Workspace" Russian="Рабочая область"/>
   <Local Name="ShowHideMenu" Russian="Показать/скрыть меню"/>

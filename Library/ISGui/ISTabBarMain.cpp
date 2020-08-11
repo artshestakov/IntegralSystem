@@ -147,16 +147,6 @@ void ISTabBarMain::CreateContextMenu()
 
 	ContextMenu->addSeparator();
 
-	ActionDuplicate = new QAction(ContextMenu);
-	ActionDuplicate->setText(LANG("DuplicateTab"));
-	ActionDuplicate->setIcon(BUFFER_ICONS("Tab.Duplicate"));
-	ContextMenu->addAction(ActionDuplicate);
-	connect(ActionDuplicate, &QAction::triggered, [=]
-	{
-		emit DuplicateWindow(MouseRightClickTabIndex);
-		MouseRightClickTabIndex = 0;
-	});
-
 	ActionSeparateWindow = new QAction(ContextMenu);
 	ActionSeparateWindow->setText(LANG("InSeparateWindow"));
 	ActionSeparateWindow->setIcon(BUFFER_ICONS("Tab.Separated"));

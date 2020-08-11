@@ -8,7 +8,6 @@ class ISTabBarMain : public QTabBar
 
 signals:
 	void MidButtonClicked(int Index);
-	void DuplicateWindow(int Index);
 	void SeparateWindow(int Index);
 
 public:
@@ -38,7 +37,6 @@ private:
 	QAction *ActionCloseOtherTabs;
 	QAction *ActionCloseAllTabs;
 	QAction *ActionSettings;
-	QAction *ActionDuplicate;
 	QAction *ActionSeparateWindow;
 
 	int MouseRightClickTabIndex;

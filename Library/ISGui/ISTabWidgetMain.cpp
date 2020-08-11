@@ -16,7 +16,6 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 
 	TabBar = new ISTabBarMain(this);
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
-	connect(TabBar, &ISTabBarMain::DuplicateWindow, this, &ISTabWidgetMain::DuplicateWindow);
 	connect(TabBar, &ISTabBarMain::SeparateWindow, this, &ISTabWidgetMain::SeparateWindow);
 	setTabBar(TabBar);
 	
@@ -119,20 +118,6 @@ void ISTabWidgetMain::tabRemoved(int Index)
 	QTabWidget::tabRemoved(Index);
 	RemoveActionTab(Index);
 	DocumentMode();
-}
-//-----------------------------------------------------------------------------
-void ISTabWidgetMain::DuplicateWindow(int Index)
-{
-	ISObjectFormBase *ObjectFormBase = dynamic_cast<ISObjectFormBase*>(widget(Index));
-	if (ObjectFormBase)
-	{
-		ISObjectFormBase *DuplicateObjectForm = ISGui::CreateObjectForm(ObjectFormBase->GetFormType(), ObjectFormBase->GetMetaTable()->Name, ObjectFormBase->GetObjectID());
-		emit Duplicate(DuplicateObjectForm);
-	}
-	else
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Warning.DuplicateFormNotObjectFormBase"));
-	}
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::SeparateWindow(int Index)
