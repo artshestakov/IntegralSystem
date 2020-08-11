@@ -250,14 +250,12 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	QAction *ActionProtocol = ToolBarEscort->addAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"));
 	ActionProtocol->setCheckable(true);
 	ActionProtocol->setProperty("IsChecked", false);
-	//ActionProtocol->setProperty("Type", ISNamespace::OAT_Service);
 	ActionProtocol->setProperty("ClassName", "ISProtocolObjectListForm");
 	ActionGroupEscort->addAction(ActionProtocol);
 
 	QAction *ActionDiscussion = ToolBarEscort->addAction(BUFFER_ICONS("Discussion"), LANG("Discussion"));
 	ActionDiscussion->setCheckable(true);
 	ActionDiscussion->setProperty("IsChecked", false);
-	//ActionDiscussion->setProperty("Type", ISNamespace::OAT_Service);
 	ActionDiscussion->setProperty("ClassName", "ISDiscussionListForm");
 	ActionGroupEscort->addAction(ActionDiscussion);
 
@@ -268,7 +266,6 @@ void ISObjectFormBase::CreateToolBarEscorts()
 		QAction *ActionEscort = ToolBarEscort->addAction(BUFFER_ICONS("Table"), MetaEscort->LocalName);
 		ActionEscort->setCheckable(true);
 		ActionEscort->setProperty("IsChecked", false);
-		//ActionEscort->setProperty("Type", ISNamespace::OAT_Escort);
 		ActionEscort->setProperty("TableName", MetaEscort->TableName);
 		ActionEscort->setProperty("ClassName", MetaEscort->ClassName);
 		ActionEscort->setProperty("ClassFilter", MetaEscort->ClassFilter);
@@ -1063,8 +1060,7 @@ void ISObjectFormBase::SetEnabledActions(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddWidgetToBottom(QWidget *Widget)
 {
-	//???
-	//WidgetObjectLayout->addWidget(Widget);
+	WidgetObject->layout()->addWidget(Widget);
 }
 //-----------------------------------------------------------------------------
 QString ISObjectFormBase::GetObjectName() const
