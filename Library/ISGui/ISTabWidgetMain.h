@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISTabBarMain.h"
 //-----------------------------------------------------------------------------
 class ISTabWidgetMain : public QTabWidget
 {
@@ -29,7 +28,6 @@ protected:
 
 private:
 	QWidget *MainTab;
-	ISTabBarMain *TabBar;
 	QToolButton *ButtonMenu;
 };
 //-----------------------------------------------------------------------------

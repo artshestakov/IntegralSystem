@@ -364,6 +364,7 @@
   <Local Name="CloseOtherTabs" Russian="Закрыть другие вкладки"/>
   <Local Name="CloseAllTabs" Russian="Закрыть все вкладки"/>
   <Local Name="Desktop" Russian="Рабочий стол"/>
+  <Local Name="CloseLeftTabs" Russian="Закрыть вкладки слева"/>
   <Local Name="CloseRightTabs" Russian="Закрыть вкладки справа"/>
   <Local Name="AutoUpdateList" Russian="Автообновление списка"/>
   <Local Name="DisconnectUser" Russian="Отключить пользователя"/>

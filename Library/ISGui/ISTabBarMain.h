@@ -8,7 +8,7 @@ class ISTabBarMain : public QTabBar
 
 signals:
 	void MidButtonClicked(int Index);
-	void SeparateWindow(int Index);
+	void SeparateWindowSignal(int Index);
 
 public:
 	ISTabBarMain(QWidget *parent = 0);
@@ -19,12 +19,14 @@ protected:
 	void mouseMoveEvent(QMouseEvent *e);
 	void mouseReleaseEvent(QMouseEvent *e);
 	void wheelEvent(QWheelEvent *e);
-	void CreateContextMenu();
 	
-	void CloseAllTabs();
-	void ShowSettingsForm();
-	void CloseOtherTabs();
-	void CloseRightTabs();
+	void CloseTab(); //Закрыть вкладку
+	void CloseLeftTabs(); //Закрыть вкладки слева
+	void CloseRightTabs(); //Закрыть вкладки справа
+	void CloseOtherTabs(); //Закрыть другие вкладки
+	void CloseAllTabs(); //Закрыть все вкладки
+	void ShowSettingsForm(); //Отобразить форму настроек для вкладок
+	void SeparateWindowClicked();
 
 private:
 	QPointF PressPos;
@@ -32,6 +34,7 @@ private:
 	
 	QMenu *ContextMenu;
 	QAction *ActionCloseTab;
+	QAction *ActionCloseLeftTabs;
 	QAction *ActionCloseRightTabs;
 	QAction *ActionCloseOtherTabs;
 	QAction *ActionCloseAllTabs;

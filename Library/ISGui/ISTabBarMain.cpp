@@ -11,6 +11,7 @@ ISTabBarMain::ISTabBarMain(QWidget *parent)
 	MouseRightClickTabIndex(0)
 {
 	setCursor(CURSOR_POINTING_HAND);
+	setObjectName(metaObject()->className());
 
 	QString SelectionBehavior = SETTING_STRING(CONST_UID_SETTING_TABS_SELECTIONBEHAVIOR);
 	if (SelectionBehavior == "SelectLeftTab")
@@ -25,7 +26,16 @@ ISTabBarMain::ISTabBarMain(QWidget *parent)
 	{
 		setSelectionBehaviorOnRemove(QTabBar::SelectionBehavior::SelectPreviousTab);
 	}
-	CreateContextMenu();
+	
+	ContextMenu = new QMenu(this);
+	ActionCloseTab = ContextMenu->addAction(BUFFER_ICONS("Tab.Close"), LANG("CloseTab"), this, &ISTabBarMain::CloseTab);
+	ActionCloseLeftTabs = ContextMenu->addAction(BUFFER_ICONS("Tab.CloseLeftTab"), LANG("CloseLeftTabs"), this, &ISTabBarMain::CloseLeftTabs);
+	ActionCloseRightTabs = ContextMenu->addAction(BUFFER_ICONS("Tab.CloseRightTabs"), LANG("CloseRightTabs"), this, &ISTabBarMain::CloseRightTabs);
+	ActionCloseOtherTabs = ContextMenu->addAction(BUFFER_ICONS("Tab.CloseOtherTabs"), LANG("CloseOtherTabs"), this, &ISTabBarMain::CloseOtherTabs);
+	ActionCloseAllTabs = ContextMenu->addAction(BUFFER_ICONS("Tab.CloseAllTabs"), LANG("CloseAllTabs"), this, &ISTabBarMain::CloseAllTabs);
+	ActionSettings = ContextMenu->addAction(BUFFER_ICONS("Settings.Tabs"), LANG("Settings"), this, &ISTabBarMain::ShowSettingsForm);
+	ContextMenu->addSeparator();
+	ActionSeparateWindow = ContextMenu->addAction(BUFFER_ICONS("Tab.Separated"), LANG("InSeparateWindow"), this, &ISTabBarMain::SeparateWindowClicked);
 }
 //-----------------------------------------------------------------------------
 ISTabBarMain::~ISTabBarMain()
@@ -57,6 +67,7 @@ void ISTabBarMain::mousePressEvent(QMouseEvent *e)
 		else //Контекстное меню вызывается для главной вкладки
 		{
 			ActionCloseTab->setVisible(false);
+			ActionCloseLeftTabs->setVisible(false);
 			ActionCloseRightTabs->setVisible(false);
 			ActionSeparateWindow->setVisible(false);
 		}
@@ -106,43 +117,40 @@ void ISTabBarMain::wheelEvent(QWheelEvent *e)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTabBarMain::CreateContextMenu()
+void ISTabBarMain::CloseTab()
 {
-	ContextMenu = new QMenu(this);
-	
-	ActionCloseTab = new QAction(BUFFER_ICONS("Tab.Close"), LANG("CloseTab"), ContextMenu);
-	connect(ActionCloseTab, &QAction::triggered, this, [=] 
-	{ 
-		emit MidButtonClicked(MouseRightClickTabIndex);
-		MouseRightClickTabIndex = 0;
-	});
-	ContextMenu->addAction(ActionCloseTab);
-
-	ActionCloseRightTabs = new QAction(BUFFER_ICONS("Tab.CloseRightTabs"), LANG("CloseRightTabs"), ContextMenu);
-	connect(ActionCloseRightTabs, &QAction::triggered, this, &ISTabBarMain::CloseRightTabs);
-	ContextMenu->addAction(ActionCloseRightTabs);
-
-	ActionCloseOtherTabs = new QAction(BUFFER_ICONS("Tab.CloseOtherTabs"), LANG("CloseOtherTabs"), ContextMenu);
-	connect(ActionCloseOtherTabs, &QAction::triggered, this, &ISTabBarMain::CloseOtherTabs);
-	ContextMenu->addAction(ActionCloseOtherTabs);
-
-	ActionCloseAllTabs = new QAction(BUFFER_ICONS("Tab.CloseAllTabs"), LANG("CloseAllTabs"), ContextMenu);
-	connect(ActionCloseAllTabs, &QAction::triggered, this, &ISTabBarMain::CloseAllTabs);
-	ContextMenu->addAction(ActionCloseAllTabs);
-
-	ActionSettings = new QAction(BUFFER_ICONS("Settings.Tabs"), LANG("Settings"), ContextMenu);
-	connect(ActionSettings, &QAction::triggered, this, &ISTabBarMain::ShowSettingsForm);
-	ContextMenu->addAction(ActionSettings);
-
-	ContextMenu->addSeparator();
-
-	ActionSeparateWindow = new QAction(BUFFER_ICONS("Tab.Separated"), LANG("InSeparateWindow"), ContextMenu);
-	connect(ActionSeparateWindow, &QAction::triggered, [=]
+	emit MidButtonClicked(MouseRightClickTabIndex);
+	MouseRightClickTabIndex = 0;
+}
+//-----------------------------------------------------------------------------
+void ISTabBarMain::CloseLeftTabs()
+{
+	for (int i = MouseRightClickTabIndex - 1; i > 0; --i)
 	{
-		emit SeparateWindow(MouseRightClickTabIndex);
-		MouseRightClickTabIndex = 0;
-	});
-	ContextMenu->addAction(ActionSeparateWindow);
+		emit MidButtonClicked(i);
+	}
+	MouseRightClickTabIndex = 0;
+}
+//-----------------------------------------------------------------------------
+void ISTabBarMain::CloseRightTabs()
+{
+	for (int i = count() - 1; i > MouseRightClickTabIndex; --i)
+	{
+		emit MidButtonClicked(i);
+	}
+	MouseRightClickTabIndex = 0;
+}
+//-----------------------------------------------------------------------------
+void ISTabBarMain::CloseOtherTabs()
+{
+	for (int i = count() - 1; i > 0; --i)
+	{
+		if (MouseRightClickTabIndex != i)
+		{
+			emit MidButtonClicked(i);
+		}
+	}
+	MouseRightClickTabIndex = 0;
 }
 //-----------------------------------------------------------------------------
 void ISTabBarMain::CloseAllTabs()
@@ -159,24 +167,9 @@ void ISTabBarMain::ShowSettingsForm()
 	ISGui::ShowSettingsForm(CONST_UID_SETTING_GROUP_TABS);
 }
 //-----------------------------------------------------------------------------
-void ISTabBarMain::CloseOtherTabs()
+void ISTabBarMain::SeparateWindowClicked()
 {
-	for (int i = count() - 1; i > 0; --i)
-	{
-		if (MouseRightClickTabIndex != i)
-		{
-			emit MidButtonClicked(i);
-		}
-	}
-	MouseRightClickTabIndex = 0;
-}
-//-----------------------------------------------------------------------------
-void ISTabBarMain::CloseRightTabs()
-{
-	for (int i = count() - 1; i > MouseRightClickTabIndex; --i)
-	{
-		emit MidButtonClicked(i);
-	}
+	emit SeparateWindowSignal(MouseRightClickTabIndex);
 	MouseRightClickTabIndex = 0;
 }
 //-----------------------------------------------------------------------------

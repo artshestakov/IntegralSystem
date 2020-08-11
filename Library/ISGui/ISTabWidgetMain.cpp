@@ -9,14 +9,16 @@
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
 #include "ISMessageBox.h"
+#include "ISTabBarMain.h"
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {
-	TabBar = new ISTabBarMain(this);
+	ISTabBarMain *TabBar = new ISTabBarMain(this);
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
-	connect(TabBar, &ISTabBarMain::SeparateWindow, this, &ISTabWidgetMain::SeparateWindow);
+	connect(TabBar, &ISTabBarMain::SeparateWindowSignal, this, &ISTabWidgetMain::SeparateWindow);
 	setTabBar(TabBar);
-	
+
+	setObjectName(metaObject()->className());
 	setTabsClosable(true);
 	setMovable(true);
 	setTabBarAutoHide(true);
@@ -51,7 +53,7 @@ void ISTabWidgetMain::RemoveActionTab(int Index)
 {
 	for (QAction *Action : ButtonMenu->menu()->actions())
 	{
-		if (Action->property("ID").toString() == TabBar->tabData(Index).toString())
+		if (Action->property("ID").toString() == tabBar()->tabData(Index).toString())
 		{
 			ButtonMenu->menu()->removeAction(Action);
 
@@ -66,13 +68,11 @@ void ISTabWidgetMain::RemoveActionTab(int Index)
 void ISTabWidgetMain::tabInserted(int Index)
 {
 	QTabWidget::tabInserted(Index);
-
 	DocumentMode();
-
 	if (Index)
 	{
 		ISUuid ID = ISSystem::GenerateUuid();
-		TabBar->setTabData(Index, ID);
+		tabBar()->setTabData(Index, ID);
 
 		QToolButton *ButtonClose = new QToolButton(this);
 		ButtonClose->setToolTip(LANG("CloseTab"));
@@ -82,7 +82,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 		ButtonClose->setCursor(CURSOR_POINTING_HAND);
 		ButtonClose->setFixedSize(ISDefines::Gui::SIZE_18_18);
 		connect(ButtonClose, &QToolButton::clicked, this, &ISTabWidgetMain::CloseCliciked);
-		TabBar->setTabButton(Index, QTabBar::RightSide, ButtonClose);
+		tabBar()->setTabButton(Index, QTabBar::RightSide, ButtonClose);
 
 		QAction *ActionTab = new QAction(ButtonMenu->menu());
 		ActionTab->setText(widget(Index)->windowTitle());
@@ -104,7 +104,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 		ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_18_18);
 		ButtonMenu->setPopupMode(QToolButton::InstantPopup);
 		ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-		TabBar->setTabButton(Index, QTabBar::RightSide, ButtonMenu);
+		tabBar()->setTabButton(Index, QTabBar::RightSide, ButtonMenu);
 
 		ButtonMenu->setMenu(new QMenu(ButtonMenu));
 		connect(ButtonMenu->menu(), &QMenu::triggered, this, &ISTabWidgetMain::TabsMenuTriggered);
@@ -134,7 +134,7 @@ void ISTabWidgetMain::CloseCliciked()
 {
 	for (int i = 0; i < count(); ++i) //Обход вкладок
 	{
-		if (TabBar->tabData(i).toString() == sender()->property("ID").toString())
+		if (tabBar()->tabData(i).toString() == sender()->property("ID").toString())
 		{
 			CloseTabFromIndex(i);
 			break;
