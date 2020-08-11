@@ -988,12 +988,6 @@
   <Local Name="ContextMenu.SelectAll" Russian="Выделить всё"/>
   <Local Name="ContextMenu.ToUpper" Russian="ПРОПИСНЫЕ"/>
   <Local Name="ContextMenu.ToUpper.ToolTip" Russian="Перевод выделенного текста в верхний регистр"/>
-  <Local Name="ContextMenu.Google" Russian="Google поиск"/>
-  <Local Name="ContextMenu.Yandex" Russian="Яндекс"/>
-  <Local Name="ContextMenu.Wikipedia" Russian="Википедия"/>
-  <Local Name="ContextMenu.Mail" Russian="Mail.ru"/>
-  <Local Name="ContextMenu.Bing" Russian="Bing"/>
-  <Local Name="ContextMenu.Yahoo" Russian="Yahoo"/>
   <Local Name="ContextMenu.ToLower" Russian="строчные"/>
   <Local Name="ContextMenu.ToLower.ToolTip" Russian="Перевод выделенного текста в нижний регистр"/>
   <Local Name="ContextMenu.Image.SelectFile" Russian="Выбрать файл"/>

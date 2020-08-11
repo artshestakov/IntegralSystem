@@ -196,60 +196,6 @@ QAction* ISControls::GetActionContextToLower(QObject *ParentObject)
 	return ContextActionLower;
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextGoogle(QObject *ParentObject)
-{
-	QAction *ContextActionGoogle = new QAction(ParentObject);
-	ContextActionGoogle->setText(LANG("ContextMenu.Google"));
-	ContextActionGoogle->setToolTip(LANG("ContextMenu.Google"));
-	ContextActionGoogle->setIcon(BUFFER_ICONS("Google"));
-	return ContextActionGoogle;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextYandex(QObject *ParentObject)
-{
-	QAction *ContextActionYandex = new QAction(ParentObject);
-	ContextActionYandex->setText(LANG("ContextMenu.Yandex"));
-	ContextActionYandex->setToolTip(LANG("ContextMenu.Yandex"));
-	ContextActionYandex->setIcon(BUFFER_ICONS("Yandex"));
-	return ContextActionYandex;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextWikipedia(QObject *ParentObject)
-{
-	QAction *ContextActionWikipedia = new QAction(ParentObject);
-	ContextActionWikipedia->setText(LANG("ContextMenu.Wikipedia"));
-	ContextActionWikipedia->setToolTip(LANG("ContextMenu.Wikipedia"));
-	ContextActionWikipedia->setIcon(BUFFER_ICONS("Wikipedia"));
-	return ContextActionWikipedia;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextMail(QObject *ParentObject)
-{
-	QAction *ContextActionMail = new QAction(ParentObject);
-	ContextActionMail->setText(LANG("ContextMenu.Mail"));
-	ContextActionMail->setToolTip(LANG("ContextMenu.Mail"));
-	ContextActionMail->setIcon(BUFFER_ICONS("Mail.ru"));
-	return ContextActionMail;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextBing(QObject *ParentObject)
-{
-	QAction *ContextActionBing = new QAction(ParentObject);
-	ContextActionBing->setText(LANG("ContextMenu.Bing"));
-	ContextActionBing->setToolTip(LANG("ContextMenu.Bing"));
-	ContextActionBing->setIcon(BUFFER_ICONS("Bing"));
-	return ContextActionBing;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::GetActionContextYahoo(QObject *ParentObject)
-{
-	QAction *ContextActionYahoo = new QAction(ParentObject);
-	ContextActionYahoo->setText(LANG("ContextMenu.Yahoo"));
-	ContextActionYahoo->setToolTip(LANG("ContextMenu.Yahoo"));
-	ContextActionYahoo->setIcon(BUFFER_ICONS("Yahoo"));
-	return ContextActionYahoo;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionCreate(QObject *ParentObject)
 {
 	QAction *ActionCreate = new QAction(ParentObject);

@@ -35,12 +35,6 @@ public:
 	static QAction* GetActionContextSelectAll(QObject *ParentObject); //Действие выделить все
 	static QAction* GetActionContextToUpper(QObject *ParentObject); //Действие верхний регистр
 	static QAction* GetActionContextToLower(QObject *ParentObject); //Действие нижний регистр
-	static QAction* GetActionContextGoogle(QObject *ParentObject); //Действие поиск в Google
-	static QAction* GetActionContextYandex(QObject *ParentObject); //Действие поиск в Яндексе
-	static QAction* GetActionContextWikipedia(QObject *ParentObject); //Действие поиск в Википедии
-	static QAction* GetActionContextMail(QObject *ParentObject); //Действие поиск в Mail.ru
-	static QAction* GetActionContextBing(QObject *ParentObject); //Действие поиск в Bing
-	static QAction* GetActionContextYahoo(QObject *ParentObject); //Действие поиск в Yahoo
 
 //БАЗОВАЯ ФОРМА СПИСКА
 	static QAction* CreateActionCreate(QObject *ParentObject);

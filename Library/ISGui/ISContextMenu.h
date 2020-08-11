@@ -53,12 +53,6 @@ class ISContextMenuText : public ISContextMenuBase
 signals:
 	void UppercaseText();
 	void LowercaseText();
-	void SearchGoogle();
-	void SearchYandex();
-	void SearchWikipedia();
-	void SearchMail();
-	void SearchBing();
-	void SearchYahoo();
 
 public:
 	ISContextMenuText(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty, int SelectedTextCount);

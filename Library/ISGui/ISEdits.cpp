@@ -144,30 +144,6 @@ void ISQLineEdit::contextMenuEvent(QContextMenuEvent *e)
 		setText(Text.replace(SelectionStart, LowerText.length(), LowerText));
 		setSelection(SelectionStart, LowerText.length());
 	});
-	connect(&ContextMenu, &ISContextMenuText::SearchGoogle, [=]
-	{
-		ISGui::OpenUrl("https://www.google.ru/search?q=" + text());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchYandex, [=]
-	{
-		ISGui::OpenUrl("https://www.yandex.ru/search/?text=" + text());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchWikipedia, [=]
-	{
-		ISGui::OpenUrl("https://ru.wikipedia.org/wiki/Special:Search?search=" + text());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchMail, [=]
-	{
-		ISGui::OpenUrl("https://go.mail.ru/search?q=" + text());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchBing, [=]
-	{
-		ISGui::OpenUrl("https://www.bing.com/search?q=" + text());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchYahoo, [=]
-	{
-		ISGui::OpenUrl("https://search.yahoo.com/search?p=" + text());
-	});
 	ISGui::SetWaitGlobalCursor(false);
 	ContextMenu.exec(e->globalPos());
 }
@@ -474,30 +450,6 @@ void ISQTextEdit::contextMenuEvent(QContextMenuEvent *e)
 		TextCursor.setPosition(SelectionStart);
 		TextCursor.setPosition(SelectionEnd, QTextCursor::KeepAnchor);
 		setTextCursor(TextCursor);
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchGoogle, [=]
-	{
-		ISGui::OpenUrl("https://www.google.ru/search?q=" + toPlainText());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchYandex, [=]
-	{
-		ISGui::OpenUrl("https://www.yandex.ru/search/?text=" + toPlainText());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchWikipedia, [=]
-	{
-		ISGui::OpenUrl("https://ru.wikipedia.org/wiki/Special:Search?search=" + toPlainText());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchMail, [=]
-	{
-		ISGui::OpenUrl("https://go.mail.ru/search?q=" + toPlainText());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchBing, [=]
-	{
-		ISGui::OpenUrl("https://www.bing.com/search?q=" + toPlainText());
-	});
-	connect(&ContextMenu, &ISContextMenuText::SearchYahoo, [=]
-	{
-		ISGui::OpenUrl("https://search.yahoo.com/search?p=" + toPlainText());
 	});
 	ISGui::SetWaitGlobalCursor(false);
 	ContextMenu.exec(e->globalPos());
