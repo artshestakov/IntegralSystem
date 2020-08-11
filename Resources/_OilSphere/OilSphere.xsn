@@ -30,6 +30,28 @@
       <Foreign Field="Type" ForeignClass="CounterpartyType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Status" ForeignClass="CounterpartyStatus" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
+    <Escorts>
+      <Escort LocalName="Баланс" TableName="CounterpartyBalance" ClassFilter="cpbl_counterparty = :ParentObjectID"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="CounterpartyBalance" UID="{D757B654-6B39-4607-A00D-43D9140B6A89}" Alias="cpbl" LocalName="Баланс" LocalListName="Баланс" TitleName="Counterparty" ClassFilterField="Counterparty">
+    <Fields>
+      <Field UID="{1EA7C67D-02A9-421A-B742-FC25DFE2808F}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{3D7356EE-D435-424C-B0E8-E72962E069C3}" Name="Operation" Type="Int" LabelName="Операция" LocalListName="Операция" NotNull="true"/>
+      <Field UID="{2D7B6C71-3FA2-4CE8-95F7-098D2E404684}" Name="Date" Type="Date" LabelName="Дата операции" LocalListName="Дата операции" NotNull="true"/>
+      <Field UID="{EA7132AB-F685-49B5-BDE1-69793DF5C86F}" Name="Sum" Type="Double" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Counterparty"/>
+      <Index Field="Operation"/>
+      <Index Field="Date"/>
+      <Index Field="Sum"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Operation" ForeignClass="OperationType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
   </Table>
 
   <Table Name="Sales" UID="{134C26BD-E852-4B35-B661-E6921620784B}" Alias="sals" LocalName="Продажа" LocalListName="Продажи" TitleName="Counterparty">
@@ -341,6 +363,15 @@
     </Fields>
     <Indexes>
       <Index Field="FIO" Unique="true"/>
+    </Indexes>
+  </Table>
+  
+  <Table Name="OperationType" UID="{398473D9-FC00-4565-99A2-C70E35A95160}" Alias="optp" LocalName="Тип операции" LocalListName="Тип операции" TitleName="Name">
+    <Fields>
+      <Field UID="{610F62E2-B596-41DA-BB65-B08F64F395E2}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
     </Indexes>
   </Table>
 
