@@ -16,6 +16,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	ISTabBarMain *TabBar = new ISTabBarMain(this);
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
 	connect(TabBar, &ISTabBarMain::SeparateWindowSignal, this, &ISTabWidgetMain::SeparateWindow);
+	connect(TabBar, &ISTabBarMain::tabMoved, this, &ISTabWidgetMain::TabMoved);
 	setTabBar(TabBar);
 
 	setObjectName(metaObject()->className());
@@ -31,7 +32,20 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 
 	MainTab = new QWidget(this);
 	MainTab->setLayout(LayoutMainTab);
-	addTab(MainTab, QString());
+	int IndexMainTab = addTab(MainTab, QString());
+
+	ButtonMenu = new QToolButton(this);
+	ButtonMenu->setAutoRaise(true);
+	ButtonMenu->setToolTip(LANG("AllTabs"));
+	ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
+	ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_18_18);
+	ButtonMenu->setPopupMode(QToolButton::InstantPopup);
+	ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
+	tabBar()->setTabButton(IndexMainTab, QTabBar::RightSide, ButtonMenu);
+
+	Menu = new QMenu(ButtonMenu);
+	connect(Menu, &QMenu::triggered, this, &ISTabWidgetMain::TabsMenuTriggered);
+	ButtonMenu->setMenu(Menu);
 }
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::~ISTabWidgetMain()
@@ -44,31 +58,9 @@ QWidget* ISTabWidgetMain::GetMainTab()
 	return MainTab;
 }
 //-----------------------------------------------------------------------------
-void ISTabWidgetMain::ActivateMainTab()
-{
-	setCurrentWidget(MainTab);
-}
-//-----------------------------------------------------------------------------
-void ISTabWidgetMain::RemoveActionTab(int Index)
-{
-	for (QAction *Action : ButtonMenu->menu()->actions())
-	{
-		if (Action->property("ID").toString() == tabBar()->tabData(Index).toString())
-		{
-			ButtonMenu->menu()->removeAction(Action);
-
-			delete Action;
-			Action = nullptr;
-
-			break;
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISTabWidgetMain::tabInserted(int Index)
 {
 	QTabWidget::tabInserted(Index);
-	DocumentMode();
 	if (Index)
 	{
 		ISUuid ID = ISSystem::GenerateUuid();
@@ -83,56 +75,48 @@ void ISTabWidgetMain::tabInserted(int Index)
 		ButtonClose->setFixedSize(ISDefines::Gui::SIZE_18_18);
 		connect(ButtonClose, &QToolButton::clicked, this, &ISTabWidgetMain::CloseCliciked);
 		tabBar()->setTabButton(Index, QTabBar::RightSide, ButtonClose);
-
-		QAction *ActionTab = new QAction(ButtonMenu->menu());
-		ActionTab->setText(widget(Index)->windowTitle());
-		ActionTab->setToolTip(widget(Index)->windowTitle());
-		ActionTab->setIcon(widget(Index)->windowIcon());
-		ActionTab->setProperty("ID", ID);
-		ButtonMenu->menu()->addAction(ActionTab);
-
-		connect(widget(Index), &QWidget::windowTitleChanged, ActionTab, &QAction::setText);
-		connect(widget(Index), &QWidget::windowTitleChanged, ActionTab, &QAction::setToolTip);
-		connect(widget(Index), &QWidget::windowIconChanged, ActionTab, &QAction::setIcon);
-	}
-	else
-	{
-		ButtonMenu = new QToolButton(this);
-		ButtonMenu->setAutoRaise(true);
-		ButtonMenu->setToolTip(LANG("AllTabs"));
-		ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
-		ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_18_18);
-		ButtonMenu->setPopupMode(QToolButton::InstantPopup);
-		ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-		tabBar()->setTabButton(Index, QTabBar::RightSide, ButtonMenu);
-
-		ButtonMenu->setMenu(new QMenu(ButtonMenu));
-		connect(ButtonMenu->menu(), &QMenu::triggered, this, &ISTabWidgetMain::TabsMenuTriggered);
+		ReCreateMenu();
 	}
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::tabRemoved(int Index)
 {
 	QTabWidget::tabRemoved(Index);
-	RemoveActionTab(Index);
-	DocumentMode();
+	ReCreateMenu();
+}
+//-----------------------------------------------------------------------------
+void ISTabWidgetMain::TabMoved(int IndexFrom, int IndexTo)
+{
+	Q_UNUSED(IndexFrom);
+	Q_UNUSED(IndexTo);
+	QTimer::singleShot(100, this, &ISTabWidgetMain::ReCreateMenu);
+}
+//-----------------------------------------------------------------------------
+void ISTabWidgetMain::ReCreateMenu()
+{
+	while (!Menu->actions().isEmpty())
+	{
+		QAction *ActionLast = Menu->actions()[Menu->actions().size() - 1];
+		Menu->removeAction(ActionLast);
+		delete ActionLast;
+	}
+	for (int i = 1, c = count(); i < c; ++i)
+	{
+		QWidget *TabWidget = widget(i);
+		QAction *ActionTab = Menu->addAction(TabWidget->windowIcon(), TabWidget->windowTitle());
+		connect(TabWidget, &QWidget::windowTitleChanged, ActionTab, &QAction::setText);
+		connect(TabWidget, &QWidget::windowIconChanged, ActionTab, &QAction::setIcon);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::SeparateWindow(int Index)
 {
-	QWidget *Widget = widget(Index);
-
-	RemoveActionTab(Index);
-	removeTab(Index);
-
-	Widget->setParent(nullptr);
-	ISGui::MoveWidgetToDesktop(Widget, ISNamespace::MWD_Center);
-	Widget->showMaximized();
+	ISGui::ShowObjectForm(widget(Index));
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::CloseCliciked()
 {
-	for (int i = 0; i < count(); ++i) //Обход вкладок
+	for (int i = 1, c = count(); i < c; ++i)
 	{
 		if (tabBar()->tabData(i).toString() == sender()->property("ID").toString())
 		{
@@ -144,28 +128,18 @@ void ISTabWidgetMain::CloseCliciked()
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::CloseTabFromIndex(int Index)
 {
-	if (widget(Index)->close())
-	{
-		RemoveActionTab(Index);
-	}
+	widget(Index)->close();
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::TabsMenuTriggered(QAction *ActionClicked)
 {
-	for (int i = 0; i < ButtonMenu->menu()->actions().count(); ++i)
+	for (int i = 0, c = Menu->actions().count(); i < c; ++i)
 	{
-		QAction *Action = ButtonMenu->menu()->actions()[i];
-		if (Action->property("ID").toString() == ActionClicked->property("ID").toString())
+		if (ActionClicked == Menu->actions()[i])
 		{
-			++i; //Прибавление единицы требуется т.к. обход начинается с НУЛЕВОЙ (главной) вкладки таб-бара
-			setCurrentIndex(i);
+			setCurrentIndex(++i);
 			break;
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-void ISTabWidgetMain::DocumentMode()
-{
-	setDocumentMode(count());
 }
 //-----------------------------------------------------------------------------

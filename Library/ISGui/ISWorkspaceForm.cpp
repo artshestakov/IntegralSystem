@@ -39,31 +39,22 @@ void ISWorkspaceForm::Invoke()
 	ISParagraphBaseForm::Invoke();
 }
 //-----------------------------------------------------------------------------
-void ISWorkspaceForm::AddObjectForm(QWidget *ObjectFormWidget)
+void ISWorkspaceForm::AddObjectForm(QWidget *ObjectForm)
 {
-	ISObjectFormBase *ObjectForm = dynamic_cast<ISObjectFormBase*>(ObjectFormWidget);
-	connect(ObjectForm, &ISObjectFormBase::CloseTab, TabWidget, &ISTabWidgetMain::RemoveActionTab);
-
-	//Изменение наименования заголовка вкладки формы объекта
 	connect(ObjectForm, &ISObjectFormBase::windowTitleChanged, [=](const QString &WindowTitle)
 	{
 		TabWidget->setTabText(TabWidget->indexOf(ObjectForm), WindowTitle);
 	});
-
-	//Изменение иконки заголовка вкладки формы объекта
 	connect(ObjectForm, &ISObjectFormBase::windowIconChanged, [=](const QIcon &WindowIcon)
 	{
 		TabWidget->setTabIcon(TabWidget->indexOf(ObjectForm), WindowIcon);
 	});
-
-	connect(ObjectForm, &ISObjectFormBase::CurrentObjectTab, [=]
+	connect(dynamic_cast<ISObjectFormBase*>(ObjectForm), &ISObjectFormBase::CurrentObjectTab, [=]
 	{
-		TabWidget->setCurrentWidget(ObjectFormWidget);
+		TabWidget->setCurrentWidget(ObjectForm);
 	});
-	
-	int TabIndex = TabWidget->addTab(ObjectForm, ObjectForm->windowIcon(), ObjectForm->windowTitle());
+	TabWidget->addTab(ObjectForm, ObjectForm->windowIcon(), ObjectForm->windowTitle());
 	TabWidget->setCurrentWidget(ObjectForm);
-	ObjectForm->SetCurrentIndexTab(TabIndex);
 }
 //-----------------------------------------------------------------------------
 void ISWorkspaceForm::CreateSystems()

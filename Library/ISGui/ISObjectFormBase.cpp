@@ -35,7 +35,6 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	BeginFieldEdit(nullptr),
 	ModificationFlag(false),
 	RecordIsDeleted(false),
-	CurrentIndexTab(-1),
 	ActionDelete(nullptr),
 	ActionGroup(new QActionGroup(this))
 {
@@ -93,11 +92,6 @@ void ISObjectFormBase::SetFieldValue(const QString &FieldName, const QVariant &v
 QVariant ISObjectFormBase::GetFieldValue(const QString &FieldName)
 {
 	return GetFieldWidget(FieldName)->GetValue();
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::SetCurrentIndexTab(int current_index_tab)
-{
-	CurrentIndexTab = current_index_tab;
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleNavigationBar(bool Visible)
@@ -684,7 +678,6 @@ void ISObjectFormBase::SaveClose()
 	{
 		close();
 	}
-	emit CloseTab(CurrentIndexTab);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SaveBefore()

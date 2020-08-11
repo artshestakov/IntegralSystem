@@ -17,7 +17,7 @@ public:
 	void Invoke() override;
 
 public slots:
-	void AddObjectForm(QWidget *ObjectFormWidget); //Добавить форму объекта на панель навигации
+	void AddObjectForm(QWidget *ObjectForm); //Добавить форму объекта на панель навигации
 
 protected:
 	void CreateSystems(); //Создание панели систем и подсистем

@@ -23,7 +23,6 @@ signals:
 	void UpdateList();
 	void CurrentObjectTab(); //Сигнал для вкладки (установление текущей вкладки)
 	void Close();
-	void CloseTab(int Index);
 
 public:
 	ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
@@ -40,7 +39,6 @@ public:
 	void SetFieldValue(const QString &FieldName, const QVariant &value); //Изменить значение поля
 	QVariant GetFieldValue(const QString &FieldName); //Получить значение поля
 
-	void SetCurrentIndexTab(int current_index_tab);
 	void SetVisibleNavigationBar(bool Visible); //Изменить видимость у талбара эскортов
 	void SetVisibleField(const QString &FieldName, bool Visible); //Изменить видимость у поля
 	void SetVisibleFavorites(bool Visible); //Изменить видимость кнопки "Избранное"
@@ -130,7 +128,6 @@ private:
 
 	bool ModificationFlag;
 	bool RecordIsDeleted;
-	int CurrentIndexTab;
 	QString ObjectName;
 };
 //-----------------------------------------------------------------------------
