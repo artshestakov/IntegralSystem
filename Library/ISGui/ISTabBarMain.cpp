@@ -5,13 +5,12 @@
 #include "ISConstants.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISTabBarMain::ISTabBarMain(QWidget *parent) : QTabBar(parent)
+ISTabBarMain::ISTabBarMain(QWidget *parent)
+	: QTabBar(parent),
+	MouseClick(false),
+	MouseRightClickTabIndex(0)
 {
-	setObjectName(metaObject()->className());
 	setCursor(CURSOR_POINTING_HAND);
-
-	MouseClick = false;
-	MouseRightClickTabIndex = 0;
 
 	QString SelectionBehavior = SETTING_STRING(CONST_UID_SETTING_TABS_SELECTIONBEHAVIOR);
 	if (SelectionBehavior == "SelectLeftTab")
@@ -164,11 +163,10 @@ void ISTabBarMain::CloseOtherTabs()
 {
 	for (int i = count() - 1; i > 0; --i)
 	{
-		if (currentIndex() == i)
+		if (MouseRightClickTabIndex != i)
 		{
-			continue;
+			emit MidButtonClicked(i);
 		}
-		emit MidButtonClicked(i);
 	}
 	MouseRightClickTabIndex = 0;
 }

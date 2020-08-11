@@ -12,8 +12,6 @@
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {
-	setObjectName(metaObject()->className());
-
 	TabBar = new ISTabBarMain(this);
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
 	connect(TabBar, &ISTabBarMain::SeparateWindow, this, &ISTabWidgetMain::SeparateWindow);
