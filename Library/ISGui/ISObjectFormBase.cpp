@@ -30,7 +30,6 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	MetaTable(meta_table),
 	ObjectID(object_id),
 	ParentObjectID(0),
-	WidgetObject(nullptr),
 	WidgetEscort(nullptr),
 	EditObjectID(nullptr),
 	BeginFieldEdit(nullptr),
@@ -44,8 +43,8 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	GetMainLayout()->setSpacing(0);
 
 	CreateToolBarEscorts();
-	CreateMainTabWidget();
 	CreateToolBar();
+	CreateWidgetObject();
 	CreateFieldsWidget();
 	FillDataFields();
 	ISCreatedObjectsEntity::Instance().RegisterForm(this);
@@ -103,7 +102,7 @@ void ISObjectFormBase::SetCurrentIndexTab(int current_index_tab)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleNavigationBar(bool Visible)
 {
-	ToolBarNavigation->setVisible(Visible);
+	ToolBarEscort->setVisible(Visible);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleField(const QString &FieldName, bool Visible)
@@ -201,9 +200,9 @@ void ISObjectFormBase::AfterShowEvent()
 	ISInterfaceForm::AfterShowEvent();
 
 	//По умолчанию все действия навигации эскортов должны быть отключены (кроме первого действия - карточки)
-	for (int i = 1; i < ToolBarNavigation->actions().size(); ++i)
+	for (int i = 1; i < ToolBarEscort->actions().size(); ++i)
 	{
-		ToolBarNavigation->actions()[i]->setEnabled(!(FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy));
+		ToolBarEscort->actions()[i]->setEnabled(!(FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy));
 	}
 
 	if (FormType == ISNamespace::OFT_Edit)
@@ -229,87 +228,61 @@ void ISObjectFormBase::AfterShowEvent()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateToolBarEscorts()
 {
-	ToolBarNavigation = new QToolBar(this);
-	ToolBarNavigation->setIconSize(ISDefines::Gui::SIZE_20_20);
-	ToolBarNavigation->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	connect(ToolBarNavigation, &QToolBar::actionTriggered, this, &ISObjectFormBase::ToolBarClicked);
-	GetMainLayout()->addWidget(ToolBarNavigation);
+	ToolBarEscort = new QToolBar(this);
+	ToolBarEscort->setIconSize(ISDefines::Gui::SIZE_20_20);
+	ToolBarEscort->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	connect(ToolBarEscort, &QToolBar::actionTriggered, this, &ISObjectFormBase::ToolBarClicked);
+	GetMainLayout()->addWidget(ToolBarEscort);
 
-	QActionGroup *g = new QActionGroup(this);
+	ActionGroupEscort = new QActionGroup(this);
 
 	//Действие объекта
-	QAction *ActionObject = ToolBarNavigation->addAction(BUFFER_ICONS("Document"), MetaTable->LocalName);
+	QAction *ActionObject = ToolBarEscort->addAction(BUFFER_ICONS("Document"), MetaTable->LocalName);
 	ActionObject->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	ActionObject->setCheckable(true);
 	ActionObject->setChecked(true);
 	ActionObject->setProperty("IsChecked", true);
-	ActionObject->setProperty("Type", ISNamespace::OAT_Object);
-	g->addAction(ActionObject);
+	ActionObject->setProperty("IsObject", true);
+	ActionGroupEscort->addAction(ActionObject);
 
-	ToolBarNavigation->addSeparator();
+	ToolBarEscort->addSeparator();
 
-	QAction *ActionProtocol = ToolBarNavigation->addAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"));
+	QAction *ActionProtocol = ToolBarEscort->addAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"));
 	ActionProtocol->setCheckable(true);
 	ActionProtocol->setProperty("IsChecked", false);
-	ActionProtocol->setProperty("Type", ISNamespace::OAT_Service);
+	//ActionProtocol->setProperty("Type", ISNamespace::OAT_Service);
 	ActionProtocol->setProperty("ClassName", "ISProtocolObjectListForm");
-	g->addAction(ActionProtocol);
+	ActionGroupEscort->addAction(ActionProtocol);
 
-	QAction *ActionDiscussion = ToolBarNavigation->addAction(BUFFER_ICONS("Discussion"), LANG("Discussion"));
+	QAction *ActionDiscussion = ToolBarEscort->addAction(BUFFER_ICONS("Discussion"), LANG("Discussion"));
 	ActionDiscussion->setCheckable(true);
 	ActionDiscussion->setProperty("IsChecked", false);
-	ActionDiscussion->setProperty("Type", ISNamespace::OAT_Service);
+	//ActionDiscussion->setProperty("Type", ISNamespace::OAT_Service);
 	ActionDiscussion->setProperty("ClassName", "ISDiscussionListForm");
-	g->addAction(ActionDiscussion);
+	ActionGroupEscort->addAction(ActionDiscussion);
 
-	ToolBarNavigation->addSeparator();
+	ToolBarEscort->addSeparator();
 
 	for (PMetaEscort *MetaEscort : MetaTable->Escorts) //Обход эскортных мета-таблиц
 	{		
-		QAction *ActionEscort = ToolBarNavigation->addAction(BUFFER_ICONS("Table"), MetaEscort->LocalName);
+		QAction *ActionEscort = ToolBarEscort->addAction(BUFFER_ICONS("Table"), MetaEscort->LocalName);
 		ActionEscort->setCheckable(true);
 		ActionEscort->setProperty("IsChecked", false);
-		ActionEscort->setProperty("Type", ISNamespace::OAT_Escort);
+		//ActionEscort->setProperty("Type", ISNamespace::OAT_Escort);
 		ActionEscort->setProperty("TableName", MetaEscort->TableName);
 		ActionEscort->setProperty("ClassName", MetaEscort->ClassName);
 		ActionEscort->setProperty("ClassFilter", MetaEscort->ClassFilter);
-		g->addAction(ActionEscort);
+		ActionGroupEscort->addAction(ActionEscort);
 	}
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::CreateMainTabWidget()
-{
-	TabWidgetMain = new ISTabWidgetObject(this);
-	GetMainLayout()->addWidget(TabWidgetMain);
 
-	StackedWidget = new QStackedWidget(TabWidgetMain);
-	TabWidgetMain->addTab(StackedWidget, LANG("Card"));
-
-	WidgetObjectLayout = new QVBoxLayout();
-	WidgetObjectLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-
-	WidgetObject = new QWidget(TabWidgetMain);
-	WidgetObject->setLayout(WidgetObjectLayout);
-	StackedWidget->addWidget(WidgetObject);
-
-	WidgetTabEscort = new QWidget(TabWidgetMain);
-	WidgetTabEscort->setLayout(new QVBoxLayout());
-	StackedWidget->addWidget(WidgetTabEscort);
+	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateToolBar()
 {
 	ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	WidgetObjectLayout->addWidget(ToolBar);
-
-	LabelIsDeleted = new QLabel(this);
-	LabelIsDeleted->setVisible(false);
-	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
-	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
-	LabelIsDeleted->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
-	WidgetObjectLayout->addWidget(LabelIsDeleted, 0, Qt::AlignHCenter);
+	GetMainLayout()->addWidget(ToolBar);
 
 	//Сохранить и закрыть карточку
 	ActionSaveClose = ISControls::CreateActionSaveAndClose(ToolBar);
@@ -380,16 +353,50 @@ void ISObjectFormBase::CreateToolBar()
 	AddActionMenu(ActionCancelChange);
 }
 //-----------------------------------------------------------------------------
+void ISObjectFormBase::CreateWidgetObject()
+{
+	QVBoxLayout *LayoutObject = new QVBoxLayout();
+	LayoutObject->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+
+	WidgetObject = new QWidget(this);
+	WidgetObject->setLayout(LayoutObject);
+	WidgetObject->setSizePolicy(WidgetObject->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
+	GetMainLayout()->addWidget(WidgetObject);
+
+	LabelIsDeleted = new QLabel(this);
+	LabelIsDeleted->setVisible(false);
+	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
+	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
+	LabelIsDeleted->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
+	LayoutObject->addWidget(LabelIsDeleted);
+
+	FormLayout = new QFormLayout();
+
+	ScrollArea = new ISScrollArea(WidgetObject); //Панель основной (главной) группы полей
+	ScrollArea->widget()->setLayout(FormLayout);
+	LayoutObject->addWidget(ScrollArea);
+}
+//-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateFieldsWidget()
 {
-	FormLayout = new QFormLayout(); //Компоновщик для главного таба
-	
-	ScrollAreaMain = new ISScrollArea(this); //Панель основной (главной) группы полей
-	ScrollAreaMain->setSizePolicy(ScrollAreaMain->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
-	ScrollAreaMain->widget()->setLayout(FormLayout);
-	WidgetObjectLayout->addWidget(ScrollAreaMain);
+	//Если настроено добавление поле с кодом
+	if (SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
+	{
+		QLabel *LabelSystemInfoObject = new QLabel(this);
+		LabelSystemInfoObject->setText(LANG("SystemField.ID") + ':');
+		LabelSystemInfoObject->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
-	CreateFieldID(FormLayout);
+		EditObjectID = new ISLineEdit(this);
+		EditObjectID->SetValue(LANG("SystemField.ID.NotAssigned"));
+		EditObjectID->SetToolTip(LANG("AutoFillField"));
+		EditObjectID->SetReadOnly(true); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
+		EditObjectID->SetCursor(CURSOR_WHATS_THIS); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
+		EditObjectID->SetVisibleClear(false);
+		EditObjectID->setSizePolicy(QSizePolicy::Maximum, EditObjectID->sizePolicy().verticalPolicy());
+		FormLayout->addRow(LabelSystemInfoObject, EditObjectID);
+	}
+
 	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 	{
 		if (!MetaField->QueryText.isEmpty()) //Если поле является запросом - пропускать его
@@ -418,7 +425,6 @@ void ISObjectFormBase::CreateFieldsWidget()
 		{
 			dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
 		}
-		
 		AddColumnForField(MetaField, FieldEditBase, FormLayout);
 	}
 }
@@ -491,25 +497,6 @@ void ISObjectFormBase::FillDataFields()
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.QueryRecord"), qSelect.GetErrorString());
 		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::CreateFieldID(QFormLayout *FormLayout)
-{
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
-	{
-		QLabel *LabelSystemInfoObject = new QLabel(this);
-		LabelSystemInfoObject->setText(LANG("SystemField.ID") + ':');
-		LabelSystemInfoObject->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-
-		EditObjectID = new ISLineEdit(this);
-		EditObjectID->SetValue(LANG("SystemField.ID.NotAssigned"));
-		EditObjectID->SetToolTip(LANG("AutoFillField"));
-		EditObjectID->SetReadOnly(true); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
-		EditObjectID->SetCursor(CURSOR_WHATS_THIS); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
-		EditObjectID->SetVisibleClear(false);
-		EditObjectID->setSizePolicy(QSizePolicy::Maximum, EditObjectID->sizePolicy().verticalPolicy());
-		FormLayout->addRow(LabelSystemInfoObject, EditObjectID);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -616,29 +603,10 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 	}
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::AddObjectEscort(QWidget *ObjectForm)
-{
-	//Изменение наименования заголовка вкладки формы объекта
-	connect(ObjectForm, &QWidget::windowTitleChanged, [=](const QString &WindowTitle)
-	{
-		TabWidgetMain->setTabText(TabWidgetMain->indexOf(ObjectForm), WindowTitle);
-	});
-
-	//Изменение иконки заголовка вкладки формы объекта
-	connect(ObjectForm, &QWidget::windowIconChanged, [=](const QIcon &WindowIcon)
-	{
-		TabWidgetMain->setTabIcon(TabWidgetMain->indexOf(ObjectForm), WindowIcon);
-	});
-
-	ObjectForm->setParent(this);
-	TabWidgetMain->addTab(ObjectForm, ObjectForm->windowIcon(), ObjectForm->windowTitle());
-	TabWidgetMain->setCurrentWidget(ObjectForm);
-}
-//-----------------------------------------------------------------------------
 void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 {
 	//Обходим все эскортные действия
-	for (QAction *Action: ToolBarNavigation->actions())
+	for (QAction *Action: ToolBarEscort->actions())
 	{
 		if (Action == ActionClicked) //Текущее действие
 		{
@@ -666,42 +634,32 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		WidgetEscort = nullptr;
 	}
 
-	TabWidgetMain->setCurrentWidget(StackedWidget);
+	bool IsObjectClicked = ActionClicked->property("IsObject").toBool();
+	ToolBar->setVisible(IsObjectClicked);
+	WidgetObject->setVisible(IsObjectClicked);
 
-	if (qvariant_cast<ISNamespace::ObjectActionType>(ActionClicked->property("Type")) == ISNamespace::OAT_Object) //Выбран объект
+	if (!IsObjectClicked)
 	{
-		TabWidgetMain->setTabText(0, LANG("Card"));
-		StackedWidget->setCurrentWidget(WidgetObject);
-	}
-	else //Выбран эскорт
-	{
-		TabWidgetMain->setTabText(TabWidgetMain->indexOf(StackedWidget), ActionClicked->text());
-		StackedWidget->setCurrentWidget(WidgetTabEscort);
-
-		QString TableName = ActionClicked->property("TableName").toString();
-		QString ClassName = ActionClicked->property("ClassName").toString();
-		QString ClassFilter = ActionClicked->property("ClassFilter").toString();
-
+		QString TableName = ActionClicked->property("TableName").toString(),
+			ClassName = ActionClicked->property("ClassName").toString(),
+			ClassFilter = ActionClicked->property("ClassFilter").toString();
 		if (!ClassName.isEmpty()) //Открытие виджета
 		{
-			WidgetEscort = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, WidgetTabEscort));
+			WidgetEscort = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, this));
 		}
 		else //Открытие таблицы
 		{
-			ISListObjectForm *ListObjectForm = new ISListObjectForm(TableName, ObjectID, WidgetTabEscort);
+			ISListObjectForm *ListObjectForm = new ISListObjectForm(TableName, ObjectID, this);
 			ListObjectForm->SetUID(ISMetaData::Instance().GetMetaTable(TableName)->UID);
-			
 			if (!ClassFilter.isEmpty())
 			{
 				ListObjectForm->GetQueryModel()->SetClassFilter(ClassFilter);
 			}
 			WidgetEscort = ListObjectForm;
 		}
+		connect(WidgetEscort, &ISInterfaceMetaForm::AddFormFromTab, &ISGui::ShowObjectForm);
+		GetMainLayout()->addWidget(WidgetEscort);
 
-		connect(WidgetEscort, &ISInterfaceMetaForm::AddFormFromTab, this, &ISObjectFormBase::AddObjectEscort);
-		WidgetTabEscort->layout()->addWidget(WidgetEscort);
-
-		//Присвоения ниже должны быть перед вызовом LoadData()
 		WidgetEscort->SetParentTableName(MetaTable->Name);
 		WidgetEscort->SetParentObjectID(ObjectID);
 		WidgetEscort->LoadData();
@@ -858,9 +816,13 @@ bool ISObjectFormBase::Save()
 		RenameReiconForm();
 		SetModificationFlag(false);
 		UpdateObjectActions();
-		//ToolBarNavigation->UpdateEnabledActionsList(true);
 		ActionFavorites->setEnabled(true);
 		SetValueFieldID(ObjectID);
+
+		for (QAction *Action : ToolBarEscort->actions())
+		{
+			Action->setEnabled(true);
+		}
 
 		SaveAfter();
 		emit SavedObject(ObjectID);
@@ -1101,7 +1063,8 @@ void ISObjectFormBase::SetEnabledActions(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddWidgetToBottom(QWidget *Widget)
 {
-	WidgetObjectLayout->addWidget(Widget);
+	//???
+	//WidgetObjectLayout->addWidget(Widget);
 }
 //-----------------------------------------------------------------------------
 QString ISObjectFormBase::GetObjectName() const
@@ -1112,16 +1075,6 @@ QString ISObjectFormBase::GetObjectName() const
 ISFieldEditBase* ISObjectFormBase::GetFieldWidget(const QString &FieldName)
 {
 	return FieldsMap[FieldName];
-}
-//-----------------------------------------------------------------------------
-ISTabWidgetObject* ISObjectFormBase::GetTabWidget()
-{
-	return TabWidgetMain;
-}
-//-----------------------------------------------------------------------------
-QVBoxLayout* ISObjectFormBase::GetLayoutWidgetObject()
-{
-	return WidgetObjectLayout;
 }
 //-----------------------------------------------------------------------------
 QToolBar* ISObjectFormBase::GetToolBar()

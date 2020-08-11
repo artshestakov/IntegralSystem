@@ -13,8 +13,6 @@ ISCalendarObjectForm::ISCalendarObjectForm(ISNamespace::ObjectFormType form_type
 	SetVisibleDelete(false);
 	SetVisibleDeleteCascade(false);
 
-	GetTabWidget()->tabBar()->setAutoHide(true);
-
 	if (GetFieldValue("TableName").isValid())
 	{
 		QAction *ActionCard = new QAction(this);

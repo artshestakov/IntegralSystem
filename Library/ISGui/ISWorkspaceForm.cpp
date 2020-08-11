@@ -43,7 +43,6 @@ void ISWorkspaceForm::AddObjectForm(QWidget *ObjectFormWidget)
 {
 	ISObjectFormBase *ObjectForm = dynamic_cast<ISObjectFormBase*>(ObjectFormWidget);
 	connect(ObjectForm, &ISObjectFormBase::CloseTab, TabWidget, &ISTabWidgetMain::RemoveActionTab);
-	connect(ObjectForm, &ISObjectFormBase::SaveAndCreate, this, &ISWorkspaceForm::CreateDuplicate);
 
 	//Изменение наименования заголовка вкладки формы объекта
 	connect(ObjectForm, &ISObjectFormBase::windowTitleChanged, [=](const QString &WindowTitle)
@@ -141,10 +140,5 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 	ISGui::SetWaitGlobalCursor(false);
 	ISGui::RepaintWidget(CentralForm);
 	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, CentralForm, &ISInterfaceMetaForm::LoadData);
-}
-//-----------------------------------------------------------------------------
-void ISWorkspaceForm::CreateDuplicate(PMetaTable *MetaTable)
-{
-	AddObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name));
 }
 //-----------------------------------------------------------------------------

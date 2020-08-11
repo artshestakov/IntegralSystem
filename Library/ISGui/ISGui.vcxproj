@@ -339,7 +339,6 @@
     <ClCompile Include="ISTabBarMain.cpp" />
     <ClCompile Include="ISTableDetailsForm.cpp" />
     <ClCompile Include="ISTabWidgetMain.cpp" />
-    <ClCompile Include="ISTabWidgetObject.cpp" />
     <ClCompile Include="ISTaskForm.cpp" />
     <ClCompile Include="ISTaskListForm.cpp" />
     <ClCompile Include="ISTaskObjectForm.cpp" />
@@ -507,7 +506,6 @@
     <QtMoc Include="ISCalendarEventItem.h" />
     <QtMoc Include="ISCalendarEventsWidget.h" />
     <QtMoc Include="ISCalendarPanel.h" />
-    <QtMoc Include="ISTabWidgetObject.h" />
     <QtMoc Include="ISPlayerWidget.h" />
     <QtMoc Include="ISSliderDuration.h" />
     <QtMoc Include="ISComboSearchWidgets.h" />

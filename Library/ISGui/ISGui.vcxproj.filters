@@ -88,9 +88,6 @@
     <Filter Include="Controls\MailCalendar">
       <UniqueIdentifier>{987e1b34-e92a-423a-a866-f03a56410943}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Controls\ObjectForm">
-      <UniqueIdentifier>{05b8eccc-4269-4bf6-b83c-3dabc7e3484a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Controls\Player">
       <UniqueIdentifier>{55d69ee3-44f5-4bf9-8d3d-99ca563ecb0b}</UniqueIdentifier>
     </Filter>
@@ -572,9 +569,6 @@
     </ClCompile>
     <ClCompile Include="ISCalendarPanel.cpp">
       <Filter>Controls\MailCalendar</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTabWidgetObject.cpp">
-      <Filter>Controls\ObjectForm</Filter>
     </ClCompile>
     <ClCompile Include="ISPlayerWidget.cpp">
       <Filter>Controls\Player</Filter>
@@ -1075,9 +1069,6 @@
     </QtMoc>
     <QtMoc Include="ISCalendarPanel.h">
       <Filter>Controls\MailCalendar</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTabWidgetObject.h">
-      <Filter>Controls\ObjectForm</Filter>
     </QtMoc>
     <QtMoc Include="ISPlayerWidget.h">
       <Filter>Controls\Player</Filter>

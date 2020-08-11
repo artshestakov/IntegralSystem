@@ -883,6 +883,8 @@ void ISListBaseForm::Update()
 {
 	IsLoadingData = true;
 	SqlModel->Clear();
+
+	QueryModel->SetParentObjectIDClassFilter(GetParentObjectID());
 	ModelThreadQuery->Execute(QueryModel->GetQueryText(), QueryModel->GetConditions());
 
 	LabelSelectedRow->setVisible(false);
@@ -1606,7 +1608,6 @@ void ISListBaseForm::CreateModels()
 	SqlModel->SetShowToolTip(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWTOOLTIP));
 
 	QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
-	QueryModel->SetParentObjectIDClassFilter(GetParentObjectID());
 
 	ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
 	if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её

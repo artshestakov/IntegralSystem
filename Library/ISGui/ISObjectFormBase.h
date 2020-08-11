@@ -10,7 +10,6 @@
 #include "ISLineEdit.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISScrollArea.h"
-#include "ISTabWidgetObject.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы объекта
 class ISObjectFormBase : public ISInterfaceForm
@@ -25,7 +24,6 @@ signals:
 	void CurrentObjectTab(); //Сигнал для вкладки (установление текущей вкладки)
 	void Close();
 	void CloseTab(int Index);
-	void SaveAndCreate(PMetaTable *MetaTable);
 
 public:
 	ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
@@ -59,15 +57,13 @@ protected:
 
 protected:
 	void CreateToolBarEscorts(); //Создание главного тулбара
-	void CreateMainTabWidget(); //Создание главного таба
 	void CreateToolBar(); //Создание панели управления объектом
+	void CreateWidgetObject(); //Создание главного виджета, на котором будут размещены поля редактирования
 	void CreateFieldsWidget(); //Создание полей редактирования информации
 	void FillDataFields(); //Заполнение полей данными
 
-	void CreateFieldID(QFormLayout *FormLayout); //Создание виджета с системной иформацией
 	ISFieldEditBase* CreateColumnForField(PMetaField *MetaField); //Создать поле редактирования информации
 	void AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *FormLayout); //Добавить поле редактирования информации на форму
-	void AddObjectEscort(QWidget *ObjectForm);
 
 	void ToolBarClicked(QAction *ActionClicked); //Событие нажатия на действие в тулбаре
 	void SetValueFieldID(int object_id); //Изменить значение поля "Код"
@@ -97,8 +93,6 @@ protected:
 
 	QString GetObjectName() const; //Получить наименование объекта
 	ISFieldEditBase* GetFieldWidget(const QString &FieldName); //Получиь виджет редактирования по его имени
-	ISTabWidgetObject* GetTabWidget(); //Получить указатель на таб-виджет
-	QVBoxLayout* GetLayoutWidgetObject(); //Получить указатель на компоновщик объекта
 	QToolBar* GetToolBar(); //Получить указатель на тулбар кнопок-действий
 
 private:
@@ -107,16 +101,13 @@ private:
 	int ObjectID; //Идентификатор текущего объекта
 	int ParentObjectID; //Идентификатор родителя
 
-	QToolBar *ToolBarNavigation; //Тулбар эскортов
-	ISTabWidgetObject *TabWidgetMain; //Главный таб
-	QStackedWidget *StackedWidget;
+	QToolBar *ToolBarEscort; //Тулбар эскортов
+	QActionGroup *ActionGroupEscort;
 	QWidget *WidgetObject; //Виджет объекта
-	QVBoxLayout *WidgetObjectLayout;
-	QWidget *WidgetTabEscort;
-	ISInterfaceMetaForm *WidgetEscort;
 	QToolBar *ToolBar; //Тулбар действий на объектом
 	QFormLayout *FormLayout;
-	ISScrollArea *ScrollAreaMain;
+	ISScrollArea *ScrollArea;
+	ISInterfaceMetaForm *WidgetEscort;
 	QLabel *LabelIsDeleted; //Надпись указывающая на то, что объект помечен на удаление
 	QActionGroup *ActionGroup;
 

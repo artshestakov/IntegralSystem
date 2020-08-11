@@ -137,13 +137,6 @@ public:
         AST_CopyRecord,
     };
 
-    enum ObjectActionType
-    {
-        OAT_Object, //Карточка объекта
-        OAT_Escort, //Эскортная форма (список/виджет)
-        OAT_Service, //Сервисный эскорт (протокол и т.д.)
-    };
-
     enum AttachChatType
     {
         ACT_NoAttach,
@@ -227,7 +220,6 @@ Q_DECLARE_METATYPE(ISNamespace::MessageBoxButton);
 Q_DECLARE_METATYPE(ISNamespace::DeleteRecoveryObject);
 Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
-Q_DECLARE_METATYPE(ISNamespace::ObjectActionType);
 Q_DECLARE_METATYPE(ISNamespace::AttachChatType);
 Q_DECLARE_METATYPE(ISNamespace::ReportType);
 Q_DECLARE_METATYPE(ISNamespace::QueryModelType);

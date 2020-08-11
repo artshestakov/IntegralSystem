@@ -24,7 +24,6 @@ protected:
 	void CreateTabWidget(); //Содание таба
 
 	void ClickedSubSystem(const QString &SubSystemUID, const QIcon &IconSubSystem); //Обработчик события клика по подсистеме
-	void CreateDuplicate(PMetaTable *MetaTable);
 
 private:
 	QVBoxLayout *Layout;

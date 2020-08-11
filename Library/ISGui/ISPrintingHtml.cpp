@@ -52,7 +52,7 @@ bool ISPrintingHtml::FillTemplate()
 		ISPrintMetaReportField *MetaReportField = Fields.at(i);
 
 		bool Contains = Html.contains(MetaReportField->ReplaceValue);
-		IS_ASSERT(Contains, QString("Not found replace value \"%1\" in file template \"%2\"").arg(MetaReportField->ReplaceValue).arg(""/*File.fileName()*/));
+		IS_ASSERT(Contains, QString("Not found replace value \"%1\" in file template \"%2\"").arg(MetaReportField->ReplaceValue).arg(MetaReportField->ParameterName));
 
 		if (MetaReportField->QueryName.length())
 		{
