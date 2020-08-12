@@ -25,7 +25,7 @@ private:
 private:
 	ISTcpConnector();
 	~ISTcpConnector();
-	ISTcpConnector(ISTcpConnector const &) {};
+    ISTcpConnector(ISTcpConnector const &) : QObject() { };
 	ISTcpConnector& operator=(ISTcpConnector const&) { return *this; };
 
 private:

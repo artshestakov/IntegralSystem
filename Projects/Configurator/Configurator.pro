@@ -30,7 +30,6 @@ SOURCES += \
     CGConfiguratorBase.cpp \
     CGConfiguratorCreate.cpp \
     CGConfiguratorDelete.cpp \
-    CGConfiguratorFIAS.cpp \
     CGConfiguratorService.cpp \
     CGConfiguratorShow.cpp \
     CGConfiguratorUpdate.cpp \
@@ -49,7 +48,6 @@ HEADERS += \
     CGConfiguratorBase.h \
     CGConfiguratorCreate.h \
     CGConfiguratorDelete.h \
-    CGConfiguratorFIAS.h \
     CGConfiguratorService.h \
     CGConfiguratorShow.h \
     CGConfiguratorUpdate.h \

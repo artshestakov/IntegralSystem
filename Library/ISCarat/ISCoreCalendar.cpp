@@ -45,7 +45,7 @@ void ISCoreCalendar::Timeout()
 		while (qSelectEvents.Next())
 		{
 			int EventID = qSelectEvents.ReadColumn("cldr_id").toInt();
-			int UserID = qSelectEvents.ReadColumn("cldr_user").toInt();
+            //int UserID = qSelectEvents.ReadColumn("cldr_user").toInt();
 			QString UserName = qSelectEvents.ReadColumn("userfullname").toString();
 			QString Name = qSelectEvents.ReadColumn("cldr_name").toString();
 

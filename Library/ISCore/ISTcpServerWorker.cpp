@@ -263,6 +263,8 @@ void ISTcpServerWorker::GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &
 //-----------------------------------------------------------------------------
 void ISTcpServerWorker::FunctionList(const QVariantMap &Parameters, ISTcpAnswer &TcpAnswer)
 {
+    Q_UNUSED(Parameters);
+
 	QVariantList VariantList;
 	for (const auto &MapItem : Functions)
 	{
