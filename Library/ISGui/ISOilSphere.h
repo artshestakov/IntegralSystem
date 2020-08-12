@@ -144,6 +144,23 @@ namespace ISOilSphere
 	private:
 		QTreeWidget *TreeWidget;
 	};
+
+	//Форма списка оплаты
+	class PaymentListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE PaymentListForm(QWidget *parent = 0);
+		virtual ~PaymentListForm();
+
+	protected:
+		void LoadDataAfterEvent() override;
+
+	private:
+		QLabel *LabelDebtTotal;
+		QLabel *LabelDebtLeft;
+	};
 }
 //-----------------------------------------------------------------------------
 #endif

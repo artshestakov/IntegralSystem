@@ -125,7 +125,7 @@
       <Field UID="{CD120D42-00D6-4D80-ADF5-77D82E089D12}" Name="UnloadPlace" Type="Int" LabelName="Место выгрузки" LocalListName="Место выгрузки" SeparatorName="Выгрузка"/>
       <Field UID="{F666929C-5DC1-4D51-8527-6D14D3F64409}" Name="UnloadContainer" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" LayoutName="Unload"/>
       <Field UID="{66950052-D388-467C-8F7D-AE5B071AFAFA}" Name="UnloadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Unload"/>
-      <Field UID="{9B8377B2-46E7-4DD7-B8B1-A3306A6C5593}" Name="UnloadWeightNet" Type="Double" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Unload"/>
+      <Field UID="{9B8377B2-46E7-4DD7-B8B1-A3306A6C5593}" Name="UnloadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Unload"/>
       <Field UID="{DD79EB7F-CCAC-46C1-8E63-073935646196}" Name="UnloadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="UnloadPrice"/>
       <Field UID="{E00C3A63-5EBF-44AC-AF4E-427F163D9E6C}" Name="UnloadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="UnloadPrice"/>
       <Field UID="{B7FA062E-4DB3-432C-B26E-AE3FA681999E}" Name="PaymentType" Type="Int" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true" SeparatorName="Дополнительно"/>
@@ -165,8 +165,29 @@
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
     </Foreigns>
+    <Escorts>
+      <Escort LocalName="Оплата" ClassName="ISOilSphere::PaymentListForm" FilterField="ImplementationDetail"/>
+    </Escorts>
   </Table>
 
+  <Table Name="ImplementationDetailPayment" UID="{3A614D33-7416-4D8F-BB6D-03A9DF921F78}" Alias="idpt" LocalName="Оплата" LocalListName="Оплаты" TitleName="Sum">
+    <Fields>
+      <Field UID="{30B55381-FE71-4E43-A1C4-1BBBF334DA2C}" Name="ImplementationDetail" Type="Int" LabelName="Детали реализации" LocalListName="Детали реализации" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{EC86A3ED-B9F9-4D38-8FC5-54C897B4B2E9}" Name="Sum" Type="Double" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+      <Field UID="{265DE75C-1B3E-4EA7-A3A8-1946358C3F14}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+      <Field UID="{C57FB5FE-3F9C-4EE5-B446-1802954D1395}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="ImplementationDetail"/>
+      <Index Field="Sum"/>
+      <Index Field="Date"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="ImplementationDetail" ForeignClass="ImplementationDetail" ForeignField="ID" ForeignViewNameField="ID"/>
+    </Foreigns>
+  </Table>
+  
   <Table Name="Debt" UID="{7F887E87-839D-4949-BC31-1C1990FF97CE}" Alias="debt" LocalName="Долг" LocalListName="Долги" TitleName="ImplementationDetail">
     <Fields>
       <Field UID="{F9458805-BDED-4DE3-A0A3-07AB3ED58F49}" Name="ImplementationDetail" Type="Int" LabelName="Подробность реализации" LocalListName="Подробность реализации" NotNull="true" HideFromObject="true"/>

@@ -51,6 +51,11 @@ static QString QS_ACCRUED = PREPARE_QUERY2("SELECT debt_accrued, debt_date, debt
 										   "AND debt_implementationdetail = :ImplementationDetailID "
 										   "ORDER BY debt_id");
 //-----------------------------------------------------------------------------
+static QString QS_PAYMENT = PREPARE_QUERY2("SELECT imdt_unloadcost, "
+										   "imdt_unloadcost - (SELECT sum(idpt_sum) FROM implementationdetailpayment WHERE idpt_implementationdetail = :ImplementationDetail) AS left "
+										   "FROM implementationdetail "
+										   "WHERE imdt_id = :ImplementationDetail");
+//-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
 
@@ -68,6 +73,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::GasStationStatementListForm*>("ISOilSphere::GasStationStatementListForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 	qRegisterMetaType<ISOilSphere::DebtSubSystemForm*>("ISOilSphere::DebtSubSystemForm");
+	qRegisterMetaType<ISOilSphere::PaymentListForm*>("ISOilSphere::PaymentListForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -589,5 +595,40 @@ QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, 
 	LayoutWidget->addStretch();
 
 	return Widget;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::PaymentListForm::PaymentListForm(QWidget *parent) : ISListBaseForm("ImplementationDetailPayment", parent)
+{
+	GetToolBar()->addSeparator();
+
+	LabelDebtTotal = new QLabel(GetToolBar());
+	LabelDebtTotal->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+	GetToolBar()->addWidget(LabelDebtTotal);
+
+	GetToolBar()->addSeparator();
+
+	LabelDebtLeft = new QLabel(GetToolBar());
+	LabelDebtLeft->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+	GetToolBar()->addWidget(LabelDebtLeft);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::PaymentListForm::~PaymentListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::PaymentListForm::LoadDataAfterEvent()
+{
+	ISListBaseForm::LoadDataAfterEvent();
+
+	ISQuery qSelect(QS_PAYMENT);
+	qSelect.BindValue(":ImplementationDetail", GetParentObjectID());
+	if (qSelect.ExecuteFirst())
+	{
+		LabelDebtTotal->setText(LANG("OilSphere.PaymentTotal").arg(qSelect.ReadColumn("imdt_unloadcost").toDouble()));
+		LabelDebtLeft->setText(LANG("OilSphere.PaymentLeft").arg(qSelect.ReadColumn("left").toDouble()));
+	}
 }
 //-----------------------------------------------------------------------------

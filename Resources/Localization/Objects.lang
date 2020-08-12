@@ -78,5 +78,7 @@
   <Local Name="OilSphere.AccruedWithDateAndNote" Russian="Начисление %1 от %2. Примечание: %3"/>
   <Local Name="OilSphere.ShowImplementation" Russian="Просмотр реализации"/>
   <Local Name="OilSphere.ShowImplementationDetails" Russian="Просмотр подробностей реализации"/>
+  <Local Name="OilSphere.PaymentTotal" Russian="Всего: %1"/>
+  <Local Name="OilSphere.PaymentLeft" Russian="Осталось: %2"/>
 	
 </Localization>
