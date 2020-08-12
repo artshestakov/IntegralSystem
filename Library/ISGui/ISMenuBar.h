@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISMainMenu.h"
 #include "ISButtons.h"
 #include "ISUuid.h"
 #include "ISButtons.h"
@@ -18,7 +17,6 @@ signals:
 	void History();
 	void ChangePassword();
 	void Settings();
-	void HelpSystem();
 	void AboutApplication();
 	void AboutQt();
 
@@ -31,29 +29,14 @@ public:
 
 	ISButtonNotify* GetbuttonNotify(); //Получить указатель на кнопку уведомлений
 
-protected:
-	void CreateMenuFile(); //Создание меню "Файл"
-	void CreateMenuService(); //Создание меню "Сервис"
-	void CreateMenuHelp(); //Создание меню "Справка"
-	
-	void CreateButtonsPanel(); //Создание панели с кнопками
-
+private:
 	QToolButton* CreateButton(const QString &ToolTip, const QString &IconName);
-	void ShowMainMenu();
-	void HideMainMenu();
-
-	void CheckVisibleMunuItems(); //Проверка отображения пунктов главного меню
-	void InstallFontMenuItems(); //Установка шрифта для всех элементов главного меню
-	void CreateParagraphs(); //Создание параграфов
 	void ButtonParagraphClicked();
 
 private:
-	QHBoxLayout *MainLayout;
-	QHBoxLayout *LayoutParagraphs;
 	QHBoxLayout *LayoutButtons;
 
 	ISButtonMainMenu *ButtonMenu;
-	ISMainMenu *MainMenu;
 	ISButtonNotify *ButtonNotify;
 
 	QMap<ISUuid, ISParagraphButton*> ParagraphButtons;

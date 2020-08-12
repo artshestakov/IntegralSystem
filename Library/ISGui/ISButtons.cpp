@@ -124,12 +124,12 @@ ISButtonMainMenu::ISButtonMainMenu(QWidget *parent)
 	setText(LANG("MainMenu"));
 	setFont(ISDefines::Gui::FONT_TAHOMA_10);
 	setAutoRaise(true);
-	setCheckable(true);
 	setIcon(IconDefault);
 	setIconSize(ISDefines::Gui::SIZE_24_24);
 	setCursor(CURSOR_POINTING_HAND);
 	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	setStyleSheet(STYLE_SHEET("QToolButtonMainMenu"));
+	setPopupMode(QToolButton::InstantPopup);
 }
 //-----------------------------------------------------------------------------
 ISButtonMainMenu::~ISButtonMainMenu()

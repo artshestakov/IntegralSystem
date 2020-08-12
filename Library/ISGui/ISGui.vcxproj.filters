@@ -609,9 +609,6 @@
     <ClCompile Include="ISListWidget.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="ISMainMenu.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISMenuBar.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -1101,9 +1098,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISListWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMainMenu.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISMenuBar.h">
