@@ -217,7 +217,6 @@
     <ClCompile Include="ISDiscussionListForm.cpp" />
     <ClCompile Include="ISDiscussionObjectForm.cpp" />
     <ClCompile Include="ISDoubleEdit.cpp" />
-    <ClCompile Include="ISEditObjectListForm.cpp" />
     <ClCompile Include="ISEdits.cpp" />
     <ClCompile Include="ISExecutorEdit.cpp" />
     <ClCompile Include="ISExportCSV.cpp" />
@@ -256,7 +255,6 @@
     <ClCompile Include="ISListEdit.cpp" />
     <ClCompile Include="ISListEditPopup.cpp" />
     <ClCompile Include="ISListIndicatorWidget.cpp" />
-    <ClCompile Include="ISListObjectForm.cpp" />
     <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
     <ClCompile Include="ISLoginEdit.cpp" />
@@ -395,9 +393,6 @@
     <QtMoc Include="ISListBaseForm.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISListObjectForm.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="ISListViewWidget.h" />
   </ItemGroup>
   <ItemGroup>
@@ -456,7 +451,6 @@
     <QtMoc Include="ISDesktopForm.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISDiscussionObjectForm.h" />
-    <QtMoc Include="ISEditObjectListForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
     <QtMoc Include="ISFullTextSearchForm.h" />
     <QtMoc Include="ISHistoryForm.h" />

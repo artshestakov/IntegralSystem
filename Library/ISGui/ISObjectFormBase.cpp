@@ -16,7 +16,7 @@
 #include "ISAssert.h"
 #include "ISNotificationService.h"
 #include "ISProtocol.h"
-#include "ISListObjectForm.h"
+#include "ISListBaseForm.h"
 #include "ISDatabaseHelper.h"
 #include "ISStyleSheet.h"
 #include "ISFavorites.h"
@@ -59,9 +59,14 @@ int ISObjectFormBase::GetParentObjectID() const
 	return ParentObjectID;
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::SetParentObjectID(int parent_object_id)
+void ISObjectFormBase::SetParentObjectID(int parent_object_id, const QString &parent_filter_field)
 {
 	ParentObjectID = parent_object_id;
+	ParentFilterField = parent_filter_field;
+	if (FieldsMap.count(parent_filter_field))
+	{
+		FieldsMap[parent_filter_field]->SetValue(parent_object_id);
+	}
 }
 //-----------------------------------------------------------------------------
 ISNamespace::ObjectFormType ISObjectFormBase::GetFormType()
@@ -209,11 +214,6 @@ void ISObjectFormBase::AfterShowEvent()
 		BeginFieldEdit->SetFocus();
 	}
 
-	if (FieldsMap.count(MetaTable->ClassFilterField))
-	{
-		FieldsMap[MetaTable->ClassFilterField]->SetValue(ParentObjectID);
-	}
-
 	RenameReiconForm();
 	UpdateObjectActions();
 	SetModificationFlag(false);
@@ -243,13 +243,11 @@ void ISObjectFormBase::CreateToolBarEscorts()
 
 	QAction *ActionProtocol = ToolBarEscort->addAction(BUFFER_ICONS("Protocol"), LANG("ProtocolCard"));
 	ActionProtocol->setCheckable(true);
-	ActionProtocol->setProperty("IsChecked", false);
 	ActionProtocol->setProperty("ClassName", "ISProtocolObjectListForm");
 	ActionGroupEscort->addAction(ActionProtocol);
 
 	QAction *ActionDiscussion = ToolBarEscort->addAction(BUFFER_ICONS("Discussion"), LANG("Discussion"));
 	ActionDiscussion->setCheckable(true);
-	ActionDiscussion->setProperty("IsChecked", false);
 	ActionDiscussion->setProperty("ClassName", "ISDiscussionListForm");
 	ActionGroupEscort->addAction(ActionDiscussion);
 
@@ -259,14 +257,11 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	{		
 		QAction *ActionEscort = ToolBarEscort->addAction(BUFFER_ICONS("Table"), MetaEscort->LocalName);
 		ActionEscort->setCheckable(true);
-		ActionEscort->setProperty("IsChecked", false);
 		ActionEscort->setProperty("TableName", MetaEscort->TableName);
 		ActionEscort->setProperty("ClassName", MetaEscort->ClassName);
-		ActionEscort->setProperty("ClassFilter", MetaEscort->ClassFilter);
+		ActionEscort->setProperty("FilterField", MetaEscort->FilterField);
 		ActionGroupEscort->addAction(ActionEscort);
 	}
-
-	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateToolBar()
@@ -632,6 +627,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 	if (!IsObjectClicked)
 	{
 		QString TableName = ActionClicked->property("TableName").toString(),
+			parent_filter_field = ActionClicked->property("FilterField").toString(),
 			ClassName = ActionClicked->property("ClassName").toString(),
 			ClassFilter = ActionClicked->property("ClassFilter").toString();
 		if (!ClassName.isEmpty()) //Открытие виджета
@@ -640,19 +636,18 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		}
 		else //Открытие таблицы
 		{
-			ISListObjectForm *ListObjectForm = new ISListObjectForm(TableName, ObjectID, this);
-			ListObjectForm->SetUID(ISMetaData::Instance().GetMetaTable(TableName)->UID);
+			ISListBaseForm *ListBaseForm = new ISListBaseForm(TableName, this);
 			if (!ClassFilter.isEmpty())
 			{
-				ListObjectForm->GetQueryModel()->SetClassFilter(ClassFilter);
+				ListBaseForm->GetQueryModel()->SetClassFilter(ClassFilter);
 			}
-			WidgetEscort = ListObjectForm;
+			WidgetEscort = ListBaseForm;
 		}
+		WidgetEscort->SetParentObjectID(ObjectID);
+		WidgetEscort->SetParentFilterField(parent_filter_field);
+		WidgetEscort->SetParentTableName(MetaTable->Name);
 		connect(WidgetEscort, &ISInterfaceMetaForm::AddFormFromTab, &ISGui::ShowObjectForm);
 		GetMainLayout()->addWidget(WidgetEscort);
-
-		WidgetEscort->SetParentTableName(MetaTable->Name);
-		WidgetEscort->SetParentObjectID(ObjectID);
 		WidgetEscort->LoadData();
 	}
 }
@@ -688,7 +683,7 @@ void ISObjectFormBase::SaveBefore()
 bool ISObjectFormBase::Save()
 {
 	SaveBefore();
-	QVariantMap ValuesMap;
+	ISStringToVariantMap ValuesMap;
 	ISVectorString FieldsVector;
 	QString QueryText;
 
@@ -710,7 +705,7 @@ bool ISObjectFormBase::Save()
 
 		if (!FieldEditBase->GetModificationFlag()) //Если значения поля редактированя не изменялось, переходить к следующему
 		{
-			if (MetaTable->ClassFilterField != FieldName) //Если текущее поле не является фильтруемым (текущая таблица не является эскортной)
+			if (ParentFilterField != FieldName) //Если текущее поле не является фильтруемым (текущая таблица не является эскортной)
 			{
 				continue;
 			}
@@ -724,7 +719,7 @@ bool ISObjectFormBase::Save()
 		}
 
 		FieldEditBase->Invoke();
-		ValuesMap.insert(FieldName, Value);
+		ValuesMap[FieldName] = Value;
 		FieldsVector.emplace_back(FieldName);
 	}
 
@@ -770,7 +765,7 @@ bool ISObjectFormBase::Save()
 
 	//Заполнение запроса значениями
 	ISQuery SqlQuery(QueryText);
-	for (const auto &Value : ValuesMap.toStdMap())
+	for (const auto &Value : ValuesMap)
 	{
 		IS_ASSERT(SqlQuery.BindValue(':' + Value.first, Value.second), "Not bind value");
 	}
@@ -1018,7 +1013,6 @@ void ISObjectFormBase::CancelChanged()
 				GetFieldWidget(FieldName)->SetValue(BeginValue);
 			}
 		}
-
 		ISGui::SetWaitGlobalCursor(false);
 		SetModificationFlag(false);
 		BeginFieldEdit->SetFocus();

@@ -29,7 +29,7 @@ public:
 	virtual ~ISObjectFormBase();
 
 	int GetParentObjectID() const;
-	void SetParentObjectID(int parent_object_id);
+	void SetParentObjectID(int parent_object_id, const QString &parent_filter_field);
 
 	ISNamespace::ObjectFormType GetFormType(); //Получить тип формы
 	int GetObjectID() const; //Получить идентификатор объекта
@@ -98,6 +98,7 @@ private:
 	PMetaTable *MetaTable; //Мета-таблица
 	int ObjectID; //Идентификатор текущего объекта
 	int ParentObjectID; //Идентификатор родителя
+	QString ParentFilterField; //Имя поля для фильтрации
 
 	QToolBar *ToolBarEscort; //Тулбар эскортов
 	QActionGroup *ActionGroupEscort;

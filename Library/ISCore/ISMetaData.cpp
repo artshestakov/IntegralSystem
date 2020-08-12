@@ -562,7 +562,6 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 				MetaTable->TitleName = DomNamedNodeMap.namedItem("TitleName").nodeValue();
 				MetaTable->UseRoles = QVariant(DomNamedNodeMap.namedItem("Name").nodeValue()).toBool();
 				MetaTable->ClassFilter = DomNamedNodeMap.namedItem("ClassFilter").nodeValue();
-				MetaTable->ClassFilterField = DomNamedNodeMap.namedItem("ClassFilterField").nodeValue();
 				MetaTable->ObjectForm = DomNamedNodeMap.namedItem("ObjectForm").nodeValue();
 				MetaTable->ShowOnly = QVariant(DomNamedNodeMap.namedItem("ShowOnly").nodeValue()).toBool();
 				MetaTable->IsSystem = QVariant(DomNamedNodeMap.namedItem("IsSystem").nodeValue()).toBool();
@@ -1065,8 +1064,8 @@ bool ISMetaData::InitializeXSNTableEscorts(PMetaTable *MetaTable, const QDomNode
 		PMetaEscort *MetaEscort = new PMetaEscort();
 		MetaEscort->LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
 		MetaEscort->TableName = DomNamedNodeMap.namedItem("TableName").nodeValue();
+		MetaEscort->FilterField = DomNamedNodeMap.namedItem("FilterField").nodeValue();
 		MetaEscort->ClassName = DomNamedNodeMap.namedItem("ClassName").nodeValue();
-		MetaEscort->ClassFilter = DomNamedNodeMap.namedItem("ClassFilter").nodeValue();
 		MetaTable->Escorts.emplace_back(MetaEscort);
 		Temp = Temp.nextSibling();
 	}

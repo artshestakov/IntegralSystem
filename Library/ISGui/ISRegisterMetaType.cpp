@@ -1,10 +1,8 @@
 #include "ISRegisterMetaType.h"
 //-----------------------------------------------------------------------------
-#include "ISListObjectForm.h"
 #include "ISUserListForm.h"
 #include "ISUserObjectForm.h"
 #include "ISProtocolObjectListForm.h"
-#include "ISEditObjectListForm.h"
 #include "ISDiscussionListForm.h"
 #include "ISControlDatabaseForm.h"
 #include "ISStorageFilesListForm.h"
@@ -60,11 +58,9 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<QSqlError>("QSqlError");
 	qRegisterMetaType<ISUuid>("ISUuid");
 
-	qRegisterMetaType<ISListObjectForm*>("ISListObjectForm");
 	qRegisterMetaType<ISUserListForm*>("ISUserListForm");
 	qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");
 	qRegisterMetaType<ISProtocolObjectListForm*>("ISProtocolObjectListForm");
-	qRegisterMetaType<ISEditObjectListForm*>("ISEditObjectListForm");
 	qRegisterMetaType<ISControlDatabaseForm*>("ISControlDatabaseForm");
 	qRegisterMetaType<ISDiscussionListForm*>("ISDiscussionListForm");
 	qRegisterMetaType<ISStorageFilesListForm*>("ISStorageFilesListForm");

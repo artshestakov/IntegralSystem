@@ -124,7 +124,6 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 		CentralForm = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
 	}
 
-	CentralForm->SetUID(SubSystemUID);
 	connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceForm::AddObjectForm);
 	TabWidget->GetMainTab()->layout()->addWidget(CentralForm);
 

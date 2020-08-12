@@ -23,12 +23,12 @@ public:
 	int GetParentObjectID() const;
 	void SetParentObjectID(int parent_object_id);
 
-	void SetUID(const QString &sub_system_uid); //Изменить идентификатор подсистемы/таблицы
-	ISUuid GetUID() const; //Получить идентификатор подсистемы/таблицы
+	QString GetParentFilterField() const;
+	void SetParentFilterField(const QString &parent_filter_field);
 
 private:
 	QString ParentTableName;
 	int ParentObjectID;
-	ISUuid UID; //Идентификатор подсистемы/таблицы
+	QString ParentFilterField;
 };
 //-----------------------------------------------------------------------------

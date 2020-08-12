@@ -30,13 +30,13 @@ void ISInterfaceMetaForm::SetParentObjectID(int parent_object_id)
 	ParentObjectID = parent_object_id;
 }
 //-----------------------------------------------------------------------------
-void ISInterfaceMetaForm::SetUID(const QString &sub_system_uid)
+QString ISInterfaceMetaForm::GetParentFilterField() const
 {
-	UID = sub_system_uid;
+	return ParentFilterField;
 }
 //-----------------------------------------------------------------------------
-ISUuid ISInterfaceMetaForm::GetUID() const
+void ISInterfaceMetaForm::SetParentFilterField(const QString &parent_filter_field)
 {
-	return UID;
+	ParentFilterField = parent_filter_field;
 }
 //-----------------------------------------------------------------------------

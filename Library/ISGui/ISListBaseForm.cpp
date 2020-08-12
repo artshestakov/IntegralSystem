@@ -244,7 +244,7 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 		if (EventName == "Window")
 		{
 			ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID());
-			ObjectFormBase->SetParentObjectID(GetParentObjectID());
+			ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 			connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::SetSelectObjectAfterUpdate);
 			connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 			connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
@@ -825,7 +825,7 @@ void ISListBaseForm::Create()
 	}
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name, 0, parentWidget());
-	ObjectFormBase->SetParentObjectID(GetParentObjectID());
+	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::SetSelectObjectAfterUpdate);
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
@@ -848,7 +848,7 @@ void ISListBaseForm::CreateCopy()
 	}
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::OFT_Copy, MetaTable->Name, GetObjectID(), parentWidget());
-	ObjectFormBase->SetParentObjectID(GetParentObjectID());
+	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::SetSelectObjectAfterUpdate);
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
@@ -871,7 +871,7 @@ void ISListBaseForm::Edit()
 	}
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID(), parentWidget());
-	ObjectFormBase->SetParentObjectID(GetParentObjectID());
+	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::SetSelectObjectAfterUpdate);
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
@@ -884,7 +884,7 @@ void ISListBaseForm::Update()
 	IsLoadingData = true;
 	SqlModel->Clear();
 
-	QueryModel->SetParentObjectIDClassFilter(GetParentObjectID());
+	QueryModel->SetParentFilter(GetParentObjectID(), GetParentFilterField());
 	ModelThreadQuery->Execute(QueryModel->GetQueryText(), QueryModel->GetConditions());
 
 	LabelSelectedRow->setVisible(false);

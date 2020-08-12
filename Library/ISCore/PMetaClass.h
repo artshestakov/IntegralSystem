@@ -65,8 +65,8 @@ struct PMetaEscort : public PMetaBase
 
 	QString LocalName;
 	QString TableName;
+	QString FilterField;
 	QString ClassName;
-	QString ClassFilter;
 };
 //-----------------------------------------------------------------------------
 struct PMetaField : public PMetaBase
@@ -191,7 +191,6 @@ struct PMetaTable : public PMetaBase
 	QString TitleName;
 	bool UseRoles;
 	QString ClassFilter; //Фильтр таблицы
-	QString ClassFilterField;
 	QString ObjectForm; //Наименование класса формы объекта
 	bool ShowOnly; //Только просмотр таблицы
 	bool IsSystem;

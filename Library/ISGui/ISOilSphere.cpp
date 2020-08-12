@@ -138,7 +138,7 @@ ISOilSphere::ImplementationObjectForm::ImplementationObjectForm(ISNamespace::Obj
 	else
 	{
 		ImplementationDetailListForm->setVisible(true);
-		ImplementationDetailListForm->GetQueryModel()->SetParentObjectIDClassFilter(object_id);
+		ImplementationDetailListForm->GetQueryModel()->SetParentFilter(object_id, "Implementation");
 		ImplementationDetailListForm->SetParentObjectID(object_id);
 		ImplementationDetailListForm->SetParentTableName(meta_table->Name);
 		ImplementationDetailListForm->LoadData();
@@ -153,7 +153,7 @@ ISOilSphere::ImplementationObjectForm::~ImplementationObjectForm()
 void ISOilSphere::ImplementationObjectForm::Saved(int ObjectID)
 {
 	ImplementationDetailListForm->setVisible(true);
-	ImplementationDetailListForm->GetQueryModel()->SetParentObjectIDClassFilter(ObjectID);
+	ImplementationDetailListForm->GetQueryModel()->SetParentFilter(ObjectID, "Implementation");
 	ImplementationDetailListForm->SetParentObjectID(ObjectID);
 	ImplementationDetailListForm->SetParentTableName(GetMetaTable()->Name);
 	ImplementationDetailListForm->LoadData();

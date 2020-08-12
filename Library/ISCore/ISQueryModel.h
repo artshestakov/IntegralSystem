@@ -22,7 +22,7 @@ public:
 	bool GetVisibleIsDeleted() const; //Показываются ли записи помеченные на удаление
 	void SetVisibleIsDeleted(bool Visible); //Показывать/скрывать удаленные записи помеченные на удаление
 
-	void SetParentObjectIDClassFilter(int ParentObjectID); //Изменить условие (идентификатор) фильтра для эскортной таблицы
+	void SetParentFilter(int ParentObjectID, const QString &FieldName); //Изменить условие (идентификатор) фильтра для эскортной таблицы
 	
 	ISNamespace::PeriodType GetPeriodType() const;
 	ISRangeStruct GetPeriod() const;
@@ -71,6 +71,7 @@ private:
 	ISRangeStruct PeriodRange;
 
 	QString ClassAlias;
+	QString ParentFilter;
 	QString ClassFilter;
 	QString SearchFilter;
 

@@ -31,22 +31,24 @@
       <Foreign Field="Status" ForeignClass="CounterpartyStatus" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <Escorts>
-      <Escort LocalName="Баланс" TableName="CounterpartyBalance" ClassFilter="cpbl_counterparty = :ParentObjectID"/>
+      <Escort LocalName="Баланс" TableName="CounterpartyBalance" FilterField="Counterparty"/>
     </Escorts>
   </Table>
 
-  <Table Name="CounterpartyBalance" UID="{D757B654-6B39-4607-A00D-43D9140B6A89}" Alias="cpbl" LocalName="Баланс" LocalListName="Баланс" TitleName="Counterparty" ClassFilterField="Counterparty">
+  <Table Name="CounterpartyBalance" UID="{D757B654-6B39-4607-A00D-43D9140B6A89}" Alias="cpbl" LocalName="Баланс" LocalListName="Баланс" TitleName="Counterparty">
     <Fields>
       <Field UID="{1EA7C67D-02A9-421A-B742-FC25DFE2808F}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{3D7356EE-D435-424C-B0E8-E72962E069C3}" Name="Operation" Type="Int" LabelName="Операция" LocalListName="Операция" NotNull="true"/>
       <Field UID="{2D7B6C71-3FA2-4CE8-95F7-098D2E404684}" Name="Date" Type="Date" LabelName="Дата операции" LocalListName="Дата операции" NotNull="true"/>
       <Field UID="{EA7132AB-F685-49B5-BDE1-69793DF5C86F}" Name="Sum" Type="Double" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+      <Field UID="{97C361A9-9AF3-46A3-88AA-EB5E7D48E58C}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
       <Index Field="Counterparty"/>
       <Index Field="Operation"/>
       <Index Field="Date"/>
       <Index Field="Sum"/>
+      <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -110,7 +112,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="Counterparty" ClassFilterField="Implementation" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
+  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="Counterparty" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
     <Fields>
       <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="Int" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" SeparatorName="Загрузка"/>

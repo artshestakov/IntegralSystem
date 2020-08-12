@@ -132,9 +132,6 @@
     <ClCompile Include="ISListBaseForm.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISListObjectForm.cpp">
-      <Filter>Common Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISListViewWidget.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
@@ -412,9 +409,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISDiscussionObjectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISEditObjectListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISFavoritesForm.cpp">
@@ -704,9 +698,6 @@
     <QtMoc Include="ISListBaseForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISListObjectForm.h">
-      <Filter>Common Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISListViewWidget.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
@@ -912,9 +903,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISDiscussionObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISEditObjectListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISFavoritesForm.h">

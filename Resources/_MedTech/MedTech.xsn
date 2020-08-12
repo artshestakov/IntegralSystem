@@ -30,11 +30,11 @@
       <Index Field="Address" Unique="true"/>
     </Indexes>
     <Escorts>
-      <Escort LocalName="Номера филиала" TableName="BranchesNumber" ClassFilter="brnm_branch = :ParentObjectID"/>
+      <Escort LocalName="Номера филиала" TableName="BranchesNumber" ClassFilterField="Branch"/>
     </Escorts>
   </Table>
 
-  <Table Name="BranchesNumber" UID="{6B859020-24A7-4851-B45D-BCF4A66D4CB6}" Alias="brnm" LocalName="Номер филиала" LocalListName="Номера филиала" ClassFilterField="Branch" TitleName="Number">
+  <Table Name="BranchesNumber" UID="{6B859020-24A7-4851-B45D-BCF4A66D4CB6}" Alias="brnm" LocalName="Номер филиала" LocalListName="Номера филиала" TitleName="Number">
     <Fields>
       <Field UID="{A6D24EF1-0C7F-4B24-98E4-9B1EA66F7253}" Name="Branch" Type="Int" LabelName="Филиал" LocalListName="Филиал" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{603428AF-D47C-4340-8C95-8700511AAEBD}" Name="Number" Type="Int" LabelName="Номер" LocalListName="Номер" NotNull="true"/>

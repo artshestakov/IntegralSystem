@@ -42,7 +42,7 @@
       <Foreign Field="Sex" ForeignClass="_Sex" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <Escorts>
-      <Escort LocalName="Изменения пароля" TableName="_UserPasswordChanged" ClassFilter="upcg_user = :ParentObjectID"/>
+      <Escort LocalName="Изменения пароля" TableName="_UserPasswordChanged" FilterField="User"/>
     </Escorts>
   </Table>
 
@@ -167,7 +167,7 @@
     </Indexes>
   </Table>
 
-  <Table Name="_UserPasswordChanged" UID="{621BC43F-01FF-43D3-9046-ADB0B229CDD2}" Alias="upcg" ShowOnly="true" LocalName="Изменение пароля" LocalListName="Изменения паролей" TitleName="User" ClassFilterField="User">
+  <Table Name="_UserPasswordChanged" UID="{621BC43F-01FF-43D3-9046-ADB0B229CDD2}" Alias="upcg" ShowOnly="true" LocalName="Изменение пароля" LocalListName="Изменения паролей" TitleName="User">
     <Fields>
       <Field UID="{B33AA18E-3C37-4D9F-8F98-C8DF6999F0E0}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{9B8B9EFC-EFEB-47E3-85B8-070D7F9DE2C8}" Name="WhoUser" Type="Int" LabelName="Кто изменил" LocalListName="Кто изменил" NotNull="true"/>

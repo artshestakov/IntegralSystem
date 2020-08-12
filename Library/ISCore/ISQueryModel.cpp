@@ -92,6 +92,12 @@ QString ISQueryModel::GetQueryText()
 		SqlText += PeriodString.arg(QDateTime(PeriodRange.BeginValue.toDate(), QTime(0, 0)).toString(FORMAT_DATE_TIME_V7)).arg(QDateTime(PeriodRange.EndValue.toDate(), QTime(23, 59, 59)).toString(FORMAT_DATE_TIME_V7));
 	}
 
+	//Если таблица является эскортной
+	if (!ParentFilter.isEmpty())
+	{
+		SqlText += "AND " + ParentFilter + " \n";
+	}
+
 	//Если для таблицы существует фильтр
 	if (!ClassFilter.isEmpty())
 	{
@@ -126,11 +132,11 @@ void ISQueryModel::SetVisibleIsDeleted(bool Visible)
 	VisibleIsDeleted = Visible;
 }
 //-----------------------------------------------------------------------------
-void ISQueryModel::SetParentObjectIDClassFilter(int ParentObjectID)
+void ISQueryModel::SetParentFilter(int ParentObjectID, const QString &FieldName)
 {
-	if (ClassFilter.contains(":ParentObjectID"))
+	if (ParentObjectID && !FieldName.isEmpty())
 	{
-		ClassFilter.replace(":ParentObjectID", QString::number(ParentObjectID));
+		ParentFilter = QString("%1_%2 = %3").arg(MetaTable->Alias).arg(FieldName).arg(ParentObjectID);
 	}
 }
 //-----------------------------------------------------------------------------
