@@ -630,11 +630,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 			parent_filter_field = ActionClicked->property("FilterField").toString(),
 			ClassName = ActionClicked->property("ClassName").toString(),
 			ClassFilter = ActionClicked->property("ClassFilter").toString();
-		if (!ClassName.isEmpty()) //Открытие виджета
-		{
-			WidgetEscort = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, this));
-		}
-		else //Открытие таблицы
+		if (ClassName.isEmpty()) //Открытие таблицы
 		{
 			ISListBaseForm *ListBaseForm = new ISListBaseForm(TableName, this);
 			if (!ClassFilter.isEmpty())
@@ -642,6 +638,10 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 				ListBaseForm->GetQueryModel()->SetClassFilter(ClassFilter);
 			}
 			WidgetEscort = ListBaseForm;
+		}
+		else //Открытие виджета
+		{
+			WidgetEscort = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, this));
 		}
 		WidgetEscort->SetParentObjectID(ObjectID);
 		WidgetEscort->SetParentFilterField(parent_filter_field);
