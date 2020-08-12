@@ -8,11 +8,6 @@
 #include "ISDefinesGui.h"
 #include "ISControls.h"
 //-----------------------------------------------------------------------------
-static QString QU_RESULT_COUNT = PREPARE_QUERY2("UPDATE implementation SET "
-												"impl_resultcount = (SELECT COUNT(*) FROM implementationdetail WHERE imdt_implementation = :ObjectID AND NOT imdt_isdeleted) "
-												"WHERE impl_id = :ObjectID "
-												"RETURNING impl_resultcount");
-//-----------------------------------------------------------------------------
 static QString QS_BEFORE_VALUES = PREPARE_QUERY2("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
 												 "COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
@@ -69,7 +64,6 @@ ISOilSphere::Object::~Object()
 void ISOilSphere::Object::RegisterMetaTypes() const
 {
 	qRegisterMetaType<ISOilSphere::CounterpartyObjectForm*>("ISOilSphere::CounterpartyObjectForm");
-	qRegisterMetaType<ISOilSphere::ImplementationObjectForm*>("ISOilSphere::ImplementationObjectForm");
 	qRegisterMetaType<ISOilSphere::ImplementationDetailObjectForm*>("ISOilSphere::ImplementationDetailObjectForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementListForm*>("ISOilSphere::GasStationStatementListForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
@@ -116,58 +110,6 @@ void ISOilSphere::CounterpartyObjectForm::SearchFinished(const ISDaDataOrganizat
 	GetFieldWidget("Director")->SetValue(OrganizationStruct.Management.FIO);
 	GetFieldWidget("Kpp")->SetValue(OrganizationStruct.Kpp);
 	GetFieldWidget("Ogrn")->SetValue(OrganizationStruct.Ogrn);
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISOilSphere::ImplementationObjectForm::ImplementationObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
-	: ISObjectFormBase(form_type, meta_table, parent, object_id)
-{
-	ImplementationDetailListForm = new ISListBaseForm("ImplementationDetail", this);
-	ImplementationDetailListForm->setSizePolicy(ImplementationDetailListForm->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
-	ImplementationDetailListForm->GetQueryModel()->SetClassFilter("imdt_implementation = :ParentObjectID");
-	connect(ImplementationDetailListForm, &ISListBaseForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
-	connect(ImplementationDetailListForm, &ISListBaseForm::Updated, this, &ISOilSphere::ImplementationObjectForm::Updated);
-	connect(this, &ISOilSphere::ImplementationObjectForm::SavedObject, this, &ISOilSphere::ImplementationObjectForm::Saved);
-	AddWidgetToBottom(ImplementationDetailListForm);
-
-	if (form_type == ISNamespace::OFT_New)
-	{
-		ImplementationDetailListForm->setVisible(false);
-	}
-	else
-	{
-		ImplementationDetailListForm->setVisible(true);
-		ImplementationDetailListForm->GetQueryModel()->SetParentFilter(object_id, "Implementation");
-		ImplementationDetailListForm->SetParentObjectID(object_id);
-		ImplementationDetailListForm->SetParentTableName(meta_table->Name);
-		ImplementationDetailListForm->LoadData();
-	}
-}
-//-----------------------------------------------------------------------------
-ISOilSphere::ImplementationObjectForm::~ImplementationObjectForm()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISOilSphere::ImplementationObjectForm::Saved(int ObjectID)
-{
-	ImplementationDetailListForm->setVisible(true);
-	ImplementationDetailListForm->GetQueryModel()->SetParentFilter(ObjectID, "Implementation");
-	ImplementationDetailListForm->SetParentObjectID(ObjectID);
-	ImplementationDetailListForm->SetParentTableName(GetMetaTable()->Name);
-	ImplementationDetailListForm->LoadData();
-}
-//-----------------------------------------------------------------------------
-void ISOilSphere::ImplementationObjectForm::Updated()
-{
-	ISQuery qUpdate(QU_RESULT_COUNT);
-	qUpdate.BindValue(":ObjectID", GetObjectID());
-	if (qUpdate.ExecuteFirst())
-	{
-		GetFieldWidget("ResultCount")->SetValue(qUpdate.ReadColumn("impl_resultcount").toInt());
-		SetModificationFlag(false);
-	}
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

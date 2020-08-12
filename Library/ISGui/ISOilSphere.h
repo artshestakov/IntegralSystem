@@ -43,23 +43,6 @@ namespace ISOilSphere
 		ISDaDataService *DaDataService;
 	};
 
-	//Форма объекта реализации
-	class ImplementationObjectForm : public ISObjectFormBase
-	{
-		Q_OBJECT
-
-	public:
-		Q_INVOKABLE ImplementationObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
-		virtual ~ImplementationObjectForm();
-
-	private:
-		void Saved(int ObjectID);
-		void Updated();
-
-	private:
-		ISListBaseForm *ImplementationDetailListForm;
-	};
-
 	//Форма объекта деталей реализации
 	class ImplementationDetailObjectForm : public ISObjectFormBase
 	{

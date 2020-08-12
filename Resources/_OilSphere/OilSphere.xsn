@@ -96,20 +96,21 @@
     </Indexes>
   </Table>
 
-  <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="DateLoad" ObjectForm="ISOilSphere::ImplementationObjectForm">
+  <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="DateLoad">
     <Fields>
       <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки" NotNull="true"/>
       <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта" NotNull="true"/>
-      <Field UID="{F7F29CDC-674A-4EA0-ADEE-4BBEF8E58C13}" Name="ResultCount" Type="Int" DefaultValue="0" LabelName="Количество" LocalListName="Количество" ReadOnly="true" NotNull="true" SeparatorName="Итого"/>
     </Fields>
     <Indexes>
       <Index Field="DateLoad"/>
       <Index Field="ProductType"/>
-      <Index Field="ResultCount"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
+    <Escorts>
+      <Escort LocalName="Подробности" TableName="ImplementationDetail" FilterField="Implementation"/>
+    </Escorts>
   </Table>
 
   <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="Counterparty" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
