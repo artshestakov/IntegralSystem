@@ -77,18 +77,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
 {
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE)) //Если нужно запоминать размер колонок
-	{
-		for (int i = 0, c = SqlModel->columnCount(); i < c; ++i)
-		{
-			QString FieldName = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-			if (!MetaTable->GetField(FieldName)->IsSystem) //Если поле не системное - запомнить размер поля
-			{
-				ISColumnSizer::Instance().SetColumnSize(MetaTable->Name, FieldName, TableView->columnWidth(i));
-			}
-		}
-	}
-
 	ModelThreadQuery->quit();
 	IS_ASSERT(ModelThreadQuery->wait(), "Not wait() thread");
 
@@ -258,6 +246,21 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 	}
 }
 //-----------------------------------------------------------------------------
+void ISListBaseForm::FieldResized(bool Include)
+{
+	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
+	{
+		Include ?
+			connect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, static_cast<void(ISListBaseForm::*)(int, int, int)>(&ISListBaseForm::FieldResized)) :
+			disconnect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, static_cast<void(ISListBaseForm::*)(int, int, int)>(&ISListBaseForm::FieldResized));
+	}
+}
+//-----------------------------------------------------------------------------
+void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
+{
+	ISColumnSizer::Instance().SetColumnSize(MetaTable->Name, SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
+}
+//-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 {
 	if (Order == SqlModel->GetSortOrder() && LogicalIndex == SqlModel->GetSortColumn())
@@ -280,16 +283,6 @@ void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 void ISListBaseForm::SortingDefault()
 {
 	SortingChanged(0, Qt::AscendingOrder);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::HideSystemFields()
-{
-	if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
-	{
-		HideField("ID");
-	}
-	HideField("IsDeleted");
-	HideField("IsSystem");
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::VisibleIndicatorWidget()
@@ -526,30 +519,20 @@ bool ISListBaseForm::CheckIsSystemObject()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::HideField(const QString &FieldName)
 {
-	for (int i = 0; i < SqlModel->columnCount(); ++i)
-	{
-		QString HeaderData = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-		if (HeaderData == FieldName)
-		{
-			TableView->hideColumn(i);
-			return;
-		}
-	}
-	ISLOGGER_W(QString("Not found field \"%1\" from HideField").arg(FieldName));
+	FieldResized(false);
+	int Index = SqlModel->GetFieldIndex(FieldName);
+	IS_ASSERT(Index != -1, QString("Not found field \"%1\"").arg(FieldName));
+	TableView->hideColumn(Index);
+	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowField(const QString &FieldName)
 {
-	for (int i = 0; i < SqlModel->columnCount(); ++i)
-	{
-		QString HeaderData = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-		if (HeaderData == FieldName)
-		{
-			TableView->showColumn(i);
-			return;
-		}
-	}
-	ISLOGGER_W(QString("Not found field \"%1\" from ShowField").arg(FieldName));
+	FieldResized(false);
+	int Index = SqlModel->GetFieldIndex(FieldName);
+	IS_ASSERT(Index != -1, QString("Not found field \"%1\"").arg(FieldName));
+	TableView->showColumn(Index);
+	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SetShowOnly(bool show_only)
@@ -588,6 +571,7 @@ void ISListBaseForm::PeriodClear()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ResizeColumnsToContents()
 {
+	FieldResized(false);
 	for (int i = 0, c = SqlModel->columnCount(); i < c; ++i)
 	{
 		QString FieldName = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
@@ -597,6 +581,7 @@ void ISListBaseForm::ResizeColumnsToContents()
 			TableView->setColumnWidth(i, ColumnSize);
 		}
 	}
+	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AddWidgetToBottom(QWidget *Widget)
@@ -1537,6 +1522,7 @@ void ISListBaseForm::CreateTableView()
 	connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
 	connect(TableView, &ISBaseTableView::CornerClicked, this, &ISListBaseForm::CornerButtonClicked);
 	connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
+	FieldResized(true);
 	LayoutTableView->addWidget(TableView);
 
 	connect(TableView, &ISBaseTableView::doubleClicked, this, &ISListBaseForm::DoubleClickedTable);
@@ -1604,7 +1590,13 @@ void ISListBaseForm::CreateModels()
 	TableView->setModel(SqlModel);
 	connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);//Это соединение обязательно должно быть после присваивания модели к QTableView
 
-	HideSystemFields();
+	//Скрытие системных полей
+	if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
+	{
+		HideField("ID");
+	}
+	HideField("IsDeleted");
+	HideField("IsSystem");
 
 	ModelThreadQuery = new ISModelThreadQuery(this);
 	connect(ModelThreadQuery, &ISModelThreadQuery::Started, this, &ISListBaseForm::ModelThreadStarted);

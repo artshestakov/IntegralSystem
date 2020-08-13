@@ -120,9 +120,11 @@ protected:
 
 	virtual void DoubleClickedTable(const QModelIndex &ModelIndex); //Обработчик события двойного нажатия на строку таблицы
 
+	void FieldResized(bool Include); //Включить/выключить сигнал изменения размера поля
+	void FieldResized(int LogicalIndex, int WidthOld, int WidthNew);
+
 	void SortingChanged(int LogicalIndex, Qt::SortOrder Order);
 	void SortingDefault(); //Установка сортировки по умолчанию
-	void HideSystemFields(); //Скрытие системных полей
 	void VisibleIndicatorWidget(); //Изменение видимости индикатора
 	void ShowSettingsForm();
 
