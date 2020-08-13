@@ -7,6 +7,7 @@
 #include "ISInputDialog.h"
 #include "ISDefinesGui.h"
 #include "ISControls.h"
+#include "ISStyleSheet.h"
 //-----------------------------------------------------------------------------
 static QString QS_BEFORE_VALUES = PREPARE_QUERY2("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
@@ -32,29 +33,28 @@ static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gs
 											 "RETURNING gsts_id");
 //-----------------------------------------------------------------------------
 static QString QS_DEBT = PREPARE_QUERY2("SELECT "
+										"imdt_implementation, "
 										"imdt_id, "
+										"cnpr_id, "
 										"cnpr_name, "
+										"(SELECT COALESCE(SUM(cpen_sum), 0) FROM counterpartyenrollment WHERE NOT cpen_isdeleted AND cpen_counterparty = cnpr_id) - "
+										"(SELECT COALESCE(SUM(cpwo_sum), 0) FROM counterpartywriteoff WHERE NOT cpwo_isdeleted AND cpwo_counterparty = cnpr_id) AS balance, "
 										"impl_dateload, "
 										"pdtp_name, "
 										"imdt_unloadcost, "
-										"(SELECT COALESCE(SUM(debt_accrued), 0) FROM debt WHERE debt_ImplementationDetail = imdt_id) AS debt_accrued, "
-										"imdt_implementation "
+										"(SELECT sum(cpwo_sum) FROM counterpartywriteoff WHERE NOT cpwo_isdeleted AND cpwo_implementationdetail = imdt_id) AS accrued "
 										"FROM implementationdetail "
+										"LEFT JOIN counterparty ON imdt_counterparty = cnpr_id "
 										"LEFT JOIN implementation ON imdt_implementation = impl_id "
 										"LEFT JOIN producttype ON impl_producttype = pdtp_id "
-										"LEFT JOIN counterparty ON imdt_counterparty = cnpr_id "
-										"WHERE imdt_unloadcost > (SELECT COALESCE(SUM(debt_accrued), 0) FROM debt WHERE debt_implementationdetail = imdt_id)");
+										"WHERE NOT imdt_isdeleted "
+										"AND NOT (SELECT impl_isdeleted FROM implementation WHERE imdt_implementation = impl_id)");
 //-----------------------------------------------------------------------------
-static QString QS_ACCRUED = PREPARE_QUERY2("SELECT debt_accrued, debt_date, debt_note "
-										   "FROM debt "
-										   "WHERE NOT debt_isdeleted "
-										   "AND debt_implementationdetail = :ImplementationDetailID "
-										   "ORDER BY debt_id");
-//-----------------------------------------------------------------------------
-static QString QS_PAYMENT = PREPARE_QUERY2("SELECT imdt_unloadcost, "
-										   "imdt_unloadcost - (SELECT sum(idpt_sum) FROM implementationdetailpayment WHERE idpt_implementationdetail = :ImplementationDetail) AS left "
-										   "FROM implementationdetail "
-										   "WHERE imdt_id = :ImplementationDetail");
+static QString QS_ACCRUED = PREPARE_QUERY2("SELECT cpwo_date, cpwo_sum, cpwo_note "
+										   "FROM counterpartywriteoff "
+										   "WHERE NOT cpwo_isdeleted "
+										   "AND cpwo_implementationdetail = :ImplementationDetailID "
+										   "ORDER BY cpwo_id");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -73,7 +73,6 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::GasStationStatementListForm*>("ISOilSphere::GasStationStatementListForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 	qRegisterMetaType<ISOilSphere::DebtSubSystemForm*>("ISOilSphere::DebtSubSystemForm");
-	qRegisterMetaType<ISOilSphere::PaymentListForm*>("ISOilSphere::PaymentListForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -501,16 +500,19 @@ void ISOilSphere::DebtSubSystemForm::LoadData()
 	{
 		while (qSelectDebt.Next())
 		{
+			int ImplementationID = qSelectDebt.ReadColumn("imdt_implementation").toInt();
 			int ImplementationDetailID = qSelectDebt.ReadColumn("imdt_id").toInt();
+			int CounterpartyID = qSelectDebt.ReadColumn("cnpr_id").toInt();
 			QString CounterpartyName = qSelectDebt.ReadColumn("cnpr_name").toString();
+			double Balance = qSelectDebt.ReadColumn("balance").toDouble();
 			QDate DateLoad = qSelectDebt.ReadColumn("impl_dateload").toDate();
 			QString ProductTypeName = qSelectDebt.ReadColumn("pdtp_name").toString();
 			double UnloadCost = qSelectDebt.ReadColumn("imdt_unloadcost").toDouble();
-			int Accrued = qSelectDebt.ReadColumn("debt_accrued").toInt();
-			int ImplementationID = qSelectDebt.ReadColumn("imdt_implementation").toInt();
+			double Accrued = qSelectDebt.ReadColumn("accrued").toDouble();
 
 			QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(TreeWidget);
-			TreeWidget->setItemWidget(TreeWidgetItem, 0, CreateItemWidget(ImplementationID, ImplementationDetailID, CounterpartyName, DateLoad, ProductTypeName, UnloadCost, Accrued));
+			TreeWidget->setItemWidget(TreeWidgetItem, 0,
+				CreateItemWidget(ImplementationID, ImplementationDetailID, CounterpartyID, CounterpartyName, Balance, DateLoad, ProductTypeName, UnloadCost, Accrued));
 
 			ISQuery qSelectAccrueds(QS_ACCRUED);
 			qSelectAccrueds.BindValue(":ImplementationDetailID", ImplementationDetailID);
@@ -518,15 +520,15 @@ void ISOilSphere::DebtSubSystemForm::LoadData()
 			{
 				while (qSelectAccrueds.Next())
 				{
-					QString Accrued = qSelectAccrueds.ReadColumn("debt_accrued").toString();
-					QString Date = qSelectAccrueds.ReadColumn("debt_date").toDate().toString(FORMAT_DATE_V2);
-					QString Note = qSelectAccrueds.ReadColumn("debt_note").toString();
+					QString Date = qSelectAccrueds.ReadColumn("cpwo_date").toDate().toString(FORMAT_DATE_V2);
+					double Sum = qSelectAccrueds.ReadColumn("cpwo_sum").toDouble();
+					QString Note = qSelectAccrueds.ReadColumn("cpwo_note").toString();
 
 					QTreeWidgetItem *TreeItemAccrued = new QTreeWidgetItem(TreeWidgetItem);
 					TreeItemAccrued->setSizeHint(0, QSize(TreeItemAccrued->sizeHint(0).width(), 30));
 					TreeItemAccrued->setText(0, Note.isEmpty() ?
-						LANG("OilSphere.AccruedWithDate").arg(Accrued).arg(Date) :
-						LANG("OilSphere.AccruedWithDateAndNote").arg(Accrued).arg(Date).arg(Note));
+						LANG("OilSphere.AccruedWithDate").arg(Sum).arg(Date) :
+						LANG("OilSphere.AccruedWithDateAndNote").arg(Sum).arg(Date).arg(Note));
 				}
 			}
 		}
@@ -540,7 +542,8 @@ void ISOilSphere::DebtSubSystemForm::LoadData()
 //-----------------------------------------------------------------------------
 void ISOilSphere::DebtSubSystemForm::AddAccrued()
 {
-	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "Debt");
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "CounterpartyWriteOff");
+	ObjectFormBase->SetFieldValue("Counterparty", sender()->property("CounterpartyID"));
 	ObjectFormBase->SetFieldValue("ImplementationDetail", sender()->property("ImplementationDetailID"));
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISOilSphere::DebtSubSystemForm::LoadData);
 	ISGui::ShowObjectForm(ObjectFormBase);
@@ -556,7 +559,12 @@ void ISOilSphere::DebtSubSystemForm::ShowImplementationDetails()
 	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "ImplementationDetail", sender()->property("ImplementationDetailID").toInt()));
 }
 //-----------------------------------------------------------------------------
-QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, int ImplementationDetailID, const QString &CounterpartyName, const QDate &DateLoad, const QString &ProductTypeName, double UnloadCost, int Accrued)
+void ISOilSphere::DebtSubSystemForm::ShowCounterparty()
+{
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "Counterparty", sender()->property("CounterpartyID").toInt()));
+}
+//-----------------------------------------------------------------------------
+QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, int ImplementationDetailID, int CounterpartyID, const QString &CounterpartyName, double Balance, const QDate &DateLoad, const QString &ProductTypeName, double UnloadCost, int Accrued)
 {
 	QHBoxLayout *LayoutWidget = new QHBoxLayout();
 
@@ -564,71 +572,77 @@ QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, 
 	Widget->setLayout(LayoutWidget);
 
 	QVBoxLayout *LayoutLabels = new QVBoxLayout();
-	LayoutLabels->addWidget(new QLabel(LANG("OilSphere.Counterpatry") + ": " + CounterpartyName, Widget));
-	LayoutLabels->addWidget(new QLabel(LANG("OilSphere.DateLoad") + ": " + DateLoad.toString(FORMAT_DATE_V2), Widget));
-	LayoutLabels->addWidget(new QLabel(LANG("OilSphere.ProductType") + ": " + ProductTypeName, Widget));
-	LayoutLabels->addWidget(new QLabel(LANG("OilSphere.UnloadCost") + ": " + QString::number(UnloadCost), Widget));
-	LayoutLabels->addWidget(new QLabel(LANG("OilSphere.Accrued") + ": " + QString::number(Accrued), Widget));
-	LayoutLabels->addWidget(new QLabel(LANG("OilSphere.Debt") + ": " + QString::number(UnloadCost - Accrued), Widget));
+
+	QLabel *LabelCounterpartyName = new QLabel(LANG("OilSphere.Counterpatry") + ": " + CounterpartyName, Widget);
+	ISGui::SetFontWidgetBold(LabelCounterpartyName, true);
+	LayoutLabels->addWidget(LabelCounterpartyName);
+
+	QLabel *LabelBalance = new QLabel(LANG("OilSphere.CurrentBalance") + ": " + QString::number(Balance), Widget);
+	ISGui::SetFontWidgetBold(LabelBalance, true);
+	LayoutLabels->addWidget(LabelBalance);
+	
+	if (Balance == 0)
+	{
+		LabelBalance->setStyleSheet(STYLE_SHEET("QLabel.Color.Blue"));
+	}
+	else if (Balance > 0)
+	{
+		LabelBalance->setStyleSheet(STYLE_SHEET("QLabel.Color.Green"));
+	}
+	else if (Balance < 0)
+	{
+		LabelBalance->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
+	}
+
+	QLabel *LabelDateLoad = new QLabel(LANG("OilSphere.DateLoad") + ": " + DateLoad.toString(FORMAT_DATE_V2), Widget);
+	ISGui::SetFontWidgetBold(LabelDateLoad, true);
+	LayoutLabels->addWidget(LabelDateLoad);
+
+	QLabel *LabelProductType = new QLabel(LANG("OilSphere.ProductType") + ": " + ProductTypeName, Widget);
+	ISGui::SetFontWidgetBold(LabelProductType, true);
+	LayoutLabels->addWidget(LabelProductType);
+
+	QLabel *LabelUnloadCost = new QLabel(LANG("OilSphere.UnloadCost") + ": " + QString::number(UnloadCost), Widget);
+	ISGui::SetFontWidgetBold(LabelUnloadCost , true);
+	LayoutLabels->addWidget(LabelUnloadCost);
+
+	QLabel *LabelDebt = new QLabel(LANG("OilSphere.Debt") + ": " + QString::number(UnloadCost - Accrued), Widget);
+	ISGui::SetFontWidgetBold(LabelDebt, true);
+	LayoutLabels->addWidget(LabelDebt);
+
+	QLabel *LabelAccrued = new QLabel(LANG("OilSphere.Accrued") + ": " + QString::number(Accrued), Widget);
+	ISGui::SetFontWidgetBold(LabelAccrued, true);
+	LayoutLabels->addWidget(LabelAccrued);
+
 	LayoutWidget->addLayout(LayoutLabels);
 
 	LayoutWidget->addWidget(ISControls::CreateVerticalLine(Widget));
 
-	ISPushButton *ButtonAddAccrued = new ISPushButton(BUFFER_ICONS("Add"), LANG("OilSphere.AddAccrued"), Widget);
-	ButtonAddAccrued->setProperty("ImplementationDetailID", ImplementationDetailID);
-	ButtonAddAccrued->setCursor(CURSOR_POINTING_HAND);
-	connect(ButtonAddAccrued, &ISPushButton::clicked, this, &ISOilSphere::DebtSubSystemForm::AddAccrued);
-	LayoutWidget->addWidget(ButtonAddAccrued);
+	QToolButton *ButtonMenu = new QToolButton(Widget);
+	ButtonMenu->setText(LANG("Menu"));
+	ButtonMenu->setToolTip(LANG("Menu"));
+	ButtonMenu->setIcon(BUFFER_ICONS("Document"));
+	ButtonMenu->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
+	ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
+	ButtonMenu->setPopupMode(QToolButton::InstantPopup);
+	ButtonMenu->setMenu(new QMenu(ButtonMenu));
+	LayoutWidget->addWidget(ButtonMenu);
 
-	ISPushButton *ButtonShowImplementation = new ISPushButton(BUFFER_ICONS("Document"), LANG("OilSphere.ShowImplementation"), Widget);
-	ButtonShowImplementation->setProperty("ImplementationID", ImplementationID);
-	ButtonShowImplementation->setCursor(CURSOR_POINTING_HAND);
-	connect(ButtonShowImplementation, &ISPushButton::clicked, this, &ISOilSphere::DebtSubSystemForm::ShowImplementation);
-	LayoutWidget->addWidget(ButtonShowImplementation);
+	QAction *ActionAddAccrued = ButtonMenu->menu()->addAction(LANG("OilSphere.AddAccrued"), this, &ISOilSphere::DebtSubSystemForm::AddAccrued);
+	ActionAddAccrued->setProperty("ImplementationDetailID", ImplementationDetailID);
+	ActionAddAccrued->setProperty("CounterpartyID", CounterpartyID);
 
-	ISPushButton *ButtonShowImplementationDetails = new ISPushButton(BUFFER_ICONS("Document"), LANG("OilSphere.ShowImplementationDetails"), Widget);
-	ButtonShowImplementationDetails->setProperty("ImplementationDetailID", ImplementationDetailID);
-	ButtonShowImplementationDetails->setCursor(CURSOR_POINTING_HAND);
-	connect(ButtonShowImplementationDetails, &ISPushButton::clicked, this, &ISOilSphere::DebtSubSystemForm::ShowImplementationDetails);
-	LayoutWidget->addWidget(ButtonShowImplementationDetails);
+	QAction *ActionShowImplementation = ButtonMenu->menu()->addAction(LANG("OilSphere.ShowImplementation"), this, &ISOilSphere::DebtSubSystemForm::ShowImplementation);
+	ActionShowImplementation->setProperty("ImplementationID", ImplementationID);
+
+	QAction *ActionShowImplementationDetails = ButtonMenu->menu()->addAction(LANG("OilSphere.ShowImplementationDetails"), this, &ISOilSphere::DebtSubSystemForm::ShowImplementationDetails);
+	ActionShowImplementationDetails->setProperty("ImplementationDetailID", ImplementationDetailID);
+
+	QAction *ActionShowCounterparty = ButtonMenu->menu()->addAction(LANG("OilSphere.ShowCounterparty"), this, &ISOilSphere::DebtSubSystemForm::ShowCounterparty);
+	ActionShowCounterparty->setProperty("CounterpartyID", CounterpartyID);
 
 	LayoutWidget->addStretch();
-
 	return Widget;
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISOilSphere::PaymentListForm::PaymentListForm(QWidget *parent) : ISListBaseForm("ImplementationDetailPayment", parent)
-{
-	GetToolBar()->addSeparator();
-
-	LabelDebtTotal = new QLabel(GetToolBar());
-	LabelDebtTotal->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	GetToolBar()->addWidget(LabelDebtTotal);
-
-	GetToolBar()->addSeparator();
-
-	LabelDebtLeft = new QLabel(GetToolBar());
-	LabelDebtLeft->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	GetToolBar()->addWidget(LabelDebtLeft);
-}
-//-----------------------------------------------------------------------------
-ISOilSphere::PaymentListForm::~PaymentListForm()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISOilSphere::PaymentListForm::LoadDataAfterEvent()
-{
-	ISListBaseForm::LoadDataAfterEvent();
-
-	ISQuery qSelect(QS_PAYMENT);
-	qSelect.BindValue(":ImplementationDetail", GetParentObjectID());
-	if (qSelect.ExecuteFirst())
-	{
-		LabelDebtTotal->setText(LANG("OilSphere.PaymentTotal").arg(qSelect.ReadColumn("imdt_unloadcost").toDouble()));
-		LabelDebtLeft->setText(LANG("OilSphere.PaymentLeft").arg(qSelect.ReadColumn("left").toDouble()));
-	}
 }
 //-----------------------------------------------------------------------------

@@ -354,6 +354,7 @@ void ISObjectFormBase::CreateWidgetObject()
 	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
 	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
 	LabelIsDeleted->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+	LabelIsDeleted->setMargin(10);
 	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
 	LayoutObject->addWidget(LabelIsDeleted);
 

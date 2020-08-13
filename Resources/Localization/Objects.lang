@@ -68,6 +68,7 @@
   <Local Name="OilSphere.NotSelectedGasStation" Russian="Чтобы создать запись выберите АЗС."/>
   <Local Name="OilSphere.ChangeAlreadyExist" Russian="Смена на дату %1 по выбранной АЗС уже существует."/>
   <Local Name="OilSphere.Counterpatry" Russian="Контрагент"/>
+  <Local Name="OilSphere.CurrentBalance" Russian="Баланс"/>
   <Local Name="OilSphere.DateLoad" Russian="Дата загрузки"/>
   <Local Name="OilSphere.ProductType" Russian="Тип продукта"/>
   <Local Name="OilSphere.UnloadCost" Russian="Стоимость выгрузки"/>
@@ -78,6 +79,7 @@
   <Local Name="OilSphere.AccruedWithDateAndNote" Russian="Начисление %1 от %2. Примечание: %3"/>
   <Local Name="OilSphere.ShowImplementation" Russian="Просмотр реализации"/>
   <Local Name="OilSphere.ShowImplementationDetails" Russian="Просмотр подробностей реализации"/>
+  <Local Name="OilSphere.ShowCounterparty" Russian="Карточка контрагента"/>
   <Local Name="OilSphere.PaymentTotal" Russian="Всего: %1"/>
   <Local Name="OilSphere.PaymentLeft" Russian="Осталось: %2"/>
 	

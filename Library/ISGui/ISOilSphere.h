@@ -137,29 +137,13 @@ namespace ISOilSphere
 		void AddAccrued();
 		void ShowImplementation();
 		void ShowImplementationDetails();
+		void ShowCounterparty();
 
 	private:
-		QWidget* CreateItemWidget(int ImplementationID, int ImplementationDetailID, const QString &CounterpartyName, const QDate &DateLoad, const QString &ProductTypeName, double UnloadCost, int Accrued);
+		QWidget* CreateItemWidget(int ImplementationID, int ImplementationDetailID, int CounterpartyID, const QString &CounterpartyName, double Balance, const QDate &DateLoad, const QString &ProductTypeName, double UnloadCost, int Accrued);
 
 	private:
 		QTreeWidget *TreeWidget;
-	};
-
-	//Форма списка оплаты
-	class PaymentListForm : public ISListBaseForm
-	{
-		Q_OBJECT
-
-	public:
-		Q_INVOKABLE PaymentListForm(QWidget *parent = 0);
-		virtual ~PaymentListForm();
-
-	protected:
-		void LoadDataAfterEvent() override;
-
-	private:
-		QLabel *LabelDebtTotal;
-		QLabel *LabelDebtLeft;
 	};
 }
 //-----------------------------------------------------------------------------

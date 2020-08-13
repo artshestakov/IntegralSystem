@@ -14,12 +14,10 @@
   
   <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
   <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Контрагенты" Icon="Lists" TableName="Counterparty"/>
-  <_SubSystems UID="{CA4CDA5C-34CD-445A-9B32-2E715D3CC85D}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Продажи" Icon="Lists" TableName="Sales"/>
-  <_SubSystems UID="{EDF8F5FF-F776-4D65-A72D-3149644D74C8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Поставщики" Icon="Lists" TableName="Suppliers"/>
-  <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
-  <_SubSystems UID="{703589B9-0408-42C2-826D-F34C3596C4BB}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="5" LocalName="Долги" Icon="Lists" ClassName="ISOilSphere::DebtSubSystemForm"/>
-  <_SubSystems UID="{8B580716-152A-4313-BB0E-2006E666451B}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="6" LocalName="Долги (старые)" Icon="Lists" TableName="DebtOld"/>
-  <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="7" LocalName="Ведомость АЗС" Icon="Lists" ClassName="ISOilSphere::GasStationStatementListForm"/>
+  <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
+  <_SubSystems UID="{703589B9-0408-42C2-826D-F34C3596C4BB}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Долги" Icon="Lists" ClassName="ISOilSphere::DebtSubSystemForm"/>
+  <_SubSystems UID="{8B580716-152A-4313-BB0E-2006E666451B}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Долги (старые)" Icon="Lists" TableName="DebtOld"/>
+  <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="5" LocalName="Ведомость АЗС" Icon="Lists" ClassName="ISOilSphere::GasStationStatementListForm"/>
 
   <OperationType UID="{439C16CE-421A-4BAB-B2B2-4CEE3FCFEE21}" Name="Списание"/>
   <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>
