@@ -231,7 +231,6 @@
   <Local Name="Message.Question.DeleteFavorites" Russian="Удалить все избранные записи?"/>
   <Local Name="Message.Question.CreateCopyFile" Russian="Создать копию файла &quot;%1&quot;?"/>
   <Local Name="Message.Question.SaveFile" Russian="Сохранить файл &quot;%1&quot;?"/>
-  <Local Name="Message.Question.SortingDefault" Russian="Сбросить сортировку по умолчанию?"/>
   <Local Name="Message.Question.HistoryClear" Russian="Очистить историю?"/>
   <Local Name="Message.Question.InitializeModelData" Russian="Открыть экспортированый файл?"/>
   <Local Name="Message.Question.SettingsExport" Russian="Экспортировать все настройки?"/>
@@ -319,6 +318,8 @@
   <Local Name="ListForm.Edit.ToolTip" Russian="Изменить запись (F2)"/>
   <Local Name="ListForm.Update" Russian="Обновить список"/>
   <Local Name="ListForm.Update.ToolTip" Russian="Обновить список (F5)"/>
+  <Local Name="ListForm.ShowActual" Russian="Показывать актуальные записи"/>
+  <Local Name="ListForm.ShowActual.ToolTip" Russian="Показывать актуальные записи (Ctrl + F1)"/>
   <Local Name="ListForm.ShowDeleted" Russian="Показывать удаленные записи"/>
   <Local Name="ListForm.ShowDeleted.ToolTip" Russian="Показывать удаленные записи (Ctrl + F2)"/>
   <Local Name="ListForm.Search" Russian="Расширенный поиск"/>
@@ -395,7 +396,6 @@
   <Local Name="RestartApplication" Russian="Перезапуск программы"/>
   <Local Name="AutoFitColumnWidth" Russian="Автоподбор ширины колонок"/>
   <Local Name="ResetWidthColumn" Russian="Сброс ширины колонок"/>
-  <Local Name="CopyRecord" Russian="Копирование записи"/>
   <Local Name="SystemsAndSubSystems" Russian="Системы и подсистемы"/>
   <Local Name="Creating" Russian="Создание"/>
   <Local Name="Editing" Russian="Изменение"/>

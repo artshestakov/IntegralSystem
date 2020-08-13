@@ -24,8 +24,7 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 
 	QuerySelectText = "SELECT \n" + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + MetaTable->GetFieldID()->Name.toLower() + " AS \"" + MetaTable->GetFieldID()->Name + "\", \n";
 	QuerySelectFrom = "FROM " + MetaTable->Name.toLower() + SYMBOL_SPACE + ClassAlias + " \n";
-	QueryWhereText = "WHERE \n";
-	QueryWhereText += QuerySelectIsDeleted;
+	QueryWhereText = "WHERE \n" + QuerySelectIsDeleted + " = ";
 	OrderFieldDefault = ClassAlias + SYMBOL_POINT + ClassAlias + "_id";
 }
 //-----------------------------------------------------------------------------
@@ -62,22 +61,8 @@ QString ISQueryModel::GetQueryText()
 	SqlText += QuerySelectFields;
 	SqlText += QuerySelectFrom;
 	SqlText += QuerySelectLeftJoin;
-
-	if (VisibleIsDeleted)
-	{
-		SqlText += QueryWhereText + " IN(true, false) \n";
-	}
-	else
-	{
-		if (ModelType == ISNamespace::QMT_List)
-		{
-			SqlText += QueryWhereText + " = false \n";
-		}
-		else if (ModelType == ISNamespace::QMT_Object)
-		{
-			SqlText += QueryWhereText + " IN(true, false) \n";
-		}
-	}
+	SqlText += QueryWhereText;
+	SqlText += (VisibleIsDeleted ? "true \n" : "false \n");
 
 	//Если задан период отображения
 	if (PeriodRange.IsValid())

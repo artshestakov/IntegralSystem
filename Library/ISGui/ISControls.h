@@ -19,11 +19,10 @@ public:
 	static QAction* CreateActionClose(QObject *ParentObject); //Действие "Закрыть"
 	static QAction* CreateActionSave(QObject *ParentObject); //Действие "Сохранить"
 	static QAction* CreateActionSaveAndClose(QObject *ParentObject); //Действие "Сохранить и закрыть"
-	static QAction* CreateActionExit(QObject *ParentObject);
-	static QAction* CreateActionFavorites(QObject *ParentObject);
+	static QAction* CreateActionExit(QObject *ParentObject); //Действие "Выход"
 	static QAction* CreateActionPasswordChange(QObject *ParentObject); //Действие "Изменить пароль"
 
-	static QAction* CreateSeparator(QObject *ParentObject); //Созджать и получить сепаратор
+	static QAction* CreateSeparator(QObject *ParentObject); //Создать и получить сепаратор
 
 //КОНТЕКСТНОЕ МЕНЮ
 	static QAction* GetActionContextUndo(QObject *ParentObject); //Действие отменить
@@ -43,7 +42,6 @@ public:
 	static QAction* CreateActionDelete(QObject *ParentObject);
 	static QAction* CreateActionDeleteCascade(QObject *ParentObject);
 	static QAction* CreateActionUpdate(QObject *ParentObject);
-	static QAction* CreateActionShowDeleted(QObject *ParentObject);
 	static QAction* CreateActionSearch(QObject *ParentObject);
 	static QAction* CreateActionSearchClearResults(QObject *ParentObject);
 	static QAction* CreateActionExport(QObject *ParentObject);

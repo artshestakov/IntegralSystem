@@ -279,10 +279,7 @@ void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingDefault()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SortingDefault")))
-	{
-		SortingChanged(0, Qt::AscendingOrder);
-	}
+	SortingChanged(0, Qt::AscendingOrder);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::HideSystemFields()
@@ -919,16 +916,8 @@ void ISListBaseForm::Delete()
 			{
 				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, VectorInt.front(), MetaTable->LocalListName)) //Если восстановление прошло успешно, обновить таблицу
 				{
+					SqlModel->RemoveRecord(GetCurrentRowIndex());
 					ISNotificationService::ShowNotification(ISNamespace::NotificationFormType::NFT_Recovery, MetaTable->LocalName);
-					if (QueryModel->GetVisibleIsDeleted())
-					{
-						SqlModel->setData(SqlModel->index(GetCurrentRowIndex(), SqlModel->GetFieldIndex("IsDeleted")), false);
-					}
-					else
-					{
-						SqlModel->RemoveRecord(GetCurrentRowIndex());
-					}
-					emit Updated();
 				}
 			}
 		}
@@ -938,16 +927,8 @@ void ISListBaseForm::Delete()
 			{
 				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.front(), MetaTable->LocalListName)) //Если удаление прошло успешно, обновить таблицу
 				{
+					SqlModel->RemoveRecord(GetCurrentRowIndex());
 					ISNotificationService::ShowNotification(ISNamespace::NotificationFormType::NFT_Delete, MetaTable->LocalName);
-					if (QueryModel->GetVisibleIsDeleted())
-					{
-						SqlModel->setData(SqlModel->index(GetCurrentRowIndex(), SqlModel->GetFieldIndex("IsDeleted")), true);
-					}
-					else
-					{
-						SqlModel->RemoveRecord(GetCurrentRowIndex());
-					}
-					emit Updated();
 				}
 			}
 		}
@@ -1036,15 +1017,26 @@ bool ISListBaseForm::DeleteCascade()
 	return false;
 }
 //-----------------------------------------------------------------------------
+void ISListBaseForm::ShowActual()
+{
+	GetAction(ISNamespace::AT_ShowActual)->setChecked(true);
+	GetAction(ISNamespace::AT_ShowDeleted)->setChecked(false);
+	QueryModel->SetVisibleIsDeleted(false);
+	Update();
+}
+//-----------------------------------------------------------------------------
 void ISListBaseForm::ShowDeleted()
 {
 	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
 	{
+		GetAction(ISNamespace::AT_ShowActual)->setChecked(true);
 		GetAction(ISNamespace::AT_ShowDeleted)->setChecked(false);
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.IsDeleted").arg(MetaTable->LocalListName));
 		return;
 	}
 
+	GetAction(ISNamespace::AT_ShowActual)->setChecked(false);
+	GetAction(ISNamespace::AT_ShowDeleted)->setChecked(true);
 	QueryModel->SetVisibleIsDeleted(!QueryModel->GetVisibleIsDeleted());
 	Update();
 }
@@ -1320,106 +1312,106 @@ void ISListBaseForm::ResetWidthColumn()
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::CopyRecord()
-{
-	QString Content;
-	QSqlRecord SqlRecord = GetCurrentRecord();
-	for (int i = 0; i < SqlModel->columnCount(); ++i)
-	{
-		Content += SqlRecord.value(i).toString() + "\n";
-	}
-	Content.chop(1);
-	QApplication::clipboard()->setText(Content);
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::CreateActions()
 {
 	//Создать
 	QAction *ActionCreate = ISControls::CreateActionCreate(this);
 	ActionCreate->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	connect(ActionCreate, &QAction::triggered, this, &ISListBaseForm::Create);
-	Actions.emplace(ISNamespace::AT_Create, ActionCreate);
+	Actions[ISNamespace::AT_Create] = ActionCreate;
 
 	//Создать копию
 	QAction *ActionCreateCopy = ISControls::CreateActionCreateCopy(this);
 	connect(ActionCreateCopy, &QAction::triggered, this, &ISListBaseForm::CreateCopy);
-	Actions.emplace(ISNamespace::AT_CreateCopy, ActionCreateCopy);
+	Actions[ISNamespace::AT_CreateCopy] = ActionCreateCopy;
 
 	//Изменить
 	QAction *ActionEdit = ISControls::CreateActionEdit(this);
 	connect(ActionEdit, &QAction::triggered, this, &ISListBaseForm::Edit);
-	Actions.emplace(ISNamespace::AT_Edit, ActionEdit);
+	Actions[ISNamespace::AT_Edit] = ActionEdit;
 
 	//Удалить
 	QAction *ActionDelete = ISControls::CreateActionDelete(this);
 	connect(ActionDelete, &QAction::triggered, this, &ISListBaseForm::Delete);
-	Actions.emplace(ISNamespace::AT_Delete, ActionDelete);
+	Actions[ISNamespace::AT_Delete] = ActionDelete;
 
 	//Удалить каскадом
 	QAction *ActionDeleteCascade = ISControls::CreateActionDeleteCascade(this);
 	connect(ActionDeleteCascade, &QAction::triggered, this, &ISListBaseForm::DeleteCascade);
-	Actions.emplace(ISNamespace::AT_DeleteCascade, ActionDeleteCascade);
+	Actions[ISNamespace::AT_DeleteCascade] = ActionDeleteCascade;
 
 	//Обновить
 	QAction *ActionUpdate = ISControls::CreateActionUpdate(this);
 	connect(ActionUpdate, &QAction::triggered, this, &ISListBaseForm::Update);
-	Actions.emplace(ISNamespace::AT_Update, ActionUpdate);
+	Actions[ISNamespace::AT_Update] = ActionUpdate;
+
+	//Показывать актуальные записи
+	QAction *ActionShowActual = new QAction(BUFFER_ICONS("ShowActual"), LANG("ListForm.ShowActual"), this);
+	ActionShowActual->setToolTip(LANG("ListForm.ShowActual.ToolTip"));
+	ActionShowActual->setCheckable(true);
+	ActionShowActual->setChecked(true);
+	ActionShowActual->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F1));
+	connect(ActionShowActual, &QAction::triggered, this, &ISListBaseForm::ShowActual);
+	Actions[ISNamespace::AT_ShowActual] = ActionShowActual;
 
 	//Показывать удаленные записи
-	QAction *ActionShowDeleted = ISControls::CreateActionShowDeleted(this);
+	QAction *ActionShowDeleted = new QAction(BUFFER_ICONS("ShowDeleted"), LANG("ListForm.ShowDeleted"), this);
+	ActionShowDeleted->setToolTip(LANG("ListForm.ShowDeleted.ToolTip"));
+	ActionShowDeleted->setCheckable(true);
+	ActionShowDeleted->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F2));
 	connect(ActionShowDeleted, &QAction::triggered, this, &ISListBaseForm::ShowDeleted);
-	Actions.emplace(ISNamespace::AT_ShowDeleted, ActionShowDeleted);
+	Actions[ISNamespace::AT_ShowDeleted] = ActionShowDeleted;
 
 	//Поиск
 	QAction *ActionSearch = ISControls::CreateActionSearch(this);
 	connect(ActionSearch, &QAction::triggered, this, &ISListBaseForm::Search);
-	Actions.emplace(ISNamespace::AT_Search, ActionSearch);
+	Actions[ISNamespace::AT_Search] = ActionSearch;
 
 	//Очистка результатов поиска
 	QAction *ActionSearchClearResult = ISControls::CreateActionSearchClearResults(this);
 	ActionSearchClearResult->setEnabled(false);
 	connect(ActionSearchClearResult, &QAction::triggered, this, &ISListBaseForm::SearchClear);
-	Actions.emplace(ISNamespace::AT_SearchClear, ActionSearchClearResult);
+	Actions[ISNamespace::AT_SearchClear] = ActionSearchClearResult;
 
 	//Экспорт
 	QAction *ActionExport = ISControls::CreateActionExport(this);
 	connect(ActionExport, &QAction::triggered, this, &ISListBaseForm::Export);
-	Actions.emplace(ISNamespace::AT_Export, ActionExport);
+	Actions[ISNamespace::AT_Export] = ActionExport;
 
 	//Печать
 	QAction *ActionPrint = ISControls::CreateActionPrint(this);
 	connect(ActionPrint, &QAction::triggered, this, &ISListBaseForm::Print);
-	Actions.emplace(ISNamespace::AT_Print, ActionPrint);
+	Actions[ISNamespace::AT_Print] = ActionPrint;
 
 	//Избранное
-	QAction *ActionFavorites = ISControls::CreateActionFavorites(this);
+	QAction *ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("Favorites"), this);
 	connect(ActionFavorites, &QAction::triggered, this, &ISListBaseForm::ShowFavorites);
-	Actions.emplace(ISNamespace::AT_Favorites, ActionFavorites);
+	Actions[ISNamespace::AT_Favorites] = ActionFavorites;
 
 	//Системная информация
 	QAction *ActionSystemInformation = ISControls::CreateActionRecordInformartion(this);
 	connect(ActionSystemInformation, &QAction::triggered, this, &ISListBaseForm::ShowSystemInfo);
-	Actions.emplace(ISNamespace::AT_SystemInfo, ActionSystemInformation);
+	Actions[ISNamespace::AT_SystemInfo] = ActionSystemInformation;
 
 	//Первая запись
 	QAction *ActionNavigationBegin = ISControls::CreateActionNavigationBegin(this);
 	connect(ActionNavigationBegin, &QAction::triggered, this, &ISListBaseForm::NavigationSelectBeginRecord);
-	Actions.emplace(ISNamespace::AT_NavigationBegin, ActionNavigationBegin);
+	Actions[ISNamespace::AT_NavigationBegin] = ActionNavigationBegin;
 
 	//Предыдущая запись
 	QAction *ActionNavigationPrevious = ISControls::CreateActionNavigationPrevious(this);
 	connect(ActionNavigationPrevious, &QAction::triggered, this, &ISListBaseForm::NavigationSelectPreviousRecord);
-	Actions.emplace(ISNamespace::AT_NavigationPrevious, ActionNavigationPrevious);
+	Actions[ISNamespace::AT_NavigationPrevious] = ActionNavigationPrevious;
 
 	//Следующая запись
 	QAction *ActionNavigationNext = ISControls::CreateActionNavigationNext(this);
 	connect(ActionNavigationNext, &QAction::triggered, this, &ISListBaseForm::NavigationSelectNextRecord);
-	Actions.emplace(ISNamespace::AT_NavigationNext, ActionNavigationNext);
+	Actions[ISNamespace::AT_NavigationNext] = ActionNavigationNext;
 
 	//Последняя запись
 	QAction *ActionNavigationLast = ISControls::CreateActionNavigationLast(this);
 	connect(ActionNavigationLast, &QAction::triggered, this, &ISListBaseForm::NavigationSelectLastRecord);
-	Actions.emplace(ISNamespace::AT_NavigationLast, ActionNavigationLast);
+	Actions[ISNamespace::AT_NavigationLast] = ActionNavigationLast;
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateSpecialActions()
@@ -1448,13 +1440,6 @@ void ISListBaseForm::CreateSpecialActions()
 	ActionResetWidthColumn->setToolTip(LANG("ResetWidthColumn"));
 	connect(ActionResetWidthColumn, &QAction::triggered, this, &ISListBaseForm::ResetWidthColumn);
 	ActionsSpecial.emplace(ISNamespace::AST_ResetWidthColumn, ActionResetWidthColumn);
-
-	//Копирование записи в буфер
-	QAction *ActionCopyRecord = new QAction(this);
-	ActionCopyRecord->setText(LANG("CopyRecord"));
-	ActionCopyRecord->setToolTip(LANG("CopyRecord"));
-	connect(ActionCopyRecord, &QAction::triggered, this, &ISListBaseForm::CopyRecord);
-	ActionsSpecial.emplace(ISNamespace::AST_CopyRecord, ActionCopyRecord);
 
 	ActionObjectGroup->addAction(ActionNoteObject);
 }
@@ -1514,6 +1499,7 @@ void ISListBaseForm::CreateToolBar()
 	ButtonAdditionally->setCursor(CURSOR_POINTING_HAND);
 	ButtonAdditionally->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
 
+	ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowActual));
 	ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowDeleted));
 	ActionAdditionally->menu()->addSeparator();
 	ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
@@ -1521,7 +1507,6 @@ void ISListBaseForm::CreateToolBar()
 	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_SortDefault));
 	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResizeFromContent));
 	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResetWidthColumn));
-	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_CopyRecord));
 
 	ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
 

@@ -50,6 +50,7 @@ public:
 	virtual void Delete(); //Удаление объекта
 	virtual bool DeleteCascade(); //Удаление объекта каскадно
 	virtual void Update(); //Обновление данных
+	virtual void ShowActual(); //Показывать актуальные записи
 	virtual void ShowDeleted(); //Показывать удаленные записи
 	virtual void Search(); //Поиск
 	virtual void SearchClear(); //Очистить результаты поиска
@@ -64,7 +65,6 @@ public:
 	void NoteObject(); //Примечание объекта
 	void AutoFitColumnWidth(); //Автоподбор ширины
 	void ResetWidthColumn(); //Сброс ширины колонок
-	void CopyRecord(); //Копирование записи в буфер обмена
 	virtual void LoadData() override; //Загрузка данных в таблицу
 	virtual void CornerButtonClicked(); //Событие нажатия на cornerButton
 	

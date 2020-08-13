@@ -23,7 +23,6 @@ void ISNotificationService::ShowNotification(ISNamespace::NotificationFormType N
 
 	ISPopupMessage *PopupMessage = new ISPopupMessage(nullptr);
 	PopupMessage->SetMessage(ObjectName);
-
 	switch (NotificationType)
 	{
 	case ISNamespace::NFT_Create:
@@ -46,7 +45,6 @@ void ISNotificationService::ShowNotification(ISNamespace::NotificationFormType N
 		PopupMessage->SetTitle(LANG("NotificationForm.Title.Recovery"));
 		break;
 	}
-
 	PopupMessage->show();
 }
 //-----------------------------------------------------------------------------

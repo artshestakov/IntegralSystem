@@ -114,6 +114,7 @@ public:
         AT_Delete,
         AT_DeleteCascade,
         AT_Update,
+		AT_ShowActual,
         AT_ShowDeleted,
         AT_Search,
         AT_SearchClear,
@@ -134,7 +135,6 @@ public:
         AST_Note,
         AST_ResizeFromContent,
         AST_ResetWidthColumn,
-        AST_CopyRecord,
     };
 
     enum AttachChatType
