@@ -241,44 +241,61 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LabelDescription->setWordWrap(true);
 	GroupBoxDescription->layout()->addWidget(LabelDescription);
 
-	GroupBoxFiles = new QGroupBox(LANG("Task.Files"), this);
-	LayoutLeft->addWidget(GroupBoxFiles);
+	TabWidget = new QTabWidget(this);
+	TabWidget->setTabsClosable(true);
+	TabWidget->setStyleSheet(STYLE_SHEET("QTabWidgetTask"));
+	TabWidget->tabBar()->setStyleSheet(STYLE_SHEET("QTabBarTask"));
+	LayoutLeft->addWidget(TabWidget);
 
-	QVBoxLayout *LayoutFiles = new QVBoxLayout();
-	LayoutFiles->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-	GroupBoxFiles->setLayout(LayoutFiles);
+	TreeWidgetComment = new QTreeWidget(TabWidget);
+	TreeWidgetComment->setHeaderHidden(true);
+	TreeWidgetComment->setRootIsDecorated(false);
+	TreeWidgetComment->setAlternatingRowColors(true);
+	TreeWidgetCommentIndex = TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
 
-	ListWidgetFiles = new ISListWidget(GroupBoxFiles);
-	ListWidgetFiles->setSizePolicy(ListWidgetFiles->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
-	ListWidgetFiles->setContextMenuPolicy(Qt::ActionsContextMenu);
-	LayoutFiles->addWidget(ListWidgetFiles);
+	QToolButton *ButtonAddComment = CreateAddButton(LANG("Task.AddComment"));
+	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
+	TabWidget->tabBar()->setTabButton(TreeWidgetCommentIndex, QTabBar::RightSide, ButtonAddComment);
 
-	QAction *ActionFileSave = ISControls::CreateActionSave(ListWidgetFiles);
-	ActionFileSave->setEnabled(false);
-	connect(ActionFileSave, &QAction::triggered, this, &ISTaskViewForm::FileSave);
-	ListWidgetFiles->addAction(ActionFileSave);
+	//GroupBoxFiles = new QGroupBox(LANG("Task.Files"), this);
+	//LayoutLeft->addWidget(GroupBoxFiles);
 
-	QAction *ActionFileDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), ListWidgetFiles);
-	ActionFileDelete->setEnabled(false);
-	connect(ActionFileDelete, &QAction::triggered, this, &ISTaskViewForm::FileDelete);
-	ListWidgetFiles->addAction(ActionFileDelete);
+	//QVBoxLayout *LayoutFiles = new QVBoxLayout();
+	//LayoutFiles->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	//GroupBoxFiles->setLayout(LayoutFiles);
+
+	//ListWidgetFiles = new ISListWidget(GroupBoxFiles);
+	//ListWidgetFiles->setSizePolicy(ListWidgetFiles->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+	//ListWidgetFiles->setContextMenuPolicy(Qt::ActionsContextMenu);
+	//LayoutFiles->addWidget(ListWidgetFiles);
+
+	//QAction *ActionFileSave = ISControls::CreateActionSave(ListWidgetFiles);
+	//ActionFileSave->setEnabled(false);
+	//connect(ActionFileSave, &QAction::triggered, this, &ISTaskViewForm::FileSave);
+	//ListWidgetFiles->addAction(ActionFileSave);
+
+	//QAction *ActionFileDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), ListWidgetFiles);
+	//ActionFileDelete->setEnabled(false);
+	//connect(ActionFileDelete, &QAction::triggered, this, &ISTaskViewForm::FileDelete);
+	//ListWidgetFiles->addAction(ActionFileDelete);
 	
-	connect(ListWidgetFiles, &ISListWidget::itemSelectionChanged, [=]
-	{
-		bool is_enabled = ListWidgetFiles->currentItem();
-		ActionFileSave->setEnabled(is_enabled);
-		ActionFileDelete->setEnabled(is_enabled);
-	});
+	//connect(ListWidgetFiles, &ISListWidget::itemSelectionChanged, [=]
+	//{
+	//	bool is_enabled = ListWidgetFiles->currentItem();
+	//	ActionFileSave->setEnabled(is_enabled);
+	//	ActionFileDelete->setEnabled(is_enabled);
+	//});
 
-	FileLoadList();
+	//FileLoadList();
 
-	GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
-	GroupBoxLinkTask->setLayout(new QVBoxLayout());
-	LayoutLeft->addWidget(GroupBoxLinkTask);
-	LinkLoadList();
+	//GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
+	//GroupBoxLinkTask->setLayout(new QVBoxLayout());
+	//LayoutLeft->addWidget(GroupBoxLinkTask);
+	//LinkLoadList();
 
 	GroupBoxComments = new QGroupBox(LANG("Task.Comments").arg(0), this);
 	GroupBoxComments->setLayout(new QVBoxLayout());
+	GroupBoxComments->setVisible(false);
 	LayoutLeft->addWidget(GroupBoxComments);
 
 	LayoutComments = new QVBoxLayout();
@@ -494,6 +511,17 @@ void ISTaskViewForm::CreateSubTask()
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Task");
 	ObjectFormBase->SetFieldValue("Parent", TaskID);
 	ISGui::ShowObjectForm(ObjectFormBase);
+}
+//-----------------------------------------------------------------------------
+QToolButton* ISTaskViewForm::CreateAddButton(const QString &ToolTip)
+{
+	QToolButton *ToolButton = new QToolButton(TabWidget->tabBar());
+	ToolButton->setToolTip(ToolTip);
+	ToolButton->setIcon(BUFFER_ICONS("Add"));
+	ToolButton->setAutoRaise(true);
+	ToolButton->setCursor(CURSOR_POINTING_HAND);
+	ToolButton->setFixedSize(ISDefines::Gui::SIZE_25_25);
+	return ToolButton;
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::FileLoadList()
@@ -752,6 +780,13 @@ void ISTaskViewForm::CommentLoadList()
 		delete ISAlgorithm::VectorTakeBack(VectorComments);
 	}
 
+	while (TreeWidgetComment->topLevelItemCount())
+	{
+		QTreeWidgetItem *TreeWidgetItem = TreeWidgetComment->takeTopLevelItem(0);
+		delete TreeWidgetComment->itemWidget(TreeWidgetItem, 0);
+		delete TreeWidgetItem;
+	}
+
 	ISQuery qSelectComments(QS_COMMENT);
 	qSelectComments.BindValue(":TaskID", TaskID);
 	if (qSelectComments.Execute())
@@ -769,6 +804,9 @@ void ISTaskViewForm::CommentLoadList()
 			QWidget *WidgetComment = CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
 			LayoutComments->insertWidget(LayoutComments->count() - 1, WidgetComment);
 			VectorComments.push_back(WidgetComment);
+
+			QTreeWidgetItem *itm = new QTreeWidgetItem(TreeWidgetComment);
+			TreeWidgetComment->setItemWidget(itm, 0, CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate));
 			
 			if (Index != Rows - 1)
 			{
@@ -779,6 +817,7 @@ void ISTaskViewForm::CommentLoadList()
 			++Index;
 		}
 		GroupBoxComments->setTitle(LANG("Task.Comments").arg(Rows));
+		TabWidget->setTabText(0, LANG("Task.Comments").arg(Rows));
 	}
 	else
 	{
@@ -791,7 +830,7 @@ void ISTaskViewForm::CommentLoadList()
 QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
-	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
 
 	QWidget *Widget = new QWidget(ScrollAreaComments);
 	Widget->setLayout(LayoutWidget);
@@ -814,7 +853,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 
 	LayoutTitle->addStretch();
 
-	ISLabelSelectionText *LabelComment = new ISLabelSelectionText(Comment, Widget);
+	QLabel *LabelComment = new QLabel(Comment, Widget);
 	LabelComment->setWordWrap(true);
 	LayoutWidget->addWidget(LabelComment);
 

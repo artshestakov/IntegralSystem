@@ -1,0 +1,27 @@
+QTabBar::tab
+{
+    background: rgb(235, 235, 235);
+    border: 1px solid rgb(170, 170, 170);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 3px;
+}
+
+QTabBar::tab:!selected
+{
+	border-bottom: 1px solid rgb(187, 187, 187);
+    margin-top: 2px;
+}
+
+QTabBar::tab:hover
+{
+	background-color: rgb(187, 187, 187);
+    border-color: rgb(130, 130, 130);
+}
+
+QTabBar::tab:selected
+{
+    border-top: 2px solid rgb(200, 200, 200);
+    border-bottom: 3px solid rgb(255,255,255);
+    background: rgb(255,255,255); 
+}

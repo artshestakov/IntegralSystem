@@ -29,6 +29,9 @@ private:
 	void CreateSubTask();
 
 private:
+	QToolButton* CreateAddButton(const QString &ToolTip);
+
+private:
 	void FileLoadList();
 	void FileAdd();
 	void FileSave();
@@ -53,6 +56,9 @@ private:
 	QVBoxLayout *LayoutLeft;
 	ISPushButton *ButtonProcess;
 	ISLabelSelectionText *LabelName;
+	QTabWidget *TabWidget;
+	QTreeWidget *TreeWidgetComment;
+	int TreeWidgetCommentIndex;
 	QGroupBox *GroupBoxFiles;
 	ISListWidget *ListWidgetFiles;
 	QGroupBox *GroupBoxLinkTask;
