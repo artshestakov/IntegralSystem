@@ -7,7 +7,6 @@
 #include "ISCore.h"
 #include "ISSettings.h"
 #include "ISQuery.h"
-#include "ISProgressForm.h"
 #include "ISLabels.h"
 #include "ISControls.h"
 #include "ISFileDialog.h"
@@ -15,7 +14,7 @@
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue, stgs_localname FROM _settings WHERE NOT stgs_isdeleted ORDER BY stgs_id");
+static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue FROM _settings WHERE NOT stgs_isdeleted ORDER BY stgs_id");
 //-----------------------------------------------------------------------------
 static QString QU_SETTINGS_DEFAULT = PREPARE_QUERY("UPDATE _usersettings SET usst_value = :SettingValue WHERE usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
@@ -156,7 +155,11 @@ void ISSettingsForm::Save()
 	{
 		if (MapItem.second->GetModificationFlag()) //Если значение поля было изменено - сохраняем его
 		{
-			ISSettings::Instance().SaveValue(MapItem.first, MapItem.second->GetValue());
+			if (!ISSettings::Instance().SaveValue(MapItem.first, MapItem.second->GetValue())) //Сохранить настройку не удалось - выходим из функции
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.SaveUserSetting").arg(MapItem.first), ISSettings::Instance().GetErrorString());
+				return;
+			}
 		}
 	}
 	ISMessageBox::ShowInformation(this, LANG("Message.Information.SettingsSaved"));
@@ -170,23 +173,13 @@ void ISSettingsForm::DefaultSettings()
 		ISQuery qSelectSettings(QS_SETTINGS);
 		if (qSelectSettings.Execute())
 		{
-			ISProgressForm ProgressForm(qSelectSettings.GetCountResultRows(), LANG("SavedSetting"), this);
-			ProgressForm.show();
 			while (qSelectSettings.Next())
 			{
-				ProgressForm.IncrementValue();
-
-				QString SettingUID = qSelectSettings.ReadColumn("stgs_uid").toString();
-				QVariant SettingValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
-				QString SettingLocalName = qSelectSettings.ReadColumn("stgs_localname").toString();
-
 				ISQuery qUpdateDefault(QU_SETTINGS_DEFAULT);
-				qUpdateDefault.BindValue(":SettingValue", SettingValue);
-				qUpdateDefault.BindValue(":SettingUID", SettingUID);
+				qUpdateDefault.BindValue(":SettingValue", qSelectSettings.ReadColumn("stgs_defaultvalue"));
+				qUpdateDefault.BindValue(":SettingUID", qSelectSettings.ReadColumn("stgs_uid"));
 				qUpdateDefault.Execute();
 			}
-			ProgressForm.hide();
-
 			ISMessageBox::ShowInformation(this, LANG("Message.Information.AppliocationWillBeRestart"));
 			close();
 		}
@@ -200,7 +193,6 @@ QListWidgetItem* ISSettingsForm::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)
 	ListWidgetItem->setToolTip(MetaGroup->Hint);
 	ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 	ListWidgetItem->setData(Qt::UserRole, MetaGroup->UID);
-
 	if (MetaGroup->System)
 	{
 		ListWidgetItem->setIcon(BUFFER_ICONS(MetaGroup->IconName));

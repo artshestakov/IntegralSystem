@@ -292,7 +292,7 @@
     <ClInclude Include="ISVersion.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="ISProtocol.h" />
-    <ClInclude Include="ISSettings.h" />
+    <QtMoc Include="ISSettings.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
     <ClInclude Include="ISStackWalker.h" />
     <ClInclude Include="StackWalker.h" />

@@ -142,6 +142,7 @@
   <Local Name="Message.Error.SelectTaskStatuses" Russian="Не удалось получить статусы задачи!"/>
   <Local Name="Message.Error.UpdateTaskStatus" Russian="Не удалось изменить статус задачи!"/>
   <Local Name="Message.Error.InsertTaskStatusHistory" Russian="Не удалось зафиксировать изменение статуса задачи!"/>
+  <Local Name="Message.Error.SaveUserSetting" Russian="Не удалось сохраненить настройку с идентификатором &quot;%1&quot;."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>

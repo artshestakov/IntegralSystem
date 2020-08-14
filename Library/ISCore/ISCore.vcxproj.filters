@@ -233,9 +233,6 @@
     <ClInclude Include="ISMetaUser.h">
       <Filter>MetaUser</Filter>
     </ClInclude>
-    <ClInclude Include="ISSettings.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
     <ClInclude Include="ISSettingsDatabase.h">
       <Filter>Settings</Filter>
     </ClInclude>
@@ -364,6 +361,9 @@
     </QtMoc>
     <QtMoc Include="ISTcpServerWorker.h">
       <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettings.h">
+      <Filter>Settings</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
