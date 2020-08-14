@@ -25,7 +25,8 @@ static QString QU_USER_SETTING_VALUE = PREPARE_QUERY("UPDATE _usersettings SET "
 													 "AND usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
-	: ErrorString(NO_ERROR_STRING)
+	: QObject(),
+	ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -144,6 +145,7 @@ bool ISSettings::SaveValue(const QString &SettingUID, const QVariant &Value)
 	if (Result)
 	{
 		SetValue(SettingUID, Value);
+		emit SettingChanged(SettingUID, Value);
 	}
 	else
 	{
