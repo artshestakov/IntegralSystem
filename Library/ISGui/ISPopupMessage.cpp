@@ -4,6 +4,7 @@
 #include "ISSettings.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISPopupMessage::ISPopupMessage(const QString &Title, const QString &Message, QWidget *parent) : QWidget(parent)
 {
@@ -16,13 +17,16 @@ ISPopupMessage::ISPopupMessage(const QString &Title, const QString &Message, QWi
 	PropertyAnimation->setPropertyName("PopupOpacity");
 	connect(PropertyAnimation, &QAbstractAnimation::finished, this, &ISPopupMessage::hide);
 
-	LabelTitle = new QLabel(Title, this);
+	LabelTitle = new QLabel(this);
+	LabelTitle->setVisible(false);
 	LabelTitle->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 	LabelTitle->setStyleSheet(STYLE_SHEET("ISPopup"));
+	SetTitle(Title);
 	
 	LabelMessage = new QLabel(Message, this);
-	LabelMessage->setStyleSheet(STYLE_SHEET("ISPopup"));
 	LabelMessage->setVisible(false);
+	LabelMessage->setStyleSheet(STYLE_SHEET("ISPopup"));
+	SetMessage(Message);
 
 	GridLayout = new QGridLayout(this);
 	GridLayout->addWidget(LabelTitle, 0, 0);
@@ -50,7 +54,7 @@ ISPopupMessage::~ISPopupMessage()
 //-----------------------------------------------------------------------------
 void ISPopupMessage::ShowNotification(const QString &Title, const QString &Message)
 {
-	if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+	//if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 	{
 		(new ISPopupMessage(Title, Message))->show();
 	}
@@ -58,7 +62,7 @@ void ISPopupMessage::ShowNotification(const QString &Title, const QString &Messa
 //-----------------------------------------------------------------------------
 void ISPopupMessage::ShowNotification(const QString &Mesage)
 {
-	if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+	//if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 	{
 		(new ISPopupMessage(QString(), Mesage))->show();
 	}
@@ -87,13 +91,17 @@ void ISPopupMessage::SetMessageAlignment(Qt::Alignment Alignment)
 //-----------------------------------------------------------------------------
 void ISPopupMessage::SetTitle(const QString &Text)
 {
-	LabelTitle->setText(Text);
-	adjustSize();
+	if (!Text.isEmpty())
+	{
+		LabelTitle->setVisible(true);
+		LabelTitle->setText(Text);
+		adjustSize();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISPopupMessage::SetMessage(const QString &Message)
 {
-	if (Message.length())
+	if (!Message.isEmpty())
 	{
 		LabelMessage->setVisible(true);
 		LabelMessage->setText(Message);
@@ -109,9 +117,8 @@ void ISPopupMessage::show()
 	PropertyAnimation->setStartValue(0.0);
 	PropertyAnimation->setEndValue(1.0);
 
-	setGeometry(QApplication::desktop()->availableGeometry().width() - 36 - width() + QApplication::desktop()->availableGeometry().x(), QApplication::desktop()->availableGeometry().height() - 36 - height() + QApplication::desktop()->availableGeometry().y(), width(), height());
-
 	QWidget::show();
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_RightBottom);
 
 	PropertyAnimation->start();
 	Timer->start(4500);

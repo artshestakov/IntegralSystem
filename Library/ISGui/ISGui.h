@@ -17,7 +17,7 @@ public:
 	static bool CheckPressCapsLook(); //Проверить активность кнопки CapsLook
 	static QString GetCurrentLayoutName(); //Получить наименование текущей раскладки клавиатуры
 	static void RepaintWidget(QWidget *Widget, bool AdjustSize = true); //Перерисовать указанный в параметре виджет
-	static void MoveWidgetToDesktop(QWidget *Widget, ISNamespace::MoveWidgetDesktop MovePosition); //Перемещение виджета по рабочему столу
+	static void MoveWidgetToDesktop(QWidget *Widget, ISNamespace::MoveWidgetDesktop MovePosition); //Перемещение виджета по рабочему столу (вызывать только после вызова метода show() у виджета)
 	static void SetWaitGlobalCursor(bool Wait); //Изменить глобальный курсор для ожидания
 	static void SetFontWidgetUnderline(QWidget *Widget, bool Underline);
 	static void SetFontWidgetItalic(QWidget *Widget, bool Italic);

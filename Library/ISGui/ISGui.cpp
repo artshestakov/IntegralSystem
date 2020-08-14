@@ -174,34 +174,22 @@ void ISGui::MoveWidgetToDesktop(QWidget *Widget, ISNamespace::MoveWidgetDesktop 
 	else if (MovePosition == ISNamespace::MWD_LeftBottom)
 	{
 		X = 30;
-
-		Y = QApplication::desktop()->availableGeometry().height();
-		Y = Y - Widget->height();
-		Y = Y - 30;
+		Y = QApplication::desktop()->availableGeometry().height() - Widget->height() - 30;
 	}
 	else if (MovePosition == ISNamespace::MWD_RightUp)
 	{
-		X = QApplication::desktop()->availableGeometry().width();
-		X = X - Widget->width();
-		X = X - 30;
-
+		X = QApplication::desktop()->availableGeometry().width() - Widget->width() - 30;
 		Y = 30;
 	}
 	else if (MovePosition == ISNamespace::MWD_RightBottom)
 	{
-		X = QApplication::desktop()->availableGeometry().width();
-		X = X - Widget->width();
-		X = X - 30;
-
-		Y = QApplication::desktop()->availableGeometry().height();
-		Y = Y - Widget->height();
-		Y = Y - 30;
+		X = QApplication::desktop()->availableGeometry().width() - Widget->width() - 30;
+		Y = QApplication::desktop()->availableGeometry().height() - Widget->height() - 30;
 	}
 	else if (MovePosition == ISNamespace::MWD_Center)
 	{
 		QRect Rect = Widget->frameGeometry();
 		Rect.moveCenter(QDesktopWidget().availableGeometry().center());
-
 		X = Rect.topLeft().x();
 		Y = Rect.topLeft().y();
 	}
