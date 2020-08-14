@@ -961,30 +961,30 @@ bool ISListBaseForm::DeleteCascade()
 	}
 
 	QString ErrorString;
+	bool Result = true;
 	ISVectorInt VectorInt = GetSelectedIDs();
 	if (VectorInt.size() == 1) //Если удаляется одна запись
 	{
-		if (CheckIsSystemObject())
+		if (CheckIsSystemObject()) //Если запись является системной - выходим из функции
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
 			return false;
 		}
-
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
 		{
 			int ObjectID = VectorInt.front();
-			if (ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString))
+			Result = ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString);
+			if (Result)
 			{
 				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
 				ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				Update();
-				return true;
 			}
 			else
 			{
 				ISMessageBox::ShowCritical(this, LANG("Message.Error.CascadeDeleteObject"), ErrorString);
-				return false;
 			}
+			return Result;
 		}
 	}
 	else //Удаляется несколько записей
@@ -994,19 +994,18 @@ bool ISListBaseForm::DeleteCascade()
 			ISProgressForm ProgressForm(VectorInt.size(), LANG("DeletingCascadeObjects"), this);
 			ProgressForm.show();
 
-			for (int i = 0; i < VectorInt.size(); ++i)
+			for (int ObjectID : VectorInt)
 			{
 				ProgressForm.IncrementValue();
-
-				int ObjectID = VectorInt[i];
-				if (ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString))
+				Result = ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString);
+				if (Result) //Если запись удалена - протоколируем
 				{
 					ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				}
-				else
+				else //Не удалось удалить запись - выходим из цикла
 				{
 					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteCascadeRecord").arg(ObjectID), ErrorString);
-					return false;
+					break;
 				}
 
 				if (ProgressForm.wasCanceled())
@@ -1015,10 +1014,9 @@ bool ISListBaseForm::DeleteCascade()
 				}
 			}
 			Update();
-			return true;
 		}
 	}
-	return false;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowActual()
