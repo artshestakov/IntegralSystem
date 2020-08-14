@@ -84,10 +84,10 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	{
 		if (ISGui::IsStringUrl(Message))
 		{
-			LabelMessage = new ISLabelLink(this);
+			LabelMessage = new ISQLabel(true, this);
 			LabelMessage->setCursor(CURSOR_POINTING_HAND);
 			LabelMessage->setToolTip(LANG("ClickFromOpenUrlInBrowser"));
-			connect(dynamic_cast<ISLabelLink*>(LabelMessage), &ISLabelLink::Clicked, this, &ISChatMessageWidget::OpenUrlLink);
+			connect(dynamic_cast<ISQLabel*>(LabelMessage), &ISQLabel::Clicked, this, &ISChatMessageWidget::OpenUrlLink);
 		}
 		else
 		{

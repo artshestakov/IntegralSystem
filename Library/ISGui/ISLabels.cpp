@@ -7,7 +7,23 @@
 #include "ISControls.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
-ISQLabel::ISQLabel(const QString &Text, QWidget *parent) : QLabel(Text, parent)
+ISQLabel::ISQLabel(const QString &Text, bool is_linked, QWidget *parent)
+	: QLabel(Text, parent),
+	IsLinked(is_linked),
+	FocusPolicyDefault(focusPolicy())
+{
+	if (is_linked)
+	{
+		SetIsLinked(IsLinked);
+	}
+}
+//-----------------------------------------------------------------------------
+ISQLabel::ISQLabel(const QString &Text, QWidget *parent) : ISQLabel(Text, false, parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISQLabel::ISQLabel(bool is_linked, QWidget *parent) : ISQLabel(QString(), is_linked, parent)
 {
 
 }
@@ -20,6 +36,14 @@ ISQLabel::ISQLabel(QWidget *parent) : QLabel(parent)
 ISQLabel::~ISQLabel()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISQLabel::SetIsLinked(bool is_linked)
+{
+	IsLinked = is_linked;
+	setFocusPolicy(IsLinked ? Qt::StrongFocus : FocusPolicyDefault);
+	setStyleSheet(IsLinked ? STYLE_SHEET("ISLabelLink") : QString());
+	setCursor(IsLinked ? CURSOR_POINTING_HAND : CURSOR_ARROW);
 }
 //-----------------------------------------------------------------------------
 void ISQLabel::mouseReleaseEvent(QMouseEvent *MouseEvent)
@@ -40,44 +64,31 @@ void ISQLabel::mouseDoubleClickEvent(QMouseEvent *MouseEvent)
 	}
 }
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISLabelLink::ISLabelLink(const QString &Text, QWidget *parent) : ISQLabel(Text, parent)
+void ISQLabel::keyPressEvent(QKeyEvent *KeyEvent)
 {
-	setFocusPolicy(Qt::StrongFocus);
-	setStyleSheet(STYLE_SHEET("ISLabelLink"));
-	setCursor(CURSOR_POINTING_HAND);
-}
-//-----------------------------------------------------------------------------
-ISLabelLink::ISLabelLink(QWidget *parent) : ISLabelLink(QString(), parent)
-{
-	
-}
-//-----------------------------------------------------------------------------
-ISLabelLink::~ISLabelLink()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISLabelLink::keyPressEvent(QKeyEvent *KeyEvent)
-{
-	ISQLabel::keyPressEvent(KeyEvent);
-	if (KeyEvent->key() == Qt::Key_Space)
+	QLabel::keyPressEvent(KeyEvent);
+	if (IsLinked && KeyEvent->key() == Qt::Key_Space)
 	{
 		emit Clicked();
 	}
 }
 //-----------------------------------------------------------------------------
-void ISLabelLink::enterEvent(QEvent *Event)
+void ISQLabel::enterEvent(QEvent *Event)
 {
-	ISQLabel::enterEvent(Event);
-	ISGui::SetFontWidgetUnderline(this, isEnabled());
+	QLabel::enterEvent(Event);
+	if (IsLinked)
+	{
+		ISGui::SetFontWidgetUnderline(this, isEnabled());
+	}
 }
 //-----------------------------------------------------------------------------
-void ISLabelLink::leaveEvent(QEvent *Event)
+void ISQLabel::leaveEvent(QEvent *Event)
 {
-	ISQLabel::leaveEvent(Event);
-	ISGui::SetFontWidgetUnderline(this, !isEnabled());
+	QLabel::leaveEvent(Event);
+	if (IsLinked)
+	{
+		ISGui::SetFontWidgetUnderline(this, !isEnabled());
+	}
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -122,17 +133,17 @@ void ISLabelSelectionText::CopySelectedText()
 //-----------------------------------------------------------------------------
 ISLabelPixmapText::ISLabelPixmapText(const QPixmap &Pixmap, const QString &Text, QWidget *parent) : QWidget(parent)
 {
-	setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-
 	Layout = new QBoxLayout(QBoxLayout::Direction::LeftToRight);
 	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	setLayout(Layout);
 
 	LabelPixmap = new QLabel(this);
 	LabelPixmap->setPixmap(Pixmap);
+	LabelPixmap->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 	Layout->addWidget(LabelPixmap);
 
-	LabelText = new QLabel(Text, this);
+	LabelText = new ISQLabel(Text, this);
+	LabelText->adjustSize();
 	Layout->addWidget(LabelText);
 }
 //-----------------------------------------------------------------------------
@@ -161,7 +172,7 @@ QLabel* ISLabelPixmapText::GetLabelPixmap() const
 	return LabelPixmap;
 }
 //-----------------------------------------------------------------------------
-QLabel* ISLabelPixmapText::GetLabelText() const
+ISQLabel* ISLabelPixmapText::GetLabelText() const
 {
 	return LabelText;
 }

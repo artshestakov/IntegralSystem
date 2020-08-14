@@ -165,12 +165,12 @@ void ISFullTextSearchForm::Search()
 
 		for (int ObjectID : VectorInt) //Обход объектов
 		{
-			ISLabelLink *LabelLink = new ISLabelLink(ScrollArea);
+			ISQLabel *LabelLink = new ISQLabel(true, ScrollArea);
 			LabelLink->setText(QString::number(++ResultCount) + ". " + MetaTable->LocalName + ": " + ISCore::GetObjectName(MetaTable, ObjectID));
 			LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
 			LabelLink->setProperty("TableName", TableName);
 			LabelLink->setProperty("ObjectID", ObjectID);
-			connect(LabelLink, &ISLabelLink::Clicked, this, &ISFullTextSearchForm::ClickedRecord);
+			connect(LabelLink, &ISQLabel::Clicked, this, &ISFullTextSearchForm::ClickedRecord);
 			dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addWidget(LabelLink);
 			WidgetList.append(LabelLink);
 		}

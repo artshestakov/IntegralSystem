@@ -13,30 +13,24 @@ signals:
 	void DoubleClicked();
 
 public:
+	ISQLabel(const QString &Text, bool is_linked = false, QWidget *parent = 0);
 	ISQLabel(const QString &Text, QWidget *parent = 0);
+	ISQLabel(bool is_linked, QWidget *parent = 0);
 	ISQLabel(QWidget *parent = 0);
 	virtual ~ISQLabel();
+
+	void SetIsLinked(bool is_linked);
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *MouseEvent);
 	void mouseDoubleClickEvent(QMouseEvent *MouseEvent);
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISLabelLink : public ISQLabel
-{
-	Q_OBJECT
-
-public:
-	ISLabelLink(const QString &Text, QWidget *parent = 0);
-	ISLabelLink(QWidget *parent = 0);
-	virtual ~ISLabelLink();
-
-protected:
 	void keyPressEvent(QKeyEvent *KeyEvent);
 	void enterEvent(QEvent *Event);
 	void leaveEvent(QEvent *Event);
+
+private:
+	bool IsLinked;
+	Qt::FocusPolicy FocusPolicyDefault;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -72,7 +66,7 @@ public:
 	virtual ~ISLabelPixmapText();
 
 	QLabel* GetLabelPixmap() const;
-	QLabel *GetLabelText() const;
+	ISQLabel *GetLabelText() const;
 
 	void SetDirection(QBoxLayout::Direction Direction);
 	void SetPixmapText(const QPixmap &Pixmap, const QString &Text);
@@ -89,7 +83,7 @@ public:
 private:
 	QBoxLayout *Layout;
 	QLabel *LabelPixmap;
-	QLabel *LabelText;
+	ISQLabel *LabelText;
 };
 //-----------------------------------------------------------------------------
 #endif

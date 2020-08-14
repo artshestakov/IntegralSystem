@@ -82,10 +82,12 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "task_description, "
 									   "userfullname(tlnk_user), "
 									   "tlnk_creationdate, "
-									   "(SELECT tsst_uid FROM _taskstatus WHERE tsst_id = task_status) AS task_status_uid, "
-									   "(SELECT tsst_name FROM _taskstatus WHERE tsst_id = task_status) AS task_status_name "
+									   "tsst_uid AS task_status_uid, "
+									   "tsst_name AS task_status_name, "
+									   "tsst_icon AS task_status_icon "
 									   "FROM _tasklink "
 									   "LEFT JOIN _task ON tlnk_link = task_id "
+									   "LEFT JOIN _taskstatus ON task_status = tsst_id "
 									   "WHERE NOT tlnk_isdeleted "
 									   "AND tlnk_task = :TaskID "
 									   "ORDER BY tlnk_id");
@@ -153,6 +155,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ISPushButton *ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
 	ButtonMenu->setFlat(true);
 	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
+	ButtonMenu->setSizePolicy(QSizePolicy::Maximum, ButtonMenu->sizePolicy().verticalPolicy());
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen, QKeySequence(Qt::Key_F5));
 	ButtonMenu->menu()->addSeparator();
@@ -167,6 +170,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonProcess = new ISPushButton(BUFFER_ICONS("Task.Process"), this);
 	ButtonProcess->setToolTip(LANG("Task.Process.ToolTip"));
 	ButtonProcess->setCursor(CURSOR_POINTING_HAND);
+	ButtonProcess->setSizePolicy(QSizePolicy::Maximum, ButtonProcess->sizePolicy().verticalPolicy());
 	ButtonProcess->setMenu(new QMenu(ButtonProcess));
 	LayoutTitle->addWidget(ButtonProcess);
 
@@ -198,21 +202,18 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonProcess->menu()->addAction(LANG("Task.Process.History"), this, &ISTaskViewForm::ShowStatusHistory);
 
 	LabelName = new ISLabelSelectionText(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
+	LabelName->setWordWrap(true);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelName->setSizePolicy(QSizePolicy::Minimum, /*LabelName->sizePolicy().verticalPolicy()*/QSizePolicy::Maximum);
 	LayoutTitle->addWidget(LabelName);
 
-	LayoutTitle->addStretch();
-
-	if (TaskImportant)
+	if (TaskImportant) //Задача является важной - добавляем соответствующую надпись
 	{
-		QLabel *LabelImportantIcon = new QLabel(this);
-		LabelImportantIcon->setPixmap(BUFFER_ICONS("Task.Important.Checked").pixmap(ISDefines::Gui::SIZE_32_32));
-		LayoutTitle->addWidget(LabelImportantIcon);
-
-		QLabel *LabelImportantText = new QLabel(LANG("Task.ThisIsImportantTask"), this);
-		ISGui::SetFontWidgetUnderline(LabelImportantText, true);
-		LayoutTitle->addWidget(LabelImportantText);
+		ISLabelPixmapText *LabelImportant = new ISLabelPixmapText(BUFFER_ICONS("Task.Important.Checked").pixmap(ISDefines::Gui::SIZE_32_32), LANG("Task.ThisIsImportantTask"), this);
+		LabelImportant->setSizePolicy(QSizePolicy::Maximum, LabelImportant->sizePolicy().verticalPolicy());
+		ISGui::SetFontWidgetUnderline(LabelImportant->GetLabelText(), true);
+		LayoutTitle->addWidget(LabelImportant);
 	}
 
 	LayoutHorizontal = new QHBoxLayout();
@@ -322,6 +323,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	ISLabelPixmapText *LabelPriority = new ISLabelPixmapText(TaskPriorityName, GroupBoxDetails);
 	LabelPriority->SetDirection(QBoxLayout::RightToLeft);
+	LabelPriority->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 	ISGui::SetFontWidgetBold(LabelPriority->GetLabelText(), true);
 	LayoutRight->addWidget(LabelPriority);
 
@@ -635,20 +637,23 @@ void ISTaskViewForm::LinkLoadList()
 			QString LinkCreationDate = qSelectLink.ReadColumn("tlnk_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
 			ISUuid TaskStatusUID = qSelectLink.ReadColumn("task_status_uid");
 			QString TaskStatusName = qSelectLink.ReadColumn("task_status_name").toString();
+			QString TaskStatusIcon = qSelectLink.ReadColumn("task_status_icon").toString();
 			
-			ISLabelLink *LabelLink = new ISLabelLink(QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName), GroupBoxLinkTask);
-			LabelLink->setProperty("TaskID", LinkTaskID);
-			LabelLink->setProperty("LinkID", LinkID);
-			LabelLink->setToolTip(LANG("Task.LinkToolTip").arg(TaskStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
-			LabelLink->setWordWrap(true);
-			LabelLink->setContextMenuPolicy(Qt::ActionsContextMenu);
-			connect(LabelLink, &ISLabelLink::Clicked, this, &ISTaskViewForm::LinkOpen);
+			ISLabelPixmapText *LabelLink = new ISLabelPixmapText(BUFFER_ICONS(TaskStatusIcon).pixmap(ISDefines::Gui::SIZE_16_16), QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName), GroupBoxLinkTask);
+			LabelLink->GetLabelText()->SetIsLinked(true);
+			LabelLink->GetLabelText()->setProperty("TaskID", LinkTaskID);
+			LabelLink->GetLabelText()->setProperty("LinkID", LinkID);
+			LabelLink->GetLabelText()->setToolTip(LANG("Task.LinkToolTip").arg(TaskStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
+			LabelLink->GetLabelText()->setWordWrap(true);
+			LabelLink->GetLabelText()->setContextMenuPolicy(Qt::ActionsContextMenu);
+			//LabelLink->GetLabelText()->setSizePolicy(QSizePolicy::Minimum, /*LabelLink->GetLabelText()->sizePolicy().verticalPolicy()*/QSizePolicy::Maximum);
+			connect(LabelLink->GetLabelText(), &ISQLabel::Clicked, this, &ISTaskViewForm::LinkOpen);
 			GroupBoxLinkTask->layout()->addWidget(LabelLink);
 			VectorLinks.push_back(LabelLink);
 
-			QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), LabelLink);
+			QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), LabelLink->GetLabelText());
 			connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::LinkDelete);
-			LabelLink->addAction(ActionDelete);
+			LabelLink->GetLabelText()->addAction(ActionDelete);
 
 			if (TaskStatusUID == CONST_UID_TASK_STATUS_DONE || TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE)
 			{
@@ -671,13 +676,14 @@ void ISTaskViewForm::LinkAdd()
 		if (LinkTaskID == TaskID)
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskLinkToByMyself"));
+			LinkAdd();
 		}
 		else
 		{
 			//Проверяем, есть ли уже связь с выбранной задачей
-			for (ISLabelLink *LabelLink : VectorLinks)
+			for (ISLabelPixmapText *LabelLink : VectorLinks)
 			{
-				if (LabelLink->property("TaskID").toInt() == LinkTaskID)
+				if (LabelLink->GetLabelText()->property("TaskID").toInt() == LinkTaskID)
 				{
 					ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskLinkAlreadyExist"));
 					return;
@@ -804,15 +810,15 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	WidgetBottom->setLayout(LayoutBottom);
 	LayoutWidget->addWidget(WidgetBottom);
 
-	ISLabelLink *LabelEdit = new ISLabelLink(LANG("Edit"), WidgetBottom);
+	ISQLabel *LabelEdit = new ISQLabel(LANG("Edit"), true, WidgetBottom);
 	LabelEdit->setProperty("Comment", Comment);
 	LabelEdit->setProperty("CommentID", CommentID);
-	connect(LabelEdit, &ISLabelLink::Clicked, this, &ISTaskViewForm::CommentEdit);
+	connect(LabelEdit, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentEdit);
 	LayoutBottom->addWidget(LabelEdit);
 
-	ISLabelLink *LabelDelete = new ISLabelLink(LANG("Delete"), WidgetBottom);
+	ISQLabel *LabelDelete = new ISQLabel(LANG("Delete"), true, WidgetBottom);
 	LabelDelete->setProperty("CommentID", CommentID);
-	connect(LabelDelete, &ISLabelLink::Clicked, this, &ISTaskViewForm::CommentDelete);
+	connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentDelete);
 	LayoutBottom->addWidget(LabelDelete);
 
 	LayoutBottom->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V10), WidgetBottom));

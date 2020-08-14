@@ -55,7 +55,7 @@ private:
 	QGroupBox *GroupBoxFiles;
 	ISListWidget *ListWidgetFiles;
 	QGroupBox *GroupBoxLinkTask;
-	std::vector<ISLabelLink *> VectorLinks;
+	std::vector<ISLabelPixmapText*> VectorLinks;
 	QGroupBox *GroupBoxComments;
 	QVBoxLayout *LayoutComments;
 	ISScrollArea *ScrollAreaComments;
