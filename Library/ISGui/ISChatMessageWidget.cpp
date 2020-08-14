@@ -12,7 +12,7 @@
 #include "ISMetaData.h"
 #include "ISGui.h"
 #include "ISButtons.h"
-#include "ISNotificationService.h"
+#include "ISPopupMessage.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
@@ -280,6 +280,6 @@ void ISChatMessageWidget::SelectMessage()
 void ISChatMessageWidget::CopyMessage()
 {
 	QApplication::clipboard()->setText(LabelMessage->text());
-	ISNotificationService::ShowNotification(LANG("MessageCopyToClipboard"));
+	ISPopupMessage::ShowNotification(LANG("MessageCopyToClipboard"));
 }
 //-----------------------------------------------------------------------------

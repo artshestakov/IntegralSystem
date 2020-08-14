@@ -8,7 +8,7 @@
 #include "ISUserPasswordForm.h"
 #include "ISMetaData.h"
 #include "ISMessageBox.h"
-#include "ISNotificationService.h"
+#include "ISPopupMessage.h"
 #include "ISCore.h"
 #include "ISRecordInfoForm.h"
 #include "ISProtocol.h"
@@ -444,7 +444,7 @@ int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const 
 	int CalendarID = ISCore::CalendarInsert(DateTime, Name, Text, TableName, ObjectID);
 	if (CalendarID)
 	{
-		ISNotificationService::ShowNotification(LANG("NotifyInsertedDone").arg(Name));
+		ISPopupMessage::ShowNotification(LANG("NotifyInsertedDone").arg(Name));
 	}
 	else
 	{

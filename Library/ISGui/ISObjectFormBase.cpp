@@ -14,7 +14,7 @@
 #include "ISDatabase.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
-#include "ISNotificationService.h"
+#include "ISPopupMessage.h"
 #include "ISProtocol.h"
 #include "ISListBaseForm.h"
 #include "ISDatabaseHelper.h"
@@ -785,16 +785,16 @@ bool ISObjectFormBase::Save()
 		{
 		case ISNamespace::OFT_New:
 			FormType = ISNamespace::OFT_Edit;
-			ISNotificationService::ShowNotification(ISNamespace::NFT_Create, MetaTable->LocalName, ObjectName);
+			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 			ISProtocol::CreateObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 			break;
 		case ISNamespace::OFT_Copy:
 			FormType = ISNamespace::OFT_Edit;
-			ISNotificationService::ShowNotification(ISNamespace::NFT_CreateCopy, MetaTable->LocalName, ObjectName);
+			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 			ISProtocol::CreateCopyObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 			break;
 		case ISNamespace::OFT_Edit:
-			ISNotificationService::ShowNotification(ISNamespace::NFT_Edit, MetaTable->LocalName, ObjectName);
+			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 			ISProtocol::EditObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 			break;
 		}
@@ -925,7 +925,7 @@ void ISObjectFormBase::AddFavoite()
 	bool IsExist = ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
 	IsExist ? ISFavorites::GetInstance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::GetInstance().AddFavorite(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
 	ActionFavorites->setCheckable(!IsExist);
-	IsExist ? ISNotificationService::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISNotificationService::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
+	IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::Delete()
@@ -972,9 +972,8 @@ void ISObjectFormBase::DeleteCascade()
 	{
 		if (ISGui::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, GetObjectID()))
 		{
-			ISNotificationService::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
+			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
 			ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
-			
 			emit UpdateList();
 			close();
 		}

@@ -20,7 +20,7 @@
 #include "ISParagraphEntity.h"
 #include "ISNotifyRecipient.h"
 #include "ISNotifySender.h"
-#include "ISNotificationService.h"
+#include "ISPopupMessage.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISIncomingCallBaseForm.h"
 #include "ISObjects.h"
@@ -97,7 +97,7 @@ void ISMainWindow::AfterShowEvent()
 	if (NewNotifyCount)
 	{
 		MenuBar->GetbuttonNotify()->SetCountNotify(NewNotifyCount);
-		ISNotificationService::ShowNotification(LANG("NewNotifications").arg(NewNotifyCount));
+		ISPopupMessage::ShowNotification(LANG("NewNotifications").arg(NewNotifyCount));
 		QApplication::beep();
 	}
 }

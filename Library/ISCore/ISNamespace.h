@@ -59,15 +59,6 @@ public:
         SLM_Multi, //Выбор нескольких записей
     };
 
-    enum NotificationFormType //Типы формы нотификации
-    {
-        NFT_Create, //Создание объекта
-        NFT_Edit, //Редактирование объекта
-        NFT_CreateCopy, //Создание копии объекта
-        NFT_Delete, //Удаление объекта
-        NFT_Recovery, //Восстановление объекта
-    };
-
     enum SearchOperatorType //Типы операторов поиска
     {
         SOT_Unknown, //Неизвестно
@@ -212,7 +203,6 @@ public:
 //-----------------------------------------------------------------------------
 Q_DECLARE_METATYPE(ISNamespace::FieldType);
 Q_DECLARE_METATYPE(ISNamespace::ObjectFormType);
-Q_DECLARE_METATYPE(ISNamespace::NotificationFormType);
 Q_DECLARE_METATYPE(ISNamespace::SearchOperatorType);
 Q_DECLARE_METATYPE(ISNamespace::ExportType);
 Q_DECLARE_METATYPE(ISNamespace::MessageBoxButton);

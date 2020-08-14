@@ -1,10 +1,12 @@
 #include "ISPopupMessage.h"
 #include "ISStyleSheet.h"
 #include "ISDefinesGui.h"
+#include "ISSettings.h"
+#include "ISConstants.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
-ISPopupMessage::ISPopupMessage(QWidget *parent) : QWidget(parent)
+ISPopupMessage::ISPopupMessage(const QString &Title, const QString &Message, QWidget *parent) : QWidget(parent)
 {
-
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 	setAttribute(Qt::WA_ShowWithoutActivating);
@@ -14,11 +16,11 @@ ISPopupMessage::ISPopupMessage(QWidget *parent) : QWidget(parent)
 	PropertyAnimation->setPropertyName("PopupOpacity");
 	connect(PropertyAnimation, &QAbstractAnimation::finished, this, &ISPopupMessage::hide);
 
-	LabelTitle = new QLabel(this);
+	LabelTitle = new QLabel(Title, this);
 	LabelTitle->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 	LabelTitle->setStyleSheet(STYLE_SHEET("ISPopup"));
 	
-	LabelMessage = new QLabel(this);
+	LabelMessage = new QLabel(Message, this);
 	LabelMessage->setStyleSheet(STYLE_SHEET("ISPopup"));
 	LabelMessage->setVisible(false);
 
@@ -31,9 +33,35 @@ ISPopupMessage::ISPopupMessage(QWidget *parent) : QWidget(parent)
 	connect(Timer, &QTimer::timeout, this, &ISPopupMessage::HideAnimation);
 }
 //-----------------------------------------------------------------------------
+ISPopupMessage::ISPopupMessage(const QString &Message, QWidget *parent) : ISPopupMessage(QString(), Message, parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISPopupMessage::ISPopupMessage(QWidget *parent) : ISPopupMessage(QString(), QString(), parent)
+{
+
+}
+//-----------------------------------------------------------------------------
 ISPopupMessage::~ISPopupMessage()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISPopupMessage::ShowNotification(const QString &Title, const QString &Message)
+{
+	if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+	{
+		(new ISPopupMessage(Title, Message))->show();
+	}
+}
+//-----------------------------------------------------------------------------
+void ISPopupMessage::ShowNotification(const QString &Mesage)
+{
+	if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+	{
+		(new ISPopupMessage(QString(), Mesage))->show();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISPopupMessage::SetPopupOpacity(float Opacity)

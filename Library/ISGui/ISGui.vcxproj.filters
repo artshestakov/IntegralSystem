@@ -336,9 +336,6 @@
     <ClCompile Include="ISMetaSystemsEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISNotificationService.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISNotifyRecipient.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -840,9 +837,6 @@
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISMediaPlayer.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISNotificationService.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISNotifyRecipient.h">

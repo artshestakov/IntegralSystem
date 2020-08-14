@@ -268,7 +268,6 @@
     <ClCompile Include="ISMonitorActivityForm.cpp" />
     <ClCompile Include="ISMonitorUserWidget.cpp" />
     <ClCompile Include="ISNoteObjectForm.cpp" />
-    <ClCompile Include="ISNotificationService.cpp" />
     <ClCompile Include="ISNotificationsForm.cpp" />
     <ClCompile Include="ISNotifyRecipient.cpp" />
     <ClCompile Include="ISNotifyWidgetItem.cpp" />
@@ -566,7 +565,6 @@
     <QtMoc Include="ISObjectInterface.h" />
     <QtMoc Include="ISMediaPlayer.h" />
     <ClInclude Include="ISMetaSystemsEntity.h" />
-    <QtMoc Include="ISNotificationService.h" />
     <QtMoc Include="ISNotifyRecipient.h" />
     <ClInclude Include="ISObjectModel.h" />
     <QtMoc Include="ISRangeEditBase.h" />

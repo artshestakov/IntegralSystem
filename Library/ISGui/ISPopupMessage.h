@@ -12,8 +12,13 @@ signals:
 	void Clicked();
 
 public:
-	explicit ISPopupMessage(QWidget *parent = 0);
+	ISPopupMessage(const QString &Title, const QString &Message, QWidget *parent = 0);
+	ISPopupMessage(const QString &Message, QWidget *parent = 0);
+	ISPopupMessage(QWidget *parent = 0);
 	virtual ~ISPopupMessage();
+
+	static void ShowNotification(const QString &Title, const QString &Message);
+	static void ShowNotification(const QString &Mesage);
 
 	void SetPopupOpacity(float Opacity);
 	float GetPopupOpacity() const;
@@ -21,7 +26,6 @@ public:
 	void SetTitleAlignment(Qt::Alignment Alignment);
 	void SetMessageAlignment(Qt::Alignment Alignment);
 
-public slots:
 	void SetTitle(const QString &Text);
 	void SetMessage(const QString &Message);
 	void show();

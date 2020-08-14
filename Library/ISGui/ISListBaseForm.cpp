@@ -6,7 +6,7 @@
 #include "ISLocalization.h"
 #include "ISSortingBuffer.h"
 #include "ISProtocol.h"
-#include "ISNotificationService.h"
+#include "ISPopupMessage.h"
 #include "ISExportForm.h"
 #include "ISProgressForm.h"
 #include "ISLogger.h"
@@ -902,7 +902,7 @@ void ISListBaseForm::Delete()
 				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, VectorInt.front(), MetaTable->LocalListName)) //Если восстановление прошло успешно, обновить таблицу
 				{
 					SqlModel->RemoveRecord(GetCurrentRowIndex());
-					ISNotificationService::ShowNotification(ISNamespace::NotificationFormType::NFT_Recovery, MetaTable->LocalName);
+					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Recovery"));
 				}
 			}
 		}
@@ -913,7 +913,7 @@ void ISListBaseForm::Delete()
 				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.front(), MetaTable->LocalListName)) //Если удаление прошло успешно, обновить таблицу
 				{
 					SqlModel->RemoveRecord(GetCurrentRowIndex());
-					ISNotificationService::ShowNotification(ISNamespace::NotificationFormType::NFT_Delete, MetaTable->LocalName);
+					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted"));
 				}
 			}
 		}
@@ -961,7 +961,7 @@ bool ISListBaseForm::DeleteCascade()
 			int ObjectID = VectorInt.front();
 			if (ISGui::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, ObjectID))
 			{
-				ISNotificationService::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
+				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
 				ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				Update();
 				return true;

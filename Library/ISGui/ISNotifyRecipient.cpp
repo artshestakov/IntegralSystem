@@ -2,7 +2,7 @@
 #include "ISDatabase.h"
 #include "ISSystem.h"
 #include "ISBuffer.h"
-#include "ISNotificationService.h"
+#include "ISPopupMessage.h"
 #include "ISMediaPlayer.h"
 #include "ISStructs.h"
 #include "ISAssert.h"
@@ -59,7 +59,7 @@ void ISNotifyRecipient::Notification(const ISUuid &NotificationName, QSqlDriver:
 
 	if (MetaNotify->ShowPopup)
 	{
-		ISNotificationService::ShowNotification(ISGui::PrepareLongToolTip(NotificationText, 350));
+		ISPopupMessage::ShowNotification(ISGui::PrepareLongToolTip(NotificationText, 350));
 	}
 }
 //-----------------------------------------------------------------------------

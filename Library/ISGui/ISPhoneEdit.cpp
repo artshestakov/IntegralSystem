@@ -1,10 +1,10 @@
 #include "ISPhoneEdit.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
+#include "ISPopupMessage.h"
 #include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISQuery.h"
-#include "ISNotificationService.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QI_ASTERISK_QUEUE = PREPARE_QUERY("INSERT INTO _asteriskqueue(astq_type, astq_initiated, astq_parameters) "
@@ -40,7 +40,7 @@ void ISPhoneEdit::Call()
 		qInsert.BindValue(":Parameters", ISSystem::VariantMapToJsonString(VariantMap));
 		if (qInsert.Execute())
 		{
-			ISNotificationService::ShowNotification(LANG("OutcomingCall").arg(Phone));
+			ISPopupMessage::ShowNotification(LANG("OutcomingCall").arg(Phone));
 			emit Called();
 		}
 		ISGui::SetWaitGlobalCursor(false);
