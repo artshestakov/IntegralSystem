@@ -205,7 +205,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LabelName->setWordWrap(true);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	LabelName->setSizePolicy(QSizePolicy::Minimum, /*LabelName->sizePolicy().verticalPolicy()*/QSizePolicy::Maximum);
+	LabelName->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
 	LayoutTitle->addWidget(LabelName);
 
 	if (TaskImportant) //Задача является важной - добавляем соответствующую надпись
@@ -646,7 +646,6 @@ void ISTaskViewForm::LinkLoadList()
 			LabelLink->GetLabelText()->setToolTip(LANG("Task.LinkToolTip").arg(TaskStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
 			LabelLink->GetLabelText()->setWordWrap(true);
 			LabelLink->GetLabelText()->setContextMenuPolicy(Qt::ActionsContextMenu);
-			//LabelLink->GetLabelText()->setSizePolicy(QSizePolicy::Minimum, /*LabelLink->GetLabelText()->sizePolicy().verticalPolicy()*/QSizePolicy::Maximum);
 			connect(LabelLink->GetLabelText(), &ISQLabel::Clicked, this, &ISTaskViewForm::LinkOpen);
 			GroupBoxLinkTask->layout()->addWidget(LabelLink);
 			VectorLinks.push_back(LabelLink);
@@ -763,7 +762,6 @@ void ISTaskViewForm::CommentLoadList()
 			++Index;
 		}
 		GroupBoxComments->setTitle(LANG("Task.Comments").arg(Rows));
-		//GroupBoxComments->setVisible(Rows);
 	}
 	else
 	{

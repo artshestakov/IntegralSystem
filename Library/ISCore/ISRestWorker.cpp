@@ -102,10 +102,6 @@ void ISRestWorker::sendMulishGetRequest(const QString &apiStr)
 				QStringList apiMethodWithPage = nextPage.split("api/");
 				sendMulishGetRequest(apiMethodWithPage.value(1));
 			}
-			else
-			{
-				//emit Error(obj);
-			}
 		}
 		else
 		{
