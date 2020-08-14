@@ -174,7 +174,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	}
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddFile"), this, &ISTaskViewForm::FileAdd);
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::LinkAdd);
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::CommentAdd);
 	LayoutTitle->addWidget(ButtonMenu);
 
 	ButtonProcess = new ISPushButton(BUFFER_ICONS("Task.Process"), this);
@@ -251,7 +250,9 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TreeWidgetComment->setHeaderHidden(true);
 	TreeWidgetComment->setRootIsDecorated(false);
 	TreeWidgetComment->setAlternatingRowColors(true);
+	TreeWidgetComment->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	TreeWidgetCommentIndex = TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
+	CommentLoadList();
 
 	QToolButton *ButtonAddComment = CreateAddButton(LANG("Task.AddComment"));
 	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
@@ -292,20 +293,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	//GroupBoxLinkTask->setLayout(new QVBoxLayout());
 	//LayoutLeft->addWidget(GroupBoxLinkTask);
 	//LinkLoadList();
-
-	GroupBoxComments = new QGroupBox(LANG("Task.Comments").arg(0), this);
-	GroupBoxComments->setLayout(new QVBoxLayout());
-	GroupBoxComments->setVisible(false);
-	LayoutLeft->addWidget(GroupBoxComments);
-
-	LayoutComments = new QVBoxLayout();
-	LayoutComments->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-	LayoutComments->addStretch();
-
-	ScrollAreaComments = new ISScrollArea(GroupBoxComments);
-	ScrollAreaComments->widget()->setLayout(LayoutComments);
-	GroupBoxComments->layout()->addWidget(ScrollAreaComments);
-	CommentLoadList();
 
 	LayoutRight = new QVBoxLayout();
 
@@ -775,11 +762,6 @@ void ISTaskViewForm::LinkDelete()
 void ISTaskViewForm::CommentLoadList()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	while (!VectorComments.empty())
-	{
-		delete ISAlgorithm::VectorTakeBack(VectorComments);
-	}
-
 	while (TreeWidgetComment->topLevelItemCount())
 	{
 		QTreeWidgetItem *TreeWidgetItem = TreeWidgetComment->takeTopLevelItem(0);
@@ -791,7 +773,7 @@ void ISTaskViewForm::CommentLoadList()
 	qSelectComments.BindValue(":TaskID", TaskID);
 	if (qSelectComments.Execute())
 	{
-		int Rows = qSelectComments.GetCountResultRows(), Index = 0;
+		int Rows = qSelectComments.GetCountResultRows();
 		while (qSelectComments.Next())
 		{
 			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
@@ -801,22 +783,9 @@ void ISTaskViewForm::CommentLoadList()
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
 
-			QWidget *WidgetComment = CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
-			LayoutComments->insertWidget(LayoutComments->count() - 1, WidgetComment);
-			VectorComments.push_back(WidgetComment);
-
-			QTreeWidgetItem *itm = new QTreeWidgetItem(TreeWidgetComment);
-			TreeWidgetComment->setItemWidget(itm, 0, CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate));
-			
-			if (Index != Rows - 1)
-			{
-				QFrame *FrameSeparator = ISControls::CreateHorizontalLine(ScrollAreaComments);
-				LayoutComments->insertWidget(LayoutComments->count() - 1, FrameSeparator);
-				VectorComments.push_back(FrameSeparator);
-			}
-			++Index;
+			QTreeWidgetItem *TreeItemWidget = new QTreeWidgetItem(TreeWidgetComment);
+			TreeWidgetComment->setItemWidget(TreeItemWidget, 0, CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate));
 		}
-		GroupBoxComments->setTitle(LANG("Task.Comments").arg(Rows));
 		TabWidget->setTabText(0, LANG("Task.Comments").arg(Rows));
 	}
 	else
@@ -832,7 +801,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
 
-	QWidget *Widget = new QWidget(ScrollAreaComments);
+	QWidget *Widget = new QWidget(TreeWidgetComment);
 	Widget->setLayout(LayoutWidget);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
@@ -894,7 +863,8 @@ void ISTaskViewForm::CommentAdd()
 		{
 			CommentLoadList();
 			//После загрузки списка комментариев вызываем прокрутку в самый низ
-			QTimer::singleShot(50, [=]() { ScrollAreaComments->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
+			TreeWidgetComment->scrollToItem(TreeWidgetComment->topLevelItem(TreeWidgetComment->topLevelItemCount() - 1), QAbstractItemView::ScrollHint::PositionAtBottom);
+			//QTimer::singleShot(50, [=]() { ScrollAreaComments->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
 		}
 		else
 		{

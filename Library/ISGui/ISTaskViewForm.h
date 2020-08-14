@@ -63,10 +63,6 @@ private:
 	ISListWidget *ListWidgetFiles;
 	QGroupBox *GroupBoxLinkTask;
 	std::vector<ISLabelPixmapText*> VectorLinks;
-	QGroupBox *GroupBoxComments;
-	QVBoxLayout *LayoutComments;
-	ISScrollArea *ScrollAreaComments;
-	std::vector<QWidget *> VectorComments;
 	QVBoxLayout *LayoutRight;
 	QLabel *LabelStatus;
 	QLabel *LabelUpdationDate;
