@@ -1,8 +1,6 @@
 #include "ISPopupMessage.h"
 #include "ISStyleSheet.h"
 #include "ISDefinesGui.h"
-#include "ISSettings.h"
-#include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
@@ -54,18 +52,12 @@ ISPopupMessage::~ISPopupMessage()
 //-----------------------------------------------------------------------------
 void ISPopupMessage::ShowNotification(const QString &Title, const QString &Message)
 {
-	//if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-	{
-		(new ISPopupMessage(Title, Message))->show();
-	}
+	(new ISPopupMessage(Title, Message))->show();
 }
 //-----------------------------------------------------------------------------
 void ISPopupMessage::ShowNotification(const QString &Mesage)
 {
-	//if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-	{
-		(new ISPopupMessage(QString(), Mesage))->show();
-	}
+	(new ISPopupMessage(QString(), Mesage))->show();
 }
 //-----------------------------------------------------------------------------
 void ISPopupMessage::SetPopupOpacity(float Opacity)

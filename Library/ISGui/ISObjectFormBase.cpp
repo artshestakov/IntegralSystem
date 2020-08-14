@@ -785,17 +785,26 @@ bool ISObjectFormBase::Save()
 		{
 		case ISNamespace::OFT_New:
 			FormType = ISNamespace::OFT_Edit;
-			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 			ISProtocol::CreateObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+			{
+				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
+			}
 			break;
 		case ISNamespace::OFT_Copy:
 			FormType = ISNamespace::OFT_Edit;
-			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 			ISProtocol::CreateCopyObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+			{
+				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
+			}
 			break;
 		case ISNamespace::OFT_Edit:
-			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 			ISProtocol::EditObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+			{
+				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
+			}
 			break;
 		}
 
@@ -925,7 +934,10 @@ void ISObjectFormBase::AddFavoite()
 	bool IsExist = ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
 	IsExist ? ISFavorites::GetInstance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::GetInstance().AddFavorite(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
 	ActionFavorites->setCheckable(!IsExist);
-	IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
+	if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+	{
+		IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::Delete()
@@ -982,7 +994,10 @@ void ISObjectFormBase::DeleteCascade()
 		QString ErrorString;
 		if (ISCore::DeleteCascadeObject(MetaTable, GetObjectID(), ErrorString))
 		{
-			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
+			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+			{
+				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
+			}
 			ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 			emit UpdateList();
 			close();

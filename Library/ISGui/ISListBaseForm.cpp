@@ -903,7 +903,10 @@ void ISListBaseForm::Delete()
 				if (ISCore::SetIsDeletedObject(false, MetaTable, VectorInt.front(), ErrorString)) //Если восстановление прошло успешно, обновить таблицу
 				{
 					SqlModel->RemoveRecord(GetCurrentRowIndex());
-					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Recovery"));
+					if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+					{
+						ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Recovery"));
+					}
 				}
 				else
 				{
@@ -918,7 +921,10 @@ void ISListBaseForm::Delete()
 				if (ISCore::SetIsDeletedObject(true, MetaTable, VectorInt.front(), ErrorString)) //Если удаление прошло успешно, обновить таблицу
 				{
 					SqlModel->RemoveRecord(GetCurrentRowIndex());
-					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted"));
+					if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+					{
+						ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted"));
+					}
 				}
 				else
 				{
@@ -976,7 +982,10 @@ bool ISListBaseForm::DeleteCascade()
 			Result = ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString);
 			if (Result)
 			{
-				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
+				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+				{
+					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
+				}
 				ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				Update();
 			}
