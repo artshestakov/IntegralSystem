@@ -111,7 +111,6 @@ void ISSettingsForm::CreateSettings()
 {
 	for (ISMetaSettingsGroup *MetaGroup : ISSettings::Instance().GetSettingGroups())
 	{
-		//ISMetaSettingsGroup *MetaGroup = ISSettings::Instance().GetSettingGroups()[i];
 		QListWidgetItem* ListWidgetItem = CreateItemGroup(MetaGroup);
 
 		QFormLayout *FormLayout = new QFormLayout();
@@ -122,8 +121,6 @@ void ISSettingsForm::CreateSettings()
 
 		for (ISMetaSetting *MetaSetting : MetaGroup->Settings)
 		{
-			//ISMetaSetting *MetaSetting = MetaGroup->Settings[j];
-			
 			ISQLabel *LabelRow = new ISQLabel(ScrollArea);
 			LabelRow->setText(MetaSetting->LocalName + ':');
 
@@ -137,8 +134,8 @@ void ISSettingsForm::CreateSettings()
 
 			ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(ScrollArea, MetaSetting->SettingType, MetaSetting->WidgetEditName);
 
-			QVariant Value = SETTING_VALUE(MetaSetting->UID);
-			FieldEditBase->SetValue(Value);
+			FieldEditBase->SetValue(SETTING_VALUE(MetaSetting->UID));
+			FieldEditBase->SetModificationFlag(false);
 			connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSettingsForm::DataChanged);
 			FormLayout->addRow(LabelRow, FieldEditBase);
 			Fields.emplace(MetaSetting->UID, FieldEditBase);
@@ -155,21 +152,13 @@ void ISSettingsForm::CreateSettings()
 //-----------------------------------------------------------------------------
 void ISSettingsForm::Save()
 {
-	ISProgressForm ProgressForm(Fields.size(), LANG("SavedSetting"), this);
-	ProgressForm.show();
-	for (const auto &MapItem : Fields)
+	for (const auto &MapItem : Fields) //Обходим все поля настроек
 	{
-		ProgressForm.IncrementValue();
-
-		QString SettingUID = MapItem.first;
-		ISFieldEditBase *FieldEditBase = MapItem.second;
-		if (FieldEditBase)
+		if (MapItem.second->GetModificationFlag()) //Если значение поля было изменено - сохраняем его
 		{
-			ISSettings::Instance().SaveValue(SettingUID, FieldEditBase->GetValue());
+			ISSettings::Instance().SaveValue(MapItem.first, MapItem.second->GetValue());
 		}
 	}
-	ProgressForm.hide();
-
 	ISMessageBox::ShowInformation(this, LANG("Message.Information.SettingsSaved"));
 	close();
 }
