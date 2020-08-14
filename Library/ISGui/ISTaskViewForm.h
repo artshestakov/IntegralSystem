@@ -26,6 +26,7 @@ private:
 	void SetDescription();
 	void TaskStatusClicked();
 	void ShowStatusHistory();
+	void CreateSubTask();
 
 private:
 	void FileLoadList();
@@ -78,6 +79,8 @@ private:
 	bool TaskImportant;
 	QString TaskCreationDate;
 	QString TaskUpdationDate;
+	int TaskParentID;
+	QString TaskParentName;
 };
 //-----------------------------------------------------------------------------
 #endif

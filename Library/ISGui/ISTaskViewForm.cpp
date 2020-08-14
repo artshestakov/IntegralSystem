@@ -15,23 +15,26 @@
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
-									   "task_name, "
-									   "task_description, "
-									   "userfullname(task_executor) AS task_executor, "
-									   "tstp_name AS task_type, "
-									   "tsst_uid AS task_status_uid, "
-									   "tsst_name AS task_status_name, "
-									   "tspr_uid AS task_priority_uid, "
-									   "tspr_name AS task_priority_name, "
-									   "userfullname(task_owner) AS task_owner, "
-									   "task_important, "
-									   "task_creationdate, "
-									   "task_updationdate "
-									   "FROM _task "
-									   "LEFT JOIN _tasktype ON tstp_id = task_type "
-									   "LEFT JOIN _taskstatus ON tsst_id = task_status "
-									   "LEFT JOIN _taskpriority ON tspr_id = task_priority "
-									   "WHERE task_id = :TaskID");
+									   "t.task_name, "
+									   "t.task_description, "
+									   "userfullname(t.task_executor) AS task_executor, "
+									   "tt.tstp_name AS task_type, "
+									   "ts.tsst_uid AS task_status_uid, "
+									   "ts.tsst_name AS task_status_name, "
+									   "tp.tspr_uid AS task_priority_uid, "
+									   "tp.tspr_name AS task_priority_name, "
+									   "userfullname(t.task_owner) AS task_owner, "
+									   "t.task_important, "
+									   "t.task_creationdate, "
+									   "t.task_updationdate, "
+									   "t.task_parent AS task_parent_id, "
+									   "p.task_name AS task_parent_name "
+									   "FROM _task t "
+									   "LEFT JOIN _tasktype tt ON tt.tstp_id = t.task_type "
+									   "LEFT JOIN _taskstatus ts ON ts.tsst_id = t.task_status "
+									   "LEFT JOIN _taskpriority tp ON tp.tspr_id = t.task_priority "
+									   "LEFT JOIN _task p ON p.task_id = t.task_parent "
+									   "WHERE t.task_id = :TaskID");
 //-----------------------------------------------------------------------------
 static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_name, tsst_stylesheet "
 										   "FROM _taskstatus "
@@ -120,7 +123,8 @@ static QString QD_COMMENT = PREPARE_QUERY("DELETE FROM _taskcomment WHERE tcom_i
 //-----------------------------------------------------------------------------
 ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	: ISInterfaceForm(parent),
-	TaskID(task_id)
+	TaskID(task_id),
+	TaskParentID(0)
 {
 	setWindowIcon(BUFFER_ICONS("Task"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
@@ -146,8 +150,10 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskCreationDate = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
 	TaskUpdationDate = qSelect.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
+	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
 
-	setWindowTitle(LANG("Task.ViewFormTitle").arg(TaskID).arg(TaskName));
+	setWindowTitle(LANG(TaskParentID ? "Task.ViewFormTitle.SubTask" : "Task.ViewFormTitle.Task").arg(TaskID).arg(TaskName));
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
@@ -162,6 +168,10 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
 	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
 	ButtonMenu->menu()->addSeparator();
+	if (!TaskParentID)
+	{
+		ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::CreateSubTask);
+	}
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddFile"), this, &ISTaskViewForm::FileAdd);
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::LinkAdd);
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddComment"), this, &ISTaskViewForm::CommentAdd);
@@ -201,7 +211,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonProcess->menu()->addSeparator();
 	ButtonProcess->menu()->addAction(LANG("Task.Process.History"), this, &ISTaskViewForm::ShowStatusHistory);
 
-	LabelName = new ISLabelSelectionText(QString("#%1: %2").arg(TaskID).arg(TaskName), this);
+	LabelName = new ISLabelSelectionText(TaskParentID ? QString("#%1 / #%2: %3").arg(TaskParentID).arg(TaskID).arg(TaskName) : QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->setWordWrap(true);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
@@ -477,6 +487,13 @@ void ISTaskViewForm::ShowStatusHistory()
 	ListBaseForm->resize(800, 600);
 	ListBaseForm->show();
 	ListBaseForm->LoadData();
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::CreateSubTask()
+{
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Task");
+	ObjectFormBase->SetFieldValue("Parent", TaskID);
+	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::FileLoadList()
