@@ -936,14 +936,19 @@ void ISObjectFormBase::Delete()
 		return;
 	}
 
+	QString ErrorString;
 	if (RecordIsDeleted)
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryThisRecord")))
 		{
-			if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, GetObjectID(), MetaTable->LocalListName))
+			if (ISCore::SetIsDeletedObject(false, MetaTable, GetObjectID(), ErrorString))
 			{
 				emit UpdateList();
 				close();
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.SetNotIsDeletedObject"), ErrorString);
 			}
 		}
 	}
@@ -951,10 +956,14 @@ void ISObjectFormBase::Delete()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteThisRecord")))
 		{
-			if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, GetObjectID(), MetaTable->LocalListName))
+			if (ISCore::SetIsDeletedObject(true, MetaTable, GetObjectID(), ErrorString))
 			{
 				emit UpdateList();
 				close();
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
 			}
 		}
 	}
@@ -970,12 +979,17 @@ void ISObjectFormBase::DeleteCascade()
 
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
 	{
-		if (ISGui::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, GetObjectID()))
+		QString ErrorString;
+		if (ISCore::DeleteCascadeObject(MetaTable, GetObjectID(), ErrorString))
 		{
 			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
 			ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 			emit UpdateList();
 			close();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.CascadeDeleteObject"), ErrorString);
 		}
 	}
 }

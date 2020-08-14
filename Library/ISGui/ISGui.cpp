@@ -32,8 +32,6 @@ static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _sett
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
-static QString QD_OBJECT_CASCADE = "DELETE FROM %1 WHERE %2_id = :ObjectID";
-//-----------------------------------------------------------------------------
 static QString QU_OBJECT = "UPDATE %1 SET %2_deletiondate = now(), %2_deletionuser = CURRENT_USER WHERE %2_id = %3";
 //-----------------------------------------------------------------------------
 static QString QS_TELEPHONY = PREPARE_QUERY("SELECT COUNT(*) "
@@ -409,34 +407,6 @@ void ISGui::ExitApplication()
 {
 	ISCore::ExitApplication();
 	qApp->closeAllWindows();
-}
-//-----------------------------------------------------------------------------
-bool ISGui::DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName)
-{
-	QString QueryText = Q_DELETE_OR_RECOVERY_OBJECT.arg(TableName).arg(TableAlias);
-
-	ISQuery qDeleteOrRecovery(QueryText);
-	qDeleteOrRecovery.BindValue(":ObjectID", ID);
-	qDeleteOrRecovery.BindValue(":IsDeleted", DeleteOrRecovery == ISNamespace::DRO_Delete ? true : false);
-	bool Result = qDeleteOrRecovery.Execute();
-	if (Result && DeleteOrRecovery == ISNamespace::DRO_Delete)
-	{
-		QString UpdateQuery = QU_OBJECT;
-		UpdateQuery = UpdateQuery.arg(TableName);
-		UpdateQuery = UpdateQuery.arg(TableAlias);
-		UpdateQuery = UpdateQuery.arg(ID);
-		ISQueryPool::Instance().AddQuery(UpdateQuery);
-		DeleteOrRecovery == ISNamespace::DRO_Delete ? ISProtocol::DeleteObject(TableName, LocalListName, ID) : ISProtocol::RecoveryObject(TableName, LocalListName, ID);
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISGui::DeleteCascadeObject(const QString &TableName, const QString &TableAlias, int ObjectID)
-{
-	QString QueryText = QD_OBJECT_CASCADE.arg(TableName).arg(TableAlias);
-	ISQuery qDeleteCascade(QueryText);
-	qDeleteCascade.BindValue(":ObjectID", ObjectID);
-	return qDeleteCascade.Execute();
 }
 //-----------------------------------------------------------------------------
 int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName, int ObjectID)

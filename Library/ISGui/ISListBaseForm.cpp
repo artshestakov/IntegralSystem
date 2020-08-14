@@ -886,6 +886,7 @@ void ISListBaseForm::Delete()
 		return;
 	}
 
+	QString ErrorString;
 	ISVectorInt VectorInt = GetSelectedIDs();
 	if (VectorInt.size() == 1) //≈сли помечаетс€ на удаление одна запись
 	{
@@ -899,10 +900,14 @@ void ISListBaseForm::Delete()
 		{
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryObjectSelected")))
 			{
-				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Recovery, MetaTable->Name, MetaTable->Alias, VectorInt.front(), MetaTable->LocalListName)) //≈сли восстановление прошло успешно, обновить таблицу
+				if (ISCore::SetIsDeletedObject(false, MetaTable, VectorInt.front(), ErrorString)) //≈сли восстановление прошло успешно, обновить таблицу
 				{
 					SqlModel->RemoveRecord(GetCurrentRowIndex());
 					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Recovery"));
+				}
+				else
+				{
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.SetNotIsDeletedObject"), ErrorString);
 				}
 			}
 		}
@@ -910,10 +915,14 @@ void ISListBaseForm::Delete()
 		{
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteSelectedRecord")))
 			{
-				if (ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt.front(), MetaTable->LocalListName)) //≈сли удаление прошло успешно, обновить таблицу
+				if (ISCore::SetIsDeletedObject(true, MetaTable, VectorInt.front(), ErrorString)) //≈сли удаление прошло успешно, обновить таблицу
 				{
 					SqlModel->RemoveRecord(GetCurrentRowIndex());
 					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted"));
+				}
+				else
+				{
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
 				}
 			}
 		}
@@ -930,7 +939,11 @@ void ISListBaseForm::Delete()
 				{
 					break;
 				}
-				ISGui::DeleteOrRecoveryObject(ISNamespace::DRO_Delete, MetaTable->Name, MetaTable->Alias, VectorInt[i], MetaTable->LocalListName);
+				
+				if (!ISCore::SetIsDeletedObject(true, MetaTable, VectorInt[i], ErrorString))
+				{
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
+				}
 				ProgressForm.IncrementValue();
 			}
 			Update();
@@ -947,6 +960,7 @@ bool ISListBaseForm::DeleteCascade()
 		return false;
 	}
 
+	QString ErrorString;
 	ISVectorInt VectorInt = GetSelectedIDs();
 	if (VectorInt.size() == 1) //≈сли удал€етс€ одна запись
 	{
@@ -959,12 +973,17 @@ bool ISListBaseForm::DeleteCascade()
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
 		{
 			int ObjectID = VectorInt.front();
-			if (ISGui::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, ObjectID))
+			if (ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString))
 			{
 				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
 				ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				Update();
 				return true;
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.CascadeDeleteObject"), ErrorString);
+				return false;
 			}
 		}
 	}
@@ -980,13 +999,13 @@ bool ISListBaseForm::DeleteCascade()
 				ProgressForm.IncrementValue();
 
 				int ObjectID = VectorInt[i];
-				if (ISGui::DeleteCascadeObject(MetaTable->Name, MetaTable->Alias, ObjectID))
+				if (ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString))
 				{
 					ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				}
 				else
 				{
-					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteCascadeRecord").arg(ObjectID));
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteCascadeRecord").arg(ObjectID), ErrorString);
 					return false;
 				}
 

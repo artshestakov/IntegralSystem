@@ -29,6 +29,16 @@ static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_clos
 //-----------------------------------------------------------------------------
 static QString QS_TASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
+static QString QU_DELETE_OBJECT = "UPDATE %1 SET "
+								  "%2_isdeleted = :IsDeleted, "
+								  "%2_deletiondate = now(), "
+								  "%2_deletionuser = CURRENT_USER "
+								  "WHERE %2_id = :ObjectID";
+//-----------------------------------------------------------------------------
+static QString QU_RECOVERY_OBJECT = "UPDATE %1 SET "
+									"%2_isdeleted = :IsDeleted "
+									"WHERE %2_id = :ObjectID";
+//-----------------------------------------------------------------------------
 bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &ErrorString)
 {
 	ISDefines::Core::Init(IsGui);
@@ -197,6 +207,35 @@ bool ISCore::TaskCheckExist(int TaskID)
 	if (Result)
 	{
 		Result = qSelect.ReadColumn("count").toInt() > 0;
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISCore::SetIsDeletedObject(bool IsDeleted, PMetaTable *MetaTable, int ObjectID, QString &ErrorString)
+{
+	ISQuery qDelete((IsDeleted ? QU_DELETE_OBJECT : QU_RECOVERY_OBJECT).arg(MetaTable->Name).arg(MetaTable->Alias));
+	qDelete.BindValue(":IsDeleted", IsDeleted);
+	qDelete.BindValue(":ObjectID", ObjectID);
+	bool Result = qDelete.Execute();
+	if (Result)
+	{
+		ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, ObjectID);
+	}
+	else
+	{
+		ErrorString = qDelete.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISCore::DeleteCascadeObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString)
+{
+	ISQuery qDeleteCascade(QString("DELETE FROM %1 WHERE %2_id = :ObjectID").arg(MetaTable->Name).arg(MetaTable->Alias));
+	qDeleteCascade.BindValue(":ObjectID", ObjectID);
+	bool Result = qDeleteCascade.Execute();
+	if (!Result)
+	{
+		ErrorString = qDeleteCascade.GetErrorString();
 	}
 	return Result;
 }

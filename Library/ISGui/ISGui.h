@@ -40,8 +40,6 @@ public:
 	static QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
 
 	static void ExitApplication(); //Выход из программы
-	static bool DeleteOrRecoveryObject(ISNamespace::DeleteRecoveryObject DeleteOrRecovery, const QString &TableName, const QString &TableAlias, int ID, const QString &LocalListName); //Удалить/Восстановить запись
-	static bool DeleteCascadeObject(const QString &TableName, const QString &TableAlias, int ObjectID); //Удалить объект каскадом
 
 	//Календарь
 	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName = QString(), int ObjectID = 0);

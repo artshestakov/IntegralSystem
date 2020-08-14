@@ -20,5 +20,9 @@ public:
 
 	//Задачи
 	static bool TaskCheckExist(int TaskID); //Проверить существование задачи по её номеру
+
+	//Объекты
+	static bool SetIsDeletedObject(bool IsDeleted, PMetaTable *MetaTable, int ObjectID, QString &ErrorString); //Удалить/восстановить объект
+	static bool DeleteCascadeObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString); //Удалить объект каскадом
 };
 //-----------------------------------------------------------------------------

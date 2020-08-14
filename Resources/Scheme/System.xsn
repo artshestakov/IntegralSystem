@@ -33,7 +33,7 @@
       <Field UID="{50E46330-1A2D-4A19-BB2D-5FAFBA55BA98}" Name="Seconds" Type="Seconds"/>
       <Field UID="{53CC6D02-DDB8-4987-8257-5303046E22FE}" Name="CallDetails" Type="CallDetails"/>
       <Field UID="{03079B94-ED11-48A7-91AD-F8A483A23CC4}" Name="Month" Type="Month"/>
-      <Field UID="{98253B62-FAF4-4962-B9D1-34A025B859BA}" Name="Login" Type="Login"/>
+      <Field UID="{98253B62-FAF4-4962-B9D1-34A025B859BA}" Name="Login" Type="String"/>
       <Field UID="{BF10DFE6-705C-4547-93A1-07F25D28ADEE}" Name="Address" Type="Address"/>
       <Field UID="{EB450550-AE7E-45DC-ADFF-A2DF34AE0A77}" Name="Url" Type="Url"/>
       <Field UID="{476D7186-BFAA-4AE9-A589-D49FD970C149}" Name="File" Type="File"/>
