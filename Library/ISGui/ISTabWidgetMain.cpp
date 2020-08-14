@@ -14,6 +14,7 @@
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {
 	ISTabBarMain *TabBar = new ISTabBarMain(this);
+	TabBar->setStyleSheet(STYLE_SHEET("ISMainWindow.TabBar"));
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
 	connect(TabBar, &ISTabBarMain::SeparateWindowSignal, this, &ISTabWidgetMain::SeparateWindow);
 	connect(TabBar, &ISTabBarMain::tabMoved, this, &ISTabWidgetMain::TabMoved);
@@ -23,7 +24,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	setTabsClosable(true);
 	setMovable(true);
 	setTabBarAutoHide(true);
-	setStyleSheet(STYLE_SHEET("QTabWidget.MainWindow"));
+	setStyleSheet(STYLE_SHEET("ISMainWindow.TabWidget"));
 	setUsesScrollButtons(SETTING_BOOL(CONST_UID_SETTING_TABS_VIEWUSESSCROLLBUTTONS));
 
 	QVBoxLayout *LayoutMainTab = new QVBoxLayout();
