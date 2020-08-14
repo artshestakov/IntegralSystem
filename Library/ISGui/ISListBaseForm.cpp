@@ -1349,7 +1349,6 @@ void ISListBaseForm::CreateActions()
 
 	//Показывать актуальные записи
 	QAction *ActionShowActual = new QAction(BUFFER_ICONS("ShowActual"), LANG("ListForm.ShowActual"), this);
-	ActionShowActual->setToolTip(LANG("ListForm.ShowActual.ToolTip"));
 	ActionShowActual->setCheckable(true);
 	ActionShowActual->setChecked(true);
 	ActionShowActual->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F1));
@@ -1358,7 +1357,6 @@ void ISListBaseForm::CreateActions()
 
 	//Показывать удаленные записи
 	QAction *ActionShowDeleted = new QAction(BUFFER_ICONS("ShowDeleted"), LANG("ListForm.ShowDeleted"), this);
-	ActionShowDeleted->setToolTip(LANG("ListForm.ShowDeleted.ToolTip"));
 	ActionShowDeleted->setCheckable(true);
 	ActionShowDeleted->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F2));
 	connect(ActionShowDeleted, &QAction::triggered, this, &ISListBaseForm::ShowDeleted);

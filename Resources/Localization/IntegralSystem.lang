@@ -324,10 +324,8 @@
   <Local Name="ListForm.Edit.ToolTip" Russian="Изменить запись (F2)"/>
   <Local Name="ListForm.Update" Russian="Обновить список"/>
   <Local Name="ListForm.Update.ToolTip" Russian="Обновить список (F5)"/>
-  <Local Name="ListForm.ShowActual" Russian="Показывать актуальные записи"/>
-  <Local Name="ListForm.ShowActual.ToolTip" Russian="Показывать актуальные записи (Ctrl + F1)"/>
-  <Local Name="ListForm.ShowDeleted" Russian="Показывать удаленные записи"/>
-  <Local Name="ListForm.ShowDeleted.ToolTip" Russian="Показывать удаленные записи (Ctrl + F2)"/>
+  <Local Name="ListForm.ShowActual" Russian="Показывать актуальные записи (Ctrl + F1)"/>
+  <Local Name="ListForm.ShowDeleted" Russian="Показывать удаленные записи (Ctrl + F2)"/>
   <Local Name="ListForm.Search" Russian="Расширенный поиск"/>
   <Local Name="ListForm.Search.ToolTip" Russian="Расширенный поиск по таблице (F7)"/>
   <Local Name="ListForm.ExportTable" Russian="Экспорт таблицы"/>
