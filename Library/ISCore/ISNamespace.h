@@ -40,7 +40,6 @@ public:
         FT_Seconds, //Секунды
         FT_CallDetails, //Подробности звонка
         FT_Month, //Месяц
-        FT_Login, //Логин пользователя системы
         FT_Address, //Адрес
         FT_Url, //Ссылка
         FT_File, //Файл

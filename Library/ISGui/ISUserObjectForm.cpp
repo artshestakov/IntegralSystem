@@ -6,12 +6,13 @@
 #include "ISMessageBox.h"
 #include "ISQuery.h"
 #include "ISGui.h"
-#include "ISNotifySender.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QC_USER = "CREATE ROLE \"%1\" SUPERUSER NOINHERIT NOREPLICATION LOGIN CONNECTION LIMIT 1";
 //-----------------------------------------------------------------------------
 static QString QA_LOGIN = "ALTER ROLE %1 RENAME TO %2";
+//-----------------------------------------------------------------------------
+static QString QS_LOGIN = "SELECT COUNT(*) FROM _users WHERE usrs_login = :Login";
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
@@ -51,13 +52,32 @@ void ISUserObjectForm::AfterShowEvent()
 //-----------------------------------------------------------------------------
 bool ISUserObjectForm::Save()
 {
-	bool Result = true;
-
 	//Проверка привязки учётной записи к группе
-	if (!GetFieldValue("Group").isValid())
+	bool Result = GetFieldValue("Group").isValid();
+	if (!Result)
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.UserNotLinkedToGroup"));
 		GetFieldWidget("Group")->BlinkRed();
+		return Result;
+	}
+
+	ISQuery qSelectLogin(QS_LOGIN);
+	qSelectLogin.BindValue(":Login", GetFieldValue("Login"));
+	Result = qSelectLogin.ExecuteFirst();
+	if (Result)
+	{
+		Result = qSelectLogin.ReadColumn("count").toInt() == 0;
+		if (!Result) //Если такой логин уже существует - выходим из функции
+		{
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.LoginAlreadyExist").arg(GetFieldValue("Login").toString()));
+			GetFieldWidget("Login")->BlinkRed();
+			return Result;
+		}
+	}
+	else //Ошибка проверки наличия логина
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.CheckExistLogin").arg(GetFieldValue("Login").toString()), qSelectLogin.GetErrorString());
+		return Result;
 	}
 
 	//Проверка корректности ввода диапазона срока действия учётной записи
@@ -96,11 +116,6 @@ bool ISUserObjectForm::Save()
 	else
 	{
 		Result = ISObjectFormBase::Save();
-	}
-
-	if (Result)
-	{
-		//ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_CHANGED, GetObjectID(), QVariant(), QString(), false);
 	}
 	return Result;
 }

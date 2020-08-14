@@ -143,6 +143,7 @@
   <Local Name="Message.Error.UpdateTaskStatus" Russian="Не удалось изменить статус задачи!"/>
   <Local Name="Message.Error.InsertTaskStatusHistory" Russian="Не удалось зафиксировать изменение статуса задачи!"/>
   <Local Name="Message.Error.SaveUserSetting" Russian="Не удалось сохраненить настройку с идентификатором &quot;%1&quot;."/>
+  <Local Name="Message.Error.CheckExistLogin" Russian="Не удалось проверить наличие логина &quot;%1&quot;."/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -221,6 +222,7 @@
   <Local Name="Message.Warning.TaskLinkToByMyself" Russian="Связывание задачи с самой собой запрещено!"/>
   <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Связь с выбранной задачей уже существует!"/>
   <Local Name="Message.Warning.NewTaskNameIsEmpty" Russian="Вы не ввели имя задачи!"/>
+  <Local Name="Message.Warning.LoginAlreadyExist" Russian="Логин &quot;%1&quot; уже существует в системе, введите другой."/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
@@ -621,7 +623,6 @@
   <Local Name="RecordAddFavorites" Russian="Запись &quot;%1&quot; добавлена в избранное"/>
   <Local Name="RecordRemoveFavorites" Russian="Запись &quot;%1&quot; удалена из избранного"/>
   <Local Name="LoadingUpdateText" Russian="Обнаружена новая версия программы! Чтобы начать загрузку новой версии, нажмите «Начать загрузку». Вы можете обновить программу и позже, для этого нажмите кнопку «Отмена»."/>
-  <Local Name="ThisLoginAlreadyExist" Russian="Такой логин уже существует в системе, введите другой."/>
   <Local Name="VacuumTableDist" Russian="Пожалуйста подождите, выполняется вакуум"/>
   <Local Name="SelectColorFont" Russian="Выберите цвет шрифта"/>
   <Local Name="ClickFromSelectNumberPage" Russian="Нажмите, чтобы выбрать номер страницы и перейти на неё."/>

@@ -531,9 +531,6 @@
     <ClCompile Include="ISListEditPopup.cpp">
       <Filter>Controls\Fields</Filter>
     </ClCompile>
-    <ClCompile Include="ISLoginEdit.cpp">
-      <Filter>Controls\Fields</Filter>
-    </ClCompile>
     <ClCompile Include="ISPassportEdit.cpp">
       <Filter>Controls\Fields</Filter>
     </ClCompile>
@@ -1020,9 +1017,6 @@
       <Filter>Controls\Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISListEditPopup.h">
-      <Filter>Controls\Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISLoginEdit.h">
       <Filter>Controls\Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISPassportEdit.h">

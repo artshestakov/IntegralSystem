@@ -257,7 +257,6 @@
     <ClCompile Include="ISListIndicatorWidget.cpp" />
     <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
-    <ClCompile Include="ISLoginEdit.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
     <ClCompile Include="ISMediaPlayer.cpp" />
     <ClCompile Include="ISMedTech.cpp" />
@@ -489,7 +488,6 @@
     <QtMoc Include="ISFileEdit.h" />
     <QtMoc Include="ISListEdit.h" />
     <QtMoc Include="ISListEditPopup.h" />
-    <QtMoc Include="ISLoginEdit.h" />
     <QtMoc Include="ISPassportEdit.h" />
     <QtMoc Include="ISPhoneEdit.h" />
     <QtMoc Include="ISUserEdit.h" />
