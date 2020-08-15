@@ -274,12 +274,18 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	QGroupBox *GroupBoxDescription = new QGroupBox(LANG("Task.Description"), this);
 	GroupBoxDescription->setLayout(new QVBoxLayout());
+	GroupBoxDescription->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	GroupBoxDescription->setSizePolicy(GroupBoxDescription->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	LayoutLeft->addWidget(GroupBoxDescription, 0, Qt::AlignTop);
 
+	ISScrollArea *ScrollAreaDescription = new ISScrollArea(GroupBoxDescription);
+	ScrollAreaDescription->widget()->setLayout(new QVBoxLayout());
+	ScrollAreaDescription->widget()->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	GroupBoxDescription->layout()->addWidget(ScrollAreaDescription);
+
 	LabelDescription = new ISLabelSelectionText(TaskDescription.isEmpty() ? LANG("Task.Description.Empty") : TaskDescription, GroupBoxDescription);
 	LabelDescription->setWordWrap(true);
-	GroupBoxDescription->layout()->addWidget(LabelDescription);
+	ScrollAreaDescription->widget()->layout()->addWidget(LabelDescription);
 
 	GroupBoxSubTask = new QGroupBox(LANG("Task.SubTask.List").arg(0), this);
 	GroupBoxSubTask->setLayout(new QVBoxLayout());
