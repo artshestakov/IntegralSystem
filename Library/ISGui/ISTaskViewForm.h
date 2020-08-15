@@ -41,7 +41,7 @@ private:
 private:
 	void LinkLoadList();
 	void LinkAdd();
-	void LinkOpen();
+	void LinkOpen(QListWidgetItem *ListWidgetItem);
 	void LinkDelete();
 
 private:
@@ -60,8 +60,7 @@ private:
 	QTabWidget *TabWidget;
 	QTreeWidget *TreeWidgetComment;
 	ISListWidget *ListWidgetFiles;
-	QGroupBox *GroupBoxLinkTask;
-	std::vector<ISLabelPixmapText*> VectorLinks;
+	ISListWidget *ListWidgetLinks;
 	QVBoxLayout *LayoutRight;
 	QLabel *LabelStatus;
 	QLabel *LabelUpdationDate;

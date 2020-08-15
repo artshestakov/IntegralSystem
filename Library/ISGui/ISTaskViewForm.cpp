@@ -172,7 +172,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	{
 		ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::CreateSubTask);
 	}
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::LinkAdd);
 	LayoutTitle->addWidget(ButtonMenu);
 
 	ButtonProcess = new ISPushButton(BUFFER_ICONS("Task.Process"), this);
@@ -253,23 +252,46 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
 	CommentLoadList();
 
+	ListWidgetLinks = new ISListWidget(TabWidget);
+	ListWidgetLinks->setAlternatingRowColors(true);
+	ListWidgetLinks->setContextMenuPolicy(Qt::ActionsContextMenu);
+	connect(ListWidgetLinks, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::LinkOpen);
+	TabWidget->addTab(ListWidgetLinks, BUFFER_ICONS("Document"), LANG("Task.Files").arg(0));
+	LinkLoadList();
+
+	QAction *ActionLinkDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Task.Link.Delete"), ListWidgetLinks);
+	ActionLinkDelete->setEnabled(false);
+	connect(ActionLinkDelete, &QAction::triggered, this, &ISTaskViewForm::LinkDelete);
+	ListWidgetLinks->addAction(ActionLinkDelete);
+
+	connect(ListWidgetLinks, &ISListWidget::itemSelectionChanged, [=]
+	{
+		if (ListWidgetLinks->count())
+		{
+			ActionLinkDelete->setEnabled(ListWidgetLinks->currentItem());
+		}
+		else
+		{
+			ActionLinkDelete->setEnabled(false);
+		}
+	});
+
+	ListWidgetFiles = new ISListWidget(TabWidget);
+	ListWidgetFiles->setLayout(new QVBoxLayout());
+	TabWidget->addTab(ListWidgetFiles, BUFFER_ICONS("Document"), LANG("Task.LinkTask").arg(0));
+	FileLoadList();
+
 	QToolButton *ButtonAddComment = CreateAddButton(LANG("Task.AddComment"));
 	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
 	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(TreeWidgetComment), QTabBar::RightSide, ButtonAddComment);
 
-	ListWidgetFiles = new ISListWidget(TabWidget);
-	ListWidgetFiles->setAlternatingRowColors(true);
-	TabWidget->addTab(ListWidgetFiles, BUFFER_ICONS("Document"), LANG("Task.Files").arg(0));
-	FileLoadList();
+	QToolButton *ButtonAddLink = CreateAddButton(LANG("Task.AddLink"));
+	connect(ButtonAddLink, &QToolButton::clicked, this, &ISTaskViewForm::LinkAdd);
+	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ListWidgetLinks), QTabBar::RightSide, ButtonAddLink);
 
 	QToolButton *ButtonAddFile = CreateAddButton(LANG("Task.AddFile"));
 	connect(ButtonAddFile, &QToolButton::clicked, this, &ISTaskViewForm::FileAdd);
 	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ListWidgetFiles), QTabBar::RightSide, ButtonAddFile);
-
-	//GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
-	//GroupBoxLinkTask->setLayout(new QVBoxLayout());
-	//LayoutLeft->addWidget(GroupBoxLinkTask);
-	//LinkLoadList();
 
 	LayoutRight = new QVBoxLayout();
 
@@ -495,7 +517,6 @@ void ISTaskViewForm::FileLoadList()
 	qSelectFiles.BindValue(":TaskID", TaskID);
 	if (qSelectFiles.Execute())
 	{
-		int Rows = qSelectFiles.GetCountResultRows();
 		while (qSelectFiles.Next())
 		{
 			int ID = qSelectFiles.ReadColumn("tfls_id").toInt();
@@ -511,7 +532,7 @@ void ISTaskViewForm::FileLoadList()
 			ListWidgetItem->setSizeHint(Widget->sizeHint());
 			ListWidgetFiles->setItemWidget(ListWidgetItem, Widget);
 		}
-		TabWidget->setTabText(TabWidget->indexOf(ListWidgetFiles), LANG("Task.Files").arg(Rows));
+		TabWidget->setTabText(TabWidget->indexOf(ListWidgetFiles), LANG("Task.Files").arg(qSelectFiles.GetCountResultRows()));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -670,10 +691,7 @@ void ISTaskViewForm::FileDelete()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LinkLoadList()
 {
-	while (!VectorLinks.empty())
-	{
-		delete ISAlgorithm::VectorTakeBack(VectorLinks);
-	}
+	ListWidgetLinks->Clear();
 
 	ISQuery qSelectLink(QS_LINK);
 	qSelectLink.BindValue(":TaskID", TaskID);
@@ -691,27 +709,23 @@ void ISTaskViewForm::LinkLoadList()
 			QString TaskStatusName = qSelectLink.ReadColumn("task_status_name").toString();
 			QString TaskStatusIcon = qSelectLink.ReadColumn("task_status_icon").toString();
 			
-			ISLabelPixmapText *LabelLink = new ISLabelPixmapText(BUFFER_ICONS(TaskStatusIcon).pixmap(ISDefines::Gui::SIZE_16_16), QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName), GroupBoxLinkTask);
-			LabelLink->GetLabelText()->SetIsLinked(true);
-			LabelLink->GetLabelText()->setProperty("TaskID", LinkTaskID);
-			LabelLink->GetLabelText()->setProperty("LinkID", LinkID);
-			LabelLink->GetLabelText()->setToolTip(LANG("Task.LinkToolTip").arg(TaskStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
-			LabelLink->GetLabelText()->setWordWrap(true);
-			LabelLink->GetLabelText()->setContextMenuPolicy(Qt::ActionsContextMenu);
-			connect(LabelLink->GetLabelText(), &ISQLabel::Clicked, this, &ISTaskViewForm::LinkOpen);
-			GroupBoxLinkTask->layout()->addWidget(LabelLink);
-			VectorLinks.push_back(LabelLink);
+			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetLinks);
+			ListWidgetItem->setData(Qt::UserRole, LinkID);
+			ListWidgetItem->setData(Qt::UserRole * 2, LinkTaskID);
+			ListWidgetItem->setIcon(BUFFER_ICONS(TaskStatusIcon));
+			ListWidgetItem->setText(QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName));
+			ListWidgetItem->setToolTip(LANG("Task.LinkToolTip").arg(TaskStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
+			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 35));
 
-			QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), LabelLink->GetLabelText());
-			connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::LinkDelete);
-			LabelLink->GetLabelText()->addAction(ActionDelete);
-
+			//Если связанная задача уже выполнена или закрыта - зачеркиваем шрифт
 			if (TaskStatusUID == CONST_UID_TASK_STATUS_DONE || TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE)
 			{
-				ISGui::SetFontWidgetStrikeOut(LabelLink, true);
+				QFont FontItem = ListWidgetItem->font();
+				FontItem.setStrikeOut(true);
+				ListWidgetItem->setFont(FontItem);
 			}
 		}
-		GroupBoxLinkTask->setVisible(qSelectLink.GetCountResultRows());
+		TabWidget->setTabText(TabWidget->indexOf(ListWidgetLinks), LANG("Task.LinkTask").arg(qSelectLink.GetCountResultRows()));
 	}
 	else
 	{
@@ -732,11 +746,12 @@ void ISTaskViewForm::LinkAdd()
 		else
 		{
 			//Проверяем, есть ли уже связь с выбранной задачей
-			for (ISLabelPixmapText *LabelLink : VectorLinks)
+			for (int i = 0; i < ListWidgetLinks->count(); ++i)
 			{
-				if (LabelLink->GetLabelText()->property("TaskID").toInt() == LinkTaskID)
+				if (ListWidgetLinks->item(i)->data(Qt::UserRole * 2).toInt() == LinkTaskID)
 				{
 					ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskLinkAlreadyExist"));
+					LinkAdd();
 					return;
 				}
 			}
@@ -756,9 +771,9 @@ void ISTaskViewForm::LinkAdd()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::LinkOpen()
+void ISTaskViewForm::LinkOpen(QListWidgetItem *ListWidgetItem)
 {
-	ISGui::ShowTaskViewForm(sender()->property("TaskID").toInt());
+	ISGui::ShowTaskViewForm(ListWidgetItem->data(Qt::UserRole * 2).toInt());
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LinkDelete()
@@ -766,11 +781,10 @@ void ISTaskViewForm::LinkDelete()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskLink")))
 	{
 		ISQuery qDeleteLink(QD_LINK);
-		qDeleteLink.BindValue(":LinkID", sender()->parent()->property("LinkID"));
+		qDeleteLink.BindValue(":LinkID", ListWidgetLinks->currentItem()->data(Qt::UserRole));
 		if (qDeleteLink.Execute())
 		{
-			//Если вызывать напрямую обновление списка связей, то происходит падение. Причина неизвестна.
-			QTimer::singleShot(10, this, &ISTaskViewForm::LinkLoadList);
+			LinkLoadList();
 		}
 		else
 		{
@@ -793,7 +807,6 @@ void ISTaskViewForm::CommentLoadList()
 	qSelectComments.BindValue(":TaskID", TaskID);
 	if (qSelectComments.Execute())
 	{
-		int Rows = qSelectComments.GetCountResultRows();
 		while (qSelectComments.Next())
 		{
 			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
@@ -806,7 +819,7 @@ void ISTaskViewForm::CommentLoadList()
 			QTreeWidgetItem *TreeItemWidget = new QTreeWidgetItem(TreeWidgetComment);
 			TreeWidgetComment->setItemWidget(TreeItemWidget, 0, CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate));
 		}
-		TabWidget->setTabText(TabWidget->indexOf(TreeWidgetComment), LANG("Task.Comments").arg(Rows));
+		TabWidget->setTabText(TabWidget->indexOf(TreeWidgetComment), LANG("Task.Comments").arg(qSelectComments.GetCountResultRows()));
 	}
 	else
 	{
@@ -882,9 +895,7 @@ void ISTaskViewForm::CommentAdd()
 		if (qInsertComment.Execute())
 		{
 			CommentLoadList();
-			//После загрузки списка комментариев вызываем прокрутку в самый низ
 			TreeWidgetComment->scrollToItem(TreeWidgetComment->topLevelItem(TreeWidgetComment->topLevelItemCount() - 1), QAbstractItemView::ScrollHint::PositionAtBottom);
-			//QTimer::singleShot(50, [=]() { ScrollAreaComments->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
 		}
 		else
 		{
@@ -904,8 +915,7 @@ void ISTaskViewForm::CommentEdit()
 		qUpdateComment.BindValue(":CommentID", sender()->property("CommentID"));
 		if (qUpdateComment.Execute())
 		{
-			//Если вызывать напрямую обновление списка комментариев, то происходит падение. Причина неизвестна.
-			QTimer::singleShot(10, this, &ISTaskViewForm::CommentLoadList);
+			CommentLoadList();
 		}
 		else
 		{
@@ -922,8 +932,7 @@ void ISTaskViewForm::CommentDelete()
 		qDeleteComment.BindValue(":CommentID", sender()->property("CommentID"));
 		if (qDeleteComment.Execute())
 		{
-			//Если вызывать напрямую обновление списка комментариев, то происходит падение. Причина неизвестна.
-			QTimer::singleShot(10, this, &ISTaskViewForm::CommentLoadList);
+			CommentLoadList();
 		}
 		else
 		{
