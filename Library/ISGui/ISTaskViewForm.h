@@ -59,9 +59,7 @@ private:
 	ISLabelSelectionText *LabelName;
 	QTabWidget *TabWidget;
 	QTreeWidget *TreeWidgetComment;
-	int TreeWidgetCommentIndex;
 	ISListWidget *ListWidgetFiles;
-	int ListWidgetFilesIndex;
 	QGroupBox *GroupBoxLinkTask;
 	std::vector<ISLabelPixmapText*> VectorLinks;
 	QVBoxLayout *LayoutRight;

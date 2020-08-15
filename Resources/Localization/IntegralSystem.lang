@@ -224,7 +224,6 @@
   <Local Name="Message.Warning.TaskWithNumberNotFound" Russian="Задача с номером #%1 не найдена!"/>
   <Local Name="Message.Warning.TaskLinkToByMyself" Russian="Связывание задачи с самой собой запрещено!"/>
   <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Связь с выбранной задачей уже существует!"/>
-  <Local Name="Message.Warning.NewTaskNameIsEmpty" Russian="Вы не ввели имя задачи!"/>
   <Local Name="Message.Warning.LoginAlreadyExist" Russian="Логин &quot;%1&quot; уже существует в системе, введите другой."/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>

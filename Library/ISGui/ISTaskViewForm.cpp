@@ -250,21 +250,21 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TreeWidgetComment->setRootIsDecorated(false);
 	TreeWidgetComment->setAlternatingRowColors(true);
 	TreeWidgetComment->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-	TreeWidgetCommentIndex = TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
+	TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
 	CommentLoadList();
 
 	QToolButton *ButtonAddComment = CreateAddButton(LANG("Task.AddComment"));
 	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
-	TabWidget->tabBar()->setTabButton(TreeWidgetCommentIndex, QTabBar::RightSide, ButtonAddComment);
+	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(TreeWidgetComment), QTabBar::RightSide, ButtonAddComment);
 
 	ListWidgetFiles = new ISListWidget(TabWidget);
 	ListWidgetFiles->setAlternatingRowColors(true);
-	ListWidgetFilesIndex = TabWidget->addTab(ListWidgetFiles, BUFFER_ICONS("Document"), LANG("Task.Files").arg(0));
+	TabWidget->addTab(ListWidgetFiles, BUFFER_ICONS("Document"), LANG("Task.Files").arg(0));
 	FileLoadList();
 
 	QToolButton *ButtonAddFile = CreateAddButton(LANG("Task.AddFile"));
 	connect(ButtonAddFile, &QToolButton::clicked, this, &ISTaskViewForm::FileAdd);
-	TabWidget->tabBar()->setTabButton(ListWidgetFilesIndex, QTabBar::RightSide, ButtonAddFile);
+	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ListWidgetFiles), QTabBar::RightSide, ButtonAddFile);
 
 	//GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
 	//GroupBoxLinkTask->setLayout(new QVBoxLayout());
@@ -374,7 +374,6 @@ void ISTaskViewForm::Rename()
 	QString NewName = ISInputDialog::GetString(LANG("Renaming"), LANG("Task.Rename.LabelText"), TaskName);
 	if (NewName.isEmpty())
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NewTaskNameIsEmpty"));
 		return;
 	}
 
@@ -512,7 +511,7 @@ void ISTaskViewForm::FileLoadList()
 			ListWidgetItem->setSizeHint(Widget->sizeHint());
 			ListWidgetFiles->setItemWidget(ListWidgetItem, Widget);
 		}
-		TabWidget->setTabText(ListWidgetFilesIndex, LANG("Task.Files").arg(Rows));
+		TabWidget->setTabText(TabWidget->indexOf(ListWidgetFiles), LANG("Task.Files").arg(Rows));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -807,7 +806,7 @@ void ISTaskViewForm::CommentLoadList()
 			QTreeWidgetItem *TreeItemWidget = new QTreeWidgetItem(TreeWidgetComment);
 			TreeWidgetComment->setItemWidget(TreeItemWidget, 0, CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate));
 		}
-		TabWidget->setTabText(0, LANG("Task.Comments").arg(Rows));
+		TabWidget->setTabText(TabWidget->indexOf(TreeWidgetComment), LANG("Task.Comments").arg(Rows));
 	}
 	else
 	{
