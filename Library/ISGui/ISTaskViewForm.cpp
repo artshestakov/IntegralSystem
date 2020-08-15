@@ -166,7 +166,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
 
-	ISPushButton *ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
+	ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
 	ButtonMenu->setFlat(true);
 	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
 	ButtonMenu->setSizePolicy(QSizePolicy::Maximum, ButtonMenu->sizePolicy().verticalPolicy());
@@ -419,6 +419,15 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 ISTaskViewForm::~ISTaskViewForm()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::keyPressEvent(QKeyEvent *KeyEvent)
+{
+	ISInterfaceForm::keyPressEvent(KeyEvent);
+	if (KeyEvent->key() == Qt::Key_Alt)
+	{
+		ButtonMenu->animateClick();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::EscapeClicked()

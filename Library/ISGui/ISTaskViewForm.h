@@ -23,6 +23,7 @@ public:
 	virtual ~ISTaskViewForm();
 
 protected:
+	void keyPressEvent(QKeyEvent *KeyEvent);
 	void EscapeClicked() override;
 
 private:
@@ -68,6 +69,7 @@ private:
 	QGroupBox *GroupBoxSubTask;
 	ISListWidget *ListWidgetSubTask;
 	QVBoxLayout *LayoutLeft;
+	ISPushButton *ButtonMenu;
 	ISPushButton *ButtonProcess;
 	ISLabelSelectionText *LabelName;
 	QTabWidget *TabWidget;
