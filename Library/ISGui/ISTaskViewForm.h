@@ -26,8 +26,13 @@ private:
 	void SetDescription(); //Изменить описание
 	void TaskStatusClicked(); //Событие смены статуса задачи
 	void ShowStatusHistory(); //Показать историю изменения статуса задачи
-	void CreateSubTask(); //Создание подзадачи
-	void CreatedSubTask(int task_id); //Событие успешного создания подзадачи
+
+private:
+	void SubTaskLoad(); //Загрузка списка подзадач
+	void SubTaskCreate(); //Создание подзадачи
+	void SubTaskCreated(int task_id); //Событие успешного создания подзадачи
+	void SubTaskOpen(QListWidgetItem *ListWidgetItem); //Открыть подзадачу
+	void SubTaskOpenParent(); //Открыть родительскую задачу
 
 private:
 	QToolButton* CreateAddButton(const QString &ToolTip);
@@ -55,6 +60,8 @@ private:
 private:
 	QHBoxLayout *LayoutHorizontal;
 	QLabel *LabelDescription;
+	QGroupBox *GroupBoxSubTask;
+	ISListWidget *ListWidgetSubTask;
 	QVBoxLayout *LayoutLeft;
 	ISPushButton *ButtonProcess;
 	ISLabelSelectionText *LabelName;

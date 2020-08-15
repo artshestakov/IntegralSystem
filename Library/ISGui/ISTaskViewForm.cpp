@@ -36,6 +36,13 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _task p ON p.task_id = t.task_parent "
 									   "WHERE t.task_id = :TaskID");
 //-----------------------------------------------------------------------------
+static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_description, tsst_uid AS task_status_uid "
+										  "FROM _task "
+										  "LEFT JOIN _taskstatus ON tsst_id = task_status "
+										  "WHERE task_parent = :TaskID "
+										  "AND NOT task_isdeleted "
+										  "ORDER BY task_id");
+//-----------------------------------------------------------------------------
 static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_name, tsst_stylesheet "
 										   "FROM _taskstatus "
 										   "WHERE NOT tsst_isdeleted "
@@ -170,7 +177,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addSeparator();
 	if (!TaskParentID)
 	{
-		ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::CreateSubTask);
+		ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::SubTaskCreate);
 	}
 	LayoutTitle->addWidget(ButtonMenu);
 
@@ -193,7 +200,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 			ActionStatus->setProperty("StatusUID", StatusUID);
 			if (StatusUID == TaskStatusUID)
 			{
-				ButtonProcess->setText(LANG("Task.Process").arg(StatusName));
+				ButtonProcess->setText(StatusName);
 				ButtonProcess->setStyleSheet(STYLE_SHEET(qSelectStatuses.ReadColumn("tsst_stylesheet").toString()));
 				ActionStatus->setIcon(BUFFER_ICONS("Task.Status.Current"));
 				ActionStatus->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
@@ -208,7 +215,23 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonProcess->menu()->addSeparator();
 	ButtonProcess->menu()->addAction(LANG("Task.Process.History"), this, &ISTaskViewForm::ShowStatusHistory);
 
-	LabelName = new ISLabelSelectionText(TaskParentID ? QString("#%1 / #%2: %3").arg(TaskParentID).arg(TaskID).arg(TaskName) : QString("#%1: %2").arg(TaskID).arg(TaskName), this);
+	if (TaskParentID)
+	{
+		ISPushButton *ButtonParent = new ISPushButton(QString("#%1").arg(TaskParentID), this);
+		ButtonParent->setToolTip(LANG("Task.SubTask.ToolTip").arg(TaskParentName));
+		ButtonParent->setFlat(true);
+		ButtonParent->setCursor(CURSOR_POINTING_HAND);
+		ButtonParent->setSizePolicy(QSizePolicy::Maximum, ButtonParent->sizePolicy().verticalPolicy());
+		ButtonParent->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+		connect(ButtonParent, &ISPushButton::clicked, this, &ISTaskViewForm::SubTaskOpenParent);
+		LayoutTitle->addWidget(ButtonParent);
+
+		QPalette Palette = ButtonParent->palette();
+		Palette.setColor(QPalette::ButtonText, Qt::gray);
+		ButtonParent->setPalette(Palette);
+	}
+
+	LabelName = new ISLabelSelectionText((TaskParentID ? " / " : QString()) + QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->setWordWrap(true);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
@@ -238,6 +261,19 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LabelDescription->setWordWrap(true);
 	GroupBoxDescription->layout()->addWidget(LabelDescription);
 
+	GroupBoxSubTask = new QGroupBox(LANG("Task.SubTask.List").arg(0), this);
+	GroupBoxSubTask->setLayout(new QVBoxLayout());
+	GroupBoxSubTask->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	GroupBoxSubTask->setSizePolicy(GroupBoxSubTask->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+	LayoutLeft->addWidget(GroupBoxSubTask);
+
+	ListWidgetSubTask = new ISListWidget(GroupBoxSubTask);
+	ListWidgetSubTask->setAlternatingRowColors(true);
+	ListWidgetSubTask->setFrameShape(QFrame::NoFrame);
+	GroupBoxSubTask->layout()->addWidget(ListWidgetSubTask);
+	connect(ListWidgetSubTask, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::SubTaskOpen);
+	SubTaskLoad();
+
 	TabWidget = new QTabWidget(this);
 	TabWidget->setTabsClosable(true);
 	TabWidget->setStyleSheet(STYLE_SHEET("QTabWidgetTask"));
@@ -249,12 +285,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TreeWidgetComment->setRootIsDecorated(false);
 	TreeWidgetComment->setAlternatingRowColors(true);
 	TreeWidgetComment->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	TreeWidgetComment->setFrameShape(QFrame::NoFrame);
 	TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
 	CommentLoadList();
 
 	ListWidgetLinks = new ISListWidget(TabWidget);
 	ListWidgetLinks->setAlternatingRowColors(true);
 	ListWidgetLinks->setContextMenuPolicy(Qt::ActionsContextMenu);
+	ListWidgetLinks->setFrameShape(QFrame::NoFrame);
 	connect(ListWidgetLinks, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::LinkOpen);
 	TabWidget->addTab(ListWidgetLinks, BUFFER_ICONS("Document"), LANG("Task.Files").arg(0));
 	LinkLoadList();
@@ -278,6 +316,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	ListWidgetFiles = new ISListWidget(TabWidget);
 	ListWidgetFiles->setLayout(new QVBoxLayout());
+	ListWidgetFiles->setFrameShape(QFrame::NoFrame);
 	TabWidget->addTab(ListWidgetFiles, BUFFER_ICONS("Document"), LANG("Task.LinkTask").arg(0));
 	FileLoadList();
 
@@ -464,7 +503,7 @@ void ISTaskViewForm::TaskStatusClicked()
 			ActionStatus->setIcon(IsCurrent ? BUFFER_ICONS("Task.Status.Current") : QIcon());
 			ActionStatus->setFont(IsCurrent ? ISDefines::Gui::FONT_APPLICATION_BOLD : ISDefines::Gui::FONT_APPLICATION);
 		}
-		ButtonProcess->setText(LANG("Task.Process").arg(TaskStatusName));
+		ButtonProcess->setText(TaskStatusName);
 		ButtonProcess->setStyleSheet(STYLE_SHEET(qUpdateStatus.ReadColumn("tsst_stylesheet").toString()));
 		LabelStatus->setText(TaskStatusName);
 
@@ -491,17 +530,55 @@ void ISTaskViewForm::ShowStatusHistory()
 	ListBaseForm->LoadData();
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::CreateSubTask()
+void ISTaskViewForm::SubTaskLoad()
+{
+	ListWidgetSubTask->Clear();
+
+	ISQuery qSelectSubTask(QS_SUBTASK);
+	qSelectSubTask.BindValue(":TaskID", TaskID);
+	if (qSelectSubTask.Execute())
+	{
+		int Rows = qSelectSubTask.GetCountResultRows();
+		while (qSelectSubTask.Next())
+		{
+			int SubTaskID = qSelectSubTask.ReadColumn("task_id").toInt();
+			QString SubTaskName = qSelectSubTask.ReadColumn("task_name").toString();
+			QString SubTaskDescription = qSelectSubTask.ReadColumn("task_description").toString();
+			ISUuid SubTaskStatusUID = qSelectSubTask.ReadColumn("task_status_uid");
+
+			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetSubTask);
+			ListWidgetItem->setText(QString("#%1: %2").arg(SubTaskID).arg(SubTaskName));
+			ListWidgetItem->setToolTip(SubTaskDescription);
+			ListWidgetItem->setData(Qt::UserRole, SubTaskID);
+			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
+			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, SubTaskStatusUID == CONST_UID_TASK_STATUS_DONE || SubTaskStatusUID == CONST_UID_TASK_STATUS_CLOSE);
+		}
+		GroupBoxSubTask->setTitle(LANG("Task.SubTask.List").arg(Rows));
+		GroupBoxSubTask->setVisible(Rows);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::SubTaskCreate()
 {
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Task");
 	ObjectFormBase->SetFieldValue("Parent", TaskID);
-	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISTaskViewForm::CreatedSubTask);
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISTaskViewForm::SubTaskCreated);
 	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::CreatedSubTask(int task_id)
+void ISTaskViewForm::SubTaskCreated(int task_id)
 {
 	ISGui::ShowTaskViewForm(task_id);
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::SubTaskOpen(QListWidgetItem *ListWidgetItem)
+{
+	ISGui::ShowTaskViewForm(ListWidgetItem->data(Qt::UserRole).toInt());
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::SubTaskOpenParent()
+{
+	ISGui::ShowTaskViewForm(TaskParentID);
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISTaskViewForm::CreateAddButton(const QString &ToolTip)
@@ -722,14 +799,7 @@ void ISTaskViewForm::LinkLoadList()
 			ListWidgetItem->setText(QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName));
 			ListWidgetItem->setToolTip(LANG("Task.LinkToolTip").arg(TaskStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 35));
-
-			//Если связанная задача уже выполнена или закрыта - зачеркиваем шрифт
-			if (TaskStatusUID == CONST_UID_TASK_STATUS_DONE || TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE)
-			{
-				QFont FontItem = ListWidgetItem->font();
-				FontItem.setStrikeOut(true);
-				ListWidgetItem->setFont(FontItem);
-			}
+			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, TaskStatusUID == CONST_UID_TASK_STATUS_DONE || TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE);
 		}
 		TabWidget->setTabText(TabWidget->indexOf(ListWidgetLinks), LANG("Task.LinkTask").arg(qSelectLink.GetCountResultRows()));
 	}

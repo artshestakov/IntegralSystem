@@ -243,6 +243,13 @@ void ISGui::SetFontWidgetStrikeOut(QWidget *Widget, bool StrikeOut)
 	Widget->setFont(Font);
 }
 //-----------------------------------------------------------------------------
+void ISGui::SetFontListWidgetItemStrikeOut(QListWidgetItem *ListWidgetItem, bool StrikeOut)
+{
+	QFont Font = ListWidgetItem->font();
+	Font.setStrikeOut(StrikeOut);
+	ListWidgetItem->setFont(Font);
+}
+//-----------------------------------------------------------------------------
 QFont ISGui::StringToFont(const QString &FontText)
 {
 	return !FontText.isEmpty() ? qvariant_cast<QFont>(FontText) : QApplication::font().toString();
