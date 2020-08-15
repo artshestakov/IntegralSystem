@@ -14,9 +14,10 @@ class ISTaskViewForm : public ISInterfaceForm
 	Q_OBJECT
 
 signals:
-	void Renamed(const QString &NewName);
-	void DescriptionChanged(const QString &NewDescription);
-	void StatusChanged(const ISUuid &NewStatusUID);
+	void Renamed(const QString &NewName); //Сигнал изменения наименования задачи
+	void DescriptionChanged(const QString &NewDescription); //Сигнал изменения описания задачи
+	void StatusChanged(const ISUuid &NewStatusUID); //Сигнал изменения статуса задачи
+	void ConvertedToTask(); //Сигнал преобразования подзадачи в задачу
 
 public:
 	ISTaskViewForm(int task_id, QWidget *parent = 0);
@@ -30,12 +31,13 @@ private:
 	void Reopen(); //Переоткрыть форму
 	void Rename(); //Переименовать задачу
 	void SetDescription(); //Изменить описание
+	void ConvertToTask(); //Преобразовать в задачу
 	void ConvertToSubTask(); //Преобразовать в подзадачу
 	void TaskStatusClicked(); //Событие смены статуса задачи
 	void ShowStatusHistory(); //Показать историю изменения статуса задачи
 
 private:
-	void SubTaskLoad(); //Загрузка списка подзадач
+	void SubTaskLoadList(); //Загрузка списка подзадач
 	void SubTaskCreate(); //Создание подзадачи
 	void SubTaskCreated(int task_id); //Событие успешного создания подзадачи
 	void SubTaskOpen(QListWidgetItem *ListWidgetItem); //Открыть подзадачу

@@ -61,6 +61,10 @@ static QString QU_DESCRIPTION = PREPARE_QUERY("UPDATE _task SET "
 											  "WHERE task_id = :TaskID "
 											  "RETURNING task_updationdate");
 //-----------------------------------------------------------------------------
+static QString QU_CONVERT_TO_TASK = PREPARE_QUERY("UPDATE _task SET "
+												  "task_parent = NULL "
+												  "WHERE task_id = :TaskID");
+//-----------------------------------------------------------------------------
 static QString QS_SUBTASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_parent = :TaskID AND NOT task_isdeleted");
 //-----------------------------------------------------------------------------
 static QString QU_CONVERT_TO_SUBTASK = PREPARE_QUERY("UPDATE _task SET "
@@ -183,7 +187,11 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
 	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
 	ButtonMenu->menu()->addSeparator();
-	if (!TaskParentID)
+	if (TaskParentID)
+	{
+		ButtonMenu->menu()->addAction(LANG("Task.ConvertToTask"), this, &ISTaskViewForm::ConvertToTask);
+	}
+	else
 	{
 		ButtonMenu->menu()->addAction(LANG("Task.ConvertToSubTask"), this, &ISTaskViewForm::ConvertToSubTask);
 		ButtonMenu->menu()->addSeparator();
@@ -283,7 +291,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ListWidgetSubTask->SetMaxVisibleItems(6);
 	GroupBoxSubTask->layout()->addWidget(ListWidgetSubTask);
 	connect(ListWidgetSubTask, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::SubTaskOpen);
-	SubTaskLoad();
+	SubTaskLoadList();
 
 	TabWidget = new QTabWidget(this);
 	TabWidget->setTabsClosable(true);
@@ -503,6 +511,24 @@ void ISTaskViewForm::SetDescription()
 	}
 }
 //-----------------------------------------------------------------------------
+void ISTaskViewForm::ConvertToTask()
+{
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ConvertToTask")))
+	{
+		ISQuery qConvertToTask(QU_CONVERT_TO_TASK);
+		qConvertToTask.BindValue(":TaskID", TaskID);
+		if (qConvertToTask.Execute())
+		{
+			emit ConvertedToTask();
+			Reopen();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.ConvertToTask"), qConvertToTask.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
 void ISTaskViewForm::ConvertToSubTask()
 {
 	//Проверка количества подзадач
@@ -533,16 +559,16 @@ void ISTaskViewForm::ConvertToSubTask()
 		}
 
 		//Преобразование в подзадачу
-		ISQuery qConvertToSubTas(QU_CONVERT_TO_SUBTASK);
-		qConvertToSubTas.BindValue(":TaskParentID", SelectedParentID);
-		qConvertToSubTas.BindValue(":TaskID", TaskID);
-		if (qConvertToSubTas.Execute())
+		ISQuery qConvertToSubTask(QU_CONVERT_TO_SUBTASK);
+		qConvertToSubTask.BindValue(":TaskParentID", SelectedParentID);
+		qConvertToSubTask.BindValue(":TaskID", TaskID);
+		if (qConvertToSubTask.Execute())
 		{
 			Reopen();
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.ConvertToSubTask"), qConvertToSubTas.GetErrorString());
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.ConvertToSubTask"), qConvertToSubTask.GetErrorString());
 		}
 	}
 }
@@ -597,7 +623,7 @@ void ISTaskViewForm::ShowStatusHistory()
 	ListBaseForm->LoadData();
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::SubTaskLoad()
+void ISTaskViewForm::SubTaskLoadList()
 {
 	ListWidgetSubTask->Clear();
 
@@ -636,18 +662,19 @@ void ISTaskViewForm::SubTaskCreate()
 void ISTaskViewForm::SubTaskCreated(int task_id)
 {
 	ISGui::ShowTaskViewForm(task_id);
-	SubTaskLoad();
+	SubTaskLoadList();
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SubTaskOpen(QListWidgetItem *ListWidgetItem)
 {
 	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(ListWidgetItem->data(Qt::UserRole).toInt());
-	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::SubTaskLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::LinkLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::SubTaskLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::LinkLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::SubTaskLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::LinkLoadList);
+	connect(TaskViewForm, &ISTaskViewForm::ConvertedToTask, this, &ISTaskViewForm::SubTaskLoadList);
 	ISGui::ShowTaskViewForm(TaskViewForm);
 }
 //-----------------------------------------------------------------------------
@@ -926,11 +953,12 @@ void ISTaskViewForm::LinkOpen(QListWidgetItem *ListWidgetItem)
 {
 	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(ListWidgetItem->data(Qt::UserRole * 2).toInt());
 	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::LinkLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::SubTaskLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::LinkLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::SubTaskLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::LinkLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::SubTaskLoadList);
+	connect(TaskViewForm, &ISTaskViewForm::ConvertedToTask, this, &ISTaskViewForm::SubTaskLoadList);
 	ISGui::ShowTaskViewForm(TaskViewForm);
 }
 //-----------------------------------------------------------------------------
