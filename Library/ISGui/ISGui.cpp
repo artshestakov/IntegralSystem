@@ -373,7 +373,7 @@ bool ISGui::OpenFolder(const QString &FolderPath)
 //-----------------------------------------------------------------------------
 QString ISGui::ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat)
 {
-	return ConvertDateToString(DateTime.date(), DateFormat) + SYMBOL_SPACE + DateTime.time().toString(TimeFormat);
+	return DateTime.isValid() ? ConvertDateToString(DateTime.date(), DateFormat) + SYMBOL_SPACE + DateTime.time().toString(TimeFormat) : QString();
 }
 //-----------------------------------------------------------------------------
 QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)

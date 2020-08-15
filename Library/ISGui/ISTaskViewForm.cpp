@@ -38,7 +38,7 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _task p ON p.task_id = t.task_parent "
 									   "WHERE t.task_id = :TaskID");
 //-----------------------------------------------------------------------------
-static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_description, tsst_uid AS task_status_uid, task_important "
+static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_description, tsst_uid AS task_status_uid "
 										  "FROM _task "
 										  "LEFT JOIN _taskstatus ON tsst_id = task_status "
 										  "WHERE task_parent = :TaskID "
@@ -168,8 +168,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskPriorityName = qSelect.ReadColumn("task_priority_name").toString();
 	TaskOwner = qSelect.ReadColumn("task_owner").toString();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
-	TaskCreationDate = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
-	TaskUpdationDate = qSelect.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+	TaskCreationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
+	TaskUpdationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_updationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
 
@@ -440,9 +440,9 @@ ISTaskViewForm::~ISTaskViewForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::keyPressEvent(QKeyEvent *KeyEvent)
+void ISTaskViewForm::keyReleaseEvent(QKeyEvent *KeyEvent)
 {
-	ISInterfaceForm::keyPressEvent(KeyEvent);
+	ISInterfaceForm::keyReleaseEvent(KeyEvent);
 	if (KeyEvent->key() == Qt::Key_Alt)
 	{
 		ButtonMenu->animateClick();
@@ -665,12 +665,10 @@ void ISTaskViewForm::SubTaskLoadList()
 			QString SubTaskName = qSelectSubTask.ReadColumn("task_name").toString();
 			QString SubTaskDescription = qSelectSubTask.ReadColumn("task_description").toString();
 			ISUuid SubTaskStatusUID = qSelectSubTask.ReadColumn("task_status_uid");
-			bool SubTaskImportant = qSelectSubTask.ReadColumn("task_important").toBool();
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetSubTask);
 			ListWidgetItem->setText(QString("#%1: %2").arg(SubTaskID).arg(SubTaskName));
 			ListWidgetItem->setToolTip(SubTaskDescription);
-			ListWidgetItem->setIcon(SubTaskImportant ? BUFFER_ICONS("Task.Important.Checked") : QIcon());
 			ListWidgetItem->setData(Qt::UserRole, SubTaskID);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
 			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, SubTaskStatusUID == CONST_UID_TASK_STATUS_DONE || SubTaskStatusUID == CONST_UID_TASK_STATUS_CLOSE);
@@ -728,14 +726,14 @@ void ISTaskViewForm::FileLoadList()
 		while (qSelectFiles.Next())
 		{
 			int ID = qSelectFiles.ReadColumn("tfls_id").toInt();
-			QString CreationDate = qSelectFiles.ReadColumn("tfls_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+			QString CreationDate = ISGui::ConvertDateTimeToString(qSelectFiles.ReadColumn("tfls_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 			QString Name = qSelectFiles.ReadColumn("tfls_name").toString();
 			QString Extension = qSelectFiles.ReadColumn("tfls_extension").toString();
 			qint64 Size = qSelectFiles.ReadColumn("tfls_size").toLongLong();
 			QByteArray Icon = qSelectFiles.ReadColumn("tfls_icon").toByteArray();
 			QString UserFullName = qSelectFiles.ReadColumn("userfullname").toString();
 
-			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_32_32), Name, ID, Extension, Size, CreationDate, UserFullName);
+			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_32_32), Name, ID, Extension, Size, UserFullName, CreationDate);
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetFiles);
 			ListWidgetItem->setSizeHint(Widget->sizeHint());
 			ListWidgetFiles->setItemWidget(ListWidgetItem, Widget);
@@ -912,7 +910,7 @@ void ISTaskViewForm::LinkLoadList()
 			QString LinkTaskName = qSelectLink.ReadColumn("task_name").toString();
 			QString LinkTaskDescription = qSelectLink.ReadColumn("task_description").toString();
 			QString LinkUser = qSelectLink.ReadColumn("userfullname").toString();
-			QString LinkCreationDate = qSelectLink.ReadColumn("tlnk_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+			QString LinkCreationDate = ISGui::ConvertDateTimeToString(qSelectLink.ReadColumn("tlnk_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 			ISUuid TaskStatusUID = qSelectLink.ReadColumn("task_status_uid");
 			QString TaskStatusName = qSelectLink.ReadColumn("task_status_name").toString();
 			QString TaskStatusIcon = qSelectLink.ReadColumn("task_status_icon").toString();
@@ -1086,7 +1084,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentDelete);
 	LayoutBottom->addWidget(LabelDelete);
 
-	LayoutBottom->addWidget(new QLabel(DateTime.toString(FORMAT_DATE_TIME_V10), WidgetBottom));
+	LayoutBottom->addWidget(new QLabel(ISGui::ConvertDateTimeToString(DateTime, FORMAT_DATE_V4, FORMAT_TIME_V3), WidgetBottom));
 
 	LayoutBottom->addStretch();
 

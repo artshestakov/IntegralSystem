@@ -24,7 +24,7 @@ public:
 	virtual ~ISTaskViewForm();
 
 protected:
-	void keyPressEvent(QKeyEvent *KeyEvent);
+	void keyReleaseEvent(QKeyEvent *KeyEvent);
 	void EscapeClicked() override;
 
 private:
