@@ -1,6 +1,8 @@
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-ISListWidget::ISListWidget(QWidget *parent) : QListWidget(parent)
+ISListWidget::ISListWidget(QWidget *parent)
+	: QListWidget(parent),
+	MaxVisibleItems(0)
 {
 
 }
@@ -57,6 +59,12 @@ void ISListWidget::SetFontItem(int Row, const QFont &Font)
 	item(Row)->setFont(Font);
 }
 //-----------------------------------------------------------------------------
+void ISListWidget::SetMaxVisibleItems(int max_visible_items)
+{
+	MaxVisibleItems = max_visible_items;
+
+}
+//-----------------------------------------------------------------------------
 QListWidgetItem* ISListWidget::BeginItem()
 {
 	if (item(0))
@@ -75,5 +83,24 @@ QListWidgetItem* ISListWidget::LastItem()
 	}
 
 	return nullptr;
+}
+//-----------------------------------------------------------------------------
+void ISListWidget::paintEvent(QPaintEvent *PaintEvent)
+{
+	QListWidget::paintEvent(PaintEvent);
+	if (MaxVisibleItems > 0 && count())
+	{
+		int Height = 0, LastHeight = 0;
+		for (int i = 0; i < MaxVisibleItems; ++i) //Обходим все элементы
+		{
+			QListWidgetItem *ListWidgetItem = item(i); //Получаем текущий элемент
+			if (ListWidgetItem) //Элемент получен - запоминаем его размер
+			{
+				LastHeight = ListWidgetItem->sizeHint().height();
+			}
+			Height += LastHeight;
+		}
+		setFixedHeight(Height);
+	}
 }
 //-----------------------------------------------------------------------------

@@ -20,7 +20,15 @@ public:
 	void SetFontItems(const QFont &Font);
 	void SetFontItem(int Row, const QFont &Font);
 
+	void SetMaxVisibleItems(int max_visible_items);
+
 	QListWidgetItem* BeginItem(); //Получить первый элемент
 	QListWidgetItem* LastItem(); //Получить последний элемент
+
+protected:
+	void paintEvent(QPaintEvent *PaintEvent);
+
+private:
+	int MaxVisibleItems;
 };
 //-----------------------------------------------------------------------------
