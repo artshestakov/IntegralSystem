@@ -150,6 +150,7 @@
   <Local Name="Message.Error.SelectSubTaskCount" Russian="Не удалось получить количество подзадач!"/>
   <Local Name="Message.Error.ConvertToSubTask" Russian="Не удалось преобразовать задачу в подзадачу!"/>
   <Local Name="Message.Error.ConvertToTask" Russian="Не удалось преобразовать подзадачу в задачу!"/>
+  <Local Name="Message.Error.CloneTask" Russian="Не удалось клонировать задачу!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -275,6 +276,8 @@
   <Local Name="Message.Question.DeleteTaskLink" Russian="Удалить связь? Это действие нельзя отменить."/>
   <Local Name="Message.Question.TaskFileSave" Russian="Сохранить файл?"/>
   <Local Name="Message.Question.DeleteTaskFile" Russian="Удалить файл? Это действие нельзя отменить."/>
+  <Local Name="Message.Question.CloneTask" Russian="Клонировать задачу?"/>
+  <Local Name="Message.Question.CloneSubTask" Russian="Клонировать подзадачу?"/>
   <Local Name="Message.Question.ConvertToTask" Russian="Преобразовать в задачу?"/>
   
   <!--Carat error-->
@@ -867,6 +870,8 @@
   <Local Name="Task.SetDescription" Russian="Изменить описание"/>
   <Local Name="Task.SetDescription.Title" Russian="Изменение описания"/>
   <Local Name="Task.SetDescription.LabelText" Russian="Введите новое описание задачи:"/>
+  <Local Name="Task.CloneTask" Russian="Клонировать задачу"/>
+  <Local Name="Task.CloneSubTask" Russian="Клонировать подзадачу"/>
   <Local Name="Task.ConvertToTask" Russian="Преобразовать в задачу"/>
   <Local Name="Task.ConvertToSubTask" Russian="Преобразовать в подзадачу"/>
   <Local Name="Task.Process.ToolTip" Russian="Нажмите, чтобы изменить статус задачи"/>

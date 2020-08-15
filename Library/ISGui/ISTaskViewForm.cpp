@@ -14,6 +14,7 @@
 #include "ISSystem.h"
 #include "ISListBaseForm.h"
 #include "ISDatabase.h"
+#include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "
@@ -186,6 +187,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
 	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Copy"), LANG(TaskParentID ? "Task.CloneSubTask" : "Task.CloneTask"), this, &ISTaskViewForm::CloneTask);
 	ButtonMenu->menu()->addSeparator();
 	if (TaskParentID)
 	{
@@ -507,6 +509,31 @@ void ISTaskViewForm::SetDescription()
 		else
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.SetDescriptionTask"), qSetDescription.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::CloneTask()
+{
+	if (ISMessageBox::ShowQuestion(this, LANG(TaskParentID ? "Message.Question.CloneSubTask" : "Message.Question.CloneTask")))
+	{
+		QString Fields;
+		PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable("_Task");
+		for (PMetaField *MetaField : MetaTable->Fields)
+		{
+			Fields += MetaTable->Alias + '_' + MetaField->Name + ',';
+		}
+		Fields.chop(1);
+
+		ISQuery qInsertClone(QString("INSERT INTO _task(%1) SELECT %1 FROM _task WHERE task_id = :TaskID RETURNING task_id").arg(Fields));
+		qInsertClone.BindValue(":TaskID", TaskID);
+		if (qInsertClone.ExecuteFirst())
+		{
+			ISGui::ShowTaskViewForm(qInsertClone.ReadColumn("task_id").toInt());
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.CloneTask"), qInsertClone.GetErrorString());
 		}
 	}
 }
