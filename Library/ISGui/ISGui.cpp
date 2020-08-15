@@ -561,8 +561,15 @@ bool ISGui::CheckSetupTelephony()
 //-----------------------------------------------------------------------------
 void ISGui::ShowTaskViewForm(int TaskID)
 {
-	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(TaskID);
-	TaskViewForm->showMaximized();
+	ShowTaskViewForm(new ISTaskViewForm(TaskID));
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowTaskViewForm(QWidget *TaskViewForm)
+{
+	if (TaskViewForm)
+	{
+		TaskViewForm->showMaximized();
+	}
 }
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)

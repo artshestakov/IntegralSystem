@@ -13,6 +13,11 @@ class ISTaskViewForm : public ISInterfaceForm
 {
 	Q_OBJECT
 
+signals:
+	void Renamed(const QString &NewName);
+	void DescriptionChanged(const QString &NewDescription);
+	void StatusChanged(const ISUuid &NewStatusUID);
+
 public:
 	ISTaskViewForm(int task_id, QWidget *parent = 0);
 	virtual ~ISTaskViewForm();

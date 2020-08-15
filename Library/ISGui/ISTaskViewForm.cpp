@@ -134,6 +134,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskParentID(0)
 {
 	setWindowIcon(BUFFER_ICONS("Task"));
+	resize(800, 600);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	//Запрашиваем информацию по задаче
@@ -451,6 +452,7 @@ void ISTaskViewForm::Rename()
 
 			LabelName->setText(QString("#%1: %2").arg(TaskID).arg(TaskName));
 			LabelUpdationDate->setText(TaskUpdationDate);
+			emit Renamed(TaskName);
 		}
 		else
 		{
@@ -474,6 +476,7 @@ void ISTaskViewForm::SetDescription()
 
 			LabelDescription->setText(TaskDescription.isEmpty() ? LANG("Task.Description.Empty") : TaskDescription);
 			LabelUpdationDate->setText(TaskUpdationDate);
+			emit DescriptionChanged(TaskDescription);
 		}
 		else
 		{
@@ -507,6 +510,7 @@ void ISTaskViewForm::TaskStatusClicked()
 		ButtonProcess->setText(TaskStatusName);
 		ButtonProcess->setStyleSheet(STYLE_SHEET(qUpdateStatus.ReadColumn("tsst_stylesheet").toString()));
 		LabelStatus->setText(TaskStatusName);
+		emit StatusChanged(TaskStatusUID);
 
 		ISQuery qInsertStatusHistory(QI_STATUS_HISTORY);
 		qInsertStatusHistory.BindValue(":TaskID", TaskID);
@@ -575,7 +579,14 @@ void ISTaskViewForm::SubTaskCreated(int task_id)
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SubTaskOpen(QListWidgetItem *ListWidgetItem)
 {
-	ISGui::ShowTaskViewForm(ListWidgetItem->data(Qt::UserRole).toInt());
+	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(ListWidgetItem->data(Qt::UserRole).toInt());
+	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::LinkLoadList);
+	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::LinkLoadList);
+	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::LinkLoadList);
+	ISGui::ShowTaskViewForm(TaskViewForm);
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SubTaskOpenParent()
@@ -851,7 +862,14 @@ void ISTaskViewForm::LinkAdd()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LinkOpen(QListWidgetItem *ListWidgetItem)
 {
-	ISGui::ShowTaskViewForm(ListWidgetItem->data(Qt::UserRole * 2).toInt());
+	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(ListWidgetItem->data(Qt::UserRole * 2).toInt());
+	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::LinkLoadList);
+	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::LinkLoadList);
+	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::SubTaskLoad);
+	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::LinkLoadList);
+	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::SubTaskLoad);
+	ISGui::ShowTaskViewForm(TaskViewForm);
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LinkDelete()
