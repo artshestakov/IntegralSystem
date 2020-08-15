@@ -191,7 +191,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addSeparator();
 	if (TaskParentID)
 	{
-		ButtonMenu->menu()->addAction(LANG("Task.ConvertToTask"), this, &ISTaskViewForm::ConvertToTask);
+		ButtonMenu->menu()->addAction(LANG("Task.ConvertToTask"), this, &ISTaskViewForm::ConvertThisToTask);
 	}
 	else
 	{
@@ -290,10 +290,28 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ListWidgetSubTask = new ISListWidget(GroupBoxSubTask);
 	ListWidgetSubTask->setAlternatingRowColors(true);
 	ListWidgetSubTask->setFrameShape(QFrame::NoFrame);
+	ListWidgetSubTask->setContextMenuPolicy(Qt::ActionsContextMenu);
 	ListWidgetSubTask->SetMaxVisibleItems(6);
 	GroupBoxSubTask->layout()->addWidget(ListWidgetSubTask);
 	connect(ListWidgetSubTask, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::SubTaskOpen);
 	SubTaskLoadList();
+
+	QAction *ActionConvertToTask = new QAction(LANG("Task.ConvertToTask"), ListWidgetSubTask);
+	ActionConvertToTask->setEnabled(false);
+	connect(ActionConvertToTask, &QAction::triggered, this, &ISTaskViewForm::ConvertListSubTaskToTask);
+	ListWidgetSubTask->addAction(ActionConvertToTask);
+
+	connect(ListWidgetSubTask, &ISListWidget::itemSelectionChanged, [=]
+	{
+		if (ListWidgetSubTask->count())
+		{
+			ActionConvertToTask->setEnabled(ListWidgetSubTask->currentItem());
+		}
+		else
+		{
+			ActionConvertToTask->setEnabled(false);
+		}
+	});
 
 	TabWidget = new QTabWidget(this);
 	TabWidget->setTabsClosable(true);
@@ -538,22 +556,40 @@ void ISTaskViewForm::CloneTask()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::ConvertToTask()
+void ISTaskViewForm::ConvertThisToTask()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ConvertToTask")))
+	if (ConvertToTask(TaskID))
+	{
+		Reopen();
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::ConvertListSubTaskToTask()
+{
+	if (ConvertToTask(ListWidgetSubTask->currentItem()->data(Qt::UserRole).toInt()))
+	{
+		SubTaskLoadList();
+	}
+}
+//-----------------------------------------------------------------------------
+bool ISTaskViewForm::ConvertToTask(int task_id)
+{
+	bool Result = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ConvertToTask"));
+	if (Result)
 	{
 		ISQuery qConvertToTask(QU_CONVERT_TO_TASK);
-		qConvertToTask.BindValue(":TaskID", TaskID);
-		if (qConvertToTask.Execute())
+		qConvertToTask.BindValue(":TaskID", task_id);
+		Result = qConvertToTask.Execute();
+		if (Result)
 		{
 			emit ConvertedToTask();
-			Reopen();
 		}
 		else
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.ConvertToTask"), qConvertToTask.GetErrorString());
 		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::ConvertToSubTask()

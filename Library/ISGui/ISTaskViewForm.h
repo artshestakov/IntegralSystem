@@ -32,7 +32,9 @@ private:
 	void Rename(); //Переименовать задачу
 	void SetDescription(); //Изменить описание
 	void CloneTask(); //Клонировать задачу
-	void ConvertToTask(); //Преобразовать в задачу
+	void ConvertThisToTask(); //Преобразовать эту подзадачу в задачу
+	void ConvertListSubTaskToTask(); //Преобразовать подзадачу из списка в задачу
+	bool ConvertToTask(int task_id); //Преобразовать подзадачу в задачу
 	void ConvertToSubTask(); //Преобразовать в подзадачу
 	void TaskStatusClicked(); //Событие смены статуса задачи
 	void ShowStatusHistory(); //Показать историю изменения статуса задачи
