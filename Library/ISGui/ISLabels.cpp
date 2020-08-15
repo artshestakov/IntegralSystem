@@ -10,7 +10,8 @@
 ISQLabel::ISQLabel(const QString &Text, bool is_linked, QWidget *parent)
 	: QLabel(Text, parent),
 	IsLinked(is_linked),
-	FocusPolicyDefault(focusPolicy())
+	FocusPolicyDefault(focusPolicy()),
+	Elided(false)
 {
 	if (is_linked)
 	{
@@ -44,6 +45,11 @@ void ISQLabel::SetIsLinked(bool is_linked)
 	setFocusPolicy(IsLinked ? Qt::StrongFocus : FocusPolicyDefault);
 	setStyleSheet(IsLinked ? STYLE_SHEET("ISLabelLink") : QString());
 	setCursor(IsLinked ? CURSOR_POINTING_HAND : CURSOR_ARROW);
+}
+//-----------------------------------------------------------------------------
+void ISQLabel::SetElided(bool elided)
+{
+	Elided = elided;
 }
 //-----------------------------------------------------------------------------
 void ISQLabel::mouseReleaseEvent(QMouseEvent *MouseEvent)
@@ -88,6 +94,17 @@ void ISQLabel::leaveEvent(QEvent *Event)
 	if (IsLinked)
 	{
 		ISGui::SetFontWidgetUnderline(this, !isEnabled());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISQLabel::resizeEvent(QResizeEvent *ResizeEvent)
+{
+	QLabel::resizeEvent(ResizeEvent);
+	if (Elided)
+	{
+		QString NewText = QFontMetrics(font()).elidedText(text(), Qt::ElideRight, width());
+		setText(NewText);
+		setToolTip(NewText.right(3) == "..." ? NewText : QString());
 	}
 }
 //-----------------------------------------------------------------------------

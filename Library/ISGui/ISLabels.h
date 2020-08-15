@@ -20,6 +20,7 @@ public:
 	virtual ~ISQLabel();
 
 	void SetIsLinked(bool is_linked);
+	void SetElided(bool elided);
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *MouseEvent);
@@ -27,10 +28,12 @@ protected:
 	void keyPressEvent(QKeyEvent *KeyEvent);
 	void enterEvent(QEvent *Event);
 	void leaveEvent(QEvent *Event);
+	void resizeEvent(QResizeEvent *ResizeEvent);
 
 private:
-	bool IsLinked;
-	Qt::FocusPolicy FocusPolicyDefault;
+	bool IsLinked; //Label будет отображаться как кликабельная ссылка
+	Qt::FocusPolicy FocusPolicyDefault; //Шрифт по умолчанию
+	bool Elided; //Текст, которые не помещается, будет укорачиваться за счёт троеточия
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
