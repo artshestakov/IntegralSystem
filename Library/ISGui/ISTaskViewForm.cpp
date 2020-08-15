@@ -172,7 +172,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	{
 		ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::CreateSubTask);
 	}
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddFile"), this, &ISTaskViewForm::FileAdd);
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.AddLink"), this, &ISTaskViewForm::LinkAdd);
 	LayoutTitle->addWidget(ButtonMenu);
 
@@ -258,36 +257,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
 	TabWidget->tabBar()->setTabButton(TreeWidgetCommentIndex, QTabBar::RightSide, ButtonAddComment);
 
-	//GroupBoxFiles = new QGroupBox(LANG("Task.Files"), this);
-	//LayoutLeft->addWidget(GroupBoxFiles);
+	ListWidgetFiles = new ISListWidget(TabWidget);
+	ListWidgetFiles->setAlternatingRowColors(true);
+	ListWidgetFilesIndex = TabWidget->addTab(ListWidgetFiles, BUFFER_ICONS("Document"), LANG("Task.Files").arg(0));
+	FileLoadList();
 
-	//QVBoxLayout *LayoutFiles = new QVBoxLayout();
-	//LayoutFiles->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-	//GroupBoxFiles->setLayout(LayoutFiles);
-
-	//ListWidgetFiles = new ISListWidget(GroupBoxFiles);
-	//ListWidgetFiles->setSizePolicy(ListWidgetFiles->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
-	//ListWidgetFiles->setContextMenuPolicy(Qt::ActionsContextMenu);
-	//LayoutFiles->addWidget(ListWidgetFiles);
-
-	//QAction *ActionFileSave = ISControls::CreateActionSave(ListWidgetFiles);
-	//ActionFileSave->setEnabled(false);
-	//connect(ActionFileSave, &QAction::triggered, this, &ISTaskViewForm::FileSave);
-	//ListWidgetFiles->addAction(ActionFileSave);
-
-	//QAction *ActionFileDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), ListWidgetFiles);
-	//ActionFileDelete->setEnabled(false);
-	//connect(ActionFileDelete, &QAction::triggered, this, &ISTaskViewForm::FileDelete);
-	//ListWidgetFiles->addAction(ActionFileDelete);
-	
-	//connect(ListWidgetFiles, &ISListWidget::itemSelectionChanged, [=]
-	//{
-	//	bool is_enabled = ListWidgetFiles->currentItem();
-	//	ActionFileSave->setEnabled(is_enabled);
-	//	ActionFileDelete->setEnabled(is_enabled);
-	//});
-
-	//FileLoadList();
+	QToolButton *ButtonAddFile = CreateAddButton(LANG("Task.AddFile"));
+	connect(ButtonAddFile, &QToolButton::clicked, this, &ISTaskViewForm::FileAdd);
+	TabWidget->tabBar()->setTabButton(ListWidgetFilesIndex, QTabBar::RightSide, ButtonAddFile);
 
 	//GroupBoxLinkTask = new QGroupBox(LANG("Task.LinkTask"), this);
 	//GroupBoxLinkTask->setLayout(new QVBoxLayout());
@@ -519,6 +496,7 @@ void ISTaskViewForm::FileLoadList()
 	qSelectFiles.BindValue(":TaskID", TaskID);
 	if (qSelectFiles.Execute())
 	{
+		int Rows = qSelectFiles.GetCountResultRows();
 		while (qSelectFiles.Next())
 		{
 			int ID = qSelectFiles.ReadColumn("tfls_id").toInt();
@@ -527,18 +505,62 @@ void ISTaskViewForm::FileLoadList()
 			QString Extension = qSelectFiles.ReadColumn("tfls_extension").toString();
 			qint64 Size = qSelectFiles.ReadColumn("tfls_size").toLongLong();
 			QByteArray Icon = qSelectFiles.ReadColumn("tfls_icon").toByteArray();
-			QString UserFullname = qSelectFiles.ReadColumn("userfullname").toString();
+			QString UserFullName = qSelectFiles.ReadColumn("userfullname").toString();
 
+			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_32_32), Name, ID, Extension, Size, CreationDate, UserFullName);
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetFiles);
-			ListWidgetItem->setText(Name);
-			ListWidgetItem->setIcon(ISGui::ByteArrayToIcon(Icon));
-			ListWidgetItem->setToolTip(LANG("Task.FileToolTip").arg(UserFullname).arg(CreationDate).arg(ISSystem::FileSizeFromString(Size)));
-			ListWidgetItem->setData(Qt::UserRole, ID);
-			ListWidgetItem->setData(Qt::UserRole * 2, Extension);
-			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
+			ListWidgetItem->setSizeHint(Widget->sizeHint());
+			ListWidgetFiles->setItemWidget(ListWidgetItem, Widget);
 		}
-		GroupBoxFiles->setVisible(qSelectFiles.GetCountResultRows());
+		TabWidget->setTabText(ListWidgetFilesIndex, LANG("Task.Files").arg(Rows));
 	}
+}
+//-----------------------------------------------------------------------------
+QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QString &CreationDate)
+{
+	QHBoxLayout *LayoutWidget = new QHBoxLayout();
+	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
+
+	QWidget *Widget = new QWidget(ListWidgetFiles);
+	Widget->setLayout(LayoutWidget);
+
+	QLabel *LabelPixmap = new QLabel(Widget);
+	LabelPixmap->setPixmap(Pixmap);
+	LayoutWidget->addWidget(LabelPixmap);
+
+	QVBoxLayout *Layout = new QVBoxLayout();
+	LayoutWidget->addLayout(Layout);
+
+	QLabel *LabelName = new QLabel(Name, Widget);
+	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	ISGui::SetFontWidgetBold(LabelName, true);
+	Layout->addWidget(LabelName);
+	
+	Layout->addWidget(new QLabel(LANG("Task.File.Size").arg(ISSystem::FileSizeFromString(Size)), Widget));
+
+	QHBoxLayout *LayoutBottom = new QHBoxLayout();
+	Layout->addLayout(LayoutBottom);
+
+	ISQLabel *LabelSave = new ISQLabel(LANG("Save"), true, Widget);
+	LabelSave->setProperty("ID", FileID);
+	LabelSave->setProperty("Name", Name);
+	LabelSave->setProperty("Extension", Extension);
+	connect(LabelSave, &ISQLabel::Clicked, this, &ISTaskViewForm::FileSave);
+	LayoutBottom->addWidget(LabelSave);
+
+	ISQLabel *LabelDelete = new ISQLabel(LANG("Delete"), true, Widget);
+	LabelDelete->setProperty("ID", FileID);
+	connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::FileDelete);
+	LayoutBottom->addWidget(LabelDelete);
+
+	LayoutBottom->addWidget(ISControls::CreateVerticalLine(Widget));
+	LayoutBottom->addWidget(new QLabel(LANG("Task.File.UserFullName").arg(UserFullName), Widget));
+	LayoutBottom->addWidget(ISControls::CreateVerticalLine(Widget));
+	LayoutBottom->addWidget(new QLabel(LANG("Task.File.CreationDate").arg(CreationDate), Widget));
+
+	LayoutWidget->addStretch();
+
+	return Widget;
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::FileAdd()
@@ -598,10 +620,9 @@ void ISTaskViewForm::FileAdd()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::FileSave()
 {
-	QListWidgetItem *ListWidgetItem = ListWidgetFiles->currentItem();
-	int ID = ListWidgetItem->data(Qt::UserRole).toInt();
-	QString Name = ListWidgetItem->text();
-	QString Extension = ListWidgetItem->data(Qt::UserRole * 2).toString();
+	int ID = sender()->property("ID").toInt();
+	QString Name = sender()->property("Name").toString();
+	QString Extension = sender()->property("Extension").toString();
 
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskFileSave")))
 	{
@@ -636,7 +657,7 @@ void ISTaskViewForm::FileDelete()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskFile")))
 	{
 		ISQuery qDeleteFile(QD_FILE);
-		qDeleteFile.BindValue(":TaskFileID", ListWidgetFiles->currentItem()->data(Qt::UserRole));
+		qDeleteFile.BindValue(":TaskFileID", sender()->property("ID"));
 		if (qDeleteFile.Execute())
 		{
 			FileLoadList();

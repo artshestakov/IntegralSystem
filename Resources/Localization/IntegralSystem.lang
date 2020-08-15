@@ -824,13 +824,16 @@
   <Local Name="Task.ViewFormTitle.SubTask" Russian="Подзадача #%1: %2"/>
   <Local Name="Task.Description" Russian="Описание задачи"/>
   <Local Name="Task.Description.Empty" Russian="Описание отсутствует"/>
-  <Local Name="Task.Files" Russian="Файлы"/>
+  <Local Name="Task.Files" Russian="Файлы (%1)"/>
   <Local Name="Task.LinkTask" Russian="Связанные задачи"/>
   <Local Name="Task.Comments" Russian="Комментарии (%1)"/>
   <Local Name="Task.Comment" Russian="Комментарий"/>
   <Local Name="Task.AddFile" Russian="Добавить файл"/>
   <Local Name="Task.AddFile.LabelText" Russian="Добавление файла: %1"/>
-  <Local Name="Task.FileToolTip" Russian="Добавил:&#10;%1&#10;&#10;Дата добавления:&#10;%2&#10;&#10;Размер файла:&#10;%3"/>
+  <Local Name="Task.File.Size" Russian="Размер файла: %1"/>
+  <Local Name="Task.File.UserFullName" Russian="Добавил: %1"/>
+  <Local Name="Task.File.CreationDate" Russian="Дата добавления: %1"/>
+  <Local Name="Task.FileToolTip" Russian="Добавил: %1 Дата добавления: %2 Размер файла: %3"/>
   <Local Name="Task.CreateSubTask" Russian="Создать подзадачу"/>
   <Local Name="Task.AddLink" Russian="Добавить связанную задачу"/>
   <Local Name="Task.AddComment" Russian="Добавить комментарий"/>

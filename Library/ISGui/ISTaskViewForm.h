@@ -33,6 +33,7 @@ private:
 
 private:
 	void FileLoadList();
+	QWidget* FileCreateWidget(const QPixmap &Pixmap, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QString &CreationDate);
 	void FileAdd();
 	void FileSave();
 	void FileDelete();
@@ -59,8 +60,8 @@ private:
 	QTabWidget *TabWidget;
 	QTreeWidget *TreeWidgetComment;
 	int TreeWidgetCommentIndex;
-	QGroupBox *GroupBoxFiles;
 	ISListWidget *ListWidgetFiles;
+	int ListWidgetFilesIndex;
 	QGroupBox *GroupBoxLinkTask;
 	std::vector<ISLabelPixmapText*> VectorLinks;
 	QVBoxLayout *LayoutRight;
