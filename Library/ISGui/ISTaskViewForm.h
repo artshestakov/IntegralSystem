@@ -21,12 +21,13 @@ protected:
 	void EscapeClicked() override;
 
 private:
-	void Reopen();
-	void Rename();
-	void SetDescription();
-	void TaskStatusClicked();
-	void ShowStatusHistory();
-	void CreateSubTask();
+	void Reopen(); //Переоткрыть форму
+	void Rename(); //Переименовать задачу
+	void SetDescription(); //Изменить описание
+	void TaskStatusClicked(); //Событие смены статуса задачи
+	void ShowStatusHistory(); //Показать историю изменения статуса задачи
+	void CreateSubTask(); //Создание подзадачи
+	void CreatedSubTask(int task_id); //Событие успешного создания подзадачи
 
 private:
 	QToolButton* CreateAddButton(const QString &ToolTip);

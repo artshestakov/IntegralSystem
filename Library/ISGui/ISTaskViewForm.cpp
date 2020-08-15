@@ -495,7 +495,13 @@ void ISTaskViewForm::CreateSubTask()
 {
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Task");
 	ObjectFormBase->SetFieldValue("Parent", TaskID);
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISTaskViewForm::CreatedSubTask);
 	ISGui::ShowObjectForm(ObjectFormBase);
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::CreatedSubTask(int task_id)
+{
+	ISGui::ShowTaskViewForm(task_id);
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISTaskViewForm::CreateAddButton(const QString &ToolTip)
