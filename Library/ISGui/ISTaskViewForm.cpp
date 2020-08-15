@@ -13,6 +13,7 @@
 #include "ISProgressForm.h"
 #include "ISSystem.h"
 #include "ISListBaseForm.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "
@@ -59,6 +60,12 @@ static QString QU_DESCRIPTION = PREPARE_QUERY("UPDATE _task SET "
 											  "task_updationdate = now() "
 											  "WHERE task_id = :TaskID "
 											  "RETURNING task_updationdate");
+//-----------------------------------------------------------------------------
+static QString QS_SUBTASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_parent = :TaskID AND NOT task_isdeleted");
+//-----------------------------------------------------------------------------
+static QString QU_CONVERT_TO_SUBTASK = PREPARE_QUERY("UPDATE _task SET "
+													 "task_parent = :TaskParentID "
+													 "WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
 static QString QU_STATUS = PREPARE_QUERY("UPDATE _task SET "
 										 "task_status = (SELECT tsst_id FROM _taskstatus WHERE tsst_uid = :StatusUID) "
@@ -178,6 +185,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addSeparator();
 	if (!TaskParentID)
 	{
+		ButtonMenu->menu()->addAction(LANG("Task.ConvertToSubTask"), this, &ISTaskViewForm::ConvertToSubTask);
+		ButtonMenu->menu()->addSeparator();
 		ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::SubTaskCreate);
 	}
 	LayoutTitle->addWidget(ButtonMenu);
@@ -490,6 +499,50 @@ void ISTaskViewForm::SetDescription()
 		else
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.SetDescriptionTask"), qSetDescription.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::ConvertToSubTask()
+{
+	//Проверка количества подзадач
+	ISQuery qSelectSubTask(QS_SUBTASK_COUNT);
+	qSelectSubTask.BindValue(":TaskID", TaskID);
+	if (qSelectSubTask.ExecuteFirst())
+	{
+		if (qSelectSubTask.ReadColumn("count").toInt() > 0)
+		{
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.CurrentTaskHaveSubTasks"));
+			return;
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectSubTaskCount"), qSelectSubTask.GetErrorString());
+	}
+
+	int SelectedParentID = ISGui::SelectObject("_Task");
+	if (SelectedParentID)
+	{
+		//Проверка выбранной задачи на факт подзадачи
+		int ParentID = ISDatabase::Instance().GetValue("_Task", "Parent", SelectedParentID).toInt();
+		if (ParentID)
+		{
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SelectedTaskIsSubTasks"));
+			return;
+		}
+
+		//Преобразование в подзадачу
+		ISQuery qConvertToSubTas(QU_CONVERT_TO_SUBTASK);
+		qConvertToSubTas.BindValue(":TaskParentID", SelectedParentID);
+		qConvertToSubTas.BindValue(":TaskID", TaskID);
+		if (qConvertToSubTas.Execute())
+		{
+			Reopen();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.ConvertToSubTask"), qConvertToSubTas.GetErrorString());
 		}
 	}
 }

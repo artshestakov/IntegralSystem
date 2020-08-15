@@ -147,6 +147,8 @@
   <Local Name="Message.Error.SetIsDeletedObject" Russian="Не удалось пометить запись на удаление!"/>
   <Local Name="Message.Error.SetNotIsDeletedObject" Russian="Не удалось восстановить запись!"/>
   <Local Name="Message.Error.CascadeDeleteObject" Russian="Не удалось удалить запись!"/>
+  <Local Name="Message.Error.SelectSubTaskCount" Russian="Не удалось получить количество подзадач!"/>
+  <Local Name="Message.Error.ConvertToSubTask" Russian="Не удалось преобразовать задачу в подзадачу!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -225,6 +227,8 @@
   <Local Name="Message.Warning.TaskLinkToByMyself" Russian="Связывание задачи с самой собой запрещено!"/>
   <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Связь с выбранной задачей уже существует!"/>
   <Local Name="Message.Warning.LoginAlreadyExist" Russian="Логин &quot;%1&quot; уже существует в системе, введите другой."/>
+  <Local Name="Message.Warning.CurrentTaskHaveSubTasks" Russian="Вы не можете преобразовать эту задачу в подзадачу, т.к. она имеет подзадачи."/>
+  <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Question.SaveObject" Russian="Сохранить объект?"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
@@ -861,6 +865,7 @@
   <Local Name="Task.SetDescription" Russian="Изменить описание"/>
   <Local Name="Task.SetDescription.Title" Russian="Изменение описания"/>
   <Local Name="Task.SetDescription.LabelText" Russian="Введите новое описание задачи:"/>
+  <Local Name="Task.ConvertToSubTask" Russian="Преобразовать в подзадачу"/>
   <Local Name="Task.Process.ToolTip" Russian="Нажмите, чтобы изменить статус задачи"/>
   <Local Name="Task.Process.History" Russian="История"/>
   <Local Name="Task.Process.History.Title" Russian="История изменения статуса задачи: %1"/>

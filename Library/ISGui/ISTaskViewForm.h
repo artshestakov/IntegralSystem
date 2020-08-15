@@ -30,6 +30,7 @@ private:
 	void Reopen(); //Переоткрыть форму
 	void Rename(); //Переименовать задачу
 	void SetDescription(); //Изменить описание
+	void ConvertToSubTask(); //Преобразовать в подзадачу
 	void TaskStatusClicked(); //Событие смены статуса задачи
 	void ShowStatusHistory(); //Показать историю изменения статуса задачи
 
