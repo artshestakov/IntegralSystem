@@ -263,13 +263,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	GroupBoxSubTask = new QGroupBox(LANG("Task.SubTask.List").arg(0), this);
 	GroupBoxSubTask->setLayout(new QVBoxLayout());
-	GroupBoxSubTask->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	GroupBoxSubTask->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_1_PX);
 	GroupBoxSubTask->setSizePolicy(GroupBoxSubTask->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	LayoutLeft->addWidget(GroupBoxSubTask);
 
 	ListWidgetSubTask = new ISListWidget(GroupBoxSubTask);
 	ListWidgetSubTask->setAlternatingRowColors(true);
 	ListWidgetSubTask->setFrameShape(QFrame::NoFrame);
+	ListWidgetSubTask->SetMaxVisibleItems(6);
 	GroupBoxSubTask->layout()->addWidget(ListWidgetSubTask);
 	connect(ListWidgetSubTask, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::SubTaskOpen);
 	SubTaskLoad();
@@ -569,6 +570,7 @@ void ISTaskViewForm::SubTaskCreate()
 void ISTaskViewForm::SubTaskCreated(int task_id)
 {
 	ISGui::ShowTaskViewForm(task_id);
+	SubTaskLoad();
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SubTaskOpen(QListWidgetItem *ListWidgetItem)

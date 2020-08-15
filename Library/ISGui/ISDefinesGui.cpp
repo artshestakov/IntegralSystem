@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 QStringList ISDefines::Gui::AVIABLE_IMAGE_EXTENSION;
 QMargins ISDefines::Gui::MARGINS_LAYOUT_NULL;
+QMargins ISDefines::Gui::MARGINS_LAYOUT_1_PX;
 QMargins ISDefines::Gui::MARGINS_LAYOUT_2_PX;
 QMargins ISDefines::Gui::MARGINS_LAYOUT_4_PX;
 QMargins ISDefines::Gui::MARGINS_LAYOUT_5_PX;
@@ -65,6 +66,7 @@ void ISDefines::Gui::Init()
 {
 	AVIABLE_IMAGE_EXTENSION = QStringList() << EXTENSION_PNG << EXTENSION_JPEG << EXTENSION_JPG << EXTENSION_DDS << EXTENSION_GIF << EXTENSION_ICNS << EXTENSION_ICO << EXTENSION_SVG << EXTENSION_TGA << EXTENSION_TIFF << EXTENSION_WBMP << EXTENSION_BMP << EXTENSION_WEBP;
 	MARGINS_LAYOUT_NULL = QMargins();
+	MARGINS_LAYOUT_1_PX = QMargins(1, 1, 1, 1);
 	MARGINS_LAYOUT_2_PX = QMargins(2, 2, 2, 2);
 	MARGINS_LAYOUT_4_PX = QMargins(4, 4, 4, 4);
 	MARGINS_LAYOUT_5_PX = QMargins(5, 5, 5, 5);

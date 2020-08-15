@@ -14,6 +14,7 @@ namespace ISDefines
 
 		static QStringList AVIABLE_IMAGE_EXTENSION;
 		static QMargins MARGINS_LAYOUT_NULL;
+		static QMargins MARGINS_LAYOUT_1_PX;
 		static QMargins MARGINS_LAYOUT_2_PX;
 		static QMargins MARGINS_LAYOUT_4_PX;
 		static QMargins MARGINS_LAYOUT_5_PX;
