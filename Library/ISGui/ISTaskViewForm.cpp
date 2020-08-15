@@ -38,7 +38,7 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _task p ON p.task_id = t.task_parent "
 									   "WHERE t.task_id = :TaskID");
 //-----------------------------------------------------------------------------
-static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_description, tsst_uid AS task_status_uid "
+static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_description, tsst_uid AS task_status_uid, task_important "
 										  "FROM _task "
 										  "LEFT JOIN _taskstatus ON tsst_id = task_status "
 										  "WHERE task_parent = :TaskID "
@@ -665,10 +665,12 @@ void ISTaskViewForm::SubTaskLoadList()
 			QString SubTaskName = qSelectSubTask.ReadColumn("task_name").toString();
 			QString SubTaskDescription = qSelectSubTask.ReadColumn("task_description").toString();
 			ISUuid SubTaskStatusUID = qSelectSubTask.ReadColumn("task_status_uid");
+			bool SubTaskImportant = qSelectSubTask.ReadColumn("task_important").toBool();
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetSubTask);
 			ListWidgetItem->setText(QString("#%1: %2").arg(SubTaskID).arg(SubTaskName));
 			ListWidgetItem->setToolTip(SubTaskDescription);
+			ListWidgetItem->setIcon(SubTaskImportant ? BUFFER_ICONS("Task.Important.Checked") : QIcon());
 			ListWidgetItem->setData(Qt::UserRole, SubTaskID);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
 			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, SubTaskStatusUID == CONST_UID_TASK_STATUS_DONE || SubTaskStatusUID == CONST_UID_TASK_STATUS_CLOSE);
@@ -682,14 +684,8 @@ void ISTaskViewForm::SubTaskCreate()
 {
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Task");
 	ObjectFormBase->SetFieldValue("Parent", TaskID);
-	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISTaskViewForm::SubTaskCreated);
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISTaskViewForm::SubTaskLoadList);
 	ISGui::ShowObjectForm(ObjectFormBase);
-}
-//-----------------------------------------------------------------------------
-void ISTaskViewForm::SubTaskCreated(int task_id)
-{
-	ISGui::ShowTaskViewForm(task_id);
-	SubTaskLoadList();
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SubTaskOpen(QListWidgetItem *ListWidgetItem)

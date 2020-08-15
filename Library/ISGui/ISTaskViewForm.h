@@ -40,7 +40,6 @@ private:
 private:
 	void SubTaskLoadList(); //Загрузка списка подзадач
 	void SubTaskCreate(); //Создание подзадачи
-	void SubTaskCreated(int task_id); //Событие успешного создания подзадачи
 	void SubTaskOpen(QListWidgetItem *ListWidgetItem); //Открыть подзадачу
 	void SubTaskOpenParent(); //Открыть родительскую задачу
 
