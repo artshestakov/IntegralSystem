@@ -984,62 +984,65 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNod
 	QDomNode Temp = DomNode;
 	while (!Temp.isNull())
 	{
-		Result = !Temp.attributes().isEmpty();
-		if (!Result)
+		if (!Temp.isComment()) //Если обнаружен комментарий - переходить на следующий НОД
 		{
-			ErrorString = QString("Empty attributes foreign. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
-			break;
+			Result = !Temp.attributes().isEmpty();
+			if (!Result)
+			{
+				ErrorString = QString("Empty attributes foreign. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+				break;
+			}
+
+			Result = Temp.nodeName() == "Foreign";
+			if (!Result)
+			{
+				ErrorString = QString("Invalid foreign tag name: %1").arg(Temp.nodeName());
+				break;
+			}
+
+			QString FieldName = Temp.attributes().namedItem("Field").nodeValue();
+			Result = !FieldName.isEmpty();
+			if (!Result)
+			{
+				ErrorString = QString("Empty foreign field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
+				break;
+			}
+
+			Result = MetaTable->GetField(FieldName) ? true : false;
+			if (!Result)
+			{
+				ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->Name);
+				break;
+			}
+
+			QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
+			PMetaForeign *MetaForeign = new PMetaForeign();
+			MetaForeign->Field = DomNamedNodeMap.namedItem("Field").nodeValue();
+			MetaForeign->ForeignClass = DomNamedNodeMap.namedItem("ForeignClass").nodeValue();
+			MetaForeign->ForeignField = DomNamedNodeMap.namedItem("ForeignField").nodeValue();
+			MetaForeign->ForeignViewNameField = DomNamedNodeMap.namedItem("ForeignViewNameField").nodeValue();
+			MetaForeign->OrderField = DomNamedNodeMap.namedItem("OrderField").nodeValue();
+			MetaForeign->TableName = MetaTable->Name;
+
+			//Проверка наличия поля - на котором делается внешний ключ
+			PMetaField *MetaField = MetaTable->GetField(FieldName);
+			Result = MetaTable ? true : false;
+			if (!Result)
+			{
+				ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->Name);
+				break;
+			}
+
+			//Проверка наличия внешнего ключа на этом поле
+			Result = !MetaField->Foreign;
+			if (!Result)
+			{
+				ErrorString = QString("Foreign already exist. TableName: %1. FieldName: %2.").arg(MetaTable->Name).arg(FieldName);
+				break;
+			}
+
+			MetaField->Foreign = MetaForeign;
 		}
-
-		Result = Temp.nodeName() == "Foreign";
-		if (!Result)
-		{
-			ErrorString = QString("Invalid foreign tag name: %1").arg(Temp.nodeName());
-			break;
-		}
-
-		QString FieldName = Temp.attributes().namedItem("Field").nodeValue();
-		Result = !FieldName.isEmpty();
-		if (!Result)
-		{
-			ErrorString = QString("Empty foreign field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
-			break;
-		}
-
-		Result = MetaTable->GetField(FieldName) ? true : false;
-		if (!Result)
-		{
-			ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->Name);
-			break;
-		}
-
-		QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
-		PMetaForeign *MetaForeign = new PMetaForeign();
-		MetaForeign->Field = DomNamedNodeMap.namedItem("Field").nodeValue();
-		MetaForeign->ForeignClass = DomNamedNodeMap.namedItem("ForeignClass").nodeValue();
-		MetaForeign->ForeignField = DomNamedNodeMap.namedItem("ForeignField").nodeValue();
-		MetaForeign->ForeignViewNameField = DomNamedNodeMap.namedItem("ForeignViewNameField").nodeValue();
-		MetaForeign->OrderField = DomNamedNodeMap.namedItem("OrderField").nodeValue();
-		MetaForeign->TableName = MetaTable->Name;
-
-		//Проверка наличия поля - на котором делается внешний ключ
-		PMetaField *MetaField = MetaTable->GetField(FieldName);
-		Result = MetaTable ? true : false;
-		if (!Result)
-		{
-			ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->Name);
-			break;
-		}
-
-		//Проверка наличия внешнего ключа на этом поле
-		Result = !MetaField->Foreign;
-		if (!Result)
-		{
-			ErrorString = QString("Foreign already exist. TableName: %1. FieldName: %2.").arg(MetaTable->Name).arg(FieldName);
-			break;
-		}
-
-		MetaField->Foreign = MetaForeign;
 		Temp = Temp.nextSibling();
 	}
 	return Result;
