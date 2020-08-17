@@ -238,18 +238,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	if (TaskParentID)
 	{
-		ISPushButton *ButtonParent = new ISPushButton(QString("#%1").arg(TaskParentID), this);
-		ButtonParent->setToolTip(LANG("Task.SubTask.ToolTip").arg(TaskParentName));
-		ButtonParent->setFlat(true);
-		ButtonParent->setCursor(CURSOR_POINTING_HAND);
-		ButtonParent->setSizePolicy(QSizePolicy::Maximum, ButtonParent->sizePolicy().verticalPolicy());
-		ButtonParent->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-		connect(ButtonParent, &ISPushButton::clicked, this, &ISTaskViewForm::SubTaskOpenParent);
-		LayoutTitle->addWidget(ButtonParent);
-
-		QPalette Palette = ButtonParent->palette();
-		Palette.setColor(QPalette::ButtonText, Qt::gray);
-		ButtonParent->setPalette(Palette);
+		ISQLabel *LabelParent = new ISQLabel(QString("#%1").arg(TaskParentID), this);
+		LabelParent->setToolTip(LANG("Task.SubTask.ToolTip").arg(TaskParentName));
+		LabelParent->SetIsLinked(true);
+		LabelParent->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+		LabelParent->setSizePolicy(QSizePolicy::Maximum, LabelParent->sizePolicy().verticalPolicy());
+		LabelParent->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+		connect(LabelParent, &ISQLabel::Clicked, this, &ISTaskViewForm::SubTaskOpenParent);
+		LayoutTitle->addWidget(LabelParent);
 	}
 
 	LabelName = new ISLabelSelectionText((TaskParentID ? " / " : QString()) + QString("#%1: %2").arg(TaskID).arg(TaskName), this);
