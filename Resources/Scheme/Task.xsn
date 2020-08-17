@@ -27,7 +27,6 @@
       <Index Field="Status"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Parent" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Space" ForeignClass="_TaskSpace" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Executor" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
       <Foreign Field="Type" ForeignClass="_TaskType" ForeignField="ID" ForeignViewNameField="Name"/>
