@@ -186,12 +186,14 @@ ISContextMenuText::ISContextMenuText(QWidget *ParentEdit, bool ReadOnly, bool Un
 	: ISContextMenuBase(ParentEdit, ReadOnly, UndoAvailable, RedoAvailable, HasSelectedText, EchoMode, Empty)
 {
 	QAction *ActionToUpper = ISControls::GetActionContextToUpper(this);
-	ActionToUpper->setEnabled(!ReadOnly && SelectedTextCount);
+	ActionToUpper->setEnabled(SelectedTextCount);
+	ActionToUpper->setVisible(!ReadOnly);
 	connect(ActionToUpper, &QAction::triggered, this, &ISContextMenuText::UppercaseText);
 	addAction(ActionToUpper);
 
 	QAction *ActionToLower = ISControls::GetActionContextToLower(this);
-	ActionToLower->setEnabled(!ReadOnly && SelectedTextCount);
+	ActionToLower->setEnabled(SelectedTextCount);
+	ActionToLower->setVisible(!ReadOnly);
 	connect(ActionToLower, &QAction::triggered, this, &ISContextMenuText::LowercaseText);
 	addAction(ActionToLower);
 }
