@@ -248,16 +248,13 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 		LayoutTitle->addWidget(LabelParent);
 	}
 
-	LabelName = new ISLabelSelectionText((TaskParentID ? " / " : QString()) + QString("#%1: %2").arg(TaskID).arg(TaskName), this);
-	LabelName->setWordWrap(true);
+	LabelName = new ISLabelElided((TaskParentID ? " / " : QString()) + QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	LabelName->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
 	LayoutTitle->addWidget(LabelName);
 
 	if (TaskImportant) //Задача является важной - добавляем соответствующую надпись
 	{
-		ISLabelPixmapText *LabelImportant = new ISLabelPixmapText(BUFFER_ICONS("Task.Important.Checked").pixmap(ISDefines::Gui::SIZE_32_32), LANG("Task.ThisIsImportantTask"), this);
+		ISLabelPixmapText *LabelImportant = new ISLabelPixmapText(BUFFER_ICONS("Task.Important.Checked").pixmap(ISDefines::Gui::SIZE_22_22), LANG("Task.ThisIsImportantTask"), this);
 		LabelImportant->setSizePolicy(QSizePolicy::Maximum, LabelImportant->sizePolicy().verticalPolicy());
 		ISGui::SetFontWidgetUnderline(LabelImportant->GetLabelText(), true);
 		LayoutTitle->addWidget(LabelImportant);
@@ -506,7 +503,7 @@ void ISTaskViewForm::Rename()
 			TaskUpdationDate = qRenameTask.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
 			TaskName = NewName;
 
-			LabelName->setText(QString("#%1: %2").arg(TaskID).arg(TaskName));
+			LabelName->SetText(QString("#%1: %2").arg(TaskID).arg(TaskName));
 			LabelUpdationDate->setText(TaskUpdationDate);
 			emit Renamed(TaskName);
 		}

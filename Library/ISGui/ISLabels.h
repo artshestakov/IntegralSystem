@@ -26,7 +26,7 @@ protected:
 	void keyPressEvent(QKeyEvent *KeyEvent);
 	void enterEvent(QEvent *Event);
 	void leaveEvent(QEvent *Event);
-	void resizeEvent(QResizeEvent *ResizeEvent);
+	void paintEvent(QPaintEvent *PaintEvent);
 
 private:
 	bool IsLinked; //Label будет отображаться как кликабельная ссылка
@@ -85,6 +85,35 @@ private:
 	QBoxLayout *Layout;
 	QLabel *LabelPixmap;
 	ISQLabel *LabelText;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISLabelElided : public QFrame
+{
+	Q_OBJECT
+
+	Q_PROPERTY(QString Content READ GetText WRITE SetText)
+	Q_PROPERTY(bool Elided READ IsElided)
+
+signals:
+	void ElisionChanged(bool elided);
+
+public:
+	ISLabelElided(const QString &Text, QWidget *parent = 0);
+	ISLabelElided(QWidget *parent = 0);
+	virtual ~ISLabelElided();
+
+	void SetText(const QString &Text);
+	const QString &GetText() const;
+	bool IsElided() const;
+
+protected:
+	void paintEvent(QPaintEvent *PaintEvent) override;
+
+private:
+	bool Elided;
+	QString Content;
 };
 //-----------------------------------------------------------------------------
 #endif

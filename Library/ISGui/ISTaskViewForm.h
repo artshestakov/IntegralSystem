@@ -77,7 +77,7 @@ private:
 	QVBoxLayout *LayoutLeft;
 	ISPushButton *ButtonMenu;
 	ISPushButton *ButtonProcess;
-	ISLabelSelectionText *LabelName;
+	ISLabelElided *LabelName;
 	QTabWidget *TabWidget;
 	QTreeWidget *TreeWidgetComment;
 	ISListWidget *ListWidgetFiles;

@@ -84,9 +84,9 @@ void ISQLabel::leaveEvent(QEvent *Event)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISQLabel::resizeEvent(QResizeEvent *ResizeEvent)
+void ISQLabel::paintEvent(QPaintEvent *PaintEvent)
 {
-	QLabel::resizeEvent(ResizeEvent);
+	QLabel::paintEvent(PaintEvent);
 	if (Elided)
 	{
 		QString NewText = QFontMetrics(font()).elidedText(text(), Qt::ElideRight, width());
@@ -225,5 +225,88 @@ void ISLabelPixmapText::ClearPixmap()
 void ISLabelPixmapText::ClearText()
 {
 	SetText(QString());
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISLabelElided::ISLabelElided(const QString &Text, QWidget *parent)
+	: QFrame(parent),
+	Elided(false),
+	Content(Text)
+{
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+}
+//-----------------------------------------------------------------------------
+ISLabelElided::ISLabelElided(QWidget *parent) : ISLabelElided(QString(), parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISLabelElided::~ISLabelElided()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISLabelElided::SetText(const QString &Text)
+{
+	Content = Text;
+	update();
+}
+//-----------------------------------------------------------------------------
+const QString& ISLabelElided::GetText() const
+{
+	return Content;
+}
+//-----------------------------------------------------------------------------
+bool ISLabelElided::IsElided() const
+{
+	return Elided;
+}
+//-----------------------------------------------------------------------------
+void ISLabelElided::paintEvent(QPaintEvent *PaintEvent)
+{
+	QFrame::paintEvent(PaintEvent);
+
+	QPainter Painter(this);
+	QFontMetrics FontMetrics = Painter.fontMetrics();
+
+	bool DidElide = false;
+	int LineSpacing = FontMetrics.lineSpacing();
+	int Y = 0;
+
+	QTextLayout TextLayout(Content, Painter.font());
+	TextLayout.beginLayout();
+	forever
+	{
+		QTextLine TextLine = TextLayout.createLine();
+		if (!TextLine.isValid())
+		{
+			break;
+		}
+		TextLine.setLineWidth(width());
+		int NextLineY = Y + LineSpacing;
+
+		if (height() >= NextLineY + LineSpacing)
+		{
+			TextLine.draw(&Painter, QPoint(0, Y));
+			Y = NextLineY;
+		}
+		else
+		{
+			QString LastLine = Content.mid(TextLine.textStart());
+			QString ElidedLastLine = FontMetrics.elidedText(LastLine, Qt::ElideRight, width());
+			Painter.drawText(QPoint(0, Y + FontMetrics.ascent()), ElidedLastLine);
+			TextLine = TextLayout.createLine();
+			DidElide = TextLine.isValid();
+			break;
+		}
+	}
+	TextLayout.endLayout();
+
+	if (DidElide != Elided)
+	{
+		Elided = DidElide;
+		emit ElisionChanged(DidElide);
+	}
 }
 //-----------------------------------------------------------------------------
