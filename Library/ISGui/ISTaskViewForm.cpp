@@ -817,15 +817,17 @@ QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
 	Layout->addLayout(LayoutBottom);
 
-	ISQLabel *LabelSave = new ISQLabel(LANG("Save"), true, Widget);
+	ISQLabel *LabelSave = new ISQLabel(LANG("Save"), Widget);
 	LabelSave->setProperty("ID", FileID);
 	LabelSave->setProperty("Name", Name);
 	LabelSave->setProperty("Extension", Extension);
+	LabelSave->SetIsLinked(true);
 	connect(LabelSave, &ISQLabel::Clicked, this, &ISTaskViewForm::FileSave);
 	LayoutBottom->addWidget(LabelSave);
 
-	ISQLabel *LabelDelete = new ISQLabel(LANG("Delete"), true, Widget);
+	ISQLabel *LabelDelete = new ISQLabel(LANG("Delete"), Widget);
 	LabelDelete->setProperty("ID", FileID);
+	LabelDelete->SetIsLinked(true);
 	connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::FileDelete);
 	LayoutBottom->addWidget(LabelDelete);
 
@@ -1123,14 +1125,16 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	WidgetBottom->setLayout(LayoutBottom);
 	LayoutWidget->addWidget(WidgetBottom);
 
-	ISQLabel *LabelEdit = new ISQLabel(LANG("Edit"), true, WidgetBottom);
+	ISQLabel *LabelEdit = new ISQLabel(LANG("Edit"), WidgetBottom);
 	LabelEdit->setProperty("Comment", Comment);
 	LabelEdit->setProperty("CommentID", CommentID);
+	LabelEdit->SetIsLinked(true);
 	connect(LabelEdit, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentEdit);
 	LayoutBottom->addWidget(LabelEdit);
 
-	ISQLabel *LabelDelete = new ISQLabel(LANG("Delete"), true, WidgetBottom);
+	ISQLabel *LabelDelete = new ISQLabel(LANG("Delete"), WidgetBottom);
 	LabelDelete->setProperty("CommentID", CommentID);
+	LabelDelete->SetIsLinked(true);
 	connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentDelete);
 	LayoutBottom->addWidget(LabelDelete);
 

@@ -13,9 +13,7 @@ signals:
 	void DoubleClicked();
 
 public:
-	ISQLabel(const QString &Text, bool is_linked = false, QWidget *parent = 0);
 	ISQLabel(const QString &Text, QWidget *parent = 0);
-	ISQLabel(bool is_linked, QWidget *parent = 0);
 	ISQLabel(QWidget *parent = 0);
 	virtual ~ISQLabel();
 

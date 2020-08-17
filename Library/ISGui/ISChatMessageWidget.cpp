@@ -1,7 +1,6 @@
 #include "ISChatMessageWidget.h"
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
-#include "ISLabels.h"
 #include "ISQuery.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
@@ -84,7 +83,8 @@ ISChatMessageWidget::ISChatMessageWidget(int message_id, QWidget *parent) : QWid
 	{
 		if (ISGui::IsStringUrl(Message))
 		{
-			LabelMessage = new ISQLabel(true, this);
+			LabelMessage = new ISQLabel(this);
+			LabelMessage->SetIsLinked(true);
 			LabelMessage->setCursor(CURSOR_POINTING_HAND);
 			LabelMessage->setToolTip(LANG("ClickFromOpenUrlInBrowser"));
 			connect(dynamic_cast<ISQLabel*>(LabelMessage), &ISQLabel::Clicked, this, &ISChatMessageWidget::OpenUrlLink);

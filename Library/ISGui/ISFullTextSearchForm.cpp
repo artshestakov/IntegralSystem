@@ -165,8 +165,8 @@ void ISFullTextSearchForm::Search()
 
 		for (int ObjectID : VectorInt) //Обход объектов
 		{
-			ISQLabel *LabelLink = new ISQLabel(true, ScrollArea);
-			LabelLink->setText(QString::number(++ResultCount) + ". " + MetaTable->LocalName + ": " + ISCore::GetObjectName(MetaTable, ObjectID));
+			ISQLabel *LabelLink = new ISQLabel(QString::number(++ResultCount) + ". " + MetaTable->LocalName + ": " + ISCore::GetObjectName(MetaTable, ObjectID), ScrollArea);
+			LabelLink->SetIsLinked(true);
 			LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
 			LabelLink->setProperty("TableName", TableName);
 			LabelLink->setProperty("ObjectID", ObjectID);

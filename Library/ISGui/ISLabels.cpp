@@ -7,26 +7,13 @@
 #include "ISControls.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
-ISQLabel::ISQLabel(const QString &Text, bool is_linked, QWidget *parent)
+ISQLabel::ISQLabel(const QString &Text, QWidget *parent)
 	: QLabel(Text, parent),
-	IsLinked(is_linked),
+	IsLinked(false),
 	FocusPolicyDefault(focusPolicy()),
 	Elided(false)
 {
-	if (is_linked)
-	{
-		SetIsLinked(IsLinked);
-	}
-}
-//-----------------------------------------------------------------------------
-ISQLabel::ISQLabel(const QString &Text, QWidget *parent) : ISQLabel(Text, false, parent)
-{
-
-}
-//-----------------------------------------------------------------------------
-ISQLabel::ISQLabel(bool is_linked, QWidget *parent) : ISQLabel(QString(), is_linked, parent)
-{
-
+	
 }
 //-----------------------------------------------------------------------------
 ISQLabel::ISQLabel(QWidget *parent) : QLabel(parent)

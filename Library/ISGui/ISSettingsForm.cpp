@@ -120,11 +120,11 @@ void ISSettingsForm::CreateSettings()
 
 		for (ISMetaSetting *MetaSetting : MetaGroup->Settings)
 		{
-			ISQLabel *LabelRow = new ISQLabel(ScrollArea);
-			LabelRow->setText(MetaSetting->LocalName + ':');
+			ISQLabel *LabelRow = new ISQLabel(MetaSetting->LocalName + ':', ScrollArea);
 
 			if (!MetaSetting->Hint.isEmpty())
 			{
+				LabelRow->SetIsLinked(true);
 				LabelRow->setToolTip(ISGui::PrepareLongToolTip(MetaSetting->Hint));
 				LabelRow->setCursor(CURSOR_WHATS_THIS);
 				ISGui::SetFontWidgetUnderline(LabelRow, true);

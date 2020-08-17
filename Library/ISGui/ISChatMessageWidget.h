@@ -1,6 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISLabels.h"
 //-----------------------------------------------------------------------------
 class ISChatMessageWidget : public QWidget
 {
@@ -28,6 +29,6 @@ protected:
 
 private:
 	int MessageID;
-	QLabel *LabelMessage;
+	ISQLabel *LabelMessage;
 };
 //-----------------------------------------------------------------------------
