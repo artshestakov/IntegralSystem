@@ -89,6 +89,11 @@ void ISFieldEditBase::SetPlaceholderText(const QString &placeholder_text)
 
 }
 //-----------------------------------------------------------------------------
+void ISFieldEditBase::SetFrameShape(QFrame::Shape FrameShape)
+{
+
+}
+//-----------------------------------------------------------------------------
 void ISFieldEditBase::SetRegExp(const QString &RegExp)
 {
 

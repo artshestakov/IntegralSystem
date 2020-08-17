@@ -1,4 +1,5 @@
 #include "ISTextEdit.h"
+#include "ISStyleSheet.h"
 //-----------------------------------------------------------------------------
 ISTextEdit::ISTextEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
@@ -82,6 +83,13 @@ void ISTextEdit::SetReadOnly(bool ReadOnly)
 void ISTextEdit::SetPlaceholderText(const QString &placeholder_text)
 {
 	TextEdit->setPlaceholderText(placeholder_text);
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetFrameShape(QFrame::Shape FrameShape)
+{
+	//Если высталено отсутствие рамки - убираем стиль, иначе рамка все равно отображается
+	TextEdit->setStyleSheet(FrameShape == QFrame::NoFrame ? QString() : STYLE_SHEET("ISTextEdit"));
+	TextEdit->setFrameShape(FrameShape);
 }
 //-----------------------------------------------------------------------------
 void ISTextEdit::OnUpperText()

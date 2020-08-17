@@ -27,6 +27,7 @@ public:
 	virtual void SetFont(const QFont &Font);
 	virtual void SetReadOnly(bool read_only);
 	virtual void SetPlaceholderText(const QString &placeholder_text);
+	virtual void SetFrameShape(QFrame::Shape FrameShape);
 	virtual void SetRegExp(const QString &RegExp);
 	virtual void SetColorText(const QColor &Color);
 

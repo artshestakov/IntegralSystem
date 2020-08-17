@@ -270,18 +270,15 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	QGroupBox *GroupBoxDescription = new QGroupBox(LANG("Task.Description"), this);
 	GroupBoxDescription->setLayout(new QVBoxLayout());
-	GroupBoxDescription->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
-	GroupBoxDescription->setSizePolicy(GroupBoxDescription->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+	GroupBoxDescription->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	LayoutLeft->addWidget(GroupBoxDescription, 0, Qt::AlignTop);
 
-	ISScrollArea *ScrollAreaDescription = new ISScrollArea(GroupBoxDescription);
-	ScrollAreaDescription->widget()->setLayout(new QVBoxLayout());
-	ScrollAreaDescription->widget()->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-	GroupBoxDescription->layout()->addWidget(ScrollAreaDescription);
-
-	LabelDescription = new ISLabelSelectionText(TaskDescription.isEmpty() ? LANG("Task.Description.Empty") : TaskDescription, GroupBoxDescription);
-	LabelDescription->setWordWrap(true);
-	ScrollAreaDescription->widget()->layout()->addWidget(LabelDescription);
+	TextEdit = new ISTextEdit(GroupBoxDescription);
+	TextEdit->SetReadOnly(true);
+	TextEdit->SetPlaceholderText(LANG("Task.Description.Empty"));
+	TextEdit->SetFrameShape(QFrame::NoFrame);
+	TextEdit->SetValue(TaskDescription);
+	GroupBoxDescription->layout()->addWidget(TextEdit);
 
 	GroupBoxSubTask = new QGroupBox(LANG("Task.SubTask.List").arg(0), this);
 	GroupBoxSubTask->setLayout(new QVBoxLayout());
@@ -529,7 +526,7 @@ void ISTaskViewForm::SetDescription()
 			TaskUpdationDate = qSetDescription.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
 			TaskDescription = NewDescription;
 
-			LabelDescription->setText(TaskDescription.isEmpty() ? LANG("Task.Description.Empty") : TaskDescription);
+			TextEdit->SetValue(TaskDescription);
 			LabelUpdationDate->setText(TaskUpdationDate);
 			emit DescriptionChanged(TaskDescription);
 		}

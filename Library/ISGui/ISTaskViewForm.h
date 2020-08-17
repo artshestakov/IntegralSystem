@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISScrollArea.h"
 #include "ISLabels.h"
 #include "ISListWidget.h"
 #include "ISButtons.h"
+#include "ISTextEdit.h"
 //-----------------------------------------------------------------------------
 class ISTaskViewForm : public ISInterfaceForm
 {
@@ -71,7 +71,7 @@ private:
 
 private:
 	QHBoxLayout *LayoutHorizontal;
-	QLabel *LabelDescription;
+	ISTextEdit *TextEdit;
 	QGroupBox *GroupBoxSubTask;
 	ISListWidget *ListWidgetSubTask;
 	QVBoxLayout *LayoutLeft;
