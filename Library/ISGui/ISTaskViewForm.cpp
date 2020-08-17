@@ -249,6 +249,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	}
 
 	LabelName = new ISLabelElided((TaskParentID ? " / " : QString()) + QString("#%1: %2").arg(TaskID).arg(TaskName), this);
+	LabelName->SetColorText(ISDefines::Gui::COLOR_DARK_GRAY);
+	LabelName->SetElidedToolTip(true);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LayoutTitle->addWidget(LabelName);
 

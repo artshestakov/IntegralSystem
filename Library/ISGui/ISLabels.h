@@ -93,11 +93,8 @@ class ISLabelElided : public QFrame
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QString Content READ GetText WRITE SetText)
-	Q_PROPERTY(bool Elided READ IsElided)
-
 signals:
-	void ElisionChanged(bool elided);
+	void ElisionChanged(bool);
 
 public:
 	ISLabelElided(const QString &Text, QWidget *parent = 0);
@@ -105,7 +102,13 @@ public:
 	virtual ~ISLabelElided();
 
 	void SetText(const QString &Text);
-	const QString &GetText() const;
+	const QString&GetText() const;
+
+	void SetColorText(QColor &Color);
+
+	void SetElidedToolTip(bool elided_tool_tip);
+	bool GetElidedToolTip() const;
+
 	bool IsElided() const;
 
 protected:
@@ -113,7 +116,9 @@ protected:
 
 private:
 	bool Elided;
+	bool ElidedToolTip;
 	QString Content;
+	QColor ColorText;
 };
 //-----------------------------------------------------------------------------
 #endif

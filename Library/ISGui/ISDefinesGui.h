@@ -51,6 +51,8 @@ namespace ISDefines
 		static QColor COLOR_WHITE;
 		static QColor COLOR_RED;
 		static QColor COLOR_BLACK;
+		static QColor COLOR_GRAY;
+		static QColor COLOR_DARK_GRAY;
 		static QColor COLOR_BLUE;
 		static QColor COLOR_MONITOR_USER;
 		static QColor COLOR_NULL;

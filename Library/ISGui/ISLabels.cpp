@@ -232,7 +232,9 @@ void ISLabelPixmapText::ClearText()
 ISLabelElided::ISLabelElided(const QString &Text, QWidget *parent)
 	: QFrame(parent),
 	Elided(false),
-	Content(Text)
+	ElidedToolTip(false),
+	Content(Text),
+	ColorText(ISDefines::Gui::COLOR_BLACK)
 {
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
@@ -258,6 +260,21 @@ const QString& ISLabelElided::GetText() const
 	return Content;
 }
 //-----------------------------------------------------------------------------
+void ISLabelElided::SetColorText(QColor &Color)
+{
+	ColorText = Color;
+}
+//-----------------------------------------------------------------------------
+void ISLabelElided::SetElidedToolTip(bool elided_tool_tip)
+{
+	ElidedToolTip = elided_tool_tip;
+}
+//-----------------------------------------------------------------------------
+bool ISLabelElided::GetElidedToolTip() const
+{
+	return ElidedToolTip;
+}
+//-----------------------------------------------------------------------------
 bool ISLabelElided::IsElided() const
 {
 	return Elided;
@@ -268,6 +285,7 @@ void ISLabelElided::paintEvent(QPaintEvent *PaintEvent)
 	QFrame::paintEvent(PaintEvent);
 
 	QPainter Painter(this);
+	Painter.setPen(QPen(ColorText));
 	QFontMetrics FontMetrics = Painter.fontMetrics();
 
 	bool DidElide = false;
@@ -306,6 +324,7 @@ void ISLabelElided::paintEvent(QPaintEvent *PaintEvent)
 	if (DidElide != Elided)
 	{
 		Elided = DidElide;
+		setToolTip(Elided && ElidedToolTip ? ISGui::PrepareLongToolTip(Content, 400) : QString());
 		emit ElisionChanged(DidElide);
 	}
 }
