@@ -146,7 +146,6 @@ private:
 	QLabel *LabelRowCount;
 	QLabel *LabelPeriod;
 	QLabel *LabelSelectedRow;
-	QLabel *LabelSearchResult;
 	ISPageNavigation *PageNavigation;
 	ISSearchEdit *EditSearch;
 	QStatusBar *StatusBar;

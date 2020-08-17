@@ -748,7 +748,7 @@
   <Local Name="Search.Operator.Less" Russian="Меньше"/>
   <Local Name="Search.Operator.MoreOrEqual" Russian="Больше или равно"/>
   <Local Name="Search.Operator.LessOrEqual" Russian="Меньше или равно"/>
-  <Local Name="Search.Results.Empty" Russian="К сожалению, на ваш поисковый запрос ничего не найдено."/>
+  <Local Name="Search.Results.Empty" Russian="К сожалению, ваш поисковый запрос не дал результатов."/>
   <Local Name="Search.ResultCount" Russian="Найдено записей"/>
 
   <!--Printing-->

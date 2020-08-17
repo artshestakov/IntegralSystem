@@ -364,17 +364,11 @@ void ISListBaseForm::LoadDataAfterEvent()
 	SelectRowObject(SelectObjectAfterUpdate);
 	VisibleIndicatorWidget();
 
-	if (SqlModel->rowCount())
+	//Если данных в модели нет и загрузка была после поиска - показываем соответствующую надпись и меняем флаг поиска
+	if (!SqlModel->rowCount() && SearchFlag)
 	{
-		LabelSearchResult->setVisible(false);
-	}
-	else
-	{
-		if (SearchFlag)
-		{
-			SearchFlag = false;
-			LabelSearchResult->setVisible(true);
-		}
+		SearchFlag = false;
+		ListIndicatorWidget->SetText(LANG("Search.Results.Empty"));
 	}
 	emit Updated();
 }
@@ -1663,12 +1657,6 @@ void ISListBaseForm::CreateStatusBar()
 	LabelSelectedRow = new QLabel(StatusBar);
 	LabelSelectedRow->setVisible(false);
 	StatusBar->addWidget(LabelSelectedRow);
-
-	LabelSearchResult = new QLabel(StatusBar);
-	LabelSearchResult->setText(LANG("Search.Results.Empty"));
-	LabelSearchResult->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	LabelSearchResult->setVisible(false);
-	StatusBar->addPermanentWidget(LabelSearchResult);
 
 	EditSearch = new ISSearchEdit(StatusBar);
 	EditSearch->setSizePolicy(QSizePolicy::Maximum, EditSearch->sizePolicy().verticalPolicy());
