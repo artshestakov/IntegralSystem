@@ -29,6 +29,7 @@ protected:
 
 private:
 	void Reopen(); //Переоткрыть форму
+	void Edit(); //Редактировать задачу
 	void Rename(); //Переименовать задачу
 	void SetDescription(); //Изменить описание
 	void CloneTask(); //Клонировать задачу

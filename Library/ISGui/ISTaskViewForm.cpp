@@ -184,6 +184,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->setSizePolicy(QSizePolicy::Maximum, ButtonMenu->sizePolicy().verticalPolicy());
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen, QKeySequence(Qt::Key_F5));
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Edit"), LANG("Task.EditTask"), this, &ISTaskViewForm::Edit, QKeySequence(Qt::Key_F2));
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
 	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
@@ -482,6 +483,13 @@ void ISTaskViewForm::Reopen()
 {
 	ISGui::ShowTaskViewForm(TaskID);
 	close();
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::Edit()
+{
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Task", TaskID);
+	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISTaskViewForm::Reopen);
+	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Rename()

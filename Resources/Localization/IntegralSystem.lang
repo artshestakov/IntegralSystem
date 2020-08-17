@@ -864,7 +864,8 @@
   <Local Name="Task.Right.UpdationDate" Russian="Задача изменена"/>
   <Local Name="Task.Right.UpdationDate.Empty" Russian="Задача не менялась"/>
   <Local Name="Task.ThisIsImportantTask" Russian="Это важная задача"/>
-  <Local Name="Task.ReopenTaskViewForm" Russian="Перечитать задачу"/>
+  <Local Name="Task.ReopenTaskViewForm" Russian="Перечитать"/>
+  <Local Name="Task.EditTask" Russian="Редактировать"/>
   <Local Name="Task.Rename" Russian="Переименовать задачу"/>
   <Local Name="Task.Rename.LabelText" Russian="Введите новое имя задачи:"/>
   <Local Name="Task.SetDescription" Russian="Изменить описание"/>
