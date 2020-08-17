@@ -704,6 +704,7 @@ void ISListBaseForm::SearchFastClear()
 	QueryModel->ClearConditions();
 	Update();
 	connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
+	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ActionSetVisible(ISNamespace::ActionType action_type, bool visible)

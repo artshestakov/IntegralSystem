@@ -17,7 +17,7 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent) : ISInterfac
 
 	setWindowTitle(LANG("Search.Advanced") + " - " + MetaTable->LocalListName);
 	setWindowIcon(BUFFER_ICONS("Search"));
-	resize(ISDefines::Gui::SIZE_550_300);
+	resize(800, 600);
 
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
