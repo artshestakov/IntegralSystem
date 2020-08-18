@@ -169,7 +169,9 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskOwner = qSelect.ReadColumn("task_owner").toString();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskCreationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
+	TaskCreationDateToolTip = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
 	TaskUpdationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_updationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
+	TaskUpdationDateToolTip = qSelect.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
 
@@ -324,13 +326,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TabWidget->tabBar()->setStyleSheet(STYLE_SHEET("QTabBarTask"));
 	LayoutLeft->addWidget(TabWidget);
 
-	TreeWidgetComment = new QTreeWidget(TabWidget);
-	TreeWidgetComment->setHeaderHidden(true);
-	TreeWidgetComment->setRootIsDecorated(false);
-	TreeWidgetComment->setAlternatingRowColors(true);
-	TreeWidgetComment->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-	TreeWidgetComment->setFrameShape(QFrame::NoFrame);
-	TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
+	LayoutComments = new QVBoxLayout();
+	LayoutComments->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	LayoutComments->setSpacing(0);
+	LayoutComments->addStretch();
+
+	ScrollAreaComment = new ISScrollArea(TabWidget);
+	ScrollAreaComment->widget()->setLayout(LayoutComments);
+	TabWidget->addTab(ScrollAreaComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
 	CommentLoadList();
 
 	ListWidgetLinks = new ISListWidget(TabWidget);
@@ -366,7 +369,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	QToolButton *ButtonAddComment = CreateAddButton(LANG("Task.AddComment"));
 	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
-	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(TreeWidgetComment), QTabBar::RightSide, ButtonAddComment);
+	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ScrollAreaComment), QTabBar::RightSide, ButtonAddComment);
 
 	QToolButton *ButtonAddLink = CreateAddButton(LANG("Task.AddLink"));
 	connect(ButtonAddLink, &QToolButton::clicked, this, &ISTaskViewForm::LinkAdd);
@@ -442,6 +445,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.CreationDate") + ':', GroupBoxDetails));
 
 	QLabel *LabelCreationDate = new QLabel(TaskCreationDate, GroupBoxDetails);
+	LabelCreationDate->setToolTip(TaskCreationDateToolTip);
+	LabelCreationDate->setCursor(CURSOR_WHATS_THIS);
 	ISGui::SetFontWidgetBold(LabelCreationDate, true);
 	LayoutRight->addWidget(LabelCreationDate);
 
@@ -450,6 +455,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.UpdationDate") + ':', GroupBoxDetails));
 
 	LabelUpdationDate = new QLabel(TaskUpdationDate.isEmpty() ? LANG("Task.Right.UpdationDate.Empty") : TaskUpdationDate, GroupBoxDetails);
+	LabelUpdationDate->setToolTip(TaskUpdationDate.isEmpty() ? QString() : TaskUpdationDateToolTip);
+	LabelUpdationDate->setCursor(CURSOR_WHATS_THIS);
 	ISGui::SetFontWidgetBold(LabelUpdationDate, true);
 	LayoutRight->addWidget(LabelUpdationDate);
 
@@ -506,10 +513,12 @@ void ISTaskViewForm::Rename()
 		if (qRenameTask.ExecuteFirst())
 		{
 			TaskUpdationDate = qRenameTask.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+			TaskUpdationDateToolTip = qRenameTask.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
 			TaskName = NewName;
 
 			LabelName->SetText(QString("#%1: %2").arg(TaskID).arg(TaskName));
 			LabelUpdationDate->setText(TaskUpdationDate);
+			LabelUpdationDate->setToolTip(TaskUpdationDateToolTip);
 			emit Renamed(TaskName);
 		}
 		else
@@ -530,10 +539,12 @@ void ISTaskViewForm::SetDescription()
 		if (qSetDescription.ExecuteFirst())
 		{
 			TaskUpdationDate = qSetDescription.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
+			TaskUpdationDateToolTip = qSetDescription.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
 			TaskDescription = NewDescription;
 
 			TextEdit->SetValue(TaskDescription);
 			LabelUpdationDate->setText(TaskUpdationDate);
+			LabelUpdationDate->setToolTip(TaskUpdationDateToolTip);
 			emit DescriptionChanged(TaskDescription);
 		}
 		else
@@ -778,7 +789,7 @@ void ISTaskViewForm::FileLoadList()
 		while (qSelectFiles.Next())
 		{
 			int ID = qSelectFiles.ReadColumn("tfls_id").toInt();
-			QString CreationDate = ISGui::ConvertDateTimeToString(qSelectFiles.ReadColumn("tfls_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
+			QDateTime CreationDate = qSelectFiles.ReadColumn("tfls_creationdate").toDateTime();
 			QString Name = qSelectFiles.ReadColumn("tfls_name").toString();
 			QString Extension = qSelectFiles.ReadColumn("tfls_extension").toString();
 			qint64 Size = qSelectFiles.ReadColumn("tfls_size").toLongLong();
@@ -794,7 +805,7 @@ void ISTaskViewForm::FileLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QString &CreationDate)
+QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &CreationDate)
 {
 	QHBoxLayout *LayoutWidget = new QHBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
@@ -836,7 +847,11 @@ QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &
 	LayoutBottom->addWidget(ISControls::CreateVerticalLine(Widget));
 	LayoutBottom->addWidget(new QLabel(LANG("Task.File.UserFullName").arg(UserFullName), Widget));
 	LayoutBottom->addWidget(ISControls::CreateVerticalLine(Widget));
-	LayoutBottom->addWidget(new QLabel(LANG("Task.File.CreationDate").arg(CreationDate), Widget));
+
+	QLabel *LabelDateTime = new QLabel(LANG("Task.File.CreationDate").arg(ISGui::ConvertDateTimeToString(CreationDate, FORMAT_DATE_V2, FORMAT_TIME_V1)), Widget);
+	LabelDateTime->setToolTip(CreationDate.toString(FORMAT_DATE_TIME_V10));
+	LabelDateTime->setCursor(CURSOR_WHATS_THIS);
+	LayoutBottom->addWidget(LabelDateTime);
 
 	LayoutWidget->addStretch();
 
@@ -1056,18 +1071,16 @@ void ISTaskViewForm::LinkDelete()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CommentLoadList()
 {
-	ISGui::SetWaitGlobalCursor(true);
-	while (TreeWidgetComment->topLevelItemCount())
+	while (!Comments.empty())
 	{
-		QTreeWidgetItem *TreeWidgetItem = TreeWidgetComment->takeTopLevelItem(0);
-		delete TreeWidgetComment->itemWidget(TreeWidgetItem, 0);
-		delete TreeWidgetItem;
+		delete ISAlgorithm::VectorTakeBack(Comments);
 	}
 
 	ISQuery qSelectComments(QS_COMMENT);
 	qSelectComments.BindValue(":TaskID", TaskID);
 	if (qSelectComments.Execute())
 	{
+		int Index = 0;
 		while (qSelectComments.Next())
 		{
 			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
@@ -1077,17 +1090,17 @@ void ISTaskViewForm::CommentLoadList()
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
 
-			QTreeWidgetItem *TreeItemWidget = new QTreeWidgetItem(TreeWidgetComment);
-			TreeWidgetComment->setItemWidget(TreeItemWidget, 0, CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate));
+			QWidget *WidgetComment = CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
+			WidgetComment->setStyleSheet(STYLE_SHEET("QWidgetCommentTask"));
+			LayoutComments->insertWidget(Index++, WidgetComment);
+			Comments.push_back(WidgetComment);
 		}
-		TabWidget->setTabText(TabWidget->indexOf(TreeWidgetComment), LANG("Task.Comments").arg(qSelectComments.GetCountResultRows()));
+		TabWidget->setTabText(TabWidget->indexOf(ScrollAreaComment), LANG("Task.Comments").arg(qSelectComments.GetCountResultRows()));
 	}
 	else
 	{
-		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadTaskComments"), qSelectComments.GetErrorString());
 	}
-	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime)
@@ -1095,7 +1108,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
 
-	QWidget *Widget = new QWidget(TreeWidgetComment);
+	QWidget *Widget = new QWidget(ScrollAreaComment);
 	Widget->setLayout(LayoutWidget);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
@@ -1140,7 +1153,10 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentDelete);
 	LayoutBottom->addWidget(LabelDelete);
 
-	LayoutBottom->addWidget(new QLabel(ISGui::ConvertDateTimeToString(DateTime, FORMAT_DATE_V4, FORMAT_TIME_V3), WidgetBottom));
+	QLabel *LabelDateTime = new QLabel(ISGui::ConvertDateTimeToString(DateTime, FORMAT_DATE_V1, FORMAT_TIME_V1), WidgetBottom);
+	LabelDateTime->setToolTip(DateTime.toString(FORMAT_DATE_TIME_V10));
+	LabelDateTime->setCursor(CURSOR_WHATS_THIS);
+	LayoutBottom->addWidget(LabelDateTime);
 
 	LayoutBottom->addStretch();
 
@@ -1158,7 +1174,7 @@ void ISTaskViewForm::CommentAdd()
 		if (qInsertComment.Execute())
 		{
 			CommentLoadList();
-			TreeWidgetComment->scrollToItem(TreeWidgetComment->topLevelItem(TreeWidgetComment->topLevelItemCount() - 1), QAbstractItemView::ScrollHint::PositionAtBottom);
+			QTimer::singleShot(50, this, [=]() { ScrollAreaComment->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
 		}
 		else
 		{

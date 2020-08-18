@@ -8,6 +8,7 @@
 #include "ISListWidget.h"
 #include "ISButtons.h"
 #include "ISTextEdit.h"
+#include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
 class ISTaskViewForm : public ISInterfaceForm
 {
@@ -51,7 +52,7 @@ private:
 
 private:
 	void FileLoadList();
-	QWidget* FileCreateWidget(const QPixmap &Pixmap, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QString &CreationDate);
+	QWidget* FileCreateWidget(const QPixmap &Pixmap, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &CreationDate);
 	void FileAdd();
 	void FileSave();
 	void FileDelete();
@@ -80,7 +81,9 @@ private:
 	ISPushButton *ButtonProcess;
 	ISLabelElided *LabelName;
 	QTabWidget *TabWidget;
-	QTreeWidget *TreeWidgetComment;
+	ISScrollArea *ScrollAreaComment;
+	QVBoxLayout *LayoutComments;
+	std::vector<QWidget*> Comments;
 	ISListWidget *ListWidgetFiles;
 	ISListWidget *ListWidgetLinks;
 	QVBoxLayout *LayoutRight;
@@ -100,7 +103,9 @@ private:
 	QString TaskOwner;
 	bool TaskImportant;
 	QString TaskCreationDate;
+	QString TaskCreationDateToolTip;
 	QString TaskUpdationDate;
+	QString TaskUpdationDateToolTip;
 	int TaskParentID;
 	QString TaskParentName;
 };
