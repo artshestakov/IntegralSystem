@@ -23,6 +23,7 @@ ISInputDialog::ISInputDialog(ISNamespace::FieldType DataType, const QString &Tit
 		Label = new QLabel(this);
 		Label->setText(LabelText);
 		Label->setWordWrap(true);
+		Label->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 		GetMainLayout()->addWidget(Label, 0, Qt::AlignLeft);
 	}
 
