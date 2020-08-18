@@ -145,6 +145,20 @@ namespace ISOilSphere
 	private:
 		QTreeWidget *TreeWidget;
 	};
+
+	//Форма объекта дебета
+	class DebetObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE DebetObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~DebetObjectForm();
+
+	private:
+		void CalculateTotal(); //Расчёт "Итого"
+		void CalculateRemainder(); //Расчёт "Остаток долга"
+	};
 }
 //-----------------------------------------------------------------------------
 #endif

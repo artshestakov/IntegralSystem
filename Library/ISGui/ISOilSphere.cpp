@@ -73,6 +73,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::GasStationStatementListForm*>("ISOilSphere::GasStationStatementListForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 	qRegisterMetaType<ISOilSphere::DebtSubSystemForm*>("ISOilSphere::DebtSubSystemForm");
+	qRegisterMetaType<ISOilSphere::DebetObjectForm*>("ISOilSphere::DebetObjectForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -644,5 +645,31 @@ QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, 
 
 	LayoutWidget->addStretch();
 	return Widget;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::DebetObjectForm::DebetObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+	connect(GetFieldWidget("Coming"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::DebetObjectForm::CalculateTotal);
+	connect(GetFieldWidget("Percent"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::DebetObjectForm::CalculateTotal);
+	connect(GetFieldWidget("Calculation"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::DebetObjectForm::CalculateRemainder);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::DebetObjectForm::~DebetObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::DebetObjectForm::CalculateTotal()
+{
+	double Coming = GetFieldValue("Coming").toDouble(), Percent = GetFieldValue("Percent").toDouble();
+	Coming > 0 && Percent > 0 ? SetFieldValue("Total", Coming - ((Coming * Percent) / 100)) : GetFieldWidget("Total")->Clear();
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::DebetObjectForm::CalculateRemainder()
+{
+	double Total = GetFieldValue("Total").toDouble(), Calculation = GetFieldValue("Calculation").toDouble();
+	Total > 0 && Calculation > 0 ? SetFieldValue("Remainder", Total - Calculation) : GetFieldWidget("Remainder")->Clear();
 }
 //-----------------------------------------------------------------------------
