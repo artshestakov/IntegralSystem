@@ -151,6 +151,7 @@
   <Local Name="Message.Error.ConvertToSubTask" Russian="Не удалось преобразовать задачу в подзадачу!"/>
   <Local Name="Message.Error.ConvertToTask" Russian="Не удалось преобразовать подзадачу в задачу!"/>
   <Local Name="Message.Error.CloneTask" Russian="Не удалось клонировать задачу!"/>
+  <Local Name="Message.Error.SelectTask" Russian="Не удалось загрузить информацию о задаче %1!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -833,6 +834,7 @@
   <Local Name="Task.Description" Russian="Описание задачи"/>
   <Local Name="Task.Description.Empty" Russian="Описание отсутствует"/>
   <Local Name="Task.SubTask.List" Russian="Подзадачи (%1)"/>
+  <Local Name="Task.SubTask.Progress" Russian="Выполнено %p%"/>
   <Local Name="Task.SubTask.ToolTip" Russian="Родительская задача: %1"/>
   <Local Name="Task.Files" Russian="Файлы (%1)"/>
   <Local Name="Task.LinkTask" Russian="Связанные задачи (%1)"/>

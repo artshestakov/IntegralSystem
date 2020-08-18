@@ -154,7 +154,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	qSelect.BindValue(":TaskID", TaskID);
 	if (!qSelect.ExecuteFirst()) //Ошибка запроса
 	{
-		ISMessageBox::ShowCritical(nullptr, qSelect.GetErrorString());
+		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.SelectTask").arg(TaskID), qSelect.GetErrorString());
 		return;
 	}
 
@@ -285,6 +285,12 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	GroupBoxSubTask->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_1_PX);
 	GroupBoxSubTask->setSizePolicy(GroupBoxSubTask->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	LayoutLeft->addWidget(GroupBoxSubTask);
+
+	ProgressBarSubTask = new QProgressBar(GroupBoxSubTask);
+	ProgressBarSubTask->setMaximum(100);
+	ProgressBarSubTask->setAlignment(Qt::AlignJustify | Qt::AlignVCenter);
+	ProgressBarSubTask->setFormat(LANG("Task.SubTask.Progress"));
+	GroupBoxSubTask->layout()->addWidget(ProgressBarSubTask);
 
 	ListWidgetSubTask = new ISListWidget(GroupBoxSubTask);
 	ListWidgetSubTask->setAlternatingRowColors(true);
@@ -700,23 +706,27 @@ void ISTaskViewForm::SubTaskLoadList()
 	qSelectSubTask.BindValue(":TaskID", TaskID);
 	if (qSelectSubTask.Execute())
 	{
-		int Rows = qSelectSubTask.GetCountResultRows();
+		//Общее количество вернутых строк и количество выполненных подзадач
+		int Rows = qSelectSubTask.GetCountResultRows(), IsDoned = 0;
 		while (qSelectSubTask.Next())
 		{
 			int SubTaskID = qSelectSubTask.ReadColumn("task_id").toInt();
 			QString SubTaskName = qSelectSubTask.ReadColumn("task_name").toString();
 			QString SubTaskDescription = qSelectSubTask.ReadColumn("task_description").toString();
 			ISUuid SubTaskStatusUID = qSelectSubTask.ReadColumn("task_status_uid");
+			bool IsDone = SubTaskStatusUID == CONST_UID_TASK_STATUS_DONE || SubTaskStatusUID == CONST_UID_TASK_STATUS_CLOSE;
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetSubTask);
 			ListWidgetItem->setText(QString("#%1: %2").arg(SubTaskID).arg(SubTaskName));
 			ListWidgetItem->setToolTip(SubTaskDescription);
 			ListWidgetItem->setData(Qt::UserRole, SubTaskID);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
-			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, SubTaskStatusUID == CONST_UID_TASK_STATUS_DONE || SubTaskStatusUID == CONST_UID_TASK_STATUS_CLOSE);
+			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, IsDone);
+			IsDoned += IsDone ? 1 : 0;
 		}
 		GroupBoxSubTask->setTitle(LANG("Task.SubTask.List").arg(Rows));
 		GroupBoxSubTask->setVisible(Rows);
+		ProgressBarSubTask->setValue(IsDoned ? (IsDoned * 100 / Rows) : 0);
 	}
 }
 //-----------------------------------------------------------------------------
