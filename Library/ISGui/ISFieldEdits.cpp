@@ -99,7 +99,7 @@ bool ISOKPOEdit::IsValid() const
 ISUuidEdit::ISUuidEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	SetPlaceholderText(UUID_PLACEHOLDER_TEXT);
-	SetFixedWidth(ISGui::GetStringWidth(UUID_PLACEHOLDER_TEXT, ISDefines::Gui::FONT_APPLICATION) + 35);
+	SetFixedWidth(ISGui::GetStringWidth(UUID_PLACEHOLDER_TEXT, ISDefines::Gui::FONT_APPLICATION) + 40);
 	SetUppercase(true);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
