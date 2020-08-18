@@ -507,20 +507,20 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		FieldEditBase->SetModificationFlag(true);
 	}
 
-	if (MetaField->NotNull && MetaField->DefaultValue.toString().isEmpty()) //Если поле обязательно для заполнения
+	if (MetaField->ReadOnly) //Если доступно только для просмотра
+	{
+		LabelField->setTextFormat(Qt::RichText);
+		LabelField->setText(QString("<font>%1:</font><font color=#3D77B2 size=4>*</font>").arg(MetaField->LabelName));
+		LabelField->setToolTip(LANG("FieldReadOnly"));
+		LabelField->setCursor(CURSOR_WHATS_THIS);
+		FieldEditBase->SetReadOnly(MetaField->ReadOnly);
+	}
+	else if (MetaField->NotNull) //Если поле обязательно для заполнения
 	{
 		LabelField->setTextFormat(Qt::RichText);
 		LabelField->setText(QString("<font>%1:</font><font color=#FF0000 size=4>*</font>").arg(MetaField->LabelName));
 		LabelField->setToolTip(LANG("FieldNotNull"));
 		LabelField->setCursor(CURSOR_WHATS_THIS);
-	}
-	else if (MetaField->ReadOnly) //Если доступно только для просмотра
-	{
-		LabelField->setTextFormat(Qt::RichText);
-		LabelField->setText(QString("<font>%1:</font><font color=#808080 size=4>*</font>").arg(MetaField->LabelName));
-		LabelField->setToolTip(LANG("FieldReadOnly"));
-		LabelField->setCursor(CURSOR_WHATS_THIS);
-		FieldEditBase->SetReadOnly(MetaField->ReadOnly);
 	}
 	else
 	{
