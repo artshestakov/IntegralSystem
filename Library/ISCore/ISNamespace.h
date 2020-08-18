@@ -121,13 +121,6 @@ public:
         AST_ResetWidthColumn,
     };
 
-    enum AttachChatType
-    {
-        ACT_NoAttach,
-        ACT_Image,
-        ACT_File,
-    };
-
     enum ReportType
     {
         RT_Unknown,
@@ -202,7 +195,6 @@ Q_DECLARE_METATYPE(ISNamespace::ExportType);
 Q_DECLARE_METATYPE(ISNamespace::MessageBoxButton);
 Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
-Q_DECLARE_METATYPE(ISNamespace::AttachChatType);
 Q_DECLARE_METATYPE(ISNamespace::ReportType);
 Q_DECLARE_METATYPE(ISNamespace::QueryModelType);
 Q_DECLARE_METATYPE(ISNamespace::PhoneIconType);

@@ -54,7 +54,6 @@
   <Local Name="Message.Information.CreatedPasswordUser" Russian="Пароль пользователя успешно изменен!"/>
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
-  <Local Name="Message.Information.FileSaved" Russian="Файл успешно сохранен."/>
   <Local Name="Message.Information.NotFoundChildCalls" Russian="Подробностей по выбранному звонку нет."/>
   <Local Name="Message.Information.FileRecordSavedToStorage" Russian="Запись разговора успешно сохранена в хранилище."/>
   <Local Name="Message.Information.TakeAlreadyInWorkYou" Russian="Задача уже в работе у вас!"/>
@@ -179,8 +178,6 @@
   <Local Name="Message.Warning.NotLoadLibrary" Russian="Не удалось загрузить библиотеку %1."/>
   <Local Name="Message.Warning.SelectedModuleInvalid" Russian="Выбранный файл не является модулем!"/>
   <Local Name="Message.Warning.FileNameIsNull" Russian="Вы не ввели имя файла."/>
-  <Local Name="Message.Warning.ChatImageSizeConstraint" Russian="Ограничение на размер загружаемого изображения - 5 мегабайт."/>
-  <Local Name="Message.Warning.ChatFileSizeConstraint" Russian="Ограничение на размер загружаемого файла - 15 мегабайт."/>
   <Local Name="Message.Warning.NotifyNotInserted" Russian="Не удалось добавить напоминание!"/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
   <Local Name="Message.Warning.AccountLifetimeNotStarted" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи ещё не начался."/>
@@ -214,7 +211,6 @@
   <Local Name="Message.Warning.NotAccess.Special.UserPasswordChange" Russian="У Вас нет прав на изменение своего пароля."/>
   <Local Name="Message.Warning.NotAccess.Special.PlayAsteriskRecord" Russian="У Вас нет прав на прослушивание записей разговоров."/>
   <Local Name="Message.Warning.NotAccess.Special.SaveAsteriskRecord" Russian="У Вас нет прав на сохранение записей разговоров."/>
-  <Local Name="Message.Warning.NotAccess.Special.SendMessageToChat" Russian="У Вас нет прав на отправку сообщений в общий чат."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>
@@ -264,7 +260,6 @@
   <Local Name="Message.Question.ClearListNotifications" Russian="Очистить список уведомлений?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.FileRecordSaved" Russian="Запись разговора успешно сохранена! Воспроизвести её?"/>
-  <Local Name="Message.Question.OpenFileInChat" Russian="Открыть файл?"/>
   <Local Name="Message.Question.StopFullTextSearch" Russian="Остановить поиск?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
   <Local Name="Message.Question.NotSettingAdministratorInSettingDatabase" Russian="ВНИМАНИЕ! В настроках базы данных не настроен администратор системы. Сделать настройку сейчас?"/>
@@ -443,7 +438,6 @@
   <Local Name="Defer" Russian="Отложить"/>
   <Local Name="SelectDate" Russian="Выберите дату"/>
   <Local Name="Group" Russian="Группа"/>
-  <Local Name="Chat" Russian="Чат"/>
   <Local Name="ChangePassword" Russian="Смена пароля"/>
   <Local Name="PasswordCheck" Russian="Проверка пароля"/>
   <Local Name="CurrentPassword" Russian="Текущий пароль"/>
@@ -490,10 +484,6 @@
   <Local Name="IncorrectPassword" Russian="Неверный пароль"/>
   <Local Name="NewNotifications" Russian="У Вас есть непросмотренные уведомления: %1"/>
   <Local Name="IncomingCall" Russian="Входящий звонок"/>
-  <Local Name="MessageID" Russian="Номер сообщения: %1"/>
-  <Local Name="CiteCurrentMessage" Russian="Цитировать это сообщение"/>
-  <Local Name="SelectMessage" Russian="Выделить сообщение"/>
-  <Local Name="CopyMessage" Russian="Скопировать сообщение"/>
   <Local Name="SelectedRecords" Russian="Выбрано записей"/>
   <Local Name="SelectFrom" Russian="Выборка по"/>
   <Local Name="Status" Russian="Статус"/>
@@ -638,10 +628,6 @@
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
   <Local Name="ClickFromIncludeAndExcludeCore" Russian="Нажмите, чтобы включить или отключить ядро."/>
-  <Local Name="LinkToRecordInTable" Russian="Ссылка на запись из таблицы &quot;%1&quot;"/>
-  <Local Name="ClickFromOpenRecord" Russian="Нажмите, чтобы открыть запись"/>
-  <Local Name="ClickFromOpenImage" Russian="Нажмите, чтобы открыть изображение"/>
-  <Local Name="ClickFromOpenFile" Russian="Нажмите, чтобы открыть файл"/>
   <Local Name="ClickFromCheckLevelVolume" Russian="Нажмите, чтобы проверить уровень громкости"/>
   <Local Name="LoadDataPleceWait" Russian="Загрузка данных. Пожалуйста, подождите..."/>
   <Local Name="RecordMarkerIsDeleted" Russian="Запись помечена на удаление"/>
@@ -663,9 +649,6 @@
   <Local Name="AutoCloseIncomingForm" Russian="Окно будет автоматически закрыто через: %1 сек."/>
   <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
   <Local Name="SelectedUserGroupLeftFromAccessSetting" Russian="Выберите группу пользователей из списка слева, чтобы настроить ей права доступа."/>
-  <Local Name="OpeningLargeFilesMayTakeSomeTime" Russian="Открытие больших файлов может занять некоторое время."/>
-  <Local Name="MessageCopyToClipboard" Russian="Сообщение из общего чата скопировано в буфер обмена"/>
-  <Local Name="ClickFromOpenUrlInBrowser" Russian="Нажмите, чтобы открыть ссылку в браузере"/>
   <Local Name="DownloadingImage" Russian="Пожалуйста подождите, изображение скачивается..."/>
   <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается..."/>
   <Local Name="InputThisSearchQuery" Russian="Введите поисковый запрос"/>
@@ -687,22 +670,6 @@
   <Local Name="CalendarForm.Events" Russian="События на %1"/>
   <Local Name="CalendarForm.EnteringSearchQuery" Russian="Введите поисковый запрос (F8)"/>
   <Local Name="CalendarForm.SearchResults" Russian="Результаты поиска"/>
-  
-  <!--ChatForm-->
-  <Local Name="ChatForm.ShowMessages" Russian="Показывать"/>
-  <Local Name="ChatForm.AllMessages" Russian="Все сообщения"/>
-  <Local Name="ChatForm.Last10Messages" Russian="Последние 10 сообщений"/>
-  <Local Name="ChatForm.Last20Messages" Russian="Последние 20 сообщений"/>
-  <Local Name="ChatForm.Last100Messages" Russian="Последние 100 сообщений"/>
-  <Local Name="ChatForm.GroupBox.Title" Russian="Общий чат"/>
-  <Local Name="ChatForm.LoadingMessages" Russian="Загрузка сообщений..."/>
-  <Local Name="ChatForm.Attach" Russian="Прикрепить"/>
-  <Local Name="ChatForm.ClearAttach" Russian="Отменить прикрепление"/>
-  <Local Name="ChatForm.Send" Russian="Отправить"/>
-  <Local Name="ChatForm.Send.ToolTip" Russian="Отправить сообщение в чат"/>
-  <Local Name="ChatForm.InputMessage" Russian="Введите сообщение..."/>
-  <Local Name="ChatForm.Sending" Russian="Отправка сообщения..."/>
-  <Local Name="ChatForm.UnreadMessages" Russian="Имеются непрочитанные сообщения."/>
   
   <!--TelephonyForm-->
   <Local Name="TelephonyForm.Journal" Russian="Журнал звонков"/>

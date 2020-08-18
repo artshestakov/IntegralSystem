@@ -7,7 +7,6 @@
 #include "ISDesktopForm.h"
 #include "ISMenuBar.h"
 #include "ISCalendarForm.h"
-#include "ISChatForm.h"
 #include "ISWorkspaceForm.h"
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT ISMainWindow : public ISInterfaceForm
@@ -56,7 +55,6 @@ private:
 	ISDesktopForm *WidgetDesktop; //Виджет рабочего стола
 	ISWorkspaceForm *WorkspaceForm; //Виджет рабочей области
 	ISCalendarForm *CalendarForm; //Виджет календаря
-	ISChatForm *ChatForm; //Виджет чата
 	
 	QString CurrentParagraphUID;
 	bool ExitConfirm;

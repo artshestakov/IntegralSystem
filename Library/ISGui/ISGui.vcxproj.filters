@@ -390,9 +390,6 @@
     <ClCompile Include="ISCaratForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISChatForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISConnectionForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -580,9 +577,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISButtons.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISChatMessageWidget.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISContextMenu.cpp">
@@ -875,9 +869,6 @@
     <QtMoc Include="ISCaratForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISChatForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISConnectionForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -1065,9 +1056,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISButtons.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISChatMessageWidget.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISContextMenu.h">

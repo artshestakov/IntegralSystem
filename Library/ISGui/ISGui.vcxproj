@@ -193,8 +193,6 @@
     <ClCompile Include="ISCalendarPopup.cpp" />
     <ClCompile Include="ISCalendarWidget.cpp" />
     <ClCompile Include="ISCaratForm.cpp" />
-    <ClCompile Include="ISChatForm.cpp" />
-    <ClCompile Include="ISChatMessageWidget.cpp" />
     <ClCompile Include="ISCheckEdit.cpp" />
     <ClCompile Include="ISColorEdit.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
@@ -442,7 +440,6 @@
     <QtMoc Include="ISCalendarForm.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />
     <QtMoc Include="ISCaratForm.h" />
-    <QtMoc Include="ISChatForm.h" />
     <QtMoc Include="ISConnectionForm.h" />
     <QtMoc Include="ISControlDatabaseForm.h" />
     <QtMoc Include="ISDesktopForm.h" />
@@ -504,7 +501,6 @@
     <QtMoc Include="ISAddressBox.h" />
     <QtMoc Include="ISButtonDialog.h" />
     <QtMoc Include="ISButtons.h" />
-    <QtMoc Include="ISChatMessageWidget.h" />
     <QtMoc Include="ISContextMenu.h" />
     <QtMoc Include="ISDelegates.h" />
     <QtMoc Include="ISEdits.h" />

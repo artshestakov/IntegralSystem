@@ -10,7 +10,6 @@ class ISNotifyRecipient : public QObject
 signals:
 
 	//Персональные сигналы для нотификаций
-	void ChatMessage(const QVariantMap &VariantMap); //Сигнал о новом сообщении в чате
 	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
 	void CalendarEvent(const QVariantMap &VariantMap); //Сигнал о событии календаря
 

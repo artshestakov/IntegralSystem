@@ -36,7 +36,6 @@
 
   <_SettingsGroup IsSystem="true" UID="{8460DB7A-90FB-459E-8343-7A67529414C0}" Name="Sound" LocalName="Звуки" IconName="Settings.Sound" Hint="Использование звуков может повлиять на производительность программы." Order="6" System="true"/>
   <_Settings IsSystem="true" UID="{203F8364-B041-4C20-A7EF-E1FBA8CDB68B}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="1" Name="Volume" Type="Volume" LocalName="Громкость" DefaultValue="50"/>
-  <_Settings IsSystem="true" UID="{D2CACFDF-F703-4351-824D-34FDC05A3F17}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="2" Name="ChatMessage" Type="Bool" LocalName="Сообщение общего чата" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{70680EED-160D-45E9-8F79-D6CBDE8AA875}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="3" Name="CalendarEvent" Type="Bool" LocalName="Напоминание календаря" DefaultValue="true"/>
 
   <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="7" System="true"/>

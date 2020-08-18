@@ -289,28 +289,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_ChatMessages" UID="{BB885688-B656-401F-89F9-F09A3EFA801A}" Alias="chat" LocalName="Сообщение" LocalListName="Сообщения" TitleName="Message" IsSystem="true">
-    <Fields>
-      <Field UID="{8F11CF28-1E7D-4A4A-913A-BC1B27A01D8E}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{D0513D32-EB18-4954-96C6-3C0F0ED937EA}" Name="Message" Type="Text" LabelName="Сообщение" LocalListName="Сообщение"/>
-      <Field UID="{CB6BB213-F229-4D83-9200-9ACD0195A096}" Name="Image" Type="ByteArray" LabelName="Изображение" LocalListName="Изображение"/>
-      <Field UID="{2D383F28-66B0-4B94-9FC0-797C8AEA5408}" Name="File" Type="ByteArray" LabelName="Файл" LocalListName="Файл"/>
-      <Field UID="{E83EC488-4E13-4B0E-8342-1D71BA2B0D00}" Name="FileName" Type="String" LabelName="Наименование файла" LocalListName="Наименование файла"/>
-      <Field UID="{AA416590-6E53-43BD-BF34-FBC813C4B2AF}" Name="TableName" Type="String" LabelName="Наименование таблицы" LocalListName="Наименование таблицы"/>
-      <Field UID="{75E9752E-1F85-44B7-ADC0-E3F0E903BCF6}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="Message"/>
-      <Index Field="FileName"/>
-      <Index Field="TableName"/>
-      <Index Field="ObjectID"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_QuestionAnswerGroup" UID="{72608326-C278-4B2B-90E9-7E1226E3471E}" Alias="qagr" LocalName="Группа вопросов и ответов" LocalListName="Группы вопросов и ответов" TitleName="Name">
     <Fields>
       <Field UID="{DF41D6E7-AFB2-4A2F-87FA-C61DCFE531C5}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Автор" LocalListName="Автор" HideFromObject="true" NotNull="true"/>
