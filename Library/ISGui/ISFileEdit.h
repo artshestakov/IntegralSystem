@@ -27,6 +27,7 @@ private:
 	QVariantMap VariantMap;
 
 	ISPushButton *ButtonFile;
+	QMenu *Menu;
 	QAction *ActionSave;
 	QAction *ActionRename;
 };

@@ -19,13 +19,13 @@ ISFileEdit::ISFileEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ButtonFile->setCursor(CURSOR_POINTING_HAND);
 	ButtonFile->setText(LANG("FileNotSelected"));
 	ButtonFile->setToolTip(LANG("ClickFromSelectFile"));
-	ButtonFile->setMenu(new QMenu(ButtonFile));
 	connect(ButtonFile, &ISPushButton::clicked, this, &ISFileEdit::SelectFile);
 	AddWidgetEdit(ButtonFile, this);
 
-	ButtonFile->menu()->addAction(BUFFER_ICONS("Select"), LANG("Overview"), this, &ISFileEdit::SelectFile);
-	ActionSave = ButtonFile->menu()->addAction(BUFFER_ICONS("Save"), LANG("SaveToDisk"), this, &ISFileEdit::Save);
-	ActionRename = ButtonFile->menu()->addAction(BUFFER_ICONS("Edit"), LANG("Rename"), this, &ISFileEdit::Rename);
+	Menu = new QMenu(this);
+	Menu->addAction(BUFFER_ICONS("Select"), LANG("Overview"), this, &ISFileEdit::SelectFile);
+	ActionSave = Menu->addAction(BUFFER_ICONS("Save"), LANG("SaveToDisk"), this, &ISFileEdit::Save);
+	ActionRename = Menu->addAction(BUFFER_ICONS("Edit"), LANG("Rename"), this, &ISFileEdit::Rename);
 
 	ActionSave->setEnabled(false);
 	ActionRename->setEnabled(false);
@@ -39,6 +39,7 @@ ISFileEdit::~ISFileEdit()
 void ISFileEdit::SetValue(const QVariant &value)
 {
 	VariantMap = ISSystem::JsonStringToVariantMap(value.toString());
+	ButtonFile->setMenu(Menu);
 	ButtonFile->setText(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
 	ActionSave->setEnabled(true);
 	ActionRename->setEnabled(true);
@@ -58,6 +59,8 @@ QVariant ISFileEdit::GetValue() const
 void ISFileEdit::Clear()
 {
 	VariantMap.clear();
+	ButtonFile->setMenu(nullptr);
+	ButtonFile->setIcon(QIcon());
 	ButtonFile->setText(LANG("FileNotSelected"));
 	ActionSave->setEnabled(false);
 	ActionRename->setEnabled(false);
@@ -85,6 +88,7 @@ void ISFileEdit::SelectFile()
 			VariantMap[FILE_EDIT_PROPERTY_LOGO] = ISGui::PixmapToByteArray(IconFile.pixmap(ISDefines::Gui::SIZE_32_32)).toBase64();
 			VariantMap[FILE_EDIT_PROPERTY_DATA] = File.readAll().toBase64();
 			File.close();
+			ButtonFile->setMenu(Menu);
 			ButtonFile->setIcon(IconFile);
 			ButtonFile->setText(FileInfo.fileName());
 			ActionSave->setEnabled(true);
