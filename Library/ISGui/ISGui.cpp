@@ -27,12 +27,20 @@
 #include "ISLogger.h"
 #include "ISUserObjectForm.h"
 #include "ISAlgorithm.h"
+#include "ISUserRoleEntity.h"
+#include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _settingsdatabase WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
 static QString QU_OBJECT = "UPDATE %1 SET %2_deletiondate = now(), %2_deletionuser = CURRENT_USER WHERE %2_id = %3";
+//-----------------------------------------------------------------------------
+static QString QS_NOTE_OBJECT = PREPARE_QUERY("SELECT nobj_note FROM _noteobject WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");
+//-----------------------------------------------------------------------------
+static QString QU_NOTE_OBJECT = PREPARE_QUERY("UPDATE _noteobject SET nobj_note = :Note WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");
+//-----------------------------------------------------------------------------
+static QString QI_NOTE_OBJECT = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tablename, nobj_objectid, nobj_note) VALUES(:TableName, :ObjectID, :Note)");
 //-----------------------------------------------------------------------------
 static QString QS_TELEPHONY = PREPARE_QUERY("SELECT COUNT(*) "
 											"FROM _asteriskpattern "
@@ -544,6 +552,52 @@ ISImageViewerForm* ISGui::ShowImageForm(const QString &FilePath)
 ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 {
 	return ShowImageForm(ByteArrayToPixmap(ByteArray));
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID)
+{
+	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE)) //Если прав на изменение примечания нет - выходим
+	{
+		ISMessageBox::ShowWarning(parent, LANG("Message.Warning.NotAccess.Special.RecordNote"));
+		return;
+	}
+	
+	bool IsExist = false; //Флаг существования примечания
+
+	ISQuery qSelect(QS_NOTE_OBJECT);
+	qSelect.BindValue(":TableName", TableName);
+	qSelect.BindValue(":ObjectID", ObjectID);
+	if (!qSelect.ExecuteFirst()) //Вероятно примечание не существует - проверяем на ошибку
+	{
+		if (qSelect.GetErrorType() != QSqlError::NoError) //Есть ошибка
+		{
+			ISMessageBox::ShowCritical(parent, qSelect.GetErrorString());
+			return;
+		}
+	}
+	else
+	{
+		IsExist = true;
+	}
+
+	QString Note = qSelect.ReadColumn("nobj_note").toString();
+	bool Ok = true;
+	QString NewNote = ISInputDialog::GetText(LANG("Note"), LANG("InputNote") + ':', IsExist ? Note : QVariant(), Ok);
+	if (Ok && NewNote != Note) //Примечание введено
+	{
+		ISQuery qUpsert(IsExist ? QU_NOTE_OBJECT : QI_NOTE_OBJECT);
+		qUpsert.BindValue(":TableName", TableName);
+		qUpsert.BindValue(":ObjectID", ObjectID);
+		qUpsert.BindValue(":Note", NewNote.isEmpty() ? QVariant() : NewNote);
+		if (qUpsert.Execute()) //Запрос выполнен успешно - протоколируем
+		{
+			ISProtocol::Insert(true, IsExist ? CONST_UID_PROTOCOL_EDIT_NOTE_RECORD : CONST_UID_PROTOCOL_ADD_NOTE_RECORD, TableName, ISMetaData::Instance().GetMetaTable(TableName)->LocalListName, ObjectID);
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(parent, qUpsert.GetErrorString());
+		}
+	}
 }
 //-----------------------------------------------------------------------------
 bool ISGui::CheckSetupTelephony()

@@ -63,6 +63,8 @@ public:
 	static ISImageViewerForm* ShowImageForm(const QString &FilePath); //Показать изображение
 	static ISImageViewerForm* ShowImageForm(const QByteArray &ByteArray); //Показать изображение
 
+	static void ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID);
+
 	static bool CheckSetupTelephony(); //Проверка настроена ли телефония
 
 	static void ShowTaskViewForm(int TaskID); //Показать форму просмотра задачи по идентификатору

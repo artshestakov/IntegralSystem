@@ -24,7 +24,6 @@
 #include "ISPrintingEntity.h"
 #include "ISPrintForm.h"
 #include "ISDatabaseHelper.h"
-#include "ISNoteObjectForm.h"
 #include "ISDelegates.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
@@ -1264,7 +1263,8 @@ void ISListBaseForm::NavigationSelectLastRecord()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NoteObject()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE))
+	ISGui::ShowNoteObject(this, MetaTable->Name, GetObjectID());
+	/*if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.RecordNote"));
 		return;
@@ -1273,7 +1273,7 @@ void ISListBaseForm::NoteObject()
 	ISGui::SetWaitGlobalCursor(true);
 	ISNoteObjectForm NoteObjectForm(MetaTable->Name, GetObjectID());
 	ISGui::SetWaitGlobalCursor(false);
-	NoteObjectForm.Exec();
+	NoteObjectForm.Exec();*/
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AutoFitColumnWidth()

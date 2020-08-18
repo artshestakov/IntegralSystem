@@ -53,7 +53,6 @@
 	<Local Name="AgreementDateTimeFilter" Russian="Фильтр по дате договоренности"/>
 	<Local Name="CalculatePercentage" Russian="Расчёт процента заполнения организаций"/>
 	<Local Name="Dispatching" Russian="Отправка писем в организации..."/>
-	<Local Name="InputNote" Russian="Введите примечание"/>
   <Local Name="InputNoteFromDay" Russian="Введите заметку о дне"/>
 	<Local Name="CallToOrganization" Russian="Позвонить в организацию %1"/>
 	<Local Name="SelectUserFromOrganizationWork" Russian="Выберите пользователя для передачи выбранных (%1) организаций в работу"/>

@@ -23,7 +23,6 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
-#include "ISNoteObjectForm.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISInterfaceForm(parent),
@@ -1052,16 +1051,7 @@ void ISObjectFormBase::CancelChanged()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::NoteObject()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.RecordNote"));
-		return;
-	}
-
-	ISGui::SetWaitGlobalCursor(true);
-	ISNoteObjectForm NoteObjectForm(MetaTable->Name, GetObjectID());
-	ISGui::SetWaitGlobalCursor(false);
-	NoteObjectForm.Exec();
+	ISGui::ShowNoteObject(this, MetaTable->Name, ObjectID);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddActionToolBar(QAction *Action, bool AddingToActionGroup)

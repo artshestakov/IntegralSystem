@@ -64,6 +64,17 @@ QString ISInputDialog::GetText(const QString &Title, const QString &LabelText, c
 	return QString();
 }
 //-----------------------------------------------------------------------------
+QString ISInputDialog::GetText(const QString &Title, const QString &LabelText, const QVariant &Value, bool &Ok)
+{
+	ISInputDialog InputDialog(ISNamespace::FT_Text, Title, LabelText, Value);
+	Ok = InputDialog.Exec();
+	if (Ok)
+	{
+		return InputDialog.GetValue().toString();
+	}
+	return QString();
+}
+//-----------------------------------------------------------------------------
 int ISInputDialog::GetInteger(const QString &Title, const QString &LabelText, int Minimum, int Maximum, const QVariant &Value)
 {
 	ISInputDialog InputDialog(ISNamespace::FT_Int, Title, LabelText, Value);

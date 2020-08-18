@@ -426,9 +426,6 @@
     <ClCompile Include="ISMonitorActivityForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISNoteObjectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISParagraphBaseForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -891,9 +888,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISMonitorActivityForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISNoteObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISParagraphBaseForm.h">

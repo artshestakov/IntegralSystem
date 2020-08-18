@@ -130,6 +130,7 @@
       <Index Field="TableName"/>
       <Index Field="ObjectID"/>
       <Index Field="Note"/>
+      <Index Field="TableName;ObjectID" Unique="true"/>
     </Indexes>
   </Table>
 

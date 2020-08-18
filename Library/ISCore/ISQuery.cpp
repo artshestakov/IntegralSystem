@@ -238,6 +238,11 @@ QString ISQuery::GetErrorString()
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
+QSqlError::ErrorType ISQuery::GetErrorType() const
+{
+	return SqlQuery.lastError().type();
+}
+//-----------------------------------------------------------------------------
 int ISQuery::GetErrorNumber() const
 {
     return SqlQuery.lastError().number();
