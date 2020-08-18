@@ -25,9 +25,6 @@
     <Filter Include="Network">
       <UniqueIdentifier>{e4784d47-59e4-4c39-956f-f5725430d28f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Notify">
-      <UniqueIdentifier>{fc7646d5-fb0e-4e1e-8d25-5b5305ac79fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{3c8bb7e9-794e-4dbf-a0c9-e51c3f514b88}</UniqueIdentifier>
     </Filter>
@@ -95,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="ISRestWorker.cpp">
       <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="ISNotifySender.cpp">
-      <Filter>Notify</Filter>
     </ClCompile>
     <ClCompile Include="ISSettings.cpp">
       <Filter>Settings</Filter>
@@ -346,9 +340,6 @@
     </QtMoc>
     <QtMoc Include="ISRestWorker.h">
       <Filter>Network</Filter>
-    </QtMoc>
-    <QtMoc Include="ISNotifySender.h">
-      <Filter>Notify</Filter>
     </QtMoc>
     <QtMoc Include="ISTcpConnector.h">
       <Filter>Protocol</Filter>

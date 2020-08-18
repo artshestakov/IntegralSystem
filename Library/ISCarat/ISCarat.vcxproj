@@ -170,7 +170,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtMoc Include="ISCoreNotification.h" />
     <QtMoc Include="ISCaratCoreApplication.h" />
     <QtMoc Include="ISCoreTelephony.h" />
     <QtMoc Include="ISAsteriskSocket.h" />
@@ -187,7 +186,6 @@
     <ClCompile Include="ISCoreAsteriskRecord.cpp" />
     <ClCompile Include="ISCoreCalendar.cpp" />
     <ClCompile Include="ISCoreMedTech.cpp" />
-    <ClCompile Include="ISCoreNotification.cpp" />
     <ClCompile Include="ISCoreTelephony.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

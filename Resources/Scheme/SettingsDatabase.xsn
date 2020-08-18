@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="SettingsDatabase.xsn">
 
-  <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="SettingName" ObjectForm="ISSettingsDatabaseObjectForm" IsSystem="true">
+  <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="SettingName" IsSystem="true">
     <Fields>
       <!--Главное-->
       <Field UID="{4C9623ED-981E-44A5-B3E0-3083F90748EF}" Name="SettingName" Type="String" LabelName="Наименование настройки" LocalListName="Наименование настройки" HideFromObject="true"/>

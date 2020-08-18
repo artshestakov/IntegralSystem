@@ -230,12 +230,6 @@ const char CONST_UID_TASK_STATUS_IN_WORK[] = "{72BEB1A3-0491-4932-AAA0-5725DA41A
 const char CONST_UID_TASK_STATUS_DONE[] = "{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}"; //Выполнена
 const char CONST_UID_TASK_STATUS_CLOSE[] = "{1617EC4F-50F6-4912-8143-4D702E1F5F8F}"; //Закрыта
 //-----------------------------------------------------------------------------
-const char CONST_UID_NOTIFY_USER_CHANGED[] = "{C1141CF5-8E95-4793-841A-2E1E8270A2F3}";
-const char CONST_UID_NOTIFY_SETTINGS_DATABASE_CHANGED[] = "{721777DC-65D9-43DE-97F0-D50DAED2F4C2}";
-const char CONST_UID_NOTIFY_INCOMING_CALL[] = "{BAD25391-7009-472C-A7E4-A89106CB7904}";
-const char CONST_UID_NOTIFY_CALENDAR_EVENT[] = "{3FF15EBE-43BD-4B2A-9E45-CA53E1CE1F54}";
-const char CONST_UID_NOTIFY_USER_MESSAGE[] = "{3C0EAFD8-1FC0-48F7-9BF2-D8E8E5875390}";
-//-----------------------------------------------------------------------------
 const char CONST_UID_ASTERISK_DIRECTION_INCOMING[] = "{EB1D0FC1-6F56-406F-9819-9C71990998EC}"; //Входящий
 const char CONST_UID_ASTERISK_DIRECTION_OUTGOING[] = "{3E1A44EB-74FD-48A2-A472-FB5B0225DAE9}"; //Исходящий
 const char CONST_UID_ASTERISK_DIRECTION_INTERNAL[] = "{660C2835-7624-4A95-A742-525152A0E253}"; //Внутренний вызов
@@ -347,7 +341,5 @@ const char CONST_CONFIG_CONNECTION_LOGIN[] = "Connection/Login";
 const char CONST_CONFIG_CONNECTION_PASSWORD[] = "Connection/Password";
 const char CONST_CONFIG_REMEMBER_USER_INCLUDE[] = "RememberUser/Include";
 const char CONST_CONFIG_REMEMBER_USER_LOGIN[] = "RememberUser/Login";
-const char CONST_CONFIG_OTHER_NOTIFICATIONFORMSIZEWIDTH[] = "Other/NotificationFormSizeWidth";
-const char CONST_CONFIG_OTHER_NOTIFICATIONFORMSIZEHEIGHT[] = "Other/NotificationFormSizeHeight";
 //-----------------------------------------------------------------------------
 #endif

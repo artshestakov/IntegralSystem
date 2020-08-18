@@ -222,7 +222,6 @@
     <ClCompile Include="ISMetaUuidCheckeder.cpp" />
     <ClCompile Include="ISMetaViewQuery.cpp" />
     <ClCompile Include="ISNetwork.cpp" />
-    <ClCompile Include="ISNotifySender.cpp" />
     <ClCompile Include="ISPhoneNumberParser.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocol.cpp" />
@@ -296,7 +295,6 @@
     <ClInclude Include="ISSettingsDatabase.h" />
     <ClInclude Include="ISStackWalker.h" />
     <ClInclude Include="StackWalker.h" />
-    <QtMoc Include="ISNotifySender.h" />
     <QtMoc Include="ISRestWorker.h" />
     <QtMoc Include="ISNetwork.h" />
     <QtMoc Include="ISAuthConnector.h" />

@@ -27,18 +27,13 @@ public:
 	ISParagraphButton* GetParagraphButton(const ISUuid &ParagraphUID);
 	void ButtonParagraphClicked(const ISUuid &ClickedParagraphUID);
 
-	ISButtonNotify* GetbuttonNotify(); //Получить указатель на кнопку уведомлений
-
 private:
 	QToolButton* CreateButton(const QString &ToolTip, const QString &IconName);
 	void ButtonParagraphClicked();
 
 private:
 	QHBoxLayout *LayoutButtons;
-
 	ISButtonMainMenu *ButtonMenu;
-	ISButtonNotify *ButtonNotify;
-
 	QMap<ISUuid, ISParagraphButton*> ParagraphButtons;
 };
 //-----------------------------------------------------------------------------

@@ -456,23 +456,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="_Notification" UID="{DFE4E7BD-F34F-4E0D-A93A-0E72AC61E219}" Alias="ntfn" LocalName="Уведомление" LocalListName="Уведомления" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{C4B33BDB-009B-43D7-87E2-3155EC75C25F}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{FA703B19-CE98-4D06-90A0-4C560BDBB1FF}" Name="Message" Type="String" LabelName="Описание" LocalListName="Описание" NotNull="true"/>
-      <Field UID="{12AC8926-0B5E-487B-B83E-7DCC73AB194D}" Name="SoundFileName" Type="String" LabelName="Путь к звуковому файлу" LocalListName="Путь к звуковому файлу"/>
-      <Field UID="{1019C296-E825-4E3A-BF99-ECD75E79EDD0}" Name="SignalName" Type="String" LabelName="Наименование сигнала" LocalListName="Наименование сигнала"/>
-      <Field UID="{CC27C96C-1B08-4CF8-836E-8DF927AADDAB}" Name="ShowPopup" Type="Bool" DefaultValue="false" LabelName="Показывать уведомление" LocalListName="Показывать уведомление"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Message"/>
-      <Index Field="SoundFileName"/>
-      <Index Field="SignalName"/>
-      <Index Field="ShowPopup"/>
-    </Indexes>
-  </Table>
-  
   <Table Name="_FullSearchTextHistory" UID="{429C3330-5CEB-4374-97B1-D876621F0624}" Alias="fsth" LocalName="История полнотекстового поиска" LocalListName="История полнотекстового поиска" TitleName="Value" IsSystem="true">
     <Fields>
       <Field UID="{DD1BF6FF-B399-4B23-ACBD-E2DA4429A1EC}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
@@ -484,30 +467,6 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
-    </Foreigns>
-  </Table>
-
-  <Table Name="_NotificationUser" UID="{790D1FBE-DEB6-41F8-8533-78BE92066BF2}" Alias="ntfu" LocalName="Уведомление пользователя" LocalListName="Уведомления пользователей" TitleName="NotificationID" IsSystem="true">
-    <Fields>
-      <Field UID="{D9558125-E14B-4664-A8F5-6CB9C7D8962F}" Name="NotificationID" Type="Int" LabelName="Уведомление" LocalListName="Уведомление" NotNull="true"/>
-      <Field UID="{3436147C-EFCB-4C5D-A1E5-CE7C3BDB5234}" Name="UserTo" Type="Int" LabelName="Для пользователя" LocalListName="Для пользователя"/>
-      <Field UID="{28C4AE92-5CFF-4F9A-9FAE-9B3A7C713C32}" Name="Payload" Type="String" LabelName="Данные уведомления" LocalListName="Данные уведомления"/>
-      <Field UID="{1C144A57-6C88-4980-8DAE-B5F75BE77E2D}" Name="String" Type="ByteArray" LabelName="Данные" LocalListName="Данные" Hint="Строка, которая будет отображаться в всплывающем виджете"/>
-      <Field UID="{EF2722AD-BEE8-4045-A2C9-6C6D1D0D1165}" Name="Sended" Type="Bool" DefaultValue="false" LabelName="Уведомление отправлено" LocalListName="Уведомление отправлено"/>
-      <Field UID="{0A7B0337-2FAC-47D0-881E-FF353565ACF3}" Name="Save" Type="Bool" DefaultValue="false" LabelName="Сохранять уведмоление в базе" LocalListName="Сохранять уведмоление в базе" Hint="Если значение этого поля true - пользователь получит уведомление даже если был офлайн, иначе - уведомление будет удалено после того как было отправлено"/>
-    </Fields>
-    <Indexes>
-      <Index Field="NotificationID"/>
-      <Index Field="UserTo"/>
-      <Index Field="Payload"/>
-      <Index Field="String"/>
-      <Index Field="Sended"/>
-      <Index Field="Save"/>
-      <Index Field="ID;Sended"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="NotificationID" ForeignClass="_Notification" ForeignField="ID" ForeignViewNameField="ID"/>
-      <Foreign Field="UserTo" ForeignClass="_Users" ForeignField="ID"/>
     </Foreigns>
   </Table>
 

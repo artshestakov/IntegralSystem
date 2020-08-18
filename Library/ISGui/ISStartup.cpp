@@ -5,7 +5,6 @@
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"
-#include "ISNotifySender.h"
 #include "ISFavorites.h"
 #include "ISColumnSizer.h"
 #include "ISUserRoleEntity.h"
@@ -83,9 +82,6 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	
 	//Инициалищация печати
 	ISPrintingEntity::GetInstance();
-
-	//Инициализация нотификаций
-	ISNotifySender::GetInstance().Initialize();
 
 	//Инициализация избранного
 	ISFavorites::GetInstance().Initialize();

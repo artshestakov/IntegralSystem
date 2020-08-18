@@ -11,7 +11,6 @@ signals:
 	void ShowUserCard();
 	void ShowProtocol();
 	void ShowDetails();
-	void SendNotify();
 
 public:
 	ISMonitorUserWidget(bool is_online, int user_id, const QString &user_name, QWidget *parent = 0);

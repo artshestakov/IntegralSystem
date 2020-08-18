@@ -52,18 +52,6 @@ struct ISMetaUserData
     bool GroupFullAccess; //Полный доступ
 };
 //-----------------------------------------------------------------------------
-struct ISCORE_EXPORT ISMetaNotify
-{
-    ISMetaNotify() : ShowPopup(true) { }
-
-    ISUuid UID;
-    QString Name;
-    QString SoundFileName;
-    QString MessageNotify;
-    QString SignalName;
-    bool ShowPopup;
-};
-//-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISMetaSetting
 {
     ISMetaSetting() : SettingType(ISNamespace::FT_Unknown) { }

@@ -336,9 +336,6 @@
     <ClCompile Include="ISMetaSystemsEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISNotifyRecipient.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISParagraphEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -432,9 +429,6 @@
     <ClCompile Include="ISNoteObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISNotificationsForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISParagraphBaseForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -457,9 +451,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISSearchForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSettingsDatabaseObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISSettingsForm.cpp">
@@ -601,9 +592,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISMonitorUserWidget.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISNotifyWidgetItem.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISPageNavigation.cpp">
@@ -833,9 +821,6 @@
     <QtMoc Include="ISMediaPlayer.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISNotifyRecipient.h">
-      <Filter>System</Filter>
-    </QtMoc>
     <QtMoc Include="ISAboutForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -911,9 +896,6 @@
     <QtMoc Include="ISNoteObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISNotificationsForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISParagraphBaseForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -936,9 +918,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISSearchForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSettingsDatabaseObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISSettingsForm.h">
@@ -1080,9 +1059,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISMonitorUserWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISNotifyWidgetItem.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISPageNavigation.h">

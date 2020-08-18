@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
-#include "ISNotifySender.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_id, cldr_user, userfullname(cldr_user), cldr_name "
@@ -45,11 +44,8 @@ void ISCoreCalendar::Timeout()
 		while (qSelectEvents.Next())
 		{
 			int EventID = qSelectEvents.ReadColumn("cldr_id").toInt();
-            //int UserID = qSelectEvents.ReadColumn("cldr_user").toInt();
 			QString UserName = qSelectEvents.ReadColumn("userfullname").toString();
 			QString Name = qSelectEvents.ReadColumn("cldr_name").toString();
-
-			//ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_CALENDAR_EVENT, UserID, EventID, Name, false);
 			ISLOGGER_L("Sended reminder \"" + QString::number(EventID) + "\" for: " + UserName);
 		}
 	}

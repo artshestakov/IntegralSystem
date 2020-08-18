@@ -18,8 +18,6 @@
 #include "ISConstants.h"
 #include "ISHistoryForm.h"
 #include "ISParagraphEntity.h"
-#include "ISNotifyRecipient.h"
-#include "ISNotifySender.h"
 #include "ISPopupMessage.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISIncomingCallBaseForm.h"
@@ -42,9 +40,6 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	CreateMenuBar();
 	CreateInformationMessage();
 	CreateStackWidget();
-
-	//¬ход€щий звонок
-	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::IncomingCall, this, &ISMainWindow::IncomingCall);
 }
 //-----------------------------------------------------------------------------
 ISMainWindow::~ISMainWindow()
@@ -92,14 +87,6 @@ void ISMainWindow::AfterShowEvent()
 	}
 
 	QTimer::singleShot(3000, this, &ISMainWindow::InitializePlugin);
-	
-	int NewNotifyCount = ISNotifySender::GetInstance().GetNewNotify();
-	if (NewNotifyCount)
-	{
-		MenuBar->GetbuttonNotify()->SetCountNotify(NewNotifyCount);
-		ISPopupMessage::ShowNotification(LANG("NewNotifications").arg(NewNotifyCount));
-		QApplication::beep();
-	}
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::CreateMenuBar()
@@ -207,6 +194,8 @@ void ISMainWindow::InitializePlugin()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ChangeUser()
 {
+	ISGui::ShowTaskViewForm(13);
+	return;
 	ExitConfirm = false;
 	SetVisibleShadow(true);
 	bool Change = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser"));

@@ -23,9 +23,6 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	MainLayout->addWidget(ButtonMenu);
 
-	ButtonNotify = new ISButtonNotify(this);
-	MainLayout->addWidget(ButtonNotify);
-
 	//Меню "Сервис"
 	QMenu *MenuService = ButtonMenu->menu()->addMenu(BUFFER_ICONS("MainMenuItem"), LANG("Service"));
 
@@ -103,11 +100,6 @@ ISParagraphButton* ISMenuBar::GetParagraphButton(const ISUuid &ParagraphUID)
 void ISMenuBar::ButtonParagraphClicked(const ISUuid &ClickedParagraphUID)
 {
 	ParagraphButtons.value(ClickedParagraphUID)->Clicked();
-}
-//-----------------------------------------------------------------------------
-ISButtonNotify* ISMenuBar::GetbuttonNotify()
-{
-	return ButtonNotify;
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &IconName)

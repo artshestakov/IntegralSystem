@@ -5,11 +5,11 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QString &user_name, QWidget *parent) : QFrame(parent)
+ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QString &user_name, QWidget *parent)
+	: QFrame(parent),
+	UserID(user_id),
+	UserName(user_name)
 {
-	UserID = user_id;
-	UserName = user_name;
-
 	setFrameShape(QFrame::Box);
 	setFrameShadow(QFrame::Plain);
 	setAutoFillBackground(true);
@@ -53,13 +53,6 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	ActionDetails->setEnabled(is_online);
 	connect(ActionDetails, &QAction::triggered, this, &ISMonitorUserWidget::ShowDetails);
 	addAction(ActionDetails);
-
-	QAction *ActionSendNotify = new QAction(this);
-	ActionSendNotify->setText(LANG("SendNotify"));
-	ActionSendNotify->setIcon(BUFFER_ICONS("SendNotify"));
-	ActionSendNotify->setEnabled(is_online);
-	connect(ActionSendNotify, &QAction::triggered, this, &ISMonitorUserWidget::SendNotify);
-	addAction(ActionSendNotify);
 }
 //-----------------------------------------------------------------------------
 ISMonitorUserWidget::~ISMonitorUserWidget()

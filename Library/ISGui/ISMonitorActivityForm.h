@@ -22,7 +22,6 @@ protected:
 	void ShowUserCard(); //Показать карточку пользователя
 	void ShowProtocol(); //Просмотр протокола
 	void ShowDetails(); //Просмотр подробностей
-	void SendNotify(); //Отправить уведомление
 
 private:
 	ISCheckEdit *CheckEdit;

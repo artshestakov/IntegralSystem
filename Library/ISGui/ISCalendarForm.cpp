@@ -9,7 +9,6 @@
 #include "ISMessageBox.h"
 #include "ISCalendarEventForm.h"
 #include "ISInputDialog.h"
-#include "ISNotifyRecipient.h"
 #include "ISCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
@@ -36,12 +35,10 @@ static QString QS_CALENDAR_SEARCH = PREPARE_QUERY("SELECT cldr_id, cldr_date, cl
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR_EVENT_DATE = PREPARE_QUERY("SELECT cldr_date FROM _calendar WHERE cldr_id = :CalendarID");
 //-----------------------------------------------------------------------------
-ISCalendarForm::ISCalendarForm(QWidget *parent) : ISParagraphBaseForm(parent)
+ISCalendarForm::ISCalendarForm(QWidget *parent)
+	: ISParagraphBaseForm(parent),
+	FirstUpdate(false)
 {
-	FirstUpdate = false;
-
-	connect(&ISNotifyRecipient::GetInstance(), &ISNotifyRecipient::CalendarEvent, this, &ISCalendarForm::CalendarEvent);
-
 	MainLayout = new QHBoxLayout();
 	setLayout(MainLayout);
 

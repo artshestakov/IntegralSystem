@@ -17,9 +17,6 @@
     <Filter Include="MedTech">
       <UniqueIdentifier>{b52abdd0-80a6-49d5-ad05-759b5b475cb6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Notification">
-      <UniqueIdentifier>{c1b11f5f-1b90-483f-a65f-6846e5e6ce59}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{b51414ae-710e-4832-9498-8006aea58d8a}</UniqueIdentifier>
     </Filter>
@@ -52,9 +49,6 @@
     <ClCompile Include="ISCaratCoreApplication.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISCoreNotification.cpp">
-      <Filter>Notification</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCoreAsteriskQueue.h">
@@ -77,9 +71,6 @@
     </QtMoc>
     <QtMoc Include="ISCaratCoreApplication.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCoreNotification.h">
-      <Filter>Notification</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

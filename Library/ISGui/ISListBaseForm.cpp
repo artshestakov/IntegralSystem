@@ -32,7 +32,6 @@
 #include "ISColumnSizer.h"
 #include "ISInputDialog.h"
 #include "ISExportWorker.h"
-#include "ISNotifySender.h"
 #include "ISExportCSV.h"
 #include "ISExportHTML.h"
 #include "ISExportDBF.h"

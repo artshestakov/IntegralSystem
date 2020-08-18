@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="Carat.xsr">
 
-  <_CaratCore IsSystem="true" UID="{C73E4C8C-1730-4B0D-A343-9AF42B374A4E}" Name="Notification" FileName="CaratNotification" LocalName="Уведомления" Priority="1"/>
-  <_CaratCore IsSystem="true" UID="{DAE9F647-7003-4D4C-8480-332285B483EE}" Name="Calendar" FileName="CaratCalendar" LocalName="Календарь" Priority="2"/>
-  <_CaratCore IsSystem="true" UID="{9940FB09-760D-4760-BBFC-9E1F7EACDCFD}" Name="Mail" FileName="CaratMail" LocalName="Рассылка электронной почты" Priority="3"/>
-  <_CaratCore IsSystem="true" UID="{008D2968-B40D-43C5-9465-08C22F76AD56}" Name="Telephony" FileName="CaratTelephony" LocalName="IP-Телефония" Priority="4"/>
-  <_CaratCore IsSystem="true" UID="{1A8A6EC6-0A40-4BCD-B8A8-779DC80A5919}" Name="AsteriskRecord" FileName="CaratAsteriskRecord" LocalName="Записи разговоров Asterisk" Priority="5"/>
-  <_CaratCore IsSystem="true" UID="{88D14D4A-7778-495C-8118-C33984B980AE}" Name="AsteriskQueue" FileName="CaratAsteriskQueue" LocalName="Очередь событий Asterisk" Priority="6"/>
+  <_CaratCore IsSystem="true" UID="{DAE9F647-7003-4D4C-8480-332285B483EE}" Name="Calendar" FileName="CaratCalendar" LocalName="Календарь" Priority="1"/>
+  <_CaratCore IsSystem="true" UID="{9940FB09-760D-4760-BBFC-9E1F7EACDCFD}" Name="Mail" FileName="CaratMail" LocalName="Рассылка электронной почты" Priority="2"/>
+  <_CaratCore IsSystem="true" UID="{008D2968-B40D-43C5-9465-08C22F76AD56}" Name="Telephony" FileName="CaratTelephony" LocalName="IP-Телефония" Priority="3"/>
+  <_CaratCore IsSystem="true" UID="{1A8A6EC6-0A40-4BCD-B8A8-779DC80A5919}" Name="AsteriskRecord" FileName="CaratAsteriskRecord" LocalName="Записи разговоров Asterisk" Priority="4"/>
+  <_CaratCore IsSystem="true" UID="{88D14D4A-7778-495C-8118-C33984B980AE}" Name="AsteriskQueue" FileName="CaratAsteriskQueue" LocalName="Очередь событий Asterisk" Priority="5"/>
 
 </XSR>

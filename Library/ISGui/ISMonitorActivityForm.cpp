@@ -11,13 +11,11 @@
 #include "ISLineEdit.h"
 #include "ISUserOnlineDetailsForm.h"
 #include "ISMessageBox.h"
-#include "ISNotifySender.h"
 #include "ISDatabase.h"
 #include "ISMetaUser.h"
 #include "ISProtocol.h"
 #include "ISUserRoleEntity.h"
 #include "ISSettings.h"
-#include "ISNotifyRecipient.h"
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
@@ -100,7 +98,6 @@ void ISMonitorActivityForm::LoadData()
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivityForm::ShowUserCard);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowDetails, this, &ISMonitorActivityForm::ShowDetails);
-			connect(MonitorUserWidget, &ISMonitorUserWidget::SendNotify, this, &ISMonitorActivityForm::SendNotify);
 			ScrollArea->widget()->layout()->addWidget(MonitorUserWidget);
 			MonitorUserWidget->adjustSize();
 
@@ -191,19 +188,6 @@ void ISMonitorActivityForm::ShowDetails()
 		ISUserOnlineDetailsForm UserOnlineDetailsForm(MonitorUserWidget->GetUserID());
 		ISGui::SetWaitGlobalCursor(false);
 		UserOnlineDetailsForm.Exec();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISMonitorActivityForm::SendNotify()
-{
-	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
-	if (MonitorUserWidget)
-	{
-		QVariant NotifyText = ISInputDialog::GetText(LANG("Notify"), LANG("NotifyText") + ':');
-		if (NotifyText.isValid())
-		{
-			//ISNotifySender::GetInstance().SendToUser(CONST_UID_NOTIFY_USER_MESSAGE, MonitorUserWidget->GetUserID(), QVariant(), LANG("NotifyUserMessage").arg(ISMetaUser::Instance().UserData->FullName).arg(NotifyText.toString()), true);
-		}
 	}
 }
 //-----------------------------------------------------------------------------

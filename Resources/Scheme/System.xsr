@@ -54,12 +54,6 @@
   <_DaysWeek IsSystem="true" UID="{AFFE23A7-8990-47C8-BAF2-2600F2F44B01}" Name="Суббота" Number="6"/>
   <_DaysWeek IsSystem="true" UID="{6DBF2B0A-818E-47E9-B049-A75F8288CBCE}" Name="Воскресенье" Number="7"/>
   
-  <_Notification IsSystem="true" UID="{C1141CF5-8E95-4793-841A-2E1E8270A2F3}" Name="UserChanged" Message="Данные Вашей учётной записи были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{721777DC-65D9-43DE-97F0-D50DAED2F4C2}" Name="SettingsDatabaseChanged" Message="Настройки базы данных были изменены, рекомендуется перезайти в программу." SoundFileName="Information" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{BAD25391-7009-472C-A7E4-A89106CB7904}" Name="IncomingCall" Message="Входящий звонок" SignalName="IncomingCall" ShowPopup="false"/>
-  <_Notification IsSystem="true" UID="{3FF15EBE-43BD-4B2A-9E45-CA53E1CE1F54}" Name="CalendarEvent" Message="Напоминание" SignalName="CalendarEvent" ShowPopup="true"/>
-  <_Notification IsSystem="true" UID="{3C0EAFD8-1FC0-48F7-9BF2-D8E8E5875390}" Name="UserMessage" Message="Уведомление" SoundFileName="Information" ShowPopup="true"/>
-
   <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
   <_ProtocolType IsSystem="true" UID="{E9461667-E1CA-4C22-907B-FDC350A931C4}" Name="Выход из программы"/>
   <_ProtocolType IsSystem="true" UID="{D1348312-298F-4A7C-B584-9BA8C4952CD3}" Name="Добавление новой записи"/>
