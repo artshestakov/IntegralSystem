@@ -48,6 +48,10 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 		Result.setValue<QString>(QString::fromStdString(ISAlgorithm::PrepareDouble(Value.toDouble(), SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))));
 		Result = Result.toString(); //Необходимо для адекватного отображения в модели
 	}
+	else if (Type == ISNamespace::FT_UID)
+	{
+		Result = ISUuid(Result);
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
