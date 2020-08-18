@@ -912,22 +912,18 @@ void ISListBaseForm::Delete()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG(show_is_deleted ? "Message.Objects.Recovery" : "Message.Objects.Delete").arg(VectorInt.size())))
 		{
-			ISProgressForm ProgressForm(VectorInt.size(), LANG("DeletingObjects"), this);
-			ProgressForm.show();
-			for (int i = 0; i < VectorInt.size(); ++i)
+			if (ISCore::SetIsDeletedObjects(!show_is_deleted, MetaTable, VectorInt, ErrorString))
 			{
-				if (ProgressForm.wasCanceled())
+				Update();
+				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 				{
-					break;
+					ISPopupMessage::ShowNotification(LANG(show_is_deleted ? "NotificationForm.Title.Recoverys" : "NotificationForm.Title.Deleteds"));
 				}
-
-				if (!ISCore::SetIsDeletedObject(!show_is_deleted, MetaTable, VectorInt[i], ErrorString))
-				{
-					ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
-				}
-				ProgressForm.IncrementValue();
 			}
-			Update();
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
+			}
 		}
 	}
 	VisibleIndicatorWidget();

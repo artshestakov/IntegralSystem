@@ -613,7 +613,6 @@
   
   <Local Name="ThisActionCanNotUndone" Russian="Это действие нельзя отменить."/>
   <Local Name="ClickToViewHelp" Russian="Нажмите, чтобы просмотреть дополнительную информацию."/>
-  <Local Name="DeletingObjects" Russian="Удаление записей..."/>
   <Local Name="RecoveryObjects" Russian="Восстановление %1 из %2 записей"/>
   <Local Name="DeletingCascadeObjects" Russian="Каскадное удаление записей"/>
   <Local Name="DeletingFiles" Russian="Удаление %1 из %2 файлов"/>
@@ -778,6 +777,8 @@
   <Local Name="NotificationForm.Title.Deleted" Russian="Установлена пометка удаления"/>
   <Local Name="NotificationForm.Title.Deleted.Cascade" Russian="Запись с кодом %1 удалена каскадно"/>
   <Local Name="NotificationForm.Title.Recovery" Russian="Пометка удаления снята"/>
+  <Local Name="NotificationForm.Title.Recoverys" Russian="Пометка удаления снята с выбранных записей"/>
+  <Local Name="NotificationForm.Title.Deleteds" Russian="Установлена пометка удаления на выбранные записи"/>
   <Local Name="NotificationForm.WindowTitle" Russian="Уведомление"/>
   
   <!--Settings-->
