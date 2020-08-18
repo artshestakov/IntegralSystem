@@ -194,8 +194,6 @@ void ISMainWindow::InitializePlugin()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ChangeUser()
 {
-	ISGui::ShowTaskViewForm(13);
-	return;
 	ExitConfirm = false;
 	SetVisibleShadow(true);
 	bool Change = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeUser"));

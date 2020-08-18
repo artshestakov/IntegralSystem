@@ -1265,5 +1265,6 @@
   <Local Name="NormalSize" Russian="Нормальный размер"/>
   <Local Name="FitToWindow" Russian="Подогнать"/>
   <Local Name="PleaseWait" Russian="Пожалуйста, подождите..."/>
+  <Local Name="NoteObject" Russian="Примечание записи"/>
 
 </Localization>

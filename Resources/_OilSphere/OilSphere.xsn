@@ -343,7 +343,7 @@
       <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" NotNull="true" LayoutName="Date"/>
       <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" LayoutName="Date"/>
       <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" NotNull="true" LayoutName="Coming"/>
-      <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocaListName="Процент" NotNull="true" LayoutName="Coming"/>
+      <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" NotNull="true" LayoutName="Coming"/>
       <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Double" ReadOnly="true" LabelName="Итого" LocalListName="Итого" NotNull="true" LayoutName="Coming"/>
       <Field UID="{FE1EFFD3-5F14-42AC-89CB-2968BFC52744}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
       <Field UID="{6D8CF294-D4E5-4026-9056-68CC4DFCFDB0}" Name="Calculation" Type="Double" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
