@@ -36,7 +36,7 @@ ISDesktopForm::ISDesktopForm(QWidget *parent)
 	}
 	else
 	{
-		if (ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_DESKTOP))
+		if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_DESKTOP))
 		{
 			DesktopWidget = ISAlgorithm::CreatePointer<QWidget *>(DesktopFormName, Q_ARG(QWidget *, this));
 			MainLayout->addWidget(DesktopWidget);

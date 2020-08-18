@@ -59,7 +59,7 @@ ISUserRoleEntity::~ISUserRoleEntity()
 
 }
 //-----------------------------------------------------------------------------
-ISUserRoleEntity& ISUserRoleEntity::GetInstance()
+ISUserRoleEntity& ISUserRoleEntity::Instance()
 {
 	static ISUserRoleEntity UserRoleEntity;
 	return UserRoleEntity;
@@ -77,7 +77,6 @@ bool ISUserRoleEntity::CheckExistSubSystemAccess(int GroupID, const ISUuid &SubS
 			return true;
 		}
 	}
-
 	return false;
 }
 //-----------------------------------------------------------------------------
@@ -110,7 +109,6 @@ bool ISUserRoleEntity::CheckExistTableAccess(int GroupID, const ISUuid &TableUID
 			return true;
 		}
 	}
-
 	return false;
 }
 //-----------------------------------------------------------------------------
@@ -144,7 +142,6 @@ bool ISUserRoleEntity::CheckExistSpecialAccess(int GroupID, const ISUuid &Specia
 			return true;
 		}
 	}
-
 	return false;
 }
 //-----------------------------------------------------------------------------
@@ -176,58 +173,26 @@ void ISUserRoleEntity::Initialize()
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 {
-	bool Result = false;
-	if (ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess)
-	{
-		Result = true;
-	}
-	else
-	{
-		Result = ISAlgorithm::VectorContains(SubSystems, SubSystemUID);
-	}
-	return Result;
+	return ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess ?
+		true : ISAlgorithm::VectorContains(SubSystems, SubSystemUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessTable(const ISUuid &TableUID, const ISUuid &AccessUID)
 {
-	bool Result = false;
-	if (ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess)
-	{
-		Result = true;
-	}
-	else
-	{
-		Result = ISAlgorithm::VectorContains(Tables.value(TableUID), AccessUID);
-	}
-	return Result;
+	return ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess ?
+		true : ISAlgorithm::VectorContains(Tables[TableUID], AccessUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
 {
-	bool Result = false;
-	if (ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess)
-	{
-		Result = true;
-	}
-	else
-	{
-		Result = ISAlgorithm::VectorContains(Specials, SpecialAccessUID);
-	}
-	return Result;
+	return ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess ?
+		true : ISAlgorithm::VectorContains(Specials, SpecialAccessUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckExistAccesses() const
 {
-	bool Result = false;
-	if (ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess)
-	{
-		Result = true;
-	}
-	else
-	{
-		Result = SubSystems.size() + Tables.count() + Specials.size();
-	}
-	return Result;
+	return ISMetaUser::Instance().UserData->System || ISMetaUser::Instance().UserData->GroupFullAccess ?
+		true : SubSystems.size() + Tables.size() + Specials.size();
 }
 //-----------------------------------------------------------------------------
 void ISUserRoleEntity::InitializeSubSystem()
@@ -253,7 +218,7 @@ void ISUserRoleEntity::InitializeTables()
 		{
 			ISUuid TableUID = qSelect.ReadColumn("gatb_table");
 			ISUuid AccessUID = qSelect.ReadColumn("gatb_accesstype");
-			Tables.contains(TableUID) ? Tables[TableUID].emplace_back(AccessUID) : Tables.insert(TableUID, { AccessUID });
+			Tables.count(TableUID) ? Tables[TableUID].emplace_back(AccessUID) : Tables[TableUID] = { AccessUID };
 		}
 	}
 }

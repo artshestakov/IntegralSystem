@@ -44,7 +44,7 @@ void ISMetaSystemsEntity::Initialize()
 			{
 				if (!ISMetaUser::Instance().UserData->GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
 				{
-					if (!ISUserRoleEntity::GetInstance().CheckAccessSubSystem(SubSystemUID)) //≈сли доступа к подсистеме нет - перезодить на следующую итерацию цикла
+					if (!ISUserRoleEntity::Instance().CheckAccessSubSystem(SubSystemUID)) //≈сли доступа к подсистеме нет - перезодить на следующую итерацию цикла
 					{
 						continue;
 					}

@@ -556,7 +556,7 @@ ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 //-----------------------------------------------------------------------------
 void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID)
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE)) //≈сли прав на изменение примечани€ нет - выходим
+	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE)) //≈сли прав на изменение примечани€ нет - выходим
 	{
 		ISMessageBox::ShowWarning(parent, LANG("Message.Warning.NotAccess.Special.RecordNote"));
 		return;

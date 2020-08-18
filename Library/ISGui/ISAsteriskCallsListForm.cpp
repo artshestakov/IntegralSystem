@@ -183,7 +183,7 @@ void ISAsteriskCallsListForm::DetailsClicked()
 //-----------------------------------------------------------------------------
 void ISAsteriskCallsListForm::SaveRecord()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_SAVE_ASTERISK_RECORD))
+	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_SAVE_ASTERISK_RECORD))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.SaveAsteriskRecord"));
 		return;
@@ -302,7 +302,7 @@ void ISAsteriskCallsListForm::FillLabels()
 //-----------------------------------------------------------------------------
 void ISAsteriskCallsListForm::PlayRecord()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_PLAY_ASTERISK_RECORD))
+	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_PLAY_ASTERISK_RECORD))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.PlayAsteriskRecord"));
 		return;

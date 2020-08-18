@@ -73,7 +73,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	}
 
 	//»нициализаци€ прав доступа
-	ISUserRoleEntity::GetInstance().Initialize();
+	ISUserRoleEntity::Instance().Initialize();
 
 	//«агрузка мета-данных о системах и подсистемах
 	ISMetaSystemsEntity::GetInstance().Initialize();

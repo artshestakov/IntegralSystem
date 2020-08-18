@@ -6,13 +6,7 @@
 class ISUserRoleEntity
 {
 public:
-	ISUserRoleEntity(const ISUserRoleEntity &) = delete;
-	ISUserRoleEntity(ISUserRoleEntity &&) = delete;
-	ISUserRoleEntity &operator=(const ISUserRoleEntity &) = delete;
-	ISUserRoleEntity &operator=(ISUserRoleEntity &&) = delete;
-	~ISUserRoleEntity();
-
-	static ISUserRoleEntity& GetInstance();
+	static ISUserRoleEntity& Instance();
 
 	static bool CheckExistSubSystemAccess(int GroupID, const ISUuid &SubSystemUID); //ѕроверить наличие права на подсистему в базе
 	static void InsertSubSystemAccess(int GroupID, const ISUuid &SubSystemUID); //ƒобавить право на подсистему в базу
@@ -40,9 +34,13 @@ protected:
 
 private:
 	ISUserRoleEntity();
+	~ISUserRoleEntity();
+	ISUserRoleEntity(ISUserRoleEntity const &) {};
+	ISUserRoleEntity& operator=(ISUserRoleEntity const&) { return *this; };
 
+private:
 	ISVectorUID SubSystems;
-	QMap<ISUuid, ISVectorUID> Tables;
+	std::map<ISUuid, ISVectorUID> Tables;
 	ISVectorUID Specials;
 };
 //-----------------------------------------------------------------------------

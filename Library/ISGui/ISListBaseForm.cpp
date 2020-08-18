@@ -220,7 +220,7 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 	}
 	else
 	{
-		if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+		if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 			return;
@@ -793,7 +793,7 @@ void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QStr
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Create()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->LocalListName));
 		return;
@@ -816,7 +816,7 @@ void ISListBaseForm::CreateCopy()
 		return;
 	}
 
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy").arg(MetaTable->LocalListName));
 		return;
@@ -839,7 +839,7 @@ void ISListBaseForm::Edit()
 		return;
 	}
 
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
@@ -873,7 +873,7 @@ void ISListBaseForm::Update()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Delete()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
@@ -929,7 +929,7 @@ void ISListBaseForm::Delete()
 //-----------------------------------------------------------------------------
 bool ISListBaseForm::DeleteCascade()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return false;
@@ -1007,7 +1007,7 @@ void ISListBaseForm::ShowActual()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowDeleted()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
 	{
 		GetAction(ISNamespace::AT_ShowActual)->setChecked(true);
 		GetAction(ISNamespace::AT_ShowDeleted)->setChecked(false);
@@ -1050,7 +1050,7 @@ void ISListBaseForm::SearchClear()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Export()
 {
-	if (!ISUserRoleEntity::GetInstance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(MetaTable->LocalListName));
 		return;
@@ -1140,7 +1140,7 @@ void ISListBaseForm::Print()
 	ProcessForm.SetText(LANG("PrintProcess.Preapre"));
 	
 	ISPrintingBase *PrintingBase = nullptr;
-	bool EditPrintForm = ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT);
+	bool EditPrintForm = ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT);
 
 	if (MetaReport->Type == ISNamespace::RT_Html)
 	{
