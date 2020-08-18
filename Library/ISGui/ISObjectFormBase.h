@@ -82,6 +82,7 @@ protected:
 	void Delete();
 	void DeleteCascade();
 	void CancelChanged(); //Отмена изменений
+	void NoteObject(); //Примечание записи
 
 	void AddActionToolBar(QAction *Action, bool AddingToActionGroup = true); //Добавить кнопку-действие на тулбар
 	void AddActionMenu(QAction *Action, bool AddingToActionGroup = true); //Добавить кнопку-действие в меню

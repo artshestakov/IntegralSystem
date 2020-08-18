@@ -23,6 +23,7 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
+#include "ISNoteObjectForm.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISInterfaceForm(parent),
@@ -308,10 +309,7 @@ void ISObjectFormBase::CreateToolBar()
 	AddActionMenu(ActionSystemInfo);
 
 	//Избранное
-	ActionFavorites = new QAction(ToolBar);
-	ActionFavorites->setText(LANG("AddToFavorites"));
-	ActionFavorites->setToolTip(LANG("AddToFavorites"));
-	ActionFavorites->setIcon(BUFFER_ICONS("Favorites"));
+	ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("AddToFavorites"), ToolBar);
 	ActionFavorites->setPriority(QAction::LowPriority);
 	ActionFavorites->setCheckable(true);
 	connect(ActionFavorites, &QAction::triggered, this, &ISObjectFormBase::AddFavoite);
@@ -323,20 +321,24 @@ void ISObjectFormBase::CreateToolBar()
 	connect(ActionDelete, &QAction::triggered, this, &ISObjectFormBase::Delete);
 	AddActionMenu(ActionDelete);
 
+	//Удалить каскадом
 	ActionDeleteCascade = ISControls::CreateActionDeleteCascade(ToolBar);
 	ActionDeleteCascade->setPriority(QAction::LowPriority);
 	connect(ActionDeleteCascade, &QAction::triggered, this, &ISObjectFormBase::DeleteCascade);
 	AddActionMenu(ActionDeleteCascade);
 
 	//Отменить изменения
-	ActionCancelChange = new QAction(ToolBar);
+	ActionCancelChange = new QAction(BUFFER_ICONS("CancelChangedObject"), LANG("CancelChanged"), ToolBar);
 	ActionCancelChange->setEnabled(false);
-	ActionCancelChange->setText(LANG("CancelChanged"));
-	ActionCancelChange->setToolTip(LANG("CancelChanged"));
-	ActionCancelChange->setIcon(BUFFER_ICONS("CancelChangedObject"));
 	ActionCancelChange->setPriority(QAction::LowPriority);
 	connect(ActionCancelChange, &QAction::triggered, this, &ISObjectFormBase::CancelChanged);
 	AddActionMenu(ActionCancelChange);
+
+	//Примечание записи
+	QAction *ActionNoteObject = ISControls::CreateActionNoteObject(ToolBar);
+	ActionNoteObject->setPriority(QAction::LowPriority);
+	connect(ActionNoteObject, &QAction::triggered, this, &ISObjectFormBase::NoteObject);
+	AddActionMenu(ActionNoteObject);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateWidgetObject()
@@ -1046,6 +1048,20 @@ void ISObjectFormBase::CancelChanged()
 		SetModificationFlag(false);
 		BeginFieldEdit->SetFocus();
 	}
+}
+//-----------------------------------------------------------------------------
+void ISObjectFormBase::NoteObject()
+{
+	if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE))
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.RecordNote"));
+		return;
+	}
+
+	ISGui::SetWaitGlobalCursor(true);
+	ISNoteObjectForm NoteObjectForm(MetaTable->Name, GetObjectID());
+	ISGui::SetWaitGlobalCursor(false);
+	NoteObjectForm.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddActionToolBar(QAction *Action, bool AddingToActionGroup)
