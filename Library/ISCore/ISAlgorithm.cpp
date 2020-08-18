@@ -34,9 +34,9 @@ qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorS
 	return -1;
 }
 //-----------------------------------------------------------------------------
-double ISAlgorithm::PrepareDouble(double Double, size_t Precision)
+std::string ISAlgorithm::PrepareDouble(double Double, size_t Precision)
 {
-	char Char[MAX_PATH];
+	char Char[DBL_DECIMAL_DIG];
 	sprintf(Char, "%.*f", (int)Precision, Double); // онвертируем дробное число в строку.
 	while (true) //ќбрезаем возможные нули в конце
 	{
@@ -55,7 +55,8 @@ double ISAlgorithm::PrepareDouble(double Double, size_t Precision)
 			break;
 		}
 	}
-	return atof(Char); //ѕреобразовываем строку обратно в число с плавающей зап€той и возвращаем
+	//return atof(Char); //ѕреобразовываем строку обратно в число с плавающей зап€той и возвращаем
+	return std::string((const char *)Char);
 }
 //-----------------------------------------------------------------------------
 void ISAlgorithm::PrepareStringDouble(QString &String, size_t Precision)

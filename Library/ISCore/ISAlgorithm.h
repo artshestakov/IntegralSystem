@@ -42,7 +42,7 @@ namespace ISAlgorithm
 	//! \param Double число с плавающей запятой
 	//! \param Precision количество цифр после запятой
 	//! \return возращает обрезанное число с плаващей запятой
-	ISCORE_EXPORT double PrepareDouble(double Double, size_t Precision);
+	ISCORE_EXPORT std::string PrepareDouble(double Double, size_t Precision);
 
 	//! Исключить все буквы из дробного числа в виде строки
 	//! \param String дробное число в виде строки
