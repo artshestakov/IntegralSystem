@@ -8,19 +8,20 @@
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH = PREPARE_QUERY("WITH w AS "
 										 "( "
-										 "SELECT task_id, lower(task_name) AS search_field "
+										 "SELECT task_id, task_parent, lower(task_name) AS search_field "
 										 "FROM _task "
 										 "WHERE NOT task_isdeleted "
 										 "UNION "
-										 "SELECT task_id, lower(task_description) AS search_field "
+										 "SELECT task_id, task_parent, lower(task_description) AS search_field "
 										 "FROM _task "
 										 "WHERE NOT task_isdeleted "
 										 "AND task_description IS NOT NULL "
 										 "UNION "
-										 "SELECT tcom_task AS task_id, lower(tcom_comment) AS search_field "
+										 "SELECT tcom_task AS task_id, task_parent, lower(tcom_comment) AS search_field "
 										 "FROM _taskcomment "
+										 "LEFT JOIN _task ON tcom_task = task_id "
 										 ") "
-										 "SELECT DISTINCT task_id, (SELECT task_name FROM _task WHERE task_id = w.task_id) "
+										 "SELECT DISTINCT task_id, task_parent, (SELECT task_name FROM _task WHERE task_id = w.task_id) "
 										 "FROM w "
 										 "WHERE search_field LIKE '%' || :Value || '%' "
 										 "ORDER BY task_id");
@@ -100,9 +101,13 @@ void ISTaskSearchByTextForm::Search()
 		while (qSelect.Next())
 		{
 			int TaskID = qSelect.ReadColumn("task_id").toInt();
+			int TaskParentID = qSelect.ReadColumn("task_parent").toInt();
+			QString TaskName = qSelect.ReadColumn("task_name").toString();
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-			ListWidgetItem->setText(QString("#%1: %2").arg(TaskID).arg(qSelect.ReadColumn("task_name").toString()));
+			ListWidgetItem->setText(TaskParentID ?
+				QString("#%1 / #%2: %3").arg(TaskParentID).arg(TaskID).arg(TaskName) :
+				QString("#%1: %2").arg(TaskID).arg(TaskName));
 			ListWidgetItem->setIcon(BUFFER_ICONS("Task"));
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 			ListWidgetItem->setData(Qt::UserRole, TaskID);
