@@ -254,7 +254,7 @@
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
   <Local Name="Message.Question.DeleteCalendarEvent" Russian="Удалить это событие?"/>
   <Local Name="Message.Question.CreatePasswordUser" Russian="Вы хотите присвоить пароль пользователю %1?"/>
-  <Local Name="Message.Question.DeleteSelectedRecord" Russian="Удалить выбранную запись?"/>
+  <Local Name="Message.Question.DeleteSelectedRecord" Russian="Пометить выбранную запись на удаление?"/>
   <Local Name="Message.Question.RecoveryObjectSelected" Russian="Восстановить выбранную запись?"/>
   <Local Name="Message.Question.DeleteThisRecord" Russian="Удалить эту запись?"/>
   <Local Name="Message.Question.RecoveryThisRecord" Russian="Восстановить эту запись?"/>

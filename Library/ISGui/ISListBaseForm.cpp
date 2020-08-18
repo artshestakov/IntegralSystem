@@ -881,56 +881,36 @@ void ISListBaseForm::Delete()
 		return;
 	}
 
+	bool show_is_deleted = QueryModel->GetVisibleIsDeleted();
 	QString ErrorString;
 	ISVectorInt VectorInt = GetSelectedIDs();
-	if (VectorInt.size() == 1) //Если помечается на удаление одна запись
+	if (VectorInt.size() == 1) //Выбрана одна запись
 	{
-		if (CheckIsSystemObject())
+		if (CheckIsSystemObject()) //Если запись системная - выдаём предупреждение и выходим из функции
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
 			return;
 		}
 
-		if (GetCurrentRecordValue("IsDeleted").toBool()) //Если объект удаленный - восстановить
+		if (ISMessageBox::ShowQuestion(this, LANG(show_is_deleted ? "Message.Question.RecoveryObjectSelected" : "Message.Question.DeleteSelectedRecord")))
 		{
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryObjectSelected")))
+			if (ISCore::SetIsDeletedObject(!show_is_deleted, MetaTable, VectorInt.front(), ErrorString)) //Если восстановление прошло успешно, обновить таблицу
 			{
-				if (ISCore::SetIsDeletedObject(false, MetaTable, VectorInt.front(), ErrorString)) //Если восстановление прошло успешно, обновить таблицу
+				SqlModel->RemoveRecord(GetCurrentRowIndex());
+				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 				{
-					SqlModel->RemoveRecord(GetCurrentRowIndex());
-					if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-					{
-						ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Recovery"));
-					}
-				}
-				else
-				{
-					ISMessageBox::ShowCritical(this, LANG("Message.Error.SetNotIsDeletedObject"), ErrorString);
+					ISPopupMessage::ShowNotification(LANG(show_is_deleted ? "NotificationForm.Title.Recovery" : "NotificationForm.Title.Deleted"));
 				}
 			}
-		}
-		else //Если объект не удаленный - удалить
-		{
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteSelectedRecord")))
+			else
 			{
-				if (ISCore::SetIsDeletedObject(true, MetaTable, VectorInt.front(), ErrorString)) //Если удаление прошло успешно, обновить таблицу
-				{
-					SqlModel->RemoveRecord(GetCurrentRowIndex());
-					if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-					{
-						ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted"));
-					}
-				}
-				else
-				{
-					ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
-				}
+				ISMessageBox::ShowCritical(this, LANG(show_is_deleted ? "Message.Error.SetNotIsDeletedObject" : "Message.Error.SetIsDeletedObject"), ErrorString);
 			}
 		}
 	}
-	else //Помечается на удаление несколько записей
+	else //Выбрано несколько записей
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size())))
+		if (ISMessageBox::ShowQuestion(this, LANG(show_is_deleted ? "Message.Objects.Recovery" : "Message.Objects.Delete").arg(VectorInt.size())))
 		{
 			ISProgressForm ProgressForm(VectorInt.size(), LANG("DeletingObjects"), this);
 			ProgressForm.show();
@@ -940,8 +920,8 @@ void ISListBaseForm::Delete()
 				{
 					break;
 				}
-				
-				if (!ISCore::SetIsDeletedObject(true, MetaTable, VectorInt[i], ErrorString))
+
+				if (!ISCore::SetIsDeletedObject(!show_is_deleted, MetaTable, VectorInt[i], ErrorString))
 				{
 					ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
 				}
