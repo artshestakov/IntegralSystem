@@ -274,6 +274,7 @@
   <Local Name="Message.Question.CloneTask" Russian="Клонировать задачу?"/>
   <Local Name="Message.Question.CloneSubTask" Russian="Клонировать подзадачу?"/>
   <Local Name="Message.Question.ConvertToTask" Russian="Преобразовать в задачу?"/>
+  <Local Name="Message.Question.CopyDiscussion" Russian="Скопировать запись?"/>
   
   <!--Carat error-->
   <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>

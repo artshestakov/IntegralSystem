@@ -214,7 +214,6 @@
     <ClCompile Include="ISDesktopForm.cpp" />
     <ClCompile Include="ISDictionaryWord.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
-    <ClCompile Include="ISDiscussionObjectForm.cpp" />
     <ClCompile Include="ISDoubleEdit.cpp" />
     <ClCompile Include="ISEdits.cpp" />
     <ClCompile Include="ISExecutorEdit.cpp" />
@@ -439,7 +438,6 @@
     <QtMoc Include="ISControlDatabaseForm.h" />
     <QtMoc Include="ISDesktopForm.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
-    <QtMoc Include="ISDiscussionObjectForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
     <QtMoc Include="ISFullTextSearchForm.h" />
     <QtMoc Include="ISHistoryForm.h" />
