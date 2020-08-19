@@ -57,6 +57,14 @@ ISInterfaceForm::~ISInterfaceForm()
 	
 }
 //-----------------------------------------------------------------------------
+void ISInterfaceForm::ForbidResize()
+{
+	if (!parentWidget())
+	{
+		setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
+	}
+}
+//-----------------------------------------------------------------------------
 void ISInterfaceForm::SetVisibleShadow(bool Visible)
 {
 	if (Visible && LabelShadow) //Если тень уже отображена
@@ -111,14 +119,6 @@ QVBoxLayout* ISInterfaceForm::GetMainLayout()
 bool ISInterfaceForm::IsShowed() const
 {
 	return ShowedFlag;
-}
-//-----------------------------------------------------------------------------
-void ISInterfaceForm::ForbidResize()
-{
-	if (!parentWidget())
-	{
-		setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::FlashingStart(int Interval, const QColor &Color)

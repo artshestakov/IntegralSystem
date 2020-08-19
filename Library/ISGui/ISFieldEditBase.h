@@ -30,14 +30,15 @@ public:
 	virtual void SetFrameShape(QFrame::Shape FrameShape);
 	virtual void SetRegExp(const QString &RegExp);
 	virtual void SetColorText(const QColor &Color);
+	virtual void SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical);
+	virtual void SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal); //Изменить политику растяжения по горизонтали
+	virtual void SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical); //Изменить политику растяжения по горизонтали
 
 	bool IsReadOnly() const;
 	
 	void SetCursor(const QCursor &Cursor); //Изменить курсор
 	void SetToolTip(const QString &ToolTip); //Изменить всплывающее сообщение-подсказку
 	void SetFixedWidth(int Width); //Изменить максимальную ширину виджета редактирования
-	void SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal); //Изменить политику растяжения по горизонтали
-	void SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical); //Изменить политику растяжения по горизонтали
 	void SetVisibleClear(bool Visible);
 
 	void BlinkRed(); //Подсветить поле красным цветом

@@ -16,14 +16,11 @@ ISInputDialog::ISInputDialog(ISNamespace::FieldType DataType, const QString &Tit
 {
 	setWindowTitle(Title);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
-	ForbidResize();
 
 	if (!LabelText.isEmpty())
 	{
-		Label = new QLabel(this);
-		Label->setText(LabelText);
+		Label = new QLabel(LabelText, this);
 		Label->setWordWrap(true);
-		Label->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 		GetMainLayout()->addWidget(Label, 0, Qt::AlignLeft);
 	}
 
@@ -32,6 +29,17 @@ ISInputDialog::ISInputDialog(ISNamespace::FieldType DataType, const QString &Tit
 		FieldEditBase = ISGui::CreateColumnForField(this, DataType);
 		FieldEditBase->SetValue(Value);
 		GetMainLayout()->addWidget(FieldEditBase);
+
+		//Если добавляется поле редактирования большого текста - не вставляем растяжение
+		if (DataType == ISNamespace::FT_Text)
+		{
+			FieldEditBase->SetSizePolicyVertical(QSizePolicy::Minimum);
+		}
+		else
+		{
+			FieldEditBase->SetSizePolicyHorizontal(QSizePolicy::Minimum);
+			GetMainLayout()->addStretch();
+		}
 	}
 
 	ISButtonDialog *ButtonDialog = new ISButtonDialog(this, "OK", LANG("Cancel"));
@@ -76,21 +84,23 @@ QString ISInputDialog::GetText(const QString &Title, const QString &LabelText, c
 	return QString();
 }
 //-----------------------------------------------------------------------------
-int ISInputDialog::GetInteger(const QString &Title, const QString &LabelText, int Minimum, int Maximum, const QVariant &Value)
+int ISInputDialog::GetInteger(bool &Ok, const QString &Title, const QString &LabelText, int Minimum, int Maximum, const QVariant &Value)
 {
 	ISInputDialog InputDialog(ISNamespace::FT_Int, Title, LabelText, Value);
-	ISIntegerEdit *IntegerEdit = dynamic_cast<ISIntegerEdit*>(InputDialog.GetEditWidget());
-	IntegerEdit->SetRange(Minimum, Maximum);
-	if (InputDialog.Exec())
+	InputDialog.ForbidResize();
+	dynamic_cast<ISIntegerEdit*>(InputDialog.GetEditWidget())->SetRange(Minimum, Maximum);
+	Ok = InputDialog.Exec();
+	if (Ok)
 	{
 		return InputDialog.GetValue().toInt();
 	}
-	return NPOS;
+	return 0;
 }
 //-----------------------------------------------------------------------------
 QDateTime ISInputDialog::GetDateTime(const QString &Title, const QString &LabelText)
 {
 	ISInputDialog InputDialog(ISNamespace::FT_DateTime, Title, LabelText);
+	InputDialog.ForbidResize();
 	if (InputDialog.Exec())
 	{
 		QDateTime DateTime = InputDialog.GetValue().toDateTime();
@@ -103,6 +113,7 @@ QDateTime ISInputDialog::GetDateTime(const QString &Title, const QString &LabelT
 QDate ISInputDialog::GetDate(const QString &Title, const QString &LabelText)
 {
 	ISInputDialog InputDialog(ISNamespace::FT_Date, Title, LabelText);
+	InputDialog.ForbidResize();
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toDate();
@@ -113,6 +124,7 @@ QDate ISInputDialog::GetDate(const QString &Title, const QString &LabelText)
 QTime ISInputDialog::GetTime(const QString &Title, const QString &LabelText)
 {
 	ISInputDialog InputDialog(ISNamespace::FT_Time, Title, LabelText);
+	InputDialog.ForbidResize();
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toTime();
@@ -122,7 +134,7 @@ QTime ISInputDialog::GetTime(const QString &Title, const QString &LabelText)
 //-----------------------------------------------------------------------------
 QString ISInputDialog::GetPassword()
 {
-	ISInputDialog InputDialog(ISNamespace::FT_Password, LANG("Password"), LANG("EnterThePassword"));
+	ISInputDialog InputDialog(ISNamespace::FT_Password, LANG("Password"), LANG("EnterThePassword") + ':');
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
@@ -164,16 +176,16 @@ void ISInputDialog::SetEditWidget(ISFieldEditBase *field_edit_base)
 	GetMainLayout()->insertWidget(GetMainLayout()->indexOf(Label) + 1, FieldEditBase);
 }
 //-----------------------------------------------------------------------------
-void ISInputDialog::Apply()
-{
-	SetResult(true);
-	close();
-}
-//-----------------------------------------------------------------------------
 void ISInputDialog::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
 	FieldEditBase->SetFocus();
+}
+//-----------------------------------------------------------------------------
+void ISInputDialog::Apply()
+{
+	SetResult(true);
+	close();
 }
 //-----------------------------------------------------------------------------
 void ISInputDialog::EnterClicked()

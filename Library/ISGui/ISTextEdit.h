@@ -22,6 +22,7 @@ public:
 	void SetReadOnly(bool ReadOnly) override;
 	void SetPlaceholderText(const QString &placeholder_text) override;
 	void SetFrameShape(QFrame::Shape FrameShape) override;
+	void SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical) override;
 
 	void AddText(const QString &Text);
 	void SetExecuteEnter(bool Execute);

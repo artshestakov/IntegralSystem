@@ -16,6 +16,7 @@ public:
 	ISInterfaceForm(QWidget *parent = 0, Qt::WindowFlags Flags = 0);
 	virtual ~ISInterfaceForm();
 
+	void ForbidResize(); //Запретить изменять размер формы
 	void SetVisibleShadow(bool Visible); //Изменить видимость тени
 	ISUuid GetFormUID() const; //Получить уникальный идентификатор формы
 
@@ -25,8 +26,6 @@ protected:
 
 	QVBoxLayout* GetMainLayout(); //Получить указатель на главный компоновщик формы
 	bool IsShowed() const;
-
-	void ForbidResize(); //Запретить изменять размер формы
 
 	void FlashingStart(int Interval, const QColor &Color); //Запуск анимации заднего фона формы
 	void FlashingTimeout(); //Событие изменения цвета анимации заднего фона формы

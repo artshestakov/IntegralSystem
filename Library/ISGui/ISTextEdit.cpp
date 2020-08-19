@@ -92,6 +92,12 @@ void ISTextEdit::SetFrameShape(QFrame::Shape FrameShape)
 	TextEdit->setFrameShape(FrameShape);
 }
 //-----------------------------------------------------------------------------
+void ISTextEdit::SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical)
+{
+	ISFieldEditBase::SetSizePolicy(PolicyHorizontal, PolicyVertical);
+	TextEdit->setSizePolicy(PolicyHorizontal, PolicyVertical);
+}
+//-----------------------------------------------------------------------------
 void ISTextEdit::OnUpperText()
 {
 	disconnect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnUpperText);

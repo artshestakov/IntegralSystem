@@ -6,14 +6,14 @@
 #include "ISBuffer.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
-ISPageNavigation::ISPageNavigation(QWidget *parent) : QWidget(parent)
+ISPageNavigation::ISPageNavigation(QWidget *parent)
+	: QWidget(parent),
+	RowCount(-1),
+	PageCount(0),
+	CurrentPage(0),
+	Limit(0),
+	Offset(0)
 {
-	RowCount = -1;
-	PageCount = 0;
-	CurrentPage = 0;
-	Limit = 0;
-	Offset = 0;
-
 	QHBoxLayout *Layout = new QHBoxLayout();
 	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	setLayout(Layout);
@@ -74,15 +74,12 @@ void ISPageNavigation::SetRowCount(int row_count)
 	if (row_count)
 	{
 		RowCount = row_count;
-
 		PageCount = RowCount / Limit;
 		if (row_count % Limit)
 		{
 			++PageCount;
 		}
-
 		ButtonSelect->setText(LANG("Page.Select").arg(CurrentPage + 1).arg(PageCount));
-
 		if (PageCount == 1) //Если количество страниц одна
 		{
 			ButtonBegin->setEnabled(false);
@@ -104,7 +101,6 @@ void ISPageNavigation::BeginClicked()
 	CurrentPage = 0;
 	Offset = 0;
 	emit OffsetSignal(Offset);
-	
 	PageChanged();
 }
 //-----------------------------------------------------------------------------
@@ -114,14 +110,14 @@ void ISPageNavigation::PreviousClicked()
 	int NewOffset = Offset - Limit;
 	Offset = NewOffset;
 	emit OffsetSignal(NewOffset);
-
 	PageChanged();
 }
 //-----------------------------------------------------------------------------
 void ISPageNavigation::Select()
 {
-	int Page = ISInputDialog::GetInteger(LANG("Page"), LANG("InputNumberPage"), 1, PageCount, CurrentPage + 1);
-	if (Page != NPOS)
+	bool Ok = true;
+	int Page = ISInputDialog::GetInteger(Ok, LANG("Page"), LANG("InputNumberPage"), 1, PageCount, CurrentPage + 1);
+	if (Ok && Page > 0)
 	{
 		CurrentPage = Page - 1;
 		Offset = CurrentPage * Limit;
@@ -133,11 +129,9 @@ void ISPageNavigation::Select()
 void ISPageNavigation::NextClicked()
 {
 	++CurrentPage;
-
 	int NewOffset = Offset + Limit;
 	Offset = NewOffset;
 	emit OffsetSignal(NewOffset);
-
 	PageChanged();
 }
 //-----------------------------------------------------------------------------
@@ -147,7 +141,6 @@ void ISPageNavigation::EndClicked()
 	--CurrentPage;
 	Offset = CurrentPage * Limit;
 	emit OffsetSignal(Offset);
-
 	PageChanged();
 }
 //-----------------------------------------------------------------------------
@@ -174,7 +167,6 @@ void ISPageNavigation::PageChanged()
 		ButtonNext->setEnabled(false);
 		ButtonEnd->setEnabled(false);
 	}
-
 	emit Update();
 }
 //-----------------------------------------------------------------------------

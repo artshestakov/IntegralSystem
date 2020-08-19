@@ -12,16 +12,16 @@ class ISInputDialog : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISInputDialog(ISNamespace::FieldType DataType, const QString &Title, const QString &LabelText = QString(), const QVariant &Value = QVariant());
+	ISInputDialog(ISNamespace::FieldType DataType, const QString &Title = QString(), const QString &LabelText = QString(), const QVariant &Value = QVariant());
 	virtual ~ISInputDialog();
 
-	static QString GetString(const QString &Title, const QString &LabelText, const QVariant &Value = QVariant()); //Получить строку
-	static QString GetText(const QString &Title, const QString &LabelText, const QVariant &Value = QVariant()); //Получить большую строку
+	static QString GetString(const QString &Title = QString(), const QString &LabelText = QString(), const QVariant &Value = QVariant()); //Получить строку
+	static QString GetText(const QString &Title = QString(), const QString &LabelText = QString(), const QVariant &Value = QVariant()); //Получить большую строку
 	static QString GetText(const QString &Title, const QString &LabelText, const QVariant &Value, bool &Ok); //Получить большую строку
-	static int GetInteger(const QString &Title, const QString &LabelText, int Minimum = 0, int Maximum = 0, const QVariant &Value = QVariant()); //Получить целое число
-	static QDateTime GetDateTime(const QString &Title, const QString &LabelText); //Получить дату и время
-	static QDate GetDate(const QString &Title, const QString &LabelText); //Получить дату
-	static QTime GetTime(const QString &Title, const QString &LabelText); //Получить время
+	static int GetInteger(bool &Ok, const QString &Title = QString(), const QString &LabelText = QString(), int Minimum = 0, int Maximum = 0, const QVariant &Value = QVariant()); //Получить целое число
+	static QDateTime GetDateTime(const QString &Title = QString(), const QString &LabelText = QString()); //Получить дату и время
+	static QDate GetDate(const QString &Title = QString(), const QString &LabelText = QString()); //Получить дату
+	static QTime GetTime(const QString &Title = QString(), const QString &LabelText = QString()); //Получить время
 	static QString GetPassword(); //Получить пароль
 	static QVariant GetList(const QString &Title, const QString &LabelText, const ISStringToVariantMap &VariantMap); //Получить список
 
@@ -29,9 +29,11 @@ public:
 	ISFieldEditBase* GetEditWidget();
 	void SetEditWidget(ISFieldEditBase *field_edit_base);
 
+protected:
+	void AfterShowEvent() override;
+
 private:
 	void Apply();
-	void AfterShowEvent() override;
 	void EnterClicked() override;
 	void ControlEnterClicked() override;
 

@@ -104,6 +104,21 @@ void ISFieldEditBase::SetColorText(const QColor &Color)
 
 }
 //-----------------------------------------------------------------------------
+void ISFieldEditBase::SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical)
+{
+	setSizePolicy(PolicyHorizontal, PolicyVertical);
+}
+//-----------------------------------------------------------------------------
+void ISFieldEditBase::SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal)
+{
+	setSizePolicy(QSizePolicy(PolicyHorizontal, sizePolicy().verticalPolicy()));
+}
+//-----------------------------------------------------------------------------
+void ISFieldEditBase::SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical)
+{
+	setSizePolicy(QSizePolicy(sizePolicy().horizontalPolicy(), PolicyVertical));
+}
+//-----------------------------------------------------------------------------
 bool ISFieldEditBase::IsReadOnly() const
 {
 	return ReadOnly;
@@ -122,16 +137,6 @@ void ISFieldEditBase::SetToolTip(const QString &ToolTip)
 void ISFieldEditBase::SetFixedWidth(int Width)
 {
 	EditWidget->setFixedWidth(Width);
-}
-//-----------------------------------------------------------------------------
-void ISFieldEditBase::SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal)
-{
-	setSizePolicy(QSizePolicy(PolicyHorizontal, sizePolicy().verticalPolicy()));
-}
-//-----------------------------------------------------------------------------
-void ISFieldEditBase::SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical)
-{
-	setSizePolicy(QSizePolicy(sizePolicy().horizontalPolicy(), PolicyVertical));
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetVisibleClear(bool Visible)

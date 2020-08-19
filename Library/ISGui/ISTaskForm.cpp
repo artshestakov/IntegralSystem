@@ -145,10 +145,11 @@ void ISTaskForm::CreateTask()
 //-----------------------------------------------------------------------------
 void ISTaskForm::SearchByNumber()
 {
+	bool Ok = true;
 	while (true)
 	{
-		int TaskID = ISInputDialog::GetInteger(LANG("Task.Search"), LANG("Task.InputTaskNumber") + ':', 0, INT_MAX);
-		if (TaskID != NPOS)
+		int TaskID = ISInputDialog::GetInteger(Ok, LANG("Task.Search"), LANG("Task.InputTaskNumber") + ':', 0, INT_MAX);
+		if (Ok && TaskID > 0)
 		{
 			if (ISCore::TaskCheckExist(TaskID))
 			{
