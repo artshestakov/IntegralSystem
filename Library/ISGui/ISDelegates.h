@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISLABELS_H_INCLUDED
-#define _ISLABELS_H_INCLUDED
+#ifndef _ISDELEGATES_H_INCLUDED
+#define _ISDELEGATES_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------

@@ -19,23 +19,8 @@ ISButtonDialog::ISButtonDialog(QWidget *parent, const QString &ApplyText, const 
 	button(QDialogButtonBox::Cancel)->setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
 	connect(button(QDialogButtonBox::Cancel), &QAbstractButton::clicked, this, &ISButtonDialog::Close);
 
-	if (ApplyText.length())
-	{
-		button(QDialogButtonBox::Ok)->setText(ApplyText);
-	}
-	else
-	{
-		button(QDialogButtonBox::Ok)->setText(LANG("Apply"));
-	}
-
-	if (CloseText.length())
-	{
-		button(QDialogButtonBox::Cancel)->setText(CloseText);
-	}
-	else
-	{
-		button(QDialogButtonBox::Cancel)->setText(LANG("Close"));
-	}
+	button(QDialogButtonBox::Ok)->setText(ApplyText.isEmpty() ? LANG("Apply") : ApplyText);
+	button(QDialogButtonBox::Cancel)->setText(CloseText.isEmpty() ? LANG("Close") : CloseText);
 }
 //-----------------------------------------------------------------------------
 ISButtonDialog::~ISButtonDialog()

@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISButtonDialog : public QDialogButtonBox
 {
@@ -24,9 +23,5 @@ public:
 	void SetCloseIcon(const QIcon &Icon);
 	void SetCloseEnabled(bool Enabled);
 	void SetCloseCursor(const QCursor &Cursor);
-
-private:
-	ISPushButton *ButtonApply;
-	ISPushButton *ButtonClose;
 };
 //-----------------------------------------------------------------------------
