@@ -160,12 +160,12 @@ struct PMetaTable : public PMetaBase
 
 	int GetFieldIndex(const QString &FieldName) const //Получить индекс поля по его имени
 	{
-		for (int i = 0, c = AllFields.size(); i < c; ++i)
+		for (size_t i = 0, c = AllFields.size(); i < c; ++i)
 		{
 			PMetaField *MetaField = AllFields[i];
 			if (MetaField->Name.toLower() == FieldName.toLower())
 			{
-				return i;
+				return (int)i;
 			}
 		}
 		return -1;

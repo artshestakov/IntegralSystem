@@ -19,9 +19,6 @@
     <ClCompile Include="ISCaratDebugger.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISServiceController.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCaratService.h">
@@ -35,10 +32,5 @@
     <ResourceCompile Include="Carat.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ISServiceController.h">
-      <Filter>System</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

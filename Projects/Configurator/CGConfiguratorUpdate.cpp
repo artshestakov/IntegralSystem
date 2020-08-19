@@ -92,7 +92,7 @@ bool CGConfiguratorUpdate::database()
 bool CGConfiguratorUpdate::functions()
 {
 	bool Result = true;
-	for (int i = 0, CountFunctions = ISMetaData::Instance().GetFunctions().size(); i < CountFunctions; ++i)
+	for (size_t i = 0, CountFunctions = ISMetaData::Instance().GetFunctions().size(); i < CountFunctions; ++i)
 	{
 		Progress("Function", i, CountFunctions);
 		PMetaFunction *MetaFunction = ISMetaData::Instance().GetFunctions()[i];
@@ -108,7 +108,7 @@ bool CGConfiguratorUpdate::functions()
 bool CGConfiguratorUpdate::tables()
 {
 	bool Result = true, Exist = true;
-	for (int i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i) //Обход таблиц
+	for (size_t i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i) //Обход таблиц
 	{
 		PMetaTable *MetaTable = ISMetaData::Instance().GetTables()[i];
 		Progress("Table", i, CountTables, "TableName: " + MetaTable->Name);
@@ -165,7 +165,7 @@ bool CGConfiguratorUpdate::indexesall()
 bool CGConfiguratorUpdate::systemindexes()
 {
 	bool Result = true, Exist = true;
-	for (int i = 0, CountIndexes = ISMetaData::Instance().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
+	for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetSystemIndexes()[i];
 		Progress("System index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
@@ -203,7 +203,7 @@ bool CGConfiguratorUpdate::systemindexes()
 bool CGConfiguratorUpdate::indexes()
 {
 	bool Result = true, Exist = true;
-	for (int i = 0, CountIndexes = ISMetaData::Instance().GetIndexes().size(); i < CountIndexes; ++i) //Обход индексов
+	for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetIndexes().size(); i < CountIndexes; ++i) //Обход индексов
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetIndexes()[i];
 		Progress("Index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
@@ -224,7 +224,7 @@ bool CGConfiguratorUpdate::indexes()
 bool CGConfiguratorUpdate::compoundindexes()
 {
 	bool Result = true, Exist = true;
-	for (int i = 0, CountIndexes = ISMetaData::Instance().GetCompoundIndexes().size(); i < CountIndexes; ++i)
+	for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetCompoundIndexes().size(); i < CountIndexes; ++i)
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetCompoundIndexes()[i];
 		Progress("Compound index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
@@ -245,7 +245,7 @@ bool CGConfiguratorUpdate::compoundindexes()
 bool CGConfiguratorUpdate::foreigns()
 {
 	bool Result = true, Exist = true;
-	for (int i = 0, CountForeigns = ISMetaData::Instance().GetForeigns().size(); i < CountForeigns; ++i)
+	for (size_t i = 0, CountForeigns = ISMetaData::Instance().GetForeigns().size(); i < CountForeigns; ++i)
 	{
 		Progress("Foreign", i, CountForeigns);
 		PMetaForeign *MetaForeign = ISMetaData::Instance().GetForeigns()[i];
@@ -266,7 +266,7 @@ bool CGConfiguratorUpdate::foreigns()
 bool CGConfiguratorUpdate::resources()
 {
 	bool Result = true, Exist = true;
-	for (int i = 0, CountResources = ISMetaData::Instance().GetResources().size(); i < CountResources; ++i)
+	for (size_t i = 0, CountResources = ISMetaData::Instance().GetResources().size(); i < CountResources; ++i)
 	{
 		PMetaResource *MetaResource = ISMetaData::Instance().GetResources()[i];
 		Progress("Resource", i, CountResources, "UID: " + MetaResource->UID);

@@ -30,7 +30,7 @@ bool CGConfiguratorService::reindex()
 	ISLOGGER_L("Reindex...");
 
 	bool Result = true;
-	for (int i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i)
+	for (size_t i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i)
 	{
 		Progress("Reindex", i, CountTables);
 

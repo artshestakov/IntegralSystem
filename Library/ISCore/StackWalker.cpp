@@ -28,6 +28,7 @@
 #pragma comment(lib, "version.lib")  // for "VerQueryValue"
 #pragma warning(disable: 4091)
 #pragma warning(disable: 4996)
+#pragma warning(disable: 4740)
 
  // If VC7 and later, then use the shipped 'dbghelp.h'-file
 #if _MSC_VER >= 1300

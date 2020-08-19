@@ -19,7 +19,7 @@ QString CGConfiguratorBase::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorBase::Progress(const QString &ObjectTypeName, int Step, int TotalStep, const QString &Description)
+void CGConfiguratorBase::Progress(const QString &ObjectTypeName, size_t Step, size_t TotalStep, const QString &Description)
 {
 	ISLOGGER_L(QString("Progress \"%1\": %2 of %3%4").arg(ObjectTypeName).arg(Step + 1).arg(TotalStep).arg(!Description.isEmpty() ? ". " + Description : QString()));
 }

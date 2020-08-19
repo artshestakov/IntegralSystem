@@ -17,8 +17,8 @@ bool CGResource::InsertResource(PMetaResource *MetaResource, QString &ErrorStrin
 	QString InsertText = "INSERT INTO " + MetaResource->TableName.toLower() + '(' + TableAlias + "_uid, ";
 	QString ValuesText = "VALUES(:UID, ";
 
-	int CountParameters = MetaResource->Parameters.size();
-	for (int i = 0; i < CountParameters; ++i)
+	size_t CountParameters = MetaResource->Parameters.size();
+	for (size_t i = 0; i < CountParameters; ++i)
 	{
 		QString FieldName = TableAlias + '_' + ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
 		InsertText += FieldName + ", ";
@@ -37,7 +37,7 @@ bool CGResource::InsertResource(PMetaResource *MetaResource, QString &ErrorStrin
 	bool BindValueUID = qInsertResource.BindValue(":UID", MetaResource->UID);
 	IS_ASSERT(BindValueUID, QString("Not BindValue Field UID. UID: %1").arg(MetaResource->UID));
 
-	for (int i = 0; i < CountParameters; ++i)
+	for (size_t i = 0; i < CountParameters; ++i)
 	{
 		QString FieldName = TableAlias + '_' + ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
 		QString FieldValue = ISAlgorithm::ConvertMapToValues(MetaResource->Parameters)[i];

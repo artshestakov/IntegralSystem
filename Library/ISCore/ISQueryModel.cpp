@@ -208,7 +208,7 @@ void ISQueryModel::SetOffset(int offset)
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectSystemFields()
 {
-	for (int i = 1, c = MetaTable->SystemFields.size(); i < c; ++i) //Обход системных полей и включение их в запрос
+	for (size_t i = 1, c = MetaTable->SystemFields.size(); i < c; ++i) //Обход системных полей и включение их в запрос
 	{
 		PMetaField *SystemField = MetaTable->SystemFields[i];
 		if (!ISAlgorithm::VectorContains(MetaTable->SystemFieldsVisible, SystemField))
@@ -224,7 +224,7 @@ void ISQueryModel::CreateQuerySelectSystemFields()
 //-----------------------------------------------------------------------------
 void ISQueryModel::CreateQuerySelectFields()
 {
-	for (int i = 0, c = MetaTable->Fields.size(); i < c; ++i)
+	for (size_t i = 0, c = MetaTable->Fields.size(); i < c; ++i)
 	{
 		PMetaField *Field = MetaTable->Fields[i];
 		if (ModelType == ISNamespace::QMT_Object)

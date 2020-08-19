@@ -106,9 +106,9 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	ISVectorString Arguments = CoreArralication.arguments().toVector().toStdVector();
-	Arguments.erase(Arguments.begin());
-	if (Arguments.size() == 0)
+	ISVectorString ArgumentsCMD = CoreArralication.arguments().toVector().toStdVector();
+	ArgumentsCMD.erase(ArgumentsCMD.begin());
+	if (ArgumentsCMD.size() == 0)
 	{
 		ISLOGGER_L(QString("Configurator [Version %1] %2 %3").arg(ISVersion::Instance().ToString()).arg(ISVersion::Instance().Info.Configuration).arg(ISVersion::Instance().Info.Platform));
 		ISLOGGER_L("Welcome to the Configurator.");
@@ -123,13 +123,13 @@ int main(int argc, char **argv)
 			InterpreterMode(Result);
 		}
 	}
-	else if (Arguments.size() == 1)
+	else if (ArgumentsCMD.size() == 1)
 	{
-		Result = Execute(Arguments[0].toLower());
+		Result = Execute(ArgumentsCMD[0].toLower());
 	}
-	else if (Arguments.size() == 2)
+	else if (ArgumentsCMD.size() == 2)
 	{
-		Result = Execute(Arguments[0].toLower(), Arguments[1].toLower());
+		Result = Execute(ArgumentsCMD[0].toLower(), ArgumentsCMD[1].toLower());
 	}
 	ISCore::ExitApplication();
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;

@@ -98,7 +98,7 @@ void ISAlgorithm::PrepareStringDouble(QString &String, size_t Precision)
 	int Pos = String.indexOf(SYMBOL_POINT);
 	if (Pos != -1) //Нашли точку
 	{
-		Pos += 1 + Precision;
+		Pos += 1 + (int)Precision;
 		if (Pos < String.size())
 		{
 			String.remove(Pos, String.size() - Pos);
