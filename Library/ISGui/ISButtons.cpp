@@ -72,23 +72,23 @@ ISButtonClose::~ISButtonClose()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISServiceButton::ISServiceButton(const QIcon &Icon, const QString &Text, const QString &ToolTip, QWidget *parent) : ISPushButton(Icon, Text, ToolTip, parent)
+ISServiceButton::ISServiceButton(const QIcon &Icon, const QString &ToolTip, QWidget *parent) : ISPushButton(Icon, QString(), ToolTip, parent)
 {
-	setFixedSize(ISDefines::Gui::SIZE_22_22);
+	setFixedSize(ISPUSHBUTTON_MINIMUM_HEIGHT, ISPUSHBUTTON_MINIMUM_HEIGHT);
 	setCursor(CURSOR_POINTING_HAND);
 }
 //-----------------------------------------------------------------------------
-ISServiceButton::ISServiceButton(const QIcon &Icon, const QString &Text, QWidget *parent) : ISServiceButton(Icon, Text, QString(), parent)
+ISServiceButton::ISServiceButton(const QIcon &Icon, QWidget *parent) : ISServiceButton(Icon, parent)
 {
 
 }
 //-----------------------------------------------------------------------------
-ISServiceButton::ISServiceButton(const QString &Text, QWidget *parent) : ISServiceButton(QIcon(), Text, QString(), parent)
+ISServiceButton::ISServiceButton(const QString &ToolTip, QWidget *parent) : ISServiceButton(ToolTip, parent)
 {
 
 }
 //-----------------------------------------------------------------------------
-ISServiceButton::ISServiceButton(QWidget *parent) : ISServiceButton(QIcon(), QString(), QString(), parent)
+ISServiceButton::ISServiceButton(QWidget *parent) : ISServiceButton(parent)
 {
 
 }

@@ -84,23 +84,17 @@ void ISPlayerWidget::CreateInterface()
 	QHBoxLayout *LayoutPlayer = new QHBoxLayout();
 	MainLayout->addLayout(LayoutPlayer);
 
-	ButtonPlay = new ISServiceButton(this);
-	ButtonPlay->setToolTip(LANG("Player.Play"));
-	ButtonPlay->setIcon(BUFFER_ICONS("Player.Play"));
+	ButtonPlay = new ISServiceButton(BUFFER_ICONS("Player.Play"), LANG("Player.Play"), this);
 	connect(ButtonPlay, &ISServiceButton::clicked, this, &ISPlayerWidget::Play);
 	LayoutPlayer->addWidget(ButtonPlay);
 
-	ButtonPause = new ISServiceButton(this);
+	ButtonPause = new ISServiceButton(BUFFER_ICONS("Player.Pause"), LANG("Player.Pause"), this);
 	ButtonPause->setEnabled(false);
-	ButtonPause->setToolTip(LANG("Player.Pause"));
-	ButtonPause->setIcon(BUFFER_ICONS("Player.Pause"));
 	connect(ButtonPause, &ISServiceButton::clicked, this, &ISPlayerWidget::Pause);
 	LayoutPlayer->addWidget(ButtonPause);
 
-	ButtonStop = new ISServiceButton(this);
+	ButtonStop = new ISServiceButton(BUFFER_ICONS("Player.Stop"), LANG("Player.Stop"), this);
 	ButtonStop->setEnabled(false);
-	ButtonStop->setToolTip(LANG("Player.Stop"));
-	ButtonStop->setIcon(BUFFER_ICONS("Player.Stop"));
 	connect(ButtonStop, &ISServiceButton::clicked, this, &ISPlayerWidget::Stop);
 	LayoutPlayer->addWidget(ButtonStop);
 
@@ -122,21 +116,15 @@ void ISPlayerWidget::CreateInterface()
 	QHBoxLayout *LayoutVolume = new QHBoxLayout();
 	MainLayout->addLayout(LayoutVolume);
 
-	ButtonPrevious = new ISServiceButton(this);
-	ButtonPrevious->setIcon(BUFFER_ICONS("Player.Previous"));
-	ButtonPrevious->setToolTip(LANG("Player.Previous"));
+	ButtonPrevious = new ISServiceButton(BUFFER_ICONS("Player.Previous"), LANG("Player.Previous"), this);
 	connect(ButtonPrevious, &ISServiceButton::clicked, this, &ISPlayerWidget::Previous);
 	LayoutVolume->addWidget(ButtonPrevious);
 
-	ButtonNext = new ISServiceButton(this);
-	ButtonNext->setIcon(BUFFER_ICONS("Player.Next"));
-	ButtonNext->setToolTip(LANG("Player.Next"));
+	ButtonNext = new ISServiceButton(BUFFER_ICONS("Player.Next"), LANG("Player.Next"), this);
 	connect(ButtonNext, &ISServiceButton::clicked, this, &ISPlayerWidget::Next);
 	LayoutVolume->addWidget(ButtonNext);
 
-	ButtonVolume = new ISServiceButton(this);
-	ButtonVolume->setToolTip(LANG("Player.Volume.Off"));
-	ButtonVolume->setIcon(BUFFER_ICONS("Volume.Maximum"));
+	ButtonVolume = new ISServiceButton(BUFFER_ICONS("Volume.Maximum"), LANG("Player.Volume.Off"), this);
 	connect(ButtonVolume, &ISServiceButton::clicked, this, &ISPlayerWidget::VolumeClicked);
 	LayoutVolume->addWidget(ButtonVolume);
 

@@ -30,9 +30,7 @@ ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
 	Label->setText("0%");
 	AddWidgetToRight(Label);
 
-	ButtonCheck = new ISServiceButton(this);
-	ButtonCheck->setToolTip(LANG("ClickFromCheckLevelVolume"));
-	ButtonCheck->setIcon(BUFFER_ICONS("Volume.Check"));
+	ButtonCheck = new ISServiceButton(BUFFER_ICONS("Volume.Check"), LANG("ClickFromCheckLevelVolume"), this);
 	ButtonCheck->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonCheck, &ISServiceButton::clicked, this, &ISVolumeEdit::VolumeCheck);
 	AddWidgetToRight(ButtonCheck);

@@ -199,11 +199,9 @@ ISQDateEdit::ISQDateEdit(QWidget *parent)
 	setReadOnly(true);
 	SetVisibleClear(false);
 
-	ButtonCalendar = new ISServiceButton(this);
-	ButtonCalendar->setToolTip(LANG("ShowCalendar") );
-	ButtonCalendar->setIcon(BUFFER_ICONS("Calendar"));
-	ButtonCalendar->setFocusPolicy(Qt::NoFocus);
+	ButtonCalendar = new ISServiceButton(BUFFER_ICONS("Calendar"), LANG("ShowCalendar"), this);
 	ButtonCalendar->setFlat(true);
+	ButtonCalendar->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonCalendar, &ISServiceButton::clicked, this, &ISQDateEdit::ShowCalendar);
 
 	CalendarWidget = new ISCalendarPopup(this);

@@ -13,10 +13,8 @@ ISPhoneBaseEdit::ISPhoneBaseEdit(QWidget *parent) : ISFieldEditBase(parent)
 	connect(this, &ISPhoneBaseEdit::DataChanged, this, &ISPhoneBaseEdit::PhoneChanged);
 	AddWidgetEdit(PhoneLineEdit, this);
 
-	ButtonCall = new ISServiceButton(this);
+	ButtonCall = new ISServiceButton(BUFFER_ICONS("CallPhone"), LANG("Call"), this);
 	ButtonCall->setVisible(false);
-	ButtonCall->setToolTip(LANG("Call"));
-	ButtonCall->setIcon(BUFFER_ICONS("CallPhone"));
 	ButtonCall->setEnabled(false);
 	ButtonCall->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonCall, &ISServiceButton::clicked, this, &ISPhoneBaseEdit::Call);

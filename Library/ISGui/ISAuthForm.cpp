@@ -78,10 +78,7 @@ ISAuthForm::ISAuthForm()
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
 	Layout->addLayout(LayoutBottom);
 
-	ButtonMenu = new ISServiceButton(this);
-	ButtonMenu->setToolTip(LANG("Additionally"));
-	ButtonMenu->setIcon(BUFFER_ICONS("Auth.Additionally"));
-	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
+	ButtonMenu = new ISServiceButton(BUFFER_ICONS("Auth.Additionally"), LANG("Additionally"), this);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	LayoutBottom->addWidget(ButtonMenu);
 

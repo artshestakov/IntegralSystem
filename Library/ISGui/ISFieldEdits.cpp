@@ -103,9 +103,7 @@ ISUuidEdit::ISUuidEdit(QWidget *parent) : ISLineEdit(parent)
 	SetUppercase(true);
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
-	ButtonGenerate = new ISServiceButton(this);
-	ButtonGenerate->setToolTip(LANG("ClickFromGenerateNewUID"));
-	ButtonGenerate->setIcon(BUFFER_ICONS("UUID.Generate"));
+	ButtonGenerate = new ISServiceButton(BUFFER_ICONS("UUID.Generate"), LANG("ClickFromGenerateNewUID"), this);
 	connect(ButtonGenerate, &ISServiceButton::clicked, this, &ISUuidEdit::Generate);
 	AddWidgetToRight(ButtonGenerate);
 }
@@ -211,10 +209,8 @@ ISINNEdit::ISINNEdit(QWidget *parent) : ISLineEdit(parent)
 	SetMaxLength(12);
 	SetFixedWidth(ISGui::GetStringWidth("123456789012", ISDefines::Gui::FONT_APPLICATION) + 50);
 
-	ButtonSearch = new ISServiceButton(this);
+	ButtonSearch = new ISServiceButton(BUFFER_ICONS("Taxation"), LANG("SearchFromINN"), this);
 	ButtonSearch->setVisible(false);
-	ButtonSearch->setToolTip(LANG("SearchFromINN"));
-	ButtonSearch->setIcon(BUFFER_ICONS("Taxation"));
 	ButtonSearch->setFlat(true);
 	ButtonSearch->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonSearch, &ISServiceButton::clicked, this, &ISINNEdit::SearchFromINN);
@@ -272,9 +268,7 @@ ISPathEditDir::ISPathEditDir(QWidget *parent) : ISLineEdit(parent)
 	connect(ButtonSelect, &ISPushButton::clicked, this, &ISPathEditDir::SelectDir);
 	AddWidgetToRight(ButtonSelect);
 
-	ButtonOpenDir = new ISServiceButton(this);
-	ButtonOpenDir->setIcon(BUFFER_ICONS("FolderClosed"));
-	ButtonOpenDir->setToolTip(LANG("OpenFolder"));
+	ButtonOpenDir = new ISServiceButton(BUFFER_ICONS("FolderClosed"), LANG("OpenFolder"), this);
 	ButtonOpenDir->setEnabled(false);
 	connect(ButtonOpenDir, &ISPushButton::clicked, this, &ISPathEditDir::OpenDir);
 	AddWidgetToRight(ButtonOpenDir);
@@ -372,10 +366,8 @@ ISPasswordEdit::ISPasswordEdit(QWidget *parent) : ISLineEdit(parent)
 	connect(CheckPasswordVisible, &QCheckBox::stateChanged, this, &ISPasswordEdit::PasswordVisibleChanged);
 	AddWidgetToLeft(CheckPasswordVisible);
 
-	ButtonGeneratePassword = new ISServiceButton(this);
+	ButtonGeneratePassword = new ISServiceButton(BUFFER_ICONS("PasswordGenerate"), LANG("GeneratePassword"), this);
 	ButtonGeneratePassword->setVisible(true);
-	ButtonGeneratePassword->setToolTip(LANG("GeneratePassword"));
-	ButtonGeneratePassword->setIcon(BUFFER_ICONS("PasswordGenerate"));
 	connect(ButtonGeneratePassword, &ISPushButton::clicked, this, &ISPasswordEdit::GeneratePassword);
 	AddWidgetToRight(ButtonGeneratePassword);
 
@@ -419,9 +411,7 @@ ISUrlEdit::ISUrlEdit(QWidget *parent) : ISLineEdit(parent)
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_URL), this));
 	connect(this, &ISUrlEdit::DataChanged, this, &ISUrlEdit::UrlChanged);
 
-	ButtonUrl = new ISServiceButton(this);
-	ButtonUrl->setToolTip(LANG("OpenUrlLink"));
-	ButtonUrl->setIcon(BUFFER_ICONS("Url"));
+	ButtonUrl = new ISServiceButton(BUFFER_ICONS("Url"), LANG("OpenUrlLink"), this);
 	connect(ButtonUrl, &ISServiceButton::clicked, this, &ISUrlEdit::OpenUrl);
 	AddWidgetToRight(ButtonUrl);
 }
@@ -467,9 +457,7 @@ ISYearEdit::ISYearEdit(QWidget *parent) : ISIntegerEdit(parent)
 	SetMinimum(YEAR_MINIMUM);
 	SetMaximum(YEAR_MAXIMUM);
 
-	ISServiceButton *ButtonCurrentYear = new ISServiceButton(this);
-	ButtonCurrentYear->setToolTip(LANG("CurrentYear"));
-	ButtonCurrentYear->setIcon(BUFFER_ICONS("Calendar"));
+	ISServiceButton *ButtonCurrentYear = new ISServiceButton(BUFFER_ICONS("Calendar"), LANG("CurrentYear"), this);
 	ButtonCurrentYear->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonCurrentYear, &ISServiceButton::clicked, this, &ISYearEdit::SelectCurrentYear);
 	AddWidgetToRight(ButtonCurrentYear);
@@ -523,10 +511,8 @@ ISEMailEdit::ISEMailEdit(QWidget *parent) : ISLineEdit(parent)
 	SetIcon(BUFFER_ICONS("EMail.FieldEdit.Acceptable"));
 	SetPlaceholderText(LANG("Field.EMail.PlaceholderText"));
 
-	ISServiceButton *ButtonSend = new ISServiceButton(this);
+	ISServiceButton *ButtonSend = new ISServiceButton(BUFFER_ICONS("EMailSend"), LANG("Send"), this);
 	ButtonSend->setVisible(false);
-	ButtonSend->setToolTip(LANG("Send"));
-	ButtonSend->setIcon(BUFFER_ICONS("EMailSend"));
 	ButtonSend->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonSend, &ISServiceButton::clicked, this, &ISEMailEdit::Send);
 	AddWidgetToRight(ButtonSend);

@@ -12,9 +12,7 @@ ISPassportEdit::ISPassportEdit(QWidget *parent) : ISLineEdit(parent)
 	SetReadOnly(true);
 	Clear();
 
-	ISServiceButton *ButtonEdit = new ISServiceButton(this);
-	ButtonEdit->setToolTip(LANG("Passport.EditPassport"));
-	ButtonEdit->setIcon(BUFFER_ICONS("Passport"));
+	ISServiceButton *ButtonEdit = new ISServiceButton(BUFFER_ICONS("Passport"), LANG("Passport.EditPassport"), this);
 	ButtonEdit->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonEdit, &ISServiceButton::clicked, this, &ISPassportEdit::Edit);
 	AddWidgetToRight(ButtonEdit);

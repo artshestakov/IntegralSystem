@@ -207,9 +207,7 @@ void ISSearchForm::AddFilter()
 	QWidget *Widget = new QWidget();
 	Widget->setLayout(LayoutWidget);
 
-	ISServiceButton *ButtonDelete = new ISServiceButton(Widget);
-	ButtonDelete->setIcon(BUFFER_ICONS("DeleteSearchField"));
-	ButtonDelete->setToolTip(LANG("Search.DeleteField"));
+	ISServiceButton *ButtonDelete = new ISServiceButton(BUFFER_ICONS("DeleteSearchField"), LANG("Search.DeleteField"), Widget);
 	connect(ButtonDelete, &ISPushButton::clicked, this, &ISSearchForm::DeleteFieldClicked);
 	LayoutWidget->addWidget(ButtonDelete);
 	LayoutWidget->addStretch();
