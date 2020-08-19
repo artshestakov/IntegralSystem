@@ -357,9 +357,6 @@
     <ClCompile Include="ISUserRoleEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISAddressForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISAsteriskCallsListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -495,9 +492,6 @@
     <ClCompile Include="ISWorkspaceForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISAddressEdit.cpp">
-      <Filter>Controls\Fields</Filter>
-    </ClCompile>
     <ClCompile Include="ISComboTimeEdit.cpp">
       <Filter>Controls\Fields</Filter>
     </ClCompile>
@@ -557,9 +551,6 @@
     </ClCompile>
     <ClCompile Include="ISTabWidgetMain.cpp">
       <Filter>Controls\TabNavigation</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAddressBox.cpp">
-      <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISButtonDialog.cpp">
       <Filter>Controls</Filter>
@@ -821,9 +812,6 @@
     <QtMoc Include="ISAboutForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISAddressForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISAsteriskCallsListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -959,9 +947,6 @@
     <QtMoc Include="ISWorkspaceForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISAddressEdit.h">
-      <Filter>Controls\Fields</Filter>
-    </QtMoc>
     <QtMoc Include="ISComboTimeEdit.h">
       <Filter>Controls\Fields</Filter>
     </QtMoc>
@@ -1021,9 +1006,6 @@
     </QtMoc>
     <QtMoc Include="ISTabWidgetMain.h">
       <Filter>Controls\TabNavigation</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAddressBox.h">
-      <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISButtonDialog.h">
       <Filter>Controls</Filter>

@@ -45,7 +45,6 @@ ISMetaData::ISMetaData()
 		{ "Seconds", ISNamespace::FT_Seconds, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", false },
 		{ "CallDetails", ISNamespace::FT_CallDetails, "BOOLEAN", "ISCheckEdit", QString(), false },
 		{ "Month", ISNamespace::FT_Month, "INTEGER", "ISMonthEdit", "ISComboSearchNumber", false },
-		{ "Address", ISNamespace::FT_Address, "CHARACTER VARYING", "ISAddressEdit", "ISComboSearchString", true },
 		{ "Url", ISNamespace::FT_Url, "CHARACTER VARYING", "ISUrlEdit", "ISComboSearchString", true },
 		{ "File", ISNamespace::FT_File, "CHARACTER VARYING", "ISFileEdit", QString(), false },
 		{ "Sex", ISNamespace::FT_Sex, "INTEGER", "ISSexEdit", "ISComboSearchNumber", true }

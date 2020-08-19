@@ -1131,24 +1131,6 @@
   <Local Name="Passport.IssuedBy" Russian="Кем выдан (как в паспорте)"/>
   <Local Name="Passport.DivisionCode" Russian="Код подразделения"/>
 
-  <!--Address-->
-  <Local Name="Address" Russian="Адрес"/>
-  <Local Name="Address.Select" Russian="Выбрать"/>
-  <Local Name="Address.ListFIAS" Russian="Справочник ФИАС"/>
-  <Local Name="Address.Region" Russian="Регион"/>
-  <Local Name="Address.Region.PlaceholderText" Russian="Поиск по региону"/>
-  <Local Name="Address.City" Russian="Город / нас. пункт"/>
-  <Local Name="Address.City.PlaceholderText" Russian="Поиск по городу или нас. пункту"/>
-  <Local Name="Address.Street" Russian="Улица"/>
-  <Local Name="Address.Street.PlaceholderText" Russian="Поиск по улице"/>
-  <Local Name="Address.House" Russian="Дом"/>
-  <Local Name="Address.House.PlaceholderText" Russian="Поиск по дому"/>
-  <Local Name="Address.Mode" Russian="Ввод"/>
-  <Local Name="Address.Mode.List" Russian="по справочнику"/>
-  <Local Name="Address.Mode.Free" Russian="в свободной форме"/>
-  <Local Name="Address.PerformanceAddress" Russian="Представление адреса"/>
-  <Local Name="Address.AddressInFreeForm" Russian="Адрес в свободной форме"/>
-
   <!--SmtpClient-->
   <Local Name="SmtpClient.Error.AuthenticationFailedError" Russian="Ошибка аутентификации"/>
 

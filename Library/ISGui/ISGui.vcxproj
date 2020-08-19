@@ -175,9 +175,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISAboutForm.cpp" />
-    <ClCompile Include="ISAddressBox.cpp" />
-    <ClCompile Include="ISAddressEdit.cpp" />
-    <ClCompile Include="ISAddressForm.cpp" />
     <ClCompile Include="ISAsteriskCallsListForm.cpp" />
     <ClCompile Include="ISAsteriskRecordPlayForm.cpp" />
     <ClCompile Include="ISAsteriskRecordWaitForm.cpp" />
@@ -429,7 +426,6 @@
     <QtMoc Include="ISVolumeEdit.h" />
     <QtMoc Include="ISWorkspaceForm.h" />
     <QtMoc Include="ISAboutForm.h" />
-    <QtMoc Include="ISAddressForm.h" />
     <QtMoc Include="ISAsteriskCallsListForm.h" />
     <QtMoc Include="ISAsteriskRecordPlayForm.h" />
     <QtMoc Include="ISAsteriskRecordWaitForm.h" />
@@ -474,7 +470,6 @@
     <QtMoc Include="ISUserObjectForm.h" />
     <QtMoc Include="ISUserOnlineDetailsForm.h" />
     <QtMoc Include="ISUserPasswordForm.h" />
-    <QtMoc Include="ISAddressEdit.h" />
     <QtMoc Include="ISComboTimeEdit.h" />
     <QtMoc Include="ISExecutorEdit.h" />
     <QtMoc Include="ISFileEdit.h" />
@@ -494,7 +489,6 @@
     <QtMoc Include="ISComboSearchWidgets.h" />
     <QtMoc Include="ISTabBarMain.h" />
     <QtMoc Include="ISTabWidgetMain.h" />
-    <QtMoc Include="ISAddressBox.h" />
     <QtMoc Include="ISButtonDialog.h" />
     <QtMoc Include="ISButtons.h" />
     <QtMoc Include="ISContextMenu.h" />

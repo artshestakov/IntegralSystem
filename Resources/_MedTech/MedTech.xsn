@@ -22,7 +22,7 @@
   <Table Name="Branches" UID="{FF6953DD-662F-46B2-920E-78A637B461F5}" Alias="brch" LocalName="Филиал" LocalListName="Филиалы" TitleName="Name">
     <Fields>
       <Field UID="{8F074AA9-670F-42E2-B249-10001596A3C6}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{FF63071A-6A20-433B-97F4-88DABE87F134}" Name="Address" Type="Address" LabelName="Адрес" LocalListName="Адрес"/>
+      <Field UID="{FF63071A-6A20-433B-97F4-88DABE87F134}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
       <Field UID="{00005453-2D21-4E7B-BAD5-3C03B9220299}" Name="CountNumbers" Type="Int" LabelName="Внутренних номеров" LocalListName="Внутренних номеров" QueryText="SELECT COUNT(*) FROM branchesnumber WHERE brnm_branch = brch_id"/>
     </Fields>
     <Indexes>

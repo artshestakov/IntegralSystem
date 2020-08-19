@@ -43,7 +43,6 @@
 #include "ISPassportEdit.h"
 #include "ISVolumeEdit.h"
 #include "ISExecutorEdit.h"
-#include "ISAddressEdit.h"
 #include "ISFileEdit.h"
 #include "ISSexEdit.h"
 #include "ISComboSearchWidgets.h"
@@ -120,7 +119,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISTaskImportantEdit*>("ISTaskImportantEdit");
 	qRegisterMetaType<ISTaskDescriptionEdit*>("ISTaskDescriptionEdit");
 	qRegisterMetaType<ISExecutorEdit*>("ISExecutorEdit");
-	qRegisterMetaType<ISAddressEdit*>("ISAddressEdit");
 	qRegisterMetaType<ISUrlEdit*>("ISUrlEdit");
 	qRegisterMetaType<ISFileEdit*>("ISFileEdit");
 	qRegisterMetaType<ISSexEdit*>("ISSexEdit");
