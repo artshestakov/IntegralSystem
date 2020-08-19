@@ -135,9 +135,6 @@
     <ClCompile Include="ISLogger.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISMemoryObjects.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISPhoneNumberParser.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -274,9 +271,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISLogger.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMemoryObjects.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISNamespace.h">

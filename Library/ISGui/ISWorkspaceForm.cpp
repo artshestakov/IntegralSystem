@@ -1,6 +1,5 @@
 #include "ISWorkspaceForm.h"
 #include "ISDefinesGui.h"
-#include "ISMemoryObjects.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISUserRoleEntity.h"
 #include "ISSystemsPanel.h"
@@ -14,12 +13,10 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISWorkspaceForm::ISWorkspaceForm(QWidget *parent) : ISParagraphBaseForm(parent)
+ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
+	: ISParagraphBaseForm(parent),
+	CentralForm(nullptr)
 {
-	CentralForm = nullptr;
-
-	ISMemoryObjects::GetInstance().SetWorkspaceForm(this);
-
 	Layout = new QVBoxLayout();
 	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	Layout->setSpacing(0);

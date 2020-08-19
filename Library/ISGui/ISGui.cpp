@@ -14,7 +14,6 @@
 #include "ISProtocol.h"
 #include "ISSelectDialogForm.h"
 #include "ISTaskViewForm.h"
-#include "ISMemoryObjects.h"
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
 #include "ISStyleSheet.h"
