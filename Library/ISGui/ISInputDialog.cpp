@@ -19,10 +19,13 @@ ISInputDialog::ISInputDialog(ISNamespace::FieldType DataType, const QString &Tit
 
 	if (!LabelText.isEmpty())
 	{
+		QHBoxLayout *LayoutLabel = new QHBoxLayout();
+		GetMainLayout()->addLayout(LayoutLabel);
+
 		Label = new QLabel(LabelText, this);
 		Label->setWordWrap(true);
-		Label->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-		GetMainLayout()->addWidget(Label, 0, Qt::AlignLeft);
+		Label->setSizePolicy(QSizePolicy::Minimum, Label->sizePolicy().verticalPolicy());
+		LayoutLabel->addWidget(Label);
 	}
 
 	if (DataType != ISNamespace::FT_Unknown)

@@ -287,11 +287,11 @@ QIcon ISGui::ByteArrayToIcon(const QByteArray &ByteArray)
 //-----------------------------------------------------------------------------
 QByteArray ISGui::PixmapToByteArray(const QPixmap &Pixmap)
 {
-	QPixmap ConvertingPixmap = Pixmap;
 	QByteArray ByteArray;
 	QBuffer Buffer(&ByteArray);
 	if (Buffer.open(QIODevice::WriteOnly))
 	{
+		QPixmap ConvertingPixmap = Pixmap;
 		ConvertingPixmap.save(&Buffer, "PNG");
 	}
 	return ByteArray;

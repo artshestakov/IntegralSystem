@@ -4,10 +4,9 @@
 #include "ISAssert.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-QVariant ISDatabaseHelper::CheckValue(QVariant &Value)
+void ISDatabaseHelper::CheckValue(QVariant &Value)
 {
 	QVariant::Type ValueType = Value.type();
-
 	if (ValueType == QVariant::Bool)
 	{
 		if (Value.toBool())
@@ -45,8 +44,6 @@ QVariant ISDatabaseHelper::CheckValue(QVariant &Value)
 	{
 		Value.clear();
 	}
-
-	return Value;
 }
 //-----------------------------------------------------------------------------
 QVariant ISDatabaseHelper::GetObjectIDToList(PMetaTable *MetaTable, PMetaField *MetaField, int ObjectID)

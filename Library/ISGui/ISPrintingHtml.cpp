@@ -84,9 +84,9 @@ bool ISPrintingHtml::FillTemplate()
 
 			if (qSelectValue.ExecuteFirst())
 			{
-				QVariant CheckedValue = ISDatabaseHelper::CheckValue(qSelectValue.ReadColumn(0));
-				QString StringValue = CheckedValue.toString();
-				Html.replace(MetaReportField->ReplaceValue, StringValue);
+				QVariant Value = qSelectValue.ReadColumn(0);
+				ISDatabaseHelper::CheckValue(Value);
+				Html.replace(MetaReportField->ReplaceValue, Value.toString());
 			}
 		}
 	}

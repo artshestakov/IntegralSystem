@@ -32,24 +32,19 @@ ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	addAction(ActionEscape);
 
 	QAction *ActionEnter = new QAction(this);
-	ActionEnter->setShortcut(Qt::Key_Enter);
+	ActionEnter->setShortcuts(QList<QKeySequence>() << Qt::Key_Enter << Qt::Key_Return);
 	connect(ActionEnter, &QAction::triggered, this, &ISInterfaceForm::EnterClicked);
 	addAction(ActionEnter);
 
-	QAction *ActionReturn = new QAction(this);
-	ActionReturn->setShortcut(Qt::Key_Return);
-	connect(ActionReturn, &QAction::triggered, this, &ISInterfaceForm::EnterClicked);
-	addAction(ActionReturn);
-
 	QAction *ActionControlEnter = new QAction(this);
-	ActionControlEnter->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
+	ActionControlEnter->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Enter) << QKeySequence(Qt::CTRL + Qt::Key_Return));
 	connect(ActionControlEnter, &QAction::triggered, this, &ISInterfaceForm::ControlEnterClicked);
 	addAction(ActionControlEnter);
-
-	QAction *ActionControlReturn = new QAction(this);
-	ActionControlReturn->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
-	connect(ActionControlReturn, &QAction::triggered, this, &ISInterfaceForm::ControlEnterClicked);
-	addAction(ActionControlReturn);
+	
+	QAction *ActionPaste = new QAction(this);
+	ActionPaste->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_V) << QKeySequence(Qt::SHIFT + Qt::Key_Insert));
+	connect(ActionPaste, &QAction::triggered, this, &ISInterfaceForm::PasteClicked);
+	addAction(ActionPaste);
 }
 //-----------------------------------------------------------------------------
 ISInterfaceForm::~ISInterfaceForm()
@@ -178,6 +173,11 @@ void ISInterfaceForm::EnterClicked()
 }
 //-----------------------------------------------------------------------------
 void ISInterfaceForm::ControlEnterClicked()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISInterfaceForm::PasteClicked()
 {
 
 }

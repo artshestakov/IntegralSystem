@@ -36,6 +36,7 @@ protected:
 	virtual void EscapeClicked();
 	virtual void EnterClicked();
 	virtual void ControlEnterClicked();
+	virtual void PasteClicked();
 
 private:
 	QVBoxLayout *MainLayout;
