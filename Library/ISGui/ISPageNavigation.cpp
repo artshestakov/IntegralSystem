@@ -18,23 +18,15 @@ ISPageNavigation::ISPageNavigation(QWidget *parent)
 	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	setLayout(Layout);
 
-	ButtonBegin = new ISServiceButton(this);
+	ButtonBegin = new ISServiceButton(BUFFER_ICONS("PageNavigation.Begin"), LANG("Page.Begin"), this);
 	ButtonBegin->setEnabled(false);
-	ButtonBegin->setToolTip(LANG("Page.Begin"));
-	ButtonBegin->setIcon(BUFFER_ICONS("PageNavigation.Begin"));
 	ButtonBegin->setFlat(true);
-	ButtonBegin->setFixedSize(ISDefines::Gui::SIZE_22_22);
-	ButtonBegin->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonBegin, &QToolButton::clicked, this, &ISPageNavigation::BeginClicked);
 	Layout->addWidget(ButtonBegin);
 
-	ButtonPrevious = new ISServiceButton(this);
+	ButtonPrevious = new ISServiceButton(BUFFER_ICONS("PageNavigation.Previous"), LANG("Page.Previous"), this);
 	ButtonPrevious->setEnabled(false);
-	ButtonPrevious->setToolTip(LANG("Page.Previous"));
-	ButtonPrevious->setIcon(BUFFER_ICONS("PageNavigation.Previous"));
 	ButtonPrevious->setFlat(true);
-	ButtonPrevious->setFixedSize(ISDefines::Gui::SIZE_22_22);
-	ButtonPrevious->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonPrevious, &QToolButton::clicked, this, &ISPageNavigation::PreviousClicked);
 	Layout->addWidget(ButtonPrevious);
 
@@ -45,21 +37,13 @@ ISPageNavigation::ISPageNavigation(QWidget *parent)
 	connect(ButtonSelect, &QToolButton::clicked, this, &ISPageNavigation::Select);
 	Layout->addWidget(ButtonSelect);
 
-	ButtonNext = new ISServiceButton(this);
-	ButtonNext->setToolTip(LANG("Page.Next"));
-	ButtonNext->setIcon(BUFFER_ICONS("PageNavigation.Next"));
+	ButtonNext = new ISServiceButton(BUFFER_ICONS("PageNavigation.Next"), LANG("Page.Next"), this);
 	ButtonNext->setFlat(true);
-	ButtonNext->setFixedSize(ISDefines::Gui::SIZE_22_22);
-	ButtonNext->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonNext, &QToolButton::clicked, this, &ISPageNavigation::NextClicked);
 	Layout->addWidget(ButtonNext);
 
-	ButtonEnd = new ISServiceButton(this);
-	ButtonEnd->setToolTip(LANG("Page.End"));
-	ButtonEnd->setIcon(BUFFER_ICONS("PageNavigation.End"));
+	ButtonEnd = new ISServiceButton(BUFFER_ICONS("PageNavigation.End"), LANG("Page.End"), this);
 	ButtonEnd->setFlat(true);
-	ButtonEnd->setFixedSize(ISDefines::Gui::SIZE_22_22);
-	ButtonEnd->setCursor(CURSOR_POINTING_HAND);
 	connect(ButtonEnd, &QToolButton::clicked, this, &ISPageNavigation::EndClicked);
 	Layout->addWidget(ButtonEnd);
 }
