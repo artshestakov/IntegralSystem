@@ -132,7 +132,7 @@ void ISFileEdit::Save()
 void ISFileEdit::Rename()
 {
 	QFileInfo FileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
-	QString FileName = ISInputDialog::GetString(LANG("Renaming"), LANG("EnterFileName"), FileInfo.baseName());
+	QString FileName = ISInputDialog::GetString(LANG("Renaming"), LANG("EnterFileName") + ':', FileInfo.baseName());
 	if (!FileName.isEmpty())
 	{
 		FileName += SYMBOL_POINT + FileInfo.suffix();

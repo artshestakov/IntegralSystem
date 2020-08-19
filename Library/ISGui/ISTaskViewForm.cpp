@@ -499,7 +499,7 @@ void ISTaskViewForm::Edit()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Rename()
 {
-	QString NewName = ISInputDialog::GetString(LANG("Renaming"), LANG("Task.Rename.LabelText"), TaskName);
+	QString NewName = ISInputDialog::GetString(LANG("Renaming"), LANG("Task.Rename.LabelText") + ':', TaskName);
 	if (NewName.isEmpty())
 	{
 		return;
@@ -530,7 +530,7 @@ void ISTaskViewForm::Rename()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SetDescription()
 {
-	QString NewDescription = ISInputDialog::GetText(LANG("Task.SetDescription.Title"), LANG("Task.SetDescription.LabelText"), TaskDescription);
+	QString NewDescription = ISInputDialog::GetText(LANG("Task.SetDescription.Title"), LANG("Task.SetDescription.LabelText") + ':', TaskDescription);
 	if (NewDescription != TaskDescription)
 	{
 		ISQuery qSetDescription(QU_DESCRIPTION);
@@ -1165,7 +1165,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CommentAdd()
 {
-	QString Comment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment"));
+	QString Comment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment") + ':');
 	if (!Comment.isEmpty())
 	{
 		ISQuery qInsertComment(QI_COMMENT);
@@ -1186,7 +1186,7 @@ void ISTaskViewForm::CommentAdd()
 void ISTaskViewForm::CommentEdit()
 {
 	QString Comment = sender()->property("Comment").toString();
-	QString NewComment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment"), Comment);
+	QString NewComment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment") + ':', Comment);
 	if (!NewComment.isEmpty() && NewComment != Comment)
 	{
 		ISQuery qUpdateComment(QU_COMMENT);

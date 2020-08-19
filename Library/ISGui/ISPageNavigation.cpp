@@ -100,7 +100,7 @@ void ISPageNavigation::PreviousClicked()
 void ISPageNavigation::Select()
 {
 	bool Ok = true;
-	int Page = ISInputDialog::GetInteger(Ok, LANG("Page"), LANG("InputNumberPage"), 1, PageCount, CurrentPage + 1);
+	int Page = ISInputDialog::GetInteger(Ok, LANG("Page"), LANG("InputNumberPage") + ':', 1, PageCount, CurrentPage + 1);
 	if (Ok && Page > 0)
 	{
 		CurrentPage = Page - 1;
