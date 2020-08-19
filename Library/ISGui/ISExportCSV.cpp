@@ -47,18 +47,14 @@ bool ISExportCSV::Export()
 	if (Header) //Если в экспортируемый файл нужно добавить заголовки колонок
 	{
 		QString HeaderString;
-
-		for (int i = 0; i < Fields.size(); ++i) //Обход выбранных для экспорта полей
+		for (const QString &FieldName : Fields) //Обход выбранных для экспорта полей
 		{
-			QString FieldName = Fields.at(i);
 			if (ISAlgorithm::VectorContains(Fields, FieldName))
 			{
-				QString LocalName = Model->GetFieldLocalName(FieldName);
-				HeaderString.append(LocalName);
+				HeaderString.append(Model->GetFieldLocalName(FieldName));
 				HeaderString.append(';');
 			}
 		}
-
 		HeaderString.chop(1);
 		HeaderString.append("\r\n");
 		FileCSV->write(HeaderString.toLocal8Bit());
@@ -91,7 +87,7 @@ bool ISExportCSV::Export()
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		QString RowString;
 
-		for (int Column = 0; Column < Fields.size(); ++Column) //Обход колонок
+		for (size_t Column = 0; Column < Fields.size(); ++Column) //Обход колонок
 		{
 			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
 			Value = PrepareValue(Value);

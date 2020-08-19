@@ -64,12 +64,8 @@ bool ISPrintingHtml::FillTemplate()
 			{
 				if (qSelect.GetCountResultRows())
 				{
-					bool First = qSelect.First();
-					IS_ASSERT(First, "Not OnFirst in query: " + QueryText);
-
-					ISHtmlQuery HtmlQuery(qSelect, "Services");
-					QString Html = HtmlQuery.GetHtmlTableQuery();
-					Html.replace(MetaReportField->ReplaceValue, Html);
+					IS_ASSERT(qSelect.First(), "Not OnFirst in query: " + QueryText);
+					Html.replace(MetaReportField->ReplaceValue, ISHtmlQuery(qSelect, "Services").GetHtmlTableQuery());
 				}
 				else
 				{

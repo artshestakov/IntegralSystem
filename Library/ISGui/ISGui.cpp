@@ -291,7 +291,7 @@ QByteArray ISGui::PixmapToByteArray(const QPixmap &Pixmap)
 	QPixmap ConvertingPixmap = Pixmap;
 	QByteArray ByteArray;
 	QBuffer Buffer(&ByteArray);
-	if (Buffer.open(QIODevice::WriteOnly));
+	if (Buffer.open(QIODevice::WriteOnly))
 	{
 		ConvertingPixmap.save(&Buffer, "PNG");
 	}

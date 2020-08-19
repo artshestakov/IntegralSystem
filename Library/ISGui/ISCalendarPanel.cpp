@@ -81,7 +81,8 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 	}
 
 	char Buffer[3];
-	itoa(Date.day(), &Buffer[0], 10);
+	_itoa(Date.day(), &Buffer[0], 10);
+	
 
 	//Рисование текста с датой
 	Painter->drawText(RectText, Buffer);

@@ -86,7 +86,7 @@ bool ISColumnSizer::Initialize(bool UseProtocol)
 	else
 	{
 		ISQuery qSelect(QS_COLUMN_SIZE);
-		bool Result = qSelect.Execute();
+		Result = qSelect.Execute();
 		if (Result)
 		{
 			while (qSelect.Next())

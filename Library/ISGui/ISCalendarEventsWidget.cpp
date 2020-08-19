@@ -39,11 +39,17 @@ void ISCalendarEventsWidget::paintEvent(QPaintEvent *e)
 //-----------------------------------------------------------------------------
 void ISCalendarEventsWidget::RowsInserted(const QModelIndex &ModelIndex, int First, int Last)
 {
+	Q_UNUSED(ModelIndex);
+	Q_UNUSED(First);
+	Q_UNUSED(Last);
 	LabelEmpty->setVisible(!count());
 }
 //-----------------------------------------------------------------------------
 void ISCalendarEventsWidget::RowsRemoved(const QModelIndex &ModelIndex, int First, int Last)
 {
+	Q_UNUSED(ModelIndex);
+	Q_UNUSED(First);
+	Q_UNUSED(Last);
 	LabelEmpty->setVisible(!count());
 }
 //-----------------------------------------------------------------------------

@@ -41,6 +41,8 @@ void ISWaitWidget::initialize()
 //-----------------------------------------------------------------------------
 void ISWaitWidget::paintEvent(QPaintEvent *PaintEvent)
 {
+	Q_UNUSED(PaintEvent);
+
 	UpdatePosition();
 	QPainter Painter(this);
 	Painter.fillRect(this->rect(), Qt::transparent);

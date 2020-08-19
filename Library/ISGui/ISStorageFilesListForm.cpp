@@ -76,7 +76,7 @@ void ISStorageFilesListForm::Create()
 			IsUpdateList = false;
 		ISVectorInt VectorInt;
 		QString LastFileName;
-		int LastObjectID;
+		int LastObjectID = 0;
 
 		ISProgressForm ProgressForm(StringList.size(), LANG("InsertingFiles"), this);
 		ProgressForm.show();

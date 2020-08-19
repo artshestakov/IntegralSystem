@@ -20,22 +20,17 @@ ISPrintForm::ISPrintForm(const QString &TableName)
 	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISPrintForm::Print);
 	GetMainLayout()->addWidget(ListWidget);
 
-	QVector<ISPrintMetaReport*> Vector = ISPrintingEntity::GetInstance().GetReports(TableName);
-	for (int i = 0; i < Vector.count(); ++i)
+	for (ISPrintMetaReport *meta_report : ISPrintingEntity::GetInstance().GetReports(TableName))
 	{
-		ISPrintMetaReport *MetaReport = Vector.at(i);
-
 		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-		ListWidgetItem->setText(MetaReport->LocalName);
+		ListWidgetItem->setText(meta_report->LocalName);
 		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
-
-		switch (MetaReport->Type)
+		switch (meta_report->Type)
 		{
 		case ISNamespace::RT_Html: ListWidgetItem->setIcon(BUFFER_ICONS("Print.Type.Html")); break;
 		case ISNamespace::RT_Word: ListWidgetItem->setIcon(BUFFER_ICONS("Print.Type.Word")); break;
 		}
-
-		Reports.insert(ListWidgetItem, MetaReport);
+		Reports.insert(ListWidgetItem, meta_report);
 	}
 
 	CheckEditPreview = new ISCheckEdit(this);

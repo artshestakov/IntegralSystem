@@ -76,6 +76,7 @@ void ISAsteriskRecordWaitForm::Connected()
 //-----------------------------------------------------------------------------
 void ISAsteriskRecordWaitForm::Error(QAbstractSocket::SocketError ErrorHost)
 {
+	Q_UNUSED(ErrorHost);
 	ProgressBar->setRange(0, 100);
 	Label->setText(TcpSocket->errorString());
 	setCursor(CURSOR_ARROW);

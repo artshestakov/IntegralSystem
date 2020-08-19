@@ -92,7 +92,7 @@ void ISSqlModelCore::RemoveColumn(PMetaField *MetaField)
 	beginResetModel();
 	int Index = ISAlgorithm::VectorIndexOf(Fields, MetaField);
 	Fields.erase(Fields.begin() + Index);
-	for (int i = 0; i < Records.size(); ++i)
+	for (size_t i = 0; i < Records.size(); ++i)
 	{
 		QSqlRecord SqlRecord = Records[i];
 		SqlRecord.remove(Index);
@@ -103,11 +103,11 @@ void ISSqlModelCore::RemoveColumn(PMetaField *MetaField)
 //-----------------------------------------------------------------------------
 int ISSqlModelCore::GetFieldIndex(const QString &FieldName) const
 {
-	for (int i = 0; i < Fields.size(); ++i)
+	for (size_t i = 0; i < Fields.size(); ++i)
 	{
 		if (Fields[i]->Name == FieldName)
 		{
-			return i;
+			return (int)i;
 		}
 	}
 	return -1;

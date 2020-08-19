@@ -38,7 +38,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
 	int CountNotSaved = 0;
 	QString DetailedText;
 
-	for (int i = 0; i < Forms.size(); ++i)
+	for (size_t i = 0; i < Forms.size(); ++i)
 	{
 		QWidget *ObjectFormBase = Forms[i];
 		if (ObjectFormBase->property("ModificationFlag").toBool())

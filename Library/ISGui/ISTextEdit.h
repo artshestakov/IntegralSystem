@@ -19,7 +19,7 @@ public:
 	QVariant GetValue() const override;
 	void Clear() override;
 
-	void SetReadOnly(bool ReadOnly) override;
+	void SetReadOnly(bool read_only) override;
 	void SetPlaceholderText(const QString &placeholder_text) override;
 	void SetFrameShape(QFrame::Shape FrameShape) override;
 	void SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical) override;

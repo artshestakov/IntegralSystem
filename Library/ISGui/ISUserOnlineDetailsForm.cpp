@@ -70,15 +70,15 @@ void ISUserOnlineDetailsForm::AddLabel(const QString &LabelName, const QString &
 //-----------------------------------------------------------------------------
 QString ISUserOnlineDetailsForm::GetState(const QString &State) const
 {
-	QString Result = SYMBOL_MINUS;
+	QString StateString = SYMBOL_MINUS;
 	if (State == "active")
 	{
-		Result = LANG("MonitorActivity.UserOnlineDetails.State.Active");
+		StateString = LANG("MonitorActivity.UserOnlineDetails.State.Active");
 	}
 	else if (State == "idle")
 	{
-		Result = LANG("MonitorActivity.UserOnlineDetails.State.Idle");
+		StateString = LANG("MonitorActivity.UserOnlineDetails.State.Idle");
 	}
-	return Result;
+	return StateString;
 }
 //-----------------------------------------------------------------------------

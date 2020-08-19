@@ -820,10 +820,10 @@ QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &
 	QVBoxLayout *Layout = new QVBoxLayout();
 	LayoutWidget->addLayout(Layout);
 
-	QLabel *LabelName = new QLabel(Name, Widget);
-	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	ISGui::SetFontWidgetBold(LabelName, true);
-	Layout->addWidget(LabelName);
+	QLabel *LabelFileName = new QLabel(Name, Widget);
+	LabelFileName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	ISGui::SetFontWidgetBold(LabelFileName, true);
+	Layout->addWidget(LabelFileName);
 	
 	Layout->addWidget(new QLabel(LANG("Task.File.Size").arg(ISSystem::FileSizeFromString(Size)), Widget));
 
@@ -980,18 +980,18 @@ void ISTaskViewForm::LinkLoadList()
 			QString LinkTaskDescription = qSelectLink.ReadColumn("task_description").toString();
 			QString LinkUser = qSelectLink.ReadColumn("userfullname").toString();
 			QString LinkCreationDate = ISGui::ConvertDateTimeToString(qSelectLink.ReadColumn("tlnk_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
-			ISUuid TaskStatusUID = qSelectLink.ReadColumn("task_status_uid");
-			QString TaskStatusName = qSelectLink.ReadColumn("task_status_name").toString();
-			QString TaskStatusIcon = qSelectLink.ReadColumn("task_status_icon").toString();
+			ISUuid TaskLinkStatusUID = qSelectLink.ReadColumn("task_status_uid");
+			QString TaskLinkStatusName = qSelectLink.ReadColumn("task_status_name").toString();
+			QString TaskLinkStatusIcon = qSelectLink.ReadColumn("task_status_icon").toString();
 			
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetLinks);
 			ListWidgetItem->setData(Qt::UserRole, LinkID);
 			ListWidgetItem->setData(Qt::UserRole * 2, LinkTaskID);
-			ListWidgetItem->setIcon(BUFFER_ICONS(TaskStatusIcon));
+			ListWidgetItem->setIcon(BUFFER_ICONS(TaskLinkStatusIcon));
 			ListWidgetItem->setText(QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName));
-			ListWidgetItem->setToolTip(LANG("Task.LinkToolTip").arg(TaskStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
+			ListWidgetItem->setToolTip(LANG("Task.LinkToolTip").arg(TaskLinkStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 35));
-			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, TaskStatusUID == CONST_UID_TASK_STATUS_DONE || TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE);
+			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, TaskLinkStatusUID == CONST_UID_TASK_STATUS_DONE || TaskLinkStatusUID == CONST_UID_TASK_STATUS_CLOSE);
 		}
 		TabWidget->setTabText(TabWidget->indexOf(ListWidgetLinks), LANG("Task.LinkTask").arg(qSelectLink.GetCountResultRows()));
 	}

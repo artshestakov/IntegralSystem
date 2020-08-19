@@ -135,8 +135,9 @@ void ISPopupMessage::paintEvent(QPaintEvent *e)
 	Painter.drawRoundedRect(RoundedRect, 10, 10);
 }
 //-----------------------------------------------------------------------------
-void ISPopupMessage::mousePressEvent(QMouseEvent *e)
+void ISPopupMessage::mousePressEvent(QMouseEvent *MouseEvent)
 {
+	Q_UNUSED(MouseEvent);
 	emit Clicked();
 	SetPopupOpacity(0.0);
 	hide();
@@ -145,7 +146,6 @@ void ISPopupMessage::mousePressEvent(QMouseEvent *e)
 void ISPopupMessage::enterEvent(QEvent *e)
 {
 	QWidget::enterEvent(e);
-	
 	PropertyAnimation->stop();
 	SetPopupOpacity(1.0);
 	Timer->stop();

@@ -61,7 +61,7 @@ protected:
 	void FillDataFields(); //Заполнение полей данными
 
 	ISFieldEditBase* CreateColumnForField(PMetaField *MetaField); //Создать поле редактирования информации
-	void AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *FormLayout); //Добавить поле редактирования информации на форму
+	void AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *form_layout); //Добавить поле редактирования информации на форму
 
 	void ToolBarClicked(QAction *ActionClicked); //Событие нажатия на действие в тулбаре
 	void SetValueFieldID(int object_id); //Изменить значение поля "Код"

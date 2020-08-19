@@ -18,15 +18,14 @@ void ISSliderDuration::mousePressEvent(QMouseEvent *e)
 		{
 			setValue(minimum() + ((maximum() - minimum()) * e->x()) / width());
 		}
-
 		e->accept();
 	}
-
 	QSlider::mousePressEvent(e);
 }
 //-----------------------------------------------------------------------------
-void ISSliderDuration::wheelEvent(QWheelEvent *e)
+void ISSliderDuration::wheelEvent(QWheelEvent *WheelEvent)
 {
+	Q_UNUSED(WheelEvent);
 	return;
 }
 //-----------------------------------------------------------------------------

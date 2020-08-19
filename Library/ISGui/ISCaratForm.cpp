@@ -58,15 +58,16 @@ void ISCaratForm::LoadData()
 
 }
 //-----------------------------------------------------------------------------
-void ISCaratForm::CoreChecked(const QVariant &value	)
+void ISCaratForm::CoreChecked(const QVariant &value)
 {
+	Q_UNUSED(value);
+
 	ISGui::SetWaitGlobalCursor(true);
 	ISQuery qUpdate(QU_CARAT_ACTIVE);
 	qUpdate.BindValue(":Active", dynamic_cast<ISCheckEdit*>(sender())->GetValue().toBool());
 	qUpdate.BindValue(":UID", sender()->objectName());
 	bool Result = qUpdate.Execute();
 	ISGui::SetWaitGlobalCursor(false);
-
 	if (!Result)
 	{
 		ISMessageBox::ShowCritical(this, qUpdate.GetErrorString());

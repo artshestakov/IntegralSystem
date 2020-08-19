@@ -9,12 +9,12 @@
 #include "ISMetaData.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_id, fvts_tablename, fvts_tablelocalname, fvts_objectname, fvts_objectid "
+static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_tablelocalname, fvts_objectname, fvts_objectid "
 											"FROM _favorites "
 											"WHERE fvts_user = currentuserid() "
 											"ORDER BY fvts_id DESC");
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITES_TABLE = PREPARE_QUERY("SELECT fvts_id, fvts_tablename, fvts_tablelocalname, fvts_objectname, fvts_objectid "
+static QString QS_FAVORITES_TABLE = PREPARE_QUERY("SELECT fvts_tablename, fvts_tablelocalname, fvts_objectname, fvts_objectid "
 												  "FROM _favorites "
 												  "WHERE fvts_user = currentuserid() "
 												  "AND fvts_tablename = :TableName "
@@ -99,7 +99,6 @@ void ISFavoritesForm::LoadFavorites()
 	{
 		while (qSelect.Next())
 		{
-			int FavoriteID = qSelect.ReadColumn("fvts_id").toInt();
 			QString TableName = qSelect.ReadColumn("fvts_tablename").toString();
 			QString TableLocalName = qSelect.ReadColumn("fvts_tablelocalname").toString();
 			QString ObjectName = qSelect.ReadColumn("fvts_objectname").toString();

@@ -74,15 +74,14 @@ bool ISExportXML::Export()
 
 		QDomElement TagRow = DomDocument.createElement(TableName);
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
-		for (int Column = 0; Column < Fields.size(); ++Column) //Обход колонок
+		for (const QString &FieldName : Fields) //Обход колонок
 		{
-			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
+			QVariant Value = SqlRecord.value(FieldName).toString();
 			Value = PrepareValue(Value);
 
-			TagRow.setAttribute(Fields.at(Column), Value.toString());
+			TagRow.setAttribute(FieldName, Value.toString());
 			DomElement.appendChild(TagRow);
 		}
-
 		emit ExportedRow();
 		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
 	}

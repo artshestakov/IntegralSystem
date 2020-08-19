@@ -127,6 +127,7 @@ void ISCalendarWidget::SelectionChanged()
 //-----------------------------------------------------------------------------
 void ISCalendarWidget::CurrentPageChanged(int Year, int Month)
 {
+	Q_UNUSED(Year);
 	for (QAction *ActionMonth : ButtonMonth->menu()->actions())
 	{
 		if (ActionMonth->data().toInt() == Month)

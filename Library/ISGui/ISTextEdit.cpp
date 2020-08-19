@@ -74,10 +74,10 @@ void ISTextEdit::SetLowercase(bool lowercase)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTextEdit::SetReadOnly(bool ReadOnly)
+void ISTextEdit::SetReadOnly(bool read_only)
 {
-	ISFieldEditBase::SetReadOnly(ReadOnly);
-	TextEdit->setReadOnly(ReadOnly);
+	ISFieldEditBase::SetReadOnly(read_only);
+	TextEdit->setReadOnly(read_only);
 }
 //-----------------------------------------------------------------------------
 void ISTextEdit::SetPlaceholderText(const QString &placeholder_text)

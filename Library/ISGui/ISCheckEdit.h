@@ -16,9 +16,7 @@ public:
 	void Clear() override;
 
 	void SetText(const QString &Text);
-	
-public slots:
-	void SetReadOnly(bool ReadOnly);
+	void SetReadOnly(bool read_only) override;
 
 protected:
 	QCheckBox* GetCheckBox();

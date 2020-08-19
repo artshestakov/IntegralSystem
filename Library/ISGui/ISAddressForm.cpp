@@ -376,20 +376,19 @@ void ISAddressForm::LoadHouse(const QVariant &StreetGUID)
 //-----------------------------------------------------------------------------
 void ISAddressForm::HouseChanged(const QVariant &HouseGUID)
 {
+	Q_UNUSED(HouseGUID);
 	UpdatePerfomance();
 }
 //-----------------------------------------------------------------------------
 int ISAddressForm::StreetCount(const ISUuid &RegionUID) const
 {
-	int Result = 0;
 	ISQuery qSelect(QS_STREET_COUNT);
 	qSelect.BindValue(":RegionUID", RegionUID);
 	if (qSelect.ExecuteFirst())
 	{
-		Result = qSelect.ReadColumn("count").toInt();
+		return qSelect.ReadColumn("count").toInt();
 	}
-
-	return Result;
+	return 0;
 }
 //-----------------------------------------------------------------------------
 QString ISAddressForm::GetRegionCode(const ISUuid &RegionUID) const

@@ -19,7 +19,7 @@ QString ISPassword::GeneratePassword()
 //-----------------------------------------------------------------------------
 int ISPassword::GetWidthPassword(const QString &Password)
 {
-	int WeightPassword = 0, PasswordLenght = 0, CountFigures = 0, AltSymbols = 0, CountUpper = 0;
+	int PasswordLenght = 0, CountFigures = 0, AltSymbols = 0, CountUpper = 0;
 
 	{ //Равно 5, если количесво символов в пароле больше 5, или равно количеству символов
 		int Count = Password.length();
@@ -40,7 +40,6 @@ int ISPassword::GetWidthPassword(const QString &Password)
 		int Count = GetCountUpperLiters(Password);
 		Count > 3 ? CountUpper = 3 : CountUpper = Count;
 	}
-
 	return ((PasswordLenght * 10) - 20) + (CountFigures * 10) + (AltSymbols * 15) + (CountUpper * 10);
 }
 //-----------------------------------------------------------------------------

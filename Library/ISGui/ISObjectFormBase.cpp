@@ -496,7 +496,7 @@ ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaField *MetaField)
 	return FieldEditBase;
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *FormLayout)
+void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *form_layout)
 {
 	QLabel *LabelField = new QLabel(this);
 	LabelField->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
@@ -567,7 +567,7 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		WidgetLine->setLayout(LayoutLine);
 		LayoutLine->addWidget(ISControls::CreateHorizontalLinePlain(this));
 
-		FormLayout->addRow(LabelTab, WidgetLine);
+		form_layout->addRow(LabelTab, WidgetLine);
 	}
 
 	QHBoxLayout *LayoutHorizontal = Layouts[MetaField->LayoutName];
@@ -581,13 +581,13 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		else
 		{
 			LayoutHorizontal->setProperty("Inserted", true);
-			FormLayout->addRow(LabelField, LayoutHorizontal);
+			form_layout->addRow(LabelField, LayoutHorizontal);
 			LayoutHorizontal->addWidget(FieldEditBase);
 		}
 	}
 	else
 	{
-		FormLayout->addRow(LabelField, FieldEditBase);
+		form_layout->addRow(LabelField, FieldEditBase);
 	}
 }
 //-----------------------------------------------------------------------------

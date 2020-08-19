@@ -263,7 +263,7 @@ ISPopupDelegate::~ISPopupDelegate()
 void ISPopupDelegate::paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const
 {
 	QStyledItemDelegate::paint(Painter, Option, Index);
-	QStyleOptionViewItemV4 OptionViewItem = Option;
+	QStyleOptionViewItem OptionViewItem = Option;
 	initStyleOption(&OptionViewItem, Index);
 }
 //-----------------------------------------------------------------------------

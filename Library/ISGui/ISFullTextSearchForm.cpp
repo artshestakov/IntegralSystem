@@ -203,8 +203,8 @@ void ISFullTextSearchForm::Execute(const QVariant &SearchValue)
 		{
 			if (Stopped)
 			{
-				break;
 				Stopped = false;
+				break;
 			}
 
 			emit SetProgressValue(++ProgressValue);

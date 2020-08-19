@@ -86,22 +86,22 @@ void ISFieldEditBase::SetReadOnly(bool read_only)
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetPlaceholderText(const QString &placeholder_text)
 {
-
+	Q_UNUSED(placeholder_text);
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetFrameShape(QFrame::Shape FrameShape)
 {
-
+	Q_UNUSED(FrameShape);
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetRegExp(const QString &RegExp)
 {
-
+	Q_UNUSED(RegExp);
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetColorText(const QColor &Color)
 {
-
+	Q_UNUSED(Color);
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical)

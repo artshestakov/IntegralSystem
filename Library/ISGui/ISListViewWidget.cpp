@@ -105,7 +105,9 @@ QToolBar* ISListViewWidget::GetToolBar()
 //-----------------------------------------------------------------------------
 void ISListViewWidget::AddAction(QAction *Action, bool AddingToActionGroup, bool AddingToContextMenu)
 {
-
+	Q_UNUSED(Action);
+	Q_UNUSED(AddingToActionGroup);
+	Q_UNUSED(AddingToContextMenu);
 }
 //-----------------------------------------------------------------------------
 void ISListViewWidget::Update()
@@ -126,7 +128,8 @@ void ISListViewWidget::DoubleClicked(const QModelIndex &ModelIndex)
 //-----------------------------------------------------------------------------
 void ISListViewWidget::SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected)
 {
-
+	Q_UNUSED(ItemSelected);
+	Q_UNUSED(ItemDeSelected);
 }
 //-----------------------------------------------------------------------------
 void ISListViewWidget::ModelThreadStarted()
@@ -166,12 +169,13 @@ void ISListViewWidget::ModelThreadLoadingData()
 //-----------------------------------------------------------------------------
 void ISListViewWidget::ModelThreadErrorConnection(const QSqlError &SqlError)
 {
-
+	Q_UNUSED(SqlError);
 }
 //-----------------------------------------------------------------------------
 void ISListViewWidget::ModelThreadErrorQuery(const QSqlError &SqlError, const QString &QueryText)
 {
-
+	Q_UNUSED(SqlError);
+	Q_UNUSED(QueryText);
 }
 //-----------------------------------------------------------------------------
 void ISListViewWidget::SortingChanged(int LogicalIndex, Qt::SortOrder SortOrder)

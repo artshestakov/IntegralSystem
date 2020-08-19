@@ -26,7 +26,7 @@ public:
 
 	void SetValidator(QValidator *Validator);
 	void SetEchoMode(QLineEdit::EchoMode EchoMode);
-	void SetCompleter(QCompleter *Completer);
+	void SetCompleter(QCompleter *completer);
 	void SetTextAlignment(Qt::Alignment Alignment);
 	void SetInputMask(const QString &InputMask);
 	void SetFocusPolicy(Qt::FocusPolicy focus_policy);

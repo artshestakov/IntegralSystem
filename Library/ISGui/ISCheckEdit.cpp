@@ -38,9 +38,9 @@ void ISCheckEdit::SetText(const QString &Text)
 	CheckBox->setText(Text);
 }
 //-----------------------------------------------------------------------------
-void ISCheckEdit::SetReadOnly(bool ReadOnly)
+void ISCheckEdit::SetReadOnly(bool read_only)
 {
-	CheckBox->setEnabled(!ReadOnly);
+	CheckBox->setEnabled(!read_only);
 }
 //-----------------------------------------------------------------------------
 QCheckBox* ISCheckEdit::GetCheckBox()

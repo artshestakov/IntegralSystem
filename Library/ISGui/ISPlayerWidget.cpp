@@ -249,6 +249,7 @@ void ISPlayerWidget::MediaStatusChanged(QMediaPlayer::MediaStatus NewStatus)
 //-----------------------------------------------------------------------------
 void ISPlayerWidget::MediaPositionChanged(qint64 Position)
 {
+	Q_UNUSED(Position);
 	UpdatePreviousNextEnable();
 }
 //-----------------------------------------------------------------------------

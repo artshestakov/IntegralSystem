@@ -39,6 +39,7 @@ void ISMediaPlayer::Play(const QString &BufferAudio)
 //-----------------------------------------------------------------------------
 void ISMediaPlayer::StateChanged(QMediaPlayer::State NewState)
 {
+	Q_UNUSED(NewState);
 	if (!Queue.empty())
 	{
 		Play(ISAlgorithm::VectorTakeFront(Queue));

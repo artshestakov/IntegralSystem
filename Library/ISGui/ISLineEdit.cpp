@@ -53,9 +53,9 @@ void ISLineEdit::SetEchoMode(QLineEdit::EchoMode EchoMode)
 	LineEdit->setEchoMode(EchoMode);
 }
 //-----------------------------------------------------------------------------
-void ISLineEdit::SetCompleter(QCompleter *Completer)
+void ISLineEdit::SetCompleter(QCompleter *completer)
 {
-	LineEdit->setCompleter(Completer);
+	LineEdit->setCompleter(completer);
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetTextAlignment(Qt::Alignment Alignment)
@@ -141,6 +141,7 @@ void ISLineEdit::OnLowerText(const QString &Text)
 //-----------------------------------------------------------------------------
 void ISLineEdit::TextChanged(const QString &Text)
 {
+	Q_UNUSED(Text);
 	emit ValueChanged();
 }
 //-----------------------------------------------------------------------------

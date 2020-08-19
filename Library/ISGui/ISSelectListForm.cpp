@@ -57,6 +57,7 @@ void ISSelectListForm::SelectedRowEvent(const QItemSelection &ItemSelected, cons
 //-----------------------------------------------------------------------------
 void ISSelectListForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
+	Q_UNUSED(ModelIndex);
 	emit Select();
 }
 //-----------------------------------------------------------------------------

@@ -26,11 +26,11 @@ QSqlRecord ISSqlModelView::GetRecord(int RowIndex) const
 //-----------------------------------------------------------------------------
 int ISSqlModelView::GetFieldIndex(const QString &FieldName) const
 {
-	for (int i = 0; i < MetaTable->Fields.size(); ++i)
+	for (size_t i = 0; i < MetaTable->Fields.size(); ++i)
 	{
 		if (MetaTable->Fields[i]->Name == FieldName)
 		{
-			return i;
+			return (int)i;
 		}
 	}
 	IS_ASSERT(false, QString("Not found field index from field name: %1.").arg(FieldName));

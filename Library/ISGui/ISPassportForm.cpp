@@ -53,22 +53,21 @@ ISPassportForm::~ISPassportForm()
 //-----------------------------------------------------------------------------
 QString ISPassportForm::GetPassportString()
 {
-	QString Result;
-	Result += EditSeria->GetValue().toString();
-	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
-	Result += EditNumber->GetValue().toString();
-	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
-	Result += EditDateOfIssue->GetValue().toDateTime().toString(FORMAT_DATE_V2);
-	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
-	Result += EditIssuedBy->GetValue().toString();
-	Result += ISDefines::Core::SYMBOL_SPACE_HIDE;
+	QString PasswordString;
+	PasswordString += EditSeria->GetValue().toString();
+	PasswordString += ISDefines::Core::SYMBOL_SPACE_HIDE;
+	PasswordString += EditNumber->GetValue().toString();
+	PasswordString += ISDefines::Core::SYMBOL_SPACE_HIDE;
+	PasswordString += EditDateOfIssue->GetValue().toDateTime().toString(FORMAT_DATE_V2);
+	PasswordString += ISDefines::Core::SYMBOL_SPACE_HIDE;
+	PasswordString += EditIssuedBy->GetValue().toString();
+	PasswordString += ISDefines::Core::SYMBOL_SPACE_HIDE;
 
 	if (EditDivisionCode->GetValue() != "-")
 	{
-		Result += EditDivisionCode->GetValue().toString();
+		PasswordString += EditDivisionCode->GetValue().toString();
 	}
-
-	return Result;
+	return PasswordString;
 }
 //-----------------------------------------------------------------------------
 void ISPassportForm::AfterShowEvent()

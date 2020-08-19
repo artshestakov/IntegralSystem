@@ -63,17 +63,13 @@ bool ISExportHTML::Export()
 	if (Header) //Если в экспортируемый файл нужно добавить заголовки колонок
 	{
 		FileHTML->write("   <tr>\r\n");
-
-		for (int i = 0; i < Fields.size(); ++i) //Обход выбранных для экспорта полей
+		for (const QString &FieldName : Fields) //Обход выбранных для экспорта полей
 		{
-			QString FieldName = Fields.at(i);
 			if (ISAlgorithm::VectorContains(Fields, FieldName))
 			{
-				QString LocalName = Model->GetFieldLocalName(FieldName);
-				FileHTML->write("    <th>" + LocalName.toUtf8() + "</th>\r\n");
+				FileHTML->write("    <th>" + Model->GetFieldLocalName(FieldName).toUtf8() + "</th>\r\n");
 			}
 		}
-
 		FileHTML->write("   </tr>\r\n");
 	}
 
@@ -105,9 +101,9 @@ bool ISExportHTML::Export()
 		QString RowString;
 
 		RowString.append("    <tr>");
-		for (int Column = 0; Column < Fields.size(); ++Column) //Обход колонок
+		for (const QString &FieldName : Fields) //Обход колонок
 		{
-			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
+			QVariant Value = SqlRecord.value(FieldName).toString();
 			Value = PrepareValue(Value);
 			RowString.append("<td>" + Value.toString().toUtf8() + "</td>");
 		}

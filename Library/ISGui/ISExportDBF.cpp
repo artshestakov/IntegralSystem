@@ -33,9 +33,8 @@ bool ISExportDBF::Export()
 {
 	QString CreateTableSql = "CREATE TABLE " + TableName + " (";
 	
-	for (int i = 0; i < Fields.size(); ++i) //Обход выбранных для экспорта полей
+	for (const QString &FieldName : Fields) //Обход выбранных для экспорта полей
 	{
-		QString FieldName = Fields.at(i);
 		if (ISAlgorithm::VectorContains(Fields, FieldName))
 		{
 			CreateTableSql += FieldName + " VARCHAR, ";
@@ -85,15 +84,11 @@ bool ISExportDBF::Export()
 		QString InsertFields = "INSERT INTO " + TableName + '(';
 		QString ValuesField = "VALUES(";
 
-		for (int Column = 0; Column < Fields.size(); ++Column) //Обход колонок
+		for (const QString &FieldName : Fields) //Обход колонок
 		{
-			QString FieldName = Fields.at(Column);
-			QString FieldValue = SqlRecord.value(FieldName).toString();
-			
 			InsertFields += FieldName + ", ";
 			ValuesField += ':' + FieldName + ", ";
-
-			Bind.emplace(':' + FieldName, FieldValue);
+			Bind.emplace(':' + FieldName, SqlRecord.value(FieldName).toString());
 		}
 
 		InsertFields.chop(2);
