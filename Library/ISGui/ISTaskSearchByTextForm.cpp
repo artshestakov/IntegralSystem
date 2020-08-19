@@ -20,10 +20,14 @@ static QString QS_SEARCH = PREPARE_QUERY("WITH w AS "
 										 "SELECT tcom_task AS task_id, task_parent, lower(tcom_comment) AS search_field "
 										 "FROM _taskcomment "
 										 "LEFT JOIN _task ON tcom_task = task_id "
+										 "UNION "
+										 "SELECT tfls_task AS task_id, task_parent, lower(tfls_name) AS search_field "
+										 "FROM _taskfile "
+										 "LEFT JOIN _task ON tfls_task = task_id "
 										 ") "
 										 "SELECT DISTINCT task_id, task_parent, (SELECT task_name FROM _task WHERE task_id = w.task_id) "
 										 "FROM w "
-										 "WHERE search_field LIKE '%' || :Value || '%' "
+										 "WHERE search_field LIKE '%' || lower(:Value) || '%' "
 										 "ORDER BY task_id");
 //-----------------------------------------------------------------------------
 ISTaskSearchByTextForm::ISTaskSearchByTextForm(QWidget *parent) : ISInterfaceForm(parent)
