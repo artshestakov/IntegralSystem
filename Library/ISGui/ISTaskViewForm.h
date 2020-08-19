@@ -27,6 +27,7 @@ public:
 protected:
 	void keyReleaseEvent(QKeyEvent *KeyEvent);
 	void EscapeClicked() override;
+	void PasteClicked() override;
 
 private:
 	void Reopen(); //Переоткрыть форму
@@ -52,8 +53,9 @@ private:
 
 private:
 	void FileLoadList();
-	QWidget* FileCreateWidget(const QPixmap &Pixmap, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &CreationDate);
+	QWidget* FileCreateWidget(const QPixmap &Pixmap, bool IsImage, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &CreationDate);
 	void FileAdd();
+	void FileShow();
 	void FileSave();
 	void FileDelete();
 

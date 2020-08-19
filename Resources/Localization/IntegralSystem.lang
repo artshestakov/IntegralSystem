@@ -151,6 +151,7 @@
   <Local Name="Message.Error.ConvertToTask" Russian="Не удалось преобразовать подзадачу в задачу!"/>
   <Local Name="Message.Error.CloneTask" Russian="Не удалось клонировать задачу!"/>
   <Local Name="Message.Error.SelectTask" Russian="Не удалось загрузить информацию о задаче %1!"/>
+  <Local Name="Message.Error.PasteImageToTask" Russian="Не удалось прикрепить изображение к задаче!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить этот объект?"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
@@ -275,6 +276,7 @@
   <Local Name="Message.Question.CloneSubTask" Russian="Клонировать подзадачу?"/>
   <Local Name="Message.Question.ConvertToTask" Russian="Преобразовать в задачу?"/>
   <Local Name="Message.Question.CopyDiscussion" Russian="Скопировать запись?"/>
+  <Local Name="Message.Question.PasteImageToTask" Russian="В буфере обмена обнаружено изображение, прикрепить его к задаче?"/>
   
   <!--Carat error-->
   <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>
@@ -649,6 +651,7 @@
   <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
   <Local Name="ClickFromSelectFile" Russian="Нажмите, чтобы выбрать файл"/>
   <Local Name="EnterFileName" Russian="Введите имя файла"/>
+  <Local Name="EnterImageName" Russian="Введите имя изображения"/>
   <Local Name="InputTheTaskNumber" Russian="Введите номер задачи"/>
 
   <!--CalendarForm-->
@@ -795,6 +798,8 @@
   <Local Name="Task.Comment" Russian="Комментарий"/>
   <Local Name="Task.AddFile" Russian="Добавить файл"/>
   <Local Name="Task.AddFile.LabelText" Russian="Добавление файла: %1"/>
+  <Local Name="Task.File.Name.File" Russian="Файл: %1"/>
+  <Local Name="Task.File.Name.Image" Russian="Изображение: %1"/>
   <Local Name="Task.File.Size" Russian="Размер файла: %1"/>
   <Local Name="Task.File.UserFullName" Russian="Добавил: %1"/>
   <Local Name="Task.File.CreationDate" Russian="Дата добавления: %1"/>

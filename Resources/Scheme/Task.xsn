@@ -134,6 +134,7 @@
   <Table Name="_TaskFile" UID="{184DFEDF-F622-4092-910F-63BA69D78029}" Alias="tfls" LocalName="Файл" LocalListName="Файлы" TitleName="Name" IsSystem="true">
     <Fields>
       <Field UID="{F783C6B9-FF78-45B4-9937-23A3790D1A45}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{1D1F1D0E-92E0-429B-8E5E-971D3A04099D}" Name="IsImage" Type="Bool" DefaultValue="false" LabelName="Файл является изображением" LocalListName="Файл является изображением" NotNull="true"/>
       <Field UID="{328A0009-8165-4728-9979-39E93701EC78}" Name="Name" Type="String" LabelName="Имя файла" LocalListName="Имя файла" NotNull="true"/>
       <Field UID="{03FEC638-031C-439E-8A4C-2C811274E178}" Name="Extension" Type="String" LabelName="Расширение файла" LocalListName="Расширение файла"/>
       <Field UID="{AC4F0DB9-2FF1-41F7-A9E0-85D3891E6374}" Name="Data" Type="ByteArray" LabelName="Данные файла" LocalListName="Данные файла" NotNull="true"/>
@@ -143,6 +144,7 @@
     </Fields>
     <Indexes>
       <Index Field="Task"/>
+      <Index Field="IsImage"/>
       <Index Field="Name"/>
       <Index Field="Extension"/>
       <Index Field="Size"/>

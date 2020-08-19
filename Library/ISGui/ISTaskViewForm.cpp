@@ -83,14 +83,14 @@ static QString QU_STATUS = PREPARE_QUERY("UPDATE _task SET "
 static QString QI_STATUS_HISTORY = PREPARE_QUERY("INSERT INTO _taskstatushistory(tshr_task, tshr_status) "
 												 "VALUES(:TaskID, :StatusID)");
 //-----------------------------------------------------------------------------
-static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_name, tfls_extension, tfls_size, tfls_icon, userfullname(tfls_user) "
+static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, userfullname(tfls_user) "
 									   "FROM _taskfile "
 									   "WHERE NOT tfls_isdeleted "
 									   "AND tfls_task = :TaskID "
 									   "ORDER BY tfls_id");
 //-----------------------------------------------------------------------------
-static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_name, tfls_extension, tfls_data, tfls_size, tfls_icon) "
-									   "VALUES(:TaskID, :Name, :Extension, :Data, :Size, :Icon)");
+static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_isimage, tfls_name, tfls_extension, tfls_data, tfls_size, tfls_icon) "
+									   "VALUES(:TaskID, :IsImage, :Name, :Extension, :Data, :Size, :Icon)");
 //-----------------------------------------------------------------------------
 static QString QS_FILE_DATA = PREPARE_QUERY("SELECT tfls_data "
 											"FROM _taskfile "
@@ -484,6 +484,76 @@ void ISTaskViewForm::EscapeClicked()
 	close();
 }
 //-----------------------------------------------------------------------------
+void ISTaskViewForm::PasteClicked()
+{
+	QString ImageName;
+	QPixmap Pixmap = QApplication::clipboard()->pixmap();
+	if (Pixmap.isNull()) //Изображение в буфере отсутствует - проверяем на наличие пути к изображению (когда в проводнике копируем файл)
+	{
+		QList<QUrl> Urls = QApplication::clipboard()->mimeData()->urls();
+		if (Urls.isEmpty() || Urls.size() != 1) //Путь тоже отсутствует или в буфере не один путь - игнорируем
+		{
+			return;
+		}
+		
+		QString FilePath = Urls.front().toLocalFile();
+		QByteArray ImageFormat = QImageReader::imageFormat(FilePath);
+		if (ImageFormat.isEmpty()) //Файл не является изображением - выходим
+		{
+			return;
+		}
+
+		QFile FileImage(FilePath);
+		if (FileImage.open(QIODevice::ReadOnly)) //Файл успешно открылся
+		{
+			QByteArray FileData = FileImage.readAll();
+			FileImage.close();
+			if (Pixmap.loadFromData(FileData, ImageFormat)) //Не удалось загрузить данные файла в изображение
+			{
+				ImageName = QFileInfo(FileImage).baseName();
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadPixmapFromBuffer"));
+				return;
+			}
+		}
+		else //Ошибка открытия файла
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FilePath), FileImage.errorString());
+			return;
+		}
+	}
+
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.PasteImageToTask")))
+	{
+		//Если имя файла не было заполненно ранее - именуем его
+		ImageName = ImageName.isEmpty() ? ISInputDialog::GetString(QString(), LANG("EnterImageName") + ':') : ImageName;
+		if (ImageName.isEmpty())
+		{
+			return;
+		}
+		QByteArray ByteArray = ISGui::PixmapToByteArray(Pixmap);
+
+		ISQuery qInsertImage(QI_FILE);
+		qInsertImage.BindValue(":TaskID", TaskID);
+		qInsertImage.BindValue(":IsImage", true);
+		qInsertImage.BindValue(":Name", ImageName);
+		qInsertImage.BindValue(":Extension", EXTENSION_PNG);
+		qInsertImage.BindValue(":Data", ByteArray);
+		qInsertImage.BindValue(":Size", ByteArray.size());
+		qInsertImage.BindValue(":Icon", ISGui::PixmapToByteArray(Pixmap.scaled(ISDefines::Gui::SIZE_45_45)));
+		if (qInsertImage.Execute())
+		{
+			FileLoadList();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.PasteImageToTask"), qInsertImage.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
 void ISTaskViewForm::Reopen()
 {
 	ISGui::ShowTaskViewForm(TaskID);
@@ -790,13 +860,14 @@ void ISTaskViewForm::FileLoadList()
 		{
 			int ID = qSelectFiles.ReadColumn("tfls_id").toInt();
 			QDateTime CreationDate = qSelectFiles.ReadColumn("tfls_creationdate").toDateTime();
+			bool IsImage = qSelectFiles.ReadColumn("tfls_isimage").toBool();
 			QString Name = qSelectFiles.ReadColumn("tfls_name").toString();
 			QString Extension = qSelectFiles.ReadColumn("tfls_extension").toString();
 			qint64 Size = qSelectFiles.ReadColumn("tfls_size").toLongLong();
 			QByteArray Icon = qSelectFiles.ReadColumn("tfls_icon").toByteArray();
 			QString UserFullName = qSelectFiles.ReadColumn("userfullname").toString();
 
-			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_32_32), Name, ID, Extension, Size, UserFullName, CreationDate);
+			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_45_45), IsImage, Name, ID, Extension, Size, UserFullName, CreationDate);
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetFiles);
 			ListWidgetItem->setSizeHint(Widget->sizeHint());
 			ListWidgetFiles->setItemWidget(ListWidgetItem, Widget);
@@ -805,7 +876,7 @@ void ISTaskViewForm::FileLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &CreationDate)
+QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, bool IsImage, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &CreationDate)
 {
 	QHBoxLayout *LayoutWidget = new QHBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
@@ -820,7 +891,7 @@ QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &
 	QVBoxLayout *Layout = new QVBoxLayout();
 	LayoutWidget->addLayout(Layout);
 
-	QLabel *LabelFileName = new QLabel(Name, Widget);
+	QLabel *LabelFileName = new QLabel((IsImage ? LANG("Task.File.Name.Image") : LANG("Task.File.Name.File")).arg(Name), Widget);
 	LabelFileName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	ISGui::SetFontWidgetBold(LabelFileName, true);
 	Layout->addWidget(LabelFileName);
@@ -829,6 +900,15 @@ QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, const QString &
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
 	Layout->addLayout(LayoutBottom);
+
+	if (IsImage)
+	{
+		ISQLabel *LabelShow = new ISQLabel(LANG("ViewImage"), Widget);
+		LabelShow->setProperty("ID", FileID);
+		LabelShow->SetIsLinked(true);
+		connect(LabelShow, &ISQLabel::Clicked, this, &ISTaskViewForm::FileShow);
+		LayoutBottom->addWidget(LabelShow);
+	}
 
 	ISQLabel *LabelSave = new ISQLabel(LANG("Save"), Widget);
 	LabelSave->setProperty("ID", FileID);
@@ -874,13 +954,21 @@ void ISTaskViewForm::FileAdd()
 			QFile File(FileList[i]);
 			if (File.open(QIODevice::ReadOnly))
 			{
+				QByteArray ImageFormat = QImageReader::imageFormat(File.fileName());
+				bool IsImage = !ImageFormat.isEmpty();
 				QByteArray FileData = File.readAll();
 				qint64 FileSize = File.size();
-				QByteArray FileIcon = ISGui::IconToByteArray(ISGui::GetIconFile(FilePath));
+				QByteArray FileIcon = IsImage ? QByteArray() : ISGui::IconToByteArray(ISGui::GetIconFile(FilePath));
 				File.close();
+
+				if (IsImage) //Если файл является изображением
+				{
+					FileIcon = ISGui::PixmapToByteArray(ISGui::ByteArrayToPixmap(FileData).scaled(ISDefines::Gui::SIZE_45_45));
+				}
 
 				ISQuery qInsertFile(QI_FILE);
 				qInsertFile.BindValue(":TaskID", TaskID);
+				qInsertFile.BindValue(":IsImage", IsImage);
 				qInsertFile.BindValue(":Name", FileName);
 				qInsertFile.BindValue(":Extension", FileExtension);
 				qInsertFile.BindValue(":Data", FileData);
@@ -902,7 +990,7 @@ void ISTaskViewForm::FileAdd()
 
 			if (ProgressForm.WasCanceled())
 			{
-
+				//???
 			}
 		}
 
@@ -910,6 +998,20 @@ void ISTaskViewForm::FileAdd()
 		{
 			FileLoadList();
 		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::FileShow()
+{
+	ISQuery qSelectImage(QS_FILE_DATA);
+	qSelectImage.BindValue(":TaskFileID", sender()->property("ID"));
+	if (qSelectImage.ExecuteFirst())
+	{
+		ISGui::ShowImageForm(qSelectImage.ReadColumn("tfls_data").toByteArray());
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectTaskFileData"), qSelectImage.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------
