@@ -291,7 +291,6 @@
     <ClCompile Include="ISPrintingBase.cpp" />
     <ClCompile Include="ISPrintingEntity.cpp" />
     <ClCompile Include="ISPrintingHtml.cpp" />
-    <ClCompile Include="ISPrintingWord.cpp" />
     <ClCompile Include="ISPrintPreviewDialog.cpp" />
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
@@ -555,7 +554,6 @@
     <QtMoc Include="ISSettingFieldWidgets.h" />
     <QtMoc Include="ISPhoneBaseEdit.h" />
     <QtMoc Include="ISRadioEdit.h" />
-    <QtMoc Include="ISPrintingWord.h" />
     <QtMoc Include="ISOilSphere.h" />
     <ClInclude Include="ISObjects.h" />
     <ClInclude Include="ISPageMetrics.h" />

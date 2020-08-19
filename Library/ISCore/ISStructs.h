@@ -193,11 +193,6 @@ struct ISPrintMetaReport
         {
             Type = ISNamespace::RT_Html;
         }
-        else if (type == REPORT_TYPE_WORD)
-        {
-            Type = ISNamespace::RT_Word;
-        }
-        else
         {
             IS_ASSERT(false, QString("Inknown report type: %1").arg(type));
         }

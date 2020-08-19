@@ -124,7 +124,6 @@ public:
     {
         RT_Unknown,
         RT_Html,
-        RT_Word,
     };
 
     enum QueryModelType

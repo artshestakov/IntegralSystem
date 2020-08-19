@@ -28,7 +28,6 @@ ISPrintForm::ISPrintForm(const QString &TableName)
 		switch (meta_report->Type)
 		{
 		case ISNamespace::RT_Html: ListWidgetItem->setIcon(BUFFER_ICONS("Print.Type.Html")); break;
-		case ISNamespace::RT_Word: ListWidgetItem->setIcon(BUFFER_ICONS("Print.Type.Word")); break;
 		}
 		Reports.insert(ListWidgetItem, meta_report);
 	}

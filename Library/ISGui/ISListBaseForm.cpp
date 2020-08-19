@@ -40,10 +40,6 @@
 #include "ISGui.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-#ifdef WIN32
-#include "ISPrintingWord.h"
-#endif
-//-----------------------------------------------------------------------------
 static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_user, srfs_value) "
 											  "VALUES(:UserID, :Value)");
 //-----------------------------------------------------------------------------
@@ -1150,15 +1146,8 @@ void ISListBaseForm::Print()
 		PrintingBase->setProperty("PathPDF", QDir::homePath() + '/' + MetaReport->LocalName);
 		PrintingBase->setProperty("EditPreview", EditPrintForm);
 	}
-	else if (MetaReport->Type == ISNamespace::RT_Word)
-	{
-#ifdef WIN32
-		PrintingBase = new ISPrintingWord(MetaReport, GetObjectID(), this);
-#endif
-    }
 
 	PrintingBase->SetReportLocalName(MetaReport->LocalName);
-
 	connect(PrintingBase, &ISPrintingBase::SetVisibleDialog, &ProcessForm, &ISProcessForm::setVisible);
 	connect(PrintingBase, &ISPrintingBase::Message, &ProcessForm, &ISProcessForm::SetText);
 

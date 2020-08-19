@@ -83,7 +83,6 @@ const char PATH_SPLASH_WIDGET_LOGO[] = ":Images/SplashWidgetLogo.png";
 const char PATH_BUILD_INFO[] = ":Build/Build.ini.tmp";
 //REPORT_TYPE------------------------------------------------------------------
 const char REPORT_TYPE_HTML[] = "Html";
-const char REPORT_TYPE_WORD[] = "Word";
 //CURSORS----------------------------------------------------------------------
 const Qt::CursorShape CURSOR_ARROW = Qt::ArrowCursor;
 const Qt::CursorShape CURSOR_POINTING_HAND = Qt::PointingHandCursor;

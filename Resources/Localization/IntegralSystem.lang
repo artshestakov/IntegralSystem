@@ -721,11 +721,6 @@
   <Local Name="PrintProcess.FillTemplateData" Russian="Заполнение шаблона данными"/>
   <Local Name="PrintProcess.Printing" Russian="Печать"/>
   <Local Name="PrintProcess.SavedToPDF" Russian="Сохранение в PDF"/>
-  <Local Name="Print.Word.Error.NotInitializeApplication" Russian="Не удалось создать экземпляр приложения Microsoft Office Word, проверьте установлен ли он у Вас."/>
-  <Local Name="Print.Word.Error.NotInitializeDocuments" Russian="Не удалось получить коллекцию документов."/>
-  <Local Name="Print.Word.Error.NotCopyTemplate" Russian="Не удалось сохранить файл шаблона по выбранному пути. %1"/>
-  <Local Name="Print.Word.Error.NotOpenTemplate" Russian="Не удалось открыть файл шаблона."/>
-  <Local Name="Print.Word.Error.NotInitializeBookmarks" Russian="Не удалось получить коллекцию закладок."/>
   
   <!--NotificationForm-->
   <Local Name="NotificationForm.Title.Created" Russian="Создана запись"/>
@@ -873,15 +868,12 @@
   <Local Name="File.Filter.Image.WEBP" Russian="Weppy (*.webp)"/>
   <Local Name="File.Filter.All" Russian="Все файлы (*.*)"/>
   <Local Name="File.Filter.Txt" Russian="Текстовый файл (*.txt)"/>
-  <Local Name="File.Filter.Word.Docx" Russian="Документ Word (*.docx)"/>
-  <Local Name="File.Filter.Word.Doc" Russian="Документ Word 97-2003 (*.doc)"/>
   <Local Name="File.Filter.Exe" Russian="Все исполняемые файлы (*.exe)"/>
   <Local Name="File.Filter.Csv" Russian="CSV (разделитель - точка с запятой) (*.csv)"/>
   <Local Name="File.Filter.Pdf" Russian="Файлы Adobe PDF (*.pdf)"/>
   <Local Name="File.Filter.TxtTab" Russian="Текстовые файлы (с разделителями табуляции) (*.txt)"/>
   <Local Name="File.Filter.Html" Russian="Веб-страница (*.html)"/>
   <Local Name="File.Filter.Xml" Russian="Веб-страница (*.xml)"/>
-  <Local Name="File.Filter.Word" Russian="Документ Word (*.docx)"/>
   <Local Name="File.Filter.Dmp" Russian="Архивы pg_dump (*.dmp)"/>
   <Local Name="File.Filter.Dll" Russian="Библиотеки динамической компоновки (*.dll)"/>
   <Local Name="File.Filter.So" Russian="Библиотеки динамической компоновки (*.so)"/>
