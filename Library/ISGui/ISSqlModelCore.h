@@ -35,7 +35,7 @@ public:
 	void SetIsSystemIndex(int IndexColumn);
 	void SetSorting(const QString &FieldName, Qt::SortOrder Order);
 	void SetSorting(int IndexColumn, Qt::SortOrder Order);
-	void SetShowToolTip(bool show_tooltip);
+	void SetShowToolTip(bool show_tool_tip);
 
 protected:
 	PMetaTable* GetMetaTable(); //Получить мета-таблицу

@@ -46,10 +46,10 @@ void ISPrintingEntity::Initialize()
 		{
 			ISUuid ReportUID = qSelectReport.ReadColumn("rprt_uid");
 			QString TableName = qSelectReport.ReadColumn("rprt_tablename").toString();
-
+			
 			ISPrintMetaReport *MetaReport = new ISPrintMetaReport();
 			MetaReport->System = qSelectReport.ReadColumn("rprt_system").toBool();
-			MetaReport->SetType(qSelectReport.ReadColumn("rprt_type").toString());
+			//MetaReport->SetType(qSelectReport.ReadColumn("rprt_type").toString());
 			MetaReport->Name = qSelectReport.ReadColumn("rprt_name").toString();
 			MetaReport->LocalName = qSelectReport.ReadColumn("rprt_localname").toString();
 			MetaReport->FileTemplate = qSelectReport.ReadColumn("rprt_filetemplate").toString();

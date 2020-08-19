@@ -73,20 +73,14 @@ QVariant ISSqlModelView::data(const QModelIndex &ModelIndex, int Role) const
 		return QVariant();
 	}
 
-	PMetaField *MetaField = MetaTable->GetField(headerData(ModelIndex.column(), Qt::Horizontal, Qt::UserRole).toString());
-	ISNamespace::FieldType FieldType = MetaField->Type;
-
 	if (Role == Qt::DisplayRole)
 	{
+		PMetaField *MetaField = MetaTable->GetField(headerData(ModelIndex.column(), Qt::Horizontal, Qt::UserRole).toString());
+		ISNamespace::FieldType FieldType = MetaField->Type;
+
 		QVariant Value = Records.at(ModelIndex.row()).value(ModelIndex.column());
-		if (Value.isNull())
-		{
-			return QVariant();
-		}
-
-		return ISSqlModelHelper::ValueForType(Value, FieldType);
+		return Value.isNull() ? QVariant() : ISSqlModelHelper::ValueForType(Value, FieldType);
 	}
-
 	return QVariant();
 }
 //-----------------------------------------------------------------------------

@@ -79,16 +79,3 @@ QVariant ISSqlModelHelper::ValueFromTextAlignment(ISNamespace::FieldType FieldTy
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString ISSqlModelHelper::ValueForToolTip(bool ShowToolTip, const QVariant &Value, ISNamespace::FieldType FieldType)
-{
-	QString Result = Value.toString();
-	if (ShowToolTip)
-	{
-		if (FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray || FieldType == ISNamespace::FT_CallDetails)
-		{
-			return QString();
-		}
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------

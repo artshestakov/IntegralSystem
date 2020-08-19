@@ -189,7 +189,7 @@ struct ISPrintMetaReport
 
     void SetType(const QString &type)
     {
-        if (type == REPORT_TYPE_HTML)
+        if (type == QString(REPORT_TYPE_HTML))
         {
             Type = ISNamespace::RT_Html;
         }

@@ -165,13 +165,13 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 			return qVariantFromValue(ISDefines::Gui::COLOR_RED); //Пометить её красным цветом
 		}
 	}
-	else if (Role == Qt::ToolTipRole) //Роль отображения подсказки для ячейки (ToolTip)
+	else if (Role == Qt::ToolTipRole && ShowToolTip) //Роль отображения подсказки для ячейки (ToolTip)
 	{
-		QVariant TempValue = ModelIndex.data();
-		if (!TempValue.isNull())
+		if (FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray || FieldType == ISNamespace::FT_CallDetails)
 		{
-			return ISSqlModelHelper::ValueForToolTip(ShowToolTip, TempValue, FieldType);
+			return QString();
 		}
+		return ModelIndex.data().toString();
 	}
 	else if (Role == Qt::TextAlignmentRole) //Роль положения текста в ячейке
 	{
@@ -277,9 +277,9 @@ void ISSqlModelCore::SetSorting(int IndexColumn, Qt::SortOrder Order)
 	SortingOrder = Order;
 }
 //-----------------------------------------------------------------------------
-void ISSqlModelCore::SetShowToolTip(bool show_tooltip)
+void ISSqlModelCore::SetShowToolTip(bool show_tool_tip)
 {
-	ShowToolTip = show_tooltip;
+	ShowToolTip = show_tool_tip;
 }
 //-----------------------------------------------------------------------------
 PMetaTable* ISSqlModelCore::GetMetaTable()
