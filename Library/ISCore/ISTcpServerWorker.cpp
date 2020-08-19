@@ -104,8 +104,8 @@ void ISTcpServerWorker::ReadyRead()
 
 		//Проверка валидности запроса
 		QVariantMap VariantMap;
-		QString ErrorString;
-		if (ISTcp::IsValidQuery(Buffer, VariantMap, ErrorString))
+		QString error_string;
+		if (ISTcp::IsValidQuery(Buffer, VariantMap, error_string))
 		{
 			QString QueryType = VariantMap["Type"].toString();
 			if (Functions.count(QueryType)) //Если такой запрос существует - выполняем его
@@ -121,8 +121,8 @@ void ISTcpServerWorker::ReadyRead()
 		}
 		else
 		{
-			TcpAnswer.SetError(ErrorString);
-			ISLOGGER_E(ErrorString);
+			TcpAnswer.SetError(error_string);
+			ISLOGGER_E(error_string);
 		}
 	}
 	else //Не удалось извлечь размер запроса - возвращаем ошибку

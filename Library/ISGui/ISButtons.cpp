@@ -78,17 +78,17 @@ ISServiceButton::ISServiceButton(const QIcon &Icon, const QString &ToolTip, QWid
 	setCursor(CURSOR_POINTING_HAND);
 }
 //-----------------------------------------------------------------------------
-ISServiceButton::ISServiceButton(const QIcon &Icon, QWidget *parent) : ISServiceButton(Icon, parent)
+ISServiceButton::ISServiceButton(const QIcon &Icon, QWidget *parent) : ISServiceButton(Icon, QString(), parent)
 {
 
 }
 //-----------------------------------------------------------------------------
-ISServiceButton::ISServiceButton(const QString &ToolTip, QWidget *parent) : ISServiceButton(ToolTip, parent)
+ISServiceButton::ISServiceButton(const QString &ToolTip, QWidget *parent) : ISServiceButton(QIcon(), ToolTip, parent)
 {
 
 }
 //-----------------------------------------------------------------------------
-ISServiceButton::ISServiceButton(QWidget *parent) : ISServiceButton(parent)
+ISServiceButton::ISServiceButton(QWidget *parent) : ISServiceButton(QIcon(), QString(), parent)
 {
 
 }

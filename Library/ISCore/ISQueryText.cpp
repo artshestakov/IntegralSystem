@@ -64,16 +64,16 @@ bool ISQueryText::CheckAllQueries()
 			{
 				for (const QString &SqlText : ISMetaData::Instance().GetMetaQueries())
 				{
-					QSqlQuery SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
-					Result = SqlQuery.prepare(SqlText);
+					QSqlQuery SqlMetaQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
+					Result = SqlMetaQuery.prepare(SqlText);
 					if (Result)
 					{
-						Result = SqlQuery.lastError().type() == QSqlError::NoError;
+						Result = SqlMetaQuery.lastError().type() == QSqlError::NoError;
 					}
 
 					if (!Result)
 					{
-						ErrorQuery(ISSqlQuery{ "NULL", 0, SqlText }, "Error prepare meta query: " + SqlQuery.lastError().text());
+						ErrorQuery(ISSqlQuery{ "NULL", 0, SqlText }, "Error prepare meta query: " + SqlMetaQuery.lastError().text());
 						break;
 					}
 				}

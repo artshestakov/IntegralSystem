@@ -39,7 +39,7 @@ public:
     bool ExistParameter(const QString &ParameterName) const;
     QString GetSqlText() const; //Получить текст запроса
     QString GetErrorString(); //Получить текст ошибки
-	QSqlError::ErrorType GetErrorType() const; //Получить тип ошибки
+	QSqlError::ErrorType GetErrorType(); //Получить тип ошибки
     int GetErrorNumber() const; //Получить номер ошибки
     int GetCountResultRows() const; //Получить количество строк из результата запроса (только для SELECT)
     int GetCountAffected() const; //Получить количество затронутых запросом строк

@@ -19,7 +19,7 @@ QString ISNetwork::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISNetwork::CheckAccessInternet(QString &ErrorString) const
+bool ISNetwork::CheckAccessInternet(QString &error_string) const
 {
 	QEventLoop EventLoop;
 	QNetworkAccessManager NetworkAccessManager;
@@ -34,7 +34,7 @@ bool ISNetwork::CheckAccessInternet(QString &ErrorString) const
 	{
 		if (NetworkReply->error() != QNetworkReply::NoError)
 		{
-			ErrorString = NetworkReply->errorString();
+			error_string = NetworkReply->errorString();
 			ISLOGGER_W(NetworkReply->errorString());
 		}
 		delete NetworkReply;

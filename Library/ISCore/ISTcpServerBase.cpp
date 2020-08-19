@@ -56,16 +56,16 @@ void ISTcpServerBase::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerBase::SendError(QTcpSocket *TcpSocket, const QString &ErrorString)
+void ISTcpServerBase::SendError(QTcpSocket *TcpSocket, const QString &error_string)
 {
 	//Формируем ответ с ошибкой
 	ISTcpAnswer TcpAnswer;
-	TcpAnswer.SetError(ErrorString);
+	TcpAnswer.SetError(error_string);
 
 	//Отправляем и обрываем соединение
 	Send(TcpSocket, TcpAnswer);
 	TcpSocket->abort();
-	ISLOGGER_E(ErrorString);
+	ISLOGGER_E(error_string);
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerBase::AcceptError(QTcpSocket::SocketError)

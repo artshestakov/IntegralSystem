@@ -32,6 +32,8 @@ void ISCrashDumper::SetAssertMessage(const char *assert_message)
 #include "ISStackWalker.h"
 int ISCrashDumper::ReportHook(int ReportType, char *Message, int *ReturnValue)
 {
+	Q_UNUSED(ReportType);
+	Q_UNUSED(ReturnValue);
     CreateReport(NULL, Message ? std::string(Message) : std::string());
     return 0;
 }

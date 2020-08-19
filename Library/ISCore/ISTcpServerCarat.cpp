@@ -110,10 +110,10 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 
 	//Проверка валидности запроса
 	QVariantMap VariantMap;
-	QString ErrorString;
-	if (!ISTcp::IsValidQuery(Buffer, VariantMap, ErrorString)) //Ошибка парсинга
+	QString error_string;
+	if (!ISTcp::IsValidQuery(Buffer, VariantMap, error_string)) //Ошибка парсинга
 	{
-		SendError(TcpSocket, LANG("CaratError.ParseQuery").arg(ErrorString));
+		SendError(TcpSocket, LANG("CaratError.ParseQuery").arg(error_string));
 		return;
 	}
 

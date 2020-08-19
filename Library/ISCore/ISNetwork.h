@@ -12,7 +12,7 @@ public:
 
 	QString GetErrorString() const; //Получить текстовое описание последней ошибки
 
-	bool CheckAccessInternet(QString &ErrorString) const; //Проверить доступ к интернету
+	bool CheckAccessInternet(QString &error_string) const; //Проверить доступ к интернету
 	QString ParseIPAddress(const QString &IPAddress) const; //Парсинг IP-Адреса
 	bool DownloadFile(const QString &Url, QByteArray &ByteArray); //Скачивание файла по ссылке
 
