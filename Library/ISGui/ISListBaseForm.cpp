@@ -1353,7 +1353,8 @@ void ISListBaseForm::CreateActions()
 	Actions[ISNamespace::AT_SearchClear] = ActionSearchClearResult;
 
 	//Экспорт
-	QAction *ActionExport = ISControls::CreateActionExport(this);
+	QAction *ActionExport = new QAction(BUFFER_ICONS("ExportTable"), LANG("ListForm.ExportTable"), this);
+	ActionExport->setShortcut(QKeySequence(Qt::Key_F12));
 	connect(ActionExport, &QAction::triggered, this, &ISListBaseForm::Export);
 	Actions[ISNamespace::AT_Export] = ActionExport;
 
@@ -1373,22 +1374,24 @@ void ISListBaseForm::CreateActions()
 	Actions[ISNamespace::AT_SystemInfo] = ActionSystemInformation;
 
 	//Первая запись
-	QAction *ActionNavigationBegin = ISControls::CreateActionNavigationBegin(this);
+	QAction *ActionNavigationBegin = new QAction(BUFFER_ICONS("TableNavigationBegin"), LANG("TableNavigationSelectBegin"), this);
+	ActionNavigationBegin->setShortcut(QKeySequence(Qt::Key_Home));
 	connect(ActionNavigationBegin, &QAction::triggered, this, &ISListBaseForm::NavigationSelectBeginRecord);
 	Actions[ISNamespace::AT_NavigationBegin] = ActionNavigationBegin;
 
 	//Предыдущая запись
-	QAction *ActionNavigationPrevious = ISControls::CreateActionNavigationPrevious(this);
+	QAction *ActionNavigationPrevious = new QAction(BUFFER_ICONS("TableNavigationPrevious"), LANG("TableNavigationSelectPrevious"), this);
 	connect(ActionNavigationPrevious, &QAction::triggered, this, &ISListBaseForm::NavigationSelectPreviousRecord);
 	Actions[ISNamespace::AT_NavigationPrevious] = ActionNavigationPrevious;
 
 	//Следующая запись
-	QAction *ActionNavigationNext = ISControls::CreateActionNavigationNext(this);
+	QAction *ActionNavigationNext = new QAction(BUFFER_ICONS("TableNavigationNext"), LANG("TableNavigationSelectNext"), this);
 	connect(ActionNavigationNext, &QAction::triggered, this, &ISListBaseForm::NavigationSelectNextRecord);
 	Actions[ISNamespace::AT_NavigationNext] = ActionNavigationNext;
 
 	//Последняя запись
-	QAction *ActionNavigationLast = ISControls::CreateActionNavigationLast(this);
+	QAction *ActionNavigationLast = new QAction(BUFFER_ICONS("TableNavigationLast"), LANG("TableNavigationSelectLast"), this);
+	ActionNavigationLast->setShortcut(QKeySequence(Qt::Key_End));
 	connect(ActionNavigationLast, &QAction::triggered, this, &ISListBaseForm::NavigationSelectLastRecord);
 	Actions[ISNamespace::AT_NavigationLast] = ActionNavigationLast;
 }
@@ -1396,7 +1399,7 @@ void ISListBaseForm::CreateActions()
 void ISListBaseForm::CreateSpecialActions()
 {
 	//Сортировка по умолчанию
-	QAction *ActionSortDefault = ISControls::CreateActionSortDefault(this);
+	QAction *ActionSortDefault = new QAction(BUFFER_ICONS("DefaultSorting"), LANG("DefaultSorting"), this);
 	connect(ActionSortDefault, &QAction::triggered, this, &ISListBaseForm::SortingDefault);
 	ActionsSpecial.emplace(ISNamespace::AST_SortDefault, ActionSortDefault);
 

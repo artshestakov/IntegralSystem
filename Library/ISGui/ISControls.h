@@ -44,14 +44,8 @@ public:
 	static QAction* CreateActionUpdate(QObject *ParentObject);
 	static QAction* CreateActionSearch(QObject *ParentObject);
 	static QAction* CreateActionSearchClearResults(QObject *ParentObject);
-	static QAction* CreateActionExport(QObject *ParentObject);
 	static QAction* CreateActionPrint(QObject *ParentObject);
 	static QAction* CreateActionRecordInformartion(QObject *ParentObject);
-	static QAction* CreateActionNavigationBegin(QObject *ParentObject);
-	static QAction* CreateActionNavigationPrevious(QObject *ParentObject);
-	static QAction* CreateActionNavigationNext(QObject *ParentObject);
-	static QAction* CreateActionNavigationLast(QObject *ParentObject);
-	static QAction* CreateActionSortDefault(QObject *ParentObject);
 	static QAction* CreateActionNoteObject(QObject *ParentObject);
 };
 //-----------------------------------------------------------------------------

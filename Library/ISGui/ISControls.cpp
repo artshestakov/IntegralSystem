@@ -213,13 +213,6 @@ QAction* ISControls::CreateActionSearchClearResults(QObject *ParentObject)
 	return ActionSearchFullTextClear;
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionExport(QObject *ParentObject)
-{
-	QAction *ActionExport = new QAction(BUFFER_ICONS("ExportTable"), LANG("ListForm.ExportTable"), ParentObject);
-	ActionExport->setShortcut(QKeySequence(Qt::Key_F12));
-	return ActionExport;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionPrint(QObject *ParentObject)
 {
 	return new QAction(BUFFER_ICONS("Print"), LANG("PrintForms"), ParentObject);
@@ -230,35 +223,6 @@ QAction* ISControls::CreateActionRecordInformartion(QObject *ParentObject)
 	QAction *ActionSystemInformation = new QAction(BUFFER_ICONS("RecordInformation"), LANG("RecordInformation"), ParentObject);
 	ActionSystemInformation->setShortcut(QKeySequence(Qt::Key_F9));
 	return ActionSystemInformation;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionNavigationBegin(QObject *ParentObject)
-{
-	QAction *ActionTableNavigationBegin = new QAction(BUFFER_ICONS("TableNavigationBegin"), LANG("TableNavigationSelectBegin"), ParentObject);
-	ActionTableNavigationBegin->setShortcut(QKeySequence(Qt::Key_Home));
-	return ActionTableNavigationBegin;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionNavigationPrevious(QObject *ParentObject)
-{
-	return new QAction(BUFFER_ICONS("TableNavigationPrevious"), LANG("TableNavigationSelectPrevious"), ParentObject);
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionNavigationNext(QObject *ParentObject)
-{
-	return new QAction(BUFFER_ICONS("TableNavigationNext"), LANG("TableNavigationSelectNext"), ParentObject);
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionNavigationLast(QObject *ParentObject)
-{
-	QAction *ActionTableNavigationLast = new QAction(BUFFER_ICONS("TableNavigationLast"), LANG("TableNavigationSelectLast"), ParentObject);
-	ActionTableNavigationLast->setShortcut(QKeySequence(Qt::Key_End));
-	return ActionTableNavigationLast;
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionSortDefault(QObject *ParentObject)
-{
-	return new QAction(BUFFER_ICONS("DefaultSorting"), LANG("DefaultSorting"), ParentObject);
 }
 //-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionNoteObject(QObject *ParentObject)
