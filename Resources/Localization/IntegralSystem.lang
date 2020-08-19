@@ -277,6 +277,8 @@
   <Local Name="Message.Question.ConvertToTask" Russian="Преобразовать в задачу?"/>
   <Local Name="Message.Question.CopyDiscussion" Russian="Скопировать запись?"/>
   <Local Name="Message.Question.PasteImageToTask" Russian="В буфере обмена обнаружено изображение, прикрепить его к задаче?"/>
+  <Local Name="Message.Question.CloseInsetingTaskFile" Russian="Остановить прикрепление файлов к задаче?"/>
+  <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
   
   <!--Carat error-->
   <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>

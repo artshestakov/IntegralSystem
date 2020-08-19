@@ -946,7 +946,7 @@ void ISTaskViewForm::FileAdd()
 		int Inserted = 0;
 		ISProgressForm ProgressForm(FileList.size(), QString(), nullptr, "TitleText");
 		ProgressForm.show();
-		for (int i = 0; i < FileList.size(); ++i)
+		for (int i = 0, c = FileList.size(); i < c; ++i)
 		{
 			QString FilePath = FileList[i], FileName = QFileInfo(FilePath).fileName(), FileExtension = QFileInfo(FilePath).suffix();
 			ProgressForm.IncrementValue(LANG("Task.AddFile.LabelText").arg(FileName));
@@ -988,9 +988,13 @@ void ISTaskViewForm::FileAdd()
 				ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
 			}
 
-			if (ProgressForm.WasCanceled())
+			if (ProgressForm.WasCanceled() && ISMessageBox::ShowQuestion(this, LANG("Message.Question.CloseInsetingTaskFile"), LANG("Message.Question.CloseInsetingTaskFile.DetailedText").arg(Inserted).arg(c - Inserted).arg(c)))
 			{
-				//???
+				break;
+			}
+			else
+			{
+				ProgressForm.SetCanceled(false);
 			}
 		}
 
