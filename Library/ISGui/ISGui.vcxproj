@@ -234,7 +234,6 @@
     <ClCompile Include="ISGui.cpp" />
     <ClCompile Include="ISHistoryForm.cpp" />
     <ClCompile Include="ISHTML.cpp" />
-    <ClCompile Include="ISHTMLHelper.cpp" />
     <ClCompile Include="ISHtmlQuery.cpp" />
     <ClCompile Include="ISImageEdit.cpp" />
     <ClCompile Include="ISImageViewerForm.cpp" />
@@ -541,7 +540,6 @@
     <ClInclude Include="ISFavorites.h" />
     <ClInclude Include="ISGui.h" />
     <ClInclude Include="ISHTML.h" />
-    <ClInclude Include="ISHTMLHelper.h" />
     <ClInclude Include="ISHtmlQuery.h" />
     <QtMoc Include="ISMedTech.h" />
     <QtMoc Include="ISObjectInterface.h" />

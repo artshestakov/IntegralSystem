@@ -267,9 +267,6 @@
     <ClCompile Include="ISHTML.cpp">
       <Filter>Printing\HTML</Filter>
     </ClCompile>
-    <ClCompile Include="ISHTMLHelper.cpp">
-      <Filter>Printing\HTML</Filter>
-    </ClCompile>
     <ClCompile Include="ISHtmlQuery.cpp">
       <Filter>Printing\HTML</Filter>
     </ClCompile>
@@ -1073,9 +1070,6 @@
       <Filter>Telephony</Filter>
     </ClInclude>
     <ClInclude Include="ISHTML.h">
-      <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISHTMLHelper.h">
       <Filter>Printing\HTML</Filter>
     </ClInclude>
     <ClInclude Include="ISHtmlQuery.h">
