@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
-#include "ISQueryModelHelper.h"
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
@@ -245,9 +244,9 @@ void ISQueryModel::CreateQuerySelectFields()
 		if (Field->Foreign) //Если на поле установлен внешний ключ
 		{
 			PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(Field->Foreign->ForeignClass);
-			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->Name.toLower() + SYMBOL_SPACE + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + " ON " + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower() + " = " + ISQueryModelHelper::GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + SYMBOL_POINT + MetaTableForeign->Alias + '_' + Field->Foreign->ForeignField.toLower() + " \n";
+			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->Name.toLower() + SYMBOL_SPACE + GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + " ON " + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + Field->Name.toLower() + " = " + GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + SYMBOL_POINT + MetaTableForeign->Alias + '_' + Field->Foreign->ForeignField.toLower() + " \n";
 			
-			QString Temp = ISQueryModelHelper::GetForeignViewNameField(MetaTableForeign->Alias, Field->Foreign, i).toLower();
+			QString Temp = GetForeignViewNameField(MetaTableForeign->Alias, Field->Foreign, i).toLower();
 			ForeignFields.emplace(Field->Name, Temp);
 
 			QuerySelectFields += Temp + " AS \"" + Field->Name + "\", \n";
@@ -276,5 +275,27 @@ void ISQueryModel::CreateQuerySelectFields()
 void ISQueryModel::CreateQuerySelectIsDeleted()
 {
 	QuerySelectIsDeleted = ClassAlias + SYMBOL_POINT + ClassAlias + "_isdeleted";
+}
+//-----------------------------------------------------------------------------
+QString ISQueryModel::GetForeignViewNameField(const QString &MetaTableForeignAlias, PMetaForeign *MetaForeign, size_t Iterator)
+{
+	QStringList StringList = MetaForeign->ForeignViewNameField.split(';');
+	if (StringList.count() > 1)
+	{
+		QString SqlText = "concat(";
+		for (const QString &String : StringList)
+		{
+			SqlText += GetAliasForLeftJoinTable(MetaTableForeignAlias, Iterator) + SYMBOL_POINT + MetaTableForeignAlias + '_' + String.toLower() + ", ' ', ";
+		}
+		SqlText.chop(2);
+		SqlText += ')';
+		return SqlText;
+	}
+	return GetAliasForLeftJoinTable(MetaTableForeignAlias, Iterator) + SYMBOL_POINT + MetaTableForeignAlias + '_' + MetaForeign->ForeignViewNameField.toLower();
+}
+//-----------------------------------------------------------------------------
+QString ISQueryModel::GetAliasForLeftJoinTable(const QString &TableAlias, size_t Iterator)
+{
+	return TableAlias + QString::number(Iterator);
 }
 //-----------------------------------------------------------------------------

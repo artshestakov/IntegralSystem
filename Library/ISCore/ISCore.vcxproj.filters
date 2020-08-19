@@ -57,9 +57,6 @@
     <ClCompile Include="ISQueryModel.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="ISQueryModelHelper.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="ISQueryPool.cpp">
       <Filter>Database</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ISQuery.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="ISQueryModelHelper.h">
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ISQueryPool.h">

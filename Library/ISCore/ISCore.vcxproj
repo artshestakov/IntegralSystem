@@ -230,7 +230,6 @@
     <ClCompile Include="ISProtocol.cpp" />
     <ClCompile Include="ISQuery.cpp" />
     <ClCompile Include="ISQueryModel.cpp" />
-    <ClCompile Include="ISQueryModelHelper.cpp" />
     <ClCompile Include="ISQueryPool.cpp" />
     <ClCompile Include="ISQueryText.cpp" />
     <ClCompile Include="ISRandom.cpp" />
@@ -307,7 +306,6 @@
     <ClInclude Include="ISMetaUuidCheckeder.h" />
     <ClInclude Include="ISMetaViewQuery.h" />
     <ClInclude Include="ISQuery.h" />
-    <ClInclude Include="ISQueryModelHelper.h" />
     <ClInclude Include="ISQueryPool.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="ISSearchModel.h" />
