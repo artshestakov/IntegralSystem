@@ -573,7 +573,7 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 					InitializeXSNTableSystemFields(MetaTable); //Инициализация системных полей
 				}
 
-				Result = InitializeXSNTableSystemFieldsVisible(MetaTable, GetChildDomNode(DomNode, "IncludeSystemFields").firstChild()); //Инициализация видимости системных полей
+				Result = InitializeXSNTableSystemFieldsVisible(MetaTable, GetChildDomNode(DomNode, "SystemFields").firstChild()); //Инициализация видимости системных полей
 				if (Result)
 				{
 					Result = InitializeXSNTableFields(MetaTable, GetChildDomNode(DomNode, "Fields").firstChild()); //Инициализация пользовательских полей
@@ -789,12 +789,11 @@ bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, co
 		}
 
 		QString LocalName = Temp.attributes().namedItem("LocalName").nodeValue();
-		if (LocalName.length())
+		if (!LocalName.isEmpty())
 		{
 			MetaField->LabelName = LocalName;
 			MetaField->LocalListName = LocalName;
 		}
-
 		MetaTable->SystemFieldsVisible.emplace_back(MetaField);
 		Temp = Temp.nextSibling();
 	}

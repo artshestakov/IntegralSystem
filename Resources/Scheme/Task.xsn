@@ -71,12 +71,10 @@
 
   <Table Name="_TaskStatusHistory" UID="{06649583-3042-45E8-867E-42CE90F73B06}" Alias="tshr" ShowOnly="true" LocalName="Изменение статуса" LocalListName="Изменения статуса" TitleName="Status" IsSystem="true">
     <Fields>
-      <Field UID="{3FE5F338-B2DA-44CA-98F2-7F4023E88090}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{92F93CF7-639B-457A-82D8-38F5458E0E72}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{DC67347A-EA59-417C-BA01-EF5A7DF8B088}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="Status"/>
     </Indexes>
@@ -84,6 +82,9 @@
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Status" ForeignClass="_TaskStatus" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
+    <SystemFields>
+      <Field Name="CreationDate" LocalName="Дата и время"/>
+    </SystemFields>
   </Table>
 
   <Table Name="_TaskPriority" UID="{BD3CB96B-C467-4818-85B5-3EF73389736A}" Alias="tspr" ShowOnly="true" LocalName="Приоритет задачи" LocalListName="Приоритеты задач" TitleName="Name" IsSystem="true">

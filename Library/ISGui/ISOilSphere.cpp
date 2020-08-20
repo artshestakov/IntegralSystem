@@ -50,7 +50,7 @@ static QString QS_DEBT = PREPARE_QUERY2("SELECT "
 										"WHERE NOT imdt_isdeleted "
 										"AND NOT (SELECT impl_isdeleted FROM implementation WHERE imdt_implementation = impl_id)");
 //-----------------------------------------------------------------------------
-static QString QS_ACCRUED = PREPARE_QUERY2("SELECT cpwo_date, cpwo_sum, cpwo_note "
+static QString QS_ACCRUED = PREPARE_QUERY2("SELECT cpwo_creationdate, cpwo_sum, cpwo_note "
 										   "FROM counterpartywriteoff "
 										   "WHERE NOT cpwo_isdeleted "
 										   "AND cpwo_implementationdetail = :ImplementationDetailID "
@@ -521,7 +521,7 @@ void ISOilSphere::DebtSubSystemForm::LoadData()
 			{
 				while (qSelectAccrueds.Next())
 				{
-					QString Date = qSelectAccrueds.ReadColumn("cpwo_date").toDate().toString(FORMAT_DATE_V2);
+					QString Date = qSelectAccrueds.ReadColumn("cpwo_creationdate").toDate().toString(FORMAT_DATE_V2);
 					double Sum = qSelectAccrueds.ReadColumn("cpwo_sum").toDouble();
 					QString Note = qSelectAccrueds.ReadColumn("cpwo_note").toString();
 

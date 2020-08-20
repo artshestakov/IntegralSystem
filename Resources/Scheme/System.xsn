@@ -182,20 +182,21 @@
     <Fields>
       <Field UID="{969E2A77-691F-4E12-9095-2C9BB933739B}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotSearch="true" NotNull="true" HideFromList="true"/>
       <Field UID="{32684211-638E-4EC7-A107-043D8DB16793}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotSearch="true" NotNull="true" HideFromList="true"/>
-      <Field UID="{D25EDF49-27ED-47FE-BF7E-9F3A0C9E258B}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{6C3FD37E-F1BB-4D20-BDD5-DA7FBECAF6C3}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Оставил сообщение" LocalListName="Оставил сообщение" NotNull="true"/>
       <Field UID="{04D790CB-F34A-4367-A1C8-2DFA28F01A7A}" Name="Message" Type="Text" LabelName="Сообщение" LocalListName="Сообщение" NotNull="true" PlaceholderText="Что Вы хотите сказать?"/>
     </Fields>
     <Indexes>
       <Index Field="TableName"/>
       <Index Field="ObjectID"/>
-      <Index Field="DateTime"/>
       <Index Field="User"/>
       <Index Field="Message"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
+    <SystemFields>
+      <Field Name="CreationDate" LocalName="Дата и время"/>
+    </SystemFields>
   </Table>
 
   <Table Name="_Favorites" UID="{38F56630-374C-4DF8-B3DB-0140CAD1A89E}" Alias="fvts" LocalName="Избранный объект" LocalListName="Избранные объекты" TitleName="TableLocalName" IsSystem="true">
@@ -444,9 +445,9 @@
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
       <Foreign Field="Type" ForeignClass="_ProtocolType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
-    <IncludeSystemFields>
+    <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время события"/>
-    </IncludeSystemFields>
+    </SystemFields>
   </Table>
 
   <Table Name="_ProtocolType" UID="{CB2C9248-710B-49D6-ABA7-EE1A008DD8AE}" Alias="prtp" ShowOnly="true" LocalName="Тип действия" LocalListName="Типы действий" TitleName="Name" IsSystem="true">

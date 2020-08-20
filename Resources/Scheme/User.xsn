@@ -180,9 +180,9 @@
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
       <Foreign Field="WhoUser" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
-    <IncludeSystemFields>
+    <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время изменения"/>
-    </IncludeSystemFields>
+    </SystemFields>
   </Table>
          
 </XSN>
