@@ -789,10 +789,16 @@ bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, co
 		}
 
 		QString LocalName = Temp.attributes().namedItem("LocalName").nodeValue();
-		if (!LocalName.isEmpty())
+		if (!LocalName.isEmpty()) //Если локальное имя переопределено
 		{
 			MetaField->LabelName = LocalName;
 			MetaField->LocalListName = LocalName;
+		}
+
+		QString AsType = Temp.attributes().namedItem("AsType").nodeValue();
+		if (!AsType.isEmpty()) //Переопределен тип
+		{
+			MetaField->Type = GetTypeField(AsType);
 		}
 		MetaTable->SystemFieldsVisible.emplace_back(MetaField);
 		Temp = Temp.nextSibling();
