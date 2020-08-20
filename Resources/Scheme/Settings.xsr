@@ -25,7 +25,8 @@
   <_Settings IsSystem="true" UID="{6F5CA447-F94A-4CCF-8241-C82F6E8BD82B}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="13" Name="PageNavigationLimit" Type="Int" LocalName="Вывод на странице" Hint="Количество записей, выводимых на каждой странице." DefaultValue="100"/>
   <_Settings IsSystem="true" UID="{D5CC8283-1C21-4FFC-8D4F-B9671C854271}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="14" Name="SearchFastRemember" Type="Bool" LocalName="Запоминанить значения быстрого поиска" Hint="Каждый поисковый запрос будет запоминаться." DefaultValue="false"/>
   <_Settings IsSystem="true" UID="{A07AA634-F553-4C05-8EEC-CC8A5AE7DC18}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="15" Name="SearchFastView" Type="Int" LocalName="Показывать количество последних запросов быстрого поиска" Hint="Сколько последних запросов быстрого поиска будет отображаться." DefaultValue="10"/>
-  <_Settings IsSystem="true" UID="{2876F177-B30F-41A0-8643-F2BCA583726F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="16" Name="VisibleFieldID" Type="Bool" LocalName="Отображать системную информацию" Hint="Показывать поле &quot;Код&quot;" DefaultValue="true"/>
+  <_Settings IsSystem="true" UID="{2876F177-B30F-41A0-8643-F2BCA583726F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="16" Name="VisibleFieldID" Type="Bool" LocalName="Показывать поле &quot;Код&quot;" DefaultValue="true"/>
+  <_Settings IsSystem="true" UID="{A7EE38D5-AC04-4FAF-8C0F-ECED895039DB}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="17" Name="ScrollSelection" Type="Bool" LocalName="Выделение записей с помощью колеса мыши" DefaultValue="true"/>
 
   <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{B523692A-F837-46CC-B278-0862280917D0}" Name="Desktop" LocalName="Рабочий стол" IconName="Settings.Desktop" Order="4" System="true"/>
   

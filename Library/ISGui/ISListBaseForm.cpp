@@ -1254,16 +1254,6 @@ void ISListBaseForm::NavigationSelectLastRecord()
 void ISListBaseForm::NoteObject()
 {
 	ISGui::ShowNoteObject(this, MetaTable->Name, GetObjectID());
-	/*if (!ISUserRoleEntity::GetInstance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.RecordNote"));
-		return;
-	}
-
-	ISGui::SetWaitGlobalCursor(true);
-	ISNoteObjectForm NoteObjectForm(MetaTable->Name, GetObjectID());
-	ISGui::SetWaitGlobalCursor(false);
-	NoteObjectForm.Exec();*/
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AutoFitColumnWidth()
@@ -1531,6 +1521,13 @@ void ISListBaseForm::CreateTableView()
 	else if (SelectionBehavior == "SelectColumns")
 	{
 		TableView->setSelectionBehavior(QAbstractItemView::SelectColumns);
+	}
+
+	if (SETTING_BOOL(CONST_UID_SETTING_TABLE_SCROLL_SELECTION))
+	{
+		TableView->SetSelectionScroll(true);
+		connect(TableView, &ISBaseTableView::WheelUp, this, &ISListBaseForm::NavigationSelectPreviousRecord);
+		connect(TableView, &ISBaseTableView::WheelDown, this, &ISListBaseForm::NavigationSelectNextRecord);
 	}
 
 	TableView->setAlternatingRowColors(SETTING_BOOL(CONST_UID_SETTING_TABLES_HIGHLIGHTINGODDROWS));
