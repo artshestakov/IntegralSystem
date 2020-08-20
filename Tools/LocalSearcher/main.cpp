@@ -5,6 +5,7 @@
 #include <map>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #ifdef WIN32
 #include <windows.h>
 #endif
@@ -21,13 +22,14 @@ bool ReadLocalFile(const std::string &FilePath); //Чтение файла локализации
 bool ReadDirs(); //Чтение всех директорий
 bool ReadDir(const std::string &DirPath); //Чтение директории
 bool JoinSource(); //Объединение содержимого файлов с исходным кодом в один единый текст
-void Search();
+void Search(); //Поиск не используемых ключей локализации
+void ShowDuplicates(); //Вывести в консоль дубликаты
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	if (argc < 2) //Если аргументы не указаны
 	{
-		std::cout << "ERROR: Not specified arguments." << std::endl;
+		std::cout << "ERROR. Not specified arguments." << std::endl;
 		Usage();
 		return EXIT_FAILURE;
 	}
@@ -52,7 +54,11 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (!ReadLocalFiles()) //При чтении файлов локализации возникла ошибка - выходим из программы
+	if (ReadLocalFiles()) //Чтение файлов локализации прошло успешно - сортируем вектор
+	{
+		std::sort(VectorLocalKeys.begin(), VectorLocalKeys.end());
+	}
+	else //При чтении файлов локализации возникла ошибка - выходим из программы
 	{
 		return EXIT_FAILURE;
 	}
@@ -68,6 +74,7 @@ int main(int argc, char **argv)
 	}
 
 	Search();
+	ShowDuplicates();
 	return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
@@ -121,14 +128,14 @@ bool ReadLocalFile(const std::string &FilePath)
 				size_t pos1 = line.find('"', 0); //Ищем индекс первой кавычки
 				if (pos1 == std::string::npos) //Не нашли - переходим к следующей строке
 				{
-					std::cout << "WARNING: Invalid string. File: " << FilePath << " Line: " << line_number << std::endl;
+					std::cout << "WARNING. Invalid string. File: " << FilePath << " Line: " << line_number << std::endl;
 					continue;
 				}
 				
 				size_t pos2 = line.find('"', ++pos1); //Идем индекс второй кавычки
 				if (pos2 == std::string::npos) //Не нашли - переходим к следующей строке
 				{
-					std::cout << "WARNING: Invalid string. File: " << FilePath << " Line: " << line_number << std::endl;
+					std::cout << "WARNING. Invalid string. File: " << FilePath << " Line: " << line_number << std::endl;
 					continue;
 				}
 				VectorLocalKeys.push_back(line.substr(pos1, pos2 - pos1));
@@ -138,7 +145,7 @@ bool ReadLocalFile(const std::string &FilePath)
 	}
 	else
 	{
-		std::cout << "ERROR: error open file " << FilePath << ": " << strerror(errno) << std::endl;
+		std::cout << "ERROR. error open file " << FilePath << ": " << strerror(errno) << std::endl;
 	}
 	return res;
 }
@@ -203,7 +210,7 @@ bool JoinSource()
 		}
 		else
 		{
-			std::cout << "ERROR: error open file " << source_path << ": " << strerror(errno) << std::endl;
+			std::cout << "ERROR. error open file " << source_path << ": " << strerror(errno) << std::endl;
 			break;
 		}
 	}
@@ -227,7 +234,7 @@ void Search()
 
 		if (!founded)
 		{
-			std::cout << "WARNING: not found local key: " << key_local << std::endl;
+			std::cout << "WARNING. not found local key: " << key_local << std::endl;
 			++not_found;
 		}
 	}
@@ -235,6 +242,20 @@ void Search()
 	if (not_found)
 	{
 		std::cout << "Total not found: " << not_found << std::endl;
+	}
+}
+//-----------------------------------------------------------------------------
+void ShowDuplicates()
+{
+	for (size_t i = 0; i < VectorLocalKeys.size(); ++i)
+	{
+		if (i != VectorLocalKeys.size() - 1)
+		{
+			if (VectorLocalKeys[i] == VectorLocalKeys[i + 1])
+			{
+				std::cout << "WARNING: key duplicate: " << VectorLocalKeys[i] << std::endl;
+			}
+		}
 	}
 }
 //-----------------------------------------------------------------------------

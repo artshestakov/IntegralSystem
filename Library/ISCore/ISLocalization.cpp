@@ -106,17 +106,9 @@ bool ISLocalization::InitializeContent(const QString &Content)
 						if (Result) //Если ключ перевода не пустой
 						{
 							Result = !Value.isEmpty();
-							if (Result) //Значение перевода не пустое
+							if (Result) //Значение перевода не пустое - добавляем
 							{
-								Result = Dictionary.find(LocalKey) == Dictionary.end();
-								if (Result) //Проверяем наличие такого ключа. Если его нет - добавляем в словарь, иначе - ошибка
-								{
-									Dictionary.emplace(LocalKey, Value);
-								}
-								else
-								{
-									ErrorString = QString("Key \"%1\" already exist in localization map. File: %2. Line: %3.").arg(LocalKey).arg(LocalizationName).arg(NodeLocalization.lineNumber());
-								}									
+								Dictionary.emplace(LocalKey, Value);
 							}
 							else //Значение перевода пустое
 							{
