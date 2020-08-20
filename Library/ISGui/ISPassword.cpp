@@ -59,10 +59,11 @@ int ISPassword::GetCountFigures(const QString &Password)
 int ISPassword::GetCountAltSymbols(const QString &Password)
 {
 	int AltSymbols = 0;
-	for (const QChar &Symbol : Password)
+	for (QChar Symbol : Password)
 	{
 		int Position = 0;
-		if (QRegExpValidator(QRegExp(REG_EXP_PASSWORD_ALT_SYMBOL)).validate(QString(Symbol), Position) == QRegExpValidator::Acceptable)
+		QString String(Symbol);
+		if (QRegExpValidator(QRegExp(REG_EXP_PASSWORD_ALT_SYMBOL)).validate(String, Position) == QRegExpValidator::Acceptable)
 		{
 			++AltSymbols;
 		}
@@ -76,7 +77,8 @@ int ISPassword::GetCountUpperLiters(const QString &Password)
 	for (const QChar &Symbol : Password)
 	{
 		int Position = 0;
-		if (QRegExpValidator(QRegExp(REG_EXP_PASSWORD_UPPER)).validate(QString(Symbol), Position) == QRegExpValidator::Acceptable)
+		QString String(Symbol);
+		if (QRegExpValidator(QRegExp(REG_EXP_PASSWORD_UPPER)).validate(String, Position) == QRegExpValidator::Acceptable)
 		{
 			++UpperSymbols;
 		}

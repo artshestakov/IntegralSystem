@@ -369,8 +369,7 @@ QColor ISGui::StringToColor(const QString &String)
 //-----------------------------------------------------------------------------
 bool ISGui::IsStringUrl(const QString &Url)
 {
-	int Pos = 0;
-	return QRegExpValidator(QRegExp(REG_EXP_URL)).validate(QString(Url), Pos) == QValidator::Acceptable;
+	return Url.left(4).toLower() == "http";
 }
 //-----------------------------------------------------------------------------
 bool ISGui::OpenFolder(const QString &FolderPath)
