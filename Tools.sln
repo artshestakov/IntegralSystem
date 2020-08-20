@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GET", "Tools\GET\GET.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sleep", "Tools\Sleep\Sleep.vcxproj", "{A522BC18-DC4A-4F15-9DF5-94D19AD4401A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LocalSearcher", "Tools\LocalSearcher\LocalSearcher.vcxproj", "{68DFFEDD-E233-4CAD-8941-4011F3AFB558}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -41,6 +43,14 @@ Global
 		{A522BC18-DC4A-4F15-9DF5-94D19AD4401A}.Release|Win32.Build.0 = Release|Win32
 		{A522BC18-DC4A-4F15-9DF5-94D19AD4401A}.Release|x64.ActiveCfg = Release|x64
 		{A522BC18-DC4A-4F15-9DF5-94D19AD4401A}.Release|x64.Build.0 = Release|x64
+		{68DFFEDD-E233-4CAD-8941-4011F3AFB558}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68DFFEDD-E233-4CAD-8941-4011F3AFB558}.Debug|Win32.Build.0 = Debug|Win32
+		{68DFFEDD-E233-4CAD-8941-4011F3AFB558}.Debug|x64.ActiveCfg = Debug|x64
+		{68DFFEDD-E233-4CAD-8941-4011F3AFB558}.Debug|x64.Build.0 = Debug|x64
+		{68DFFEDD-E233-4CAD-8941-4011F3AFB558}.Release|Win32.ActiveCfg = Release|Win32
+		{68DFFEDD-E233-4CAD-8941-4011F3AFB558}.Release|Win32.Build.0 = Release|Win32
+		{68DFFEDD-E233-4CAD-8941-4011F3AFB558}.Release|x64.ActiveCfg = Release|x64
+		{68DFFEDD-E233-4CAD-8941-4011F3AFB558}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
