@@ -80,13 +80,21 @@ void ISBaseTableView::keyReleaseEvent(QKeyEvent *e)
 //-----------------------------------------------------------------------------
 void ISBaseTableView::wheelEvent(QWheelEvent *WheelEvent)
 {
-	if (SelectionScroll)
+	if (SelectionScroll) //Если включена прокрутка через выделение
 	{
 		emit WheelEvent->delta() > 0 ? WheelUp() : WheelDown();
 	}
-	else
+	else //Прокрутка через выделение отключена - используем стандартное событие
 	{
-		QTableView::wheelEvent(CtrlClicked ? &QWheelEvent(WheelEvent->pos(), WheelEvent->delta(), WheelEvent->buttons(), WheelEvent->modifiers(), Qt::Horizontal) : WheelEvent);
+		if (CtrlClicked) //Если сейчас нажата кнопка CTRL - игонрируем текущее событие прокрутки и прокручиваем по горизонтали
+		{
+			WheelEvent->ignore();
+			horizontalScrollBar()->triggerAction(WheelEvent->delta() > 0 ? QAbstractSlider::SliderSingleStepSub : QAbstractSlider::SliderSingleStepAdd);
+		}
+		else //Стандартная прокрутка
+		{
+			QTableView::wheelEvent(WheelEvent);
+		}
 	}
 }
 //-----------------------------------------------------------------------------
