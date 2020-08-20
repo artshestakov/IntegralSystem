@@ -70,7 +70,14 @@ void ISDaDataService::SuccessOrganization(const QJsonObject &JsonObject)
 		Organization.Address = VariantMap["data"].toMap()["address"].toMap()["value"].toString();
 		Organization.Branch.Count = VariantMap["data"].toMap()["branch_count"].toInt();
 		Organization.Branch.BranchType = VariantMap["data"].toMap()["branch_type"].toString();
-		Organization.Branch.BranchTypeLocalName = LANG("DaData.Organization.BranchType." + Organization.Branch.BranchType);
+		if (Organization.Branch.BranchType == "MAIN")
+		{
+			Organization.Branch.BranchTypeLocalName = LANG("DaData.Organization.BranchType.Main");
+		}
+		else if (Organization.Branch.BranchType == "BRANCH")
+		{
+			Organization.Branch.BranchTypeLocalName = LANG("DaData.Organization.BranchType.Branch");
+		}
 		Organization.Inn = VariantMap["data"].toMap()["inn"].toString();
 		Organization.Kpp = VariantMap["data"].toMap()["kpp"].toString();
 		Organization.Ogrn = VariantMap["data"].toMap()["ogrn"].toString();
@@ -92,9 +99,31 @@ void ISDaDataService::SuccessOrganization(const QJsonObject &JsonObject)
 		Organization.State.RegistrationDate = VariantMap["data"].toMap()["state"].toMap()["registration_date"].toString();
 		Organization.State.LiquidationDate = VariantMap["data"].toMap()["state"].toMap()["liquidation_date"].toString();
 		Organization.State.StatusName = VariantMap["data"].toMap()["state"].toMap()["status"].toString();
-		Organization.State.StatusLocalName = LANG("DaData.Organization.State." + Organization.State.StatusName);
+		if (Organization.State.StatusName == "ACTIVE")
+		{
+			Organization.State.StatusLocalName = LANG("DaData.Organization.State.Active");
+		}
+		else if (Organization.State.StatusName == "LIQUIDATING")
+		{
+			Organization.State.StatusLocalName = LANG("DaData.Organization.State.Liquidating");
+		}
+		else if (Organization.State.StatusName == "LIQUIDATED")
+		{
+			Organization.State.StatusLocalName = LANG("DaData.Organization.State.Liquidated");
+		}
+		else if (Organization.State.StatusName == "REORGANIZING")
+		{
+			Organization.State.StatusLocalName = LANG("DaData.Organization.State.Reorganizing");
+		}
 		Organization.Type = VariantMap["data"].toMap()["type"].toString();
-		Organization.TypeLocalName = LANG("DaData.Organization.Type." + Organization.Type);
+		if (Organization.Type == "LEGAL")
+		{
+			Organization.TypeLocalName = LANG("DaData.Organization.Type.Legal");
+		}
+		else if (Organization.Type == "INDIVIDUAL")
+		{
+			Organization.TypeLocalName = LANG("DaData.Organization.Type.Individual");
+		}
 		emit FoundedOgranization(Organization);
 	}
 }
@@ -123,12 +152,46 @@ void ISDaDataService::SuccessBank(const QJsonObject &JsonObject)
 		Bank.Name.Short = VariantMap["data"].toMap()["name"].toMap()["short"].toString();
 		Bank.PaymentCity = VariantMap["data"].toMap()["payment_city"].toString();
 		Bank.OPF = VariantMap["data"].toMap()["opf"].toMap()["type"].toString();
-		Bank.OPFLocalName = LANG("DaData.Bank.OPF.Type." + Bank.OPF);
+		if (Bank.OPF == "BANK")
+		{
+			Bank.OPFLocalName = LANG("DaData.Bank.OPF.Type.Bank");
+		}
+		else if (Bank.OPF == "BANK_BRANCH")
+		{
+			Bank.OPFLocalName = LANG("DaData.Bank.OPF.Type.BankBranch");
+		}
+		else if (Bank.OPF == "NKO")
+		{
+			Bank.OPFLocalName = LANG("DaData.Bank.OPF.Type.Nko");
+		}
+		else if (Bank.OPF == "NKO_BRANCH")
+		{
+			Bank.OPFLocalName = LANG("DaData.Bank.OPF.Type.NkoBranch");
+		}
+		else if (Bank.OPF == "RKC")
+		{
+			Bank.OPFLocalName = LANG("DaData.Bank.OPF.Type.Rkc");
+		}
+		else if (Bank.OPF == "OTHER")
+		{
+			Bank.OPFLocalName = LANG("DaData.Bank.OPF.Type.Other");
+		}
 		Bank.State.ActualityDate = VariantMap["data"].toMap()["state"].toMap()["actuality_date"].toString();
 		Bank.State.RegistrationDate = VariantMap["data"].toMap()["state"].toMap()["registration_date"].toString();
 		Bank.State.LiquidationDate = VariantMap["data"].toMap()["state"].toMap()["liquidation_date"].toString();
 		Bank.State.StatusName = VariantMap["data"].toMap()["state"].toMap()["status"].toString();
-		Bank.State.StatusLocalName = LANG("DaData.Bank.State." + Bank.State.StatusName);
+		if (Bank.State.StatusName == "ACTIVE")
+		{
+			Bank.State.StatusLocalName = LANG("DaData.Bank.State.Active");
+		}
+		else if (Bank.State.StatusName == "LIQUIDATING")
+		{
+			Bank.State.StatusLocalName = LANG("DaData.Bank.State.Liquidating");
+		}
+		else if (Bank.State.StatusName == "LIQUIDATED")
+		{
+			Bank.State.StatusLocalName = LANG("DaData.Bank.State.Liquidated");
+		}
 		emit FoundedBank(Bank);
 	}
 }

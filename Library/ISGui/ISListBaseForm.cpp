@@ -887,32 +887,32 @@ void ISListBaseForm::Delete()
 			return;
 		}
 
-		if (ISMessageBox::ShowQuestion(this, LANG(show_is_deleted ? "Message.Question.RecoveryObjectSelected" : "Message.Question.DeleteSelectedRecord")))
+		if (ISMessageBox::ShowQuestion(this, show_is_deleted ? LANG("Message.Question.RecoveryObjectSelected") : LANG("Message.Question.DeleteSelectedRecord")))
 		{
 			if (ISCore::SetIsDeletedObject(!show_is_deleted, MetaTable, VectorInt.front(), ErrorString)) //≈сли восстановление прошло успешно, обновить таблицу
 			{
 				SqlModel->RemoveRecord(GetCurrentRowIndex());
 				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 				{
-					ISPopupMessage::ShowNotification(LANG(show_is_deleted ? "NotificationForm.Title.Recovery" : "NotificationForm.Title.Deleted"));
+					ISPopupMessage::ShowNotification(show_is_deleted ? LANG("NotificationForm.Title.Recovery") : LANG("NotificationForm.Title.Deleted"));
 				}
 			}
 			else
 			{
-				ISMessageBox::ShowCritical(this, LANG(show_is_deleted ? "Message.Error.SetNotIsDeletedObject" : "Message.Error.SetIsDeletedObject"), ErrorString);
+				ISMessageBox::ShowCritical(this, show_is_deleted ? LANG("Message.Error.SetNotIsDeletedObject") : LANG("Message.Error.SetIsDeletedObject"), ErrorString);
 			}
 		}
 	}
 	else //¬ыбрано несколько записей
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG(show_is_deleted ? "Message.Objects.Recovery" : "Message.Objects.Delete").arg(VectorInt.size())))
+		if (ISMessageBox::ShowQuestion(this, show_is_deleted ? LANG("Message.Objects.Recovery") : LANG("Message.Objects.Delete").arg(VectorInt.size())))
 		{
 			if (ISCore::SetIsDeletedObjects(!show_is_deleted, MetaTable, VectorInt, ErrorString))
 			{
 				Update();
 				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 				{
-					ISPopupMessage::ShowNotification(LANG(show_is_deleted ? "NotificationForm.Title.Recoverys" : "NotificationForm.Title.Deleteds"));
+					ISPopupMessage::ShowNotification(show_is_deleted ? LANG("NotificationForm.Title.Recoverys") : LANG("NotificationForm.Title.Deleteds"));
 				}
 			}
 			else

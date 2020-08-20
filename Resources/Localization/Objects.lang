@@ -3,17 +3,8 @@
 	
 	<!--Highway-->
 	<Local Name="Highway.Core.Search" Russian="Входящий звонок с номера %1, поиск организации..."/>
-  <Local Name="Highway.Core.SearchComplete" Russian="Найдена организация %1 по номеру %2. Осуществляется перевод звонка абоненту %3"/>
-  <Local Name="Highway.Core.SearchInvalid" Russian="Организация с номером %1 в базе отсутствует"/>
-	<Local Name="Highway.Core.NewRaiting" Russian="Новая оценка качества &quot;%1&quot; для пользователя &quot;%2&quot;"/>
-  
+	<Local Name="Highway.Core.NewRaiting" Russian="Новая оценка качества &quot;%1&quot; для пользователя &quot;%2&quot;"/>  
 	<Local Name="Highway.Branches" Russian="Филиалы"/>
-  <Local Name="Highway.Branche" Russian="Филиал"/>
-  <Local Name="Highway.SelectBranche" Russian="Выберите филиал"/>
-  <Local Name="Highway.Branches.Bind" Russian="Привязать"/>
-  <Local Name="Highway.Branches.Rebind" Russian="Отвязать от &quot;%1&quot;"/>
-  <Local Name="Rating.Filter.All1" Russian="Все оценки"/>
-  <Local Name="Highway.Message.Question.Rebind" Russian="Отвязать филиал &quot;%1&quot;?"/>
 	
 	<!--InformResource-->
 	<Local Name="Message.Information.TrasferOrganizationUserDone" Russian="Организаци (%1 шт.) успешно переданы в работу пользователю &quot;%2&quot;."/>
@@ -45,15 +36,12 @@
 	<Local Name="Organizations" Russian="Организации"/>
 	<Local Name="Organization" Russian="Организация"/>
 	<Local Name="CallHistory" Russian="История звонков"/>
-  <Local Name="InformResource.InputCountDays" Russian="Введите количество дней"/>
-  <Local Name="InformResource.SelectDays" Russian="Отбор по дням"/>
 	<Local Name="DemoAccess" Russian="Демо доступ"/>
 	<Local Name="DemoAccessesInWord" Russian="Демо доступы в работе"/>
 	<Local Name="Score" Russian="Счёт"/>
 	<Local Name="AgreementDateTimeFilter" Russian="Фильтр по дате договоренности"/>
 	<Local Name="CalculatePercentage" Russian="Расчёт процента заполнения организаций"/>
 	<Local Name="Dispatching" Russian="Отправка писем в организации..."/>
-  <Local Name="InputNoteFromDay" Russian="Введите заметку о дне"/>
 	<Local Name="CallToOrganization" Russian="Позвонить в организацию %1"/>
 	<Local Name="SelectUserFromOrganizationWork" Russian="Выберите пользователя для передачи выбранных (%1) организаций в работу"/>
 	<Local Name="OrganizationInWorkFromUser" Russian="Организация находится в работе у &quot;%1&quot;"/>
@@ -79,7 +67,5 @@
   <Local Name="OilSphere.ShowImplementation" Russian="Просмотр реализации"/>
   <Local Name="OilSphere.ShowImplementationDetails" Russian="Просмотр подробностей реализации"/>
   <Local Name="OilSphere.ShowCounterparty" Russian="Карточка контрагента"/>
-  <Local Name="OilSphere.PaymentTotal" Russian="Всего: %1"/>
-  <Local Name="OilSphere.PaymentLeft" Russian="Осталось: %2"/>
 	
 </LANG>

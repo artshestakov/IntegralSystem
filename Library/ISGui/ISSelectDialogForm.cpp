@@ -23,7 +23,7 @@ ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, c
 		SelectListForm->SetSelectObjectAfterUpdate(SelectObjectID);
 	}
 
-	LabelInfo->setText(LANG(SelectMode == ISNamespace::SLM_Single ? "SelectDialog.Title.Single" : "SelectDialog.Title.Multi") + ':');
+	LabelInfo->setText(SelectMode == ISNamespace::SLM_Single ? LANG("SelectDialog.Title.Single") : LANG("SelectDialog.Title.Multi") + ':');
 }
 //-----------------------------------------------------------------------------
 ISSelectDialogForm::~ISSelectDialogForm()

@@ -175,7 +175,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
 
-	setWindowTitle(LANG(TaskParentID ? "Task.ViewFormTitle.SubTask" : "Task.ViewFormTitle.Task").arg(TaskID).arg(TaskName));
+	setWindowTitle(TaskParentID ? LANG("Task.ViewFormTitle.SubTask") : LANG("Task.ViewFormTitle.Task").arg(TaskID).arg(TaskName));
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
@@ -190,7 +190,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
 	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Copy"), LANG(TaskParentID ? "Task.CloneSubTask" : "Task.CloneTask"), this, &ISTaskViewForm::CloneTask);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("Copy"), TaskParentID ? LANG("Task.CloneSubTask") : LANG("Task.CloneTask"), this, &ISTaskViewForm::CloneTask);
 	ButtonMenu->menu()->addSeparator();
 	if (TaskParentID)
 	{
@@ -626,7 +626,7 @@ void ISTaskViewForm::SetDescription()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CloneTask()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG(TaskParentID ? "Message.Question.CloneSubTask" : "Message.Question.CloneTask")))
+	if (ISMessageBox::ShowQuestion(this, TaskParentID ? LANG("Message.Question.CloneSubTask") : LANG("Message.Question.CloneTask")))
 	{
 		QString Fields;
 		PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable("_Task");

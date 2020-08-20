@@ -29,7 +29,7 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	Layout->addWidget(LabelIcon, 0, Qt::AlignHCenter);
 
 	QLabel *LabelUserName = new QLabel(this);
-	LabelUserName->setText(QString(user_name).replace(SYMBOL_SPACE, "\n") + "\n" + LANG("MonitorActivity.MonitorUser." + is_online ? "Online" : "Offline") + ')');
+	LabelUserName->setText(QString(user_name).replace(SYMBOL_SPACE, "\n") + "\n" + (is_online ? LANG("MonitorActivity.MonitorUser.Online") : LANG("MonitorActivity.MonitorUser.Offline")) + ')');
 	LabelUserName->setAlignment(Qt::AlignHCenter);
 	LabelUserName->setWordWrap(true);
 	Layout->addWidget(LabelUserName, 0, Qt::AlignHCenter);
