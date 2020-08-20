@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Localization Name="Configurator">
+<LANG Name="Configurator">
   
   <!--System user-->
   <Local Name="SystemUser.Surname" Russian="Главный"/>
   <Local Name="SystemUser.Name" Russian="администратор"/>
   <Local Name="SystemUser.Patronymic" Russian="postgres"/>
   
-</Localization>
+</LANG>

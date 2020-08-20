@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Localization Name="Objects">
+<LANG Name="Objects">
 	
 	<!--Highway-->
 	<Local Name="Highway.Core.Search" Russian="Входящий звонок с номера %1, поиск организации..."/>
@@ -82,4 +82,4 @@
   <Local Name="OilSphere.PaymentTotal" Russian="Всего: %1"/>
   <Local Name="OilSphere.PaymentLeft" Russian="Осталось: %2"/>
 	
-</Localization>
+</LANG>
