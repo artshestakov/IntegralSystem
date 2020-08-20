@@ -196,7 +196,7 @@ void ISFullTextSearchForm::Execute(const QVariant &SearchValue)
 	if (Result)
 	{
 		std::vector<PMetaTable*> Tables = ISMetaData::Instance().GetTables();
-		emit SetProgressMaximum(Tables.size());
+		emit SetProgressMaximum((int)Tables.size());
 
 		int ProgressValue = 0;
 		for (PMetaTable *MetaTable : Tables) //Обход не системных таблиц

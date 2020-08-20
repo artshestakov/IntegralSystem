@@ -90,12 +90,12 @@ void ISSqlModelCore::RemoveRecord(int Index)
 void ISSqlModelCore::RemoveColumn(PMetaField *MetaField)
 {
 	beginResetModel();
-	int Index = ISAlgorithm::VectorIndexOf(Fields, MetaField);
+	size_t Index = ISAlgorithm::VectorIndexOf(Fields, MetaField);
 	Fields.erase(Fields.begin() + Index);
 	for (size_t i = 0; i < Records.size(); ++i)
 	{
 		QSqlRecord SqlRecord = Records[i];
-		SqlRecord.remove(Index);
+		SqlRecord.remove((int)Index);
 		Records[i] = SqlRecord;
 	}
 	endResetModel();
@@ -235,13 +235,13 @@ QVariant ISSqlModelCore::headerData(int Section, Qt::Orientation Orientation, in
 int ISSqlModelCore::rowCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return Records.size();
+	return (int)Records.size();
 }
 //-----------------------------------------------------------------------------
 int ISSqlModelCore::columnCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return Fields.size();
+	return (int)Fields.size();
 }
 //-----------------------------------------------------------------------------
 QModelIndex ISSqlModelCore::index(int Row, int Column, const QModelIndex &Parent) const

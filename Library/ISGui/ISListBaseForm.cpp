@@ -966,7 +966,7 @@ bool ISListBaseForm::DeleteCascade()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete.Cascade").arg(VectorInt.size()), LANG("Message.Object.Delete.Cascade.Help")))
 		{
-			ISProgressForm ProgressForm(VectorInt.size(), LANG("DeletingCascadeObjects"), this);
+			ISProgressForm ProgressForm((int)VectorInt.size(), LANG("DeletingCascadeObjects"), this);
 			ProgressForm.show();
 
 			for (int ObjectID : VectorInt)

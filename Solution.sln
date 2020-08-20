@@ -129,6 +129,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ISCarat", "Library\ISCarat\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ISGui", "Library\ISGui\ISGui.vcxproj", "{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DF96E239-1BB5-402B-B4F4-BF01D4A168BF} = {DF96E239-1BB5-402B-B4F4-BF01D4A168BF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaratWorker", "Projects\CaratWorker\CaratWorker.vcxproj", "{07117845-DDF6-4F2A-B2D9-93A670AB36DD}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -224,7 +227,7 @@ Global
 		{3BE791E4-23C3-4D11-A390-9964ED39A461} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 		Qt5Version = 58_msvc2015
+		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 	EndGlobalSection
 EndGlobal
