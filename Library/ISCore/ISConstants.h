@@ -143,6 +143,7 @@ const size_t	NPOS = std::string::npos;
 const char		FILE_EDIT_PROPERTY_NAME[] = "Name";
 const char		FILE_EDIT_PROPERTY_LOGO[] = "Logo";
 const char		FILE_EDIT_PROPERTY_DATA[] = "Data";
+const size_t    MAX_DECIMAL_LEN = 17; //Максимальная "длинна" числа (аналог DBL_DECIMAL_DIG)
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера

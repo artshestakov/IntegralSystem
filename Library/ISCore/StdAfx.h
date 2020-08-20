@@ -2,7 +2,9 @@
 #ifndef _STDAFX_H_INCLUDED
 #define _STDAFX_H_INCLUDED
 //-----------------------------------------------------------------------------
+#ifdef WIN32
 #pragma warning(disable: 4127)
+#endif
 //Cross-platform-includes------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>

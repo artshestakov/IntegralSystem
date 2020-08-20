@@ -45,7 +45,6 @@ HEADERS += \
     ISDefinesCore.h \
     ISLocalization.h \
     ISLogger.h \
-    ISMemoryObjects.h \
     ISMetaData.h \
     ISMetaDataHelper.h \
     ISMetaUser.h \
@@ -53,13 +52,11 @@ HEADERS += \
     ISMetaViewQuery.h \
     ISNamespace.h \
     ISNetwork.h \
-    ISNotifySender.h \
     ISPhoneNumberParser.h \
     ISProperty.h \
     ISProtocol.h \
     ISQuery.h \
     ISQueryModel.h \
-    ISQueryModelHelper.h \
     ISQueryPool.h \
     ISQueryText.h \
     ISRandom.h \
@@ -91,20 +88,17 @@ SOURCES += \
     ISDefinesCore.cpp \
     ISLocalization.cpp \
     ISLogger.cpp \
-    ISMemoryObjects.cpp \
     ISMetaData.cpp \
     ISMetaDataHelper.cpp \
     ISMetaUser.cpp \
     ISMetaUuidCheckeder.cpp \
     ISMetaViewQuery.cpp \
     ISNetwork.cpp \
-    ISNotifySender.cpp \
     ISPhoneNumberParser.cpp \
     ISProperty.cpp \
     ISProtocol.cpp \
     ISQuery.cpp \
     ISQueryModel.cpp \
-    ISQueryModelHelper.cpp \
     ISQueryPool.cpp \
     ISQueryText.cpp \
     ISRandom.cpp \

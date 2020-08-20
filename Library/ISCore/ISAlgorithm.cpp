@@ -1,5 +1,6 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
+#include <float.h>
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 {
@@ -36,7 +37,7 @@ qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorS
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::PrepareDouble(double Double, size_t Precision)
 {
-	char Char[DBL_DECIMAL_DIG];
+    char Char[MAX_DECIMAL_LEN];
 	sprintf(Char, "%.*f", (int)Precision, Double); //Конвертируем дробное число в строку.
 	while (true) //Обрезаем возможные нули в конце
 	{

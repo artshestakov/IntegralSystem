@@ -33,7 +33,7 @@ private:
 private:
 	ISSettings();
 	~ISSettings();
-	ISSettings(ISSettings const &) {};
+    ISSettings(ISSettings const &) : QObject() { };
 	ISSettings& operator=(ISSettings const&) { return *this; };
 
 private:

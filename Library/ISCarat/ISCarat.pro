@@ -31,9 +31,7 @@ HEADERS += \
     ISCaratCoreApplication.h \
     ISCoreAsteriskQueue.h \
     ISCoreAsteriskRecord.h \
-    ISCoreCalendar.h \
     ISCoreMedTech.h \
-    ISCoreNotification.h \
     ISCoreTelephony.h \
     iscarat_global.h
 
@@ -42,7 +40,5 @@ SOURCES += \
     ISCaratCoreApplication.cpp \
     ISCoreAsteriskQueue.cpp \
     ISCoreAsteriskRecord.cpp \
-    ISCoreCalendar.cpp \
     ISCoreMedTech.cpp \
-    ISCoreNotification.cpp \
     ISCoreTelephony.cpp
