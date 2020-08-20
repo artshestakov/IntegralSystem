@@ -122,6 +122,9 @@
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;ISGui.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5PrintSupportd.lib;Qt5SerialPortd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(SolutionDir)Resources\Localization\Configurator.lang $(SolutionDir)Resources\Localization\IntegralSystem.lang $(SolutionDir)Resources\Localization\Objects.lang -D $(SolutionDir)Library\ISCarat $(SolutionDir)Library\ISCore $(SolutionDir)Library\ISGui</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

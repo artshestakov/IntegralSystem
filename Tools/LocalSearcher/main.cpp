@@ -2,19 +2,18 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
+#include <map>
 #include <fstream>
 #include <sstream>
 #ifdef WIN32
 #include <windows.h>
 #endif
 //-----------------------------------------------------------------------------
-#define RESULT_FILE_NAME "SourceCode.txt"
-//-----------------------------------------------------------------------------
 std::vector<std::string> VectorLocalFiles; //Файлы локализации
 std::vector<std::string> VectorDirs; //Директории с исходным кодом
 std::vector<std::string> VectorLocalKeys; //Ключи локализации
 std::vector<std::string> VectorSourceFiles; //Файлы с исходным кодом
-std::string SourceCode; //Исходный код
+std::map<std::string, std::string> Map; //Файлы с исходным кодом
 //-----------------------------------------------------------------------------
 void Usage(); //Вывод инструкции в консоль
 bool ReadLocalFiles(); //Чтение файлов локализации
@@ -22,6 +21,7 @@ bool ReadLocalFile(const std::string &FilePath); //Чтение файла локализации
 bool ReadDirs(); //Чтение всех директорий
 bool ReadDir(const std::string &DirPath); //Чтение директории
 bool JoinSource(); //Объединение содержимого файлов с исходным кодом в один единый текст
+void Search();
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -66,6 +66,8 @@ int main(int argc, char **argv)
 	{
 		return EXIT_FAILURE;
 	}
+
+	Search();
 	return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
@@ -184,7 +186,6 @@ bool ReadDir(const std::string &DirPath)
 //-----------------------------------------------------------------------------
 bool JoinSource()
 {
-	std::ofstream FileResult(RESULT_FILE_NAME);
 	bool result = true;
 	for (const std::string &source_path : VectorSourceFiles)
 	{
@@ -192,12 +193,13 @@ bool JoinSource()
 		result = file.is_open();
 		if (result) //Файл успешно открыт
 		{
-			std::string line;
+			std::string line, content;
 			while (std::getline(file, line)) //Читаем файл построчно
 			{
-				FileResult << line << std::endl;
+				content += line + '\n';
 			}
 			file.close();
+			Map[source_path] = content;
 		}
 		else
 		{
@@ -205,7 +207,34 @@ bool JoinSource()
 			break;
 		}
 	}
-	FileResult.close();
 	return result;
+}
+//-----------------------------------------------------------------------------
+void Search()
+{
+	size_t not_found = 0;
+	for (const std::string &key_local : VectorLocalKeys) //Обходим все ключи локализации
+	{
+		std::string key = "LANG(\"" + key_local + "\")";
+		size_t founded = 0;
+		for (const auto &map_item : Map) //Обходим файлы исходного кода
+		{
+			if (map_item.second.find(key) != std::string::npos)
+			{
+				++founded;
+			}
+		}
+
+		if (!founded)
+		{
+			std::cout << "WARNING: not found local key: " << key_local << std::endl;
+			++not_found;
+		}
+	}
+	
+	if (not_found)
+	{
+		std::cout << "Total not found: " << not_found << std::endl;
+	}
 }
 //-----------------------------------------------------------------------------
