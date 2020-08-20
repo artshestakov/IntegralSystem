@@ -29,7 +29,7 @@ bool ISConsole::Question(const QString &QuestionText)
 void ISConsole::Pause()
 {
 	ISLOGGER_L("To continue, press \"Enter\" or \"Return\" buttons...");
-	getchar();
+	(void)getchar();
 }
 //-----------------------------------------------------------------------------
 QString ISConsole::GetString(const QString &OutputString)

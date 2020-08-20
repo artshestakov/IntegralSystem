@@ -19,7 +19,7 @@ bool ISApplicationRunning::IsRunning()
 #ifdef WIN32
     HANDLE Mutex = CreateMutex(NULL, TRUE, Key.c_str());
     Result = GetLastError() == 0;
-    if (!Result)
+    if (!Result && Mutex != INVALID_HANDLE_VALUE)
     {
         ReleaseMutex(Mutex);
         CloseHandle(Mutex);
