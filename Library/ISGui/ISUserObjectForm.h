@@ -17,7 +17,10 @@ protected:
 	bool Save() override;
 	void SavedEvent() override;
 	void SaveAfter() override;
+
+private:
 	void PasswordChange();
+	void PasswordDelete();
 	void AccountLifeTimeChanged();
 
 private:

@@ -24,6 +24,10 @@ ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaT
 	connect(ActionChangePassword, &QAction::triggered, this, &ISUserObjectForm::PasswordChange);
 	AddActionToolBar(ActionChangePassword, true);
 
+	QAction *ActionDeletePassword = ISControls::CreateActionPasswordDelete(this);
+	connect(ActionDeletePassword, &QAction::triggered, this, &ISUserObjectForm::PasswordDelete);
+	AddActionToolBar(ActionDeletePassword, true);
+
 	EditLogin = GetFieldWidget("Login");
 
 	EditAccountLifeTime = GetFieldWidget("AccountLifeTime");
@@ -171,6 +175,18 @@ void ISUserObjectForm::PasswordChange()
 	{
 		QString FullName = GetFieldValue("Surname").toString() + SYMBOL_SPACE + GetFieldValue("Name").toString() + SYMBOL_SPACE + GetFieldValue("Patronymic").toString();
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.ChangePasswordUser").arg(FullName));
+	}
+}
+//-----------------------------------------------------------------------------
+void ISUserObjectForm::PasswordDelete()
+{
+	if (GetModificationFlag()) //≈сли запись была изменена - просим сохранить
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue"));
+	}
+	else
+	{
+		ISGui::ShowUserPasswordDelete(GetFieldValue("Login").toString());
 	}
 }
 //-----------------------------------------------------------------------------

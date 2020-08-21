@@ -82,6 +82,11 @@ QAction* ISControls::CreateActionPasswordChange(QObject *ParentObject)
 	return new QAction(BUFFER_ICONS("User.ChangePassword"), LANG("ChangePassword"), ParentObject);
 }
 //-----------------------------------------------------------------------------
+QAction* ISControls::CreateActionPasswordDelete(QObject *ParentObject)
+{
+	return new QAction(BUFFER_ICONS("User.DeletePassword"), LANG("DeletePassword"), ParentObject);
+}
+//-----------------------------------------------------------------------------
 QAction* ISControls::CreateSeparator(QObject *ParentObject)
 {
 	QAction *ActionSeparator = new QAction(ParentObject);

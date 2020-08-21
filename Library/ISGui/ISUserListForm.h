@@ -15,7 +15,10 @@ public:
 protected:
 	void CreateCopy() override;
 	void Edit() override;
+
+private:
 	void ChangePassword();
+	void DeletePassword();
 
 	bool CheckThisUser(); //ѕроверка редактировани€ текущего пользовател€
 };

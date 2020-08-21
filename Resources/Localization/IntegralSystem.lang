@@ -61,6 +61,7 @@
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
+  <Local Name="Message.Information.UserPasswordDeleted" Russian="Пароль пользователя успешно удалён."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
   <Local Name="Message.Error.ConnectionSetting.Input.DatabaseNameEmpty" Russian="В настройках подключения к базе данных не указано имя базы данных."/>
@@ -134,6 +135,7 @@
   <Local Name="Message.Error.SelectCurrentPasswordUser" Russian="Не удалось проверить текущий пароль!"/>
   <Local Name="Message.Error.ChangePasswordUser" Russian="Не удалось изменить пароль!"/>
   <Local Name="Message.Error.ChangePasswordUserHistory" Russian="Не удалось зафиксировать изменение пароля в истории!"/>
+  <Local Name="Message.Error.DeleteUserPassword" Russian="Не удалось удалить пароль пользователя!"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
@@ -189,6 +191,7 @@
   <Local Name="Message.Warning.LoginAlreadyExist" Russian="Логин &quot;%1&quot; уже существует в системе, введите другой."/>
   <Local Name="Message.Warning.CurrentTaskHaveSubTasks" Russian="Вы не можете преобразовать эту задачу в подзадачу, т.к. она имеет подзадачи."/>
   <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
+  <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
@@ -228,6 +231,7 @@
   <Local Name="Message.Question.PasteImageToTask" Russian="В буфере обмена обнаружено изображение, прикрепить его к задаче?"/>
   <Local Name="Message.Question.CloseInsetingTaskFile" Russian="Остановить прикрепление файлов к задаче?"/>
   <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
+  <Local Name="Message.Question.DeleteUserPassword" Russian="Удалить пароль пользователя?"/>
   
   <!--Carat error-->
   <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>
@@ -347,6 +351,7 @@
   <Local Name="Defer" Russian="Отложить"/>
   <Local Name="SelectDate" Russian="Выберите дату"/>
   <Local Name="ChangePassword" Russian="Смена пароля"/>
+  <Local Name="DeletePassword" Russian="Удалить пароль"/>
   <Local Name="CreatingPassword" Russian="Создание пароля"/>
   <Local Name="ChangingPassword" Russian="Изменение пароля"/>
   <Local Name="PasswordCheck" Russian="Проверка пароля"/>

@@ -13,6 +13,10 @@ ISUserListForm::ISUserListForm(QWidget *parent) : ISListBaseForm("_Users", paren
 	QAction *ActionChangePassword = ISControls::CreateActionPasswordChange(this);
 	connect(ActionChangePassword, &QAction::triggered, this, &ISUserListForm::ChangePassword);
 	AddAction(ActionChangePassword, true, true);
+
+	QAction *ActionDeletePassword = ISControls::CreateActionPasswordDelete(this);
+	connect(ActionDeletePassword, &QAction::triggered, this, &ISUserListForm::DeletePassword);
+	AddAction(ActionDeletePassword, true, true);
 }
 //-----------------------------------------------------------------------------
 ISUserListForm::~ISUserListForm()
@@ -63,6 +67,11 @@ void ISUserListForm::ChangePassword()
 		QString FullName = GetCurrentRecordValue("Surname").toString() + SYMBOL_SPACE + GetCurrentRecordValue("Name").toString() + SYMBOL_SPACE + GetCurrentRecordValue("Patronymic").toString();
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.ChangePasswordUser").arg(FullName));
 	}
+}
+//-----------------------------------------------------------------------------
+void ISUserListForm::DeletePassword()
+{
+	ISGui::ShowUserPasswordDelete(GetCurrentRecordValue("Login").toString());
 }
 //-----------------------------------------------------------------------------
 bool ISUserListForm::CheckThisUser()

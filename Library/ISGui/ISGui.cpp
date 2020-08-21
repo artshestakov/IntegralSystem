@@ -46,6 +46,8 @@ static QString QS_TELEPHONY = PREPARE_QUERY("SELECT COUNT(*) "
 											"WHERE NOT aspt_isdeleted "
 											"AND aspt_user = currentuserid()");
 //-----------------------------------------------------------------------------
+static QString QD_USER_PASSWORD = PREPARE_QUERY2("ALTER ROLE %1 PASSWORD NULL");
+//-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
 	bool Result = ISCore::Startup(true, "Client", ErrorString);
@@ -493,6 +495,22 @@ bool ISGui::ShowUserPasswordForm(int UserID)
 	ISUserPasswordForm UserPasswordForm(UserID);
 	SetWaitGlobalCursor(false);
 	return UserPasswordForm.Exec();
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowUserPasswordDelete(const QString &UserLogin)
+{
+	if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.DeleteUserPassword")))
+	{
+		ISQuery qDeletePassword;
+		if (qDeletePassword.Execute(QD_USER_PASSWORD.arg(UserLogin)))
+		{
+			ISMessageBox::ShowInformation(nullptr, LANG("Message.Information.UserPasswordDeleted"));
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.DeleteUserPassword"), qDeletePassword.GetErrorString());
+		}
+	}
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID)

@@ -21,6 +21,7 @@ public:
 	static QAction* CreateActionSaveAndClose(QObject *ParentObject); //Действие "Сохранить и закрыть"
 	static QAction* CreateActionExit(QObject *ParentObject); //Действие "Выход"
 	static QAction* CreateActionPasswordChange(QObject *ParentObject); //Действие "Изменить пароль"
+	static QAction* CreateActionPasswordDelete(QObject *ParentObject); //Действие "Удалить пароль"
 
 	static QAction* CreateSeparator(QObject *ParentObject); //Создать и получить сепаратор
 
