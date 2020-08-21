@@ -134,7 +134,7 @@ void ISMenuBar::ParagraphClicked()
 QToolButton* ISMenuBar::CreateParagraphButton(ISMetaParagraph *MetaParagraph)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
-	LayoutWidget->setContentsMargins(25, 10, 25, 10);
+	LayoutWidget->setContentsMargins(25, 5, 25, 5);
 
 	QWidget *Widget = new QWidget(this);
 	Widget->setLayout(LayoutWidget);

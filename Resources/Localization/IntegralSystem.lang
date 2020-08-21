@@ -426,19 +426,6 @@
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
   <Local Name="MonitorActivity.MonitorUser.Online" Russian="(в сети)"/>
   <Local Name="MonitorActivity.MonitorUser.Offline" Russian="(не в сети)"/>
-  <Local Name="MonitorActivity.DetailsSession" Russian="Подробности сеанса"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.User" Russian="Пользователь"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.Login" Russian="Логин"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.PID" Russian="Идентификатор серверного процесса"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.ClientVersion" Russian="Версия программы"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.ClientAddress" Russian="IP-адрес"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.HostName" Russian="Имя компьютера"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.Port" Russian="Порт"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.BackendStart" Russian="Время запуска программы"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.Time" Russian="Время работы"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.State" Russian="Статус"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.State.Active" Russian="Серверный процесс выполняет запрос"/>
-  <Local Name="MonitorActivity.UserOnlineDetails.State.Idle" Russian="Серверный процесс ожидает новой команды от клиента"/>
   
   <!--Access rights-->
   <Local Name="AccessRights.SettingAcceessFromGroup" Russian="Настрока прав для группы"/>

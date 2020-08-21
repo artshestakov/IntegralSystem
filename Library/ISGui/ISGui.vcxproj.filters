@@ -471,9 +471,6 @@
     <ClCompile Include="ISUserObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserOnlineDetailsForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISUserPasswordForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -918,9 +915,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISUserObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserOnlineDetailsForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISUserPasswordForm.h">

@@ -9,7 +9,6 @@
 #include "ISGui.h"
 #include "ISProtocolListForm.h"
 #include "ISLineEdit.h"
-#include "ISUserOnlineDetailsForm.h"
 #include "ISMessageBox.h"
 #include "ISDatabase.h"
 #include "ISMetaUser.h"
@@ -73,9 +72,9 @@ ISMonitorActivityForm::~ISMonitorActivityForm()
 void ISMonitorActivityForm::LoadData()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	while (!VectorUsers.isEmpty())
+	while (!VectorUsers.empty())
 	{
-		delete VectorUsers.takeFirst();
+		delete ISAlgorithm::VectorTakeBack(VectorUsers);
 	}
 
 	QSize SizeWidget;
@@ -97,7 +96,6 @@ void ISMonitorActivityForm::LoadData()
 			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline, UserID, UserFullName, ScrollArea);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivityForm::ShowUserCard);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
-			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowDetails, this, &ISMonitorActivityForm::ShowDetails);
 			ScrollArea->widget()->layout()->addWidget(MonitorUserWidget);
 			MonitorUserWidget->adjustSize();
 
@@ -111,8 +109,7 @@ void ISMonitorActivityForm::LoadData()
 			{
 				SizeWidget.setHeight(CurrentSize.height());
 			}
-
-			VectorUsers.append(MonitorUserWidget);
+			VectorUsers.push_back(MonitorUserWidget);
 		}
 	}
 
@@ -139,14 +136,7 @@ void ISMonitorActivityForm::Search(const QVariant &value)
 	{
 		if (value.isValid())
 		{
-			if (MonitorUserWidget->GetUserName().toLower().contains(value.toString().toLower()))
-			{
-				MonitorUserWidget->setVisible(true);
-			}
-			else
-			{
-				MonitorUserWidget->setVisible(false);
-			}
+			MonitorUserWidget->setVisible(MonitorUserWidget->property("UserName").toString().toLower().contains(value.toString().toLower()));
 		}
 		else
 		{
@@ -160,7 +150,7 @@ void ISMonitorActivityForm::ShowUserCard()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->GetUserID())->show();
+		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->property("UserID").toInt())->show();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -170,24 +160,12 @@ void ISMonitorActivityForm::ShowProtocol()
 	if (MonitorUserWidget)
 	{
 		ISProtocolListForm *ProtocolBaseListForm = new ISProtocolListForm();
-		ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + MonitorUserWidget->GetUserName());
+		ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + MonitorUserWidget->property("UserName").toString());
 		ProtocolBaseListForm->setWindowIcon(BUFFER_ICONS("Protocol"));
 		ProtocolBaseListForm->GetQueryModel()->SetClassFilter("prtc_user = :UserID");
-		ProtocolBaseListForm->GetQueryModel()->AddCondition(":UserID", MonitorUserWidget->GetUserID());
+		ProtocolBaseListForm->GetQueryModel()->AddCondition(":UserID", MonitorUserWidget->property("UserID"));
 		ProtocolBaseListForm->LoadData();
 		ProtocolBaseListForm->showMaximized();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISMonitorActivityForm::ShowDetails()
-{
-	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
-	if (MonitorUserWidget)
-	{
-		ISGui::SetWaitGlobalCursor(true);
-		ISUserOnlineDetailsForm UserOnlineDetailsForm(MonitorUserWidget->GetUserID());
-		ISGui::SetWaitGlobalCursor(false);
-		UserOnlineDetailsForm.Exec();
 	}
 }
 //-----------------------------------------------------------------------------

@@ -21,12 +21,11 @@ protected:
 	void Search(const QVariant &value);
 	void ShowUserCard(); //Показать карточку пользователя
 	void ShowProtocol(); //Просмотр протокола
-	void ShowDetails(); //Просмотр подробностей
 
 private:
 	ISCheckEdit *CheckEdit;
 	QLabel *LabelCount;
 	ISScrollArea *ScrollArea;
-	QVector<ISMonitorUserWidget*> VectorUsers;
+	std::vector<ISMonitorUserWidget*> VectorUsers;
 };
 //-----------------------------------------------------------------------------
