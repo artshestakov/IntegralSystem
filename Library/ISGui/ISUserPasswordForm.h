@@ -32,5 +32,6 @@ private:
 	int UserID;
 	QString Login;
 	QString UserFullName;
+	bool ExistPassword;
 };
 //-----------------------------------------------------------------------------

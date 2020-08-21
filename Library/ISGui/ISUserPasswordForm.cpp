@@ -12,7 +12,10 @@
 #include "ISGui.h"
 #include "ISPasswordWidthWidget.h"
 //-----------------------------------------------------------------------------
-static QString QS_USER = PREPARE_QUERY("SELECT usrs_login, userfullname(:UserID) FROM _users WHERE usrs_id = :UserID");
+static QString QS_USER = PREPARE_QUERY("SELECT usrs_login, userfullname(:UserID), CASE WHEN length(passwd) > 0 THEN true ELSE false END "
+									   "FROM _users "
+									   "LEFT JOIN pg_shadow ON usename = usrs_login "
+									   "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_AUTHID = PREPARE_QUERY("SELECT rolpassword "
 										 "FROM pg_authid "
@@ -32,9 +35,10 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id) : ISInterfaceDialogForm()
 		UserID = user_id;
 		Login = qSelectUser.ReadColumn("usrs_login").toString();
 		UserFullName = qSelectUser.ReadColumn("userfullname").toString();
+		ExistPassword = qSelectUser.ReadColumn("case").toBool();
 	}
 
-	setWindowTitle(LANG("ChangePassword"));
+	setWindowTitle(ExistPassword ? LANG("ChangingPassword") : LANG("CreatingPassword"));
 	ForbidResize();
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
@@ -55,9 +59,12 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id) : ISInterfaceDialogForm()
 	QFormLayout *FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);
 
-	EditCurrentPassword = new ISLineEdit(this);
-	EditCurrentPassword->SetEchoMode(QLineEdit::Password);
-	FormLayout->addRow(LANG("CurrentPassword") + ':', EditCurrentPassword);
+	if (ExistPassword)
+	{
+		EditCurrentPassword = new ISLineEdit(this);
+		EditCurrentPassword->SetEchoMode(QLineEdit::Password);
+		FormLayout->addRow(LANG("CurrentPassword") + ':', EditCurrentPassword);
+	}
 
 	EditPassword = new ISLineEdit(this);
 	EditPassword->SetEchoMode(QLineEdit::Password);
@@ -88,7 +95,7 @@ ISUserPasswordForm::~ISUserPasswordForm()
 void ISUserPasswordForm::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
-	EditCurrentPassword->SetFocus();
+	ExistPassword ? EditCurrentPassword->SetFocus() : EditPassword->SetFocus();
 }
 //-----------------------------------------------------------------------------
 void ISUserPasswordForm::EnterClicked()
@@ -98,50 +105,75 @@ void ISUserPasswordForm::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISUserPasswordForm::ChangePassword()
 {
-	if (EditPassword->GetValue().toString().length() < MINIMUM_PASSWORD_LENGHT)
+	if (ExistPassword) //Если пароль есть - сравниваем с тем что ввели
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.PasswordLenghtSmall").arg(MINIMUM_PASSWORD_LENGHT));
+		if (!EditCurrentPassword->GetValue().isValid()) //Если текущий пароль не ввели - выходим из функции
+		{
+			ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("CurrentPassword")));
+			EditCurrentPassword->BlinkRed();
+			return;
+		}
+
+		ISQuery qSelectAuth(QS_AUTHID);
+		qSelectAuth.BindValue(":Login", Login);
+		if (qSelectAuth.ExecuteFirst()) //Если запрос на текущий пароль прошел успешно - проверяем с тем что ввели
+		{
+			if (qSelectAuth.ReadColumn("rolpassword").toString().remove(0, 3) != ISSystem::StringToMD5(EditCurrentPassword->GetValue().toString() + Login))
+			{
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotValidInputPasswordForChange"));
+				EditCurrentPassword->BlinkRed();
+				return;
+			}
+		}
+		else //Не удалось запросить текущий пароль
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectCurrentPasswordUser"), qSelectAuth.GetErrorString());
+			return;
+		}
+	}
+
+	if (!EditPassword->GetValue().isValid())
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("Password")));
+		EditPassword->BlinkRed();
 		return;
 	}
 
-	ISGui::SetWaitGlobalCursor(true);
-
-	ISQuery qSelectAuth(QS_AUTHID);
-	qSelectAuth.BindValue(":Login", Login);
-	if (qSelectAuth.ExecuteFirst())
+	if (EditPassword->GetValue().toString().length() < MINIMUM_PASSWORD_LENGHT)
 	{
-		QString CurrentPassword = qSelectAuth.ReadColumn("rolpassword").toString().remove(0, 3);
-		QString InputCurrentPassword = ISSystem::StringToMD5(EditCurrentPassword->GetValue().toString() + Login);
-
-		if (CurrentPassword == InputCurrentPassword || !CurrentPassword.length()) //Сравнение MD5 хеша текущего пароля
-		{
-			ISQuery qAlterPassword;
-			if (qAlterPassword.Execute(QA_PASSWORD.arg(Login).arg(EditPasswordCheck->GetValue().toString())))
-			{
-				if (UserID == CURRENT_USER_ID)
-				{
-					ISProtocol::Insert(true, CONST_UID_PROTOCOL_CHANGE_PASSWORD, QString(), QString(), QVariant());
-				}
-
-				ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
-				qInsertPasswordChange.BindValue(":User", UserID);
-				qInsertPasswordChange.BindValue(":WhoUser", CURRENT_USER_ID);
-				if (qInsertPasswordChange.Execute())
-				{
-					SetResult(true);
-					close();
-				}
-			}
-		}
-		else
-		{
-			ISGui::SetWaitGlobalCursor(false);
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotValidInputPasswordForChange"));
-			EditCurrentPassword->BlinkRed();
-		}
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.PasswordLenghtSmall").arg(MINIMUM_PASSWORD_LENGHT));
+		EditPassword->BlinkRed();
+		return;
 	}
 
-	ISGui::SetWaitGlobalCursor(false);
+	if (!EditPasswordCheck->GetValue().isValid())
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("PasswordCheck")));
+		EditPasswordCheck->BlinkRed();
+		return;
+	}
+
+	ISQuery qAlterPassword;
+	if (qAlterPassword.Execute(QA_PASSWORD.arg(Login).arg(EditPasswordCheck->GetValue().toString())))
+	{
+		if (UserID == CURRENT_USER_ID)
+		{
+			ISProtocol::Insert(true, CONST_UID_PROTOCOL_CHANGE_PASSWORD, QString(), QString(), QVariant());
+		}
+
+		ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
+		qInsertPasswordChange.BindValue(":User", UserID);
+		qInsertPasswordChange.BindValue(":WhoUser", CURRENT_USER_ID);
+		if (qInsertPasswordChange.Execute())
+		{
+			SetResult(true);
+			close();
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ChangePasswordUser"), qAlterPassword.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISUserPasswordForm::PasswordChecked()

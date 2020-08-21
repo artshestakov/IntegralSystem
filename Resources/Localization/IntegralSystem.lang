@@ -131,6 +131,8 @@
   <Local Name="Message.Error.CreateUserRole" Russian="Не удалось создать пользователя!"/>
   <Local Name="Message.Error.AlterUserRole" Russian="Не удалось переименовать логин пользователя пользователя!"/>
   <Local Name="Message.Error.AlterOID" Russian="Не удалось присвоить пользователю OID!"/>
+  <Local Name="Message.Error.SelectCurrentPasswordUser" Russian="Не удалось проверить текущий пароль!"/>
+  <Local Name="Message.Error.ChangePasswordUser" Russian="Не удалось изменить пароль!"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
@@ -344,6 +346,8 @@
   <Local Name="Defer" Russian="Отложить"/>
   <Local Name="SelectDate" Russian="Выберите дату"/>
   <Local Name="ChangePassword" Russian="Смена пароля"/>
+  <Local Name="CreatingPassword" Russian="Создание пароля"/>
+  <Local Name="ChangingPassword" Russian="Изменение пароля"/>
   <Local Name="PasswordCheck" Russian="Проверка пароля"/>
   <Local Name="CurrentPassword" Russian="Текущий пароль"/>
   <Local Name="EnterThePassword" Russian="Введите пароль"/>
