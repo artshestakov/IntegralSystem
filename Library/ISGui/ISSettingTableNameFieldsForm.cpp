@@ -49,7 +49,7 @@ ISSettingTableNameFieldsForm::ISSettingTableNameFieldsForm(QWidget *parent) : IS
 			LineEdit->setProperty("TableName", MetaTable->Name);
 			LineEdit->setProperty("FieldName", MetaField->Name.toLower());
 			FormLayout->addRow(MetaField->LabelName + ":", LineEdit);
-			Edits.push_back(LineEdit);
+			Edits.emplace_back(LineEdit);
 
 			ISQuery qSelect(QS_NAME_VALUE);
 			qSelect.BindValue(":TableName", MetaTable->Name);

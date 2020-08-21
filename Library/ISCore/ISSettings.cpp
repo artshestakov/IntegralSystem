@@ -68,7 +68,7 @@ bool ISSettings::Initialize()
 				MetaGroup->LocalName = qSelectSettings.ReadColumn("stgp_localname").toString();
 				MetaGroup->IconName = qSelectSettings.ReadColumn("stgp_iconname").toString();
 				MetaGroup->Hint = qSelectSettings.ReadColumn("stgp_hint").toString();
-				SettingGroups.push_back(MetaGroup);
+				SettingGroups.emplace_back(MetaGroup);
 			}
 
 			ISUuid SettingUID = qSelectSettings.ReadColumn("stgs_uid");
@@ -81,7 +81,7 @@ bool ISSettings::Initialize()
 			Setting->LocalName = qSelectSettings.ReadColumn("stgs_localname").toString();
 			Setting->Hint = qSelectSettings.ReadColumn("stgs_hint").toString();
 			Setting->DefaultValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
-			MetaGroup->Settings.push_back(Setting);
+			MetaGroup->Settings.emplace_back(Setting);
 
 			if (qSelectSettings.ReadColumn("count").toInt())
 			{

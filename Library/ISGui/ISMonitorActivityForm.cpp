@@ -109,7 +109,7 @@ void ISMonitorActivityForm::LoadData()
 			{
 				SizeWidget.setHeight(CurrentSize.height());
 			}
-			VectorUsers.push_back(MonitorUserWidget);
+			VectorUsers.emplace_back(MonitorUserWidget);
 		}
 	}
 

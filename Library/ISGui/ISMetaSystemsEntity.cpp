@@ -60,7 +60,7 @@ void ISMetaSystemsEntity::Initialize()
 				MetaSystem->OrderID = qSelect.ReadColumn("stms_orderid").toInt();
 				MetaSystem->IconName = qSelect.ReadColumn("stms_icon").toString();
 				MetaSystem->Hint = qSelect.ReadColumn("stms_hint").toString();
-				Systems.push_back(MetaSystem);
+				Systems.emplace_back(MetaSystem);
 			}
 
 			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem();
@@ -73,7 +73,7 @@ void ISMetaSystemsEntity::Initialize()
 			MetaSubSystem->TableName = qSelect.ReadColumn("sbsm_tablename").toString();
 			MetaSubSystem->Hint = qSelect.ReadColumn("sbsm_hint").toString();
 			MetaSubSystem->SystemUID = SystemUID;
-			MetaSystem->SubSystems.push_back(MetaSubSystem);
+			MetaSystem->SubSystems.emplace_back(MetaSubSystem);
 		}
 	}
 }

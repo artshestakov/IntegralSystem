@@ -1199,7 +1199,7 @@ void ISTaskViewForm::CommentLoadList()
 			QWidget *WidgetComment = CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
 			WidgetComment->setStyleSheet(STYLE_SHEET("QWidgetCommentTask"));
 			LayoutComments->insertWidget(Index++, WidgetComment);
-			Comments.push_back(WidgetComment);
+			Comments.emplace_back(WidgetComment);
 		}
 		TabWidget->setTabText(TabWidget->indexOf(ScrollAreaComment), LANG("Task.Comments").arg(qSelectComments.GetCountResultRows()));
 	}

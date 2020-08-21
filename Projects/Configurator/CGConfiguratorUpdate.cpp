@@ -289,7 +289,7 @@ bool CGConfiguratorUpdate::resources()
 		{
 			if (!ISAlgorithm::VectorContains(Tables, MetaResource->TableName))
 			{
-				Tables.push_back(MetaResource->TableName);
+				Tables.emplace_back(MetaResource->TableName);
 			}
 		}
 		

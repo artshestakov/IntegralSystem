@@ -57,7 +57,7 @@ bool ISParagraphEntity::Initialize()
 				MetaParagraph->Icon = qSelect.ReadColumn("prhs_icon").toString();
 				MetaParagraph->ClassName = qSelect.ReadColumn("prhs_classname").toString();
 				MetaParagraph->Default = qSelect.ReadColumn("prhs_default").toBool();
-				Paragraphs.push_back(MetaParagraph);
+				Paragraphs.emplace_back(MetaParagraph);
 			}
 		}
 	}
