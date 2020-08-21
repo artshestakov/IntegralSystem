@@ -3,7 +3,6 @@
 #define _ISPARAGPATHBASEFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISMenuBar.h"
 //-----------------------------------------------------------------------------
 class ISParagraphBaseForm : public QWidget
 {
@@ -12,14 +11,8 @@ class ISParagraphBaseForm : public QWidget
 public:
 	ISParagraphBaseForm(QWidget *parent = 0);
 	virtual ~ISParagraphBaseForm();
-
-	void SetButtonParagraph(ISParagraphButton *paragraph_button);
-	ISParagraphButton *GetButtonParagraph();
 	
 	virtual void Invoke() = 0;
-
-private:
-	ISParagraphButton *ParagraphButton;
 };
 //-----------------------------------------------------------------------------
 #endif

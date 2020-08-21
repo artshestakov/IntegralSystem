@@ -120,7 +120,7 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	LayoutRight->addWidget(EditSearch);
 
 	GroupBox = new QGroupBox(this);
-	GroupBox->setTitle(LANG("CalendarForm.Events").arg(CalendarPanel->selectedDate().toString(FORMAT_DATE_V1)));
+	GroupBox->setTitle(LANG("CalendarForm.Events"));
 	GroupBox->setLayout(new QVBoxLayout());
 	LayoutRight->addWidget(GroupBox);
 
@@ -197,7 +197,7 @@ void ISCalendarForm::SelectedDateChanged()
 		}
 	}
 
-	GroupBox->setTitle(LANG("CalendarForm.Events").arg(CalendarPanel->selectedDate().toString(FORMAT_DATE_V1)));
+	GroupBox->setTitle(LANG("CalendarForm.Events"));
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

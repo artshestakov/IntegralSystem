@@ -88,9 +88,6 @@ struct ISCORE_EXPORT ISMetaSettingsGroup
 //-----------------------------------------------------------------------------
 struct ISMetaParagraph
 {
-    ISMetaParagraph(const ISUuid &uid, const QString &name, const QString &local_name, const QString &tool_tip, const QString &icon, const QString &class_name, bool _default)
-        : UID(uid), Name(name), LocalName(local_name), ToolTip(tool_tip), Icon(icon), ClassName(class_name), Default(_default) { }
-
     ISUuid UID;
     QString Name;
     QString LocalName;

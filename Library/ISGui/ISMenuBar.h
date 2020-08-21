@@ -24,16 +24,16 @@ public:
 	ISMenuBar(QWidget *parent = 0);
 	virtual ~ISMenuBar();
 
-	ISParagraphButton* GetParagraphButton(const ISUuid &ParagraphUID);
-	void ButtonParagraphClicked(const ISUuid &ClickedParagraphUID);
+	void ParagraphClick(const ISUuid &ParagraphUID);
 
 private:
 	QToolButton* CreateButton(const QString &ToolTip, const QString &IconName);
-	void ButtonParagraphClicked();
+	void ParagraphClicked();
+	QToolButton* CreateParagraphButton(ISMetaParagraph *MetaParagraph);
 
 private:
 	QHBoxLayout *LayoutButtons;
 	ISButtonMainMenu *ButtonMenu;
-	QMap<ISUuid, ISParagraphButton*> ParagraphButtons;
+	std::map<ISUuid, QToolButton*> ParagraphButtons;
 };
 //-----------------------------------------------------------------------------

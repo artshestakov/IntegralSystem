@@ -524,7 +524,7 @@
   <Local Name="CalendarForm.CalendarDateTo" Russian="Перейти к дате"/>
   <Local Name="CalendarForm.Delete" Russian="Удалить событие"/>
   <Local Name="CalendarForm.OnDateEvent" Russian="На дату события"/>
-  <Local Name="CalendarForm.Events" Russian="События на %1"/>
+  <Local Name="CalendarForm.Events" Russian="События"/>
   <Local Name="CalendarForm.EnteringSearchQuery" Russian="Введите поисковый запрос (F8)"/>
   <Local Name="CalendarForm.SearchResults" Russian="Результаты поиска"/>
   

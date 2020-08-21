@@ -70,12 +70,11 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	//Создание парграфов
 	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
 	{
-		ISParagraphButton *ParagraphButton = new ISParagraphButton(MetaParagraph, this);
-		connect(ParagraphButton, &ISParagraphButton::Clicked, this, static_cast<void(ISMenuBar::*)()>(&ISMenuBar::ButtonParagraphClicked));
-		LayoutParagraphs->addWidget(ParagraphButton);
-		ParagraphButtons.insert(MetaParagraph->UID, ParagraphButton);
+		QToolButton *ButtonParagraph = CreateParagraphButton(MetaParagraph);
+		connect(ButtonParagraph, &QToolButton::clicked, this, static_cast<void(ISMenuBar::*)()>(&ISMenuBar::ParagraphClicked));
+		LayoutParagraphs->addWidget(ButtonParagraph->parentWidget());
+		ParagraphButtons[MetaParagraph->UID] = ButtonParagraph;
 	}
-	
 	MainLayout->addStretch();
 
 	LayoutButtons = new QHBoxLayout();
@@ -92,14 +91,9 @@ ISMenuBar::~ISMenuBar()
 	
 }
 //-----------------------------------------------------------------------------
-ISParagraphButton* ISMenuBar::GetParagraphButton(const ISUuid &ParagraphUID)
+void ISMenuBar::ParagraphClick(const ISUuid &ParagraphUID)
 {
-	return ParagraphButtons.value(ParagraphUID);
-}
-//-----------------------------------------------------------------------------
-void ISMenuBar::ButtonParagraphClicked(const ISUuid &ClickedParagraphUID)
-{
-	ParagraphButtons.value(ClickedParagraphUID)->Clicked();
+	ParagraphButtons[ParagraphUID]->clicked();
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &IconName)
@@ -119,19 +113,49 @@ QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &Icon
 	return ToolButton;
 }
 //-----------------------------------------------------------------------------
-void ISMenuBar::ButtonParagraphClicked()
+void ISMenuBar::ParagraphClicked()
 {
-	for (ISParagraphButton *ParagraphButton : ParagraphButtons.values())
+	for (const auto &MapItem : ParagraphButtons)
 	{
-		if (ParagraphButton == sender())
+		if (MapItem.second == sender())
 		{
-			ParagraphButton->SetVisibleLine(true);
-			emit ParagraphClicked(ParagraphButtons.key(ParagraphButton));
+			MapItem.second->parentWidget()->setStyleSheet("background-color: white;");
+			MapItem.second->setChecked(true);
+			emit ParagraphClicked(MapItem.first);
 		}
 		else
 		{
-			ParagraphButton->SetVisibleLine(false);
+			MapItem.second->parentWidget()->setStyleSheet(QString());
+			MapItem.second->setChecked(false);
 		}
 	}
+}
+//-----------------------------------------------------------------------------
+QToolButton* ISMenuBar::CreateParagraphButton(ISMetaParagraph *MetaParagraph)
+{
+	QVBoxLayout *LayoutWidget = new QVBoxLayout();
+	LayoutWidget->setContentsMargins(25, 10, 25, 10);
+
+	QWidget *Widget = new QWidget(this);
+	Widget->setLayout(LayoutWidget);
+
+	QIcon IconDefault = BUFFER_ICONS(MetaParagraph->Icon), IconActive = BUFFER_ICONS(MetaParagraph->Icon + ".Active");
+	QIcon Icon;
+	Icon.addPixmap(IconDefault.pixmap(QSize(45, 45), QIcon::Normal, QIcon::Off));
+	Icon.addPixmap(IconActive.pixmap(ISDefines::Gui::SIZE_45_45), QIcon::Normal, QIcon::On);
+	Icon.addPixmap(IconActive.pixmap(ISDefines::Gui::SIZE_45_45), QIcon::Active, QIcon::Off);
+	Icon.addPixmap(IconActive.pixmap(ISDefines::Gui::SIZE_45_45), QIcon::Selected, QIcon::On);
+
+	QToolButton *ToolButton = new QToolButton(this);
+	ToolButton->setToolTip(MetaParagraph->ToolTip);
+	ToolButton->setCheckable(true);
+	ToolButton->setIcon(Icon);
+	ToolButton->setAutoRaise(true);
+	ToolButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	ToolButton->setIconSize(ISDefines::Gui::SIZE_45_45);
+	ToolButton->setCursor(CURSOR_POINTING_HAND);
+	ToolButton->setStyleSheet(STYLE_SHEET("ISParagraphButton"));
+	LayoutWidget->addWidget(ToolButton, 0, Qt::AlignHCenter);
+	return ToolButton;
 }
 //-----------------------------------------------------------------------------

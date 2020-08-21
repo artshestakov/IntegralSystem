@@ -47,21 +47,17 @@ bool ISParagraphEntity::Initialize()
 		while (qSelect.Next())
 		{
 			ISUuid UID = qSelect.ReadColumn("prhs_uid");
-			QString Name = qSelect.ReadColumn("prhs_name").toString();
-			QString LocalName = qSelect.ReadColumn("prhs_localname").toString();
-			QString ToolTip = qSelect.ReadColumn("prhs_tooltip").toString();
-			QString Icon = qSelect.ReadColumn("prhs_icon").toString();
-			QString ClassName = qSelect.ReadColumn("prhs_classname").toString();
-			bool Default = qSelect.ReadColumn("prhs_default").toBool();
-
 			if (ParagraphView == "All" || EnabledParagraphs.contains(UID))
 			{
-				ISMetaParagraph *MetaParagraph = new ISMetaParagraph(UID, Name, LocalName, ToolTip, Icon, ClassName, Default);
+				ISMetaParagraph *MetaParagraph = new ISMetaParagraph();
+				MetaParagraph->UID = UID;
+				MetaParagraph->Name = qSelect.ReadColumn("prhs_name").toString();
+				MetaParagraph->LocalName = qSelect.ReadColumn("prhs_localname").toString();
+				MetaParagraph->ToolTip = qSelect.ReadColumn("prhs_tooltip").toString();
+				MetaParagraph->Icon = qSelect.ReadColumn("prhs_icon").toString();
+				MetaParagraph->ClassName = qSelect.ReadColumn("prhs_classname").toString();
+				MetaParagraph->Default = qSelect.ReadColumn("prhs_default").toBool();
 				Paragraphs.push_back(MetaParagraph);
-				if (Default || SETTING_STRING(CONST_UID_SETTING_VIEW_STARTEDPARAGRAPH) == UID)
-				{
-					DefaultParagraph = UID;
-				}
 			}
 		}
 	}
@@ -70,11 +66,6 @@ bool ISParagraphEntity::Initialize()
 		ErrorString = qSelect.GetErrorString();
 	}
 	return Result;
-}
-//-----------------------------------------------------------------------------
-ISUuid ISParagraphEntity::GetDefaultParagraph() const
-{
-	return DefaultParagraph;
 }
 //-----------------------------------------------------------------------------
 ISMetaParagraph* ISParagraphEntity::GetParagraph(const QString &ParagraphUID)

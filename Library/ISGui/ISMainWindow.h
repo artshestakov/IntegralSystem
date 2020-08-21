@@ -13,16 +13,11 @@ class ISGUI_EXPORT ISMainWindow : public ISInterfaceForm
 {
 	Q_OBJECT
 
-	Q_PROPERTY(ISUuid CurrentParagraphUID READ GetCurrentParagraphUID WRITE SetCurrentParagraphUID)
-
 public:
 	ISMainWindow(QWidget *parent = 0);
 	virtual ~ISMainWindow();
 	
-	void SetCurrentParagraphUID(const ISUuid &current_paragraph_uid);
-	ISUuid GetCurrentParagraphUID() const;
-
-protected:
+private:
 	void closeEvent(QCloseEvent *CloseEvent);
 	void AfterShowEvent() override;
 
