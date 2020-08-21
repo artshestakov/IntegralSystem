@@ -15,7 +15,7 @@ public:
 	bool CheckAllQueries(); //Проверка всех запросов
 
 protected:
-	void ErrorQuery(const ISSqlQuery &SqlQuery, const QString &ErrorQuery);
+	void ErrorQuery(const ISSqlQuery &SqlQuery, const QString &error_string);
 
 private:
 	ISQueryText();

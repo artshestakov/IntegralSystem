@@ -87,27 +87,17 @@ bool ISQueryText::CheckAllQueries()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISQueryText::ErrorQuery(const ISSqlQuery &SqlQuery, const QString &ErrorQuery)
+void ISQueryText::ErrorQuery(const ISSqlQuery &SqlQuery, const QString &error_string)
 {
-	ErrorString = ErrorQuery;
+	ErrorString = QString("File: %1\nLine: %2\nSqlQuery: %3\n\n%4").arg(SqlQuery.FileName).arg(SqlQuery.Line).arg(SqlQuery.SqlText).arg(error_string);
 	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/" + ISSystem::GenerateUuid());
 	if (File.open(QIODevice::WriteOnly))
 	{
-		QString Content;
-		Content += "File: " + SqlQuery.FileName.toUtf8() + "\n";
-		Content += "Line: " + QString::number(SqlQuery.Line).toUtf8() + "\n";
-		Content += "SqlQuery: " + SqlQuery.SqlText + "\n\n";
-		Content += ErrorQuery;
-		File.write(Content.toUtf8());
+		File.write(ErrorString.toUtf8());
 		File.close();
-
-		if (ISDefines::Core::IS_GUI)
+		if (!ISDefines::Core::IS_GUI)
 		{
-			QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/ErrorViewer.exe", QStringList() << File.fileName());
-		}
-		else
-		{
-			printf("%s\n", Content.toStdString().c_str());
+			printf("%s\n", ErrorString.toStdString().c_str());
 		}
 	}
 }
