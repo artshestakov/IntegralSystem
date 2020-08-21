@@ -10,4 +10,7 @@
   <Field UID="{4FB96E87-4895-444A-BF12-6CC25F9915BD}" Name="CreationUser" Type="String" LabelName="Создал" LocalListName="Создал" DefaultValue="&quot;current_user&quot;()" HideFromList="true" NotNull="true" IsSystem="true"/>
   <Field UID="{B49C8C00-E813-454B-B98F-E17E8FFEFFB2}" Name="UpdationUser" Type="String" LabelName="Изменил" LocalListName="Изменил" DefaultValue="NULL" HideFromList="true" IsSystem="true"/>
   <Field UID="{6E29DA2A-A3BA-44A7-B30F-3729DDB54846}" Name="DeletionUser" Type="String" LabelName="Удалил" LocalListName="Удалил" DefaultValue="NULL" HideFromList="true" IsSystem="true"/>
+  <Field UID="{35E2D45A-B5AB-4EFD-A37E-7A1EE598F5C3}" Name="CreationUserOID" Type="OID" LabelName="Создал" LocalListName="Создал" DefaultValue="currentuseroid()" HideFromList="true" NotNull="true" IsSystem="true"/>
+  <Field UID="{0D50B521-E8B8-4D19-9BB7-A9E4FDE7A1CD}" Name="UpdationUserOID" Type="OID" LabelName="Изменил" LocalListName="Изменил" DefaultValue="NULL" HideFromList="true" IsSystem="true"/>
+  <Field UID="{D8975B1F-F80C-4A16-94E6-72717C2A8832}" Name="DeletionUserOID" Type="OID" LabelName="Удалил" LocalListName="Удалил" DefaultValue="NULL" HideFromList="true" IsSystem="true"/>
 </TemplateFields>

@@ -260,7 +260,7 @@ bool CGTable::AlterExistFields(PMetaTable *MetaTable, QString &ErrorString)
 bool CGTable::CreateNewFields(PMetaTable *MetaTable, QString &ErrorString)
 {
 	bool Result = true, Exist = true;
-	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
+	for (PMetaField *MetaField : MetaTable->AllFields) //Обход полей
 	{
 		if (!MetaField->QueryText.isEmpty())
 		{
@@ -273,26 +273,16 @@ bool CGTable::CreateNewFields(PMetaTable *MetaTable, QString &ErrorString)
 			if (!Exist)//Если поле не существует
 			{
 				QString AddColumn = "ALTER TABLE public." + MetaTable->Name + " \n" +
-					"ADD COLUMN \"" + FieldName + "\"" + SYMBOL_SPACE + ISMetaData::Instance().GetTypeDB(MetaField->Type);
+					"ADD COLUMN \"" + FieldName + "\" " + ISMetaData::Instance().GetTypeDB(MetaField->Type);
 
 				if (MetaField->Size) //Если указан размер поля
 				{
 					AddColumn += QString("(%1)").arg(MetaField->Size);
 				}
 
-				if (!MetaField->DefaultValue.toString().isEmpty()) //Если указано значение по умолчанию
+				if (MetaField->DefaultValue.isValid()) //Если указано значение по умолчанию
 				{
-					if (MetaField->Type == ISNamespace::FT_Int ||
-						MetaField->Type == ISNamespace::FT_Date ||
-						MetaField->Type == ISNamespace::FT_Time ||
-						MetaField->Type == ISNamespace::FT_DateTime)
-					{
-						AddColumn += " DEFAULT " + MetaField->DefaultValue.toString(); //Указание NULL без кавычек
-					}
-					else
-					{
-						AddColumn += " DEFAULT '" + MetaField->DefaultValue.toString() + '\''; //Указание NULL с кавычек
-					}
+					AddColumn += " DEFAULT " + MetaField->DefaultValue.toString(); //Указание NULL без кавычек
 				}
 
 				if (MetaField->NotNull)

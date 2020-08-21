@@ -30,6 +30,21 @@
     SECURITY INVOKER
     COST 100;
   </Function>
+  
+  <Function Name="currentuseroid">
+    CREATE OR REPLACE FUNCTION public.currentuseroid()
+    RETURNS integer AS
+    $body$
+      BEGIN
+        RETURN usesysid FROM pg_user WHERE usename = CURRENT_USER;
+      END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    RETURNS NULL ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
 
   <Function Name="userfullname">
     CREATE OR REPLACE FUNCTION public.userfullname(id bigint)

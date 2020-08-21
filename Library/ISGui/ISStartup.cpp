@@ -37,6 +37,15 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
 	bool UseProtocol = CONFIG_BOOL("Protocol/Use");
 
+	ISObjects::GetInstance().Initialize();
+
+	//Инициализация мета-данных
+	if (!ISMetaData::Instance().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false))
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
+		return false;
+	}
+
 	//Проверка всех запросов
 	if (!UseProtocol)
 	{
@@ -45,15 +54,6 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 			ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.CheckAllQuery"), ISQueryText::Instance().GetErrorString());
 			return false;
 		}
-	}
-
-	ISObjects::GetInstance().Initialize();
-
-	//Инициализация мета-данных
-	if (!ISMetaData::Instance().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false))
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
-		return false;
 	}
 
 	//Инициализация настроек базы данных

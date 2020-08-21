@@ -16,6 +16,7 @@ protected:
 	void AfterShowEvent() override;
 	bool Save() override;
 	void SavedEvent() override;
+	void SaveAfter() override;
 	void PasswordChange();
 	void AccountLifeTimeChanged();
 
@@ -25,7 +26,7 @@ private:
 	ISFieldEditBase *EditAccountLifeTimeStart;
 	ISFieldEditBase *EditAccountLifeTimeEnd;
 
-	QString LoginOld;
+	QString CurrentLogin;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -22,6 +22,7 @@ ISMetaData::ISMetaData()
 		{ "UID", ISNamespace::FT_UID, "UUID", "ISUuidEdit", "ISComboSearchString", true },
 		{ "Bool", ISNamespace::FT_Bool, "BOOLEAN", "ISCheckEdit", "ISComboSearchBase", true },
 		{ "Double", ISNamespace::FT_Double, "NUMERIC", "ISDoubleEdit", "ISComboSearchNumber", true },
+		{ "OID", ISNamespace::FT_OID, "OID", "ISIntegerEdit", "ISComboSearchNumber", true },
 		{ "ByteArray", ISNamespace::FT_ByteArray, "BYTEA", "ISLineEdit", QString(), false },
 		{ "Date", ISNamespace::FT_Date, "DATE", "ISDateEdit", "ISComboSearchNumber", true },
 		{ "Time", ISNamespace::FT_Time, "TIME WITHOUT TIME ZONE", "ISTimeEdit", "ISComboSearchNumber", true },
@@ -75,38 +76,46 @@ bool ISMetaData::Initialize(const QString &configuration_name, bool InitXSR, boo
 	bool Result = Initialized;
 	if (!Result)
 	{
-		ConfigurationName = configuration_name;
-		Result = InitializeXSN();
+		Result = !configuration_name.isEmpty();
 		if (Result)
 		{
-			if (InitXSR)
-			{
-				Result = InitializeXSR();
-			}
-
+			ConfigurationName = configuration_name;
+			Result = InitializeXSN();
 			if (Result)
 			{
-				if (InitXSF)
+				if (InitXSR)
 				{
-					Result = InitializeXSF();
+					Result = InitializeXSR();
+				}
+
+				if (Result)
+				{
+					if (InitXSF)
+					{
+						Result = InitializeXSF();
+					}
 				}
 			}
-		}
 
-		if (Result)
+			if (Result)
+			{
+				Result = CheckUniqueAllIdentifiers(InitXSR);
+				if (Result)
+				{
+					Result = CheckUniqueAllAliases();
+				}
+
+				if (Result)
+				{
+					Result = GenerateSqlFromForeigns();
+				}
+			}
+			Initialized = Result;
+		}
+		else
 		{
-			Result = CheckUniqueAllIdentifiers(InitXSR);
-			if (Result)
-			{
-				Result = CheckUniqueAllAliases();
-			}
-
-			if (Result)
-			{
-				Result = GenerateSqlFromForeigns();
-			}
+			ErrorString = "ConfigurationName is empty.";
 		}
-		Initialized = Result;
 	}
 	return Result;
 }
@@ -757,6 +766,18 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 	PMetaField *FieldDeletionUser = MetaTable->GetField("DeletionUser");
 	IS_ASSERT(FieldDeletionUser, "Null field object");
 	FieldDeletionUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionUser->Name);
+
+	PMetaField *FieldCreationUserOID = MetaTable->GetField("CreationUserOID");
+	IS_ASSERT(FieldCreationUserOID, "Null field object");
+	FieldCreationUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUserOID->Name);
+
+	PMetaField *FieldUpdationUserOID = MetaTable->GetField("CreationUserOID");
+	IS_ASSERT(FieldUpdationUserOID, "Null field object");
+	FieldUpdationUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationUserOID->Name);
+
+	PMetaField *FieldDeletionUserOID = MetaTable->GetField("CreationUserOID");
+	IS_ASSERT(FieldDeletionUserOID, "Null field object");
+	FieldDeletionUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionUserOID->Name);
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, const QDomNode &DomNode)

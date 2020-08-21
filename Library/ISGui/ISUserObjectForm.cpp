@@ -12,7 +12,11 @@ static QString QC_USER = "CREATE ROLE \"%1\" SUPERUSER NOINHERIT NOREPLICATION L
 //-----------------------------------------------------------------------------
 static QString QA_LOGIN = "ALTER ROLE %1 RENAME TO %2";
 //-----------------------------------------------------------------------------
-static QString QS_LOGIN = "SELECT COUNT(*) FROM _users WHERE usrs_login = :Login";
+static QString QS_LOGIN = PREPARE_QUERY("SELECT COUNT(*) FROM _users WHERE usrs_login = :Login");
+//-----------------------------------------------------------------------------
+static QString QU_OID = PREPARE_QUERY("UPDATE _users SET "
+									  "usrs_oid = (SELECT usesysid FROM pg_user WHERE usename = :Login) "
+									  "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
@@ -40,9 +44,7 @@ ISUserObjectForm::~ISUserObjectForm()
 void ISUserObjectForm::AfterShowEvent()
 {
 	ISObjectFormBase::AfterShowEvent();
-
-	LoginOld = EditLogin->GetValue().toString();
-	
+	CurrentLogin = EditLogin->GetValue().toString();
 	if (GetFormType() == ISNamespace::OFT_Edit && EditAccountLifeTime->GetValue().toBool())
 	{
 		EditAccountLifeTimeStart->setEnabled(true);
@@ -122,24 +124,44 @@ bool ISUserObjectForm::Save()
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::SavedEvent()
 {
+	QString NewLogin = EditLogin->GetValue().toString();
 	if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy) //≈сли происходит создание или создание копии пользовател€
 	{
 		ISQuery qCreate;
-		if (qCreate.Execute(QC_USER.arg(EditLogin->GetValue().toString())))
+		if (qCreate.Execute(QC_USER.arg(NewLogin)))
 		{
-			LoginOld = EditLogin->GetValue().toString();
+			CurrentLogin = NewLogin;
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.CreateUserRole"), qCreate.GetErrorString());
 		}
 	}
 	else if (GetFormType() == ISNamespace::OFT_Edit) //≈сли происходит редактирование пользовател€
 	{
-		if (LoginOld != EditLogin->GetValue().toString()) //≈сли логин пользовател€ изменилс€
+		if (CurrentLogin != NewLogin) //≈сли логин пользовател€ изменилс€
 		{
 			ISQuery qAlterLogin;
-			if (qAlterLogin.Execute(QA_LOGIN.arg(LoginOld).arg(EditLogin->GetValue().toString())))
+			if (qAlterLogin.Execute(QA_LOGIN.arg(CurrentLogin).arg(NewLogin)))
 			{
-				LoginOld = EditLogin->GetValue().toString();
+				CurrentLogin = NewLogin;
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.AlterUserRole"), qAlterLogin.GetErrorString());
 			}
 		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISUserObjectForm::SaveAfter()
+{
+	ISObjectFormBase::SaveAfter();
+	ISQuery qUpdateOID(QU_OID);
+	qUpdateOID.BindValue(":Login", CurrentLogin);
+	if (!qUpdateOID.Execute())
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.AlterOID"), qUpdateOID.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

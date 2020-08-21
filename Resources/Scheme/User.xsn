@@ -3,6 +3,7 @@
   
   <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="Surname;Name;Patronymic" ObjectForm="ISUserObjectForm">
     <Fields>
+      <Field UID="{6B61D73F-A200-499B-BD31-4168908FA35C}" Name="OID" Type="OID" LabelName="Системный идентификатор" LocalListName="Системный идентификатор" HideFromList="true" HideFromObject="true"/>
       <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="Int" LabelName="Группа" LocalListName="Группа" LayoutName="GroupSubdivision"/>
       <Field UID="{4ED0AB79-0ECC-4CDA-9FEF-970813028FCB}" Name="Subdivision" Type="Int" LabelName="Подразделение" LocalListName="Подразделение" LayoutName="GroupSubdivision"/>
       <Field UID="{861223FE-18B5-4557-99D1-AEA74D42483E}" Name="Surname" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Фамилия" LocalListName="Фамилия" NotNull="true" LayoutName="FIO"/>
@@ -20,6 +21,7 @@
       <Field UID="{C19191C0-9398-4FEB-9BED-BA1C3F8C0979}" Name="Photo" Type="Image" LabelName="Фотография" LocalListName="Фотография" HideFromList="true"/>
     </Fields>
     <Indexes>
+      <Index Field="OID"/>
       <Index Field="Group"/>
       <Index Field="Subdivision"/>
       <Index Field="Surname"/>

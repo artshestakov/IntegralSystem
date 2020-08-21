@@ -128,6 +128,9 @@
   <Local Name="Message.Error.CloneTask" Russian="Не удалось клонировать задачу!"/>
   <Local Name="Message.Error.SelectTask" Russian="Не удалось загрузить информацию о задаче %1!"/>
   <Local Name="Message.Error.PasteImageToTask" Russian="Не удалось прикрепить изображение к задаче!"/>
+  <Local Name="Message.Error.CreateUserRole" Russian="Не удалось создать пользователя!"/>
+  <Local Name="Message.Error.AlterUserRole" Russian="Не удалось переименовать логин пользователя пользователя!"/>
+  <Local Name="Message.Error.AlterOID" Russian="Не удалось присвоить пользователю OID!"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
