@@ -8,6 +8,7 @@ class ISCORE_EXPORT ISCore
 public:
 	static bool Startup(bool IsGui, const QString &ConfigTemplateName, QString &ErrorString); //Инициализация ядра
 	static void ExitApplication(); //Выход из программы
+	static QString GetObjectName(const QString &TableName, int ObjectID); //Получить наименование объекта
 	static QString GetObjectName(PMetaTable *MetaTable, int ObjectID); //Получить наименование объекта
 
 	//История

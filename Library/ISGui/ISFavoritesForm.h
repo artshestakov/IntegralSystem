@@ -2,18 +2,14 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "PMetaClass.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISFavoritesForm : public ISInterfaceForm
 {
 	Q_OBJECT
 
-signals:
-	void OpenObject(const QString &TableName, int ObjectID);
-
 public:
-	ISFavoritesForm(QWidget *parent = 0, PMetaTable *meta_table = nullptr);
+	ISFavoritesForm(QWidget *parent = 0, const QString &table_name = QString());
 	virtual ~ISFavoritesForm();
 
 protected:
@@ -29,11 +25,12 @@ protected slots:
 	void ItemClicked(QListWidgetItem *Item);
 
 private:
+	QString TableName;
+
 	QToolBar *ToolBar;
 	QAction *ActionOpen;
 	QAction *ActionDelete;
 	QAction *ActionClearFavorites;
 	ISListWidget *ListWidget;
-	PMetaTable *MetaTable;
 };
 //-----------------------------------------------------------------------------

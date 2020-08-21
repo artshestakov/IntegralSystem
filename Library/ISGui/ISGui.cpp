@@ -28,6 +28,7 @@
 #include "ISAlgorithm.h"
 #include "ISUserRoleEntity.h"
 #include "ISInputDialog.h"
+#include "ISFavoritesForm.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _settingsdatabase WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
@@ -614,6 +615,13 @@ void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int Object
 			ISMessageBox::ShowCritical(parent, qUpsert.GetErrorString());
 		}
 	}
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowFavoritesForm(const QString &TableName)
+{
+	ISGui::SetWaitGlobalCursor(true);
+	(new ISFavoritesForm(nullptr, TableName))->show();
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 bool ISGui::CheckSetupTelephony()

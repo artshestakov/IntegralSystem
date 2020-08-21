@@ -6,23 +6,26 @@
 class ISFavorites
 {
 public:
-	ISFavorites(const ISFavorites &) = delete;
-	ISFavorites(ISFavorites &&) = delete;
-	ISFavorites &operator=(const ISFavorites &) = delete;
-	ISFavorites &operator=(ISFavorites &&) = delete;
-	~ISFavorites();
+	static ISFavorites& Instance();
 
-	static ISFavorites& GetInstance();
-
-	void Initialize();
-	void AddFavorite(const QString &TableName, const QString &TableLocalName, const QString &ObjectName, int ObjectID); //Добавить объект в избранное
-	bool DeleteFavorite(const QString &TableName, int ObjectID); //Удалить избранный объект
+	QString GetErrorString() const;
+	bool Initialize();
+	void AddFavorite(const QString &TableName, int ObjectID); //Добавить объект в избранное
+	void DeleteFavorite(const QString &TableName, int ObjectID); //Удалить избранный объект
 	void DeleteAllFavorites(); //Удалить все избранные объекты
 	bool CheckExistFavoriteObject(const QString &TableName, int ObjectID); //Проверить наличие объекта в избранном
+	ISVectorInt& GetObjects(const QString &TableName); //Получить избранные объекты по таблице
+	std::map<QString, ISVectorInt>& GetObjects(); //Получить все избранные объекты
+	bool Save(); //Сохранить в БД
 
 private:
 	ISFavorites();
+	~ISFavorites();
+	ISFavorites(ISFavorites const &) {};
+	ISFavorites& operator=(ISFavorites const&) { return *this; };
 
-	QMap<QString, ISVectorInt> Favorites;
+private:
+	QString ErrorString;
+	std::map<QString, ISVectorInt> Favorites;
 };
 //-----------------------------------------------------------------------------

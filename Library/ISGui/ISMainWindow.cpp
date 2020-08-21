@@ -9,7 +9,6 @@
 #include "ISMessageBox.h"
 #include "ISMetaUser.h"
 #include "ISSettings.h"
-#include "ISFavoritesForm.h"
 #include "ISAboutForm.h"
 #include "ISSettingsDatabase.h"
 #include "ISControls.h"
@@ -158,11 +157,6 @@ void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)
 	ISGui::CreateObjectForm(ISNamespace::ObjectFormType::OFT_Edit, TableName, ObjectID)->show();
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::OpenFavoritesObject(const QString &TableName, int ObjectID)
-{
-	ISGui::CreateObjectForm(ISNamespace::ObjectFormType::OFT_Edit, TableName, ObjectID)->show();
-}
-//-----------------------------------------------------------------------------
 void ISMainWindow::EscapeClicked()
 {
 	close();
@@ -202,11 +196,7 @@ void ISMainWindow::ActivateWorkspace()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowFavoritesForm()
 {
-	ISGui::SetWaitGlobalCursor(true);
-	ISFavoritesForm *FavoritesForm = new ISFavoritesForm();
-	connect(FavoritesForm, &ISFavoritesForm::OpenObject, this, &ISMainWindow::OpenFavoritesObject);
-	FavoritesForm->show();
-	ISGui::SetWaitGlobalCursor(false);
+	ISGui::ShowFavoritesForm();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowHistoryForm()

@@ -106,6 +106,11 @@ void ISCore::ExitApplication()
 	QCoreApplication::quit();
 }
 //-----------------------------------------------------------------------------
+QString ISCore::GetObjectName(const QString &TableName, int ObjectID)
+{
+	return GetObjectName(ISMetaData::Instance().GetMetaTable(TableName), ObjectID);
+}
+//-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 {
 	QString ObjectName;
@@ -151,6 +156,9 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 			}
 		}
 	}
+
+	//Удаляем возможные пробелы в конце имени объекта
+	ISSystem::RemoveLastSymbolLoop(ObjectName, SYMBOL_SPACE);
 	return ObjectName;
 }
 //-----------------------------------------------------------------------------

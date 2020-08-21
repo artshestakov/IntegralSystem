@@ -84,7 +84,10 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	ISPrintingEntity::GetInstance();
 
 	//Инициализация избранного
-	ISFavorites::GetInstance().Initialize();
+	if (!ISFavorites::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeFavorites"), ISFavorites::Instance().GetErrorString());
+	}
 
 	//Инициализация сортировок
 	ISSortingBuffer::Instance();
@@ -135,6 +138,11 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ? ISColumnSizer::Instance().Save() : ISColumnSizer::Instance().Clear()))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
+	}
+
+	if (!ISFavorites::Instance().Save())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveFavorites"), ISFavorites::Instance().GetErrorString());
 	}
 	ISGui::ExitApplication();
 }

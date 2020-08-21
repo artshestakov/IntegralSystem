@@ -80,6 +80,8 @@
   <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
   <Local Name="Message.Error.SaveSortingBuffer" Russian="Не удалось сохранить сортировки полей."/>
   <Local Name="Message.Error.SaveColumnSizer" Russian="Не удалось сохранить размерность полей."/>
+  <Local Name="Message.Error.SaveFavorites" Russian="Не удалось сохранить избранные объекты."/>
+  <Local Name="Message.Error.InitializeFavorites" Russian="Не удалось загрузить избранные объекты."/>
   <Local Name="Message.Error.InitializeColumnSizer" Russian="Не удалось загрузить размеры полей."/>
   <Local Name="Message.Error.DeleteInsetedFiles" Russian="Не удалось удалить добавленные файлы."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
@@ -313,8 +315,8 @@
   <Local Name="CloseRightTabs" Russian="Закрыть вкладки справа"/>
   <Local Name="NotSelected" Russian="Не выбрано"/>
   <Local Name="Discussion" Russian="Обсуждение"/>
-  <Local Name="Favorites" Russian="Избранное"/>
-  <Local Name="FavoritesForTable" Russian="Избранные записи для таблицы"/>
+  <Local Name="Favorites" Russian="Избранные записи"/>
+  <Local Name="FavoritesForTable" Russian="Избранные записи таблицы: %1"/>
   <Local Name="AddToFavorites" Russian="Добавить/удалить из избранного"/>
   <Local Name="ClearFavorites" Russian="Очистить избранное"/>
   <Local Name="History" Russian="История"/>

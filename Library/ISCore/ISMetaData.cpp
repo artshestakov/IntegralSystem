@@ -16,6 +16,7 @@ ISMetaData::ISMetaData()
 	VectorTypes = std::vector<ISMetaDataType>
 	{
 		{ "Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true },
+		{ "IntArray", ISNamespace::FT_IntArray, "INTEGER[]", "ISIntegerEdit", "ISComboSearchNumber", true },
 		{ "BigInt", ISNamespace::FT_BigInt, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true },
 		{ "String", ISNamespace::FT_String, "CHARACTER VARYING", "ISLineEdit", "ISComboSearchString", true },
 		{ "Text", ISNamespace::FT_Text, "TEXT", "ISTextEdit", "ISComboSearchString", true },

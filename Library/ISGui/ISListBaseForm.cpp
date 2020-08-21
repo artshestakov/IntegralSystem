@@ -11,7 +11,6 @@
 #include "ISProgressForm.h"
 #include "ISLogger.h"
 #include "ISProcessForm.h"
-#include "ISFavoritesForm.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
 #include "ISControls.h"
@@ -1206,15 +1205,7 @@ void ISListBaseForm::ShowSystemInfo()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowFavorites()
 {
-	ISGui::SetWaitGlobalCursor(true);
-	ISFavoritesForm *FavoritesForm = new ISFavoritesForm(nullptr, MetaTable);
-	FavoritesForm->show();
-	connect(FavoritesForm, &ISFavoritesForm::OpenObject, [=](const QString &TableName, int ObjectID)
-	{
-		Q_UNUSED(TableName);
-		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName, ObjectID)->show();
-	});
-	ISGui::SetWaitGlobalCursor(false);
+	ISGui::ShowFavoritesForm(MetaTable->Name);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectBeginRecord()

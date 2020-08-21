@@ -3,21 +3,23 @@
 #include "ISMetaUser.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
+static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 											"FROM _favorites "
 											"WHERE fvts_user = currentuserid()");
 //-----------------------------------------------------------------------------
-static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_user, fvts_tablename, fvts_tablelocalname, fvts_objectname, fvts_objectid) "
-										   "VALUES(:User, :TableName, :TableLocalName, :ObjectName, :ObjectID)");
-//-----------------------------------------------------------------------------
 static QString QD_FAVORITE = PREPARE_QUERY("DELETE FROM _favorites "
-										   "WHERE fvts_tablename = :TableName "
-										   "AND fvts_objectid = :ObjectID");
+										   "WHERE fvts_user = currentuserid() "
+										   "AND fvts_tablename = :TableName");
 //-----------------------------------------------------------------------------
-static QString QD_ALL_FAVORITES = PREPARE_QUERY("DELETE FROM _favorites "
-												"WHERE fvts_user = currentuserid()");
+static QString QS_FAVORITE = PREPARE_QUERY("SELECT COUNT(*) FROM _favorites WHERE fvts_user = currentuserid() AND fvts_tablename = :TableName");
+//-----------------------------------------------------------------------------
+static QString QU_FAVORITE = PREPARE_QUERY("UPDATE _favorites SET fvts_objectsid = :ObjectsID WHERE fvts_user = currentuserid() AND fvts_tablename = :TableName");
+//-----------------------------------------------------------------------------
+static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_tablename, fvts_objectsid) "
+										   "VALUES(:TableName, :ObjectsID)");
 //-----------------------------------------------------------------------------
 ISFavorites::ISFavorites()
+	: ErrorString(NO_ERROR_STRING)
 {
 
 }
@@ -27,83 +29,134 @@ ISFavorites::~ISFavorites()
 
 }
 //-----------------------------------------------------------------------------
-ISFavorites& ISFavorites::GetInstance()
+ISFavorites& ISFavorites::Instance()
 {
 	static ISFavorites Favorites;
 	return Favorites;
 }
 //-----------------------------------------------------------------------------
-void ISFavorites::Initialize()
+QString ISFavorites::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISFavorites::Initialize()
 {
 	ISQuery qSelectFavorites(QS_FAVORITES);
-	if (qSelectFavorites.Execute())
+	bool Result = qSelectFavorites.Execute();
+	if (Result)
 	{
 		while (qSelectFavorites.Next())
 		{
 			QString TableName = qSelectFavorites.ReadColumn("fvts_tablename").toString();
-			int ObjectID = qSelectFavorites.ReadColumn("fvts_objectid").toInt();
+			QString ObjectsID = qSelectFavorites.ReadColumn("fvts_objectsid").toString();
+			ObjectsID.remove(0, 1);
+			ObjectsID.chop(1);
 
-			if (Favorites.contains(TableName))
+			QStringList StringList = ObjectsID.split(SYMBOL_COMMA);
+			int StringListSize = StringList.size();
+			ISVectorInt VectorInt(StringListSize);
+			for (int i = 0; i < StringListSize; ++i)
 			{
-				Favorites[TableName].emplace_back(ObjectID);
+				VectorInt[i] = StringList[i].toInt();
 			}
-			else
-			{
-				Favorites.insert(TableName, ISVectorInt{ ObjectID });
-			}
+			Favorites[TableName] = VectorInt;
 		}
 	}
+	else
+	{
+		ErrorString = qSelectFavorites.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISFavorites::AddFavorite(const QString &TableName, const QString &TableLocalName, const QString &ObjectName, int ObjectID)
+void ISFavorites::AddFavorite(const QString &TableName, int ObjectID)
 {
-	ISQuery qInsertFavorite(QI_FAVORITE);
-	qInsertFavorite.BindValue(":User", CURRENT_USER_ID);
-	qInsertFavorite.BindValue(":TableName", TableName);
-	qInsertFavorite.BindValue(":TableLocalName", TableLocalName);
-	qInsertFavorite.BindValue(":ObjectName", ObjectName);
-	qInsertFavorite.BindValue(":ObjectID", ObjectID);
-	if (qInsertFavorite.Execute())
-	{
-		Favorites.contains(TableName) ? Favorites[TableName].emplace_back(ObjectID) : Favorites.insert(TableName, ISVectorInt{ ObjectID });
-	}
+	Favorites.count(TableName) ? Favorites[TableName].emplace_back(ObjectID) : Favorites[TableName] = ISVectorInt{ ObjectID };
 }
 //-----------------------------------------------------------------------------
-bool ISFavorites::DeleteFavorite(const QString &TableName, int ObjectID)
+void ISFavorites::DeleteFavorite(const QString &TableName, int ObjectID)
 {
-	ISQuery qDeleteFavorite(QD_FAVORITE);
-	qDeleteFavorite.BindValue(":TableName", TableName);
-	qDeleteFavorite.BindValue(":ObjectID", ObjectID);
-	bool Executed = qDeleteFavorite.Execute();
-	if (Executed)
-	{
-		Favorites[TableName].erase(Favorites[TableName].begin() + ISAlgorithm::VectorIndexOf(Favorites[TableName], ObjectID));
-		if (Favorites[TableName].empty())
-		{
-			Favorites.take(TableName);
-		}
-	}
-	return Executed;
+	Favorites[TableName].erase(Favorites[TableName].begin() + ISAlgorithm::VectorIndexOf(Favorites[TableName], ObjectID));
 }
 //-----------------------------------------------------------------------------
 void ISFavorites::DeleteAllFavorites()
 {
-	ISQuery qDeleteFavorites(QD_ALL_FAVORITES);
-	if (qDeleteFavorites.Execute())
+	std::vector<QString> Keys = ISAlgorithm::ConvertMapToKeys(Favorites);
+	for (const QString &Key : Keys)
 	{
-		while (Favorites.count())
-		{
-			Favorites.take(Favorites.begin().key()).clear();
-		}
+		Favorites[Key].clear();
 	}
 }
 //-----------------------------------------------------------------------------
 bool ISFavorites::CheckExistFavoriteObject(const QString &TableName, int ObjectID)
 {
-	bool Result = Favorites.contains(TableName);
+	bool Result = Favorites.count(TableName);
 	if (Result)
 	{
 		Result = ISAlgorithm::VectorContains(Favorites[TableName], ObjectID);
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+ISVectorInt& ISFavorites::GetObjects(const QString &TableName)
+{
+	return Favorites[TableName];
+}
+//-----------------------------------------------------------------------------
+std::map<QString, ISVectorInt>& ISFavorites::GetObjects()
+{
+	return Favorites;
+}
+//-----------------------------------------------------------------------------
+bool ISFavorites::Save()
+{
+	bool Result = true;
+	for (const auto &MapItem : Favorites) //Обходим таблицы избранного
+	{
+		if (MapItem.second.empty()) //Если объектов в избранном по такой таблице нет - удаляем их
+		{
+			ISQuery qDelete(QD_FAVORITE);
+			qDelete.BindValue(":TableName", MapItem.first);
+			Result = qDelete.Execute();
+			if (!Result)
+			{
+				ErrorString = qDelete.GetErrorString();
+				break;
+			}
+		}
+		else //Избранные объекты по такой таблице есть - сохраняем
+		{
+			ISQuery qSelect(QS_FAVORITE);
+			qSelect.BindValue(":TableName", MapItem.first);
+			Result = qSelect.ExecuteFirst();
+			if (Result)
+			{
+				//Формируем массив идентификаторов
+				QString ObjectsID = "{";
+				for (int ObjectID : MapItem.second)
+				{
+					ObjectsID += QString::number(ObjectID) + ",";
+				}
+				ObjectsID.chop(1);
+				ObjectsID += "}";
+
+				ISQuery qUpsert(qSelect.ReadColumn("count").toBool() ? QU_FAVORITE : QI_FAVORITE);
+				qUpsert.BindValue(":TableName", MapItem.first);
+				qUpsert.BindValue(":ObjectsID", ObjectsID);
+				Result = qUpsert.Execute();
+				if (!Result)
+				{
+					ErrorString = qUpsert.GetErrorString();
+					break;
+				}
+			}
+			else
+			{
+				ErrorString = qSelect.GetErrorString();
+				break;
+			}
+		}
 	}
 	return Result;
 }

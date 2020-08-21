@@ -4,37 +4,18 @@
 #include "ISFavorites.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
-#include "ISQueryModel.h"
-#include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISButtons.h"
+#include "ISCore.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_tablelocalname, fvts_objectname, fvts_objectid "
-											"FROM _favorites "
-											"WHERE fvts_user = currentuserid() "
-											"ORDER BY fvts_id DESC");
-//-----------------------------------------------------------------------------
-static QString QS_FAVORITES_TABLE = PREPARE_QUERY("SELECT fvts_tablename, fvts_tablelocalname, fvts_objectname, fvts_objectid "
-												  "FROM _favorites "
-												  "WHERE fvts_user = currentuserid() "
-												  "AND fvts_tablename = :TableName "
-												  "ORDER BY fvts_id DESC");
-//-----------------------------------------------------------------------------
-ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaTable *meta_table) : ISInterfaceForm(parent)
+ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
+	: ISInterfaceForm(parent),
+	TableName(table_name)
 {
-	MetaTable = meta_table;
-
-	if (MetaTable)
-	{
-		setWindowTitle(LANG("FavoritesForTable") + ": " + MetaTable->LocalListName);
-	}
-	else
-	{
-		setWindowTitle(LANG("Favorites"));
-	}
-
+	setWindowTitle(table_name.isEmpty() ? LANG("Favorites") : LANG("FavoritesForTable").arg(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName));
 	setWindowIcon(BUFFER_ICONS("Favorites"));
-
+	resize(ISDefines::Gui::SIZE_640_480);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	ToolBar = new QToolBar(this);
@@ -69,11 +50,11 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, PMetaTable *meta_table) : ISIn
 	connect(ListWidget, &QListWidget::itemClicked, this, &ISFavoritesForm::ItemClicked);
 	GetMainLayout()->addWidget(ListWidget);
 
+	LoadFavorites();
+
 	ISButtonClose *ButtonClose = new ISButtonClose(this);
 	connect(ButtonClose, &ISButtonClose::clicked, this, &ISFavoritesForm::close);
 	GetMainLayout()->addWidget(ButtonClose, 0, Qt::AlignRight);
-
-	LoadFavorites();
 }
 //-----------------------------------------------------------------------------
 ISFavoritesForm::~ISFavoritesForm()
@@ -83,31 +64,25 @@ ISFavoritesForm::~ISFavoritesForm()
 //-----------------------------------------------------------------------------
 void ISFavoritesForm::LoadFavorites()
 {
-	ISQuery qSelect;
-
-	if (MetaTable)
+	ListWidget->Clear();
+	std::map<QString, ISVectorInt> Map;
+	if (TableName.isEmpty()) //Конкретная таблица не указана - показываем все объекты
 	{
-		qSelect = ISQuery(QS_FAVORITES_TABLE);
-		qSelect.BindValue(":TableName", MetaTable->Name);
+		Map = ISFavorites::Instance().GetObjects();
 	}
-	else
+	else //Указана конкретная таблица - показываем избранные объекты только по ней
 	{
-		qSelect = ISQuery(QS_FAVORITES);
+		Map[TableName] = ISFavorites::Instance().GetObjects(TableName);
 	}
 
-	if (qSelect.Execute())
+	for (const auto &MapItem : Map)
 	{
-		while (qSelect.Next())
+		for (int ObjectID : MapItem.second)
 		{
-			QString TableName = qSelect.ReadColumn("fvts_tablename").toString();
-			QString TableLocalName = qSelect.ReadColumn("fvts_tablelocalname").toString();
-			QString ObjectName = qSelect.ReadColumn("fvts_objectname").toString();
-			int ObjectID = qSelect.ReadColumn("fvts_objectid").toInt();
-
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-			ListWidgetItem->setText(TableLocalName + ": " + ObjectName);
+			ListWidgetItem->setText(ISMetaData::Instance().GetMetaTable(MapItem.first)->LocalListName + ": " + ISCore::GetObjectName(MapItem.first, ObjectID));
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
-			ListWidgetItem->setData(Qt::UserRole, TableName);
+			ListWidgetItem->setData(Qt::UserRole, MapItem.first);
 			ListWidgetItem->setData(Qt::UserRole * 2, ObjectID);
 		}
 	}
@@ -123,8 +98,7 @@ void ISFavoritesForm::OpenFavorite()
 {
 	if (ListWidget->currentItem())
 	{
-		emit OpenObject(ListWidget->currentItem()->data(Qt::UserRole).toString(), ListWidget->currentItem()->data(Qt::UserRole * 2).toInt());
-		close();
+		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, ListWidget->currentItem()->data(Qt::UserRole).toString(), ListWidget->currentItem()->data(Qt::UserRole * 2).toInt()));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -134,10 +108,8 @@ void ISFavoritesForm::DeleteFavorite()
 	{
 		if (ListWidget->currentItem())
 		{
-			if (ISFavorites::GetInstance().DeleteFavorite(ListWidget->currentItem()->data(Qt::UserRole).toString(), ListWidget->currentItem()->data(Qt::UserRole * 2).toInt()))
-			{
-				ReloadFavorites();
-			}
+			ISFavorites::Instance().DeleteFavorite(ListWidget->currentItem()->data(Qt::UserRole).toString(), ListWidget->currentItem()->data(Qt::UserRole * 2).toInt());
+			ReloadFavorites();
 		}
 	}
 }
@@ -146,7 +118,7 @@ void ISFavoritesForm::ClearFavorites()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteFavorites")))
 	{
-		ISFavorites::GetInstance().DeleteAllFavorites();
+		ISFavorites::Instance().DeleteAllFavorites();
 		ReloadFavorites();
 	}
 }

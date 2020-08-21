@@ -199,21 +199,17 @@
     </SystemFields>
   </Table>
 
-  <Table Name="_Favorites" UID="{38F56630-374C-4DF8-B3DB-0140CAD1A89E}" Alias="fvts" LocalName="Избранный объект" LocalListName="Избранные объекты" TitleName="TableLocalName" IsSystem="true">
+  <Table Name="_Favorites" UID="{38F56630-374C-4DF8-B3DB-0140CAD1A89E}" Alias="fvts" LocalName="Избранный объект" LocalListName="Избранные объекты" TitleName="TableName" IsSystem="true">
     <Fields>
-      <Field UID="{7A9C12CD-210E-4B83-B002-D055BD6221D7}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{7A9C12CD-210E-4B83-B002-D055BD6221D7}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{3E124016-29ED-4636-A7AE-3EEE96F07F35}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotNull="true"/>
-      <Field UID="{6567368E-27EB-496B-B50C-E5F94F7A64F9}" Name="TableLocalName" Type="String" LabelName="Локальное имя таблицы" LocalListName="Локальное имя таблицы" NotNull="true"/>
-      <Field UID="{2CC4F5C3-3024-4D46-8B0B-0A41B9C4E514}" Name="ObjectName" Type="String" LabelName="Наименование объекта" LocalListName="Наименование объекта" NotNull="true"/>
-      <Field UID="{A5E091B4-62D3-4A2D-9E9F-EBBEAA3011EF}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
+      <Field UID="{A5E091B4-62D3-4A2D-9E9F-EBBEAA3011EF}" Name="ObjectsID" Type="IntArray" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="User"/>
       <Index Field="TableName"/>
-      <Index Field="TableLocalName"/>
-      <Index Field="ObjectName"/>
-      <Index Field="ObjectID"/>
-      <Index Field="TableName;ObjectID"/>
+      <Index Field="ObjectsID"/>
+      <Index Field="User;TableName" Unique="true"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>

@@ -99,7 +99,7 @@ namespace ISAlgorithm
     }
 
     //Получить все ключи словаря
-    template <typename TKey, typename TValue> std::vector<TValue> ConvertMapToKeys(const std::map<TKey, TValue> &Map)
+    template <typename TKey, typename TValue> std::vector<TKey> ConvertMapToKeys(const std::map<TKey, TValue> &Map)
     {
         std::vector<TKey> Vector(Map.size());
         size_t Index = 0;

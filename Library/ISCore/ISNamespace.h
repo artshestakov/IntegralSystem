@@ -11,6 +11,7 @@ public:
     {
         FT_Unknown, //Неизвестный
         FT_Int, //Целое число
+		FT_IntArray, //Массив целых чисел
         FT_BigInt, //Большое целое число
         FT_String, //Строка
         FT_Text, //Большая строка

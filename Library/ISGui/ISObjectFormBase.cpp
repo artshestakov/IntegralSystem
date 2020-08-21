@@ -921,7 +921,7 @@ void ISObjectFormBase::UpdateObjectActions()
 	{
 		SetEnabledActions(true);
 		ActionSave->setEnabled(false);
-		ActionFavorites->setChecked(ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID));
+		ActionFavorites->setChecked(ISFavorites::Instance().CheckExistFavoriteObject(MetaTable->Name, ObjectID));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -932,8 +932,8 @@ void ISObjectFormBase::ShowSystemInfo()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddFavoite()
 {
-	bool IsExist = ISFavorites::GetInstance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
-	IsExist ? ISFavorites::GetInstance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::GetInstance().AddFavorite(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
+	bool IsExist = ISFavorites::Instance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
+	IsExist ? ISFavorites::Instance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::Instance().AddFavorite(MetaTable->Name, ObjectID);
 	ActionFavorites->setCheckable(!IsExist);
 	if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 	{
