@@ -19,10 +19,7 @@ public:
 public slots:
 	void AddObjectForm(QWidget *ObjectForm); //Добавить форму объекта на панель навигации
 
-protected:
-	void CreateSystems(); //Создание панели систем и подсистем
-	void CreateTabWidget(); //Содание таба
-
+private:
 	void ClickedSubSystem(const QString &SubSystemUID, const QIcon &IconSubSystem); //Обработчик события клика по подсистеме
 
 private:

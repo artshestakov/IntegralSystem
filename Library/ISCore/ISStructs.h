@@ -143,9 +143,9 @@ struct ISMetaSystem
 
     ~ISMetaSystem()
     {
-        while (!SubSystems.isEmpty())
+        while (!SubSystems.empty())
         {
-            delete SubSystems.takeLast();
+            delete ISAlgorithm::VectorTakeBack(SubSystems);
         }
     }
 
@@ -156,9 +156,9 @@ struct ISMetaSystem
     int OrderID; //Порядок системы
     QString IconName; //Имя иконки
     QByteArray IconImage; //Пользовательская иконка
-    QString Hint;
+    QString Hint; //Всплывающая подсказка
 
-    QVector<ISMetaSubSystem*> SubSystems; //Список подсистем
+    std::vector<ISMetaSubSystem*> SubSystems; //Список подсистем
 };
 //-----------------------------------------------------------------------------
 struct ISObjectModelItem

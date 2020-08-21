@@ -120,15 +120,11 @@ void ISSettingsForm::CreateSettings()
 
 		for (ISMetaSetting *MetaSetting : MetaGroup->Settings)
 		{
-			ISQLabel *LabelRow = new ISQLabel(MetaSetting->LocalName + ':', ScrollArea);
-
+			QLabel *LabelRow = new QLabel(MetaSetting->LocalName + ':', ScrollArea);
 			if (!MetaSetting->Hint.isEmpty())
 			{
-				LabelRow->SetIsLinked(true);
 				LabelRow->setToolTip(ISGui::PrepareLongToolTip(MetaSetting->Hint));
 				LabelRow->setCursor(CURSOR_WHATS_THIS);
-				ISGui::SetFontWidgetUnderline(LabelRow, true);
-				connect(LabelRow, &ISQLabel::Clicked, this, &ISSettingsForm::LabelRowClicked);
 			}
 
 			ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(ScrollArea, MetaSetting->SettingType, MetaSetting->WidgetEditName);
@@ -144,8 +140,7 @@ void ISSettingsForm::CreateSettings()
 
 	if (ListWidget->count())
 	{
-		QListWidgetItem *BeginItem = ListWidget->item(0);
-		ListWidget->setCurrentItem(BeginItem);
+		ListWidget->setCurrentItem(ListWidget->item(0));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -222,14 +217,5 @@ void ISSettingsForm::ItemSelectionChanged()
 void ISSettingsForm::DataChanged()
 {
 	ButtonDialog->SetApplyEnabled(true);
-}
-//-----------------------------------------------------------------------------
-void ISSettingsForm::LabelRowClicked()
-{
-	ISQLabel *LabelRow = dynamic_cast<ISQLabel*>(sender());
-	if (LabelRow)
-	{
-		ISMessageBox::ShowInformation(this, LabelRow->toolTip());
-	}
 }
 //-----------------------------------------------------------------------------

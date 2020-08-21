@@ -16,16 +16,16 @@ public:
 
 	void Initialize(); //Инициализация
 
-	QVector<ISMetaSystem*> GetSystems(); //Получить список всех систем
+	std::vector<ISMetaSystem*> GetSystems(); //Получить список всех систем
 	ISMetaSystem* GetSystem(const QString &SystemUID); //Получить систему по её идентификатору
 	ISMetaSubSystem* GetSubSystem(const QString &SubSystemUID); //Получить подсистему по её идентификатору
 
-protected:
+private:
 	ISMetaSystem* CheckExistSystem(const ISUuid &SystemUID);
 
 private:
 	ISMetaSystemsEntity();
 
-	QVector<ISMetaSystem*> Systems;
+	std::vector<ISMetaSystem*> Systems;
 };
 //-----------------------------------------------------------------------------

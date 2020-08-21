@@ -18,9 +18,9 @@ ISMetaSystemsEntity::ISMetaSystemsEntity()
 //-----------------------------------------------------------------------------
 ISMetaSystemsEntity::~ISMetaSystemsEntity()
 {
-	while (!Systems.isEmpty())
+	while (!Systems.empty())
 	{
-		delete Systems.takeLast();
+		delete ISAlgorithm::VectorTakeBack(Systems);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -37,9 +37,7 @@ void ISMetaSystemsEntity::Initialize()
 	{
 		while (qSelect.Next())
 		{
-			ISUuid SystemUID = qSelect.ReadColumn("stms_uid");
-			ISUuid SubSystemUID = qSelect.ReadColumn("sbsm_uid");
-
+			ISUuid SystemUID = qSelect.ReadColumn("stms_uid"), SubSystemUID = qSelect.ReadColumn("sbsm_uid");
 			if (!ISMetaUser::Instance().UserData->System) //≈сли текущий пользователь не системный
 			{
 				if (!ISMetaUser::Instance().UserData->GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
@@ -62,7 +60,7 @@ void ISMetaSystemsEntity::Initialize()
 				MetaSystem->OrderID = qSelect.ReadColumn("stms_orderid").toInt();
 				MetaSystem->IconName = qSelect.ReadColumn("stms_icon").toString();
 				MetaSystem->Hint = qSelect.ReadColumn("stms_hint").toString();
-				Systems.append(MetaSystem);
+				Systems.push_back(MetaSystem);
 			}
 
 			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem();
@@ -75,12 +73,12 @@ void ISMetaSystemsEntity::Initialize()
 			MetaSubSystem->TableName = qSelect.ReadColumn("sbsm_tablename").toString();
 			MetaSubSystem->Hint = qSelect.ReadColumn("sbsm_hint").toString();
 			MetaSubSystem->SystemUID = SystemUID;
-			MetaSystem->SubSystems.append(MetaSubSystem);
+			MetaSystem->SubSystems.push_back(MetaSubSystem);
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-QVector<ISMetaSystem*> ISMetaSystemsEntity::GetSystems()
+std::vector<ISMetaSystem*> ISMetaSystemsEntity::GetSystems()
 {
 	return Systems;
 }
@@ -92,7 +90,6 @@ ISMetaSystem* ISMetaSystemsEntity::GetSystem(const QString &SystemUID)
 	{
 		return MetaSystem;
 	}
-
 	return nullptr;
 }
 //-----------------------------------------------------------------------------

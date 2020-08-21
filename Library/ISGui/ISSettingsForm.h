@@ -22,7 +22,6 @@ protected:
 	void DefaultSettings(); //Установить настройки по умолчанию
 	QListWidgetItem* CreateItemGroup(ISMetaSettingsGroup *MetaGroup);
 	void ItemSelectionChanged();
-	void LabelRowClicked();
 	void DataChanged();
 
 private:

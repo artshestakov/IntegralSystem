@@ -22,8 +22,29 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
 	Layout->setSpacing(0);
 	setLayout(Layout);
 
-	CreateSystems();
-	CreateTabWidget();
+	ISSystemsPanel *SystemsPanel = new ISSystemsPanel(this);
+	connect(SystemsPanel, &ISSystemsPanel::ClickedSubSystem, this, &ISWorkspaceForm::ClickedSubSystem);
+	Layout->addWidget(SystemsPanel);
+
+	//Заполнение систем в виджете
+	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::GetInstance().GetSystems())
+	{
+		SystemsPanel->AddSystem(MetaSystem);
+	}
+
+	TabWidget = new ISTabWidgetMain(this);
+	TabWidget->setSizePolicy(QSizePolicy::Ignored, TabWidget->sizePolicy().verticalPolicy());
+	connect(TabWidget, &ISTabWidgetMain::Duplicate, this, &ISWorkspaceForm::AddObjectForm);
+	Layout->addWidget(TabWidget);
+
+	//Если у пользователя нет доступа ни к одной из систем
+	if (ISMetaSystemsEntity::GetInstance().GetSystems().empty())
+	{
+		QLabel *Label = new QLabel(TabWidget);
+		Label->setText(LANG("NotAccessSystems"));
+		Label->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+		dynamic_cast<QVBoxLayout*>(TabWidget->GetMainTab()->layout())->addWidget(Label, 0, Qt::AlignCenter);
+	}
 }
 //-----------------------------------------------------------------------------
 ISWorkspaceForm::~ISWorkspaceForm()
@@ -52,36 +73,6 @@ void ISWorkspaceForm::AddObjectForm(QWidget *ObjectForm)
 	});
 	TabWidget->addTab(ObjectForm, ObjectForm->windowIcon(), ObjectForm->windowTitle());
 	TabWidget->setCurrentWidget(ObjectForm);
-}
-//-----------------------------------------------------------------------------
-void ISWorkspaceForm::CreateSystems()
-{
-	ISSystemsPanel *SystemsPanel = new ISSystemsPanel(this);
-	connect(SystemsPanel, &ISSystemsPanel::ClickedSubSystem, this, &ISWorkspaceForm::ClickedSubSystem);
-	Layout->addWidget(SystemsPanel);
-
-	//Заполнение систем в виджете
-	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::GetInstance().GetSystems())
-	{
-		SystemsPanel->AddSystem(MetaSystem);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISWorkspaceForm::CreateTabWidget()
-{
-	TabWidget = new ISTabWidgetMain(this);
-	TabWidget->setSizePolicy(QSizePolicy::Ignored, TabWidget->sizePolicy().verticalPolicy());
-	connect(TabWidget, &ISTabWidgetMain::Duplicate, this, &ISWorkspaceForm::AddObjectForm);
-	Layout->addWidget(TabWidget);
-
-	//Если у пользователя нет доступа ни к одной из систем
-	if (!ISMetaSystemsEntity::GetInstance().GetSystems().count())
-	{
-		QLabel *Label = new QLabel(TabWidget);
-		Label->setText(LANG("NotAccessSystems"));
-		Label->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-		dynamic_cast<QVBoxLayout*>(TabWidget->GetMainTab()->layout())->addWidget(Label, 0, Qt::AlignCenter);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon &IconSubSystem)
