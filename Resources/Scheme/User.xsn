@@ -172,19 +172,31 @@
   <Table Name="_UserPasswordChanged" UID="{621BC43F-01FF-43D3-9046-ADB0B229CDD2}" Alias="upcg" ShowOnly="true" LocalName="Изменение пароля" LocalListName="Изменения паролей" TitleName="User">
     <Fields>
       <Field UID="{B33AA18E-3C37-4D9F-8F98-C8DF6999F0E0}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{08D7A891-9410-4EBB-A774-2A72ED2E7591}" Name="Type" Type="Int" LabelName="Тип события" LocalListName="Тип события" NotNull="true"/>
       <Field UID="{9B8B9EFC-EFEB-47E3-85B8-070D7F9DE2C8}" Name="WhoUser" Type="Int" LabelName="Кто изменил" LocalListName="Кто изменил" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="User"/>
+      <Index Field="Type"/>
       <Index Field="WhoUser"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Type" ForeignClass="_UserPasswordChangedType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="WhoUser" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время изменения"/>
     </SystemFields>
+  </Table>
+
+  <Table Name="_UserPasswordChangedType" UID="{66ADFC95-5A86-4246-9F27-8C993496D166}" Alias="upct" LocalName="Тип изменения пароля" LocalListName="Тип изменения пароля" TitleName="Name">
+    <Fields>
+      <Field UID="{DFBA562D-4563-43D7-8B87-28D7F849C277}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
   </Table>
          
 </XSN>

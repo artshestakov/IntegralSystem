@@ -18,5 +18,9 @@
   <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="4"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Редактирование печатных форм" Hint="Возможность редактировать печатные формы в режиме предпросмотра" Order="1"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{1196470D-AE52-4361-AC0D-9C15612663D0}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Добавление примечаний к записям в таблицах" Order="2"/>
-  
+
+  <_UserPasswordChangedType IsSystem="true" UID="{6DD00B13-2A69-45FD-B565-3142C2D2BA97}" Name="Создание пароля"/>
+  <_UserPasswordChangedType IsSystem="true" UID="{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}" Name="Изменение пароля"/>
+  <_UserPasswordChangedType IsSystem="true" UID="{62892860-8644-419A-BE6A-6783EA685424}" Name="Удаление пароля"/>
+
 </XSR>

@@ -23,8 +23,8 @@ static QString QS_AUTHID = PREPARE_QUERY("SELECT rolpassword "
 //-----------------------------------------------------------------------------
 static QString QA_PASSWORD = "ALTER ROLE %1 WITH ENCRYPTED PASSWORD '%2'";
 //-----------------------------------------------------------------------------
-static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_whouser) "
-														"VALUES(:User, :WhoUser)");
+static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type, upcg_whouser) "
+														"VALUES(:User, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :ChangeTypeUID), :WhoUser)");
 //-----------------------------------------------------------------------------
 ISUserPasswordForm::ISUserPasswordForm(int user_id) : ISInterfaceDialogForm()
 {
@@ -163,12 +163,14 @@ void ISUserPasswordForm::ChangePassword()
 
 		ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
 		qInsertPasswordChange.BindValue(":User", UserID);
+		qInsertPasswordChange.BindValue(":ChangeTypeUID", ExistPassword ? CONST_UID_USER_PASSWORD_CHANGE_TYPE_UPDATE : CONST_UID_USER_PASSWORD_CHANGE_TYPE_CREATE);
 		qInsertPasswordChange.BindValue(":WhoUser", CURRENT_USER_ID);
-		if (qInsertPasswordChange.Execute())
+		if (!qInsertPasswordChange.Execute())
 		{
-			SetResult(true);
-			close();
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.ChangePasswordUserHistory"), qInsertPasswordChange.GetErrorString());
 		}
+		SetResult(true);
+		close();
 	}
 	else
 	{

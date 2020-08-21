@@ -218,6 +218,10 @@ const char CONST_UID_GROUP_ACCESS_SPECIAL_SAVE_ASTERISK_RECORD[] = "{8E2E4FD2-AE
 const char CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT[] = "{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}"; //–едактирование печатных форм
 const char CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE[] = "{1196470D-AE52-4361-AC0D-9C15612663D0}"; //ƒобавление примечаний к запис€м в таблицах
 //-----------------------------------------------------------------------------
+const char CONST_UID_USER_PASSWORD_CHANGE_TYPE_CREATE[] = "{6DD00B13-2A69-45FD-B565-3142C2D2BA97}";
+const char CONST_UID_USER_PASSWORD_CHANGE_TYPE_UPDATE[] = "{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}";
+const char CONST_UID_USER_PASSWORD_CHANGE_TYPE_DELETE[] = "{62892860-8644-419A-BE6A-6783EA685424}";
+//-----------------------------------------------------------------------------
 const char CONST_UID_TELEPHONY_ASTERISK[] = "{AAF1708E-B224-441C-B4E9-7569267F3B55}";
 const char CONST_UID_TELEPHONY_BEELINE[] = "{CA82CCF7-D66B-4415-BE7B-DC02006DFABF}";
 //-----------------------------------------------------------------------------
