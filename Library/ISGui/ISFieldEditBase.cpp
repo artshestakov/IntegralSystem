@@ -266,9 +266,11 @@ void ISFieldEditBase::CreateButtonClear()
 {
 	if (!ButtonClear)
 	{
-		ButtonClear = new ISButtonClear(this);
-		connect(ButtonClear, &ISButtonClear::clicked, this, &ISFieldEditBase::Clear);
-		connect(ButtonClear, &ISButtonClear::clicked, this, &ISFieldEditBase::SetFocus);
+		ButtonClear = new ISServiceButton(BUFFER_ICONS("ButtonClear"), LANG("Clear.Field"), this);
+		ButtonClear->setFocusPolicy(Qt::NoFocus);
+		ButtonClear->setFlat(true);
+		connect(ButtonClear, &ISServiceButton::clicked, this, &ISFieldEditBase::Clear);
+		connect(ButtonClear, &ISServiceButton::clicked, this, &ISFieldEditBase::SetFocus);
 		MainLayout->addWidget(ButtonClear);
 	}
 }

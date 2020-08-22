@@ -13,8 +13,8 @@ ISAsteriskRecordPlayForm::ISAsteriskRecordPlayForm(const QString &FilePath) : IS
 	PlayerWidget = new ISPlayerWidget(FilePath, true, this);
 	GetMainLayout()->addWidget(PlayerWidget);
 
-	ISButtonClose *ButtonClose = new ISButtonClose(this);
-	connect(ButtonClose, &ISButtonClose::clicked, this, &ISAsteriskRecordPlayForm::close);
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISAsteriskRecordPlayForm::close);
 	GetMainLayout()->addWidget(ButtonClose, 0, Qt::AlignRight);
 }
 //-----------------------------------------------------------------------------

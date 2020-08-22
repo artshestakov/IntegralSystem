@@ -126,9 +126,8 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 
 	LayoutBottom->addStretch();
 
-	ISButtonClose *ButtonClose = new ISButtonClose(this);
-	ButtonClose->setText(LANG("CalendarCloseEvent"));
-	connect(ButtonClose, &ISButtonClose::clicked, this, &ISCalendarEventForm::EventClose);
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("CalendarCloseEvent"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISCalendarEventForm::EventClose);
 	LayoutBottom->addWidget(ButtonClose);
 
 	TimerSound = new QTimer(this);

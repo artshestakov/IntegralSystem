@@ -41,8 +41,8 @@ ISAboutForm::ISAboutForm() : ISInterfaceDialogForm()
 	TabWidget = new QTabWidget(this);
 	LayoutRight->addWidget(TabWidget);
 
-	ISButtonClose *ButtonClose = new ISButtonClose(this);
-	connect(ButtonClose, &ISButtonClose::clicked, this, &ISAboutForm::close);
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISAboutForm::close);
 	LayoutRight->addWidget(ButtonClose, 0, Qt::AlignRight);
 
 	CreateCommonTab();

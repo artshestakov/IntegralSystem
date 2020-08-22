@@ -42,36 +42,6 @@ ISPushButton::~ISPushButton()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISButtonClear::ISButtonClear(QWidget *parent) : ISPushButton(parent)
-{
-	setFixedSize(ISDefines::Gui::SIZE_22_22);
-	setCursor(CURSOR_POINTING_HAND);
-	setToolTip(LANG("Clear.Field"));
-	setFocusPolicy(Qt::NoFocus);
-	setIcon(BUFFER_ICONS("ButtonClear"));
-	setFlat(true);
-}
-//-----------------------------------------------------------------------------
-ISButtonClear::~ISButtonClear()
-{
-
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISButtonClose::ISButtonClose(QWidget *parent) : ISPushButton(parent)
-{
-	setText(LANG("Close"));
-	setIcon(BUFFER_ICONS("Close"));
-}
-//-----------------------------------------------------------------------------
-ISButtonClose::~ISButtonClose()
-{
-
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISServiceButton::ISServiceButton(const QIcon &Icon, const QString &ToolTip, QWidget *parent) : ISPushButton(Icon, QString(), ToolTip, parent)
 {
 	setFixedSize(ISPUSHBUTTON_MINIMUM_HEIGHT, ISPUSHBUTTON_MINIMUM_HEIGHT);

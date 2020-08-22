@@ -54,8 +54,8 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 
 	LoadFavorites();
 
-	ISButtonClose *ButtonClose = new ISButtonClose(this);
-	connect(ButtonClose, &ISButtonClose::clicked, this, &ISFavoritesForm::close);
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISFavoritesForm::close);
 	GetMainLayout()->addWidget(ButtonClose, 0, Qt::AlignRight);
 }
 //-----------------------------------------------------------------------------

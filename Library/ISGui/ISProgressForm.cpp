@@ -18,8 +18,8 @@ ISProgressForm::ISProgressForm(int Maximum, const QString &LabelText, QWidget *p
 	setMinimumDuration(0);
 	setAutoClose(true);
 
-	ISButtonClose *ButtonClose = new ISButtonClose(this);
-	connect(ButtonClose, &ISButtonClose::clicked, this, &ISProgressForm::CancelClicked);
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISProgressForm::CancelClicked);
 	setCancelButton(ButtonClose);
 
 	ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);

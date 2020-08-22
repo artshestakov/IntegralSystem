@@ -33,8 +33,8 @@ ISIncomingCallBaseForm::ISIncomingCallBaseForm(const QVariantMap &payload) : ISI
 	connect(ButtonCard, &ISPushButton::clicked, this, &ISIncomingCallBaseForm::OpenCard);
 	LayoutTitle->addWidget(ButtonCard);
 
-	ISButtonClose *ButtonClose = new ISButtonClose(this);
-	connect(ButtonClose, &ISButtonClose::clicked, this, &ISIncomingCallBaseForm::close);
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISIncomingCallBaseForm::close);
 	LayoutTitle->addWidget(ButtonClose);
 
 	GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));

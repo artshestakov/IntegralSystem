@@ -63,7 +63,7 @@ ISTaskSearchByTextForm::ISTaskSearchByTextForm(QWidget *parent) : ISInterfaceFor
 
 	LayoutBottom->addStretch();
 
-	ISButtonClose *ButtonClose = new ISButtonClose(this);
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
 	connect(ButtonClose, &ISPushButton::clicked, this, &ISTaskSearchByTextForm::close);
 	LayoutBottom->addWidget(ButtonClose);
 }

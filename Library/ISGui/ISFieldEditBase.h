@@ -70,7 +70,7 @@ private:
 	QHBoxLayout *LayoutLeft;
 	QHBoxLayout *LayoutEdit;
 	QHBoxLayout *LayoutRight;
-	ISButtonClear *ButtonClear;
+	ISServiceButton *ButtonClear;
 	
 	QWidget *EditWidget;
 	QWidget *FieldEditPointer;

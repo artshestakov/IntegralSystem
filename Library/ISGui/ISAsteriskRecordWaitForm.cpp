@@ -31,8 +31,8 @@ ISAsteriskRecordWaitForm::ISAsteriskRecordWaitForm(const QString &unique_id) : I
 	ProgressBar->setTextVisible(false);
 	GetMainLayout()->addWidget(ProgressBar);
 
-	ISButtonClose *ButtonClose = new ISButtonClose(this);
-	connect(ButtonClose, &ISButtonClose::clicked, this, &ISAsteriskRecordWaitForm::close);
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISAsteriskRecordWaitForm::close);
 	GetMainLayout()->addWidget(ButtonClose, 0, Qt::AlignRight);
 }
 //-----------------------------------------------------------------------------
