@@ -84,41 +84,6 @@ ISToolButton::~ISToolButton()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISButtonMainMenu::ISButtonMainMenu(QWidget *parent)
-	: QToolButton(parent),
-	IconDefault(BUFFER_ICONS("MainPanel.Menu")),
-	IconActive(BUFFER_ICONS("MainPanel.Menu.Active"))
-{
-	setText(LANG("MainMenu"));
-	setFont(ISDefines::Gui::FONT_TAHOMA_10);
-	setAutoRaise(true);
-	setIcon(IconDefault);
-	setIconSize(ISDefines::Gui::SIZE_24_24);
-	setCursor(CURSOR_POINTING_HAND);
-	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	setStyleSheet(STYLE_SHEET("QToolButtonMainMenu"));
-	setPopupMode(QToolButton::InstantPopup);
-}
-//-----------------------------------------------------------------------------
-ISButtonMainMenu::~ISButtonMainMenu()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISButtonMainMenu::enterEvent(QEvent *e)
-{
-	QToolButton::enterEvent(e);
-	setIcon(IconActive);
-}
-//-----------------------------------------------------------------------------
-void ISButtonMainMenu::leaveEvent(QEvent *e)
-{
-	QToolButton::leaveEvent(e);
-	setIcon(IconDefault);
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISButtonFile::ISButtonFile(QWidget *parent) : ISPushButton(parent)
 {
 	setAcceptDrops(true);

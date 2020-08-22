@@ -8,7 +8,7 @@
 
 QToolButton:hover
 {
-    color: rgb(210, 210, 210);
+    color: rgb(255, 178, 127);
 }
 
 QToolButton::menu-indicator

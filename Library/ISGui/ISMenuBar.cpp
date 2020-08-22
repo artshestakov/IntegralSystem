@@ -19,7 +19,20 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	setLayout(MainLayout);
 
-	ButtonMenu = new ISButtonMainMenu(this);
+	QIcon IconMainMenu;
+	IconMainMenu.addPixmap(BUFFER_ICONS("MainPanel.Menu").pixmap(ISDefines::Gui::SIZE_25_25), QIcon::Normal, QIcon::Off);
+	IconMainMenu.addPixmap(BUFFER_ICONS("MainPanel.Menu.Hover").pixmap(ISDefines::Gui::SIZE_25_25), QIcon::Active, QIcon::Off);
+
+	QToolButton *ButtonMenu = new QToolButton(this);
+	ButtonMenu->setText(LANG("MainMenu"));
+	ButtonMenu->setFont(ISDefines::Gui::FONT_TAHOMA_10);
+	ButtonMenu->setAutoRaise(true);
+	ButtonMenu->setIcon(IconMainMenu);
+	ButtonMenu->setIconSize(ISDefines::Gui::SIZE_25_25);
+	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
+	ButtonMenu->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMainMenu"));
+	ButtonMenu->setPopupMode(QToolButton::InstantPopup);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	MainLayout->addWidget(ButtonMenu);
 
@@ -98,15 +111,15 @@ void ISMenuBar::ParagraphClick(const ISUuid &ParagraphUID)
 //-----------------------------------------------------------------------------
 QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &IconName)
 {
-	QIcon Icon = BUFFER_ICONS(IconName);
-	Icon.addPixmap(BUFFER_ICONS(IconName + ".Active").pixmap(ISDefines::Gui::SIZE_24_24), QIcon::Active);
+	QIcon Icon;
+	Icon.addPixmap(BUFFER_ICONS(IconName).pixmap(ISDefines::Gui::SIZE_25_25));
+	Icon.addPixmap(BUFFER_ICONS(IconName + ".Hover").pixmap(ISDefines::Gui::SIZE_25_25), QIcon::Active);
 
 	QToolButton *ToolButton = new QToolButton(this);
 	ToolButton->setToolTip(ToolTip);
 	ToolButton->setIcon(Icon);
 	ToolButton->setAutoRaise(true);
-	ToolButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	ToolButton->setIconSize(ISDefines::Gui::SIZE_24_24);
+	ToolButton->setIconSize(ISDefines::Gui::SIZE_25_25);
 	ToolButton->setCursor(CURSOR_POINTING_HAND);
 	ToolButton->setStyleSheet(STYLE_SHEET("ISMenuBar.Button"));
 	LayoutButtons->addWidget(ToolButton);
@@ -139,19 +152,23 @@ QToolButton* ISMenuBar::CreateParagraphButton(ISMetaParagraph *MetaParagraph)
 	QWidget *Widget = new QWidget(this);
 	Widget->setLayout(LayoutWidget);
 
-	QIcon IconDefault = BUFFER_ICONS(MetaParagraph->Icon), IconActive = BUFFER_ICONS(MetaParagraph->Icon + ".Active");
+	QIcon IconDeSelected = BUFFER_ICONS(MetaParagraph->Icon),
+		IconSelected = BUFFER_ICONS(MetaParagraph->Icon + ".Selected"),
+		IconHover = BUFFER_ICONS(MetaParagraph->Icon + ".Hover");
+	QPixmap PixmapDeSelected = IconDeSelected.pixmap(ISDefines::Gui::SIZE_45_45),
+		PixmapSelected = IconSelected.pixmap(ISDefines::Gui::SIZE_45_45),
+		PixmapHover = IconHover.pixmap(ISDefines::Gui::SIZE_45_45);
 	QIcon Icon;
-	Icon.addPixmap(IconDefault.pixmap(QSize(45, 45), QIcon::Normal, QIcon::Off));
-	Icon.addPixmap(IconActive.pixmap(ISDefines::Gui::SIZE_45_45), QIcon::Normal, QIcon::On);
-	Icon.addPixmap(IconActive.pixmap(ISDefines::Gui::SIZE_45_45), QIcon::Active, QIcon::Off);
-	Icon.addPixmap(IconActive.pixmap(ISDefines::Gui::SIZE_45_45), QIcon::Selected, QIcon::On);
+	Icon.addPixmap(PixmapDeSelected, QIcon::Normal, QIcon::Off);
+	Icon.addPixmap(PixmapSelected, QIcon::Normal, QIcon::On);
+	Icon.addPixmap(PixmapHover, QIcon::Active, QIcon::Off);
+	Icon.addPixmap(PixmapHover, QIcon::Selected, QIcon::On);
 
 	QToolButton *ToolButton = new QToolButton(this);
 	ToolButton->setToolTip(MetaParagraph->ToolTip);
 	ToolButton->setCheckable(true);
 	ToolButton->setIcon(Icon);
 	ToolButton->setAutoRaise(true);
-	ToolButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	ToolButton->setIconSize(ISDefines::Gui::SIZE_45_45);
 	ToolButton->setCursor(CURSOR_POINTING_HAND);
 	ToolButton->setStyleSheet(STYLE_SHEET("ISParagraphButton"));

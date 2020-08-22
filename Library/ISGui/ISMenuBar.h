@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISButtons.h"
 #include "ISUuid.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
@@ -33,7 +32,6 @@ private:
 
 private:
 	QHBoxLayout *LayoutButtons;
-	ISButtonMainMenu *ButtonMenu;
 	std::map<ISUuid, QToolButton*> ParagraphButtons;
 };
 //-----------------------------------------------------------------------------
