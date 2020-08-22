@@ -212,15 +212,19 @@ void ISMainWindow::ShowChangePasswordForm()
 		return;
 	}
 
+	SetVisibleShadow(true);
 	if (ISGui::ShowUserPasswordForm(CURRENT_USER_ID))
 	{
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.YouPasswordDoneChanged"));
 	}
+	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowSettingsForm()
 {
+	SetVisibleShadow(true);
 	ISGui::ShowSettingsForm(CONST_UID_SETTING_GROUP_GENERAL);
+	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAboutForm()
@@ -233,6 +237,8 @@ void ISMainWindow::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowAboutQt()
 {
+	SetVisibleShadow(true);
 	QApplication::aboutQt();
+	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------
