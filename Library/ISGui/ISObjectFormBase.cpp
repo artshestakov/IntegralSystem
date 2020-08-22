@@ -23,6 +23,7 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
+#include "ISHistory.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISInterfaceForm(parent),
@@ -474,7 +475,7 @@ void ISObjectFormBase::FillDataFields()
 						connect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 					}
 				}
-				ISCore::AddHistory(MetaTable->Name, MetaTable->LocalListName, ObjectName, ObjectID);
+				ISHistory::Instance().AddObject(MetaTable->Name, ObjectID);
 			}
 			else
 			{

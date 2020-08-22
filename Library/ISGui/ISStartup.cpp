@@ -23,6 +23,7 @@
 #include "ISQueryPool.h"
 #include "ISProperty.h"
 #include "ISConfig.h"
+#include "ISHistory.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER_CHECK = PREPARE_QUERY("SELECT "
 											 "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
@@ -89,6 +90,12 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeFavorites"), ISFavorites::Instance().GetErrorString());
 	}
 
+	//Инициализация истории
+	if (!ISHistory::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeHistory"), ISHistory::Instance().GetErrorString());
+	}
+
 	//Инициализация сортировок
 	ISSortingBuffer::Instance();
 
@@ -143,6 +150,11 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	if (!ISFavorites::Instance().Save())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveFavorites"), ISFavorites::Instance().GetErrorString());
+	}
+
+	if (!ISHistory::Instance().Save())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveHistory"), ISHistory::Instance().GetErrorString());
 	}
 	ISGui::ExitApplication();
 }

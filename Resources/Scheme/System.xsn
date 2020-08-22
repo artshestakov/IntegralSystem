@@ -216,20 +216,17 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_History" UID="{BF61E8B0-56A5-4EF7-A178-C22072B3F318}" Alias="htry" LocalName="История" LocalListName="История" TitleName="TableLocalName" IsSystem="true">
+  <Table Name="_History" UID="{BF61E8B0-56A5-4EF7-A178-C22072B3F318}" Alias="htry" LocalName="История" LocalListName="История" TitleName="ObjectID" IsSystem="true">
     <Fields>
-      <Field UID="{913AFE17-1817-4998-8B04-557318EA9A3E}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{913AFE17-1817-4998-8B04-557318EA9A3E}" Name="User" Type="Int" DefaultValue="currentuserid()" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{689A53DD-3873-43CE-9265-85854AA15BB6}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotNull="true"/>
-      <Field UID="{D7A5172A-31BB-4C91-80B4-B77A4A741B55}" Name="TableLocalName" Type="String" LabelName="Локальное имя таблицы" LocalListName="Локальное имя таблицы" NotNull="true"/>
-      <Field UID="{4AD6DFDC-5930-46AE-A86A-0D809DADB55E}" Name="ObjectName" Type="String" LabelName="Наименование объекта" LocalListName="Наименование объекта"/>
       <Field UID="{CD7B1881-AE3E-4F1B-80A2-E6C93FB00588}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="User"/>
       <Index Field="TableName"/>
-      <Index Field="TableLocalName"/>
-      <Index Field="ObjectName"/>
       <Index Field="ObjectID"/>
+      <Index Field="ID;User"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>

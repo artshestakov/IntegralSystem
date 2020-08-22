@@ -81,7 +81,9 @@
   <Local Name="Message.Error.SaveSortingBuffer" Russian="Не удалось сохранить сортировки полей."/>
   <Local Name="Message.Error.SaveColumnSizer" Russian="Не удалось сохранить размерность полей."/>
   <Local Name="Message.Error.SaveFavorites" Russian="Не удалось сохранить избранные объекты."/>
+  <Local Name="Message.Error.SaveHistory" Russian="Не удалось сохранить историю открытий объектов."/>
   <Local Name="Message.Error.InitializeFavorites" Russian="Не удалось загрузить избранные объекты."/>
+  <Local Name="Message.Error.InitializeHistory" Russian="Не удалось загрузить историю открытий объектов."/>
   <Local Name="Message.Error.InitializeColumnSizer" Russian="Не удалось загрузить размеры полей."/>
   <Local Name="Message.Error.DeleteInsetedFiles" Russian="Не удалось удалить добавленные файлы."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
@@ -201,6 +203,7 @@
   <Local Name="Message.Question.ChangeSettingsToDefault" Russian="Установить все настройки по умолчанию?"/>
   <Local Name="Message.Question.DeleteFavorite" Russian="Удалить выделенную запись из избранного?"/>
   <Local Name="Message.Question.DeleteFavorites" Russian="Удалить все избранные записи?"/>
+  <Local Name="Message.Question.DeleteHistory" Russian="Очистить историю открытых записей?"/>
   <Local Name="Message.Question.CreateCopyFile" Russian="Создать копию файла &quot;%1&quot;?"/>
   <Local Name="Message.Question.SaveFile" Russian="Сохранить файл &quot;%1&quot;?"/>
   <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
@@ -319,6 +322,7 @@
   <Local Name="FavoritesForTable" Russian="Избранные записи таблицы: %1"/>
   <Local Name="AddToFavorites" Russian="Добавить/удалить из избранного"/>
   <Local Name="ClearFavorites" Russian="Очистить избранное"/>
+  <Local Name="ClearHistory" Russian="Очистить историю"/>
   <Local Name="History" Russian="История"/>
   <Local Name="VersionPostgreSQL" Russian="Версия PostgreSQL"/>
   <Local Name="ServerStartTime" Russian="Время запуска сервера"/>

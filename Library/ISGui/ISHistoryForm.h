@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
+#include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISHistoryForm : public ISInterfaceForm
 {
@@ -11,7 +12,14 @@ public:
 	ISHistoryForm(QWidget *parent = 0);
 	virtual ~ISHistoryForm();
 
+protected:
+	void EscapeClicked();
+
 private:
 	void Open(QListWidgetItem *ListWidgetItem);
+	void Clear();
+
+private:
+	ISListWidget *ListWidget;
 };
 //-----------------------------------------------------------------------------

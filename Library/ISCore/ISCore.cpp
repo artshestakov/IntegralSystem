@@ -16,11 +16,6 @@
 #include "ISDatabase.h"
 #include "ISTcpConnector.h"
 //-----------------------------------------------------------------------------
-static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_user, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid) "
-										  "VALUES(:CurrentUserID, :TableName, :TableLocalName, :ObjectName, :ObjectID)");
-//-----------------------------------------------------------------------------
-static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_user = currentuserid()");
-//-----------------------------------------------------------------------------
 static QString QI_CALENDAR = PREPARE_QUERY("INSERT INTO _calendar(cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_tablename, cldr_objectid) "
                                            "VALUES(:Date, :TimeAlert, :Name, :Text, :TableName, :ObjectID) "
 										   "RETURNING cldr_id");
@@ -160,24 +155,6 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 	//Удаляем возможные пробелы в конце имени объекта
 	ISSystem::RemoveLastSymbolLoop(ObjectName, SYMBOL_SPACE);
 	return ObjectName;
-}
-//-----------------------------------------------------------------------------
-void ISCore::AddHistory(const QString &TableName, const QString &LocalListName, const QString &ObjectName, int ObjectID)
-{
-	ISQueryPool::Instance().AddQuery(QI_HISTORY,
-	{
-		{ ":CurrentUserID", CURRENT_USER_ID },
-		{ ":TableName", TableName },
-		{ ":TableLocalName", LocalListName },
-		{ ":ObjectName", ObjectName },
-		{ ":ObjectID", ObjectID }
-		}
-	);
-}
-//-----------------------------------------------------------------------------
-void ISCore::ClearHistory()
-{
-	ISQueryPool::Instance().AddQuery(QD_HISTORY);
 }
 //-----------------------------------------------------------------------------
 int ISCore::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName, int ObjectID)

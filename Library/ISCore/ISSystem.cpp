@@ -66,9 +66,12 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
 //-----------------------------------------------------------------------------
 void ISSystem::RemoveLastSymbolLoop(QString &String, char Char)
 {
-	while (String.back() == Char)
+	if (!String.isEmpty())
 	{
-		String.chop(1);
+		while (String.back() == Char)
+		{
+			String.chop(1);
+		}
 	}
 }
 //-----------------------------------------------------------------------------

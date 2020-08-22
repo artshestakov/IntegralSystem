@@ -483,4 +483,12 @@ struct ISQueryPoolObject
     ISStringToVariantMap Parameters;
 };
 //-----------------------------------------------------------------------------
+struct ISHistoryObject
+{
+	QDateTime DateTime; //Дата и время открытия
+	QString TableName; //Имя таблицы
+	int ObjectID; //Идентификатор объекта
+	bool IsNew; //Новая запись
+};
+//-----------------------------------------------------------------------------
 #endif

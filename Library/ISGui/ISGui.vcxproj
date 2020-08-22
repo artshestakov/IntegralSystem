@@ -232,6 +232,7 @@
     <ClCompile Include="ISFlowLayout.cpp" />
     <ClCompile Include="ISFullTextSearchForm.cpp" />
     <ClCompile Include="ISGui.cpp" />
+    <ClCompile Include="ISHistory.cpp" />
     <ClCompile Include="ISHistoryForm.cpp" />
     <ClCompile Include="ISHTML.cpp" />
     <ClCompile Include="ISHtmlQuery.cpp" />
@@ -506,6 +507,7 @@
     <QtMoc Include="ISSexEdit.h" />
     <QtMoc Include="ISTaskListForm.h" />
     <QtMoc Include="ISTaskSearchByTextForm.h" />
+    <ClInclude Include="ISHistory.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISTextEdit.h" />
     <QtMoc Include="ISTimeEdit.h" />
