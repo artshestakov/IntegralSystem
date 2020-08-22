@@ -50,6 +50,7 @@ static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatb_ac
 static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gasp_specialaccess FROM _groupaccessspecial WHERE gasp_group = :GroupID");
 //-----------------------------------------------------------------------------
 ISUserRoleEntity::ISUserRoleEntity()
+	: ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -161,14 +162,29 @@ void ISUserRoleEntity::DeleteSpecialAccess(int GroupID, const ISUuid &SpecialAcc
 	qDelete.Execute();
 }
 //-----------------------------------------------------------------------------
-void ISUserRoleEntity::Initialize()
+QString ISUserRoleEntity::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISUserRoleEntity::Initialize()
 {
 	if (!ISMetaUser::Instance().UserData->System) //Если текущий пользователь не является системным - инициализируем
 	{
-		InitializeSubSystem();
-		InitializeTables();
-		InitializeSpecial();
+		if (!InitializeSubSystem())
+		{
+			return false;
+		}
+		if (!InitializeTables())
+		{
+			return false;
+		}
+		if (!InitializeSpecial())
+		{
+			return false;
+		}
 	}
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
@@ -195,24 +211,31 @@ bool ISUserRoleEntity::CheckExistAccesses() const
 		true : SubSystems.size() + Tables.size() + Specials.size();
 }
 //-----------------------------------------------------------------------------
-void ISUserRoleEntity::InitializeSubSystem()
+bool ISUserRoleEntity::InitializeSubSystem()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_SUBSYSTEM);
 	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData->GroupID);
-	if (qSelect.Execute())
+	bool Result = qSelect.Execute();
+	if (Result)
 	{
 		while (qSelect.Next())
 		{
 			SubSystems.emplace_back(ISUuid(qSelect.ReadColumn("gass_subsystem")));
 		}
 	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISUserRoleEntity::InitializeTables()
+bool ISUserRoleEntity::InitializeTables()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_TABLE);
 	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData->GroupID);
-	if (qSelect.Execute())
+	bool Result = qSelect.Execute();
+	if (Result)
 	{
 		while (qSelect.Next())
 		{
@@ -221,18 +244,29 @@ void ISUserRoleEntity::InitializeTables()
 			Tables.count(TableUID) ? Tables[TableUID].emplace_back(AccessUID) : Tables[TableUID] = { AccessUID };
 		}
 	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISUserRoleEntity::InitializeSpecial()
+bool ISUserRoleEntity::InitializeSpecial()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_SPECIAL);
 	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData->GroupID);
-	if (qSelect.Execute())
+	bool Result = qSelect.Execute();
+	if (Result)
 	{
 		while (qSelect.Next())
 		{
 			Specials.emplace_back(ISUuid(qSelect.ReadColumn("gasp_specialaccess")));
 		}
 	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

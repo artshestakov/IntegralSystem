@@ -82,8 +82,11 @@
   <Local Name="Message.Error.SaveColumnSizer" Russian="Не удалось сохранить размерность полей."/>
   <Local Name="Message.Error.SaveFavorites" Russian="Не удалось сохранить избранные объекты."/>
   <Local Name="Message.Error.SaveHistory" Russian="Не удалось сохранить историю открытий объектов."/>
+  <Local Name="Message.Error.InitializeMetaSystems" Russian="Не удалось загрузить информацию о системах и подсистемах."/>
+  <Local Name="Message.Error.InitializeUserRole" Russian="Не удалось загрузить права пользователя."/>
   <Local Name="Message.Error.InitializeFavorites" Russian="Не удалось загрузить избранные объекты."/>
-  <Local Name="Message.Error.InitializeHistory" Russian="Не удалось загрузить историю открытий объектов."/>
+  <Local Name="Message.Error.InitializeHistory" Russian="Не удалось загрузить историю открытых объектов."/>
+  <Local Name="Message.Error.InitializeSortingBuffer" Russian="Не удалось загрузить сортировки."/>
   <Local Name="Message.Error.InitializeColumnSizer" Russian="Не удалось загрузить размеры полей."/>
   <Local Name="Message.Error.DeleteInsetedFiles" Russian="Не удалось удалить добавленные файлы."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>

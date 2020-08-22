@@ -250,10 +250,11 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 		return;
 	}
 
-	//Формируем ответ с портом и отправляем его
+	//Формируем ответ с портом, отправляем его и отключаем клиента
 	ISTcpAnswer TcpAnswer;
 	TcpAnswer["Port"] = StringPort;
 	Send(TcpSocket, TcpAnswer);
+	TcpSocket->close();
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::Disconnected()

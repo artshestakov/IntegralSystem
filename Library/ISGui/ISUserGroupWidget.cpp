@@ -66,7 +66,7 @@ void ISUserGroupWidget::CreateSubSystems()
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.SubSystems"));
 
-	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::GetInstance().GetSystems()) //Обход всех систем
+	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::Instance().GetSystems()) //Обход всех систем
 	{
 		QFormLayout *FormLayout = new QFormLayout();
 

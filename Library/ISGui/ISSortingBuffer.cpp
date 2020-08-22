@@ -49,6 +49,24 @@ QString ISSortingBuffer::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+bool ISSortingBuffer::Initialize()
+{
+	ISQuery qSelect(QS_SORTINGS);
+	bool Result = qSelect.Execute();
+	if (Result)
+	{
+		while (qSelect.Next())
+		{
+			Sortings.emplace_back(CreateSorting(qSelect.ReadColumn("sgts_tablename").toString(), qSelect.ReadColumn("sgts_fieldname").toString(), static_cast<Qt::SortOrder>(qSelect.ReadColumn("sgts_sorting").toInt())));
+		}
+	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
 void ISSortingBuffer::AddSorting(const QString &TableName, const QString &FieldName, Qt::SortOrder Sorting)
 {
 	if (!Sortings.empty())
@@ -112,18 +130,6 @@ ISSortingMetaTable* ISSortingBuffer::GetSorting(const QString &TableName)
 		}
 	}
 	return nullptr;
-}
-//-----------------------------------------------------------------------------
-void ISSortingBuffer::Initialize()
-{
-	ISQuery qSelect(QS_SORTINGS);
-	if (qSelect.Execute())
-	{
-		while (qSelect.Next())
-		{
-			Sortings.emplace_back(CreateSorting(qSelect.ReadColumn("sgts_tablename").toString(), qSelect.ReadColumn("sgts_fieldname").toString(), static_cast<Qt::SortOrder>(qSelect.ReadColumn("sgts_sorting").toInt())));
-		}
-	}
 }
 //-----------------------------------------------------------------------------
 bool ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)

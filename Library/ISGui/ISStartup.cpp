@@ -87,10 +87,18 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	}
 
 	//Инициализация прав доступа
-	ISUserRoleEntity::Instance().Initialize();
+	if (!ISUserRoleEntity::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeUserRole"), ISUserRoleEntity::Instance().GetErrorString());
+		return false;;
+	}
 
 	//Загрузка мета-данных о системах и подсистемах
-	ISMetaSystemsEntity::GetInstance().Initialize();
+	if (!ISMetaSystemsEntity::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaSystems"), ISMetaSystemsEntity::Instance().GetErrorString());
+		return false;
+	}
 
 	ISQueryPool::Instance().Start();
 	
@@ -101,16 +109,22 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	if (!ISFavorites::Instance().Initialize())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeFavorites"), ISFavorites::Instance().GetErrorString());
+		return false;
 	}
 
 	//Инициализация истории
 	if (!ISHistory::Instance().Initialize())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeHistory"), ISHistory::Instance().GetErrorString());
+		return false;
 	}
 
 	//Инициализация сортировок
-	ISSortingBuffer::Instance();
+	if (!ISSortingBuffer::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
+		return false;
+	}
 
 	//Инициализация размеров колонок
 	if (!ISColumnSizer::Instance().Initialize(UseProtocol))

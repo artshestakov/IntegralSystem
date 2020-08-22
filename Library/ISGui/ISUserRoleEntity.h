@@ -20,17 +20,18 @@ public:
 	static void InsertSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID);
 	static void DeleteSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID);
 
-	void Initialize();
+	QString GetErrorString() const;
+	bool Initialize();
 
 	bool CheckAccessSubSystem(const ISUuid &SubSystemUID);
 	bool CheckAccessTable(const ISUuid &TableUID, const ISUuid &AccessUID);
 	bool CheckAccessSpecial(const ISUuid &SpecialAccessUID);
 	bool CheckExistAccesses() const; //Проверить наличие прав доступа
 
-protected:
-	void InitializeSubSystem();
-	void InitializeTables();
-	void InitializeSpecial();
+private:
+	bool InitializeSubSystem();
+	bool InitializeTables();
+	bool InitializeSpecial();
 
 private:
 	ISUserRoleEntity();
@@ -39,6 +40,7 @@ private:
 	ISUserRoleEntity& operator=(ISUserRoleEntity const&) { return *this; };
 
 private:
+	QString ErrorString;
 	ISVectorUID SubSystems;
 	std::map<ISUuid, ISVectorUID> Tables;
 	ISVectorUID Specials;

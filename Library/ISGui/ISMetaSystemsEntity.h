@@ -6,15 +6,10 @@
 class ISMetaSystemsEntity
 {
 public:
-	ISMetaSystemsEntity(const ISMetaSystemsEntity &) = delete;
-	ISMetaSystemsEntity(ISMetaSystemsEntity &&) = delete;
-	ISMetaSystemsEntity &operator=(const ISMetaSystemsEntity &) = delete;
-	ISMetaSystemsEntity &operator=(ISMetaSystemsEntity &&) = delete;
-	~ISMetaSystemsEntity();
+	static ISMetaSystemsEntity& Instance();
 
-	static ISMetaSystemsEntity& GetInstance();
-
-	void Initialize(); //Инициализация
+	QString GetErrorString() const;
+	bool Initialize(); //Инициализация
 
 	std::vector<ISMetaSystem*> GetSystems(); //Получить список всех систем
 	ISMetaSystem* GetSystem(const QString &SystemUID); //Получить систему по её идентификатору
@@ -25,7 +20,12 @@ private:
 
 private:
 	ISMetaSystemsEntity();
+	~ISMetaSystemsEntity();
+	ISMetaSystemsEntity(ISMetaSystemsEntity const &) {};
+	ISMetaSystemsEntity& operator=(ISMetaSystemsEntity const&) { return *this; };
 
+private:
+	QString ErrorString;
 	std::vector<ISMetaSystem*> Systems;
 };
 //-----------------------------------------------------------------------------

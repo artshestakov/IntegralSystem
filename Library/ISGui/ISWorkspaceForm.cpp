@@ -27,7 +27,7 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
 	Layout->addWidget(SystemsPanel);
 
 	//Заполнение систем в виджете
-	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::GetInstance().GetSystems())
+	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::Instance().GetSystems())
 	{
 		SystemsPanel->AddSystem(MetaSystem);
 	}
@@ -38,7 +38,7 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
 	Layout->addWidget(TabWidget);
 
 	//Если у пользователя нет доступа ни к одной из систем
-	if (ISMetaSystemsEntity::GetInstance().GetSystems().empty())
+	if (ISMetaSystemsEntity::Instance().GetSystems().empty())
 	{
 		QLabel *Label = new QLabel(TabWidget);
 		Label->setText(LANG("NotAccessSystems"));
@@ -89,7 +89,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 
 	ISGui::SetWaitGlobalCursor(true);
 
-	ISMetaSubSystem *MetaSubSystem = ISMetaSystemsEntity::GetInstance().GetSubSystem(SubSystemUID);
+	ISMetaSubSystem *MetaSubSystem = ISMetaSystemsEntity::Instance().GetSubSystem(SubSystemUID);
 
 	if (CentralForm) //Если центральная форма была создана - удалить её
 	{

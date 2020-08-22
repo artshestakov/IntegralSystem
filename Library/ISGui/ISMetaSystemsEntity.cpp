@@ -12,6 +12,7 @@ static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 										  "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
 ISMetaSystemsEntity::ISMetaSystemsEntity()
+	: ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -24,16 +25,22 @@ ISMetaSystemsEntity::~ISMetaSystemsEntity()
 	}
 }
 //-----------------------------------------------------------------------------
-ISMetaSystemsEntity& ISMetaSystemsEntity::GetInstance()
+ISMetaSystemsEntity& ISMetaSystemsEntity::Instance()
 {
 	static ISMetaSystemsEntity MetaSystemsEntity;
 	return MetaSystemsEntity;
 }
 //-----------------------------------------------------------------------------
-void ISMetaSystemsEntity::Initialize()
+QString ISMetaSystemsEntity::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaSystemsEntity::Initialize()
 {
 	ISQuery qSelect(QS_SYSTEMS);
-	if (qSelect.Execute())
+	bool Result = qSelect.Execute();
+	if (Result)
 	{
 		while (qSelect.Next())
 		{
@@ -76,6 +83,11 @@ void ISMetaSystemsEntity::Initialize()
 			MetaSystem->SubSystems.emplace_back(MetaSubSystem);
 		}
 	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 std::vector<ISMetaSystem*> ISMetaSystemsEntity::GetSystems()

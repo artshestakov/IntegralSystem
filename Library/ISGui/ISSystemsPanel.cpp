@@ -151,7 +151,7 @@ QIcon ISSystemsPanel::GetSystemIcon(ISMetaSystem *MetaSystem) const
 //-----------------------------------------------------------------------------
 QIcon ISSystemsPanel::GetSubSystemIcon(ISMetaSubSystem *MetaSubSystem) const
 {
-	return ISMetaSystemsEntity::GetInstance().GetSystem(MetaSubSystem->SystemUID)->IsSystem ?
+	return ISMetaSystemsEntity::Instance().GetSystem(MetaSubSystem->SystemUID)->IsSystem ?
 		BUFFER_ICONS(MetaSubSystem->IconName) :
 		ISObjects::Instance().GetInterface()->GetIcon(MetaSubSystem->IconName);
 }
