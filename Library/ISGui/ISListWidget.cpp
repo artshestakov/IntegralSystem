@@ -65,6 +65,19 @@ void ISListWidget::SetMaxVisibleItems(int max_visible_items)
 
 }
 //-----------------------------------------------------------------------------
+QAction* ISListWidget::AddAction(const QIcon &Icon, const QString &Text, bool InGroup)
+{
+	QAction *Action = new QAction(Icon, Text, this);
+	AddAction(Action, InGroup);
+	return Action;
+}
+//-----------------------------------------------------------------------------
+void ISListWidget::AddAction(QAction *Action, bool InGroup)
+{
+	addAction(Action);
+	Action->setProperty("InGroup", InGroup);
+}
+//-----------------------------------------------------------------------------
 QListWidgetItem* ISListWidget::BeginItem()
 {
 	if (item(0))
@@ -101,6 +114,25 @@ void ISListWidget::paintEvent(QPaintEvent *PaintEvent)
 			Height += LastHeight;
 		}
 		setFixedHeight(Height);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISListWidget::mousePressEvent(QMouseEvent *MouseEvent)
+{
+	QListWidget::mousePressEvent(MouseEvent);
+	bool IsSelectedItem = itemAt(MouseEvent->pos());
+	if (!IsSelectedItem) //Если элемент не был выбран - убираем выделение
+	{
+		clearSelection();
+	}
+
+	//Обходим действия и проверяем какому из низ нужно сменить доступность
+	for (QAction *Action : actions())
+	{
+		if (Action->property("InGroup").toBool())
+		{
+			Action->setEnabled(IsSelectedItem);
+		}
 	}
 }
 //-----------------------------------------------------------------------------

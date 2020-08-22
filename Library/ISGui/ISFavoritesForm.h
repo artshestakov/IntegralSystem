@@ -12,7 +12,7 @@ public:
 	ISFavoritesForm(QWidget *parent = 0, const QString &table_name = QString());
 	virtual ~ISFavoritesForm();
 
-protected:
+private:
 	void LoadFavorites(); //Загрузка избранного
 	void ReloadFavorites(); //Перезагрузка изранного
 	void OpenFavorite(); //Открыть избранный обхект
@@ -20,17 +20,11 @@ protected:
 	void ClearFavorites(); //Очистить избранные объекты
 	void EscapeClicked() override;
 
-protected slots:
+private:
 	void ListWidgetDoubleClicked(QListWidgetItem *Item);
-	void ItemClicked(QListWidgetItem *Item);
 
 private:
 	QString TableName;
-
-	QToolBar *ToolBar;
-	QAction *ActionOpen;
-	QAction *ActionDelete;
-	QAction *ActionClearFavorites;
 	ISListWidget *ListWidget;
 };
 //-----------------------------------------------------------------------------

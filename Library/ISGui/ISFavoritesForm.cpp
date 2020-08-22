@@ -18,11 +18,11 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	resize(ISDefines::Gui::SIZE_640_480);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
-	ToolBar = new QToolBar(this);
+	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	GetMainLayout()->addWidget(ToolBar);
 
-	ActionOpen = new QAction(ToolBar);
+	QAction *ActionOpen = new QAction(ToolBar);
 	ActionOpen->setText(LANG("Open"));
 	ActionOpen->setToolTip(LANG("Open"));
 	ActionOpen->setIcon(BUFFER_ICONS("Select"));
@@ -30,7 +30,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	connect(ActionOpen, &QAction::triggered, this, &ISFavoritesForm::OpenFavorite);
 	ToolBar->addAction(ActionOpen);
 
-	ActionDelete = new QAction(ToolBar);
+	QAction *ActionDelete = new QAction(ToolBar);
 	ActionDelete->setText(LANG("Delete"));
 	ActionDelete->setToolTip(LANG("Delete"));
 	ActionDelete->setIcon(BUFFER_ICONS("Delete"));
@@ -38,7 +38,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	connect(ActionDelete, &QAction::triggered, this, &ISFavoritesForm::DeleteFavorite);
 	ToolBar->addAction(ActionDelete);
 
-	ActionClearFavorites = new QAction(ToolBar);
+	QAction *ActionClearFavorites = new QAction(ToolBar);
 	ActionClearFavorites->setText(LANG("ClearFavorites"));
 	ActionClearFavorites->setToolTip(LANG("ClearFavorites"));
 	ActionClearFavorites->setIcon(BUFFER_ICONS("Clear"));
@@ -46,8 +46,10 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	ToolBar->addAction(ActionClearFavorites);
 
 	ListWidget = new ISListWidget(this);
+	ListWidget->AddAction(ActionOpen, true);
+	ListWidget->AddAction(ActionDelete, true);
+	ListWidget->AddAction(ActionClearFavorites, false);
 	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISFavoritesForm::ListWidgetDoubleClicked);
-	connect(ListWidget, &QListWidget::itemClicked, this, &ISFavoritesForm::ItemClicked);
 	GetMainLayout()->addWidget(ListWidget);
 
 	LoadFavorites();
@@ -132,12 +134,5 @@ void ISFavoritesForm::ListWidgetDoubleClicked(QListWidgetItem *Item)
 {
     Q_UNUSED(Item);
 	OpenFavorite();
-}
-//-----------------------------------------------------------------------------
-void ISFavoritesForm::ItemClicked(QListWidgetItem *Item)
-{
-    Q_UNUSED(Item);
-	ActionOpen->setEnabled(true);
-	ActionDelete->setEnabled(true);
 }
 //-----------------------------------------------------------------------------
