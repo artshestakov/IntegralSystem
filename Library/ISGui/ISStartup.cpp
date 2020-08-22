@@ -38,10 +38,23 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
 	bool UseProtocol = CONFIG_BOOL("Protocol/Use");
 
-	ISObjects::GetInstance().Initialize();
+	//Инициализация объекта конфигурации
+	if (!ISObjects::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeObjects"), ISObjects::Instance().GetErrorString());
+		return false;
+	}
+
+	//Если дата запрета меньше чем текущая - не даём зайти в программу
+	QDate DateExpired = ISObjects::Instance().Info.DateExpired;
+	if (DateExpired.isValid() && QDate::currentDate() > DateExpired)
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.ObjectDateExpired"));
+		return false;
+	}
 
 	//Инициализация мета-данных
-	if (!ISMetaData::Instance().Initialize(ISObjects::GetInstance().GetInfo().Name, false, false))
+	if (!ISMetaData::Instance().Initialize(ISObjects::Instance().Info.Name, false, false))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
 		return false;
@@ -129,7 +142,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	//Фиксация входа в протоколе
 	ISProtocol::EnterApplication();
 
-	ISObjects::GetInstance().GetInterface()->BeforeShowMainWindow();
+	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
 	ISProperty::Instance().SetValue(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
 	return true;
 }

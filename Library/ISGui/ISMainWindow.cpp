@@ -30,7 +30,7 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_ICONS("Logo"));
-	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::GetInstance().GetInfo().LocalName).arg(ISMetaUser::Instance().UserData->FullName));
+	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::Instance().Info.LocalName).arg(ISMetaUser::Instance().UserData->FullName));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
 	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setSpacing(0);
@@ -146,7 +146,7 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISIncomingCallBaseForm *IncomingCallForm = ISAlgorithm::CreatePointer<ISIncomingCallBaseForm *>(ISObjects::GetInstance().GetInfo().IncomingCallForm, Q_ARG(const QVariantMap &, VariantMap));
+	ISIncomingCallBaseForm *IncomingCallForm = ISAlgorithm::CreatePointer<ISIncomingCallBaseForm *>(ISObjects::Instance().Info.IncomingCallForm, Q_ARG(const QVariantMap &, VariantMap));
 	ISGui::SetWaitGlobalCursor(false);
 	IncomingCallForm->Exec();
 }
@@ -166,7 +166,7 @@ void ISMainWindow::InitializePlugin()
 			ISGui::ShowDatabaseSettings();
 		}
 	}
-	ISObjects::GetInstance().GetInterface()->InitializePlugin();
+	ISObjects::Instance().GetInterface()->InitializePlugin();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ChangeUser()

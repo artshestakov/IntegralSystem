@@ -146,13 +146,13 @@ QString ISSystemsPanel::GetSubSystemToolTip(ISMetaSubSystem *MetaSubSystem) cons
 //-----------------------------------------------------------------------------
 QIcon ISSystemsPanel::GetSystemIcon(ISMetaSystem *MetaSystem) const
 {
-	return MetaSystem->IsSystem ? BUFFER_ICONS(MetaSystem->IconName) : ISObjects::GetInstance().GetInterface()->GetIcon(MetaSystem->IconName);
+	return MetaSystem->IsSystem ? BUFFER_ICONS(MetaSystem->IconName) : ISObjects::Instance().GetInterface()->GetIcon(MetaSystem->IconName);
 }
 //-----------------------------------------------------------------------------
 QIcon ISSystemsPanel::GetSubSystemIcon(ISMetaSubSystem *MetaSubSystem) const
 {
 	return ISMetaSystemsEntity::GetInstance().GetSystem(MetaSubSystem->SystemUID)->IsSystem ?
 		BUFFER_ICONS(MetaSubSystem->IconName) :
-		ISObjects::GetInstance().GetInterface()->GetIcon(MetaSubSystem->IconName);
+		ISObjects::Instance().GetInterface()->GetIcon(MetaSubSystem->IconName);
 }
 //-----------------------------------------------------------------------------

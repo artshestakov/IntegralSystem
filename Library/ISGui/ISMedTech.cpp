@@ -40,7 +40,7 @@ ISMedTech::RatingListForm::RatingListForm(QWidget *parent) : ISListBaseForm("Rat
 	ActionFilterAll->setChecked(true);
 	ActionFilterAll->setText(LANG("Rating.Filter.All"));
 	ActionFilterAll->setToolTip(LANG("Rating.Filter.All"));
-	ActionFilterAll->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.All"));
+	ActionFilterAll->setIcon(ISObjects::Instance().GetInterface()->GetIcon("Rating.All"));
 	ActionFilterAll->setProperty("Filter", QVariant());
 	connect(ActionFilterAll, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilterAll, false);
@@ -49,7 +49,7 @@ ISMedTech::RatingListForm::RatingListForm(QWidget *parent) : ISListBaseForm("Rat
 	ActionFilter5->setCheckable(true);
 	ActionFilter5->setText("5");
 	ActionFilter5->setToolTip("5");
-	ActionFilter5->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.5"));
+	ActionFilter5->setIcon(ISObjects::Instance().GetInterface()->GetIcon("Rating.5"));
 	ActionFilter5->setProperty("Filter", 5);
 	connect(ActionFilter5, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter5, false);
@@ -58,7 +58,7 @@ ISMedTech::RatingListForm::RatingListForm(QWidget *parent) : ISListBaseForm("Rat
 	ActionFilter4->setCheckable(true);
 	ActionFilter4->setText("4");
 	ActionFilter4->setToolTip("4");
-	ActionFilter4->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.4"));
+	ActionFilter4->setIcon(ISObjects::Instance().GetInterface()->GetIcon("Rating.4"));
 	ActionFilter4->setProperty("Filter", 4);
 	connect(ActionFilter4, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter4, false);
@@ -67,7 +67,7 @@ ISMedTech::RatingListForm::RatingListForm(QWidget *parent) : ISListBaseForm("Rat
 	ActionFilter3->setCheckable(true);
 	ActionFilter3->setText("3");
 	ActionFilter3->setToolTip("3");
-	ActionFilter3->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.3"));
+	ActionFilter3->setIcon(ISObjects::Instance().GetInterface()->GetIcon("Rating.3"));
 	ActionFilter3->setProperty("Filter", 3);
 	connect(ActionFilter3, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter3, false);
@@ -76,7 +76,7 @@ ISMedTech::RatingListForm::RatingListForm(QWidget *parent) : ISListBaseForm("Rat
 	ActionFilter2->setCheckable(true);
 	ActionFilter2->setText("2");
 	ActionFilter2->setToolTip("2");
-	ActionFilter2->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.2"));
+	ActionFilter2->setIcon(ISObjects::Instance().GetInterface()->GetIcon("Rating.2"));
 	ActionFilter2->setProperty("Filter", 2);
 	connect(ActionFilter2, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter2, false);
@@ -85,7 +85,7 @@ ISMedTech::RatingListForm::RatingListForm(QWidget *parent) : ISListBaseForm("Rat
 	ActionFilter1->setCheckable(true);
 	ActionFilter1->setText("1");
 	ActionFilter1->setToolTip("1");
-	ActionFilter1->setIcon(ISObjects::GetInstance().GetInterface()->GetIcon("Rating.1"));
+	ActionFilter1->setIcon(ISObjects::Instance().GetInterface()->GetIcon("Rating.1"));
 	ActionFilter1->setProperty("Filter", 1);
 	connect(ActionFilter1, &QAction::triggered, this, &ISMedTech::RatingListForm::FilterClicked);
 	AddAction(ActionFilter1, false);

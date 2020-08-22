@@ -103,7 +103,7 @@ void ISAboutForm::CreateContactsTab()
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateModuleTab()
 {
-	if (!ISObjects::GetInstance().IsInitialized())
+	if (!ISObjects::Instance().IsInitialized())
 	{
 		return;
 	}
@@ -114,9 +114,9 @@ void ISAboutForm::CreateModuleTab()
 	TabModule->setLayout(LayoutModule);
 	TabWidget->addTab(TabModule, LANG("AboutForm.Tab.Configuration"));
 
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISObjects::GetInstance().GetInfo().Name);
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISObjects::GetInstance().GetInfo().LocalName);
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.UID"), ISObjects::GetInstance().GetInfo().UID);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISObjects::Instance().Info.Name);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISObjects::Instance().Info.LocalName);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.UID"), ISObjects::Instance().Info.UID);
 
 	LayoutModule->addStretch();
 }
@@ -159,7 +159,7 @@ void ISAboutForm::CreateLicenseTab()
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateShortcuts()
 {
-	if (!ISObjects::GetInstance().IsInitialized())
+	if (!ISObjects::Instance().IsInitialized())
 	{
 		return;
 	}

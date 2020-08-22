@@ -25,7 +25,7 @@ ISObjects::~ISObjects()
 	}
 }
 //-----------------------------------------------------------------------------
-ISObjects& ISObjects::GetInstance()
+ISObjects& ISObjects::Instance()
 {
 	static ISObjects Objects;
 	return Objects;
@@ -70,6 +70,7 @@ bool ISObjects::Initialize()
 				Info.LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
 				Info.DesktopForm = DomNamedNodeMap.namedItem("DesktopForm").nodeValue();
 				Info.IncomingCallForm = DomNamedNodeMap.namedItem("IncomingCallForm").nodeValue();
+				Info.DateExpired = QDate::fromString(DomNamedNodeMap.namedItem("DateExpired").nodeValue(), FORMAT_DATE_V2);
 				break;
 			}
 			DomNode = DomNode.nextSibling();
@@ -98,10 +99,5 @@ bool ISObjects::Initialize()
 ISObjectInterface* ISObjects::GetInterface()
 {
 	return ObjectInterface;
-}
-//-----------------------------------------------------------------------------
-ISConfigurationItem ISObjects::GetInfo()
-{
-	return Info;
 }
 //-----------------------------------------------------------------------------
