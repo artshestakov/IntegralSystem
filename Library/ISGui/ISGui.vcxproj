@@ -336,7 +336,6 @@
     <ClCompile Include="ISTextEdit.cpp" />
     <ClCompile Include="ISTimeEdit.cpp" />
     <ClCompile Include="ISToolBarAccessTable.cpp" />
-    <ClCompile Include="ISUserEdit.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
     <ClCompile Include="ISUserGroupWidget.cpp" />
     <ClCompile Include="ISUserListForm.cpp" />
@@ -472,7 +471,6 @@
     <QtMoc Include="ISListEditPopup.h" />
     <QtMoc Include="ISPassportEdit.h" />
     <QtMoc Include="ISPhoneEdit.h" />
-    <QtMoc Include="ISUserEdit.h" />
     <QtMoc Include="ISListIndicatorWidget.h" />
     <QtMoc Include="ISSearchEdit.h" />
     <QtMoc Include="ISCalendarDayWidget.h" />

@@ -39,7 +39,6 @@
 #include "ISComboTimeEdit.h"
 #include "ISPhoneBaseEdit.h"
 #include "ISPhoneEdit.h"
-#include "ISUserEdit.h"
 #include "ISPassportEdit.h"
 #include "ISVolumeEdit.h"
 #include "ISExecutorEdit.h"
@@ -107,7 +106,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISComboTimeEdit*>("ISComboTimeEdit");
 	qRegisterMetaType<ISPhoneBaseEdit*>("ISPhoneBaseEdit");
 	qRegisterMetaType<ISPhoneEdit*>("ISPhoneEdit");
-	qRegisterMetaType<ISUserEdit*>("ISUserEdit");
 	qRegisterMetaType<ISBIKEdit*>("ISBIKEdit");
 	qRegisterMetaType<ISEMailEdit*>("ISEMailEdit");
 	qRegisterMetaType<ISPassportEdit*>("ISPassportEdit");

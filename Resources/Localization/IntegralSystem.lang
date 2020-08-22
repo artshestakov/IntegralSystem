@@ -420,7 +420,6 @@
   <Local Name="SettingsDatabase" Russian="Настройки базы данных"/>
   <Local Name="SelectDialog.Title.Single" Russian="Выберите одну запись из списка ниже"/>
   <Local Name="SelectDialog.Title.Multi" Russian="Выберите несколько записей из списка ниже"/>
-  <Local Name="SelectUser" Russian="Выберите пользователя"/>
   <Local Name="You" Russian="Вы"/>
   <Local Name="InfoAboutCall" Russian="Информация о звонке"/>
   <Local Name="PG_Settings" Russian="Параметры СУБД"/>
@@ -516,7 +515,6 @@
   <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается..."/>
   <Local Name="InputThisSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="OpeningUrl" Russian="Открытие ссылки..."/>
-  <Local Name="ClickFromShowUserList" Russian="Нажмите, чтобы показать список пользователей"/>
   <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
   <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
   <Local Name="ClickFromSelectFile" Russian="Нажмите, чтобы выбрать файл"/>
