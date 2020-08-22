@@ -150,7 +150,7 @@ void ISMonitorActivityForm::ShowUserCard()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->property("UserID").toInt())->show();
+		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->property("UserID").toInt()));
 	}
 }
 //-----------------------------------------------------------------------------

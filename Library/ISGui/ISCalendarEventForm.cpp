@@ -199,7 +199,7 @@ void ISCalendarEventForm::Defer()
 //-----------------------------------------------------------------------------
 void ISCalendarEventForm::OpenCard()
 {
-	ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName, ObjectID)->show();
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName, ObjectID));
 }
 //-----------------------------------------------------------------------------
 void ISCalendarEventForm::EventClose()

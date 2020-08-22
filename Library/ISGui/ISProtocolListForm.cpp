@@ -17,9 +17,9 @@ void ISProtocolListForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 
 	QString TableName = GetCurrentRecordValueDB("TableName").toString();
 	int ObjectID = GetCurrentRecordValueDB("ObjectID").toInt();
-	if (TableName.length() && ObjectID)
+	if (!TableName.isEmpty() && ObjectID)
 	{
-		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName, ObjectID)->show();
+		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName, ObjectID));
 	}
 }
 //-----------------------------------------------------------------------------

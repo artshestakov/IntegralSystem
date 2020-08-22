@@ -109,15 +109,14 @@ void ISKnowledgeBaseSubSystem::CreateGroup()
 	{
 		ObjectFormBase->SetFieldValue("Parent", SelectedItems.first()->data(0, Qt::UserRole));
 	}
-
-	ObjectFormBase->show();
+	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
 void ISKnowledgeBaseSubSystem::EditGroup()
 {
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_QuestionAnswerGroup", TreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISKnowledgeBaseSubSystem::LoadData);
-	ObjectFormBase->show();
+	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
 void ISKnowledgeBaseSubSystem::DeleteGroup()

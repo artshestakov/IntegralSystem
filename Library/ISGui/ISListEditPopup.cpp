@@ -180,7 +180,7 @@ void ISListEditPopup::ItemClicked(QListWidgetItem *ListWidgetItem)
 void ISListEditPopup::Add()
 {
 	hide();
-	ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTableForeign->Name)->show();
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTableForeign->Name));
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::LoadDataFromQuery()

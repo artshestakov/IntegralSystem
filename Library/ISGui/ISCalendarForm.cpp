@@ -206,10 +206,9 @@ void ISCalendarForm::Create()
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Calendar"));
 	CalendarObjectForm->SetDate(CalendarPanel->selectedDate());
 	CalendarObjectForm->adjustSize();
-	ISGui::MoveWidgetToDesktop(CalendarObjectForm, ISNamespace::MWD_Center);
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, CalendarPanel, &ISCalendarPanel::UpdateCells);
-	CalendarObjectForm->show();
+	ISGui::ShowObjectForm(CalendarObjectForm);
 }
 //-----------------------------------------------------------------------------
 void ISCalendarForm::DateTo()
@@ -316,7 +315,7 @@ void ISCalendarForm::EditEvent(int CalendarID)
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Calendar", CalendarID));
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, CalendarPanel, &ISCalendarPanel::UpdateCells);
-	CalendarObjectForm->show();
+	ISGui::ShowObjectForm(CalendarObjectForm);
 }
 //-----------------------------------------------------------------------------
 void ISCalendarForm::DeleteEvent(int CalendarID)

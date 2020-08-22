@@ -278,7 +278,7 @@ QString ISFullTextSearchForm::CreateQuery(PMetaTable *MetaTable) const
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::ClickedRecord()
 {
-	ISGui::CreateObjectForm(ISNamespace::OFT_Edit, sender()->property("TableName").toString(), sender()->property("ObjectID").toInt())->show();
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, sender()->property("TableName").toString(), sender()->property("ObjectID").toInt()));
 }
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::Stop()

@@ -76,6 +76,6 @@ void ISCalendarObjectForm::EscapeClicked()
 //-----------------------------------------------------------------------------
 void ISCalendarObjectForm::OpenCard()
 {
-	ISGui::CreateObjectForm(ISNamespace::OFT_Edit, GetFieldValue("TableName").toString(), GetFieldValue("ObjectID").toInt())->show();
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, GetFieldValue("TableName").toString(), GetFieldValue("ObjectID").toInt()));
 }
 //-----------------------------------------------------------------------------

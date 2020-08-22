@@ -218,7 +218,7 @@ void ISListEdit::CreateObject()
 {
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
-		ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name)->show();
+		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name));
 	}
 	else
 	{
@@ -230,7 +230,7 @@ void ISListEdit::EditObject()
 {
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt())->show();
+		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt()));
 	}
 	else
 	{
