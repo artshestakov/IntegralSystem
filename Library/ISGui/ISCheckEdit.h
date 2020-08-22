@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISCHECKEDIT_H_INCLUDED
+#define _ISCHECKEDIT_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISFieldEditBase.h"
@@ -25,3 +27,4 @@ private:
 	QCheckBox *CheckBox;
 };
 //-----------------------------------------------------------------------------
+#endif

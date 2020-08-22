@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISRangeEditBase.h"
-#include "ISDateEdit.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISRangeDateEdit : public ISRangeEditBase
 {

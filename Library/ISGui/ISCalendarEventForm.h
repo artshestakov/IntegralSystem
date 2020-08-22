@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISComboTimeEdit.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISCalendarEventForm : public ISInterfaceForm
 {
@@ -18,6 +18,8 @@ public:
 protected:
 	void AfterShowEvent() override;
 	void closeEvent(QCloseEvent *e);
+
+private:
 	void Defer();
 	void OpenCard();
 	void EventClose(); //Завершение события

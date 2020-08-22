@@ -3,13 +3,13 @@
 #define _ISFIELDEDITS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISLineEdit.h"
-#include "ISDoubleEdit.h"
-#include "ISDateEdit.h"
 #include "ISComboEdit.h"
-#include "ISIntegerEdit.h"
+#include "ISListEdit.h"
 #include "ISRadioEdit.h"
 #include "ISCheckEdit.h"
 #include "ISTextEdit.h"
+#include "ISPhoneBaseEdit.h"
+#include "ISDateTimeEdit.h"
 //-----------------------------------------------------------------------------
 class ISBIKEdit : public ISLineEdit
 {
@@ -93,6 +93,23 @@ public:
 	~ISVINEdit();
 
 	bool IsValid() const override;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISDateEdit : public ISDateTimeEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISDateEdit(QWidget *parent = 0);
+	virtual ~ISDateEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+
+	void SetMinimumDate(const QDate &Date);
+	void SetMaximumDate(const QDate &Date);
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -228,19 +245,6 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISYearEdit : public ISIntegerEdit
-{
-	Q_OBJECT
-
-public:
-	Q_INVOKABLE ISYearEdit(QWidget *parent = 0);
-	virtual ~ISYearEdit();
-
-	void SelectCurrentYear();
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 class ISMonthEdit : public ISComboEdit
 {
 	Q_OBJECT
@@ -313,6 +317,167 @@ class ISTaskDescriptionEdit : public ISTextEdit
 public:
 	Q_INVOKABLE ISTaskDescriptionEdit(QWidget *parent = 0);
 	virtual ~ISTaskDescriptionEdit();
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISTimeEdit : public ISDateTimeEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISTimeEdit(QWidget *parent = 0);
+	virtual ~ISTimeEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISDoubleEdit : public ISLineEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISDoubleEdit(QWidget *parent = 0);
+	virtual ~ISDoubleEdit();
+
+	void SetValue(const QVariant &value) override;
+
+protected:
+	void TextChanged(const QString &Text) override;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISComboTimeEdit : public ISComboEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISComboTimeEdit(QWidget *parent = 0);
+	virtual ~ISComboTimeEdit();
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISExecutorEdit : public ISListEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISExecutorEdit(QWidget *parent = 0);
+	virtual ~ISExecutorEdit();
+
+	void SetReadOnly(bool read_only) override;
+
+protected:
+	void DesignateMe();
+
+private:
+	ISPushButton *ButtonDesignateMe;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISIntegerEdit : public ISLineEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISIntegerEdit(QWidget *parent = 0);
+	virtual ~ISIntegerEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+
+	void SetMinimum(int Minimum);
+	void SetMaximum(int Maximum);
+	void SetRange(int Minimum, int Maximum);
+	void ResetRange();
+
+private:
+	QIntValidator *IntValidator;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISYearEdit : public ISIntegerEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISYearEdit(QWidget *parent = 0);
+	virtual ~ISYearEdit();
+
+	void SelectCurrentYear();
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISPassportEdit : public ISLineEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISPassportEdit(QWidget *parent = 0);
+	virtual ~ISPassportEdit();
+
+	void SetValue(const QVariant &value);
+	QVariant GetValue() const override;
+	void Clear() override;
+
+protected:
+	virtual void Edit(); //Метод сделан виртуальным на случай новых подобных полей (заграничный паспорт, паспорты других стран)
+	QString PreparePassport(const QString &passport_string);
+
+private:
+	QString PassportString;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISPhoneEdit : public ISPhoneBaseEdit
+{
+	Q_OBJECT
+
+signals:
+	void Called();
+
+public:
+	Q_INVOKABLE ISPhoneEdit(QWidget *parent = 0);
+	virtual ~ISPhoneEdit();
+
+protected:
+	void Call() override;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISSearchEdit : public ISLineEdit
+{
+	Q_OBJECT
+
+		signals :
+	void Search(const QString &SearchValue);
+
+public:
+	ISSearchEdit(QWidget *parent);
+	virtual ~ISSearchEdit();
+
+	void Updated();
+
+protected:
+	void SearchChanged();
+	void AboutToShow();
+	void AboutToHide();
+	void LastSearchClicked();
+	void Timeout();
+
+private:
+	ISServiceButton *ButtonLastSearch;
+	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------
 #endif

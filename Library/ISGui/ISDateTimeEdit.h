@@ -6,7 +6,7 @@
 #include "ISFieldEditBase.h"
 #include "ISEdits.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT ISDateTimeEdit : public ISFieldEditBase
+class ISDateTimeEdit : public ISFieldEditBase
 {
     Q_OBJECT
 

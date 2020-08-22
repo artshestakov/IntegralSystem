@@ -91,9 +91,6 @@
     <Filter Include="Controls\TabNavigation">
       <UniqueIdentifier>{55eb325b-7656-478e-859d-3038016d710b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fields\Fields">
-      <UniqueIdentifier>{63119c2d-3db2-45bd-9168-364efd5a19f5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISExportForm.cpp">
@@ -468,9 +465,6 @@
     <ClCompile Include="ISListIndicatorWidget.cpp">
       <Filter>Controls\ListEdit</Filter>
     </ClCompile>
-    <ClCompile Include="ISSearchEdit.cpp">
-      <Filter>Controls\ListEdit</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalendarDayWidget.cpp">
       <Filter>Controls\MailCalendar</Filter>
     </ClCompile>
@@ -508,9 +502,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISDelegates.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISEdits.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISImageWidget.cpp">
@@ -582,32 +573,11 @@
     <ClCompile Include="ISListEditPopup.cpp">
       <Filter>Fields\Base</Filter>
     </ClCompile>
-    <ClCompile Include="ISComboTimeEdit.cpp">
-      <Filter>Fields\Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISExecutorEdit.cpp">
-      <Filter>Fields\Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPassportEdit.cpp">
-      <Filter>Fields\Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPhoneEdit.cpp">
-      <Filter>Fields\Fields</Filter>
-    </ClCompile>
     <ClCompile Include="ISVolumeEdit.cpp">
       <Filter>Fields\Base</Filter>
     </ClCompile>
-    <ClCompile Include="ISDoubleEdit.cpp">
-      <Filter>Fields\Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDateEdit.cpp">
-      <Filter>Fields\Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISIntegerEdit.cpp">
-      <Filter>Fields\Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTimeEdit.cpp">
-      <Filter>Fields\Fields</Filter>
+    <ClCompile Include="ISEdits.cpp">
+      <Filter>Fields</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -914,9 +884,6 @@
     <QtMoc Include="ISListIndicatorWidget.h">
       <Filter>Controls\ListEdit</Filter>
     </QtMoc>
-    <QtMoc Include="ISSearchEdit.h">
-      <Filter>Controls\ListEdit</Filter>
-    </QtMoc>
     <QtMoc Include="ISCalendarDayWidget.h">
       <Filter>Controls\MailCalendar</Filter>
     </QtMoc>
@@ -954,9 +921,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISDelegates.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISEdits.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISImageWidget.h">
@@ -1022,32 +986,11 @@
     <QtMoc Include="ISListEditPopup.h">
       <Filter>Fields\Base</Filter>
     </QtMoc>
-    <QtMoc Include="ISComboTimeEdit.h">
-      <Filter>Fields\Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISExecutorEdit.h">
-      <Filter>Fields\Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPassportEdit.h">
-      <Filter>Fields\Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPhoneEdit.h">
-      <Filter>Fields\Fields</Filter>
-    </QtMoc>
     <QtMoc Include="ISVolumeEdit.h">
       <Filter>Fields\Base</Filter>
     </QtMoc>
-    <QtMoc Include="ISDoubleEdit.h">
-      <Filter>Fields\Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDateEdit.h">
-      <Filter>Fields\Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISIntegerEdit.h">
-      <Filter>Fields\Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTimeEdit.h">
-      <Filter>Fields\Fields</Filter>
+    <QtMoc Include="ISEdits.h">
+      <Filter>Fields</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

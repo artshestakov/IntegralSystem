@@ -4,10 +4,10 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
-#include "ISIntegerEdit.h"
 #include "ISComboEdit.h"
 #include "ISGui.h"
 #include "ISButtonDialog.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 ISInputDialog::ISInputDialog(ISNamespace::FieldType DataType, const QString &Title, const QString &LabelText, const QVariant &Value)
 	: ISInterfaceDialogForm(),

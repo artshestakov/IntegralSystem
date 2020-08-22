@@ -11,6 +11,20 @@
 #include "ISStyleSheet.h"
 #include "ISDefinesCore.h"
 #include "ISDefinesGui.h"
+#include "ISQuery.h"
+#include "ISMetaUser.h"
+#include "ISPassportForm.h"
+#include "ISSettingsDatabase.h"
+#include "ISSettings.h"
+//-----------------------------------------------------------------------------
+static QString QI_ASTERISK_QUEUE = PREPARE_QUERY("INSERT INTO _asteriskqueue(astq_type, astq_initiated, astq_parameters) "
+												 "VALUES((SELECT asqt_id FROM _asteriskqueuetype WHERE asqt_uid = :TypeUID), currentuserid(), :Parameters)");
+//-----------------------------------------------------------------------------
+static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
+											  "FROM _searchfast "
+											  "WHERE srfs_user = currentuserid() "
+											  "ORDER BY srfs_id "
+											  "LIMIT :Limit");
 //-----------------------------------------------------------------------------
 ISBIKEdit::ISBIKEdit(QWidget *parent) : ISLineEdit(parent)
 {
@@ -153,6 +167,38 @@ bool ISVINEdit::IsValid() const
 {
 	int Count = GetValue().toString().length();
 	return !Count || Count == 17;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISDateEdit::ISDateEdit(QWidget *parent) : ISDateTimeEdit(parent)
+{
+	SetVisibleTimeEdit(false);
+}
+//-----------------------------------------------------------------------------
+ISDateEdit::~ISDateEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISDateEdit::SetValue(const QVariant &value)
+{
+	ISDateTimeEdit::SetValue(QDateTime(value.toDate(), QTime()));
+}
+//-----------------------------------------------------------------------------
+QVariant ISDateEdit::GetValue() const
+{
+	return ISDateTimeEdit::GetValue().toDate();
+}
+//-----------------------------------------------------------------------------
+void ISDateEdit::SetMinimumDate(const QDate &Date)
+{
+	ISDateTimeEdit::SetMinimumDate(Date);
+}
+//-----------------------------------------------------------------------------
+void ISDateEdit::SetMaximumDate(const QDate &Date)
+{
+	ISDateTimeEdit::SetMaximumDate(Date);
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -452,29 +498,6 @@ void ISUrlEdit::UrlChanged()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISYearEdit::ISYearEdit(QWidget *parent) : ISIntegerEdit(parent)
-{
-	SetMinimum(YEAR_MINIMUM);
-	SetMaximum(YEAR_MAXIMUM);
-
-	ISServiceButton *ButtonCurrentYear = new ISServiceButton(BUFFER_ICONS("Calendar"), LANG("CurrentYear"), this);
-	ButtonCurrentYear->setFocusPolicy(Qt::NoFocus);
-	connect(ButtonCurrentYear, &ISServiceButton::clicked, this, &ISYearEdit::SelectCurrentYear);
-	AddWidgetToRight(ButtonCurrentYear);
-}
-//-----------------------------------------------------------------------------
-ISYearEdit::~ISYearEdit()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISYearEdit::SelectCurrentYear()
-{
-	SetValue(QDate::currentDate().year());
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISMonthEdit::ISMonthEdit(QWidget *parent) : ISComboEdit(parent)
 {
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
@@ -623,5 +646,419 @@ ISTaskDescriptionEdit::ISTaskDescriptionEdit(QWidget *parent) : ISTextEdit(paren
 ISTaskDescriptionEdit::~ISTaskDescriptionEdit()
 {
 
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISTimeEdit::ISTimeEdit(QWidget *parent) : ISDateTimeEdit(parent)
+{
+	SetVisibleDateEdit(false);
+}
+//-----------------------------------------------------------------------------
+ISTimeEdit::~ISTimeEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISTimeEdit::SetValue(const QVariant &value)
+{
+	ISDateTimeEdit::SetValue(QDateTime(QDate(), value.toTime()));
+}
+//-----------------------------------------------------------------------------
+QVariant ISTimeEdit::GetValue() const
+{
+	return ISDateTimeEdit::GetValue().toTime();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISDoubleEdit::ISDoubleEdit(QWidget *parent) : ISLineEdit(parent)
+{
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+}
+//-----------------------------------------------------------------------------
+ISDoubleEdit::~ISDoubleEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISDoubleEdit::SetValue(const QVariant &value)
+{
+	bool Ok = true;
+	double Double = value.toDouble(&Ok);
+	Ok ? ISLineEdit::SetValue(QString::fromStdString(ISAlgorithm::PrepareDouble(Double, SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)))) :
+		ISLineEdit::SetValue(QString());
+}
+//-----------------------------------------------------------------------------
+void ISDoubleEdit::TextChanged(const QString &Text)
+{
+	QString String = Text;
+	ISAlgorithm::PrepareStringDouble(String, SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
+	if (String != Text)
+	{
+		ISLineEdit::TextChangedDisconnect();
+		ISLineEdit::SetValue(String);
+		ISLineEdit::TextChangedConnect();
+	}
+	ISLineEdit::TextChanged(String);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISComboTimeEdit::ISComboTimeEdit(QWidget *parent) : ISComboEdit(parent)
+{
+	SetEditable(false);
+
+	AddItem(LANG("Minute_3"), 3);
+	AddItem(LANG("Minute_5"), 5);
+	AddItem(LANG("Minute_10"), 10);
+	AddItem(LANG("Minute_15"), 15);
+	AddItem(LANG("Minute_30"), 30);
+	AddItem(LANG("Minute_45"), 45);
+	AddItem(LANG("Minute_60"), 60);
+	AddItem(LANG("Minute_120"), 120);
+	AddItem(LANG("Minute_180"), 180);
+	AddItem(LANG("Minute_240"), 240);
+	AddItem(LANG("Minute_300"), 300);
+	AddItem(LANG("Minute_360"), 360);
+}
+//-----------------------------------------------------------------------------
+ISComboTimeEdit::~ISComboTimeEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISExecutorEdit::ISExecutorEdit(QWidget *parent) : ISListEdit(parent)
+{
+	ButtonDesignateMe = new ISPushButton(this);
+	ButtonDesignateMe->setText(LANG("Task.DesignateMe"));
+	ButtonDesignateMe->setIcon(BUFFER_ICONS("User"));
+	ButtonDesignateMe->setCursor(CURSOR_POINTING_HAND);
+	ButtonDesignateMe->setSizePolicy(QSizePolicy::Maximum, ButtonDesignateMe->sizePolicy().verticalPolicy());
+	connect(ButtonDesignateMe, &ISPushButton::clicked, this, &ISExecutorEdit::DesignateMe);
+	AddWidgetToRight(ButtonDesignateMe);
+}
+//-----------------------------------------------------------------------------
+ISExecutorEdit::~ISExecutorEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISExecutorEdit::SetReadOnly(bool read_only)
+{
+	ISListEdit::SetReadOnly(read_only);
+	ButtonDesignateMe->setVisible(!read_only);
+}
+//-----------------------------------------------------------------------------
+void ISExecutorEdit::DesignateMe()
+{
+	SetValue(CURRENT_USER_ID);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISIntegerEdit::ISIntegerEdit(QWidget *parent)
+	: ISLineEdit(parent),
+	IntValidator(new QIntValidator(this))
+{
+	SetValidator(IntValidator);
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+}
+//-----------------------------------------------------------------------------
+ISIntegerEdit::~ISIntegerEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISIntegerEdit::SetValue(const QVariant &value)
+{
+	ISLineEdit::SetValue(value.toString().isEmpty() ? QVariant() : value.toInt());
+}
+//-----------------------------------------------------------------------------
+QVariant ISIntegerEdit::GetValue() const
+{
+	QString Value = ISLineEdit::GetValue().toString();
+	return Value.isEmpty() ? QVariant() : QVariant(Value.toInt());
+}
+//-----------------------------------------------------------------------------
+void ISIntegerEdit::SetMinimum(int Minimum)
+{
+	SetRange(Minimum, INT_MAX);
+}
+//-----------------------------------------------------------------------------
+void ISIntegerEdit::SetMaximum(int Maximum)
+{
+	SetRange(INT_MIN, Maximum);
+}
+//-----------------------------------------------------------------------------
+void ISIntegerEdit::SetRange(int Minimum, int Maximum)
+{
+	if (IntValidator)
+	{
+		delete IntValidator;
+	}
+
+	IntValidator = new QIntValidator(Minimum, Maximum, this);
+	SetValidator(IntValidator);
+}
+//-----------------------------------------------------------------------------
+void ISIntegerEdit::ResetRange()
+{
+	SetRange(INT_MIN, INT_MAX);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISYearEdit::ISYearEdit(QWidget *parent) : ISIntegerEdit(parent)
+{
+	SetMinimum(YEAR_MINIMUM);
+	SetMaximum(YEAR_MAXIMUM);
+
+	ISServiceButton *ButtonCurrentYear = new ISServiceButton(BUFFER_ICONS("Calendar"), LANG("CurrentYear"), this);
+	ButtonCurrentYear->setFocusPolicy(Qt::NoFocus);
+	connect(ButtonCurrentYear, &ISServiceButton::clicked, this, &ISYearEdit::SelectCurrentYear);
+	AddWidgetToRight(ButtonCurrentYear);
+}
+//-----------------------------------------------------------------------------
+ISYearEdit::~ISYearEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISYearEdit::SelectCurrentYear()
+{
+	SetValue(QDate::currentDate().year());
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISPassportEdit::ISPassportEdit(QWidget *parent) : ISLineEdit(parent)
+{
+	SetReadOnly(true);
+	Clear();
+
+	ISServiceButton *ButtonEdit = new ISServiceButton(BUFFER_ICONS("Passport"), LANG("Passport.EditPassport"), this);
+	ButtonEdit->setFocusPolicy(Qt::NoFocus);
+	connect(ButtonEdit, &ISServiceButton::clicked, this, &ISPassportEdit::Edit);
+	AddWidgetToRight(ButtonEdit);
+}
+//-----------------------------------------------------------------------------
+ISPassportEdit::~ISPassportEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISPassportEdit::SetValue(const QVariant &value)
+{
+	if (value.isValid())
+	{
+		ISLineEdit::SetValue(PreparePassport(value.toString()));
+	}
+	else
+	{
+		GetLineEdit()->setText(LANG("NotFill"));
+	}
+
+	PassportString = value.toString();
+}
+//-----------------------------------------------------------------------------
+QVariant ISPassportEdit::GetValue() const
+{
+	return PassportString;
+}
+//-----------------------------------------------------------------------------
+void ISPassportEdit::Clear()
+{
+	disconnect(GetLineEdit(), &ISQLineEdit::textChanged, this, &ISPassportEdit::ValueChanged);
+	GetLineEdit()->setText(LANG("NotFill"));
+	connect(GetLineEdit(), &ISQLineEdit::textChanged, this, &ISPassportEdit::ValueChanged);
+
+	PassportString.clear();
+}
+//-----------------------------------------------------------------------------
+void ISPassportEdit::Edit()
+{
+	ISGui::SetWaitGlobalCursor(true);
+	ISPassportForm PassportForm(PassportString);
+	ISGui::SetWaitGlobalCursor(false);
+	if (PassportForm.Exec())
+	{
+		PassportString = PassportForm.GetPassportString();
+		SetValue(PassportString);
+		SetFocus();
+	}
+}
+//-----------------------------------------------------------------------------
+QString ISPassportEdit::PreparePassport(const QString &passport_string)
+{
+	QString Result;
+	if (!passport_string.isEmpty())
+	{
+		QStringList StringList = passport_string.split(ISDefines::Core::SYMBOL_SPACE_HIDE);
+		QString Seria = StringList.at(0);
+		QString Number = StringList.at(1);
+		QString DateOfIssue = StringList.at(2);
+		QString Issued = StringList.at(3);
+		QString DivisionCode = StringList.at(4);
+
+		if (Seria.length())
+		{
+			Result += LANG("Passport.Seria") + ": " + Seria + SYMBOL_SPACE;
+		}
+
+		if (Number.length())
+		{
+			Result += LANG("Passport.Number") + ": " + Number + SYMBOL_SPACE;
+		}
+
+		if (DateOfIssue.length())
+		{
+			Result += LANG("Passport.DateOfIssue") + ": " + DateOfIssue + SYMBOL_SPACE;
+		}
+
+		if (Issued.length())
+		{
+			Result += LANG("Passport.Issued") + ": " + Issued + SYMBOL_SPACE;
+		}
+
+		if (DivisionCode.length())
+		{
+			Result += LANG("Passport.DivisionCode") + ": " + DivisionCode + SYMBOL_SPACE;
+		}
+	}
+
+	return Result;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISPhoneBaseEdit(parent)
+{
+	SetVisibleCall(true);
+	if (!ISGui::CheckSetupTelephony())
+	{
+		SetToolTipCall(LANG("NotSettingTelephonyForCurrentUser"));
+		SetCursorCall(CURSOR_FORBIDDEN);
+	}
+}
+//-----------------------------------------------------------------------------
+ISPhoneEdit::~ISPhoneEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISPhoneEdit::Call()
+{
+	if (ISGui::CheckSetupTelephony())
+	{
+		ISGui::SetWaitGlobalCursor(true);
+		QString Phone = GetValue().toString();
+
+		QVariantMap VariantMap;
+		VariantMap.insert("Phone", Phone);
+
+		ISQuery qInsert(QI_ASTERISK_QUEUE);
+		qInsert.BindValue(":TypeUID", CONST_UID_ASTERISK_QUEUE_TYPE_OUT_CALLED);
+		qInsert.BindValue(":Parameters", ISSystem::VariantMapToJsonString(VariantMap));
+		if (qInsert.Execute())
+		{
+			ISPopupMessage::ShowNotification(LANG("OutcomingCall").arg(Phone));
+			emit Called();
+		}
+		ISGui::SetWaitGlobalCursor(false);
+	}
+	else
+	{
+		ISMessageBox::ShowInformation(this, LANG("NotSettingTelephonyForCurrentUser"));
+	}
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISSearchEdit::ISSearchEdit(QWidget *parent) : ISLineEdit(parent)
+{
+	connect(this, &ISSearchEdit::DataChanged, this, &ISSearchEdit::SearchChanged);
+
+	SetPlaceholderText(LANG("Search"));
+	SetToolTip(LANG("EnteringSearchQuery"));
+	SetIcon(BUFFER_ICONS("Search"));
+
+	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_SEARCH_FAST_REMEMBER))
+	{
+		ButtonLastSearch = new ISServiceButton(LANG("ClickFromViewMyLLastSearchQuery"), this);
+		ButtonLastSearch->setText("...");
+		ButtonLastSearch->setMenu(new QMenu(ButtonLastSearch));
+		connect(ButtonLastSearch->menu(), &QMenu::aboutToShow, this, &ISSearchEdit::AboutToShow);
+		connect(ButtonLastSearch->menu(), &QMenu::aboutToHide, this, &ISSearchEdit::AboutToHide);
+		AddWidgetToRight(ButtonLastSearch);
+	}
+
+	Timer = new QTimer(this);
+	Timer->setInterval(800);
+	connect(Timer, &QTimer::timeout, this, &ISSearchEdit::Timeout);
+}
+//-----------------------------------------------------------------------------
+ISSearchEdit::~ISSearchEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISSearchEdit::Updated()
+{
+	QTimer::singleShot(10, this, &ISSearchEdit::SetFocus);
+}
+//-----------------------------------------------------------------------------
+void ISSearchEdit::SearchChanged()
+{
+	if (GetValue().toString().length())
+	{
+		Timer->start();
+	}
+	else
+	{
+		emit ClearPressed();
+	}
+}
+//-----------------------------------------------------------------------------
+void ISSearchEdit::AboutToShow()
+{
+	ISGui::SetWaitGlobalCursor(true);
+	while (ButtonLastSearch->menu()->actions().count())
+	{
+		delete ButtonLastSearch->menu()->actions().takeAt(0);
+	}
+
+	ISQuery qSelect(QS_SEARCH_FAST);
+	qSelect.BindValue(":Limit", SETTING_INT(CONST_UID_SETTING_TABLES_SEARCH_FAST_VIEW));
+	if (qSelect.Execute())
+	{
+		while (qSelect.Next())
+		{
+			QAction *Action = new QAction(this);
+			Action->setText(qSelect.ReadColumn("srfs_value").toString());
+			connect(Action, &QAction::triggered, this, &ISSearchEdit::LastSearchClicked);
+			ButtonLastSearch->menu()->addAction(Action);
+		}
+	}
+	ISGui::SetWaitGlobalCursor(false);
+}
+//-----------------------------------------------------------------------------
+void ISSearchEdit::AboutToHide()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISSearchEdit::LastSearchClicked()
+{
+	SetValue(dynamic_cast<QAction*>(sender())->text());
+}
+//-----------------------------------------------------------------------------
+void ISSearchEdit::Timeout()
+{
+	Timer->stop();
+	ISGui::RepaintWidget(this);
+	emit Search(GetValue().toString());
 }
 //-----------------------------------------------------------------------------

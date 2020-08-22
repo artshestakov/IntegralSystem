@@ -199,7 +199,6 @@
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboEdit.cpp" />
     <ClCompile Include="ISComboSearchWidgets.cpp" />
-    <ClCompile Include="ISComboTimeEdit.cpp" />
     <ClCompile Include="ISConnectionForm.cpp" />
     <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControlDatabaseForm.cpp" />
@@ -207,16 +206,13 @@
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDatabaseHelper.cpp" />
-    <ClCompile Include="ISDateEdit.cpp" />
     <ClCompile Include="ISDateTimeEdit.cpp" />
     <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDesktopForm.cpp" />
     <ClCompile Include="ISDictionaryWord.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
-    <ClCompile Include="ISDoubleEdit.cpp" />
     <ClCompile Include="ISEdits.cpp" />
-    <ClCompile Include="ISExecutorEdit.cpp" />
     <ClCompile Include="ISExportCSV.cpp" />
     <ClCompile Include="ISExportDBF.cpp" />
     <ClCompile Include="ISExportForm.cpp" />
@@ -241,7 +237,6 @@
     <ClCompile Include="ISImageWidget.cpp" />
     <ClCompile Include="ISIncomingCallBaseForm.cpp" />
     <ClCompile Include="ISInputDialog.cpp" />
-    <ClCompile Include="ISIntegerEdit.cpp" />
     <ClCompile Include="ISInterfaceDialogForm.cpp" />
     <ClCompile Include="ISInterfaceForm.cpp" />
     <ClCompile Include="ISInterfaceMetaForm.cpp" />
@@ -275,7 +270,6 @@
     <ClCompile Include="ISPagesTextEdit.cpp" />
     <ClCompile Include="ISParagraphBaseForm.cpp" />
     <ClCompile Include="ISParagraphEntity.cpp" />
-    <ClCompile Include="ISPassportEdit.cpp" />
     <ClCompile Include="ISPassportForm.cpp" />
     <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPasswordWidthWidget.cpp" />
@@ -284,7 +278,6 @@
     <ClCompile Include="ISPeriodForm.cpp" />
     <ClCompile Include="ISPGSettingsForm.cpp" />
     <ClCompile Include="ISPhoneBaseEdit.cpp" />
-    <ClCompile Include="ISPhoneEdit.cpp" />
     <ClCompile Include="ISPlayerWidget.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
@@ -303,7 +296,6 @@
     <ClCompile Include="ISRecordInfoForm.cpp" />
     <ClCompile Include="ISRegisterMetaType.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
-    <ClCompile Include="ISSearchEdit.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSelectDialogForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
@@ -334,7 +326,6 @@
     <ClCompile Include="ISTelephonyForm.cpp" />
     <ClCompile Include="ISTelephonySummary.cpp" />
     <ClCompile Include="ISTextEdit.cpp" />
-    <ClCompile Include="ISTimeEdit.cpp" />
     <ClCompile Include="ISToolBarAccessTable.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
     <ClCompile Include="ISUserGroupWidget.cpp" />
@@ -464,15 +455,10 @@
     <QtMoc Include="ISUserListForm.h" />
     <QtMoc Include="ISUserObjectForm.h" />
     <QtMoc Include="ISUserPasswordForm.h" />
-    <QtMoc Include="ISComboTimeEdit.h" />
-    <QtMoc Include="ISExecutorEdit.h" />
     <QtMoc Include="ISFileEdit.h" />
     <QtMoc Include="ISListEdit.h" />
     <QtMoc Include="ISListEditPopup.h" />
-    <QtMoc Include="ISPassportEdit.h" />
-    <QtMoc Include="ISPhoneEdit.h" />
     <QtMoc Include="ISListIndicatorWidget.h" />
-    <QtMoc Include="ISSearchEdit.h" />
     <QtMoc Include="ISCalendarDayWidget.h" />
     <QtMoc Include="ISCalendarEventItem.h" />
     <QtMoc Include="ISCalendarEventsWidget.h" />
@@ -508,7 +494,6 @@
     <ClInclude Include="ISHistory.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISTextEdit.h" />
-    <QtMoc Include="ISTimeEdit.h" />
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISScrollArea.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
@@ -520,12 +505,9 @@
     <QtMoc Include="ISCheckEdit.h" />
     <QtMoc Include="ISColorEdit.h" />
     <QtMoc Include="ISComboEdit.h" />
-    <QtMoc Include="ISDateEdit.h" />
     <QtMoc Include="ISDateTimeEdit.h" />
     <QtMoc Include="ISLineEdit.h" />
-    <QtMoc Include="ISDoubleEdit.h" />
     <QtMoc Include="ISImageEdit.h" />
-    <QtMoc Include="ISIntegerEdit.h" />
     <QtMoc Include="ISMessageBox.h" />
     <ClInclude Include="ISBuffer.h" />
     <ClInclude Include="ISColumnSizer.h" />

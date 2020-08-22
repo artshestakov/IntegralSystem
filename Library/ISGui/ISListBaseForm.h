@@ -12,7 +12,7 @@
 #include "ISListIndicatorWidget.h"
 #include "ISSearchForm.h"
 #include "ISPageNavigation.h"
-#include "ISSearchEdit.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы списка
 class ISListBaseForm : public ISInterfaceMetaForm

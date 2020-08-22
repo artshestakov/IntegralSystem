@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISLINEEDIT_H_INCLUDED
+#define _ISLINEEDIT_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISFieldEditBase.h"
 #include "ISEdits.h"
@@ -56,3 +58,4 @@ private:
 	QCompleter *Completer;
 };
 //-----------------------------------------------------------------------------
+#endif

@@ -2,7 +2,6 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISIntegerEdit.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISConnectionForm : public ISInterfaceDialogForm
@@ -16,6 +15,8 @@ public:
 protected:
 	void AfterShowEvent() override;
 	void EnterClicked() override;
+
+private:
 	void SaveSettings(); //Программное сохранение настроек
 	bool CheckFields(); //Проверка на заполнение полей
 
