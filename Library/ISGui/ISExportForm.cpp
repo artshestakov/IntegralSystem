@@ -5,14 +5,14 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISExportForm::ISExportForm(PMetaTable *meta_table) : ISInterfaceDialogForm()
+ISExportForm::ISExportForm(PMetaTable *meta_table)
+	: ISInterfaceDialogForm(),
+	MetaTable(meta_table),
+	SelectedType(ISNamespace::ET_Unknown)
 {
-	MetaTable = meta_table;
-	SelectedType = ISNamespace::ET_Unknown;
-
 	setWindowIcon(BUFFER_ICONS("ExportTable"));
 	setWindowTitle(LANG("Export.Table"));
-
+	setFixedSize(ISDefines::Gui::SIZE_640_480);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QLabel *LabelText = new QLabel(this);
@@ -87,33 +87,16 @@ void ISExportForm::CreateTabFields()
 	TabWidget->addTab(TabFields, LANG("Export.Fields"));
 
 	QToolBar *ToolBar = new QToolBar(TabFields);
+	ToolBar->setIconSize(ISDefines::Gui::SIZE_22_22);
 	LayoutFields->addWidget(ToolBar);
 
-	QAction *ActionSelectAll = new QAction(ToolBar);
-	ActionSelectAll->setText(LANG("SelectAllFields"));
-	ActionSelectAll->setToolTip(LANG("SelectAllFields"));
-	ActionSelectAll->setIcon(BUFFER_ICONS("CheckAll"));
+	QAction *ActionSelectAll = new QAction(BUFFER_ICONS("CheckAll"), LANG("SelectAllFields"), ToolBar);
+	connect(ActionSelectAll, &QAction::triggered, [=] { ListFields->SetCheckedItems(true); });
 	ToolBar->addAction(ActionSelectAll);
-	connect(ActionSelectAll, &QAction::triggered, [=]
-	{
-		for (int i = 0; i < ListFields->count(); ++i)
-		{
-			ListFields->item(i)->setCheckState(Qt::Checked);
-		}
-	});
 
-	QAction *ActionDeselectAll = new QAction(ToolBar);
-	ActionDeselectAll->setText(LANG("DeselectAllFields"));
-	ActionDeselectAll->setToolTip(LANG("DeselectAllFields"));
-	ActionDeselectAll->setIcon(BUFFER_ICONS("CheckNotAll"));
+	QAction *ActionDeselectAll = new QAction(BUFFER_ICONS("CheckNotAll"), LANG("DeselectAllFields"), ToolBar);
+	connect(ActionDeselectAll, &QAction::triggered, [=] { ListFields->SetCheckedItems(false); });
 	ToolBar->addAction(ActionDeselectAll);
-	connect(ActionDeselectAll, &QAction::triggered, [=]
-	{
-		for (int i = 0; i < ListFields->count(); ++i)
-		{
-			ListFields->item(i)->setCheckState(Qt::Unchecked);
-		}
-	});
 
 	ListFields = new ISListWidget(TabFields);
 	ListFields->setSelectionMode(QAbstractItemView::ExtendedSelection);

@@ -140,7 +140,7 @@ void ISSettingsForm::CreateSettings()
 
 	if (ListWidget->count())
 	{
-		ListWidget->setCurrentItem(ListWidget->item(0));
+		ListWidget->setCurrentItem(ListWidget->BeginItem());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -197,14 +197,8 @@ QListWidgetItem* ISSettingsForm::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)
 //-----------------------------------------------------------------------------
 void ISSettingsForm::ItemSelectionChanged()
 {
+	ListWidget->SetFontItems(ISDefines::Gui::FONT_TAHOMA_9);
 	QListWidgetItem *ClickedItem = ListWidget->currentItem();
-
-	for (int i = 0; i < ListWidget->count(); ++i)
-	{
-		QListWidgetItem *ListWidgetItem = ListWidget->item(i);
-		ListWidgetItem->setFont(ISDefines::Gui::FONT_TAHOMA_9);
-	}
-
 	ClickedItem->setFont(ISDefines::Gui::FONT_TAHOMA_9_BOLD);
 	TabWidget->setCurrentIndex(ListWidget->row(ClickedItem));
 	LabelCurrentGroup->setText(ClickedItem->text());

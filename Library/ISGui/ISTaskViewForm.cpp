@@ -306,19 +306,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	QAction *ActionConvertToTask = new QAction(LANG("Task.ConvertToTask"), ListWidgetSubTask);
 	ActionConvertToTask->setEnabled(false);
 	connect(ActionConvertToTask, &QAction::triggered, this, &ISTaskViewForm::ConvertListSubTaskToTask);
-	ListWidgetSubTask->addAction(ActionConvertToTask);
-
-	connect(ListWidgetSubTask, &ISListWidget::itemSelectionChanged, [=]
-	{
-		if (ListWidgetSubTask->count())
-		{
-			ActionConvertToTask->setEnabled(ListWidgetSubTask->currentItem());
-		}
-		else
-		{
-			ActionConvertToTask->setEnabled(false);
-		}
-	});
+	ListWidgetSubTask->AddAction(ActionConvertToTask, true);
 
 	TabWidget = new QTabWidget(this);
 	TabWidget->setTabsClosable(true);
@@ -347,19 +335,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	QAction *ActionLinkDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Task.Link.Delete"), ListWidgetLinks);
 	ActionLinkDelete->setEnabled(false);
 	connect(ActionLinkDelete, &QAction::triggered, this, &ISTaskViewForm::LinkDelete);
-	ListWidgetLinks->addAction(ActionLinkDelete);
-
-	connect(ListWidgetLinks, &ISListWidget::itemSelectionChanged, [=]
-	{
-		if (ListWidgetLinks->count())
-		{
-			ActionLinkDelete->setEnabled(ListWidgetLinks->currentItem());
-		}
-		else
-		{
-			ActionLinkDelete->setEnabled(false);
-		}
-	});
+	ListWidgetLinks->AddAction(ActionLinkDelete, true);
 
 	ListWidgetFiles = new ISListWidget(TabWidget);
 	ListWidgetFiles->setLayout(new QVBoxLayout());

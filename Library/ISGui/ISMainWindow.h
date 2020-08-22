@@ -29,7 +29,6 @@ private:
 	
 	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
 
-	void OpenHistoryObject(const QString &TableName, int ObjectID);
 	void EscapeClicked() override;
 	void InitializePlugin();
 	void ChangeUser(); //Смена пользователя

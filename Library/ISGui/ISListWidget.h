@@ -6,6 +6,9 @@ class ISListWidget : public QListWidget
 {
 	Q_OBJECT
 
+signals:
+	void ItemSelectionChanged(bool);
+
 public:
 	ISListWidget(QWidget *parent = 0);
 	virtual ~ISListWidget();
@@ -18,6 +21,7 @@ public:
 	void SetFontItems(const QFont &Font);
 	void SetFontItem(int Row, const QFont &Font);
 	void SetMaxVisibleItems(int max_visible_items);
+	void SetCheckedItems(bool Checked); //Изменить включение всех элементов
 	QAction* AddAction(const QIcon &Icon, const QString &Text, bool InGroup);
 	void AddAction(QAction *Action, bool InGroup); //Добавить действие
 	QListWidgetItem* BeginItem(); //Получить первый элемент

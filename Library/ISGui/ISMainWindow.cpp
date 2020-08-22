@@ -15,7 +15,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
-#include "ISHistoryForm.h"
 #include "ISParagraphEntity.h"
 #include "ISPopupMessage.h"
 #include "ISCreatedObjectsEntity.h"
@@ -152,11 +151,6 @@ void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
 	IncomingCallForm->Exec();
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::OpenHistoryObject(const QString &TableName, int ObjectID)
-{
-	ISGui::CreateObjectForm(ISNamespace::ObjectFormType::OFT_Edit, TableName, ObjectID)->show();
-}
-//-----------------------------------------------------------------------------
 void ISMainWindow::EscapeClicked()
 {
 	close();
@@ -201,11 +195,7 @@ void ISMainWindow::ShowFavoritesForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowHistoryForm()
 {
-	ISGui::SetWaitGlobalCursor(true);
-	ISHistoryForm *HistoryForm = new ISHistoryForm();
-	connect(HistoryForm, &ISHistoryForm::OpenObject, this, &ISMainWindow::OpenHistoryObject);
-	HistoryForm->show();
-	ISGui::SetWaitGlobalCursor(false);
+	ISGui::ShowHistoryForm();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()

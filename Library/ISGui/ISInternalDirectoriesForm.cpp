@@ -13,10 +13,10 @@ static QString QS_INTERNAL_DIRECTORIES = PREPARE_QUERY("SELECT intd_tablename "
 													   "WHERE NOT intd_isdeleted "
 													   "ORDER BY intd_order");
 //-----------------------------------------------------------------------------
-ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent) : ISInterfaceMetaForm(parent)
+ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent)
+	: ISInterfaceMetaForm(parent),
+	ListBaseForm(nullptr)
 {
-	ListBaseForm = nullptr;
-
 	Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
 	
@@ -76,11 +76,7 @@ void ISInternalDirectoriesForm::ItemSelectionChanged()
 		ListBaseForm = nullptr;
 	}
 
-	for (int i = 0; i < ListWidget->count(); ++i)
-	{
-		ListWidget->item(i)->setFont(ISDefines::Gui::FONT_APPLICATION);
-	}
-
+	ListWidget->SetFontItems(ISDefines::Gui::FONT_APPLICATION);
 	QListWidgetItem *CurrentItem = ListWidget->currentItem();
 	CurrentItem->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 

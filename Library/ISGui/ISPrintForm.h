@@ -28,7 +28,7 @@ private:
 	ISCheckEdit *CheckEditPDF;
 	ISButtonDialog *ButtonPanel;
 
-	QMap<QListWidgetItem*, ISPrintMetaReport*> Reports;
+	std::map<QListWidgetItem*, ISPrintMetaReport*> Reports;
 	ISPrintMetaReport *MetaReport;
 };
 //-----------------------------------------------------------------------------

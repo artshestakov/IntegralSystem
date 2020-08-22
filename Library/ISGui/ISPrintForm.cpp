@@ -12,12 +12,11 @@ ISPrintForm::ISPrintForm(const QString &TableName)
 	setWindowTitle(LANG("PrintForms"));
 	setWindowIcon(BUFFER_ICONS("Print"));
 	
-	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->setCursor(CURSOR_POINTING_HAND);
-	connect(ListWidget, &QListWidget::itemClicked, [=] { ButtonPanel->SetApplyEnabled(true); });
-	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISPrintForm::Print);
+	connect(ListWidget, &ISListWidget::itemDoubleClicked, this, &ISPrintForm::Print);
 	GetMainLayout()->addWidget(ListWidget);
 
 	for (ISPrintMetaReport *meta_report : ISPrintingEntity::GetInstance().GetReports(TableName))
@@ -29,7 +28,7 @@ ISPrintForm::ISPrintForm(const QString &TableName)
 		{
 		case ISNamespace::RT_Html: ListWidgetItem->setIcon(BUFFER_ICONS("Print.Type.Html")); break;
 		}
-		Reports.insert(ListWidgetItem, meta_report);
+		Reports[ListWidgetItem] = meta_report;
 	}
 
 	CheckEditPreview = new ISCheckEdit(this);
@@ -44,6 +43,7 @@ ISPrintForm::ISPrintForm(const QString &TableName)
 	ButtonPanel->SetApplyEnabled(false);
 	connect(ButtonPanel, &ISButtonDialog::Apply, this, &ISPrintForm::Print);
 	connect(ButtonPanel, &ISButtonDialog::Close, this, &ISPrintForm::close);
+	connect(ListWidget, &ISListWidget::ItemSelectionChanged, ButtonPanel, &ISButtonDialog::SetApplyEnabled);
 	GetMainLayout()->addWidget(ButtonPanel, 0, Qt::AlignRight);
 }
 //-----------------------------------------------------------------------------
@@ -69,7 +69,8 @@ bool ISPrintForm::GetPDF() const
 //-----------------------------------------------------------------------------
 void ISPrintForm::Print()
 {
-	MetaReport = Reports.value(ListWidget->currentItem());
+	MetaReport = Reports[ListWidget->currentItem()];
+	SetResult(true);
 	close();
 }
 //-----------------------------------------------------------------------------

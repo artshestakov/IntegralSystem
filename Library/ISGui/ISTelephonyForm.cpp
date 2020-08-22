@@ -66,8 +66,7 @@ void ISTelephonyForm::ItemSelectionChanged()
 	}
 	else if (FormType == ISNamespace::TF_Summary) //Сводная статистика
 	{
-		ISAsteriskTotalForm *AsteriskTotalForm = new ISAsteriskTotalForm(this);
-		CentralWidget = AsteriskTotalForm;
+		CentralWidget = new ISAsteriskTotalForm(this);
 	}
 	else if (FormType == ISNamespace::TF_Pattern) //Внутренние номера
 	{
@@ -80,15 +79,12 @@ void ISTelephonyForm::ItemSelectionChanged()
 			ISGui::MoveWidgetToDesktop(ObjectFormBase, ISNamespace::MWD_Center);
 			ObjectFormBase->show();
 		});
-
 		CentralWidget = ListBaseForm;
 	}
 	else if (FormType == ISNamespace::TF_Activity)
 	{
-		ISPatternActivityForm *PatternActivityForm = new ISPatternActivityForm(this);
-		CentralWidget = PatternActivityForm;
+		CentralWidget = new ISPatternActivityForm(this);
 	}
-
 	MainLayout->addWidget(CentralWidget);
 }
 //-----------------------------------------------------------------------------

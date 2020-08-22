@@ -6,6 +6,8 @@
 #include "ISQuery.h"
 #include "ISSettings.h"
 #include "ISConstants.h"
+#include "ISListWidget.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_tablelocalname, htry_objectname, htry_objectid "
 										  "FROM _history "
@@ -17,10 +19,10 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {
 	setWindowTitle(LANG("History"));
 	setWindowIcon(BUFFER_ICONS("History"));
-
+	resize(ISDefines::Gui::SIZE_640_480);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
-	ListWidget = new ISListWidget(this);
+	ISListWidget *ListWidget = new ISListWidget(this);
 	ListWidget->setCursor(CURSOR_POINTING_HAND);
 	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISHistoryForm::Open);
 	GetMainLayout()->addWidget(ListWidget);
@@ -55,9 +57,8 @@ ISHistoryForm::~ISHistoryForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISHistoryForm::Open()
+void ISHistoryForm::Open(QListWidgetItem *ListWidgetItem)
 {
-	QListWidgetItem *ListWidgetItem = ListWidget->currentItem();
-	emit OpenObject(ListWidgetItem->data(Qt::UserRole).toString(), ListWidgetItem->data(Qt::UserRole * 2).toInt());
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, ListWidgetItem->data(Qt::UserRole).toString(), ListWidgetItem->data(Qt::UserRole * 2).toInt()));
 }
 //-----------------------------------------------------------------------------

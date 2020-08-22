@@ -29,6 +29,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISInputDialog.h"
 #include "ISFavoritesForm.h"
+#include "ISHistoryForm.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _settingsdatabase WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
@@ -621,6 +622,13 @@ void ISGui::ShowFavoritesForm(const QString &TableName)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	(new ISFavoritesForm(nullptr, TableName))->show();
+	ISGui::SetWaitGlobalCursor(false);
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowHistoryForm()
+{
+	ISGui::SetWaitGlobalCursor(true);
+	(new ISHistoryForm())->show();
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

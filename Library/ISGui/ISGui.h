@@ -66,6 +66,7 @@ public:
 
 	static void ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID);
 	static void ShowFavoritesForm(const QString &TableName = QString());
+	static void ShowHistoryForm();
 
 	static bool CheckSetupTelephony(); //Проверка настроена ли телефония
 

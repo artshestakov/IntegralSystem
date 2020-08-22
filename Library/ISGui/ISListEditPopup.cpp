@@ -14,10 +14,9 @@
 //-----------------------------------------------------------------------------
 ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
 	: ISInterfaceForm(ComboBox),
-	MetaForeign(meta_foreign)
+	MetaForeign(meta_foreign),
+	MetaTableForeign(ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass))
 {
-	MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
-
 	setWindowFlags(Qt::Popup);
 	setAttribute(Qt::WA_DeleteOnClose, false);
 
@@ -36,8 +35,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
 	connect(LineEdit, &ISLineEdit::ValueChange, this, &ISListEditPopup::Search);
 	LayoutFrame->addWidget(LineEdit);
 
-	LabelName = new QLabel(this);
-	LabelName->setText(MetaTableForeign->LocalListName + ':');
+	LabelName = new QLabel(MetaTableForeign->LocalListName + ':', this);
 	LabelName->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutFrame->addWidget(LabelName);
@@ -65,15 +63,12 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
 		StatusBar->addWidget(ButtonAdd);
 	}
 
-	ISPushButton *ButtonHide = new ISPushButton(StatusBar);
-	ButtonHide->setText(LANG("Hide"));
-	ButtonHide->setIcon(BUFFER_ICONS("ArrowUp"));
+	ISPushButton *ButtonHide = new ISPushButton(BUFFER_ICONS("ArrowUp"), LANG("Hide"), StatusBar);
 	ButtonHide->setFlat(true);
 	connect(ButtonHide, &ISPushButton::clicked, this, &ISListEditPopup::hide);
 	StatusBar->addPermanentWidget(ButtonHide);
 
-	LabelEmpty = new QLabel(this);
-	LabelEmpty->setText(LANG("ListIsEmpty"));
+	LabelEmpty = new QLabel(LANG("ListIsEmpty"), this);
 	LabelEmpty->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelEmpty->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	LabelEmpty->setVisible(false);
@@ -107,7 +102,6 @@ void ISListEditPopup::hideEvent(QHideEvent *e)
 void ISListEditPopup::paintEvent(QPaintEvent *e)
 {
 	ISInterfaceForm::paintEvent(e);
-
 	if (LabelEmpty->isVisible())
 	{
 		QPoint CenterPoint = ListWidget->frameGeometry().center();
@@ -144,7 +138,7 @@ void ISListEditPopup::Search(const QVariant &value)
 	QString SearchValue = value.toString().toLower();
 	if (SearchValue.isEmpty())
 	{
-		for (int i = 0; i < ListWidget->count(); ++i)
+		for (int i = 0, c = ListWidget->count(); i < c; ++i)
 		{
 			ListWidget->setItemHidden(ListWidget->item(i), false);
 		}
@@ -170,7 +164,7 @@ void ISListEditPopup::Search(const QVariant &value)
 
 		if (Founded)
 		{
-			QListWidgetItem *ListWidgetItem = ListWidget->item(0);
+			QListWidgetItem *ListWidgetItem = ListWidget->BeginItem();
 			ListWidget->setItemSelected(ListWidgetItem, true);
 			ListWidget->setCurrentItem(ListWidgetItem);
 		}
@@ -213,11 +207,7 @@ void ISListEditPopup::LoadDataFromQuery()
 			ListWidgetItem->setText(Value);
 			ListWidgetItem->setData(Qt::UserRole, ID);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
-			
-			if (CurrentValue == ID)
-			{
-				CurrentItem = ListWidgetItem;
-			}
+			CurrentItem = CurrentValue == ID ? ListWidgetItem : nullptr;
 		}
 
 		if (CurrentItem)
@@ -229,7 +219,6 @@ void ISListEditPopup::LoadDataFromQuery()
 		}
 		LabelCountRow->setText(LANG("RecordsCount") + ": " + QString::number(ListWidget->count()));
 	}
-
 	LabelEmpty->setVisible(!ListWidget->count());
 }
 //-----------------------------------------------------------------------------

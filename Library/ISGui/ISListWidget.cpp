@@ -48,7 +48,7 @@ void ISListWidget::RemoveItem(QListWidgetItem *ListWidgetItem)
 //-----------------------------------------------------------------------------
 void ISListWidget::SetFontItems(const QFont &Font)
 {
-	for (int i = 0; i < count(); ++i)
+	for (int i = 0, c = count(); i < c; ++i)
 	{
 		item(i)->setFont(Font);
 	}
@@ -62,7 +62,14 @@ void ISListWidget::SetFontItem(int Row, const QFont &Font)
 void ISListWidget::SetMaxVisibleItems(int max_visible_items)
 {
 	MaxVisibleItems = max_visible_items;
-
+}
+//-----------------------------------------------------------------------------
+void ISListWidget::SetCheckedItems(bool Checked)
+{
+	for (int i = 0, c = count(); i < c; ++i)
+	{
+		item(i)->setCheckState(Checked ? Qt::Checked : Qt::Unchecked);
+	}
 }
 //-----------------------------------------------------------------------------
 QAction* ISListWidget::AddAction(const QIcon &Icon, const QString &Text, bool InGroup)
@@ -134,5 +141,6 @@ void ISListWidget::mousePressEvent(QMouseEvent *MouseEvent)
 			Action->setEnabled(IsSelectedItem);
 		}
 	}
+	emit ItemSelectionChanged(IsSelectedItem);
 }
 //-----------------------------------------------------------------------------
