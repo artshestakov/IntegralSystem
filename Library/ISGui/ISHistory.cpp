@@ -1,6 +1,7 @@
 #include "ISHistory.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
+#include "ISSettings.h"
 //-----------------------------------------------------------------------------
 static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_objectid "
 										  "FROM _history "
@@ -60,7 +61,10 @@ bool ISHistory::Initialize()
 //-----------------------------------------------------------------------------
 void ISHistory::AddObject(const QString &TableName, int ObjectID)
 {
-	Stories.emplace_back(ISHistoryObject{ QDateTime::currentDateTime(), TableName, ObjectID, true });
+	if (SETTING_BOOL(CONST_UID_SETTING_OTHER_ENABLE_HISTORY_TRACKING))
+	{
+		Stories.emplace_back(ISHistoryObject{ QDateTime::currentDateTime(), TableName, ObjectID, true });
+	}
 }
 //-----------------------------------------------------------------------------
 void ISHistory::Clear()

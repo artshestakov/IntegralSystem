@@ -520,6 +520,7 @@
   <Local Name="ClickFromSelectFile" Russian="Нажмите, чтобы выбрать файл"/>
   <Local Name="EnterFileName" Russian="Введите имя файла"/>
   <Local Name="EnterImageName" Russian="Введите имя изображения"/>
+  <Local Name="EnableHistoryTracking" Russian="Включить ведение истории"/>
 
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>

@@ -17,6 +17,7 @@ protected:
 
 private:
 	void Open(QListWidgetItem *ListWidgetItem);
+	void CheckEditChanged(const QVariant &Value);
 	void Clear();
 
 private:

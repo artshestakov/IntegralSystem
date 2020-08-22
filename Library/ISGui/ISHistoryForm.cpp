@@ -10,6 +10,7 @@
 #include "ISMetaData.h"
 #include "ISCore.h"
 #include "ISMessageBox.h"
+#include "ISCheckEdit.h"
 //-----------------------------------------------------------------------------
 ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {
@@ -36,6 +37,12 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 		ListWidgetItem->setData(Qt::UserRole * 2, HistoryObject.ObjectID);
 		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
 	}
+
+	ISCheckEdit *CheckEdit = new ISCheckEdit(this);
+	CheckEdit->SetText(LANG("EnableHistoryTracking"));
+	CheckEdit->SetValue(SETTING_BOOL(CONST_UID_SETTING_OTHER_ENABLE_HISTORY_TRACKING));
+	connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISHistoryForm::CheckEditChanged);
+	GetMainLayout()->addWidget(CheckEdit, 0, Qt::AlignLeft);
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutBottom);
@@ -64,6 +71,11 @@ void ISHistoryForm::EscapeClicked()
 void ISHistoryForm::Open(QListWidgetItem *ListWidgetItem)
 {
 	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, ListWidgetItem->data(Qt::UserRole).toString(), ListWidgetItem->data(Qt::UserRole * 2).toInt()));
+}
+//-----------------------------------------------------------------------------
+void ISHistoryForm::CheckEditChanged(const QVariant &Value)
+{
+	ISSettings::Instance().SetValue(CONST_UID_SETTING_OTHER_ENABLE_HISTORY_TRACKING, Value);
 }
 //-----------------------------------------------------------------------------
 void ISHistoryForm::Clear()
