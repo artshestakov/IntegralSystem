@@ -70,9 +70,6 @@
     <ClCompile Include="CGTable.cpp">
       <Filter>Configurator</Filter>
     </ClCompile>
-    <ClCompile Include="CGTemplateField.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
     <ClCompile Include="CGConfigurator.cpp">
       <Filter>Command</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGTemplateField.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
     <ClInclude Include="CGTable.h">
       <Filter>Configurator</Filter>
     </ClInclude>

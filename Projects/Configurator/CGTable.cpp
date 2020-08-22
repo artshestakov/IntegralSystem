@@ -1,7 +1,6 @@
 #include "CGTable.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "CGTemplateField.h"
 #include "CGHelper.h"
 #include "CGSequence.h"
 #include "ISConstants.h"
@@ -45,44 +44,45 @@ bool CGTable::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 		return Result;
 	}
 
+	//Заголовок запроса
 	QString SqlText = "CREATE TABLE public." + MetaTable->Name.toLower() + " \n( \n";
-	SqlText += CGTemplateField::GetSqlTextForTemplateSystemFields(TableName, TableAlias);
 
 	//Формирование запроса на создание таблицы
-	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей таблицы
+	for (PMetaField *MetaField : MetaTable->AllFields) //Обход полей таблицы
 	{
 		if (!MetaField->QueryText.isEmpty())
 		{
 			continue;
 		}
 
-		ISNamespace::FieldType FieldType = MetaField->Type; //Тип поля
 		QString FieldName = MetaField->Name; //Имя поля
+		ISNamespace::FieldType FieldType = MetaField->Type; //Тип поля
 		int FieldSize = MetaField->Size; //Размер поля
 		QString FieldDefalutValue = MetaField->DefaultValue.toString(); //Значение по умолчанию для поля
 		bool FieldNotNull = MetaField->NotNull; //Статус обязательного заполнения поля
+		bool FieldSequence = MetaField->Sequence;
 
 		SqlText += "\t" + TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::Instance().GetTypeDB(FieldType);
 
 		if (FieldSize > 0) //Если указан размер поля
 		{
-			SqlText += '(' + QString::number(FieldSize) + ')';
+			SqlText += QString("(%1)").arg(FieldSize);
 		}
 
-		if (FieldDefalutValue.isEmpty()) //Если значение по умолчанию не указано
+		if (FieldSequence) //Если поле является последовательностью - устанавливаем счётчик значением по умолчанию
 		{
-			SqlText += " DEFAULT NULL";
+			SqlText += QString(" DEFAULT nextval('%1'::regclass)").arg(CGSequence::GetSequenceNameForTable(TableName));
 		}
-		else //Значение по умолчанию указано
+		else //Поле не является поледовательностью - устанавливаем указанное значение по умолчанию
 		{
-			SqlText += " DEFAULT " + (FieldType == ISNamespace::FT_UID ? QString("'%1'").arg(FieldDefalutValue) : FieldDefalutValue);
+			//Если значние по умолчанию не указано - ставим NULL, иначе - то что указали
+			SqlText += " DEFAULT " + (FieldDefalutValue.isEmpty() ? "NULL" : FieldDefalutValue);
 		}
 
 		if (FieldNotNull) //Если поле обязательно для заполнения
 		{
 			SqlText += " NOT NULL";
 		}
-
 		SqlText += ",\n";
 	}
 
@@ -188,34 +188,9 @@ bool CGTable::AlterExistFields(PMetaTable *MetaTable, QString &ErrorString)
 			//Проверка соответствия значения по умолчанию
 			if (ColumnDefaultValue != MetaDefaultValue)
 			{
-				QString QueryText;
-				if (MetaDefaultValue.isEmpty()) //Удалить значение по умолчанию
-				{
-					QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + ColumnNameFull + " DROP DEFAULT";
-				}
-				else //Если значение по умолчанию указано
-				{
-					if (MetaDefaultValue.toLower() == "null") //Если значение по умолчанию указано НУЛЕВОЕ
-					{
-						QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT NULL";
-					}
-					else
-					{
-						if (MetaField->Type == ISNamespace::FT_Int ||
-							MetaField->Type == ISNamespace::FT_DateTime ||
-							MetaField->Type == ISNamespace::FT_Date ||
-							MetaField->Type == ISNamespace::FT_Time ||
-							MetaField->Type == ISNamespace::FT_UID)
-						{
-							QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT " + MetaDefaultValue;
-						}
-						else
-						{
-							QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + ColumnNameFull + " SET DEFAULT '" + MetaDefaultValue + '\'';
-						}
-					}
-				}
-
+				//Если в мета-данных значение по умолчанию не указано - удаляем текущее (даже если его нет), иначе - изменяем
+				QString QueryText = "ALTER TABLE public." + MetaTable->Name + 
+					" ALTER COLUMN " + ColumnNameFull + (MetaDefaultValue.isEmpty() ? " DROP DEFAULT" : (" SET DEFAULT " + MetaDefaultValue));
 				ISQuery qAlterColumn;
 				qAlterColumn.SetShowLongQuery(false);
 				Result = qAlterColumn.Execute(QueryText);

@@ -36,7 +36,6 @@
     <ClCompile Include="CGResource.cpp" />
     <ClCompile Include="CGSequence.cpp" />
     <ClCompile Include="CGTable.cpp" />
-    <ClCompile Include="CGTemplateField.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGTable.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGTemplateField.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{641EC90D-70E1-42F5-9F2F-22C5238F1D02}</ProjectGuid>

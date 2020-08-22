@@ -13,11 +13,11 @@ static QString QC_SEQUENCE = "CREATE SEQUENCE public.%1 "
 							 "MAXVALUE 2147483647 START 1 "
 							 "CACHE 1";
 //-----------------------------------------------------------------------------
-bool CGSequence::CreateSequence(const QString &ClassName, QString &ErrorString)
+bool CGSequence::CreateSequence(const QString &TableName, QString &ErrorString)
 {
 	ISQuery qCreateSequence;
 	qCreateSequence.SetShowLongQuery(false);
-	bool Result = qCreateSequence.Execute(QC_SEQUENCE.arg(GetSequenceNameForClass(ClassName)));
+	bool Result = qCreateSequence.Execute(QC_SEQUENCE.arg(GetSequenceNameForTable(TableName)));
 	if (!Result)
 	{
 		ErrorString = qCreateSequence.GetErrorString();
@@ -25,11 +25,11 @@ bool CGSequence::CreateSequence(const QString &ClassName, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGSequence::CheckExistSequence(const QString &ClassName, bool &Exist, QString &ErrorString)
+bool CGSequence::CheckExistSequence(const QString &TableName, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectSequences(QS_SEQUENCES);
 	qSelectSequences.SetShowLongQuery(false);
-	qSelectSequences.BindValue(":SequenceName", GetSequenceNameForClass(ClassName));
+	qSelectSequences.BindValue(":SequenceName", GetSequenceNameForTable(TableName));
 	bool Result = qSelectSequences.ExecuteFirst();
 	if (Result)
 	{
@@ -42,8 +42,8 @@ bool CGSequence::CheckExistSequence(const QString &ClassName, bool &Exist, QStri
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString CGSequence::GetSequenceNameForClass(const QString &ClassName)
+QString CGSequence::GetSequenceNameForTable(const QString &TableName)
 {
-	return ClassName + "_sequence";
+	return TableName + "_sequence";
 }
 //-----------------------------------------------------------------------------
