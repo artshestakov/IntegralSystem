@@ -10,6 +10,7 @@
 #include "ISCalendarEventForm.h"
 #include "ISInputDialog.h"
 #include "ISCore.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
 										   "FROM _calendar "
@@ -111,8 +112,26 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	Panel->setLayout(LayoutRight);
 	MainLayout->addWidget(Panel);
 
-	SelectedDayWidget = new ISCalendarDayWidget(Panel);
-	LayoutRight->addWidget(SelectedDayWidget);
+	QHBoxLayout *LayoutSelectedDate = new QHBoxLayout();
+	LayoutSelectedDate->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	LayoutRight->addLayout(LayoutSelectedDate);
+
+	LabelDayNumber = new QLabel(Panel);
+	LabelDayNumber->setFont(ISDefines::Gui::FONT_TAHOMA_35);
+	LayoutSelectedDate->addWidget(LabelDayNumber, 0, Qt::AlignVCenter);
+
+	QVBoxLayout *LayoutSelectedDateRight = new QVBoxLayout();
+	LayoutSelectedDate->addLayout(LayoutSelectedDateRight);
+
+	LabelDayName = new QLabel(this);
+	LabelDayName->setFont(ISDefines::Gui::FONT_TAHOMA_18);
+	LayoutSelectedDateRight->addWidget(LabelDayName);
+
+	LabelMonthYear = new QLabel(this);
+	LabelMonthYear->setFont(ISDefines::Gui::FONT_TAHOMA_12);
+	LayoutSelectedDateRight->addWidget(LabelMonthYear);
+
+	LayoutSelectedDate->addStretch();
 
 	EditSearch = new ISLineEdit(this);
 	EditSearch->SetPlaceholderText(LANG("CalendarForm.EnteringSearchQuery"));
@@ -176,8 +195,9 @@ void ISCalendarForm::SelectedDateChanged()
 	ISGui::SetWaitGlobalCursor(true);
 
 	QDate Date = CalendarPanel->selectedDate();
-	SelectedDayWidget->SetSelectedDate(Date);
-
+	LabelDayNumber->setText(QString::number(Date.day()));
+	LabelDayName->setText(Date == QDate::currentDate() ? QString("%1 (%2)").arg(Date.longDayName(Date.dayOfWeek())).arg(LANG("Today")) : Date.longDayName(Date.dayOfWeek()));
+	LabelMonthYear->setText(QString("%1 %2").arg(Date.longMonthName(Date.month())).arg(Date.year()));
 	EditSearch->Clear();
 	ListWidget->Clear();
 
@@ -205,7 +225,6 @@ void ISCalendarForm::Create()
 {
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Calendar"));
 	CalendarObjectForm->SetDate(CalendarPanel->selectedDate());
-	CalendarObjectForm->adjustSize();
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, CalendarPanel, &ISCalendarPanel::UpdateCells);
 	ISGui::ShowObjectForm(CalendarObjectForm);
@@ -369,16 +388,10 @@ void ISCalendarForm::SearchChanged(const QVariant &value)
 ISCalendarEventItem* ISCalendarForm::AddEventItem(int CalendarID, const QString &Name, const QString &Text, const QTime &Time, bool Closed)
 {
 	ISCalendarEventItem *EventItem = new ISCalendarEventItem(CalendarID, Name, Text, Time, Closed, ListWidget);
-
 	QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
 	ListWidgetItem->setSizeHint(EventItem->sizeHint());
 	ListWidget->setItemWidget(ListWidgetItem, EventItem);
-
-	connect(EventItem, &ISCalendarEventItem::SizeHintChanged, [=]
-	{
-		ListWidgetItem->setSizeHint(EventItem->sizeHint());
-	});
-
+	connect(EventItem, &ISCalendarEventItem::SizeHintChanged, [=] { ListWidgetItem->setSizeHint(EventItem->sizeHint()); });
 	return EventItem;
 }
 //-----------------------------------------------------------------------------

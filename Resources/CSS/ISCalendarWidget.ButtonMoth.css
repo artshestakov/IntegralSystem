@@ -1,9 +1,0 @@
-﻿QToolButton
-{
-    color: white;
-}
-
-QToolButton::menu-indicator
-{
-    image: none;
-}

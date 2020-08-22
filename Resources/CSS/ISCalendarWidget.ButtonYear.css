@@ -2,3 +2,8 @@
 {
     color: white;
 }
+
+QToolButton:hover
+{
+    color: rgb(255, 178, 127);
+}

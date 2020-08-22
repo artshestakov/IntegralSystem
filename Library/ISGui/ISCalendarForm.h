@@ -3,7 +3,6 @@
 #include "StdAfx.h"
 #include "ISParagraphBaseForm.h"
 #include "ISCalendarPanel.h"
-#include "ISCalendarDayWidget.h"
 #include "ISCalendarEventItem.h"
 #include "ISLineEdit.h"
 #include "ISCalendarEventsWidget.h"
@@ -47,7 +46,9 @@ private:
 	QHBoxLayout *MainLayout;
 	
 	ISCalendarPanel *CalendarPanel;
-	ISCalendarDayWidget *SelectedDayWidget;
+	QLabel *LabelDayNumber;
+	QLabel *LabelDayName;
+	QLabel *LabelMonthYear;
 
 	QAction *ActionCreate;
 	QAction *ActionDateTo;

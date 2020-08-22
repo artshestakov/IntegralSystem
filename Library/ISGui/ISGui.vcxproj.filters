@@ -465,9 +465,6 @@
     <ClCompile Include="ISListIndicatorWidget.cpp">
       <Filter>Controls\ListEdit</Filter>
     </ClCompile>
-    <ClCompile Include="ISCalendarDayWidget.cpp">
-      <Filter>Controls\MailCalendar</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalendarEventItem.cpp">
       <Filter>Controls\MailCalendar</Filter>
     </ClCompile>
@@ -883,9 +880,6 @@
     </QtMoc>
     <QtMoc Include="ISListIndicatorWidget.h">
       <Filter>Controls\ListEdit</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCalendarDayWidget.h">
-      <Filter>Controls\MailCalendar</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarEventItem.h">
       <Filter>Controls\MailCalendar</Filter>

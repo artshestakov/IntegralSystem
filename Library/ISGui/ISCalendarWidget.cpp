@@ -35,7 +35,7 @@ ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 	ButtonPrevMouth->setCursor(CURSOR_POINTING_HAND);
 
 	ButtonMonth = findChild<QToolButton*>("qt_calendar_monthbutton");
-	ButtonMonth->setStyleSheet(STYLE_SHEET("ISCalendarWidget.ButtonMoth"));
+	ButtonMonth->setStyleSheet(STYLE_SHEET("ISCalendarWidget.ButtonMonth"));
 	ButtonMonth->setCursor(CURSOR_POINTING_HAND);
 
 	int MonthID = 1;

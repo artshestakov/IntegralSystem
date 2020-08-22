@@ -184,7 +184,6 @@
     <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISButtonDialog.cpp" />
     <ClCompile Include="ISButtons.cpp" />
-    <ClCompile Include="ISCalendarDayWidget.cpp" />
     <ClCompile Include="ISCalendarEventForm.cpp" />
     <ClCompile Include="ISCalendarEventItem.cpp" />
     <ClCompile Include="ISCalendarEventsWidget.cpp" />
@@ -459,7 +458,6 @@
     <QtMoc Include="ISListEdit.h" />
     <QtMoc Include="ISListEditPopup.h" />
     <QtMoc Include="ISListIndicatorWidget.h" />
-    <QtMoc Include="ISCalendarDayWidget.h" />
     <QtMoc Include="ISCalendarEventItem.h" />
     <QtMoc Include="ISCalendarEventsWidget.h" />
     <QtMoc Include="ISCalendarPanel.h" />

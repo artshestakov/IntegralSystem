@@ -132,7 +132,7 @@ void ISMenuBar::ParagraphClicked()
 	{
 		if (MapItem.second == sender())
 		{
-			MapItem.second->parentWidget()->setStyleSheet("background-color: white;");
+			MapItem.second->parentWidget()->setStyleSheet(STYLE_SHEET("QWidgetParagraph.Checked"));
 			MapItem.second->setChecked(true);
 			emit ParagraphClicked(MapItem.first);
 		}
