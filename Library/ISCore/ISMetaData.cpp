@@ -890,6 +890,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 			MetaField->IsSystem = QVariant(DomNamedNodeMap.namedItem("IsSystem").nodeValue()).toBool();
 			MetaField->QueryText = DomNamedNodeMap.namedItem("QueryText").nodeValue();
 			MetaField->Sequence = QVariant(DomNamedNodeMap.namedItem("Sequence").nodeValue()).toBool();
+			MetaField->PrimaryKey = QVariant(DomNamedNodeMap.namedItem("PrimaryKey").nodeValue()).toBool();
 			MetaField->LayoutName = DomNamedNodeMap.namedItem("LayoutName").nodeValue();
 			MetaField->SeparatorName = DomNamedNodeMap.namedItem("SeparatorName").nodeValue();
 			MetaField->IsSystem ? MetaTable->SystemFields.emplace_back(MetaField) : MetaTable->Fields.emplace_back(MetaField);

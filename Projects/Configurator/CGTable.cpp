@@ -60,7 +60,6 @@ bool CGTable::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 		int FieldSize = MetaField->Size; //Размер поля
 		QString FieldDefalutValue = MetaField->DefaultValue.toString(); //Значение по умолчанию для поля
 		bool FieldNotNull = MetaField->NotNull; //Статус обязательного заполнения поля
-		bool FieldSequence = MetaField->Sequence;
 
 		SqlText += "\t" + TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::Instance().GetTypeDB(FieldType);
 
@@ -69,7 +68,7 @@ bool CGTable::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 			SqlText += QString("(%1)").arg(FieldSize);
 		}
 
-		if (FieldSequence) //Если поле является последовательностью - устанавливаем счётчик значением по умолчанию
+		if (MetaField->Sequence) //Если поле является последовательностью - устанавливаем счётчик значением по умолчанию
 		{
 			SqlText += QString(" DEFAULT nextval('%1'::regclass)").arg(CGSequence::GetSequenceNameForTable(TableName));
 		}
@@ -82,6 +81,11 @@ bool CGTable::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 		if (FieldNotNull) //Если поле обязательно для заполнения
 		{
 			SqlText += " NOT NULL";
+		}
+
+		if (MetaField->PrimaryKey) //Если поле является первичным ключом
+		{
+			SqlText += " PRIMARY KEY";
 		}
 		SqlText += ",\n";
 	}

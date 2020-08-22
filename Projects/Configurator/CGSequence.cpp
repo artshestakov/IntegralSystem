@@ -4,9 +4,9 @@
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_SEQUENCES = PREPARE_QUERY("SELECT COUNT(*) "
-											"FROM information_schema.sequences t "
-											"WHERE t.sequence_catalog = current_database() "
-											"AND t.sequence_name = :SequenceName");
+											"FROM information_schema.sequences "
+											"WHERE sequence_catalog = current_database() "
+											"AND sequence_name = :SequenceName");
 //-----------------------------------------------------------------------------
 static QString QC_SEQUENCE = "CREATE SEQUENCE public.%1 "
 							 "INCREMENT 1 MINVALUE 1 "

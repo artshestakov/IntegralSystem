@@ -84,7 +84,8 @@ struct PMetaField : public PMetaBase
 		IsSystem(false),
 		Index(nullptr),
         Foreign(nullptr),
-        Sequence(false)
+        Sequence(false),
+		PrimaryKey(false)
 	{
 
 	}
@@ -119,6 +120,7 @@ struct PMetaField : public PMetaBase
 	PMetaForeign *Foreign; //Внешний ключ
 
 	bool Sequence; //Последовательность поля
+	bool PrimaryKey; //Первичный ключ
 	QString LayoutName; //Наименование компоновщика (для горизонтального размещения поля)
 	QString SeparatorName; //Наименование вкладки
 };
