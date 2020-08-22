@@ -16,6 +16,7 @@ protected:
 	void EscapeClicked();
 
 private:
+	void Search(const QVariant &Value);
 	void Open(QListWidgetItem *ListWidgetItem);
 	void CheckEditChanged(const QVariant &Value);
 	void Clear();

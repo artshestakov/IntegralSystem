@@ -64,6 +64,14 @@ void ISListWidget::SetMaxVisibleItems(int max_visible_items)
 	MaxVisibleItems = max_visible_items;
 }
 //-----------------------------------------------------------------------------
+void ISListWidget::SetVisibleItems(bool Visible)
+{
+	for (int i = 0, c = count(); i < c; ++i)
+	{
+		setItemHidden(item(i), !Visible);
+	}
+}
+//-----------------------------------------------------------------------------
 void ISListWidget::SetCheckedItems(bool Checked)
 {
 	for (int i = 0, c = count(); i < c; ++i)

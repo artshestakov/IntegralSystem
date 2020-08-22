@@ -19,6 +19,11 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	resize(ISDefines::Gui::SIZE_640_480);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
+	ISLineEdit *EditSearch = new ISLineEdit(this);
+	EditSearch->SetPlaceholderText(LANG("InputThisSearchQuery"));
+	connect(EditSearch, &ISLineEdit::ValueChange, this, &ISHistoryForm::Search);
+	GetMainLayout()->addWidget(EditSearch);
+
 	ListWidget = new ISListWidget(this);
 	ListWidget->setCursor(CURSOR_POINTING_HAND);
 	ListWidget->setAlternatingRowColors(true);
@@ -66,6 +71,24 @@ ISHistoryForm::~ISHistoryForm()
 void ISHistoryForm::EscapeClicked()
 {
 	close();
+}
+//-----------------------------------------------------------------------------
+void ISHistoryForm::Search(const QVariant &Value)
+{
+	if (Value.isValid())
+	{
+		for (int i = 0, c = ListWidget->count(); i < c; ++i)
+		{
+			if (!ListWidget->item(i)->text().toLower().contains(Value.toString().toLower()))
+			{
+				ListWidget->setItemHidden(ListWidget->item(i), true);
+			}
+		}
+	}
+	else
+	{
+		ListWidget->SetVisibleItems(true);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISHistoryForm::Open(QListWidgetItem *ListWidgetItem)

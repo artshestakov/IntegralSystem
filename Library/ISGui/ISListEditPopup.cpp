@@ -138,10 +138,7 @@ void ISListEditPopup::Search(const QVariant &value)
 	QString SearchValue = value.toString().toLower();
 	if (SearchValue.isEmpty())
 	{
-		for (int i = 0, c = ListWidget->count(); i < c; ++i)
-		{
-			ListWidget->setItemHidden(ListWidget->item(i), false);
-		}
+		ListWidget->SetVisibleItems(true);
 		LabelSearch->setVisible(false);
 		LabelSearch->clear();
 	}
