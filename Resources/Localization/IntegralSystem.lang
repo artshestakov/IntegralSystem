@@ -646,7 +646,7 @@
   <Local Name="Task.SearchByNumber.ToolTip" Russian="Поиск по номеру задачи"/>
   <Local Name="Task.SearchByText" Russian="Поиск по тексту"/>
   <Local Name="Task.SearchByText.Title" Russian="Поиск задач по тексту"/>
-  <Local Name="Task.SearchByText.PlaceholderText" Russian="Введите поисковое значение"/>
+  <Local Name="Task.SearchByText.PlaceholderText" Russian="Поиск по названию, описанию, комментариям и файлам"/>
   <Local Name="Task.SearchByText.ResultLabel" Russian="Найдено: %1"/>
   <Local Name="Task.Search" Russian="Поиск задачи"/>
   <Local Name="Task.InputTaskNumber" Russian="Введите номер задачи"/>

@@ -161,6 +161,7 @@ private:
 	bool SearchFlag;
 	
 	QToolBar *ToolBar;
+	QAction *ActionPeriodClear;
 	std::map<ISNamespace::ActionType, QAction*> Actions;
 	std::map<ISNamespace::ActionSpecialType, QAction *> ActionsSpecial;
 	QActionGroup *ActionObjectGroup; //Группа действий для одного объекта

@@ -545,6 +545,7 @@ void ISListBaseForm::Period()
 		
 		LabelPeriod->setVisible(true);
 		QueryModel->SetPeriod(PeriodForm.GetPeriodType(), PeriodForm.GetRange());
+		ActionPeriodClear->setEnabled(true);
 		Update();
 	}
 }
@@ -553,6 +554,7 @@ void ISListBaseForm::PeriodClear()
 {
 	LabelPeriod->setVisible(false);
 	LabelPeriod->clear();
+	ActionPeriodClear->setEnabled(false);
 	QueryModel->ClearPeriod();
 	Update();
 }
@@ -1414,10 +1416,7 @@ void ISListBaseForm::CreateToolBar()
 	ToolBar->addAction(GetAction(ISNamespace::AT_SearchClear));
 	ToolBar->addAction(GetAction(ISNamespace::AT_Print));
 
-	QAction *ActionPeriod = new QAction(ToolBar);
-	ActionPeriod->setText(LANG("Period"));
-	ActionPeriod->setToolTip(LANG("Period"));
-	ActionPeriod->setIcon(BUFFER_ICONS("Period"));
+	QAction *ActionPeriod = new QAction(BUFFER_ICONS("Period"), LANG("Period"), ToolBar);
 	ActionPeriod->setMenu(new QMenu(ToolBar));
 	ToolBar->addAction(ActionPeriod);
 
@@ -1426,24 +1425,18 @@ void ISListBaseForm::CreateToolBar()
 	ButtonPeriod->setCursor(CURSOR_POINTING_HAND);
 	ButtonPeriod->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
 
-	QAction *ActionPeriodSelect = new QAction(ActionPeriod);
-	ActionPeriodSelect->setText(LANG("PeriodSelect"));
-	ActionPeriodSelect->setToolTip(LANG("PeriodSelect"));
+	QAction *ActionPeriodSelect = new QAction(LANG("PeriodSelect"), ActionPeriod);
 	connect(ActionPeriodSelect, &QAction::triggered, this, &ISListBaseForm::Period);
 	ActionPeriod->menu()->addAction(ActionPeriodSelect);
 
 	ActionPeriod->menu()->addSeparator();
 
-	QAction *ActionPeriodClear = new QAction(ActionPeriod);
-	ActionPeriodClear->setText(LANG("PeriodClear"));
-	ActionPeriodClear->setToolTip(LANG("PeriodClear"));
+	ActionPeriodClear = new QAction(LANG("PeriodClear"), ActionPeriod);
+	ActionPeriodClear->setEnabled(false);
 	connect(ActionPeriodClear, &QAction::triggered, this, &ISListBaseForm::PeriodClear);
 	ActionPeriod->menu()->addAction(ActionPeriodClear);
 
-	QAction *ActionAdditionally = new QAction(ToolBar);
-	ActionAdditionally->setText(LANG("Additionally"));
-	ActionAdditionally->setToolTip(LANG("Additionally"));
-	ActionAdditionally->setIcon(BUFFER_ICONS("AdditionallyActions"));
+	QAction *ActionAdditionally = new QAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"), ToolBar);
 	ActionAdditionally->setMenu(new QMenu(ToolBar));
 	ToolBar->addAction(ActionAdditionally);
 

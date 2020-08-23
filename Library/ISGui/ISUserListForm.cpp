@@ -26,26 +26,12 @@ ISUserListForm::~ISUserListForm()
 //-----------------------------------------------------------------------------
 void ISUserListForm::CreateCopy()
 {
-	if (CheckThisUser())
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCreateCopyThisUser"));
-	}
-	else
-	{
-		ISListBaseForm::CreateCopy();
-	}
+	CheckThisUser() ? ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCreateCopyThisUser")) : ISListBaseForm::CreateCopy();
 }
 //-----------------------------------------------------------------------------
 void ISUserListForm::Edit()
 {
-	if (CheckThisUser())
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotEditThisUser"));
-	}
-	else
-	{
-		ISListBaseForm::Edit();
-	}
+	CheckThisUser() ? ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotEditThisUser")) : ISListBaseForm::Edit();
 }
 //-----------------------------------------------------------------------------
 void ISUserListForm::ChangePassword()
@@ -71,16 +57,13 @@ void ISUserListForm::ChangePassword()
 //-----------------------------------------------------------------------------
 void ISUserListForm::DeletePassword()
 {
-	ISGui::ShowUserPasswordDelete(GetCurrentRecordValue("Login").toString());
+	ISDatabase::Instance().GetValue("_Users", "IsSystem", GetObjectID()).toBool() ?
+		ISMessageBox::ShowWarning(this, LANG("Message.User.ChangePassword.Postgres")) :
+		ISGui::ShowUserPasswordDelete(GetCurrentRecordValue("Login").toString());
 }
 //-----------------------------------------------------------------------------
 bool ISUserListForm::CheckThisUser()
 {
-	if (GetObjectID() == CURRENT_USER_ID)
-	{
-		return true;
-	}
-
-	return false;
+	return GetObjectID() == CURRENT_USER_ID;
 }
 //-----------------------------------------------------------------------------
