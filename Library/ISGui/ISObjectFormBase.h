@@ -102,6 +102,7 @@ private:
 	QString ParentFilterField; //Имя поля для фильтрации
 
 	QToolBar *ToolBarEscort; //Тулбар эскортов
+	QFrame *ToolBarEscortSeparator; //Разделитель тулбара эскортов
 	QActionGroup *ActionGroupEscort;
 	QWidget *WidgetObject; //Виджет объекта
 	QToolBar *ToolBar; //Тулбар действий на объектом

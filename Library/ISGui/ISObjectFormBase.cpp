@@ -103,6 +103,7 @@ QVariant ISObjectFormBase::GetFieldValue(const QString &FieldName)
 void ISObjectFormBase::SetVisibleNavigationBar(bool Visible)
 {
 	ToolBarEscort->setVisible(Visible);
+	ToolBarEscortSeparator->setVisible(Visible);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleField(const QString &FieldName, bool Visible)
@@ -228,6 +229,9 @@ void ISObjectFormBase::CreateToolBarEscorts()
 	ToolBarEscort->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	connect(ToolBarEscort, &QToolBar::actionTriggered, this, &ISObjectFormBase::ToolBarClicked);
 	GetMainLayout()->addWidget(ToolBarEscort);
+
+	ToolBarEscortSeparator = ISControls::CreateHorizontalLine(this);
+	GetMainLayout()->addWidget(ToolBarEscortSeparator);
 
 	ActionGroupEscort = new QActionGroup(this);
 
