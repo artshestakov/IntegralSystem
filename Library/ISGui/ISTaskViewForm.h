@@ -73,6 +73,14 @@ private:
 	void CommentDelete();
 
 private:
+	void CheckLoadList();
+	QWidget* CreateCheckListWidget(int CheckListID, int Order, const QString &Name, bool Done);
+	void CheckAdd();
+	void CheckEdit();
+	void CheckDelete();
+	void CheckClicked(const QVariant &Value);
+
+private:
 	QHBoxLayout *LayoutHorizontal;
 	ISTextEdit *TextEdit;
 	QGroupBox *GroupBoxSubTask;
@@ -83,9 +91,12 @@ private:
 	ISPushButton *ButtonProcess;
 	ISLabelElided *LabelName;
 	QTabWidget *TabWidget;
-	ISScrollArea *ScrollAreaComment;
 	QVBoxLayout *LayoutComments;
-	std::vector<QWidget*> Comments;
+	ISScrollArea *ScrollComment;
+	std::vector<QWidget*> VectorComments;
+	QVBoxLayout *LayoutCheckList;
+	ISScrollArea *ScrollCheckList;
+	std::vector<QWidget*> VectorCheckList;
 	ISListWidget *ListWidgetFiles;
 	ISListWidget *ListWidgetLinks;
 	QVBoxLayout *LayoutRight;

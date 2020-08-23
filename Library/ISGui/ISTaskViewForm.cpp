@@ -140,6 +140,24 @@ static QString QU_COMMENT = PREPARE_QUERY("UPDATE _taskcomment SET "
 //-----------------------------------------------------------------------------
 static QString QD_COMMENT = PREPARE_QUERY("DELETE FROM _taskcomment WHERE tcom_id = :CommentID");
 //-----------------------------------------------------------------------------
+static QString QS_CHECK_LIST = PREPARE_QUERY("SELECT tchl_id, tchl_name, tchl_done "
+											 "FROM _taskchecklist "
+											 "WHERE tchl_task = :TaskID "
+											 "ORDER BY tchl_id");
+//-----------------------------------------------------------------------------
+static QString QI_CHECK_LIST = PREPARE_QUERY("INSERT INTO _taskchecklist(tchl_task, tchl_name) "
+											 "VALUES(:TaskID, :Name)");
+//-----------------------------------------------------------------------------
+static QString QU_CHECK_LIST = PREPARE_QUERY("UPDATE _taskchecklist SET "
+											 "tchl_name = :Name "
+											 "WHERE tchl_id = :CheckListID");
+//-----------------------------------------------------------------------------
+static QString QU_CHECK_LIST_DONE = PREPARE_QUERY("UPDATE _taskchecklist SET "
+												  "tchl_done = :Done "
+												  "WHERE tchl_id = :CheckListID");
+//-----------------------------------------------------------------------------
+static QString QD_CHECK_LIST = PREPARE_QUERY("DELETE FROM _taskchecklist WHERE tchl_id = :CheckListID");
+//-----------------------------------------------------------------------------
 ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	: ISInterfaceForm(parent),
 	TaskID(task_id),
@@ -319,10 +337,20 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutComments->setSpacing(0);
 	LayoutComments->addStretch();
 
-	ScrollAreaComment = new ISScrollArea(TabWidget);
-	ScrollAreaComment->widget()->setLayout(LayoutComments);
-	TabWidget->addTab(ScrollAreaComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
+	ScrollComment = new ISScrollArea(TabWidget);
+	ScrollComment->widget()->setLayout(LayoutComments);
+	TabWidget->addTab(ScrollComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
 	CommentLoadList();
+
+	LayoutCheckList = new QVBoxLayout();
+	LayoutCheckList->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	LayoutCheckList->setSpacing(0);
+	LayoutCheckList->addStretch();
+
+	ScrollCheckList = new ISScrollArea(TabWidget);
+	ScrollCheckList->widget()->setLayout(LayoutCheckList);
+	TabWidget->addTab(ScrollCheckList, BUFFER_ICONS("Document"), LANG("Task.CheckList").arg(0));
+	CheckLoadList();
 
 	ListWidgetLinks = new ISListWidget(TabWidget);
 	ListWidgetLinks->setAlternatingRowColors(true);
@@ -345,7 +373,11 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	QToolButton *ButtonAddComment = CreateAddButton(LANG("Task.AddComment"));
 	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
-	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ScrollAreaComment), QTabBar::RightSide, ButtonAddComment);
+	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ScrollComment), QTabBar::RightSide, ButtonAddComment);
+
+	QToolButton *ButtonAddCheck = CreateAddButton(LANG("Task.AddCheck"));
+	connect(ButtonAddCheck, &QToolButton::clicked, this, &ISTaskViewForm::CheckAdd);
+	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ScrollCheckList), QTabBar::RightSide, ButtonAddCheck);
 
 	QToolButton *ButtonAddLink = CreateAddButton(LANG("Task.AddLink"));
 	connect(ButtonAddLink, &QToolButton::clicked, this, &ISTaskViewForm::LinkAdd);
@@ -1156,9 +1188,9 @@ void ISTaskViewForm::LinkDelete()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CommentLoadList()
 {
-	while (!Comments.empty())
+	while (!VectorComments.empty())
 	{
-		delete ISAlgorithm::VectorTakeBack(Comments);
+		delete ISAlgorithm::VectorTakeBack(VectorComments);
 	}
 
 	ISQuery qSelectComments(QS_COMMENT);
@@ -1178,9 +1210,9 @@ void ISTaskViewForm::CommentLoadList()
 			QWidget *WidgetComment = CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
 			WidgetComment->setStyleSheet(STYLE_SHEET("QWidgetCommentTask"));
 			LayoutComments->insertWidget(Index++, WidgetComment);
-			Comments.emplace_back(WidgetComment);
+			VectorComments.emplace_back(WidgetComment);
 		}
-		TabWidget->setTabText(TabWidget->indexOf(ScrollAreaComment), LANG("Task.Comments").arg(qSelectComments.GetCountResultRows()));
+		TabWidget->setTabText(TabWidget->indexOf(ScrollComment), LANG("Task.Comments").arg(qSelectComments.GetCountResultRows()));
 	}
 	else
 	{
@@ -1193,7 +1225,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
 
-	QWidget *Widget = new QWidget(ScrollAreaComment);
+	QWidget *Widget = new QWidget(ScrollComment);
 	Widget->setLayout(LayoutWidget);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
@@ -1259,7 +1291,7 @@ void ISTaskViewForm::CommentAdd()
 		if (qInsertComment.Execute())
 		{
 			CommentLoadList();
-			QTimer::singleShot(50, this, [=]() { ScrollAreaComment->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
+			QTimer::singleShot(50, this, [=]() { ScrollComment->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
 		}
 		else
 		{
@@ -1302,6 +1334,138 @@ void ISTaskViewForm::CommentDelete()
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteTaskComment"), qDeleteComment.GetErrorString());
 		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::CheckLoadList()
+{
+	while (!VectorCheckList.empty())
+	{
+		delete ISAlgorithm::VectorTakeBack(VectorCheckList);
+	}
+
+	ISQuery qSelectCheckList(QS_CHECK_LIST);
+	qSelectCheckList.BindValue(":TaskID", TaskID);
+	if (qSelectCheckList.Execute())
+	{
+		int Index = 0, Order = 0;
+		while (qSelectCheckList.Next())
+		{
+			QWidget *Widget = CreateCheckListWidget(
+				qSelectCheckList.ReadColumn("tchl_id").toInt(),
+				++Order,
+				qSelectCheckList.ReadColumn("tchl_name").toString(),
+				qSelectCheckList.ReadColumn("tchl_done").toBool());
+			LayoutCheckList->insertWidget(Index++, Widget);
+			VectorCheckList.emplace_back(Widget);
+		}
+		TabWidget->setTabText(TabWidget->indexOf(ScrollCheckList), LANG("Task.CheckList").arg(qSelectCheckList.GetCountResultRows()));
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadTaskCheckList"), qSelectCheckList.GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
+QWidget* ISTaskViewForm::CreateCheckListWidget(int CheckListID, int Order, const QString &Name, bool Done)
+{
+	QHBoxLayout *LayoutWidget = new QHBoxLayout();
+
+	QWidget *Widget = new QWidget(ScrollCheckList);
+	Widget->setLayout(LayoutWidget);
+
+	ISServiceButton *ButtonCheckMenu = new ISServiceButton(BUFFER_ICONS("AdditionallyActions"), Widget);
+	ButtonCheckMenu->setFlat(true);
+	ButtonCheckMenu->setMenu(new QMenu(ButtonCheckMenu));
+	LayoutWidget->addWidget(ButtonCheckMenu);
+
+	QAction *ActionEdit = new QAction(BUFFER_ICONS("Edit"), LANG("Edit"), ButtonCheckMenu->menu());
+	ActionEdit->setProperty("CheckListID", CheckListID);
+	ActionEdit->setProperty("CheckListName", Name);
+	connect(ActionEdit, &QAction::triggered, this, &ISTaskViewForm::CheckEdit);
+	ButtonCheckMenu->menu()->addAction(ActionEdit);
+
+	QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), ButtonCheckMenu->menu());
+	ActionDelete->setProperty("CheckListID", CheckListID);
+	connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::CheckDelete);
+	ButtonCheckMenu->menu()->addAction(ActionDelete);
+
+	ISCheckEdit *CheckEdit = new ISCheckEdit(Widget);
+	CheckEdit->SetCheckableStrikeOut(true);
+	CheckEdit->SetText(QString("%1. %2").arg(Order).arg(Name));
+	CheckEdit->SetValue(Done);
+	CheckEdit->setProperty("CheckListID", CheckListID);
+	connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISTaskViewForm::CheckClicked);
+	LayoutWidget->addWidget(CheckEdit);
+
+	LayoutWidget->addStretch();
+	return Widget;
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::CheckAdd()
+{
+	QString ItemName = ISInputDialog::GetString(LANG("Task.Check"), LANG("Task.Check.InputName"));
+	if (!ItemName.isEmpty())
+	{
+		ISQuery qInsertCheck(QI_CHECK_LIST);
+		qInsertCheck.BindValue(":TaskID", TaskID);
+		qInsertCheck.BindValue(":Name", ItemName);
+		if (qInsertCheck.Execute())
+		{
+			CheckLoadList();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertTaskCheckList"), qInsertCheck.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::CheckEdit()
+{
+	QString CurrentName = sender()->property("CheckListName").toString();
+	QString NewName = ISInputDialog::GetString(LANG("Task.Check"), LANG("Task.Check.InputName"), CurrentName);
+	if (!NewName.isEmpty() && NewName != CurrentName)
+	{
+		ISQuery qUpdateCheck(QU_CHECK_LIST);
+		qUpdateCheck.BindValue(":Name", NewName);
+		qUpdateCheck.BindValue(":CheckListID", sender()->property("CheckListID"));
+		if (qUpdateCheck.Execute())
+		{
+			CheckLoadList();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.UpdateTaskCheckList"), qUpdateCheck.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::CheckDelete()
+{
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskCheckListDelete")))
+	{
+		ISQuery qDeleteCheck(QD_CHECK_LIST);
+		qDeleteCheck.BindValue(":CheckListID", sender()->property("CheckListID"));
+		if (qDeleteCheck.Execute())
+		{
+			CheckLoadList();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteTaskCheckList"), qDeleteCheck.GetErrorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::CheckClicked(const QVariant &Value)
+{
+	ISQuery qUpdate(QU_CHECK_LIST_DONE);
+	qUpdate.BindValue(":Done", Value);
+	qUpdate.BindValue(":CheckListID", sender()->property("CheckListID"));
+	if (!qUpdate.Execute())
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.UpdateDoneTaskCheckList"), qUpdate.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

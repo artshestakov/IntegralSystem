@@ -116,6 +116,7 @@
   <Local Name="Message.Error.SaveImageFile" Russian="Не удалось открыть файл для записи изображения!"/>
   <Local Name="Message.Error.LoadPixmapFromBuffer" Russian="Не удалось прочитать изображение!"/>
   <Local Name="Message.Error.LoadTaskComments" Russian="Не удалось загрузить комментарии к этой задаче!"/>
+  <Local Name="Message.Error.LoadTaskCheckList" Russian="Не удалось загрузить чек-лист этой задачи!"/>
   <Local Name="Message.Error.InsertTaskLink" Russian="Не удалось создать связь!"/>
   <Local Name="Message.Error.DeleteTaskLink" Russian="Не удалось удалить связь!"/>
   <Local Name="Message.Error.LoadTaskLink" Russian="Не удалось загрузить список связей!"/>
@@ -146,6 +147,10 @@
   <Local Name="Message.Error.ChangePasswordUser" Russian="Не удалось изменить пароль!"/>
   <Local Name="Message.Error.ChangePasswordUserHistory" Russian="Не удалось зафиксировать изменение пароля в истории!"/>
   <Local Name="Message.Error.DeleteUserPassword" Russian="Не удалось удалить пароль пользователя!"/>
+  <Local Name="Message.Error.InsertTaskCheckList" Russian="Не удалось добавить элемент чек-листа!"/>
+  <Local Name="Message.Error.UpdateTaskCheckList" Russian="Не удалось переименовать элемент чек-листа!"/>
+  <Local Name="Message.Error.UpdateDoneTaskCheckList" Russian="Не удалось изменить состояние пункта!"/>
+  <Local Name="Message.Error.DeleteTaskCheckList" Russian="Не удалось удалить пункт!"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
@@ -243,6 +248,7 @@
   <Local Name="Message.Question.CloseInsetingTaskFile" Russian="Остановить прикрепление файлов к задаче?"/>
   <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
   <Local Name="Message.Question.DeleteUserPassword" Russian="Удалить пароль пользователя?"/>
+  <Local Name="Message.Question.TaskCheckListDelete" Russian="Удалить пункт?"/>
   
   <!--Carat error-->
   <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>
@@ -660,6 +666,7 @@
   <Local Name="Task.Files" Russian="Файлы (%1)"/>
   <Local Name="Task.LinkTask" Russian="Связанные задачи (%1)"/>
   <Local Name="Task.Comments" Russian="Комментарии (%1)"/>
+  <Local Name="Task.CheckList" Russian="Чек-лист (%1)"/>
   <Local Name="Task.Comment" Russian="Комментарий"/>
   <Local Name="Task.AddFile" Russian="Добавить файл"/>
   <Local Name="Task.AddFile.LabelText" Russian="Добавление файла: %1"/>
@@ -672,6 +679,9 @@
   <Local Name="Task.AddLink" Russian="Добавить связанную задачу"/>
   <Local Name="Task.AddComment" Russian="Добавить комментарий"/>
   <Local Name="Task.InputComment" Russian="Введите комментарий"/>
+  <Local Name="Task.AddCheck" Russian="Добавить пункт"/>
+  <Local Name="Task.Check" Russian="Пункт"/>
+  <Local Name="Task.Check.InputName" Russian="Введите название:"/>
   <Local Name="Task.LinkToolTip" Russian="Статус:&#10;%1&#10;&#10;Описание задачи:&#10;%2&#10;&#10;Связал:&#10;%3&#10;&#10;Связь создана:&#10;%4"/>
   <Local Name="Task.Link.Delete" Russian="Удалить связь"/>
   <Local Name="Task.CommentUserOwner" Russian="%1 (автор)"/>

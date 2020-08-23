@@ -17,11 +17,15 @@ public:
 	QVariant GetValue() const override;
 	void Clear() override;
 
-	void SetText(const QString &Text);
 	void SetReadOnly(bool read_only) override;
+	void SetText(const QString &Text);
+	void SetCheckableStrikeOut(bool StrikeOut); //≈сли включить это свойство, то при активном состо€нии текст будет зачеркнутым
 
 protected:
 	QCheckBox* GetCheckBox();
+
+private:
+	void CheckableStrikeOut();
 
 private:
 	QCheckBox *CheckBox;

@@ -113,6 +113,22 @@
     </Foreigns>
   </Table>
 
+  <Table Name="_TaskCheckList" UID="{A0B54A7A-6C76-49D2-A5F4-7E7525B576A8}" Alias="tchl" LocalName="Чек-лист" LocalListName="Чек-листы" TitleName="Name" IsSystem="true">
+    <Fields>
+      <Field UID="{1ECCF59E-1B07-4389-B740-933A89C9C02A}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{84F66F9F-6226-4C50-8E84-65957E0C725F}" Name="Name" Type="String" LabelName="Имя" LocalListName="Имя" NotNull="true"/>
+      <Field UID="{4DC55709-3085-43DF-8BE9-CC98D3928679}" Name="Done" Type="Bool" DefaultValue="false" LabelName="Выполнено" LocalListName="Выполнено" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Task"/>
+      <Index Field="Name"/>
+      <Index Field="Done"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
   <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="Link" IsSystem="true">
     <Fields>
       <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>

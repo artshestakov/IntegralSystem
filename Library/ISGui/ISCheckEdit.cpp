@@ -33,18 +33,33 @@ void ISCheckEdit::Clear()
 	ISFieldEditBase::Clear();
 }
 //-----------------------------------------------------------------------------
-void ISCheckEdit::SetText(const QString &Text)
-{
-	CheckBox->setText(Text);
-}
-//-----------------------------------------------------------------------------
 void ISCheckEdit::SetReadOnly(bool read_only)
 {
 	CheckBox->setEnabled(!read_only);
 }
 //-----------------------------------------------------------------------------
+void ISCheckEdit::SetText(const QString &Text)
+{
+	CheckBox->setText(Text);
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::SetCheckableStrikeOut(bool StrikeOut)
+{
+	CheckableStrikeOut(); //Вызываем на всякий случай, вдруг сейчас CheckEdit уже активен
+	StrikeOut ?
+		connect(CheckBox, &QCheckBox::stateChanged, this, &ISCheckEdit::CheckableStrikeOut) :
+		disconnect(CheckBox, &QCheckBox::stateChanged, this, &ISCheckEdit::CheckableStrikeOut);
+}
+//-----------------------------------------------------------------------------
 QCheckBox* ISCheckEdit::GetCheckBox()
 {
 	return CheckBox;
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::CheckableStrikeOut()
+{
+	QFont Font = CheckBox->font();
+	Font.setStrikeOut(CheckBox->isChecked());
+	CheckBox->setFont(Font);
 }
 //-----------------------------------------------------------------------------
