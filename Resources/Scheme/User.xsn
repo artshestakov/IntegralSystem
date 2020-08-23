@@ -16,8 +16,6 @@
       <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия." SeparatorName="Учётная запись"/>
       <Field UID="{07CB8028-4695-4F7C-A676-8D89E38932F8}" Name="AccountLifeTimeStart" Type="Date" LabelName="Дата начала действия" LocalListName="Дата начала действия" HideFromList="true"/>
       <Field UID="{196BD860-208E-4DF7-8E4D-A65F7A9E8F35}" Name="AccountLifeTimeEnd" Type="Date" LabelName="Дата окончания действия" LocalListName="Дата окончания действия" HideFromList="true"/>
-      <Field UID="{18F6BFE0-0770-4F2F-A8DE-973416F41CEA}" Name="LastEnter" Type="DateTime" LabelName="Последний вход" LocalListName="Последний вход" HideFromObject="true"/>
-      <Field UID="{852CB655-75AF-4515-BBDC-149F08BB82AE}" Name="LastAddress" Type="String" LabelName="Последний адрес" LocalListName="Последний адрес" HideFromObject="true"/>
       <Field UID="{C19191C0-9398-4FEB-9BED-BA1C3F8C0979}" Name="Photo" Type="Image" LabelName="Фотография" LocalListName="Фотография" HideFromList="true"/>
     </Fields>
     <Indexes>
@@ -34,8 +32,6 @@
       <Index Field="AccountLifetime"/>
       <Index Field="AccountLifetimeStart"/>
       <Index Field="AccountLifetimeEnd"/>
-      <Index Field="LastEnter"/>
-      <Index Field="LastAddress"/>
       <Index Field="IsDeleted;Login"/>
     </Indexes>
     <Foreigns>

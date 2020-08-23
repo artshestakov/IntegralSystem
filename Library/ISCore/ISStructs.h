@@ -178,9 +178,9 @@ struct ISPrintMetaReport
 
     ~ISPrintMetaReport()
     {
-        while (!Fields.isEmpty())
+        while (!Fields.empty())
         {
-            delete Fields.takeLast();
+			delete ISAlgorithm::VectorTakeBack(Fields);
         }
     }
 
@@ -202,7 +202,7 @@ struct ISPrintMetaReport
     QString LocalName;
     QString FileTemplate;
 
-    QVector<ISPrintMetaReportField*> Fields;
+    std::vector<ISPrintMetaReportField*> Fields;
 };
 //-----------------------------------------------------------------------------
 struct PMetaUserPermission

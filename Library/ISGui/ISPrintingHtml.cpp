@@ -46,15 +46,11 @@ bool ISPrintingHtml::PrepareTempate()
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::FillTemplate()
 {
-	QVector<ISPrintMetaReportField*> Fields = GetMetaReport()->Fields;
-	for (int i = 0; i < Fields.count(); ++i)
+	for (ISPrintMetaReportField *MetaReportField : GetMetaReport()->Fields)
 	{
-		ISPrintMetaReportField *MetaReportField = Fields.at(i);
-
 		bool Contains = Html.contains(MetaReportField->ReplaceValue);
 		IS_ASSERT(Contains, QString("Not found replace value \"%1\" in file template \"%2\"").arg(MetaReportField->ReplaceValue).arg(MetaReportField->ParameterName));
-
-		if (MetaReportField->QueryName.length())
+		if (!MetaReportField->QueryName.isEmpty())
 		{
 			ISMetaViewQuery MetaViewQuery(MetaReportField->QueryName);
 			QString QueryText = MetaViewQuery.GetQueryText();
@@ -76,7 +72,6 @@ bool ISPrintingHtml::FillTemplate()
 		else
 		{
 			ISQuery qSelectValue(MetaReportField->FieldQuery);
-
 			if (qSelectValue.ExistParameter(":SourceID"))
 			{
 				IS_ASSERT(qSelectValue.BindValue(":SourceID", GetObjectID()), "Not BindValue");

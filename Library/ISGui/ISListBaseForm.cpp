@@ -1111,7 +1111,7 @@ void ISListBaseForm::Export()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Print()
 {
-	if (!ISPrintingEntity::GetInstance().GetCountReports(MetaTable->Name))
+	if (!ISPrintingEntity::Instance().GetCountReports(MetaTable->Name))
 	{
 		ISMessageBox::ShowInformation(this, LANG("Message.Information.NotFoundPrintFormFromMetaTable").arg(MetaTable->LocalListName));
 		return;

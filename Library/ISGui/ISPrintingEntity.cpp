@@ -12,8 +12,9 @@ static QString QS_REPORT_FIELDS = PREPARE_QUERY("SELECT rpfl_replacevalue, rpfl_
 												"AND rpfl_report = :ReportUID");
 //-----------------------------------------------------------------------------
 ISPrintingEntity::ISPrintingEntity()
+	: ErrrorString(NO_ERROR_STRING)
 {
-	Initialize();
+	
 }
 //-----------------------------------------------------------------------------
 ISPrintingEntity::~ISPrintingEntity()
@@ -21,32 +22,27 @@ ISPrintingEntity::~ISPrintingEntity()
 
 }
 //-----------------------------------------------------------------------------
-ISPrintingEntity& ISPrintingEntity::GetInstance()
+ISPrintingEntity& ISPrintingEntity::Instance()
 {
 	static ISPrintingEntity PrintingEntity;
 	return PrintingEntity;
 }
 //-----------------------------------------------------------------------------
-QVector<ISPrintMetaReport*> ISPrintingEntity::GetReports(const QString &TableName)
+QString ISPrintingEntity::GetErrorString() const
 {
-	return Reports.value(TableName);
+	return ErrrorString;
 }
 //-----------------------------------------------------------------------------
-int ISPrintingEntity::GetCountReports(const QString &TableName)
-{
-	return Reports.value(TableName).count();
-}
-//-----------------------------------------------------------------------------
-void ISPrintingEntity::Initialize()
+bool ISPrintingEntity::Initialize()
 {
 	ISQuery qSelectReport(QS_REPORT);
-	if (qSelectReport.Execute())
+	bool Result = qSelectReport.Execute();
+	if (Result)
 	{
 		while (qSelectReport.Next())
 		{
-			ISUuid ReportUID = qSelectReport.ReadColumn("rprt_uid");
 			QString TableName = qSelectReport.ReadColumn("rprt_tablename").toString();
-			
+
 			ISPrintMetaReport *MetaReport = new ISPrintMetaReport();
 			MetaReport->System = qSelectReport.ReadColumn("rprt_system").toBool();
 			//MetaReport->SetType(qSelectReport.ReadColumn("rprt_type").toString());
@@ -55,8 +51,9 @@ void ISPrintingEntity::Initialize()
 			MetaReport->FileTemplate = qSelectReport.ReadColumn("rprt_filetemplate").toString();
 
 			ISQuery qSelectReportFields(QS_REPORT_FIELDS);
-			qSelectReportFields.BindValue(":ReportUID", ReportUID);
-			if (qSelectReportFields.Execute())
+			qSelectReportFields.BindValue(":ReportUID", qSelectReport.ReadColumn("rprt_uid"));
+			Result = qSelectReportFields.Execute();
+			if (Result)
 			{
 				while (qSelectReportFields.Next())
 				{
@@ -65,14 +62,31 @@ void ISPrintingEntity::Initialize()
 					MetaReportField->FieldQuery = qSelectReportFields.ReadColumn("rpfl_fieldquery").toString();
 					MetaReportField->QueryName = qSelectReportFields.ReadColumn("rpfl_queryname").toString();
 					MetaReportField->ParameterName = qSelectReportFields.ReadColumn("rpfl_parametername").toString();
-					MetaReport->Fields.append(MetaReportField);
+					MetaReport->Fields.emplace_back(MetaReportField);
 				}
 			}
-
-			QVector<ISPrintMetaReport*> Vector = Reports.value(TableName);
-			Vector.append(MetaReport);
-			Reports.insert(TableName, Vector);
+			else
+			{
+				ErrrorString = qSelectReportFields.GetErrorString();
+				break;
+			}
+			Reports[TableName].emplace_back(MetaReport);
 		}
 	}
+	else
+	{
+		ErrrorString = qSelectReport.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+std::vector<ISPrintMetaReport*>& ISPrintingEntity::GetReports(const QString &TableName)
+{
+	return Reports[TableName];
+}
+//-----------------------------------------------------------------------------
+int ISPrintingEntity::GetCountReports(const QString &TableName)
+{
+	return Reports[TableName].size();
 }
 //-----------------------------------------------------------------------------

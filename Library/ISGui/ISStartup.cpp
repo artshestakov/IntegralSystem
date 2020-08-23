@@ -103,7 +103,11 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	ISQueryPool::Instance().Start();
 	
 	//Инициалищация печати
-	ISPrintingEntity::GetInstance();
+	if (!ISPrintingEntity::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializePrinting"), ISPrintingEntity::Instance().GetErrorString());
+		return false;
+	}
 
 	//Инициализация избранного
 	if (!ISFavorites::Instance().Initialize())
@@ -153,9 +157,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	//Фиксация входа в протоколе
 	ISProtocol::EnterApplication();
-
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
 	ISProperty::Instance().SetValue(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
 	return true;

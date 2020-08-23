@@ -19,7 +19,7 @@ ISPrintForm::ISPrintForm(const QString &TableName)
 	connect(ListWidget, &ISListWidget::itemDoubleClicked, this, &ISPrintForm::Print);
 	GetMainLayout()->addWidget(ListWidget);
 
-	for (ISPrintMetaReport *meta_report : ISPrintingEntity::GetInstance().GetReports(TableName))
+	for (ISPrintMetaReport *meta_report : ISPrintingEntity::Instance().GetReports(TableName))
 	{
 		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
 		ListWidgetItem->setText(meta_report->LocalName);

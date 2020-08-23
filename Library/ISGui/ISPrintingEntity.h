@@ -6,23 +6,21 @@
 class ISPrintingEntity
 {
 public:
-	ISPrintingEntity(const ISPrintingEntity &) = delete;
-	ISPrintingEntity(ISPrintingEntity &&) = delete;
-	ISPrintingEntity &operator=(const ISPrintingEntity &) = delete;
-	ISPrintingEntity &operator=(ISPrintingEntity &&) = delete;
-	~ISPrintingEntity();
+	static ISPrintingEntity& Instance();
 
-	static ISPrintingEntity& GetInstance();
-
-	QVector<ISPrintMetaReport*> GetReports(const QString &TableName);
+	QString GetErrorString() const;
+	bool Initialize();
+	std::vector<ISPrintMetaReport*>& GetReports(const QString &TableName);
 	int GetCountReports(const QString &TableName);
-
-protected:
-	void Initialize();
 
 private:
 	ISPrintingEntity();
+	~ISPrintingEntity();
+	ISPrintingEntity(ISPrintingEntity const &) {};
+	ISPrintingEntity& operator=(ISPrintingEntity const&) { return *this; };
 	
-	QMap<QString, QVector<ISPrintMetaReport*>> Reports;
+private:
+	QString ErrrorString;
+	std::map<QString, std::vector<ISPrintMetaReport*>> Reports;
 };
 //-----------------------------------------------------------------------------

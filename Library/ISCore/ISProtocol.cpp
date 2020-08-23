@@ -9,19 +9,9 @@ static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_tablename
 										   "VALUES(:TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information) "
 										   "RETURNING prtc_id");
 //-----------------------------------------------------------------------------
-static QString QU_USER_LAST_ENTER = PREPARE_QUERY("UPDATE _users SET "
-												  "usrs_lastenter = now(), "
-												  "usrs_lastaddress = split_part(inet_client_addr()::VARCHAR, '/', 1) "
-												  "WHERE usrs_id = currentuserid()");
-//-----------------------------------------------------------------------------
 void ISProtocol::EnterApplication()
 {
-	int ProtocolID = Insert(false, CONST_UID_PROTOCOL_ENTER_APPLICATION, QString(), QString(), QVariant());
-	if (ProtocolID)
-	{
-		ISQuery qLastEnter(QU_USER_LAST_ENTER);
-		qLastEnter.Execute();
-	}
+	Insert(true, CONST_UID_PROTOCOL_ENTER_APPLICATION, QString(), QString(), QVariant());
 }
 //-----------------------------------------------------------------------------
 void ISProtocol::ExitApplication()
