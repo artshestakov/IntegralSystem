@@ -365,6 +365,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Executor") + ':', GroupBoxDetails));
 
 	QLabel *LabelExecutor = new QLabel(TaskExecutor.isEmpty() ? LANG("Task.Right.Executor.Empty") : TaskExecutor, GroupBoxDetails);
+	LabelExecutor->setWordWrap(true);
 	ISGui::SetFontWidgetBold(LabelExecutor, true);
 	LayoutRight->addWidget(LabelExecutor);
 
@@ -373,6 +374,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Owner") + ':', GroupBoxDetails));
 
 	QLabel *LabelOwner = new QLabel(TaskOwner.isEmpty() ? LANG("Task.Right.Owner.Empty") : TaskOwner, GroupBoxDetails);
+	LabelOwner->setWordWrap(true);
 	ISGui::SetFontWidgetBold(LabelOwner, true);
 	LayoutRight->addWidget(LabelOwner);
 
@@ -381,6 +383,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Type") + ':', GroupBoxDetails));
 
 	QLabel *LabelType = new QLabel(TaskType.isEmpty() ? LANG("Task.Right.Type.Empty") : TaskType, GroupBoxDetails);
+	LabelType->setWordWrap(true);
 	ISGui::SetFontWidgetBold(LabelType, true);
 	LayoutRight->addWidget(LabelType);
 

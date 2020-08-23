@@ -67,23 +67,27 @@ bool ISUserObjectForm::Save()
 		return Result;
 	}
 
-	ISQuery qSelectLogin(QS_LOGIN);
-	qSelectLogin.BindValue(":Login", GetFieldValue("Login"));
-	Result = qSelectLogin.ExecuteFirst();
-	if (Result)
+	//Если логин был изменен - проверяем новый на наличие
+	if (EditLogin->GetValue().toString() != CurrentLogin)
 	{
-		Result = qSelectLogin.ReadColumn("count").toInt() == 0;
-		if (!Result) //Если такой логин уже существует - выходим из функции
+		ISQuery qSelectLogin(QS_LOGIN);
+		qSelectLogin.BindValue(":Login", EditLogin->GetValue());
+		Result = qSelectLogin.ExecuteFirst();
+		if (Result)
 		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.LoginAlreadyExist").arg(GetFieldValue("Login").toString()));
-			GetFieldWidget("Login")->BlinkRed();
+			Result = qSelectLogin.ReadColumn("count").toInt() == 0;
+			if (!Result) //Если такой логин уже существует - выходим из функции
+			{
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.LoginAlreadyExist").arg(EditLogin->GetValue().toString()));
+				EditLogin->BlinkRed();
+				return Result;
+			}
+		}
+		else //Ошибка проверки наличия логина
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.CheckExistLogin").arg(EditLogin->GetValue().toString()), qSelectLogin.GetErrorString());
 			return Result;
 		}
-	}
-	else //Ошибка проверки наличия логина
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.CheckExistLogin").arg(GetFieldValue("Login").toString()), qSelectLogin.GetErrorString());
-		return Result;
 	}
 
 	//Проверка корректности ввода диапазона срока действия учётной записи
@@ -180,14 +184,8 @@ void ISUserObjectForm::PasswordChange()
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::PasswordDelete()
 {
-	if (GetModificationFlag()) //Если запись была изменена - просим сохранить
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue"));
-	}
-	else
-	{
-		ISGui::ShowUserPasswordDelete(GetFieldValue("Login").toString());
-	}
+	//Если запись была изменена - просим сохранить
+	GetModificationFlag() ? ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue")) : ISGui::ShowUserPasswordDelete(EditLogin->GetValue().toString());
 }
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()
