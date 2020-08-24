@@ -26,6 +26,7 @@ ISExportForm::ISExportForm(PMetaTable *meta_table)
 	ComboBoxType->AddItem(LANG("Export.Type.HTML"), ISNamespace::ET_HTML);
 	ComboBoxType->AddItem(LANG("Export.Type.DBF"), ISNamespace::ET_DBF);
 	ComboBoxType->AddItem(LANG("Export.Type.XML"), ISNamespace::ET_XML);
+	connect(ComboBoxType, &ISComboEdit::ValueChange, this, &ISExportForm::TypeChanged);
 	GetMainLayout()->addWidget(ComboBoxType);
 
 	TabWidget = new QTabWidget(this);
@@ -34,10 +35,11 @@ ISExportForm::ISExportForm(PMetaTable *meta_table)
 	CreateTabSettings();
 	CreateTabFields();
 
-	ButtonPanel = new ISButtonDialog(this, LANG("Export"));
-	connect(ButtonPanel, &ISButtonDialog::Apply, this, &ISExportForm::Select);
-	connect(ButtonPanel, &ISButtonDialog::Close, this, &ISExportForm::close);
-	GetMainLayout()->addWidget(ButtonPanel);
+	ButtonDialog = new ISButtonDialog(this, LANG("Export"));
+	ButtonDialog->SetApplyEnabled(false);
+	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISExportForm::Select);
+	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISExportForm::close);
+	GetMainLayout()->addWidget(ButtonDialog);
 }
 //-----------------------------------------------------------------------------
 ISExportForm::~ISExportForm()
@@ -123,20 +125,11 @@ void ISExportForm::CreateTabFields()
 //-----------------------------------------------------------------------------
 void ISExportForm::Select()
 {
-	SelectedType = qvariant_cast<ISNamespace::ExportType>(ComboBoxType->GetValue());
-
-	if (SelectedType == ISNamespace::ET_Unknown)
-	{
-		ISMessageBox::ShowWarning(this, LANG("Export.UnknownType"));
-		return;
-	}
-
 	if (SelectedFields.empty())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Export.NotSelectedFields"));
 		return;
 	}
-
 	SetResult(true);
 	close();
 }
@@ -182,5 +175,10 @@ void ISExportForm::ItemDoubleClicked(QListWidgetItem *item)
 void ISExportForm::EnterClicked()
 {
 	Select();
+}
+//-----------------------------------------------------------------------------
+void ISExportForm::TypeChanged(const QVariant &Value)
+{
+	ButtonDialog->SetApplyEnabled(Value.toInt() != ISNamespace::ET_Unknown);
 }
 //-----------------------------------------------------------------------------

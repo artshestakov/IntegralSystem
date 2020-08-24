@@ -4,7 +4,9 @@
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISExportCSV::ISExportCSV(QObject *parent) : ISExportWorker(parent)
+ISExportCSV::ISExportCSV(PMetaTable *meta_table, QObject *parent)
+	: ISExportWorker(meta_table, parent),
+	FileCSV(nullptr)
 {
 	FileCSV = nullptr;
 }
@@ -16,7 +18,7 @@ ISExportCSV::~ISExportCSV()
 //-----------------------------------------------------------------------------
 bool ISExportCSV::Prepare()
 {
-	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Csv"), LocalName);
+	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Csv"), MetaTable->LocalListName);
 	if (!FilePath.length())
 	{
 		return false;
@@ -87,10 +89,10 @@ bool ISExportCSV::Export()
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		QString RowString;
 
-		for (size_t Column = 0; Column < Fields.size(); ++Column) //Обход колонок
+		for (const QString &FieldName : Fields) //Обход колонок
 		{
-			QVariant Value = SqlRecord.value(Fields.at(Column)).toString();
-			Value = PrepareValue(Value);
+			QVariant Value = SqlRecord.value(FieldName);
+			Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
 			RowString.append(Value.toString());
 			RowString.append(';');
 		}

@@ -22,7 +22,7 @@ public:
 	ISVectorString GetSelectedFields() const;
 	bool GetHeader() const;
 
-protected:
+private:
 	void CreateTabSettings();
 	void CreateTabFields();
 	void Select();
@@ -32,6 +32,7 @@ protected:
 	void ItemDoubleClicked(QListWidgetItem *item);
 
 	void EnterClicked();
+	void TypeChanged(const QVariant &Value);
 
 private:
 	ISNamespace::ExportType SelectedType;
@@ -39,7 +40,7 @@ private:
 	ISVectorString SelectedFields;
 	ISComboEdit *ComboBoxType;
 	QTabWidget *TabWidget;
-	ISButtonDialog *ButtonPanel;
+	ISButtonDialog *ButtonDialog;
 	ISListWidget *ListFields;
 
 	ISCheckEdit *CheckHeader;

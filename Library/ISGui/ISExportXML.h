@@ -8,7 +8,7 @@ class ISExportXML : public ISExportWorker
 	Q_OBJECT
 
 public:
-	ISExportXML(QObject *parent = 0);
+	ISExportXML(PMetaTable *meta_table, QObject *parent = 0);
 	virtual ~ISExportXML();
 
 	bool Prepare() override;

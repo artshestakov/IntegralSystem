@@ -9,7 +9,7 @@ class ISExportDBF : public ISExportWorker
 	Q_OBJECT
 
 public:
-	ISExportDBF(QObject *parent = 0);
+	ISExportDBF(PMetaTable *meta_table, QObject *parent = 0);
 	virtual ~ISExportDBF();
 
 	bool Prepare() override;

@@ -4,7 +4,7 @@
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISExportHTML::ISExportHTML(QObject *parent) : ISExportWorker(parent)
+ISExportHTML::ISExportHTML(PMetaTable *meta_table, QObject *parent) : ISExportWorker(meta_table, parent)
 {
 	FileHTML = nullptr;
 }
@@ -16,7 +16,7 @@ ISExportHTML::~ISExportHTML()
 //-----------------------------------------------------------------------------
 bool ISExportHTML::Prepare()
 {
-	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Html"), LocalName);
+	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Html"), MetaTable->LocalListName);
 	if (!FilePath.length())
 	{
 		return false;
@@ -48,7 +48,7 @@ bool ISExportHTML::Export()
 	FileHTML->write("<html>\r\n");
 	FileHTML->write(" <head>\r\n");
 	FileHTML->write("  <meta charset=\"utf-8\">\r\n");
-	FileHTML->write("  <title>" + LocalName.toUtf8() + "</title>\r\n");
+	FileHTML->write("  <title>" + MetaTable->LocalListName.toUtf8() + "</title>\r\n");
 	FileHTML->write("  <style type=\"text/css\">\r\n");
 	FileHTML->write("   table, td, th { border-collapse: collapse; border: 1px solid black; }\r\n");
 	FileHTML->write("   th { background: lightGray; font-weight: normal; padding: 10px 15px; }\r\n");
@@ -58,7 +58,7 @@ bool ISExportHTML::Export()
 	FileHTML->write(" </head>\r\n");
 	FileHTML->write(" <body>\r\n");
 	FileHTML->write("  <table>\r\n");
-	FileHTML->write("   <caption>" + LocalName.toUtf8() + "</caption>\r\n");
+	FileHTML->write("   <caption>" + MetaTable->LocalListName.toUtf8() + "</caption>\r\n");
 
 	if (Header) //Если в экспортируемый файл нужно добавить заголовки колонок
 	{
@@ -104,7 +104,7 @@ bool ISExportHTML::Export()
 		for (const QString &FieldName : Fields) //Обход колонок
 		{
 			QVariant Value = SqlRecord.value(FieldName).toString();
-			Value = PrepareValue(Value);
+			Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
 			RowString.append("<td>" + Value.toString().toUtf8() + "</td>");
 		}
 		RowString.append("</tr>\r\n");

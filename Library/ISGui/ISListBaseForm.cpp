@@ -1069,14 +1069,11 @@ void ISListBaseForm::Export()
 	ISExportWorker *ExportWorker = nullptr;
 	switch (ExportForm.GetSelectedType())
 	{
-	case ISNamespace::ET_CSV: ExportWorker = new ISExportCSV(this); break;
-	case ISNamespace::ET_HTML: ExportWorker = new ISExportHTML(this); break;
-	case ISNamespace::ET_DBF: ExportWorker = new ISExportDBF(this); break;
-	case ISNamespace::ET_XML: ExportWorker = new ISExportXML(this); break;
+	case ISNamespace::ET_CSV: ExportWorker = new ISExportCSV(MetaTable, this); break;
+	case ISNamespace::ET_HTML: ExportWorker = new ISExportHTML(MetaTable, this); break;
+	case ISNamespace::ET_DBF: ExportWorker = new ISExportDBF(MetaTable, this); break;
+	case ISNamespace::ET_XML: ExportWorker = new ISExportXML(MetaTable, this); break;
 	}
-
-	ExportWorker->SetLocalName(MetaTable->LocalListName);
-	ExportWorker->SetTableName(MetaTable->Name);
 	ExportWorker->SetFields(ExportForm.GetSelectedFields());
 	ExportWorker->SetModel(SqlModel);
 	ExportWorker->SetHeader(ExportForm.GetHeader());
@@ -1085,7 +1082,6 @@ void ISListBaseForm::Export()
 	ISProgressForm ProgressForm(SqlModel->rowCount(), LANG("Export.Process.Prepare"), this);
 	connect(&ProgressForm, &ISProgressForm::canceled, ExportWorker, &ISExportWorker::Cancel);
 	connect(ExportWorker, &ISExportWorker::ExportedRow, &ProgressForm, static_cast<void(ISProgressForm::*)(void)>(&ISProgressForm::IncrementValue));
-	//connect(ExportWorker, &ISExportWorker::Message, &ProgressForm, &ISProgressForm::SetText);
 	ProgressForm.show();
 
 	bool Prepared = ExportWorker->Prepare();

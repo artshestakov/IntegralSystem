@@ -8,7 +8,7 @@ class ISExportHTML : public ISExportWorker
 	Q_OBJECT
 
 public:
-	ISExportHTML(QObject *parent = 0);
+	ISExportHTML(PMetaTable *meta_table, QObject *parent = 0);
 	virtual ~ISExportHTML();
 
 	bool Prepare() override;

@@ -478,7 +478,6 @@
   <Local Name="Export.Completed" Russian="Экспорт таблицы &quot;%1&quot; в &quot;%2&quot; успешно завершен!"/>
   <Local Name="Export.Fields" Russian="Экспортируемые поля"/>
   <Local Name="Export.Settings" Russian="Параметры экспорта"/>
-  <Local Name="Export.UnknownType" Russian="Выберите формат экспорта!"/>
   <Local Name="Export.NotSelectedFields" Russian="Выберите хотя бы одно поле для экспорта!"/>
   <Local Name="Export.NoData" Russian="Данных нет! Экспорт невозможен."/>
   <Local Name="Export.Setting.Header" Russian="Заголовки колонок"/>

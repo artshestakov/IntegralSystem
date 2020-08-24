@@ -8,7 +8,7 @@ class ISExportCSV : public ISExportWorker
 	Q_OBJECT
 
 public:
-	ISExportCSV(QObject *parent = 0);
+	ISExportCSV(PMetaTable *meta_table, QObject *parent = 0);
 	virtual ~ISExportCSV();
 
 	bool Prepare() override;

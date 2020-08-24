@@ -5,9 +5,11 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISExportDBF::ISExportDBF(QObject *parent) : ISExportWorker(parent)
+ISExportDBF::ISExportDBF(PMetaTable *meta_table, QObject *parent)
+	: ISExportWorker(meta_table, parent),
+	ConnectionName(ISSystem::GenerateUuid())
 {
-	ConnectionName = ISSystem::GenerateUuid();
+	
 }
 //-----------------------------------------------------------------------------
 ISExportDBF::~ISExportDBF()
@@ -31,7 +33,7 @@ bool ISExportDBF::Prepare()
 //-----------------------------------------------------------------------------
 bool ISExportDBF::Export()
 {
-	QString CreateTableSql = "CREATE TABLE " + TableName + " (";
+	QString CreateTableSql = "CREATE TABLE " + MetaTable->Name + " (";
 	
 	for (const QString &FieldName : Fields) //Обход выбранных для экспорта полей
 	{
@@ -81,7 +83,7 @@ bool ISExportDBF::Export()
 
 		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		ISStringMap Bind;
-		QString InsertFields = "INSERT INTO " + TableName + '(';
+		QString InsertFields = "INSERT INTO " + MetaTable->Name + '(';
 		QString ValuesField = "VALUES(";
 
 		for (const QString &FieldName : Fields) //Обход колонок

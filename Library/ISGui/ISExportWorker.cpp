@@ -1,12 +1,15 @@
 #include "ISExportWorker.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
-ISExportWorker::ISExportWorker(QObject *parent) : QObject(parent)
+ISExportWorker::ISExportWorker(PMetaTable *meta_table, QObject *parent)
+	: QObject(parent),
+	ErrorString(LANG("Export.Error.NoError")),
+	MetaTable(meta_table),
+	Model(nullptr),
+	Header(false),
+	Canceled(false)
 {
-	ErrorString = LANG("Export.Error.NoError");
-	Model = nullptr;
-	Header = false;
-	Canceled = false;
+	
 }
 //-----------------------------------------------------------------------------
 ISExportWorker::~ISExportWorker()
@@ -17,16 +20,6 @@ ISExportWorker::~ISExportWorker()
 void ISExportWorker::Cancel()
 {
 	Canceled = true;
-}
-//-----------------------------------------------------------------------------
-void ISExportWorker::SetLocalName(const QString &local_name)
-{
-	LocalName = local_name;
-}
-//-----------------------------------------------------------------------------
-void ISExportWorker::SetTableName(const QString &table_name)
-{
-	TableName = table_name;
 }
 //-----------------------------------------------------------------------------
 void ISExportWorker::SetModel(ISSqlModelCore *model)
@@ -54,25 +47,22 @@ QString ISExportWorker::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-QVariant ISExportWorker::PrepareValue(const QVariant &Value) const
+QVariant ISExportWorker::PrepareValue(ISNamespace::FieldType Type, const QVariant &Value) const
 {
-	QVariant Result;
-	if (Value.type() == QVariant::Bool)
+	if (Value.isNull())
 	{
-		if (Value.toBool())
-		{
-			Result = LANG("Yes");
-		}
-		else
-		{
-			Result = LANG("No");
-		}
+		return QVariant();
+	}
+
+	QVariant Result;
+	if (Type == ISNamespace::FT_Bool)
+	{
+		Result = Value.toBool() ? LANG("Yes") : LANG("No");
 	}
 	else
 	{
 		Result = Value;
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
