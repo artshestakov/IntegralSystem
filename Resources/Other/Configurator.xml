@@ -33,7 +33,6 @@
     <Function FunctionName="VacuumAnalyze" LocalName="Вакуум с анализом" Description="Обновление статистики, которую использует планировщик для выбора наиболее эффективного способа выполнения запросов."/>
     <Function FunctionName="VacuumFull" LocalName="Полный вакуум" Description="Выбирает режим полной очистки, который может освободить больше пространства."/>
     <Function FunctionName="ClearTable" LocalName="Очистка таблицы" Description="Очистка таблицы от данных"/>
-    <Function FunctionName="Configuration" LocalName="Очистка таблицы" Description="Очистка таблицы от данных"/>
   </Section>
 
   <Section Name="Show" ClassName="CGConfiguratorShow">
