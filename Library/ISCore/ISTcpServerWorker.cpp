@@ -12,7 +12,7 @@ static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_field
 											  "FROM _columnsize "
 											  "WHERE clsz_user = currentuserid()");
 //-----------------------------------------------------------------------------
-static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname, prhs_default "
+static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
 											 "FROM _paragraphs "
 											 "WHERE NOT prhs_isdeleted "
 											 "ORDER BY prhs_orderid");
@@ -226,8 +226,7 @@ void ISTcpServerWorker::GetMetaData(const QVariantMap &Parameters, ISTcpAnswer &
 				{ "LocalName", qSelectParagraph.ReadColumn("prhs_localname") },
 				{ "ToolTip", qSelectParagraph.ReadColumn("prhs_tooltip") },
 				{ "Icon", qSelectParagraph.ReadColumn("prhs_icon") },
-				{ "ClassName", qSelectParagraph.ReadColumn("prhs_classname") },
-				{ "Default", qSelectParagraph.ReadColumn("prhs_default") }
+				{ "ClassName", qSelectParagraph.ReadColumn("prhs_classname") }
 			});
 		}
 		TcpAnswer["Paragraphs"] = Paragraphs;

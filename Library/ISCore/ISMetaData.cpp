@@ -987,7 +987,7 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaTable *MetaTable, const QDomNode
 				Result = MetaField ? true : false;
 				if (!Result)
 				{
-					QString("Not found field from name: %1").arg(FieldName);
+					ErrorString = QString("Not found field from name: %1. TableName: %2").arg(FieldName).arg(MetaTable->Name);
 					break;
 				}
 
