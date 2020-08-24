@@ -106,7 +106,10 @@ ISMenuBar::~ISMenuBar()
 //-----------------------------------------------------------------------------
 void ISMenuBar::ParagraphClick(const ISUuid &ParagraphUID)
 {
-	ParagraphButtons[ParagraphUID]->clicked();
+	if (ParagraphButtons.count(ParagraphUID))
+	{
+		ParagraphButtons[ParagraphUID]->clicked();
+	}
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &IconName)

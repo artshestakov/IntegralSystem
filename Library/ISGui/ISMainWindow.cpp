@@ -118,13 +118,9 @@ void ISMainWindow::CreateStackWidget()
 	GetMainLayout()->addWidget(StackedWidget);
 	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
 	{
-		ISParagraphBaseForm *ParagraphBaseForm = ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this));
-		Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ParagraphBaseForm);
-		if (MetaParagraph->Default)
-		{
-			MenuBar->ParagraphClick(MetaParagraph->UID);
-		}
+		Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
 	}
+	MenuBar->ParagraphClick(ISParagraphEntity::Instance().GetStartedParagraph());
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)

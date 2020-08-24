@@ -94,7 +94,6 @@ struct ISMetaParagraph
     QString ToolTip;
     QString Icon;
     QString ClassName;
-    bool Default;
 };
 //-----------------------------------------------------------------------------
 struct ISSortingMetaTable

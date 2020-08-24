@@ -1,6 +1,7 @@
 #include "ISSettingFIeldWidgets.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARAGPAPH = PREPARE_QUERY("SELECT prhs_localname, prhs_uid "
 											 "FROM _paragraphs "
@@ -13,8 +14,11 @@ ISCheckViewParagraph::ISCheckViewParagraph(QWidget *parent) : ISFieldEditBase(pa
 	ButtonGroup->setExclusive(false);
 	connect(ButtonGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &ISCheckViewParagraph::ValueChanged);
 
+	QVBoxLayout *Layout = new QVBoxLayout();
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+
 	QWidget *WidgetPanel = new QWidget(this);
-	WidgetPanel->setLayout(new QVBoxLayout());
+	WidgetPanel->setLayout(Layout);
 	AddWidgetEdit(WidgetPanel, this);
 
 	ISQuery qSelect(QS_PARAGPAPH);
@@ -22,15 +26,11 @@ ISCheckViewParagraph::ISCheckViewParagraph(QWidget *parent) : ISFieldEditBase(pa
 	{
 		while (qSelect.Next())
 		{
-			ISUuid ParagraphUID = qSelect.ReadColumn("prhs_uid");
-			QString ParagpraphName = qSelect.ReadColumn("prhs_localname").toString();
-
 			QCheckBox *CheckBox = new QCheckBox(this);
-			CheckBox->setText(ParagpraphName);
+			CheckBox->setText(qSelect.ReadColumn("prhs_localname").toString());
 			CheckBox->setCursor(CURSOR_POINTING_HAND);
-			CheckBox->setObjectName(ParagraphUID);
+			CheckBox->setObjectName(ISUuid(qSelect.ReadColumn("prhs_uid")));
 			WidgetPanel->layout()->addWidget(CheckBox);
-
 			ButtonGroup->addButton(CheckBox);
 		}
 	}
@@ -43,7 +43,7 @@ ISCheckViewParagraph::~ISCheckViewParagraph()
 //-----------------------------------------------------------------------------
 void ISCheckViewParagraph::SetValue(const QVariant &value)
 {
-	if (value.isValid())
+	if (value.isValid() && !value.isNull())
 	{
 		if (value.toString() == "All")
 		{
@@ -74,23 +74,20 @@ QVariant ISCheckViewParagraph::GetValue() const
 	{
 		if (AbstractButton->isChecked())
 		{
-			StringList.append(AbstractButton->objectName());
+			StringList.push_back(AbstractButton->objectName());
 		}
 	}
 
-	if (StringList.count() == ButtonGroup->buttons().count())
+	//Если выбраны все параграфы
+	if (StringList.size() == ButtonGroup->buttons().count())
 	{
 		return "All";
 	}
-	else if (StringList.count())
+	
+	//Выбраны не все параграфы
+	if (!StringList.empty())
 	{
-		QString Result;
-		for (const QString &String : StringList)
-		{
-			Result.append(String + SYMBOL_COMMA);
-		}
-		Result.chop(1);
-		return Result;
+		return StringList.join(SYMBOL_COMMA);
 	}
 	return QVariant();
 }

@@ -6,7 +6,7 @@
   <_Sex IsSystem="true" UID="{7446B115-AED2-4D5B-89D7-16F367B0CF13}" Name="Не определено"/>
 
   <_Paragraphs IsSystem="true" UID="{9A36AD64-5A2F-4B62-9DA7-4FC545B6AB5F}" Name="Desktop" OrderID="1" LocalName="Рабочий стол" ToolTip="Рабочий стол" Icon="MainPanel.Desktop" ClassName="ISDesktopForm"/>
-  <_Paragraphs IsSystem="true" UID="{18A90F8B-1D99-420E-BA60-C3EBF60D595E}" Name="Workspace" OrderID="2" LocalName="Рабочая область" ToolTip="Рабочая область" Icon="MainPanel.Workspace" ClassName="ISWorkspaceForm" Default="true"/>
+  <_Paragraphs IsSystem="true" UID="{18A90F8B-1D99-420E-BA60-C3EBF60D595E}" Name="Workspace" OrderID="2" LocalName="Рабочая область" ToolTip="Рабочая область" Icon="MainPanel.Workspace" ClassName="ISWorkspaceForm"/>
   <_Paragraphs IsSystem="true" UID="{1BA7F467-32AA-4719-B8F0-BCD8BC678CAB}" Name="Calendar" OrderID="3" LocalName="Календарь" ToolTip="Календарь" Icon="MainPanel.Calendar" ClassName="ISCalendarForm"/>
   <_Paragraphs IsSystem="true" UID="{588A7DBA-CC77-4EA2-9691-7F800C629D7F}" Name="Tasks" OrderID="4" LocalName="Трекер задач" ToolTip="Трекер задач" Icon="MainPanel.Tasks" ClassName="ISTaskForm"/>
   <_Paragraphs IsDeleted="true" IsSystem="true" UID="{47EFC431-D5AB-481D-BB8C-6BB5E80DCD9B}" Name="Telephony" OrderID="6" LocalName="IP-Телефония" ToolTip="IP-Телефония" Icon="MainPanel.Telephony" ClassName="ISTelephonyForm"/>

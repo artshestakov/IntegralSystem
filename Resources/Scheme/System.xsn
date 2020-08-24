@@ -95,7 +95,6 @@
       <Field UID="{963845B6-6A19-4B91-819D-94D8A6280858}" Name="ToolTip" Type="String" LabelName="Всплывающая подсказка" LocalListName="Всплывающая подсказка" NotNull="true"/>
       <Field UID="{5F7C5BCD-6D38-42B2-933D-E2E381182799}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка" NotNull="true"/>
       <Field UID="{C09B8103-A395-491D-8E29-CB1792336C42}" Name="ClassName" Type="String" LabelName="Наименование класса" LocalListName="Наименование класса" NotNull="true"/>
-      <Field UID="{00CD78A9-132F-44BB-88A7-57B98CFF10A3}" Name="Default" Type="Bool" DefaultValue="false" LabelName="По умолчанию" LocalListName="По умолчанию"/>
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
@@ -104,7 +103,6 @@
       <Index Field="ToolTip"/>
       <Index Field="Icon" Unique="true"/>
       <Index Field="ClassName" Unique="true"/>
-      <Index Field="Default"/>
     </Indexes>
   </Table>
 

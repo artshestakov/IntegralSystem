@@ -5,7 +5,7 @@
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname, prhs_default "
+static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
 											 "FROM _paragraphs "
 											 "WHERE NOT prhs_isdeleted "
 											 "ORDER BY prhs_orderid");
@@ -38,7 +38,17 @@ QString ISParagraphEntity::GetErrorString() const
 bool ISParagraphEntity::Initialize()
 {
 	QString ParagraphView = SETTING_STRING(CONST_UID_SETTING_VIEW_PARAGRAPHVIEW);
+	if (ParagraphView.isEmpty()) //Если отображаемые параграфы отсутствуют - выходим
+	{
+		return true;
+	}
+
 	QStringList EnabledParagraphs = ParagraphView.split(SYMBOL_COMMA);
+	StartedParagraph = SETTING_STRING(CONST_UID_SETTING_VIEW_STARTEDPARAGRAPH);
+	if (!EnabledParagraphs.contains(StartedParagraph)) //Если стартовый парраграф не найдет среди отображаемых - назначаем первый попавшийся
+	{
+		StartedParagraph = EnabledParagraphs.front();
+	}
 
 	ISQuery qSelect(QS_PARAGRAPHS);
 	bool Result = qSelect.Execute();
@@ -56,7 +66,6 @@ bool ISParagraphEntity::Initialize()
 				MetaParagraph->ToolTip = qSelect.ReadColumn("prhs_tooltip").toString();
 				MetaParagraph->Icon = qSelect.ReadColumn("prhs_icon").toString();
 				MetaParagraph->ClassName = qSelect.ReadColumn("prhs_classname").toString();
-				MetaParagraph->Default = qSelect.ReadColumn("prhs_default").toBool();
 				Paragraphs.emplace_back(MetaParagraph);
 			}
 		}
@@ -84,5 +93,10 @@ ISMetaParagraph* ISParagraphEntity::GetParagraph(const QString &ParagraphUID)
 std::vector<ISMetaParagraph*> ISParagraphEntity::GetParagraphs()
 {
 	return Paragraphs;
+}
+//-----------------------------------------------------------------------------
+ISUuid ISParagraphEntity::GetStartedParagraph() const
+{
+	return StartedParagraph;
 }
 //-----------------------------------------------------------------------------
