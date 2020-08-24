@@ -1374,21 +1374,18 @@ QWidget* ISTaskViewForm::CreateCheckListWidget(int CheckListID, int Order, const
 	QWidget *Widget = new QWidget(ScrollCheckList);
 	Widget->setLayout(LayoutWidget);
 
-	ISServiceButton *ButtonCheckMenu = new ISServiceButton(BUFFER_ICONS("AdditionallyActions"), Widget);
-	ButtonCheckMenu->setFlat(true);
-	ButtonCheckMenu->setMenu(new QMenu(ButtonCheckMenu));
-	LayoutWidget->addWidget(ButtonCheckMenu);
+	ISServiceButton *ButtonEditCheck = new ISServiceButton(BUFFER_ICONS("Edit"), LANG("Edit"), Widget);
+	ButtonEditCheck->setFlat(true);
+	ButtonEditCheck->setProperty("CheckListID", CheckListID);
+	ButtonEditCheck->setProperty("CheckListName", Name);
+	connect(ButtonEditCheck, &ISServiceButton::clicked, this, &ISTaskViewForm::CheckEdit);
+	LayoutWidget->addWidget(ButtonEditCheck);
 
-	QAction *ActionEdit = new QAction(BUFFER_ICONS("Edit"), LANG("Edit"), ButtonCheckMenu->menu());
-	ActionEdit->setProperty("CheckListID", CheckListID);
-	ActionEdit->setProperty("CheckListName", Name);
-	connect(ActionEdit, &QAction::triggered, this, &ISTaskViewForm::CheckEdit);
-	ButtonCheckMenu->menu()->addAction(ActionEdit);
-
-	QAction *ActionDelete = new QAction(BUFFER_ICONS("Delete"), LANG("Delete"), ButtonCheckMenu->menu());
-	ActionDelete->setProperty("CheckListID", CheckListID);
-	connect(ActionDelete, &QAction::triggered, this, &ISTaskViewForm::CheckDelete);
-	ButtonCheckMenu->menu()->addAction(ActionDelete);
+	ISServiceButton *ButtonDeleteCheck = new ISServiceButton(BUFFER_ICONS("Delete"), LANG("Delete"), Widget);
+	ButtonDeleteCheck->setFlat(true);
+	ButtonDeleteCheck->setProperty("CheckListID", CheckListID);
+	connect(ButtonDeleteCheck, &ISServiceButton::clicked, this, &ISTaskViewForm::CheckDelete);
+	LayoutWidget->addWidget(ButtonDeleteCheck);
 
 	ISCheckEdit *CheckEdit = new ISCheckEdit(Widget);
 	CheckEdit->SetCheckableStrikeOut(true);
