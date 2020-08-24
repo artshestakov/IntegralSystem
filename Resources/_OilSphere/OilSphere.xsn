@@ -379,4 +379,92 @@
     </Indexes>
   </Table>
 
+  <Table Name="Station" UID="{2455675E-EB7E-4D52-A348-0832BB759059}" Alias="stat" LocalName="Станция" LocalListName="Станция" TitleName="Name">
+    <Fields>
+      <Field UID="{FBB6152E-E215-4D17-8BCF-DECFE807E7B7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="ConsumptionSUG" UID="{6A343038-3BF0-4ED9-A2DA-F5EF218D3D38}" Alias="csug" LocalName="Расход СУГ" LocalListName="Расходы СУГ" TitleName="DateTime" ObjectForm="ISOilSphere::ConsumptionSUGObjectForm">
+    <Fields>
+      <Field UID="{569D169D-A604-439A-B02B-8A08BF6D0C88}" Name="DateTime" Type="DateTime" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
+      <Field UID="{6259D563-FE8D-44B1-A849-3B23B9C26B2D}" Name="Station" Type="Int" LabelName="Станция" LocalListName="Станция" LayoutName="Station"/>
+      <Field UID="{74926D23-CDD0-4D30-8132-E83623503FC9}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Station"/>
+      <Field UID="{982CFF4A-684A-4307-8321-96ED64B25307}" Name="Car" Type="Int" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Car"/>
+      <Field UID="{C3049C86-8B21-47B6-943A-97952FDF2535}" Name="Took" Type="Int" LabelName="Забрал" LocalListName="Забрал" LayoutName="Car"/>
+      <Field UID="{F334FCBE-6114-4082-BF67-A4879BA2F3D3}" Name="Coming" Type="Int" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+      <Field UID="{2BB8266D-BAA2-4304-96CD-A222B85479FF}" Name="Consumption" Type="Int" LabelName="Расход" LocalListName="Расход" LayoutName="Coming"/>
+      <Field UID="{FC67B691-1DCC-47D0-A17E-4E284716670D}" Name="Remainder" Type="Int" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Coming"/>
+      <Field UID="{BA0E8481-7C12-4E03-822C-C59680C0B564}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="DateTime"/>
+      <Index Field="Station"/>
+      <Index Field="Counterparty"/>
+      <Index Field="Car"/>
+      <Index Field="Took"/>
+      <Index Field="Coming"/>
+      <Index Field="Consumption"/>
+      <Index Field="Remainder"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Station" ForeignClass="Station" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Number"/>
+      <Foreign Field="Took" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
+    <Fields>
+      <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки"/>
+      <Field UID="{29423F87-6E67-492B-B82E-CE6F054A13A8}" Name="Station" Type="Int" LabelName="Станция" LocalListName="Станция" LayoutName="Station"/>
+      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="Int" LabelName="Поставщик" LocalListName="Поставщик" LayoutName="Station"/>
+      <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Int" LabelName="Цена" LocalListName="Цена" LayoutName="Price"/>
+      <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="Price"/>
+      <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" LayoutName="Price"/>
+      <Field UID="{C6DFF9F3-C4D4-456C-8EFF-77AB756A360F}" Name="PassportQuality" Type="Bool" DefaultValue="false" LabelName="Паспорт качества" LocalListName="Паспорт качества"/>
+      <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="DateShipping"/>
+      <Index Field="Station"/>
+      <Index Field="Provider"/>
+      <Index Field="Price"/>
+      <Index Field="DateArrival"/>
+      <Index Field="Waybill"/>
+      <Index Field="PassportQuality"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Station" ForeignClass="Station" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Provider" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+    <Escorts>
+      <Escort LocalName="Подробности передвижений" TableName="MoveWagonDetail" FilterField="MoveWagon"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="MoveWagonDetail" UID="{5E5F2AB5-29EA-46CB-84CF-93890DF87965}" Alias="mwdt" LocalName="Детали движения вагона" LocalListName="Детали движения вагонов" TitleName="WagonNumber">
+    <Fields>
+      <Field UID="{B9AD4F3A-6AA9-485D-9B4A-4CD558392A63}" Name="MoveWagon" Type="Int" LabelName="Движения вагонов" LocalListName="Движения вагонов" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{916CDBC8-55AC-4A22-8B0D-9CA43D6A4A3F}" Name="WagonNumber" Type="Int" LabelName="Номер вагона" LocalListName="Номер вагона"/>
+      <Field UID="{B94799C8-4ADB-490A-A835-83F50E36CCAE}" Name="Kilogram" Type="Int" LabelName="Килограммы" LocalListName="Килограммы"/>
+      <Field UID="{1071385C-D44D-48A4-A757-DFA13AA32D27}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="MoveWagon"/>
+      <Index Field="WagonNumber"/>
+      <Index Field="Kilogram"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="MoveWagon" ForeignClass="MoveWagon" ForeignField="ID" ForeignViewNameField="DateShipping"/>
+    </Foreigns>
+  </Table>
+
 </XSN>

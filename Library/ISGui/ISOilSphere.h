@@ -146,7 +146,7 @@ namespace ISOilSphere
 		QTreeWidget *TreeWidget;
 	};
 
-	//Форма объекта дебета
+	//Форма объекта дебета 1
 	class DebetObjectForm : public ISObjectFormBase
 	{
 		Q_OBJECT
@@ -160,6 +160,7 @@ namespace ISOilSphere
 		void CalculateRemainder(); //Расчёт "Остаток долга"
 	};
 
+	//Форма списка дебета 1
 	class DebetListForm : public ISListBaseForm
 	{
 		Q_OBJECT
@@ -174,6 +175,19 @@ namespace ISOilSphere
 	private:
 		QLabel *LabelTotalSum; //Сумма итого
 		QLabel *LabelRemainderSum; //Сумма остатка
+	};
+
+	//Форма объекта расходов СУГ
+	class ConsumptionSUGObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ConsumptionSUGObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~ConsumptionSUGObjectForm();
+
+	private:
+		void CalculateRemainder(); //Расчёт поля "Остаток"
 	};
 }
 //-----------------------------------------------------------------------------

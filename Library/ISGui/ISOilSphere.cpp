@@ -75,6 +75,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::DebtSubSystemForm*>("ISOilSphere::DebtSubSystemForm");
 	qRegisterMetaType<ISOilSphere::DebetObjectForm*>("ISOilSphere::DebetObjectForm");
 	qRegisterMetaType<ISOilSphere::DebetListForm*>("ISOilSphere::DebetListForm");
+	qRegisterMetaType<ISOilSphere::ConsumptionSUGObjectForm*>("ISOilSphere::ConsumptionSUGObjectForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -710,5 +711,25 @@ void ISOilSphere::DebetListForm::LoadDataAfterEvent()
 	}
 	LabelTotalSum->setText(LANG("OilSphere.Debet.Total").arg(Total));
 	LabelRemainderSum->setText(LANG("OilSphere.Debet.Remainder").arg(Remainder));
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionSUGObjectForm::ConsumptionSUGObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+	: ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+	connect(GetFieldWidget("Coming"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ConsumptionSUGObjectForm::CalculateRemainder);
+	connect(GetFieldWidget("Consumption"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ConsumptionSUGObjectForm::CalculateRemainder);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionSUGObjectForm::~ConsumptionSUGObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::ConsumptionSUGObjectForm::CalculateRemainder()
+{
+	int Coming = GetFieldValue("Coming").toInt(), Consumption = GetFieldValue("Consumption").toInt();
+	Coming > 0 && Consumption > 0 ? SetFieldValue("Remainder", Coming - Consumption) : GetFieldWidget("Remainder")->Clear();
 }
 //-----------------------------------------------------------------------------
