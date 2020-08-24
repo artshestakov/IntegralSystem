@@ -576,6 +576,9 @@
     <ClCompile Include="ISEdits.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
+    <ClCompile Include="ISValidators.cpp">
+      <Filter>Export</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -985,6 +988,9 @@
     </QtMoc>
     <QtMoc Include="ISEdits.h">
       <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISValidators.h">
+      <Filter>Export</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

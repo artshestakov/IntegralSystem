@@ -332,6 +332,7 @@
     <ClCompile Include="ISUserObjectForm.cpp" />
     <ClCompile Include="ISUserPasswordForm.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
+    <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISVolumeEdit.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="ISWorkspaceForm.cpp" />
@@ -409,6 +410,7 @@
     <QtMoc Include="ISSqlModelCore.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="ISValidators.h" />
     <QtMoc Include="ISVolumeEdit.h" />
     <QtMoc Include="ISWorkspaceForm.h" />
     <QtMoc Include="ISAboutForm.h" />

@@ -145,16 +145,6 @@ void ISLineEdit::TextChanged(const QString &Text)
 	emit ValueChanged();
 }
 //-----------------------------------------------------------------------------
-void ISLineEdit::TextChangedConnect()
-{
-	connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::TextChanged);
-}
-//-----------------------------------------------------------------------------
-void ISLineEdit::TextChangedDisconnect()
-{
-	disconnect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::TextChanged);
-}
-//-----------------------------------------------------------------------------
 ISQLineEdit* ISLineEdit::GetLineEdit()
 {
 	return LineEdit;

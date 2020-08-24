@@ -38,16 +38,6 @@ namespace ISAlgorithm
 	//! \return возвращает размер файла в байтах. В случае ошибки возвращается -1, а ErrorString заполняется описанием ошибки
     ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath, std::string &ErrorString);
 
-	//! Обрезание числа с плавающей запятой.
-	//! \param Double число с плавающей запятой
-	//! \param Precision количество цифр после запятой
-	//! \return возращает обрезанное число с плаващей запятой
-	ISCORE_EXPORT std::string PrepareDouble(double Double, size_t Precision);
-
-	//! Исключить все буквы из дробного числа в виде строки
-	//! \param String дробное число в виде строки
-	ISCORE_EXPORT void PrepareStringDouble(QString &String, size_t Precision);
-
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {

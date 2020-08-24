@@ -10,6 +10,7 @@
 #include "ISTextEdit.h"
 #include "ISPhoneBaseEdit.h"
 #include "ISDateTimeEdit.h"
+#include "ISValidators.h"
 //-----------------------------------------------------------------------------
 class ISBIKEdit : public ISLineEdit
 {
@@ -342,11 +343,6 @@ class ISDoubleEdit : public ISLineEdit
 public:
 	Q_INVOKABLE ISDoubleEdit(QWidget *parent = 0);
 	virtual ~ISDoubleEdit();
-
-	void SetValue(const QVariant &value) override;
-
-protected:
-	void TextChanged(const QString &Text) override;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -398,7 +394,7 @@ public:
 	void ResetRange();
 
 private:
-	QIntValidator *IntValidator;
+	ISIntValidator *IntValidator;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

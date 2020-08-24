@@ -208,6 +208,7 @@
 #include <QtGui/QValidator>
 #include <QtGui/QRegExpValidator>
 #include <QtGui/QIntValidator>
+#include <QtGui/QDoubleValidator>
 #include <QtGui/QKeySequence>
 #include <QtGui/QClipboard>
 #include <QtGui/QDesktopServices>
@@ -225,8 +226,6 @@
 #include <QtGui/QScreen>
 #include <QtGui/QTextFrame>
 #include <QtGui/QBitmap>
-#include <QtGui/QDoubleValidator>
-#include <QtGui/QIntValidator>
 //-----------------------------------------------------------------------------
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintPreviewDialog>
