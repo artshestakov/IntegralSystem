@@ -344,14 +344,14 @@
 
   <Table Name="Debet1" UID="{6FD4EE55-A3F7-4E96-883E-925A948B935A}" Alias="deb1" LocalName="Дебет 1" LocalListName="Дебет 1" TitleName="DateComing" ObjectForm="ISOilSphere::DebetObjectForm">
     <Fields>
-      <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" NotNull="true" LayoutName="Date"/>
-      <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" LayoutName="Date"/>
-      <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" NotNull="true" LayoutName="Coming"/>
-      <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" NotNull="true" LayoutName="Coming"/>
-      <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Double" ReadOnly="true" LabelName="Итого" LocalListName="Итого" NotNull="true" LayoutName="Coming"/>
+      <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
+      <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+      <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+      <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
+      <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Double" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
       <Field UID="{FE1EFFD3-5F14-42AC-89CB-2968BFC52744}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
       <Field UID="{6D8CF294-D4E5-4026-9056-68CC4DFCFDB0}" Name="Calculation" Type="Double" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
-      <Field UID="{4C09D8BD-F29A-4EB9-81E7-698F2B90576C}" Name="Remainder" Type="Double" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+      <Field UID="{4C09D8BD-F29A-4EB9-81E7-698F2B90576C}" Name="Remainder" Type="Double" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{E58FB379-7635-4C7B-B8AF-7C00FD760640}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>

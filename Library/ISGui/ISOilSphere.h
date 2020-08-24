@@ -159,6 +159,22 @@ namespace ISOilSphere
 		void CalculateTotal(); //Расчёт "Итого"
 		void CalculateRemainder(); //Расчёт "Остаток долга"
 	};
+
+	class DebetListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE DebetListForm(QWidget *parent = 0);
+		virtual ~DebetListForm();
+
+	protected:
+		void LoadDataAfterEvent() override;
+
+	private:
+		QLabel *LabelTotalSum; //Сумма итого
+		QLabel *LabelRemainderSum; //Сумма остатка
+	};
 }
 //-----------------------------------------------------------------------------
 #endif

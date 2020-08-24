@@ -74,6 +74,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 	qRegisterMetaType<ISOilSphere::DebtSubSystemForm*>("ISOilSphere::DebtSubSystemForm");
 	qRegisterMetaType<ISOilSphere::DebetObjectForm*>("ISOilSphere::DebetObjectForm");
+	qRegisterMetaType<ISOilSphere::DebetListForm*>("ISOilSphere::DebetListForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -671,5 +672,41 @@ void ISOilSphere::DebetObjectForm::CalculateRemainder()
 {
 	double Total = GetFieldValue("Total").toDouble(), Calculation = GetFieldValue("Calculation").toDouble();
 	Total > 0 && Calculation > 0 ? SetFieldValue("Remainder", Total - Calculation) : GetFieldWidget("Remainder")->Clear();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::DebetListForm::DebetListForm(QWidget *parent) : ISListBaseForm("Debet1", parent)
+{
+	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
+
+	LabelTotalSum = new QLabel(GetToolBar());
+	ISGui::SetFontWidgetBold(LabelTotalSum, true);
+	GetToolBar()->addWidget(LabelTotalSum);
+
+	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
+
+	LabelRemainderSum = new QLabel(GetToolBar());
+	ISGui::SetFontWidgetBold(LabelRemainderSum, true);
+	GetToolBar()->addWidget(LabelRemainderSum);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::DebetListForm::~DebetListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::DebetListForm::LoadDataAfterEvent()
+{
+	ISListBaseForm::LoadDataAfterEvent();
+
+	double Total = 0, Remainder = 0;
+	for (int Row = 0; Row < GetSqlModel()->rowCount(); ++Row)
+	{
+		Total += GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toDouble();
+		Remainder += GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Remainder"))).toDouble();
+	}
+	LabelTotalSum->setText(LANG("OilSphere.Debet.Total").arg(Total));
+	LabelRemainderSum->setText(LANG("OilSphere.Debet.Remainder").arg(Remainder));
 }
 //-----------------------------------------------------------------------------

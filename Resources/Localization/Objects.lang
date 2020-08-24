@@ -67,5 +67,7 @@
   <Local Name="OilSphere.ShowImplementation" Russian="Просмотр реализации"/>
   <Local Name="OilSphere.ShowImplementationDetails" Russian="Просмотр подробностей реализации"/>
   <Local Name="OilSphere.ShowCounterparty" Russian="Карточка контрагента"/>
+  <Local Name="OilSphere.Debet.Total" Russian="Сумма итого: %1"/>
+  <Local Name="OilSphere.Debet.Remainder" Russian="Сумма остатка: %1"/>
 	
 </LANG>

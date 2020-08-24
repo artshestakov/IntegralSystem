@@ -22,7 +22,7 @@
   <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="7" LocalName="Ведомость АЗС" Icon="Lists" ClassName="ISOilSphere::GasStationStatementListForm"/>
 
   <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="5" LocalName="Прочее" Icon="Lists"/>
-  <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" TableName="Debet1"/>
+  <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::DebetListForm"/>
   
   <OperationType UID="{439C16CE-421A-4BAB-B2B2-4CEE3FCFEE21}" Name="Списание"/>
   <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>
