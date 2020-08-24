@@ -45,7 +45,7 @@ bool ISParagraphEntity::Initialize()
 
 	QStringList EnabledParagraphs = ParagraphView.split(SYMBOL_COMMA);
 	StartedParagraph = SETTING_STRING(CONST_UID_SETTING_VIEW_STARTEDPARAGRAPH);
-	if (!EnabledParagraphs.contains(StartedParagraph)) //Если стартовый парраграф не найдет среди отображаемых - назначаем первый попавшийся
+	if (!EnabledParagraphs.contains(StartedParagraph) && EnabledParagraphs.front() != "All") //Если стартовый парраграф не найдет среди отображаемых - назначаем первый попавшийся
 	{
 		StartedParagraph = EnabledParagraphs.front();
 	}
