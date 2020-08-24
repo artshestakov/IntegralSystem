@@ -575,11 +575,11 @@ QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, 
 
 	QVBoxLayout *LayoutLabels = new QVBoxLayout();
 
-	QLabel *LabelCounterpartyName = new QLabel(LANG("OilSphere.Counterpatry") + ": " + CounterpartyName, Widget);
+	QLabel *LabelCounterpartyName = new QLabel(LANG("OilSphere.Counterpatry").arg(CounterpartyName), Widget);
 	ISGui::SetFontWidgetBold(LabelCounterpartyName, true);
 	LayoutLabels->addWidget(LabelCounterpartyName);
 
-	QLabel *LabelBalance = new QLabel(LANG("OilSphere.CurrentBalance") + ": " + QString::number(Balance), Widget);
+	QLabel *LabelBalance = new QLabel(LANG("OilSphere.CurrentBalance").arg(Balance), Widget);
 	ISGui::SetFontWidgetBold(LabelBalance, true);
 	LayoutLabels->addWidget(LabelBalance);
 	
@@ -596,23 +596,24 @@ QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, 
 		LabelBalance->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
 	}
 
-	QLabel *LabelDateLoad = new QLabel(LANG("OilSphere.DateLoad") + ": " + DateLoad.toString(FORMAT_DATE_V2), Widget);
+	QLabel *LabelDateLoad = new QLabel(LANG("OilSphere.DateLoad").arg(DateLoad.toString(FORMAT_DATE_V2)), Widget);
 	ISGui::SetFontWidgetBold(LabelDateLoad, true);
 	LayoutLabels->addWidget(LabelDateLoad);
 
-	QLabel *LabelProductType = new QLabel(LANG("OilSphere.ProductType") + ": " + ProductTypeName, Widget);
+	QLabel *LabelProductType = new QLabel(LANG("OilSphere.ProductType").arg(ProductTypeName), Widget);
 	ISGui::SetFontWidgetBold(LabelProductType, true);
 	LayoutLabels->addWidget(LabelProductType);
 
-	QLabel *LabelUnloadCost = new QLabel(LANG("OilSphere.UnloadCost") + ": " + QString::number(UnloadCost), Widget);
+	QLabel *LabelUnloadCost = new QLabel(LANG("OilSphere.UnloadCost").arg(UnloadCost), Widget);
 	ISGui::SetFontWidgetBold(LabelUnloadCost , true);
 	LayoutLabels->addWidget(LabelUnloadCost);
 
-	QLabel *LabelDebt = new QLabel(LANG("OilSphere.Debt") + ": " + QString::number(UnloadCost - Accrued), Widget);
+	double Debt = UnloadCost - Accrued;
+	QLabel *LabelDebt = new QLabel(LANG("OilSphere.Debt").arg(Debt), Widget);
 	ISGui::SetFontWidgetBold(LabelDebt, true);
 	LayoutLabels->addWidget(LabelDebt);
 
-	QLabel *LabelAccrued = new QLabel(LANG("OilSphere.Accrued") + ": " + QString::number(Accrued), Widget);
+	QLabel *LabelAccrued = new QLabel(LANG("OilSphere.Accrued").arg(Accrued), Widget);
 	ISGui::SetFontWidgetBold(LabelAccrued, true);
 	LayoutLabels->addWidget(LabelAccrued);
 
@@ -634,6 +635,7 @@ QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, 
 	QAction *ActionAddAccrued = ButtonMenu->menu()->addAction(LANG("OilSphere.AddAccrued"), this, &ISOilSphere::DebtSubSystemForm::AddAccrued);
 	ActionAddAccrued->setProperty("ImplementationDetailID", ImplementationDetailID);
 	ActionAddAccrued->setProperty("CounterpartyID", CounterpartyID);
+	ActionAddAccrued->setEnabled(Debt > 0);
 
 	QAction *ActionShowImplementation = ButtonMenu->menu()->addAction(LANG("OilSphere.ShowImplementation"), this, &ISOilSphere::DebtSubSystemForm::ShowImplementation);
 	ActionShowImplementation->setProperty("ImplementationID", ImplementationID);

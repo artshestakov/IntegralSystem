@@ -54,13 +54,13 @@
   <Local Name="OilSphere.SelectGasStation" Russian="Выбор АЗС:"/>
   <Local Name="OilSphere.NotSelectedGasStation" Russian="Чтобы создать запись выберите АЗС."/>
   <Local Name="OilSphere.ChangeAlreadyExist" Russian="Смена на дату %1 по выбранной АЗС уже существует."/>
-  <Local Name="OilSphere.Counterpatry" Russian="Контрагент"/>
-  <Local Name="OilSphere.CurrentBalance" Russian="Баланс"/>
-  <Local Name="OilSphere.DateLoad" Russian="Дата загрузки"/>
-  <Local Name="OilSphere.ProductType" Russian="Тип продукта"/>
-  <Local Name="OilSphere.UnloadCost" Russian="Стоимость выгрузки"/>
-  <Local Name="OilSphere.Accrued" Russian="Начисллено"/>
-  <Local Name="OilSphere.Debt" Russian="Долг"/>
+  <Local Name="OilSphere.Counterpatry" Russian="Контрагент: %1"/>
+  <Local Name="OilSphere.CurrentBalance" Russian="Баланс: %1"/>
+  <Local Name="OilSphere.DateLoad" Russian="Дата загрузки: %1"/>
+  <Local Name="OilSphere.ProductType" Russian="Тип продукта: %1"/>
+  <Local Name="OilSphere.UnloadCost" Russian="Стоимость выгрузки: %1"/>
+  <Local Name="OilSphere.Accrued" Russian="Начисллено: %1"/>
+  <Local Name="OilSphere.Debt" Russian="Долг: %1"/>
   <Local Name="OilSphere.AddAccrued" Russian="Добавить начисление"/>
   <Local Name="OilSphere.AccruedWithDate" Russian="Начисление %1 от %2"/>
   <Local Name="OilSphere.AccruedWithDateAndNote" Russian="Начисление %1 от %2. Примечание: %3"/>
