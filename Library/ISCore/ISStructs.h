@@ -240,6 +240,7 @@ struct ISCORE_EXPORT ISConfigurationItem
     QString DesktopForm; //Имя класса рабочего стола
     QString IncomingCallForm; //Имя класса формы входящего звонка
 	QDate DateExpired; //Дата, после которой программа запускаться не должна
+	QString LogoName;
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISSqlQuery

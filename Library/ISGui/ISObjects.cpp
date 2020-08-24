@@ -71,6 +71,7 @@ bool ISObjects::Initialize()
 				Info.DesktopForm = DomNamedNodeMap.namedItem("DesktopForm").nodeValue();
 				Info.IncomingCallForm = DomNamedNodeMap.namedItem("IncomingCallForm").nodeValue();
 				Info.DateExpired = QDate::fromString(DomNamedNodeMap.namedItem("DateExpired").nodeValue(), FORMAT_DATE_V2);
+				Info.LogoName = DomNamedNodeMap.namedItem("LogoName").nodeValue();
 				break;
 			}
 			DomNode = DomNode.nextSibling();

@@ -21,9 +21,9 @@ ISDesktopForm::ISDesktopForm(QWidget *parent)
 	if (DesktopFormName.isEmpty())
 	{
 		MainLayout->addStretch();
-
+		
 		QLabel *LabelLogo = new QLabel(this);
-		LabelLogo->setPixmap(BUFFER_PIXMAPS("DesktopLogo"));
+		LabelLogo->setPixmap(ISObjects::Instance().Info.LogoName.isEmpty() ? BUFFER_PIXMAPS("DesktopLogo") : QPixmap(":_" + ISObjects::Instance().Info.Name + '/' + ISObjects::Instance().Info.LogoName));
 		MainLayout->addWidget(LabelLogo, 0, Qt::AlignCenter);
 
 		QLabel *LabelLocalName = new QLabel(this);
