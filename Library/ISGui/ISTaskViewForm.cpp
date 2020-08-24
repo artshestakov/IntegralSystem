@@ -300,17 +300,11 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TextEdit->SetValue(TaskDescription);
 	GroupBoxDescription->layout()->addWidget(TextEdit);
 
-	GroupBoxSubTask = new QGroupBox(LANG("Task.SubTask.List").arg(0), this);
+	GroupBoxSubTask = new QGroupBox(LANG("Task.SubTask.List").arg(0).arg(0), this);
 	GroupBoxSubTask->setLayout(new QVBoxLayout());
 	GroupBoxSubTask->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_1_PX);
 	GroupBoxSubTask->setSizePolicy(GroupBoxSubTask->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
 	LayoutLeft->addWidget(GroupBoxSubTask);
-
-	ProgressBarSubTask = new QProgressBar(GroupBoxSubTask);
-	ProgressBarSubTask->setMaximum(100);
-	ProgressBarSubTask->setAlignment(Qt::AlignJustify | Qt::AlignVCenter);
-	ProgressBarSubTask->setFormat(LANG("Task.SubTask.Progress"));
-	GroupBoxSubTask->layout()->addWidget(ProgressBarSubTask);
 
 	ListWidgetSubTask = new ISListWidget(GroupBoxSubTask);
 	ListWidgetSubTask->setAlternatingRowColors(true);
@@ -814,11 +808,10 @@ void ISTaskViewForm::SubTaskLoadList()
 			ListWidgetItem->setData(Qt::UserRole, SubTaskID);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
 			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, IsDone);
-			IsDoned += IsDone ? 1 : 0;
+			IsDone ? ++IsDoned : IsDoned;
 		}
-		GroupBoxSubTask->setTitle(LANG("Task.SubTask.List").arg(Rows));
+		GroupBoxSubTask->setTitle(LANG("Task.SubTask.List").arg(IsDoned).arg(Rows));
 		GroupBoxSubTask->setVisible(Rows);
-		ProgressBarSubTask->setValue(IsDoned ? (IsDoned * 100 / Rows) : 0);
 	}
 }
 //-----------------------------------------------------------------------------

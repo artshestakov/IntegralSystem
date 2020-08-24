@@ -84,7 +84,6 @@ private:
 	QHBoxLayout *LayoutHorizontal;
 	ISTextEdit *TextEdit;
 	QGroupBox *GroupBoxSubTask;
-	QProgressBar *ProgressBarSubTask;
 	ISListWidget *ListWidgetSubTask;
 	QVBoxLayout *LayoutLeft;
 	ISPushButton *ButtonMenu;

@@ -659,8 +659,7 @@
   <Local Name="Task.ViewFormTitle.SubTask" Russian="Подзадача #%1: %2"/>
   <Local Name="Task.Description" Russian="Описание задачи"/>
   <Local Name="Task.Description.Empty" Russian="Описание отсутствует"/>
-  <Local Name="Task.SubTask.List" Russian="Подзадачи (%1)"/>
-  <Local Name="Task.SubTask.Progress" Russian="Выполнено %p%"/>
+  <Local Name="Task.SubTask.List" Russian="Подзадачи: выполнено %1 из %2"/>
   <Local Name="Task.SubTask.ToolTip" Russian="Родительская задача: %1"/>
   <Local Name="Task.Files" Russian="Файлы (%1)"/>
   <Local Name="Task.LinkTask" Russian="Связанные задачи (%1)"/>
