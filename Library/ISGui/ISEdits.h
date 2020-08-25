@@ -55,7 +55,7 @@ protected:
 	virtual void paintEvent(QPaintEvent *e);
 
 private:
-	QIcon Icon;
+	QPixmap Pixmap;
 	QMenu *MenuCopy;
 	QAction *ActionClear;
 };

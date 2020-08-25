@@ -74,8 +74,8 @@ ISQLineEdit::~ISQLineEdit()
 //-----------------------------------------------------------------------------
 void ISQLineEdit::SetIcon(const QIcon &icon)
 {
-	Icon = icon;
-	setTextMargins(Icon.isNull() ? 0 : 20, 0, 0, 0);
+	Pixmap = icon.pixmap(ISDefines::Gui::SIZE_20_20);
+	setTextMargins(Pixmap.isNull() ? 0 : Pixmap.height() + 2, 0, 0, 0);
 }
 //-----------------------------------------------------------------------------
 void ISQLineEdit::SetMenuSelected(bool menu)
@@ -178,9 +178,8 @@ void ISQLineEdit::mouseReleaseEvent(QMouseEvent *e)
 void ISQLineEdit::paintEvent(QPaintEvent *e)
 {
 	QLineEdit::paintEvent(e);
-	if (!Icon.isNull())
+	if (!Pixmap.isNull())
 	{
-		QPixmap Pixmap = Icon.pixmap(height() - 6, height() - 6);
 		int x = Pixmap.width();
 
 		QPainter Painter(this);
