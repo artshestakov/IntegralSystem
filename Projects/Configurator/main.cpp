@@ -46,6 +46,7 @@ QString GetClassName(const QString &Argument); //Получить имя класса
 QStringList ParseInputCommand(const QString &Command); //Парсинг введенной команды
 void FillConfig(); //Заполнение конфигурационного файла
 bool GetDatabaseList(QStringList &StringList); //Получить список баз на сервере
+bool ExistConfiguration(const QString &ConfigurationName, bool &Exist, QString &ErrorString); //Проверка наличия таакой конфигурации
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -247,13 +248,35 @@ bool CreateDatabase()
 
 	if (!qFunction.ReadColumn("count").toBool()) //Если функция не существует - запрашиваем имя конфигурации и создаём функцию
 	{
-		//Запрашиваем название конфигурации
-		QString ConfigurationName = ISConsole::GetString("Input configuration name (from file Configuration.xml): ");
-		Result = !ConfigurationName.isEmpty();
-		if (!Result) //Если название не ввели - выходим с ошибкой
+		QString ConfigurationName; //Имя конфигурации
+		while (true)
 		{
-			ISLOGGER_W("Configuration name is empty.");
-			return Result;
+			//Запрашиваем название конфигурации
+			ConfigurationName = ISConsole::GetString("Input configuration name (from file Configuration.xml): ");
+			Result = !ConfigurationName.isEmpty();
+			if (!Result) //Если название не ввели - выходим с ошибкой
+			{
+				ISLOGGER_W("Configuration name is empty.");
+				return Result;
+			}
+			
+			//Проверяем наличие такой конфигурации
+			QString ErrorString;
+			Result = ExistConfiguration(ConfigurationName, Exist, ErrorString);
+			if (!Result) //Не удалось проверить наличие такой конфигурации
+			{
+				ISLOGGER_W("Not checking configuration name: " + ErrorString);
+				return Result;
+			}
+
+			if (Exist) //Если конфигурация найдена - выходим из цикла и переходим к созданию функции
+			{
+				break;
+			}
+			else //Конфигурация не найдена - переходим к очередной итерации цикла
+			{
+				ISLOGGER_W("Not found configuration: " + ConfigurationName);
+			}
 		}
 
 		//Создаём функцию
@@ -263,7 +286,6 @@ bool CreateDatabase()
 			ISLOGGER_E(qFunction.GetErrorString());
 		}
 	}
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -498,6 +520,36 @@ bool GetDatabaseList(QStringList &StringList)
 	else
 	{
 		ISLOGGER_E("Not connected to system database: " + ISDatabase::Instance().GetErrorString());
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ExistConfiguration(const QString &ConfigurationName, bool &Exist, QString &ErrorString)
+{
+	QFile File(PATH_CONFIGURATIONS_SCHEME);
+	bool Result = File.open(QIODevice::ReadOnly); //Читаем файл с описанием конфигураций
+	if (Result) //Файл успешно открыт
+	{
+		QString Content = File.readAll();
+		File.close();
+
+		QDomElement DomElement = ISSystem::GetDomElement(Content);
+		QDomNode DomNode = DomElement.firstChild();
+		while (!DomNode.isNull()) //Обходим каждую конфигурацию и ищем нужную
+		{
+			QDomNamedNodeMap DomNamedNodeMap = DomNode.attributes();
+			Exist = DomNamedNodeMap.namedItem("Name").nodeValue() == ConfigurationName;
+			if (Exist) //Нашли - выходим из цикла поиска
+			{
+				break;
+			}
+			//Не нашли - переходим к следующей
+			DomNode = DomNode.nextSibling();
+		}
+	}
+	else //Не удалось открыть файл с описанием конфигураций
+	{
+		ErrorString = QString("Error open file %1: %2").arg(File.errorString()).arg(PATH_CONFIGURATIONS_SCHEME);
 	}
 	return Result;
 }
