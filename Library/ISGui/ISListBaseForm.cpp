@@ -1109,12 +1109,6 @@ void ISListBaseForm::Export()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Print()
 {
-	if (!ISPrintingEntity::Instance().GetCountReports(MetaTable->Name))
-	{
-		ISMessageBox::ShowInformation(this, LANG("Message.Information.NotFoundPrintFormFromMetaTable").arg(MetaTable->LocalListName));
-		return;
-	}
-
 	ISGui::SetWaitGlobalCursor(true);
 	ISPrintForm PrintListForm(MetaTable->Name);
 	ISGui::SetWaitGlobalCursor(false);
@@ -1329,6 +1323,7 @@ void ISListBaseForm::CreateActions()
 
 	//Печать
 	QAction *ActionPrint = ISControls::CreateActionPrint(this);
+	ActionPrint->setVisible(ISPrintingEntity::Instance().GetCountReports(MetaTable->Name));
 	connect(ActionPrint, &QAction::triggered, this, &ISListBaseForm::Print);
 	Actions[ISNamespace::AT_Print] = ActionPrint;
 

@@ -57,7 +57,6 @@
   <Local Name="Message.Information.PlayRecordOnlyAnswer" Russian="Вы можете прослушивать записи разговоров только со статусом &quot;Отвечен&quot;."/>
   <Local Name="Message.Information.SaveRecordOnlyAnswer" Russian="Вы можете сохранять записи разговоров только со статусом &quot;Отвечен&quot;."/>
   <Local Name="Message.Information.SelectAtLeastOneRecord" Russian="Выберите хотя бы одну запись в списке."/>
-  <Local Name="Message.Information.NotFoundPrintFormFromMetaTable" Russian="Для таблицы &quot;%1&quot; нет доступных печатных форм."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
