@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #pragma warning(disable: 4127)
+#pragma warning(disable: 4718)
 #endif
 //Cross-platform-includes------------------------------------------------------
 #ifdef WIN32

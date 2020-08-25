@@ -121,13 +121,13 @@ QVariant ISSqlModelView::headerData(int Section, Qt::Orientation Orientation, in
 int ISSqlModelView::rowCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return Records.size();
+	return (int)Records.size();
 }
 //-----------------------------------------------------------------------------
 int ISSqlModelView::columnCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return MetaTable->Fields.size();
+	return (int)MetaTable->Fields.size();
 }
 //-----------------------------------------------------------------------------
 QModelIndex ISSqlModelView::index(int Row, int Column, const QModelIndex &Parent) const

@@ -11,7 +11,7 @@ public:
 	QString GetErrorString() const;
 	bool Initialize();
 	std::vector<ISPrintMetaReport*>& GetReports(const QString &TableName);
-	int GetCountReports(const QString &TableName);
+	size_t GetCountReports(const QString &TableName);
 
 private:
 	ISPrintingEntity();

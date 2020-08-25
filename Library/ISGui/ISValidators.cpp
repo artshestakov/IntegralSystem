@@ -30,7 +30,7 @@ QIntValidator::State ISIntValidator::validate(QString &String, int &Pos) const
 			VectorInt.emplace_back(i);
 		}
 	}
-	Pos -= VectorInt.size(); //Отнимаем у позиции размер найденных НЕ цифр
+	Pos -= (int)VectorInt.size(); //Отнимаем у позиции размер найденных НЕ цифр
 	while (!VectorInt.empty()) //Удаляем не цифры
 	{
 		String.remove(ISAlgorithm::VectorTakeBack(VectorInt), 1);
@@ -87,7 +87,7 @@ QDoubleValidator::State ISDoubleValidator::validate(QString &String, int &Pos) c
 		}
 		VectorInt.emplace_back(i); //Иначе запоминаем индекс НЕ цифры и НЕ разделителя
 	}
-	Pos -= VectorInt.size(); //Отнимаем у позиции размер найденных НЕ цифр
+	Pos -= (int)VectorInt.size(); //Отнимаем у позиции размер найденных НЕ цифр
 
 	//Удаляем не цифры
 	while (!VectorInt.empty())

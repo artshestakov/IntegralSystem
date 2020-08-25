@@ -85,7 +85,7 @@ std::vector<ISPrintMetaReport*>& ISPrintingEntity::GetReports(const QString &Tab
 	return Reports[TableName];
 }
 //-----------------------------------------------------------------------------
-int ISPrintingEntity::GetCountReports(const QString &TableName)
+size_t ISPrintingEntity::GetCountReports(const QString &TableName)
 {
 	return Reports[TableName].size();
 }
