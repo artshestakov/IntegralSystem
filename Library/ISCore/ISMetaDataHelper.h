@@ -7,6 +7,7 @@ class ISCORE_EXPORT ISMetaDataHelper
 {
 public:
 	static QString GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign, const QString &SqlFilter = QString(), const QVariant &ObjectID = QVariant()); //Генерация SQL-запроса для внешнего ключа
+	static QString GenerateSqlQueryFromTitleName(PMetaForeign *MetaForeign, const QString &Alias, const QString &FieldName); //Генерация SQL-запроса для получения имени эскортной ссылки
 	static QString GetConfigurationName(QString &ErrorString); //Получить наименование конфигурации БД
 };
 //-----------------------------------------------------------------------------

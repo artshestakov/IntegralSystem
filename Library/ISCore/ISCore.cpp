@@ -15,6 +15,7 @@
 #include "ISDefinesCore.h"
 #include "ISDatabase.h"
 #include "ISTcpConnector.h"
+#include "ISMetaDataHelper.h"
 //-----------------------------------------------------------------------------
 static QString QI_CALENDAR = PREPARE_QUERY("INSERT INTO _calendar(cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_tablename, cldr_objectid) "
                                            "VALUES(:Date, :TimeAlert, :Name, :Text, :TableName, :ObjectID) "
@@ -108,47 +109,50 @@ QString ISCore::GetObjectName(const QString &TableName, int ObjectID)
 //-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 {
-	QString ObjectName;
-	if (MetaTable->TitleName.isEmpty())
+	if (MetaTable->TitleName.isEmpty()) //Если TitleName у мета-таблицы не заполнен - возвращаем идентификатор объекта
 	{
-		ObjectName = QString::number(ObjectID);
+		return ObjectID;
 	}
-	else
+	
+	QString ObjectName;
+	QStringList StringList = MetaTable->TitleName.split(';');
+	QString QueryText = "SELECT ";
+
+	if (StringList.count() > 1) //Если имя объекта строится из нескольких полей
 	{
-		QString TitleName = MetaTable->TitleName;
-		QStringList StringList = TitleName.split(';');
-		QString QueryText = "SELECT ";
-
-		if (StringList.count() > 1) //Если имя объекта строится из нескольких полей
+		QueryText += "concat(";
+		for (const QString &FieldName : StringList) //Обход полей
 		{
-			QueryText += "concat(";
-			for (int i = 0; i < StringList.count(); ++i)
-			{
-				QueryText += MetaTable->Alias + '_' + StringList[i] + ", ' ', ";
-			}
-			QueryText.chop(7);
-			QueryText += ") \n";
+			PMetaForeign *MetaForeign = MetaTable->GetField(FieldName)->Foreign;
+			QueryText += MetaForeign ?
+				("(" + ISMetaDataHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "), ' ', ") :
+				(MetaTable->Alias + '_' + FieldName + ", ' ', ");
 		}
-		else //Если указано только одно поле
-		{
-			QueryText += MetaTable->Alias + '_' + TitleName + " \n";
-		}
+		QueryText.chop(7);
+		QueryText += ") \n";
+	}
+	else //Если указано только одно поле
+	{
+		PMetaForeign *MetaForeign = MetaTable->GetField(MetaTable->TitleName)->Foreign;
+		QueryText += MetaForeign ?
+			("(" + ISMetaDataHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, MetaTable->TitleName) + ") \n") :
+			(MetaTable->Alias + '_' + MetaTable->TitleName + " \n");
+	}
 
-		QueryText += "FROM " + MetaTable->Name + " \n";
-		QueryText += "WHERE " + MetaTable->Alias + "_id = :ObjectID";
+	QueryText += "FROM " + MetaTable->Name + " \n";
+	QueryText += "WHERE " + MetaTable->Alias + "_id = :ObjectID";
 
-		ISQuery qSelectName(QueryText);
-		qSelectName.BindValue(":ObjectID", ObjectID);
-		if (qSelectName.ExecuteFirst())
+	ISQuery qSelectName(QueryText);
+	qSelectName.BindValue(":ObjectID", ObjectID);
+	if (qSelectName.ExecuteFirst())
+	{
+		QVariant Value = qSelectName.ReadColumn(0);
+		switch (Value.type())
 		{
-			QVariant Value = qSelectName.ReadColumn(0);
-			switch (Value.type())
-			{
-			case QVariant::Date: ObjectName = Value.toDate().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT)); break;
-			case QVariant::Time: ObjectName = Value.toTime().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT)); break;
-			case QVariant::DateTime: ObjectName = Value.toDateTime().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT) + SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT)); break;
-			default: ObjectName = qSelectName.ReadColumn(0).toString();
-			}
+		case QVariant::Date: ObjectName = Value.toDate().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT)); break;
+		case QVariant::Time: ObjectName = Value.toTime().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT)); break;
+		case QVariant::DateTime: ObjectName = Value.toDateTime().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT) + SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT)); break;
+		default: ObjectName = qSelectName.ReadColumn(0).toString();
 		}
 	}
 
