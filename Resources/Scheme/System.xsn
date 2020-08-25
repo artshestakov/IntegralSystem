@@ -39,15 +39,6 @@
     </Fields>
   </Table>
 
-  <Table Name="_Database" UID="{E8BA8296-883A-459D-950A-C16CC4680DA3}" Alias="dtbs" LocalName="Банк данных" LocalListName="Банки данных" TitleName="Name">
-    <Fields>
-      <Field UID="{E93DA1A0-B0AE-44B1-825A-9FC232253BC7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_Systems" UID="{2FA65F0E-D5EA-45C3-9873-6553FFD2440F}" Alias="stms" LocalName="Система" LocalListName="Системы" TitleName="LocalName" IsSystem="true">
     <Fields>
       <Field UID="{7C6C3789-6DE8-40D7-B192-2C78E23ED2F7}" Name="LocalName" Type="String" LabelName="Наименование системы" LocalListName="Наименование системы" NotNull="true"/>
@@ -462,16 +453,6 @@
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="_SystemParameters" UID="{B6ED0630-5005-4B2C-ACE7-FEACF413A1E8}" Alias="spdb" LocalName="Системный параметр базы данных" LocalListName="Системные параметры базы данных" TitleName="LocalName" IsSystem="true">
-    <Fields>
-      <Field UID="{E547F1B0-8D90-4224-917A-76694AB21BF4}" Name="LocalName" Type="String" LabelName="Локальное наименование параметра" LocalListName="Локальное наименование параметра" NotNull="true"/>
-      <Field UID="{03D300FA-D30A-4A4F-8D33-E3A65C2E4A17}" Name="Value" Type="String" LabelName="Значение параметра" LocalListName="Значение параметра"/>
-    </Fields>
-    <Indexes>
-      <Index Field="LocalName" Unique="true"/>
-    </Indexes>
   </Table>
 
   <Table Name="_DictionaryWord" UID="{25311F76-73EB-4951-94B0-2B9191DBD3AD}" Alias="dicw" LocalName="Слово" LocalListName="Слова" TitleName="Word" IsSystem="true">

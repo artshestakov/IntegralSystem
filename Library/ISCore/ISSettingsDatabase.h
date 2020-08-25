@@ -15,7 +15,6 @@ public:
 	static ISSettingsDatabase& GetInstance();
 
 	void Initialize(); //Инициализация настроек базы данных
-	void InitializedSystemParameters(); //Инициализация системных параметров базы данных
 
 	QVariant GetValueDB(const QString &SettingName); //Получить значение настройки из базы
 	QVariant GetValue(const QString &SettingName); //Получить значение настройки

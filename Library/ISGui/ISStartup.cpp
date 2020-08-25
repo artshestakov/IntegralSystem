@@ -72,7 +72,6 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 
 	//»нициализаци€ настроек базы данных
 	ISSettingsDatabase::GetInstance().Initialize();
-	ISSettingsDatabase::GetInstance().InitializedSystemParameters();
 
 	if (!CheckAccessDatabase(SplashScreen)) //ѕроверка разрешени€ доступа к базе пользовател€м
 	{

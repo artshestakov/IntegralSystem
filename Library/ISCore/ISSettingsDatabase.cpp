@@ -12,11 +12,6 @@ static QString QS_COLUMN_SETTING = PREPARE_QUERY("SELECT column_name "
 												 "AND table_schema = current_schema() "
 												 "AND table_name = '_settingsdatabase'");
 //-----------------------------------------------------------------------------
-static QString QS_SYSTEM_PARAMETERS = PREPARE_QUERY("SELECT spdb_uid, spdb_value "
-													"FROM _systemparameters "
-													"WHERE NOT spdb_isdeleted "
-													"ORDER BY spdb_id");
-//-----------------------------------------------------------------------------
 ISSettingsDatabase::ISSettingsDatabase()
 {
 	
@@ -87,18 +82,6 @@ void ISSettingsDatabase::Initialize()
 				}
 			}
 			Settings.emplace(String, SettingValue);
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISSettingsDatabase::InitializedSystemParameters()
-{
-	ISQuery qSelect(QS_SYSTEM_PARAMETERS);
-	if (qSelect.Execute())
-	{
-		while (qSelect.Next())
-		{
-			SystemParameters.emplace(qSelect.ReadColumn("spdb_uid"), qSelect.ReadColumn("spdb_value"));
 		}
 	}
 }

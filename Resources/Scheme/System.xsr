@@ -84,8 +84,6 @@
   <_ProtocolType IsSystem="true" UID="{FB494E8E-BDF3-4804-AF42-43487AF8A871}" Name="Добавление специального права"/>
   <_ProtocolType IsSystem="true" UID="{4E7C34E5-C7FE-4C0D-BB4D-7B4A1D4CF9D2}" Name="Удаление специального права"/>
 
-  <_SystemParameters IsDeleted="true" IsSystem="true" UID="{4A3DFE73-B66E-4560-848F-64408F3B9846}" LocalName="Текущая версия базы данных"/>
-
   <_KeyboardShortcuts IsSystem="true" UID="{F1A235BC-B6A3-4705-8594-65183A8CA64C}" Shortcut="F11" Description="Развернуть окно на весь экран"/>
   <_KeyboardShortcuts IsSystem="true" UID="{112A7CCC-6605-479D-9DFA-D9DE6A403EF3}" Shortcut="Alt + F12" Description="Скриншот активного окна"/>
 
