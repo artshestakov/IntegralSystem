@@ -35,6 +35,9 @@ QIntValidator::State ISIntValidator::validate(QString &String, int &Pos) const
 	{
 		String.remove(ISAlgorithm::VectorTakeBack(VectorInt), 1);
 	}
+
+	//ѕровер€ем "длину" числа: оно не должно быть длинее MAX_INTEGER_LEN
+	String.chop(String.size() - MAX_INTEGER_LEN);
 	return ISIntValidator::Acceptable;
 }
 //-----------------------------------------------------------------------------
@@ -49,7 +52,11 @@ ISDoubleValidator::ISDoubleValidator(QObject *parent)
 	: QDoubleValidator(parent),
 	Decimal(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))
 {
-
+	//≈сли количество знаков меньше нул€, или больше ограничени€, или равно нулю - приравниваем его к ограничению
+	if (Decimal < 0 || Decimal > MAX_DECIMAL_LEN || !Decimal)
+	{
+		Decimal = MAX_DECIMAL_LEN;
+	}
 }
 //-----------------------------------------------------------------------------
 ISDoubleValidator::~ISDoubleValidator()
@@ -105,13 +112,15 @@ QDoubleValidator::State ISDoubleValidator::validate(QString &String, int &Pos) c
 
 	if (IntPart == DoublePart) //≈сли цела€ и дробна€ части равны - это целое число
 	{
-		String.setNum(IntPart.toInt()); //ѕреобразовываем стандартным способом
+		String.setNum(IntPart.toLongLong()); //ѕреобразовываем стандартным способом
+		String.chop(String.size() - MAX_INTEGER_LEN); //Ќе даЄм целой части числа выйти за ограничение
 	}
 	else //»наче дробное
 	{
-		IntPart.setNum(IntPart.toInt()); //ѕреобразовываем стандартным способом
+		IntPart.setNum(IntPart.toLongLong()); //ѕреобразовываем стандартным способом
+		String.chop(String.size() - MAX_INTEGER_LEN); //Ќе даЄм целой части числа выйти за ограничение
 
-		//”читываем свойство Decimal
+		//”читываем свойство Decimal и параллельно MAX_DECIMAL_LEN
 		if (DoublePart.size() > Decimal)
 		{
 			DoublePart.chop(DoublePart.size() - Decimal);
