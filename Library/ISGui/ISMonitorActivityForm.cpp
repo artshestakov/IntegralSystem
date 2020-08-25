@@ -84,6 +84,7 @@ void ISMonitorActivityForm::LoadData()
 	{
 		while (qSelect.Next())
 		{
+			//???
 			bool IsOnline = false;//qSelect.ReadColumn("useronline").toBool();
 			if (CheckEdit->GetValue().toBool() && !IsOnline)
 			{
