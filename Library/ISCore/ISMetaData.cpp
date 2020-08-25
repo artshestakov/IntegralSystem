@@ -568,7 +568,7 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 				MetaTable->LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
 				MetaTable->LocalListName = DomNamedNodeMap.namedItem("LocalListName").nodeValue();
 				MetaTable->TitleName = DomNamedNodeMap.namedItem("TitleName").nodeValue();
-				MetaTable->UseRoles = QVariant(DomNamedNodeMap.namedItem("Name").nodeValue()).toBool();
+				MetaTable->UseRoles = QVariant(DomNamedNodeMap.namedItem("UseRoles").nodeValue()).toBool();
 				MetaTable->ClassFilter = DomNamedNodeMap.namedItem("ClassFilter").nodeValue();
 				MetaTable->ObjectForm = DomNamedNodeMap.namedItem("ObjectForm").nodeValue();
 				MetaTable->ShowOnly = QVariant(DomNamedNodeMap.namedItem("ShowOnly").nodeValue()).toBool();
@@ -872,8 +872,8 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 			MetaField->Name = FieldName;
 			MetaField->Type = ISMetaData::Instance().GetTypeField(DomNamedNodeMap.namedItem("Type").nodeValue());
 			MetaField->Size = DomNamedNodeMap.namedItem("Size").nodeValue().toInt();
-			MetaField->Upper = QVariant(DomNamedNodeMap.namedItem("LocalListName").nodeValue()).toBool();
-			MetaField->Lower = QVariant(DomNamedNodeMap.namedItem("TitleName").nodeValue()).toBool();
+			MetaField->Upper = QVariant(DomNamedNodeMap.namedItem("Upper").nodeValue()).toBool();
+			MetaField->Lower = QVariant(DomNamedNodeMap.namedItem("Lover").nodeValue()).toBool();
 			MetaField->DefaultValue = DomNamedNodeMap.namedItem("DefaultValue").nodeValue().isEmpty() ? QVariant() : DomNamedNodeMap.namedItem("DefaultValue").nodeValue();
 			MetaField->DefaultValueWidget = DomNamedNodeMap.namedItem("DefaultValueWidget").nodeValue().isEmpty() ? QVariant() : DomNamedNodeMap.namedItem("DefaultValueWidget").nodeValue();
 			MetaField->LabelName = DomNamedNodeMap.namedItem("LabelName").nodeValue().isEmpty() ? MetaField->Name : DomNamedNodeMap.namedItem("LabelName").nodeValue();
