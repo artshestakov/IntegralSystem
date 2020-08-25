@@ -18,7 +18,7 @@
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS = PREPARE_QUERY("SELECT useronline(usrs_login), usrs_id, userfullname(usrs_id) "
+static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, userfullname(usrs_id) "
 										"FROM _users "
 										"WHERE usrs_uid != :PostgresUID "
 										"ORDER BY userfullname(usrs_id)");
@@ -84,7 +84,7 @@ void ISMonitorActivityForm::LoadData()
 	{
 		while (qSelect.Next())
 		{
-			bool IsOnline = qSelect.ReadColumn("useronline").toBool();
+			bool IsOnline = false;//qSelect.ReadColumn("useronline").toBool();
 			if (CheckEdit->GetValue().toBool() && !IsOnline)
 			{
 				continue;
