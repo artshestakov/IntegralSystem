@@ -7,10 +7,10 @@
 //-----------------------------------------------------------------------------
 ISIntValidator::ISIntValidator(int Bottom, int Top, QObject *parent) : QIntValidator(Bottom, Top, parent)
 {
-
+	
 }
 //-----------------------------------------------------------------------------
-ISIntValidator::ISIntValidator(QObject *parent) : QIntValidator(parent)
+ISIntValidator::ISIntValidator(QObject *parent) : ISIntValidator(0, 0, parent)
 {
 
 }
@@ -22,10 +22,19 @@ ISIntValidator::~ISIntValidator()
 //-----------------------------------------------------------------------------
 QIntValidator::State ISIntValidator::validate(QString &String, int &Pos) const
 {
+	if (String.isEmpty() && !Pos)
+	{
+		return ISIntValidator::Acceptable;
+	}
+
+	//Если первый символ минус, выставляем соответствующий флаг
+	bool IsMinus = String.front() == '-';
+
 	ISVectorInt VectorInt;
 	for (int i = 0, c = String.size(); i < c; ++i) //Ищём индексы НЕ цифр
 	{
-		if (!String[i].isDigit())
+		QChar Symbol = String[i];
+		if (!Symbol.isDigit())
 		{
 			VectorInt.emplace_back(i);
 		}
@@ -38,25 +47,49 @@ QIntValidator::State ISIntValidator::validate(QString &String, int &Pos) const
 
 	//Проверяем "длину" числа: оно не должно быть длинее MAX_INTEGER_LEN
 	String.chop(String.size() - MAX_INTEGER_LEN);
+
+	if (IsMinus) //Если число отрицательное
+	{
+		if (String != '0') //И при этом это ноль - ничего не делаем (потому что ноль не может быть отрицательным), иначе - вставляем минус и инкрементируем позицию
+		{
+			String.insert(0, '-');
+			++Pos;
+		}
+	}
+
+	//Если нижний или верхний пределы не нули - учитываем их
+	if (bottom() != 0 || top() != 0)
+	{
+		bool Ok = true;
+		int Value = String.toInt(&Ok); //Пытаемся перевести строку в число
+		if (Ok) //Если все ок - продолжаем проверку
+		{
+			if (Value < bottom()) //Если введённое значение меньше нижнего предела - приравниваем значение к нижнему пределу
+			{
+				Value = bottom();
+			}
+			else if (Value > top()) //Если введённое значение больше верхнего предела - приравниваем значение к верхнему пределу
+			{
+				Value = top();
+			}
+			String.setNum(Value); //Устанавливаем значение в строку
+		}
+	}
 	return ISIntValidator::Acceptable;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISDoubleValidator::ISDoubleValidator(double Bottom, double Top, int Decimals, QObject *parent) : QDoubleValidator(Bottom, Top, Decimals, parent)
+ISDoubleValidator::ISDoubleValidator(double Bottom, double Top, int Decimals, QObject *parent)
+	//Если количество знаков меньше нуля, или больше ограничения, или равно нулю - приравниваем его к ограничению
+	: QDoubleValidator(Bottom, Top, Decimals < 0 || Decimals > MAX_DECIMAL_LEN || !Decimals ? MAX_DECIMAL_LEN : Decimals, parent)
 {
 
 }
 //-----------------------------------------------------------------------------
-ISDoubleValidator::ISDoubleValidator(QObject *parent)
-	: QDoubleValidator(parent),
-	Decimal(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))
+ISDoubleValidator::ISDoubleValidator(int Decimals, QObject *parent) : ISDoubleValidator(0, 0, Decimals, parent)
 {
-	//Если количество знаков меньше нуля, или больше ограничения, или равно нулю - приравниваем его к ограничению
-	if (Decimal < 0 || Decimal > MAX_DECIMAL_LEN || !Decimal)
-	{
-		Decimal = MAX_DECIMAL_LEN;
-	}
+	
 }
 //-----------------------------------------------------------------------------
 ISDoubleValidator::~ISDoubleValidator()
@@ -76,6 +109,9 @@ QDoubleValidator::State ISDoubleValidator::validate(QString &String, int &Pos) c
 	{
 		String.replace(SYMBOL_COMMA, SYMBOL_POINT);
 	}
+
+	//Если первый символ минус, выставляем соответствующий флаг
+	bool IsMinus = String.front() == '-';
 
 	ISVectorInt VectorInt;
 	for (int i = 0, c = String.size(); i < c; ++i) //Ищём индексы НЕ цифр
@@ -112,7 +148,7 @@ QDoubleValidator::State ISDoubleValidator::validate(QString &String, int &Pos) c
 
 	if (IntPart == DoublePart) //Если целая и дробная части равны - это целое число
 	{
-		String.setNum(IntPart.toLongLong()); //Преобразовываем стандартным способом
+		IntPart.setNum(IntPart.toLongLong()); //Преобразовываем стандартным способом
 		String.chop(String.size() - MAX_INTEGER_LEN); //Не даём целой части числа выйти за ограничение
 	}
 	else //Иначе дробное
@@ -121,14 +157,45 @@ QDoubleValidator::State ISDoubleValidator::validate(QString &String, int &Pos) c
 		String.chop(String.size() - MAX_INTEGER_LEN); //Не даём целой части числа выйти за ограничение
 
 		//Учитываем свойство Decimal и параллельно MAX_DECIMAL_LEN
-		if (DoublePart.size() > Decimal)
+		if (DoublePart.size() > decimals())
 		{
-			DoublePart.chop(DoublePart.size() - Decimal);
+			DoublePart.chop(DoublePart.size() - decimals());
 		}
 
 		//Собираем итоговое дробное число
 		String = IntPart + SYMBOL_POINT + DoublePart;
 	}
-	return QDoubleValidator::Acceptable;
+
+	if (IsMinus) //Если число отрицательное - вставляем минус и инкрементируем позицию
+	{
+		String.insert(0, '-');
+		++Pos;
+	}
+
+	//Если нижний или верхний пределы не нули - учитываем их
+	if (bottom() != 0 || top() != 0)
+	{
+		bool Ok = true;
+		double Value = String.toDouble(&Ok); //Пытаемся перевести строку в число
+		if (Ok) //Если все ок - продолжаем проверку
+		{
+			if (Value < bottom()) //Если введённое значение меньше нижнего предела - приравниваем значение к нижнему пределу
+			{
+				String.setNum(bottom());
+				return ISDoubleValidator::Acceptable;
+			}
+			else if (Value > top()) //Если введённое значение больше верхнего предела - приравниваем значение к верхнему пределу
+			{
+				String.setNum(top());
+				return ISDoubleValidator::Acceptable;
+			}
+
+			if (String.back() != SYMBOL_POINT && String.back() != '0') //Вызываем setNum только когда последний символ строки не равен разделителю и не равен нулю
+			{
+				String.setNum(Value); //Устанавливаем значение в строку
+			}
+		}
+	}
+	return ISDoubleValidator::Acceptable;
 }
 //-----------------------------------------------------------------------------

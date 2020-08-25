@@ -24,13 +24,10 @@ class ISDoubleValidator : public QDoubleValidator
 
 public:
 	ISDoubleValidator(double Bottom, double Top, int Decimals, QObject *parent = 0);
-	ISDoubleValidator(QObject *parent = 0);
+	ISDoubleValidator(int Decimals, QObject *parent = 0);
 	virtual ~ISDoubleValidator();
 
 	QDoubleValidator::State validate(QString &String, int &Pos) const;
-
-private:
-	int Decimal; //Количество чисел после разделителя
 };
 //-----------------------------------------------------------------------------
 #endif

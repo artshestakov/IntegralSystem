@@ -48,7 +48,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	{
 		QString String = Value.toString();
 		int Pos = 0;
-		ISDoubleValidator().validate(String, Pos);
+		ISDoubleValidator(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)).validate(String, Pos);
 		Result = String;
 	}
 	else if (Type == ISNamespace::FT_UID)

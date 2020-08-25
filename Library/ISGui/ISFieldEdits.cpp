@@ -674,7 +674,7 @@ QVariant ISTimeEdit::GetValue() const
 //-----------------------------------------------------------------------------
 ISDoubleEdit::ISDoubleEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetValidator(new ISDoubleValidator(this));
+	SetValidator(new ISDoubleValidator(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA), this));
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 }
 //-----------------------------------------------------------------------------
@@ -765,16 +765,7 @@ QVariant ISIntegerEdit::GetValue() const
 //-----------------------------------------------------------------------------
 void ISIntegerEdit::SetMinimum(int Minimum)
 {
-	SetRange(Minimum, INT_MAX);
-}
-//-----------------------------------------------------------------------------
-void ISIntegerEdit::SetMaximum(int Maximum)
-{
-	SetRange(INT_MIN, Maximum);
-}
-//-----------------------------------------------------------------------------
-void ISIntegerEdit::SetRange(int Minimum, int Maximum)
-{
+	int Maximum = IntValidator->top(); //«апоминаем значение максимального предела
 	if (IntValidator)
 	{
 		delete IntValidator;
@@ -784,9 +775,27 @@ void ISIntegerEdit::SetRange(int Minimum, int Maximum)
 	SetValidator(IntValidator);
 }
 //-----------------------------------------------------------------------------
+void ISIntegerEdit::SetMaximum(int Maximum)
+{
+	int Minimum = IntValidator->bottom(); //«апоминаем значение нижнего предела
+	if (IntValidator)
+	{
+		delete IntValidator;
+	}
+
+	IntValidator = new ISIntValidator(Minimum, Maximum, this);
+	SetValidator(IntValidator);
+}
+//-----------------------------------------------------------------------------
+void ISIntegerEdit::SetRange(int Minimum, int Maximum)
+{
+	SetMinimum(Minimum);
+	SetMaximum(Maximum);
+}
+//-----------------------------------------------------------------------------
 void ISIntegerEdit::ResetRange()
 {
-	SetRange(INT_MIN, INT_MAX);
+	SetRange(0, 0);
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
