@@ -641,36 +641,28 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 										Result = !MetaTable->LocalListName.isEmpty();
 										if (Result)
 										{
-											Result = !MetaTable->TitleName.isEmpty();
-											if (Result)
+											QStringList TitleFields = MetaTable->TitleName.split(';');
+											for (const QString &FieldName : TitleFields)
 											{
-												QStringList TitleFields = MetaTable->TitleName.split(';');
-												for (const QString &FieldName : TitleFields)
+												Result = MetaTable->ContainsField(FieldName);
+												if (!Result)
 												{
-													Result = MetaTable->ContainsField(FieldName);
-													if (!Result)
-													{
-														ErrorString = QString("Invalid field name \"%1\" in title name. Table name: %2").arg(MetaTable->TitleName).arg(TableName);
-														break;
-													}
-												}
-
-												if (Result)
-												{
-													Result = !TablesMap.count(TableName);
-													if (Result)
-													{
-														TablesMap.emplace(TableName, MetaTable);
-													}
-													else
-													{
-														ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
-													}
+													ErrorString = QString("Invalid field name \"%1\" in title name. Table name: %2").arg(MetaTable->TitleName).arg(TableName);
+													break;
 												}
 											}
-											else
+
+											if (Result)
 											{
-												ErrorString = QString("Empty table title name \"%1\".").arg(MetaTable->Name);
+												Result = !TablesMap.count(TableName);
+												if (Result)
+												{
+													TablesMap.emplace(TableName, MetaTable);
+												}
+												else
+												{
+													ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
+												}
 											}
 										}
 										else
