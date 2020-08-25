@@ -18,9 +18,9 @@ public slots:
 	bool foreigns();
 	bool systems();
 	bool subsystems();
-	bool tables();
-	bool fields();
-	bool resources();
+	bool oldtables();
+	bool oldfields();
+	bool oldresources();
 
 protected:
 	void ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID);

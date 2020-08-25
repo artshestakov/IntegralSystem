@@ -154,7 +154,7 @@ bool CGConfiguratorDelete::subsystems()
     return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorDelete::tables()
+bool CGConfiguratorDelete::oldtables()
 {
     ISVectorString VectorString;
     std::vector<PMetaTable*> Tables = ISMetaData::Instance().GetTables();
@@ -208,7 +208,7 @@ bool CGConfiguratorDelete::tables()
     return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorDelete::fields()
+bool CGConfiguratorDelete::oldfields()
 {
     QMap<QString, ISVectorString> Map;
     std::vector<PMetaTable*> Tables = ISMetaData::Instance().GetTables();
@@ -273,7 +273,7 @@ bool CGConfiguratorDelete::fields()
     return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorDelete::resources()
+bool CGConfiguratorDelete::oldresources()
 {
     QMap<QString, ISVectorString> Map;
     for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())

@@ -34,9 +34,9 @@ CGConfiguratorShow::~CGConfiguratorShow()
 
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorShow::obsoletetables()
+bool CGConfiguratorShow::oldtables()
 {
-	ISLOGGER_L("Searching not needed tables...");
+	ISLOGGER_L("Searching old tables...");
 
 	int FoundedTables = 0;
 
@@ -67,9 +67,9 @@ bool CGConfiguratorShow::obsoletetables()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorShow::obsoletefields()
+bool CGConfiguratorShow::oldfields()
 {
-	ISLOGGER_L("Searching not needed fields...");
+	ISLOGGER_L("Searching old fields...");
 
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
@@ -115,9 +115,9 @@ bool CGConfiguratorShow::obsoletefields()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorShow::obsoleteresources()
+bool CGConfiguratorShow::oldresources()
 {
-	ISLOGGER_L("Searching not needed resources...");
+	ISLOGGER_L("Searching old resources...");
 
 	std::map<QString, ISVectorString> Map, MapOutput;
 	for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
@@ -180,9 +180,9 @@ bool CGConfiguratorShow::obsoleteresources()
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorShow::obsoletesequence()
+bool CGConfiguratorShow::oldsequence()
 {
-	ISLOGGER_L("Searching not needed sequences...");
+	ISLOGGER_L("Searching old sequences...");
 
 	QString Where;
     for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())

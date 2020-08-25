@@ -22,9 +22,9 @@
     <Function FunctionName="Foreigns" LocalName="Внешние ключи" Description="Удаление всех внешних ключей из базы данных."/>
     <Function FunctionName="Systems" LocalName="Системы" Description="Удаление всех систем из базы данных."/>
     <Function FunctionName="SubSystems" LocalName="Подсистемы" Description="Удаление всех подсистем из базы данных."/>
-    <Function FunctionName="Tables" LocalName="Таблицы" Description="Удаление всех устаревших таблиц."/>
-    <Function FunctionName="Fields" LocalName="Поля" Description="Удаление всех устаревших полей."/>
-    <Function FunctionName="Resources" LocalName="Ресусры" Description="Удаление всех устаревших ресурсов."/>
+    <Function FunctionName="OldTables" LocalName="Таблицы" Description="Удаление всех устаревших таблиц."/>
+    <Function FunctionName="OldFields" LocalName="Поля" Description="Удаление всех устаревших полей."/>
+    <Function FunctionName="OldResources" LocalName="Ресусры" Description="Удаление всех устаревших ресурсов."/>
   </Section>
 
   <Section Name="Service" ClassName="CGConfiguratorService">
@@ -36,10 +36,10 @@
   </Section>
 
   <Section Name="Show" ClassName="CGConfiguratorShow">
-    <Function FunctionName="ObsoleteTables" LocalName="Показать устаревшие таблицы" Description="Вывести список таблиц, которые существуют в базе данных, но не существуют в схемах мета-данных."/>
-    <Function FunctionName="ObsoleteFields" LocalName="Показать устаревшие поля" Description="Вывести список полей, которые существуют в базе данных, но не существуют в схемах мета-данных."/>
-    <Function FunctionName="ObsoleteResources" LocalName="Показать устаревшие ресурсы" Description="Вывести список идентификаторов ресурсов, которые существуют в базе данных, но не существуют в схемах мета-данных."/>
-    <Function FunctionName="ObsoleteSequence" LocalName="Показать устаревшие последовательности" Description="Вывести список последовательностей, которые существую в базе данных, но не существуют в схемах мета-данных."/>
+    <Function FunctionName="OldTables" LocalName="Показать устаревшие таблицы" Description="Вывести список устаревших таблиц."/>
+    <Function FunctionName="OldFields" LocalName="Показать устаревшие поля" Description="Вывести список устаревших полей."/>
+    <Function FunctionName="OldResources" LocalName="Показать устаревшие ресурсы" Description="Вывести список устаревших ресурсов."/>
+    <Function FunctionName="OldSequence" LocalName="Показать устаревшие последовательности" Description="Вывести список устаревших последовательностей."/>
     <Function FunctionName="Config" LocalName="Показать настройки конфигурационного файла" Description="Вывести содержимое конфигурационного файла"/>
     <Function FunctionName="DatabaseSize" LocalName="Показать размер базы данных" Description="Показать размер базы данных"/>
   </Section>

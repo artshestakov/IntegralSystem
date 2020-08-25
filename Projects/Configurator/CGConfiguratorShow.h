@@ -14,10 +14,10 @@ public:
 	virtual ~CGConfiguratorShow();
 
 public slots:
-	bool obsoletetables();
-	bool obsoletefields();
-	bool obsoleteresources();
-	bool obsoletesequence();
+	bool oldtables();
+	bool oldfields();
+	bool oldresources();
+	bool oldsequence();
 	bool config();
 	bool databasesize();
 
