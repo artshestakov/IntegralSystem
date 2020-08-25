@@ -467,4 +467,55 @@
     </Foreigns>
   </Table>
 
+  <Table Name="DriverExpenses" UID="{933357F2-ED4D-49CA-AF28-DC3ED4873C60}" Alias="drex" LocalName="Расход водителя" LocalListName="Расходы водителей" TitleName="Driver">
+    <Fields>
+      <Field UID="{18EC4EF2-23BC-4B68-A8ED-F1CA315552BF}" Name="Driver" Type="Int" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
+      <Field UID="{A4BD7ADE-0EC2-4D31-9CC4-898A034D8348}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
+      <Field UID="{0E4FFD31-632F-405E-8C3D-E5F40835A0B7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" NotNull="true" LayoutName="Date"/>
+      <Field UID="{A3060787-EBA3-4183-83CC-D8B3EBAE9262}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Date"/>
+      <Field UID="{1D0350CD-177A-4076-B964-95E8DB6DDBFD}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Driver"/>
+      <Index Field="Date"/>
+      <Index Field="Coming"/>
+      <Index Field="Consumption"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
+    </Foreigns>
+    <Escorts>
+      <Escort LocalName="Подробности расходов" TableName="DriverExpensesDetail" FilterField="DriverExpenses"/>
+    </Escorts>
+  </Table>
+
+  <Table Name="DriverExpensesDetail" UID="{1BC1638C-687A-4423-94AD-3E591554C911}" Alias="dexd" LocalName="Подробности расходов" LocalListName="Подробности расходов" TitleName="Service">
+    <Fields>
+      <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="DriverExpenses" Type="Int" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{F61804DD-00C4-4024-8446-2DBF6C27E92D}" Name="Service" Type="Int" LabelName="Услуга" LocalListName="Услуга" NotNull="true"/>
+      <Field UID="{3E689891-AE2A-4589-B80E-79F47B46A324}" Name="Price" Type="Double" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true"/>
+      <Field UID="{B177D422-38F4-4D28-A3BC-33C0C9158B5E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="DriverExpenses"/>
+      <Index Field="Service"/>
+      <Index Field="Price"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="DriverExpenses" ForeignClass="DriverExpenses" ForeignField="ID"/>
+      <Foreign Field="Service" ForeignClass="DriverService" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="DriverService" UID="{FB317D58-F783-47F2-A8AD-E6D40CC28AC0}" Alias="dsrv" LocalName="Услуга" LocalListName="Услуги" TitleName="Name">
+    <Fields>
+      <Field UID="{7154D2FE-5091-48AD-ACD5-BD49BB39DA41}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
 </XSN>
