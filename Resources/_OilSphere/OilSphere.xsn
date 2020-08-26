@@ -427,6 +427,7 @@
       <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Int" LabelName="Цена" LocalListName="Цена" LayoutName="Price"/>
       <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="Price"/>
       <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" LayoutName="Price"/>
+      <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Int" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" QueryText="SELECT sum(mwdt_kilogram) FROM movewagondetail WHERE mwdt_movewagon = mwag_id"/>
       <Field UID="{C6DFF9F3-C4D4-456C-8EFF-77AB756A360F}" Name="PassportQuality" Type="Bool" DefaultValue="false" LabelName="Паспорт качества" LocalListName="Паспорт качества"/>
       <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
@@ -472,14 +473,15 @@
       <Field UID="{18EC4EF2-23BC-4B68-A8ED-F1CA315552BF}" Name="Driver" Type="Int" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
       <Field UID="{A4BD7ADE-0EC2-4D31-9CC4-898A034D8348}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
       <Field UID="{0E4FFD31-632F-405E-8C3D-E5F40835A0B7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" NotNull="true" LayoutName="Date"/>
-      <Field UID="{A3060787-EBA3-4183-83CC-D8B3EBAE9262}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Date"/>
+      <!--<Field UID="{A3060787-EBA3-4183-83CC-D8B3EBAE9262}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Date"/>-->
+      <Field UID="{BE580F77-B118-454F-8751-62469DF707CF}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Date" QueryText="SELECT sum(dexd_price) FROM driverexpensesdetail WHERE dexd_driverexpenses = drex_id"/>
       <Field UID="{1D0350CD-177A-4076-B964-95E8DB6DDBFD}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
       <Index Field="Driver"/>
       <Index Field="Date"/>
       <Index Field="Coming"/>
-      <Index Field="Consumption"/>
+      <!--<Index Field="Consumption"/>-->
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
