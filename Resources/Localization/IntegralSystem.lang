@@ -103,7 +103,6 @@
   <Local Name="Message.Error.InstallPasswordStorageFile" Russian="Ошибка установки пароля."/>
   <Local Name="Message.Error.IncorrectPassword" Russian="Неверный пароль."/>
   <Local Name="Message.Error.QueryRecord" Russian="Ошибка запроса данных."/>
-  <Local Name="Message.Error.QueryRecordIsNull" Russian="Запрос ничего не вернул."/>
   <Local Name="Message.Error.ConnectToServer" Russian="Ошибка подключения к серверу!"/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации: %1"/>
   <Local Name="Message.Error.ConnectToWorker" Russian="Ошибка подключения к рабочему процессу!"/>

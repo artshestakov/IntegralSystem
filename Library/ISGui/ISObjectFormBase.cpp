@@ -140,8 +140,8 @@ void ISObjectFormBase::closeEvent(QCloseEvent *e)
 		ISMessageBox MessageBox(QMessageBox::Warning, LANG("SavingProcess"), LANG("Message.Question.SaveObjectChanged").arg(MetaTable->LocalName), QString(),
 		{
 			{ 1, LANG("Yes") },
-			{ 2, LANG("No"), true },
-			{ 3, LANG("Cancel") }
+			{ 2, LANG("No") },
+			{ 3, LANG("Cancel"), true }
 		}, this);
 		MessageBox.setWindowIcon(BUFFER_ICONS("Save"));
         switch (MessageBox.Exec())
@@ -376,9 +376,9 @@ void ISObjectFormBase::CreateFieldsWidget()
 
 	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 	{
-		if (!MetaField->QueryText.isEmpty()) //Если поле является запросом - пропускать его
+		//if (!MetaField->QueryText.isEmpty()) //Если поле является запросом - пропускать его
 		{
-			continue;
+			//continue;
 		}
 
 		//Если тип поля ByteArray и для него не предусмотрен виджет редактирования - пропускать его
@@ -420,55 +420,50 @@ void ISObjectFormBase::FillDataFields()
 		ISQuery qSelect(QueryModel.GetQueryText());
 		if (qSelect.ExecuteFirst())
 		{
-			if (qSelect.GetCountResultRows() == 1)
-			{
-				QSqlRecord SqlRecord = qSelect.GetRecord();
-				RecordIsDeleted = SqlRecord.value("IsDeleted").toBool();
-				LabelIsDeleted->setVisible(RecordIsDeleted);
+			QSqlRecord SqlRecord = qSelect.GetRecord();
+			RecordIsDeleted = SqlRecord.value("IsDeleted").toBool();
+			LabelIsDeleted->setVisible(RecordIsDeleted);
 
-				if (FormType == ISNamespace::OFT_Edit)
+			if (FormType == ISNamespace::OFT_Edit)
+			{
+				SetValueFieldID(ObjectID);
+			}
+
+			for (int i = 0, c = SqlRecord.count(); i < c; ++i) //Обход полей записи
+			{
+				QString FieldName = SqlRecord.fieldName(i);
+				QVariant Value = SqlRecord.value(FieldName);
+				if (Value.isNull()) //Если значение пустое, перейти на следующий шаг цикла
 				{
-					SetValueFieldID(ObjectID);
+					BeginValues[FieldName] = QVariant();
+					continue;
 				}
 
-				for (int i = 0; i < SqlRecord.count(); ++i) //Обход полей записи
+				if (!FieldsMap.count(FieldName)) //Если такого поля нет - переходим к следующему
 				{
-					QString FieldName = SqlRecord.fieldName(i);
-					QVariant Value = SqlRecord.value(FieldName);
-					if (Value.isNull()) //Если значение пустое, перейти на следующий шаг цикла
-					{
-						BeginValues.insert(FieldName, QVariant());
-						continue;
-					}
-
-					if (FieldsMap.count(FieldName))
-					{
-						ISFieldEditBase *FieldEditWidget = FieldsMap[FieldName];
-						disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
-
-						if (MetaTable->GetField(FieldName)->Foreign)
-						{
-							QVariant ListObjectID = ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID);
-							FieldEditWidget->SetValue(ListObjectID);
-							BeginValues.insert(FieldName, ListObjectID);
-						}
-						else
-						{
-							FieldEditWidget->SetValue(Value);
-							BeginValues.insert(FieldName, Value);
-						}
-
-						//Если формы открывается для создания копии
-						FieldEditWidget->SetModificationFlag(FormType == ISNamespace::OFT_Copy);
-						connect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
-					}
+					continue;
 				}
-				ISHistory::Instance().AddObject(MetaTable->Name, ObjectID);
+
+				ISFieldEditBase *FieldEditWidget = FieldsMap[FieldName];
+				disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
+
+				if (MetaTable->GetField(FieldName)->Foreign)
+				{
+					QVariant ListObjectID = ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID);
+					FieldEditWidget->SetValue(ListObjectID);
+					BeginValues[FieldName] = ListObjectID;
+				}
+				else
+				{
+					FieldEditWidget->SetValue(Value);
+					BeginValues[FieldName] = Value;
+				}
+
+				//Если форма открывается для создания копии
+				FieldEditWidget->SetModificationFlag(FormType == ISNamespace::OFT_Copy);
+				connect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.QueryRecordIsNull"));
-			}
+			ISHistory::Instance().AddObject(MetaTable->Name, ObjectID);
 		}
 		else
 		{
@@ -690,6 +685,16 @@ bool ISObjectFormBase::Save()
 		QString FieldName = Field.first; //Имя поля
 		PMetaField *MetaField = MetaTable->GetField(FieldName); //Мета-поле
 		ISFieldEditBase *FieldEditBase = Field.second; //Указатель на виджет редактирования поля
+
+		//Если значения поля редактированя не изменялось, переходить к следующему
+		if (!FieldEditBase->GetModificationFlag())
+		{
+			if (ParentFilterField != FieldName) //Если текущее поле не является фильтруемым (текущая таблица не является эскортной)
+			{
+				continue;
+			}
+		}
+
 		QVariant Value = FieldEditBase->GetValue(); //Значение поля
 		if (Value.isNull()) //Если значение в поле отсутствует, проверить обязательно ли поле для заполнения
 		{
@@ -698,14 +703,6 @@ bool ISObjectFormBase::Save()
 				ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(MetaField->LabelName));
 				FieldEditBase->BlinkRed();
 				return false;
-			}
-		}
-
-		if (!FieldEditBase->GetModificationFlag()) //Если значения поля редактированя не изменялось, переходить к следующему
-		{
-			if (ParentFilterField != FieldName) //Если текущее поле не является фильтруемым (текущая таблица не является эскортной)
-			{
-				continue;
 			}
 		}
 
@@ -1024,7 +1021,7 @@ void ISObjectFormBase::CancelChanged()
 			}
 		}
 
-		for (const auto &FieldItem : BeginValues.toStdMap()) //Обход всех первоначальных значений
+		for (const auto &FieldItem : BeginValues) //Обход всех первоначальных значений
 		{
 			QString FieldName = FieldItem.first;
 			QVariant BeginValue = FieldItem.second;

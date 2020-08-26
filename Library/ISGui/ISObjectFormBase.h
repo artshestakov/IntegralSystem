@@ -127,7 +127,7 @@ private:
 	std::map<QString, ISFieldEditBase*> FieldsMap;
 	std::map<QString, QLabel*> LabelsMap;
 	std::map<QString, QHBoxLayout*> Layouts;
-	QVariantMap BeginValues;
+	std::map<QString, QVariant> BeginValues;
 
 	bool ModificationFlag;
 	bool RecordIsDeleted;
