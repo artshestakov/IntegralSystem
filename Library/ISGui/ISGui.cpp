@@ -539,7 +539,8 @@ void ISGui::ShowDatabaseSettings()
 void ISGui::ShowObjectForm(QWidget *ObjectForm)
 {
 	ObjectForm->setParent(nullptr);
-	ObjectForm->resize(ISDefines::Gui::SIZE_TASK_OBJECT_FORM);
+	QRect Rect = QDesktopWidget().availableGeometry();
+	ObjectForm->resize((Rect.width() / 3) * 2, (Rect.height() / 3) * 2);
 	MoveWidgetToDesktop(ObjectForm, ISNamespace::MWD_Center);
 	ObjectForm->show();
 }

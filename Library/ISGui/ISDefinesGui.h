@@ -21,7 +21,6 @@ namespace ISDefines
 		static QMargins MARGINS_LAYOUT_10_PX;
 		static QSize SIZE_MAIN_WINDOW;
 		static QSize SIZE_MAIN_WINDOW_MINIMUM;
-		static QSize SIZE_TASK_OBJECT_FORM;
 		static QSize SIZE_PROGRESS_FORM;
 		static QSize SIZE_640_480;
 		static QSize SIZE_550_300;

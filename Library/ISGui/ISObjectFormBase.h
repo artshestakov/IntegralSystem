@@ -57,8 +57,6 @@ protected:
 	void CreateToolBarEscorts(); //Создание главного тулбара
 	void CreateToolBar(); //Создание панели управления объектом
 	void CreateWidgetObject(); //Создание главного виджета, на котором будут размещены поля редактирования
-	void CreateFieldsWidget(); //Создание полей редактирования информации
-	void FillDataFields(); //Заполнение полей данными
 
 	ISFieldEditBase* CreateColumnForField(PMetaField *MetaField); //Создать поле редактирования информации
 	void AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *form_layout); //Добавить поле редактирования информации на форму
@@ -75,7 +73,6 @@ protected:
 	void RenameReiconForm(); //Переименование формы
 	void DataChanged(); //Собыие при изменении значения одного из полей
 	void SetModificationFlag(bool modification); //Изменить флаг модицикации данных
-	void ResizeRemove(); //Центрирование формы
 	void UpdateObjectActions(); //Обновление видимости действий объекта
 	void ShowSystemInfo(); //Показать системную информацию
 	void AddFavoite(); //Добавить в избранное
@@ -88,9 +85,6 @@ protected:
 	void AddActionMenu(QAction *Action, bool AddingToActionGroup = true); //Добавить кнопку-действие в меню
 	void SetEnabledActions(bool Enabled); //Изменение доступности кнопок действий
 
-	void AddWidgetToBottom(QWidget *Widget); //Добавить виджет в самый низ формы
-
-	QString GetObjectName() const; //Получить наименование объекта
 	ISFieldEditBase* GetFieldWidget(const QString &FieldName); //Получиь виджет редактирования по его имени
 	QToolBar* GetToolBar(); //Получить указатель на тулбар кнопок-действий
 
@@ -104,12 +98,8 @@ private:
 	QToolBar *ToolBarEscort; //Тулбар эскортов
 	QFrame *ToolBarEscortSeparator; //Разделитель тулбара эскортов
 	QActionGroup *ActionGroupEscort;
-	QWidget *WidgetObject; //Виджет объекта
 	QToolBar *ToolBar; //Тулбар действий на объектом
-	QFormLayout *FormLayout;
-	ISScrollArea *ScrollArea;
-	ISInterfaceMetaForm *WidgetEscort;
-	QLabel *LabelIsDeleted; //Надпись указывающая на то, что объект помечен на удаление
+	QWidget *CentralWidget; //Текущий центральный виджет
 	QActionGroup *ActionGroup;
 
 	QAction *ActionSaveClose;

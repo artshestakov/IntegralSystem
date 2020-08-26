@@ -30,12 +30,12 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	MetaTable(meta_table),
 	ObjectID(object_id),
 	ParentObjectID(0),
-	WidgetEscort(nullptr),
 	EditObjectID(nullptr),
 	BeginFieldEdit(nullptr),
 	ModificationFlag(false),
 	RecordIsDeleted(false),
 	ActionDelete(nullptr),
+	CentralWidget(nullptr),
 	ActionGroup(new QActionGroup(this))
 {
 	GetMainLayout()->setContentsMargins(0, 3, 0, 0);
@@ -44,8 +44,6 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	CreateToolBarEscorts();
 	CreateToolBar();
 	CreateWidgetObject();
-	CreateFieldsWidget();
-	FillDataFields();
 	ISCreatedObjectsEntity::Instance().RegisterForm(this);
 }
 //-----------------------------------------------------------------------------
@@ -65,7 +63,7 @@ void ISObjectFormBase::SetParentObjectID(int parent_object_id, const QString &pa
 	ParentFilterField = parent_filter_field;
 	if (FieldsMap.count(parent_filter_field))
 	{
-		FieldsMap[parent_filter_field]->SetValue(parent_object_id);
+		FieldsMap.at(parent_filter_field)->SetValue(parent_object_id);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -107,8 +105,8 @@ void ISObjectFormBase::SetVisibleNavigationBar(bool Visible)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleField(const QString &FieldName, bool Visible)
 {
-	LabelsMap[FieldName]->setVisible(Visible);
-	FieldsMap[FieldName]->setVisible(Visible);
+	LabelsMap.at(FieldName)->setVisible(Visible);
+	FieldsMap.at(FieldName)->setVisible(Visible);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleFavorites(bool Visible)
@@ -203,7 +201,6 @@ void ISObjectFormBase::AfterShowEvent()
 	RenameReiconForm();
 	UpdateObjectActions();
 	SetModificationFlag(false);
-	ResizeRemove();
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateToolBarEscorts()
@@ -331,15 +328,22 @@ void ISObjectFormBase::CreateToolBar()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateWidgetObject()
 {
+	//Выполняем предварительные очистки (на случай, если виджет карточки объекта создаётся повторно)
+	FieldsMap.clear();
+	BeginValues.clear();
+	Layouts.clear();
+	LabelsMap.clear();
+
 	QVBoxLayout *LayoutObject = new QVBoxLayout();
 	LayoutObject->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
-	WidgetObject = new QWidget(this);
-	WidgetObject->setLayout(LayoutObject);
-	WidgetObject->setSizePolicy(WidgetObject->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
-	GetMainLayout()->addWidget(WidgetObject);
+	CentralWidget = new QWidget(this);
+	CentralWidget->setLayout(LayoutObject);
+	CentralWidget->setSizePolicy(CentralWidget->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
+	GetMainLayout()->addWidget(CentralWidget);
 
-	LabelIsDeleted = new QLabel(this);
+	//Надпись указывающая на то, что объект помечен на удаление
+	QLabel *LabelIsDeleted = new QLabel(CentralWidget);
 	LabelIsDeleted->setVisible(false);
 	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
 	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
@@ -348,39 +352,32 @@ void ISObjectFormBase::CreateWidgetObject()
 	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
 	LayoutObject->addWidget(LabelIsDeleted);
 
-	FormLayout = new QFormLayout();
+	QFormLayout *FormLayout = new QFormLayout();
 
-	ScrollArea = new ISScrollArea(WidgetObject); //Панель основной (главной) группы полей
+	ISScrollArea *ScrollArea = new ISScrollArea(CentralWidget);
 	ScrollArea->widget()->setLayout(FormLayout);
 	LayoutObject->addWidget(ScrollArea);
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::CreateFieldsWidget()
-{
+
 	//Если настроено добавление поле с кодом
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
 	{
-		QLabel *LabelSystemInfoObject = new QLabel(this);
-		LabelSystemInfoObject->setText(LANG("SystemField.ID") + ':');
-		LabelSystemInfoObject->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+		QLabel *LabelObjectID = new QLabel(CentralWidget);
+		LabelObjectID->setText(LANG("SystemField.ID") + ':');
+		LabelObjectID->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
-		EditObjectID = new ISLineEdit(this);
+		EditObjectID = new ISLineEdit(CentralWidget);
 		EditObjectID->SetValue(LANG("SystemField.ID.NotAssigned"));
 		EditObjectID->SetToolTip(LANG("AutoFillField"));
 		EditObjectID->SetReadOnly(true); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
 		EditObjectID->SetCursor(CURSOR_WHATS_THIS); //Последовательность setReadOnly и setCursor должна быть именно такой, иначе курсор не меняется
 		EditObjectID->SetVisibleClear(false);
 		EditObjectID->setSizePolicy(QSizePolicy::Maximum, EditObjectID->sizePolicy().verticalPolicy());
-		FormLayout->addRow(LabelSystemInfoObject, EditObjectID);
+		FormLayout->addRow(LabelObjectID, EditObjectID);
 	}
 
-	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
+	//Создаём и размещаем на форме поля редактирования
+	for (PMetaField *MetaField : MetaTable->Fields)
 	{
-		//if (!MetaField->QueryText.isEmpty()) //Если поле является запросом - пропускать его
-		{
-			//continue;
-		}
-
 		//Если тип поля ByteArray и для него не предусмотрен виджет редактирования - пропускать его
 		if (MetaField->Type == ISNamespace::FT_ByteArray && MetaField->ControlWidget.isEmpty())
 		{
@@ -404,10 +401,8 @@ void ISObjectFormBase::CreateFieldsWidget()
 		}
 		AddColumnForField(MetaField, FieldEditBase, FormLayout);
 	}
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::FillDataFields()
-{
+
+	//Заполняем поля
 	if (FormType == ISNamespace::OFT_Edit || FormType == ISNamespace::OFT_Copy)
 	{
 		ObjectName = ISCore::GetObjectName(MetaTable, ObjectID);
@@ -435,28 +430,28 @@ void ISObjectFormBase::FillDataFields()
 				QVariant Value = SqlRecord.value(FieldName);
 				if (Value.isNull()) //Если значение пустое, перейти на следующий шаг цикла
 				{
-					BeginValues[FieldName] = QVariant();
+					BeginValues.emplace(FieldName, QVariant());
 					continue;
 				}
 
-				if (!FieldsMap.count(FieldName)) //Если такого поля нет - переходим к следующему
+				if (!FieldsMap.count(FieldName)) //Если такого поля нет (возможно это поле ID, IsDeleted и т.д.) - переходим к следующему
 				{
 					continue;
 				}
 
-				ISFieldEditBase *FieldEditWidget = FieldsMap[FieldName];
+				ISFieldEditBase *FieldEditWidget = FieldsMap.at(FieldName);
 				disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 
 				if (MetaTable->GetField(FieldName)->Foreign)
 				{
 					QVariant ListObjectID = ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID);
 					FieldEditWidget->SetValue(ListObjectID);
-					BeginValues[FieldName] = ListObjectID;
+					BeginValues.emplace(FieldName, ListObjectID);
 				}
 				else
 				{
 					FieldEditWidget->SetValue(Value);
-					BeginValues[FieldName] = Value;
+					BeginValues.emplace(FieldName, Value);
 				}
 
 				//Если форма открывается для создания копии
@@ -474,7 +469,7 @@ void ISObjectFormBase::FillDataFields()
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaField *MetaField)
 {
-	ISFieldEditBase	*FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
+	ISFieldEditBase	*FieldEditBase = ISGui::CreateColumnForField(CentralWidget, MetaField);
 	FieldsMap.emplace(MetaField->Name, FieldEditBase);
 	connect(FieldEditBase, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 	return FieldEditBase;
@@ -482,7 +477,7 @@ ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaField *MetaField)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase *FieldEditBase, QFormLayout *form_layout)
 {
-	QLabel *LabelField = new QLabel(this);
+	QLabel *LabelField = new QLabel(CentralWidget);
 	LabelField->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
 	LabelsMap.emplace(MetaField->Name, LabelField);
 
@@ -540,23 +535,23 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 
 	if (!MetaField->SeparatorName.isEmpty())
 	{
-		QLabel *LabelTab = new QLabel(this);
+		QLabel *LabelTab = new QLabel(CentralWidget);
 		LabelTab->setText(MetaField->SeparatorName);
 		LabelTab->setFont(ISDefines::Gui::FONT_TAHOMA_10_BOLD);
 
 		QHBoxLayout *LayoutLine = new QHBoxLayout();
 		LayoutLine->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
-		QWidget *WidgetLine = new QWidget(this);
+		QWidget *WidgetLine = new QWidget(CentralWidget);
 		WidgetLine->setLayout(LayoutLine);
 		LayoutLine->addWidget(ISControls::CreateHorizontalLinePlain(this));
 
 		form_layout->addRow(LabelTab, WidgetLine);
 	}
 
-	QHBoxLayout *LayoutHorizontal = Layouts[MetaField->LayoutName];
-	if (LayoutHorizontal)
+	if (Layouts.count(MetaField->LayoutName))
 	{
+		QHBoxLayout *LayoutHorizontal = Layouts[MetaField->LayoutName];
 		if (LayoutHorizontal->property("Inserted").toBool())
 		{
 			LayoutHorizontal->addWidget(LabelField);
@@ -607,18 +602,22 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		}
 	}
 
-	if (WidgetEscort)
+	if (CentralWidget)
 	{
-		delete WidgetEscort;
-		WidgetEscort = nullptr;
+		delete CentralWidget;
+		CentralWidget = nullptr;
 	}
 
 	bool IsObjectClicked = ActionClicked->property("IsObject").toBool();
 	ToolBar->setVisible(IsObjectClicked);
-	WidgetObject->setVisible(IsObjectClicked);
 
-	if (!IsObjectClicked)
+	if (IsObjectClicked) //Выбор карточки объекта
 	{
+		CreateWidgetObject();
+	}
+	else //Выбор эскорта
+	{
+		ISInterfaceMetaForm *WidgetEscort = nullptr;
 		QString TableName = ActionClicked->property("TableName").toString(),
 			parent_filter_field = ActionClicked->property("FilterField").toString(),
 			ClassName = ActionClicked->property("ClassName").toString(),
@@ -642,6 +641,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		connect(WidgetEscort, &ISInterfaceMetaForm::AddFormFromTab, &ISGui::ShowObjectForm);
 		GetMainLayout()->addWidget(WidgetEscort);
 		WidgetEscort->LoadData();
+		CentralWidget = WidgetEscort;
 	}
 }
 //-----------------------------------------------------------------------------
@@ -884,21 +884,6 @@ void ISObjectFormBase::SetModificationFlag(bool modification)
 	setWindowTitle(WindowTitle);
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::ResizeRemove()
-{
-	if (!parentWidget())
-	{
-		QRect Rect = QDesktopWidget().availableGeometry();
-		int Width = Rect.width() / 3;
-		Width *= 2;
-		int Height = Rect.height() / 3;
-		Height *= 2;
-
-		resize(Width, Height);
-		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
-	}
-}
-//-----------------------------------------------------------------------------
 void ISObjectFormBase::UpdateObjectActions()
 {
 	if (FormType == ISNamespace::OFT_New)
@@ -1073,19 +1058,9 @@ void ISObjectFormBase::SetEnabledActions(bool Enabled)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::AddWidgetToBottom(QWidget *Widget)
-{
-	WidgetObject->layout()->addWidget(Widget);
-}
-//-----------------------------------------------------------------------------
-QString ISObjectFormBase::GetObjectName() const
-{
-	return ObjectName;
-}
-//-----------------------------------------------------------------------------
 ISFieldEditBase* ISObjectFormBase::GetFieldWidget(const QString &FieldName)
 {
-	return FieldsMap[FieldName];
+	return FieldsMap.at(FieldName);
 }
 //-----------------------------------------------------------------------------
 QToolBar* ISObjectFormBase::GetToolBar()
