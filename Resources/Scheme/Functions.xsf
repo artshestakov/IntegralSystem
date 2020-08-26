@@ -76,21 +76,6 @@
     COST 100;
   </Function>
 
-  <Function Name="databasesize">
-    CREATE OR REPLACE FUNCTION public.databasesize()
-    RETURNS varchar AS
-    $body$
-      BEGIN
-        RETURN pg_size_pretty(pg_database_size(current_database())) AS databasesize;
-      END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    RETURNS NULL ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-
   <Function Name="tablesize">
     CREATE OR REPLACE FUNCTION public.tablesize(table_name varchar)
     RETURNS varchar AS

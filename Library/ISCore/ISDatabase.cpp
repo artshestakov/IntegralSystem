@@ -11,7 +11,7 @@ static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 static QString QS_VERSION_POSTGRESQL = PREPARE_QUERY("SELECT version()");
 //-----------------------------------------------------------------------------
-static QString QS_DATABASE_SIZE = PREPARE_QUERY("SELECT databasesize()");
+static QString QS_DATABASE_SIZE = PREPARE_QUERY("SELECT pg_size_pretty(pg_database_size(current_database())) AS databasesize");
 //-----------------------------------------------------------------------------
 static QString QS_TABLE_SIZE = PREPARE_QUERY("SELECT pg_size_pretty(pg_relation_size(:TableName))");
 //-----------------------------------------------------------------------------
