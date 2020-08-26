@@ -584,7 +584,9 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 {
 	if (GetModificationFlag()) //Если данные были изменены - просить сохранить
 	{
-		//ISMessageBox::ShowQuestion(this, "Test", QString(), std::vector<ISPushButton
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue"));
+		ToolBarEscort->actions()[0]->setChecked(true); //Выделяем кнопку-действие (ответственную за карточку объекта) обратно
+		return;
 	}
 
 	//Обходим все эскортные действия
