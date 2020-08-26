@@ -153,8 +153,7 @@ void ISListViewWidget::ModelThreadFinished()
 	QMovie *Movie = LabelAnimation->movie();
 	Movie->stop();
 
-	delete Movie;
-	Movie = nullptr;
+	POINTER_DELETE(Movie);
 
 	LabelLoading->setText(QString());
 	ISGui::RepaintWidget(ToolBar);

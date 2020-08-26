@@ -118,15 +118,12 @@ void ISSystemsPanel::ClearSubSystemsBar()
 	while (SubSystemBar->actions().count()) //Обход действий подсистем
 	{
 		QAction *Action = SubSystemBar->actions().takeFirst(); //Первый элемент списка
-
 		if (ActionSubSystemGroup->actions().contains(Action))
 		{
 			ActionSubSystemGroup->removeAction(Action);
 		}
-
 		SubSystemBar->actions().removeAll(Action);
-		delete Action;
-		Action = nullptr;
+		POINTER_DELETE(Action);
 	}
 }
 //-----------------------------------------------------------------------------

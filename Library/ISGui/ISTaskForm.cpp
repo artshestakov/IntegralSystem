@@ -112,13 +112,7 @@ void ISTaskForm::FilterClicked()
 		return;
 	}
 	CurrentListForm = ListFormName;
-
-	if (TempWidget)
-	{
-		delete TempWidget;
-		TempWidget = nullptr;
-	}
-
+	POINTER_DELETE(TempWidget);
 	if (!TaskListForm)
 	{
 		TaskListForm = new ISTaskListForm(this);

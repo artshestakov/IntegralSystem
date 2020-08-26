@@ -1103,8 +1103,7 @@ void ISListBaseForm::Export()
 	{
 		ISMessageBox::ShowWarning(this, LANG("Export.Error.Prepare"), ExportWorker->GetErrorString());
 	}
-	delete ExportWorker;
-	ExportWorker = nullptr;
+	POINTER_DELETE(ExportWorker);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Print()
@@ -1183,11 +1182,7 @@ void ISListBaseForm::Print()
 	}
 
 	ISGui::SetWaitGlobalCursor(false);
-	if (PrintingBase)
-	{
-		delete PrintingBase;
-		PrintingBase = nullptr;
-	}
+	POINTER_DELETE(PrintingBase);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowSystemInfo()

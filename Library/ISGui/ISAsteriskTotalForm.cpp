@@ -167,12 +167,7 @@ void ISAsteriskTotalForm::ReloadUsers()
 {
 	while (TreeWidget->topLevelItemCount())
 	{
-		QTreeWidgetItem *TreeWidgetItem = TreeWidget->takeTopLevelItem(0);
-		if (TreeWidgetItem)
-		{
-			delete TreeWidgetItem;
-			TreeWidgetItem = nullptr;
-		}
+		delete TreeWidget->takeTopLevelItem(0);
 	}
 
 	ISQuery qSelect(QS_ASTERISK_PATTER);

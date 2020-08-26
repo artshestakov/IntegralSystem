@@ -24,12 +24,7 @@ ISUserGroupListForm::~ISUserGroupListForm()
 //-----------------------------------------------------------------------------
 void ISUserGroupListForm::SelectedGroup()
 {
-	if (UserGroupWidget)
-	{
-		delete UserGroupWidget;
-		UserGroupWidget = nullptr;
-	}
-
+	POINTER_DELETE(UserGroupWidget);
 	if (GetCountSelected())
 	{
 		Label->setVisible(false);

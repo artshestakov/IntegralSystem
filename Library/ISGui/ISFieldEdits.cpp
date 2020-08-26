@@ -189,12 +189,7 @@ void ISLineEdit::AddAction(QAction *Action, QLineEdit::ActionPosition Position)
 //-----------------------------------------------------------------------------
 void ISLineEdit::CreateCompleter(const QStringList &StringList)
 {
-	if (Completer)
-	{
-		delete Completer;
-		Completer = nullptr;
-	}
-
+	POINTER_DELETE(Completer);
 	Completer = new QCompleter(StringList, this);
 	Completer->setMaxVisibleItems(20);
 	Completer->setFilterMode(Qt::MatchContains);

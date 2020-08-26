@@ -51,12 +51,7 @@ void ISTelephonyForm::CreateItem(const QIcon &Icon, const QString &Text, ISNames
 //-----------------------------------------------------------------------------
 void ISTelephonyForm::ItemSelectionChanged()
 {
-	if (CentralWidget)
-	{
-		delete CentralWidget;
-		CentralWidget = nullptr;
-	}
-
+	POINTER_DELETE(CentralWidget);
 	ISNamespace::TelephonyForm FormType = qvariant_cast<ISNamespace::TelephonyForm>(ListWidget->currentItem()->data(Qt::UserRole));
 	if (FormType == ISNamespace::TF_Journal) //Журнал звонков
 	{

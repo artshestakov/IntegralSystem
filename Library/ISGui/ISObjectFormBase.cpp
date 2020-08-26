@@ -602,12 +602,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		}
 	}
 
-	if (CentralWidget)
-	{
-		delete CentralWidget;
-		CentralWidget = nullptr;
-	}
-
+	POINTER_DELETE(CentralWidget);
 	bool IsObjectClicked = ActionClicked->property("IsObject").toBool();
 	ToolBar->setVisible(IsObjectClicked);
 

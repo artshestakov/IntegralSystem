@@ -64,17 +64,8 @@ void ISInternalDirectoriesForm::ItemSelectionChanged()
 {
 	ISGui::SetWaitGlobalCursor(true);
 
-	if (Label)
-	{
-		delete Label;
-		Label = nullptr;
-	}
-
-	if (ListBaseForm)
-	{
-		delete	ListBaseForm;
-		ListBaseForm = nullptr;
-	}
+	POINTER_DELETE(Label);
+	POINTER_DELETE(ListBaseForm);
 
 	ListWidget->SetFontItems(ISDefines::Gui::FONT_APPLICATION);
 	QListWidgetItem *CurrentItem = ListWidget->currentItem();

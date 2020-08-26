@@ -91,11 +91,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 
 	ISMetaSubSystem *MetaSubSystem = ISMetaSystemsEntity::Instance().GetSubSystem(SubSystemUID);
 
-	if (CentralForm) //Если центральная форма была создана - удалить её
-	{
-		delete CentralForm;
-		CentralForm = nullptr;
-	}
+	POINTER_DELETE(CentralForm);
 
 	TabWidget->tabBar()->setTabIcon(0, IconSubSystem);
 	TabWidget->tabBar()->setTabText(0, MetaSubSystem->LocalName);

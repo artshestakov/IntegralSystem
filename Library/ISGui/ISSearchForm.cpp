@@ -314,8 +314,7 @@ void ISSearchForm::DeleteField(QTreeWidgetItem *TreeWidgetItem)
 			if (ItemWidget) //Если виджет у итема имеется - удалить его
 			{
 				TreeWidget->setItemWidget(TreeWidgetItem, i, nullptr);
-				delete ItemWidget;
-				ItemWidget = nullptr;
+				POINTER_DELETE(ItemWidget);
 			}
 		}
 

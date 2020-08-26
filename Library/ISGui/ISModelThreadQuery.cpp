@@ -10,11 +10,7 @@ ISModelThreadQuery::ISModelThreadQuery(QObject *parent)
 //-----------------------------------------------------------------------------
 ISModelThreadQuery::~ISModelThreadQuery()
 {
-	if (ModelWorker)
-	{
-		delete ModelWorker;
-		ModelWorker = nullptr;
-	}
+	POINTER_DELETE(ModelWorker);
 }
 //-----------------------------------------------------------------------------
 void ISModelThreadQuery::Execute(const QString &SqlQuery, const QVariantMap &Conditions)

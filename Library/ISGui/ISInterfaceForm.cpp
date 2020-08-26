@@ -4,6 +4,7 @@
 #include "ISSystem.h"
 #include "ISStyleSheet.h"
 #include "ISConstants.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	: QWidget(parent, Flags),
@@ -77,8 +78,7 @@ void ISInterfaceForm::SetVisibleShadow(bool Visible)
 	}
 	else
 	{
-		delete LabelShadow;
-		LabelShadow = nullptr;
+		POINTER_DELETE(LabelShadow);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -143,8 +143,7 @@ void ISInterfaceForm::FlashingStop()
 		FlashingTimer->stop();
 		
 		ISSystem::ExecLoop(100);
-		delete FlashingTimer;
-		FlashingTimer = nullptr;
+		POINTER_DELETE(FlashingTimer);
 	}
 }
 //-----------------------------------------------------------------------------

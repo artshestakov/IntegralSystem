@@ -94,11 +94,7 @@ void ISQLineEdit::SetMenuSelected(bool menu)
 	}
 	else
 	{
-		if (MenuCopy)
-		{
-			delete MenuCopy;
-			MenuCopy = nullptr;
-		}
+		POINTER_DELETE(MenuCopy);
 	}
 }
 //-----------------------------------------------------------------------------

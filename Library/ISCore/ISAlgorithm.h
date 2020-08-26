@@ -4,6 +4,12 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 //-----------------------------------------------------------------------------
+#define POINTER_DELETE(POINTER) \
+if (POINTER) \
+{ \
+	delete(POINTER); \
+	POINTER = nullptr; \
+}
 #ifdef WIN32
 #define ISSleep(MSec) ::Sleep(MSec)
 #define INIT_CRITICAL_SECTION(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
