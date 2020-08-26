@@ -85,11 +85,6 @@ public:
         ET_XML,
     };
 
-    enum MessageBoxButton
-    {
-        MBB_Unknown, //Неизвестно (НЕ ИСПОЛЬЗОВАТЬ ДАННЫЙ ФЛАГ)
-    };
-
     enum ActionType
     {
         AT_Create,
@@ -184,7 +179,6 @@ Q_DECLARE_METATYPE(ISNamespace::FieldType);
 Q_DECLARE_METATYPE(ISNamespace::ObjectFormType);
 Q_DECLARE_METATYPE(ISNamespace::SearchOperatorType);
 Q_DECLARE_METATYPE(ISNamespace::ExportType);
-Q_DECLARE_METATYPE(ISNamespace::MessageBoxButton);
 Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
 Q_DECLARE_METATYPE(ISNamespace::ReportType);

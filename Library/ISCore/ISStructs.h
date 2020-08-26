@@ -492,4 +492,15 @@ struct ISHistoryObject
 	bool IsNew; //Новая запись
 };
 //-----------------------------------------------------------------------------
+struct ISMessageBoxButton
+{
+	ISMessageBoxButton(int id, const QString &text, bool _default = false, const QIcon &icon = QIcon()) : ID(id), Text(text), Default(_default), Icon(icon) { }
+	ISMessageBoxButton() : ID(-1) { }
+
+	int ID; //Идентификатор кнопки
+	QString Text; //Надпись
+	bool Default; //На кнопке будет установлен фокус
+	QIcon Icon; //Иконка
+};
+//-----------------------------------------------------------------------------
 #endif

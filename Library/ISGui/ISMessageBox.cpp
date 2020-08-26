@@ -4,12 +4,18 @@
 #include "ISBuffer.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISMessageBox::ISMessageBox(QMessageBox::Icon Icon, const QString &Title, const QString &Message, QMessageBox::StandardButtons Buttons, QWidget *parent)
-	: QMessageBox(Icon, Title, Message, Buttons, parent),
-	AdditionalButtonClicked(ISNamespace::MBB_Unknown)
+ISMessageBox::ISMessageBox(ISMessageBox::Icon Icon, const QString &Title, const QString &Message, const QString &DetailedText, const std::vector<ISMessageBoxButton> &Buttons, QWidget *parent)
+	: QMessageBox(Icon, Title, Message, ISMessageBox::NoButton, parent),
+	ClickedID(-1)
 {
 	setWindowIcon(BUFFER_ICONS("Logo"));
+	AddButtons(Buttons);
+	if (!DetailedText.isEmpty())
+	{
+		setDetailedText(DetailedText);
+	}
 }
 //-----------------------------------------------------------------------------
 ISMessageBox::~ISMessageBox()
@@ -19,75 +25,73 @@ ISMessageBox::~ISMessageBox()
 //-----------------------------------------------------------------------------
 void ISMessageBox::ShowInformation(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
-	ISMessageBox MessageBox(QMessageBox::Information, LANG("Information"), Message, QMessageBox::Ok, parent);
-	if (!DetailedText.isEmpty())
-	{
-		MessageBox.setDetailedText(DetailedText);
-	}
-	MessageBox.Exec();
+	ISMessageBox(ISMessageBox::Information, LANG("Information"), Message, DetailedText, { { 1, "OK", true } },parent).Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMessageBox::ShowWarning(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
-	ISMessageBox MessageBox(QMessageBox::Warning, LANG("Warning"), Message, QMessageBox::Ok, parent);
-	if (!DetailedText.isEmpty())
-	{
-		MessageBox.setDetailedText(DetailedText);
-	}
-	MessageBox.Exec();
+	ISMessageBox(ISMessageBox::Warning, LANG("Warning"), Message, DetailedText, { { 1, "OK", true } }, parent).Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMessageBox::ShowCritical(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
-	ISMessageBox MessageBox(QMessageBox::Critical, LANG("Error"), Message, QMessageBox::Ok, parent);
-	if (!DetailedText.isEmpty())
-	{
-		MessageBox.setDetailedText(DetailedText);
-	}
-	MessageBox.Exec();
+	ISMessageBox(ISMessageBox::Critical, LANG("Error"), Message, DetailedText, { { 1, "OK", true } }, parent).Exec();
 }
 //-----------------------------------------------------------------------------
 bool ISMessageBox::ShowQuestion(QWidget *parent, const QString &Message, const QString &DetailedText)
 {
-	ISMessageBox MessageBox(QMessageBox::Question, LANG("Question"), Message, QMessageBox::Yes | QMessageBox::No, parent);
-	MessageBox.setDefaultButton(QMessageBox::No);
-	if (!DetailedText.isEmpty())
+	return ISMessageBox(ISMessageBox::Question, LANG("Question"), Message, DetailedText,
 	{
-		MessageBox.setDetailedText(DetailedText);
-	}
-	return MessageBox.Exec() == QMessageBox::Yes ? true : false;
+		{ 1, LANG("Yes") },
+		{ 2, LANG("No"), true }
+	}, parent).Exec() == 1;
 }
 //-----------------------------------------------------------------------------
-void ISMessageBox::AddButton(const QString &Text, ISNamespace::MessageBoxButton ButtonType)
+int ISMessageBox::ShowQuestion(QWidget *parent, const QString &Message, const std::vector<ISMessageBoxButton> &Buttons, const QString &DetailedText)
 {
-	QPushButton *Button = new QPushButton(this);
-	Button->setText(Text);
-	connect(Button, &QPushButton::clicked, this, &ISMessageBox::ButtonClicked);
-	addButton(Button, ButtonRole::NoRole);
-	AdditionalButtons.emplace(Button, ButtonType);
-}
-//-----------------------------------------------------------------------------
-ISNamespace::MessageBoxButton ISMessageBox::GetClickedButton()
-{
-	return AdditionalButtonClicked;
-}
-//-----------------------------------------------------------------------------
-void ISMessageBox::ButtonClicked()
-{
-	QPushButton *Button = dynamic_cast<QPushButton*>(sender());
-	AdditionalButtonClicked = Button ? AdditionalButtons[Button] : ISNamespace::MBB_Unknown;
+	return ISMessageBox(ISMessageBox::Question, LANG("Question"), Message, DetailedText, Buttons, parent).Exec();
 }
 //-----------------------------------------------------------------------------
 int ISMessageBox::Exec()
 {
-	for (QAbstractButton *Button : buttons())
-	{
-		Button->setStyleSheet(STYLE_SHEET("ISPushButton"));
-		Button->setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
-		Button->setFixedHeight(23);
-	}
+	adjustSize();
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	QApplication::beep();
 	ISSystem::ProcessEvents();
-	return exec();
+	exec();
+	return ClickedID;
+}
+//-----------------------------------------------------------------------------
+void ISMessageBox::AddButtons(const std::vector<ISMessageBoxButton> &Buttons)
+{
+	for (const ISMessageBoxButton &Button : Buttons)
+	{
+		ISPushButton *PushButton = new ISPushButton(Button.Icon, Button.Text, this);
+		PushButton->setProperty("ID", Button.ID);
+		connect(PushButton, &ISPushButton::clicked, this, &ISMessageBox::ButtonClicked);
+		addButton(PushButton, ISMessageBox::ActionRole);
+		
+		if (Button.Default)
+		{
+			PushButton->setFocus();
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISMessageBox::SetDefaultButton(int ID)
+{
+	for (QAbstractButton *AbstractButton : buttons())
+	{
+		if (AbstractButton->property("ID").toInt() == ID)
+		{
+			AbstractButton->setFocus();
+			break;
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISMessageBox::ButtonClicked()
+{
+	ClickedID = sender()->property("ID").toInt();
 }
 //-----------------------------------------------------------------------------

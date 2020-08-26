@@ -137,39 +137,24 @@ void ISObjectFormBase::closeEvent(QCloseEvent *e)
 	if (ModificationFlag)
 	{
 		emit CurrentObjectTab();
-
-		ISMessageBox MessageBox(QMessageBox::Warning, LANG("SavingProcess"), LANG("Message.Question.SaveObjectChanged").arg(MetaTable->LocalName), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, this);
-		MessageBox.setWindowIcon(BUFFER_ICONS("Save"));
-		MessageBox.setDefaultButton(QMessageBox::No);
-        QMessageBox::StandardButtons ClickedButton = static_cast<QMessageBox::StandardButtons>(MessageBox.Exec());
-
-		switch (ClickedButton)
+		ISMessageBox MessageBox(QMessageBox::Warning, LANG("SavingProcess"), LANG("Message.Question.SaveObjectChanged").arg(MetaTable->LocalName), QString(),
 		{
-		case ISMessageBox::Save:
-			if (Save())
-			{
-				ISInterfaceForm::closeEvent(e);
-			}
-			else
-			{
-				e->ignore();
-			}
-			break;
-
-		case ISMessageBox::Discard:
-			ISInterfaceForm::closeEvent(e);
-			break;
-
-		case ISMessageBox::Cancel:
-			e->ignore();
-			break;
+			{ 1, LANG("Yes") },
+			{ 2, LANG("No"), true },
+			{ 3, LANG("Cancel") }
+		}, this);
+		MessageBox.setWindowIcon(BUFFER_ICONS("Save"));
+        switch (MessageBox.Exec())
+		{
+		case 1: Save() ? ISInterfaceForm::closeEvent(e) : e->ignore(); break;
+		case 2: ISInterfaceForm::closeEvent(e); break;
+		case 3: e->ignore(); break;
 		}
 	}
 	else
 	{
 		ISInterfaceForm::closeEvent(e);
 	}
-
 	emit Close();
 }
 //-----------------------------------------------------------------------------
@@ -597,6 +582,11 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 {
+	if (GetModificationFlag()) //Если данные были изменены - просить сохранить
+	{
+		//ISMessageBox::ShowQuestion(this, "Test", QString(), std::vector<ISPushButton
+	}
+
 	//Обходим все эскортные действия
 	for (QAction *Action: ToolBarEscort->actions())
 	{

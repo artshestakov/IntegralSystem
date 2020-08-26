@@ -133,7 +133,7 @@ ISAuthForm::ISAuthForm()
 //-----------------------------------------------------------------------------
 ISAuthForm::~ISAuthForm()
 {
-	
+
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::closeEvent(QCloseEvent *CloseEvent)
@@ -273,28 +273,17 @@ void ISAuthForm::ConnectedDone()
 	}
 	else //Ошибка подключения к базе данных
 	{
-		ISMessageBox MessageBox(ISMessageBox::Warning,
-			LANG("ErrorConnectionDatabase"),
-			LANG("Message.Question.ConnectionError.Reconnect").arg(ISDatabase::Instance().GetErrorString()),
-			ISMessageBox::Yes | ISMessageBox::No | ISMessageBox::Close, this);
-		MessageBox.setButtonText(ISMessageBox::Close, LANG("Exit"));
-		MessageBox.setDefaultButton(ISMessageBox::No);
-		MessageBox.adjustSize();
-		ISGui::MoveWidgetToDesktop(&MessageBox, ISNamespace::MWD_Center);
-		ISMessageBox::StandardButtons ClickedButton = static_cast<ISMessageBox::StandardButtons>(MessageBox.Exec());
-		if (ClickedButton == ISMessageBox::Yes) //Предложить повтор попытки соединения
+		ISMessageBox MessageBox(ISMessageBox::Question, LANG("Question"),
+			LANG("Message.Question.ConnectionError.Reconnect").arg(ISDatabase::Instance().GetErrorString()), QString(),
 		{
-			Input();
-		}
-		else if (ClickedButton == ISMessageBox::No) //Отмена
+			{ 1, LANG("Yes") },
+			{ 2, LANG("No"), true }, //Нажатие на эту кнопку не учитывается
+			{ 3, LANG("Exit") }
+		}, this);
+		switch (MessageBox.Exec())
 		{
-			return;
-		}
-		else if (ClickedButton == ISMessageBox::Close) //Выход из программы
-		{
-			SetResult(false);
-			close();
-			return;
+		case 1: Input(); break; //Выбрали повторить подключение
+		case 3: close(); break; //Выбрали выход из программы
 		}
 	}
 }
