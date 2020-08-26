@@ -21,7 +21,6 @@
       <Field UID="{A4DAE20A-E751-4C78-96F0-D84F3107775A}" Name="Bik" Type="Bik" LayoutName="Inn"/>
       <Field UID="{2329CBCC-85A3-438A-8679-C75CF1DD4CF3}" Name="Vin" Type="Vin" LayoutName="Inn"/>
       <Field UID="{96CB1395-A26F-4141-B921-C07E90BBB632}" Name="Year" Type="Year"/>
-      <Field UID="{CBC08C8F-41CF-425C-BDFA-3B913AAACED3}" Name="PhoneBase" Type="PhoneBase"/>
       <Field UID="{416F1A31-A8E1-4786-8439-6DF8D3AEF4DA}" Name="Phone" Type="Phone"/>
       <Field UID="{7F136648-585F-45B2-840D-2FE504765EC0}" Name="Password" Type="Password"/>
       <Field UID="{EA2338DC-DD87-472F-A081-B3D00BD06EA7}" Name="Image" Type="Image"/>

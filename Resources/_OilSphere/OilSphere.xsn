@@ -11,7 +11,7 @@
       <Field UID="{3CB172A8-590C-462B-AB70-F6A4BABF3A24}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН" LayoutName="INN"/>
       <Field UID="{4459AAC7-F885-4120-A1D8-13C7E84179B0}" Name="Kpp" Type="Kpp" LabelName="КПП" LocalListName="КПП" LayoutName="INN"/>
       <Field UID="{2BF964F2-20F0-44C6-91D6-CB436DBFFE67}" Name="Ogrn" Type="Ogrn" LabelName="ОГРН" LocalListName="ОГРН" LayoutName="INN"/>
-      <Field UID="{6A63EE11-4F3E-4C72-BBE6-454AF87E2BD6}" Name="Phone" Type="PhoneBase" LabelName="Телефон" LocalListName="Телефон" LayoutName="Phone"/>
+      <Field UID="{6A63EE11-4F3E-4C72-BBE6-454AF87E2BD6}" Name="Phone" Type="Phone" LabelName="Телефон" LocalListName="Телефон" LayoutName="Phone"/>
       <Field UID="{AB52855E-A2E9-4DA8-BFBE-1885CCCA13EF}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта" LayoutName="Phone"/>
     </Fields>
     <Indexes>
@@ -113,7 +113,7 @@
       <Field UID="{B47E3F31-CE60-450F-905C-F54D6D17F7D4}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
       <Field UID="{E3EC604A-96C7-4DA2-9C44-7EB4C9871796}" Name="Driver" Type="Int" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
       <Field UID="{AA821AE0-6837-4386-B371-D4E8614A1811}" Name="Car" Type="Int" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Driver"/>
-      <Field UID="{45EC9CDF-3142-41BC-A396-16DEF03D0EF5}" Name="WeightDifference" Type="Int" LabelName="Разница весов" LocalListName="Разница весов"/>
+      <Field UID="{45EC9CDF-3142-41BC-A396-16DEF03D0EF5}" Name="WeightDifference" Type="Int" ReadOnly="true" LabelName="Разница весов" LocalListName="Разница весов"/>
     </Fields>
     <Indexes>
       <Index Field="Implementation"/>
@@ -218,8 +218,8 @@
       <Field UID="{FECC72D2-03B6-44BC-85D5-0197204274C9}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения"/>
       <Field UID="{1F9C9036-EDC7-4E91-AC72-852A810A7CB1}" Name="Type" Type="Int" LabelName="Тип водителя" LocalListName="Тип водителя"/>
       <Field UID="{50874597-C07E-4CF9-9DC1-12A2C99D007F}" Name="Address" Type="String" LabelName="Адрес (домашний)" LocalListName="Адрес (домашний)"/>
-      <Field UID="{5CFC1697-2A76-4C3E-B5A7-D7365BAF441B}" Name="PhoneMain" Type="PhoneBase" LabelName="Телефон (основной)" LocalListName="Телефон (основной)"/>
-      <Field UID="{FE94A84B-E945-4D59-AD10-5962DBF23102}" Name="PhoneOther" Type="PhoneBase" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
+      <Field UID="{5CFC1697-2A76-4C3E-B5A7-D7365BAF441B}" Name="PhoneMain" Type="Phone" LabelName="Телефон (основной)" LocalListName="Телефон (основной)"/>
+      <Field UID="{FE94A84B-E945-4D59-AD10-5962DBF23102}" Name="PhoneOther" Type="Phone" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
       <Field UID="{B259018F-0E88-4DA7-988B-36747489F91F}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
       <Field UID="{32A4254D-1D93-4FE8-811F-6E8235343785}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
