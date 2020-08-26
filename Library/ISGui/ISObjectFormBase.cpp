@@ -579,8 +579,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		return;
 	}
 
-	//Обходим все эскортные действия
-	for (QAction *Action: ToolBarEscort->actions())
+	for (QAction *Action: ToolBarEscort->actions()) //Обходим все эскортные действия
 	{
 		if (Action == ActionClicked) //Текущее действие
 		{
@@ -602,6 +601,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		}
 	}
 
+	ISGui::SetWaitGlobalCursor(true);
 	POINTER_DELETE(CentralWidget);
 	bool IsObjectClicked = ActionClicked->property("IsObject").toBool();
 	ToolBar->setVisible(IsObjectClicked);
@@ -638,6 +638,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		WidgetEscort->LoadData();
 		CentralWidget = WidgetEscort;
 	}
+	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetValueFieldID(int object_id)
