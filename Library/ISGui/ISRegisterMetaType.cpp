@@ -25,7 +25,6 @@
 #include "ISDelegates.h"
 //-----------------------------------------------------------------------------
 #include "ISFieldEdits.h"
-#include "ISPhoneBaseEdit.h"
 #include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
 #include "ISListEdit.h"
@@ -87,7 +86,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISOGRNEdit*>("ISOGRNEdit");
 	qRegisterMetaType<ISYearEdit*>("ISYearEdit");
 	qRegisterMetaType<ISComboTimeEdit*>("ISComboTimeEdit");
-	qRegisterMetaType<ISPhoneBaseEdit*>("ISPhoneBaseEdit");
 	qRegisterMetaType<ISPhoneEdit*>("ISPhoneEdit");
 	qRegisterMetaType<ISBIKEdit*>("ISBIKEdit");
 	qRegisterMetaType<ISEMailEdit*>("ISEMailEdit");

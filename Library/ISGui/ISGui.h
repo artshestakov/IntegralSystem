@@ -68,8 +68,6 @@ public:
 	static void ShowFavoritesForm(const QString &TableName = QString());
 	static void ShowHistoryForm();
 
-	static bool CheckSetupTelephony(); //Проверка настроена ли телефония
-
 	static void ShowTaskViewForm(int TaskID); //Показать форму просмотра задачи по идентификатору
 	static void ShowTaskViewForm(QWidget *TaskViewForm); //Показать форму просмотра задач по виджету
 

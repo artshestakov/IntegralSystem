@@ -268,7 +268,6 @@
     <ClCompile Include="ISPatternWidget.cpp" />
     <ClCompile Include="ISPeriodForm.cpp" />
     <ClCompile Include="ISPGSettingsForm.cpp" />
-    <ClCompile Include="ISPhoneBaseEdit.cpp" />
     <ClCompile Include="ISPlayerWidget.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
@@ -505,7 +504,6 @@
     <ClInclude Include="ISObjectModel.h" />
     <QtMoc Include="ISRangeEditBase.h" />
     <QtMoc Include="ISSettingFieldWidgets.h" />
-    <QtMoc Include="ISPhoneBaseEdit.h" />
     <QtMoc Include="ISOilSphere.h" />
     <ClInclude Include="ISObjects.h" />
     <ClInclude Include="ISPageMetrics.h" />

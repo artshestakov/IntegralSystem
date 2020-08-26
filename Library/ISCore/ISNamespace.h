@@ -30,7 +30,6 @@ public:
         FT_Bik, //Банковский идентификационый номер
         FT_Vin, //Идентификационный номер транспортного средства
         FT_Year, //Год
-        FT_PhoneBase, //Номер телефона
         FT_Phone, //Номер телефона
         FT_Password, //Пароль
         FT_Image, //Изображение
@@ -134,13 +133,6 @@ public:
         QMT_List,
     };
 
-    enum PhoneIconType //Тип иконки
-    {
-        PIT_Standart, //Стандартная
-        PIT_TRUE, //Корректный ввод
-        PIT_FALSE, //Некорректный ввод
-    };
-
     enum PeriodType //Тип фильтрации по периоду
     {
         PT_UnknownDate,
@@ -197,7 +189,6 @@ Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
 Q_DECLARE_METATYPE(ISNamespace::ReportType);
 Q_DECLARE_METATYPE(ISNamespace::QueryModelType);
-Q_DECLARE_METATYPE(ISNamespace::PhoneIconType);
 Q_DECLARE_METATYPE(ISNamespace::PeriodType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::TelephonyForm);

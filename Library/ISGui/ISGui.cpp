@@ -43,11 +43,6 @@ static QString QU_NOTE_OBJECT = PREPARE_QUERY("UPDATE _noteobject SET nobj_note 
 //-----------------------------------------------------------------------------
 static QString QI_NOTE_OBJECT = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tablename, nobj_objectid, nobj_note) VALUES(:TableName, :ObjectID, :Note)");
 //-----------------------------------------------------------------------------
-static QString QS_TELEPHONY = PREPARE_QUERY("SELECT COUNT(*) "
-											"FROM _asteriskpattern "
-											"WHERE NOT aspt_isdeleted "
-											"AND aspt_user = currentuserid()");
-//-----------------------------------------------------------------------------
 static QString QD_USER_PASSWORD = PREPARE_QUERY2("ALTER ROLE %1 PASSWORD NULL");
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
@@ -630,19 +625,6 @@ void ISGui::ShowHistoryForm()
 	ISGui::SetWaitGlobalCursor(true);
 	(new ISHistoryForm())->show();
 	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-bool ISGui::CheckSetupTelephony()
-{
-	ISQuery qSelect(QS_TELEPHONY);
-	if (qSelect.ExecuteFirst())
-	{
-		if (qSelect.ReadColumn("count").toInt())
-		{
-			return true;
-		}
-	}
-	return false;
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowTaskViewForm(int TaskID)

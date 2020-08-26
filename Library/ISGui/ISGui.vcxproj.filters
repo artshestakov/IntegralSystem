@@ -204,9 +204,6 @@
     <ClCompile Include="ISRangeEditBase.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
-    <ClCompile Include="ISPhoneBaseEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
     <ClCompile Include="ISMessageBox.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
@@ -643,9 +640,6 @@
     </QtMoc>
     <QtMoc Include="ISRangeEditBase.h">
       <Filter>Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPhoneBaseEdit.h">
-      <Filter>Fields\Base</Filter>
     </QtMoc>
     <QtMoc Include="ISMessageBox.h">
       <Filter>Dialogs</Filter>

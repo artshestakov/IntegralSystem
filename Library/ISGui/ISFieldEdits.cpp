@@ -22,9 +22,7 @@
 #include "ISMetaData.h"
 #include "ISInputDialog.h"
 #include "ISDelegates.h"
-//-----------------------------------------------------------------------------
-static QString QI_ASTERISK_QUEUE = PREPARE_QUERY("INSERT INTO _asteriskqueue(astq_type, astq_initiated, astq_parameters) "
-												 "VALUES((SELECT asqt_id FROM _asteriskqueuetype WHERE asqt_uid = :TypeUID), currentuserid(), :Parameters)");
+#include "ISPhoneNumberParser.h"
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
 											  "FROM _searchfast "
@@ -259,6 +257,16 @@ void ISLineEdit::SetInputMask(const QString &InputMask)
 void ISLineEdit::SetFocusPolicy(Qt::FocusPolicy focus_policy)
 {
 	LineEdit->setFocusPolicy(focus_policy);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetTextMargins(const QMargins &Margins)
+{
+	LineEdit->setTextMargins(Margins);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetTextMargins(int Left, int Top, int Right, int Bottom)
+{
+	LineEdit->setTextMargins(Left, Top, Right, Bottom);
 }
 //-----------------------------------------------------------------------------
 void ISLineEdit::SetMaxLength(int Length)
@@ -1552,14 +1560,15 @@ QString ISPassportEdit::PreparePassport(const QString &passport_string)
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISPhoneBaseEdit(parent)
+ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetVisibleCall(true);
-	if (!ISGui::CheckSetupTelephony())
-	{
-		SetToolTipCall(LANG("NotSettingTelephonyForCurrentUser"));
-		SetCursorCall(CURSOR_FORBIDDEN);
-	}
+	SetInputMask("(000) 000-00-00;_");
+	SetTextMargins(45, 0, 0, 0);
+
+	ButtonCall = new ISServiceButton(BUFFER_ICONS("CallPhone"), LANG("Call"), this);
+	ButtonCall->setFocusPolicy(Qt::NoFocus);
+	connect(ButtonCall, &ISServiceButton::clicked, this, &ISPhoneEdit::Call);
+	AddWidgetToRight(ButtonCall);
 }
 //-----------------------------------------------------------------------------
 ISPhoneEdit::~ISPhoneEdit()
@@ -1567,30 +1576,20 @@ ISPhoneEdit::~ISPhoneEdit()
 
 }
 //-----------------------------------------------------------------------------
+QVariant ISPhoneEdit::GetValue() const
+{
+	QString PhoneString = ISPhoneNumberParser::RemoveNotDigits(ISLineEdit::GetValue().toString());
+	return PhoneString.size() == 10 ? PhoneString : QVariant();
+}
+//-----------------------------------------------------------------------------
+bool ISPhoneEdit::IsValid() const
+{
+	return ISLineEdit::GetValue().toString().size() == 10;
+}
+//-----------------------------------------------------------------------------
 void ISPhoneEdit::Call()
 {
-	if (ISGui::CheckSetupTelephony())
-	{
-		ISGui::SetWaitGlobalCursor(true);
-		QString Phone = GetValue().toString();
-
-		QVariantMap VariantMap;
-		VariantMap.insert("Phone", Phone);
-
-		ISQuery qInsert(QI_ASTERISK_QUEUE);
-		qInsert.BindValue(":TypeUID", CONST_UID_ASTERISK_QUEUE_TYPE_OUT_CALLED);
-		qInsert.BindValue(":Parameters", ISSystem::VariantMapToJsonString(VariantMap));
-		if (qInsert.Execute())
-		{
-			ISPopupMessage::ShowNotification(LANG("OutcomingCall").arg(Phone));
-			emit Called();
-		}
-		ISGui::SetWaitGlobalCursor(false);
-	}
-	else
-	{
-		ISMessageBox::ShowInformation(this, LANG("NotSettingTelephonyForCurrentUser"));
-	}
+	
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

@@ -36,7 +36,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 		}
 		Result = ValueString;
 	}
-	else if (Type == ISNamespace::FT_Phone || Type == ISNamespace::FT_PhoneBase)
+	else if (Type == ISNamespace::FT_Phone)
 	{
 		Result = "+7" + Result.toString();
 	}
@@ -67,8 +67,7 @@ QVariant ISSqlModelHelper::ValueFromTextAlignment(ISNamespace::FieldType FieldTy
 		FieldType == ISNamespace::FT_Birthday ||
 		FieldType == ISNamespace::FT_Seconds ||
 		FieldType == ISNamespace::FT_Year ||
-		FieldType == ISNamespace::FT_Phone ||
-		FieldType == ISNamespace::FT_PhoneBase)
+		FieldType == ISNamespace::FT_Phone)
 	{
 		Result = Qt::AlignCenter;
 	}

@@ -2,7 +2,7 @@
 #ifndef _ISFIELDEDITS_H_INCLUDED
 #define _ISFIELDEDITS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISPhoneBaseEdit.h"
+#include "ISFieldEditBase.h"
 #include "ISValidators.h"
 #include "ISImageWidget.h"
 #include "PMetaClass.h"
@@ -63,6 +63,8 @@ public:
 	void SetTextAlignment(Qt::Alignment Alignment);
 	void SetInputMask(const QString &InputMask);
 	void SetFocusPolicy(Qt::FocusPolicy focus_policy);
+	void SetTextMargins(const QMargins &Margins);
+	void SetTextMargins(int Left, int Top, int Right, int Bottom);
 	void SetMaxLength(int Length);
 	void SetIcon(const QIcon &Icon);
 	void SelectAll();
@@ -623,7 +625,7 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISPhoneEdit : public ISPhoneBaseEdit
+class ISPhoneEdit : public ISLineEdit
 {
 	Q_OBJECT
 
@@ -634,8 +636,19 @@ public:
 	Q_INVOKABLE ISPhoneEdit(QWidget *parent = 0);
 	virtual ~ISPhoneEdit();
 
+	QVariant GetValue() const override;
+
+	bool IsValid() const override; //Проверка корректности номера
+
 protected:
-	void Call() override;
+	virtual void Call();
+
+private:
+	void PhoneChanged();
+	void Paste(const QString &PastedString); //Обработка вставки
+
+private:
+	ISServiceButton *ButtonCall;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

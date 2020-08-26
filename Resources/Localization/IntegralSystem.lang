@@ -500,7 +500,6 @@
   <Local Name="ClickFromCheckLevelVolume" Russian="Нажмите, чтобы проверить уровень громкости"/>
   <Local Name="LoadDataPleceWait" Russian="Загрузка данных. Пожалуйста, подождите..."/>
   <Local Name="RecordMarkerIsDeleted" Russian="Запись помечена на удаление"/>
-  <Local Name="NotSettingTelephonyForCurrentUser" Russian="Телефония для Вашей учётной записи не настроена, обратитесь к системному администратору."/>
   <Local Name="ClickFromViewList" Russian="Чтобы просмотреть справочник, нажмите на соответствующий пункт слева."/>
   <Local Name="ClickFromViewMyLLastSearchQuery" Russian="Нажмите, чтобы увидеть Ваши последние поисковые запросы"/>
   <Local Name="ClickFromGoMainJournal" Russian="Нажмите, чтобы перейти в основной журнал"/>
@@ -513,7 +512,6 @@
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickDoneFromFilter" Russian="Нажмите кнопку &quot;Применить&quot; для получения сводных данных за период."/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
-  <Local Name="OutcomingCall" Russian="Исходщяий вызов на номер: %1"/>
   <Local Name="AsteriskFileRecordName" Russian="Запись разговора абонента %1 от %2"/>
   <Local Name="AutoCloseIncomingForm" Russian="Окно будет автоматически закрыто через: %1 сек."/>
   <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
