@@ -5,8 +5,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 										  "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "
-										  "sbsm_id, sbsm_uid, sbsm_localname, sbsm_orderid, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint, "
-										  "(SELECT CASE WHEN COUNT(*) = 1 THEN true ELSE false END AS access FROM _groupaccesssubsystem WHERE gass_group = (SELECT usrs_group FROM _users WHERE usrs_id = currentuserid()) AND gass_subsystem = sbsm_uid) "
+										  "sbsm_id, sbsm_uid, sbsm_localname, sbsm_orderid, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
 										  "FROM _subsystems "
 										  "LEFT JOIN _systems ON stms_uid = sbsm_system "
 										  "WHERE NOT sbsm_isdeleted "
