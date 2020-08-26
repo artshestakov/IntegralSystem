@@ -41,12 +41,6 @@
     <Filter Include="Fields">
       <UniqueIdentifier>{58f40b29-3ff2-4056-b6ff-2c2b6b24ebce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fields\Range">
-      <UniqueIdentifier>{d077dca7-a197-41f6-b992-07881a8d860f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fields\Settings">
-      <UniqueIdentifier>{dc041919-ffa8-4da5-b1ca-6a45ce5ae2f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fields\Base">
       <UniqueIdentifier>{90560a43-286b-4f4d-8a16-e61124c4fdc8}</UniqueIdentifier>
     </Filter>
@@ -210,40 +204,7 @@
     <ClCompile Include="ISRangeEditBase.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
-    <ClCompile Include="ISRangeDateEdit.cpp">
-      <Filter>Fields\Range</Filter>
-    </ClCompile>
-    <ClCompile Include="ISRangeDateTimeEdit.cpp">
-      <Filter>Fields\Range</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSettingFieldWidgets.cpp">
-      <Filter>Fields\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCheckEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISColorEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISComboEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDateTimeEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISLineEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISImageEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
     <ClCompile Include="ISPhoneBaseEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISRadioEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTextEdit.cpp">
       <Filter>Fields\Base</Filter>
     </ClCompile>
     <ClCompile Include="ISMessageBox.cpp">
@@ -549,9 +510,6 @@
     <ClCompile Include="ISOilSphere.cpp">
       <Filter>Objects\OilSphere</Filter>
     </ClCompile>
-    <ClCompile Include="ISSexEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
     <ClCompile Include="ISTaskListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -561,23 +519,20 @@
     <ClCompile Include="ISHistory.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISFileEdit.cpp">
-      <Filter>Fields\Base</Filter>
+    <ClCompile Include="ISValidators.cpp">
+      <Filter>Export</Filter>
+    </ClCompile>
+    <ClCompile Include="ISEditsQT.cpp">
+      <Filter>Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISRangeEdits.cpp">
+      <Filter>Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingFieldWidgets.cpp">
+      <Filter>Fields</Filter>
     </ClCompile>
     <ClCompile Include="ISListEdit.cpp">
       <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISListEditPopup.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISVolumeEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ISEdits.cpp">
-      <Filter>Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISValidators.cpp">
-      <Filter>Export</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -689,40 +644,7 @@
     <QtMoc Include="ISRangeEditBase.h">
       <Filter>Fields</Filter>
     </QtMoc>
-    <QtMoc Include="ISRangeDateEdit.h">
-      <Filter>Fields\Range</Filter>
-    </QtMoc>
-    <QtMoc Include="ISRangeDateTimeEdit.h">
-      <Filter>Fields\Range</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSettingFieldWidgets.h">
-      <Filter>Fields\Settings</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCheckEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISColorEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISComboEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDateTimeEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISLineEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISImageEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
     <QtMoc Include="ISPhoneBaseEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISRadioEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTextEdit.h">
       <Filter>Fields\Base</Filter>
     </QtMoc>
     <QtMoc Include="ISMessageBox.h">
@@ -965,32 +887,26 @@
     <QtMoc Include="ISOilSphere.h">
       <Filter>Objects\OilSphere</Filter>
     </QtMoc>
-    <QtMoc Include="ISSexEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
     <QtMoc Include="ISTaskListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskSearchByTextForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISFileEdit.h">
-      <Filter>Fields\Base</Filter>
+    <QtMoc Include="ISValidators.h">
+      <Filter>Export</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEditsQT.h">
+      <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISRangeEdits.h">
+      <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingFieldWidgets.h">
+      <Filter>Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISListEdit.h">
       <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISListEditPopup.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISVolumeEdit.h">
-      <Filter>Fields\Base</Filter>
-    </QtMoc>
-    <QtMoc Include="ISEdits.h">
-      <Filter>Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISValidators.h">
-      <Filter>Export</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

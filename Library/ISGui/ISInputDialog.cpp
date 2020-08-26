@@ -4,7 +4,6 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
-#include "ISComboEdit.h"
 #include "ISGui.h"
 #include "ISButtonDialog.h"
 #include "ISFieldEdits.h"

@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISStyleSheet.h"
-#include "ISTextEdit.h"
 #include "ISQuery.h"
 #include "ISButtons.h"
 #include "ISButtons.h"

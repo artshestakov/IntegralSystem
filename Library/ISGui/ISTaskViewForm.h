@@ -7,7 +7,7 @@
 #include "ISLabels.h"
 #include "ISListWidget.h"
 #include "ISButtons.h"
-#include "ISTextEdit.h"
+#include "ISFieldEdits.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
 class ISTaskViewForm : public ISInterfaceForm

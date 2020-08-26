@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISNamespace.h"
-#include "ISRangeDateEdit.h"
+#include "ISRangeEdits.h"
 #include "ISButtonDialog.h"
 //-----------------------------------------------------------------------------
 class ISPeriodForm : public ISInterfaceDialogForm

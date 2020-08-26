@@ -5,7 +5,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMetaData.h"
-#include "ISListEdit.h"
 #include "ISSettings.h"
 #include "ISCore.h"
 #include "ISGui.h"
@@ -24,6 +23,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
 #include "ISHistory.h"
+#include "ISListEdit.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISInterfaceForm(parent),

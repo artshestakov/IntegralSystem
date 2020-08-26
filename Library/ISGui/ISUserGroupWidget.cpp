@@ -10,7 +10,6 @@
 #include "ISQuery.h"
 #include "ISToolBarAccessTable.h"
 #include "ISMetaData.h"
-#include "ISCheckEdit.h"
 #include "ISUserRoleEntity.h"
 #include "ISControls.h"
 #include "ISProtocol.h"

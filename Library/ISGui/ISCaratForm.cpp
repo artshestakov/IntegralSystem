@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
-#include "ISCheckEdit.h"
 #include "ISGui.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------

@@ -2,15 +2,190 @@
 #ifndef _ISFIELDEDITS_H_INCLUDED
 #define _ISFIELDEDITS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISLineEdit.h"
-#include "ISComboEdit.h"
-#include "ISListEdit.h"
-#include "ISRadioEdit.h"
-#include "ISCheckEdit.h"
-#include "ISTextEdit.h"
 #include "ISPhoneBaseEdit.h"
-#include "ISDateTimeEdit.h"
 #include "ISValidators.h"
+#include "ISImageWidget.h"
+#include "PMetaClass.h"
+#include "ISEditsQT.h"
+//-----------------------------------------------------------------------------
+class ISCheckEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISCheckEdit(QWidget *parent = 0);
+	virtual ~ISCheckEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+	void Clear() override;
+
+	void SetReadOnly(bool read_only) override;
+	void SetText(const QString &Text);
+	void SetCheckableStrikeOut(bool StrikeOut); //Если включить это свойство, то при активном состоянии текст будет зачеркнутым
+
+protected:
+	QCheckBox* GetCheckBox();
+
+private:
+	void CheckableStrikeOut();
+
+private:
+	QCheckBox *CheckBox;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISLineEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+signals:
+	void ClearPressed();
+	void EnterClicked();
+
+public:
+	Q_INVOKABLE ISLineEdit(QWidget *parent = 0);
+	virtual ~ISLineEdit();
+
+	virtual void SetValue(const QVariant &value) override;
+	virtual QVariant GetValue() const override;
+	virtual void Clear() override;
+
+	void SetReadOnly(bool read_only) override;
+	void SetPlaceholderText(const QString &placeholder_text) override;
+	void SetRegExp(const QString &RegExp) override;
+	void SetColorText(const QColor &Color) override;
+
+	void SetValidator(QValidator *Validator);
+	void SetEchoMode(QLineEdit::EchoMode EchoMode);
+	void SetCompleter(QCompleter *completer);
+	void SetTextAlignment(Qt::Alignment Alignment);
+	void SetInputMask(const QString &InputMask);
+	void SetFocusPolicy(Qt::FocusPolicy focus_policy);
+	void SetMaxLength(int Length);
+	void SetIcon(const QIcon &Icon);
+	void SelectAll();
+
+	void SetUppercase(bool uppercase);
+	void SetLowercase(bool lowercase);
+	void ResetFontcase(); //Сброс контроля регистра
+
+	void AddAction(QAction *Action, QLineEdit::ActionPosition Position);
+
+	void CreateCompleter(const QStringList &StringList);
+	QStringList GetCompleterList() const;
+
+protected:
+	void OnUpperText(const QString &Text);
+	void OnLowerText(const QString &Text);
+	void TextChanged(const QString &Text);
+	ISQLineEdit* GetLineEdit();
+
+private:
+	ISQLineEdit *LineEdit;
+	QCompleter *Completer;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISComboEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISComboEdit(QWidget *parent = 0);
+	virtual ~ISComboEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+	void Clear() override;
+
+	QString GetCurrentText() const;
+	void SetEditable(bool Editable);
+	void SetCurrentItem(int Index);
+	void SetCurrentText(const QString &Text);
+	void InsertItem(int Index, const QString &Text, const QVariant &UserData);
+	void AddItem(const QIcon &IconItem, const QString &Text, const QVariant &UserData);
+	void AddItem(const QString &Text, const QVariant &UserData);
+	void AddItem(const QString &Text);
+	void SetIcon(int Index, const QIcon &Icon);
+	void SetWheelScroll(bool WheelScroll);
+	void SetDuplicatesEnabled(bool Enabled);
+	void HideFirstItem(); //Скрыть первый элемент в списке
+
+	public slots:
+	void SetReadOnly(bool read_only);
+
+protected:
+	void CurrentIndexChanged(int Index);
+
+private:
+	ISQComboBox *ComboBox;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISRadioEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISRadioEdit(QWidget *parent = 0);
+	virtual ~ISRadioEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+	void Clear() override;
+
+protected:
+	void AddButton(QRadioButton *RadioButton, const QVariant &Value); //Добавить кнопку
+
+private:
+	QHBoxLayout *LayoutPanel;
+	QWidget *WidgetPanel;
+	QButtonGroup *ButtonGroup;
+	QMap<int, QVariant> MapButtons;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISTextEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+	signals:
+	void KeyPressEnter();
+
+public:
+	Q_INVOKABLE ISTextEdit(QWidget *parent = 0);
+	virtual ~ISTextEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+	void Clear() override;
+
+	void SetReadOnly(bool read_only) override;
+	void SetPlaceholderText(const QString &placeholder_text) override;
+	void SetFrameShape(QFrame::Shape FrameShape) override;
+	void SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical) override;
+
+	void AddText(const QString &Text);
+	void SetExecuteEnter(bool Execute);
+	void SetUppercase(bool uppercase);
+	void SetLowercase(bool lowercase);
+	void ResetFontcase(); //Сброс контроля регистра
+
+protected:
+	void OnUpperText();
+	void OnLowerText();
+	ISQTextEdit* GetTextEdit();
+
+private:
+	ISQTextEdit *TextEdit;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISBIKEdit : public ISLineEdit
 {
@@ -98,6 +273,39 @@ public:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+class ISDateTimeEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+signals:
+	void DateTimeChanged();
+
+public:
+	Q_INVOKABLE ISDateTimeEdit(QWidget *parent = 0);
+	virtual ~ISDateTimeEdit();
+
+	virtual void SetValue(const QVariant &value) override;
+	virtual QVariant GetValue() const override;
+	virtual void Clear() override;
+	virtual void SetReadOnly(bool read_only) override;
+
+	void SetDate(const QDate &Date);
+	void SetTime(const QTime &Time);
+	void SetRangeDate(const QDate &Minimum, const QDate &Maximum);
+	void SetMinimumDate(const QDate &Date);
+	void SetMaximumDate(const QDate &Date);
+
+protected:
+	void SetVisibleDateEdit(bool Visible);
+	void SetVisibleTimeEdit(bool Visible);
+
+private:
+	ISQDateEdit *DateEdit;
+	ISQTimeEdit *TimeEdit;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 class ISDateEdit : public ISDateTimeEdit
 {
 	Q_OBJECT
@@ -111,6 +319,20 @@ public:
 
 	void SetMinimumDate(const QDate &Date);
 	void SetMaximumDate(const QDate &Date);
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISTimeEdit : public ISDateTimeEdit
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISTimeEdit(QWidget *parent = 0);
+	virtual ~ISTimeEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -322,20 +544,6 @@ public:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISTimeEdit : public ISDateTimeEdit
-{
-	Q_OBJECT
-
-public:
-	Q_INVOKABLE ISTimeEdit(QWidget *parent = 0);
-	virtual ~ISTimeEdit();
-
-	void SetValue(const QVariant &value) override;
-	QVariant GetValue() const override;
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 class ISDoubleEdit : public ISLineEdit
 {
 	Q_OBJECT
@@ -354,25 +562,6 @@ class ISComboTimeEdit : public ISComboEdit
 public:
 	Q_INVOKABLE ISComboTimeEdit(QWidget *parent = 0);
 	virtual ~ISComboTimeEdit();
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISExecutorEdit : public ISListEdit
-{
-	Q_OBJECT
-
-public:
-	Q_INVOKABLE ISExecutorEdit(QWidget *parent = 0);
-	virtual ~ISExecutorEdit();
-
-	void SetReadOnly(bool read_only) override;
-
-protected:
-	void DesignateMe();
-
-private:
-	ISPushButton *ButtonDesignateMe;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -455,7 +644,7 @@ class ISSearchEdit : public ISLineEdit
 {
 	Q_OBJECT
 
-		signals :
+signals:
 	void Search(const QString &SearchValue);
 
 public:
@@ -474,6 +663,132 @@ protected:
 private:
 	ISServiceButton *ButtonLastSearch;
 	QTimer *Timer;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISColorEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISColorEdit(QWidget *parent = 0);
+	virtual ~ISColorEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+	void Clear() override;
+
+	public slots:
+	void SetReadOnly(bool read_only);
+
+protected:
+	void SelectColor();
+
+private:
+	QWidget *WidgetColor;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISFileEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISFileEdit(QWidget *parent = 0);
+	virtual ~ISFileEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+	void Clear() override;
+
+private:
+	void SelectFile();
+	void Save();
+	void Rename();
+
+private:
+	QVariantMap VariantMap;
+
+	ISPushButton *ButtonFile;
+	QMenu *Menu;
+	QAction *ActionSave;
+	QAction *ActionRename;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISImageEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISImageEdit(QWidget *parent = 0);
+	virtual ~ISImageEdit();
+
+	virtual void SetValue(const QVariant &value) override;
+	virtual QVariant GetValue() const override;
+	virtual void Clear() override;
+
+	public slots:
+	void SetReadOnly(bool read_only);
+
+private:
+	ISImageWidget *ImageWidget;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISSexEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISSexEdit(QWidget *parent = 0);
+	virtual ~ISSexEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+	void Clear() override;
+
+	void SetFont(const QFont &Font);
+	void SetReadOnly(bool read_only);
+
+private:
+	void ButtonClicked(QAbstractButton *AbstractButton);
+
+private:
+	QWidget *Widget;
+	QButtonGroup *ButtonGroup;
+	int CurrentID;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISVolumeEdit : public ISFieldEditBase
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISVolumeEdit(QWidget *parent = 0);
+	virtual ~ISVolumeEdit();
+
+	void SetValue(const QVariant &value) override;
+	QVariant GetValue() const override;
+	void Clear() override;
+
+protected:
+	void ValueChanged() override;
+	void VolumeCheck();
+	void MediaStateChanged(QMediaPlayer::State NewState);
+
+private:
+	QSlider *Slider;
+	QLabel *Label;
+	ISServiceButton *ButtonCheck;
+
+	QMediaPlayer *MediaPlayer;
 };
 //-----------------------------------------------------------------------------
 #endif

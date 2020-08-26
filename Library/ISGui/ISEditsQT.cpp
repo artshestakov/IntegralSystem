@@ -1,4 +1,4 @@
-#include "ISEdits.h"
+#include "ISEditsQT.h"
 #include "ISStyleSheet.h"
 #include "ISGui.h"
 #include "ISConstants.h"

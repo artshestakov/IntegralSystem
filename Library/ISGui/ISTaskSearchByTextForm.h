@@ -3,9 +3,9 @@
 #define _ISTASKSEARCHBYTEXTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISInterfaceForm.h"
-#include "ISLineEdit.h"
 #include "ISButtons.h"
 #include "ISListWidget.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISTaskSearchByTextForm : public ISInterfaceForm
 {

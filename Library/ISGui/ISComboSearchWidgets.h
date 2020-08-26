@@ -3,7 +3,7 @@
 #define _ISCOMBOSEARCHWIDGETS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISComboEdit.h"
+#include "ISFieldEdits.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
 class ISComboSearchBase : public ISComboEdit

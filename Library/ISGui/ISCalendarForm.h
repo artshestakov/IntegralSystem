@@ -4,8 +4,8 @@
 #include "ISParagraphBaseForm.h"
 #include "ISCalendarPanel.h"
 #include "ISCalendarEventItem.h"
-#include "ISLineEdit.h"
 #include "ISCalendarEventsWidget.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISCalendarForm : public ISParagraphBaseForm
 {

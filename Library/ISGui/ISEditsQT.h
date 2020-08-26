@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISEDITS_H_INCLUDED
-#define _ISEDITS_H_INCLUDED
+#ifndef _ISEDITSQT_H_INCLUDED
+#define _ISEDITSQT_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISCalendarPopup.h"

@@ -2,7 +2,7 @@
 #ifndef _ISSETTINGFIELDWIDGETS_H_INCLUDED
 #define _ISSETTINGFIELDWIDGETS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISComboEdit.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISCheckViewParagraph : public ISFieldEditBase
 {

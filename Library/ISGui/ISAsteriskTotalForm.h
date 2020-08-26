@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISRangeDateTimeEdit.h"
+#include "ISRangeEdits.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISAsteriskTotalForm : public ISInterfaceForm

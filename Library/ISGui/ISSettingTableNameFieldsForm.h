@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISLineEdit.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISSettingTableNameFieldsForm : public ISInterfaceForm
 {

@@ -10,7 +10,6 @@
 #include "ISMetaData.h"
 #include "ISCore.h"
 #include "ISMessageBox.h"
-#include "ISCheckEdit.h"
 //-----------------------------------------------------------------------------
 ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {

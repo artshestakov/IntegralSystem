@@ -4,7 +4,7 @@
 #include "ISInterfaceMetaForm.h"
 #include "ISScrollArea.h"
 #include "ISMonitorUserWidget.h"
-#include "ISCheckEdit.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISMonitorActivityForm : public ISInterfaceMetaForm
 {

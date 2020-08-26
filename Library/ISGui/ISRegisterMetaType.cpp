@@ -24,20 +24,11 @@
 #include "ISKnowledgeBaseSubSystem.h"
 #include "ISDelegates.h"
 //-----------------------------------------------------------------------------
-#include "ISLineEdit.h"
-#include "ISCheckEdit.h"
-#include "ISTextEdit.h"
-#include "ISDateTimeEdit.h"
-#include "ISImageEdit.h"
-#include "ISListEdit.h"
-#include "ISColorEdit.h"
 #include "ISFieldEdits.h"
 #include "ISPhoneBaseEdit.h"
-#include "ISVolumeEdit.h"
-#include "ISFileEdit.h"
-#include "ISSexEdit.h"
 #include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
+#include "ISListEdit.h"
 //-----------------------------------------------------------------------------
 void ISRegisterMetaType::RegisterMetaType()
 {

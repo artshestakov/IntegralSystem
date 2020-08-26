@@ -2,9 +2,10 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
-#include "ISLineEdit.h"
 #include "PMetaClass.h"
 #include "ISScrollArea.h"
+#include "ISButtons.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISFullTextSearchForm : public ISInterfaceMetaForm
 {

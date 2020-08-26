@@ -2,11 +2,9 @@
 //-----------------------------------------------------------------------------
 #include "isgui_global.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISLineEdit.h"
 #include "ISWaitWidget.h"
 #include "ISAuthConnector.h"
 #include "ISFieldEdits.h"
-#include "ISCheckEdit.h"
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT	ISAuthForm : public ISInterfaceDialogForm
 {

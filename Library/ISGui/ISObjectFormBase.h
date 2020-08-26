@@ -7,7 +7,7 @@
 #include "ISNamespace.h"
 #include "PMetaClass.h"
 #include "ISFieldEditBase.h"
-#include "ISLineEdit.h"
+#include "ISFieldEdits.h"
 #include "ISInterfaceMetaForm.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------

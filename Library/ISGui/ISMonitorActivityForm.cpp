@@ -8,7 +8,6 @@
 #include "ISFlowLayout.h"
 #include "ISGui.h"
 #include "ISProtocolListForm.h"
-#include "ISLineEdit.h"
 #include "ISMessageBox.h"
 #include "ISDatabase.h"
 #include "ISMetaUser.h"

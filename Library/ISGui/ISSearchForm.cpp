@@ -5,11 +5,11 @@
 #include "ISStyleSheet.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
-#include "ISListEdit.h"
 #include "ISButtons.h"
 #include "ISDelegates.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
+#include "ISListEdit.h"
 //-----------------------------------------------------------------------------
 ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent) : ISInterfaceForm(parent)
 {

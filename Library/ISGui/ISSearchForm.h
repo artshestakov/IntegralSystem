@@ -4,7 +4,6 @@
 #include "ISInterfaceForm.h"
 #include "PMetaClass.h"
 #include "ISButtons.h"
-#include "ISButtons.h"
 #include "ISSearchModel.h"
 //-----------------------------------------------------------------------------
 class ISSearchForm : public ISInterfaceForm

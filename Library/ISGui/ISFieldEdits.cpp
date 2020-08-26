@@ -16,6 +16,12 @@
 #include "ISPassportForm.h"
 #include "ISSettingsDatabase.h"
 #include "ISSettings.h"
+#include "ISUserRoleEntity.h"
+#include "ISControls.h"
+#include "ISMetaDataHelper.h"
+#include "ISMetaData.h"
+#include "ISInputDialog.h"
+#include "ISDelegates.h"
 //-----------------------------------------------------------------------------
 static QString QI_ASTERISK_QUEUE = PREPARE_QUERY("INSERT INTO _asteriskqueue(astq_type, astq_initiated, astq_parameters) "
 												 "VALUES((SELECT asqt_id FROM _asteriskqueuetype WHERE asqt_uid = :TypeUID), currentuserid(), :Parameters)");
@@ -25,6 +31,564 @@ static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
 											  "WHERE srfs_user = currentuserid() "
 											  "ORDER BY srfs_id "
 											  "LIMIT :Limit");
+//-----------------------------------------------------------------------------
+static QString QS_SEX = PREPARE_QUERY("SELECT sexs_id, sexs_name "
+									  "FROM _sex "
+									  "WHERE NOT sexs_isdeleted "
+									  "ORDER BY sexs_name");
+//-----------------------------------------------------------------------------
+ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+
+	CheckBox = new QCheckBox(this);
+	CheckBox->setChecked(false);
+	CheckBox->setTristate(false);
+	CheckBox->setCursor(CURSOR_POINTING_HAND);
+	connect(CheckBox, &QCheckBox::stateChanged, this, &ISCheckEdit::ValueChanged);
+	AddWidgetEdit(CheckBox, this);
+}
+//-----------------------------------------------------------------------------
+ISCheckEdit::~ISCheckEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::SetValue(const QVariant &value)
+{
+	CheckBox->setChecked(value.toBool());
+}
+//-----------------------------------------------------------------------------
+QVariant ISCheckEdit::GetValue() const
+{
+	return CheckBox->isChecked();
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::Clear()
+{
+	ISFieldEditBase::Clear();
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::SetReadOnly(bool read_only)
+{
+	CheckBox->setEnabled(!read_only);
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::SetText(const QString &Text)
+{
+	CheckBox->setText(Text);
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::SetCheckableStrikeOut(bool StrikeOut)
+{
+	CheckableStrikeOut(); //Вызываем на всякий случай, вдруг сейчас CheckEdit уже активен
+	StrikeOut ?
+		connect(CheckBox, &QCheckBox::stateChanged, this, &ISCheckEdit::CheckableStrikeOut) :
+		disconnect(CheckBox, &QCheckBox::stateChanged, this, &ISCheckEdit::CheckableStrikeOut);
+}
+//-----------------------------------------------------------------------------
+QCheckBox* ISCheckEdit::GetCheckBox()
+{
+	return CheckBox;
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::CheckableStrikeOut()
+{
+	QFont Font = CheckBox->font();
+	Font.setStrikeOut(CheckBox->isChecked());
+	CheckBox->setFont(Font);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISLineEdit::ISLineEdit(QWidget *parent)
+	: ISFieldEditBase(parent),
+	Completer(nullptr)
+{
+	LineEdit = new ISQLineEdit(this);
+	connect(LineEdit, &ISQLineEdit::ClearClicked, this, &ISLineEdit::Clear);
+	connect(LineEdit, &ISQLineEdit::returnPressed, this, &ISLineEdit::EnterClicked);
+	connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::TextChanged);
+	AddWidgetEdit(LineEdit, this);
+}
+//-----------------------------------------------------------------------------
+ISLineEdit::~ISLineEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetValue(const QVariant &value)
+{
+	LineEdit->setText(value.toString());
+}
+//-----------------------------------------------------------------------------
+QVariant ISLineEdit::GetValue() const
+{
+	return LineEdit->text().isEmpty() ? QVariant() : LineEdit->text();
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::Clear()
+{
+	LineEdit->clear();
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetRegExp(const QString &RegExp)
+{
+	SetValidator(new QRegExpValidator(QRegExp(RegExp), this));
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetColorText(const QColor &Color)
+{
+	QPalette Palette = LineEdit->palette();
+	Palette.setColor(QPalette::Text, Color);
+	LineEdit->setPalette(Palette);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetValidator(QValidator *Validator)
+{
+	LineEdit->setValidator(Validator);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetEchoMode(QLineEdit::EchoMode EchoMode)
+{
+	LineEdit->setEchoMode(EchoMode);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetCompleter(QCompleter *completer)
+{
+	LineEdit->setCompleter(completer);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetTextAlignment(Qt::Alignment Alignment)
+{
+	LineEdit->setAlignment(Alignment);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetUppercase(bool uppercase)
+{
+	uppercase ?
+		connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnUpperText) :
+		disconnect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnUpperText);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetLowercase(bool lowercase)
+{
+	lowercase ?
+		connect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnLowerText) :
+		disconnect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnLowerText);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::ResetFontcase()
+{
+	disconnect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnUpperText);
+	disconnect(LineEdit, &ISQLineEdit::textChanged, this, &ISLineEdit::OnLowerText);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::AddAction(QAction *Action, QLineEdit::ActionPosition Position)
+{
+	LineEdit->AddAction(Action, Position);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::CreateCompleter(const QStringList &StringList)
+{
+	if (Completer)
+	{
+		delete Completer;
+		Completer = nullptr;
+	}
+
+	Completer = new QCompleter(StringList, this);
+	Completer->setMaxVisibleItems(20);
+	Completer->setFilterMode(Qt::MatchContains);
+	Completer->setCaseSensitivity(Qt::CaseInsensitive);
+	Completer->setCompletionMode(QCompleter::PopupCompletion);
+	SetCompleter(Completer);
+}
+//-----------------------------------------------------------------------------
+QStringList ISLineEdit::GetCompleterList() const
+{
+	QStringList StringList;
+	for (int i = 0; i < Completer->model()->rowCount(); ++i)
+	{
+		StringList.append(Completer->model()->data(Completer->model()->index(i, 0)).toString());
+	}
+	return StringList;
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetReadOnly(bool read_only)
+{
+	ISFieldEditBase::SetReadOnly(read_only);
+	SetVisibleClear(!read_only);
+	LineEdit->setReadOnly(read_only);
+	LineEdit->SetVisibleClear(!read_only);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetPlaceholderText(const QString &placeholder_text)
+{
+	LineEdit->setPlaceholderText(placeholder_text);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::OnUpperText(const QString &Text)
+{
+	LineEdit->setText(Text.toUpper());
+	LineEdit->setCursorPosition(LineEdit->cursorPosition());
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::OnLowerText(const QString &Text)
+{
+	LineEdit->setText(Text.toLower());
+	LineEdit->setCursorPosition(LineEdit->cursorPosition());
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::TextChanged(const QString &Text)
+{
+	Q_UNUSED(Text);
+	emit ValueChanged();
+}
+//-----------------------------------------------------------------------------
+ISQLineEdit* ISLineEdit::GetLineEdit()
+{
+	return LineEdit;
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetInputMask(const QString &InputMask)
+{
+	LineEdit->setInputMask(InputMask);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetFocusPolicy(Qt::FocusPolicy focus_policy)
+{
+	LineEdit->setFocusPolicy(focus_policy);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetMaxLength(int Length)
+{
+	LineEdit->setMaxLength(Length);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SetIcon(const QIcon &Icon)
+{
+	LineEdit->SetIcon(Icon);
+}
+//-----------------------------------------------------------------------------
+void ISLineEdit::SelectAll()
+{
+	QTimer::singleShot(10, GetLineEdit(), &ISQLineEdit::selectAll);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISComboEdit::ISComboEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	ISQLineEdit *LineEdit = new ISQLineEdit(this);
+	LineEdit->SetVisibleClear(false);
+	LineEdit->setStyleSheet(QString());
+	LineEdit->setFixedHeight(20);
+
+	ComboBox = new ISQComboBox(this);
+	ComboBox->setLineEdit(LineEdit);
+	ComboBox->setItemDelegate(new ISPopupDelegate(ComboBox));
+	ComboBox->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	ComboBox->setIconSize(ISDefines::Gui::SIZE_22_22);
+	connect(ComboBox, static_cast<void(ISQComboBox::*)(int Index)>(&ISQComboBox::currentIndexChanged), this, &ISComboEdit::ValueChanged);
+	AddWidgetEdit(ComboBox, this);
+}
+//-----------------------------------------------------------------------------
+ISComboEdit::~ISComboEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::SetValue(const QVariant &value)
+{
+	for (int i = 0; i < ComboBox->count(); ++i)
+	{
+		if (value == ComboBox->itemData(i))
+		{
+			ComboBox->setCurrentIndex(i);
+			break;
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+QVariant ISComboEdit::GetValue() const
+{
+	QVariant UserData = ComboBox->itemData(ComboBox->currentIndex());
+	if (UserData.isNull())
+	{
+		return QVariant();
+	}
+
+	return UserData;
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::Clear()
+{
+	ISFieldEditBase::Clear();
+}
+//-----------------------------------------------------------------------------
+QString ISComboEdit::GetCurrentText() const
+{
+	return ComboBox->currentText();
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::SetEditable(bool Editable)
+{
+	ComboBox->setEditable(Editable);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::SetCurrentItem(int Index)
+{
+	ComboBox->setCurrentIndex(Index);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::SetCurrentText(const QString &Text)
+{
+	ComboBox->setCurrentText(Text);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::InsertItem(int Index, const QString &Text, const QVariant &UserData)
+{
+	ComboBox->insertItem(Index, Text, UserData);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::AddItem(const QIcon &IconItem, const QString &Text, const QVariant &UserData)
+{
+	ComboBox->addItem(IconItem, Text, UserData);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::AddItem(const QString &Text, const QVariant &UserData)
+{
+	ComboBox->addItem(Text, UserData);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::AddItem(const QString &Text)
+{
+	ComboBox->addItem(Text);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::SetIcon(int Index, const QIcon &Icon)
+{
+	ComboBox->setItemIcon(Index, Icon);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::SetWheelScroll(bool WheelScroll)
+{
+	ComboBox->SetWheelScroll(WheelScroll);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::SetDuplicatesEnabled(bool Enabled)
+{
+	ComboBox->setDuplicatesEnabled(Enabled);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::HideFirstItem()
+{
+	ComboBox->model()->removeRow(0);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::SetReadOnly(bool read_only)
+{
+	ComboBox->setEnabled(!read_only);
+}
+//-----------------------------------------------------------------------------
+void ISComboEdit::CurrentIndexChanged(int Index)
+{
+	Q_UNUSED(Index);
+	emit ValueChanged();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISRadioEdit::ISRadioEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	LayoutPanel = new QHBoxLayout();
+	LayoutPanel->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	LayoutPanel->addStretch();
+
+	WidgetPanel = new QWidget(this);
+	WidgetPanel->setLayout(LayoutPanel);
+	AddWidgetEdit(WidgetPanel, this);
+
+	ButtonGroup = new QButtonGroup(this);
+	connect(ButtonGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &ISRadioEdit::ValueChanged);
+}
+//-----------------------------------------------------------------------------
+ISRadioEdit::~ISRadioEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISRadioEdit::SetValue(const QVariant &value)
+{
+	ButtonGroup->button(MapButtons.key(value))->setChecked(true);
+}
+//-----------------------------------------------------------------------------
+QVariant ISRadioEdit::GetValue() const
+{
+	QVariant Value = MapButtons.value(ButtonGroup->checkedId());
+	if (Value.isValid())
+	{
+		return Value;
+	}
+
+	return QVariant();
+}
+//-----------------------------------------------------------------------------
+void ISRadioEdit::Clear()
+{
+	ISFieldEditBase::Clear();
+}
+//-----------------------------------------------------------------------------
+void ISRadioEdit::AddButton(QRadioButton *RadioButton, const QVariant &Value)
+{
+	RadioButton->setParent(WidgetPanel);
+	RadioButton->setCursor(CURSOR_POINTING_HAND);
+
+	int ButtonID = ButtonGroup->buttons().count();
+	ButtonGroup->addButton(RadioButton, ButtonID);
+	MapButtons.insert(ButtonID, Value);
+
+	LayoutPanel->insertWidget(ButtonID, RadioButton);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISTextEdit::ISTextEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	SetSizePolicyHorizontal(QSizePolicy::Minimum);
+	CreateButtonClear();
+
+	TextEdit = new ISQTextEdit(this);
+	TextEdit->setTabChangesFocus(true);
+	TextEdit->setAcceptRichText(false);
+	connect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::ValueChanged);
+	connect(TextEdit, &ISQTextEdit::KeyPressEnter, this, &ISTextEdit::KeyPressEnter);
+	AddWidgetEdit(TextEdit, this);
+}
+//-----------------------------------------------------------------------------
+ISTextEdit::~ISTextEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetValue(const QVariant &value)
+{
+	TextEdit->setText(value.toString());
+}
+//-----------------------------------------------------------------------------
+QVariant ISTextEdit::GetValue() const
+{
+	if (TextEdit->toPlainText().length())
+	{
+		return TextEdit->toPlainText();
+	}
+
+	return QVariant();
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::Clear()
+{
+	TextEdit->clear();
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::AddText(const QString &Text)
+{
+	TextEdit->append(Text);
+	TextEdit->verticalScrollBar()->setValue(TextEdit->verticalScrollBar()->maximum());
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetExecuteEnter(bool Execute)
+{
+	TextEdit->SetExecuteEnter(Execute);
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetUppercase(bool uppercase)
+{
+	if (uppercase)
+	{
+		connect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnUpperText);
+	}
+	else
+	{
+		disconnect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnUpperText);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetLowercase(bool lowercase)
+{
+	if (lowercase)
+	{
+		connect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnLowerText);
+	}
+	else
+	{
+		disconnect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnLowerText);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetReadOnly(bool read_only)
+{
+	ISFieldEditBase::SetReadOnly(read_only);
+	TextEdit->setReadOnly(read_only);
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetPlaceholderText(const QString &placeholder_text)
+{
+	TextEdit->setPlaceholderText(placeholder_text);
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetFrameShape(QFrame::Shape FrameShape)
+{
+	//Если высталено отсутствие рамки - убираем стиль, иначе рамка все равно отображается
+	TextEdit->setStyleSheet(FrameShape == QFrame::NoFrame ? QString() : STYLE_SHEET("ISTextEdit"));
+	TextEdit->setFrameShape(FrameShape);
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical)
+{
+	ISFieldEditBase::SetSizePolicy(PolicyHorizontal, PolicyVertical);
+	TextEdit->setSizePolicy(PolicyHorizontal, PolicyVertical);
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::OnUpperText()
+{
+	disconnect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnUpperText);
+
+	QTextCursor TextCursor = TextEdit->textCursor();
+	int Position = TextCursor.position();
+	TextEdit->setText(TextEdit->toPlainText().toUpper());
+	TextCursor.setPosition(Position);
+	TextEdit->setTextCursor(TextCursor);
+
+	connect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnUpperText);
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::OnLowerText()
+{
+	disconnect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnLowerText);
+
+	QTextCursor TextCursor = TextEdit->textCursor();
+	int Position = TextCursor.position();
+	TextEdit->setText(TextEdit->toPlainText().toLower());
+	TextCursor.setPosition(Position);
+	TextEdit->setTextCursor(TextCursor);
+
+	connect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnLowerText);
+}
+//-----------------------------------------------------------------------------
+void ISTextEdit::ResetFontcase()
+{
+	disconnect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnUpperText);
+	disconnect(TextEdit, &ISQTextEdit::textChanged, this, &ISTextEdit::OnLowerText);
+}
+//-----------------------------------------------------------------------------
+ISQTextEdit* ISTextEdit::GetTextEdit()
+{
+	return TextEdit;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISBIKEdit::ISBIKEdit(QWidget *parent) : ISLineEdit(parent)
 {
@@ -171,6 +735,100 @@ bool ISVINEdit::IsValid() const
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+ISDateTimeEdit::ISDateTimeEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+	CreateButtonClear();
+
+	QHBoxLayout *Layout = new QHBoxLayout();
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+
+	QWidget *Widget = new QWidget(this);
+	Widget->setLayout(Layout);
+	AddWidgetEdit(Widget, this);
+
+	DateEdit = new ISQDateEdit(this);
+	connect(DateEdit, &ISQDateEdit::DateChanged, this, &ISDateTimeEdit::ValueChanged);
+	Layout->addWidget(DateEdit);
+
+	TimeEdit = new ISQTimeEdit(this);
+	connect(TimeEdit, &ISQTimeEdit::TimeChanged, this, &ISDateTimeEdit::ValueChanged);
+	Layout->addWidget(TimeEdit);
+}
+//-----------------------------------------------------------------------------
+ISDateTimeEdit::~ISDateTimeEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetValue(const QVariant &value)
+{
+	QDateTime DateTime = value.toDateTime();
+	if (!DateTime.date().isNull())
+	{
+		DateEdit->SetDate(DateTime.date());
+	}
+	if (!DateTime.time().isNull())
+	{
+		TimeEdit->SetTime(DateTime.time());
+	}
+}
+//-----------------------------------------------------------------------------
+QVariant ISDateTimeEdit::GetValue() const
+{
+	return QDateTime(DateEdit->GetDate(), TimeEdit->GetTime());
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::Clear()
+{
+	DateEdit->Clear();
+	TimeEdit->Clear();
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetReadOnly(bool read_only)
+{
+	ISFieldEditBase::SetReadOnly(read_only);
+	DateEdit->SetReadOnly(read_only);
+	TimeEdit->SetReadOnly(read_only);
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetDate(const QDate &Date)
+{
+	DateEdit->SetDate(Date);
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetTime(const QTime &Time)
+{
+	TimeEdit->SetTime(Time);
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetRangeDate(const QDate &Minimum, const QDate &Maximum)
+{
+	DateEdit->SetRange(Minimum, Maximum);
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetMinimumDate(const QDate &Date)
+{
+	DateEdit->SetMinimumDate(Date);
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetMaximumDate(const QDate &Date)
+{
+	DateEdit->SetMaximumDate(Date);
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetVisibleDateEdit(bool Visible)
+{
+	DateEdit->setVisible(Visible);
+}
+//-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetVisibleTimeEdit(bool Visible)
+{
+	TimeEdit->setVisible(Visible);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ISDateEdit::ISDateEdit(QWidget *parent) : ISDateTimeEdit(parent)
 {
 	SetVisibleTimeEdit(false);
@@ -199,6 +857,28 @@ void ISDateEdit::SetMinimumDate(const QDate &Date)
 void ISDateEdit::SetMaximumDate(const QDate &Date)
 {
 	ISDateTimeEdit::SetMaximumDate(Date);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISTimeEdit::ISTimeEdit(QWidget *parent) : ISDateTimeEdit(parent)
+{
+	SetVisibleDateEdit(false);
+}
+//-----------------------------------------------------------------------------
+ISTimeEdit::~ISTimeEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISTimeEdit::SetValue(const QVariant &value)
+{
+	ISDateTimeEdit::SetValue(QDateTime(QDate(), value.toTime()));
+}
+//-----------------------------------------------------------------------------
+QVariant ISTimeEdit::GetValue() const
+{
+	return ISDateTimeEdit::GetValue().toTime();
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -650,28 +1330,6 @@ ISTaskDescriptionEdit::~ISTaskDescriptionEdit()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISTimeEdit::ISTimeEdit(QWidget *parent) : ISDateTimeEdit(parent)
-{
-	SetVisibleDateEdit(false);
-}
-//-----------------------------------------------------------------------------
-ISTimeEdit::~ISTimeEdit()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISTimeEdit::SetValue(const QVariant &value)
-{
-	ISDateTimeEdit::SetValue(QDateTime(QDate(), value.toTime()));
-}
-//-----------------------------------------------------------------------------
-QVariant ISTimeEdit::GetValue() const
-{
-	return ISDateTimeEdit::GetValue().toTime();
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISDoubleEdit::ISDoubleEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	SetValidator(new ISDoubleValidator(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA), this));
@@ -706,35 +1364,6 @@ ISComboTimeEdit::ISComboTimeEdit(QWidget *parent) : ISComboEdit(parent)
 ISComboTimeEdit::~ISComboTimeEdit()
 {
 
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISExecutorEdit::ISExecutorEdit(QWidget *parent) : ISListEdit(parent)
-{
-	ButtonDesignateMe = new ISPushButton(this);
-	ButtonDesignateMe->setText(LANG("Task.DesignateMe"));
-	ButtonDesignateMe->setIcon(BUFFER_ICONS("User"));
-	ButtonDesignateMe->setCursor(CURSOR_POINTING_HAND);
-	ButtonDesignateMe->setSizePolicy(QSizePolicy::Maximum, ButtonDesignateMe->sizePolicy().verticalPolicy());
-	connect(ButtonDesignateMe, &ISPushButton::clicked, this, &ISExecutorEdit::DesignateMe);
-	AddWidgetToRight(ButtonDesignateMe);
-}
-//-----------------------------------------------------------------------------
-ISExecutorEdit::~ISExecutorEdit()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISExecutorEdit::SetReadOnly(bool read_only)
-{
-	ISListEdit::SetReadOnly(read_only);
-	ButtonDesignateMe->setVisible(!read_only);
-}
-//-----------------------------------------------------------------------------
-void ISExecutorEdit::DesignateMe()
-{
-	SetValue(CURRENT_USER_ID);
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1049,5 +1678,419 @@ void ISSearchEdit::Timeout()
 	Timer->stop();
 	ISGui::RepaintWidget(this);
 	emit Search(GetValue().toString());
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+	CreateButtonClear();
+
+	QGroupBox *GroupBox = new QGroupBox(this);
+	GroupBox->setLayout(new QHBoxLayout());
+	GroupBox->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	GroupBox->setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
+	GroupBox->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
+	AddWidgetEdit(GroupBox, this);
+
+	WidgetColor = new QWidget(this);
+	WidgetColor->setAutoFillBackground(true);
+	GroupBox->layout()->addWidget(WidgetColor);
+
+	ISServiceButton *ButtonSelectColor = new ISServiceButton(BUFFER_ICONS("Color"), LANG("SelectColor"), this);
+	ButtonSelectColor->setFocusPolicy(Qt::NoFocus);
+	connect(ButtonSelectColor, &ISServiceButton::clicked, this, &ISColorEdit::SelectColor);
+	AddWidgetToRight(ButtonSelectColor);
+}
+//-----------------------------------------------------------------------------
+ISColorEdit::~ISColorEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISColorEdit::SetValue(const QVariant &value)
+{
+	if (value.toString().length())
+	{
+		QColor Color(value.toString());
+		QPalette Palette = WidgetColor->palette();
+		Palette.setColor(QPalette::Background, Color);
+		WidgetColor->setPalette(Palette);
+		WidgetColor->setToolTip(QString("RGB(%1, %2, %3)").arg(Color.red()).arg(Color.green()).arg(Color.blue()));
+	}
+}
+//-----------------------------------------------------------------------------
+QVariant ISColorEdit::GetValue() const
+{
+	QColor Color = WidgetColor->palette().color(QPalette::Background);
+	return Color.name();
+}
+//-----------------------------------------------------------------------------
+void ISColorEdit::Clear()
+{
+	WidgetColor->setPalette(QPalette());
+	WidgetColor->setToolTip(QString());
+}
+//-----------------------------------------------------------------------------
+void ISColorEdit::SetReadOnly(bool read_only)
+{
+	WidgetColor->setEnabled(!read_only);
+}
+//-----------------------------------------------------------------------------
+void ISColorEdit::SelectColor()
+{
+	QColor Color = QColorDialog::getColor(WidgetColor->palette().color(QPalette::Background), this, LANG("SelectedColor"), QColorDialog::DontUseNativeDialog);
+	QString ColorName = Color.name();
+	if (ColorName != COLOR_STANDART)
+	{
+		SetValue(ColorName);
+		emit ValueChanged();
+	}
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISFileEdit::ISFileEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+	CreateButtonClear();
+
+	ButtonFile = new ISPushButton(this);
+	ButtonFile->setCursor(CURSOR_POINTING_HAND);
+	ButtonFile->setText(LANG("FileNotSelected"));
+	ButtonFile->setToolTip(LANG("ClickFromSelectFile"));
+	connect(ButtonFile, &ISPushButton::clicked, this, &ISFileEdit::SelectFile);
+	AddWidgetEdit(ButtonFile, this);
+
+	Menu = new QMenu(this);
+	Menu->addAction(BUFFER_ICONS("Select"), LANG("Overview"), this, &ISFileEdit::SelectFile);
+	ActionSave = Menu->addAction(BUFFER_ICONS("Save"), LANG("SaveToDisk"), this, &ISFileEdit::Save);
+	ActionRename = Menu->addAction(BUFFER_ICONS("Edit"), LANG("Rename"), this, &ISFileEdit::Rename);
+
+	ActionSave->setEnabled(false);
+	ActionRename->setEnabled(false);
+}
+//-----------------------------------------------------------------------------
+ISFileEdit::~ISFileEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISFileEdit::SetValue(const QVariant &value)
+{
+	VariantMap = ISSystem::JsonStringToVariantMap(value.toString());
+	ButtonFile->setMenu(Menu);
+	ButtonFile->setText(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
+	ActionSave->setEnabled(true);
+	ActionRename->setEnabled(true);
+
+	QPixmap Pixmap;
+	if (Pixmap.loadFromData(QByteArray::fromBase64(VariantMap[FILE_EDIT_PROPERTY_LOGO].toString().toUtf8())))
+	{
+		ButtonFile->setIcon(QIcon(Pixmap));
+	}
+}
+//-----------------------------------------------------------------------------
+QVariant ISFileEdit::GetValue() const
+{
+	return VariantMap.isEmpty() ? QVariant() : ISSystem::VariantMapToJsonString(VariantMap, QJsonDocument::Compact).simplified();
+}
+//-----------------------------------------------------------------------------
+void ISFileEdit::Clear()
+{
+	VariantMap.clear();
+	ButtonFile->setMenu(nullptr);
+	ButtonFile->setIcon(QIcon());
+	ButtonFile->setText(LANG("FileNotSelected"));
+	ActionSave->setEnabled(false);
+	ActionRename->setEnabled(false);
+	emit ValueChanged();
+}
+//-----------------------------------------------------------------------------
+void ISFileEdit::SelectFile()
+{
+	QString FilePath = ISFileDialog::GetOpenFileName(this);
+	if (!FilePath.isEmpty())
+	{
+		QFileInfo FileInfo(FilePath);
+		QFile File(FilePath);
+		if (File.size() > (((1000 * 1024) * SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE))))
+		{
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.InsertingFileSizeVeryBig").arg(FileInfo.fileName()).arg(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE)));
+			return;
+		}
+
+		if (File.open(QIODevice::ReadOnly))
+		{
+			ISGui::SetWaitGlobalCursor(true);
+			QIcon IconFile = ISGui::GetIconFile(FilePath);
+			VariantMap[FILE_EDIT_PROPERTY_NAME] = FileInfo.fileName();
+			VariantMap[FILE_EDIT_PROPERTY_LOGO] = ISGui::PixmapToByteArray(IconFile.pixmap(ISDefines::Gui::SIZE_32_32)).toBase64();
+			VariantMap[FILE_EDIT_PROPERTY_DATA] = File.readAll().toBase64();
+			File.close();
+			ButtonFile->setMenu(Menu);
+			ButtonFile->setIcon(IconFile);
+			ButtonFile->setText(FileInfo.fileName());
+			ActionSave->setEnabled(true);
+			ActionRename->setEnabled(true);
+			emit ValueChanged();
+			ISGui::SetWaitGlobalCursor(false);
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FileInfo.fileName()), File.errorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISFileEdit::Save()
+{
+	QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).suffix()), QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).baseName());
+	if (!FilePath.isEmpty())
+	{
+		QFile File(FilePath);
+		if (File.open(QIODevice::WriteOnly))
+		{
+			File.write(QByteArray::fromBase64(VariantMap[FILE_EDIT_PROPERTY_DATA].toString().toUtf8()));
+			File.close();
+
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.FileSaved")))
+			{
+				if (!ISGui::OpenFile(FilePath))
+				{
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FilePath));
+				}
+			}
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(File.fileName()), File.errorString());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISFileEdit::Rename()
+{
+	QFileInfo FileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
+	QString FileName = ISInputDialog::GetString(LANG("Renaming"), LANG("EnterFileName") + ':', FileInfo.baseName());
+	if (!FileName.isEmpty())
+	{
+		FileName += SYMBOL_POINT + FileInfo.suffix();
+		ButtonFile->setText(FileName);
+		VariantMap[FILE_EDIT_PROPERTY_NAME] = FileName;
+		emit ValueChanged();
+	}
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISImageEdit::ISImageEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	CreateButtonClear();
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+
+	ImageWidget = new ISImageWidget(this);
+	ImageWidget->setFixedSize(QSize(150, 150));
+	ImageWidget->setCursor(CURSOR_POINTING_HAND);
+	ImageWidget->setToolTip(LANG("ClickRightButtonMouseForCallContextMenu"));
+	connect(ImageWidget, &ISImageWidget::ImageChanged, this, &ISImageEdit::ValueChanged);
+	AddWidgetEdit(ImageWidget, this);
+}
+//-----------------------------------------------------------------------------
+ISImageEdit::~ISImageEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISImageEdit::SetValue(const QVariant &value)
+{
+	value.isValid() ? ImageWidget->SetByteArray(value.toByteArray()) : ImageWidget->Clear();
+}
+//-----------------------------------------------------------------------------
+QVariant ISImageEdit::GetValue() const
+{
+	QByteArray ByteArray = ImageWidget->GetImage();
+	return ByteArray.isEmpty() ? QVariant() : ByteArray;
+}
+//-----------------------------------------------------------------------------
+void ISImageEdit::Clear()
+{
+	ImageWidget->Clear();
+}
+//-----------------------------------------------------------------------------
+void ISImageEdit::SetReadOnly(bool read_only)
+{
+	ImageWidget->setEnabled(!read_only);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISSexEdit::ISSexEdit(QWidget *parent)
+	: ISFieldEditBase(parent),
+	CurrentID(0)
+{
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+	CreateButtonClear();
+
+	ButtonGroup = new QButtonGroup(this);
+	connect(ButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), this, &ISSexEdit::ButtonClicked);
+
+	Widget = new QWidget(this);
+	Widget->setLayout(new QHBoxLayout());
+	Widget->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	AddWidgetEdit(Widget, this);
+
+	ISQuery qSelectSex(QS_SEX);
+	if (qSelectSex.Execute())
+	{
+		while (qSelectSex.Next())
+		{
+			ISPushButton *ButtonSex = new ISPushButton(qSelectSex.ReadColumn("sexs_name").toString(), Widget);
+			ButtonSex->setCheckable(true);
+			ButtonSex->setCursor(CURSOR_POINTING_HAND);
+			Widget->layout()->addWidget(ButtonSex);
+			ButtonGroup->addButton(ButtonSex, qSelectSex.ReadColumn("sexs_id").toInt());
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+ISSexEdit::~ISSexEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISSexEdit::SetValue(const QVariant &value)
+{
+	bool Ok = true;
+	CurrentID = value.toInt(&Ok);
+	if (Ok)
+	{
+		ButtonGroup->button(CurrentID)->setChecked(true);
+	}
+}
+//-----------------------------------------------------------------------------
+QVariant ISSexEdit::GetValue() const
+{
+	return CurrentID > 0 ? CurrentID : QVariant();
+}
+//-----------------------------------------------------------------------------
+void ISSexEdit::Clear()
+{
+	QAbstractButton *AbstractButton = ButtonGroup->checkedButton();
+	if (AbstractButton)
+	{
+		ButtonGroup->setExclusive(false);
+		AbstractButton->setChecked(false);
+		ButtonGroup->setExclusive(true);
+		CurrentID = 0;
+		emit ValueChanged();
+	}
+}
+//-----------------------------------------------------------------------------
+void ISSexEdit::SetFont(const QFont &Font)
+{
+	for (QAbstractButton *AbstractButton : ButtonGroup->buttons())
+	{
+		AbstractButton->setFont(Font);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISSexEdit::SetReadOnly(bool read_only)
+{
+	ISFieldEditBase::SetReadOnly(read_only);
+	Widget->setEnabled(!read_only);
+}
+//-----------------------------------------------------------------------------
+void ISSexEdit::ButtonClicked(QAbstractButton *AbstractButton)
+{
+	CurrentID = ButtonGroup->id(AbstractButton);
+	emit ValueChanged();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
+{
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+
+	QLabel *LabelImageMinimum = new QLabel(this);
+	LabelImageMinimum->setPixmap(BUFFER_ICONS("Volume.Minimum").pixmap(ISDefines::Gui::SIZE_20_20));
+	LabelImageMinimum->setContentsMargins(0, 0, 0, 5);
+	AddWidgetToLeft(LabelImageMinimum);
+
+	Slider = new QSlider(Qt::Horizontal, this);
+	Slider->setMinimum(0);
+	Slider->setMaximum(100);
+	Slider->setTickPosition(QSlider::TicksBelow);
+	Slider->setTickInterval(10);
+	connect(Slider, &QSlider::valueChanged, this, &ISVolumeEdit::ValueChanged);
+	AddWidgetEdit(Slider, this);
+
+	QLabel *LabelImageMaximum = new QLabel(this);
+	LabelImageMaximum->setPixmap(BUFFER_ICONS("Volume.Maximum").pixmap(ISDefines::Gui::SIZE_20_20));
+	LabelImageMaximum->setContentsMargins(0, 0, 0, 5);
+	AddWidgetToRight(LabelImageMaximum);
+
+	Label = new QLabel(this);
+	Label->setText("0%");
+	AddWidgetToRight(Label);
+
+	ButtonCheck = new ISServiceButton(BUFFER_ICONS("Volume.Check"), LANG("ClickFromCheckLevelVolume"), this);
+	ButtonCheck->setFocusPolicy(Qt::NoFocus);
+	connect(ButtonCheck, &ISServiceButton::clicked, this, &ISVolumeEdit::VolumeCheck);
+	AddWidgetToRight(ButtonCheck);
+
+	SetValue(0);
+
+	MediaPlayer = new QMediaPlayer(this);
+	MediaPlayer->setMedia(QUrl("qrc:/Audio/VolumeChecking.wav"));
+	connect(MediaPlayer, &QMediaPlayer::stateChanged, this, &ISVolumeEdit::MediaStateChanged);
+}
+//-----------------------------------------------------------------------------
+ISVolumeEdit::~ISVolumeEdit()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISVolumeEdit::SetValue(const QVariant &value)
+{
+	Slider->setValue(value.toInt());
+}
+//-----------------------------------------------------------------------------
+QVariant ISVolumeEdit::GetValue() const
+{
+	return Slider->value();
+}
+//-----------------------------------------------------------------------------
+void ISVolumeEdit::Clear()
+{
+	ISFieldEditBase::Clear();
+}
+//-----------------------------------------------------------------------------
+void ISVolumeEdit::ValueChanged()
+{
+	ISFieldEditBase::ValueChanged();
+	Label->setText(QString("%1%").arg(Slider->value()));
+}
+//-----------------------------------------------------------------------------
+void ISVolumeEdit::VolumeCheck()
+{
+	ISGui::SetWaitGlobalCursor(true);
+	ButtonCheck->setEnabled(false);
+	Slider->setEnabled(false);
+
+	MediaPlayer->setVolume(Slider->value());
+	MediaPlayer->play();
+}
+//-----------------------------------------------------------------------------
+void ISVolumeEdit::MediaStateChanged(QMediaPlayer::State NewState)
+{
+	if (NewState == QMediaPlayer::StoppedState)
+	{
+		ISGui::SetWaitGlobalCursor(false);
+		ButtonCheck->setEnabled(true);
+		Slider->setEnabled(true);
+	}
 }
 //-----------------------------------------------------------------------------

@@ -3,11 +3,10 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "PMetaClass.h"
-#include "ISComboEdit.h"
 #include "ISNamespace.h"
 #include "ISButtonDialog.h"
-#include "ISCheckEdit.h"
 #include "ISListWidget.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISExportForm : public ISInterfaceDialogForm
 {
