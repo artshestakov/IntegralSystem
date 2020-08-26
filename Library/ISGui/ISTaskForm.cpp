@@ -16,7 +16,8 @@
 //-----------------------------------------------------------------------------
 ISTaskForm::ISTaskForm(QWidget *parent)
 	: ISParagraphBaseForm(parent),
-	ActionGroup(new QActionGroup(this))
+	ActionGroup(new QActionGroup(this)),
+	TaskListForm(nullptr)
 {
 	MainLayout = new QVBoxLayout();
 	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
@@ -47,11 +48,6 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 	MainLayout->addWidget(ISControls::CreateHorizontalLine(this));
 
 	CreateTempWidget();
-
-	TaskListForm = new ISTaskListForm(this);
-	TaskListForm->setVisible(false);
-	connect(TaskListForm, &ISTaskListForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
-	MainLayout->addWidget(TaskListForm);
 }
 //-----------------------------------------------------------------------------
 ISTaskForm::~ISTaskForm()
@@ -115,6 +111,7 @@ void ISTaskForm::FilterClicked()
 	{
 		return;
 	}
+	CurrentListForm = ListFormName;
 
 	if (TempWidget)
 	{
@@ -122,9 +119,13 @@ void ISTaskForm::FilterClicked()
 		TempWidget = nullptr;
 	}
 
-	CurrentListForm = ListFormName;
-	TaskListForm->setVisible(true);
-	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, TaskListForm, &ISTaskListForm::LoadData);
+	if (!TaskListForm)
+	{
+		TaskListForm = new ISTaskListForm(this);
+		connect(TaskListForm, &ISTaskListForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
+		MainLayout->addWidget(TaskListForm);
+		QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, TaskListForm, &ISTaskListForm::LoadData);
+	}
 
 	for (QAction *Action : ActionGroup->actions())
 	{
