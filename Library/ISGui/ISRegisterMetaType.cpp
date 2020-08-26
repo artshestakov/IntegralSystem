@@ -27,7 +27,6 @@
 #include "ISFieldEdits.h"
 #include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
-#include "ISListEdit.h"
 //-----------------------------------------------------------------------------
 void ISRegisterMetaType::RegisterMetaType()
 {

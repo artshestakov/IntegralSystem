@@ -9,7 +9,6 @@
 #include "ISDelegates.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
-#include "ISListEdit.h"
 //-----------------------------------------------------------------------------
 ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent) : ISInterfaceForm(parent)
 {

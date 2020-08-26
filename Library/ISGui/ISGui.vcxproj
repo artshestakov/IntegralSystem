@@ -237,7 +237,6 @@
     <ClCompile Include="ISKnowledgeBaseSubSystem.cpp" />
     <ClCompile Include="ISLabels.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
-    <ClCompile Include="ISListEdit.cpp" />
     <ClCompile Include="ISListIndicatorWidget.cpp" />
     <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
@@ -474,7 +473,6 @@
     <QtMoc Include="ISTaskSearchByTextForm.h" />
     <ClInclude Include="ISHistory.h" />
     <QtMoc Include="ISRangeEdits.h" />
-    <QtMoc Include="ISListEdit.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISScrollArea.h" />

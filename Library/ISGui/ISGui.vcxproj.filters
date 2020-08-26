@@ -41,9 +41,6 @@
     <Filter Include="Fields">
       <UniqueIdentifier>{58f40b29-3ff2-4056-b6ff-2c2b6b24ebce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fields\Base">
-      <UniqueIdentifier>{90560a43-286b-4f4d-8a16-e61124c4fdc8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Printing">
       <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
       <Extensions>qrc;*</Extensions>
@@ -528,9 +525,6 @@
     <ClCompile Include="ISSettingFieldWidgets.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
-    <ClCompile Include="ISListEdit.cpp">
-      <Filter>Fields\Base</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -898,9 +892,6 @@
     </QtMoc>
     <QtMoc Include="ISSettingFieldWidgets.h">
       <Filter>Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISListEdit.h">
-      <Filter>Fields\Base</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
