@@ -829,18 +829,6 @@
   <Local Name="Field.Password.PlaceholderText" Russian="Введите пароль"/>
   <Local Name="Field.EMail.PlaceholderText" Russian="Введите адрес электронной почты"/>
 
-  <!--Passport-->
-  <Local Name="Passport.Issued" Russian="Выдан"/>
-  <Local Name="Passport.EditPassport" Russian="Редактировать паспорт"/>
-  <Local Name="Passport.EditingPassport" Russian="Редактирование паспорта"/>
-  <Local Name="Passport.Seria" Russian="Серия"/>
-  <Local Name="Passport.Seria.Placeholder" Russian="Введите серию паспорта"/>
-  <Local Name="Passport.Number" Russian="Номер"/>
-  <Local Name="Passport.Number.Placeholder" Russian="Введите номер паспорта"/>
-  <Local Name="Passport.DateOfIssue" Russian="Дата выдачи"/>
-  <Local Name="Passport.IssuedBy" Russian="Кем выдан (как в паспорте)"/>
-  <Local Name="Passport.DivisionCode" Russian="Код подразделения"/>
-
   <!--Other-->
   <Local Name="Yesterday" Russian="Вчера"/>
   <Local Name="Today" Russian="Сегодня"/>

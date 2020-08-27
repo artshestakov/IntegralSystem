@@ -35,7 +35,6 @@ public:
         FT_Image, //Изображение
         FT_Color, //Цвет
         FT_EMail, //Адрес электронной почты
-        FT_Passport, //Паспорт
         FT_Volume, //Громкость
         FT_Birthday, //Дата рождения
         FT_Seconds, //Секунды

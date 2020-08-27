@@ -26,7 +26,6 @@
       <Field UID="{EA2338DC-DD87-472F-A081-B3D00BD06EA7}" Name="Image" Type="Image"/>
       <Field UID="{378E842C-061F-49BB-B731-5050362665B1}" Name="Color" Type="Color"/>
       <Field UID="{35FDD215-A544-4E0C-BBC5-466BBF8BAD00}" Name="EMail" Type="EMail"/>
-      <Field UID="{78F9AE49-3DC6-4A8F-8E2A-DC5A02593BDA}" Name="Passport" Type="Passport"/>
       <Field UID="{78F1C5F2-80E0-4FE6-8108-3053DF1E53DE}" Name="Volume" Type="Volume"/>
       <Field UID="{8B1E212C-5140-4412-9A75-EA092B8D5945}" Name="Birthday" Type="Birthday"/>
       <Field UID="{50E46330-1A2D-4A19-BB2D-5FAFBA55BA98}" Name="Seconds" Type="Seconds"/>

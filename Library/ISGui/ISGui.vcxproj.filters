@@ -348,9 +348,6 @@
     <ClCompile Include="ISParagraphBaseForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISPassportForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISPatternActivityForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -714,9 +711,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISParagraphBaseForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPassportForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISPatternActivityForm.h">

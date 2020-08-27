@@ -88,7 +88,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISPhoneEdit*>("ISPhoneEdit");
 	qRegisterMetaType<ISBIKEdit*>("ISBIKEdit");
 	qRegisterMetaType<ISEMailEdit*>("ISEMailEdit");
-	qRegisterMetaType<ISPassportEdit*>("ISPassportEdit");
 	qRegisterMetaType<ISDivisionCodeEdit*>("ISDivisionCodeEdit");
 	qRegisterMetaType<ISVolumeEdit*>("ISVolumeEdit");
 	qRegisterMetaType<ISBirthdayEdit*>("ISBirthdayEdit");

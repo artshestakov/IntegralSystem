@@ -40,7 +40,6 @@ ISMetaData::ISMetaData()
 		{ "Image", ISNamespace::FT_Image, "BYTEA", "ISImageEdit", QString(), false },
 		{ "Color", ISNamespace::FT_Color, "CHARACTER VARYING", "ISColorEdit", QString(), false },
 		{ "EMail", ISNamespace::FT_EMail, "CHARACTER VARYING", "ISEMailEdit", "ISComboSearchString", true },
-		{ "Passport", ISNamespace::FT_Passport, "CHARACTER VARYING", "ISPassportEdit", "ISComboSearchString", true },
 		{ "Volume", ISNamespace::FT_Volume, "INTEGER", "ISVolumeEdit", QString(), false },
 		{ "Birthday", ISNamespace::FT_Birthday, "DATE", "ISBirthdayEdit", "ISComboSearchNumber", true },
 		{ "Seconds", ISNamespace::FT_Seconds, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", false },

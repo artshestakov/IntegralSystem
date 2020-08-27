@@ -258,7 +258,6 @@
     <ClCompile Include="ISPagesTextEdit.cpp" />
     <ClCompile Include="ISParagraphBaseForm.cpp" />
     <ClCompile Include="ISParagraphEntity.cpp" />
-    <ClCompile Include="ISPassportForm.cpp" />
     <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPasswordWidthWidget.cpp" />
     <ClCompile Include="ISPatternActivityForm.cpp" />
@@ -416,7 +415,6 @@
     <QtMoc Include="ISMainWindow.h" />
     <QtMoc Include="ISMonitorActivityForm.h" />
     <QtMoc Include="ISParagraphBaseForm.h" />
-    <QtMoc Include="ISPassportForm.h" />
     <QtMoc Include="ISPatternActivityForm.h" />
     <QtMoc Include="ISPGSettingsForm.h" />
     <QtMoc Include="ISPrintForm.h" />
