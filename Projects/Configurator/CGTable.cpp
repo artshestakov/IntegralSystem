@@ -303,7 +303,11 @@ bool CGTable::DeleteOldFields(PMetaTable *MetaTable, QString &ErrorString)
 		{
 			QString FieldFullName = qSelectColumns.ReadColumn("column_full_name").toString();
 			QString FieldName = qSelectColumns.ReadColumn("column_name").toString();
-			if (!MetaTable->ContainsField(FieldName)) //Если поле существует в базе, но не существует в мета-данных - предлагаем удалить
+
+			//Если поле существует в базе, но не существует в мета-данных - предлагаем удалить
+			//или если это поле есть в базе и оно имеет мета-запрос (т.е. оно виртуальное) - предлагаем удалить
+			//Во второму случае такое условие можно объяснить так: было поле в базе, потом его сделали виртуальным - соответственно оно в базе на ни к чему - удаляем
+			if (!MetaTable->ContainsField(FieldName) || (MetaTable->ContainsField(FieldName) && !MetaTable->GetField(FieldName)->QueryText.isEmpty()))
 			{
 				if (ISConsole::Question(QString("The field \"%1\" in the table \"%2\" is out of date, delete?").arg(FieldFullName).arg(MetaTable->Name))) //Пользователь согласился удалить поле - удаляем
 				{

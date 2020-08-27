@@ -48,7 +48,7 @@
     <Fields>
       <Field UID="{E4F2FE6C-DFA4-4B8A-AD38-1D39410DC14D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
       <Field UID="{0E544427-A9C1-4CC6-9741-DEA81321E9B5}" Name="FullAccess" Type="Bool" DefaultValue="true" LabelName="Полный доступ" LocalListName="Полный доступ"/>
-      <Field UID="{B864EA45-906B-498F-8489-034E80668FDC}" Name="Count" Type="Int" LabelName="Пользователей в группе" LocalListName="Пользователей в группе" QueryText="SELECT COUNT(*) FROM _users WHERE usrs_group = usgp_id"/>
+      <Field UID="{B864EA45-906B-498F-8489-034E80668FDC}" Name="Count" Type="Int" ReadOnly="true" LabelName="Пользователей в группе" LocalListName="Пользователей в группе" QueryText="SELECT COUNT(*) FROM _users WHERE usrs_group = usgp_id"/>
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
