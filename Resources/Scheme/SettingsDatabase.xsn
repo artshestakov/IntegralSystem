@@ -43,9 +43,6 @@
       <Field UID="{D825A46E-50A4-43B7-A171-791A46C72139}" Name="AsteriskLogin" Type="String" LabelName="Логин AMI" LocalListName="Логин AMI" Hint="Логин от учётной записи Asterisk Manager API."/>
       <Field UID="{4C4CF432-5AE8-4FFE-BB31-111EBD99D92A}" Name="AsteriskPassword" Type="Password" LabelName="Пароль AMI" LocalListName="Пароль AMI" Hint="Пароль от учётной записи Asterisk Manager API."/>
       <Field UID="{0B1A942F-2409-4E36-B460-1A69868968AB}" Name="AsteriskDigitNumbers" Type="Int" LabelName="Максимальная длина внутреннего номера" LocalListName="Максимальная длина внутреннего номера" Hint="Укажите максимальную длину внутренних номеров абонентов, это параметр обязателен для заполнения."/>
-      <Field UID="{737F4AA6-B06D-4357-A479-FC8D1557BF4E}" Name="AsteriskRepositoryRecords" Type="String" LabelName="Хранилище записей разговоров" LocalListName="Хранилище записей разговоров" Hint="Укажите путь к хранилищу с записями разговоров на сервере Asterisk."/>
-      <Field UID="{0350F566-7FD3-4BE4-B650-EA162109AE92}" Name="AsteriskRecordsPort" Type="Int" LabelName="Порт службы записей разговоров" LocalListName="Порт службы записей разговоров" Hint="Порт по которому будут происходить трансляция записей разговров."/>
-      <Field UID="{EC5BFFE4-75D1-4E90-B7F7-C078CC7C5956}" Name="AsteriskRecordsExtension" Type="UID" LabelName="Расширение записей разговоров" LocalListName="Расширение записей разговоров" Hint="Выберите расширение записей разговоров."/>
       
       <!--Логотип-->
       <Field UID="{9684C2D8-B880-4C38-A3AD-33663F1CA706}" Name="Logo" Type="Image" LabelName="Логотип организации" LocalListName="Логотип организации" ControlWidget="ISImageEdit" SeparatorName="Логотип"/>
@@ -91,7 +88,6 @@
       <Index Field="AsteriskLogin"/>
       <Index Field="AsteriskPassword"/>
       <Index Field="AsteriskDigitNumbers"/>
-      <Index Field="AsteriskRepositoryRecords"/>
       <Index Field="Logo"/>
       <Index Field="LogoSmall"/>
       <Index Field="InformationMessage"/>
@@ -101,18 +97,8 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="AccountCurrency" ForeignClass="_Currency" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="AsteriskRecordsExtension" ForeignClass="_AsteriskRecordsExtension" ForeignField="UID" ForeignViewNameField="Name"/>
       <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="_AsteriskRecordsExtension" UID="{47F5E49F-8D89-4B05-879C-3180C12FA5F1}" Alias="arex" LocalName="Расширение" LocalListName="Расширения" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{6C9F485A-3FB5-4067-97C0-A10A6AC93C85}" Name="Name" Type="String" LabelName="Расширение" LocalListName="Расширение" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name"/>
-    </Indexes>
   </Table>
   
 </XSN>

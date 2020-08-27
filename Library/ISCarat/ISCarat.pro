@@ -30,7 +30,6 @@ HEADERS += \
     ISAsteriskSocket.h \
     ISCaratCoreApplication.h \
     ISCoreAsteriskQueue.h \
-    ISCoreAsteriskRecord.h \
     ISCoreMedTech.h \
     ISCoreTelephony.h \
     iscarat_global.h
@@ -39,6 +38,5 @@ SOURCES += \
     ISAsteriskSocket.cpp \
     ISCaratCoreApplication.cpp \
     ISCoreAsteriskQueue.cpp \
-    ISCoreAsteriskRecord.cpp \
     ISCoreMedTech.cpp \
     ISCoreTelephony.cpp

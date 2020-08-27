@@ -1,13 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="SettingsDatabase.xsr">
-
-  <_AsteriskRecordsExtension IsSystem="true" UID="{B4979A85-EA55-4DC4-9F1A-8A567BF5E9CC}" Name="wav"/>
-  <_AsteriskRecordsExtension IsSystem="true" UID="{A93D6E10-1098-469E-BBAC-BA35FFA225B3}" Name="mp2"/>
-  <_AsteriskRecordsExtension IsSystem="true" UID="{254349B5-816F-4A88-AAC0-4BF67C799C52}" Name="mp3"/>
-  <_AsteriskRecordsExtension IsSystem="true" UID="{E0D321EC-3DD2-409E-8532-019EBB364429}" Name="ogg"/>
-  <_AsteriskRecordsExtension IsSystem="true" UID="{C1B89DF8-18D9-47FE-9194-B37B425293C5}" Name="aac"/>
-  <_AsteriskRecordsExtension IsSystem="true" UID="{5B2F35D0-FEF6-4BD5-8DED-3E562D866860}" Name="wma"/>
-  <_AsteriskRecordsExtension IsSystem="true" UID="{397DE476-8301-407C-BF8E-03070A3E0A80}" Name="flac"/>
-  <_AsteriskRecordsExtension IsSystem="true" UID="{EA62490F-30BB-4C0F-A14C-6889FB221A81}" Name="midi"/>
   
 </XSR>

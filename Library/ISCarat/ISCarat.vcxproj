@@ -180,14 +180,12 @@
     <ClInclude Include="iscarat_global.h" />
     <QtMoc Include="ISCoreMedTech.h" />
     <QtMoc Include="ISCoreCalendar.h" />
-    <QtMoc Include="ISCoreAsteriskRecord.h" />
     <QtMoc Include="ISCoreAsteriskQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISAsteriskSocket.cpp" />
     <ClCompile Include="ISCaratCoreApplication.cpp" />
     <ClCompile Include="ISCoreAsteriskQueue.cpp" />
-    <ClCompile Include="ISCoreAsteriskRecord.cpp" />
     <ClCompile Include="ISCoreCalendar.cpp" />
     <ClCompile Include="ISCoreMedTech.cpp" />
     <ClCompile Include="ISCoreTelephony.cpp" />
