@@ -23,7 +23,7 @@
       <Index Field="Inn"/>
       <Index Field="Kpp"/>
       <Index Field="Ogrn"/>
-      <Index Field="Phone"/>
+      <Index Field="Phone" Unique="true"/>
       <Index Field="EMail"/>
     </Indexes>
     <Foreigns>
@@ -228,8 +228,8 @@
       <Index Field="Birthday"/>
       <Index Field="Type"/>
       <Index Field="Address"/>
-      <Index Field="PhoneMain"/>
-      <Index Field="PhoneOther"/>
+      <Index Field="PhoneMain" Unique="true"/>
+      <Index Field="PhoneOther" Unique="true"/>
       <Index Field="EMail"/>
       <Index Field="Note"/>
     </Indexes>

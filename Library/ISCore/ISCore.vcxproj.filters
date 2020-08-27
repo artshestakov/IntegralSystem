@@ -132,9 +132,6 @@
     <ClCompile Include="ISLogger.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISPhoneNumberParser.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISProperty.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -268,9 +265,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISNamespace.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPhoneNumberParser.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISProperty.h">

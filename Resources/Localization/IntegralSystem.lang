@@ -56,7 +56,6 @@
   <Local Name="Message.Information.FileRecordSavedToStorage" Russian="Запись разговора успешно сохранена в хранилище."/>
   <Local Name="Message.Information.PlayRecordOnlyAnswer" Russian="Вы можете прослушивать записи разговоров только со статусом &quot;Отвечен&quot;."/>
   <Local Name="Message.Information.SaveRecordOnlyAnswer" Russian="Вы можете сохранять записи разговоров только со статусом &quot;Отвечен&quot;."/>
-  <Local Name="Message.Information.SelectAtLeastOneRecord" Russian="Выберите хотя бы одну запись в списке."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
@@ -380,7 +379,6 @@
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
   <Local Name="Add" Russian="Добавить"/>
   <Local Name="NotifyInsertedDone" Russian="Напоминание &quot;%1&quot; успешно добавлено."/>
-  <Local Name="Call" Russian="Вызов"/>
   <Local Name="Page.Begin" Russian="Первая страница"/>
   <Local Name="Page.Previous" Russian="Предыдущая страница"/>
   <Local Name="Page.Next" Russian="Следующая страница"/>

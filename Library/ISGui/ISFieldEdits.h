@@ -83,7 +83,7 @@ public:
 protected:
 	void OnUpperText(const QString &Text);
 	void OnLowerText(const QString &Text);
-	void TextChanged(const QString &Text);
+	virtual void TextChanged(const QString &Text);
 	ISQLineEdit* GetLineEdit();
 
 private:
@@ -631,22 +631,12 @@ class ISPhoneEdit : public ISLineEdit
 {
 	Q_OBJECT
 
-signals:
-	void Called();
-
 public:
 	Q_INVOKABLE ISPhoneEdit(QWidget *parent = 0);
 	virtual ~ISPhoneEdit();
 
-	QVariant GetValue() const override;
-
-	bool IsValid() const override; //Проверка корректности номера
-
-protected:
-	virtual void Call();
-
-private:
-	ISServiceButton *ButtonCall;
+	QVariant GetValue() const;
+	bool IsValid() const override;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

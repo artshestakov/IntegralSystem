@@ -1,7 +1,7 @@
 #include "ISSqlModelHelper.h"
 #include "ISConstants.h"
-#include "ISPhoneNumberParser.h"
 #include "ISSettings.h"
+#include "ISCore.h"
 #include "ISGui.h"
 #include "ISDefinesCore.h"
 #include "ISSettingsDatabase.h"
@@ -38,7 +38,9 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_Phone)
 	{
-		Result = "+7" + Result.toString();
+		QString PhoneNumber = Value.toString();
+		ISCore::PhoneNumberFormat(PhoneNumber);
+		Result = PhoneNumber;
 	}
 	else if (Type == ISNamespace::FT_Seconds)
 	{

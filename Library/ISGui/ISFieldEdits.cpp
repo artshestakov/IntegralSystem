@@ -5,6 +5,7 @@
 #include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
+#include "ISCore.h"
 #include "ISGui.h"
 #include "ISPassword.h"
 #include "ISPopupMessage.h"
@@ -22,7 +23,6 @@
 #include "ISMetaData.h"
 #include "ISInputDialog.h"
 #include "ISDelegates.h"
-#include "ISPhoneNumberParser.h"
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
 											  "FROM _searchfast "
@@ -1557,13 +1557,11 @@ QString ISPassportEdit::PreparePassport(const QString &passport_string)
 //-----------------------------------------------------------------------------
 ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISLineEdit(parent)
 {
-	SetInputMask("(000) 000-00-00;_");
-	SetTextMargins(45, 0, 0, 0);
-
-	ButtonCall = new ISServiceButton(BUFFER_ICONS("CallPhone"), LANG("Call"), this);
-	ButtonCall->setFocusPolicy(Qt::NoFocus);
-	connect(ButtonCall, &ISServiceButton::clicked, this, &ISPhoneEdit::Call);
-	AddWidgetToRight(ButtonCall);
+	QString InputMask = "(000) 000-00-00;_";
+	SetInputMask(InputMask);
+	SetFixedWidth(ISGui::GetStringWidth(InputMask, ISDefines::Gui::FONT_APPLICATION) + 50);
+	SetSizePolicyHorizontal(QSizePolicy::Maximum);
+	SetIcon(BUFFER_ICONS("PhoneEdit"));
 }
 //-----------------------------------------------------------------------------
 ISPhoneEdit::~ISPhoneEdit()
@@ -1573,18 +1571,14 @@ ISPhoneEdit::~ISPhoneEdit()
 //-----------------------------------------------------------------------------
 QVariant ISPhoneEdit::GetValue() const
 {
-	QString PhoneString = ISPhoneNumberParser::RemoveNotDigits(ISLineEdit::GetValue().toString());
-	return PhoneString.size() == 10 ? PhoneString : QVariant();
+	QString String = ISLineEdit::GetValue().toString();
+	ISCore::PhoneNumberPrepare(String);
+	return String.isEmpty() ? QVariant() : String;
 }
 //-----------------------------------------------------------------------------
 bool ISPhoneEdit::IsValid() const
 {
-	return ISLineEdit::GetValue().toString().size() == 10;
-}
-//-----------------------------------------------------------------------------
-void ISPhoneEdit::Call()
-{
-	
+	return GetValue().toString().size() == 10;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

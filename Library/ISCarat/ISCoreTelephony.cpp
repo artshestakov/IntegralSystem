@@ -2,7 +2,6 @@
 #include "ISConstants.h"
 #include "ISSettingsDatabase.h"
 #include "ISQuery.h"
-#include "ISPhoneNumberParser.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static QString QS_CDR_ID = PREPARE_QUERY2("SELECT id "
@@ -111,14 +110,14 @@ void ISCoreTelephony::HandlingCDR(int ID)
 	{
 		DirectionID = GetDirection(CONST_UID_ASTERISK_DIRECTION_OUTGOING);
 		Subscriber = SRC;
-		Number = ISPhoneNumberParser::PasteEvent(DST);
+		Number = DST/*ISPhoneNumberParser::PasteEvent(DST)*/;
 		ISLOGGER_I("Handling outgoing call from \"" + Subscriber + "\" to number \"" + Number + "\". Call id: " + QString::number(ID));
 		UserID = GetUser(ID, Subscriber);
 	}
 	else //Входящий вызов
 	{
 		DirectionID = GetDirection(CONST_UID_ASTERISK_DIRECTION_INCOMING);
-		Subscriber = ISPhoneNumberParser::PasteEvent(SRC);
+		Subscriber = SRC/*ISPhoneNumberParser::PasteEvent(SRC)*/;
 		Number = GetPattern(ID, DSTChannel);
 		ISLOGGER_I("Handling incoming call from \"" + Subscriber + "\" to number \"" + Number + "\". Call id: " + QString::number(ID));
 		UserID = GetUser(ID, Number);

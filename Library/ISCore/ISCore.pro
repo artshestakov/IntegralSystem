@@ -52,7 +52,6 @@ HEADERS += \
     ISMetaViewQuery.h \
     ISNamespace.h \
     ISNetwork.h \
-    ISPhoneNumberParser.h \
     ISProperty.h \
     ISProtocol.h \
     ISQuery.h \
@@ -94,7 +93,6 @@ SOURCES += \
     ISMetaUuidCheckeder.cpp \
     ISMetaViewQuery.cpp \
     ISNetwork.cpp \
-    ISPhoneNumberParser.cpp \
     ISProperty.cpp \
     ISProtocol.cpp \
     ISQuery.cpp \

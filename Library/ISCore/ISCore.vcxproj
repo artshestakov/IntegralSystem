@@ -225,7 +225,6 @@
     <ClCompile Include="ISMetaUuidCheckeder.cpp" />
     <ClCompile Include="ISMetaViewQuery.cpp" />
     <ClCompile Include="ISNetwork.cpp" />
-    <ClCompile Include="ISPhoneNumberParser.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocol.cpp" />
     <ClCompile Include="ISQuery.cpp" />
@@ -273,7 +272,6 @@
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
-    <ClInclude Include="ISPhoneNumberParser.h" />
     <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISRandom.h" />
     <ClInclude Include="ISStructs.h" />

@@ -264,3 +264,24 @@ bool ISCore::DeleteCascadeObject(PMetaTable *MetaTable, int ObjectID, QString &E
 	return Result;
 }
 //-----------------------------------------------------------------------------
+void ISCore::PhoneNumberPrepare(QString &PhoneNumber)
+{
+	for (int i = 0; i < PhoneNumber.size(); ++i) //Обходим строку с номером телефона
+	{
+		if (!PhoneNumber[i].isDigit()) //Если текущий символ не является цифрой
+		{
+			PhoneNumber.remove(i, 1); //Удаляем этот символ
+			--i; //И уменьшаем индекс
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISCore::PhoneNumberFormat(QString &PhoneNumber)
+{
+	PhoneNumber = QString("+7 (%1) %2-%3-%4").
+		arg(PhoneNumber.left(3)).
+		arg(PhoneNumber.mid(3, 3)).
+		arg(PhoneNumber.mid(6, 2)).
+		arg(PhoneNumber.right(2));
+}
+//-----------------------------------------------------------------------------
