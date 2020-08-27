@@ -13,8 +13,6 @@ QString ISDefines::Core::PATH_PID_FILE;
 QString ISDefines::Core::PATH_LAST_DIRECTORY;
 QString ISDefines::Core::SYMBOL_CIRCLE;
 QString ISDefines::Core::SYMBOL_OBJECT_CHANGED;
-QString ISDefines::Core::SYMBOL_SPACE_HIDE;
-QString ISDefines::Core::SYMBOL_FIAS_SPLIT;
 //-----------------------------------------------------------------------------
 void ISDefines::Core::Init(bool IsGui)
 {
@@ -30,7 +28,5 @@ void ISDefines::Core::Init(bool IsGui)
 	PATH_LAST_DIRECTORY = QDir::homePath();
 	SYMBOL_CIRCLE = QString(QChar(9679));
 	SYMBOL_OBJECT_CHANGED = QString(" {*}");
-	SYMBOL_SPACE_HIDE = QString::fromLocal8Bit(" ");
-	SYMBOL_FIAS_SPLIT = QString(SYMBOL_COMMA + SYMBOL_SPACE_HIDE);
 }
 //-----------------------------------------------------------------------------

@@ -22,7 +22,6 @@ public:
 	static void BeginSymbolToUpper(QString &String); //Преобразование первого символа строки в верхний регистр
 	static bool CheckExistSlot(QObject *Object, const QString &SlotName); //Проверить наличие слота в объекте
 	static void ExecLoop(unsigned long Milliseconds); //Остановка потока событий
-	static bool AddressIsList(const QString &AddressString); //Проверка строки адреса на ввод по справочнику
 	static bool CreateDir(const QString &DirPath);
 	static bool CreateDir(const QString &DirPath, QString &ErrorString);
 	static void ProcessEvents();

@@ -23,8 +23,6 @@ namespace ISDefines
 		static QString PATH_LAST_DIRECTORY; //Последний использованный путь в классе ISFileDialog
 		static QString SYMBOL_CIRCLE; //Символ "Круг"
 		static QString SYMBOL_OBJECT_CHANGED;
-		static QString SYMBOL_SPACE_HIDE; //Невидмый символ (НЕ ЯВЛЯЕТСЯ СТАНДАРТНЫМ СИМВОЛОМ ПРОБЕЛА)
-		static QString SYMBOL_FIAS_SPLIT;
 	};
 }
 //-----------------------------------------------------------------------------

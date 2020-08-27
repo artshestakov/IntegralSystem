@@ -23,19 +23,15 @@ namespace ISDefines
 		static QSize SIZE_MAIN_WINDOW_MINIMUM;
 		static QSize SIZE_PROGRESS_FORM;
 		static QSize SIZE_640_480;
-		static QSize SIZE_550_300;
-		static QSize SIZE_200_200;
 		static QSize SIZE_100_100;
 		static QSize SIZE_64_64;
 		static QSize SIZE_45_45;
 		static QSize SIZE_32_32;
 		static QSize SIZE_25_25;
-		static QSize SIZE_24_24;
 		static QSize SIZE_22_22;
 		static QSize SIZE_20_20;
 		static QSize SIZE_18_18;
 		static QSize SIZE_16_16;
-		static QSize SIZE_10_10;
 		static QColor EDIT_WIDGET_COLOR_RED; //Цвет рамки вокруг незаполненного поля реадктирования информации
 		static QColor COLOR_BACKGROUND_INTERFACE; //Цвет фона форм интерфейса
 		static QColor COLOR_MAIN_MENU_BAR;
@@ -44,13 +40,11 @@ namespace ISDefines
 		static QColor COLOR_CALENDAR_CELL_BACKGROUP;
 		static QColor COLOR_CAALENDAR_DAY_NOT_CURRENT_MONTH;
 		static QColor COLOR_SPLASH_SCREEN_TEXT;
-		static QColor COLOR_MAIN_WINDOW_SHADOW;
 		static QColor COLOR_POPUP_BRUSH;
 		static QColor COLOR_FLASH_INCOMING_FORM;
 		static QColor COLOR_WHITE;
 		static QColor COLOR_RED;
 		static QColor COLOR_BLACK;
-		static QColor COLOR_GRAY;
 		static QColor COLOR_DARK_GRAY;
 		static QColor COLOR_BLUE;
 		static QColor COLOR_MONITOR_USER;
@@ -64,7 +58,6 @@ namespace ISDefines
 		static QFont FONT_TAHOMA_14_BOLD;
 		static QFont FONT_TAHOMA_12;
 		static QFont FONT_TAHOMA_12_BOLD;
-		static QFont FONT_TAHOMA_11;
 		static QFont FONT_TAHOMA_10_BOLD;
 		static QFont FONT_TAHOMA_10;
 		static QFont FONT_TAHOMA_9;
