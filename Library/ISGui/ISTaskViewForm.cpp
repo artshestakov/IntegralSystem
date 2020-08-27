@@ -381,12 +381,17 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	connect(ButtonAddFile, &QToolButton::clicked, this, &ISTaskViewForm::FileAdd);
 	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ListWidgetFiles), QTabBar::RightSide, ButtonAddFile);
 
-	LayoutRight = new QVBoxLayout();
-
 	QGroupBox *GroupBoxDetails = new QGroupBox(LANG("Task.Details"), this);
 	GroupBoxDetails->setSizePolicy(QSizePolicy::Maximum, GroupBoxDetails->sizePolicy().verticalPolicy());
-	GroupBoxDetails->setLayout(LayoutRight);
+	GroupBoxDetails->setLayout(new QVBoxLayout());
 	LayoutHorizontal->addWidget(GroupBoxDetails);
+
+	LayoutRight = new QVBoxLayout();
+	LayoutRight->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+
+	ISScrollArea *ScrollRight = new ISScrollArea(GroupBoxDetails);
+	ScrollRight->widget()->setLayout(LayoutRight);
+	GroupBoxDetails->layout()->addWidget(ScrollRight);
 
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Executor") + ':', GroupBoxDetails));
 
