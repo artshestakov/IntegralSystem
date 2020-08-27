@@ -40,7 +40,7 @@
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_user, srfs_value) "
-											  "VALUES(:UserID, :Value)");
+	"VALUES(:UserID, :Value)");
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
@@ -82,12 +82,7 @@ ISListBaseForm::~ISListBaseForm()
 //-----------------------------------------------------------------------------
 int ISListBaseForm::GetCurrentRowIndex()
 {
-	int CurrentRow = TableView->selectionModel()->currentIndex().row();
-	if (CurrentRow == -1)
-	{
-		return 0;
-	}
-	return CurrentRow;
+	return TableView->selectionModel()->currentIndex().row();
 }
 //-----------------------------------------------------------------------------
 int ISListBaseForm::GetObjectID()
@@ -149,16 +144,12 @@ ISVectorInt ISListBaseForm::GetSelectedIDs()
 {
 	ISVectorInt VectorInt;
 	QModelIndexList ModelIndexList = GetTableView()->selectionModel()->selectedRows();
-	if (ModelIndexList.count())
+	if (!ModelIndexList.isEmpty())
 	{
-		for(const QModelIndex &ModelIndex : ModelIndexList)
+		for (const QModelIndex &ModelIndex : ModelIndexList)
 		{
 			VectorInt.emplace_back(GetObjectID(ModelIndex.row()));
 		}
-	}
-	else
-	{
-		ISMessageBox::ShowInformation(this, LANG("Message.Information.SelectAtLeastOneRecord"));
 	}
 	return VectorInt;
 }
@@ -197,9 +188,14 @@ ISQueryModel* ISListBaseForm::GetQueryModel()
 	return QueryModel;
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SetSelectObjectAfterUpdate(int object_id)
+void ISListBaseForm::SetSelectObjectAfterUpdate(int ObjectID)
 {
-	SelectObjectAfterUpdate = object_id;
+	SetSelectObjectAfterUpdate(ISVectorInt{ ObjectID });
+}
+//-----------------------------------------------------------------------------
+void ISListBaseForm::SetSelectObjectAfterUpdate(const ISVectorInt &Objects)
+{
+	SelectObjectAfterUpdate = Objects;
 }
 //-----------------------------------------------------------------------------
 PMetaTable* ISListBaseForm::GetMetaTable()
@@ -226,7 +222,7 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 		{
 			ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID());
 			ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-			connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::SetSelectObjectAfterUpdate);
+			connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 			connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 			connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 			connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
@@ -265,7 +261,7 @@ void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 	QString FieldName = SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString();
 	QueryModel->SetOrderField(MetaTable->Alias + '_' + FieldName.toLower(), FieldName, Order);
 	SqlModel->SetSorting(LogicalIndex, Order);
-	
+
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING))
 	{
 		ISSortingBuffer::Instance().AddSorting(MetaTable->Name, FieldName, Order);
@@ -304,8 +300,8 @@ void ISListBaseForm::ShowSettingsForm()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected)
 {
-    Q_UNUSED(ItemSelected);
-    Q_UNUSED(ItemDeSelected);
+	Q_UNUSED(ItemSelected);
+	Q_UNUSED(ItemDeSelected);
 
 	int SelectedRows = TableView->selectionModel()->selectedRows().count();
 	if (SelectedRows > 1 || SelectedRows == 0)
@@ -542,7 +538,7 @@ void ISListBaseForm::Period()
 		case ISNamespace::PT_CreationDate: LabelPeriod->setText(LANG("PeriodLabelCreate").arg(StartDate.toString(FORMAT_DATE_V2)).arg(EndDate.toString(FORMAT_DATE_V2))); break;
 		case ISNamespace::PT_UpdationDate: LabelPeriod->setText(LANG("PeriodLabelUpdate").arg(StartDate.toString(FORMAT_DATE_V2)).arg(EndDate.toString(FORMAT_DATE_V2))); break;
 		}
-		
+
 		LabelPeriod->setVisible(true);
 		QueryModel->SetPeriod(PeriodForm.GetPeriodType(), PeriodForm.GetRange());
 		ActionPeriodClear->setEnabled(true);
@@ -589,16 +585,27 @@ void ISListBaseForm::ClosingObjectForm()
 	TableView->setFocus();
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SelectRowObject(int object_id)
+void ISListBaseForm::SelectRowObject(const ISVectorInt &Objects)
 {
-	if (object_id)
+	if (!Objects.empty()) //Если вектор не пустой
 	{
-		int RowIndex = GetRowIndex(object_id);
-		if (RowIndex != -1)
+		//Устанавливаем режим выделения на мультистрочный (потому что если этого не сделать,
+		//то сколько бы строк в Objects не было, выделена будет только одна строка)
+		TableView->setSelectionMode(QAbstractItemView::MultiSelection);
+
+		//Обходим все записи
+		for (int ObjectID : Objects)
 		{
-			SelectRowIndex(RowIndex);
-			SetSelectObjectAfterUpdate(0);
+			int RowIndex = GetRowIndex(ObjectID); //Получаем индекс строки по её идентификатору
+			if (RowIndex != -1) //Если индекс валидный - выделяем строку
+			{
+				SelectRowIndex(RowIndex);
+			}
 		}
+
+		//Возвращаем режим выделения на исходный и очищаем вектор выделения
+		TableView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+		SelectObjectAfterUpdate.clear();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -627,7 +634,7 @@ void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SearchFast(const QString &SearchValue)
 {
-	ISQueryPool::Instance().AddQuery(QI_SEARCH_FAST, 
+	ISQueryPool::Instance().AddQuery(QI_SEARCH_FAST,
 	{
 		{ ":UserID", CURRENT_USER_ID },
 		{ ":Value", SearchValue }
@@ -676,7 +683,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 
 		WhereText.chop(7);
 		WhereText += ")) LIKE '%' || :Search || '%'";
-		
+
 		QueryModel->SetSearchFilter(WhereText);
 		QueryModel->ClearConditions();
 		QueryModel->AddCondition(":Search", PreparedSearchValue);
@@ -799,7 +806,7 @@ void ISListBaseForm::Create()
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name, 0, parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::SetSelectObjectAfterUpdate);
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
@@ -822,7 +829,7 @@ void ISListBaseForm::CreateCopy()
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::OFT_Copy, MetaTable->Name, GetObjectID(), parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::SetSelectObjectAfterUpdate);
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
@@ -845,7 +852,7 @@ void ISListBaseForm::Edit()
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID(), parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::SetSelectObjectAfterUpdate);
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
@@ -854,8 +861,9 @@ void ISListBaseForm::Edit()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Update()
 {
-	IsLoadingData = true;
-	SqlModel->Clear();
+	SelectObjectAfterUpdate = GetSelectedIDs(); //Запоминаем выделенные записи перед обновлением таблицы
+	IsLoadingData = true; //Устанавливаем флаг что сейчас происходит загрузка данных
+	SqlModel->Clear();	 //Чистим модель
 
 	QueryModel->SetParentFilter(GetParentObjectID(), GetParentFilterField());
 	ModelThreadQuery->Execute(QueryModel->GetQueryText(), QueryModel->GetConditions());
@@ -1122,10 +1130,10 @@ void ISListBaseForm::Print()
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_PRINT, MetaTable->Name, MetaTable->LocalListName, GetObjectID(), MetaReport->LocalName);
 	ISGui::SetWaitGlobalCursor(true);
 
-    ISProcessForm ProcessForm;
+	ISProcessForm ProcessForm;
 	ProcessForm.show();
 	ProcessForm.SetText(LANG("PrintProcess.Preapre"));
-	
+
 	ISPrintingBase *PrintingBase = nullptr;
 	bool EditPrintForm = ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT);
 
@@ -1206,7 +1214,7 @@ void ISListBaseForm::NavigationSelectBeginRecord()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectPreviousRecord()
 {
-    if (SqlModel->rowCount() || GetCurrentRowIndex())
+	if (SqlModel->rowCount() || GetCurrentRowIndex())
 	{
 		TableView->selectRow(GetCurrentRowIndex() - 1);
 	}
@@ -1449,7 +1457,7 @@ void ISListBaseForm::CreateToolBar()
 		ToolBar->addAction(GetAction(ISNamespace::AT_NavigationNext));
 		ToolBar->addAction(GetAction(ISNamespace::AT_NavigationLast));
 	}
-	
+
 	if (GetAction(ISNamespace::AT_CreateCopy)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_CreateCopy));
 	if (GetAction(ISNamespace::AT_Edit)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Edit));
 	if (GetAction(ISNamespace::AT_Delete)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Delete));

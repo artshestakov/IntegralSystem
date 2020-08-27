@@ -41,7 +41,8 @@ public:
 	ISVectorInt GetIDs() const; //Получить список идентификатор отображаемых строк в данный момент
 	ISVectorInt GetSelectedRowIndexes(); //Получить список индексов выделенных строк
 	ISQueryModel* GetQueryModel(); //Получить указатель на модель запроса
-	void SetSelectObjectAfterUpdate(int object_id); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
+	void SetSelectObjectAfterUpdate(int ObjectID); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
+	void SetSelectObjectAfterUpdate(const ISVectorInt &Objects); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	PMetaTable* GetMetaTable(); //Получить указатель на мета-таблицу
 
 	virtual void Create(); //Создание объекта
@@ -100,7 +101,7 @@ protected:
 	void AddWidgetToBottom(QWidget *Widget); //Добавить виджет в нижний виджет формы списка (WidgetBottom)
 	void SetVisibleBottom(bool Visible); //Изменить видимость нижнего виджета (WidgetBottom)
 	void ClosingObjectForm(); //Срабатывает при закрытии формы объекта (порожденной этой формой списка)
-	void SelectRowObject(int object_id); //Выделение строки по идентификатору объекта
+	void SelectRowObject(const ISVectorInt &Objects); //Выделение строки по идентификатору объекта
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом
 	void SetEnabledPageNavigation(bool Enabled); //Изменить доступность постраничной навигации
@@ -154,7 +155,7 @@ private:
 	ISQueryModel *QueryModel;
 	ISSearchForm *SearchForm;
 
-	int SelectObjectAfterUpdate;
+	ISVectorInt SelectObjectAfterUpdate; //Вектор записей, которые нужно выделить после обновления таблицы
 	bool DelegatesCreated; //Индикатор указания созданы делегаты или нет
 	bool ShowOnly;
 	bool IsLoadingData; //Флаг загрузки данных
