@@ -16,14 +16,10 @@ protected:
 	void CreateStatusDescription();
 
 	void DetailsClicked();
-	void SaveRecord();
 	void DoubleClickedTable(const QModelIndex &ModelIndex) override;
 	void Back();
 
 	void FillLabels();
-	void PlayRecord();
-	void SaveToStorage();
-	void Play(const QString &FilePath);
 	void StatusClicked();
 
 	void DefaultFilter(); //Установить стандартный фильтр
@@ -32,9 +28,6 @@ protected:
 
 private:
 	QAction *ActionDetails;
-	QAction *ActionSave;
-	QAction *ActionPlay;
-	QAction *ActionStorage;
 	QWidget *WidgetCallInfo;
 	ISPushButton *ButtonBack;
 	int ObjectID;

@@ -53,9 +53,6 @@
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.NotFoundChildCalls" Russian="Подробностей по выбранному звонку нет."/>
-  <Local Name="Message.Information.FileRecordSavedToStorage" Russian="Запись разговора успешно сохранена в хранилище."/>
-  <Local Name="Message.Information.PlayRecordOnlyAnswer" Russian="Вы можете прослушивать записи разговоров только со статусом &quot;Отвечен&quot;."/>
-  <Local Name="Message.Information.SaveRecordOnlyAnswer" Russian="Вы можете сохранять записи разговоров только со статусом &quot;Отвечен&quot;."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
@@ -171,7 +168,6 @@
   <Local Name="Message.Warning.NotValidInputPasswordForChange" Russian="Вы ввели неверный текущий пароль!"/>
   <Local Name="Message.Warning.PasswordLenghtSmall" Russian="Пароль должен быть не короче %1 символов."/>
   <Local Name="Message.Warning.SearchFieldNotValid" Russian="Поисковое поле &quot;%1&quot; не заполнено."/>
-  <Local Name="Message.Warning.FileRecordNotSaved" Russian="Не удалось сохранить запись разговора!"/>
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
   <Local Name="Message.Warning.FailedConnectionToPostgreSQL" Russian="Ошибка подключения к серверу базы данных: %1"/>
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
@@ -184,8 +180,6 @@
   <Local Name="Message.Warning.NotAccess.Export" Russian="У Вас нет прав на экспорт данных из таблицы &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Special.RecordNote" Russian="У Вас нет прав добавление примечаний к записям в таблицах."/>
   <Local Name="Message.Warning.NotAccess.Special.UserPasswordChange" Russian="У Вас нет прав на изменение своего пароля."/>
-  <Local Name="Message.Warning.NotAccess.Special.PlayAsteriskRecord" Russian="У Вас нет прав на прослушивание записей разговоров."/>
-  <Local Name="Message.Warning.NotAccess.Special.SaveAsteriskRecord" Russian="У Вас нет прав на сохранение записей разговоров."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>
@@ -225,7 +219,6 @@
   <Local Name="Message.Question.CalendarEventFormClose" Russian="Закрытие окна привезет к автомтическому завернею события. Закрыть окно?"/>
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
-  <Local Name="Message.Question.FileRecordSaved" Russian="Запись разговора успешно сохранена! Воспроизвести её?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
   <Local Name="Message.Question.NotSettingAdministratorInSettingDatabase" Russian="ВНИМАНИЕ! В настроках базы данных не настроен администратор системы. Сделать настройку сейчас?"/>
   <Local Name="Message.Question.StorageFileIsPrivate" Russian="Приватный файл?"/>
@@ -412,9 +405,7 @@
   <Local Name="OverdueEvent" Russian="Просроченное событие"/>
   <Local Name="EnteringSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="Edit" Russian="Изменить"/>
-  <Local Name="SaveToStorage" Russian="Сохранить в хранилище"/>
   <Local Name="CallDetails" Russian="Подробности звонка"/>
-  <Local Name="ReproductionAsteriskRecord" Russian="Прослушивание записи разговора"/>
   <Local Name="ListIsEmpty" Russian="Справочник пуст"/>
   <Local Name="OpenUrlLink" Russian="Посетить ссылку"/>
   <Local Name="Rename" Russian="Переименовать"/>
@@ -500,7 +491,6 @@
   <Local Name="ClickFromViewList" Russian="Чтобы просмотреть справочник, нажмите на соответствующий пункт слева."/>
   <Local Name="ClickFromViewMyLLastSearchQuery" Russian="Нажмите, чтобы увидеть Ваши последние поисковые запросы"/>
   <Local Name="ClickFromGoMainJournal" Russian="Нажмите, чтобы перейти в основной журнал"/>
-  <Local Name="ListeningRecordVoice" Russian="Прослушивание записи разговора"/>
   <Local Name="ConnectionForm.Hint.Server" Russian="В этом поле укажите IP-адрес сервера, на котором находится база данных программы."/>
   <Local Name="ConnectionForm.Hint.Port" Russian="В этом поле укажите порт, по которому будет происходить подключение к базе данных."/>
   <Local Name="ConnectionForm.Hint.Database" Russian="В этом поле укажите наименование базы данных, подключение к которой требуется."/>
@@ -509,7 +499,6 @@
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickDoneFromFilter" Russian="Нажмите кнопку &quot;Применить&quot; для получения сводных данных за период."/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
-  <Local Name="AsteriskFileRecordName" Russian="Запись разговора абонента %1 от %2"/>
   <Local Name="AutoCloseIncomingForm" Russian="Окно будет автоматически закрыто через: %1 сек."/>
   <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
   <Local Name="SelectedUserGroupLeftFromAccessSetting" Russian="Выберите группу пользователей из списка слева, чтобы настроить ей права доступа."/>
@@ -708,7 +697,6 @@
   <!--File Dialog-->
   <Local Name="FileDialog.Image.Select.Title" Russian="Выбор изображения"/>
   <Local Name="FileDialog.Image.Save.Title" Russian="Сохранение изображения"/>
-  <Local Name="FileDialog.AsteriskRecord.Save.Title" Russian="Сохранение записи разговора"/>
   <Local Name="FileDialog.File.Open.Title" Russian="Выбор файла"/>
   <Local Name="FileDialog.File.Save.Title" Russian="Сохранение файла"/>
   <Local Name="FileDialog.Directory.Title" Russian="Выбор директории"/>
@@ -814,14 +802,6 @@
   <Local Name="ContextMenu.Image.Paste" Russian="Вставить"/>
   <Local Name="ContextMenu.Image.Paste.ToolTip" Russian="Вставить изображение из буфера обмена"/>
   <Local Name="ContextMenu.Image.PasteFromLink" Russian="Вставить по ссылке"/>
-
-  <!--AsteriskRecord-->
-  <Local Name="AsteriskRecord.Interface.Title" Russian="Загрузка"/>
-  <Local Name="AsteriskRecord.Interface.Label.Prepare" Russian="Пожалуйста, подождите, идет подготовка записи разговора"/>
-  <Local Name="AsteriskRecord.Interface.Label.Connecting" Russian="Подключение к серверу..."/>
-  <Local Name="AsteriskRecord.Interface.Label.Connected" Russian="Подключение к серверу установлено. Запись подготавливается"/>
-  <Local Name="AsteriskRecord.Interface.Label.Downloading" Russian="Пожалуйста, подождите, запись разговора загружается"/>
-  <Local Name="AsteriskRecord.Interface.Label.Downloaded" Russian="Загрузка завершена, сохранение на диск"/>
 
   <!--MediaPlayerError-->
   <Local Name="QMediaPlayer.Error.ResourceError" Russian="Медиа-ресурс не может быть разрешен"/>

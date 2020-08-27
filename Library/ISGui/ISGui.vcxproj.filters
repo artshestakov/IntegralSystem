@@ -291,12 +291,6 @@
     <ClCompile Include="ISAsteriskCallsListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISAsteriskRecordPlayForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAsteriskRecordWaitForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISAsteriskTotalForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -663,12 +657,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISAsteriskCallsListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAsteriskRecordPlayForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAsteriskRecordWaitForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISAsteriskTotalForm.h">

@@ -71,8 +71,6 @@
   <_ProtocolType IsSystem="true" UID="{916A2119-5D8D-41C9-8358-AE587F365898}" Name="Печать"/>
   <_ProtocolType IsSystem="true" UID="{179F73BF-8983-4B52-B505-AF0EF4BF8093}" Name="Расширенный поиск"/>
   <_ProtocolType IsSystem="true" UID="{B0A1EF68-2AA4-4EB2-A5A9-F8E5604F864B}" Name="Полнотекстовый поиск"/>
-  <_ProtocolType IsSystem="true" UID="{F8ACA207-50D6-4BE4-9658-08F869D0E54F}" Name="Прослушивание записи разговора"/>
-  <_ProtocolType IsSystem="true" UID="{EA2EF795-5243-4D9B-97C9-283605D290B6}" Name="Сохранение записи разговора на диск"/>
   <_ProtocolType IsSystem="true" UID="{662105B6-6671-46BE-8E1A-E57061C5C268}" Name="Добавление примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{C20634AF-EF58-4D96-9215-8085C2B8C416}" Name="Изменение примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{A0115A19-05CC-4AFD-8568-F9AE970E7157}" Name="Просмотр информации о программе"/>

@@ -176,8 +176,6 @@
   <ItemGroup>
     <ClCompile Include="ISAboutForm.cpp" />
     <ClCompile Include="ISAsteriskCallsListForm.cpp" />
-    <ClCompile Include="ISAsteriskRecordPlayForm.cpp" />
-    <ClCompile Include="ISAsteriskRecordWaitForm.cpp" />
     <ClCompile Include="ISAsteriskTotalForm.cpp" />
     <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
@@ -399,8 +397,6 @@
     <QtMoc Include="ISWorkspaceForm.h" />
     <QtMoc Include="ISAboutForm.h" />
     <QtMoc Include="ISAsteriskCallsListForm.h" />
-    <QtMoc Include="ISAsteriskRecordPlayForm.h" />
-    <QtMoc Include="ISAsteriskRecordWaitForm.h" />
     <QtMoc Include="ISAsteriskTotalForm.h" />
     <QtMoc Include="ISAuthForm.h" />
     <QtMoc Include="ISCalendarEventForm.h" />

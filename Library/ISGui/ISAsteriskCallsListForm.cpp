@@ -9,8 +9,6 @@
 #include "ISControls.h"
 #include "ISSettingsDatabase.h"
 #include "ISFileDialog.h"
-#include "ISAsteriskRecordWaitForm.h"
-#include "ISAsteriskRecordPlayForm.h"
 #include "ISProtocol.h"
 #include "ISUserRoleEntity.h"
 #include "ISDefinesCore.h"
@@ -24,16 +22,6 @@ static QString QS_CALL = PREPARE_QUERY("SELECT ascl_dialbegin, asdr_name, ascl_s
 									   "LEFT JOIN _asteriskdirection ON asdr_id = ascl_direction "
 									   "LEFT JOIN _asteriskcallstatus ON asds_id = ascl_dialstatus "
 									   "WHERE ascl_id = :ObjectID");
-//-----------------------------------------------------------------------------
-static QString QS_FILE_INFO = PREPARE_QUERY("SELECT ascl_dialbegin, asdr_name, ascl_subscriber, ascl_number, ascl_duration "
-											"FROM _asteriskcalls "
-											"LEFT JOIN _AsteriskDirection ON ascl_direction = asdr_id "
-											"WHERE ascl_id = :CallID");
-//-----------------------------------------------------------------------------
-static QString QU_FILE = PREPARE_QUERY("UPDATE _storagefiles SET "
-									   "sgfs_name = :FileName, "
-									   "sgfs_expansion = :Expansion "
-									   "WHERE sgfs_id = :FileID");
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_CALL_STATUSES = PREPARE_QUERY("SELECT asds_localname, asds_iconname, asds_description "
 														 "FROM _asteriskcallstatus "
@@ -56,24 +44,6 @@ ISAsteriskCallsListForm::ISAsteriskCallsListForm(QWidget *parent) : ISListBaseFo
 	ActionDetails->setIcon(BUFFER_ICONS("Information"));
 	connect(ActionDetails, &QAction::triggered, this, &ISAsteriskCallsListForm::DetailsClicked);
 	AddAction(ActionDetails, true, true);
-
-	ActionSave = ISControls::CreateActionSave(this);
-	connect(ActionSave, &QAction::triggered, this, &ISAsteriskCallsListForm::SaveRecord);
-	AddAction(ActionSave, true, true);
-
-	ActionPlay = new QAction(this);
-	ActionPlay->setText(LANG("ListeningRecordVoice"));
-	ActionPlay->setToolTip(LANG("ListeningRecordVoice"));
-	ActionPlay->setIcon(BUFFER_ICONS("PlayRecord"));
-	connect(ActionPlay, &QAction::triggered, this, &ISAsteriskCallsListForm::PlayRecord);
-	AddAction(ActionPlay, false, true);
-
-	ActionStorage = new QAction(this);
-	ActionStorage->setText(LANG("SaveToStorage"));
-	ActionStorage->setToolTip(LANG("SaveToStorage"));
-	ActionStorage->setIcon(BUFFER_ICONS("Favorites"));
-	connect(ActionStorage, &QAction::triggered, this, &ISAsteriskCallsListForm::SaveToStorage);
-	AddAction(ActionStorage, true, true);
 
 	CreateDetailsPanel();
 	CreateStatusDescription();
@@ -181,49 +151,6 @@ void ISAsteriskCallsListForm::DetailsClicked()
 	DoubleClickedTable(QModelIndex());
 }
 //-----------------------------------------------------------------------------
-void ISAsteriskCallsListForm::SaveRecord()
-{
-	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_SAVE_ASTERISK_RECORD))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.SaveAsteriskRecord"));
-		return;
-	}
-
-	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
-	{
-		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("FileDialog.AsteriskRecord.Save.Title"), LANG("AsteriskFileRecordName").arg(GetCurrentRecordValue("Subscriber").toString()).arg(GetCurrentRecordValue("DialBegin").toDateTime().toString(FORMAT_DATE_TIME_V6)));
-		if (!FilePath.isEmpty())
-		{
-			ISAsteriskRecordWaitForm AsteriskRecordWaitForm(GetCurrentRecordValueDB("UniqueID").toString());
-			if (AsteriskRecordWaitForm.Exec())
-			{
-				if (QFile::exists(FilePath))
-				{
-					QFile::remove(FilePath);
-				}
-
-				QFile FileRecord(AsteriskRecordWaitForm.GetFilePath());
-				if (FileRecord.copy(FilePath))
-				{
-					ISProtocol::Insert(true, CONST_UID_PROTOCOL_ASTERISK_RECORD_SAVE, QString(), QString(), QVariant(), QString::number(GetObjectID()));
-					if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.FileRecordSaved")))
-					{
-						Play(FilePath);
-					}
-				}
-				else
-				{
-					ISMessageBox::ShowWarning(this, LANG("Message.Warning.FileRecordNotSaved"), FileRecord.errorString());
-				}
-			}
-		}
-	}
-	else
-	{
-		ISMessageBox::ShowInformation(this, LANG("Message.Information.SaveRecordOnlyAnswer"));
-	}
-}
-//-----------------------------------------------------------------------------
 void ISAsteriskCallsListForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
 	ISListBaseForm::DoubleClickedTable(ModelIndex);
@@ -240,9 +167,6 @@ void ISAsteriskCallsListForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 		TransferFilter(UniqueID);
 
 		ActionDetails->setVisible(false);
-		ActionSave->setVisible(false);
-		ActionPlay->setVisible(false);
-		ActionStorage->setVisible(false);
 		WidgetCallInfo->setVisible(true);
 
 		HideField("ID");
@@ -263,9 +187,6 @@ void ISAsteriskCallsListForm::Back()
 	SetSelectObjectAfterUpdate(ObjectID);
 	
 	ActionDetails->setVisible(true);
-	ActionSave->setVisible(true);
-	ActionPlay->setVisible(true);
-	ActionStorage->setVisible(true);
 	WidgetCallInfo->setVisible(false);
 	
 	ShowField("ID");
@@ -298,98 +219,6 @@ void ISAsteriskCallsListForm::FillLabels()
 		LabelDuration->setText(QTime(0, 0).addSecs(qSelect.ReadColumn("ascl_duration").toInt()).toString(FORMAT_TIME_V3));
 		LabelStatus->setText(qSelect.ReadColumn("asds_localname").toString());
 	}
-}
-//-----------------------------------------------------------------------------
-void ISAsteriskCallsListForm::PlayRecord()
-{
-	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_PLAY_ASTERISK_RECORD))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.PlayAsteriskRecord"));
-		return;
-	}
-
-	if (GetStatusCall() == CONST_UID_ASTERISK_CALL_STATUS_ANSWER)
-	{
-		QString FilePath = ISDefines::Core::PATH_TEMP_DIR + '/' + GetCurrentRecordValueDB("UID").toString() + SYMBOL_POINT + EXTENSION_WAV;
-		if (QFile::exists(FilePath))
-		{
-			Play(FilePath);
-		}
-		else
-		{
-			ISAsteriskRecordWaitForm AsteriskRecordWaitForm(GetCurrentRecordValueDB("UniqueID").toString());
-			if (AsteriskRecordWaitForm.Exec())
-			{
-				Play(AsteriskRecordWaitForm.GetFilePath());
-			}
-		}
-	}
-	else
-	{
-		ISMessageBox::ShowInformation(this, LANG("Message.Information.PlayRecordOnlyAnswer"));
-	}
-}
-//-----------------------------------------------------------------------------
-void ISAsteriskCallsListForm::SaveToStorage()
-{
-	ISUuid UID = GetCurrentRecordValueDB("UID");
-	QString FilePath = ISDefines::Core::PATH_TEMP_DIR + '/' + UID + SYMBOL_POINT + EXTENSION_WAV;
-
-	if (!QFile::exists(FilePath))
-	{
-		QString HangupString = GetSqlModel()->data(GetSqlModel()->index(GetCurrentRowIndex(), GetSqlModel()->GetFieldIndex("Hangup"))).toString();
-		QTime HangupTime = QTime::fromString(HangupString, FORMAT_TIME_V3);
-		if (HangupTime.second())
-		{
-			/*ISAsteriskRecordWaitForm AsteriskRecordWaitForm(UID, GetCurrentRecordValueDB("UniqueID").toString());
-			if (AsteriskRecordWaitForm.Exec())
-			{
-				FilePath = AsteriskRecordWaitForm.GetFileRecordPath();
-			}*/
-		}
-		else
-		{
-			ISMessageBox::ShowInformation(this, LANG("Message.Information.FileRecordInvalid"));
-		}
-	}
-
-	//???
-	/*
-	ISAttachFileForm AttachFileForm;
-	AttachFileForm.SetEnabledPath(false);
-	AttachFileForm.SetFilePath(FilePath);
-	connect(&AttachFileForm, &ISAttachFileForm::UpdateList, [=]
-	{
-		ISMessageBox::ShowInformation(this, LANG("Message.Information.FileRecordSavedToStorage"));
-	});
-	connect(&AttachFileForm, &ISAttachFileForm::Loaded, [=](int FileID)
-	{
-		ISQuery qSelect(QS_FILE_INFO);
-		qSelect.BindValue(":CallID", GetObjectID());
-		if (qSelect.ExecuteFirst())
-		{
-			QString CallDateTime = qSelect.ReadColumn("ascl_dialbegin").toDateTime().toString(FORMAT_DATE_TIME_V6);
-			QString CallDirection = qSelect.ReadColumn("asdr_name").toString();
-			QString CallSubscriber = qSelect.ReadColumn("ascl_subscriber").toString();
-			QString CallNumber = qSelect.ReadColumn("ascl_number").toString();
-			int CallDuration = qSelect.ReadColumn("ascl_duration").toInt();
-			
-			ISQuery qUpdateFile(QU_FILE);
-			qUpdateFile.BindValue(":FileName", CallDateTime + '_' + CallDirection + '_' + CallSubscriber + '_' + CallNumber + '_' + QTime(0, 0).addSecs(CallDuration).toString(FORMAT_TIME_V5));
-			qUpdateFile.BindValue(":Expansion", EXTENSION_WAV);
-			qUpdateFile.BindValue(":FileID", FileID);
-			qUpdateFile.Execute();
-		}
-	});
-	AttachFileForm.Exec();
-	*/
-}
-//-----------------------------------------------------------------------------
-void ISAsteriskCallsListForm::Play(const QString &FilePath)
-{
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_ASTERISK_RECORD_PLAY, QString(), QString(), QVariant(), QString::number(GetObjectID()));
-	ISAsteriskRecordPlayForm AsteriskRecordPlayForm(FilePath);
-	AsteriskRecordPlayForm.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISAsteriskCallsListForm::StatusClicked()
@@ -429,7 +258,6 @@ ISUuid ISAsteriskCallsListForm::GetStatusCall()
 	{
 		StatusUID = qSelect.ReadColumn("asds_uid");
 	}
-
 	return StatusUID;
 }
 //-----------------------------------------------------------------------------
