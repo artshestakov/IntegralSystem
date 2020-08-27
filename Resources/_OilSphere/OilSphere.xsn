@@ -95,7 +95,7 @@
   <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="Counterparty" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
     <Fields>
       <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="Int" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" SeparatorName="Загрузка"/>
+      <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" SeparatorName="Загрузка"/>
       <Field UID="{04C3B695-9BD8-49ED-BFEE-D2DE54403AF9}" Name="Stock" Type="Int" LabelName="Склад" LocalListName="Склад"/>
       <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="LoadContainer" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="LoadContainer"/>
       <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="LoadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="LoadContainer"/>
@@ -421,29 +421,29 @@
 
   <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
     <Fields>
-      <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки"/>
-      <Field UID="{29423F87-6E67-492B-B82E-CE6F054A13A8}" Name="Station" Type="Int" LabelName="Станция" LocalListName="Станция" LayoutName="Station"/>
-      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="Int" LabelName="Поставщик" LocalListName="Поставщик" LayoutName="Station"/>
-      <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Int" LabelName="Цена" LocalListName="Цена" LayoutName="Price"/>
-      <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="Price"/>
+      <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" LayoutName="DateShipping" SeparatorName="Отгрузка"/>
+      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="Int" LabelName="Поставщик" LocalListName="Поставщик" LayoutName="DateShipping"/>
+      <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="DateArrival" SeparatorName="Прибытие"/>
+      <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="Int" LabelName="Склад" LocalListName="Склад" LayoutName="DateArrival"/>
+      <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Int" LabelName="Цена" LocalListName="Цена" LayoutName="Price" SeparatorName="Дополнительная информация"/>
+      <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Int" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" LayoutName="Price" QueryText="SELECT sum(mwdt_kilogram) FROM movewagondetail WHERE mwdt_movewagon = mwag_id"/>
       <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" LayoutName="Price"/>
-      <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Int" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" QueryText="SELECT sum(mwdt_kilogram) FROM movewagondetail WHERE mwdt_movewagon = mwag_id"/>
       <Field UID="{C6DFF9F3-C4D4-456C-8EFF-77AB756A360F}" Name="PassportQuality" Type="Bool" DefaultValue="false" LabelName="Паспорт качества" LocalListName="Паспорт качества"/>
       <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
       <Index Field="DateShipping"/>
-      <Index Field="Station"/>
       <Index Field="Provider"/>
-      <Index Field="Price"/>
       <Index Field="DateArrival"/>
+      <Index Field="Stock"/>
+      <Index Field="Price"/>
       <Index Field="Waybill"/>
       <Index Field="PassportQuality"/>
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Station" ForeignClass="Station" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Provider" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <Escorts>
       <Escort LocalName="Подробности передвижений" TableName="MoveWagonDetail" FilterField="MoveWagon"/>

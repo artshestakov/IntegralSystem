@@ -48,6 +48,7 @@ static QString QS_DEBT = PREPARE_QUERY2("SELECT "
 										"LEFT JOIN implementation ON imdt_implementation = impl_id "
 										"LEFT JOIN producttype ON impl_producttype = pdtp_id "
 										"WHERE NOT imdt_isdeleted "
+										"AND imdt_counterparty IS NOT NULL "
 										"AND NOT (SELECT impl_isdeleted FROM implementation WHERE imdt_implementation = impl_id)");
 //-----------------------------------------------------------------------------
 static QString QS_ACCRUED = PREPARE_QUERY2("SELECT cpwo_creationdate, cpwo_sum, cpwo_note "
