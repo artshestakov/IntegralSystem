@@ -111,7 +111,7 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 {
 	if (MetaTable->TitleName.isEmpty()) //Если TitleName у мета-таблицы не заполнен - возвращаем идентификатор объекта
 	{
-		return ObjectID;
+        return QString::number(ObjectID);
 	}
 	
 	QString ObjectName;

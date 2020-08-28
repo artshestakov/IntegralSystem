@@ -24,7 +24,6 @@ INCLUDEPATH += $$PWD/../../Library/ISCore
 INCLUDEPATH += .
 
 LIBS += -L$$DESTDIR -Wl,-rpath="$${DESTDIR}",-rpath-link="$${DESTDIR}" \
-    -lISCarat \
     -lISCore
 
 HEADERS += \

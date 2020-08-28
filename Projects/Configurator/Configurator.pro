@@ -40,7 +40,6 @@ SOURCES += \
     CGResource.cpp \
     CGSequence.cpp \
     CGTable.cpp \
-    CGTemplateField.cpp \
     main.cpp
 
 HEADERS += \
@@ -57,5 +56,4 @@ HEADERS += \
     CGIndex.h \
     CGResource.h \
     CGSequence.h \
-    CGTable.h \
-    CGTemplateField.h
+    CGTable.h
