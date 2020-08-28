@@ -58,6 +58,7 @@ public:
 	void SetPlaceholderText(const QString &placeholder_text) override;
 	void SetRegExp(const QString &RegExp) override;
 	void SetColorText(const QColor &Color) override;
+	void SetVisibleClear(bool Visible) override;
 
 	void SetValidator(QValidator *Validator);
 	void SetEchoMode(QLineEdit::EchoMode EchoMode);

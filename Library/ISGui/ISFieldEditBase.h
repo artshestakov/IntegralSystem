@@ -33,13 +33,13 @@ public:
 	virtual void SetSizePolicy(QSizePolicy::Policy PolicyHorizontal, QSizePolicy::Policy PolicyVertical);
 	virtual void SetSizePolicyHorizontal(QSizePolicy::Policy PolicyHorizontal); //Изменить политику растяжения по горизонтали
 	virtual void SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical); //Изменить политику растяжения по горизонтали
+	virtual void SetVisibleClear(bool Visible);
 
 	bool IsReadOnly() const;
 	
 	void SetCursor(const QCursor &Cursor); //Изменить курсор
 	void SetToolTip(const QString &ToolTip); //Изменить всплывающее сообщение-подсказку
 	void SetFixedWidth(int Width); //Изменить максимальную ширину виджета редактирования
-	void SetVisibleClear(bool Visible);
 
 	void BlinkRed(); //Подсветить поле красным цветом
 	void Blink(const QColor &Color);

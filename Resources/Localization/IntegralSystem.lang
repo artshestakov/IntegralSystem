@@ -886,7 +886,6 @@
   <Local Name="Overview" Russian="Обзор..."/>
   <Local Name="Hide" Russian="Скрыть"/>
   <Local Name="SearchFromINN" Russian="Поиск по ИНН"/>
-  <Local Name="NotFill" Russian="Не заполнено"/>
   <Local Name="Select" Russian="Выбрать"/>
   <Local Name="SelectAll" Russian="Выбрать все"/>
   <Local Name="Range" Russian="Диапазон"/>

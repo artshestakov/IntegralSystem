@@ -141,6 +141,11 @@ void ISLineEdit::SetColorText(const QColor &Color)
 	LineEdit->setPalette(Palette);
 }
 //-----------------------------------------------------------------------------
+void ISLineEdit::SetVisibleClear(bool Visible)
+{
+	LineEdit->SetVisibleClear(Visible);
+}
+//-----------------------------------------------------------------------------
 void ISLineEdit::SetValidator(QValidator *Validator)
 {
 	LineEdit->setValidator(Validator);
@@ -987,7 +992,7 @@ ISWeekDayEdit::~ISWeekDayEdit()
 ISPathEditDir::ISPathEditDir(QWidget *parent) : ISLineEdit(parent)
 {
 	SetReadOnly(true);
-	SetVisibleClear(true); //„тобы кнопка очистки отображалась, пор€док SetReadOnly и SetVisibleClear доллжен быть именно такой
+	SetVisibleClear(true); //„тобы кнопка очистки отображалась, пор€док SetReadOnly и SetVisibleClear должен быть именно такой
 	SetFocusPolicy(Qt::NoFocus);
 
 	ISPushButton *ButtonSelect = new ISPushButton(this);

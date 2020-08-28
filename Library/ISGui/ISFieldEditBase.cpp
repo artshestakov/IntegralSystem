@@ -119,6 +119,14 @@ void ISFieldEditBase::SetSizePolicyVertical(QSizePolicy::Policy PolicyVertical)
 	setSizePolicy(QSizePolicy(sizePolicy().horizontalPolicy(), PolicyVertical));
 }
 //-----------------------------------------------------------------------------
+void ISFieldEditBase::SetVisibleClear(bool Visible)
+{
+	if (ButtonClear)
+	{
+		ButtonClear->setVisible(Visible);
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISFieldEditBase::IsReadOnly() const
 {
 	return ReadOnly;
@@ -137,14 +145,6 @@ void ISFieldEditBase::SetToolTip(const QString &ToolTip)
 void ISFieldEditBase::SetFixedWidth(int Width)
 {
 	EditWidget->setFixedWidth(Width);
-}
-//-----------------------------------------------------------------------------
-void ISFieldEditBase::SetVisibleClear(bool Visible)
-{
-	if (ButtonClear)
-	{
-		ButtonClear->setVisible(Visible);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::BlinkRed()
