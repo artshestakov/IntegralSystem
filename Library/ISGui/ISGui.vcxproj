@@ -206,6 +206,7 @@
     <ClCompile Include="ISDictionaryWord.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
     <ClCompile Include="ISEditsQT.cpp" />
+    <ClCompile Include="ISEmpty.cpp" />
     <ClCompile Include="ISExportCSV.cpp" />
     <ClCompile Include="ISExportDBF.cpp" />
     <ClCompile Include="ISExportForm.cpp" />
@@ -461,6 +462,7 @@
     <QtMoc Include="ISSystemsPanel.h" />
     <QtMoc Include="ISToolBarAccessTable.h" />
     <QtMoc Include="ISUserGroupWidget.h" />
+    <QtMoc Include="ISEmpty.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISTaskListForm.h" />

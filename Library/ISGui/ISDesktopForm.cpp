@@ -26,11 +26,14 @@ ISDesktopForm::ISDesktopForm(QWidget *parent)
 		LabelLogo->setPixmap(ISObjects::Instance().Info.LogoName.isEmpty() ? BUFFER_PIXMAPS("DesktopLogo") : QPixmap(":_" + ISObjects::Instance().Info.Name + '/' + ISObjects::Instance().Info.LogoName));
 		MainLayout->addWidget(LabelLogo, 0, Qt::AlignCenter);
 
-		QLabel *LabelLocalName = new QLabel(this);
-		LabelLocalName->setText(ISObjects::Instance().Info.LocalName);
-		LabelLocalName->setFont(ISDefines::Gui::FONT_TAHOMA_15_BOLD);
-		LabelLocalName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-		MainLayout->addWidget(LabelLocalName, 0, Qt::AlignCenter);
+		if (!ISObjects::Instance().Info.LocalName.isEmpty())
+		{
+			QLabel *LabelLocalName = new QLabel(this);
+			LabelLocalName->setText(ISObjects::Instance().Info.LocalName);
+			LabelLocalName->setFont(ISDefines::Gui::FONT_TAHOMA_15_BOLD);
+			LabelLocalName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+			MainLayout->addWidget(LabelLocalName, 0, Qt::AlignCenter);
+		}
 
 		MainLayout->addStretch();
 	}

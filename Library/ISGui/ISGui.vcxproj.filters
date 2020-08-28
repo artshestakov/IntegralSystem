@@ -82,6 +82,9 @@
     <Filter Include="Controls\TabNavigation">
       <UniqueIdentifier>{55eb325b-7656-478e-859d-3038016d710b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Empty">
+      <UniqueIdentifier>{e0648b57-1356-4d69-a3e9-00354d175eed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISExportForm.cpp">
@@ -516,6 +519,9 @@
     <ClCompile Include="ISSettingFieldWidgets.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
+    <ClCompile Include="ISEmpty.cpp">
+      <Filter>Objects\Empty</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -874,6 +880,9 @@
     </QtMoc>
     <QtMoc Include="ISSettingFieldWidgets.h">
       <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEmpty.h">
+      <Filter>Objects\Empty</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

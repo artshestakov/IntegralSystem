@@ -28,9 +28,11 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 {
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
+	ISObjects::Instance().Info.LocalName.isEmpty() ?
+		setWindowTitle("IntegralSystem: " + ISMetaUser::Instance().UserData->FullName) :
+		setWindowTitle("IntegralSystem - " + ISObjects::Instance().Info.LocalName + " : " + ISMetaUser::Instance().UserData->FullName);
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_ICONS("Logo"));
-	setWindowTitle(QString("IntegralSystem - %1 : %2").arg(ISObjects::Instance().Info.LocalName).arg(ISMetaUser::Instance().UserData->FullName));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
 	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setSpacing(0);
