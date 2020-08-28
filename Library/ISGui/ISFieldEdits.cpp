@@ -1482,7 +1482,8 @@ QVariant ISPhoneEdit::GetValue() const
 //-----------------------------------------------------------------------------
 bool ISPhoneEdit::IsValid() const
 {
-	return GetValue().toString().size() == 10;
+	QString Phone = GetValue().toString();
+	return Phone.size() == 10 || Phone.isEmpty();
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
