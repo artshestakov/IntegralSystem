@@ -264,7 +264,6 @@
     <ClCompile Include="ISPatternActivityForm.cpp" />
     <ClCompile Include="ISPatternWidget.cpp" />
     <ClCompile Include="ISPeriodForm.cpp" />
-    <ClCompile Include="ISPGSettingsForm.cpp" />
     <ClCompile Include="ISPlayerWidget.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
@@ -286,7 +285,6 @@
     <ClCompile Include="ISSelectListForm.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
-    <ClCompile Include="ISSettingTableNameFieldsForm.cpp" />
     <ClCompile Include="ISSliderDuration.cpp" />
     <ClCompile Include="ISSortingBuffer.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
@@ -295,12 +293,10 @@
     <ClCompile Include="ISSqlModelHelper.cpp" />
     <ClCompile Include="ISSqlModelView.cpp" />
     <ClCompile Include="ISStartup.cpp" />
-    <ClCompile Include="ISStatisticTablesForm.cpp" />
     <ClCompile Include="ISStorageFilesListForm.cpp" />
     <ClCompile Include="ISStyleSheet.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
-    <ClCompile Include="ISTableDetailsForm.cpp" />
     <ClCompile Include="ISTabWidgetMain.cpp" />
     <ClCompile Include="ISTaskForm.cpp" />
     <ClCompile Include="ISTaskListForm.cpp" />
@@ -417,16 +413,12 @@
     <QtMoc Include="ISMonitorActivityForm.h" />
     <QtMoc Include="ISParagraphBaseForm.h" />
     <QtMoc Include="ISPatternActivityForm.h" />
-    <QtMoc Include="ISPGSettingsForm.h" />
     <QtMoc Include="ISPrintForm.h" />
     <QtMoc Include="ISProtocolObjectListForm.h" />
     <QtMoc Include="ISRecordInfoForm.h" />
     <QtMoc Include="ISSearchForm.h" />
     <QtMoc Include="ISSettingsForm.h" />
-    <QtMoc Include="ISSettingTableNameFieldsForm.h" />
-    <QtMoc Include="ISStatisticTablesForm.h" />
     <QtMoc Include="ISStorageFilesListForm.h" />
-    <QtMoc Include="ISTableDetailsForm.h" />
     <QtMoc Include="ISTaskForm.h" />
     <QtMoc Include="ISTaskObjectForm.h" />
     <QtMoc Include="ISTaskViewForm.h" />

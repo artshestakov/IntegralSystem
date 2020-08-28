@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISControlDatabaseForm : public ISInterfaceMetaForm
 {
@@ -13,13 +14,19 @@ public:
 
 	void LoadData() override;
 
-protected:
+private:
 	void CreateGeneralTab();
 	void CreatePGSettings();
 	void CreateStatisticTablesForm();
 	void CreateSettingLocalNameFields();
 
 private:
+	void DetailsClicked();
+
+private:
 	QTabWidget *TabWidget;
+
+private:
+	std::vector<ISLineEdit*> Edits;
 };
 //-----------------------------------------------------------------------------

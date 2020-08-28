@@ -354,9 +354,6 @@
     <ClCompile Include="ISPatternActivityForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISPGSettingsForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISPrintForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -372,16 +369,7 @@
     <ClCompile Include="ISSettingsForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISSettingTableNameFieldsForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISStatisticTablesForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISStorageFilesListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTableDetailsForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISTaskForm.cpp">
@@ -722,9 +710,6 @@
     <QtMoc Include="ISPatternActivityForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISPGSettingsForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISPrintForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -740,16 +725,7 @@
     <QtMoc Include="ISSettingsForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISSettingTableNameFieldsForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISStatisticTablesForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISStorageFilesListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTableDetailsForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskForm.h">
