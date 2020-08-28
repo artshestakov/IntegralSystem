@@ -421,8 +421,8 @@
 
   <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
     <Fields>
-      <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" LayoutName="DateShipping" SeparatorName="Отгрузка"/>
-      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="Int" LabelName="Поставщик" LocalListName="Поставщик" LayoutName="DateShipping"/>
+      <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" NotNull="true" LayoutName="DateShipping" SeparatorName="Отгрузка"/>
+      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="Int" LabelName="Поставщик" LocalListName="Поставщик" NotNull="true" LayoutName="DateShipping"/>
       <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="DateArrival" SeparatorName="Прибытие"/>
       <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="Int" LabelName="Склад" LocalListName="Склад" LayoutName="DateArrival"/>
       <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Int" LabelName="Цена" LocalListName="Цена" LayoutName="Price" SeparatorName="Дополнительная информация"/>

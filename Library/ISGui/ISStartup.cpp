@@ -18,7 +18,6 @@
 #include "ISBuffer.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISProperty.h"
-#include "ISMediaPlayer.h"
 #include "ISObjects.h"
 #include "ISQueryPool.h"
 #include "ISProperty.h"

@@ -382,7 +382,6 @@
   <Local Name="Page" Russian="Страница"/>
   <Local Name="InputNumberPage" Russian="Введите номер страницы"/>
   <Local Name="Send" Russian="Отправить"/>
-  <Local Name="Cores" Russian="Ядра"/>
   <Local Name="IncomingCall" Russian="Входящий звонок"/>
   <Local Name="SelectedRecords" Russian="Выбрано записей"/>
   <Local Name="SelectFrom" Russian="Выборка по"/>
@@ -396,13 +395,6 @@
   <Local Name="Call.Whom" Russian="Кому"/>
   <Local Name="Call.Duration" Russian="Общая длительность"/>
   <Local Name="Call.Status" Russian="Статус звонка"/>
-  <Local Name="Player.Play" Russian="Воспроизвести"/>
-  <Local Name="Player.Pause" Russian="Приостановить"/>
-  <Local Name="Player.Stop" Russian="Стоп"/>
-  <Local Name="Player.Previous" Russian="Промотать назад на 10 секунд"/>
-  <Local Name="Player.Next" Russian="Промотать вперед на 10 секунд"/>
-  <Local Name="Player.Volume.On" Russian="Включить звук"/>
-  <Local Name="Player.Volume.Off" Russian="Выключить звук"/>
   <Local Name="TimeAlert" Russian="Время уведомления"/>
   <Local Name="OverdueEvent" Russian="Просроченное событие"/>
   <Local Name="EnteringSearchQuery" Russian="Введите поисковый запрос"/>
@@ -485,7 +477,6 @@
   <Local Name="ClickFromSelectNumberPage" Russian="Нажмите, чтобы выбрать номер страницы и перейти на неё."/>
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
-  <Local Name="ClickFromIncludeAndExcludeCore" Russian="Нажмите, чтобы включить или отключить ядро."/>
   <Local Name="ClickFromCheckLevelVolume" Russian="Нажмите, чтобы проверить уровень громкости"/>
   <Local Name="LoadDataPleceWait" Russian="Загрузка данных. Пожалуйста, подождите..."/>
   <Local Name="RecordMarkerIsDeleted" Russian="Запись помечена на удаление"/>
@@ -800,13 +791,6 @@
   <Local Name="ContextMenu.Image.Paste" Russian="Вставить"/>
   <Local Name="ContextMenu.Image.Paste.ToolTip" Russian="Вставить изображение из буфера обмена"/>
   <Local Name="ContextMenu.Image.PasteFromLink" Russian="Вставить по ссылке"/>
-
-  <!--MediaPlayerError-->
-  <Local Name="QMediaPlayer.Error.ResourceError" Russian="Медиа-ресурс не может быть разрешен"/>
-  <Local Name="QMediaPlayer.Error.FormatError" Russian="Формат медиа-ресурса не поддерживается. Воспроизведение может быть возможно, но без аудио- или видеокомпонентов"/>
-  <Local Name="QMediaPlayer.Error.NetworkError" Russian="Сетевая ошибка"/>
-  <Local Name="QMediaPlayer.Error.AccessDeniedError" Russian="Не существует соответствующих разрешений для воспроизведения медиа-ресурса"/>
-  <Local Name="QMediaPlayer.Error.ServiceMissingError" Russian="Действительная служба воспроизведения не найдена, воспроизведение не может продолжаться"/>
 
   <!--Reduction (сокращения)-->
   <Local Name="Reduction.SerialNumber" Russian="№ п/п"/>

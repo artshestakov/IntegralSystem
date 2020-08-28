@@ -12,7 +12,6 @@
 #include "ISCalendarForm.h"
 #include "ISTaskForm.h"
 #include "ISProtocolListForm.h"
-#include "ISCaratForm.h"
 #include "ISInternalDirectoriesForm.h"
 #include "ISAsteriskCallsListForm.h"
 #include "ISTaskListForm.h"
@@ -46,7 +45,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISCalendarForm*>("ISCalendarForm");
 	qRegisterMetaType<ISTaskForm*>("ISTaskForm");
 	qRegisterMetaType<ISProtocolListForm*>("ISProtocolListForm");
-	qRegisterMetaType<ISCaratForm*>("ISCaratForm");
 	qRegisterMetaType<ISInternalDirectoriesForm*>("ISInternalDirectoriesForm");
 	qRegisterMetaType<ISAsteriskCallsListForm*>("ISAsteriskCallsListForm");
 	qRegisterMetaType<ISTaskListForm*>("ISTaskListForm");

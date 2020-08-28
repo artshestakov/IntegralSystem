@@ -73,9 +73,6 @@
     <Filter Include="Controls\MailCalendar">
       <UniqueIdentifier>{987e1b34-e92a-423a-a866-f03a56410943}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Controls\Player">
-      <UniqueIdentifier>{55d69ee3-44f5-4bf9-8d3d-99ca563ecb0b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Controls\SearchCondition">
       <UniqueIdentifier>{8598752d-2a09-41ac-af98-1dbd42776702}</UniqueIdentifier>
     </Filter>
@@ -120,9 +117,6 @@
     <ClCompile Include="ISListBaseForm.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISListViewWidget.cpp">
-      <Filter>Common Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISObjectFormBase.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
@@ -160,9 +154,6 @@
       <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="ISSqlModelHelper.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSqlModelView.cpp">
       <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="ISModelThreadQuery.cpp">
@@ -264,9 +255,6 @@
     <ClCompile Include="ISGui.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISMediaPlayer.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISMetaSystemsEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -307,9 +295,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISCalendarObjectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCaratForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISConnectionForm.cpp">
@@ -410,12 +395,6 @@
     </ClCompile>
     <ClCompile Include="ISCalendarPanel.cpp">
       <Filter>Controls\MailCalendar</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPlayerWidget.cpp">
-      <Filter>Controls\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSliderDuration.cpp">
-      <Filter>Controls\Player</Filter>
     </ClCompile>
     <ClCompile Include="ISComboSearchWidgets.cpp">
       <Filter>Controls\SearchCondition</Filter>
@@ -545,9 +524,6 @@
     <QtMoc Include="ISListBaseForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISListViewWidget.h">
-      <Filter>Common Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISObjectFormBase.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
@@ -582,9 +558,6 @@
       <Filter>Layouts</Filter>
     </QtMoc>
     <QtMoc Include="ISSqlModelCore.h">
-      <Filter>Model</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSqlModelView.h">
       <Filter>Model</Filter>
     </QtMoc>
     <QtMoc Include="ISModelThreadQuery.h">
@@ -641,9 +614,6 @@
     <QtMoc Include="ISDaDataService.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISMediaPlayer.h">
-      <Filter>System</Filter>
-    </QtMoc>
     <QtMoc Include="ISAboutForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -663,9 +633,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCaratForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISConnectionForm.h">
@@ -766,12 +733,6 @@
     </QtMoc>
     <QtMoc Include="ISCalendarPanel.h">
       <Filter>Controls\MailCalendar</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPlayerWidget.h">
-      <Filter>Controls\Player</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSliderDuration.h">
-      <Filter>Controls\Player</Filter>
     </QtMoc>
     <QtMoc Include="ISComboSearchWidgets.h">
       <Filter>Controls\SearchCondition</Filter>

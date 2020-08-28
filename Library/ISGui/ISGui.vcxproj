@@ -106,7 +106,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;DEBUG;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtPrintSupport\;$(QTDIR)\include\QtSerialPort\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtPrintSupport\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -125,7 +125,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;DEBUG;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtSerialPort\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -143,7 +143,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtPrintSupport\;$(QTDIR)\include\QtSerialPort\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtPrintSupport\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -162,7 +162,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtSerialPort\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -190,7 +190,6 @@
     <ClCompile Include="ISCalendarPanel.cpp" />
     <ClCompile Include="ISCalendarPopup.cpp" />
     <ClCompile Include="ISCalendarWidget.cpp" />
-    <ClCompile Include="ISCaratForm.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboSearchWidgets.cpp" />
     <ClCompile Include="ISConnectionForm.cpp" />
@@ -237,10 +236,8 @@
     <ClCompile Include="ISLabels.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
     <ClCompile Include="ISListIndicatorWidget.cpp" />
-    <ClCompile Include="ISListViewWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
-    <ClCompile Include="ISMediaPlayer.cpp" />
     <ClCompile Include="ISMedTech.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
     <ClCompile Include="ISMessageBox.cpp" />
@@ -264,7 +261,6 @@
     <ClCompile Include="ISPatternActivityForm.cpp" />
     <ClCompile Include="ISPatternWidget.cpp" />
     <ClCompile Include="ISPeriodForm.cpp" />
-    <ClCompile Include="ISPlayerWidget.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
     <ClCompile Include="ISPrintingBase.cpp" />
@@ -285,13 +281,11 @@
     <ClCompile Include="ISSelectListForm.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
-    <ClCompile Include="ISSliderDuration.cpp" />
     <ClCompile Include="ISSortingBuffer.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSplashWidget.cpp" />
     <ClCompile Include="ISSqlModelCore.cpp" />
     <ClCompile Include="ISSqlModelHelper.cpp" />
-    <ClCompile Include="ISSqlModelView.cpp" />
     <ClCompile Include="ISStartup.cpp" />
     <ClCompile Include="ISStorageFilesListForm.cpp" />
     <ClCompile Include="ISStyleSheet.cpp" />
@@ -350,9 +344,6 @@
     <QtMoc Include="ISListBaseForm.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISListViewWidget.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="ISObjectFormBase.h" />
   </ItemGroup>
   <ItemGroup>
@@ -398,7 +389,6 @@
     <QtMoc Include="ISCalendarEventForm.h" />
     <QtMoc Include="ISCalendarForm.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />
-    <QtMoc Include="ISCaratForm.h" />
     <QtMoc Include="ISConnectionForm.h" />
     <QtMoc Include="ISControlDatabaseForm.h" />
     <QtMoc Include="ISDesktopForm.h" />
@@ -431,8 +421,6 @@
     <QtMoc Include="ISCalendarEventItem.h" />
     <QtMoc Include="ISCalendarEventsWidget.h" />
     <QtMoc Include="ISCalendarPanel.h" />
-    <QtMoc Include="ISPlayerWidget.h" />
-    <QtMoc Include="ISSliderDuration.h" />
     <QtMoc Include="ISComboSearchWidgets.h" />
     <QtMoc Include="ISTabBarMain.h" />
     <QtMoc Include="ISTabWidgetMain.h" />
@@ -485,7 +473,6 @@
     <ClInclude Include="ISHtmlQuery.h" />
     <QtMoc Include="ISMedTech.h" />
     <QtMoc Include="ISObjectInterface.h" />
-    <QtMoc Include="ISMediaPlayer.h" />
     <ClInclude Include="ISMetaSystemsEntity.h" />
     <ClInclude Include="ISObjectModel.h" />
     <QtMoc Include="ISRangeEditBase.h" />
@@ -506,7 +493,6 @@
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISModelThreadQuery.h" />
     <ClInclude Include="ISSqlModelHelper.h" />
-    <QtMoc Include="ISSqlModelView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
