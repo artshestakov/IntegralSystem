@@ -12,11 +12,9 @@ public:
 	ISConnectionForm();
 	virtual ~ISConnectionForm();
 
-protected:
+private:
 	void AfterShowEvent() override;
 	void EnterClicked() override;
-
-private:
 	void SaveSettings(); //Программное сохранение настроек
 	bool CheckFields(); //Проверка на заполнение полей
 
@@ -24,6 +22,7 @@ private:
 	ISLineEdit *EditServer;
 	ISIntegerEdit *EditPort;
 	ISLineEdit *EditDatabase;
+	ISPathEditDir *EditUpdateDir;
 
 	ISCheckEdit *EditProtocolUse;
 	ISCheckEdit *EditProtocolAuth;

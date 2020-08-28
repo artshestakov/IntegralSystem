@@ -57,6 +57,7 @@
   <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.UserPasswordDeleted" Russian="Пароль пользователя успешно удалён."/>
+  <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК чтобы начать её установку."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
   <Local Name="Message.Error.ConnectionSetting.Input.DatabaseNameEmpty" Russian="В настройках подключения к базе данных не указано имя базы данных."/>
@@ -198,6 +199,7 @@
   <Local Name="Message.Warning.CurrentTaskHaveSubTasks" Russian="Вы не можете преобразовать эту задачу в подзадачу, т.к. она имеет подзадачи."/>
   <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
+  <Local Name="Message.Warning.StartInstallUpdate" Russian="ВНИМАНИЕ! Программа обнаружила обновление, но запустить его установку в автоматическом режиме не удалось. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
@@ -491,9 +493,6 @@
   <Local Name="ClickFromViewList" Russian="Чтобы просмотреть справочник, нажмите на соответствующий пункт слева."/>
   <Local Name="ClickFromViewMyLLastSearchQuery" Russian="Нажмите, чтобы увидеть Ваши последние поисковые запросы"/>
   <Local Name="ClickFromGoMainJournal" Russian="Нажмите, чтобы перейти в основной журнал"/>
-  <Local Name="ConnectionForm.Hint.Server" Russian="В этом поле укажите IP-адрес сервера, на котором находится база данных программы."/>
-  <Local Name="ConnectionForm.Hint.Port" Russian="В этом поле укажите порт, по которому будет происходить подключение к базе данных."/>
-  <Local Name="ConnectionForm.Hint.Database" Russian="В этом поле укажите наименование базы данных, подключение к которой требуется."/>
   <Local Name="ISImportantEditToolTip" Russian="Отметьте этот флажок, чтобы другие пользователи видели, что эта задача является важной."/>
   <Local Name="NotEventsWithSelectedDay" Russian="События на выбранный день отсутствуют"/>
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
@@ -850,6 +849,7 @@
   <Local Name="Server" Russian="Сервер"/>
   <Local Name="Port" Russian="Порт"/>
   <Local Name="DatabaseName" Russian="Имя базы данных"/>
+  <Local Name="UpdateDir" Russian="Путь к папке с обновлениями"/>
   <Local Name="Information" Russian="Информация"/>
   <Local Name="Warning" Russian="Предупреждение"/>
   <Local Name="Question" Russian="Вопрос"/>

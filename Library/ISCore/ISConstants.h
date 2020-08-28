@@ -335,6 +335,7 @@ const char CONST_UID_SETTING_OTHER_TIME_FORMAT[] = "{B404CED9-B5FF-45A6-833F-C60
 const char CONST_CONFIG_CONNECTION_SERVER[] = "Connection/Server";
 const char CONST_CONFIG_CONNECTION_PORT[] = "Connection/Port";
 const char CONST_CONFIG_CONNECTION_DATABASE[] = "Connection/Database";
+const char CONST_CONFIG_CONNECTION_UPDATE_DIR[] = "Connection/UpdateDir";
 const char CONST_CONFIG_CONNECTION_LOGIN[] = "Connection/Login";
 const char CONST_CONFIG_CONNECTION_PASSWORD[] = "Connection/Password";
 const char CONST_CONFIG_REMEMBER_USER_INCLUDE[] = "RememberUser/Include";

@@ -11,6 +11,7 @@
 #include "ISMessageBox.h"
 #include "ISGui.h"
 #include "ISMetaUser.h"
+#include "ISVersion.h"
 //-----------------------------------------------------------------------------
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
@@ -208,6 +209,12 @@ void ISAuthForm::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISAuthForm::Input()
 {
+	if (CheckUpdate())
+	{
+		close();
+		return;
+	}
+
 	if (Check())
 	{
 		SetConnecting(true);
@@ -355,5 +362,34 @@ void ISAuthForm::ClearFields()
 	EditLogin->Clear();
 	EditPassword->Clear();
 	EditLogin->SetFocus();
+}
+//-----------------------------------------------------------------------------
+bool ISAuthForm::CheckUpdate()
+{
+	QString UpdateDir = CONFIG_STRING(CONST_CONFIG_CONNECTION_UPDATE_DIR);
+	bool result = !UpdateDir.isEmpty();
+	if (result)
+	{
+		QFileInfoList FileInfoList = QDir(UpdateDir).entryInfoList(QStringList() << "*.exe", QDir::Files, QDir::Name);
+		for (const QFileInfo &FileInfo : FileInfoList)
+		{
+			QString FileName = FileInfo.fileName();
+			QStringList StringList = FileName.split(SYMBOL_POINT);
+			if (StringList.size() == 4)
+			{
+				if (StringList[2].toInt() > ISVersion::Instance().Info.Revision)
+				{
+					ISMessageBox::ShowInformation(this, LANG("Message.Information.FoundNewAppVersion"));
+					QString FilePath = FileInfo.filePath();
+					result = QProcess::startDetached(FilePath, QStringList() << "/SILENT" << "/NOCANCEL");
+					if (!result)
+					{
+						ISMessageBox::ShowWarning(this, LANG("Message.Warning.StartInstallUpdate").arg(FilePath));
+					}
+				}
+			}
+		}
+	}
+	return result;
 }
 //-----------------------------------------------------------------------------

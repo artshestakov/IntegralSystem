@@ -15,32 +15,21 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 	QFormLayout *FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);
 
-	QLabel *LabelServer = new QLabel(this);
-	LabelServer->setText(LANG("Server") + ':');
-	LabelServer->setToolTip(LANG("ConnectionForm.Hint.Server"));
-	LabelServer->setCursor(CURSOR_WHATS_THIS);
-
 	EditServer = new ISLineEdit(this);
 	EditServer->SetValue(CONFIG_VALUE(CONST_CONFIG_CONNECTION_SERVER));
-	FormLayout->addRow(LabelServer, EditServer);
-
-	QLabel *LabelPort = new QLabel(this);
-	LabelPort->setText(LANG("Port") + ':');
-	LabelPort->setToolTip(LANG("ConnectionForm.Hint.Port"));
-	LabelPort->setCursor(CURSOR_WHATS_THIS);
+	FormLayout->addRow(LANG("Server") + ':', EditServer);
 
 	EditPort = new ISIntegerEdit(this);
 	EditPort->SetValue(CONFIG_VALUE(CONST_CONFIG_CONNECTION_PORT));
-	FormLayout->addRow(LabelPort, EditPort);
-
-	QLabel *LabelDatabase = new QLabel(this);
-	LabelDatabase->setText(LANG("DatabaseName") + ':');
-	LabelDatabase->setToolTip(LANG("ConnectionForm.Hint.Database"));
-	LabelDatabase->setCursor(CURSOR_WHATS_THIS);
+	FormLayout->addRow(LANG("Port") + ':', EditPort);
 
 	EditDatabase = new ISLineEdit(this);
 	EditDatabase->SetValue(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
-	FormLayout->addRow(LabelDatabase, EditDatabase);
+	FormLayout->addRow(LANG("DatabaseName") + ':', EditDatabase);
+
+	EditUpdateDir = new ISPathEditDir(this);
+	EditUpdateDir->SetValue(CONFIG_STRING(CONST_CONFIG_CONNECTION_UPDATE_DIR));
+	FormLayout->addRow(LANG("UpdateDir") + ':', EditUpdateDir);
 
 	EditProtocolUse = new ISCheckEdit(this);
 	EditProtocolUse->SetValue(CONFIG_BOOL("Protocol/Use"));
@@ -87,6 +76,7 @@ void ISConnectionForm::SaveSettings()
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
+		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_UPDATE_DIR, EditUpdateDir->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Use", EditProtocolUse->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Auth", EditProtocolAuth->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Host", EditProtocolHost->GetValue());
