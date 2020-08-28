@@ -793,7 +793,7 @@
   <Local Name="ContextMenu.Image.PasteFromLink" Russian="Вставить по ссылке"/>
 
   <!--Reduction (сокращения)-->
-  <Local Name="Reduction.SerialNumber" Russian="№ п/п"/>
+  <Local Name="Reduction.SerialNumber" Russian="п/п"/>
 
   <!--DateTime-->
   <Local Name="NextMouth" Russian="Следующий месяц"/>

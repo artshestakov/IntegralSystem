@@ -1,10 +1,25 @@
 ﻿QTableView
 {
-	selection-background-color: rgb(81, 145, 189);
-    selection-color: white;
+	selection-background-color: rgb(188, 220, 244);
+    selection-color: black;
 }
 
-QTableView::item:focus
+QHeaderView::section::horizontal:checked
 {
-    selection-background-color: rgb(75, 135, 170);
+	font-weight:bold;
+}
+
+QHeaderView::section::horizontal
+{
+    background-color: rgb(81, 145, 189);
+    color: white;
+    padding-left: 4px;
+    border: 0px solid rgb(216, 216, 216);
+    border-top: 0px;
+    border-bottom: 0px;
+}
+
+QHeaderView::section::horizontal:hover
+{
+    background-color: rgb(65, 117, 152);
 }

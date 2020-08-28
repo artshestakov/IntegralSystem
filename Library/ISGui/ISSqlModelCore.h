@@ -43,7 +43,6 @@ protected:
 
 	bool GetIsSystem(int RowIndex) const; //Получить статус системной записи
 	bool GetIsDeleted(int RowIndex) const; //Получить статус удаленной записи
-	QIcon GetSortingIcon(int Section) const; //Получить иконку сортировки
 
 private:
 	PMetaTable *MetaTable; //Мета-таблица

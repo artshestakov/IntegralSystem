@@ -17,8 +17,8 @@ ISSqlModelCore::ISSqlModelCore(PMetaTable *meta_table, QObject *parent)
 	IsSystemIndex(-1),
 	IsDeletedIndex(-1),
 	ShowToolTip(false),
-	IconSortingUp(BUFFER_ICONS("Arrow.Up")),
-	IconSortingDown(BUFFER_ICONS("Arrow.Down"))
+	IconSortingUp(BUFFER_ICONS("Table.Sorting.Up")),
+	IconSortingDown(BUFFER_ICONS("Table.Sorting.Down"))
 {
 	
 }
@@ -211,7 +211,10 @@ QVariant ISSqlModelCore::headerData(int Section, Qt::Orientation Orientation, in
 		}
 		else if (Role == Qt::DecorationRole) //Отображение иконки сортируемого столбца
 		{
-			Value = GetSortingIcon(Section);
+			if (Section == SortingColumn)
+			{
+				Value = SortingOrder == Qt::AscendingOrder ? IconSortingUp : IconSortingDown;
+			}
 		}
 		else if (Role == Qt::UserRole) //Отображение наименования столбца
 		{
@@ -300,22 +303,5 @@ bool ISSqlModelCore::GetIsSystem(int RowIndex) const
 bool ISSqlModelCore::GetIsDeleted(int RowIndex) const
 {
 	return Records[RowIndex].value("IsDeleted").toBool();
-}
-//-----------------------------------------------------------------------------
-QIcon ISSqlModelCore::GetSortingIcon(int Section) const
-{
-	QIcon SortingIcon;
-	if (Section == SortingColumn)
-	{
-		if (SortingOrder == Qt::AscendingOrder)
-		{
-			SortingIcon = IconSortingUp;
-		}
-		else if (SortingOrder == Qt::DescendingOrder)
-		{
-			SortingIcon = IconSortingDown;
-		}
-	}
-	return SortingIcon;
 }
 //-----------------------------------------------------------------------------
