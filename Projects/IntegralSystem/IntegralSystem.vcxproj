@@ -123,7 +123,7 @@
       <AdditionalDependencies>ISCore.lib;ISGui.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5PrintSupportd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(SolutionDir)Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(SolutionDir)Resources\Localization\Configurator.lang $(SolutionDir)Resources\Localization\IntegralSystem.lang $(SolutionDir)Resources\Localization\Objects.lang -D $(SolutionDir)Library\ISCarat $(SolutionDir)Library\ISCore $(SolutionDir)Library\ISGui $(SolutionDir)Projects\Carat $(SolutionDir)Projects\CaratWorker $(SolutionDir)Projects\Configurator $(SolutionDir)Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\Configurator.lang $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISGui $(ProjectDir)..\..\Projects\Carat $(ProjectDir)..\..\Projects\CaratWorker $(ProjectDir)..\..\Projects\Configurator $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -144,6 +144,9 @@
       <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;ISGui.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5PrintSupportd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\Configurator.lang $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISGui $(ProjectDir)..\..\Projects\Carat $(ProjectDir)..\..\Projects\CaratWorker $(ProjectDir)..\..\Projects\Configurator $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -162,6 +165,9 @@
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;ISGui.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5PrintSupport.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\Configurator.lang $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISGui $(ProjectDir)..\..\Projects\Carat $(ProjectDir)..\..\Projects\CaratWorker $(ProjectDir)..\..\Projects\Configurator $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -181,6 +187,9 @@
       <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;ISGui.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5PrintSupport.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\Configurator.lang $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISGui $(ProjectDir)..\..\Projects\Carat $(ProjectDir)..\..\Projects\CaratWorker $(ProjectDir)..\..\Projects\Configurator $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

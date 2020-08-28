@@ -33,7 +33,6 @@ CALL GenerateBuildInfo.cmd %CONFIGURATION% %PLATFORM% %MAJOR% %MINOR% %REVISION%
 REM Компиляция библиотек
 CALL BuildItem.cmd Library ISCore %CONFIGURATION% %PLATFORM%
 CALL BuildItem.cmd Library ISGui %CONFIGURATION% %PLATFORM%
-CALL BuildItem.cmd Library ISCarat %CONFIGURATION% %PLATFORM%
 
 REM Компиляция проектов
 CALL BuildItem.cmd Projects Carat %CONFIGURATION% %PLATFORM%

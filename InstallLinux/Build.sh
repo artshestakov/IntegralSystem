@@ -25,7 +25,6 @@ REVISION=$(git rev-list --all --count)
 
 #Компиляция библиотек
 ./BuildItem.sh Library ISCore $CONFIGURATION $PLATFORM lib
-./BuildItem.sh Library ISCarat $CONFIGURATION $PLATFORM lib
 
 #Компиляция проектов
 ./BuildItem.sh Projects Carat $CONFIGURATION $PLATFORM

@@ -41,7 +41,6 @@ Filename: "{app}\Configurator.exe"; Description: "Запустить конфи�
 
 [Files]
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCarat.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\Carat.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\CaratWorker.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\Configurator.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;

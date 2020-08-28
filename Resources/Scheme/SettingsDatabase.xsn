@@ -36,13 +36,6 @@
       <Field UID="{333EC997-E589-402B-A9D1-B8C570639EAC}" Name="ICQ" Type="String" LabelName="ICQ" LocalListName="ICQ"/>
       <Field UID="{49EA422F-605C-4BC0-A2EA-4237861E8341}" Name="ContactPerson" Type="String" LabelName="Контактное лицо" LocalListName="Контактное лицо"/>
       <Field UID="{44128138-313F-43AE-B49B-2066F39D3381}" Name="PhoneContactPerson" Type="Phone" LabelName="Телефон контактного лица" LocalListName="Телефон контактного лица"/>
-
-      <!--Телефония - Asterisk-->
-      <Field UID="{57866504-A45D-4C1E-8A1B-EFEB03A0921E}" Name="AsteriskServer" Type="String" LabelName="Сервер Asterisk" LocalListName="Сервер Asterisk" SeparatorName="IP-Телефония (Asterisk)" Hint="Адрес сервера на котором установлен программный комплекс Asterisk."/>
-      <Field UID="{96CAD547-D7C7-4108-AA02-88BFE3D395E9}" Name="AsteriskPort" Type="Int" LabelName="Порт" LocalListName="Порт" Hint="Порт по которому разрешено подключение к программному комплексу Asterisk."/>
-      <Field UID="{D825A46E-50A4-43B7-A171-791A46C72139}" Name="AsteriskLogin" Type="String" LabelName="Логин AMI" LocalListName="Логин AMI" Hint="Логин от учётной записи Asterisk Manager API."/>
-      <Field UID="{4C4CF432-5AE8-4FFE-BB31-111EBD99D92A}" Name="AsteriskPassword" Type="Password" LabelName="Пароль AMI" LocalListName="Пароль AMI" Hint="Пароль от учётной записи Asterisk Manager API."/>
-      <Field UID="{0B1A942F-2409-4E36-B460-1A69868968AB}" Name="AsteriskDigitNumbers" Type="Int" LabelName="Максимальная длина внутреннего номера" LocalListName="Максимальная длина внутреннего номера" Hint="Укажите максимальную длину внутренних номеров абонентов, это параметр обязателен для заполнения."/>
       
       <!--Логотип-->
       <Field UID="{9684C2D8-B880-4C38-A3AD-33663F1CA706}" Name="Logo" Type="Image" LabelName="Логотип организации" LocalListName="Логотип организации" ControlWidget="ISImageEdit" SeparatorName="Логотип"/>
@@ -83,11 +76,6 @@
       <Index Field="ICQ"/>
       <Index Field="ContactPerson"/>
       <Index Field="PhoneContactPerson"/>
-      <Index Field="AsteriskServer"/>
-      <Index Field="AsteriskPort"/>
-      <Index Field="AsteriskLogin"/>
-      <Index Field="AsteriskPassword"/>
-      <Index Field="AsteriskDigitNumbers"/>
       <Index Field="Logo"/>
       <Index Field="LogoSmall"/>
       <Index Field="InformationMessage"/>
