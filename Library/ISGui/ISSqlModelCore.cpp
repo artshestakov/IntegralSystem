@@ -167,7 +167,7 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 	}
 	else if (Role == Qt::ToolTipRole && ShowToolTip) //Роль отображения подсказки для ячейки (ToolTip)
 	{
-		if (FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray || FieldType == ISNamespace::FT_CallDetails)
+		if (FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray)
 		{
 			return QString();
 		}

@@ -41,11 +41,6 @@
 
   <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="7" System="true"/>
   <_Settings IsSystem="true" UID="{B03FBAC5-F793-4565-92A3-821C87AE3B56}" Group="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Order="1" Name="NoteViewType" Type="String" WidgetEditName="ISComboCalendarNoteType" LocalName="Отображение примечаний" DefaultValue="ToolTip"/>
-
-  <_SettingsGroup IsSystem="true" UID="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Name="Telephony" LocalName="Телефония" IconName="Settings.Telephony" Order="8" System="true"/>
-  <_Settings IsSystem="true" UID="{BDB8F660-4014-4A16-913C-94E8C02B7630}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="1" Name="IncomingFormPosition" Type="String" WidgetEditName="ISComboIncomingFormPosition" LocalName="Расположение формы входящего звонка" DefaultValue="Center"/>
-  <_Settings IsSystem="true" UID="{10FDBAF9-2E4D-4480-9CFF-ED87E8B31A59}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="2" Name="AutoCloseIncomingForm" Type="Bool" LocalName="Автоматически закрывать форму входящего звонка" DefaultValue="true"/>
-  <_Settings IsSystem="true" UID="{0C9AAC0D-1BDD-4FD9-BEB8-80FAF90D5FDE}" Group="{5F122A7F-1E74-4935-88CC-3154E3C207AD}" Order="3" Name="AutoCloseIncomingFormTimeout" Type="Int" LocalName="Таймаут закрытия формы входящего звонка (сек.)" DefaultValue="15"/>
   
   <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="Device" LocalName="Устройства" IconName="Settings.Device" Order="9" System="true"/>
   

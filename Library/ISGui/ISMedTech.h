@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISObjectInterface.h"
 #include "ISListBaseForm.h"
-#include "ISAsteriskCallsListForm.h"
+//#include "ISAsteriskCallsListForm.h"
 //-----------------------------------------------------------------------------
 namespace ISMedTech
 {
@@ -50,7 +50,7 @@ namespace ISMedTech
 
 	private:
 		RatingListForm *RatingListForm;
-		ISAsteriskCallsListForm *AsteriskCallsListForm;
+		//ISAsteriskCallsListForm *AsteriskCallsListForm;
 		bool CDRLoadData;
 	};
 }

@@ -231,14 +231,10 @@ struct PMetaUserPermission
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISConfigurationItem
 {
-    ISConfigurationItem() : IsValid(false) { }
-
-    bool IsValid; //Валидность конфигурации
     ISUuid UID; //Идентификатор
     QString Name; //Наименование
     QString LocalName; //Локальное наименование
     QString DesktopForm; //Имя класса рабочего стола
-    QString IncomingCallForm; //Имя класса формы входящего звонка
 	QDate DateExpired; //Дата, после которой программа запускаться не должна
 	QString LogoName;
 };

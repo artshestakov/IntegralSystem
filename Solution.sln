@@ -74,8 +74,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{3C2C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheme", "Scheme", "{EDC6FC6C-ABB5-41F9-AC2E-CD3A3788902C}"
 	ProjectSection(SolutionItems) = preProject
-		Resources\Scheme\Asterisk.xsn = Resources\Scheme\Asterisk.xsn
-		Resources\Scheme\Asterisk.xsr = Resources\Scheme\Asterisk.xsr
 		Resources\Scheme\Countries.xsr = Resources\Scheme\Countries.xsr
 		Resources\Scheme\Currency.xsr = Resources\Scheme\Currency.xsr
 		Resources\Scheme\Functions.xsf = Resources\Scheme\Functions.xsf
@@ -209,7 +207,7 @@ Global
 		{3BE791E4-23C3-4D11-A390-9964ED39A461} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 		Qt5Version = 58_msvc2015
+		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 	EndGlobalSection
 EndGlobal

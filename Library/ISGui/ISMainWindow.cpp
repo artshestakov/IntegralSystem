@@ -18,7 +18,6 @@
 #include "ISParagraphEntity.h"
 #include "ISPopupMessage.h"
 #include "ISCreatedObjectsEntity.h"
-#include "ISIncomingCallBaseForm.h"
 #include "ISObjects.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
@@ -139,14 +138,6 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 	CurrentParagraphUID = ParagraphUID;
 	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_PARAGRAPH, QString(), QString(), QVariant(), ISParagraphEntity::Instance().GetParagraph(ParagraphUID)->LocalName);
 	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::IncomingCall(const QVariantMap &VariantMap)
-{
-	ISGui::SetWaitGlobalCursor(true);
-	ISIncomingCallBaseForm *IncomingCallForm = ISAlgorithm::CreatePointer<ISIncomingCallBaseForm *>(ISObjects::Instance().Info.IncomingCallForm, Q_ARG(const QVariantMap &, VariantMap));
-	ISGui::SetWaitGlobalCursor(false);
-	IncomingCallForm->Exec();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::EscapeClicked()

@@ -38,7 +38,6 @@ public:
         FT_Volume, //Громкость
         FT_Birthday, //Дата рождения
         FT_Seconds, //Секунды
-        FT_CallDetails, //Подробности звонка
         FT_Month, //Месяц
         FT_Url, //Ссылка
         FT_File, //Файл
@@ -143,14 +142,6 @@ public:
         MWD_Center, //Центр экрана
     };
 
-    enum TelephonyForm
-    {
-        TF_Journal,
-        TF_Summary,
-        TF_Pattern,
-        TF_Activity,
-    };
-
     enum DebugMessageType //Тип отладочоного сообщения
     {
         DMT_Unknown, //Неизвестное
@@ -184,7 +175,6 @@ Q_DECLARE_METATYPE(ISNamespace::ReportType);
 Q_DECLARE_METATYPE(ISNamespace::QueryModelType);
 Q_DECLARE_METATYPE(ISNamespace::PeriodType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
-Q_DECLARE_METATYPE(ISNamespace::TelephonyForm);
 Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
 Q_DECLARE_METATYPE(ISNamespace::RangeDatePeriod);
 //-----------------------------------------------------------------------------

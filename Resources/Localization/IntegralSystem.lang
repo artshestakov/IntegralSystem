@@ -52,7 +52,6 @@
   <Local Name="Message.Information.CreatedPasswordUser" Russian="Пароль пользователя успешно изменен!"/>
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
-  <Local Name="Message.Information.NotFoundChildCalls" Russian="Подробностей по выбранному звонку нет."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
@@ -382,36 +381,24 @@
   <Local Name="Page" Russian="Страница"/>
   <Local Name="InputNumberPage" Russian="Введите номер страницы"/>
   <Local Name="Send" Russian="Отправить"/>
-  <Local Name="IncomingCall" Russian="Входящий звонок"/>
   <Local Name="SelectedRecords" Russian="Выбрано записей"/>
   <Local Name="SelectFrom" Russian="Выборка по"/>
   <Local Name="Age" Russian="Возраст"/>
   <Local Name="AgeNotSelected" Russian="Не указан"/>
-  <Local Name="Back" Russian="Назад"/>
-  <Local Name="TransferCall" Russian="Переводы звонка"/>
-  <Local Name="Call.DateTime" Russian="Дата и время звонка"/>
-  <Local Name="Call.Direction" Russian="Направление"/>
-  <Local Name="Call.Subscriber" Russian="Абонент"/>
-  <Local Name="Call.Whom" Russian="Кому"/>
-  <Local Name="Call.Duration" Russian="Общая длительность"/>
-  <Local Name="Call.Status" Russian="Статус звонка"/>
   <Local Name="TimeAlert" Russian="Время уведомления"/>
   <Local Name="OverdueEvent" Russian="Просроченное событие"/>
   <Local Name="EnteringSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="Edit" Russian="Изменить"/>
-  <Local Name="CallDetails" Russian="Подробности звонка"/>
   <Local Name="ListIsEmpty" Russian="Справочник пуст"/>
   <Local Name="OpenUrlLink" Russian="Посетить ссылку"/>
   <Local Name="Rename" Russian="Переименовать"/>
   <Local Name="Renaming" Russian="Переименование"/>
-  <Local Name="CallStatuses" Russian="Статусы звонка"/>
   <Local Name="GeneralInformation" Russian="Общая информация"/>
   <Local Name="StatisticTables" Russian="Статистика таблиц"/>
   <Local Name="SettingNameFields" Russian="Настройка имен полей"/>
   <Local Name="SettingsDatabase" Russian="Настройки базы данных"/>
   <Local Name="SelectDialog.Title.Single" Russian="Выберите одну запись из списка ниже"/>
   <Local Name="SelectDialog.Title.Multi" Russian="Выберите несколько записей из списка ниже"/>
-  <Local Name="InfoAboutCall" Russian="Информация о звонке"/>
   <Local Name="PG_Settings" Russian="Параметры СУБД"/>
   <Local Name="ImageSize" Russian="Размер изображения"/>
   <Local Name="CapsLookActivate" Russian="CapsLook включен"/>
@@ -482,13 +469,10 @@
   <Local Name="RecordMarkerIsDeleted" Russian="Запись помечена на удаление"/>
   <Local Name="ClickFromViewList" Russian="Чтобы просмотреть справочник, нажмите на соответствующий пункт слева."/>
   <Local Name="ClickFromViewMyLLastSearchQuery" Russian="Нажмите, чтобы увидеть Ваши последние поисковые запросы"/>
-  <Local Name="ClickFromGoMainJournal" Russian="Нажмите, чтобы перейти в основной журнал"/>
   <Local Name="ISImportantEditToolTip" Russian="Отметьте этот флажок, чтобы другие пользователи видели, что эта задача является важной."/>
   <Local Name="NotEventsWithSelectedDay" Russian="События на выбранный день отсутствуют"/>
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
-  <Local Name="ClickDoneFromFilter" Russian="Нажмите кнопку &quot;Применить&quot; для получения сводных данных за период."/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
-  <Local Name="AutoCloseIncomingForm" Russian="Окно будет автоматически закрыто через: %1 сек."/>
   <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
   <Local Name="SelectedUserGroupLeftFromAccessSetting" Russian="Выберите группу пользователей из списка слева, чтобы настроить ей права доступа."/>
   <Local Name="DownloadingImage" Russian="Пожалуйста подождите, изображение скачивается..."/>
@@ -511,28 +495,6 @@
   <Local Name="CalendarForm.Events" Russian="События"/>
   <Local Name="CalendarForm.EnteringSearchQuery" Russian="Введите поисковый запрос (F8)"/>
   <Local Name="CalendarForm.SearchResults" Russian="Результаты поиска"/>
-  
-  <!--TelephonyForm-->
-  <Local Name="TelephonyForm.Journal" Russian="Журнал звонков"/>
-  <Local Name="TelephonyForm.Summary" Russian="Сводная статистика"/>
-  <Local Name="TelephonyForm.Summary.Users" Russian="Сводные данные по пользователям"/>
-  <Local Name="TelephonyForm.Summary.Requery" Russian="Запрос выполняется"/>
-  <Local Name="TelephonyForm.Patterns" Russian="Внутренние номера"/>
-  <Local Name="TelephonyForm.Pattern" Russian="Внутренний номер"/>
-  <Local Name="TelephonyForm.Activity" Russian="Активность"/>
-  <Local Name="TelephonyForm.Count.Total" Russian="Общее количество"/>
-  <Local Name="TelephonyForm.Count.Incoming" Russian="Количество входящих"/>
-  <Local Name="TelephonyForm.Count.Outcoming" Russian="Количество исходящих"/>
-  <Local Name="TelephonyForm.Duration.Total" Russian="Общая длительность"/>
-  <Local Name="TelephonyForm.Duration.Incoming" Russian="Длительность входящих"/>
-  <Local Name="TelephonyForm.Duration.Outcoming" Russian="Длительность исходящих"/>
-  <Local Name="TelephonyForm.Average.Incoming" Russian="Средняя длительность входящего звонка"/>
-  <Local Name="TelephonyForm.Average.Outcoming" Russian="Средняя длительность исходящего звонка"/>
-  <Local Name="TelephonyForm.Activity.EmptyPatterns" Russian="Внутренние номера не настроены"/>
-  <Local Name="TelephonyForm.Activity.Sign" Russian="Обозначения"/>
-  <Local Name="TelephonyForm.Activity.Sign.Free" Russian="Свободен"/>
-  <Local Name="TelephonyForm.Activity.Sign.Busy" Russian="Занят"/>
-  <Local Name="TelephonyForm.Activity.Sign.NotRegistered" Russian="Не зарегистрирован"/>
 
   <!--Search-->
   <Local Name="Search" Russian="Поиск"/>
@@ -601,12 +563,6 @@
   <Local Name="Settings.TabBar.SelectionBehavior.SelectLeftTab" Russian="Выбрать первую вкладку слева"/>
   <Local Name="Settings.TabBar.SelectionBehavior.SelectRightTab" Russian="Выбрать первую вкладку справа"/>
   <Local Name="Settings.TabBar.SelectionBehavior.SelectPreviousTab" Russian="Выбрать предыдущую вкладку"/>
-
-  <Local Name="Settings.IncomingForm.Position.LeftUp" Russian="Левый верхний угол"/>
-  <Local Name="Settings.IncomingForm.Position.LeftBottom" Russian="Левый нижний угол"/>
-  <Local Name="Settings.IncomingForm.Position.RightUp" Russian="Правый верхний угол"/>
-  <Local Name="Settings.IncomingForm.Position.RightBottom" Russian="Правый нижний угол"/>
-  <Local Name="Settings.IncomingForm.Position.Center" Russian="По центру экрана"/>
   
   <!--Task-->
   <Local Name="Task.LabelCentral" Russian="Чтобы отобразить список задач, выберите фильтр сверху."/>

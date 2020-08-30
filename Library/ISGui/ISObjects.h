@@ -26,5 +26,6 @@ private:
 	QString ErrorString;
 	QString ConfigurationName;
 	ISObjectInterface *ObjectInterface;
+	bool Valid;
 };
 //-----------------------------------------------------------------------------

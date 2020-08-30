@@ -135,10 +135,10 @@ ISMedTech::RatingSubSystem::RatingSubSystem(QWidget *parent)
 	connect(RatingListForm, &ISMedTech::RatingListForm::SelectedRowSignal, this, &ISMedTech::RatingSubSystem::SelectedRating);
 	Splitter->addWidget(RatingListForm);
 
-	AsteriskCallsListForm = new ISAsteriskCallsListForm(this);
-	AsteriskCallsListForm->setEnabled(false);
-	AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_id = 0");
-	Splitter->addWidget(AsteriskCallsListForm);
+	//AsteriskCallsListForm = new ISAsteriskCallsListForm(this);
+	//AsteriskCallsListForm->setEnabled(false);
+	//AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_id = 0");
+	//Splitter->addWidget(AsteriskCallsListForm);
 }
 //-----------------------------------------------------------------------------
 ISMedTech::RatingSubSystem::~RatingSubSystem()
@@ -159,15 +159,15 @@ void ISMedTech::RatingSubSystem::SelectedRating()
 		qSelect.BindValue(":RatingID", RatingListForm->GetObjectID());
 		if (qSelect.ExecuteFirst())
 		{
-			AsteriskCallsListForm->setEnabled(true);
-			AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_uniqueid IS NOT NULL AND ascl_uniqueid = '" + qSelect.ReadColumn("rtng_uniqueid").toString() + '\'');
+			//AsteriskCallsListForm->setEnabled(true);
+			//AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_uniqueid IS NOT NULL AND ascl_uniqueid = '" + qSelect.ReadColumn("rtng_uniqueid").toString() + '\'');
 			if (CDRLoadData)
 			{
-				AsteriskCallsListForm->Update();
+				//AsteriskCallsListForm->Update();
 			}
 			else
 			{
-				AsteriskCallsListForm->LoadData();
+				//AsteriskCallsListForm->LoadData();
 				CDRLoadData = true;
 			}
 		}
@@ -180,8 +180,8 @@ void ISMedTech::RatingSubSystem::SelectedRating()
 //-----------------------------------------------------------------------------
 void ISMedTech::RatingSubSystem::ClearCDR()
 {
-	AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_id = 0");
-	AsteriskCallsListForm->Update();
-	AsteriskCallsListForm->setEnabled(false);
+	//AsteriskCallsListForm->GetQueryModel()->SetClassFilter("ascl_id = 0");
+	//AsteriskCallsListForm->Update();
+	//AsteriskCallsListForm->setEnabled(false);
 }
 //-----------------------------------------------------------------------------

@@ -13,10 +13,8 @@
 #include "ISTaskForm.h"
 #include "ISProtocolListForm.h"
 #include "ISInternalDirectoriesForm.h"
-#include "ISAsteriskCallsListForm.h"
 #include "ISTaskListForm.h"
 #include "ISTaskObjectForm.h"
-#include "ISTelephonyForm.h"
 #include "ISUserGroupListForm.h"
 #include "ISMonitorActivityForm.h"
 #include "ISFullTextSearchForm.h"
@@ -46,10 +44,8 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISTaskForm*>("ISTaskForm");
 	qRegisterMetaType<ISProtocolListForm*>("ISProtocolListForm");
 	qRegisterMetaType<ISInternalDirectoriesForm*>("ISInternalDirectoriesForm");
-	qRegisterMetaType<ISAsteriskCallsListForm*>("ISAsteriskCallsListForm");
 	qRegisterMetaType<ISTaskListForm*>("ISTaskListForm");
 	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
-	qRegisterMetaType<ISTelephonyForm*>("ISTelephonyForm");
 	qRegisterMetaType<ISUserGroupListForm*>("ISUserGroupListForm");
 	qRegisterMetaType<ISMonitorActivityForm*>("ISMonitorActivityForm");
 	qRegisterMetaType<ISFullTextSearchForm*>("ISFullTextSearchForm");
@@ -109,7 +105,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISComboCalendarNoteType*>("ISComboCalendarNoteType");
 	qRegisterMetaType<ISComboStartedParagraph*>("ISComboStartedParagraph");
 	qRegisterMetaType<ISComboTabBarSelectionBehavior*>("ISComboTabBarSelectionBehavior");
-	qRegisterMetaType<ISComboIncomingFormPosition*>("ISComboIncomingFormPosition");
 	qRegisterMetaType<ISCheckViewParagraph*>("ISCheckViewParagraph");
 }
 //-----------------------------------------------------------------------------

@@ -32,9 +32,6 @@
     <Filter Include="ObjectModel">
       <UniqueIdentifier>{755452f5-70b6-4109-81fd-4d400241243b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Telephony">
-      <UniqueIdentifier>{4d17f9e7-d189-44e3-a9d4-9e5f1ccff536}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Widgets">
       <UniqueIdentifier>{5f6a732d-7467-49d5-a44a-7e386cb56364}</UniqueIdentifier>
     </Filter>
@@ -102,9 +99,6 @@
     <ClCompile Include="ISCalendarWidget.cpp">
       <Filter>Calendar</Filter>
     </ClCompile>
-    <ClCompile Include="ISIncomingCallBaseForm.cpp">
-      <Filter>Common Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISInterfaceDialogForm.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
@@ -164,9 +158,6 @@
     </ClCompile>
     <ClCompile Include="ISObjectModel.cpp">
       <Filter>ObjectModel</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTelephonySummary.cpp">
-      <Filter>Telephony</Filter>
     </ClCompile>
     <ClCompile Include="ISBaseTableView.cpp">
       <Filter>Widgets</Filter>
@@ -279,12 +270,6 @@
     <ClCompile Include="ISUserRoleEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISAsteriskCallsListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAsteriskTotalForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISAuthForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -336,9 +321,6 @@
     <ClCompile Include="ISParagraphBaseForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISPatternActivityForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISPrintForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -364,9 +346,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISTaskViewForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTelephonyForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISUserGroupListForm.cpp">
@@ -433,9 +412,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISPageNavigation.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPatternWidget.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISPopupMessage.cpp">
@@ -508,9 +484,6 @@
     </QtMoc>
     <QtMoc Include="ISCalendarWidget.h">
       <Filter>Calendar</Filter>
-    </QtMoc>
-    <QtMoc Include="ISIncomingCallBaseForm.h">
-      <Filter>Common Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISInterfaceDialogForm.h">
       <Filter>Common Forms</Filter>
@@ -617,12 +590,6 @@
     <QtMoc Include="ISAboutForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISAsteriskCallsListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAsteriskTotalForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISAuthForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -674,9 +641,6 @@
     <QtMoc Include="ISParagraphBaseForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISPatternActivityForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISPrintForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -702,9 +666,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskViewForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTelephonyForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISUserGroupListForm.h">
@@ -773,9 +734,6 @@
     <QtMoc Include="ISPageNavigation.h">
       <Filter>Controls</Filter>
     </QtMoc>
-    <QtMoc Include="ISPatternWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
     <QtMoc Include="ISPopupMessage.h">
       <Filter>Controls</Filter>
     </QtMoc>
@@ -828,9 +786,6 @@
     </ClInclude>
     <ClInclude Include="ISObjectModel.h">
       <Filter>ObjectModel</Filter>
-    </ClInclude>
-    <ClInclude Include="ISTelephonySummary.h">
-      <Filter>Telephony</Filter>
     </ClInclude>
     <ClInclude Include="ISHTML.h">
       <Filter>Printing\HTML</Filter>

@@ -12,7 +12,8 @@
 //-----------------------------------------------------------------------------
 ISObjects::ISObjects()
 	: ErrorString(NO_ERROR_STRING),
-	ObjectInterface(nullptr)
+	ObjectInterface(nullptr),
+	Valid(false)
 {
 	qRegisterMetaType<ISEmpty::Object*>("ISEmpty::Object");
 	qRegisterMetaType<ISMedTech::Object*>("ISMedTech::Object");
@@ -40,7 +41,7 @@ QString ISObjects::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISObjects::IsInitialized() const
 {
-	return Info.IsValid;
+	return Valid;
 }
 //-----------------------------------------------------------------------------
 bool ISObjects::Initialize()
@@ -66,20 +67,18 @@ bool ISObjects::Initialize()
 			QString configuration_name = DomNamedNodeMap.namedItem("Name").nodeValue();
 			if (configuration_name == ConfigurationName)
 			{
-				Info.IsValid = true;
 				Info.UID = DomNamedNodeMap.namedItem("UID").nodeValue();
 				Info.Name = configuration_name;
 				Info.LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
 				Info.DesktopForm = DomNamedNodeMap.namedItem("DesktopForm").nodeValue();
-				Info.IncomingCallForm = DomNamedNodeMap.namedItem("IncomingCallForm").nodeValue();
 				Info.DateExpired = QDate::fromString(DomNamedNodeMap.namedItem("DateExpired").nodeValue(), FORMAT_DATE_V2);
 				Info.LogoName = DomNamedNodeMap.namedItem("LogoName").nodeValue();
+				Valid = true;
 				break;
 			}
 			DomNode = DomNode.nextSibling();
 		}
-
-		Result = Info.IsValid;
+		Result = Valid;
 		if (!Result)
 		{
 			ErrorString = "Not found configuration";

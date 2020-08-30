@@ -26,8 +26,6 @@ private:
 	void CreateStackWidget(); //Создание начальной страницы и рабочей области
 
 	void ParagraphClicked(const ISUuid &ParagraphUID); //Событие нажатия на кнопку-параграф
-	
-	void IncomingCall(const QVariantMap &VariantMap); //Сигнал о входящем звонке
 
 	void EscapeClicked() override;
 	void InitializePlugin();

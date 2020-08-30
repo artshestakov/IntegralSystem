@@ -175,8 +175,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISAboutForm.cpp" />
-    <ClCompile Include="ISAsteriskCallsListForm.cpp" />
-    <ClCompile Include="ISAsteriskTotalForm.cpp" />
     <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
@@ -226,7 +224,6 @@
     <ClCompile Include="ISHtmlQuery.cpp" />
     <ClCompile Include="ISImageViewerForm.cpp" />
     <ClCompile Include="ISImageWidget.cpp" />
-    <ClCompile Include="ISIncomingCallBaseForm.cpp" />
     <ClCompile Include="ISInputDialog.cpp" />
     <ClCompile Include="ISInterfaceDialogForm.cpp" />
     <ClCompile Include="ISInterfaceForm.cpp" />
@@ -258,8 +255,6 @@
     <ClCompile Include="ISParagraphEntity.cpp" />
     <ClCompile Include="ISPassword.cpp" />
     <ClCompile Include="ISPasswordWidthWidget.cpp" />
-    <ClCompile Include="ISPatternActivityForm.cpp" />
-    <ClCompile Include="ISPatternWidget.cpp" />
     <ClCompile Include="ISPeriodForm.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
@@ -297,8 +292,6 @@
     <ClCompile Include="ISTaskObjectForm.cpp" />
     <ClCompile Include="ISTaskSearchByTextForm.cpp" />
     <ClCompile Include="ISTaskViewForm.cpp" />
-    <ClCompile Include="ISTelephonyForm.cpp" />
-    <ClCompile Include="ISTelephonySummary.cpp" />
     <ClCompile Include="ISToolBarAccessTable.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
     <ClCompile Include="ISUserGroupWidget.cpp" />
@@ -327,9 +320,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCalendarWidget.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISIncomingCallBaseForm.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISInterfaceDialogForm.h" />
@@ -383,8 +373,6 @@
     <QtMoc Include="ISValidators.h" />
     <QtMoc Include="ISWorkspaceForm.h" />
     <QtMoc Include="ISAboutForm.h" />
-    <QtMoc Include="ISAsteriskCallsListForm.h" />
-    <QtMoc Include="ISAsteriskTotalForm.h" />
     <QtMoc Include="ISAuthForm.h" />
     <QtMoc Include="ISCalendarEventForm.h" />
     <QtMoc Include="ISCalendarForm.h" />
@@ -402,7 +390,6 @@
     <QtMoc Include="ISMainWindow.h" />
     <QtMoc Include="ISMonitorActivityForm.h" />
     <QtMoc Include="ISParagraphBaseForm.h" />
-    <QtMoc Include="ISPatternActivityForm.h" />
     <QtMoc Include="ISPrintForm.h" />
     <QtMoc Include="ISProtocolObjectListForm.h" />
     <QtMoc Include="ISRecordInfoForm.h" />
@@ -412,7 +399,6 @@
     <QtMoc Include="ISTaskForm.h" />
     <QtMoc Include="ISTaskObjectForm.h" />
     <QtMoc Include="ISTaskViewForm.h" />
-    <QtMoc Include="ISTelephonyForm.h" />
     <QtMoc Include="ISUserGroupListForm.h" />
     <QtMoc Include="ISUserListForm.h" />
     <QtMoc Include="ISUserObjectForm.h" />
@@ -435,7 +421,6 @@
     <QtMoc Include="ISMenuBar.h" />
     <QtMoc Include="ISMonitorUserWidget.h" />
     <QtMoc Include="ISPageNavigation.h" />
-    <QtMoc Include="ISPatternWidget.h" />
     <QtMoc Include="ISPopupMessage.h" />
     <QtMoc Include="ISSplashScreen.h" />
     <QtMoc Include="ISSplashWidget.h" />
@@ -489,7 +474,6 @@
     <ClInclude Include="ISSortingBuffer.h" />
     <ClInclude Include="ISStartup.h" />
     <ClInclude Include="ISStyleSheet.h" />
-    <ClInclude Include="ISTelephonySummary.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISModelThreadQuery.h" />
     <ClInclude Include="ISSqlModelHelper.h" />
