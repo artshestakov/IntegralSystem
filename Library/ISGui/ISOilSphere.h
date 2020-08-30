@@ -188,6 +188,36 @@ namespace ISOilSphere
 	private:
 		void CalculateRemainder(); //Расчёт поля "Остаток"
 	};
+
+	//Форма пополнения склада
+	class ArrivalStock : public ISInterfaceMetaForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ArrivalStock(QWidget *parent = 0);
+		virtual ~ArrivalStock();
+
+		void LoadData() override;
+
+	private:
+		ISBaseTableView *TableView;
+	};
+
+	//Форма списаний со склада
+	class StockWriteOff : public ISInterfaceMetaForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE StockWriteOff(QWidget *parent = 0);
+		virtual ~StockWriteOff();
+
+		void LoadData() override;
+
+	private:
+		ISBaseTableView *TableView;
+	};
 }
 //-----------------------------------------------------------------------------
 #endif

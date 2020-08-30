@@ -8,6 +8,7 @@
 #include "ISDefinesGui.h"
 #include "ISControls.h"
 #include "ISStyleSheet.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 static QString QS_BEFORE_VALUES = PREPARE_QUERY2("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
@@ -57,6 +58,23 @@ static QString QS_ACCRUED = PREPARE_QUERY2("SELECT cpwo_creationdate, cpwo_sum, 
 										   "AND cpwo_implementationdetail = :ImplementationDetailID "
 										   "ORDER BY cpwo_id");
 //-----------------------------------------------------------------------------
+static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT m.mwag_dateshipping, c.cnpr_name, m.mwag_datearrival, sum(d.mwdt_kilogram), COUNT(*) "
+												 "FROM movewagon m "
+												 "LEFT JOIN counterparty c ON c.cnpr_id = m.mwag_provider "
+												 "LEFT JOIN movewagondetail d ON d.mwdt_movewagon = m.mwag_id AND NOT d.mwdt_isdeleted "
+												 "WHERE NOT m.mwag_isdeleted "
+												 "AND m.mwag_datearrival IS NOT NULL "
+												 "AND m.mwag_stock = :StockID "
+												 "GROUP BY m.mwag_dateshipping, c.cnpr_name, m.mwag_datearrival");
+//-----------------------------------------------------------------------------
+static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT i.impl_dateload, p.pdtp_name, d.imdt_loadweightnet "
+												   "FROM implementationdetail d "
+												   "LEFT JOIN implementation i ON i.impl_id = d.imdt_implementation "
+												   "LEFT JOIN producttype p ON p.pdtp_id = i.impl_producttype "
+												   "WHERE NOT d.imdt_isdeleted "
+												   "AND NOT i.impl_isdeleted "
+												   "AND d.imdt_stock = :StockID");
+//-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
 
@@ -77,6 +95,8 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::DebetObjectForm*>("ISOilSphere::DebetObjectForm");
 	qRegisterMetaType<ISOilSphere::DebetListForm*>("ISOilSphere::DebetListForm");
 	qRegisterMetaType<ISOilSphere::ConsumptionSUGObjectForm*>("ISOilSphere::ConsumptionSUGObjectForm");
+	qRegisterMetaType<ISOilSphere::ArrivalStock*>("ISOilSphere::ArrivalStock");
+	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -732,5 +752,65 @@ void ISOilSphere::ConsumptionSUGObjectForm::CalculateRemainder()
 {
 	int Coming = GetFieldValue("Coming").toInt(), Consumption = GetFieldValue("Consumption").toInt();
 	Coming > 0 && Consumption > 0 ? SetFieldValue("Remainder", Coming - Consumption) : GetFieldWidget("Remainder")->Clear();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ArrivalStock::ArrivalStock(QWidget *parent) : ISInterfaceMetaForm(parent)
+{
+	TableView = new ISBaseTableView(this);
+	GetMainLayout()->addWidget(TableView);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ArrivalStock::~ArrivalStock()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::ArrivalStock::LoadData()
+{
+	QSqlQuery qSelect(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
+	qSelect.prepare(QS_ARRIVAL_STOCK);
+	qSelect.bindValue(":StockID", GetParentObjectID());
+	if (qSelect.exec())
+	{
+		QSqlQueryModel *SqlQueryModel = new QSqlQueryModel();
+		SqlQueryModel->setQuery(qSelect);
+		SqlQueryModel->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Дата отгрузки"), Qt::DisplayRole);
+		SqlQueryModel->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("Поставщик"), Qt::DisplayRole);
+		SqlQueryModel->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("Прибыло"), Qt::DisplayRole);
+		SqlQueryModel->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("Масса"), Qt::DisplayRole);
+		SqlQueryModel->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("Количество вагонов"), Qt::DisplayRole);
+		TableView->setModel(SqlQueryModel);
+	}
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::StockWriteOff::StockWriteOff(QWidget *parent) : ISInterfaceMetaForm(parent)
+{
+	TableView = new ISBaseTableView(this);
+	GetMainLayout()->addWidget(TableView);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::StockWriteOff::~StockWriteOff()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::StockWriteOff::LoadData()
+{
+	QSqlQuery qSelect(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
+	qSelect.prepare(QS_STOCK_WRITE_OFF);
+	qSelect.bindValue(":StockID", GetParentObjectID());
+	if (qSelect.exec())
+	{
+		QSqlQueryModel *SqlQueryModel = new QSqlQueryModel();
+		SqlQueryModel->setQuery(qSelect);
+		SqlQueryModel->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Дата загрузки"), Qt::DisplayRole);
+		SqlQueryModel->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("Тип продукта"), Qt::DisplayRole);
+		SqlQueryModel->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("Списано"), Qt::DisplayRole);
+		TableView->setModel(SqlQueryModel);
+	}
 }
 //-----------------------------------------------------------------------------

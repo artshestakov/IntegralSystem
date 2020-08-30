@@ -377,6 +377,10 @@
     <Indexes>
       <Index Field="Name" Unique="true"/>
     </Indexes>
+    <Escorts>
+      <Escort LocalName="Прибытия" ClassName="ISOilSphere::ArrivalStock"/>
+      <Escort LocalName="Списания" ClassName="ISOilSphere::StockWriteOff"/>
+    </Escorts>
   </Table>
 
   <Table Name="Station" UID="{2455675E-EB7E-4D52-A348-0832BB759059}" Alias="stat" LocalName="Станция" LocalListName="Станции" TitleName="Name">
@@ -426,7 +430,7 @@
       <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="DateArrival" SeparatorName="Прибытие"/>
       <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="Int" LabelName="Склад" LocalListName="Склад" LayoutName="DateArrival"/>
       <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Int" LabelName="Цена" LocalListName="Цена" LayoutName="Price" SeparatorName="Дополнительная информация"/>
-      <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Int" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" LayoutName="Price" QueryText="SELECT sum(mwdt_kilogram) FROM movewagondetail WHERE mwdt_movewagon = mwag_id"/>
+      <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Double" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" LayoutName="Price" QueryText="SELECT sum(mwdt_kilogram) FROM movewagondetail WHERE mwdt_movewagon = mwag_id"/>
       <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" LayoutName="Price"/>
       <Field UID="{C6DFF9F3-C4D4-456C-8EFF-77AB756A360F}" Name="PassportQuality" Type="Bool" DefaultValue="false" LabelName="Паспорт качества" LocalListName="Паспорт качества"/>
       <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
@@ -454,7 +458,7 @@
     <Fields>
       <Field UID="{B9AD4F3A-6AA9-485D-9B4A-4CD558392A63}" Name="MoveWagon" Type="Int" LabelName="Движения вагонов" LocalListName="Движения вагонов" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{916CDBC8-55AC-4A22-8B0D-9CA43D6A4A3F}" Name="WagonNumber" Type="Int" LabelName="Номер вагона" LocalListName="Номер вагона"/>
-      <Field UID="{B94799C8-4ADB-490A-A835-83F50E36CCAE}" Name="Kilogram" Type="Int" LabelName="Килограммы" LocalListName="Килограммы"/>
+      <Field UID="{B94799C8-4ADB-490A-A835-83F50E36CCAE}" Name="Kilogram" Type="Double" LabelName="Килограммы" LocalListName="Килограммы"/>
       <Field UID="{1071385C-D44D-48A4-A757-DFA13AA32D27}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
