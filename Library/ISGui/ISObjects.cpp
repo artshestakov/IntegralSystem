@@ -7,7 +7,6 @@
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 #include "ISEmpty.h"
-#include "ISMedTech.h"
 #include "ISOilSphere.h"
 //-----------------------------------------------------------------------------
 ISObjects::ISObjects()
@@ -16,7 +15,6 @@ ISObjects::ISObjects()
 	Valid(false)
 {
 	qRegisterMetaType<ISEmpty::Object*>("ISEmpty::Object");
-	qRegisterMetaType<ISMedTech::Object*>("ISMedTech::Object");
 	qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
 }
 //-----------------------------------------------------------------------------

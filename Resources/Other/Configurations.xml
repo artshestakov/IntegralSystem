@@ -2,7 +2,6 @@
 <Configurations>
 
   <Configuration UID="{20DA4E7C-5843-49E1-9D87-2FF279EEF0FF}" Name="Empty"/>
-  <Configuration UID="{744D107A-6BAD-4038-8E9D-D33A1C62C537}" Name="MedTech" LocalName="ООО «Медицинские технологии»"/>
   <Configuration UID="{B2003F73-0DD2-4359-AC96-FA7CABB53049}" Name="OilSphere" LocalName="ООО «Нефтесфера»" DateExpired="30.09.2020" LogoName="Logo.png"/>
 
 </Configurations>

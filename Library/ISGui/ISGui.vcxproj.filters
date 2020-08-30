@@ -207,9 +207,6 @@
     <ClCompile Include="ISPrintingHtml.cpp">
       <Filter>Printing</Filter>
     </ClCompile>
-    <ClCompile Include="ISMedTech.cpp">
-      <Filter>Objects\MedTech</Filter>
-    </ClCompile>
     <ClCompile Include="ISObjectInterface.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -574,9 +571,6 @@
     </QtMoc>
     <QtMoc Include="ISPrintingHtml.h">
       <Filter>Printing</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMedTech.h">
-      <Filter>Objects\MedTech</Filter>
     </QtMoc>
     <QtMoc Include="ISObjectInterface.h">
       <Filter>Objects</Filter>

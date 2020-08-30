@@ -235,7 +235,6 @@
     <ClCompile Include="ISListIndicatorWidget.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
-    <ClCompile Include="ISMedTech.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
     <ClCompile Include="ISMessageBox.cpp" />
     <ClCompile Include="ISMetaSystemsEntity.cpp" />
@@ -456,7 +455,6 @@
     <ClInclude Include="ISGui.h" />
     <ClInclude Include="ISHTML.h" />
     <ClInclude Include="ISHtmlQuery.h" />
-    <QtMoc Include="ISMedTech.h" />
     <QtMoc Include="ISObjectInterface.h" />
     <ClInclude Include="ISMetaSystemsEntity.h" />
     <ClInclude Include="ISObjectModel.h" />
