@@ -1,15 +1,10 @@
 #include "CGConfiguratorUpdate.h"
 #include "ISMetaData.h"
-#include "CGFunction.h"
-#include "CGTable.h"
-#include "CGIndex.h"
-#include "CGForeign.h"
-#include "CGResource.h"
+#include "CGDatabase.h"
 #include "ISQuery.h"
 #include "ISConfig.h"
 #include "ISLogger.h"
 #include "ISLocalization.h"
-#include "CGHelper.h"
 #include "ISConsole.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEM_USER = PREPARE_QUERY("SELECT COUNT(*) "
@@ -96,7 +91,7 @@ bool CGConfiguratorUpdate::functions()
 	{
 		Progress("Function", i, CountFunctions);
 		PMetaFunction *MetaFunction = ISMetaData::Instance().GetFunctions()[i];
-		Result = CGFunction::CreateOrReplaceFunction(MetaFunction, ErrorString);
+		Result = CGDatabase::CreateOrReplaceFunction(MetaFunction, ErrorString);
 		if (!Result)
 		{
 			break;
@@ -112,15 +107,15 @@ bool CGConfiguratorUpdate::tables()
 	{
 		PMetaTable *MetaTable = ISMetaData::Instance().GetTables()[i];
 		Progress("Table", i, CountTables, "TableName: " + MetaTable->Name);
-		Result = CGTable::CheckExistTable(MetaTable, Exist, ErrorString);
+		Result = CGDatabase::CheckExistTable(MetaTable, Exist, ErrorString);
 		if (Result)
 		{
-			Result = Exist ? CGTable::UpdateTable(MetaTable, ErrorString) : CGTable::CreateTable(MetaTable, ErrorString);
+			Result = Exist ? CGDatabase::UpdateTable(MetaTable, ErrorString) : CGDatabase::CreateTable(MetaTable, ErrorString);
 		}
 
 		if (Result) //Создание/обновление таблицы прошло успешно - комментируем таблицу
 		{
-			Result = CGHelper::CommentTable(MetaTable, ErrorString);
+			Result = CGDatabase::CommentTable(MetaTable, ErrorString);
 		}
 
 		if (Result) //Комментируем поля таблицы
@@ -129,7 +124,7 @@ bool CGConfiguratorUpdate::tables()
 			{
 				if (MetaField->QueryText.isEmpty()) //Если поле является обычным полем - комментируем его
 				{
-					Result = CGHelper::CommentField(MetaTable, MetaField, ErrorString);
+					Result = CGDatabase::CommentField(MetaTable, MetaField, ErrorString);
 				}
 
 				if (!Result)
@@ -169,26 +164,26 @@ bool CGConfiguratorUpdate::systemindexes()
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetSystemIndexes()[i];
 		Progress("System index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
-		if (CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString))
+		if (CGDatabase::CheckExistIndex(MetaIndex, Exist, ErrorString))
 		{
 			if (Exist)
 			{
 				if (MetaIndex->FieldName.toLower() == "id") //Если поле primary_key - делать reindex
 				{
-					Result = CGIndex::ReindexIndex(MetaIndex, ErrorString);
+					Result = CGDatabase::ReindexIndex(MetaIndex, ErrorString);
 				}
-				else if (CGIndex::CheckIndexForeign(MetaIndex)) //Если на поле, где установлен текущий индекс ссылается внешний ключ - делать reindex
+				else if (CGDatabase::CheckIndexForeign(MetaIndex)) //Если на поле, где установлен текущий индекс ссылается внешний ключ - делать reindex
 				{
-					Result = CGIndex::ReindexIndex(MetaIndex, ErrorString);
+					Result = CGDatabase::ReindexIndex(MetaIndex, ErrorString);
 				}
 				else
 				{
-					Result = CGIndex::UpdateIndex(MetaIndex, ErrorString);
+					Result = CGDatabase::UpdateIndex(MetaIndex, ErrorString);
 				}
 			}
 			else
 			{
-				Result = CGIndex::CreateIndex(MetaIndex, ErrorString);
+				Result = CGDatabase::CreateIndex(MetaIndex, ErrorString);
 			}
 		}
 
@@ -207,10 +202,10 @@ bool CGConfiguratorUpdate::indexes()
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetIndexes()[i];
 		Progress("Index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
-		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
+		Result = CGDatabase::CheckExistIndex(MetaIndex, Exist, ErrorString);
 		if (Result)
 		{
-			Result = Exist ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
+			Result = Exist ? CGDatabase::UpdateIndex(MetaIndex, ErrorString) : CGDatabase::CreateIndex(MetaIndex, ErrorString);
 		}
 
 		if (!Result)
@@ -228,10 +223,10 @@ bool CGConfiguratorUpdate::compoundindexes()
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetCompoundIndexes()[i];
 		Progress("Compound index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
-		Result = CGIndex::CheckExistIndex(MetaIndex, Exist, ErrorString);
+		Result = CGDatabase::CheckExistIndex(MetaIndex, Exist, ErrorString);
 		if (Result)
 		{
-			Result = Exist ? CGIndex::UpdateIndex(MetaIndex, ErrorString) : CGIndex::CreateIndex(MetaIndex, ErrorString);
+			Result = Exist ? CGDatabase::UpdateIndex(MetaIndex, ErrorString) : CGDatabase::CreateIndex(MetaIndex, ErrorString);
 		}
 		
 		if (!Result)
@@ -249,10 +244,10 @@ bool CGConfiguratorUpdate::foreigns()
 	{
 		Progress("Foreign", i, CountForeigns);
 		PMetaForeign *MetaForeign = ISMetaData::Instance().GetForeigns()[i];
-		Result = CGForeign::CheckExistForeign(MetaForeign, Exist, ErrorString);
+		Result = CGDatabase::CheckExistForeign(MetaForeign, Exist, ErrorString);
 		if (Result)
 		{
-			Result = Exist ? CGForeign::UpdateForeign(MetaForeign, ErrorString) : CGForeign::CreateForeign(MetaForeign, ErrorString);
+			Result = Exist ? CGDatabase::UpdateForeign(MetaForeign, ErrorString) : CGDatabase::CreateForeign(MetaForeign, ErrorString);
 		}
 
 		if (!Result)
@@ -271,9 +266,9 @@ bool CGConfiguratorUpdate::resources()
 		PMetaResource *MetaResource = ISMetaData::Instance().GetResources()[i];
 		Progress("Resource", i, CountResources, "UID: " + MetaResource->UID);
 		
-		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))
+		if (CGDatabase::CheckExistResource(MetaResource, Exist, ErrorString))
 		{
-			Result = Exist ? CGResource::UpdateResource(MetaResource, ErrorString) : CGResource::InsertResource(MetaResource, ErrorString);
+			Result = Exist ? CGDatabase::UpdateResource(MetaResource, ErrorString) : CGDatabase::InsertResource(MetaResource, ErrorString);
 		}
 
 		if (!Result)

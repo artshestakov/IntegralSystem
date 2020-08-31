@@ -18,9 +18,6 @@
     <Filter Include="Command">
       <UniqueIdentifier>{c7df47db-a8cf-4e8b-9f50-7691bdcd67db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Configurator">
-      <UniqueIdentifier>{a57a8b35-1407-49c6-85ff-1baeea34b4d6}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Configurator.rc">
@@ -49,29 +46,11 @@
     <ClCompile Include="CGConfiguratorUpdate.cpp">
       <Filter>Command</Filter>
     </ClCompile>
-    <ClCompile Include="CGForeign.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
-    <ClCompile Include="CGFunction.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
-    <ClCompile Include="CGHelper.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
-    <ClCompile Include="CGIndex.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
-    <ClCompile Include="CGResource.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
-    <ClCompile Include="CGSequence.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
-    <ClCompile Include="CGTable.cpp">
-      <Filter>Configurator</Filter>
-    </ClCompile>
     <ClCompile Include="CGConfigurator.cpp">
       <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGDatabase.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,26 +77,8 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGTable.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGSequence.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGResource.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGHelper.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGIndex.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGForeign.h">
-      <Filter>Configurator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGFunction.h">
-      <Filter>Configurator</Filter>
+    <ClInclude Include="CGDatabase.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

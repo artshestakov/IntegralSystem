@@ -29,13 +29,7 @@
     <ClCompile Include="CGConfiguratorService.cpp" />
     <ClCompile Include="CGConfiguratorShow.cpp" />
     <ClCompile Include="CGConfiguratorUpdate.cpp" />
-    <ClCompile Include="CGForeign.cpp" />
-    <ClCompile Include="CGFunction.cpp" />
-    <ClCompile Include="CGHelper.cpp" />
-    <ClCompile Include="CGIndex.cpp" />
-    <ClCompile Include="CGResource.cpp" />
-    <ClCompile Include="CGSequence.cpp" />
-    <ClCompile Include="CGTable.cpp" />
+    <ClCompile Include="CGDatabase.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -60,25 +54,7 @@
     <QtMoc Include="CGConfiguratorUpdate.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGForeign.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGFunction.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGHelper.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGIndex.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGResource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGSequence.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGTable.h" />
+    <ClInclude Include="CGDatabase.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{641EC90D-70E1-42F5-9F2F-22C5238F1D02}</ProjectGuid>

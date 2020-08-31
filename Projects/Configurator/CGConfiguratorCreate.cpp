@@ -3,13 +3,13 @@
 #include "ISAssert.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"
-#include "CGResource.h"
 #include "ISMetaData.h"
 #include "ISConfig.h"
 #include "ISConstants.h"
 #include "ISMetaData.h"
 #include "ISMetaDataHelper.h"
 #include "ISConsole.h"
+#include "CGDatabase.h"
 //-----------------------------------------------------------------------------
 CGConfiguratorCreate::CGConfiguratorCreate() : CGConfiguratorBase()
 {
@@ -29,11 +29,11 @@ bool CGConfiguratorCreate::resources()
 		PMetaResource *MetaResource = ISMetaData::Instance().GetResources().at(i);
 		Progress("Resources for " + MetaResource->TableName, i, CountResources);
 
-		if (CGResource::CheckExistResource(MetaResource, Exist, ErrorString))
+		if (CGDatabase::CheckExistResource(MetaResource, Exist, ErrorString))
 		{
 			if (!Exist)
 			{
-				Result = CGResource::InsertResource(MetaResource, ErrorString);
+				Result = CGDatabase::InsertResource(MetaResource, ErrorString);
 			}
 		}
 		
