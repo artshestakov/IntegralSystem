@@ -92,17 +92,18 @@
     </Escorts>
   </Table>
 
-  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="Counterparty" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
+  <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="ID" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
     <Fields>
       <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="Int" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{866DE096-CD20-417E-8F64-7DFB7FB40C0F}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" SeparatorName="Загрузка"/>
-      <Field UID="{04C3B695-9BD8-49ED-BFEE-D2DE54403AF9}" Name="Stock" Type="Int" LabelName="Склад" LocalListName="Склад"/>
+      <Field UID="{604C8962-D8D7-462A-95D5-E9AD659275C9}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" SeparatorName="Загрузка"/>
+      <Field UID="{C7774279-61D4-41BC-AD6E-4AECC04CEE03}" Name="LoadStock" Type="Int" LabelName="Склад" LocalListName="Склад"/>
       <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="LoadContainer" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="LoadContainer"/>
       <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="LoadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="LoadContainer"/>
       <Field UID="{F6E17298-F970-4E8F-92AC-1560184CB2DE}" Name="LoadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="LoadContainer"/>
       <Field UID="{590547D1-75DD-4CE2-95C4-B6EC97D43EFD}" Name="LoadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="LoadPrice"/>
       <Field UID="{64CCFB48-4BF4-4322-B35D-7869E27554EB}" Name="LoadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="LoadPrice"/>
-      <Field UID="{CD120D42-00D6-4D80-ADF5-77D82E089D12}" Name="UnloadPlace" Type="Int" LabelName="Место выгрузки" LocalListName="Место выгрузки" SeparatorName="Выгрузка"/>
+      <Field UID="{3235443C-B601-4658-B0A6-91008E244A3E}" Name="UnloadCounterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" SeparatorName="Выгрузка"/>
+      <Field UID="{E3B99D47-6D06-4986-BE26-3B0AA31CE762}" Name="UnloadStock" Type="Int" LabelName="Склад" LocalListName="Склад"/>
       <Field UID="{F666929C-5DC1-4D51-8527-6D14D3F64409}" Name="UnloadContainer" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" LayoutName="Unload"/>
       <Field UID="{66950052-D388-467C-8F7D-AE5B071AFAFA}" Name="UnloadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Unload"/>
       <Field UID="{9B8377B2-46E7-4DD7-B8B1-A3306A6C5593}" Name="UnloadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Unload"/>
@@ -117,14 +118,15 @@
     </Fields>
     <Indexes>
       <Index Field="Implementation"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Stock"/>
+      <Index Field="LoadCounterparty"/>
+      <Index Field="LoadStock"/>
       <Index Field="LoadContainer"/>
       <Index Field="LoadWeightGross"/>
       <Index Field="LoadWeightNet"/>
       <Index Field="LoadPriceUnit"/>
       <Index Field="LoadCost"/>
-      <Index Field="UnloadPlace"/>
+      <Index Field="UnloadCounterparty"/>
+      <Index Field="UnloadStock"/>
       <Index Field="UnloadWeightGross"/>
       <Index Field="UnloadContainer"/>
       <Index Field="UnloadWeightNet"/>
@@ -139,9 +141,10 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="DateLoad"/>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="UnloadPlace" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="LoadCounterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="LoadStock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="UnloadCounterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="UnloadStock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Organization" ForeignClass="Organization" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
