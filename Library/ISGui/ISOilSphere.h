@@ -51,6 +51,8 @@ namespace ISOilSphere
 		Q_INVOKABLE ImplementationDetailObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
 		virtual ~ImplementationDetailObjectForm();
 
+		bool Save() override;
+
 	private:
 		void CalculateLoad(); //Расчёт загрузки
 		void CalculateUnload(); //Расчёт выгрузки

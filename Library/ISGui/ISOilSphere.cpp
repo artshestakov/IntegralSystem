@@ -172,6 +172,37 @@ ISOilSphere::ImplementationDetailObjectForm::~ImplementationDetailObjectForm()
 
 }
 //-----------------------------------------------------------------------------
+bool ISOilSphere::ImplementationDetailObjectForm::Save()
+{
+	QVariant LoadCounterparty = GetFieldValue("LoadCounterparty"), LoadStock = GetFieldValue("LoadStock"),
+		UnloadCounterparty = GetFieldValue("UnloadCounterparty"), UnloadStock = GetFieldValue("UnloadStock");
+
+	if (!LoadCounterparty.isValid() && !LoadStock.isValid()) //Ни одно из поле не выбрано
+	{
+		ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty"));
+		return false;
+	}
+
+	if (LoadCounterparty.isValid() && LoadStock.isValid()) //Выбраны оба поля
+	{
+		ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty"));
+		return false;
+	}
+
+	if (!UnloadCounterparty.isValid() && !UnloadStock.isValid()) //Ни одно из поле не выбрано
+	{
+		ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.UnloadCounterpartyAndStockIsEmpty"));
+		return false;
+	}
+
+	if (UnloadCounterparty.isValid() && UnloadStock.isValid()) //Выбраны оба поля
+	{
+		ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.UnloadCounterpartyAndStockNotIsEmpty"));
+		return false;
+	}
+	return ISObjectFormBase::Save();
+}
+//-----------------------------------------------------------------------------
 void ISOilSphere::ImplementationDetailObjectForm::CalculateLoad()
 {
 	//Тара (весы)

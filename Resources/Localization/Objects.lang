@@ -69,5 +69,9 @@
   <Local Name="OilSphere.ShowCounterparty" Russian="Карточка контрагента"/>
   <Local Name="OilSphere.Debet.Total" Russian="Сумма итого: %1"/>
   <Local Name="OilSphere.Debet.Remainder" Russian="Сумма остатка: %1"/>
+  <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место загрузки."/>
+  <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место загрузки."/>
+  <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место выгрузки."/>
+  <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место выгрузки."/>
 	
 </LANG>
