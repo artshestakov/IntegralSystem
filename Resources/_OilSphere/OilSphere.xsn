@@ -267,13 +267,14 @@
 
   <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
     <Fields>
-      <Field UID="{0912634C-ACA7-408A-9761-872E88FF99E7}" Name="GasStation" Type="Int" LabelName="АЗС" LocalListName="АЗС" NotNull="true" HideFromList="true" LayoutName="Title"/>
+      <Field UID="{7C6A6D31-3F92-41A6-836D-A1B96E345A92}" Name="ImplementationDetail" Type="Int" LabelName="Подробности реализации" LocalListName="Подробности реализации" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="Int" ReadOnly="true" LabelName="Склад" LocalListName="Склад" NotNull="true" HideFromList="true" LayoutName="Title"/>
       <Field UID="{64DC2A84-C906-4F46-AE3E-3D32E273E236}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Title"/>
       <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="Int" LabelName="Оператор" LocalListName="Оператор" LayoutName="Title"/>
       <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="Int" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>
       
       <Field UID="{79298632-AE9B-4DFF-B0EF-EE23CD9A6914}" Name="BalanceBeginChange" Type="Double" LabelName="Остаток на начало смены" LocalListName="Остаток на начало смены" LayoutName="Layout1"/>
-      <Field UID="{6E0C3D58-C0B2-4BA7-B62E-AB0EA597317A}" Name="VolumeIncome" Type="Double" LabelName="Объём прихода" LocalListName="Объём прихода" LayoutName="Layout1"/>
+      <Field UID="{6E0C3D58-C0B2-4BA7-B62E-AB0EA597317A}" Name="VolumeIncome" Type="Double" ReadOnly="true" LabelName="Объём прихода" LocalListName="Объём прихода" NotNull="true" LayoutName="Layout1"/>
       <Field UID="{1BD71122-D089-4A06-A903-1643F15B12BF}" Name="VolumeHolidaysCounters" Type="Double" LabelName="Объём отпуска по счётчикам" LocalListName="Объём отпуска по счётчикам" LayoutName="Layout1"/>
       <Field UID="{39277383-AE19-43D9-8219-166C8B51A3A6}" Name="TechnicalStraitDeviation" Type="Double" LabelName="Технический пролив, отклонения" LocalListName="Технический пролив, отклонения" LayoutName="Layout1"/>
       <Field UID="{4DEFF451-A68A-4AD4-8CEB-0D2EFEFF4F24}" Name="StraitNote" Type="String" LabelName="Пояснение пролива" LocalListName="Пояснение пролива" LayoutName="Layout1"/>
@@ -302,29 +303,17 @@
       <Field UID="{8E7094B4-DE39-466C-A7AD-A12346A7EB10}" Name="CashboxAdministrativeExpensesNote" Type="String" LabelName="Пояснения к административным расходам" LocalListName="Пояснения к административным расходам" LayoutName="Layout6"/>
     </Fields>
     <Indexes>
-      <Index Field="GasStation"/>
+      <Index Field="ImplementationDetail"/>
+      <Index Field="Stock"/>
       <Index Field="Date"/>
       <Index Field="Operator"/>
       <Index Field="Change"/>
-      <Index Field="GasStation;Date" Unique="true"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="GasStation" ForeignClass="GasStation" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="ImplementationDetail" ForeignClass="ImplementationDetail" ForeignField="ID"/>
+      <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Operator" ForeignClass="Operator" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="GasStation" UID="{E2F7AE10-649C-43ED-8F5F-446DA411D88B}" Alias="gsst" LocalName="АЗС" LocalListName="АЗС" TitleName="Name">
-    <Fields>
-      <Field UID="{D5BB8F77-8E1B-427E-9E5A-7EEE40DD13D7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{416F2C81-7D57-4E9E-A3F7-22A43DA51619}" Name="Place" Type="String" LabelName="Местоположение" LocalListName="Местоположение"/>
-      <Field UID="{50F421CC-3BBA-479B-A0ED-AFB44744FD27}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Place"/>
-      <Index Field="Note"/>
-    </Indexes>
   </Table>
 
   <Table Name="Operator" UID="{84E69F6B-3072-4815-9318-4A61E753F4A2}" Alias="oper" LocalName="Оператор" LocalListName="Оператор" TitleName="FIO">
@@ -522,6 +511,23 @@
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
+  <Table Name="Period" UID="{832E7C72-9D07-46D6-910F-DCB04131C968}" Alias="prod" LocalName="Период" LocalListName="Периоды" TitleName="Name">
+    <Fields>
+      <Field UID="{C2729C95-DD67-40C6-9356-64084300F124}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{0BECAF8A-8D84-4379-BC6E-005DC6974F01}" Name="DateStart" Type="Date" LabelName="Начало периода" LocalListName="Начало периода" NotNull="true" LayoutName="DateStart"/>
+      <Field UID="{F8553578-5954-4538-B9F6-28FA61D4337A}" Name="DateEnd" Type="Date" LabelName="Конец периода" LocalListName="Конец периода" NotNull="true" LayoutName="DateStart"/>
+      <Field UID="{8B2A4D90-C051-4B18-9A4E-949D1454FDF4}" Name="Constant" Type="Double" LabelName="Константа" LocalListName="Константа" NotNull="true" LayoutName="DateStart"/>
+      <Field UID="{BC93B9AA-6A9E-4543-BA99-9C17790770D2}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+      <Index Field="DateStart"/>
+      <Index Field="DateEnd"/>
+      <Index Field="Constant"/>
+      <Index Field="Note"/>
     </Indexes>
   </Table>
 

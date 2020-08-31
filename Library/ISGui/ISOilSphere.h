@@ -74,24 +74,6 @@ namespace ISOilSphere
 		ISFieldEditBase *EditWeightDifference; //Разница весов
 	};
 
-	//Форма списка ведомости АЗС
-	class GasStationStatementListForm : public ISListBaseForm
-	{
-		Q_OBJECT
-
-	public:
-		Q_INVOKABLE GasStationStatementListForm(QWidget *parent = 0);
-		virtual ~GasStationStatementListForm();
-
-		void Create() override;
-
-	private:
-		void GasStationChanged();
-
-	private:
-		ISListEdit *EditGasStation;
-	};
-
 	//Форма объекта ведомости АЗС
 	class GasStationStatementObjectForm : public ISObjectFormBase
 	{

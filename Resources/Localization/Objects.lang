@@ -2,9 +2,6 @@
 <LANG Name="Objects">
 	
   <!--OilSphere-->
-  <Local Name="OilSphere.SelectGasStation" Russian="Выбор АЗС:"/>
-  <Local Name="OilSphere.NotSelectedGasStation" Russian="Чтобы создать запись выберите АЗС."/>
-  <Local Name="OilSphere.ChangeAlreadyExist" Russian="Смена на дату %1 по выбранной АЗС уже существует."/>
   <Local Name="OilSphere.Counterpatry" Russian="Контрагент: %1"/>
   <Local Name="OilSphere.CurrentBalance" Russian="Баланс: %1"/>
   <Local Name="OilSphere.DateLoad" Russian="Дата загрузки: %1"/>
@@ -24,5 +21,6 @@
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место загрузки."/>
   <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место выгрузки."/>
   <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место выгрузки."/>
+  <Local Name="OilSphere.Message.Critical.InsertGasStatment" Russian="Не удалось зафиксировать приход на склад."/>
 	
 </LANG>
