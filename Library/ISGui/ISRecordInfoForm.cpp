@@ -10,19 +10,13 @@
 ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInterfaceDialogForm()
 {
 	setWindowIcon(BUFFER_ICONS("RecordInformation"));
-	setWindowTitle(MetaTable->LocalName);
+	setWindowTitle(LANG("SystemInformation").arg(MetaTable->LocalName));
 	ForbidResize();
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	
 	QFormLayout *FormLayout = new QFormLayout();
 	FormLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(FormLayout);
-
-	QLabel *LabelTitle = new QLabel(this);
-	LabelTitle->setText(LANG("SystemInformation") + ':');
-	LabelTitle->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-	LabelTitle->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
-	ISGui::SetFontWidgetUnderline(LabelTitle, true);
-	FormLayout->addRow(LabelTitle, new QWidget(this));
 
 	for (PMetaField *MetaField : MetaTable->SystemFields)
 	{
@@ -42,7 +36,10 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInte
 			FieldEditBase->SetValue(Value);
 		}
 	}
-	setFocus();
+	
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISRecordInfoForm::close);
+	GetMainLayout()->addWidget(ButtonClose, 0, Qt::AlignRight);
 }
 //-----------------------------------------------------------------------------
 ISRecordInfoForm::~ISRecordInfoForm()
