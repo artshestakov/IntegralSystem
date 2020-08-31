@@ -761,65 +761,63 @@ bool ISObjectFormBase::Save()
 		IS_ASSERT(SqlQuery.BindValue(':' + Value.first, Value.second), "Not bind value");
 	}
 
-	if (SqlQuery.Execute()) //Запрос выполнен успешно
-	{
-		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).commit(); //Коммит транзакции
-		if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
-		{
-			IS_ASSERT(SqlQuery.First(), "Not first SqlQuery");
-			ObjectID = SqlQuery.ReadColumn(MetaTable->Alias + "_id").toInt();
-		}
-
-		ObjectName = ISCore::GetObjectName(MetaTable, ObjectID);
-		switch (FormType)
-		{
-		case ISNamespace::OFT_New:
-			FormType = ISNamespace::OFT_Edit;
-			ISProtocol::CreateObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-			{
-				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
-			}
-			break;
-		case ISNamespace::OFT_Copy:
-			FormType = ISNamespace::OFT_Edit;
-			ISProtocol::CreateCopyObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-			{
-				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
-			}
-			break;
-		case ISNamespace::OFT_Edit:
-			ISProtocol::EditObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-			{
-				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
-			}
-			break;
-		}
-
-		RenameReiconForm();
-		SetModificationFlag(false);
-		UpdateObjectActions();
-		ActionFavorites->setEnabled(true);
-		SetValueFieldID(ObjectID);
-
-		for (QAction *Action : ToolBarEscort->actions())
-		{
-			Action->setEnabled(true);
-		}
-
-		SaveAfter();
-		emit SavedObject(ObjectID);
-		emit UpdateList();
-		return true;
-	}
-	else
+	if (!SqlQuery.Execute()) //Запрос выполнен успешно
 	{
 		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).rollback(); //Откат транзакции
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorQuerySQL"), LANG("Message.Error.ErrorQuerySQL.Details").arg(SqlQuery.GetErrorString()).arg(SqlQuery.GetSqlText()));
+		return false;
 	}
-	return false;
+
+	ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).commit(); //Коммит транзакции
+	if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
+	{
+		IS_ASSERT(SqlQuery.First(), "Not first SqlQuery");
+		ObjectID = SqlQuery.ReadColumn(MetaTable->Alias + "_id").toInt();
+	}
+
+	ObjectName = ISCore::GetObjectName(MetaTable, ObjectID);
+	switch (FormType)
+	{
+	case ISNamespace::OFT_New:
+		FormType = ISNamespace::OFT_Edit;
+		ISProtocol::CreateObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+		{
+			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
+		}
+		break;
+	case ISNamespace::OFT_Copy:
+		FormType = ISNamespace::OFT_Edit;
+		ISProtocol::CreateCopyObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+		{
+			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
+		}
+		break;
+	case ISNamespace::OFT_Edit:
+		ISProtocol::EditObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+		{
+			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
+		}
+		break;
+	}
+
+	RenameReiconForm();
+	SetModificationFlag(false);
+	UpdateObjectActions();
+	ActionFavorites->setEnabled(true);
+	SetValueFieldID(ObjectID);
+
+	for (QAction *Action : ToolBarEscort->actions())
+	{
+		Action->setEnabled(true);
+	}
+
+	SaveAfter();
+	emit SavedObject(ObjectID);
+	emit UpdateList();
+	return true;
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SavedEvent()

@@ -2289,18 +2289,13 @@ void ISListEdit::SetReadOnly(bool read_only)
 {
 	ISFieldEditBase::SetReadOnly(read_only);
 	ButtonMain->setCheckable(!read_only);
+	ButtonMain->setToolTip(read_only ? QString() : LANG("ClickFromShowList"));
+	ButtonMain->setIcon(read_only ? QIcon() : BUFFER_ICONS("ArrowDown"));
+	ButtonMain->setCursor(read_only ? CURSOR_ARROW : CURSOR_POINTING_HAND);
 	ButtonList->setVisible(!read_only);
-
-	if (read_only)
-	{
-		ButtonMain->setIcon(QIcon());
-		disconnect(ButtonMain, &ISPushButton::clicked, this, &ISListEdit::ShowPopup);
-	}
-	else
-	{
-		ButtonMain->setIcon(BUFFER_ICONS("ArrowDown"));
+	read_only ?
+		disconnect(ButtonMain, &ISPushButton::clicked, this, &ISListEdit::ShowPopup) :
 		connect(ButtonMain, &ISPushButton::clicked, this, &ISListEdit::ShowPopup);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISListEdit::InvokeList(PMetaForeign *meta_foreign)
