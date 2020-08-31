@@ -1,55 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="Objects">
 	
-	<!--Highway-->
-	<Local Name="Highway.Core.Search" Russian="Входящий звонок с номера %1, поиск организации..."/>
-	<Local Name="Highway.Core.NewRaiting" Russian="Новая оценка качества &quot;%1&quot; для пользователя &quot;%2&quot;"/>  
-	<Local Name="Highway.Branches" Russian="Филиалы"/>
-	
-	<!--InformResource-->
-	<Local Name="Message.Information.TrasferOrganizationUserDone" Russian="Организаци (%1 шт.) успешно переданы в работу пользователю &quot;%2&quot;."/>
-	<Local Name="Message.Information.OrganizationTakeToWorkDone" Russian="Организации (%1 шт.) успешно взяты Вами в работу."/>
-	<Local Name="Message.Information.ReturnOrganizationDone" Russian="Организации (%1 шт.) успешно возвращены."/>
-	<Local Name="Message.Information.ResetOrganizationExecutor" Russian="Исполнитель успешно сброшен. Затронутых организаций: %1"/>
-	<Local Name="Message.Information.CalculatePercantageOrganizations" Russian="Расчёт процентов заполнения карточек выполнен."/>
-	<Local Name="Message.Question.FoundOrganizationCard" Russian="Найдена организация с ИНН &quot;%2&quot;. Открыть карточку организации?"/>
-	<Local Name="Message.Question.OrganizationTakeToWork" Russian="Вы действительно хотите взять выбранные организации (%1 шт.) в работу?"/>
-	<Local Name="Message.Question.ReturnOrganization" Russian="Вы действительно хотите вернуть организации (%1 шт.) из работы?"/>
-	<Local Name="Message.Question.ResetOrganizationExecutor" Russian="Вы действительно хотите сбросить исполнителя у %1 организаций?"/>
-	<Local Name="Message.Warning.OrganizationAlreadyInWork" Russian="Организация &quot;%1&quot; уже находится в работе у другого пользователя."/>
-	<Local Name="Message.Warning.InvalidINN" Russian="Введен некорректный ИНН!"/>
-	<Local Name="Message.Warning.SaveOrganizationCard" Russian="Прежде чем совершить звонок, сохраните карточку организации!"/>
-	<Local Name="Message.Warning.ErrorConnectionHostDispath" Russian="Не удалось соединиться с сервером отправки."/>
-	<Local Name="Message.Warning.ErrorLoginAndPasswordDispatch" Russian="Ошибка электронной почты или пароля отправителя."/>
-	<Local Name="Message.Warning.ErrorSendingMessageDispatch" Russian="Не удалось отправить сообщение."/>
-	<Local Name="Message.Warning.OrganizationPhoneMainNull" Russian="У организации %1 не заполнено поле &quot;Основной номер&quot;."/>
-	<Local Name="Message.Warning.NotSelectedUserWithTransfer" Russian="Вы не выбрали пользователя для передачи организации в работу!"/>
-	<Local Name="Message.Warning.OkvedNotFound" Russian="Код ОКВЕД по ИНН &quot;%1&quot; не найден!"/>
-	<Local Name="TransferInWork" Russian="Передать в работу..."/>
-	<Local Name="TakeOrganization" Russian="Взять в работу"/>
-	<Local Name="ReturnOrganization" Russian="Вернуть организацию"/>
-	<Local Name="ResetExecutor" Russian="Сбросить исполнителя"/>
-	<Local Name="OrganizationNotify" Russian="Напомнить"/>
-	<Local Name="CalculatePercentageFill" Russian="Расчёт процента заполнения"/>
-	<Local Name="Dispatch" Russian="Рассылка"/>
-	<Local Name="OrganizationsInWork" Russian="Организации в работе"/>
-	<Local Name="Organizations" Russian="Организации"/>
-	<Local Name="Organization" Russian="Организация"/>
-	<Local Name="CallHistory" Russian="История звонков"/>
-	<Local Name="DemoAccess" Russian="Демо доступ"/>
-	<Local Name="DemoAccessesInWord" Russian="Демо доступы в работе"/>
-	<Local Name="Score" Russian="Счёт"/>
-	<Local Name="AgreementDateTimeFilter" Russian="Фильтр по дате договоренности"/>
-	<Local Name="CalculatePercentage" Russian="Расчёт процента заполнения организаций"/>
-	<Local Name="Dispatching" Russian="Отправка писем в организации..."/>
-	<Local Name="CallToOrganization" Russian="Позвонить в организацию %1"/>
-	<Local Name="SelectUserFromOrganizationWork" Russian="Выберите пользователя для передачи выбранных (%1) организаций в работу"/>
-	<Local Name="OrganizationInWorkFromUser" Russian="Организация находится в работе у &quot;%1&quot;"/>
-	<Local Name="Protocol.Transfer" Russian="Организация &quot;%1&quot; передана в работу пользователю &quot;%2&quot;"/>
-	
-	<!--MedTech-->
-	<Local Name="Rating.Filter.All" Russian="Все оценки"/>
-  
   <!--OilSphere-->
   <Local Name="OilSphere.SelectGasStation" Russian="Выбор АЗС:"/>
   <Local Name="OilSphere.NotSelectedGasStation" Russian="Чтобы создать запись выберите АЗС."/>
