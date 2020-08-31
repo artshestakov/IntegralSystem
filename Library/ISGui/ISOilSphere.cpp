@@ -193,7 +193,7 @@ void ISOilSphere::ImplementationDetailObjectForm::CalculateLoad()
 	}
 
 	//Вес (нетто)
-	double LoadWeightNet = LoadContainer * LoadWeightGross;
+	double LoadWeightNet = LoadWeightGross - LoadContainer;
 	EditLoadWeightNet->SetValue(LoadWeightNet);
 
 	//Цена за кг./л
@@ -232,7 +232,7 @@ void ISOilSphere::ImplementationDetailObjectForm::CalculateUnload()
 	}
 
 	//Вес (нетто)
-	double UnloadWeightNet = UnloadContainer * UnloadWeightGross;
+	double UnloadWeightNet = UnloadWeightGross - UnloadContainer;
 	EditUnloadWeightNet->SetValue(UnloadWeightNet);
 
 	//Цена за кг./л
