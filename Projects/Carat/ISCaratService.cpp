@@ -5,12 +5,6 @@
 #include "ISQuery.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-static QString QS_CARAT_CORE = PREPARE_QUERY("SELECT core_name, core_filename "
-											 "FROM _caratcore "
-											 "WHERE NOT core_isdeleted "
-											 "AND core_active "
-											 "ORDER BY core_priority");
-//-----------------------------------------------------------------------------
 ISCaratService::ISCaratService(QObject *parent)
 	: QObject(parent),
 	LocalSocket(new QLocalSocket(this)),
@@ -24,62 +18,13 @@ ISCaratService::~ISCaratService()
 	
 }
 //-----------------------------------------------------------------------------
-void ISCaratService::StartService()
+bool ISCaratService::StartService()
 {
-	ISQuery qSelectCore(QS_CARAT_CORE);
-	qSelectCore.SetShowLongQuery(false);
-	if (qSelectCore.Execute())
-	{
-		//ќбщее количество €дер и количество запущенных
-		int CoreCountTotal = qSelectCore.GetCountResultRows(), CoreCountStarted = 0;
-		if (CoreCountTotal) //≈сли активные €дра существуют - запускаем
-		{
-			while (qSelectCore.Next()) //ќбход €дер
-			{
-				QString CoreName = qSelectCore.ReadColumn("core_name").toString();
-				QString FileName = qSelectCore.ReadColumn("core_filename").toString() + EXTENSION_BINARY;
-
-				ISLOGGER_I("Core \"" + CoreName + "\": starting...");
-				QString CoreFilePath = ISDefines::Core::PATH_APPLICATION_DIR + '/' + FileName;
-				if (!QFile::exists(CoreFilePath)) //≈сли €дро не существует - переходим к следующему
-				{
-					ISLOGGER_E("Core \"" + CoreName + "\" not found. Path: " + CoreFilePath);
-					continue;
-				}
-
-				QProcess *Process = new QProcess(this);
-				Process->setObjectName(CoreName);
-				connect(Process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ISCaratService::Finished);
-				connect(Process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ISCaratService::Error);
-				connect(Process, &QProcess::readyReadStandardOutput, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
-				connect(Process, &QProcess::readyReadStandardError, this, &ISCaratService::ReadyReadStandartOutput, Qt::QueuedConnection);
-				Process->start(CoreFilePath);
-
-				//≈сли дождались первого сообщени€ от €дра и оно валидное - считаем, что €дро успешно запустилось - иначе ошибка в любом случае
-				if (Process->waitForReadyRead(CARAT_CORE_START_TIMEOUT) && Process->readAll().contains(CARAT_CORE_START_FLAG))
-				{
-					ISLOGGER_I("Core \"" + CoreName + "\" started. PID: " + QString::number(Process->processId()));
-					++CoreCountStarted;
-				}
-				else
-				{
-					ISLOGGER_E("Core \"" + CoreName + "\" not started");
-				}
-			}
-			CoreCountStarted == CoreCountTotal ?
-				ISLOGGER_I("Started all cores") : //≈сли €дра были успешно запущены
-				ISLOGGER_W("Started " + QString::number(CoreCountStarted) + " of " + QString::number(CoreCountTotal));
-		}
-		else
-		{
-			ISLOGGER_W("Active core not exist");
-		}
-	}
-
 	//«апуск локального сервера дл€ отладки
 	LocalServer = new QLocalServer(this);
 	LocalServer->setMaxPendingConnections(CARAT_DEBUGGER_MAX_CLIENTS);
-	if (LocalServer->listen(CARAT_DEBUGGER_PORT))
+	bool Result = LocalServer->listen(CARAT_DEBUGGER_PORT);
+	if (Result)
 	{
 		connect(LocalServer, &QLocalServer::newConnection, this, &ISCaratService::NewConnection);
 	}
@@ -88,45 +33,16 @@ void ISCaratService::StartService()
         ISLOGGER_W("Error listen port for local server: " + LocalServer->errorString());
 	}
 
-	TcpServer = new ISTcpServerCarat(this);
-	if (!TcpServer->Run(CARAT_DEFAULT_PORT))
+	if (Result)
 	{
-		ISLOGGER_W(QString("Not started TCP-server with port %1: %2").arg(CARAT_DEFAULT_PORT).arg(TcpServer->GetErrorString()));
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::Finished(int ExitCode, QProcess::ExitStatus Status)
-{
-	OutputString(sender()->objectName(), QString("Core finished with code %1 and %2 status").arg(ExitCode).arg(Status == QProcess::NormalExit ? "normal" : "crash"));
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::Error(QProcess::ProcessError ErrorType)
-{
-    Q_UNUSED(ErrorType);
-	OutputString(sender()->objectName(), dynamic_cast<QProcess*>(sender())->errorString());
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::ReadyReadStandartOutput()
-{
-	QByteArray ByteArray = dynamic_cast<QProcess*>(sender())->readAllStandardOutput();
-	if (!ByteArray.isEmpty())
-	{
-		OutputString(sender()->objectName(), ByteArray);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCaratService::OutputString(const QString &CoreObjectName, const QString &String)
-{
-	QString CompleteString = "[" + CoreObjectName + "] " + String;
-	ISLOGGER_L(CompleteString);
-	if (IsConnectedDebugger)
-	{
-		if (LocalSocket->isOpen() && LocalSocket->isValid())
+		TcpServer = new ISTcpServerCarat(this);
+		Result = TcpServer->Run(CARAT_DEFAULT_PORT);
+		if (!Result)
 		{
-			LocalSocket->write(CompleteString.toStdString().c_str(), CompleteString.size());
-			LocalSocket->flush();
+			ISLOGGER_W(QString("Not started TCP-server with port %1: %2").arg(CARAT_DEFAULT_PORT).arg(TcpServer->GetErrorString()));
 		}
 	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISCaratService::NewConnection()
