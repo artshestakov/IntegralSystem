@@ -14,7 +14,7 @@ ISSplashWidget::ISSplashWidget(QWidget *parent) : QFrame(parent)
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
-	LabelIcon->setPixmap(QPixmap(PATH_SPLASH_WIDGET_LOGO));
+	LabelIcon->setPixmap(QPixmap(":Images/SplashWidgetLogo.png"));
 	Layout->addWidget(LabelIcon);
 
 	LabelText = new QLabel(this);
