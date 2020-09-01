@@ -384,6 +384,12 @@ void ISObjectFormBase::CreateWidgetObject()
 			continue;
 		}
 
+		//Если поле отключено на форме объекта
+		if (MetaField->HideFromObject)
+		{
+			continue;
+		}
+
 		if (!MetaField->LayoutName.isEmpty()) //Если поле должно быть в горизональном компоновщике
 		{
 			if (!Layouts.count(MetaField->LayoutName))
@@ -454,7 +460,6 @@ void ISObjectFormBase::CreateWidgetObject()
 
 				//Если форма открывается для создания копии
 				FieldEditWidget->SetModificationFlag(FormType == ISNamespace::OFT_Copy);
-				connect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 			}
 			ISHistory::Instance().AddObject(MetaTable->Name, ObjectID);
 		}
@@ -462,6 +467,12 @@ void ISObjectFormBase::CreateWidgetObject()
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.QueryRecord"), qSelect.GetErrorString());
 		}
+	}
+
+	//Подключаем необходиые сигналы к полям
+	for (ISFieldEditBase *FieldEditBase : ISAlgorithm::ConvertMapToValues(FieldsMap))
+	{
+		connect(FieldEditBase, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 	}
 }
 //-----------------------------------------------------------------------------

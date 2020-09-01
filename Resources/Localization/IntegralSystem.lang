@@ -840,5 +840,6 @@
   <Local Name="NoteObject" Russian="Примечание записи"/>
   <Local Name="InputNote" Russian="Введите примечание"/>
   <Local Name="TableName" Russian="Имя таблицы"/>
+  <Local Name="Groups" Russian="Группы"/>
 
 </LANG>

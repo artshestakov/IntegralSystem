@@ -29,12 +29,14 @@ ISKnowledgeBaseSubSystem::ISKnowledgeBaseSubSystem(QWidget *parent) : ISInterfac
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
 	
-	QVBoxLayout *LayoutTreeWidget = new QVBoxLayout();
-	Layout->addLayout(LayoutTreeWidget);
+	QGroupBox *GroupBox = new QGroupBox(LANG("Groups"), this);
+	GroupBox->setLayout(new QVBoxLayout());
+	GroupBox->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	Layout->addWidget(GroupBox);
 
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	LayoutTreeWidget->addWidget(ToolBar);
+	GroupBox->layout()->addWidget(ToolBar);
 
 	ActionCreate = ToolBar->addAction(BUFFER_ICONS("Add"), LANG("Add"), this, &ISKnowledgeBaseSubSystem::CreateGroup);
 
@@ -58,7 +60,7 @@ ISKnowledgeBaseSubSystem::ISKnowledgeBaseSubSystem(QWidget *parent) : ISInterfac
 	TreeWidget->addAction(ActionEdit);
 	TreeWidget->addAction(ActionDelete);
 	connect(TreeWidget, &QTreeWidget::itemSelectionChanged, this, &ISKnowledgeBaseSubSystem::ItemSelectionChanged);
-	LayoutTreeWidget->addWidget(TreeWidget);
+	GroupBox->layout()->addWidget(TreeWidget);
 
 	ListBaseForm = new ISListBaseForm("_QuestionAnswer", this);
 	ListBaseForm->setEnabled(false);
@@ -212,7 +214,6 @@ void ISKnowledgeBaseSubSystem::CreateObjectForm(QWidget *ObjectForm)
 {
 	ISObjectFormBase *ObjectFormBase = dynamic_cast<ISObjectFormBase*>(ObjectForm);
 	ObjectFormBase->SetFieldValue("Group", TreeWidget->selectedItems().first()->data(0, Qt::UserRole));
-	ObjectFormBase->setParent(nullptr);
-	ObjectFormBase->show();
+	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
