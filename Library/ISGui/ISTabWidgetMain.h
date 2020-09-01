@@ -18,10 +18,9 @@ public:
 
 protected:
 	void tabInserted(int Index) override;
-	void tabRemoved(int Index) override;
 
 private:
-	void TabMoved(int IndexFrom, int IndexTo);
+	void MenuClicked();
 	void ReCreateMenu();
 	void SeparateWindow(int Index);
 	void CloseCliciked();
@@ -31,6 +30,5 @@ private:
 private:
 	QWidget *MainTab;
 	QToolButton *ButtonMenu;
-	QMenu *Menu;
 };
 //-----------------------------------------------------------------------------

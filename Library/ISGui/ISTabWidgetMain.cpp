@@ -17,7 +17,6 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	TabBar->setStyleSheet(STYLE_SHEET("ISMainWindow.TabBar"));
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
 	connect(TabBar, &ISTabBarMain::SeparateWindowSignal, this, &ISTabWidgetMain::SeparateWindow);
-	connect(TabBar, &ISTabBarMain::tabMoved, this, &ISTabWidgetMain::TabMoved);
 	setTabBar(TabBar);
 
 	setObjectName(metaObject()->className());
@@ -42,11 +41,9 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_18_18);
 	ButtonMenu->setPopupMode(QToolButton::InstantPopup);
 	ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
+	//ButtonMenu->setMenu(new QMenu(ButtonMenu));
+	connect(ButtonMenu, &QToolButton::clicked, this, &ISTabWidgetMain::MenuClicked);
 	tabBar()->setTabButton(IndexMainTab, QTabBar::RightSide, ButtonMenu);
-
-	Menu = new QMenu(ButtonMenu);
-	connect(Menu, &QMenu::triggered, this, &ISTabWidgetMain::TabsMenuTriggered);
-	ButtonMenu->setMenu(Menu);
 }
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::~ISTabWidgetMain()
@@ -76,38 +73,36 @@ void ISTabWidgetMain::tabInserted(int Index)
 		ButtonClose->setFixedSize(ISDefines::Gui::SIZE_18_18);
 		connect(ButtonClose, &QToolButton::clicked, this, &ISTabWidgetMain::CloseCliciked);
 		tabBar()->setTabButton(Index, QTabBar::RightSide, ButtonClose);
-		ReCreateMenu();
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTabWidgetMain::tabRemoved(int Index)
+void ISTabWidgetMain::MenuClicked()
 {
-	QTabWidget::tabRemoved(Index);
-	ReCreateMenu();
-}
-//-----------------------------------------------------------------------------
-void ISTabWidgetMain::TabMoved(int IndexFrom, int IndexTo)
-{
-	Q_UNUSED(IndexFrom);
-	Q_UNUSED(IndexTo);
-	QTimer::singleShot(100, this, &ISTabWidgetMain::ReCreateMenu);
+	ISGui::SetWaitGlobalCursor(true);
+	QMenu Menu;
+	for (int i = 1, c = count(); i < c; ++i)
+	{
+		QWidget *TabWidget = widget(i);
+		QAction *ActionTab = Menu.addAction(TabWidget->windowIcon(), TabWidget->windowTitle());
+		ActionTab->setCheckable(true);
+		ActionTab->setData(i);
+		if (i == currentIndex())
+		{
+			ActionTab->setChecked(true);
+			ActionTab->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+		}
+	}
+	connect(&Menu, &QMenu::triggered, this, &ISTabWidgetMain::TabsMenuTriggered);
+
+	QPoint Point = ButtonMenu->mapToGlobal(QPoint());
+	Point.setY(Point.y() + ButtonMenu->height());
+	ISGui::SetWaitGlobalCursor(false);
+	Menu.exec(Point);
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::ReCreateMenu()
 {
-	while (!Menu->actions().isEmpty())
-	{
-		QAction *ActionLast = Menu->actions()[Menu->actions().size() - 1];
-		Menu->removeAction(ActionLast);
-		delete ActionLast;
-	}
-	for (int i = 1, c = count(); i < c; ++i)
-	{
-		QWidget *TabWidget = widget(i);
-		QAction *ActionTab = Menu->addAction(TabWidget->windowIcon(), TabWidget->windowTitle());
-		connect(TabWidget, &QWidget::windowTitleChanged, ActionTab, &QAction::setText);
-		connect(TabWidget, &QWidget::windowIconChanged, ActionTab, &QAction::setIcon);
-	}
+	
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::SeparateWindow(int Index)
@@ -134,13 +129,6 @@ void ISTabWidgetMain::CloseTabFromIndex(int Index)
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::TabsMenuTriggered(QAction *ActionClicked)
 {
-	for (int i = 0, c = Menu->actions().count(); i < c; ++i)
-	{
-		if (ActionClicked == Menu->actions()[i])
-		{
-			setCurrentIndex(++i);
-			break;
-		}
-	}
+	setCurrentIndex(ActionClicked->data().toInt());
 }
 //-----------------------------------------------------------------------------
