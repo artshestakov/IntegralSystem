@@ -306,17 +306,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="_Months" UID="{EDDDB6BD-E1FA-4E07-95C9-D8FE9995D58D}" Alias="mnts" ShowOnly="true" LocalName="Месяц" LocalListName="Месяцы" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{2A39192E-2FC4-4404-8568-3F8AEE1B339B}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{32182CDD-C617-4AA1-9D5B-EA220B02559E}" Name="Number" Type="Int" LabelName="Номер месяца" LocalListName="Номер месяца" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Number" Unique="true"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_SearchFast" UID="{382BA5DC-C0A2-4934-A718-70B9F6BBE6F2}" Alias="srfs" LocalName="Запрос быстрого поиска" LocalListName="Запросы быстрого поиска" TitleName="Value" IsSystem="true">
     <Fields>
       <Field UID="{57F639C8-2A73-4DBA-AA20-CB693219A408}" Name="Value" Type="String" LabelName="Поисковой запрос" LocalListName="Поисковой запрос" NotNull="true"/>

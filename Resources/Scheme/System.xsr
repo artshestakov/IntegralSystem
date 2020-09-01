@@ -30,19 +30,6 @@
   <_InternalDirectories IsSystem="true" UID="{484906E2-8F17-4388-9E88-0B26511F1212}" TableName="_Currency" Order="2"/>
   <_InternalDirectories IsSystem="true" UID="{8B09C989-EF47-40C3-8EA6-21ADB3D17019}" TableName="_Units" Order="3"/>
   
-  <_Months ID="1" IsSystem="true" UID="{C0C3D83C-B381-465E-B544-967AE9396E04}" Name="Январь" Number="1"/>
-  <_Months ID="2" IsSystem="true" UID="{8965BE84-9BD4-4111-9520-9777FDF7835F}" Name="Февраль" Number="2"/>
-  <_Months ID="3" IsSystem="true" UID="{80F6C7CB-B198-4619-AF66-063F2AEFA712}" Name="Март" Number="3"/>
-  <_Months ID="4" IsSystem="true" UID="{4C609ADA-2483-43CF-9FA8-E4C5DE517D63}" Name="Апрель" Number="4"/>
-  <_Months ID="5" IsSystem="true" UID="{EBED417A-09ED-4EDD-A47B-AEAB6265B237}" Name="Май" Number="5"/>
-  <_Months ID="6" IsSystem="true" UID="{14B875F0-9F1B-4E0E-9614-768BAB4225FC}" Name="Июнь" Number="6"/>
-  <_Months ID="7" IsSystem="true" UID="{665AD3FC-3CF2-464B-8C80-4FD76C896DA8}" Name="Июль" Number="7"/>
-  <_Months ID="8" IsSystem="true" UID="{F836E63A-2941-43DF-8CF7-ED748DBE1BB9}" Name="Август" Number="8"/>
-  <_Months ID="9" IsSystem="true" UID="{90FFD6BF-C00A-4A96-B62D-83B7DA795E9D}" Name="Сентябрь" Number="9"/>
-  <_Months ID="10" IsSystem="true" UID="{C964257E-6865-4853-AD4B-F65E70628516}" Name="Октябрь" Number="10"/>
-  <_Months ID="11" IsSystem="true" UID="{D8F8CA24-C4ED-4885-928C-97C8A3EE739E}" Name="Ноябрь" Number="11"/>
-  <_Months ID="12" IsSystem="true" UID="{2414143C-BF3E-41D0-AA88-310D824C80A4}" Name="Декабрь" Number="12"/>
-  
   <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
   <_ProtocolType IsSystem="true" UID="{E9461667-E1CA-4C22-907B-FDC350A931C4}" Name="Выход из программы"/>
   <_ProtocolType IsSystem="true" UID="{D1348312-298F-4A7C-B584-9BA8C4952CD3}" Name="Добавление новой записи"/>
