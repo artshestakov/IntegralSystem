@@ -42,14 +42,6 @@
   <_Months ID="10" IsSystem="true" UID="{C964257E-6865-4853-AD4B-F65E70628516}" Name="Октябрь" Number="10"/>
   <_Months ID="11" IsSystem="true" UID="{D8F8CA24-C4ED-4885-928C-97C8A3EE739E}" Name="Ноябрь" Number="11"/>
   <_Months ID="12" IsSystem="true" UID="{2414143C-BF3E-41D0-AA88-310D824C80A4}" Name="Декабрь" Number="12"/>
-
-  <_DaysWeek IsSystem="true" UID="{8B5F3AF8-5EF6-43E1-B45D-9EF6426C379D}" Name="Понедельник" Number="1"/>
-  <_DaysWeek IsSystem="true" UID="{1971C44C-0821-4507-BECF-D68A8EAA8AF5}" Name="Вторник" Number="2"/>
-  <_DaysWeek IsSystem="true" UID="{D34F6AAD-4648-4F0F-A3A2-A260679043A9}" Name="Среда" Number="3"/>
-  <_DaysWeek IsSystem="true" UID="{154CBCEC-6233-4148-8139-64ADF68A154B}" Name="Четверг" Number="4"/>
-  <_DaysWeek IsSystem="true" UID="{D03139F6-7DC1-4748-BD53-8F03251D5BED}" Name="Пятница" Number="5"/>
-  <_DaysWeek IsSystem="true" UID="{AFFE23A7-8990-47C8-BAF2-2600F2F44B01}" Name="Суббота" Number="6"/>
-  <_DaysWeek IsSystem="true" UID="{6DBF2B0A-818E-47E9-B049-A75F8288CBCE}" Name="Воскресенье" Number="7"/>
   
   <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
   <_ProtocolType IsSystem="true" UID="{E9461667-E1CA-4C22-907B-FDC350A931C4}" Name="Выход из программы"/>

@@ -317,17 +317,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="_DaysWeek" UID="{2CA44906-F7D7-48C7-A019-DB6713E3D9D3}" Alias="days" ShowOnly="true" LocalName="День недели" LocalListName="Дни недели" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{9CD78AD3-6FDE-46BD-8A30-3E0DB006E08D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{4466C7A2-775E-4430-8DBF-2A80F4A016CA}" Name="Number" Type="Int" LabelName="Номер дня недели" LocalListName="Номер дня недели" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Number" Unique="true"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_SearchFast" UID="{382BA5DC-C0A2-4934-A718-70B9F6BBE6F2}" Alias="srfs" LocalName="Запрос быстрого поиска" LocalListName="Запросы быстрого поиска" TitleName="Value" IsSystem="true">
     <Fields>
       <Field UID="{57F639C8-2A73-4DBA-AA20-CB693219A408}" Name="Value" Type="String" LabelName="Поисковой запрос" LocalListName="Поисковой запрос" NotNull="true"/>
