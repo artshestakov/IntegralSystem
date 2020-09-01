@@ -43,7 +43,7 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 //-----------------------------------------------------------------------------
 void ISSearchModel::AddField(const QString &FieldName, const QVariant &Value, ISNamespace::SearchOperatorType Operator, ISNamespace::FieldType FieldType)
 {
-	for (int i = 0, c = Vector.size(); i < c; ++i)
+	for (size_t i = 0, c = Vector.size(); i < c; ++i)
 	{
 		if (Vector[i].FieldName == FieldName && Vector[i].Operator == Operator)
 		{
