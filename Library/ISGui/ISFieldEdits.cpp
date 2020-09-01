@@ -1320,7 +1320,7 @@ ISTaskImportantEdit::~ISTaskImportantEdit()
 //-----------------------------------------------------------------------------
 void ISTaskImportantEdit::ImportantChanged(const QVariant &value)
 {
-	GetCheckBox()->setIcon(BUFFER_ICONS(value.toBool() ? "Task.Important.Checked" : "Task.Important.Unchecked"));
+	GetCheckBox()->setIcon(value.toBool() ? BUFFER_ICONS("Task.Important.Checked") : BUFFER_ICONS("Task.Important.Unchecked"));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
