@@ -5,9 +5,9 @@
     CREATE OR REPLACE FUNCTION public.uuid_generate_v4()
     RETURNS uuid AS
     $$
-      BEGIN
-        RETURN md5(random()::TEXT || clock_timestamp()::TEXT)::UUID;
-      END;
+    BEGIN
+    RETURN md5(random()::TEXT || clock_timestamp()::TEXT)::UUID;
+    END;
     $$
     LANGUAGE 'plpgsql'
     VOLATILE
@@ -16,28 +16,13 @@
     COST 100;
   </Function>
 
-  <Function Name="currentuserid">
-    CREATE OR REPLACE FUNCTION public.currentuserid()
-    RETURNS integer AS
-    $body$
-      BEGIN
-        RETURN usrs_id FROM _users WHERE usrs_login = CURRENT_USER;
-      END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    RETURNS NULL ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-  
   <Function Name="currentuseroid">
     CREATE OR REPLACE FUNCTION public.currentuseroid()
     RETURNS integer AS
     $body$
-      BEGIN
-        RETURN usesysid FROM pg_user WHERE usename = CURRENT_USER;
-      END;
+    BEGIN
+    RETURN usesysid FROM pg_user WHERE usename = CURRENT_USER;
+    END;
     $body$
     LANGUAGE 'plpgsql'
     VOLATILE
@@ -46,13 +31,13 @@
     COST 100;
   </Function>
 
-  <Function Name="userfullname">
-    CREATE OR REPLACE FUNCTION public.userfullname(id bigint)
+  <Function Name="userfullnamebyoid">
+    CREATE OR REPLACE FUNCTION public.userfullnamebyoid(oid oid)
     RETURNS varchar AS
     $body$
-      BEGIN
-        RETURN concat(usrs_surname, ' ', usrs_name, ' ' || usrs_patronymic) FROM _users WHERE usrs_id = id;
-      END;
+    BEGIN
+    RETURN concat(usrs_surname, ' ', usrs_name, ' ' || usrs_patronymic) FROM _users WHERE usrs_oid = oid;
+    END;
     $body$
     LANGUAGE 'plpgsql'
     VOLATILE
@@ -60,14 +45,44 @@
     SECURITY INVOKER
     COST 100;
   </Function>
-  
-  <Function Name="userphoto">
-    CREATE OR REPLACE FUNCTION public.userphoto(id bigint)
+
+  <Function Name="userfullnamebyid">
+    CREATE OR REPLACE FUNCTION public.userfullnamebyid(id bigint)
+    RETURNS varchar AS
+    $body$
+    BEGIN
+    RETURN concat(usrs_surname, ' ', usrs_name, ' ' || usrs_patronymic) FROM _users WHERE usrs_id = id;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
+  <Function Name="userphotobyoid">
+    CREATE OR REPLACE FUNCTION public.userphotobyoid(oid oid)
     RETURNS bytea AS
     $body$
-      BEGIN
-        RETURN usrs_photo FROM _users WHERE usrs_id = id;
-      END;
+    BEGIN
+    RETURN usrs_photo FROM _users WHERE usrs_oid = oid;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
+  <Function Name="userphotobyid">
+    CREATE OR REPLACE FUNCTION public.userphotobyid(id bigint)
+    RETURNS bytea AS
+    $body$
+    BEGIN
+    RETURN usrs_photo FROM _users WHERE usrs_id = id;
+    END;
     $body$
     LANGUAGE 'plpgsql'
     VOLATILE
@@ -80,9 +95,9 @@
     CREATE OR REPLACE FUNCTION public.tablesize(table_name varchar)
     RETURNS varchar AS
     $body$
-      BEGIN
-        RETURN pg_size_pretty(pg_relation_size(table_name));
-      END;
+    BEGIN
+    RETURN pg_size_pretty(pg_relation_size(table_name));
+    END;
     $body$
     LANGUAGE 'plpgsql'
     VOLATILE
@@ -95,9 +110,9 @@
     CREATE OR REPLACE FUNCTION public.tablesizefull(table_name varchar)
     RETURNS varchar AS
     $body$
-      BEGIN
-        RETURN pg_size_pretty(pg_total_relation_size(table_name));
-      END;
+    BEGIN
+    RETURN pg_size_pretty(pg_total_relation_size(table_name));
+    END;
     $body$
     LANGUAGE 'plpgsql'
     VOLATILE
@@ -111,12 +126,12 @@
     RETURNS boolean AS
     $body$
     BEGIN
-      RETURN
-      (
-        date_part('day', CURRENT_DATE)::VARCHAR || date_part('month', CURRENT_DATE)::VARCHAR =
-        date_part('day', dateofbirth)::VARCHAR || date_part('month', dateofbirth)::VARCHAR
-      )::BOOLEAN;
-      END;
+    RETURN
+    (
+    date_part('day', CURRENT_DATE)::VARCHAR || date_part('month', CURRENT_DATE)::VARCHAR =
+    date_part('day', dateofbirth)::VARCHAR || date_part('month', dateofbirth)::VARCHAR
+    )::BOOLEAN;
+    END;
     $body$
     LANGUAGE 'plpgsql'
     VOLATILE
@@ -125,13 +140,28 @@
     COST 100;
   </Function>
 
-  <Function Name="userlogin">
-    CREATE OR REPLACE FUNCTION public.userlogin(id bigint)
+  <Function Name="userloginbyoid">
+    CREATE OR REPLACE FUNCTION public.userloginbyoid(oid oid)
     RETURNS varchar AS
     $body$
-      BEGIN
-        RETURN usrs_login FROM _users WHERE usrs_id = id;
-      END;
+    BEGIN
+    RETURN usrs_login FROM _users WHERE usrs_oid = oid;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
+  <Function Name="userloginbyid">
+    CREATE OR REPLACE FUNCTION public.userloginbyid(id bigint)
+    RETURNS varchar AS
+    $body$
+    BEGIN
+    RETURN usrs_login FROM _users WHERE usrs_id = id;
+    END;
     $body$
     LANGUAGE 'plpgsql'
     VOLATILE

@@ -15,7 +15,7 @@
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
 										   "FROM _calendar "
 										   "WHERE NOT cldr_isdeleted "
-										   "AND cldr_user = currentuserid() "
+										   "AND cldr_creationuseroid = currentuseroid() "
 										   "AND cldr_date = :Date "
 										   "ORDER BY cldr_id DESC");
 //-----------------------------------------------------------------------------
@@ -23,7 +23,7 @@ static QString QD_CALENDAR = PREPARE_QUERY("DELETE FROM _calendar WHERE cldr_id 
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR_OVERDUE = PREPARE_QUERY("SELECT cldr_id "
 												   "FROM _calendar "
-												   "WHERE cldr_user = currentuserid() "
+												   "WHERE cldr_creationuseroid = currentuseroid() "
 												   "AND NOT cldr_closed "
 												   "AND cldr_date <= CURRENT_DATE "
 												   "AND cldr_timealert <= CURRENT_TIME");
@@ -31,7 +31,7 @@ static QString QS_CALENDAR_OVERDUE = PREPARE_QUERY("SELECT cldr_id "
 static QString QS_CALENDAR_SEARCH = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
 												  "FROM _calendar "
 												  "WHERE NOT cldr_isdeleted "
-												  "AND cldr_user = currentuserid() "
+												  "AND cldr_creationuseroid = currentuseroid() "
 												  "ORDER BY cldr_id DESC");
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR_EVENT_DATE = PREPARE_QUERY("SELECT cldr_date FROM _calendar WHERE cldr_id = :CalendarID");

@@ -26,13 +26,13 @@ static QString QS_TABLES = PREPARE_QUERY("SELECT tablename "
 //-----------------------------------------------------------------------------
 static QString QS_NAME_VALUE = PREPARE_QUERY("SELECT lcnm_localname "
 											 "FROM _localnames "
-											 "WHERE lcnm_user = currentuserid() "
+											 "WHERE lcnm_creationuseroid = currentuseroid() "
 											 "AND lcnm_tablename = :TableName "
 											 "AND lcnm_fieldname = :FieldName");
 //-----------------------------------------------------------------------------
 static QString QS_NAME = PREPARE_QUERY("SELECT COUNT(*) "
 									   "FROM _localnames "
-									   "WHERE lcnm_user = currentuserid() "
+									   "WHERE lcnm_creationuseroid = currentuseroid() "
 									   "AND lcnm_tablename = :TableName "
 									   "AND lcnm_fieldname = :FieldName");
 //-----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ static QString QI_NAME = PREPARE_QUERY("INSERT INTO _localnames (lcnm_tablename,
 //-----------------------------------------------------------------------------
 static QString QU_NAME = PREPARE_QUERY("UPDATE _localnames SET "
 									   "lcnm_localname = :LocalName "
-									   "WHERE lcnm_user = currentuserid() "
+									   "WHERE lcnm_creationuseroid = currentuseroid() "
 									   "AND lcnm_tablename = :TableName "
 									   "AND lcnm_fieldname = :FieldName");
 //-----------------------------------------------------------------------------

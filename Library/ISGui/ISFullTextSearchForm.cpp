@@ -18,7 +18,7 @@
 static QString QS_SEARCH_HISTORY = PREPARE_QUERY("SELECT fsth_value "
 												 "FROM _fullsearchtexthistory "
 												 "WHERE NOT fsth_isdeleted "
-												 "AND fsth_user = currentuserid()");
+												 "AND fsth_creationuseroid = currentuseroid()");
 //-----------------------------------------------------------------------------
 static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _fullsearchtexthistory(fsth_value) "
 										  "VALUES (:Value)");
@@ -290,7 +290,10 @@ void ISFullTextSearchForm::Stop()
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::AddHistory(const QString &Value)
 {
-	ISQueryPool::Instance().AddQuery(QI_HISTORY, { {":Value", Value} });
+	ISQueryPool::Instance().AddQuery(QI_HISTORY,
+	{
+		{ ":Value", Value }
+	});
 	LineEdit->CreateCompleter(LineEdit->GetCompleterList() << Value);
 }
 //-----------------------------------------------------------------------------

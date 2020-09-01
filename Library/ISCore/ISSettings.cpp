@@ -8,20 +8,20 @@ static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
 										   "stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
 										   "stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
 										   "usst_value, "
-										   "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = currentuserid() AND usst_setting = stgs_uid) "
+										   "(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuseroid = currentuseroid() AND usst_setting = stgs_uid) "
 										   "FROM _settings "
 										   "LEFT JOIN _settingsgroup ON stgp_uid = stgs_group "
-										   "LEFT JOIN _usersettings ON usst_setting = stgs_uid AND usst_user = currentuserid() "
+										   "LEFT JOIN _usersettings ON usst_setting = stgs_uid AND usst_creationuseroid = currentuseroid() "
 										   "WHERE NOT stgs_isdeleted "
 										   "AND NOT stgp_isdeleted "
 										   "ORDER BY stgp_order, stgs_order");
 //-----------------------------------------------------------------------------
-static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_user, usst_setting, usst_value) "
-											   "VALUES(currentuserid(), :SettingUID, :Value)");
+static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
+											   "VALUES(:SettingUID, :Value)");
 //-----------------------------------------------------------------------------
 static QString QU_USER_SETTING_VALUE = PREPARE_QUERY("UPDATE _usersettings SET "
 													 "usst_value = :Value "
-													 "WHERE usst_user = currentuserid() "
+													 "WHERE usst_creationuseroid = currentuseroid() "
 													 "AND usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()

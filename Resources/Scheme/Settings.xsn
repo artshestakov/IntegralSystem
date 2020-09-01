@@ -3,18 +3,16 @@
   
   <Table Name="_UserSettings" UID="{40628A04-2B01-49F2-87EC-2935221C5B3E}" Alias="usst" LocalName="Настройка пользователя" LocalListName="Настройки пользователя" TitleName="Setting" IsSystem="true">
     <Fields>
-      <Field UID="{F30FDB7D-C562-4DD3-9617-09307F8E0EF0}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{37DCAF64-6AD3-45F9-8081-FB49410CF30A}" Name="Setting" Type="UID" LabelName="Настройка" LocalListName="Настройка" NotNull="true"/>
       <Field UID="{BB690831-A151-4BA0-9E4F-66699DB132F9}" Name="Value" Type="String" LabelName="Значение" LocalListName="Значение"/>
     </Fields>
     <Indexes>
-      <Index Field="User"/>
       <Index Field="Setting"/>
       <Index Field="Value"/>
-      <Index Field="User;Setting"/>
+      <Index Field="CreationUserOID;Setting"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
       <Foreign Field="Setting" ForeignClass="_Settings" ForeignField="UID" ForeignViewNameField="LocalName"/>
     </Foreigns>
   </Table>

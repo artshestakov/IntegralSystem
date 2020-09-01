@@ -5,24 +5,25 @@
 static QString QS_SORTINGS = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
 										   "FROM _sortingtables "
 										   "WHERE NOT sgts_isdeleted "
-										   "AND sgts_user = currentuserid()");
+										   "AND sgts_creationuseroid = currentuseroid()");
 //-----------------------------------------------------------------------------
 static QString QS_SORTING_EXIST = PREPARE_QUERY("SELECT COUNT(*) "
 												"FROM _sortingtables "
 												"WHERE NOT sgts_isdeleted "
-												"AND sgts_user = currentuserid() "
+												"AND sgts_creationuseroid = currentuseroid() "
 												"AND sgts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
 										  "sgts_fieldname = :FieldName, "
 										  "sgts_sorting = :Sorting "
-										  "WHERE sgts_user = currentuserid() "
+										  "WHERE sgts_creationuseroid = currentuseroid() "
 										  "AND sgts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_tablename, sgts_fieldname, sgts_sorting) "
 										  "VALUES(:TableName, :FieldName, :Sorting)");
 //-----------------------------------------------------------------------------
-static QString QD_SORTING = PREPARE_QUERY("DELETE FROM _sortingtables WHERE sgts_user = currentuserid()");
+static QString QD_SORTING = PREPARE_QUERY("DELETE FROM _sortingtables "
+										  "WHERE sgts_creationuseroid = currentuseroid()");
 //-----------------------------------------------------------------------------
 ISSortingBuffer::ISSortingBuffer()
 	: ErrorString(NO_ERROR_STRING)

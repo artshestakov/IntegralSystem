@@ -5,7 +5,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QString &user_name, QWidget *parent) : QFrame(parent)
+ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, int user_oid, const QString &user_name, QWidget *parent) : QFrame(parent)
 {
 	setFrameShape(QFrame::Box);
 	setFrameShadow(QFrame::Plain);
@@ -13,6 +13,7 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	setCursor(CURSOR_POINTING_HAND);
 	setContextMenuPolicy(Qt::ActionsContextMenu);
 	setProperty("UserID", user_id);
+	setProperty("UserOID", user_oid);
 	setProperty("UserName", user_name);
 
 	QPalette Palette(palette());

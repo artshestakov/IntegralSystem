@@ -739,7 +739,7 @@ bool ISObjectFormBase::Save()
 
 		//Заполнение полей информацией о опользователе и текущей дате
 		QueryText += MetaTable->Alias + "_updationdate = now(), \n";
-		QueryText += MetaTable->Alias + "_updationuser = CURRENT_USER, \n";
+		QueryText += MetaTable->Alias + "_updationuseroid = currentuseroid(), \n";
 
 		for (const QString &String : FieldsVector)
 		{

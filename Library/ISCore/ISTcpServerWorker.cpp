@@ -10,7 +10,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
-											  "WHERE clsz_user = currentuserid()");
+											  "WHERE clsz_creationuseroid = currentuseroid()");
 //-----------------------------------------------------------------------------
 static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
 											 "FROM _paragraphs "
@@ -20,7 +20,7 @@ static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_l
 static QString QS_SORTING_COLUMN = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
 												 "FROM _sortingtables "
 												 "WHERE NOT sgts_isdeleted "
-												 "AND sgts_user = currentuserid()");
+												 "AND sgts_creationuseroid = currentuseroid()");
 //-----------------------------------------------------------------------------
 ISTcpServerWorker::ISTcpServerWorker(QObject *parent)
 	: ISTcpServerBase(parent),

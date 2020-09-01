@@ -42,20 +42,14 @@ public:
 	void SetOffset(int offset); //Изменить страницу
 
 private:
-	void CreateQuerySelectSystemFields(); //Создание списка системных полей для запроса выборки
-	void CreateQuerySelectFields(); //Создание списка полей для запроса выборки
-	void CreateQuerySelectIsDeleted(); //Создание условия отображения полей удаленные/не удаленные
-
-private:
 	QString GetForeignViewNameField(const QString &MetaTableForeignAlias, PMetaForeign *MetaForeign, size_t Iterator); //Получить текст запроса для отображаемого поля эскортной таблицы (Атрибут в схеме ForeignViewNameField)
 	QString GetAliasForLeftJoinTable(const QString &TableAlias, size_t Iterator); //Получить алиас для таблицы в связке LEFT JOIN
 
 private:
 	PMetaTable *MetaTable;
 	ISNamespace::QueryModelType ModelType;
+	QString ClassAlias;
 	
-	QString QuerySelectText; //Текст запроса на выборку
-	QString QuerySelectSystemFields; //Список системных полей для запроса на выборку
 	QString QuerySelectFields;
 	QString QuerySelectFrom; //Отношение к таблице
 	QString QuerySelectLeftJoin;
@@ -74,7 +68,6 @@ private:
 	ISNamespace::PeriodType PeriodType;
 	ISRangeStruct PeriodRange;
 
-	QString ClassAlias;
 	QString ParentFilter;
 	QString ClassFilter;
 	QString SearchFilter;

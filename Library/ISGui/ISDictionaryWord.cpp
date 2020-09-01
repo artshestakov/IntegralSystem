@@ -5,10 +5,10 @@
 static QString QS_WORD = PREPARE_QUERY("SELECT dicw_word "
 									   "FROM _dictionaryword "
 									   "WHERE NOT dicw_isdeleted "
-									   "AND dicw_user = currentuserid()");
+									   "AND dicw_creationuseroid = currentuseroid()");
 //-----------------------------------------------------------------------------
-static QString QI_WORD = PREPARE_QUERY("INSERT INTO _dictionaryword (dicw_user, dicw_word) "
-									   "VALUES (currentuserid(), :Word)");
+static QString QI_WORD = PREPARE_QUERY("INSERT INTO _dictionaryword (dicw_word) "
+									   "VALUES(:Word)");
 //-----------------------------------------------------------------------------
 ISDictionaryWord::ISDictionaryWord()
 	: ErrorString(NO_ERROR_STRING),

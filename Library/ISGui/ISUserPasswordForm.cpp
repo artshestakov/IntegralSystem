@@ -12,7 +12,7 @@
 #include "ISGui.h"
 #include "ISPasswordWidthWidget.h"
 //-----------------------------------------------------------------------------
-static QString QS_USER = PREPARE_QUERY("SELECT usrs_login, userfullname(:UserID), CASE WHEN length(passwd) > 0 THEN true ELSE false END "
+static QString QS_USER = PREPARE_QUERY("SELECT usrs_login, userfullnamebyid(:UserID), CASE WHEN length(passwd) > 0 THEN true ELSE false END "
 									   "FROM _users "
 									   "LEFT JOIN pg_shadow ON usename = usrs_login "
 									   "WHERE usrs_id = :UserID");
@@ -23,18 +23,19 @@ static QString QS_AUTHID = PREPARE_QUERY("SELECT rolpassword "
 //-----------------------------------------------------------------------------
 static QString QA_PASSWORD = "ALTER ROLE %1 WITH ENCRYPTED PASSWORD '%2'";
 //-----------------------------------------------------------------------------
-static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type, upcg_whouser) "
-														"VALUES(:User, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :ChangeTypeUID), :WhoUser)");
+static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
+														"VALUES(:User, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :ChangeTypeUID))");
 //-----------------------------------------------------------------------------
-ISUserPasswordForm::ISUserPasswordForm(int user_id) : ISInterfaceDialogForm()
+ISUserPasswordForm::ISUserPasswordForm(int user_id)
+	: ISInterfaceDialogForm(),
+	UserID(user_id)
 {
 	ISQuery qSelectUser(QS_USER);
 	qSelectUser.BindValue(":UserID", user_id);
 	if (qSelectUser.ExecuteFirst())
 	{
-		UserID = user_id;
 		Login = qSelectUser.ReadColumn("usrs_login").toString();
-		UserFullName = qSelectUser.ReadColumn("userfullname").toString();
+		UserFullName = qSelectUser.ReadColumn("userfullnamebyid").toString();
 		ExistPassword = qSelectUser.ReadColumn("case").toBool();
 	}
 
@@ -164,7 +165,6 @@ void ISUserPasswordForm::ChangePassword()
 		ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
 		qInsertPasswordChange.BindValue(":User", UserID);
 		qInsertPasswordChange.BindValue(":ChangeTypeUID", ExistPassword ? CONST_UID_USER_PASSWORD_CHANGE_TYPE_UPDATE : CONST_UID_USER_PASSWORD_CHANGE_TYPE_CREATE);
-		qInsertPasswordChange.BindValue(":WhoUser", CURRENT_USER_ID);
 		if (!qInsertPasswordChange.Execute())
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.ChangePasswordUserHistory"), qInsertPasswordChange.GetErrorString());

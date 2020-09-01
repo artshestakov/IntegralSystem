@@ -10,6 +10,7 @@ public: //foreigns
 	static bool CreateForeign(PMetaForeign *MetaForeign, QString &ErrorString); //Создание внешнего ключа
 	static bool UpdateForeign(PMetaForeign *MetaForeign, QString &ErrorString); //Обновление внешнего ключа
 	static bool CheckExistForeign(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString); //Проверка существования внешнего ключа
+	static QString GetForeignName(PMetaForeign *MetaForeign); //Получение имени внешнего ключа
 
 public: //functions
 	static bool CreateOrReplaceFunction(PMetaFunction *MetaFunction, QString &ErrorString); //Создание функции
@@ -45,9 +46,6 @@ public: //tables
 	static bool AlterExistFields(PMetaTable *MetaTable, QString &ErrorString);
 	static bool CreateNewFields(PMetaTable *MetaTable, QString &ErrorString);
 	static bool DeleteOldFields(PMetaTable *MetaTable, QString &ErrorString);
-
-private: //other
-	static QString GetForeignName(PMetaForeign *MetaForeign); //Получение имени внешнего ключа
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
 											  "FROM _searchfast "
-											  "WHERE srfs_user = currentuserid() "
+											  "WHERE srfs_creationuseroid = currentuseroid() "
 											  "ORDER BY srfs_id "
 											  "LIMIT :Limit");
 //-----------------------------------------------------------------------------
@@ -2460,6 +2460,6 @@ void ISExecutorEdit::SetReadOnly(bool read_only)
 //-----------------------------------------------------------------------------
 void ISExecutorEdit::DesignateMe()
 {
-	SetValue(CURRENT_USER_ID);
+	SetValue(CURRENT_USER_OID);
 }
 //-----------------------------------------------------------------------------

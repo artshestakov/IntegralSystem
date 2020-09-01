@@ -218,7 +218,7 @@ std::vector<PMetaForeign*> ISMetaData::GetForeigns()
 	std::vector<PMetaForeign*> Foreigns;
 	for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
 	{
-		for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
+		for (PMetaField *MetaField : MetaTable->AllFields) //Обход полей
 		{
 			if (MetaField->Foreign)
 			{
@@ -745,18 +745,6 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 	IS_ASSERT(FieldDeletionDate, "Null field object");
 	FieldDeletionDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionDate->Name);
 
-	PMetaField *FieldCreationUser = MetaTable->GetField("CreationUser");
-	IS_ASSERT(FieldCreationUser, "Null field object");
-	FieldCreationUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUser->Name);
-
-	PMetaField *FieldUpdationUser = MetaTable->GetField("UpdationUser");
-	IS_ASSERT(FieldUpdationUser, "Null field object");
-	FieldUpdationUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationUser->Name);
-
-	PMetaField *FieldDeletionUser = MetaTable->GetField("DeletionUser");
-	IS_ASSERT(FieldDeletionUser, "Null field object");
-	FieldDeletionUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionUser->Name);
-
 	PMetaField *FieldCreationUserOID = MetaTable->GetField("CreationUserOID");
 	IS_ASSERT(FieldCreationUserOID, "Null field object");
 	FieldCreationUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUserOID->Name);
@@ -1024,7 +1012,9 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNod
 				break;
 			}
 
-			Result = MetaTable->GetField(FieldName) ? true : false;
+			//Проверка наличия поля - на котором делается внешний ключ
+			PMetaField *MetaField = MetaTable->GetField(FieldName);
+			Result = MetaField ? true : false;
 			if (!Result)
 			{
 				ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->Name);
@@ -1039,15 +1029,6 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNod
 			MetaForeign->ForeignViewNameField = DomNamedNodeMap.namedItem("ForeignViewNameField").nodeValue();
 			MetaForeign->OrderField = DomNamedNodeMap.namedItem("OrderField").nodeValue();
 			MetaForeign->TableName = MetaTable->Name;
-
-			//Проверка наличия поля - на котором делается внешний ключ
-			PMetaField *MetaField = MetaTable->GetField(FieldName);
-			Result = MetaTable ? true : false;
-			if (!Result)
-			{
-				ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(FieldName).arg(MetaTable->Name);
-				break;
-			}
 
 			//Проверка наличия внешнего ключа на этом поле
 			Result = !MetaField->Foreign;

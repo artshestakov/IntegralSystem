@@ -3,7 +3,7 @@
   
   <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="Surname;Name;Patronymic" ObjectForm="ISUserObjectForm">
     <Fields>
-      <Field UID="{6B61D73F-A200-499B-BD31-4168908FA35C}" Name="OID" Type="OID" LabelName="Системный идентификатор" LocalListName="Системный идентификатор" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{6B61D73F-A200-499B-BD31-4168908FA35C}" Name="OID" Type="OID" ReadOnly="true" LabelName="Системный идентификатор" LocalListName="Системный идентификатор" HideFromList="true" Hint="Внутренний идентификатор пользователя в базе данных."/>
       <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="Int" LabelName="Группа" LocalListName="Группа" LayoutName="GroupSubdivision"/>
       <Field UID="{4ED0AB79-0ECC-4CDA-9FEF-970813028FCB}" Name="Subdivision" Type="Int" LabelName="Подразделение" LocalListName="Подразделение" LayoutName="GroupSubdivision"/>
       <Field UID="{861223FE-18B5-4557-99D1-AEA74D42483E}" Name="Surname" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Фамилия" LocalListName="Фамилия" NotNull="true" LayoutName="FIO"/>
@@ -19,7 +19,7 @@
       <Field UID="{C19191C0-9398-4FEB-9BED-BA1C3F8C0979}" Name="Photo" Type="Image" LabelName="Фотография" LocalListName="Фотография" HideFromList="true"/>
     </Fields>
     <Indexes>
-      <Index Field="OID"/>
+      <Index Field="OID" Unique="true"/>
       <Index Field="Group"/>
       <Index Field="Subdivision"/>
       <Index Field="Surname"/>
@@ -169,20 +169,19 @@
     <Fields>
       <Field UID="{B33AA18E-3C37-4D9F-8F98-C8DF6999F0E0}" Name="User" Type="Int" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{08D7A891-9410-4EBB-A774-2A72ED2E7591}" Name="Type" Type="Int" LabelName="Тип события" LocalListName="Тип события" NotNull="true"/>
-      <Field UID="{9B8B9EFC-EFEB-47E3-85B8-070D7F9DE2C8}" Name="WhoUser" Type="Int" LabelName="Кто изменил" LocalListName="Кто изменил" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="User"/>
       <Index Field="Type"/>
-      <Index Field="WhoUser"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
       <Foreign Field="Type" ForeignClass="_UserPasswordChangedType" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="WhoUser" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
     </Foreigns>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время изменения"/>
+      <Field Name="CreationUserOID" LocalName="Изменил"/>
     </SystemFields>
   </Table>
 

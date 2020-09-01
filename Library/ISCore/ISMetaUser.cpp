@@ -6,6 +6,7 @@
 static QString QS_USER = PREPARE_QUERY("SELECT "
 									   "usrs_issystem, "
 									   "usrs_id, "
+									   "usrs_oid, "
 									   "usrs_group, "
 									   "usrs_surname, "
 									   "usrs_name, "
@@ -53,6 +54,7 @@ bool ISMetaUser::Initialize()
 	{
 		UserData->System = qSelectUser.ReadColumn("usrs_issystem").toBool();
 		UserData->ID = qSelectUser.ReadColumn("usrs_id").toInt();
+		UserData->OID = qSelectUser.ReadColumn("usrs_oid").toInt();
 		UserData->GroupID = qSelectUser.ReadColumn("usrs_group").toInt();
 		UserData->Surname = qSelectUser.ReadColumn("usrs_surname").toString();
 		UserData->Name = qSelectUser.ReadColumn("usrs_name").toString();

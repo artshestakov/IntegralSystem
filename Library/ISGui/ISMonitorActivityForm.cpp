@@ -17,10 +17,10 @@
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, userfullname(usrs_id) "
+static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, usrs_oid, userfullnamebyoid(usrs_oid) "
 										"FROM _users "
 										"WHERE usrs_uid != :PostgresUID "
-										"ORDER BY userfullname(usrs_id)");
+										"ORDER BY userfullnamebyoid(usrs_oid)");
 //-----------------------------------------------------------------------------
 ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
@@ -91,9 +91,10 @@ void ISMonitorActivityForm::LoadData()
 			}
 
 			int UserID = qSelect.ReadColumn("usrs_id").toInt();
-			QString UserFullName = qSelect.ReadColumn("userfullname").toString();
+			int UserOID = qSelect.ReadColumn("usrs_oid").toInt();
+			QString UserFullName = qSelect.ReadColumn("userfullnamebyoid").toString();
 
-			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline, UserID, UserFullName, ScrollArea);
+			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline, UserID, UserOID, UserFullName, ScrollArea);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivityForm::ShowUserCard);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
 			ScrollArea->widget()->layout()->addWidget(MonitorUserWidget);
@@ -162,8 +163,8 @@ void ISMonitorActivityForm::ShowProtocol()
 		ISProtocolListForm *ProtocolBaseListForm = new ISProtocolListForm();
 		ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + MonitorUserWidget->property("UserName").toString());
 		ProtocolBaseListForm->setWindowIcon(BUFFER_ICONS("Protocol"));
-		ProtocolBaseListForm->GetQueryModel()->SetClassFilter("prtc_user = :UserID");
-		ProtocolBaseListForm->GetQueryModel()->AddCondition(":UserID", MonitorUserWidget->property("UserID"));
+		ProtocolBaseListForm->GetQueryModel()->SetClassFilter("prtc_creationuseroid = :UserOID");
+		ProtocolBaseListForm->GetQueryModel()->AddCondition(":UserOID", MonitorUserWidget->property("UserOID"));
 		ProtocolBaseListForm->LoadData();
 		ProtocolBaseListForm->showMaximized();
 	}

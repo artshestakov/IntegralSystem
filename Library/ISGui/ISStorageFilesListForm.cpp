@@ -1,3 +1,4 @@
+
 #include "ISStorageFilesListForm.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
@@ -282,18 +283,18 @@ void ISStorageFilesListForm::FilterChanged(QAbstractButton *AbstractButton)
 	}
 	else if (AbstractButton == RadioMyFiles)
 	{
-		GetQueryModel()->SetClassFilter("sgfs_owner = currentuserid()");
+		GetQueryModel()->SetClassFilter("sgfs_owner = currentuseroid()");
 	}
 	else if (AbstractButton == RadioMyPrivateFiles)
 	{
-		GetQueryModel()->SetClassFilter("sgfs_owner = currentuserid() AND sgfs_private");
+		GetQueryModel()->SetClassFilter("sgfs_owner = currentuseroid() AND sgfs_private");
 	}
 	Update();
 }
 //-----------------------------------------------------------------------------
 bool ISStorageFilesListForm::IsMyFile()
 {
-	return GetCurrentRecordValueDB("Owner").toInt() == CURRENT_USER_ID;
+	return GetCurrentRecordValueDB("CreationUserOID").toInt() == CURRENT_USER_OID;
 }
 //-----------------------------------------------------------------------------
 bool ISStorageFilesListForm::CheckPassword()

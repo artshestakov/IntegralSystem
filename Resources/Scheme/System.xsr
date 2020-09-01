@@ -22,10 +22,9 @@
   <_SubSystems IsSystem="true" UID="{D55AE0AD-D609-48FF-BDAF-02279CBE146E}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="1" LocalName="Файловое хранилище" Icon="SubSystem.StorageFiles" ClassName="ISStorageFilesListForm" Hint="Предметно-ориентированная информационная база данных файлов. Данные, поступающие в хранилище, доступны только для чтения."/>
   <_SubSystems IsSystem="true" UID="{BBC746E2-C9CD-451E-BF1A-0FC5A3D1FFF3}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="База знаний" Icon="SubSystem.QuestionAnswer" ClassName="ISKnowledgeBaseSubSystem" Hint="База знаний."/>
   <_SubSystems IsSystem="true" UID="{1B59B2AF-A27A-415C-A844-AEF1F24226CF}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="3" LocalName="Типы задач" Icon="Lists" TableName="_TaskType"/>
-  <_SubSystems IsSystem="true" UID="{044F9718-23AA-45E6-98BA-D0292AF74325}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Банки данных" Icon="SubSystem.Database" TableName="_Database"/>
-  <_SubSystems IsSystem="true" UID="{22669BBC-FA2B-456D-81C9-DEE48F997BAE}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="5" LocalName="Подразделения" Icon="SubSystem.Subdivision" TableName="_Subdivision"/>
-  <_SubSystems IsSystem="true" UID="{B8E43757-67D5-4B8B-A840-7BCA3245F845}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="6" LocalName="Полнотекстовый поиск" Icon="SubSystem.SearchFullText" ClassName="ISFullTextSearchForm"/>
-  <_SubSystems IsSystem="true" UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="7" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
+  <_SubSystems IsSystem="true" UID="{22669BBC-FA2B-456D-81C9-DEE48F997BAE}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Подразделения" Icon="SubSystem.Subdivision" TableName="_Subdivision"/>
+  <_SubSystems IsSystem="true" UID="{B8E43757-67D5-4B8B-A840-7BCA3245F845}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="5" LocalName="Полнотекстовый поиск" Icon="SubSystem.SearchFullText" ClassName="ISFullTextSearchForm"/>
+  <_SubSystems IsSystem="true" UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="6" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
 
   <_InternalDirectories IsSystem="true" UID="{F09346EB-8B35-4673-BEA1-8357661482E7}" TableName="_Countries" Order="1"/>
   <_InternalDirectories IsSystem="true" UID="{484906E2-8F17-4388-9E88-0B26511F1212}" TableName="_Currency" Order="2"/>

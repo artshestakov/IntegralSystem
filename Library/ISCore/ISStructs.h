@@ -34,6 +34,7 @@ struct ISMetaUserData
 
     bool System; //Системный
     int ID; //Идентификатор пользователя
+	int OID; //Системный идентификатор пользователя
     QString Surname; //Фамилия
     QString Name; //Имя
     QString Patronymic; //Отчество

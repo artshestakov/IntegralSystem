@@ -19,13 +19,13 @@
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "
 									   "t.task_description, "
-									   "userfullname(t.task_executor) AS task_executor, "
+									   "userfullnamebyoid(t.task_executor) AS task_executor, "
 									   "tt.tstp_name AS task_type, "
 									   "ts.tsst_uid AS task_status_uid, "
 									   "ts.tsst_name AS task_status_name, "
 									   "tp.tspr_uid AS task_priority_uid, "
 									   "tp.tspr_name AS task_priority_name, "
-									   "userfullname(t.task_owner) AS task_owner, "
+									   "userfullnamebyoid(t.task_creationuseroid) AS task_owner, "
 									   "t.task_important, "
 									   "t.task_creationdate, "
 									   "t.task_updationdate, "
@@ -83,7 +83,7 @@ static QString QU_STATUS = PREPARE_QUERY("UPDATE _task SET "
 static QString QI_STATUS_HISTORY = PREPARE_QUERY("INSERT INTO _taskstatushistory(tshr_task, tshr_status) "
 												 "VALUES(:TaskID, :StatusID)");
 //-----------------------------------------------------------------------------
-static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, userfullname(tfls_user) "
+static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, userfullnamebyoid(tfls_creationuseroid) "
 									   "FROM _taskfile "
 									   "WHERE NOT tfls_isdeleted "
 									   "AND tfls_task = :TaskID "
@@ -102,7 +102,7 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "task_id, "
 									   "task_name, "
 									   "task_description, "
-									   "userfullname(tlnk_user), "
+									   "userfullnamebyoid(tlnk_creationuseroid), "
 									   "tlnk_creationdate, "
 									   "tsst_uid AS task_status_uid, "
 									   "tsst_name AS task_status_name, "
@@ -122,9 +122,9 @@ static QString QD_LINK = PREPARE_QUERY("DELETE FROM _tasklink "
 //-----------------------------------------------------------------------------
 static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "tcom_id, "
-										  "userphoto(tcom_user), "
-										  "userfullname(tcom_user), "
-										  "(SELECT task_owner = tcom_user AS is_user_owner FROM _task WHERE task_id = tcom_task), "
+										  "userphotobyoid(tcom_creationuseroid), "
+										  "userfullnamebyoid(tcom_creationuseroid), "
+										  "(SELECT task_creationuseroid = tcom_creationuseroid AS is_user_owner FROM _task WHERE task_id = tcom_task), "
 										  "tcom_comment, "
 										  "tcom_creationdate "
 										  "FROM _taskcomment "
@@ -876,7 +876,7 @@ void ISTaskViewForm::FileLoadList()
 			QString Extension = qSelectFiles.ReadColumn("tfls_extension").toString();
 			qint64 Size = qSelectFiles.ReadColumn("tfls_size").toLongLong();
 			QByteArray Icon = qSelectFiles.ReadColumn("tfls_icon").toByteArray();
-			QString UserFullName = qSelectFiles.ReadColumn("userfullname").toString();
+			QString UserFullName = qSelectFiles.ReadColumn("userfullnamebyoid").toString();
 
 			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_45_45), IsImage, Name, ID, Extension, Size, UserFullName, CreationDate);
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetFiles);
@@ -1095,7 +1095,7 @@ void ISTaskViewForm::LinkLoadList()
 			int LinkTaskID = qSelectLink.ReadColumn("task_id").toInt();
 			QString LinkTaskName = qSelectLink.ReadColumn("task_name").toString();
 			QString LinkTaskDescription = qSelectLink.ReadColumn("task_description").toString();
-			QString LinkUser = qSelectLink.ReadColumn("userfullname").toString();
+			QString LinkUser = qSelectLink.ReadColumn("userfullnamebyoid").toString();
 			QString LinkCreationDate = ISGui::ConvertDateTimeToString(qSelectLink.ReadColumn("tlnk_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 			ISUuid TaskLinkStatusUID = qSelectLink.ReadColumn("task_status_uid");
 			QString TaskLinkStatusName = qSelectLink.ReadColumn("task_status_name").toString();
@@ -1201,8 +1201,8 @@ void ISTaskViewForm::CommentLoadList()
 		while (qSelectComments.Next())
 		{
 			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
-			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphoto").toByteArray());
-			QString UserFullName = qSelectComments.ReadColumn("userfullname").toString();
+			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyoid").toByteArray());
+			QString UserFullName = qSelectComments.ReadColumn("userfullnamebyoid").toString();
 			bool IsUserOwner = qSelectComments.ReadColumn("is_user_owner").toBool();
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();

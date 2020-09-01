@@ -1,19 +1,24 @@
 #include "ISFavorites.h"
 #include "ISQuery.h"
-#include "ISMetaUser.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 											"FROM _favorites "
-											"WHERE fvts_user = currentuserid()");
+											"WHERE fvts_creationuseroid = currentuseroid()");
 //-----------------------------------------------------------------------------
 static QString QD_FAVORITE = PREPARE_QUERY("DELETE FROM _favorites "
-										   "WHERE fvts_user = currentuserid() "
+										   "WHERE fvts_creationuseroid = currentuseroid() "
 										   "AND fvts_tablename = :TableName");
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITE = PREPARE_QUERY("SELECT COUNT(*) FROM _favorites WHERE fvts_user = currentuserid() AND fvts_tablename = :TableName");
+static QString QS_FAVORITE = PREPARE_QUERY("SELECT COUNT(*) "
+										   "FROM _favorites "
+										   "WHERE fvts_creationuseroid = currentuseroid() "
+										   "AND fvts_tablename = :TableName");
 //-----------------------------------------------------------------------------
-static QString QU_FAVORITE = PREPARE_QUERY("UPDATE _favorites SET fvts_objectsid = :ObjectsID WHERE fvts_user = currentuserid() AND fvts_tablename = :TableName");
+static QString QU_FAVORITE = PREPARE_QUERY("UPDATE _favorites SET "
+										   "fvts_objectsid = :ObjectsID "
+										   "WHERE fvts_creationuseroid = currentuseroid() "
+										   "AND fvts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_tablename, fvts_objectsid) "
 										   "VALUES(:TableName, :ObjectsID)");

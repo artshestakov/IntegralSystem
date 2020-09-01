@@ -29,7 +29,7 @@ static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT COUNT(*) FROM pg_indexes WHERE schemaname = current_schema() AND tablename = :TableName AND indexname = :IndexName;");
 //-----------------------------------------------------------------------------
-static QString QD_INDEX = "DROP INDEX public.%1;";
+static QString QD_INDEX = "DROP INDEX public.%1 CASCADE";
 //-----------------------------------------------------------------------------
 static QString QC_INDEX = "CREATE %1 INDEX %2 ON public.%3 USING btree(%4);";
 //-----------------------------------------------------------------------------
@@ -125,6 +125,12 @@ bool CGDatabase::CheckExistForeign(PMetaForeign *MetaForeign, bool &Exist, QStri
 		ErrorString = qSelect.GetErrorString();
 	}
 	return Result;
+}
+//-----------------------------------------------------------------------------
+QString CGDatabase::GetForeignName(PMetaForeign *MetaForeign)
+{
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
+	return MetaTable->Name.toLower() + '_' + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + "_foreign";
 }
 //-----------------------------------------------------------------------------
 bool CGDatabase::CreateOrReplaceFunction(PMetaFunction *MetaFunction, QString &ErrorString)
@@ -778,11 +784,5 @@ bool CGDatabase::DeleteOldFields(PMetaTable *MetaTable, QString &ErrorString)
 		ErrorString = qSelectColumns.GetErrorString();
 	}
 	return Result;
-}
-//-----------------------------------------------------------------------------
-QString CGDatabase::GetForeignName(PMetaForeign *MetaForeign)
-{
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
-	return MetaTable->Name.toLower() + '_' + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + "_foreign";
 }
 //-----------------------------------------------------------------------------

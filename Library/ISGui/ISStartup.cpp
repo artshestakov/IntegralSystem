@@ -31,7 +31,7 @@ static QString QS_USER_CHECK = PREPARE_QUERY("SELECT "
 static QString QS_LOCAL_NAME = PREPARE_QUERY("SELECT lcnm_tablename, lcnm_fieldname, lcnm_localname "
 											 "FROM _localnames "
 											 "WHERE NOT lcnm_isdeleted "
-											 "AND lcnm_user = currentuserid()");
+											 "AND lcnm_creationuseroid = currentuseroid()");
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
