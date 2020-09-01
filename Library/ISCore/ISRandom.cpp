@@ -1,56 +1,34 @@
+#include "StdAfx.h"
 #include "ISRandom.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
-int ISRandom::Integer()
+ISRandom::ISRandom(rand_t InitDigit)
+	: Digit(InitDigit)
 {
-	return QTime::currentTime().msec();
-}
-//-----------------------------------------------------------------------------
-int ISRandom::Integer(int Minimum, int Maximum)
-{
-	int Result = 0;
-	while (true)
-	{
-		QString TempString = QString::number(QTime::currentTime().msec());
-		if (TempString.length() > 0)
-		{
-			TempString.remove(0, TempString.length() - 1);
-		}
 
-		int TempInt = TempString.toInt();
-		if (TempInt >= Minimum && TempInt <= Maximum)
-		{
-			Result = TempInt;
-			break;
-		}
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
-double ISRandom::Double()
+ISRandom::ISRandom() : ISRandom(time(NULL))
 {
-	return (double)Integer() + (1 / (double)Integer(1, 10));
-}
-//-----------------------------------------------------------------------------
-QString ISRandom::String(int Symbols)
-{
-	QString Result;
-	if (Symbols)
-	{
-		QString Code = ISSystem::GenerateUuid();
-		Code.replace('{', QString());
-		Code.replace('}', QString());
-		Code.replace('-', QString());
-		if (Symbols > Code.length())
-		{
-			return Result;
-		}
 
-		for (int i = 0; i < Symbols; ++i)
-		{
-			Result += Code.at(i);
-		}
-	}
-	return Result;
+}
+//-----------------------------------------------------------------------------
+ISRandom::~ISRandom()
+{
+
+}
+//-----------------------------------------------------------------------------
+rand_t ISRandom::Get(rand_t Minimum, rand_t Maximum)
+{
+	return Minimum + Get() & Maximum;
+}
+//-----------------------------------------------------------------------------
+rand_t ISRandom::Get()
+{
+	Digit ^= (Digit << 21);
+#pragma warning (disable: 4293)
+	Digit ^= (Digit >> 35);
+#pragma warning (default: 4293)
+	Digit ^= (Digit << 4);
+	return Digit;
 }
 //-----------------------------------------------------------------------------

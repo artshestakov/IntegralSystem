@@ -17,6 +17,6 @@ protected:
 	QString CreateSubString(ISNamespace::SearchOperatorType Operator, const QString &FieldName, const QString &Condition, bool OneField) const;
 
 private:
-	QVector<StructModelItem> Vector;
+	std::vector<StructModelItem> Vector;
 };
 //-----------------------------------------------------------------------------

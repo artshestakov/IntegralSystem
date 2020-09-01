@@ -1,13 +1,21 @@
 #pragma once
+#ifndef _ISRANDOM_H_INCLUDED
+#define _ISRANDOM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+typedef unsigned __int64 rand_t;
 //-----------------------------------------------------------------------------
 class ISRandom
 {
 public:
-	static int Integer(); //Целое рандомное число
-	static int Integer(int Minimum, int Maximum); //Целое рандомное число
-	static double Double(); //Число с плавающей запятой
-	static QString String(int Symbols = 5); //Строка
+	ISRandom(rand_t InitDigit);
+	ISRandom();
+	~ISRandom();
+
+	rand_t Get(rand_t Minimum, rand_t Maximum);
+	rand_t Get();
+
+private:
+	rand_t Digit;
 };
 //-----------------------------------------------------------------------------
+#endif
