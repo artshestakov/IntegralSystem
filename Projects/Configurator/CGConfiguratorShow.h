@@ -19,7 +19,7 @@ public slots:
 	bool oldresources();
 	bool oldsequence();
 	bool config();
-	bool databasesize();
+	bool databaseinfo();
 
 private:
 	PMetaTable * FoundTable(const QString &TableName);

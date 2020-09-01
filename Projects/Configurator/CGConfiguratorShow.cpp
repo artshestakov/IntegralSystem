@@ -24,6 +24,22 @@ static QString QS_SEQUENCES = PREPARE_QUERY("SELECT sequence_name "
 											"AND sequence_name NOT IN(:Where) "
 											"ORDER BY sequence_name");
 //-----------------------------------------------------------------------------
+static QString QS_INFO = PREPARE_QUERY("SELECT "
+									   "(SELECT pg_size_pretty(pg_database_size(current_database()))) AS \"database_size\", "
+									   "(SELECT pg_catalog.pg_get_userbyid(datdba) AS \"database_owner\" FROM pg_catalog.pg_database WHERE datname = current_database()), "
+									   "(SELECT pg_encoding_to_char(encoding) AS \"database_encoding\" FROM pg_database WHERE datname = current_database()), "
+									   "(SELECT now() - pg_postmaster_start_time() AS \"database_uptime\"), "
+									   "(SELECT pg_backend_pid() AS pid) AS \"database_backend_pid\", "
+									   "(SELECT version()) AS \"database_version\", "
+									   "(SELECT setting AS \"database_cluster_path\" FROM pg_settings WHERE name = 'data_directory'), "
+									   "(SELECT COUNT(*) AS \"table_count\" FROM information_schema.tables WHERE table_catalog = current_database() AND table_schema = current_schema()), "
+									   "(SELECT COUNT(*) AS \"field_count\" FROM information_schema.columns WHERE table_catalog = current_database() AND table_schema = current_schema()), "
+									   "(SELECT COUNT(*) AS \"sequence_count\" FROM information_schema.sequences WHERE sequence_catalog = current_database() AND sequence_schema = current_schema()), "
+									   "(SELECT COUNT(*) AS \"index_count\" FROM pg_indexes WHERE schemaname = current_schema()), "
+									   "(SELECT COUNT(*) AS \"foreign_count\" FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema()), "
+									   "(SELECT COUNT(*) AS \"user_count\" FROM pg_user), "
+									   "(SELECT sum(reltuples) AS \"record_count\" FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN ('pg_catalog', 'information_schema') AND relkind='r')");
+//-----------------------------------------------------------------------------
 CGConfiguratorShow::CGConfiguratorShow() : CGConfiguratorBase()
 {
 
@@ -236,10 +252,32 @@ bool CGConfiguratorShow::config()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorShow::databasesize()
+bool CGConfiguratorShow::databaseinfo()
 {
-	ISLOGGER_L(ISDatabase::Instance().GetCurrentDatabaseSize());
-	return true;
+	ISQuery qSelectInfo(QS_INFO);
+	qSelectInfo.SetShowLongQuery(false);
+	bool Result = qSelectInfo.ExecuteFirst();
+	if (Result)
+	{
+		ISLOGGER_L("Size:\t\t" + qSelectInfo.ReadColumn("database_size").toString());
+		ISLOGGER_L("Owner:\t\t" + qSelectInfo.ReadColumn("database_owner").toString());
+		ISLOGGER_L("Encoding:\t" + qSelectInfo.ReadColumn("database_encoding").toString());
+		ISLOGGER_L("Uptime:\t\t" + qSelectInfo.ReadColumn("database_uptime").toString());
+		ISLOGGER_L("Backend PID:\t" + qSelectInfo.ReadColumn("database_backend_pid").toString());
+		ISLOGGER_L("Version:\t" + qSelectInfo.ReadColumn("database_version").toString());
+		ISLOGGER_L("Cluster path:\t" + qSelectInfo.ReadColumn("database_cluster_path").toString());
+		ISLOGGER_L("Count tables:\t" + qSelectInfo.ReadColumn("table_count").toString());
+		ISLOGGER_L("Count fields:\t" + qSelectInfo.ReadColumn("field_count").toString());
+		ISLOGGER_L("Count sequence:\t" + qSelectInfo.ReadColumn("sequence_count").toString());
+		ISLOGGER_L("Count foreigns:\t" + qSelectInfo.ReadColumn("foreign_count").toString());
+		ISLOGGER_L("Count users:\t" + qSelectInfo.ReadColumn("user_count").toString());
+		ISLOGGER_L("Count records:\t" + qSelectInfo.ReadColumn("record_count").toString());
+	}
+	else
+	{
+		ISLOGGER_E(qSelectInfo.GetErrorString());
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 PMetaTable* CGConfiguratorShow::FoundTable(const QString &TableName)

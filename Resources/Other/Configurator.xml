@@ -42,7 +42,7 @@
     <Function FunctionName="OldResources" LocalName="Показать устаревшие ресурсы" Description="Вывести список устаревших ресурсов."/>
     <Function FunctionName="OldSequence" LocalName="Показать устаревшие последовательности" Description="Вывести список устаревших последовательностей."/>
     <Function FunctionName="Config" LocalName="Показать настройки конфигурационного файла" Description="Вывести содержимое конфигурационного файла"/>
-    <Function FunctionName="DatabaseSize" LocalName="Показать размер базы данных" Description="Показать размер базы данных"/>
+    <Function FunctionName="DatabaseInfo" LocalName="Показать информацию о базе данных" Description="Показать информацию о базе данных"/>
   </Section>
 
 </Scheme>
