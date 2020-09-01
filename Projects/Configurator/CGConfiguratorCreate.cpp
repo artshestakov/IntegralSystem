@@ -29,11 +29,11 @@ bool CGConfiguratorCreate::resources()
 		PMetaResource *MetaResource = ISMetaData::Instance().GetResources().at(i);
 		Progress("Resources for " + MetaResource->TableName, i, CountResources);
 
-		if (CGDatabase::CheckExistResource(MetaResource, Exist, ErrorString))
+		if (CGDatabase::Resource_Exist(MetaResource, Exist, ErrorString))
 		{
 			if (!Exist)
 			{
-				Result = CGDatabase::InsertResource(MetaResource, ErrorString);
+				Result = CGDatabase::Resource_Insert(MetaResource, ErrorString);
 			}
 		}
 		

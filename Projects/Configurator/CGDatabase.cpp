@@ -69,14 +69,14 @@ static QString QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
 											  "AND table_name = :TableName "
 											  "ORDER BY ordinal_position");
 //-----------------------------------------------------------------------------
-bool CGDatabase::CreateForeign(PMetaForeign *MetaForeign, QString &ErrorString)
+bool CGDatabase::Foreign_Create(PMetaForeign *MetaForeign, QString &ErrorString)
 {
 	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
 	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
 
 	QString SqlText;
 	SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
-	SqlText += "ADD CONSTRAINT " + GetForeignName(MetaForeign) + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
+	SqlText += "ADD CONSTRAINT " + Foreign_GetName(MetaForeign) + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
 	SqlText += "REFERENCES public." + MetaTableForeign->Name.toLower() + '(' + MetaTableForeign->Alias.toLower() + '_' + MetaForeign->ForeignField.toLower() + ") \n";
 	SqlText += "ON DELETE CASCADE \n";
 	SqlText += "ON UPDATE NO ACTION \n";
@@ -92,16 +92,16 @@ bool CGDatabase::CreateForeign(PMetaForeign *MetaForeign, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::UpdateForeign(PMetaForeign *MetaForeign, QString &ErrorString)
+bool CGDatabase::Foreign_Update(PMetaForeign *MetaForeign, QString &ErrorString)
 {
 	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
 
 	ISQuery qDeleteForeign;
 	qDeleteForeign.SetShowLongQuery(false);
-	bool Result = qDeleteForeign.Execute(QD_FOREIGN.arg(MetaTable->Name.toLower()).arg(GetForeignName(MetaForeign)));
+	bool Result = qDeleteForeign.Execute(QD_FOREIGN.arg(MetaTable->Name.toLower()).arg(Foreign_GetName(MetaForeign)));
 	if (Result)
 	{
-		Result = CreateForeign(MetaForeign, ErrorString);
+		Result = Foreign_Create(MetaForeign, ErrorString);
 	}
 	else
 	{
@@ -110,11 +110,11 @@ bool CGDatabase::UpdateForeign(PMetaForeign *MetaForeign, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CheckExistForeign(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString)
+bool CGDatabase::Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelect(QS_FOREIGN);
 	qSelect.SetShowLongQuery(false);
-	qSelect.BindValue(":ForeignName", GetForeignName(MetaForeign));
+	qSelect.BindValue(":ForeignName", Foreign_GetName(MetaForeign));
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
@@ -127,13 +127,13 @@ bool CGDatabase::CheckExistForeign(PMetaForeign *MetaForeign, bool &Exist, QStri
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString CGDatabase::GetForeignName(PMetaForeign *MetaForeign)
+QString CGDatabase::Foreign_GetName(PMetaForeign *MetaForeign)
 {
 	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
 	return MetaTable->Name.toLower() + '_' + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + "_foreign";
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CreateOrReplaceFunction(PMetaFunction *MetaFunction, QString &ErrorString)
+bool CGDatabase::Function_CreateOrReplace(PMetaFunction *MetaFunction, QString &ErrorString)
 {
 	ISQuery qCreateFunction;
 	qCreateFunction.SetShowLongQuery(false);
@@ -145,79 +145,7 @@ bool CGDatabase::CreateOrReplaceFunction(PMetaFunction *MetaFunction, QString &E
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CheckExistColumn(PMetaTable *MetaTable, const QString &ColumnName, bool &Exist, QString &ErrorString)
-{
-	ISQuery qSelectColumn(QS_COLUMN);
-	qSelectColumn.SetShowLongQuery(false);
-	qSelectColumn.BindValue(":TableName", MetaTable->Name.toLower());
-	qSelectColumn.BindValue(":ColumnName", ColumnName);
-	bool Result = qSelectColumn.ExecuteFirst();
-	if (Result)
-	{
-		Exist = qSelectColumn.ReadColumn("count").toInt() > 0;
-	}
-	else
-	{
-		ErrorString = qSelectColumn.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool CGDatabase::CommentTable(PMetaTable *MetaTable, QString &ErrorString)
-{
-	QString CommentText = ISSystem::VariantMapToJsonString(
-	{
-		{ "Name", MetaTable->Name },
-		{ "UID", MetaTable->UID },
-		{ "Alias", MetaTable->Alias },
-		{ "LocalName", MetaTable->LocalName },
-		{ "LocalListName", MetaTable->LocalListName },
-		{ "TitleName", MetaTable->TitleName },
-		{ "ObjectForm", MetaTable->ObjectForm },
-		{ "ShowOnly", MetaTable->ShowOnly },
-		{ "IsSystem", MetaTable->IsSystem }
-	});
-
-	ISQuery qComment;
-	qComment.SetShowLongQuery(false);
-	bool Result = qComment.Execute(QString("COMMENT ON TABLE public.%1 IS '%2'").arg(MetaTable->Name.toLower()).arg(CommentText));
-	if (!Result)
-	{
-		ErrorString = qComment.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool CGDatabase::CommentField(PMetaTable *MetaTable, PMetaField *MetaField, QString &ErrorString)
-{
-	QString CommentText = ISSystem::VariantMapToJsonString(
-	{
-		{ "UID", MetaField->UID },
-		{ "Name", MetaField->Name },
-		{ "Type", ISMetaData::Instance().GetTypeDB(MetaField->Type) },
-		{ "Size", MetaField->Size },
-		{ "DefaultValue", MetaField->DefaultValue },
-		{ "LabelName", MetaField->LabelName },
-		{ "LocalListName", MetaField->LocalListName },
-		{ "NotNull", MetaField->NotNull },
-		{ "ReadOnly", MetaField->ReadOnly },
-		{ "HideFromObject", MetaField->HideFromObject },
-		{ "HideFromList", MetaField->HideFromList },
-		{ "Hint", MetaField->Hint },
-		{ "IsSystem", MetaField->IsSystem }
-	});
-
-	ISQuery qComment;
-	qComment.SetShowLongQuery(false);
-	bool Result = qComment.Execute(QString("COMMENT ON COLUMN public.%1.%2 IS '%3'").arg(MetaTable->Name.toLower()).arg(MetaTable->Alias + '_' + MetaField->Name.toLower()).arg(CommentText));
-	if (!Result)
-	{
-		ErrorString = qComment.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool CGDatabase::CreateIndex(PMetaIndex *Index, QString &ErrorString)
+bool CGDatabase::Index_Create(PMetaIndex *Index, QString &ErrorString)
 {
 	QString IndexUnique = Index->Unique ? "UNIQUE" : QString();
 	QString Fields, SqlText = QC_INDEX.arg(IndexUnique).arg(Index->GetName()).arg(Index->TableName);
@@ -245,14 +173,14 @@ bool CGDatabase::CreateIndex(PMetaIndex *Index, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::UpdateIndex(PMetaIndex *Index, QString &ErrorString)
+bool CGDatabase::Index_Update(PMetaIndex *Index, QString &ErrorString)
 {
 	ISQuery qDelete;
 	qDelete.SetShowLongQuery(false);
 	bool Result = qDelete.Execute(QD_INDEX.arg(Index->GetName()));
 	if (Result)
 	{
-		Result = CreateIndex(Index, ErrorString);
+		Result = Index_Create(Index, ErrorString);
 	}
 	else
 	{
@@ -261,7 +189,7 @@ bool CGDatabase::UpdateIndex(PMetaIndex *Index, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CheckExistIndex(PMetaIndex *Index, bool &Exist, QString &ErrorString)
+bool CGDatabase::Index_Exist(PMetaIndex *Index, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectIndex(QS_INDEXES);
 	qSelectIndex.SetShowLongQuery(false);
@@ -279,7 +207,7 @@ bool CGDatabase::CheckExistIndex(PMetaIndex *Index, bool &Exist, QString &ErrorS
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CheckIndexForeign(PMetaIndex *Index)
+bool CGDatabase::Index_CheckForeign(PMetaIndex *Index)
 {
 	bool Result = true;
 	std::vector<PMetaForeign*> Foreigns = ISMetaData::Instance().GetForeigns();
@@ -298,7 +226,7 @@ bool CGDatabase::CheckIndexForeign(PMetaIndex *Index)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::ReindexIndex(PMetaIndex *Index, QString &ErrorString)
+bool CGDatabase::Index_ReIndex(PMetaIndex *Index, QString &ErrorString)
 {
 	ISQuery qReindex;
 	qReindex.SetShowLongQuery(false);
@@ -310,7 +238,7 @@ bool CGDatabase::ReindexIndex(PMetaIndex *Index, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::InsertResource(PMetaResource *MetaResource, QString &ErrorString)
+bool CGDatabase::Resource_Insert(PMetaResource *MetaResource, QString &ErrorString)
 {
 	QString TableAlias = ISMetaData::Instance().GetMetaTable(MetaResource->TableName)->Alias;
 
@@ -353,16 +281,16 @@ bool CGDatabase::InsertResource(PMetaResource *MetaResource, QString &ErrorStrin
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::UpdateResource(PMetaResource *MetaResource, QString &ErrorString)
+bool CGDatabase::Resource_Update(PMetaResource *MetaResource, QString &ErrorString)
 {
 	QString TableName = MetaResource->TableName;
 	QString TableAlias = ISMetaData::Instance().GetMetaTable(TableName)->Alias;
 	QString ResourceUID = MetaResource->UID;
 
-	bool Result = UpdateResourceField(TableName, TableAlias, TableAlias + "_isdeleted", false, ResourceUID, ErrorString);
+	bool Result = Resource_UpdateField(TableName, TableAlias, TableAlias + "_isdeleted", false, ResourceUID, ErrorString);
 	IS_ASSERT(Result, QString("Error update resource field. TableName: %1 FieldName: %2 UID: %3 Error: %4").arg(TableName).arg(TableAlias + "_isdeleted").arg(ResourceUID).arg(ErrorString));
 
-	Result = UpdateResourceField(TableName, TableAlias, TableAlias + "_issystem", false, ResourceUID, ErrorString);
+	Result = Resource_UpdateField(TableName, TableAlias, TableAlias + "_issystem", false, ResourceUID, ErrorString);
 	IS_ASSERT(Result, QString("Error update resource field. TableName: %1 FieldName: %2 UID: %3 Error: %4").arg(TableName).arg(TableAlias + "_issystem").arg(ResourceUID).arg(ErrorString));
 
 	for (const auto &Resource : MetaResource->Parameters) //Обход параметров ресурса
@@ -374,11 +302,11 @@ bool CGDatabase::UpdateResource(PMetaResource *MetaResource, QString &ErrorStrin
 		PMetaField *MetaField = ISMetaData::Instance().GetMetaField(TableName, FieldName);
 		if (!MetaField->NotNull) //Если поле НЕ ЯВЛЯЕТСЯ обязательным для заполнения - обнулить его
 		{
-			bool ResetField = ResetResourceField(TableName, TableAlias, FieldNameComplete, ResourceUID, ErrorString);
+			bool ResetField = Resource_ResetField(TableName, TableAlias, FieldNameComplete, ResourceUID, ErrorString);
 			IS_ASSERT(ResetField, QString("Not reset resource field. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(FieldNameComplete).arg(ResourceUID).arg(ErrorString));
 		}
 
-		Result = UpdateResourceField(TableName, TableAlias, FieldNameComplete, FieldValue, ResourceUID, ErrorString);
+		Result = Resource_UpdateField(TableName, TableAlias, FieldNameComplete, FieldValue, ResourceUID, ErrorString);
 		IS_ASSERT(Result, QString("Not update resource. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(FieldNameComplete).arg(ResourceUID).arg(ErrorString));
 	}
 
@@ -392,14 +320,14 @@ bool CGDatabase::UpdateResource(PMetaResource *MetaResource, QString &ErrorStrin
 
 		if (!ISAlgorithm::VectorContains(ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters), MetaField->Name))
 		{
-			bool ResetUserField = ResetResourceField(TableName, TableAlias, TableAlias + '_' + MetaField->Name, ResourceUID, ErrorString);
+			bool ResetUserField = Resource_ResetField(TableName, TableAlias, TableAlias + '_' + MetaField->Name, ResourceUID, ErrorString);
 			IS_ASSERT(ResetUserField, QString("Not reset resource field. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(TableAlias + '_' + MetaField->Name).arg(ResourceUID).arg(ErrorString));
 		}
 	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CheckExistResource(PMetaResource *MetaResource, bool &Exist, QString &ErrorString)
+bool CGDatabase::Resource_Exist(PMetaResource *MetaResource, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectResource(QS_RESOURCE.arg(MetaResource->TableName).arg(ISMetaData::Instance().GetMetaTable(MetaResource->TableName)->Alias));
 	qSelectResource.SetShowLongQuery(false);
@@ -416,7 +344,7 @@ bool CGDatabase::CheckExistResource(PMetaResource *MetaResource, bool &Exist, QS
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::ResetResourceField(const QString &TableName, const QString &TableAlias, const QString &FieldName, const QString &ResourceUID, QString &ErrorString)
+bool CGDatabase::Resource_ResetField(const QString &TableName, const QString &TableAlias, const QString &FieldName, const QString &ResourceUID, QString &ErrorString)
 {
 	ISQuery qReset(QU_RESET_RESOURCE_FIELD.arg(TableName).arg(FieldName).arg(TableAlias));
 	qReset.SetShowLongQuery(false);
@@ -429,7 +357,7 @@ bool CGDatabase::ResetResourceField(const QString &TableName, const QString &Tab
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::UpdateResourceField(const QString &TableName, const QString &TableAlias, const QString &FieldName, const QVariant &Value, const QString &ResourceUID, QString &ErrorString)
+bool CGDatabase::Resource_UpdateField(const QString &TableName, const QString &TableAlias, const QString &FieldName, const QVariant &Value, const QString &ResourceUID, QString &ErrorString)
 {
 	ISQuery qUpdate(QU_RESOURCE_FIELD.arg(TableName).arg(FieldName).arg(TableAlias));
 	qUpdate.SetShowLongQuery(false);
@@ -443,11 +371,11 @@ bool CGDatabase::UpdateResourceField(const QString &TableName, const QString &Ta
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CreateSequence(const QString &TableName, QString &ErrorString)
+bool CGDatabase::Sequence_Create(const QString &TableName, QString &ErrorString)
 {
 	ISQuery qCreateSequence;
 	qCreateSequence.SetShowLongQuery(false);
-	bool Result = qCreateSequence.Execute(QC_SEQUENCE.arg(GetSequenceNameForTable(TableName)));
+	bool Result = qCreateSequence.Execute(QC_SEQUENCE.arg(Sequence_GetName(TableName)));
 	if (!Result)
 	{
 		ErrorString = qCreateSequence.GetErrorString();
@@ -455,11 +383,11 @@ bool CGDatabase::CreateSequence(const QString &TableName, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CheckExistSequence(const QString &TableName, bool &Exist, QString &ErrorString)
+bool CGDatabase::Sequence_Exist(const QString &TableName, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectSequences(QS_SEQUENCES);
 	qSelectSequences.SetShowLongQuery(false);
-	qSelectSequences.BindValue(":SequenceName", GetSequenceNameForTable(TableName));
+	qSelectSequences.BindValue(":SequenceName", Sequence_GetName(TableName));
 	bool Result = qSelectSequences.ExecuteFirst();
 	if (Result)
 	{
@@ -472,22 +400,22 @@ bool CGDatabase::CheckExistSequence(const QString &TableName, bool &Exist, QStri
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString CGDatabase::GetSequenceNameForTable(const QString &TableName)
+QString CGDatabase::Sequence_GetName(const QString &TableName)
 {
 	return TableName + "_sequence";
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_Create(PMetaTable *MetaTable, QString &ErrorString)
 {
 	QString TableName = MetaTable->Name.toLower(), TableAlias = MetaTable->Alias.toLower();
 
 	bool Exist = true;
-	bool Result = CGDatabase::CheckExistSequence(TableName, Exist, ErrorString);
+	bool Result = CGDatabase::Sequence_Exist(TableName, Exist, ErrorString);
 	if (Result)
 	{
 		if (!Exist)
 		{
-			Result = CGDatabase::CreateSequence(TableName, ErrorString);
+			Result = CGDatabase::Sequence_Create(TableName, ErrorString);
 		}
 	}
 
@@ -522,7 +450,7 @@ bool CGDatabase::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 
 		if (MetaField->Sequence) //Если поле является последовательностью - устанавливаем счётчик значением по умолчанию
 		{
-			SqlText += QString(" DEFAULT nextval('%1'::regclass)").arg(CGDatabase::GetSequenceNameForTable(TableName));
+			SqlText += QString(" DEFAULT nextval('%1'::regclass)").arg(CGDatabase::Sequence_GetName(TableName));
 		}
 		else //Поле не является поледовательностью - устанавливаем указанное значение по умолчанию
 		{
@@ -557,22 +485,22 @@ bool CGDatabase::CreateTable(PMetaTable *MetaTable, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::UpdateTable(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_Update(PMetaTable *MetaTable, QString &ErrorString)
 {
-	bool Result = AlterExistFields(MetaTable, ErrorString);
+	bool Result = Table_AlterFields(MetaTable, ErrorString);
 	if (Result)
 	{
-		Result = CreateNewFields(MetaTable, ErrorString);
+		Result = Table_CreateFields(MetaTable, ErrorString);
 	}
 
 	if (Result)
 	{
-		Result = DeleteOldFields(MetaTable, ErrorString);
+		Result = Table_DeleteFields(MetaTable, ErrorString);
 	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CheckExistTable(PMetaTable *MetaTable, bool &Exist, QString &ErrorString)
+bool CGDatabase::Table_Exist(PMetaTable *MetaTable, bool &Exist, QString &ErrorString)
 {
 	ISQuery qSelectTable(QS_TABLE);
 	qSelectTable.SetShowLongQuery(false);
@@ -589,7 +517,7 @@ bool CGDatabase::CheckExistTable(PMetaTable *MetaTable, bool &Exist, QString &Er
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::AlterExistFields(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_AlterFields(PMetaTable *MetaTable, QString &ErrorString)
 {
 	ISQuery qSelectColumns(QS_COLUMNS);
 	qSelectColumns.SetShowLongQuery(false);
@@ -688,7 +616,7 @@ bool CGDatabase::AlterExistFields(PMetaTable *MetaTable, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::CreateNewFields(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_CreateFields(PMetaTable *MetaTable, QString &ErrorString)
 {
 	bool Result = true, Exist = true;
 	for (PMetaField *MetaField : MetaTable->AllFields) //Обход полей
@@ -699,7 +627,7 @@ bool CGDatabase::CreateNewFields(PMetaTable *MetaTable, QString &ErrorString)
 		}
 
 		QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();
-		if (CGDatabase::CheckExistColumn(MetaTable, FieldName, Exist, ErrorString))
+		if (CGDatabase::Helper_ExistField(MetaTable, FieldName, Exist, ErrorString))
 		{
 			if (!Exist)//Если поле не существует
 			{
@@ -743,7 +671,7 @@ bool CGDatabase::CreateNewFields(PMetaTable *MetaTable, QString &ErrorString)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::DeleteOldFields(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_DeleteFields(PMetaTable *MetaTable, QString &ErrorString)
 {
 	ISQuery qSelectColumns(QS_OLD_COLUMNS);
 	qSelectColumns.SetShowLongQuery(false);
@@ -782,6 +710,78 @@ bool CGDatabase::DeleteOldFields(PMetaTable *MetaTable, QString &ErrorString)
 	else
 	{
 		ErrorString = qSelectColumns.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGDatabase::Helper_ExistField(PMetaTable *MetaTable, const QString &ColumnName, bool &Exist, QString &ErrorString)
+{
+	ISQuery qSelectColumn(QS_COLUMN);
+	qSelectColumn.SetShowLongQuery(false);
+	qSelectColumn.BindValue(":TableName", MetaTable->Name.toLower());
+	qSelectColumn.BindValue(":ColumnName", ColumnName);
+	bool Result = qSelectColumn.ExecuteFirst();
+	if (Result)
+	{
+		Exist = qSelectColumn.ReadColumn("count").toInt() > 0;
+	}
+	else
+	{
+		ErrorString = qSelectColumn.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGDatabase::Helper_CommentTable(PMetaTable *MetaTable, QString &ErrorString)
+{
+	QString CommentText = ISSystem::VariantMapToJsonString(
+	{
+		{ "Name", MetaTable->Name },
+		{ "UID", MetaTable->UID },
+		{ "Alias", MetaTable->Alias },
+		{ "LocalName", MetaTable->LocalName },
+		{ "LocalListName", MetaTable->LocalListName },
+		{ "TitleName", MetaTable->TitleName },
+		{ "ObjectForm", MetaTable->ObjectForm },
+		{ "ShowOnly", MetaTable->ShowOnly },
+		{ "IsSystem", MetaTable->IsSystem }
+	});
+
+	ISQuery qComment;
+	qComment.SetShowLongQuery(false);
+	bool Result = qComment.Execute(QString("COMMENT ON TABLE public.%1 IS '%2'").arg(MetaTable->Name.toLower()).arg(CommentText));
+	if (!Result)
+	{
+		ErrorString = qComment.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGDatabase::Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaField, QString &ErrorString)
+{
+	QString CommentText = ISSystem::VariantMapToJsonString(
+	{
+		{ "UID", MetaField->UID },
+		{ "Name", MetaField->Name },
+		{ "Type", ISMetaData::Instance().GetTypeDB(MetaField->Type) },
+		{ "Size", MetaField->Size },
+		{ "DefaultValue", MetaField->DefaultValue },
+		{ "LabelName", MetaField->LabelName },
+		{ "LocalListName", MetaField->LocalListName },
+		{ "NotNull", MetaField->NotNull },
+		{ "ReadOnly", MetaField->ReadOnly },
+		{ "HideFromObject", MetaField->HideFromObject },
+		{ "HideFromList", MetaField->HideFromList },
+		{ "Hint", MetaField->Hint },
+		{ "IsSystem", MetaField->IsSystem }
+	});
+
+	ISQuery qComment;
+	qComment.SetShowLongQuery(false);
+	bool Result = qComment.Execute(QString("COMMENT ON COLUMN public.%1.%2 IS '%3'").arg(MetaTable->Name.toLower()).arg(MetaTable->Alias + '_' + MetaField->Name.toLower()).arg(CommentText));
+	if (!Result)
+	{
+		ErrorString = qComment.GetErrorString();
 	}
 	return Result;
 }
