@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TemplateFields>
   <Field UID="{6E43F4C2-EBEE-443E-84A1-B3A60A635583}" Name="ID" Type="BigInt" LabelName="Код" LocalListName="Код" NotNull="true" Sequence="true" PrimaryKey="true" IsSystem="true"/>
-  <Field UID="{862F9461-19A3-428C-94E0-2E25A28E6194}" Name="UID" Type="UID" LabelName="Идентификатор" LocalListName="Идентификатор" DefaultValue="uuid_generate_v4()" HideFromList="true" NotNull="true" IsSystem="true"/>
+  <Field UID="{862F9461-19A3-428C-94E0-2E25A28E6194}" Name="UID" Type="UID" LabelName="Идентификатор" LocalListName="Идентификатор" DefaultValue="uuid_generate_v4()" HideFromList="true" HideFromObject="true" NotNull="true" IsSystem="true"/>
   <Field UID="{60B1DCC0-AED3-4B16-A706-DDB4DDF55BE4}" Name="IsDeleted" Type="Bool" LabelName="Пометка удаления" LocalListName="Пометка удаления" DefaultValue="false" IsSystem="true"/>
   <Field UID="{3945F262-C682-420A-A845-32A827B10424}" Name="IsSystem" Type="Bool" LabelName="Системный" LocalListName="Системный" DefaultValue="false" IsSystem="true"/>
-  <Field UID="{6AA2F914-7136-4318-9722-08BF16C93D25}" Name="CreationDate" Type="DateTime" LabelName="Дата и время создания записи" LocalListName="Дата и время создания записи" DefaultValue="now()" HideFromList="true" NotNull="true" IsSystem="true"/>
-  <Field UID="{7C6D0DEE-88F4-4C5A-B3DA-8EE48E933DA1}" Name="UpdationDate" Type="DateTime" LabelName="Дата и время изменения записи" LocalListName="Дата и время изменения записи" DefaultValue="NULL" HideFromList="true" IsSystem="true"/>
-  <Field UID="{AC5A58C8-066A-4777-BEDE-33D559B5238A}" Name="DeletionDate" Type="DateTime" LabelName="Дата и время удаления записи" LocalListName="Дата и время удаления записи" DefaultValue="NULL" HideFromList="true" IsSystem="true"/>
-  <Field UID="{35E2D45A-B5AB-4EFD-A37E-7A1EE598F5C3}" Name="CreationUserOID" Type="OID" LabelName="Создал" LocalListName="Создал" DefaultValue="currentuseroid()" HideFromList="true" NotNull="true" IsSystem="true"/>
-  <Field UID="{0D50B521-E8B8-4D19-9BB7-A9E4FDE7A1CD}" Name="UpdationUserOID" Type="OID" LabelName="Изменил" LocalListName="Изменил" DefaultValue="NULL" HideFromList="true" IsSystem="true"/>
-  <Field UID="{D8975B1F-F80C-4A16-94E6-72717C2A8832}" Name="DeletionUserOID" Type="OID" LabelName="Удалил" LocalListName="Удалил" DefaultValue="NULL" HideFromList="true" IsSystem="true"/>
+  <Field UID="{6AA2F914-7136-4318-9722-08BF16C93D25}" Name="CreationDate" Type="DateTime" LabelName="Дата и время создания записи" LocalListName="Дата и время создания записи" DefaultValue="now()" HideFromList="true" HideFromObject="true" NotNull="true" IsSystem="true"/>
+  <Field UID="{7C6D0DEE-88F4-4C5A-B3DA-8EE48E933DA1}" Name="UpdationDate" Type="DateTime" LabelName="Дата и время изменения записи" LocalListName="Дата и время изменения записи" DefaultValue="NULL" HideFromList="true" HideFromObject="true" IsSystem="true"/>
+  <Field UID="{AC5A58C8-066A-4777-BEDE-33D559B5238A}" Name="DeletionDate" Type="DateTime" LabelName="Дата и время удаления записи" LocalListName="Дата и время удаления записи" DefaultValue="NULL" HideFromList="true" HideFromObject="true" IsSystem="true"/>
+  <Field UID="{35E2D45A-B5AB-4EFD-A37E-7A1EE598F5C3}" Name="CreationUserOID" Type="OID" LabelName="Создал" LocalListName="Создал" DefaultValue="currentuseroid()" HideFromList="true" HideFromObject="true" NotNull="true" IsSystem="true"/>
+  <Field UID="{0D50B521-E8B8-4D19-9BB7-A9E4FDE7A1CD}" Name="UpdationUserOID" Type="OID" LabelName="Изменил" LocalListName="Изменил" DefaultValue="NULL" HideFromList="true" HideFromObject="true" IsSystem="true"/>
+  <Field UID="{D8975B1F-F80C-4A16-94E6-72717C2A8832}" Name="DeletionUserOID" Type="OID" LabelName="Удалил" LocalListName="Удалил" DefaultValue="NULL" HideFromList="true" HideFromObject="true" IsSystem="true"/>
 </TemplateFields>

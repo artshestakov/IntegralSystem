@@ -440,8 +440,6 @@ void ISObjectFormBase::CreateWidgetObject()
 				}
 
 				ISFieldEditBase *FieldEditWidget = FieldsMap.at(FieldName);
-				disconnect(FieldEditWidget, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
-
 				if (MetaTable->GetField(FieldName)->Foreign)
 				{
 					QVariant ListObjectID = ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID);
@@ -471,7 +469,6 @@ ISFieldEditBase* ISObjectFormBase::CreateColumnForField(PMetaField *MetaField)
 {
 	ISFieldEditBase	*FieldEditBase = ISGui::CreateColumnForField(CentralWidget, MetaField);
 	FieldsMap.emplace(MetaField->Name, FieldEditBase);
-	connect(FieldEditBase, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
 	return FieldEditBase;
 }
 //-----------------------------------------------------------------------------
