@@ -25,6 +25,7 @@
     <Function FunctionName="OldTables" LocalName="Таблицы" Description="Удаление всех устаревших таблиц."/>
     <Function FunctionName="OldFields" LocalName="Поля" Description="Удаление всех устаревших полей."/>
     <Function FunctionName="OldResources" LocalName="Ресусры" Description="Удаление всех устаревших ресурсов."/>
+    <Function FunctionName="OldSequence" LocalName="Последовательности" Description="Удаление всех устаревших последовательностей."/>
   </Section>
 
   <Section Name="Service" ClassName="CGConfiguratorService">
