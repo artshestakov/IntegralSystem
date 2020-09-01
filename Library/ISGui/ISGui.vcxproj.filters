@@ -29,9 +29,6 @@
     <Filter Include="ModelThread">
       <UniqueIdentifier>{50fc7d41-dc56-48a5-a96a-018e6d093dc8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ObjectModel">
-      <UniqueIdentifier>{755452f5-70b6-4109-81fd-4d400241243b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Widgets">
       <UniqueIdentifier>{5f6a732d-7467-49d5-a44a-7e386cb56364}</UniqueIdentifier>
     </Filter>
@@ -152,9 +149,6 @@
     </ClCompile>
     <ClCompile Include="ISModelThreadWorker.cpp">
       <Filter>ModelThread</Filter>
-    </ClCompile>
-    <ClCompile Include="ISObjectModel.cpp">
-      <Filter>ObjectModel</Filter>
     </ClCompile>
     <ClCompile Include="ISBaseTableView.cpp">
       <Filter>Widgets</Filter>
@@ -774,9 +768,6 @@
   <ItemGroup>
     <ClInclude Include="ISSqlModelHelper.h">
       <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="ISObjectModel.h">
-      <Filter>ObjectModel</Filter>
     </ClInclude>
     <ClInclude Include="ISHTML.h">
       <Filter>Printing\HTML</Filter>

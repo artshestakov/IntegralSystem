@@ -244,7 +244,6 @@
     <ClCompile Include="ISMonitorUserWidget.cpp" />
     <ClCompile Include="ISObjectFormBase.cpp" />
     <ClCompile Include="ISObjectInterface.cpp" />
-    <ClCompile Include="ISObjectModel.cpp" />
     <ClCompile Include="ISObjects.cpp" />
     <ClCompile Include="ISOilSphere.cpp" />
     <ClCompile Include="ISPageMetrics.cpp" />
@@ -457,7 +456,6 @@
     <ClInclude Include="ISHtmlQuery.h" />
     <QtMoc Include="ISObjectInterface.h" />
     <ClInclude Include="ISMetaSystemsEntity.h" />
-    <ClInclude Include="ISObjectModel.h" />
     <QtMoc Include="ISRangeEditBase.h" />
     <QtMoc Include="ISSettingFieldWidgets.h" />
     <QtMoc Include="ISOilSphere.h" />

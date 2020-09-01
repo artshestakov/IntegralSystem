@@ -158,12 +158,6 @@ struct ISMetaSystem
     std::vector<ISMetaSubSystem*> SubSystems; //Список подсистем
 };
 //-----------------------------------------------------------------------------
-struct ISObjectModelItem
-{
-    QVariant OldValue;
-    QVariant NewValue;
-};
-//-----------------------------------------------------------------------------
 struct ISPrintMetaReportField
 {
     QString ReplaceValue;
