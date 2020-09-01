@@ -1,8 +1,12 @@
 #include "ISListWidget.h"
+#include "ISStyleSheet.h"
+#include "ISLocalization.h"
+#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISListWidget::ISListWidget(QWidget *parent)
 	: QListWidget(parent),
-	MaxVisibleItems(0)
+	MaxVisibleItems(0),
+	LabelCenter(nullptr)
 {
 
 }
@@ -80,6 +84,18 @@ void ISListWidget::SetCheckedItems(bool Checked)
 	}
 }
 //-----------------------------------------------------------------------------
+void ISListWidget::SetVisibleNoData(bool Visible)
+{
+	if (!LabelCenter)
+	{
+		LabelCenter = new QLabel(LANG("NoData"), this);
+		LabelCenter->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+		LabelCenter->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+		LabelCenter->setWordWrap(true);
+	}
+	LabelCenter->setVisible(Visible);
+}
+//-----------------------------------------------------------------------------
 QAction* ISListWidget::AddAction(const QIcon &Icon, const QString &Text, bool InGroup)
 {
 	QAction *Action = new QAction(Icon, Text, this);
@@ -116,6 +132,7 @@ QListWidgetItem* ISListWidget::LastItem()
 void ISListWidget::paintEvent(QPaintEvent *PaintEvent)
 {
 	QListWidget::paintEvent(PaintEvent);
+	
 	if (MaxVisibleItems > 0 && count())
 	{
 		int Height = 0, LastHeight = 0;
@@ -129,6 +146,14 @@ void ISListWidget::paintEvent(QPaintEvent *PaintEvent)
 			Height += LastHeight;
 		}
 		setFixedHeight(Height);
+	}
+
+	if (LabelCenter && !count())
+	{
+		QPoint Point = frameGeometry().center();
+		Point.setX(Point.x() - (LabelCenter->width() / 2));
+		Point.setY(Point.y() - (LabelCenter->height() / 2));
+		LabelCenter->move(Point);
 	}
 }
 //-----------------------------------------------------------------------------

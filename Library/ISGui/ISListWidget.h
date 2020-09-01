@@ -25,6 +25,7 @@ public:
 	void SetMaxVisibleItems(int max_visible_items);
 	void SetVisibleItems(bool Visible); //Изменить видимость элементов
 	void SetCheckedItems(bool Checked); //Изменить включение всех элементов
+	void SetVisibleNoData(bool Visible); //Изменить видимость надписи "Данных нет"
 	QAction* AddAction(const QIcon &Icon, const QString &Text, bool InGroup);
 	void AddAction(QAction *Action, bool InGroup); //Добавить действие
 	QListWidgetItem* BeginItem(); //Получить первый элемент
@@ -35,7 +36,8 @@ protected:
 	void mousePressEvent(QMouseEvent *MouseEvent);
 
 private:
-	int MaxVisibleItems;
+	int MaxVisibleItems; //Максимально отображаемое количество элементов
+	QLabel *LabelCenter; //Надпись посередние
 };
 //-----------------------------------------------------------------------------
 #endif

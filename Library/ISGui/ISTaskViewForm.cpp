@@ -350,6 +350,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ListWidgetLinks->setAlternatingRowColors(true);
 	ListWidgetLinks->setContextMenuPolicy(Qt::ActionsContextMenu);
 	ListWidgetLinks->setFrameShape(QFrame::NoFrame);
+	ListWidgetLinks->SetVisibleNoData(true);
 	connect(ListWidgetLinks, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::LinkOpen);
 	TabWidget->addTab(ListWidgetLinks, BUFFER_ICONS("Document"), LANG("Task.Files").arg(0));
 	LinkLoadList();
@@ -362,6 +363,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ListWidgetFiles = new ISListWidget(TabWidget);
 	ListWidgetFiles->setLayout(new QVBoxLayout());
 	ListWidgetFiles->setFrameShape(QFrame::NoFrame);
+	ListWidgetFiles->SetVisibleNoData(true);
 	TabWidget->addTab(ListWidgetFiles, BUFFER_ICONS("Document"), LANG("Task.LinkTask").arg(0));
 	FileLoadList();
 

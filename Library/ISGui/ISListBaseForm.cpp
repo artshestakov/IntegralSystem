@@ -408,8 +408,7 @@ void ISListBaseForm::paintEvent(QPaintEvent *e)
 	ISInterfaceMetaForm::paintEvent(e);
 	if (ListIndicatorWidget->isVisible())
 	{
-		QRect Rect = TableView->frameGeometry();
-		QPoint CenterPoint = Rect.center();
+		QPoint CenterPoint = TableView->frameGeometry().center();
 		CenterPoint.setX(CenterPoint.x() - (ListIndicatorWidget->width() / 2));
 		CenterPoint.setY(CenterPoint.y() - (ListIndicatorWidget->height() / 2));
 		ListIndicatorWidget->move(CenterPoint);
