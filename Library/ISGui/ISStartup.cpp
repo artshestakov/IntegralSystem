@@ -183,6 +183,11 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveHistory"), ISHistory::Instance().GetErrorString());
 	}
+
+	if (!ISSettings::Instance().Save())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveUserSettings"), ISSettings::Instance().GetErrorString());
+	}
 	ISGui::ExitApplication();
 }
 //-----------------------------------------------------------------------------

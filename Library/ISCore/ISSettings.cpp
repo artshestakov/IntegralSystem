@@ -19,10 +19,10 @@ static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
 static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
 											   "VALUES(:SettingUID, :Value)");
 //-----------------------------------------------------------------------------
-static QString QU_USER_SETTING_VALUE = PREPARE_QUERY("UPDATE _usersettings SET "
-													 "usst_value = :Value "
-													 "WHERE usst_creationuseroid = currentuseroid() "
-													 "AND usst_setting = :SettingUID");
+static QString QU_USER_SETTING = PREPARE_QUERY("UPDATE _usersettings SET "
+											   "usst_value = :Value "
+											   "WHERE usst_creationuseroid = currentuseroid() "
+											   "AND usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
 	: QObject(),
@@ -113,6 +113,8 @@ QVariant ISSettings::GetValue(const QString &SettingUID)
 void ISSettings::SetValue(const QString &SettingUID, const QVariant &Value)
 {
 	GetMetaSetting(SettingUID)->Value = Value;
+	SettingsChanged[SettingUID] = Value;
+	emit SettingChanged(SettingUID, Value);
 }
 //-----------------------------------------------------------------------------
 std::vector<ISMetaSettingsGroup*> ISSettings::GetSettingGroups()
@@ -136,20 +138,20 @@ ISMetaSetting* ISSettings::GetMetaSetting(const QString &SettingUID)
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-bool ISSettings::SaveValue(const QString &SettingUID, const QVariant &Value)
+bool ISSettings::Save()
 {
-	ISQuery qUpdateValue(QU_USER_SETTING_VALUE);
-	qUpdateValue.BindValue(":Value", Value);
-	qUpdateValue.BindValue(":SettingUID", SettingUID);
-	bool Result = qUpdateValue.Execute();
-	if (Result)
+	bool Result = true;
+	for (const auto &MapItem : SettingsChanged)
 	{
-		SetValue(SettingUID, Value);
-		emit SettingChanged(SettingUID, Value);
-	}
-	else
-	{
-		ErrorString = qUpdateValue.GetErrorString();
+		ISQuery qUpdateValue(QU_USER_SETTING);
+		qUpdateValue.BindValue(":Value", MapItem.second);
+		qUpdateValue.BindValue(":SettingUID", MapItem.first);
+		Result = qUpdateValue.Execute();
+		if (!Result)
+		{
+			ErrorString = qUpdateValue.GetErrorString();
+			break;
+		}
 	}
 	return Result;
 }

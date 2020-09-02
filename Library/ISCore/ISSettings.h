@@ -24,7 +24,7 @@ public:
 	std::vector<ISMetaSettingsGroup*> GetSettingGroups(); //Получить все группы настроек
 	ISMetaSetting* GetMetaSetting(const QString &SettingUID); //Получить мета-настройку по её идентификатору
 	
-	bool SaveValue(const QString &SettingUID, const QVariant &Value);
+	bool Save();
 
 private:
 	ISMetaSettingsGroup* CheckExistGroup(const ISUuid &GroupUID);
@@ -39,6 +39,7 @@ private:
 private:
 	QString ErrorString;
 	std::vector<ISMetaSettingsGroup*> SettingGroups;
+	std::map<ISUuid, QVariant> SettingsChanged; //Измененные в ходе работы программы настройки, нужно для сохранения
 };
 //-----------------------------------------------------------------------------
 #define SETTING_VALUE(SETTING_UID) ISSettings::Instance().GetValue(SETTING_UID)

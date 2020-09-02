@@ -125,10 +125,8 @@ void ISMonitorActivityForm::LoadData()
 //-----------------------------------------------------------------------------
 void ISMonitorActivityForm::CheckEditChanged(const QVariant &value)
 {
-	if (ISSettings::Instance().SaveValue(CONST_UID_SETTING_OTHER_HIDE_OFFLINE_MONITOR_ACTIVITY, value))
-	{
-		LoadData();
-	}
+	ISSettings::Instance().SetValue(CONST_UID_SETTING_OTHER_HIDE_OFFLINE_MONITOR_ACTIVITY, value);
+	LoadData();
 }
 //-----------------------------------------------------------------------------
 void ISMonitorActivityForm::Search(const QVariant &value)

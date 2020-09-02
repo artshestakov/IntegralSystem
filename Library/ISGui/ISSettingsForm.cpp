@@ -150,14 +150,9 @@ void ISSettingsForm::Save()
 	{
 		if (MapItem.second->GetModificationFlag()) //Если значение поля было изменено - сохраняем его
 		{
-			if (!ISSettings::Instance().SaveValue(MapItem.first, MapItem.second->GetValue())) //Сохранить настройку не удалось - выходим из функции
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.SaveUserSetting").arg(MapItem.first), ISSettings::Instance().GetErrorString());
-				return;
-			}
+			ISSettings::Instance().SetValue(MapItem.first, MapItem.second->GetValue());
 		}
 	}
-	ISMessageBox::ShowInformation(this, LANG("Message.Information.SettingsSaved"));
 	close();
 }
 //-----------------------------------------------------------------------------

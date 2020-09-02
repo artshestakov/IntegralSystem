@@ -52,7 +52,6 @@
   <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
-  <Local Name="Message.Information.SettingsSaved" Russian="Для того чтобы все настройки вступили в силу, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.UserPasswordDeleted" Russian="Пароль пользователя успешно удалён."/>
   <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК чтобы начать её установку."/>
@@ -76,6 +75,7 @@
   <Local Name="Message.Error.SaveColumnSizer" Russian="Не удалось сохранить размерность полей."/>
   <Local Name="Message.Error.SaveFavorites" Russian="Не удалось сохранить избранные объекты."/>
   <Local Name="Message.Error.SaveHistory" Russian="Не удалось сохранить историю открытий объектов."/>
+  <Local Name="Message.Error.SaveUserSettings" Russian="Не удалось сохранить пользовательские настройки."/>
   <Local Name="Message.Error.InitializeMetaSystems" Russian="Не удалось загрузить информацию о системах и подсистемах."/>
   <Local Name="Message.Error.InitializeUserRole" Russian="Не удалось загрузить права пользователя."/>
   <Local Name="Message.Error.InitializePrinting" Russian="Не удалось загрузить отчёты."/>
@@ -122,7 +122,6 @@
   <Local Name="Message.Error.SelectTaskStatuses" Russian="Не удалось получить статусы задачи!"/>
   <Local Name="Message.Error.UpdateTaskStatus" Russian="Не удалось изменить статус задачи!"/>
   <Local Name="Message.Error.InsertTaskStatusHistory" Russian="Не удалось зафиксировать изменение статуса задачи!"/>
-  <Local Name="Message.Error.SaveUserSetting" Russian="Не удалось сохраненить настройку с идентификатором &quot;%1&quot;."/>
   <Local Name="Message.Error.CheckExistLogin" Russian="Не удалось проверить наличие логина &quot;%1&quot;."/>
   <Local Name="Message.Error.SetIsDeletedObject" Russian="Не удалось пометить запись на удаление!"/>
   <Local Name="Message.Error.SetNotIsDeletedObject" Russian="Не удалось восстановить запись!"/>
