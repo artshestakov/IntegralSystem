@@ -28,9 +28,6 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{3c8bb7e9-794e-4dbf-a0c9-e51c3f514b88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\_MedTech">
-      <UniqueIdentifier>{b999f67a-ea02-4a79-86ea-9eeac1589d1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\_OilSphere">
       <UniqueIdentifier>{922d7d9c-d456-48a0-864f-b5de44c10fc1}</UniqueIdentifier>
     </Filter>
@@ -345,12 +342,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\_MedTech\MedTech.xsn">
-      <Filter>Resources\_MedTech</Filter>
-    </None>
-    <None Include="..\..\Resources\_MedTech\MedTech.xsr">
-      <Filter>Resources\_MedTech</Filter>
-    </None>
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsn">
       <Filter>Resources\_OilSphere</Filter>
     </None>

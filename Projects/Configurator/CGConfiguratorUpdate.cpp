@@ -13,6 +13,7 @@ static QString QS_SYSTEM_USER = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 static QString QU_SYSTEM_USER = PREPARE_QUERY("UPDATE _users SET "
 											  "usrs_issystem = :IsSystem, "
+											  "usrs_oid = :OID, "
 											  "usrs_surname = :Surname, "
 											  "usrs_name = :Name, "
 											  "usrs_patronymic = :Patronymic, "
@@ -21,8 +22,8 @@ static QString QU_SYSTEM_USER = PREPARE_QUERY("UPDATE _users SET "
 											  "usrs_accessallowed = :AccessAllowed "
 											  "WHERE usrs_uid = :UID");
 //-----------------------------------------------------------------------------
-static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_issystem, usrs_uid, usrs_surname, usrs_name, usrs_patronymic, usrs_sex, usrs_login, usrs_accessallowed) "
-											  "VALUES(:IsSystem, :UID, :Surname, :Name, :Patronymic, (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID), :Login, :AccessAllowed)");
+static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_oid, usrs_surname, usrs_name, usrs_patronymic, usrs_sex, usrs_login, usrs_accessallowed) "
+											  "VALUES(:UID, :IsSystem, :OID, :Surname, :Name, :Patronymic, (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID), :Login, :AccessAllowed)");
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 													"FROM _settingsdatabase "
@@ -333,6 +334,7 @@ bool CGConfiguratorUpdate::systemuser()
 		{
 			ISQuery qUpdate(QU_SYSTEM_USER);
 			qUpdate.BindValue(":IsSystem", true);
+			qUpdate.BindValue(":OID", SYSTEM_USER_OID);
 			qUpdate.BindValue(":Surname", LANG("SystemUser.Surname"));
 			qUpdate.BindValue(":Name", LANG("SystemUser.Name"));
 			qUpdate.BindValue(":Patronymic", LANG("SystemUser.Patronymic"));
@@ -353,8 +355,9 @@ bool CGConfiguratorUpdate::systemuser()
 		else
 		{
 			ISQuery qInsert(QI_SYSTEM_USER);
-			qInsert.BindValue(":IsSystem", true);
 			qInsert.BindValue(":UID", CONST_UID_USER_POSTGRES);
+			qInsert.BindValue(":IsSystem", true);
+			qInsert.BindValue(":OID", SYSTEM_USER_OID);
 			qInsert.BindValue(":Surname", LANG("SystemUser.Surname"));
 			qInsert.BindValue(":Name", LANG("SystemUser.Name"));
 			qInsert.BindValue(":Patronymic", LANG("SystemUser.Patronymic"));

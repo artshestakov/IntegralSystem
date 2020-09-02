@@ -46,7 +46,7 @@ ISMetaData::ISMetaData()
 		{ "Month", ISNamespace::FT_Month, "INTEGER", "ISMonthEdit", "ISComboSearchNumber", false },
 		{ "Url", ISNamespace::FT_Url, "CHARACTER VARYING", "ISUrlEdit", "ISComboSearchString", true },
 		{ "File", ISNamespace::FT_File, "CHARACTER VARYING", "ISFileEdit", QString(), false },
-		{ "Sex", ISNamespace::FT_Sex, "INTEGER", "ISSexEdit", "ISComboSearchNumber", true }
+		{ "Sex", ISNamespace::FT_Sex, "BIGINT", "ISSexEdit", "ISComboSearchNumber", true }
 	};
 }
 //-----------------------------------------------------------------------------
@@ -1023,7 +1023,7 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNod
 
 			QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
 			PMetaForeign *MetaForeign = new PMetaForeign();
-			MetaForeign->Field = DomNamedNodeMap.namedItem("Field").nodeValue();
+			MetaForeign->Field = FieldName;
 			MetaForeign->ForeignClass = DomNamedNodeMap.namedItem("ForeignClass").nodeValue();
 			MetaForeign->ForeignField = DomNamedNodeMap.namedItem("ForeignField").nodeValue();
 			MetaForeign->ForeignViewNameField = DomNamedNodeMap.namedItem("ForeignViewNameField").nodeValue();
