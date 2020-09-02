@@ -89,6 +89,7 @@
       <Field UID="{6449D540-D02B-4EC1-B367-B112500BB2D9}" Name="UnloadWeightGross" Type="Double" ReadOnly="true" LabelName="Вес выгрузки (брутто)" LocalListName="Вес выгрузки (брутто)" LayoutName="Unload" QueryText="SELECT sum(iunl_weightgross) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
       <Field UID="{D7A74FDD-106C-4FFC-A6AB-AC13D461CF99}" Name="UnloadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес выгрузки (нетто)" LocalListName="Вес выгрузки (нетто)" LayoutName="Unload" QueryText="SELECT sum(iunl_weightnet) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
       <Field UID="{1EA933CA-06AE-4F0D-B2B3-B6CCAD7A9B46}" Name="UnloadCost" Type="Double" ReadOnly="true" LabelName="Стоимость выгрузки" LocalListName="Стоимость выгрузки" LayoutName="Unload" QueryText="SELECT sum(iunl_cost) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
+      <Field UID="{4864E582-6A0F-4BCC-A3CB-024B3CD70310}" Name="WeightDifference" Type="Double" ReadOnly="true" LabelName="Разница весов" LocalListName="Разница весов" QueryText="WITH r AS (SELECT (SELECT sum(ilod_weightnet) AS load FROM implementationload WHERE ilod_implementation = impl_id), (SELECT sum(iunl_weightnet) AS unload FROM implementationunload WHERE iunl_implementation = impl_id)) SELECT CASE WHEN load > unload THEN load - unload ELSE unload - load END FROM r"/>
     </Fields>
     <Indexes>
       <Index Field="Date"/>
