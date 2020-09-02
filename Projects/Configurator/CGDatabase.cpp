@@ -129,8 +129,7 @@ bool CGDatabase::Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &
 //-----------------------------------------------------------------------------
 QString CGDatabase::Foreign_GetName(PMetaForeign *MetaForeign)
 {
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
-	return MetaTable->Name.toLower() + '_' + MetaTable->Alias + '_' + MetaForeign->ForeignField.toLower() + "_foreign";
+	return (MetaForeign->TableName + '_' + MetaForeign->Field + '_' + MetaForeign->ForeignClass + '_' + MetaForeign->ForeignField).toLower();
 }
 //-----------------------------------------------------------------------------
 bool CGDatabase::Function_CreateOrReplace(PMetaFunction *MetaFunction, QString &ErrorString)
@@ -147,20 +146,19 @@ bool CGDatabase::Function_CreateOrReplace(PMetaFunction *MetaFunction, QString &
 //-----------------------------------------------------------------------------
 bool CGDatabase::Index_Create(PMetaIndex *Index, QString &ErrorString)
 {
-	QString IndexUnique = Index->Unique ? "UNIQUE" : QString();
-	QString Fields, SqlText = QC_INDEX.arg(IndexUnique).arg(Index->GetName()).arg(Index->TableName);
+	QString Fields, SqlText = QC_INDEX.arg(Index->Unique ? "UNIQUE" : QString()).arg(Index->GetName()).arg(Index->TableName);
 	if (!Index->Fields.empty())
 	{
 		for (const QString &String : Index->Fields)
 		{
-			Fields += Index->Alias + '_' + String + ", ";
+			Fields += String + ", ";
 		}
 		Fields.chop(2);
 		SqlText = SqlText.arg(Fields);
 	}
 	else
 	{
-		SqlText = SqlText.arg(Index->Alias.toLower() + '_' + Index->FieldName.toLower());
+		SqlText = SqlText.arg(Index->Alias + '_' + Index->FieldName.toLower());
 	}
 
 	ISQuery qCreateIndex;

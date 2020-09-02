@@ -33,7 +33,7 @@ struct PMetaIndex : public PMetaBase
 		}
 		else
 		{
-			IndexName = TableName + '_' + Alias + '_' + FieldName + "_index";
+			IndexName = TableName + '_' + FieldName;
 		}
 		return IndexName.toLower();
 	}
