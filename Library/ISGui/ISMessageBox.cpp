@@ -5,6 +5,7 @@
 #include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISGui.h"
+#include "ISControls.h"
 //-----------------------------------------------------------------------------
 ISMessageBox::ISMessageBox(ISMessageBox::Icon Icon, const QString &Title, const QString &Message, const QString &DetailedText, const std::vector<ISMessageBoxButton> &Buttons, QWidget *parent)
 	: QMessageBox(Icon, Title, Message, ISMessageBox::NoButton, parent),
@@ -58,6 +59,11 @@ int ISMessageBox::Exec()
 	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	QApplication::beep();
 	ISSystem::ProcessEvents();
+	for (QAbstractButton *AbstractButton : buttons())
+	{
+		AbstractButton->setStyleSheet(STYLE_SHEET("ISPushButton"));
+		AbstractButton->setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
+	}
 	exec();
 	return ClickedID;
 }
@@ -70,7 +76,6 @@ void ISMessageBox::AddButtons(const std::vector<ISMessageBoxButton> &Buttons)
 		PushButton->setProperty("ID", Button.ID);
 		connect(PushButton, &ISPushButton::clicked, this, &ISMessageBox::ButtonClicked);
 		addButton(PushButton, ISMessageBox::ActionRole);
-		
 		if (Button.Default)
 		{
 			PushButton->setFocus();
