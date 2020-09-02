@@ -61,9 +61,9 @@ void ISObjectFormBase::SetParentObjectID(int parent_object_id, const QString &pa
 {
 	ParentObjectID = parent_object_id;
 	ParentFilterField = parent_filter_field;
-	if (FieldsMap.count(parent_filter_field))
+	//if (FieldsMap.count(parent_filter_field))
 	{
-		FieldsMap.at(parent_filter_field)->SetValue(parent_object_id);
+		//FieldsMap.at(parent_filter_field)->SetValue(parent_object_id);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -684,6 +684,12 @@ bool ISObjectFormBase::Save()
 	ISStringToVariantMap ValuesMap;
 	ISVectorString FieldsVector;
 	QString QueryText;
+
+	if (ParentObjectID && !ParentFilterField.isEmpty()) //Если форма является дочерней
+	{
+		ValuesMap[ParentFilterField] = ParentObjectID;
+		FieldsVector.emplace_back(ParentFilterField);
+	}
 
 	for (const auto &Field : FieldsMap) //Обход существующих полей на форме
 	{
