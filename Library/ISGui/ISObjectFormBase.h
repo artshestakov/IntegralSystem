@@ -16,8 +16,6 @@ class ISObjectFormBase : public ISInterfaceForm
 {
 	Q_OBJECT
 
-	Q_PROPERTY(bool ModificationFlag READ GetModificationFlag WRITE SetModificationFlag)
-
 signals:
 	void SavedObject(int ObjectID);
 	void UpdateList();

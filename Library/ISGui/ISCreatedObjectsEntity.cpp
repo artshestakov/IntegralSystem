@@ -5,6 +5,7 @@
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
 #include "ISAlgorithm.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISCreatedObjectsEntity::ISCreatedObjectsEntity() : QObject()
 {
@@ -22,7 +23,7 @@ ISCreatedObjectsEntity& ISCreatedObjectsEntity::Instance()
 	return CreatedObjectsEntity;
 }
 //-----------------------------------------------------------------------------
-void ISCreatedObjectsEntity::RegisterForm(QWidget *ObjectForm)
+void ISCreatedObjectsEntity::RegisterForm(ISObjectFormBase *ObjectForm)
 {
 	ObjectForms.emplace(dynamic_cast<ISInterfaceForm*>(ObjectForm)->GetFormUID(), ObjectForm);
 }
@@ -34,17 +35,24 @@ void ISCreatedObjectsEntity::UnregisterForm(const QString &FormUID)
 //-----------------------------------------------------------------------------
 bool ISCreatedObjectsEntity::CheckExistForms()
 {
-	std::vector<QWidget *> Forms = ISAlgorithm::ConvertMapToValues<ISUuid, QWidget*>(ObjectForms);
+	std::vector<ISObjectFormBase*> Forms = ISAlgorithm::ConvertMapToValues<ISUuid, ISObjectFormBase*>(ObjectForms);
 	int CountNotSaved = 0;
 	QString DetailedText;
 
 	for (size_t i = 0; i < Forms.size(); ++i)
 	{
-		QWidget *ObjectFormBase = Forms[i];
-		if (ObjectFormBase->property("ModificationFlag").toBool())
+		ISObjectFormBase *ObjectFormBase = Forms[i];
+		if (ObjectFormBase->GetModificationFlag())
 		{
 			++CountNotSaved;
 			DetailedText += QString::number(i + 1) + ") " + ObjectFormBase->windowTitle().remove(ISDefines::Core::SYMBOL_OBJECT_CHANGED) + ";\n";
+			if (!ObjectFormBase->parentWidget()) //Если форма не является вкладкой, а отдельным окном
+			{
+				//Если форма свернута - активируем её, иначе - переводим на передний план
+				ObjectFormBase->isMinimized() ?
+					ObjectFormBase->setWindowState(ObjectFormBase->windowState() & ~Qt::WindowMinimized | Qt::WindowActive) :
+					ObjectFormBase->activateWindow();
+			}
 		}
 	}
 

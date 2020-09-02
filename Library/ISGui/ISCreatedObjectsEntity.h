@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISUuid.h"
+#include "ISObjectFormBase.h"
 //-----------------------------------------------------------------------------
 class ISCreatedObjectsEntity : public QObject
 {
@@ -13,7 +14,7 @@ signals:
 public:
 	static ISCreatedObjectsEntity& Instance();
 
-	void RegisterForm(QWidget *ObjectForm); //Зарегистрировать форму объекта
+	void RegisterForm(ISObjectFormBase *ObjectForm); //Зарегистрировать форму объекта
 	void UnregisterForm(const QString &FormUID); //Отменить регистрацию формы объекта
 	bool CheckExistForms(); //Проверка существующих форм
 
@@ -24,6 +25,6 @@ private:
 	ISCreatedObjectsEntity& operator=(ISCreatedObjectsEntity const&) { return *this; };
 	
 private:
-	std::map<ISUuid, QWidget*> ObjectForms;
+	std::map<ISUuid, ISObjectFormBase*> ObjectForms;
 };
 //-----------------------------------------------------------------------------
