@@ -49,6 +49,11 @@ struct PMetaForeign : public PMetaBase
 {
 	PMetaForeign() : PMetaBase("Foreign") { }
 
+	QString GetName() const //Получить имя внешнего ключа
+	{
+		return (TableName + '_' + Field).toLower();
+	}
+
 	QString Field; //Поле, на которое устанавливается внешний ключ
 	QString ForeignClass; //На какую таблицу ссылкается внешний ключ
 	QString ForeignField; //На какое поле ссылается внешний ключ

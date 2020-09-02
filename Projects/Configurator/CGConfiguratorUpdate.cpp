@@ -243,7 +243,7 @@ bool CGConfiguratorUpdate::foreigns()
 	for (size_t i = 0, CountForeigns = ISMetaData::Instance().GetForeigns().size(); i < CountForeigns; ++i)
 	{
 		PMetaForeign *MetaForeign = ISMetaData::Instance().GetForeigns()[i];
-		Progress("Foreign", i, CountForeigns, "Table: " + MetaForeign->TableName + ". ForeignName: " + CGDatabase::Foreign_GetName(MetaForeign));
+		Progress("Foreign", i, CountForeigns, "Table: " + MetaForeign->TableName + ". ForeignName: " + MetaForeign->GetName());
 		Result = CGDatabase::Foreign_Exist(MetaForeign, Exist, ErrorString);
 		if (Result)
 		{

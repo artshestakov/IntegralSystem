@@ -10,7 +10,6 @@ public: //Внешние ключи
 	static bool Foreign_Create(PMetaForeign *MetaForeign, QString &ErrorString); //Создание внешнего ключа
 	static bool Foreign_Update(PMetaForeign *MetaForeign, QString &ErrorString); //Обновление внешнего ключа
 	static bool Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString); //Проверка существования внешнего ключа
-	static QString Foreign_GetName(PMetaForeign *MetaForeign); //Получение имени внешнего ключа
 
 public: //Функции
 	static bool Function_CreateOrReplace(PMetaFunction *MetaFunction, QString &ErrorString); //Создание функции

@@ -76,7 +76,7 @@ bool CGDatabase::Foreign_Create(PMetaForeign *MetaForeign, QString &ErrorString)
 
 	QString SqlText;
 	SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
-	SqlText += "ADD CONSTRAINT " + Foreign_GetName(MetaForeign) + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
+	SqlText += "ADD CONSTRAINT " + MetaForeign->GetName() + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
 	SqlText += "REFERENCES public." + MetaTableForeign->Name.toLower() + '(' + MetaTableForeign->Alias.toLower() + '_' + MetaForeign->ForeignField.toLower() + ") \n";
 	SqlText += "ON DELETE CASCADE \n";
 	SqlText += "ON UPDATE NO ACTION \n";
@@ -98,7 +98,7 @@ bool CGDatabase::Foreign_Update(PMetaForeign *MetaForeign, QString &ErrorString)
 
 	ISQuery qDeleteForeign;
 	qDeleteForeign.SetShowLongQuery(false);
-	bool Result = qDeleteForeign.Execute(QD_FOREIGN.arg(MetaTable->Name.toLower()).arg(Foreign_GetName(MetaForeign)));
+	bool Result = qDeleteForeign.Execute(QD_FOREIGN.arg(MetaTable->Name.toLower()).arg(MetaForeign->GetName()));
 	if (Result)
 	{
 		Result = Foreign_Create(MetaForeign, ErrorString);
@@ -114,7 +114,7 @@ bool CGDatabase::Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &
 {
 	ISQuery qSelect(QS_FOREIGN);
 	qSelect.SetShowLongQuery(false);
-	qSelect.BindValue(":ForeignName", Foreign_GetName(MetaForeign));
+	qSelect.BindValue(":ForeignName", MetaForeign->GetName());
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
@@ -125,11 +125,6 @@ bool CGDatabase::Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &
 		ErrorString = qSelect.GetErrorString();
 	}
 	return Result;
-}
-//-----------------------------------------------------------------------------
-QString CGDatabase::Foreign_GetName(PMetaForeign *MetaForeign)
-{
-	return (MetaForeign->TableName + '_' + MetaForeign->Field + '_' + MetaForeign->ForeignClass + '_' + MetaForeign->ForeignField).toLower();
 }
 //-----------------------------------------------------------------------------
 bool CGDatabase::Function_CreateOrReplace(PMetaFunction *MetaFunction, QString &ErrorString)
