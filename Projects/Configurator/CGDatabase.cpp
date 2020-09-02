@@ -146,7 +146,7 @@ bool CGDatabase::Index_Create(PMetaIndex *Index, QString &ErrorString)
 	{
 		for (const QString &String : Index->Fields)
 		{
-			Fields += String + ", ";
+			Fields += (Index->Alias + '_' + String).toLower() + ", ";
 		}
 		Fields.chop(2);
 		SqlText = SqlText.arg(Fields);

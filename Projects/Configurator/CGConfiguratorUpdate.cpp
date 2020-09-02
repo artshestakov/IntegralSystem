@@ -234,7 +234,7 @@ bool CGConfiguratorUpdate::compoundindexes()
 			break;
 		}
 	}
-	return true;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::foreigns()

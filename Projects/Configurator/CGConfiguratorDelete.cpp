@@ -6,9 +6,9 @@
 #include "ISConsole.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname "
-	"FROM pg_indexes "
-	"WHERE schemaname = current_schema()");
+static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname, right(indexname, 4) = 'pkey' AS is_primary "
+										  "FROM pg_indexes "
+										  "WHERE schemaname = current_schema()");
 //-----------------------------------------------------------------------------
 static QString QD_INDEX = "DROP INDEX public.%1 CASCADE";
 //-----------------------------------------------------------------------------
@@ -63,6 +63,12 @@ bool CGConfiguratorDelete::indexes()
 		int Deleted = 0, CountIndexes = qSelectIndexes.GetCountResultRows();
 		while (qSelectIndexes.Next())
 		{
+			//Если поле является первичным ключем - пропускаем его
+			if (qSelectIndexes.ReadColumn("is_primary").toBool())
+			{
+				continue;
+			}
+
 			ISQuery qDeleteIndex;
 			Result = qDeleteIndex.Execute(QD_INDEX.arg(qSelectIndexes.ReadColumn("indexname").toString()));
 			if (Result)
