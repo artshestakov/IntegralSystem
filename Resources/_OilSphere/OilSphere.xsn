@@ -5,8 +5,8 @@
     <Fields>
       <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
       <Field UID="{3B7EB4F8-CFEB-40C8-99E9-22150ED555B9}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
-      <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="Int" LabelName="Тип" LocalListName="Тип"/>
-      <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус"/>
+      <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="BigInt" LabelName="Тип" LocalListName="Тип"/>
+      <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>
       <Field UID="{4514E2E7-18C5-4B1B-8052-AEFCBF4626E8}" Name="Director" Type="String" LabelName="Директор" LocalListName="Директор"/>
       <Field UID="{3CB172A8-590C-462B-AB70-F6A4BABF3A24}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН" LayoutName="INN"/>
       <Field UID="{4459AAC7-F885-4120-A1D8-13C7E84179B0}" Name="Kpp" Type="Kpp" LabelName="КПП" LocalListName="КПП" LayoutName="INN"/>
@@ -38,7 +38,7 @@
 
   <Table Name="CounterpartyEnrollment" UID="{BB867613-17D5-4FC0-B29F-6C5167257630}" Alias="cpen" LocalName="Зачисление" LocalListName="Зачилсения" TitleName="Counterparty">
     <Fields>
-      <Field UID="{1EA7C67D-02A9-421A-B742-FC25DFE2808F}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{1EA7C67D-02A9-421A-B742-FC25DFE2808F}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{EBEF5EA5-0AEC-4A47-A3B4-C094D6CE4247}" Name="Date" Type="Date" LabelName="Дата операции" LocalListName="Дата операции" NotNull="true"/>
       <Field UID="{E72F8D34-7317-484D-BD2F-01AF4889D8FB}" Name="Sum" Type="Double" LabelName="Сумма зачисления" LocalListName="Сумма зачисления" NotNull="true"/>
       <Field UID="{787F2C5F-1840-4108-A5C5-EAB4AAEBE89E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
@@ -56,7 +56,7 @@
 
   <Table Name="CounterpartyWriteOff" UID="{901F3DE4-1302-4A79-80E3-E2CDF966E9B5}" Alias="cpwo" LocalName="Списание" LocalListName="Списания" ShowOnly="true" TitleName="Counterparty">
     <Fields>
-      <Field UID="{EAB963AB-0DE6-4671-B372-9BE5429E3E51}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{EAB963AB-0DE6-4671-B372-9BE5429E3E51}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{8582AE37-D4F2-4E0D-8E97-8C6A91E66255}" Name="ImplementationDetail" Type="Int" LabelName="Деталь реализации" LocalListName="Деталь реализации" HideFromObject="true" NotNull="true"/>
       <Field UID="{D024AF09-07F4-4C25-806E-680C968D3F35}" Name="Sum" Type="Double" LabelName="Сумма списания" LocalListName="Сумма списания" NotNull="true"/>
       <Field UID="{FBBBAAA5-D961-44F1-8438-55BB09BD5D77}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
@@ -78,7 +78,7 @@
   <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="DateLoad">
     <Fields>
       <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="DateLoad" Type="Date" LabelName="Дата загрузки" LocalListName="Дата загрузки" NotNull="true"/>
-      <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="Int" LabelName="Тип продукта" LocalListName="Тип продукта" NotNull="true"/>
+      <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="BigInt" LabelName="Тип продукта" LocalListName="Тип продукта" NotNull="true"/>
       <Field UID="{AB8F960B-45B3-4822-9F67-AEF74B65A5E3}" Name="CountDetail" Type="Int" ReadOnly="true" LabelName="Количество" LocalListName="Количество" SeparatorName="Общее" QueryText="SELECT COUNT(*) FROM implementationdetail WHERE NOT imdt_isdeleted AND imdt_implementation = impl_id"/>
       <Field UID="{216A78EB-E5BA-4786-8766-577C27B842AF}" Name="LoadWeightGross" Type="Double" ReadOnly="true" LabelName="Вес загрузки (брутто)" LocalListName="Вес загрузки (брутто)" LayoutName="Load" QueryText="SELECT sum(imdt_loadweightgross) FROM implementationdetail WHERE NOT imdt_isdeleted AND imdt_implementation = impl_id"/>
       <Field UID="{7047216E-288F-4355-98EE-982603061C5D}" Name="LoadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес загрузки (нетто)" LocalListName="Вес загрузки (нетто)" LayoutName="Load" QueryText="SELECT sum(imdt_loadweightnet) FROM implementationdetail WHERE NOT imdt_isdeleted AND imdt_implementation = impl_id"/>
@@ -101,26 +101,26 @@
 
   <Table Name="ImplementationDetail" UID="{805F2B37-0EB0-4ED3-8C50-78F630043394}" Alias="imdt" LocalName="Подробности реализации" LocalListName="Подробности реализации" TitleName="ID" ObjectForm="ISOilSphere::ImplementationDetailObjectForm">
     <Fields>
-      <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="Int" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{604C8962-D8D7-462A-95D5-E9AD659275C9}" Name="LoadCounterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" SeparatorName="Загрузка"/>
-      <Field UID="{C7774279-61D4-41BC-AD6E-4AECC04CEE03}" Name="LoadStock" Type="Int" LabelName="Склад" LocalListName="Склад"/>
+      <Field UID="{20A60D36-B6F6-427A-9292-05831A928CA9}" Name="Implementation" Type="BigInt" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{604C8962-D8D7-462A-95D5-E9AD659275C9}" Name="LoadCounterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" SeparatorName="Загрузка"/>
+      <Field UID="{C7774279-61D4-41BC-AD6E-4AECC04CEE03}" Name="LoadStock" Type="BigInt" LabelName="Склад" LocalListName="Склад"/>
       <Field UID="{79560081-946F-41B1-BA19-28B0BD067894}" Name="LoadContainer" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="LoadContainer"/>
       <Field UID="{CE80AC68-6F0B-45EA-AFD7-41F6CF0F7029}" Name="LoadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="LoadContainer"/>
       <Field UID="{F6E17298-F970-4E8F-92AC-1560184CB2DE}" Name="LoadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="LoadContainer"/>
       <Field UID="{590547D1-75DD-4CE2-95C4-B6EC97D43EFD}" Name="LoadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="LoadPrice"/>
       <Field UID="{64CCFB48-4BF4-4322-B35D-7869E27554EB}" Name="LoadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="LoadPrice"/>
-      <Field UID="{3235443C-B601-4658-B0A6-91008E244A3E}" Name="UnloadCounterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" SeparatorName="Выгрузка"/>
-      <Field UID="{E3B99D47-6D06-4986-BE26-3B0AA31CE762}" Name="UnloadStock" Type="Int" LabelName="Склад" LocalListName="Склад"/>
+      <Field UID="{3235443C-B601-4658-B0A6-91008E244A3E}" Name="UnloadCounterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" SeparatorName="Выгрузка"/>
+      <Field UID="{E3B99D47-6D06-4986-BE26-3B0AA31CE762}" Name="UnloadStock" Type="BigInt" LabelName="Склад" LocalListName="Склад"/>
       <Field UID="{F666929C-5DC1-4D51-8527-6D14D3F64409}" Name="UnloadContainer" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" LayoutName="Unload"/>
       <Field UID="{66950052-D388-467C-8F7D-AE5B071AFAFA}" Name="UnloadWeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Unload"/>
       <Field UID="{9B8377B2-46E7-4DD7-B8B1-A3306A6C5593}" Name="UnloadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Unload"/>
       <Field UID="{DD79EB7F-CCAC-46C1-8E63-073935646196}" Name="UnloadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="UnloadPrice"/>
       <Field UID="{E00C3A63-5EBF-44AC-AF4E-427F163D9E6C}" Name="UnloadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="UnloadPrice"/>
-      <Field UID="{B7FA062E-4DB3-432C-B26E-AE3FA681999E}" Name="PaymentType" Type="Int" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true" SeparatorName="Дополнительно"/>
-      <Field UID="{D4AAA5D3-53D8-40F2-88C3-7A712F0726FB}" Name="Organization" Type="Int" LabelName="Огранизация" LocalListName="Огранизация"/>
+      <Field UID="{B7FA062E-4DB3-432C-B26E-AE3FA681999E}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true" SeparatorName="Дополнительно"/>
+      <Field UID="{D4AAA5D3-53D8-40F2-88C3-7A712F0726FB}" Name="Organization" Type="BigInt" LabelName="Огранизация" LocalListName="Огранизация"/>
       <Field UID="{B47E3F31-CE60-450F-905C-F54D6D17F7D4}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-      <Field UID="{E3EC604A-96C7-4DA2-9C44-7EB4C9871796}" Name="Driver" Type="Int" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
-      <Field UID="{AA821AE0-6837-4386-B371-D4E8614A1811}" Name="Car" Type="Int" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Driver"/>
+      <Field UID="{E3EC604A-96C7-4DA2-9C44-7EB4C9871796}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
+      <Field UID="{AA821AE0-6837-4386-B371-D4E8614A1811}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Driver"/>
       <Field UID="{45EC9CDF-3142-41BC-A396-16DEF03D0EF5}" Name="WeightDifference" Type="Int" ReadOnly="true" LabelName="Разница весов" LocalListName="Разница весов"/>
     </Fields>
     <Indexes>
@@ -161,7 +161,7 @@
 
   <Table Name="DebtOld" UID="{38BF717C-938B-486F-80DA-8F3F3FA96914}" Alias="dold" LocalName="Долг (старый)" LocalListName="Долг (старый)" TitleName="Counterparty">
     <Fields>
-      <Field UID="{AE11D732-B596-4E45-A468-6E4C7E2337D3}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true"/>
+      <Field UID="{AE11D732-B596-4E45-A468-6E4C7E2337D3}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true"/>
       <Field UID="{C01CBB35-FA78-4DE7-96BF-6F2402732CAE}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
       <Field UID="{28E4EA19-2C55-4EB1-9068-33C8A88510EC}" Name="Sum" Type="Double" LabelName="Сумма долга" LocalListName="Сумма долга" NotNull="true"/>
       <Field UID="{A7DB1268-74A1-40FE-996B-B8FF5F432F12}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
@@ -226,7 +226,7 @@
     <Fields>
       <Field UID="{19147562-18AA-4DC7-953F-A0DD4A0843D7}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
       <Field UID="{FECC72D2-03B6-44BC-85D5-0197204274C9}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения"/>
-      <Field UID="{1F9C9036-EDC7-4E91-AC72-852A810A7CB1}" Name="Type" Type="Int" LabelName="Тип водителя" LocalListName="Тип водителя"/>
+      <Field UID="{1F9C9036-EDC7-4E91-AC72-852A810A7CB1}" Name="Type" Type="BigInt" LabelName="Тип водителя" LocalListName="Тип водителя"/>
       <Field UID="{50874597-C07E-4CF9-9DC1-12A2C99D007F}" Name="Address" Type="String" LabelName="Адрес (домашний)" LocalListName="Адрес (домашний)"/>
       <Field UID="{5CFC1697-2A76-4C3E-B5A7-D7365BAF441B}" Name="PhoneMain" Type="Phone" LabelName="Телефон (основной)" LocalListName="Телефон (основной)"/>
       <Field UID="{FE94A84B-E945-4D59-AD10-5962DBF23102}" Name="PhoneOther" Type="Phone" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
@@ -274,10 +274,10 @@
 
   <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
     <Fields>
-      <Field UID="{7C6A6D31-3F92-41A6-836D-A1B96E345A92}" Name="ImplementationDetail" Type="Int" LabelName="Подробности реализации" LocalListName="Подробности реализации" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="Int" ReadOnly="true" LabelName="Склад" LocalListName="Склад" NotNull="true" HideFromList="true" LayoutName="Title"/>
+      <Field UID="{7C6A6D31-3F92-41A6-836D-A1B96E345A92}" Name="ImplementationDetail" Type="BigInt" LabelName="Подробности реализации" LocalListName="Подробности реализации" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="BigInt" ReadOnly="true" LabelName="Склад" LocalListName="Склад" NotNull="true" HideFromList="true" LayoutName="Title"/>
       <Field UID="{64DC2A84-C906-4F46-AE3E-3D32E273E236}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Title"/>
-      <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="Int" LabelName="Оператор" LocalListName="Оператор" LayoutName="Title"/>
+      <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="BigInt" LabelName="Оператор" LocalListName="Оператор" LayoutName="Title"/>
       <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="Int" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>
       
       <Field UID="{79298632-AE9B-4DFF-B0EF-EE23CD9A6914}" Name="BalanceBeginChange" Type="Double" LabelName="Остаток на начало смены" LocalListName="Остаток на начало смены" LayoutName="Layout1"/>
@@ -344,7 +344,7 @@
   <Table Name="Debet1" UID="{6FD4EE55-A3F7-4E96-883E-925A948B935A}" Alias="deb1" LocalName="Дебет 1" LocalListName="Дебет 1" TitleName="DateComing" ObjectForm="ISOilSphere::DebetObjectForm">
     <Fields>
       <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
-      <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+      <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
       <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
       <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
       <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Double" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
@@ -394,10 +394,10 @@
   <Table Name="ConsumptionSUG" UID="{6A343038-3BF0-4ED9-A2DA-F5EF218D3D38}" Alias="csug" LocalName="Расход СУГ" LocalListName="Расходы СУГ" TitleName="DateTime" ObjectForm="ISOilSphere::ConsumptionSUGObjectForm">
     <Fields>
       <Field UID="{569D169D-A604-439A-B02B-8A08BF6D0C88}" Name="DateTime" Type="DateTime" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
-      <Field UID="{6259D563-FE8D-44B1-A849-3B23B9C26B2D}" Name="Station" Type="Int" LabelName="Станция" LocalListName="Станция" LayoutName="Station"/>
-      <Field UID="{74926D23-CDD0-4D30-8132-E83623503FC9}" Name="Counterparty" Type="Int" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Station"/>
-      <Field UID="{982CFF4A-684A-4307-8321-96ED64B25307}" Name="Car" Type="Int" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Car"/>
-      <Field UID="{C3049C86-8B21-47B6-943A-97952FDF2535}" Name="Took" Type="Int" LabelName="Забрал" LocalListName="Забрал" LayoutName="Car"/>
+      <Field UID="{6259D563-FE8D-44B1-A849-3B23B9C26B2D}" Name="Station" Type="BigInt" LabelName="Станция" LocalListName="Станция" LayoutName="Station"/>
+      <Field UID="{74926D23-CDD0-4D30-8132-E83623503FC9}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Station"/>
+      <Field UID="{982CFF4A-684A-4307-8321-96ED64B25307}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Car"/>
+      <Field UID="{C3049C86-8B21-47B6-943A-97952FDF2535}" Name="Took" Type="BigInt" LabelName="Забрал" LocalListName="Забрал" LayoutName="Car"/>
       <Field UID="{F334FCBE-6114-4082-BF67-A4879BA2F3D3}" Name="Coming" Type="Int" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
       <Field UID="{2BB8266D-BAA2-4304-96CD-A222B85479FF}" Name="Consumption" Type="Int" LabelName="Расход" LocalListName="Расход" LayoutName="Coming"/>
       <Field UID="{FC67B691-1DCC-47D0-A17E-4E284716670D}" Name="Remainder" Type="Int" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Coming"/>
@@ -425,9 +425,9 @@
   <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
     <Fields>
       <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" NotNull="true" LayoutName="DateShipping" SeparatorName="Отгрузка"/>
-      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="Int" LabelName="Поставщик" LocalListName="Поставщик" NotNull="true" LayoutName="DateShipping"/>
+      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="BigInt" LabelName="Поставщик" LocalListName="Поставщик" NotNull="true" LayoutName="DateShipping"/>
       <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="DateArrival" SeparatorName="Прибытие"/>
-      <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="Int" LabelName="Склад" LocalListName="Склад" LayoutName="DateArrival"/>
+      <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" LayoutName="DateArrival"/>
       <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Int" LabelName="Цена" LocalListName="Цена" LayoutName="Price" SeparatorName="Дополнительная информация"/>
       <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Double" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" LayoutName="Price" QueryText="SELECT sum(mwdt_kilogram) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id"/>
       <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" LayoutName="Price"/>
@@ -455,7 +455,7 @@
 
   <Table Name="MoveWagonDetail" UID="{5E5F2AB5-29EA-46CB-84CF-93890DF87965}" Alias="mwdt" LocalName="Детали движения вагона" LocalListName="Детали движения вагонов" TitleName="WagonNumber">
     <Fields>
-      <Field UID="{B9AD4F3A-6AA9-485D-9B4A-4CD558392A63}" Name="MoveWagon" Type="Int" LabelName="Движения вагонов" LocalListName="Движения вагонов" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{B9AD4F3A-6AA9-485D-9B4A-4CD558392A63}" Name="MoveWagon" Type="BigInt" LabelName="Движения вагонов" LocalListName="Движения вагонов" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{916CDBC8-55AC-4A22-8B0D-9CA43D6A4A3F}" Name="WagonNumber" Type="Int" LabelName="Номер вагона" LocalListName="Номер вагона"/>
       <Field UID="{B94799C8-4ADB-490A-A835-83F50E36CCAE}" Name="Kilogram" Type="Double" LabelName="Килограммы" LocalListName="Килограммы"/>
       <Field UID="{1071385C-D44D-48A4-A757-DFA13AA32D27}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
@@ -473,7 +473,7 @@
 
   <Table Name="DriverExpenses" UID="{933357F2-ED4D-49CA-AF28-DC3ED4873C60}" Alias="drex" LocalName="Расход водителя" LocalListName="Расходы водителей" TitleName="Driver">
     <Fields>
-      <Field UID="{18EC4EF2-23BC-4B68-A8ED-F1CA315552BF}" Name="Driver" Type="Int" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
+      <Field UID="{18EC4EF2-23BC-4B68-A8ED-F1CA315552BF}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
       <Field UID="{A4BD7ADE-0EC2-4D31-9CC4-898A034D8348}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
       <Field UID="{0E4FFD31-632F-405E-8C3D-E5F40835A0B7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" NotNull="true" LayoutName="Date"/>
       <Field UID="{BE580F77-B118-454F-8751-62469DF707CF}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Date" QueryText="SELECT sum(dexd_price) FROM driverexpensesdetail WHERE NOT dexd_isdeleted AND dexd_driverexpenses = drex_id"/>
@@ -495,8 +495,8 @@
 
   <Table Name="DriverExpensesDetail" UID="{1BC1638C-687A-4423-94AD-3E591554C911}" Alias="dexd" LocalName="Подробности расходов" LocalListName="Подробности расходов" TitleName="Service">
     <Fields>
-      <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="DriverExpenses" Type="Int" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{F61804DD-00C4-4024-8446-2DBF6C27E92D}" Name="Service" Type="Int" LabelName="Услуга" LocalListName="Услуга" NotNull="true"/>
+      <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="DriverExpenses" Type="BigInt" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{F61804DD-00C4-4024-8446-2DBF6C27E92D}" Name="Service" Type="BigInt" LabelName="Услуга" LocalListName="Услуга" NotNull="true"/>
       <Field UID="{3E689891-AE2A-4589-B80E-79F47B46A324}" Name="Price" Type="Double" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true"/>
       <Field UID="{B177D422-38F4-4D28-A3BC-33C0C9158B5E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>

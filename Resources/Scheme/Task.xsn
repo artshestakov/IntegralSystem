@@ -5,13 +5,13 @@
     <Fields>
       <Field UID="{9142958F-8B24-479A-BD96-345E24B5B6DB}" Name="Parent" Type="Int" LabelName="Родительская задача" LocalListName="Родительская задача" HideFromObject="true" NotSearch="true"/>
       <Field UID="{9A1F7E8D-004D-4E4B-955C-5FCAFEDE2F32}" Name="Name" Type="String" LabelName="Заголовок" LocalListName="Заголовок" PlaceholderText="Что необходимо сделать?" NotNull="true"/>
-      <Field UID="{D908244D-973B-49D1-B477-3304E20D109D}" Name="Space" Type="Int" LabelName="Пространство" LocalListName="Пространство" Hint="Пространтсво используется для разделения и фильтрации задач."/>
+      <Field UID="{D908244D-973B-49D1-B477-3304E20D109D}" Name="Space" Type="BigInt" LabelName="Пространство" LocalListName="Пространство" Hint="Пространтсво используется для разделения и фильтрации задач."/>
       <Field UID="{660CEB99-2D94-4013-A805-E43E47BDA030}" Name="Description" Type="Text" ControlWidget="ISTaskDescriptionEdit" LabelName="Описание задачи" LocalListName="Описание задачи" PlaceholderText="Введите описание задачи" HideFromList="true"/>
       <Field UID="{FBF65264-BCA0-4882-86FD-AFF5A991B645}" Name="Executor" Type="OID" ControlWidget="ISExecutorEdit" LabelName="Исполнитель" LocalListName="Исполнитель"/>
-      <Field UID="{9708C094-D404-4FDD-A17F-C7278D10B0B2}" Name="Type" Type="Int" LabelName="Тип задачи" LocalListName="Тип задачи"/>
-      <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="Int" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет"/>
+      <Field UID="{9708C094-D404-4FDD-A17F-C7278D10B0B2}" Name="Type" Type="BigInt" LabelName="Тип задачи" LocalListName="Тип задачи"/>
+      <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="BigInt" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет"/>
       <Field UID="{9D4228B1-3DBB-4918-AA5B-A5B36189A2D8}" Name="Important" Type="Bool" DefaultValue="false" ControlWidget="ISTaskImportantEdit" LabelName="Это важная задача" LocalListName="Это важная задача"/>
-      <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="Int" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true" HideFromObject="true"/>
+      <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="BigInt" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true" HideFromObject="true"/>
     </Fields>
     <Indexes>
       <Index Field="Parent"/>
@@ -69,8 +69,8 @@
 
   <Table Name="_TaskStatusHistory" UID="{06649583-3042-45E8-867E-42CE90F73B06}" Alias="tshr" ShowOnly="true" LocalName="Изменение статуса" LocalListName="Изменения статуса" TitleName="Status" IsSystem="true">
     <Fields>
-      <Field UID="{92F93CF7-639B-457A-82D8-38F5458E0E72}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-      <Field UID="{DC67347A-EA59-417C-BA01-EF5A7DF8B088}" Name="Status" Type="Int" LabelName="Статус" LocalListName="Статус" NotNull="true"/>
+      <Field UID="{92F93CF7-639B-457A-82D8-38F5458E0E72}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{DC67347A-EA59-417C-BA01-EF5A7DF8B088}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Task"/>
@@ -96,7 +96,7 @@
 
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
     <Fields>
-      <Field UID="{47664BE4-308A-4B69-8E8E-76E8111F0110}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{47664BE4-308A-4B69-8E8E-76E8111F0110}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{2B8CFE09-5BF7-4AAA-B206-CA646868E322}" Name="Comment" Type="Text" LabelName="Комментарий" LocalListName="Комментарий" NotNull="true"/>
     </Fields>
     <Indexes>
@@ -111,7 +111,7 @@
 
   <Table Name="_TaskCheckList" UID="{A0B54A7A-6C76-49D2-A5F4-7E7525B576A8}" Alias="tchl" LocalName="Чек-лист" LocalListName="Чек-листы" TitleName="Name" IsSystem="true">
     <Fields>
-      <Field UID="{1ECCF59E-1B07-4389-B740-933A89C9C02A}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{1ECCF59E-1B07-4389-B740-933A89C9C02A}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{84F66F9F-6226-4C50-8E84-65957E0C725F}" Name="Name" Type="String" LabelName="Имя" LocalListName="Имя" NotNull="true"/>
       <Field UID="{4DC55709-3085-43DF-8BE9-CC98D3928679}" Name="Done" Type="Bool" DefaultValue="false" LabelName="Выполнено" LocalListName="Выполнено" NotNull="true"/>
     </Fields>
@@ -127,8 +127,8 @@
 
   <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="Link" IsSystem="true">
     <Fields>
-      <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-      <Field UID="{3615E923-9B37-4E47-927B-738218705DDD}" Name="Link" Type="Int" LabelName="Связанная задача" LocalListName="Связанная задача" NotNull="true"/>
+      <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{3615E923-9B37-4E47-927B-738218705DDD}" Name="Link" Type="BigInt" LabelName="Связанная задача" LocalListName="Связанная задача" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Task"/>
@@ -144,7 +144,7 @@
 
   <Table Name="_TaskFile" UID="{184DFEDF-F622-4092-910F-63BA69D78029}" Alias="tfls" LocalName="Файл" LocalListName="Файлы" TitleName="Name" IsSystem="true">
     <Fields>
-      <Field UID="{F783C6B9-FF78-45B4-9937-23A3790D1A45}" Name="Task" Type="Int" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{F783C6B9-FF78-45B4-9937-23A3790D1A45}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{1D1F1D0E-92E0-429B-8E5E-971D3A04099D}" Name="IsImage" Type="Bool" DefaultValue="false" LabelName="Файл является изображением" LocalListName="Файл является изображением" NotNull="true"/>
       <Field UID="{328A0009-8165-4728-9979-39E93701EC78}" Name="Name" Type="String" LabelName="Имя файла" LocalListName="Имя файла" NotNull="true"/>
       <Field UID="{03FEC638-031C-439E-8A4C-2C811274E178}" Name="Extension" Type="String" LabelName="Расширение файла" LocalListName="Расширение файла"/>
