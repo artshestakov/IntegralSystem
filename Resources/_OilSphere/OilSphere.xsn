@@ -117,7 +117,6 @@
       <Field UID="{DD79EB7F-CCAC-46C1-8E63-073935646196}" Name="UnloadPriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="UnloadPrice"/>
       <Field UID="{E00C3A63-5EBF-44AC-AF4E-427F163D9E6C}" Name="UnloadCost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="UnloadPrice"/>
       <Field UID="{B7FA062E-4DB3-432C-B26E-AE3FA681999E}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true" SeparatorName="Дополнительно"/>
-      <Field UID="{D4AAA5D3-53D8-40F2-88C3-7A712F0726FB}" Name="Organization" Type="BigInt" LabelName="Огранизация" LocalListName="Огранизация"/>
       <Field UID="{B47E3F31-CE60-450F-905C-F54D6D17F7D4}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
       <Field UID="{E3EC604A-96C7-4DA2-9C44-7EB4C9871796}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
       <Field UID="{AA821AE0-6837-4386-B371-D4E8614A1811}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Driver"/>
@@ -140,7 +139,6 @@
       <Index Field="UnloadPriceUnit"/>
       <Index Field="UnloadCost"/>
       <Index Field="PaymentType"/>
-      <Index Field="Organization"/>
       <Index Field="Note"/>
       <Index Field="Driver"/>
       <Index Field="Car"/>
@@ -153,7 +151,6 @@
       <Foreign Field="UnloadCounterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="UnloadStock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Organization" ForeignClass="Organization" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
     </Foreigns>
@@ -207,15 +204,6 @@
   <Table Name="ProductType" UID="{7863AAAC-FB7B-4330-97BB-8490409134DB}" Alias="pdtp" LocalName="Тип продукта" LocalListName="Типы продуктов" TitleName="Name">
     <Fields>
       <Field UID="{31320A15-8039-4899-B642-4DF4A7B34F13}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-
-  <Table Name="Organization" UID="{168A7F8D-0CA2-4930-B214-AC7A6E09B7F6}" Alias="orgz" LocalName="Организация" LocalListName="Организации" TitleName="Name">
-    <Fields>
-      <Field UID="{50790BDB-3B26-4DE5-B6B2-F4080F19CCF0}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
