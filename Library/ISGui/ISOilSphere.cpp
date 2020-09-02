@@ -10,10 +10,15 @@
 #include "ISStyleSheet.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
-static QString QS_STATEMENT = PREPARE_QUERY2("SELECT COUNT(*) FROM gasstationstatement WHERE gsts_implementationdetail = :ImplementationDetail");
+static QString QS_STATEMENT = PREPARE_QUERY2("SELECT COUNT(*) FROM gasstationstatement WHERE gsts_implementationunload = :ImplementationUnload");
 //-----------------------------------------------------------------------------
-static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gsts_implementationdetail, gsts_stock, gsts_date, gsts_volumeincome) "
-											 "VALUES(:ImplementationDetail, :StockID, CURRENT_DATE, (SELECT prod_constant * :LoadWeightNet FROM period WHERE NOT prod_isdeleted AND CURRENT_DATE BETWEEN prod_datestart AND prod_dateend))");
+static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
+											 "VALUES(:ImplementationUnload, :StockID, CURRENT_DATE, :VolumeIncome)");
+//-----------------------------------------------------------------------------
+static QString QS_CONSTANT = PREPARE_QUERY2("SELECT prod_constant "
+											"FROM period "
+											"WHERE NOT prod_isdeleted "
+											"AND CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
 //-----------------------------------------------------------------------------
 static QString QS_BEFORE_VALUES = PREPARE_QUERY2("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
@@ -54,22 +59,22 @@ static QString QS_ACCRUED = PREPARE_QUERY2("SELECT cpwo_creationdate, cpwo_sum, 
 										   "AND cpwo_implementationdetail = :ImplementationDetailID "
 										   "ORDER BY cpwo_id");
 //-----------------------------------------------------------------------------
-static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT m.mwag_dateshipping, c.cnpr_name, m.mwag_datearrival, sum(d.mwdt_kilogram), COUNT(*) "
-												 "FROM movewagon m "
-												 "LEFT JOIN counterparty c ON c.cnpr_id = m.mwag_provider "
-												 "LEFT JOIN movewagondetail d ON d.mwdt_movewagon = m.mwag_id AND NOT d.mwdt_isdeleted "
-												 "WHERE NOT m.mwag_isdeleted "
-												 "AND m.mwag_datearrival IS NOT NULL "
-												 "AND m.mwag_stock = :StockID "
-												 "GROUP BY m.mwag_dateshipping, c.cnpr_name, m.mwag_datearrival");
+static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT mwag_dateshipping, cnpr_name, mwag_datearrival, sum(mwdt_kilogram), COUNT(*) "
+												 "FROM movewagon "
+												 "LEFT JOIN counterparty ON cnpr_id = mwag_provider "
+												 "LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id AND NOT mwdt_isdeleted "
+												 "WHERE NOT mwag_isdeleted "
+												 "AND mwag_datearrival IS NOT NULL "
+												 "AND mwag_stock = :StockID "
+												 "GROUP BY mwag_dateshipping, cnpr_name, mwag_datearrival");
 //-----------------------------------------------------------------------------
-static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT i.impl_dateload, p.pdtp_name, d.imdt_loadweightnet "
-												   "FROM implementationdetail d "
-												   "LEFT JOIN implementation i ON i.impl_id = d.imdt_implementation "
-												   "LEFT JOIN producttype p ON p.pdtp_id = i.impl_producttype "
-												   "WHERE NOT d.imdt_isdeleted "
-												   "AND NOT i.impl_isdeleted "
-												   "AND d.imdt_stock = :StockID");
+static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT impl_dateload, pdtp_name, imdt_loadweightnet "
+												   "FROM implementationdetail "
+												   "LEFT JOIN implementation ON impl_id = imdt_implementation "
+												   "LEFT JOIN producttype ON pdtp_id = impl_producttype "
+												   "WHERE NOT imdt_isdeleted "
+												   "AND NOT impl_isdeleted "
+												   "AND imdt_stock = :StockID");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -84,7 +89,8 @@ ISOilSphere::Object::~Object()
 void ISOilSphere::Object::RegisterMetaTypes() const
 {
 	qRegisterMetaType<ISOilSphere::CounterpartyObjectForm*>("ISOilSphere::CounterpartyObjectForm");
-	qRegisterMetaType<ISOilSphere::ImplementationDetailObjectForm*>("ISOilSphere::ImplementationDetailObjectForm");
+	qRegisterMetaType<ISOilSphere::ImplementationLoadObjectForm*>("ISOilSphere::ImplementationLoadObjectForm");
+	qRegisterMetaType<ISOilSphere::ImplementationUnloadObjectForm*>("ISOilSphere::ImplementationUnloadObjectForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 	qRegisterMetaType<ISOilSphere::DebtSubSystemForm*>("ISOilSphere::DebtSubSystemForm");
 	qRegisterMetaType<ISOilSphere::DebetObjectForm*>("ISOilSphere::DebetObjectForm");
@@ -138,61 +144,104 @@ void ISOilSphere::CounterpartyObjectForm::SearchFinished(const ISDaDataOrganizat
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::ImplementationDetailObjectForm::ImplementationDetailObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+ISOilSphere::ImplementationLoadObjectForm::ImplementationLoadObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
-	EditLoadContainer = GetFieldWidget("LoadContainer");
-	EditLoadWeightGross = GetFieldWidget("LoadWeightGross");
-	EditLoadWeightNet = GetFieldWidget("LoadWeightNet");
-	EditLoadPriceUnit = GetFieldWidget("LoadPriceUnit");
-	EditLoadCost = GetFieldWidget("LoadCost");
-	connect(EditLoadContainer, &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationDetailObjectForm::CalculateLoad);
-	connect(EditLoadWeightGross, &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationDetailObjectForm::CalculateLoad);
-	connect(EditLoadPriceUnit, &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationDetailObjectForm::CalculateLoad);
-
-	EditUnloadContainer = GetFieldWidget("UnloadContainer");
-	EditUnloadWeightGross = GetFieldWidget("UnloadWeightGross");
-	EditUnloadWeightNet = GetFieldWidget("UnloadWeightNet");
-	EditUnloadPriceUnit = GetFieldWidget("UnloadPriceUnit");
-	EditUnloadCost = GetFieldWidget("UnloadCost");
-	connect(EditUnloadContainer, &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationDetailObjectForm::CalculateUnload);
-	connect(EditUnloadWeightGross, &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationDetailObjectForm::CalculateUnload);
-	connect(EditUnloadPriceUnit, &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationDetailObjectForm::CalculateUnload);
-
-	EditWeightDifference = GetFieldWidget("WeightDifference");
+	connect(GetFieldWidget("Container"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationLoadObjectForm::Calculate);
+	connect(GetFieldWidget("WeightGross"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationLoadObjectForm::Calculate);
+	connect(GetFieldWidget("PriceUnit"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationLoadObjectForm::Calculate);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::ImplementationDetailObjectForm::~ImplementationDetailObjectForm()
+ISOilSphere::ImplementationLoadObjectForm::~ImplementationLoadObjectForm()
 {
 
 }
 //-----------------------------------------------------------------------------
-bool ISOilSphere::ImplementationDetailObjectForm::Save()
+bool ISOilSphere::ImplementationLoadObjectForm::Save()
 {
-	QVariant LoadCounterparty = GetFieldValue("LoadCounterparty"), LoadStock = GetFieldValue("LoadStock"),
-		UnloadCounterparty = GetFieldValue("UnloadCounterparty"), UnloadStock = GetFieldValue("UnloadStock");
-
-	if (!LoadCounterparty.isValid() && !LoadStock.isValid()) //Ни одно из поле не выбрано
+	QVariant Counterparty = GetFieldValue("Counterparty"), Stock = GetFieldValue("Stock");
+	if (!Counterparty.isValid() && !Stock.isValid()) //Контрагент и склад не выбран
 	{
 		ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty"));
 		return false;
 	}
-
-	if (LoadCounterparty.isValid() && LoadStock.isValid()) //Выбраны оба поля
+	if (Counterparty.isValid() && Stock.isValid()) //Выбран и контрагент и склад
 	{
 		ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty"));
 		return false;
 	}
+	return ISObjectFormBase::Save();
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::ImplementationLoadObjectForm::Calculate()
+{
+	//Тара (весы)
+	double Container = GetFieldValue("Container").toDouble();
+	if (!Container)
+	{
+		GetFieldWidget("WeightNet")->Clear();
+		GetFieldWidget("Cost")->Clear();
+		return;
+	}
 
-	if (!UnloadCounterparty.isValid() && !UnloadStock.isValid()) //Ни одно из поле не выбрано
+	//Вес (брутто)
+	double WeightGross = GetFieldValue("WeightGross").toDouble();
+	if (!WeightGross)
+	{
+		GetFieldWidget("WeightNet")->Clear();
+		GetFieldWidget("Cost")->Clear();
+		return;
+	}
+
+	//Вес (нетто)
+	double WeightNet = WeightGross - Container;
+	SetFieldValue("WeightNet", WeightNet);
+
+	//Цена за кг./л
+	double PriceUnit = GetFieldValue("PriceUnit").toDouble();
+	if (!PriceUnit)
+	{
+		GetFieldWidget("Cost")->Clear();
+		return;
+	}
+
+	//Стоимость загрузки
+	SetFieldValue("Cost", WeightNet * PriceUnit);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ImplementationUnloadObjectForm::ImplementationUnloadObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+	: ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+	connect(GetFieldWidget("Container"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationUnloadObjectForm::Calculate);
+	connect(GetFieldWidget("WeightGross"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationUnloadObjectForm::Calculate);
+	connect(GetFieldWidget("PriceUnit"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ImplementationUnloadObjectForm::Calculate);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ImplementationUnloadObjectForm::~ImplementationUnloadObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::ImplementationUnloadObjectForm::Save()
+{
+	QVariant UnloadCounterparty = GetFieldValue("Counterparty"), UnloadStock = GetFieldValue("Stock");
+	if (!UnloadCounterparty.isValid() && !UnloadStock.isValid()) //Контрагент и склад не выбран
 	{
 		ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.UnloadCounterpartyAndStockIsEmpty"));
 		return false;
 	}
-
-	if (UnloadCounterparty.isValid() && UnloadStock.isValid()) //Выбраны оба поля
+	if (UnloadCounterparty.isValid() && UnloadStock.isValid()) //Выбран и контрагент и склад
 	{
 		ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.UnloadCounterpartyAndStockNotIsEmpty"));
+		return false;
+	}
+
+	ISQuery qSelectConstant(QS_CONSTANT);
+	if (!qSelectConstant.ExecuteFirst())
+	{
+		ISMessageBox::ShowCritical(this, LANG("OilSphere.Message.Warning.NotFoundCurrentConstant"));
 		return false;
 	}
 	
@@ -200,15 +249,15 @@ bool ISOilSphere::ImplementationDetailObjectForm::Save()
 	if (Result && UnloadStock.isValid())
 	{
 		ISQuery qSelect(QS_STATEMENT);
-		qSelect.BindValue(":ImplementationDetail", GetObjectID());
+		qSelect.BindValue(":ImplementationUnload", GetObjectID());
 		if (qSelect.ExecuteFirst())
 		{
 			if (qSelect.ReadColumn("count").toInt() == 0)
 			{
 				ISQuery qInsert(QI_STATEMENT);
-				qInsert.BindValue(":ImplementationDetail", GetObjectID());
+				qInsert.BindValue(":ImplementationUnload", GetObjectID());
 				qInsert.BindValue(":StockID", UnloadStock);
-				qInsert.BindValue(":LoadWeightNet", GetFieldValue("UnloadWeightNet"));
+				qInsert.BindValue(":VolumeIncome", qSelectConstant.ReadColumn("prod_constant").toDouble() * GetFieldValue("WeightNet").toDouble());
 				Result = qInsert.Execute();
 				if (!Result)
 				{
@@ -220,103 +269,44 @@ bool ISOilSphere::ImplementationDetailObjectForm::Save()
 		{
 			ISMessageBox::ShowCritical(this, qSelect.GetErrorString());
 		}
-		
 	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::ImplementationDetailObjectForm::CalculateLoad()
+void ISOilSphere::ImplementationUnloadObjectForm::Calculate()
 {
 	//Тара (весы)
-	double LoadContainer = EditLoadContainer->GetValue().toDouble();
-	if (!LoadContainer)
+	double Container = GetFieldValue("Container").toDouble();
+	if (!Container)
 	{
-		EditLoadWeightNet->Clear();
-		EditLoadCost->Clear();
+		GetFieldWidget("WeightNet")->Clear();
+		GetFieldWidget("Cost")->Clear();
 		return;
 	}
 
 	//Вес (брутто)
-	double LoadWeightGross = EditLoadWeightGross->GetValue().toDouble();
-	if (!LoadWeightGross)
+	double WeightGross = GetFieldValue("WeightGross").toDouble();
+	if (!WeightGross)
 	{
-		EditLoadWeightNet->Clear();
-		EditLoadCost->Clear();
+		GetFieldWidget("WeightNet")->Clear();
+		GetFieldWidget("Cost")->Clear();
 		return;
 	}
 
 	//Вес (нетто)
-	double LoadWeightNet = LoadWeightGross - LoadContainer;
-	EditLoadWeightNet->SetValue(LoadWeightNet);
+	double WeightNet = WeightGross - Container;
+	SetFieldValue("WeightNet", WeightNet);
 
 	//Цена за кг./л
-	double LoadPriceUnit = EditLoadPriceUnit->GetValue().toDouble();
-	if (!LoadPriceUnit)
+	double PriceUnit = GetFieldValue("PriceUnit").toDouble();
+	if (!PriceUnit)
 	{
-		EditLoadCost->Clear();
+		GetFieldWidget("Cost")->Clear();
 		return;
 	}
 
 	//Стоимость загрузки
-	double LoadCost = LoadWeightNet * LoadPriceUnit;
-	EditLoadCost->SetValue(LoadCost);
-
-	CalculateWeightDifference();
-}
-//-----------------------------------------------------------------------------
-void ISOilSphere::ImplementationDetailObjectForm::CalculateUnload()
-{
-	//Тара (весы)
-	double UnloadContainer = EditUnloadContainer->GetValue().toDouble();
-	if (!UnloadContainer)
-	{
-		EditUnloadWeightNet->Clear();
-		EditUnloadCost->Clear();
-		return;
-	}
-
-	//Вес (брутто)
-	double UnloadWeightGross = EditUnloadWeightGross->GetValue().toDouble();
-	if (!UnloadWeightGross)
-	{
-		EditUnloadWeightNet->Clear();
-		EditUnloadCost->Clear();
-		return;
-	}
-
-	//Вес (нетто)
-	double UnloadWeightNet = UnloadWeightGross - UnloadContainer;
-	EditUnloadWeightNet->SetValue(UnloadWeightNet);
-
-	//Цена за кг./л
-	double UnloadPriceUnit = EditUnloadPriceUnit->GetValue().toDouble();
-	if (!UnloadPriceUnit)
-	{
-		EditUnloadCost->Clear();
-		return;
-	}
-
-	//Стоимость загрузки
-	double UnloadCost = UnloadWeightNet * UnloadPriceUnit;
-	EditUnloadCost->SetValue(UnloadCost);
-
-	CalculateWeightDifference();
-}
-//-----------------------------------------------------------------------------
-void ISOilSphere::ImplementationDetailObjectForm::CalculateWeightDifference()
-{
-	double LoadWeightNet = EditLoadWeightNet->GetValue().toDouble();
-	double UnloadWeightNet = EditUnloadWeightNet->GetValue().toDouble();
-	double Result = 0;
-	if (LoadWeightNet > UnloadWeightNet)
-	{
-		Result = LoadWeightNet - UnloadWeightNet;
-	}
-	else if (LoadWeightNet < UnloadWeightNet)
-	{
-		Result = UnloadWeightNet - LoadWeightNet;
-	}
-	EditWeightDifference->SetValue(Result);
+	SetFieldValue("Cost", WeightNet * PriceUnit);
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

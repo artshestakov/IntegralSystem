@@ -42,36 +42,34 @@ namespace ISOilSphere
 		ISDaDataService *DaDataService;
 	};
 
-	//Форма объекта деталей реализации
-	class ImplementationDetailObjectForm : public ISObjectFormBase
+	//Форма объекта загрузок реализации
+	class ImplementationLoadObjectForm : public ISObjectFormBase
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE ImplementationDetailObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
-		virtual ~ImplementationDetailObjectForm();
+		Q_INVOKABLE ImplementationLoadObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~ImplementationLoadObjectForm();
 
 		bool Save() override;
 
 	private:
-		void CalculateLoad(); //Расчёт загрузки
-		void CalculateUnload(); //Расчёт выгрузки
-		void CalculateWeightDifference(); //Расчёт разницы весов
+		void Calculate();
+	};
+
+	//Форма объекта выгрузки реализации
+	class ImplementationUnloadObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ImplementationUnloadObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~ImplementationUnloadObjectForm();
+
+		bool Save() override;
 
 	private:
-		ISFieldEditBase *EditLoadContainer; //Тара (весы)
-		ISFieldEditBase *EditLoadWeightGross; //Вес (брутто)
-		ISFieldEditBase *EditLoadWeightNet; //Вес (нетто)
-		ISFieldEditBase *EditLoadPriceUnit; //Цена за кг./л
-		ISFieldEditBase *EditLoadCost; //Стоимость (загрузка)
-
-		ISFieldEditBase *EditUnloadContainer; //Тара (весы)
-		ISFieldEditBase *EditUnloadWeightGross; //Вес (брутто)
-		ISFieldEditBase *EditUnloadWeightNet; //Вес (нетто)
-		ISFieldEditBase *EditUnloadPriceUnit; //Цена за кг./л
-		ISFieldEditBase *EditUnloadCost; //Стоимость (загрузка)
-
-		ISFieldEditBase *EditWeightDifference; //Разница весов
+		void Calculate();
 	};
 
 	//Форма объекта ведомости АЗС
