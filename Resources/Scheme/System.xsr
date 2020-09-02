@@ -22,9 +22,8 @@
   <_SubSystems IsSystem="true" UID="{D55AE0AD-D609-48FF-BDAF-02279CBE146E}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="1" LocalName="Файловое хранилище" Icon="SubSystem.StorageFiles" ClassName="ISStorageFilesListForm" Hint="Предметно-ориентированная информационная база данных файлов. Данные, поступающие в хранилище, доступны только для чтения."/>
   <_SubSystems IsSystem="true" UID="{BBC746E2-C9CD-451E-BF1A-0FC5A3D1FFF3}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="База знаний" Icon="SubSystem.QuestionAnswer" ClassName="ISKnowledgeBaseSubSystem" Hint="База знаний."/>
   <_SubSystems IsSystem="true" UID="{1B59B2AF-A27A-415C-A844-AEF1F24226CF}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="3" LocalName="Типы задач" Icon="Lists" TableName="_TaskType"/>
-  <_SubSystems IsSystem="true" UID="{22669BBC-FA2B-456D-81C9-DEE48F997BAE}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Подразделения" Icon="SubSystem.Subdivision" TableName="_Subdivision"/>
-  <_SubSystems IsSystem="true" UID="{B8E43757-67D5-4B8B-A840-7BCA3245F845}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="5" LocalName="Полнотекстовый поиск" Icon="SubSystem.SearchFullText" ClassName="ISFullTextSearchForm"/>
-  <_SubSystems IsSystem="true" UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="6" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
+  <_SubSystems IsSystem="true" UID="{B8E43757-67D5-4B8B-A840-7BCA3245F845}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Полнотекстовый поиск" Icon="SubSystem.SearchFullText" ClassName="ISFullTextSearchForm"/>
+  <_SubSystems IsSystem="true" UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="5" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
   
   <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
   <_ProtocolType IsSystem="true" UID="{E9461667-E1CA-4C22-907B-FDC350A931C4}" Name="Выход из программы"/>

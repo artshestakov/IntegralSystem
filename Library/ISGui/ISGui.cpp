@@ -45,6 +45,8 @@ static QString QI_NOTE_OBJECT = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tabl
 //-----------------------------------------------------------------------------
 static QString QD_USER_PASSWORD = PREPARE_QUERY2("ALTER ROLE %1 PASSWORD NULL");
 //-----------------------------------------------------------------------------
+static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
+														"VALUES(:User, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :ChangeTypeUID))");
 bool ISGui::Startup(QString &ErrorString)
 {
 	bool Result = ISCore::Startup(true, "Client", ErrorString);
@@ -494,14 +496,20 @@ bool ISGui::ShowUserPasswordForm(int UserID)
 	return UserPasswordForm.Exec();
 }
 //-----------------------------------------------------------------------------
-void ISGui::ShowUserPasswordDelete(const QString &UserLogin)
+void ISGui::ShowUserPasswordDelete(int UserID, const QString &UserLogin)
 {
 	if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.DeleteUserPassword")))
 	{
 		ISQuery qDeletePassword;
 		if (qDeletePassword.Execute(QD_USER_PASSWORD.arg(UserLogin)))
 		{
-			ISMessageBox::ShowInformation(nullptr, LANG("Message.Information.UserPasswordDeleted"));
+			ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
+			qInsertPasswordChange.BindValue(":User", UserID);
+			qInsertPasswordChange.BindValue(":ChangeTypeUID", CONST_UID_USER_PASSWORD_CHANGE_TYPE_DELETE);
+			if (!qInsertPasswordChange.Execute())
+			{
+				ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.ChangePasswordUserHistory"), qInsertPasswordChange.GetErrorString());
+			}
 		}
 		else
 		{

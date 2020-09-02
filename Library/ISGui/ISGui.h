@@ -55,7 +55,7 @@ public:
 
 	static void ShowSettingsForm(const QString &SettingGroupUID = QString()); //Открыть форму настроек
 	static bool ShowUserPasswordForm(int UserID); //Открыть форму изменения пароля для пользователя
-	static void ShowUserPasswordDelete(const QString &UserLogin); //Удаление пароля пользователя
+	static void ShowUserPasswordDelete(int UserID, const QString &UserLogin); //Удаление пароля пользователя
 	static void ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID); //Просмотр системной информации о записи
 	static void ShowDatabaseSettings(); //Показать настройки базы данных
 	static void ShowObjectForm(QWidget *ObjectForm); //Показать форму объекта

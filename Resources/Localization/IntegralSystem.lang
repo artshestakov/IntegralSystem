@@ -53,7 +53,6 @@
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
-  <Local Name="Message.Information.UserPasswordDeleted" Russian="Пароль пользователя успешно удалён."/>
   <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК чтобы начать её установку."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>

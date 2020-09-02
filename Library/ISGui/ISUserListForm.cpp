@@ -59,7 +59,7 @@ void ISUserListForm::DeletePassword()
 {
 	ISDatabase::Instance().GetValue("_Users", "IsSystem", GetObjectID()).toBool() ?
 		ISMessageBox::ShowWarning(this, LANG("Message.User.ChangePassword.Postgres")) :
-		ISGui::ShowUserPasswordDelete(GetCurrentRecordValue("Login").toString());
+		ISGui::ShowUserPasswordDelete(GetObjectID(), GetCurrentRecordValue("Login").toString());
 }
 //-----------------------------------------------------------------------------
 bool ISUserListForm::CheckThisUser()

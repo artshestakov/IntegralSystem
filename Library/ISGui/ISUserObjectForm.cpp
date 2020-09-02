@@ -185,7 +185,7 @@ void ISUserObjectForm::PasswordChange()
 void ISUserObjectForm::PasswordDelete()
 {
 	//≈сли запись была изменена - просим сохранить
-	GetModificationFlag() ? ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue")) : ISGui::ShowUserPasswordDelete(EditLogin->GetValue().toString());
+	GetModificationFlag() ? ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue")) : ISGui::ShowUserPasswordDelete(GetObjectID(), EditLogin->GetValue().toString());
 }
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()

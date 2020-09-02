@@ -5,15 +5,14 @@
     <Fields>
       <Field UID="{6B61D73F-A200-499B-BD31-4168908FA35C}" Name="OID" Type="OID" ReadOnly="true" LabelName="Системный идентификатор" LocalListName="Системный идентификатор" HideFromList="true" Hint="Внутренний идентификатор пользователя в базе данных."/>
       <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" LayoutName="GroupSubdivision"/>
-      <Field UID="{4ED0AB79-0ECC-4CDA-9FEF-970813028FCB}" Name="Subdivision" Type="BigInt" LabelName="Подразделение" LocalListName="Подразделение" LayoutName="GroupSubdivision"/>
       <Field UID="{861223FE-18B5-4557-99D1-AEA74D42483E}" Name="Surname" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Фамилия" LocalListName="Фамилия" NotNull="true" LayoutName="FIO"/>
       <Field UID="{7FC68D04-457E-405A-AB43-75E960148742}" Name="Name" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Имя" LocalListName="Имя" NotNull="true" LayoutName="FIO"/>
       <Field UID="{FDDA65F7-0C37-4B42-BC43-E8D889DBADA2}" Name="Patronymic" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Отчество" LocalListName="Отчество" LayoutName="FIO"/>
-      <Field UID="{194CC7C5-E4FB-46AA-B6BE-EE8420A5BB9D}" Name="Sex" Type="Sex" ControlWidget="ISSexEdit" LabelName="Пол" LocalListName="Пол" NotNull="true"/>
-      <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true"/>
       <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Size="16" Lower="true" RegExp="^([a-z]+)$" LabelName="Логин" LocalListName="Логин" Hint="Логин должен быть в нижнем регистре и на английском языке." NotNull="true"/>
-      <Field UID="{FEB51D6E-1395-4799-9049-3C9A9CE68370}" Name="AccessAllowed" Type="Bool" DefaultValueWidget="true" LabelName="Доступ разрешен" LocalListName="Доступ разрешен" Hint="Если эта опция отключена, пользователь не сможет войти в программу."/>
-      <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия." SeparatorName="Учётная запись"/>
+      <Field UID="{194CC7C5-E4FB-46AA-B6BE-EE8420A5BB9D}" Name="Sex" Type="Sex" ControlWidget="ISSexEdit" LabelName="Пол" LocalListName="Пол" NotNull="true" LayoutName="Sex"/>
+      <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true" LayoutName="Sex"/>
+      <Field UID="{FEB51D6E-1395-4799-9049-3C9A9CE68370}" Name="AccessAllowed" Type="Bool" DefaultValueWidget="true" LabelName="Доступ разрешен" LocalListName="Доступ разрешен" Hint="Если эта опция отключена, пользователь не сможет войти в программу." SeparatorName="Учётная запись"/>
+      <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия."/>
       <Field UID="{07CB8028-4695-4F7C-A676-8D89E38932F8}" Name="AccountLifeTimeStart" Type="Date" LabelName="Дата начала действия" LocalListName="Дата начала действия" HideFromList="true"/>
       <Field UID="{196BD860-208E-4DF7-8E4D-A65F7A9E8F35}" Name="AccountLifeTimeEnd" Type="Date" LabelName="Дата окончания действия" LocalListName="Дата окончания действия" HideFromList="true"/>
       <Field UID="{C19191C0-9398-4FEB-9BED-BA1C3F8C0979}" Name="Photo" Type="Image" LabelName="Фотография" LocalListName="Фотография" HideFromList="true"/>
@@ -21,13 +20,12 @@
     <Indexes>
       <Index Field="OID" Unique="true"/>
       <Index Field="Group"/>
-      <Index Field="Subdivision"/>
       <Index Field="Surname"/>
       <Index Field="Name"/>
       <Index Field="Patronymic"/>
+      <Index Field="Login" Unique="true"/>
       <Index Field="Sex"/>
       <Index Field="Birthday"/>
-      <Index Field="Login" Unique="true"/>
       <Index Field="AccessAllowed"/>
       <Index Field="AccountLifetime"/>
       <Index Field="AccountLifetimeStart"/>
@@ -36,7 +34,6 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Subdivision" ForeignClass="_Subdivision" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Sex" ForeignClass="_Sex" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <Escorts>
@@ -134,15 +131,6 @@
     <Foreigns>
       <Foreign Field="Parent" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="_Subdivision" UID="{C6DBB699-CF12-43AA-8ADF-A42F9CF4640B}" Alias="sdvs" LocalName="Подразделение пользователя" LocalListName="Подразделения пользователей" TitleName="Name">
-    <Fields>
-      <Field UID="{FF1BD721-F9AE-4841-99BC-6ED5F5C53738}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
   </Table>
   
   <Table Name="_Sex" UID="{E95FFC22-30A7-4316-AE6D-D88898D1C5AC}" Alias="sexs" ShowOnly="true" LocalName="Пол" LocalListName="Пол" TitleName="Name">
