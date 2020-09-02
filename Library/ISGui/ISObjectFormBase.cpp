@@ -333,6 +333,7 @@ void ISObjectFormBase::CreateWidgetObject()
 	BeginValues.clear();
 	Layouts.clear();
 	LabelsMap.clear();
+	BeginFieldEdit = nullptr;
 
 	QVBoxLayout *LayoutObject = new QVBoxLayout();
 	LayoutObject->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
