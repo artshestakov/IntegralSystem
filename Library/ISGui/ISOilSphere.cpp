@@ -35,28 +35,28 @@ static QString QS_CASHBOX_TOTAL_PAYMENT = PREPARE_QUERY2("SELECT gsts_cashboxtot
 														 "AND gsts_date = :Date - INTERVAL '1 day'");
 //-----------------------------------------------------------------------------
 static QString QS_DEBT = PREPARE_QUERY2("SELECT "
-										"imdt_implementation, "
-										"imdt_id, "
+										"iunl_implementation, "
+										"iunl_id, "
 										"cnpr_id, "
 										"cnpr_name, "
 										"(SELECT COALESCE(SUM(cpen_sum), 0) FROM counterpartyenrollment WHERE NOT cpen_isdeleted AND cpen_counterparty = cnpr_id) - "
 										"(SELECT COALESCE(SUM(cpwo_sum), 0) FROM counterpartywriteoff WHERE NOT cpwo_isdeleted AND cpwo_counterparty = cnpr_id) AS balance, "
-										"impl_dateload, "
+										"impl_date, "
 										"pdtp_name, "
-										"imdt_unloadcost, "
-										"(SELECT sum(cpwo_sum) FROM counterpartywriteoff WHERE NOT cpwo_isdeleted AND cpwo_implementationdetail = imdt_id) AS accrued "
-										"FROM implementationdetail "
-										"LEFT JOIN counterparty ON imdt_counterparty = cnpr_id "
-										"LEFT JOIN implementation ON imdt_implementation = impl_id "
+										"iunl_cost, "
+										"(SELECT sum(cpwo_sum) FROM counterpartywriteoff WHERE NOT cpwo_isdeleted AND cpwo_unload = iunl_id) AS accrued "
+										"FROM implementationunload "
+										"LEFT JOIN counterparty ON iunl_counterparty = cnpr_id "
+										"LEFT JOIN implementation ON iunl_implementation = impl_id "
 										"LEFT JOIN producttype ON impl_producttype = pdtp_id "
-										"WHERE NOT imdt_isdeleted "
-										"AND imdt_counterparty IS NOT NULL "
-										"AND NOT (SELECT impl_isdeleted FROM implementation WHERE imdt_implementation = impl_id)");
+										"WHERE NOT iunl_isdeleted "
+										"AND iunl_counterparty IS NOT NULL "
+										"AND NOT (SELECT impl_isdeleted FROM implementation WHERE iunl_implementation = impl_id)");
 //-----------------------------------------------------------------------------
 static QString QS_ACCRUED = PREPARE_QUERY2("SELECT cpwo_creationdate, cpwo_sum, cpwo_note "
 										   "FROM counterpartywriteoff "
 										   "WHERE NOT cpwo_isdeleted "
-										   "AND cpwo_implementationdetail = :ImplementationDetailID "
+										   "AND cpwo_unload = :ImplementationUnloadID "
 										   "ORDER BY cpwo_id");
 //-----------------------------------------------------------------------------
 static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT mwag_dateshipping, cnpr_name, mwag_datearrival, sum(mwdt_kilogram), COUNT(*) "
@@ -68,8 +68,8 @@ static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT mwag_dateshipping, cnpr
 												 "AND mwag_stock = :StockID "
 												 "GROUP BY mwag_dateshipping, cnpr_name, mwag_datearrival");
 //-----------------------------------------------------------------------------
-static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT impl_dateload, pdtp_name, imdt_loadweightnet "
-												   "FROM implementationdetail "
+static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT impl_date, pdtp_name, iunl_weightnet "
+												   "FROM implementationunload "
 												   "LEFT JOIN implementation ON impl_id = imdt_implementation "
 												   "LEFT JOIN producttype ON pdtp_id = impl_producttype "
 												   "WHERE NOT imdt_isdeleted "
@@ -503,22 +503,22 @@ void ISOilSphere::DebtSubSystemForm::LoadData()
 	{
 		while (qSelectDebt.Next())
 		{
-			int ImplementationID = qSelectDebt.ReadColumn("imdt_implementation").toInt();
-			int ImplementationDetailID = qSelectDebt.ReadColumn("imdt_id").toInt();
+			int ImplementationID = qSelectDebt.ReadColumn("iunl_implementation").toInt();
+			int ImplementationUnloadID = qSelectDebt.ReadColumn("iunl_id").toInt();
 			int CounterpartyID = qSelectDebt.ReadColumn("cnpr_id").toInt();
 			QString CounterpartyName = qSelectDebt.ReadColumn("cnpr_name").toString();
 			double Balance = qSelectDebt.ReadColumn("balance").toDouble();
-			QDate DateLoad = qSelectDebt.ReadColumn("impl_dateload").toDate();
+			QDate DateLoad = qSelectDebt.ReadColumn("impl_date").toDate();
 			QString ProductTypeName = qSelectDebt.ReadColumn("pdtp_name").toString();
-			double UnloadCost = qSelectDebt.ReadColumn("imdt_unloadcost").toDouble();
+			double Cost = qSelectDebt.ReadColumn("iunl_cost").toDouble();
 			double Accrued = qSelectDebt.ReadColumn("accrued").toDouble();
 
 			QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(TreeWidget);
 			TreeWidget->setItemWidget(TreeWidgetItem, 0,
-				CreateItemWidget(ImplementationID, ImplementationDetailID, CounterpartyID, CounterpartyName, Balance, DateLoad, ProductTypeName, UnloadCost, Accrued));
+				CreateItemWidget(ImplementationID, ImplementationUnloadID, CounterpartyID, CounterpartyName, Balance, DateLoad, ProductTypeName, Cost, Accrued));
 
 			ISQuery qSelectAccrueds(QS_ACCRUED);
-			qSelectAccrueds.BindValue(":ImplementationDetailID", ImplementationDetailID);
+			qSelectAccrueds.BindValue(":ImplementationUnloadID", ImplementationUnloadID);
 			if (qSelectAccrueds.Execute())
 			{
 				while (qSelectAccrueds.Next())
@@ -546,8 +546,8 @@ void ISOilSphere::DebtSubSystemForm::LoadData()
 void ISOilSphere::DebtSubSystemForm::AddAccrued()
 {
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "CounterpartyWriteOff");
-	ObjectFormBase->SetFieldValue("Counterparty", sender()->property("CounterpartyID"));
-	ObjectFormBase->SetFieldValue("ImplementationDetail", sender()->property("ImplementationDetailID"));
+	ObjectFormBase->AddVirtualField("Counterparty", sender()->property("CounterpartyID"));
+	ObjectFormBase->AddVirtualField("Unload", sender()->property("ImplementationUnloadID"));
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISOilSphere::DebtSubSystemForm::LoadData);
 	ISGui::ShowObjectForm(ObjectFormBase);
 }
@@ -557,9 +557,9 @@ void ISOilSphere::DebtSubSystemForm::ShowImplementation()
 	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "Implementation", sender()->property("ImplementationID").toInt()));
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::DebtSubSystemForm::ShowImplementationDetails()
+void ISOilSphere::DebtSubSystemForm::ShowImplementationUnload()
 {
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "ImplementationDetail", sender()->property("ImplementationDetailID").toInt()));
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "ImplementationUnload", sender()->property("ImplementationUnloadID").toInt()));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::DebtSubSystemForm::ShowCounterparty()
@@ -567,7 +567,7 @@ void ISOilSphere::DebtSubSystemForm::ShowCounterparty()
 	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "Counterparty", sender()->property("CounterpartyID").toInt()));
 }
 //-----------------------------------------------------------------------------
-QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, int ImplementationDetailID, int CounterpartyID, const QString &CounterpartyName, double Balance, const QDate &DateLoad, const QString &ProductTypeName, double UnloadCost, int Accrued)
+QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, int ImplementationUnloadID, int CounterpartyID, const QString &CounterpartyName, double Balance, const QDate &DateLoad, const QString &ProductTypeName, double Cost, int Accrued)
 {
 	QHBoxLayout *LayoutWidget = new QHBoxLayout();
 
@@ -605,11 +605,11 @@ QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, 
 	ISGui::SetFontWidgetBold(LabelProductType, true);
 	LayoutLabels->addWidget(LabelProductType);
 
-	QLabel *LabelUnloadCost = new QLabel(LANG("OilSphere.UnloadCost").arg(UnloadCost), Widget);
+	QLabel *LabelUnloadCost = new QLabel(LANG("OilSphere.UnloadCost").arg(Cost), Widget);
 	ISGui::SetFontWidgetBold(LabelUnloadCost , true);
 	LayoutLabels->addWidget(LabelUnloadCost);
 
-	double Debt = UnloadCost - Accrued;
+	double Debt = Cost - Accrued;
 	QLabel *LabelDebt = new QLabel(LANG("OilSphere.Debt").arg(Debt), Widget);
 	ISGui::SetFontWidgetBold(LabelDebt, true);
 	LayoutLabels->addWidget(LabelDebt);
@@ -634,15 +634,15 @@ QWidget* ISOilSphere::DebtSubSystemForm::CreateItemWidget(int ImplementationID, 
 	LayoutWidget->addWidget(ButtonMenu);
 
 	QAction *ActionAddAccrued = ButtonMenu->menu()->addAction(LANG("OilSphere.AddAccrued"), this, &ISOilSphere::DebtSubSystemForm::AddAccrued);
-	ActionAddAccrued->setProperty("ImplementationDetailID", ImplementationDetailID);
+	ActionAddAccrued->setProperty("ImplementationUnloadID", ImplementationUnloadID);
 	ActionAddAccrued->setProperty("CounterpartyID", CounterpartyID);
 	ActionAddAccrued->setEnabled(Debt > 0);
 
 	QAction *ActionShowImplementation = ButtonMenu->menu()->addAction(LANG("OilSphere.ShowImplementation"), this, &ISOilSphere::DebtSubSystemForm::ShowImplementation);
 	ActionShowImplementation->setProperty("ImplementationID", ImplementationID);
 
-	QAction *ActionShowImplementationDetails = ButtonMenu->menu()->addAction(LANG("OilSphere.ShowImplementationDetails"), this, &ISOilSphere::DebtSubSystemForm::ShowImplementationDetails);
-	ActionShowImplementationDetails->setProperty("ImplementationDetailID", ImplementationDetailID);
+	QAction *ActionShowImplementationUnload = ButtonMenu->menu()->addAction(LANG("OilSphere.ShowImplementationUnload"), this, &ISOilSphere::DebtSubSystemForm::ShowImplementationUnload);
+	ActionShowImplementationUnload->setProperty("ImplementationUnloadID", ImplementationUnloadID);
 
 	QAction *ActionShowCounterparty = ButtonMenu->menu()->addAction(LANG("OilSphere.ShowCounterparty"), this, &ISOilSphere::DebtSubSystemForm::ShowCounterparty);
 	ActionShowCounterparty->setProperty("CounterpartyID", CounterpartyID);
@@ -784,7 +784,7 @@ void ISOilSphere::StockWriteOff::LoadData()
 	qSelect.bindValue(":StockID", GetParentObjectID());
 	if (qSelect.exec())
 	{
-		QSqlQueryModel *SqlQueryModel = new QSqlQueryModel();
+		QSqlQueryModel *SqlQueryModel = new QSqlQueryModel(TableView);
 		SqlQueryModel->setQuery(qSelect);
 		SqlQueryModel->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Дата загрузки"), Qt::DisplayRole);
 		SqlQueryModel->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("Тип продукта"), Qt::DisplayRole);

@@ -61,10 +61,6 @@ void ISObjectFormBase::SetParentObjectID(int parent_object_id, const QString &pa
 {
 	ParentObjectID = parent_object_id;
 	ParentFilterField = parent_filter_field;
-	//if (FieldsMap.count(parent_filter_field))
-	{
-		//FieldsMap.at(parent_filter_field)->SetValue(parent_object_id);
-	}
 }
 //-----------------------------------------------------------------------------
 ISNamespace::ObjectFormType ISObjectFormBase::GetFormType()
@@ -95,6 +91,11 @@ void ISObjectFormBase::SetFieldValue(const QString &FieldName, const QVariant &v
 QVariant ISObjectFormBase::GetFieldValue(const QString &FieldName)
 {
 	return GetFieldWidget(FieldName)->GetValue();
+}
+//-----------------------------------------------------------------------------
+void ISObjectFormBase::AddVirtualField(const QString &FieldName, const QVariant &Value)
+{
+	VirtualFields[FieldName] = Value;
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::SetVisibleNavigationBar(bool Visible)
@@ -689,6 +690,12 @@ bool ISObjectFormBase::Save()
 	{
 		ValuesMap[ParentFilterField] = ParentObjectID;
 		FieldsVector.emplace_back(ParentFilterField);
+	}
+
+	for (const auto &MapItem : VirtualFields) //Обходим виртуальные поля
+	{
+		ValuesMap[MapItem.first] = MapItem.second;
+		FieldsVector.emplace_back(MapItem.first);
 	}
 
 	for (const auto &Field : FieldsMap) //Обход существующих полей на форме

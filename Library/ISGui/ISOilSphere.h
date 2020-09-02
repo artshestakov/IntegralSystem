@@ -117,11 +117,11 @@ namespace ISOilSphere
 	private:
 		void AddAccrued();
 		void ShowImplementation();
-		void ShowImplementationDetails();
+		void ShowImplementationUnload();
 		void ShowCounterparty();
 
 	private:
-		QWidget* CreateItemWidget(int ImplementationID, int ImplementationDetailID, int CounterpartyID, const QString &CounterpartyName, double Balance, const QDate &DateLoad, const QString &ProductTypeName, double UnloadCost, int Accrued);
+		QWidget* CreateItemWidget(int ImplementationID, int ImplementationUnloadID, int CounterpartyID, const QString &CounterpartyName, double Balance, const QDate &DateLoad, const QString &ProductTypeName, double Cost, int Accrued);
 
 	private:
 		QTreeWidget *TreeWidget;

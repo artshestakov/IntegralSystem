@@ -57,18 +57,19 @@
   <Table Name="CounterpartyWriteOff" UID="{901F3DE4-1302-4A79-80E3-E2CDF966E9B5}" Alias="cpwo" LocalName="Списание" LocalListName="Списания" ShowOnly="true" TitleName="Counterparty">
     <Fields>
       <Field UID="{EAB963AB-0DE6-4671-B372-9BE5429E3E51}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <!--<Field UID="{8582AE37-D4F2-4E0D-8E97-8C6A91E66255}" Name="ImplementationDetail" Type="Int" LabelName="Деталь реализации" LocalListName="Деталь реализации" HideFromObject="true" NotNull="true"/>-->
+      <Field UID="{8582AE37-D4F2-4E0D-8E97-8C6A91E66255}" Name="Unload" Type="Int" LabelName="Выгрузка" LocalListName="Выгрузка" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{D024AF09-07F4-4C25-806E-680C968D3F35}" Name="Sum" Type="Double" LabelName="Сумма списания" LocalListName="Сумма списания" NotNull="true"/>
       <Field UID="{FBBBAAA5-D961-44F1-8438-55BB09BD5D77}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
       <Index Field="Counterparty"/>
-      <!--<Index Field="ImplementationDetail"/>-->
+      <Index Field="Unload"/>
       <Index Field="Sum"/>
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Unload" ForeignClass="ImplementationUnload" ForeignField="ID"/>
     </Foreigns>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата операции"/>

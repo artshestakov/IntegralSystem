@@ -36,6 +36,7 @@ public:
 
 	void SetFieldValue(const QString &FieldName, const QVariant &value); //Изменить значение поля
 	QVariant GetFieldValue(const QString &FieldName); //Получить значение поля
+	void AddVirtualField(const QString &FieldName, const QVariant &Value); //Добавить виртуальное поле
 
 	void SetVisibleNavigationBar(bool Visible); //Изменить видимость у талбара эскортов
 	void SetVisibleField(const QString &FieldName, bool Visible); //Изменить видимость у поля
@@ -116,6 +117,7 @@ private:
 	std::map<QString, QLabel*> LabelsMap;
 	std::map<QString, QHBoxLayout*> Layouts;
 	std::map<QString, QVariant> BeginValues;
+	std::map<QString, QVariant> VirtualFields; //Виртуальные поля
 
 	bool ModificationFlag;
 	bool RecordIsDeleted;
