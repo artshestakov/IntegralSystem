@@ -1484,20 +1484,6 @@ void ISListBaseForm::CreateTableView()
 		TableView->verticalHeader()->setDefaultSectionSize(19);
 	}
 
-	QString SelectionBehavior = SETTING_STRING(CONST_UID_SETTING_TABLES_SELECTIONBEHAVIOR);
-	if (SelectionBehavior == "SelectItems")
-	{
-		TableView->setSelectionBehavior(QAbstractItemView::SelectItems);
-	}
-	else if (SelectionBehavior == "SelectRows")
-	{
-		TableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-	}
-	else if (SelectionBehavior == "SelectColumns")
-	{
-		TableView->setSelectionBehavior(QAbstractItemView::SelectColumns);
-	}
-
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLE_SCROLL_SELECTION))
 	{
 		TableView->SetSelectionScroll(true);

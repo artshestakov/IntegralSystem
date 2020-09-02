@@ -97,15 +97,4 @@ public:
 	virtual ~ISComboTableDoubleClickEvent();
 };
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISComboTableSelectionBehavior : public ISComboSettingEdit
-{
-	Q_OBJECT
-
-public:
-	Q_INVOKABLE ISComboTableSelectionBehavior(QWidget *parent = 0);
-	virtual ~ISComboTableSelectionBehavior();
-};
-//-----------------------------------------------------------------------------
 #endif
