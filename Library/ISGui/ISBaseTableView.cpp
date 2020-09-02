@@ -11,6 +11,7 @@ ISBaseTableView::ISBaseTableView(QWidget *parent)
 	setSortingEnabled(true);
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	setSelectionMode(QAbstractItemView::ExtendedSelection);
+	setSelectionBehavior(QAbstractItemView::SelectRows);
 	setCornerButtonEnabled(false);
 	setStyleSheet(STYLE_SHEET("ISBaseTableView"));
 	setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
