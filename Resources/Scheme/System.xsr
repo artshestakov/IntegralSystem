@@ -25,10 +25,6 @@
   <_SubSystems IsSystem="true" UID="{22669BBC-FA2B-456D-81C9-DEE48F997BAE}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Подразделения" Icon="SubSystem.Subdivision" TableName="_Subdivision"/>
   <_SubSystems IsSystem="true" UID="{B8E43757-67D5-4B8B-A840-7BCA3245F845}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="5" LocalName="Полнотекстовый поиск" Icon="SubSystem.SearchFullText" ClassName="ISFullTextSearchForm"/>
   <_SubSystems IsSystem="true" UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="6" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
-
-  <_InternalDirectories IsSystem="true" UID="{F09346EB-8B35-4673-BEA1-8357661482E7}" TableName="_Countries" Order="1"/>
-  <_InternalDirectories IsSystem="true" UID="{484906E2-8F17-4388-9E88-0B26511F1212}" TableName="_Currency" Order="2"/>
-  <_InternalDirectories IsSystem="true" UID="{8B09C989-EF47-40C3-8EA6-21ADB3D17019}" TableName="_Units" Order="3"/>
   
   <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
   <_ProtocolType IsSystem="true" UID="{E9461667-E1CA-4C22-907B-FDC350A931C4}" Name="Выход из программы"/>
@@ -57,8 +53,5 @@
   <_ProtocolType IsSystem="true" UID="{9D4E8104-33F9-4F9E-A6AA-272DDA7C1A52}" Name="Удаление права на таблицу"/>
   <_ProtocolType IsSystem="true" UID="{FB494E8E-BDF3-4804-AF42-43487AF8A871}" Name="Добавление специального права"/>
   <_ProtocolType IsSystem="true" UID="{4E7C34E5-C7FE-4C0D-BB4D-7B4A1D4CF9D2}" Name="Удаление специального права"/>
-
-  <_KeyboardShortcuts IsSystem="true" UID="{F1A235BC-B6A3-4705-8594-65183A8CA64C}" Shortcut="F11" Description="Развернуть окно на весь экран"/>
-  <_KeyboardShortcuts IsSystem="true" UID="{112A7CCC-6605-479D-9DFA-D9DE6A403EF3}" Shortcut="Alt + F12" Description="Скриншот активного окна"/>
 
 </XSR>

@@ -14,10 +14,6 @@
 #include "ISConfig.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-static QString QS_SHORTCUTS = PREPARE_QUERY("SELECT kbsc_shortcut, kbsc_description "
-											"FROM _keyboardshortcuts "
-											"ORDER BY kbsc_id");
-//-----------------------------------------------------------------------------
 ISAboutForm::ISAboutForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("AboutForm.AboutApplication"));
@@ -50,7 +46,6 @@ ISAboutForm::ISAboutForm() : ISInterfaceDialogForm()
 	CreateModuleTab();
 	CreateDescriptionTab();
 	CreateLicenseTab();
-	CreateShortcuts();
 	CreateOtherTab();
 }
 //-----------------------------------------------------------------------------
@@ -154,36 +149,6 @@ void ISAboutForm::CreateLicenseTab()
 	{
 		TextEdit->SetValue(QString::fromLocal8Bit(FileLicense.readAll()));
 		FileLicense.close();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISAboutForm::CreateShortcuts()
-{
-	if (!ISObjects::Instance().IsInitialized())
-	{
-		return;
-	}
-
-	QFormLayout *FormLayout = new QFormLayout();
-
-	QWidget *TabShortcuts = new QWidget(TabWidget);
-	TabShortcuts->setLayout(FormLayout);
-	TabWidget->addTab(TabShortcuts, LANG("AboutForm.Tab.Shortcuts"));
-
-	ISQuery qSelect(QS_SHORTCUTS);
-	if (qSelect.Execute())
-	{
-		while (qSelect.Next())
-		{
-			QString Shortcut = qSelect.ReadColumn("kbsc_shortcut").toString();
-			QString Description = qSelect.ReadColumn("kbsc_description").toString();
-
-			QLabel *Label = new QLabel(this);
-			Label->setText(Shortcut + ':');
-			Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-
-			FormLayout->addRow(Label, new QLabel(Description, this));
-		}
 	}
 }
 //-----------------------------------------------------------------------------

@@ -42,7 +42,6 @@
   <Local Name="AboutForm.Tab.Configuration.UID" Russian="Идентификатор"/>
   <Local Name="AboutForm.Tab.Description" Russian="Описание"/>
   <Local Name="AboutForm.Tab.License" Russian="Лицензионное соглашение"/>
-  <Local Name="AboutForm.Tab.Shortcuts" Russian="Сочетания клавиш"/>
   <Local Name="AboutForm.Tab.Other" Russian="Прочее"/>
   <Local Name="AboutForm.Tab.Other.SizeTemp" Russian="Размер временных файлов"/>
   <Local Name="AboutForm.Tab.Other.SizeLogger" Russian="Размер логов"/>

@@ -25,7 +25,6 @@
       <Field UID="{C4645CB0-CF14-4670-8E05-9139F9DEEDC3}" Name="CheckingAccount" Type="String" LabelName="Расчётный счёт" LocalListName="Расчётный счёт"/>
       <Field UID="{231C9438-CF37-402D-A973-CF4CCEBBBAFD}" Name="FullNameBank" Type="String" LabelName="Полное наименование банка" LocalListName="Полное наименование банка"/>
       <Field UID="{66FF7E39-5FF6-4DD7-A2B7-95131536E870}" Name="BIK" Type="Bik" LabelName="Банковский идентификационный номер" LocalListName="Банковский идентификационный номер"/>
-      <Field UID="{AFAF2958-FEA7-4312-8F4D-3EB779C48F82}" Name="AccountCurrency" Type="Int" LabelName="Валюта счёта" LocalListName="Валюта счёта"/>
 
       <!--Контакты-->
       <Field UID="{E4774821-BEEE-4B29-88B9-0CB53E4767CB}" Name="PhoneMain" Type="Phone" LabelName="Телефон (основной)" LocalListName="Телефон (основной)" SeparatorName="Контакты"/>
@@ -67,7 +66,6 @@
       <Index Field="CheckingAccount"/>
       <Index Field="FullNameBank"/>
       <Index Field="BIK"/>
-      <Index Field="AccountCurrency"/>
       <Index Field="PhoneMain"/>
       <Index Field="PhoneOther"/>
       <Index Field="PhoneFax"/>
@@ -85,7 +83,6 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
-      <Foreign Field="AccountCurrency" ForeignClass="_Currency" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
   

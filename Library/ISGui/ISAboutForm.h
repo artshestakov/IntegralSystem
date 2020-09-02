@@ -17,7 +17,6 @@ protected:
 	void CreateModuleTab(); //Текущий модуль
 	void CreateDescriptionTab(); //Описание
 	void CreateLicenseTab(); //Лицензионное соглашение
-	void CreateShortcuts(); //Комбинации клавиш
 	void CreateOtherTab(); //Прочее
 
 	void AddLabel(QWidget *parent, const QString &LabelText, const QString &Text);
