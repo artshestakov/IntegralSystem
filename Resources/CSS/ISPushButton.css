@@ -28,8 +28,8 @@ QPushButton:pressed, QToolButton:pressed
 
 QPushButton:focus, QToolButton:focus
 {
-	border-color: rgb(70, 70, 70);
-    outline: none;
+	border: 2px solid rgb(0, 120, 215);
+	outline: none;
 }
 
 QPushButton:checked, QToolButton:checked
