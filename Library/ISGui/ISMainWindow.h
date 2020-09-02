@@ -17,17 +17,20 @@ public:
 	ISMainWindow(QWidget *parent = 0);
 	virtual ~ISMainWindow();
 	
+protected:
+	void AfterShowEvent() override;
+	void EscapeClicked() override;
+
 private:
 	void closeEvent(QCloseEvent *CloseEvent);
-	void AfterShowEvent() override;
+	
 
-	void CreateMenuBar(); //Создание главного тулбара
 	void CreateInformationMessage(); //Создание информационного сообщения
 	void CreateStackWidget(); //Создание начальной страницы и рабочей области
 
 	void ParagraphClicked(const ISUuid &ParagraphUID); //Событие нажатия на кнопку-параграф
 
-	void EscapeClicked() override;
+	void RollUp();
 	void InitializePlugin();
 	void ChangeUser(); //Смена пользователя
 	void ActivateWorkspace(); //Активация рабочей области
@@ -49,6 +52,7 @@ private:
 	
 	QString CurrentParagraphUID;
 	bool ExitConfirm;
+	QPropertyAnimation *PropertyAnimation;
 };
 //-----------------------------------------------------------------------------
 #endif

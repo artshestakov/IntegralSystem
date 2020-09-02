@@ -95,8 +95,14 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	MainLayout->addLayout(LayoutButtons);
 
 	//Создание панели с кнопками справа
-	connect(CreateButton(LANG("Settings"), "MainPanel.Settings"), &QToolButton::clicked, this, &ISMenuBar::Settings); //Настройки
+	connect(CreateButton(LANG("SettingsUser"), "MainPanel.Settings"), &QToolButton::clicked, this, &ISMenuBar::Settings); //Настройки
 	connect(CreateButton(LANG("ChangeUser"), "MainPanel.ChangeUser"), &QToolButton::clicked, this, &ISMenuBar::ChangeUser); //Смена пользователя
+
+	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_FULLSCREEN))
+	{
+		connect(CreateButton(LANG("RollUpApplication"), "MainPanel.RollUp"), &QToolButton::clicked, this, &ISMenuBar::RollUp);
+		connect(CreateButton(LANG("ExitApplication"), "MainPanel.Exit"), &QToolButton::clicked, this, &ISMenuBar::Exit);
+	}
 }
 //-----------------------------------------------------------------------------
 ISMenuBar::~ISMenuBar()

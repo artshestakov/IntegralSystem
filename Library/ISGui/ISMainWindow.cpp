@@ -23,7 +23,8 @@
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
 	: ISInterfaceForm(parent),
-	ExitConfirm(true)
+	ExitConfirm(true),
+	PropertyAnimation(nullptr)
 {
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
@@ -36,7 +37,19 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
 	GetMainLayout()->setSpacing(0);
 
-	CreateMenuBar();
+	MenuBar = new ISMenuBar(this);
+	connect(MenuBar, static_cast<void(ISMenuBar::*)(const ISUuid &)>(&ISMenuBar::ParagraphClicked), this, &ISMainWindow::ParagraphClicked);
+	connect(MenuBar, &ISMenuBar::ChangeUser, this, &ISMainWindow::ChangeUser);
+	connect(MenuBar, &ISMenuBar::RollUp, this, &ISMainWindow::RollUp);
+	connect(MenuBar, &ISMenuBar::Exit, this, &ISMainWindow::close);
+	connect(MenuBar, &ISMenuBar::Favorites, this, &ISMainWindow::ShowFavoritesForm);
+	connect(MenuBar, &ISMenuBar::History, this, &ISMainWindow::ShowHistoryForm);
+	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
+	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
+	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
+	connect(MenuBar, &ISMenuBar::AboutQt, this, &ISMainWindow::ShowAboutQt);
+	GetMainLayout()->addWidget(MenuBar);
+
 	CreateInformationMessage();
 	CreateStackWidget();
 }
@@ -44,6 +57,30 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 ISMainWindow::~ISMainWindow()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISMainWindow::AfterShowEvent()
+{
+	ISInterfaceForm::AfterShowEvent();
+	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_FULLSCREEN))
+	{
+		PropertyAnimation = new QPropertyAnimation(this, "windowOpacity", this);
+		PropertyAnimation->setStartValue(1.0);
+		PropertyAnimation->setEndValue(0.0);
+		PropertyAnimation->setDuration(100);
+		connect(PropertyAnimation, &QPropertyAnimation::finished, [=]
+		{
+			showMinimized();
+			setWindowOpacity(1.0);
+		});
+		setWindowState(Qt::WindowFullScreen);
+	}
+	QTimer::singleShot(3000, this, &ISMainWindow::InitializePlugin);
+}
+//-----------------------------------------------------------------------------
+void ISMainWindow::EscapeClicked()
+{
+	close();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
@@ -64,33 +101,6 @@ void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
 	{
 		CloseEvent->ignore();
 	}
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::AfterShowEvent()
-{
-	ISInterfaceForm::AfterShowEvent();
-
-	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_FULLSCREEN))
-	{
-		setWindowState(Qt::WindowFullScreen);
-	}
-
-	QTimer::singleShot(3000, this, &ISMainWindow::InitializePlugin);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::CreateMenuBar()
-{
-	MenuBar = new ISMenuBar(this);
-	connect(MenuBar, static_cast<void(ISMenuBar::*)(const ISUuid &)>(&ISMenuBar::ParagraphClicked), this, &ISMainWindow::ParagraphClicked);
-	connect(MenuBar, &ISMenuBar::ChangeUser, this, &ISMainWindow::ChangeUser);
-	connect(MenuBar, &ISMenuBar::Exit, this, &ISMainWindow::close);
-	connect(MenuBar, &ISMenuBar::Favorites, this, &ISMainWindow::ShowFavoritesForm);
-	connect(MenuBar, &ISMenuBar::History, this, &ISMainWindow::ShowHistoryForm);
-	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
-	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
-	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
-	connect(MenuBar, &ISMenuBar::AboutQt, this, &ISMainWindow::ShowAboutQt);
-	GetMainLayout()->addWidget(MenuBar);
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::CreateInformationMessage()
@@ -140,9 +150,9 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::EscapeClicked()
+void ISMainWindow::RollUp()
 {
-	close();
+	PropertyAnimation->start();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::InitializePlugin()
