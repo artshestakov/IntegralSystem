@@ -944,6 +944,7 @@ ISINNEdit::ISINNEdit(QWidget *parent) : ISLineEdit(parent)
 
 	ButtonSearch = new ISServiceButton(BUFFER_ICONS("Taxation"), LANG("SearchFromINN"), this);
 	ButtonSearch->setVisible(false);
+	ButtonSearch->setEnabled(false);
 	ButtonSearch->setFlat(true);
 	ButtonSearch->setFocusPolicy(Qt::NoFocus);
 	connect(ButtonSearch, &ISServiceButton::clicked, this, &ISINNEdit::SearchFromINN);
@@ -964,6 +965,12 @@ bool ISINNEdit::IsValid() const
 void ISINNEdit::SetEnabledSearch(bool Enabled)
 {
 	ButtonSearch->setVisible(Enabled);
+}
+//-----------------------------------------------------------------------------
+void ISINNEdit::TextChanged(const QString &Text)
+{
+	ISLineEdit::TextChanged(Text);
+	ButtonSearch->setEnabled(!Text.isEmpty() && IsValid());
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

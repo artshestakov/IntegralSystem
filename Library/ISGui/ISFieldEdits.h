@@ -375,6 +375,9 @@ public:
 	bool IsValid() const override;
 	void SetEnabledSearch(bool Enabled);
 
+protected:
+	void TextChanged(const QString &Text) override;
+
 private:
 	ISServiceButton *ButtonSearch;
 };
