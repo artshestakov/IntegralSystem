@@ -707,19 +707,10 @@ bool ISObjectFormBase::Save()
 			continue;
 		}
 
-		//”казатель на виджет редактировани€ пол€
+		//ѕолучаем указатель на поле редактировани€ и вытаскиваем его значение
 		ISFieldEditBase *FieldEditBase = Field.second;
+		QVariant Value = FieldEditBase->GetValue();
 
-		//≈сли значени€ пол€ редактирован€ не измен€лось, переходить к следующему
-		if (!FieldEditBase->GetModificationFlag())
-		{
-			if (ParentFilterField != Field.first) //≈сли текущее поле не €вл€етс€ фильтруемым (текуща€ таблица не €вл€етс€ эскортной)
-			{
-				continue;
-			}
-		}
-
-		QVariant Value = FieldEditBase->GetValue(); //«начение пол€
 		if (Value.isNull()) //≈сли значение в поле отсутствует, проверить об€зательно ли поле дл€ заполнени€
 		{
 			if (MetaField->NotNull && !MetaField->HideFromObject && MetaField->DefaultValue.toString().isEmpty()) //≈сли поле об€зательно дл€ заполнени€
@@ -728,6 +719,12 @@ bool ISObjectFormBase::Save()
 				FieldEditBase->BlinkRed();
 				return false;
 			}
+		}
+
+		//≈сли значени€ пол€ редактирован€ не измен€лось, переходить к следующему
+		if (!FieldEditBase->GetModificationFlag())
+		{
+			continue;
 		}
 
 		if (!FieldEditBase->IsValid()) //≈сли поле не прошло валидацию
