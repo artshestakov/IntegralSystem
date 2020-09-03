@@ -330,7 +330,6 @@ void ISObjectFormBase::CreateWidgetObject()
 {
 	//Выполняем предварительные очистки (на случай, если виджет карточки объекта создаётся повторно)
 	FieldsMap.clear();
-	BeginValues.clear();
 	Layouts.clear();
 	LabelsMap.clear();
 	BeginFieldEdit = nullptr;
@@ -338,6 +337,7 @@ void ISObjectFormBase::CreateWidgetObject()
 	QVBoxLayout *LayoutObject = new QVBoxLayout();
 	LayoutObject->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
+	POINTER_DELETE(CentralWidget); //Удаляем центральный видджет (если есть)
 	CentralWidget = new QWidget(this);
 	CentralWidget->setLayout(LayoutObject);
 	CentralWidget->setSizePolicy(CentralWidget->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
@@ -443,7 +443,6 @@ void ISObjectFormBase::CreateWidgetObject()
 				QVariant Value = SqlRecord.value(FieldName);
 				if (Value.isNull()) //Если значение пустое, перейти на следующий шаг цикла
 				{
-					BeginValues.emplace(FieldName, QVariant());
 					continue;
 				}
 
@@ -452,18 +451,8 @@ void ISObjectFormBase::CreateWidgetObject()
 					continue;
 				}
 
-				ISFieldEditBase *FieldEditWidget = FieldsMap.at(FieldName);
-				if (MetaTable->GetField(FieldName)->Foreign)
-				{
-					QVariant ListObjectID = ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID);
-					FieldEditWidget->SetValue(ListObjectID);
-					BeginValues.emplace(FieldName, ListObjectID);
-				}
-				else
-				{
-					FieldEditWidget->SetValue(Value);
-					BeginValues.emplace(FieldName, Value);
-				}
+				//Получаем виджет поля по имени и если это справочное поле - получаем и устанавливаем ID, иначе - устаналиваем значение "как есть"
+				FieldsMap.at(FieldName)->SetValue(MetaTable->GetField(FieldName)->Foreign ? ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID) : Value);
 			}
 			ISHistory::Instance().AddObject(MetaTable->Name, ObjectID);
 		}
@@ -613,7 +602,6 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 	}
 
 	ISGui::SetWaitGlobalCursor(true);
-	POINTER_DELETE(CentralWidget);
 	bool IsObjectClicked = ActionClicked->property("IsObject").toBool();
 	ToolBar->setVisible(IsObjectClicked);
 
@@ -623,6 +611,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 	}
 	else //Выбор эскорта
 	{
+		POINTER_DELETE(CentralWidget);
 		ISInterfaceMetaForm *WidgetEscort = nullptr;
 		QString TableName = ActionClicked->property("TableName").toString(),
 			parent_filter_field = ActionClicked->property("FilterField").toString(),
@@ -1012,37 +1001,10 @@ void ISObjectFormBase::CancelChanged()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CancelChanged")))
 	{
 		ISGui::SetWaitGlobalCursor(true);
-
-		if (FormType == ISNamespace::OFT_New)
-		{
-			for (const auto &MapItem : FieldsMap)
-			{
-				ISFieldEditBase *FieldEditBase = MapItem.second;
-				if (FieldEditBase->GetModificationFlag())
-				{
-					FieldEditBase->Clear();
-				}
-			}
-		}
-
-		for (const auto &FieldItem : BeginValues) //Обход всех первоначальных значений
-		{
-			QString FieldName = FieldItem.first;
-			QVariant BeginValue = FieldItem.second;
-			if (!MetaTable->GetField(FieldName)->QueryText.isEmpty()) //Если поле является мета-запросом
-			{
-				continue;
-			}
-
-			QVariant CurrentValue = GetFieldValue(FieldName);
-			if (CurrentValue != BeginValue) //Если текущее значение поля не равно первичному - изменить значение поля на первичное
-			{
-				GetFieldWidget(FieldName)->SetValue(BeginValue);
-			}
-		}
-		ISGui::SetWaitGlobalCursor(false);
+		CreateWidgetObject();
 		SetModificationFlag(false);
 		BeginFieldEdit->SetFocus();
+		ISGui::SetWaitGlobalCursor(false);
 	}
 }
 //-----------------------------------------------------------------------------

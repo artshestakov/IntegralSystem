@@ -116,7 +116,6 @@ private:
 	std::map<QString, ISFieldEditBase*> FieldsMap;
 	std::map<QString, QLabel*> LabelsMap;
 	std::map<QString, QHBoxLayout*> Layouts;
-	std::map<QString, QVariant> BeginValues;
 	std::map<QString, QVariant> VirtualFields; //Виртуальные поля
 
 	bool ModificationFlag;
