@@ -172,7 +172,6 @@ bool InitConfiguratorScheme(QString &ErrorString)
 				Section->Items.emplace_back(new CGSectionItem
 				{
 					NodeFunctions.attributes().namedItem("FunctionName").nodeValue(),
-					NodeFunctions.attributes().namedItem("FunctionLocalName").nodeValue(),
 					NodeFunctions.attributes().namedItem("Description").nodeValue()
 				});
 				NodeFunctions = NodeFunctions.nextSibling();

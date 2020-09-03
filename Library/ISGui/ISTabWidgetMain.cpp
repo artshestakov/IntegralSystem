@@ -78,7 +78,6 @@ void ISTabWidgetMain::MenuClicked()
 	QMenu Menu;
 	for (int i = 0, c = count(); i < c; ++i)
 	{
-		QWidget *TabWidget = widget(i);
 		QAction *ActionTab = Menu.addAction(tabIcon(i), tabText(i));
 		ActionTab->setCheckable(true);
 		ActionTab->setData(i);

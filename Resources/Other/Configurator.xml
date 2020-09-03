@@ -2,47 +2,49 @@
 <Scheme>
 
   <Section Name="Create" ClassName="CGConfiguratorCreate">
-    <Function FunctionName="Resources" LocalName="Ресурсы" Description="Добавление новых ресурсов и заполнение существующих справочников."/>
+    <Function FunctionName="Resources" Description="Добавление новых ресурсов и заполнение существующих справочников."/>
   </Section>
 
   <Section Name="Update" ClassName="CGConfiguratorUpdate">
-    <Function FunctionName="Database" LocalName="База данных" Description="Полное обновление базы данных."/>
-    <Function FunctionName="Functions" LocalName="Функции" Description="Обновление всех функций базы данных."/>
-    <Function FunctionName="Tables" LocalName="Таблицы" Description="Обновление таблиц базы данных."/>
-    <Function FunctionName="IndexesAll" LocalName="Все индексы" Description="Обновление всех индексов базы данных."/>
-    <Function FunctionName="SystemIndexes" LocalName="Системные индексы" Description="Обновление системных индексов базы данных."/>
-    <Function FunctionName="Indexes" LocalName="Индексы" Description="Обновление индексов базы данных."/>
-    <Function FunctionName="CompoundIndexes" LocalName="Составные индексы" Description="Обновление составных индексов базы данных."/>
-    <Function FunctionName="Foreigns" LocalName="Внешние ключи" Description="Обновление внешних ключей базы данных."/>
-    <Function FunctionName="Resources" LocalName="Ресурсы" Description="Обновление ресурсов и справочников базы данных."/>
+    <Function FunctionName="Database" Description="Полное обновление базы данных."/>
+    <Function FunctionName="Functions" Description="Обновление всех функций базы данных."/>
+    <Function FunctionName="Tables" Description="Обновление таблиц базы данных."/>
+    <Function FunctionName="IndexesAll" Description="Обновление всех индексов базы данных."/>
+    <Function FunctionName="SystemIndexes" Description="Обновление системных индексов базы данных."/>
+    <Function FunctionName="Indexes" Description="Обновление индексов базы данных."/>
+    <Function FunctionName="CompoundIndexes" Description="Обновление составных индексов базы данных."/>
+    <Function FunctionName="Foreigns" Description="Обновление внешних ключей базы данных."/>
+    <Function FunctionName="Resources" Description="Обновление ресурсов и справочников базы данных."/>
+    <Function FunctionName="SystemUser" Description="Обновление информации о системном пользователе."/>
+    <Function FunctionName="DatabaseSettings" Description="Обновление системного профиля настроек базы данных."/>
   </Section>
 
   <Section Name="Delete" ClassName="CGConfiguratorDelete">
-    <Function FunctionName="Indexes" LocalName="Индексы" Description="Удаление всех индексов из базы данных."/>
-    <Function FunctionName="Foreigns" LocalName="Внешние ключи" Description="Удаление всех внешних ключей из базы данных."/>
-    <Function FunctionName="Systems" LocalName="Системы" Description="Удаление всех систем из базы данных."/>
-    <Function FunctionName="SubSystems" LocalName="Подсистемы" Description="Удаление всех подсистем из базы данных."/>
-    <Function FunctionName="OldTables" LocalName="Таблицы" Description="Удаление всех устаревших таблиц."/>
-    <Function FunctionName="OldFields" LocalName="Поля" Description="Удаление всех устаревших полей."/>
-    <Function FunctionName="OldResources" LocalName="Ресусры" Description="Удаление всех устаревших ресурсов."/>
-    <Function FunctionName="OldSequence" LocalName="Последовательности" Description="Удаление всех устаревших последовательностей."/>
+    <Function FunctionName="Indexes" Description="Удаление всех индексов из базы данных."/>
+    <Function FunctionName="Foreigns" Description="Удаление всех внешних ключей из базы данных."/>
+    <Function FunctionName="Systems" Description="Удаление всех систем из базы данных."/>
+    <Function FunctionName="SubSystems" Description="Удаление всех подсистем из базы данных."/>
+    <Function FunctionName="OldTables" Description="Удаление всех устаревших таблиц."/>
+    <Function FunctionName="OldFields" Description="Удаление всех устаревших полей."/>
+    <Function FunctionName="OldResources" Description="Удаление всех устаревших ресурсов."/>
+    <Function FunctionName="OldSequence" Description="Удаление всех устаревших последовательностей."/>
   </Section>
 
   <Section Name="Service" ClassName="CGConfiguratorService">
-    <Function FunctionName="Reindex" LocalName="Переиндексация базы данных" Description="Переиндексация всех индексов базы данных."/>
-    <Function FunctionName="Vacuum" LocalName="Вакуум" Description="Высвобождение пространства, занимаемое мёртвыми кортежами."/>
-    <Function FunctionName="VacuumAnalyze" LocalName="Вакуум с анализом" Description="Обновление статистики, которую использует планировщик для выбора наиболее эффективного способа выполнения запросов."/>
-    <Function FunctionName="VacuumFull" LocalName="Полный вакуум" Description="Выбирает режим полной очистки, который может освободить больше пространства."/>
-    <Function FunctionName="ClearTable" LocalName="Очистка таблицы" Description="Очистка таблицы от данных"/>
+    <Function FunctionName="Reindex" Description="Переиндексация всех индексов базы данных."/>
+    <Function FunctionName="Vacuum" Description="Высвобождение пространства, занимаемое мёртвыми кортежами."/>
+    <Function FunctionName="VacuumAnalyze" Description="Обновление статистики, которую использует планировщик для выбора наиболее эффективного способа выполнения запросов."/>
+    <Function FunctionName="VacuumFull" Description="Выбирает режим полной очистки, который может освободить больше пространства."/>
+    <Function FunctionName="ClearTable" Description="Очистка таблицы от данных"/>
   </Section>
 
   <Section Name="Show" ClassName="CGConfiguratorShow">
-    <Function FunctionName="OldTables" LocalName="Показать устаревшие таблицы" Description="Вывести список устаревших таблиц."/>
-    <Function FunctionName="OldFields" LocalName="Показать устаревшие поля" Description="Вывести список устаревших полей."/>
-    <Function FunctionName="OldResources" LocalName="Показать устаревшие ресурсы" Description="Вывести список устаревших ресурсов."/>
-    <Function FunctionName="OldSequence" LocalName="Показать устаревшие последовательности" Description="Вывести список устаревших последовательностей."/>
-    <Function FunctionName="Config" LocalName="Показать настройки конфигурационного файла" Description="Вывести содержимое конфигурационного файла"/>
-    <Function FunctionName="DatabaseInfo" LocalName="Показать информацию о базе данных" Description="Показать информацию о базе данных"/>
+    <Function FunctionName="OldTables" Description="Вывести список устаревших таблиц."/>
+    <Function FunctionName="OldFields" Description="Вывести список устаревших полей."/>
+    <Function FunctionName="OldResources" Description="Вывести список устаревших ресурсов."/>
+    <Function FunctionName="OldSequence" Description="Вывести список устаревших последовательностей."/>
+    <Function FunctionName="Config" Description="Вывести содержимое конфигурационного файла"/>
+    <Function FunctionName="DatabaseInfo" Description="Показать информацию о базе данных"/>
   </Section>
 
 </Scheme>

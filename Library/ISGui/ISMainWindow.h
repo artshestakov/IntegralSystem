@@ -18,20 +18,13 @@ public:
 	virtual ~ISMainWindow();
 	
 protected:
+	void closeEvent(QCloseEvent *CloseEvent);
 	void AfterShowEvent() override;
 	void EscapeClicked() override;
 
 private:
-	void closeEvent(QCloseEvent *CloseEvent);
-	
-
-	void CreateInformationMessage(); //Создание информационного сообщения
-	void CreateStackWidget(); //Создание начальной страницы и рабочей области
-
 	void ParagraphClicked(const ISUuid &ParagraphUID); //Событие нажатия на кнопку-параграф
-
 	void RollUp();
-	void InitializePlugin();
 	void ChangeUser(); //Смена пользователя
 	void ActivateWorkspace(); //Активация рабочей области
 	void ShowFavoritesForm(); //Открыть форму избранного

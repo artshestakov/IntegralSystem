@@ -28,14 +28,13 @@ static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 													"WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
 static QString QU_SETTINGS_DATABASE = PREPARE_QUERY("UPDATE _settingsdatabase SET "
-													"sgdb_issystem = :IsSystem, "
-													"sgdb_settingname = :SettingName, "
-													"sgdb_useraccessdatabase = :UserAccessDatabase, "
-													"sgdb_administrator = (SELECT usrs_id FROM _users WHERE usrs_uid = :SystemUserUID) "
+													"sgdb_issystem = true, "
+													"sgdb_active = true, "
+													"sgdb_settingname = :SettingName "
 													"WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
-static QString QI_SETTINGS_DATABASE = PREPARE_QUERY("INSERT INTO _settingsdatabase(sgdb_uid, sgdb_issystem, sgdb_settingname, sgdb_useraccessdatabase, sgdb_administrator) "
-													"VALUES(:UID, :IsSystem, :SettingName, :UserAccessDatabase, (SELECT usrs_id FROM _users WHERE usrs_uid = :SystemUserUID))");
+static QString QI_SETTINGS_DATABASE = PREPARE_QUERY("INSERT INTO _settingsdatabase(sgdb_uid, sgdb_issystem, sgdb_active, sgdb_settingname) "
+													"VALUES(:UID, true, true, :SettingName)");
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
@@ -383,41 +382,18 @@ bool CGConfiguratorUpdate::databasesettings()
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
-		if (qSelect.ReadColumn("count").toInt() > 0)
+		bool IsExist = qSelect.ReadColumn("count").toInt() > 0;
+		ISQuery qUpsert(IsExist ? QU_SETTINGS_DATABASE : QI_SETTINGS_DATABASE);
+		qUpsert.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
+		qUpsert.BindValue(":SettingName", LANG("SystemProfile"));
+		Result = qUpsert.Execute();
+		if (Result)
 		{
-			ISQuery qUpdate(QU_SETTINGS_DATABASE);
-			qUpdate.BindValue(":IsSystem", true);
-			qUpdate.BindValue(":SettingName", LANG("DatabaseSettings.Name"));
-			qUpdate.BindValue(":UserAccessDatabase", true);
-			qUpdate.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
-			qUpdate.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-			Result = qUpdate.Execute();
-			if (Result)
-			{
-				ISLOGGER_L("Database settings updated");
-			}
-			else
-			{
-				ErrorString = qUpdate.GetErrorString();
-			}
+			ISLOGGER_L(IsExist ? "Database settings updated" : "Database settings created");
 		}
 		else
 		{
-			ISQuery qInsert(QI_SETTINGS_DATABASE);
-			qInsert.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-			qInsert.BindValue(":IsSystem", true);
-			qInsert.BindValue(":SettingName", LANG("DatabaseSettings.Name"));
-			qInsert.BindValue(":UserAccessDatabase", true);
-			qInsert.BindValue(":SystemUserUID", CONST_UID_USER_POSTGRES);
-			Result = qInsert.Execute();
-			if (Result)
-			{
-				ISLOGGER_L("Database settings created");
-			}
-			else
-			{
-				ErrorString = qInsert.GetErrorString();
-			}
+			ErrorString = qUpsert.GetErrorString();
 		}
 	}
 	return Result;

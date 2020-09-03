@@ -50,37 +50,18 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	connect(MenuBar, &ISMenuBar::AboutQt, this, &ISMainWindow::ShowAboutQt);
 	GetMainLayout()->addWidget(MenuBar);
 
-	CreateInformationMessage();
-	CreateStackWidget();
+	StackedWidget = new QStackedWidget(this);
+	GetMainLayout()->addWidget(StackedWidget);
+	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
+	{
+		Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
+	}
+	MenuBar->ParagraphClick(ISParagraphEntity::Instance().GetStartedParagraph());
 }
 //-----------------------------------------------------------------------------
 ISMainWindow::~ISMainWindow()
 {
 
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::AfterShowEvent()
-{
-	ISInterfaceForm::AfterShowEvent();
-	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_FULLSCREEN))
-	{
-		PropertyAnimation = new QPropertyAnimation(this, "windowOpacity", this);
-		PropertyAnimation->setStartValue(1.0);
-		PropertyAnimation->setEndValue(0.0);
-		PropertyAnimation->setDuration(100);
-		connect(PropertyAnimation, &QPropertyAnimation::finished, [=]
-		{
-			showMinimized();
-			setWindowOpacity(1.0);
-		});
-		setWindowState(Qt::WindowFullScreen);
-	}
-	QTimer::singleShot(3000, this, &ISMainWindow::InitializePlugin);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::EscapeClicked()
-{
-	close();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
@@ -103,35 +84,28 @@ void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::CreateInformationMessage()
+void ISMainWindow::AfterShowEvent()
 {
-	QString InformationMessage = SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGE);
-	if (!InformationMessage.isEmpty())
+	ISInterfaceForm::AfterShowEvent();
+	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_FULLSCREEN))
 	{
-		QLabel *Label = new QLabel(this);
-		Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-		Label->setText(InformationMessage);
-		Label->setWordWrap(true);
-		Label->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
-		GetMainLayout()->addWidget(Label, 0, Qt::AlignCenter);
-
-		GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
-
-		QPalette Palette = Label->palette();
-		Palette.setColor(QPalette::WindowText, ISGui::StringToColor(SETTING_DATABASE_VALUE_STRING(CONST_UID_DATABASE_SETTING_OTHER_INFORMATIONMESSAGE)));
-		Label->setPalette(Palette);
+		PropertyAnimation = new QPropertyAnimation(this, "windowOpacity", this);
+		PropertyAnimation->setStartValue(1.0);
+		PropertyAnimation->setEndValue(0.0);
+		PropertyAnimation->setDuration(100);
+		connect(PropertyAnimation, &QPropertyAnimation::finished, [=]
+		{
+			showMinimized();
+			setWindowOpacity(1.0);
+		});
+		setWindowState(Qt::WindowFullScreen);
 	}
+	QTimer::singleShot(3000, ISObjects::Instance().GetInterface(), &ISObjectInterface::InitializePlugin);
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::CreateStackWidget()
+void ISMainWindow::EscapeClicked()
 {
-	StackedWidget = new QStackedWidget(this);
-	GetMainLayout()->addWidget(StackedWidget);
-	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
-	{
-		Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
-	}
-	MenuBar->ParagraphClick(ISParagraphEntity::Instance().GetStartedParagraph());
+	close();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
@@ -153,19 +127,6 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 void ISMainWindow::RollUp()
 {
 	PropertyAnimation->start();
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::InitializePlugin()
-{
-	//Если не настроен администратор - предложить настроить
-	if (!SETTING_DATABASE_VALUE(CONST_UID_DATABASE_SETTING_GENERAL_ADMINISTRATOR).isValid())
-	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.NotSettingAdministratorInSettingDatabase")))
-		{
-			ISGui::ShowDatabaseSettings();
-		}
-	}
-	ISObjects::Instance().GetInterface()->InitializePlugin();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ChangeUser()
