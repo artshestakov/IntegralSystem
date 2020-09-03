@@ -5,10 +5,10 @@
 //-----------------------------------------------------------------------------
 ISDelegateBoolean::ISDelegateBoolean(QObject *parent)
 	: QStyledItemDelegate(parent),
-	ImageNotSelected(BUFFER_ICONS("Delegate.Boolean.NotSelected").pixmap(ISDefines::Gui::SIZE_16_16).toImage()),
-	ImageSelected(BUFFER_ICONS("Delegate.Boolean.Selected").pixmap(ISDefines::Gui::SIZE_16_16).toImage())
+	Image(BUFFER_ICONS("Delegate.Boolean").pixmap(ISDefines::Gui::SIZE_16_16).toImage())
 {
-	
+	ImageWidth = Image.width();
+	ImageHeight = Image.height();
 }
 //-----------------------------------------------------------------------------
 ISDelegateBoolean::~ISDelegateBoolean()
@@ -27,10 +27,7 @@ void ISDelegateBoolean::paint(QPainter *Painter, const QStyleOptionViewItem &Opt
 
 	if (Index.data().toBool())
 	{
-		QImage Image = Option.state & QStyle::State_Selected ? ImageSelected : ImageNotSelected;
-		const int x = Option.rect.center().x() - Image.rect().width() / 2;
-		const int y = Option.rect.center().y() - Image.rect().height() / 2;
-		Painter->drawImage(QRect(x, y, Image.rect().width(), Image.rect().height()), Image);
+		Painter->drawImage(QRect(Option.rect.center().x() - ImageWidth / 2, Option.rect.center().y() - ImageHeight / 2, ImageWidth, ImageHeight), Image);
 	}
 }
 //-----------------------------------------------------------------------------
