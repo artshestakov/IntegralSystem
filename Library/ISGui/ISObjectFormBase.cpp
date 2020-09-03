@@ -201,7 +201,7 @@ void ISObjectFormBase::AfterShowEvent()
 
 	RenameReiconForm();
 	UpdateObjectActions();
-	SetModificationFlag(false);
+	SetModificationFlag(FormType == ISNamespace::OFT_Copy);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateToolBarEscorts()
@@ -315,7 +315,6 @@ void ISObjectFormBase::CreateToolBar()
 
 	//Отменить изменения
 	ActionCancelChange = new QAction(BUFFER_ICONS("CancelChangedObject"), LANG("CancelChanged"), ToolBar);
-	ActionCancelChange->setEnabled(false);
 	ActionCancelChange->setPriority(QAction::LowPriority);
 	connect(ActionCancelChange, &QAction::triggered, this, &ISObjectFormBase::CancelChanged);
 	AddActionMenu(ActionCancelChange);
@@ -392,6 +391,12 @@ void ISObjectFormBase::CreateWidgetObject()
 			continue;
 		}
 
+		//Если поле является виртуальным и сейчас режим создания копии - поле не размещаем
+		if (!MetaField->QueryText.isEmpty() && FormType == ISNamespace::OFT_Copy)
+		{
+			continue;
+		}
+
 		if (!MetaField->LayoutName.isEmpty()) //Если поле должно быть в горизональном компоновщике
 		{
 			if (!Layouts.count(MetaField->LayoutName))
@@ -459,9 +464,6 @@ void ISObjectFormBase::CreateWidgetObject()
 					FieldEditWidget->SetValue(Value);
 					BeginValues.emplace(FieldName, Value);
 				}
-
-				//Если форма открывается для создания копии
-				FieldEditWidget->SetModificationFlag(FormType == ISNamespace::OFT_Copy);
 			}
 			ISHistory::Instance().AddObject(MetaTable->Name, ObjectID);
 		}
@@ -494,7 +496,6 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 	if (MetaField->DefaultValueWidget.isValid()) //Если в поле указано значение по умолчанию для виджета-редактора
 	{
 		FieldEditBase->SetValue(MetaField->DefaultValueWidget);
-		FieldEditBase->SetModificationFlag(true);
 	}
 
 	if (MetaField->ReadOnly) //Если доступно только для просмотра
@@ -700,14 +701,19 @@ bool ISObjectFormBase::Save()
 
 	for (const auto &Field : FieldsMap) //Обход существующих полей на форме
 	{
-		QString FieldName = Field.first; //Имя поля
-		PMetaField *MetaField = MetaTable->GetField(FieldName); //Мета-поле
-		ISFieldEditBase *FieldEditBase = Field.second; //Указатель на виджет редактирования поля
+		PMetaField *MetaField = MetaTable->GetField(Field.first); //Мета-поле
+		if (!MetaField->QueryText.isEmpty()) //Если поле является виртуальным
+		{
+			continue;
+		}
+
+		//Указатель на виджет редактирования поля
+		ISFieldEditBase *FieldEditBase = Field.second;
 
 		//Если значения поля редактированя не изменялось, переходить к следующему
 		if (!FieldEditBase->GetModificationFlag())
 		{
-			if (ParentFilterField != FieldName) //Если текущее поле не является фильтруемым (текущая таблица не является эскортной)
+			if (ParentFilterField != Field.first) //Если текущее поле не является фильтруемым (текущая таблица не является эскортной)
 			{
 				continue;
 			}
@@ -732,8 +738,8 @@ bool ISObjectFormBase::Save()
 		}
 
 		FieldEditBase->Invoke();
-		ValuesMap[FieldName] = Value;
-		FieldsVector.emplace_back(FieldName);
+		ValuesMap[Field.first] = Value;
+		FieldsVector.emplace_back(Field.first);
 	}
 
 	//Формирование запроса на добавление/изменение/копирование
