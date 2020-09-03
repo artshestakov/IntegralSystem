@@ -3,87 +3,19 @@
 
   <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="SettingName" IsSystem="true">
     <Fields>
-      <!--Главное-->
-      <Field UID="{4C9623ED-981E-44A5-B3E0-3083F90748EF}" Name="SettingName" Type="String" LabelName="Наименование настройки" LocalListName="Наименование настройки" HideFromObject="true"/>
-      <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
-      <Field UID="{F7DA2452-624B-47DA-9A06-01FF1958E537}" Name="Administrator" Type="BigInt" LabelName="Администратор системы" LocalListName="Администратор системы" Hint="Главный администратор системы"/>
-
-      <!--Организация-->
-      <Field UID="{B2861EC2-B533-4C07-8961-DB714878BDF1}" Name="OrganizationNameFull" Type="String" LabelName="Полное наименование организации" LocalListName="Полное наименование организации" SeparatorName="Организация"/>
-      <Field UID="{BB5C9F2A-89AB-4512-AE34-FD35E7A2FDC5}" Name="OrganizationNameSmall" Type="String" LabelName="Сокращенное наименование организации" LocalListName="Сокращенное полное наименование организации"/>
-      <Field UID="{FDA37094-6A15-4787-8CEB-D53551E92EBD}" Name="GeneralPrincipal" Type="String" LabelName="Генеральный директор" LocalListName="Генеральный директор"/>
-      <Field UID="{5C7F96FE-24A0-4B8A-8869-7ADE94163C5D}" Name="ChiefAccountant" Type="String" LabelName="Главный бухгалтер" LocalListName="Главный бухгалтер"/>
-      <Field UID="{847ECC0A-CA22-4104-B7A2-FC639EB31183}" Name="Storekeeper" Type="String" LabelName="Кладовщик" LocalListName="Кладовщик"/>
-      <Field UID="{FB71E7D4-4C9E-40A8-9C59-5D4A4CEBF3D0}" Name="LegalAddress" Type="String" LabelName="Юридический адрес" LocalListName="Юридический адрес"/>
-      <Field UID="{A56E7B65-13C3-456C-8275-DBBA4F4FD100}" Name="ActualAddress" Type="String" LabelName="Фактический адрес" LocalListName="Фактический адрес"/>
-      <Field UID="{A42151C3-ADD5-491C-844E-7E1CC5931CA1}" Name="INN" Type="Inn" LabelName="ИНН" LocalListName="ИНН" Hint="Идентификационный номер налогоплательщика (ИНН) — цифровой код, упорядочивающий учёт налогоплательщиков в Российской Федерации. Присваивается налоговой записи как юридических, так и физических лиц в Федеральной Налоговой Службе (сокращённо — ФНС). Организациям присваивается с 1993 года, индивидуальным предпринимателям — с 1997 года, прочим физическим лицам — с 1999 года (с начала действия первой части Налогового кодекса Российской Федерации)."/>
-      <Field UID="{886EC035-4DB2-49EB-842A-26FB9963CB55}" Name="KPP" Type="Kpp" LabelName="КПП" LocalListName="КПП" Hint="Для организаций в дополнение к ИНН в связи с постановкой на учет в налоговых органах по основаниям, предусмотренным Налоговым кодексом Российской Федерации, присваивается код причины постановки на учет (КПП)."/>
-      <Field UID="{DAA4B357-7213-4A55-9C8E-98AFF3BB2F3B}" Name="OGRN" Type="String" LabelName="ОГРН" LocalListName="ОГРН" Hint="ОГРН (основной государственный регистрационный номер) — государственный регистрационный номер записи о создании юридического лица либо записи о первом представлении в соответствии с Федеральным законом Российской Федерации «О государственной регистрации юридических лиц» сведений о юридическом лице, зарегистрированном до введения в действие указанного Закона (пункт 8 Правил ведения Единого государственного реестра юридических лиц)."/>
-      <Field UID="{0006BBB1-DD72-448B-8E2A-677EAC810253}" Name="DateRegistration" Type="Date" LabelName="Дата регистрации" LocalListName="Дата регистрации"/>
-      <Field UID="{752702F5-09AF-4E19-9440-A19B46BB78FE}" Name="OKVED" Type="String" LabelName="ОКВЭД" LocalListName="ОКВЭД"/>
-      <Field UID="{679C155D-E1C6-4071-B974-10F353D6CCC2}" Name="OKPO" Type="Okpo" LabelName="ОКПО" LocalListName="ОКПО" Hint="Расшифровка ОКПО - Общероссийский Классификатор Предприятий и Организаций. Код ОКПО - это основной код организаций и индивидуальных предпринимателей в базах Росстата."/>
-      <Field UID="{C4645CB0-CF14-4670-8E05-9139F9DEEDC3}" Name="CheckingAccount" Type="String" LabelName="Расчётный счёт" LocalListName="Расчётный счёт"/>
-      <Field UID="{231C9438-CF37-402D-A973-CF4CCEBBBAFD}" Name="FullNameBank" Type="String" LabelName="Полное наименование банка" LocalListName="Полное наименование банка"/>
-      <Field UID="{66FF7E39-5FF6-4DD7-A2B7-95131536E870}" Name="BIK" Type="Bik" LabelName="Банковский идентификационный номер" LocalListName="Банковский идентификационный номер"/>
-
-      <!--Контакты-->
-      <Field UID="{E4774821-BEEE-4B29-88B9-0CB53E4767CB}" Name="PhoneMain" Type="Phone" LabelName="Телефон (основной)" LocalListName="Телефон (основной)" SeparatorName="Контакты"/>
-      <Field UID="{948CE33C-DAD9-4D9F-B0DC-131803EA5733}" Name="PhoneOther" Type="Phone" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
-      <Field UID="{EC74932F-3549-4BE3-9577-4837F5C928A4}" Name="PhoneFax" Type="Phone" LabelName="Телефон (факс)" LocalListName="Телефон (факс)"/>
-      <Field UID="{B375FEE9-5836-4936-B16C-1E834C9DFFF6}" Name="WebSite" Type="String" LabelName="Web-сайт" LocalListName="Web-сайт"/>
-      <Field UID="{36D0CA19-D39C-4B54-8CCA-A59507296E8C}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
-      <Field UID="{333EC997-E589-402B-A9D1-B8C570639EAC}" Name="ICQ" Type="String" LabelName="ICQ" LocalListName="ICQ"/>
-      <Field UID="{49EA422F-605C-4BC0-A2EA-4237861E8341}" Name="ContactPerson" Type="String" LabelName="Контактное лицо" LocalListName="Контактное лицо"/>
-      <Field UID="{44128138-313F-43AE-B49B-2066F39D3381}" Name="PhoneContactPerson" Type="Phone" LabelName="Телефон контактного лица" LocalListName="Телефон контактного лица"/>
-      
-      <!--Логотип-->
-      <Field UID="{9684C2D8-B880-4C38-A3AD-33663F1CA706}" Name="Logo" Type="Image" LabelName="Логотип организации" LocalListName="Логотип организации" ControlWidget="ISImageEdit" SeparatorName="Логотип"/>
-      <Field UID="{B9F6C7D2-3D4F-477D-B4D2-E7F287337FF4}" Name="LogoSmall" Type="Image" LabelName="Логотип организации (уменьшенный)" LocalListName="Логотип организации (уменьшенный)" ControlWidget="ISImageEdit"/>
-
-      <!--Прочее-->
-      <Field UID="{2B485045-EF0E-4DAA-8E31-3CEFC440528C}" Name="InformationMessage" Type="String" LabelName="Информационное сообщение" LocalListName="Информационное сообщение" Hint="Будет отображаться для всех пользователей в главной форме программы." SeparatorName="Прочее"/>
-      <Field UID="{A1BB9779-82E4-49EE-B5B2-4E6AD493644E}" Name="InformationMessageColor" Type="Color" DefaultValueWidget="#000000" LabelName="Цвет информационного сообщения" LocalListName="Цвет информационного сообщения"/>
-      <Field UID="{2878FEEB-F439-422C-A7B8-DA4684A6460F}" Name="NumberSimbolsAfterComma" Type="Int" DefaultValueWidget="3" LabelName="Количество символов после запятой в дробных числах" LocalListName="Количество символов после запятой в дробных числах"/>
-      <Field UID="{6288E37D-413A-48E0-B9BF-D4CA288B5007}" Name="StorageFileMaxSize" Type="Int" DefaultValueWidget="10" LabelName="Максимальный размер файла в хранилище (мб)" LocalListName="Максимальный размер файла в хранилище (мб)" Hint="Ограничение размера файла добавляемого в файловое хранилище."/>
+      <Field UID="{D27D3F1E-2D94-4E07-8E36-64ACE60A9B0C}" Name="Active" Type="Bool" DefaultValue="false" ReadOnly="true" LabelName="Активный профиль" LocalListName="Активный профиль" NotNull="true"/>
+      <Field UID="{4C9623ED-981E-44A5-B3E0-3083F90748EF}" Name="SettingName" Type="String" LabelName="Наименование настройки" LocalListName="Наименование настройки" NotNull="true"/>
+      <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" DefaultValueWidget="true" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" HideFromList="true" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
+      <Field UID="{2878FEEB-F439-422C-A7B8-DA4684A6460F}" Name="NumberSimbolsAfterComma" Type="Int" DefaultValueWidget="3" LabelName="Размер дробной части в дробных числах" LocalListName="Размер дробной части в дробных числах" HideFromList="true"/>
+      <Field UID="{6288E37D-413A-48E0-B9BF-D4CA288B5007}" Name="StorageFileMaxSize" Type="Int" DefaultValueWidget="10" LabelName="Максимальный размер файла в хранилище (мб)" LocalListName="Максимальный размер файла в хранилище (мб)" HideFromList="true" Hint="Ограничение размера файла добавляемого в файловое хранилище."/>
     </Fields>
     <Indexes>
+      <Index Field="Active"/>
       <Index Field="SettingName"/>
       <Index Field="UserAccessDatabase"/>
-      <Index Field="Administrator"/>
-      <Index Field="OrganizationNameFull"/>
-      <Index Field="OrganizationNameSmall"/>
-      <Index Field="GeneralPrincipal"/>
-      <Index Field="ChiefAccountant"/>
-      <Index Field="Storekeeper"/>
-      <Index Field="LegalAddress"/>
-      <Index Field="ActualAddress"/>
-      <Index Field="INN"/>
-      <Index Field="KPP"/>
-      <Index Field="OGRN"/>
-      <Index Field="DateRegistration"/>
-      <Index Field="OKVED"/>
-      <Index Field="OKPO"/>
-      <Index Field="CheckingAccount"/>
-      <Index Field="FullNameBank"/>
-      <Index Field="BIK"/>
-      <Index Field="PhoneMain"/>
-      <Index Field="PhoneOther"/>
-      <Index Field="PhoneFax"/>
-      <Index Field="WebSite"/>
-      <Index Field="EMail"/>
-      <Index Field="ICQ"/>
-      <Index Field="ContactPerson"/>
-      <Index Field="PhoneContactPerson"/>
-      <Index Field="Logo"/>
-      <Index Field="LogoSmall"/>
-      <Index Field="InformationMessage"/>
-      <Index Field="InformationMessageColor"/>
       <Index Field="NumberSimbolsAfterComma"/>
       <Index Field="StorageFileMaxSize"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
   
 </XSN>

@@ -18,6 +18,7 @@
 #include "ISMonitorActivityForm.h"
 #include "ISFullTextSearchForm.h"
 #include "ISKnowledgeBaseSubSystem.h"
+#include "ISSettingsDatabaseListForm.h"
 #include "ISDelegates.h"
 //-----------------------------------------------------------------------------
 #include "ISFieldEdits.h"
@@ -48,6 +49,7 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISMonitorActivityForm*>("ISMonitorActivityForm");
 	qRegisterMetaType<ISFullTextSearchForm*>("ISFullTextSearchForm");
 	qRegisterMetaType<ISKnowledgeBaseSubSystem*>("ISKnowledgeBaseSubSystem");
+	qRegisterMetaType<ISSettingsDatabaseListForm*>("ISSettingsDatabaseListForm");
 
 	qRegisterMetaType<ISDelegateBoolean*>("ISDelegateBoolean");
 	qRegisterMetaType<ISDelegateImage*>("ISDelegateImage");

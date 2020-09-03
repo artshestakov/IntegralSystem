@@ -57,7 +57,6 @@ public:
 	static bool ShowUserPasswordForm(int UserID); //Открыть форму изменения пароля для пользователя
 	static void ShowUserPasswordDelete(int UserID, const QString &UserLogin); //Удаление пароля пользователя
 	static void ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID); //Просмотр системной информации о записи
-	static void ShowDatabaseSettings(); //Показать настройки базы данных
 	static void ShowObjectForm(QWidget *ObjectForm); //Показать форму объекта
 	
 	static ISImageViewerForm* ShowImageForm(const QPixmap &Pixmap); //Показать изображение

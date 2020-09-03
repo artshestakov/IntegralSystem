@@ -442,7 +442,6 @@ struct ISCORE_EXPORT ISDaDataLocation
 struct ISCORE_EXPORT CGSectionItem
 {
     QString Function;
-    QString LocalName;
     QString Description;
 };
 //-----------------------------------------------------------------------------

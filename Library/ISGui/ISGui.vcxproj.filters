@@ -450,6 +450,9 @@
     <ClCompile Include="ISEmpty.cpp">
       <Filter>Objects\Empty</Filter>
     </ClCompile>
+    <ClCompile Include="ISSettingsDatabaseListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -757,6 +760,9 @@
     </QtMoc>
     <QtMoc Include="ISEmpty.h">
       <Filter>Objects\Empty</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingsDatabaseListForm.h">
+      <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

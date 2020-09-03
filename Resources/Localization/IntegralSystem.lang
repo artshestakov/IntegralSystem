@@ -180,7 +180,6 @@
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>
   <Local Name="Message.Warning.NotExistLinkInBuffer" Russian="Ссылка в буфере обмена отсутствует."/>
-  <Local Name="Message.Warning.SettingsDatabaseNotExist" Russian="ВНИМАНИЕ! Настройки базы данных не созданы. Обратитесь к системному администратору."/>
   <Local Name="Message.Warning.InsertingFileSizeVeryBig" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Message.Warning.NotEditAlienStorageFiles" Russian="Редактировать чужие файлы запрещено."/>
   <Local Name="Message.Warning.NotCopyAlienStorageFiles" Russian="Создавать копии чужих файлов запрещено."/>
@@ -195,6 +194,7 @@
   <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
   <Local Name="Message.Warning.StartInstallUpdate" Russian="ВНИМАНИЕ! Программа обнаружила обновление, но запустить его установку в автоматическом режиме не удалось. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
+  <Local Name="Message.Warning.ActiveSettingDatabase" Russian="Не удалось установить активный профиль настроек базы данных."/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
@@ -217,7 +217,6 @@
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
-  <Local Name="Message.Question.NotSettingAdministratorInSettingDatabase" Russian="ВНИМАНИЕ! В настроках базы данных не настроен администратор системы. Сделать настройку сейчас?"/>
   <Local Name="Message.Question.StorageFileIsPrivate" Russian="Приватный файл?"/>
   <Local Name="Message.Question.AllStorageFileIsPrivate" Russian="Применить приватность для всех файлов (%1)?"/>
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
@@ -624,9 +623,6 @@
   <Local Name="FileDialog.Directory.Title" Russian="Выбор директории"/>
   <Local Name="FileDialog.Files.Open.Title" Russian="Выбор файлов"/>
 
-  <!--Database settings-->
-  <Local Name="DatabaseSettings.Name" Russian="Настройка базы данных"/>
-
   <!--FileFilters-->
   <Local Name="File.Filter.Images" Russian="Файлы изображений (*.png *.jpeg *.jpg *.dds *.gif *.icns *.ico *.svg *.tga *.tiff *.wbmp *.bmp *.webp)"/>
   <Local Name="File.Filter.Image.PNG" Russian="Portable Network Graphics (*.png)"/>
@@ -819,5 +815,6 @@
   <Local Name="ExitApplication" Russian="Выход из программы"/>
   <Local Name="RollUpApplication" Russian="Свернуть программу"/>
   <Local Name="SettingsUser" Russian="Настройки пользователя"/>
+  <Local Name="ActiveProfile" Russian="Активный профиль"/>
 
 </LANG>

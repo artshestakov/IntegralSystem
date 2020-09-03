@@ -31,8 +31,6 @@
 #include "ISFavoritesForm.h"
 #include "ISHistoryForm.h"
 //-----------------------------------------------------------------------------
-static QString QS_SETTING_DATABASE_ID = PREPARE_QUERY("SELECT sgdb_id FROM _settingsdatabase WHERE sgdb_uid = :UID");
-//-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
 static QString QU_OBJECT = "UPDATE %1 SET %2_deletiondate = now(), %2_deletionuseroid = currentuseroid() WHERE %2_id = %3";
@@ -525,23 +523,6 @@ void ISGui::ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID)
 	ISRecordInfoForm RecordInfoForm(MetaTable, ObjectID);
 	SetWaitGlobalCursor(false);
 	RecordInfoForm.Exec();
-}
-//-----------------------------------------------------------------------------
-void ISGui::ShowDatabaseSettings()
-{
-	ISGui::SetWaitGlobalCursor(true);
-	ISQuery qSelectID(QS_SETTING_DATABASE_ID);
-	qSelectID.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-	bool Result = qSelectID.ExecuteFirst();
-	if (Result)
-	{
-		ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_SettingsDatabase", qSelectID.ReadColumn("sgdb_id").toInt())->showMaximized();
-	}
-	ISGui::SetWaitGlobalCursor(false);
-	if (!Result)
-	{
-		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.SettingsDatabaseNotExist"));
-	}
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowObjectForm(QWidget *ObjectForm)
