@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISUuid.h"
+#include "ISTabBarMain.h"
 //-----------------------------------------------------------------------------
 class ISTabWidgetMain : public QTabWidget
 {
@@ -14,10 +14,9 @@ public:
 	ISTabWidgetMain(QWidget *parent = 0);
 	virtual ~ISTabWidgetMain();
 
-	QWidget* GetMainTab(); //ѕолучить указатель на главную вкладку
-
 protected:
 	void tabInserted(int Index) override;
+	void tabRemoved(int index) override;
 
 private:
 	void MenuClicked();
@@ -28,7 +27,7 @@ private:
 	void TabsMenuTriggered(QAction *ActionClicked);
 
 private:
-	QWidget *MainTab;
+	ISTabBarMain *TabBar;
 	QToolButton *ButtonMenu;
 };
 //-----------------------------------------------------------------------------

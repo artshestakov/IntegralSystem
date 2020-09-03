@@ -1,6 +1,5 @@
 #include "ISTabWidgetMain.h"
 #include "ISDefinesGui.h"
-#include "ISSettings.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSystem.h"
@@ -9,11 +8,10 @@
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
 #include "ISMessageBox.h"
-#include "ISTabBarMain.h"
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {
-	ISTabBarMain *TabBar = new ISTabBarMain(this);
+	TabBar = new ISTabBarMain(this);
 	TabBar->setStyleSheet(STYLE_SHEET("ISMainWindow.TabBar"));
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
 	connect(TabBar, &ISTabBarMain::SeparateWindowSignal, this, &ISTabWidgetMain::SeparateWindow);
@@ -23,37 +21,24 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	setTabsClosable(true);
 	setMovable(true);
 	setTabBarAutoHide(true);
+	setDocumentMode(false);
 	setStyleSheet(STYLE_SHEET("ISMainWindow.TabWidget"));
-	setUsesScrollButtons(SETTING_BOOL(CONST_UID_SETTING_TABS_VIEWUSESSCROLLBUTTONS));
-
-	QVBoxLayout *LayoutMainTab = new QVBoxLayout();
-	LayoutMainTab->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-	LayoutMainTab->setSpacing(0);
-
-	MainTab = new QWidget(this);
-	MainTab->setLayout(LayoutMainTab);
-	int IndexMainTab = addTab(MainTab, QString());
+	setUsesScrollButtons(false);
 
 	ButtonMenu = new QToolButton(this);
+	ButtonMenu->setVisible(false);
 	ButtonMenu->setAutoRaise(true);
 	ButtonMenu->setToolTip(LANG("AllTabs"));
 	ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
-	ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_18_18);
+	ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_32_32);
 	ButtonMenu->setPopupMode(QToolButton::InstantPopup);
 	ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-	//ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	connect(ButtonMenu, &QToolButton::clicked, this, &ISTabWidgetMain::MenuClicked);
-	tabBar()->setTabButton(IndexMainTab, QTabBar::RightSide, ButtonMenu);
 }
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::~ISTabWidgetMain()
 {
 
-}
-//-----------------------------------------------------------------------------
-QWidget* ISTabWidgetMain::GetMainTab()
-{
-	return MainTab;
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::tabInserted(int Index)
@@ -74,16 +59,27 @@ void ISTabWidgetMain::tabInserted(int Index)
 		connect(ButtonClose, &QToolButton::clicked, this, &ISTabWidgetMain::CloseCliciked);
 		tabBar()->setTabButton(Index, QTabBar::RightSide, ButtonClose);
 	}
+	else
+	{
+		TabBar->setTabButton(0, QTabBar::RightSide, nullptr);
+	}
+	ButtonMenu->setVisible(count() > 1);
+}
+//-----------------------------------------------------------------------------
+void ISTabWidgetMain::tabRemoved(int index)
+{
+	QTabWidget::tabRemoved(index);
+	ButtonMenu->setVisible(count() > 1);
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::MenuClicked()
 {
 	ISGui::SetWaitGlobalCursor(true);
 	QMenu Menu;
-	for (int i = 1, c = count(); i < c; ++i)
+	for (int i = 0, c = count(); i < c; ++i)
 	{
 		QWidget *TabWidget = widget(i);
-		QAction *ActionTab = Menu.addAction(TabWidget->windowIcon(), TabWidget->windowTitle());
+		QAction *ActionTab = Menu.addAction(tabIcon(i), tabText(i));
 		ActionTab->setCheckable(true);
 		ActionTab->setData(i);
 		if (i == currentIndex())

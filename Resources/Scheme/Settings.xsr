@@ -31,8 +31,7 @@
   
   <_SettingsGroup IsSystem="true" UID="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Name="Tabs" LocalName="Вкладки" IconName="Settings.Tabs" Order="5" System="true"/>
   <_Settings IsSystem="true" UID="{3398D347-6B46-465E-BB58-2B93B92C85EF}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="1" Name="WheelScrollingTabs" Type="Bool" LocalName="Навигация по вкладкам с использованием колеса мыши" DefaultValue="true"/>
-  <_Settings IsSystem="true" UID="{307693A2-BD35-41AE-8F83-016CD340AD43}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="2" Name="ViewUsesScrollButtons" Type="Bool" LocalName="Отображать кнопки перемещения между вкладками" DefaultValue="true"/>
-  <_Settings IsSystem="true" UID="{8C96BF79-A7FB-4562-ABAB-A9C520B4B68D}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="3" Name="SelectionBehavior" Type="String" WidgetEditName="ISComboTabBarSelectionBehavior" LocalName="Поведение при закрытии вкладки" DefaultValue="SelectLeftTab"/>
+  <_Settings IsSystem="true" UID="{8C96BF79-A7FB-4562-ABAB-A9C520B4B68D}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="2" Name="SelectionBehavior" Type="String" WidgetEditName="ISComboTabBarSelectionBehavior" LocalName="Поведение при закрытии вкладки" DefaultValue="SelectLeftTab"/>
 
   <_SettingsGroup IsSystem="true" UID="{8460DB7A-90FB-459E-8343-7A67529414C0}" Name="Sound" LocalName="Звуки" IconName="Settings.Sound" Hint="Использование звуков может повлиять на производительность программы." Order="6" System="true"/>
   <_Settings IsSystem="true" UID="{203F8364-B041-4C20-A7EF-E1FBA8CDB68B}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="1" Name="Volume" Type="Volume" LocalName="Громкость" DefaultValue="50"/>

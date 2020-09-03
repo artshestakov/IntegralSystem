@@ -43,7 +43,8 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
 		QLabel *Label = new QLabel(TabWidget);
 		Label->setText(LANG("NotAccessSystems"));
 		Label->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-		dynamic_cast<QVBoxLayout*>(TabWidget->GetMainTab()->layout())->addWidget(Label, 0, Qt::AlignCenter);
+		Label->setAlignment(Qt::AlignCenter);
+		TabWidget->addTab(Label, QString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -82,21 +83,11 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 		TabWidget->setCurrentIndex(0);
 		return;
 	}
-	else
-	{
-		CurrentSubSystemUID = SubSystemUID;
-	}
+	CurrentSubSystemUID = SubSystemUID;
 
 	ISGui::SetWaitGlobalCursor(true);
-
 	ISMetaSubSystem *MetaSubSystem = ISMetaSystemsEntity::Instance().GetSubSystem(SubSystemUID);
-
 	POINTER_DELETE(CentralForm);
-
-	TabWidget->tabBar()->setTabIcon(0, IconSubSystem);
-	TabWidget->tabBar()->setTabText(0, MetaSubSystem->LocalName);
-	TabWidget->tabBar()->setCurrentIndex(0);
-
 	if (!MetaSubSystem->TableName.isEmpty()) //Открытие таблицы
 	{
 		ISProtocol::OpenSubSystem(MetaSubSystem->TableName, ISMetaData::Instance().GetMetaTable(MetaSubSystem->TableName)->LocalListName);
@@ -107,12 +98,10 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 		ISProtocol::OpenSubSystem(QString(), MetaSubSystem->LocalName);
 		CentralForm = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
 	}
-
 	connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceForm::AddObjectForm);
-	TabWidget->GetMainTab()->layout()->addWidget(CentralForm);
-
+	TabWidget->insertTab(0, CentralForm, IconSubSystem, MetaSubSystem->LocalName);
+	TabWidget->setCurrentIndex(0);
 	ISGui::SetWaitGlobalCursor(false);
-	ISGui::RepaintWidget(CentralForm);
 	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, CentralForm, &ISInterfaceMetaForm::LoadData);
 }
 //-----------------------------------------------------------------------------

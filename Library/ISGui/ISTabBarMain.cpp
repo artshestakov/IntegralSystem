@@ -10,8 +10,8 @@ ISTabBarMain::ISTabBarMain(QWidget *parent)
 	MouseClick(false),
 	MouseRightClickTabIndex(0)
 {
-	setCursor(CURSOR_POINTING_HAND);
 	setObjectName(metaObject()->className());
+	setCursor(CURSOR_POINTING_HAND);
 
 	QString SelectionBehavior = SETTING_STRING(CONST_UID_SETTING_TABS_SELECTIONBEHAVIOR);
 	if (SelectionBehavior == "SelectLeftTab")
