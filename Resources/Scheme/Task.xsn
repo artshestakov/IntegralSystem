@@ -7,7 +7,7 @@
       <Field UID="{9A1F7E8D-004D-4E4B-955C-5FCAFEDE2F32}" Name="Name" Type="String" LabelName="Заголовок" LocalListName="Заголовок" PlaceholderText="Что необходимо сделать?" NotNull="true"/>
       <Field UID="{D908244D-973B-49D1-B477-3304E20D109D}" Name="Space" Type="BigInt" LabelName="Пространство" LocalListName="Пространство" Hint="Пространтсво используется для разделения и фильтрации задач."/>
       <Field UID="{660CEB99-2D94-4013-A805-E43E47BDA030}" Name="Description" Type="Text" ControlWidget="ISTaskDescriptionEdit" LabelName="Описание задачи" LocalListName="Описание задачи" PlaceholderText="Введите описание задачи" HideFromList="true"/>
-      <Field UID="{FBF65264-BCA0-4882-86FD-AFF5A991B645}" Name="Executor" Type="OID" ControlWidget="ISExecutorEdit" LabelName="Исполнитель" LocalListName="Исполнитель"/>
+      <Field UID="{FBF65264-BCA0-4882-86FD-AFF5A991B645}" Name="Executor" Type="BigInt" ControlWidget="ISExecutorEdit" LabelName="Исполнитель" LocalListName="Исполнитель"/>
       <Field UID="{9708C094-D404-4FDD-A17F-C7278D10B0B2}" Name="Type" Type="BigInt" LabelName="Тип задачи" LocalListName="Тип задачи"/>
       <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="BigInt" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет"/>
       <Field UID="{9D4228B1-3DBB-4918-AA5B-A5B36189A2D8}" Name="Important" Type="Bool" DefaultValue="false" ControlWidget="ISTaskImportantEdit" LabelName="Это важная задача" LocalListName="Это важная задача"/>
@@ -27,7 +27,7 @@
     <Foreigns>
       <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Space" ForeignClass="_TaskSpace" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Executor" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Executor" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Type" ForeignClass="_TaskType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Priority" ForeignClass="_TaskPriority" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Status" ForeignClass="_TaskStatus" ForeignField="ID" ForeignViewNameField="Name"/>

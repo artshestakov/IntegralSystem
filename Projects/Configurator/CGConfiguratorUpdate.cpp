@@ -31,11 +31,11 @@ static QString QU_SETTINGS_DATABASE = PREPARE_QUERY("UPDATE _settingsdatabase SE
 													"sgdb_issystem = :IsSystem, "
 													"sgdb_settingname = :SettingName, "
 													"sgdb_useraccessdatabase = :UserAccessDatabase, "
-													"sgdb_administrator = (SELECT usrs_oid FROM _users WHERE usrs_uid = :SystemUserUID) "
+													"sgdb_administrator = (SELECT usrs_id FROM _users WHERE usrs_uid = :SystemUserUID) "
 													"WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
 static QString QI_SETTINGS_DATABASE = PREPARE_QUERY("INSERT INTO _settingsdatabase(sgdb_uid, sgdb_issystem, sgdb_settingname, sgdb_useraccessdatabase, sgdb_administrator) "
-													"VALUES(:UID, :IsSystem, :SettingName, :UserAccessDatabase, (SELECT usrs_oid FROM _users WHERE usrs_uid = :SystemUserUID))");
+													"VALUES(:UID, :IsSystem, :SettingName, :UserAccessDatabase, (SELECT usrs_id FROM _users WHERE usrs_uid = :SystemUserUID))");
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {

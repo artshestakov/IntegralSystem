@@ -6,7 +6,7 @@
       <!--Главное-->
       <Field UID="{4C9623ED-981E-44A5-B3E0-3083F90748EF}" Name="SettingName" Type="String" LabelName="Наименование настройки" LocalListName="Наименование настройки" HideFromObject="true"/>
       <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
-      <Field UID="{F7DA2452-624B-47DA-9A06-01FF1958E537}" Name="Administrator" Type="OID" LabelName="Администратор системы" LocalListName="Администратор системы" Hint="Главный администратор системы"/>
+      <Field UID="{F7DA2452-624B-47DA-9A06-01FF1958E537}" Name="Administrator" Type="BigInt" LabelName="Администратор системы" LocalListName="Администратор системы" Hint="Главный администратор системы"/>
 
       <!--Организация-->
       <Field UID="{B2861EC2-B533-4C07-8961-DB714878BDF1}" Name="OrganizationNameFull" Type="String" LabelName="Полное наименование организации" LocalListName="Полное наименование организации" SeparatorName="Организация"/>
@@ -82,7 +82,7 @@
       <Index Field="StorageFileMaxSize"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
   
