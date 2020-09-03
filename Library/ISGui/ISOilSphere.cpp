@@ -69,11 +69,11 @@ static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT mwag_dateshipping, cnpr
 //-----------------------------------------------------------------------------
 static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT impl_date, pdtp_name, iunl_weightnet "
 												   "FROM implementationunload "
-												   "LEFT JOIN implementation ON impl_id = imdt_implementation "
+												   "LEFT JOIN implementation ON impl_id = iunl_implementation "
 												   "LEFT JOIN producttype ON pdtp_id = impl_producttype "
-												   "WHERE NOT imdt_isdeleted "
+												   "WHERE NOT iunl_isdeleted "
 												   "AND NOT impl_isdeleted "
-												   "AND imdt_stock = :StockID");
+												   "AND iunl_stock = :StockID");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {

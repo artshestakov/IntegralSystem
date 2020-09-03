@@ -29,4 +29,34 @@
     COST 100;
   </Function>
 
+  <Function Name="get_stock_balance">
+    CREATE OR REPLACE FUNCTION public.get_stock_balance(stock_id bigint)
+    RETURNS numeric AS
+    $body$
+    BEGIN
+    RETURN
+    (
+    SELECT sum(mwdt_kilogram)
+    FROM movewagon
+    LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id AND NOT mwdt_isdeleted
+    WHERE NOT mwag_isdeleted
+    AND mwag_datearrival IS NOT NULL
+    AND mwag_stock = stock_id
+    )
+    -
+    (
+    SELECT sum(iunl_weightnet)
+    FROM implementation
+    LEFT JOIN implementationunload ON iunl_implementation = impl_id AND NOT iunl_isdeleted AND iunl_stock = stock_id
+    WHERE NOT impl_isdeleted
+    );
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
 </XSF>

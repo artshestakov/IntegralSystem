@@ -376,6 +376,7 @@
   <Table Name="Stock" UID="{49AA23FB-4679-4349-95FA-DB1933ED65BE}" Alias="stck" LocalName="Склад" LocalListName="Склады" TitleName="Name">
     <Fields>
       <Field UID="{E256950B-F90C-4643-9493-ADFEB2349918}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{C2F49C31-8DAA-4A30-80F3-BE0CC9DF4730}" Name="Balance" Type="Double" ReadOnly="true" LabelName="Баланс" LocalListName="Баланс" QueryText="SELECT get_stock_balance(stck_id)"/>
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
