@@ -6,16 +6,18 @@
 #include "ISConsole.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname, right(indexname, 4) = 'pkey' AS is_primary "
+static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname "
 										  "FROM pg_indexes "
-										  "WHERE schemaname = current_schema()");
+										  "WHERE schemaname = current_schema() "
+										  "AND right(indexname, 4) != 'pkey'");
 //-----------------------------------------------------------------------------
 static QString QD_INDEX = "DROP INDEX public.%1 CASCADE";
 //-----------------------------------------------------------------------------
 static QString QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name "
-	"FROM information_schema.constraint_table_usage "
-	"WHERE table_catalog = current_database() "
-	"AND table_schema = current_schema()");
+										   "FROM information_schema.constraint_table_usage "
+										   "WHERE table_catalog = current_database() "
+										   "AND table_schema = current_schema() "
+										   "AND right(constraint_name, 4) != 'pkey'");
 //-----------------------------------------------------------------------------
 static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
 //-----------------------------------------------------------------------------
@@ -24,23 +26,23 @@ static QString QD_SYSTEMS = PREPARE_QUERY("DELETE FROM _systems");
 static QString QD_SUB_SYSTEMS = PREPARE_QUERY("DELETE FROM _subsystems");
 //-----------------------------------------------------------------------------
 static QString QS_TABLES = PREPARE_QUERY("SELECT table_name "
-	"FROM information_schema.tables "
-	"WHERE table_catalog = current_database() "
-	"AND table_schema = 'public' "
-	"AND table_name != '_cdr' "
-	"ORDER BY table_name");
+										 "FROM information_schema.tables "
+										 "WHERE table_catalog = current_database() "
+										 "AND table_schema = 'public' "
+										 "AND table_name != '_cdr' "
+										 "ORDER BY table_name");
 //-----------------------------------------------------------------------------
 static QString QS_COLUMNS = PREPARE_QUERY("SELECT table_name, column_name "
-	"FROM information_schema.columns "
-	"WHERE table_catalog = current_database() "
-	"AND table_schema = current_schema() "
-	"ORDER BY table_name, ordinal_position");
+										  "FROM information_schema.columns "
+										  "WHERE table_catalog = current_database() "
+										  "AND table_schema = current_schema() "
+										  "ORDER BY table_name, ordinal_position");
 //-----------------------------------------------------------------------------
 static QString QS_SEQUENCES = PREPARE_QUERY("SELECT sequence_name "
-	"FROM information_schema.sequences "
-	"WHERE sequence_catalog = current_database() "
-	"AND sequence_name NOT IN(:Where) "
-	"ORDER BY sequence_name");
+											"FROM information_schema.sequences "
+											"WHERE sequence_catalog = current_database() "
+											"AND sequence_name NOT IN(:Where) "
+											"ORDER BY sequence_name");
 //-----------------------------------------------------------------------------
 static QString QD_SEQUENCE = "DROP SEQUENCE public.%1";
 //-----------------------------------------------------------------------------
@@ -63,17 +65,11 @@ bool CGConfiguratorDelete::indexes()
 		int Deleted = 0, CountIndexes = qSelectIndexes.GetCountResultRows();
 		while (qSelectIndexes.Next())
 		{
-			//Если поле является первичным ключем - пропускаем его
-			if (qSelectIndexes.ReadColumn("is_primary").toBool())
-			{
-				continue;
-			}
-
 			ISQuery qDeleteIndex;
 			Result = qDeleteIndex.Execute(QD_INDEX.arg(qSelectIndexes.ReadColumn("indexname").toString()));
 			if (Result)
 			{
-				++Deleted;
+				ISLOGGER_I(QString("Deleted %1 of %2 indexes").arg(++Deleted).arg(CountIndexes));
 			}
 			else
 			{
@@ -81,7 +77,6 @@ bool CGConfiguratorDelete::indexes()
 				break;
 			}
 		}
-		ISLOGGER_I(QString("Deleted %1 of %2 indexes").arg(Deleted).arg(CountIndexes));
 	}
 	else
 	{
@@ -124,6 +119,7 @@ bool CGConfiguratorDelete::foreigns()
 			else
 			{
 				ErrorString = qDeleteForeign.GetErrorString();
+				break;
 			}
 		}
 	}
@@ -183,12 +179,12 @@ bool CGConfiguratorDelete::oldtables()
 	bool Result = qSelectTables.Execute();
 	if (Result)
 	{
-		while (qSelectTables.Next()) //????? ?????? ???? ??????
+		while (qSelectTables.Next())
 		{
 			QString TableName = qSelectTables.ReadColumn("table_name").toString();
-			if (!ISAlgorithm::VectorContains(VectorString, TableName)) //???? ??????? ?? ???? ?????? ??????????? ? ????-??????
+			if (!ISAlgorithm::VectorContains(VectorString, TableName))
 			{
-				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName))) //???????? ???????
+				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName)))
 				{
 					ISLOGGER_L(QString("Removing table \"%1\"...").arg(TableName));
 					ISQuery qDeleteTable;
@@ -203,22 +199,14 @@ bool CGConfiguratorDelete::oldtables()
 						ErrorString = qDeleteTable.GetErrorString();
 					}
 				}
-				else //?????????? ???????? ???????
+				else
 				{
 					++Skipped;
 				}
 			}
 		}
 	}
-
-	if (Removed == Skipped) //??????? ??? ???????? ?? ???????
-	{
-		ISLOGGER_L("Not found obsolete tables");
-	}
-	else
-	{
-		ISLOGGER_L(QString("Removed tables: %1. Skipped tables: %2").arg(Removed).arg(Skipped));
-	}
+	ISLOGGER_L(Removed == Skipped ? "Not found obsolete tables" : QString("Removed tables: %1. Skipped tables: %2").arg(Removed).arg(Skipped));
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -244,15 +232,15 @@ bool CGConfiguratorDelete::oldfields()
 	bool Result = qSelectColumns.Execute();
 	if (Result)
 	{
-		while (qSelectColumns.Next()) //????? ???? ????? ???? ??????
+		while (qSelectColumns.Next())
 		{
 			QString TableName = qSelectColumns.ReadColumn("table_name").toString();
 			QString ColumnName = qSelectColumns.ReadColumn("column_name").toString();
 			if (Map.contains(TableName))
 			{
-				if (!ISAlgorithm::VectorContains(Map.value(TableName), ColumnName)) //???? ???? ?? ???? ?????? ??????????? ? ????-??????
+				if (!ISAlgorithm::VectorContains(Map.value(TableName), ColumnName))
 				{
-					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName))) //???????? ????
+					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName)))
 					{
 						ISLOGGER_L(QString("Removing column \"%1\"...").arg(ColumnName));
 						ISQuery qDeleteField;
@@ -267,7 +255,7 @@ bool CGConfiguratorDelete::oldfields()
 							ErrorString = qDeleteField.GetErrorString();
 						}
 					}
-					else //?????????? ???????? ????
+					else
 					{
 						++Skipped;
 					}
@@ -275,15 +263,7 @@ bool CGConfiguratorDelete::oldfields()
 			}
 		}
 	}
-
-	if (Removed == Skipped) //???? ??? ???????? ?? ???????
-	{
-		ISLOGGER_L("Not found obsolete fields");
-	}
-	else
-	{
-		ISLOGGER_L(QString("Removed columns: %1. Skipped columns: %2").arg(Removed).arg(Skipped));
-	}
+	ISLOGGER_L(Removed == Skipped ? "Not found obsolete fields" : QString("Removed columns: %1. Skipped columns: %2").arg(Removed).arg(Skipped));
 	return Result;
 }
 //-----------------------------------------------------------------------------
