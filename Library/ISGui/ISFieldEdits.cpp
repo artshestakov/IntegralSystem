@@ -2164,7 +2164,9 @@ void ISListEditPopup::ItemClicked(QListWidgetItem *ListWidgetItem)
 void ISListEditPopup::Add()
 {
 	hide();
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTableForeign->Name));
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTableForeign->Name);
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEditPopup::Created);
+	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::LoadDataFromQuery()
@@ -2312,12 +2314,12 @@ void ISListEdit::InvokeList(PMetaForeign *meta_foreign)
 
 	ListEditPopup = new ISListEditPopup(MetaForeign, this);
 	connect(ListEditPopup, &ISListEditPopup::Selected, this, &ISListEdit::SelectedValue);
+	connect(ListEditPopup, &ISListEditPopup::Created, this, &ISListEdit::SetValue);
 	connect(ListEditPopup, &ISListEditPopup::Hided, this, &ISListEdit::HidedPopup);
 
 	if (MetaTable->ShowOnly)
 	{
 		ButtonList->setPopupMode(QToolButton::DelayedPopup);
-
 		ActionCreate = nullptr;
 		ActionEdit = nullptr;
 	}
@@ -2420,7 +2422,9 @@ void ISListEdit::CreateObject()
 {
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
-		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name));
+		ISObjectFormBase*ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
+		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEdit::SetValue);
+		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 	else
 	{
@@ -2432,13 +2436,14 @@ void ISListEdit::EditObject()
 {
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt()));
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt());
+		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEdit::SetValue);
+		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 	else
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 	}
-
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

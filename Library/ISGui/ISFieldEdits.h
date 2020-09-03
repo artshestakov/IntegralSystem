@@ -780,8 +780,9 @@ class ISListEditPopup : public ISInterfaceForm
 {
 	Q_OBJECT
 
-		signals :
+signals:
 	void Selected(const QVariant &ID, const QString &Text);
+	void Created(int ObjectID);
 	void Hided();
 
 public:
