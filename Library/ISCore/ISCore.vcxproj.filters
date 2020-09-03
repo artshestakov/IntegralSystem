@@ -348,5 +348,8 @@
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsr">
       <Filter>Resources\_OilSphere</Filter>
     </None>
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsf">
+      <Filter>Resources\_OilSphere</Filter>
+    </None>
   </ItemGroup>
 </Project>

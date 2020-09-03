@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XSF Name="Functions.xsf">
+
+  <Function Name="get_counterparty_balance">
+    CREATE OR REPLACE FUNCTION public.get_counterparty_balance(counterparty_id bigint)
+    RETURNS numeric AS
+    $body$
+    BEGIN
+    RETURN
+    (
+    SELECT COALESCE(SUM(cpen_sum), 0)
+    FROM counterpartyenrollment
+    WHERE NOT cpen_isdeleted
+    AND cpen_counterparty = counterparty_id
+    )
+    -
+    (
+    SELECT COALESCE(SUM(cpwo_sum), 0)
+    FROM counterpartywriteoff
+    WHERE NOT cpwo_isdeleted
+    AND cpwo_counterparty = counterparty_id
+    );
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
+</XSF>

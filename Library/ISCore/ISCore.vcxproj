@@ -314,6 +314,7 @@
     <QtRcc Include="..\..\Resources\Resources.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsf" />
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsn" />
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsr" />
   </ItemGroup>
