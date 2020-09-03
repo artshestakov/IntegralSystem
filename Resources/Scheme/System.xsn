@@ -357,22 +357,4 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_LocalNames" UID="{92CBB528-2A68-4F9B-A421-8D1B1390F7B0}" Alias="lcnm" LocalName="Наименование поля" LocalListName="Наименования полей" TitleName="LocalName" IsSystem="true">
-    <Fields>
-      <Field UID="{E2504B2A-95D6-4579-BD85-83342FCFAAAA}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotNull="true"/>
-      <Field UID="{57BF251B-5BFD-4F94-A93E-DCA9211EA087}" Name="FieldName" Type="String" LabelName="Имя поля" LocalListName="Имя поля" NotNull="true"/>
-      <Field UID="{FCA206E1-5C21-472B-BC63-C3746BA9DFC4}" Name="LocalName" Type="String" LabelName="Локальное имя поля" LocalListName="Локальное имя поля"/>
-    </Fields>
-    <Indexes>
-      <Index Field="TableName"/>
-      <Index Field="FieldName"/>
-      <Index Field="LocalName"/>
-      <Index Field="CreationUserOID;TableName;FieldName;LocalName"/>
-      <Index Field="IsDeleted;CreationUserOID"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID"/>
-    </Foreigns>
-  </Table>
-
 </XSN>

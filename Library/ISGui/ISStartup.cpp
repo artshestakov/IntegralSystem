@@ -28,11 +28,6 @@ static QString QS_USER_CHECK = PREPARE_QUERY("SELECT "
 											 "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
 											 "(SELECT usrs_isdeleted FROM _users WHERE usrs_login = :Login)");
 //-----------------------------------------------------------------------------
-static QString QS_LOCAL_NAME = PREPARE_QUERY("SELECT lcnm_tablename, lcnm_fieldname, lcnm_localname "
-											 "FROM _localnames "
-											 "WHERE NOT lcnm_isdeleted "
-											 "AND lcnm_creationuseroid = currentuseroid()");
-//-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
 	bool UseProtocol = CONFIG_BOOL("Protocol/Use");
@@ -132,12 +127,6 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	if (!ISColumnSizer::Instance().Initialize(UseProtocol))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
-		return false;
-	}
-
-	//Инициализация переопределнных локальных имен полей
-	if (!LoadLocalNames(SplashScreen))
-	{
 		return false;
 	}
 
@@ -274,33 +263,5 @@ bool ISStartup::CheckAccessDatabase(ISSplashScreen *SplashScreen)
 		ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.NotAccessToDatabase"));
 	}
 	return AccessDatabase;
-}
-//-----------------------------------------------------------------------------
-bool ISStartup::LoadLocalNames(ISSplashScreen *SplashScreen)
-{
-	ISQuery qSelect(QS_LOCAL_NAME);
-	bool Result = qSelect.Execute();
-	if (Result)
-	{
-		while (qSelect.Next())
-		{
-			PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(qSelect.ReadColumn("lcnm_tablename").toString());
-			if (MetaTable)
-			{
-				PMetaField *MetaField = MetaTable->GetField(qSelect.ReadColumn("lcnm_fieldname").toString());
-				if (MetaField)
-				{
-					MetaField->LabelName = qSelect.ReadColumn("lcnm_localname").toString();
-					MetaField->LocalListName = MetaField->LabelName;
-				}
-			}
-
-		}
-	}
-	else
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.OverrideLocalListName"), qSelect.GetErrorString());
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------

@@ -4,7 +4,6 @@
 #include "ISUserObjectForm.h"
 #include "ISProtocolObjectListForm.h"
 #include "ISDiscussionListForm.h"
-#include "ISControlDatabaseForm.h"
 #include "ISStorageFilesListForm.h"
 #include "ISCalendarObjectForm.h"
 #include "ISDesktopForm.h"
@@ -34,7 +33,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISUserListForm*>("ISUserListForm");
 	qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");
 	qRegisterMetaType<ISProtocolObjectListForm*>("ISProtocolObjectListForm");
-	qRegisterMetaType<ISControlDatabaseForm*>("ISControlDatabaseForm");
 	qRegisterMetaType<ISDiscussionListForm*>("ISDiscussionListForm");
 	qRegisterMetaType<ISStorageFilesListForm*>("ISStorageFilesListForm");
 	qRegisterMetaType<ISCalendarObjectForm*>("ISCalendarObjectForm");

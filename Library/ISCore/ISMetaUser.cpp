@@ -56,9 +56,7 @@ bool ISMetaUser::Initialize()
 		UserData->GroupID = qSelectUser.ReadColumn("usrs_group").toInt();
 		UserData->FIO = qSelectUser.ReadColumn("usrs_fio").toString();
 		UserData->Birthday = qSelectUser.ReadColumn("usrs_birthday").toDate();
-		UserData->IPAddress = ISDatabase::Instance().GetInetClientAddress();
 		UserData->AccessAllowed = qSelectUser.ReadColumn("usrs_accessallowed").toBool();
-		
 		UserData->AccountLifeTime = qSelectUser.ReadColumn("usrs_accountlifetime").toBool();
 		UserData->AccountLifeTimeStart = qSelectUser.ReadColumn("usrs_accountlifetimestart").toDate();
 		UserData->AccountLifeTimeEnd = qSelectUser.ReadColumn("usrs_accountlifetimeend").toDate();

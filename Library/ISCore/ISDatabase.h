@@ -14,20 +14,6 @@ public:
 	ISConnectOptionDB GetOption(const QString &ConnectionName); //Получить параметры подключения к БД
 
 	bool CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist); //Проверить существование базы данных
-	QString GetVersionPostgres() const; //Получить версию PostgreSQL
-	QString GetCurrentDatabaseSize() const; //Получить размер базы данных
-	QString GetTableSize(const QString &TableName) const; //Получить размер таблицы
-	QString GetTableSizeWithIndices(const QString &TableName) const; //Получить размер таблицы
-	int GetTableRowCount(const QString &TableName) const; //Получить количество строк в таблице
-	QString GetStartTimeServer() const; //Получить время запуска сервера баз данных
-	QString GetLoadConfigurationTime() const; //Получить время загрузки конфигурации
-	QString GetInetClientAddress() const; //Получить адрес удаленной стороны соединения
-	QString GetInetServerAddress() const; //Получить адрес локальной стороны соединения
-	int GetServerProcessID() const; //Получить код серверного процесса
-	QString GetDatabaseCollate() const; //Получить LC_COLLATE базы данных
-	QString GetDatabaseCType() const; //Получить CType базы данных
-	QString GetDatabaseDataDirectory() const; //Получить путь к кластеру базы данных
-	QString GetAge(const QDateTime &DateTime) const;
 	QVariant GetValue(const QString &TableName, const QString &FieldName, int ObjectID) const; //Получить значение поля из таблицы по идентификатору записи
 
 	bool Connect(const QString &ConnectionName, const QString &Host, int Port, const QString &Database, const QString &Login, const QString &Password); //Подключение к базе данных

@@ -273,9 +273,6 @@
     <ClCompile Include="ISConnectionForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISControlDatabaseForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISDesktopForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -588,9 +585,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISConnectionForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISControlDatabaseForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISDesktopForm.h">

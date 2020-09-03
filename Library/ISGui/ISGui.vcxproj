@@ -192,7 +192,6 @@
     <ClCompile Include="ISComboSearchWidgets.cpp" />
     <ClCompile Include="ISConnectionForm.cpp" />
     <ClCompile Include="ISContextMenu.cpp" />
-    <ClCompile Include="ISControlDatabaseForm.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
@@ -376,7 +375,6 @@
     <QtMoc Include="ISCalendarForm.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />
     <QtMoc Include="ISConnectionForm.h" />
-    <QtMoc Include="ISControlDatabaseForm.h" />
     <QtMoc Include="ISDesktopForm.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
