@@ -25,9 +25,9 @@
       <Index Field="Status"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Space" ForeignClass="_TaskSpace" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Executor" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Executor" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Type" ForeignClass="_TaskType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Priority" ForeignClass="_TaskPriority" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Status" ForeignClass="_TaskStatus" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -104,7 +104,7 @@
       <Index Field="Comment"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
@@ -136,7 +136,7 @@
       <Index Field="Task;Link" Unique="true"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Link" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -160,7 +160,7 @@
       <Index Field="Size"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>

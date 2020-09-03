@@ -50,8 +50,7 @@ void ISUserListForm::ChangePassword()
 
 	if (ISGui::ShowUserPasswordForm(GetCurrentRecordValue("ID").toInt()))
 	{
-		QString FullName = GetCurrentRecordValue("Surname").toString() + SYMBOL_SPACE + GetCurrentRecordValue("Name").toString() + SYMBOL_SPACE + GetCurrentRecordValue("Patronymic").toString();
-		ISMessageBox::ShowInformation(this, LANG("Message.Information.ChangePasswordUser").arg(FullName));
+		ISMessageBox::ShowInformation(this, LANG("Message.Information.ChangePasswordUser").arg(GetCurrentRecordValue("FIO").toString()));
 	}
 }
 //-----------------------------------------------------------------------------

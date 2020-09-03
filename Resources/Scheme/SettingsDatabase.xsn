@@ -82,7 +82,7 @@
       <Index Field="StorageFileMaxSize"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="Administrator" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
   

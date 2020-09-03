@@ -2,8 +2,6 @@
 <LANG Name="Configurator">
   
   <!--System user-->
-  <Local Name="SystemUser.Surname" Russian="Главный"/>
-  <Local Name="SystemUser.Name" Russian="администратор"/>
-  <Local Name="SystemUser.Patronymic" Russian="postgres"/>
+  <Local Name="SystemUser.FIO" Russian="Главный администратор postgres"/>
   
 </LANG>

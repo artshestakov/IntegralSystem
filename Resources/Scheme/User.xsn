@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="User.xsn">
   
-  <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="Surname;Name;Patronymic" ObjectForm="ISUserObjectForm">
+  <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="FIO" ObjectForm="ISUserObjectForm">
     <Fields>
-      <Field UID="{6B61D73F-A200-499B-BD31-4168908FA35C}" Name="OID" Type="OID" ReadOnly="true" LabelName="Системный идентификатор" LocalListName="Системный идентификатор" HideFromList="true" Hint="Внутренний идентификатор пользователя в базе данных."/>
-      <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" LayoutName="GroupSubdivision"/>
-      <Field UID="{861223FE-18B5-4557-99D1-AEA74D42483E}" Name="Surname" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Фамилия" LocalListName="Фамилия" NotNull="true" LayoutName="FIO"/>
-      <Field UID="{7FC68D04-457E-405A-AB43-75E960148742}" Name="Name" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Имя" LocalListName="Имя" NotNull="true" LayoutName="FIO"/>
-      <Field UID="{FDDA65F7-0C37-4B42-BC43-E8D889DBADA2}" Name="Patronymic" Type="String" RegExp="^[А-ЯЁа-яёA-Za-z-]+$" LabelName="Отчество" LocalListName="Отчество" LayoutName="FIO"/>
+      <Field UID="{6B61D73F-A200-499B-BD31-4168908FA35C}" Name="OID" Type="OID" ReadOnly="true" LabelName="Системный идентификатор" LocalListName="Системный идентификатор" Hint="Внутренний идентификатор пользователя в базе данных."/>
+      <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа"/>
+      <Field UID="{79E27A03-6412-4236-B9A2-761DA41E80E6}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
       <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Size="16" Lower="true" RegExp="^([a-z]+)$" LabelName="Логин" LocalListName="Логин" Hint="Логин должен быть в нижнем регистре и на английском языке." NotNull="true"/>
       <Field UID="{194CC7C5-E4FB-46AA-B6BE-EE8420A5BB9D}" Name="Sex" Type="Sex" ControlWidget="ISSexEdit" LabelName="Пол" LocalListName="Пол" NotNull="true" LayoutName="Sex"/>
       <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true" LayoutName="Sex"/>
@@ -20,9 +18,7 @@
     <Indexes>
       <Index Field="OID" Unique="true"/>
       <Index Field="Group"/>
-      <Index Field="Surname"/>
-      <Index Field="Name"/>
-      <Index Field="Patronymic"/>
+      <Index Field="FIO"/>
       <Index Field="Login" Unique="true"/>
       <Index Field="Sex"/>
       <Index Field="Birthday"/>
@@ -163,9 +159,9 @@
       <Index Field="Type"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Type" ForeignClass="_UserPasswordChangedType" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="Surname;Name;Patronymic"/>
+      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
     </Foreigns>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время изменения"/>

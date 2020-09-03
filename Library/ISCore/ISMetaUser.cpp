@@ -8,9 +8,7 @@ static QString QS_USER = PREPARE_QUERY("SELECT "
 									   "usrs_id, "
 									   "usrs_oid, "
 									   "usrs_group, "
-									   "usrs_surname, "
-									   "usrs_name, "
-									   "usrs_patronymic, "
+									   "usrs_fio, "
 									   "usrs_birthday, "
 									   "usrs_accessallowed, "
 									   "usrs_accountlifetime, "
@@ -56,12 +54,9 @@ bool ISMetaUser::Initialize()
 		UserData->ID = qSelectUser.ReadColumn("usrs_id").toInt();
 		UserData->OID = qSelectUser.ReadColumn("usrs_oid").toInt();
 		UserData->GroupID = qSelectUser.ReadColumn("usrs_group").toInt();
-		UserData->Surname = qSelectUser.ReadColumn("usrs_surname").toString();
-		UserData->Name = qSelectUser.ReadColumn("usrs_name").toString();
-		UserData->Patronymic = qSelectUser.ReadColumn("usrs_patronymic").toString();
+		UserData->FIO = qSelectUser.ReadColumn("usrs_fio").toString();
 		UserData->Birthday = qSelectUser.ReadColumn("usrs_birthday").toDate();
 		UserData->IPAddress = ISDatabase::Instance().GetInetClientAddress();
-		UserData->FullName = UserData->Surname + SYMBOL_SPACE + UserData->Name + SYMBOL_SPACE + UserData->Patronymic;
 		UserData->AccessAllowed = qSelectUser.ReadColumn("usrs_accessallowed").toBool();
 		
 		UserData->AccountLifeTime = qSelectUser.ReadColumn("usrs_accountlifetime").toBool();

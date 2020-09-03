@@ -36,7 +36,7 @@
     RETURNS varchar AS
     $body$
     BEGIN
-    RETURN concat(usrs_surname, ' ', usrs_name, ' ' || usrs_patronymic) FROM _users WHERE usrs_oid = oid;
+    RETURN usrs_fio FROM _users WHERE usrs_oid = oid;
     END;
     $body$
     LANGUAGE 'plpgsql'
@@ -51,7 +51,7 @@
     RETURNS varchar AS
     $body$
     BEGIN
-    RETURN concat(usrs_surname, ' ', usrs_name, ' ' || usrs_patronymic) FROM _users WHERE usrs_id = id;
+    RETURN usrs_fio FROM _users WHERE usrs_id = id;
     END;
     $body$
     LANGUAGE 'plpgsql'

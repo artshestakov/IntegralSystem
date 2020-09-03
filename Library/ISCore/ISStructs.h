@@ -35,14 +35,11 @@ struct ISMetaUserData
     bool System; //Системный
     int ID; //Идентификатор пользователя
 	int OID; //Системный идентификатор пользователя
-    QString Surname; //Фамилия
-    QString Name; //Имя
-    QString Patronymic; //Отчество
+	QString FIO; //ФИО
     QDate Birthday; //Дата рождения
     QString Login; //Логин
     QString Password; //Пароль
     QString IPAddress; //IP-адресс
-    QString FullName; //ФИО
     bool AccessAllowed; //Доступ разрешен
     bool AccountLifeTime; //Использовать срок действия учётной записи
     QDate AccountLifeTimeStart; //Начало действия учётной записи
