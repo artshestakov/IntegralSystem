@@ -91,7 +91,7 @@ void ISListWidget::SetVisibleNoData(bool Visible)
 		LabelCenter = new QLabel(LANG("NoData"), this);
 		LabelCenter->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 		LabelCenter->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-		LabelCenter->setWordWrap(true);
+		LabelCenter->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 	}
 	LabelCenter->setVisible(Visible);
 }
@@ -154,6 +154,7 @@ void ISListWidget::paintEvent(QPaintEvent *PaintEvent)
 		Point.setX(Point.x() - (LabelCenter->width() / 2));
 		Point.setY(Point.y() - (LabelCenter->height() / 2));
 		LabelCenter->move(Point);
+		qDebug() << LabelCenter->text();
 	}
 }
 //-----------------------------------------------------------------------------

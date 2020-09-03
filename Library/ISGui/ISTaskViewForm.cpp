@@ -19,19 +19,21 @@
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "
 									   "t.task_description, "
-									   "userfullnamebyoid(t.task_executor) AS task_executor, "
+									   "ue.usrs_fio AS task_executor, "
 									   "tt.tstp_name AS task_type, "
 									   "ts.tsst_uid AS task_status_uid, "
 									   "ts.tsst_name AS task_status_name, "
 									   "tp.tspr_uid AS task_priority_uid, "
 									   "tp.tspr_name AS task_priority_name, "
-									   "userfullnamebyoid(t.task_creationuseroid) AS task_owner, "
+									   "uo.usrs_fio AS task_owner, "
 									   "t.task_important, "
 									   "t.task_creationdate, "
 									   "t.task_updationdate, "
 									   "t.task_parent AS task_parent_id, "
 									   "p.task_name AS task_parent_name "
 									   "FROM _task t "
+									   "LEFT JOIN _users ue ON ue.usrs_id = t.task_executor "
+									   "LEFT JOIN _users uo ON uo.usrs_oid = t.task_creationuseroid "
 									   "LEFT JOIN _tasktype tt ON tt.tstp_id = t.task_type "
 									   "LEFT JOIN _taskstatus ts ON ts.tsst_id = t.task_status "
 									   "LEFT JOIN _taskpriority tp ON tp.tspr_id = t.task_priority "
@@ -83,8 +85,9 @@ static QString QU_STATUS = PREPARE_QUERY("UPDATE _task SET "
 static QString QI_STATUS_HISTORY = PREPARE_QUERY("INSERT INTO _taskstatushistory(tshr_task, tshr_status) "
 												 "VALUES(:TaskID, :StatusID)");
 //-----------------------------------------------------------------------------
-static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, userfullnamebyoid(tfls_creationuseroid) "
+static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, usrs_fio "
 									   "FROM _taskfile "
+									   "LEFT JOIN _users u ON u.usrs_oid = tfls_creationuseroid "
 									   "WHERE NOT tfls_isdeleted "
 									   "AND tfls_task = :TaskID "
 									   "ORDER BY tfls_id");
@@ -102,13 +105,14 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "task_id, "
 									   "task_name, "
 									   "task_description, "
-									   "userfullnamebyoid(tlnk_creationuseroid), "
+									   "usrs_fio, "
 									   "tlnk_creationdate, "
 									   "tsst_uid AS task_status_uid, "
 									   "tsst_name AS task_status_name, "
 									   "tsst_icon AS task_status_icon "
 									   "FROM _tasklink "
 									   "LEFT JOIN _task ON tlnk_link = task_id "
+									   "LEFT JOIN _users ON usrs_oid = tlnk_creationuseroid "
 									   "LEFT JOIN _taskstatus ON task_status = tsst_id "
 									   "WHERE NOT tlnk_isdeleted "
 									   "AND tlnk_task = :TaskID "
@@ -123,11 +127,12 @@ static QString QD_LINK = PREPARE_QUERY("DELETE FROM _tasklink "
 static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "tcom_id, "
 										  "userphotobyoid(tcom_creationuseroid), "
-										  "userfullnamebyoid(tcom_creationuseroid), "
+										  "usrs_fio, "
 										  "(SELECT task_creationuseroid = tcom_creationuseroid AS is_user_owner FROM _task WHERE task_id = tcom_task), "
 										  "tcom_comment, "
 										  "tcom_creationdate "
 										  "FROM _taskcomment "
+										  "LEFT JOIN _users ON usrs_oid = tcom_creationuseroid "
 										  "WHERE tcom_task = :TaskID "
 										  "ORDER BY tcom_id");
 //-----------------------------------------------------------------------------
@@ -350,7 +355,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ListWidgetLinks->setAlternatingRowColors(true);
 	ListWidgetLinks->setContextMenuPolicy(Qt::ActionsContextMenu);
 	ListWidgetLinks->setFrameShape(QFrame::NoFrame);
-	ListWidgetLinks->SetVisibleNoData(true);
 	connect(ListWidgetLinks, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::LinkOpen);
 	TabWidget->addTab(ListWidgetLinks, BUFFER_ICONS("Document"), LANG("Task.Files").arg(0));
 	LinkLoadList();
@@ -363,7 +367,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ListWidgetFiles = new ISListWidget(TabWidget);
 	ListWidgetFiles->setLayout(new QVBoxLayout());
 	ListWidgetFiles->setFrameShape(QFrame::NoFrame);
-	ListWidgetFiles->SetVisibleNoData(true);
 	TabWidget->addTab(ListWidgetFiles, BUFFER_ICONS("Document"), LANG("Task.LinkTask").arg(0));
 	FileLoadList();
 
@@ -867,6 +870,7 @@ void ISTaskViewForm::FileLoadList()
 	qSelectFiles.BindValue(":TaskID", TaskID);
 	if (qSelectFiles.Execute())
 	{
+		int Rows = qSelectFiles.GetCountResultRows();
 		while (qSelectFiles.Next())
 		{
 			int ID = qSelectFiles.ReadColumn("tfls_id").toInt();
@@ -876,14 +880,15 @@ void ISTaskViewForm::FileLoadList()
 			QString Extension = qSelectFiles.ReadColumn("tfls_extension").toString();
 			qint64 Size = qSelectFiles.ReadColumn("tfls_size").toLongLong();
 			QByteArray Icon = qSelectFiles.ReadColumn("tfls_icon").toByteArray();
-			QString UserFullName = qSelectFiles.ReadColumn("userfullnamebyoid").toString();
+			QString UserFIO = qSelectFiles.ReadColumn("usrs_fio").toString();
 
-			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_45_45), IsImage, Name, ID, Extension, Size, UserFullName, CreationDate);
+			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_45_45), IsImage, Name, ID, Extension, Size, UserFIO, CreationDate);
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetFiles);
 			ListWidgetItem->setSizeHint(Widget->sizeHint());
 			ListWidgetFiles->setItemWidget(ListWidgetItem, Widget);
 		}
-		TabWidget->setTabText(TabWidget->indexOf(ListWidgetFiles), LANG("Task.Files").arg(qSelectFiles.GetCountResultRows()));
+		TabWidget->setTabText(TabWidget->indexOf(ListWidgetFiles), LANG("Task.Files").arg(Rows));
+		ListWidgetFiles->SetVisibleNoData(!Rows);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -1089,13 +1094,14 @@ void ISTaskViewForm::LinkLoadList()
 	qSelectLink.BindValue(":TaskID", TaskID);
 	if (qSelectLink.Execute())
 	{
+		int Rows = qSelectLink.GetCountResultRows();
 		while (qSelectLink.Next())
 		{
 			int LinkID = qSelectLink.ReadColumn("tlnk_id").toInt();
 			int LinkTaskID = qSelectLink.ReadColumn("task_id").toInt();
 			QString LinkTaskName = qSelectLink.ReadColumn("task_name").toString();
 			QString LinkTaskDescription = qSelectLink.ReadColumn("task_description").toString();
-			QString LinkUser = qSelectLink.ReadColumn("userfullnamebyoid").toString();
+			QString LinkUser = qSelectLink.ReadColumn("usrs_fio").toString();
 			QString LinkCreationDate = ISGui::ConvertDateTimeToString(qSelectLink.ReadColumn("tlnk_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 			ISUuid TaskLinkStatusUID = qSelectLink.ReadColumn("task_status_uid");
 			QString TaskLinkStatusName = qSelectLink.ReadColumn("task_status_name").toString();
@@ -1110,7 +1116,8 @@ void ISTaskViewForm::LinkLoadList()
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 35));
 			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, TaskLinkStatusUID == CONST_UID_TASK_STATUS_DONE || TaskLinkStatusUID == CONST_UID_TASK_STATUS_CLOSE);
 		}
-		TabWidget->setTabText(TabWidget->indexOf(ListWidgetLinks), LANG("Task.LinkTask").arg(qSelectLink.GetCountResultRows()));
+		TabWidget->setTabText(TabWidget->indexOf(ListWidgetLinks), LANG("Task.LinkTask").arg(Rows));
+		ListWidgetLinks->SetVisibleNoData(!Rows);
 	}
 	else
 	{
@@ -1202,7 +1209,7 @@ void ISTaskViewForm::CommentLoadList()
 		{
 			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
 			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyoid").toByteArray());
-			QString UserFullName = qSelectComments.ReadColumn("userfullnamebyoid").toString();
+			QString UserFullName = qSelectComments.ReadColumn("usrs_fio").toString();
 			bool IsUserOwner = qSelectComments.ReadColumn("is_user_owner").toBool();
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();

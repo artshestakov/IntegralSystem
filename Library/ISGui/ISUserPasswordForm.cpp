@@ -12,7 +12,7 @@
 #include "ISGui.h"
 #include "ISPasswordWidthWidget.h"
 //-----------------------------------------------------------------------------
-static QString QS_USER = PREPARE_QUERY("SELECT usrs_login, userfullnamebyid(:UserID), CASE WHEN length(passwd) > 0 THEN true ELSE false END "
+static QString QS_USER = PREPARE_QUERY("SELECT usrs_login, usrs_fio, CASE WHEN length(passwd) > 0 THEN true ELSE false END "
 									   "FROM _users "
 									   "LEFT JOIN pg_shadow ON usename = usrs_login "
 									   "WHERE usrs_id = :UserID");
@@ -35,7 +35,7 @@ ISUserPasswordForm::ISUserPasswordForm(int user_id)
 	if (qSelectUser.ExecuteFirst())
 	{
 		Login = qSelectUser.ReadColumn("usrs_login").toString();
-		UserFullName = qSelectUser.ReadColumn("userfullnamebyid").toString();
+		UserFullName = qSelectUser.ReadColumn("usrs_fio").toString();
 		ExistPassword = qSelectUser.ReadColumn("case").toBool();
 	}
 

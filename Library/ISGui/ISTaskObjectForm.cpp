@@ -23,7 +23,7 @@ bool ISTaskObjectForm::Save()
 	bool Result = qSelectStatus.ExecuteFirst();
 	if (Result)
 	{
-		SetFieldValue("Status", qSelectStatus.ReadColumn("tsst_id"));
+		AddVirtualField("Status", qSelectStatus.ReadColumn("tsst_id"));
 		Result = ISObjectFormBase::Save();
 	}
 	else

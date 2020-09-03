@@ -17,10 +17,10 @@
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, usrs_oid, userfullnamebyoid(usrs_oid) "
+static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, usrs_oid, usrs_fio "
 										"FROM _users "
 										"WHERE usrs_uid != :PostgresUID "
-										"ORDER BY userfullnamebyoid(usrs_oid)");
+										"ORDER BY usrs_fio");
 //-----------------------------------------------------------------------------
 ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
@@ -92,7 +92,7 @@ void ISMonitorActivityForm::LoadData()
 
 			int UserID = qSelect.ReadColumn("usrs_id").toInt();
 			int UserOID = qSelect.ReadColumn("usrs_oid").toInt();
-			QString UserFullName = qSelect.ReadColumn("userfullnamebyoid").toString();
+			QString UserFullName = qSelect.ReadColumn("usrs_fio").toString();
 
 			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline, UserID, UserOID, UserFullName, ScrollArea);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivityForm::ShowUserCard);
