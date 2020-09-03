@@ -13,12 +13,13 @@ static QString QS_USER = PREPARE_QUERY("SELECT "
 									   "usrs_accessallowed, "
 									   "usrs_accountlifetime, "
 									   "usrs_accountlifetimestart, "
-									   "usrs_accountlifetimeend "
+									   "usrs_accountlifetimeend, "
+									   "usgp_name, "
+									   "usgp_fullaccess "
 									   "FROM _users "
+									   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
 									   "WHERE NOT usrs_isdeleted "
 									   "AND usrs_login = :Login");
-//-----------------------------------------------------------------------------
-static QString QS_USER_GROUP = PREPARE_QUERY("SELECT usgp_name, usgp_fullaccess FROM _usergroup WHERE NOT usgp_isdeleted AND usgp_id = :GroupID");
 //-----------------------------------------------------------------------------
 ISMetaUser::ISMetaUser()
 	: UserData(new ISMetaUserData()),
@@ -60,28 +61,13 @@ bool ISMetaUser::Initialize()
 		UserData->AccountLifeTime = qSelectUser.ReadColumn("usrs_accountlifetime").toBool();
 		UserData->AccountLifeTimeStart = qSelectUser.ReadColumn("usrs_accountlifetimestart").toDate();
 		UserData->AccountLifeTimeEnd = qSelectUser.ReadColumn("usrs_accountlifetimeend").toDate();
+		UserData->GroupName = qSelectUser.ReadColumn("usgp_name").toString();
+		UserData->GroupFullAccess = qSelectUser.ReadColumn("usgp_fullaccess").toBool();
 	}
 	else
 	{
 		ErrorString = qSelectUser.GetErrorString();
-	}
-
-	if (Result)
-	{
-		ISQuery qSelectGroup(QS_USER_GROUP);
-		qSelectGroup.BindValue(":GroupID", UserData->GroupID);
-		Result = qSelectGroup.ExecuteFirst();
-		if (Result)
-		{
-			UserData->GroupName = qSelectGroup.ReadColumn("usgp_name").toString();
-			UserData->GroupFullAccess = qSelectGroup.ReadColumn("usgp_fullaccess").toBool();
-		}
-		else
-		{
-			ErrorString = qSelectGroup.GetErrorString();
-		}
-	}
-	
+	}	
 	return Result;
 }
 //-----------------------------------------------------------------------------
