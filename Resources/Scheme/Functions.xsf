@@ -129,4 +129,19 @@
     COST 100;
   </Function>
 
+  <Function Name="get_status_id_by_uid">
+    CREATE OR REPLACE FUNCTION public.get_status_id_by_uid(status_uid uuid)
+    RETURNS bigint AS
+    $body$
+    BEGIN
+    RETURN tsst_id FROM _taskstatus WHERE tsst_uid = status_uid;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
 </XSF>

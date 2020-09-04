@@ -13,7 +13,6 @@
 #include "ISProtocolListForm.h"
 #include "ISInternalDirectoriesForm.h"
 #include "ISTaskListForm.h"
-#include "ISTaskObjectForm.h"
 #include "ISUserGroupListForm.h"
 #include "ISMonitorActivityForm.h"
 #include "ISFullTextSearchForm.h"
@@ -44,7 +43,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISProtocolListForm*>("ISProtocolListForm");
 	qRegisterMetaType<ISInternalDirectoriesForm*>("ISInternalDirectoriesForm");
 	qRegisterMetaType<ISTaskListForm*>("ISTaskListForm");
-	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
 	qRegisterMetaType<ISUserGroupListForm*>("ISUserGroupListForm");
 	qRegisterMetaType<ISMonitorActivityForm*>("ISMonitorActivityForm");
 	qRegisterMetaType<ISFullTextSearchForm*>("ISFullTextSearchForm");

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="Task.xsn">
 
-  <Table Name="_Task" UID="{0C4396AF-BD65-482C-BFE0-D46C072341AC}" Alias="task" LocalName="Задача" LocalListName="Задачи" ObjectForm="ISTaskObjectForm" TitleName="Name">
+  <Table Name="_Task" UID="{0C4396AF-BD65-482C-BFE0-D46C072341AC}" Alias="task" LocalName="Задача" LocalListName="Задачи" TitleName="Name">
     <Fields>
       <Field UID="{9142958F-8B24-479A-BD96-345E24B5B6DB}" Name="Parent" Type="Int" LabelName="Родительская задача" LocalListName="Родительская задача" HideFromList="true" HideFromObject="true" NotSearch="true"/>
       <Field UID="{9A1F7E8D-004D-4E4B-955C-5FCAFEDE2F32}" Name="Name" Type="String" LabelName="Заголовок" LocalListName="Заголовок" PlaceholderText="Что необходимо сделать?" NotNull="true" HideFromList="true"/>
@@ -12,7 +12,7 @@
       <Field UID="{9708C094-D404-4FDD-A17F-C7278D10B0B2}" Name="Type" Type="BigInt" LabelName="Тип задачи" LocalListName="Тип задачи"/>
       <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="BigInt" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет"/>
       <Field UID="{9D4228B1-3DBB-4918-AA5B-A5B36189A2D8}" Name="Important" Type="Bool" DefaultValue="false" ControlWidget="ISTaskImportantEdit" LabelName="Это важная задача" LocalListName="Это важная задача"/>
-      <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="BigInt" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true" HideFromObject="true"/>
+      <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="BigInt" DefaultValue="get_status_id_by_uid('2FD27958-6EC9-4E78-88F4-0A2BFDFE4716'::UUID)" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true" HideFromObject="true"/>
     </Fields>
     <Indexes>
       <Index Field="Parent"/>

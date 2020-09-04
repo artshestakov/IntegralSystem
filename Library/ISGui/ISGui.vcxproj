@@ -287,7 +287,6 @@
     <ClCompile Include="ISTabWidgetMain.cpp" />
     <ClCompile Include="ISTaskForm.cpp" />
     <ClCompile Include="ISTaskListForm.cpp" />
-    <ClCompile Include="ISTaskObjectForm.cpp" />
     <ClCompile Include="ISTaskSearchByTextForm.cpp" />
     <ClCompile Include="ISTaskViewForm.cpp" />
     <ClCompile Include="ISToolBarAccessTable.cpp" />
@@ -394,7 +393,6 @@
     <QtMoc Include="ISSettingsForm.h" />
     <QtMoc Include="ISStorageFilesListForm.h" />
     <QtMoc Include="ISTaskForm.h" />
-    <QtMoc Include="ISTaskObjectForm.h" />
     <QtMoc Include="ISTaskViewForm.h" />
     <QtMoc Include="ISUserGroupListForm.h" />
     <QtMoc Include="ISUserListForm.h" />

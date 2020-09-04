@@ -327,9 +327,6 @@
     <ClCompile Include="ISTaskForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISTaskObjectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISTaskViewForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -642,9 +639,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskViewForm.h">
