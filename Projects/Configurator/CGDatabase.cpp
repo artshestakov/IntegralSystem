@@ -758,7 +758,6 @@ bool CGDatabase::Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaFiel
 		{ "Name", MetaField->Name },
 		{ "Type", ISMetaData::Instance().GetTypeDB(MetaField->Type) },
 		{ "Size", MetaField->Size },
-		{ "DefaultValue", MetaField->DefaultValue },
 		{ "LabelName", MetaField->LabelName },
 		{ "LocalListName", MetaField->LocalListName },
 		{ "NotNull", MetaField->NotNull },
