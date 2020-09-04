@@ -51,8 +51,9 @@ protected:
 	void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
 
 private:
-	QImage ImageNotSelected;
-	QImage ImageSelected;
+	QImage Image;
+	int ImageWidth;
+	int ImageHeight;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
