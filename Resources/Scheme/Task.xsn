@@ -3,8 +3,9 @@
 
   <Table Name="_Task" UID="{0C4396AF-BD65-482C-BFE0-D46C072341AC}" Alias="task" LocalName="Задача" LocalListName="Задачи" ObjectForm="ISTaskObjectForm" TitleName="Name">
     <Fields>
-      <Field UID="{9142958F-8B24-479A-BD96-345E24B5B6DB}" Name="Parent" Type="Int" LabelName="Родительская задача" LocalListName="Родительская задача" HideFromObject="true" NotSearch="true"/>
-      <Field UID="{9A1F7E8D-004D-4E4B-955C-5FCAFEDE2F32}" Name="Name" Type="String" LabelName="Заголовок" LocalListName="Заголовок" PlaceholderText="Что необходимо сделать?" NotNull="true"/>
+      <Field UID="{9142958F-8B24-479A-BD96-345E24B5B6DB}" Name="Parent" Type="Int" LabelName="Родительская задача" LocalListName="Родительская задача" HideFromList="true" HideFromObject="true" NotSearch="true"/>
+      <Field UID="{9A1F7E8D-004D-4E4B-955C-5FCAFEDE2F32}" Name="Name" Type="String" LabelName="Заголовок" LocalListName="Заголовок" PlaceholderText="Что необходимо сделать?" NotNull="true" HideFromList="true"/>
+      <Field UID="{4E3E704D-A02B-4A85-9615-3A20CDF888A5}" Name="NameVirtual" Type="String" LabelName="Заголовок" LocalListName="Заголовок" HideFromObject="true" QueryText="CASE WHEN task_parent IS NULL THEN task_name ELSE concat('#', task_parent, ' \ ', task_name) END"/>
       <Field UID="{D908244D-973B-49D1-B477-3304E20D109D}" Name="Space" Type="BigInt" LabelName="Пространство" LocalListName="Пространство" Hint="Пространтсво используется для разделения и фильтрации задач."/>
       <Field UID="{660CEB99-2D94-4013-A805-E43E47BDA030}" Name="Description" Type="Text" ControlWidget="ISTaskDescriptionEdit" LabelName="Описание задачи" LocalListName="Описание задачи" PlaceholderText="Введите описание задачи" HideFromList="true"/>
       <Field UID="{FBF65264-BCA0-4882-86FD-AFF5A991B645}" Name="Executor" Type="BigInt" ControlWidget="ISExecutorEdit" LabelName="Исполнитель" LocalListName="Исполнитель"/>

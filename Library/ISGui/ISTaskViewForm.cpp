@@ -198,7 +198,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
 
-	setWindowTitle(TaskParentID ? LANG("Task.ViewFormTitle.SubTask") : LANG("Task.ViewFormTitle.Task").arg(TaskID).arg(TaskName));
+	setWindowTitle(TaskParentID ? LANG("Task.ViewFormTitle.SubTask").arg(TaskParentID).arg(TaskName) : LANG("Task.ViewFormTitle.Task").arg(TaskID).arg(TaskName));
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
@@ -273,7 +273,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 		LayoutTitle->addWidget(LabelParent);
 	}
 
-	LabelName = new ISLabelElided((TaskParentID ? " / " : QString()) + QString("#%1: %2").arg(TaskID).arg(TaskName), this);
+	LabelName = new ISLabelElided((TaskParentID ? " \\ " : QString()) + QString("#%1: %2").arg(TaskID).arg(TaskName), this);
 	LabelName->SetColorText(ISDefines::Gui::COLOR_DARK_GRAY);
 	LabelName->SetElidedToolTip(true);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
@@ -828,7 +828,7 @@ void ISTaskViewForm::SubTaskLoadList()
 void ISTaskViewForm::SubTaskCreate()
 {
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Task");
-	ObjectFormBase->SetFieldValue("Parent", TaskID);
+	ObjectFormBase->AddVirtualField("Parent", TaskID);
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISTaskViewForm::SubTaskLoadList);
 	ISGui::ShowObjectForm(ObjectFormBase);
 }
