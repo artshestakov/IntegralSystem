@@ -53,18 +53,6 @@ static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_buttontext, ts
 										   "WHERE NOT tsst_isdeleted "
 										   "ORDER BY tsst_order");
 //-----------------------------------------------------------------------------
-static QString QU_NAME = PREPARE_QUERY("UPDATE _task SET "
-									   "task_name = :TaskName, "
-									   "task_updationdate = now() "
-									   "WHERE task_id = :TaskID "
-									   "RETURNING task_updationdate");
-//-----------------------------------------------------------------------------
-static QString QU_DESCRIPTION = PREPARE_QUERY("UPDATE _task SET "
-											  "task_description = :TaskDescription, "
-											  "task_updationdate = now() "
-											  "WHERE task_id = :TaskID "
-											  "RETURNING task_updationdate");
-//-----------------------------------------------------------------------------
 static QString QU_CONVERT_TO_TASK = PREPARE_QUERY("UPDATE _task SET "
 												  "task_parent = NULL "
 												  "WHERE task_id = :TaskID");
@@ -265,8 +253,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ButtonActions->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen, QKeySequence(Qt::Key_F5));
 	ButtonActions->menu()->addAction(BUFFER_ICONS("Edit"), LANG("Task.EditTask"), this, &ISTaskViewForm::Edit, QKeySequence(Qt::Key_F2));
 	ButtonActions->menu()->addSeparator();
-	ButtonActions->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
-	ButtonActions->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
 	ButtonActions->menu()->addAction(BUFFER_ICONS("Copy"), TaskParentID ? LANG("Task.CloneSubTask") : LANG("Task.CloneTask"), this, &ISTaskViewForm::CloneTask);
 	ButtonActions->menu()->addAction(LANG("Task.Process.History"), this, &ISTaskViewForm::ShowStatusHistory);
 	ButtonActions->menu()->addSeparator();
@@ -608,63 +594,6 @@ void ISTaskViewForm::Edit()
 	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
-void ISTaskViewForm::Rename()
-{
-	QString NewName = ISInputDialog::GetString(LANG("Renaming"), LANG("Task.Rename.LabelText") + ':', TaskName);
-	if (NewName.isEmpty())
-	{
-		return;
-	}
-
-	if (NewName != TaskName)
-	{
-		ISQuery qRenameTask(QU_NAME);
-		qRenameTask.BindValue(":TaskName", NewName);
-		qRenameTask.BindValue(":TaskID", TaskID);
-		if (qRenameTask.ExecuteFirst())
-		{
-			TaskUpdationDate = qRenameTask.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
-			TaskUpdationDateToolTip = qRenameTask.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
-			TaskName = NewName;
-
-			LabelName->SetText(QString("#%1: %2").arg(TaskID).arg(TaskName));
-			LabelUpdationDate->setText(TaskUpdationDate);
-			LabelUpdationDate->setToolTip(TaskUpdationDateToolTip);
-			emit Renamed(TaskName);
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.RenameTask"), qRenameTask.GetErrorString());
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISTaskViewForm::SetDescription()
-{
-	QString NewDescription = ISInputDialog::GetText(LANG("Task.SetDescription.Title"), LANG("Task.SetDescription.LabelText") + ':', TaskDescription);
-	if (NewDescription != TaskDescription)
-	{
-		ISQuery qSetDescription(QU_DESCRIPTION);
-		qSetDescription.BindValue(":TaskDescription", NewDescription);
-		qSetDescription.BindValue(":TaskID", TaskID);
-		if (qSetDescription.ExecuteFirst())
-		{
-			TaskUpdationDate = qSetDescription.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V2);
-			TaskUpdationDateToolTip = qSetDescription.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
-			TaskDescription = NewDescription;
-
-			TextEdit->SetValue(TaskDescription);
-			LabelUpdationDate->setText(TaskUpdationDate);
-			LabelUpdationDate->setToolTip(TaskUpdationDateToolTip);
-			emit DescriptionChanged(TaskDescription);
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.SetDescriptionTask"), qSetDescription.GetErrorString());
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISTaskViewForm::CloneTask()
 {
 	if (ISMessageBox::ShowQuestion(this, TaskParentID ? LANG("Message.Question.CloneSubTask") : LANG("Message.Question.CloneTask")))
@@ -853,10 +782,6 @@ void ISTaskViewForm::SubTaskCreate()
 void ISTaskViewForm::SubTaskOpen(QListWidgetItem *ListWidgetItem)
 {
 	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(ListWidgetItem->data(Qt::UserRole).toInt());
-	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::SubTaskLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::LinkLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::SubTaskLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::LinkLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::SubTaskLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::LinkLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::ConvertedToTask, this, &ISTaskViewForm::SubTaskLoadList);
@@ -1183,10 +1108,6 @@ void ISTaskViewForm::LinkAdd()
 void ISTaskViewForm::LinkOpen(QListWidgetItem *ListWidgetItem)
 {
 	ISTaskViewForm *TaskViewForm = new ISTaskViewForm(ListWidgetItem->data(Qt::UserRole * 2).toInt());
-	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::LinkLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::Renamed, this, &ISTaskViewForm::SubTaskLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::LinkLoadList);
-	connect(TaskViewForm, &ISTaskViewForm::DescriptionChanged, this, &ISTaskViewForm::SubTaskLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::LinkLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::StatusChanged, this, &ISTaskViewForm::SubTaskLoadList);
 	connect(TaskViewForm, &ISTaskViewForm::ConvertedToTask, this, &ISTaskViewForm::SubTaskLoadList);

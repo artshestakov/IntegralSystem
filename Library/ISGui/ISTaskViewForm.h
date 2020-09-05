@@ -15,8 +15,6 @@ class ISTaskViewForm : public ISInterfaceForm
 	Q_OBJECT
 
 signals:
-	void Renamed(const QString &NewName); //Сигнал изменения наименования задачи
-	void DescriptionChanged(const QString &NewDescription); //Сигнал изменения описания задачи
 	void StatusChanged(const ISUuid &NewStatusUID); //Сигнал изменения статуса задачи
 	void ConvertedToTask(); //Сигнал преобразования подзадачи в задачу
 
@@ -34,8 +32,6 @@ private:
 	void ReopenStatus(); //Переоткрыть задачу
 	void Reopen(); //Переоткрыть форму
 	void Edit(); //Редактировать задачу
-	void Rename(); //Переименовать задачу
-	void SetDescription(); //Изменить описание
 	void CloneTask(); //Клонировать задачу
 	void ConvertThisToTask(); //Преобразовать эту подзадачу в задачу
 	void ConvertListSubTaskToTask(); //Преобразовать подзадачу из списка в задачу

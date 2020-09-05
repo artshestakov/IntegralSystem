@@ -110,8 +110,6 @@
   <Local Name="Message.Error.InsertTaskLink" Russian="Не удалось создать связь!"/>
   <Local Name="Message.Error.DeleteTaskLink" Russian="Не удалось удалить связь!"/>
   <Local Name="Message.Error.LoadTaskLink" Russian="Не удалось загрузить список связей!"/>
-  <Local Name="Message.Error.RenameTask" Russian="Не удалось переименовать задачу!"/>
-  <Local Name="Message.Error.SetDescriptionTask" Russian="Не удалось изменить описание задачи!"/>
   <Local Name="Message.Error.InsertTaskFile" Russian="При добавлении файла &quot;%1&quot; произошла ошибка!"/>
   <Local Name="Message.Error.SelectTaskFileData" Russian="Не удалось получить данные файла!"/>
   <Local Name="Message.Error.DeleteTaskFile" Russian="Не удалось удалить файл!"/>
@@ -601,11 +599,6 @@
   <Local Name="Task.ThisIsImportantTask" Russian="Это важная задача"/>
   <Local Name="Task.ReopenTaskViewForm" Russian="Перечитать"/>
   <Local Name="Task.EditTask" Russian="Редактировать"/>
-  <Local Name="Task.Rename" Russian="Переименовать задачу"/>
-  <Local Name="Task.Rename.LabelText" Russian="Введите новое имя задачи:"/>
-  <Local Name="Task.SetDescription" Russian="Изменить описание"/>
-  <Local Name="Task.SetDescription.Title" Russian="Изменение описания"/>
-  <Local Name="Task.SetDescription.LabelText" Russian="Введите новое описание задачи:"/>
   <Local Name="Task.CloneTask" Russian="Клонировать задачу"/>
   <Local Name="Task.CloneSubTask" Russian="Клонировать подзадачу"/>
   <Local Name="Task.ConvertToTask" Russian="Преобразовать в задачу"/>
