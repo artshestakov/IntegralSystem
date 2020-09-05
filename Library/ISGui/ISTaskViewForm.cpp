@@ -669,24 +669,9 @@ void ISTaskViewForm::CloneTask()
 {
 	if (ISMessageBox::ShowQuestion(this, TaskParentID ? LANG("Message.Question.CloneSubTask") : LANG("Message.Question.CloneTask")))
 	{
-		QString Fields;
-		PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable("_Task");
-		for (PMetaField *MetaField : MetaTable->Fields)
-		{
-			Fields += MetaTable->Alias + '_' + MetaField->Name + ',';
-		}
-		Fields.chop(1);
-
-		ISQuery qInsertClone(QString("INSERT INTO _task(%1) SELECT %1 FROM _task WHERE task_id = :TaskID RETURNING task_id").arg(Fields));
-		qInsertClone.BindValue(":TaskID", TaskID);
-		if (qInsertClone.ExecuteFirst())
-		{
-			ISGui::ShowTaskViewForm(qInsertClone.ReadColumn("task_id").toInt());
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.CloneTask"), qInsertClone.GetErrorString());
-		}
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Copy, "_Task", TaskID);
+		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, [=](int ObjectID) { ISGui::ShowTaskViewForm(ObjectID); });
+		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 }
 //-----------------------------------------------------------------------------

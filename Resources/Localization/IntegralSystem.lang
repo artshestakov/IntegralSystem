@@ -126,7 +126,6 @@
   <Local Name="Message.Error.SelectSubTaskCount" Russian="Не удалось получить количество подзадач!"/>
   <Local Name="Message.Error.ConvertToSubTask" Russian="Не удалось преобразовать задачу в подзадачу!"/>
   <Local Name="Message.Error.ConvertToTask" Russian="Не удалось преобразовать подзадачу в задачу!"/>
-  <Local Name="Message.Error.CloneTask" Russian="Не удалось клонировать задачу!"/>
   <Local Name="Message.Error.SelectTask" Russian="Не удалось загрузить информацию о задаче %1!"/>
   <Local Name="Message.Error.PasteImageToTask" Russian="Не удалось прикрепить изображение к задаче!"/>
   <Local Name="Message.Error.CreateUserRole" Russian="Не удалось создать пользователя!"/>
