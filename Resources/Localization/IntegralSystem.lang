@@ -611,7 +611,7 @@
   <Local Name="Task.CloneSubTask" Russian="Клонировать подзадачу"/>
   <Local Name="Task.ConvertToTask" Russian="Преобразовать в задачу"/>
   <Local Name="Task.ConvertToSubTask" Russian="Преобразовать в подзадачу"/>
-  <Local Name="Task.Process.History" Russian="История"/>
+  <Local Name="Task.Process.History" Russian="История статусов"/>
   <Local Name="Task.Process.History.Title" Russian="История изменения статуса задачи: %1"/>
 
   <!--File Dialog-->

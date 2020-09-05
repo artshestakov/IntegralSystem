@@ -208,7 +208,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LabelStatus = new QLabel(TaskStatusName, this);
 	LabelStatus->setFont(ISDefines::Gui::FONT_TAHOMA_10_BOLD);
 	LabelStatus->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
-	LabelStatus->setStyleSheet(TaskStatusStyleSheet);
+	LabelStatus->setAlignment(Qt::AlignCenter);
+	LabelStatus->setStyleSheet(STYLE_SHEET(TaskStatusStyleSheet));
 	LayoutTitle->addWidget(LabelStatus);
 
 	LayoutTitle->addWidget(ISControls::CreateVerticalLine(this));
@@ -571,7 +572,7 @@ void ISTaskViewForm::ReloadStatusButtons()
 			ISUuid StatusUID = qSelectStatuses.ReadColumn("tsst_uid");
 			if (StatusUID == TaskStatusUID)
 			{
-				LabelStatus->setStyleSheet(qSelectStatuses.ReadColumn("tsst_stylesheet").toString());
+				LabelStatus->setStyleSheet(STYLE_SHEET(qSelectStatuses.ReadColumn("tsst_stylesheet").toString()));
 			}
 			else
 			{
@@ -793,7 +794,7 @@ void ISTaskViewForm::SetStatus(const ISUuid &StatusUID)
 
 			//Меняем надпись, её стиль и видимость кнопки переоткрытия задачи
 			LabelStatus->setText(TaskStatusName);
-			LabelStatus->setStyleSheet(qUpdateStatus.ReadColumn("tsst_stylesheet").toString());
+			LabelStatus->setStyleSheet(STYLE_SHEET(qUpdateStatus.ReadColumn("tsst_stylesheet").toString()));
 			UpdateVisibleButtonReOpen();
 
 			//Перезагружаем кнопки со статусами и высылаем сигнал изменения статуса

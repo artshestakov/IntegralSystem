@@ -70,7 +70,7 @@
 
   <Table Name="_TaskStatusHistory" UID="{06649583-3042-45E8-867E-42CE90F73B06}" Alias="tshr" ShowOnly="true" LocalName="Изменение статуса" LocalListName="Изменения статуса" TitleName="Status" IsSystem="true">
     <Fields>
-      <Field UID="{92F93CF7-639B-457A-82D8-38F5458E0E72}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{92F93CF7-639B-457A-82D8-38F5458E0E72}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" HideFromList="true" NotNull="true"/>
       <Field UID="{DC67347A-EA59-417C-BA01-EF5A7DF8B088}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус" NotNull="true"/>
     </Fields>
     <Indexes>
