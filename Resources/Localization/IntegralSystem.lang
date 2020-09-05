@@ -542,6 +542,8 @@
   <!--Task-->
   <Local Name="Task.LabelCentral" Russian="Чтобы отобразить список задач, выберите фильтр сверху."/>
   <Local Name="Task.DesignateMe" Russian="Назначить меня"/>
+  <Local Name="Task.Actions" Russian="Действия"/>
+  <Local Name="Task.ReopenStatus" Russian="Переоткрыть"/>
   <Local Name="Task.Filter.All" Russian="Все задачи"/>
   <Local Name="Task.Priority.Low" Russian="Низкий"/>
   <Local Name="Task.Priority.Low.ToolTip" Russian="Несрочная, низкоприоритетная задача (выполняется, когда нет других задач)"/>
@@ -593,7 +595,6 @@
   <Local Name="Task.Right.Owner.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Type" Russian="Тип задачи"/>
   <Local Name="Task.Right.Type.Empty" Russian="Не выбран"/>
-  <Local Name="Task.Right.Status" Russian="Статус задачи"/>
   <Local Name="Task.Right.Priority" Russian="Приоритет"/>
   <Local Name="Task.Right.CreationDate" Russian="Задача создана"/>
   <Local Name="Task.Right.UpdationDate" Russian="Задача изменена"/>
@@ -610,7 +611,6 @@
   <Local Name="Task.CloneSubTask" Russian="Клонировать подзадачу"/>
   <Local Name="Task.ConvertToTask" Russian="Преобразовать в задачу"/>
   <Local Name="Task.ConvertToSubTask" Russian="Преобразовать в подзадачу"/>
-  <Local Name="Task.Process.ToolTip" Russian="Нажмите, чтобы изменить статус задачи"/>
   <Local Name="Task.Process.History" Russian="История"/>
   <Local Name="Task.Process.History.Title" Russian="История изменения статуса задачи: %1"/>
 

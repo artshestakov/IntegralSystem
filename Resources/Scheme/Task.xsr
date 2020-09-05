@@ -5,9 +5,10 @@
   <_TaskPriority ID="2" IsSystem="true" UID="{87AC0B68-9348-4A39-8466-B84DC641FE8B}" Name="Средний"/>
   <_TaskPriority ID="3" IsSystem="true" UID="{5B4C2BDB-758B-49F3-B172-7351AAA51C58}" Name="Высокий"/>
 
-  <_TaskStatus IsSystem="true" UID="{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}" Name="Новая" StyleSheet="ISPushButton.TaskProcess.New" Icon="Task.Status.New" Order="1"/>
-  <_TaskStatus IsSystem="true" UID="{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}" Name="В работе" StyleSheet="ISPushButton.TaskProcess.InWork" Icon="Task.Status.InWork" Order="2"/>
-  <_TaskStatus IsSystem="true" UID="{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}" Name="Выполнена" StyleSheet="ISPushButton.TaskProcess.Done" Icon="Task.Status.Done" Order="3"/>
-  <_TaskStatus IsSystem="true" UID="{1617EC4F-50F6-4912-8143-4D702E1F5F8F}" Name="Закрыта" StyleSheet="ISPushButton.TaskProcess.Close" Icon="Task.Status.Close" Order="4"/>
+  <_TaskStatus IsSystem="true" UID="{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}" Name="Открыта" ButtonText="Открыть" StyleSheet="background-color: rgb(204, 204, 204)" Order="1"/>
+  <_TaskStatus IsSystem="true" UID="{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}" Name="В работе" ButtonText="В работу" StyleSheet="background-color: rgb(112, 158, 203)" Order="2"/>
+  <_TaskStatus IsSystem="true" UID="{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}" Name="Выполнена" ButtonText="Выполнить" StyleSheet="background-color: rgb(103, 250, 137)" Order="3"/>
+  <_TaskStatus IsSystem="true" UID="{D3F65984-117E-4AFE-81E0-1198533767F8}" Name="Не будет выполнена" ButtonText="Не будет выполнено" StyleSheet="background-color: rgb(236, 117, 117)" Order="4"/>
+  <_TaskStatus IsSystem="true" UID="{1617EC4F-50F6-4912-8143-4D702E1F5F8F}" Name="Закрыта" ButtonText="Закрыть" StyleSheet="background-color: rgb(103, 250, 137)" Order="5"/>
 
 </XSR>

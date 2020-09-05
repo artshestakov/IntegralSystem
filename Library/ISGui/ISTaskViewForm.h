@@ -30,6 +30,8 @@ protected:
 	void PasteClicked() override;
 
 private:
+	void ReloadStatusButtons(); //Перезагрузить панель с кнопками-статусами
+	void ReopenStatus(); //Переоткрыть задачу
 	void Reopen(); //Переоткрыть форму
 	void Edit(); //Редактировать задачу
 	void Rename(); //Переименовать задачу
@@ -40,7 +42,9 @@ private:
 	bool ConvertToTask(int task_id); //Преобразовать подзадачу в задачу
 	void ConvertToSubTask(); //Преобразовать в подзадачу
 	void TaskStatusClicked(); //Событие смены статуса задачи
+	void SetStatus(const ISUuid &StatusUID); //Сменить статус задачи
 	void ShowStatusHistory(); //Показать историю изменения статуса задачи
+	void UpdateVisibleButtonReOpen();
 
 private:
 	void SubTaskLoadList(); //Загрузка списка подзадач
@@ -81,14 +85,17 @@ private:
 	void CheckClicked(const QVariant &Value);
 
 private:
+	QLabel *LabelStatus;
+	ISLabelElided *LabelName;
 	QHBoxLayout *LayoutHorizontal;
+	QVBoxLayout *LayoutLeft;
+	QWidget *WidgetButtonStatus;
+	QButtonGroup *ButtonGroupStatus;
+	ISPushButton *ButtonReopen;
+	ISPushButton *ButtonActions;
 	ISTextEdit *TextEdit;
 	QGroupBox *GroupBoxSubTask;
 	ISListWidget *ListWidgetSubTask;
-	QVBoxLayout *LayoutLeft;
-	ISPushButton *ButtonMenu;
-	ISPushButton *ButtonProcess;
-	ISLabelElided *LabelName;
 	QTabWidget *TabWidget;
 	QVBoxLayout *LayoutComments;
 	ISScrollArea *ScrollComment;
@@ -99,7 +106,6 @@ private:
 	ISListWidget *ListWidgetFiles;
 	ISListWidget *ListWidgetLinks;
 	QVBoxLayout *LayoutRight;
-	QLabel *LabelStatus;
 	QLabel *LabelUpdationDate;
 
 private:
@@ -110,6 +116,7 @@ private:
 	QString TaskType;
 	ISUuid TaskStatusUID;
 	QString TaskStatusName;
+	QString TaskStatusStyleSheet;
 	ISUuid TaskPriorityUID;
 	QString TaskPriorityName;
 	QString TaskOwner;

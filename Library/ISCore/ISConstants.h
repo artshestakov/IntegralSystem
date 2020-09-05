@@ -203,9 +203,10 @@ const char CONST_UID_TASK_PRIORITY_LOW[] = "{CD620874-5069-48E4-BDEA-2D5AEBF8ABA
 const char CONST_UID_TASK_PRIORITY_AVERAGE[] = "{87AC0B68-9348-4A39-8466-B84DC641FE8B}"; //Средний
 const char CONST_UID_TASK_PRIORITY_HIGH[] = "{5B4C2BDB-758B-49F3-B172-7351AAA51C58}"; //Высокий
 //-----------------------------------------------------------------------------
-const char CONST_UID_TASK_STATUS_NEW[] = "{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}"; //Новая
+const char CONST_UID_TASK_STATUS_OPEN[] = "{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}"; //Открыта
 const char CONST_UID_TASK_STATUS_IN_WORK[] = "{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}"; //В работе
 const char CONST_UID_TASK_STATUS_DONE[] = "{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}"; //Выполнена
+const char CONST_UID_TASK_STATUS_NOT_DONE[] = "{D3F65984-117E-4AFE-81E0-1198533767F8}"; //Не будет выполнена
 const char CONST_UID_TASK_STATUS_CLOSE[] = "{1617EC4F-50F6-4912-8143-4D702E1F5F8F}"; //Закрыта
 //-----------------------------------------------------------------------------
 const char CONST_UID_DATABASE_SETTING_GENERAL_ACCESSDATABASE[] = "UserAccessDatabase";

@@ -56,14 +56,14 @@
   <Table Name="_TaskStatus" UID="{79619A77-8385-4AD9-BCB5-3E2B08479166}" Alias="tsst" ShowOnly="true" LocalName="Статус задачи" LocalListName="Статусы задач" TitleName="Name" IsSystem="true">
     <Fields>
       <Field UID="{0E0D9E42-AFD9-4798-8B7B-F98237FE72F4}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{140A389F-DF4C-4422-9F3D-05F929DD3365}" Name="StyleSheet" Type="String" LabelName="Имя файла со стилем" LocalListName="Имя файла со стилем" NotNull="true"/>
-      <Field UID="{A8289236-BD97-4ACB-834F-B7D08AB853D3}" Name="Icon" Type="String" LabelName="Имя файла с иконкой" LocalListName="Имя файла с иконкой" NotNull="true"/>
+      <Field UID="{EB5DCE7E-AB26-4B53-B088-82E3F2EC6439}" Name="ButtonText" Type="String" LabelName="Текст кнопки" LocalListName="Текст кнопки" NotNull="true"/>
+      <Field UID="{27CA4711-86BE-4717-B95A-C92C79691AFD}" Name="StyleSheet" Type="String" LabelName="Стиль" LocalListName="Стиль" NotNull="true"/>
       <Field UID="{34AC5440-D7F0-4811-BC5F-C9BDCCCC1CA6}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="Name" Unique="true"/>
+      <Index Field="Name"/>
+      <Index Field="ButtonText"/>
       <Index Field="StyleSheet"/>
-      <Index Field="Icon"/>
       <Index Field="Order"/>
     </Indexes>
   </Table>

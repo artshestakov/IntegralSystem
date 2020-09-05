@@ -23,6 +23,7 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "tt.tstp_name AS task_type, "
 									   "ts.tsst_uid AS task_status_uid, "
 									   "ts.tsst_name AS task_status_name, "
+									   "ts.tsst_stylesheet AS task_status_stylesheet, "
 									   "tp.tspr_uid AS task_priority_uid, "
 									   "tp.tspr_name AS task_priority_name, "
 									   "uo.usrs_fio AS task_owner, "
@@ -47,7 +48,7 @@ static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_descr
 										  "AND NOT task_isdeleted "
 										  "ORDER BY task_id");
 //-----------------------------------------------------------------------------
-static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_name, tsst_stylesheet "
+static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_buttontext, tsst_stylesheet "
 										   "FROM _taskstatus "
 										   "WHERE NOT tsst_isdeleted "
 										   "ORDER BY tsst_order");
@@ -108,8 +109,7 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "usrs_fio, "
 									   "tlnk_creationdate, "
 									   "tsst_uid AS task_status_uid, "
-									   "tsst_name AS task_status_name, "
-									   "tsst_icon AS task_status_icon "
+									   "tsst_name AS task_status_name "
 									   "FROM _tasklink "
 									   "LEFT JOIN _task ON tlnk_link = task_id "
 									   "LEFT JOIN _users ON usrs_oid = tlnk_creationuseroid "
@@ -165,6 +165,7 @@ static QString QD_CHECK_LIST = PREPARE_QUERY("DELETE FROM _taskchecklist WHERE t
 //-----------------------------------------------------------------------------
 ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	: ISInterfaceForm(parent),
+	ButtonGroupStatus(new QButtonGroup(this)),
 	TaskID(task_id),
 	TaskParentID(0)
 {
@@ -187,6 +188,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskType = qSelect.ReadColumn("task_type").toString();
 	TaskStatusUID = qSelect.ReadColumn("task_status_uid");
 	TaskStatusName = qSelect.ReadColumn("task_status_name").toString();
+	TaskStatusStyleSheet = qSelect.ReadColumn("task_status_stylesheet").toString();
 	TaskPriorityUID = qSelect.ReadColumn("task_priority_uid");
 	TaskPriorityName = qSelect.ReadColumn("task_priority_name").toString();
 	TaskOwner = qSelect.ReadColumn("task_owner").toString();
@@ -203,63 +205,13 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
 
-	ButtonMenu = new ISPushButton(BUFFER_ICONS("Menu"), LANG("Menu"), this);
-	ButtonMenu->setFlat(true);
-	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
-	ButtonMenu->setSizePolicy(QSizePolicy::Maximum, ButtonMenu->sizePolicy().verticalPolicy());
-	ButtonMenu->setMenu(new QMenu(ButtonMenu));
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen, QKeySequence(Qt::Key_F5));
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Edit"), LANG("Task.EditTask"), this, &ISTaskViewForm::Edit, QKeySequence(Qt::Key_F2));
-	ButtonMenu->menu()->addSeparator();
-	ButtonMenu->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
-	ButtonMenu->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("Copy"), TaskParentID ? LANG("Task.CloneSubTask") : LANG("Task.CloneTask"), this, &ISTaskViewForm::CloneTask);
-	ButtonMenu->menu()->addSeparator();
-	if (TaskParentID)
-	{
-		ButtonMenu->menu()->addAction(LANG("Task.ConvertToTask"), this, &ISTaskViewForm::ConvertThisToTask);
-	}
-	else
-	{
-		ButtonMenu->menu()->addAction(LANG("Task.ConvertToSubTask"), this, &ISTaskViewForm::ConvertToSubTask);
-		ButtonMenu->menu()->addSeparator();
-		ButtonMenu->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::SubTaskCreate);
-	}
-	LayoutTitle->addWidget(ButtonMenu);
+	LabelStatus = new QLabel(TaskStatusName, this);
+	LabelStatus->setFont(ISDefines::Gui::FONT_TAHOMA_10_BOLD);
+	LabelStatus->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+	LabelStatus->setStyleSheet(TaskStatusStyleSheet);
+	LayoutTitle->addWidget(LabelStatus);
 
-	ButtonProcess = new ISPushButton(BUFFER_ICONS("Task.Process"), this);
-	ButtonProcess->setToolTip(LANG("Task.Process.ToolTip"));
-	ButtonProcess->setCursor(CURSOR_POINTING_HAND);
-	ButtonProcess->setSizePolicy(QSizePolicy::Maximum, ButtonProcess->sizePolicy().verticalPolicy());
-	ButtonProcess->setMenu(new QMenu(ButtonProcess));
-	LayoutTitle->addWidget(ButtonProcess);
-
-	ISQuery qSelectStatuses(QS_STATUSES);
-	if (qSelectStatuses.Execute())
-	{
-		while (qSelectStatuses.Next())
-		{
-			ISUuid StatusUID = qSelectStatuses.ReadColumn("tsst_uid");
-			QString StatusName = qSelectStatuses.ReadColumn("tsst_name").toString();
-			
-			QAction *ActionStatus = ButtonProcess->menu()->addAction(StatusName, this, &ISTaskViewForm::TaskStatusClicked);
-			ActionStatus->setProperty("StatusUID", StatusUID);
-			if (StatusUID == TaskStatusUID)
-			{
-				ButtonProcess->setText(StatusName);
-				ButtonProcess->setStyleSheet(STYLE_SHEET(qSelectStatuses.ReadColumn("tsst_stylesheet").toString()));
-				ActionStatus->setIcon(BUFFER_ICONS("Task.Status.Current"));
-				ActionStatus->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-			}
-		}
-	}
-	else
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectTaskStatuses"), qSelectStatuses.GetErrorString());
-	}
-
-	ButtonProcess->menu()->addSeparator();
-	ButtonProcess->menu()->addAction(LANG("Task.Process.History"), this, &ISTaskViewForm::ShowStatusHistory);
+	LayoutTitle->addWidget(ISControls::CreateVerticalLine(this));
 
 	if (TaskParentID)
 	{
@@ -277,6 +229,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LabelName->SetColorText(ISDefines::Gui::COLOR_DARK_GRAY);
 	LabelName->SetElidedToolTip(true);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+	LabelName->setSizePolicy(LabelName->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
 	LayoutTitle->addWidget(LabelName);
 
 	if (TaskImportant) //Задача является важной - добавляем соответствующую надпись
@@ -292,6 +245,41 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	LayoutLeft = new QVBoxLayout();
 	LayoutHorizontal->addLayout(LayoutLeft);
+
+	WidgetButtonStatus = new QWidget(this);
+	WidgetButtonStatus->setLayout(new QHBoxLayout());
+	WidgetButtonStatus->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	WidgetButtonStatus->setSizePolicy(QSizePolicy::Maximum, WidgetButtonStatus->sizePolicy().verticalPolicy());
+	LayoutLeft->addWidget(WidgetButtonStatus);
+	ReloadStatusButtons();
+
+	ButtonReopen = new ISPushButton(LANG("Task.ReopenStatus"), this);
+	connect(ButtonReopen, &ISPushButton::clicked, this, &ISTaskViewForm::ReopenStatus);
+	WidgetButtonStatus->layout()->addWidget(ButtonReopen);
+	UpdateVisibleButtonReOpen();
+
+	ButtonActions = new ISPushButton(BUFFER_ICONS("ArrowDown"), LANG("Task.Actions"), this);
+	ButtonActions->setCursor(CURSOR_POINTING_HAND);
+	ButtonActions->setMenu(new QMenu(ButtonActions));
+	ButtonActions->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen, QKeySequence(Qt::Key_F5));
+	ButtonActions->menu()->addAction(BUFFER_ICONS("Edit"), LANG("Task.EditTask"), this, &ISTaskViewForm::Edit, QKeySequence(Qt::Key_F2));
+	ButtonActions->menu()->addSeparator();
+	ButtonActions->menu()->addAction(LANG("Task.Rename"), this, &ISTaskViewForm::Rename);
+	ButtonActions->menu()->addAction(LANG("Task.SetDescription"), this, &ISTaskViewForm::SetDescription);
+	ButtonActions->menu()->addAction(BUFFER_ICONS("Copy"), TaskParentID ? LANG("Task.CloneSubTask") : LANG("Task.CloneTask"), this, &ISTaskViewForm::CloneTask);
+	ButtonActions->menu()->addAction(LANG("Task.Process.History"), this, &ISTaskViewForm::ShowStatusHistory);
+	ButtonActions->menu()->addSeparator();
+	if (TaskParentID)
+	{
+		ButtonActions->menu()->addAction(LANG("Task.ConvertToTask"), this, &ISTaskViewForm::ConvertThisToTask);
+	}
+	else
+	{
+		ButtonActions->menu()->addAction(LANG("Task.ConvertToSubTask"), this, &ISTaskViewForm::ConvertToSubTask);
+		ButtonActions->menu()->addSeparator();
+		ButtonActions->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::SubTaskCreate);
+	}
+	WidgetButtonStatus->layout()->addWidget(ButtonActions);
 
 	QGroupBox *GroupBoxDescription = new QGroupBox(LANG("Task.Description"), this);
 	GroupBoxDescription->setLayout(new QVBoxLayout());
@@ -425,14 +413,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
-	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Status") + ':', GroupBoxDetails));
-
-	LabelStatus = new QLabel(TaskStatusName, GroupBoxDetails);
-	ISGui::SetFontWidgetBold(LabelStatus, true);
-	LayoutRight->addWidget(LabelStatus);
-
-	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
-
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Priority") + ':', GroupBoxDetails));
 
 	ISLabelPixmapText *LabelPriority = new ISLabelPixmapText(TaskPriorityName, GroupBoxDetails);
@@ -490,7 +470,7 @@ void ISTaskViewForm::keyReleaseEvent(QKeyEvent *KeyEvent)
 	ISInterfaceForm::keyReleaseEvent(KeyEvent);
 	if (KeyEvent->key() == Qt::Key_Alt)
 	{
-		ButtonMenu->animateClick();
+		ButtonActions->animateClick();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -567,6 +547,51 @@ void ISTaskViewForm::PasteClicked()
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.PasteImageToTask"), qInsertImage.GetErrorString());
 		}
 	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::ReloadStatusButtons()
+{
+	while (!ButtonGroupStatus->buttons().isEmpty())
+	{
+		delete ButtonGroupStatus->buttons().takeLast();
+	}
+
+	//Если текущая задача "закрыта" или "не будет выполнена" мы не созаём кнопки
+	if (TaskStatusUID == CONST_UID_TASK_STATUS_NOT_DONE || TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE)
+	{
+		return;
+	}
+
+	ISQuery qSelectStatuses(QS_STATUSES);
+	if (qSelectStatuses.Execute())
+	{
+		int ButtonIndex = 0;
+		while (qSelectStatuses.Next())
+		{
+			ISUuid StatusUID = qSelectStatuses.ReadColumn("tsst_uid");
+			if (StatusUID == TaskStatusUID)
+			{
+				LabelStatus->setStyleSheet(qSelectStatuses.ReadColumn("tsst_stylesheet").toString());
+			}
+			else
+			{
+				ISPushButton *ButtonStatus = new ISPushButton(qSelectStatuses.ReadColumn("tsst_buttontext").toString(), WidgetButtonStatus);
+				ButtonStatus->setProperty("StatusUID", StatusUID);
+				connect(ButtonStatus, &ISPushButton::clicked, this, &ISTaskViewForm::TaskStatusClicked);
+				dynamic_cast<QHBoxLayout*>(WidgetButtonStatus->layout())->insertWidget(ButtonIndex++, ButtonStatus);
+				ButtonGroupStatus->addButton(ButtonStatus);
+			}
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectTaskStatuses"), qSelectStatuses.GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::ReopenStatus()
+{
+	SetStatus(CONST_UID_TASK_STATUS_OPEN);
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Reopen()
@@ -746,35 +771,36 @@ void ISTaskViewForm::ConvertToSubTask()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::TaskStatusClicked()
 {
-	ISUuid NewTaskStatusUID = sender()->property("StatusUID");
-	if (NewTaskStatusUID == TaskStatusUID)
-	{
-		return;
-	}
-
+	SetStatus(sender()->property("StatusUID"));
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::SetStatus(const ISUuid &StatusUID)
+{
 	ISQuery qUpdateStatus(QU_STATUS);
-	qUpdateStatus.BindValue(":StatusUID", NewTaskStatusUID);
+	qUpdateStatus.BindValue(":StatusUID", StatusUID);
 	qUpdateStatus.BindValue(":TaskID", TaskID);
 	if (qUpdateStatus.ExecuteFirst())
 	{
-		TaskStatusUID = NewTaskStatusUID;
-		TaskStatusName = qUpdateStatus.ReadColumn("tsst_name").toString();
-
-		for (QAction *ActionStatus : ButtonProcess->menu()->actions())
-		{
-			bool IsCurrent = ActionStatus->property("StatusUID") == TaskStatusUID;
-			ActionStatus->setIcon(IsCurrent ? BUFFER_ICONS("Task.Status.Current") : QIcon());
-			ActionStatus->setFont(IsCurrent ? ISDefines::Gui::FONT_APPLICATION_BOLD : ISDefines::Gui::FONT_APPLICATION);
-		}
-		ButtonProcess->setText(TaskStatusName);
-		ButtonProcess->setStyleSheet(STYLE_SHEET(qUpdateStatus.ReadColumn("tsst_stylesheet").toString()));
-		LabelStatus->setText(TaskStatusName);
-		emit StatusChanged(TaskStatusUID);
-
+		//Фиксируем изменение статуса в истории
 		ISQuery qInsertStatusHistory(QI_STATUS_HISTORY);
 		qInsertStatusHistory.BindValue(":TaskID", TaskID);
 		qInsertStatusHistory.BindValue(":StatusID", qUpdateStatus.ReadColumn("task_status").toInt());
-		if (!qInsertStatusHistory.Execute())
+		if (qInsertStatusHistory.Execute()) //Если удалось зафиксировать изменение статуса
+		{
+			//Запоминаем новый идентификатор статуса и его имя
+			TaskStatusUID = StatusUID;
+			TaskStatusName = qUpdateStatus.ReadColumn("tsst_name").toString();
+
+			//Меняем надпись, её стиль и видимость кнопки переоткрытия задачи
+			LabelStatus->setText(TaskStatusName);
+			LabelStatus->setStyleSheet(qUpdateStatus.ReadColumn("tsst_stylesheet").toString());
+			UpdateVisibleButtonReOpen();
+
+			//Перезагружаем кнопки со статусами и высылаем сигнал изменения статуса
+			ReloadStatusButtons();
+			emit StatusChanged(TaskStatusUID);
+		}
+		else
 		{
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertTaskStatusHistory"), qInsertStatusHistory.GetErrorString());
 		}
@@ -792,6 +818,11 @@ void ISTaskViewForm::ShowStatusHistory()
 	ListBaseForm->resize(800, 600);
 	ListBaseForm->show();
 	ListBaseForm->LoadData();
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::UpdateVisibleButtonReOpen()
+{
+	ButtonReopen->setVisible(TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE || TaskStatusUID == CONST_UID_TASK_STATUS_NOT_DONE); //Изменяем видимость кнопки переоткрытия: если текущий статус "закрыта" или "не будет выполнена"
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SubTaskLoadList()
