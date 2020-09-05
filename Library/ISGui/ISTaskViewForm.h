@@ -41,6 +41,7 @@ private:
 	void SetStatus(const ISUuid &StatusUID); //Сменить статус задачи
 	void ShowStatusHistory(); //Показать историю изменения статуса задачи
 	void UpdateVisibleButtonReOpen();
+	void Vote();
 
 private:
 	void SubTaskLoadList(); //Загрузка списка подзадач
@@ -89,6 +90,7 @@ private:
 	QButtonGroup *ButtonGroupStatus;
 	ISPushButton *ButtonReopen;
 	ISPushButton *ButtonActions;
+	ISPushButton *ButtonVote;
 	ISTextEdit *TextEdit;
 	QGroupBox *GroupBoxSubTask;
 	ISListWidget *ListWidgetSubTask;
@@ -123,6 +125,7 @@ private:
 	QString TaskUpdationDateToolTip;
 	int TaskParentID;
 	QString TaskParentName;
+	bool IsVoted;
 };
 //-----------------------------------------------------------------------------
 #endif

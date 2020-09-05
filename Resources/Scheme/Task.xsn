@@ -95,6 +95,19 @@
     </Indexes>
   </Table>
 
+  <Table Name="_TaskVote" UID="{8AF12609-6A0D-4063-B48B-29569F25FA15}" Alias="tvot" LocalName="Голос" LocalListName="Голоса" TitleName="Task" IsSystem="true">
+    <Fields>
+      <Field UID="{41CFD1A5-A86F-48F4-A2C6-C67FD63F89A7}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Task"/>
+      <Index Field="CreationUserOID;Task" Unique="true"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
+    </Foreigns>
+  </Table>
+
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
     <Fields>
       <Field UID="{47664BE4-308A-4B69-8E8E-76E8111F0110}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>

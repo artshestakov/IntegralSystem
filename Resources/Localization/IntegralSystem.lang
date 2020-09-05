@@ -137,6 +137,7 @@
   <Local Name="Message.Error.UpdateTaskCheckList" Russian="Не удалось переименовать элемент чек-листа!"/>
   <Local Name="Message.Error.UpdateDoneTaskCheckList" Russian="Не удалось изменить состояние пункта!"/>
   <Local Name="Message.Error.DeleteTaskCheckList" Russian="Не удалось удалить пункт!"/>
+  <Local Name="Message.Error.TaskVote" Russian="Не удалось произвести операцию с голосованием!"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
@@ -556,6 +557,8 @@
   <Local Name="Task.SearchByText.PlaceholderText" Russian="Поиск по названию, описанию, комментариям и файлам"/>
   <Local Name="Task.SearchByText.ResultLabel" Russian="Найдено: %1"/>
   <Local Name="Task.Search" Russian="Поиск задачи"/>
+  <Local Name="Task.Vote.Enable" Russian="Проголосовать"/>
+  <Local Name="Task.Vote.Disable" Russian="Снять голос"/>
   <Local Name="Task.InputTaskNumber" Russian="Введите номер задачи"/>
   <Local Name="Task.ViewFormTitle.Task" Russian="Задача #%1: %2"/>
   <Local Name="Task.ViewFormTitle.SubTask" Russian="Подзадача #%1: %2"/>

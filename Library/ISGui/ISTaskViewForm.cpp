@@ -31,7 +31,8 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_creationdate, "
 									   "t.task_updationdate, "
 									   "t.task_parent AS task_parent_id, "
-									   "p.task_name AS task_parent_name "
+									   "p.task_name AS task_parent_name, "
+									   "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_vote FROM _taskvote WHERE tvot_task = :TaskID) "
 									   "FROM _task t "
 									   "LEFT JOIN _users ue ON ue.usrs_id = t.task_executor "
 									   "LEFT JOIN _users uo ON uo.usrs_oid = t.task_creationuseroid "
@@ -40,6 +41,11 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _taskpriority tp ON tp.tspr_id = t.task_priority "
 									   "LEFT JOIN _task p ON p.task_id = t.task_parent "
 									   "WHERE t.task_id = :TaskID");
+//-----------------------------------------------------------------------------
+static QString QI_VOTE = PREPARE_QUERY("INSERT INTO _taskvote(tvot_task) "
+									   "VALUES(:TaskID)");
+//-----------------------------------------------------------------------------
+static QString QD_VOTE = PREPARE_QUERY("DELETE FROM _taskvote WHERE tvot_task = :TaskID");
 //-----------------------------------------------------------------------------
 static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_description, tsst_uid AS task_status_uid "
 										  "FROM _task "
@@ -187,6 +193,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskUpdationDateToolTip = qSelect.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
+	IsVoted = qSelect.ReadColumn("is_vote").toBool();
 
 	setWindowTitle(TaskParentID ? LANG("Task.ViewFormTitle.SubTask").arg(TaskParentID).arg(TaskName) : LANG("Task.ViewFormTitle.Task").arg(TaskID).arg(TaskName));
 
@@ -235,16 +242,18 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutLeft = new QVBoxLayout();
 	LayoutHorizontal->addLayout(LayoutLeft);
 
+	QHBoxLayout *LayoutButtonStatus = new QHBoxLayout();
+	LayoutButtonStatus->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+
 	WidgetButtonStatus = new QWidget(this);
-	WidgetButtonStatus->setLayout(new QHBoxLayout());
-	WidgetButtonStatus->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+	WidgetButtonStatus->setLayout(LayoutButtonStatus);
 	WidgetButtonStatus->setSizePolicy(QSizePolicy::Maximum, WidgetButtonStatus->sizePolicy().verticalPolicy());
 	LayoutLeft->addWidget(WidgetButtonStatus);
 	ReloadStatusButtons();
 
 	ButtonReopen = new ISPushButton(LANG("Task.ReopenStatus"), this);
 	connect(ButtonReopen, &ISPushButton::clicked, this, &ISTaskViewForm::ReopenStatus);
-	WidgetButtonStatus->layout()->addWidget(ButtonReopen);
+	LayoutButtonStatus->addWidget(ButtonReopen);
 	UpdateVisibleButtonReOpen();
 
 	ButtonActions = new ISPushButton(BUFFER_ICONS("ArrowDown"), LANG("Task.Actions"), this);
@@ -266,7 +275,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 		ButtonActions->menu()->addSeparator();
 		ButtonActions->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::SubTaskCreate);
 	}
-	WidgetButtonStatus->layout()->addWidget(ButtonActions);
+	LayoutButtonStatus->addWidget(ButtonActions);
+
+	LayoutButtonStatus->addStretch();
+
+	ButtonVote = new ISPushButton(BUFFER_ICONS("Task.Vote"), WidgetButtonStatus);
+	ButtonVote->setToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
+	connect(ButtonVote, &ISPushButton::clicked, this, &ISTaskViewForm::Vote);
+	LayoutButtonStatus->addWidget(ButtonVote);
 
 	QGroupBox *GroupBoxDescription = new QGroupBox(LANG("Task.Description"), this);
 	GroupBoxDescription->setLayout(new QVBoxLayout());
@@ -738,6 +754,21 @@ void ISTaskViewForm::ShowStatusHistory()
 void ISTaskViewForm::UpdateVisibleButtonReOpen()
 {
 	ButtonReopen->setVisible(TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE || TaskStatusUID == CONST_UID_TASK_STATUS_NOT_DONE); //»змен€ем видимость кнопки переоткрыти€: если текущий статус "закрыта" или "не будет выполнена"
+}
+//-----------------------------------------------------------------------------
+void ISTaskViewForm::Vote()
+{
+	ISQuery qVote(IsVoted ? QD_VOTE : QI_VOTE);
+	qVote.BindValue(":TaskID", TaskID);
+	if (qVote.Execute())
+	{
+		IsVoted = !IsVoted;
+		ButtonVote->setToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.TaskVote"));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SubTaskLoadList()
