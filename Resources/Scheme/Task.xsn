@@ -12,7 +12,7 @@
       <Field UID="{9708C094-D404-4FDD-A17F-C7278D10B0B2}" Name="Type" Type="BigInt" LabelName="Тип задачи" LocalListName="Тип задачи"/>
       <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="BigInt" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет"/>
       <Field UID="{9D4228B1-3DBB-4918-AA5B-A5B36189A2D8}" Name="Important" Type="Bool" DefaultValue="false" ControlWidget="ISTaskImportantEdit" LabelName="Это важная задача" LocalListName="Это важная задача"/>
-      <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="BigInt" DefaultValue="get_status_id_by_uid('2FD27958-6EC9-4E78-88F4-0A2BFDFE4716'::UUID)" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true" HideFromObject="true"/>
+      <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="BigInt" DefaultValue="get_task_status_id_by_uid('2FD27958-6EC9-4E78-88F4-0A2BFDFE4716'::UUID)" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true" HideFromObject="true"/>
     </Fields>
     <Indexes>
       <Index Field="Parent"/>

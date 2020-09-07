@@ -129,12 +129,35 @@
     COST 100;
   </Function>
 
-  <Function Name="get_status_id_by_uid">
-    CREATE OR REPLACE FUNCTION public.get_status_id_by_uid(status_uid uuid)
+  <Function Name="get_task_status_id_by_uid">
+    CREATE OR REPLACE FUNCTION public.get_task_status_id_by_uid(status_uid uuid)
     RETURNS bigint AS
     $body$
     BEGIN
     RETURN tsst_id FROM _taskstatus WHERE tsst_uid = status_uid;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
+  <Function Name="task_vote">
+    CREATE OR REPLACE FUNCTION public.task_vote(task_id bigint)
+    RETURNS bigint AS
+    $body$
+    DECLARE
+    cnt INTEGER;
+    BEGIN
+    SELECT INTO cnt COUNT(*) FROM _taskvote WHERE tvot_creationuseroid = currentuseroid() AND tvot_task = task_id;
+    CASE WHEN cnt > 0 THEN
+    DELETE FROM _taskvote WHERE tvot_creationuseroid = currentuseroid() AND tvot_task = task_id;
+    ELSE
+    INSERT INTO _taskvote(tvot_task) VALUES(task_id);
+    END CASE;
+    RETURN COUNT(*) FROM _taskvote WHERE tvot_task = task_id;
     END;
     $body$
     LANGUAGE 'plpgsql'

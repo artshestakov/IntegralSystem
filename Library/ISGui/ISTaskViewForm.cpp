@@ -32,7 +32,8 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_updationdate, "
 									   "t.task_parent AS task_parent_id, "
 									   "p.task_name AS task_parent_name, "
-									   "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_vote FROM _taskvote WHERE tvot_task = :TaskID) "
+									   "(SELECT COUNT(*) AS vote_count FROM _taskvote WHERE tvot_task = :TaskID), "
+									   "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_voted FROM _taskvote WHERE tvot_creationuseroid = currentuseroid()) "
 									   "FROM _task t "
 									   "LEFT JOIN _users ue ON ue.usrs_id = t.task_executor "
 									   "LEFT JOIN _users uo ON uo.usrs_oid = t.task_creationuseroid "
@@ -42,10 +43,7 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _task p ON p.task_id = t.task_parent "
 									   "WHERE t.task_id = :TaskID");
 //-----------------------------------------------------------------------------
-static QString QI_VOTE = PREPARE_QUERY("INSERT INTO _taskvote(tvot_task) "
-									   "VALUES(:TaskID)");
-//-----------------------------------------------------------------------------
-static QString QD_VOTE = PREPARE_QUERY("DELETE FROM _taskvote WHERE tvot_task = :TaskID");
+static QString QS_VOTE = PREPARE_QUERY("SELECT task_vote(:TaskID)");
 //-----------------------------------------------------------------------------
 static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_description, tsst_uid AS task_status_uid "
 										  "FROM _task "
@@ -193,7 +191,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskUpdationDateToolTip = qSelect.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
-	IsVoted = qSelect.ReadColumn("is_vote").toBool();
+	VoteCount = qSelect.ReadColumn("vote_count").toInt();
+	IsVoted = qSelect.ReadColumn("is_voted").toBool();
 
 	setWindowTitle(TaskParentID ? LANG("Task.ViewFormTitle.SubTask").arg(TaskParentID).arg(TaskName) : LANG("Task.ViewFormTitle.Task").arg(TaskID).arg(TaskName));
 
@@ -277,10 +276,10 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	}
 	LayoutButtonStatus->addWidget(ButtonActions);
 
-	LayoutButtonStatus->addStretch();
-
-	ButtonVote = new ISPushButton(BUFFER_ICONS("Task.Vote"), WidgetButtonStatus);
+	ButtonVote = new ISPushButton(BUFFER_ICONS("Task.Vote"), QString::number(VoteCount), WidgetButtonStatus);
 	ButtonVote->setToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
+	ButtonVote->setCheckable(true);
+	ButtonVote->setChecked(IsVoted);
 	connect(ButtonVote, &ISPushButton::clicked, this, &ISTaskViewForm::Vote);
 	LayoutButtonStatus->addWidget(ButtonVote);
 
@@ -758,11 +757,13 @@ void ISTaskViewForm::UpdateVisibleButtonReOpen()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Vote()
 {
-	ISQuery qVote(IsVoted ? QD_VOTE : QI_VOTE);
+	ISQuery qVote(QS_VOTE);
 	qVote.BindValue(":TaskID", TaskID);
-	if (qVote.Execute())
+	if (qVote.ExecuteFirst())
 	{
+		VoteCount = qVote.ReadColumn("task_vote").toInt();
 		IsVoted = !IsVoted;
+		ButtonVote->setText(QString::number(VoteCount));
 		ButtonVote->setToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
 	}
 	else

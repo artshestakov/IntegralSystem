@@ -125,6 +125,7 @@ private:
 	QString TaskUpdationDateToolTip;
 	int TaskParentID;
 	QString TaskParentName;
+	int VoteCount;
 	bool IsVoted;
 };
 //-----------------------------------------------------------------------------
