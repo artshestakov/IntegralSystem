@@ -17,11 +17,12 @@ static QString QU_SYSTEM_USER = PREPARE_QUERY("UPDATE _users SET "
 											  "usrs_fio = :FIO, "
 											  "usrs_sex = (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID),"
 											  "usrs_login = :Login, "
-											  "usrs_accessallowed = :AccessAllowed "
+											  "usrs_accessallowed = :AccessAllowed, "
+											  "usrs_photo = :Photo "
 											  "WHERE usrs_uid = :UID");
 //-----------------------------------------------------------------------------
-static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_oid, usrs_fio, usrs_sex, usrs_login, usrs_accessallowed) "
-											  "VALUES(:UID, :IsSystem, :OID, :FIO, (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID), :Login, :AccessAllowed)");
+static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_oid, usrs_fio, usrs_sex, usrs_login, usrs_accessallowed, usrs_photo) "
+											  "VALUES(:UID, :IsSystem, :OID, :FIO, (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID), :Login, :AccessAllowed, :Photo)");
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 													"FROM _settingsdatabase "
@@ -327,45 +328,36 @@ bool CGConfiguratorUpdate::systemuser()
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
-		if (qSelect.ReadColumn("count").toInt() > 0)
+		QByteArray ByteArray;
+		QFile FileAvatar(":/Images/PostgresAvatar.png");
+		if (FileAvatar.open(QIODevice::ReadOnly))
 		{
-			ISQuery qUpdate(QU_SYSTEM_USER);
-			qUpdate.BindValue(":IsSystem", true);
-			qUpdate.BindValue(":OID", SYSTEM_USER_OID);
-			qUpdate.BindValue(":FIO", LANG("SystemUser.FIO"));
-			qUpdate.BindValue(":SexUID", CONST_UID_SEX_MALE);
-			qUpdate.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
-			qUpdate.BindValue(":AccessAllowed", true);
-			qUpdate.BindValue(":UID", CONST_UID_USER_POSTGRES);
-			Result = qUpdate.Execute();
-			if (Result)
-			{
-				ISLOGGER_L("System user updated");
-			}
-			else
-			{
-				ErrorString = qUpdate.GetErrorString();
-			}
+			ByteArray = FileAvatar.readAll();
+			FileAvatar.close();
 		}
 		else
 		{
-			ISQuery qInsert(QI_SYSTEM_USER);
-			qInsert.BindValue(":UID", CONST_UID_USER_POSTGRES);
-			qInsert.BindValue(":IsSystem", true);
-			qInsert.BindValue(":OID", SYSTEM_USER_OID);
-			qInsert.BindValue(":FIO", LANG("SystemUser.FIO"));
-			qInsert.BindValue(":SexUID", CONST_UID_SEX_MALE);
-			qInsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
-			qInsert.BindValue(":AccessAllowed", true);
-			Result = qInsert.Execute();
-			if (Result)
-			{
-				ISLOGGER_L("System user created");
-			}
-			else
-			{
-				ErrorString = qInsert.GetErrorString();
-			}
+			ISLOGGER_W("Error open avatar \"" + FileAvatar.fileName() + "\": " + FileAvatar.errorString());
+		}
+
+		bool IsExist = qSelect.ReadColumn("count").toInt() > 0;
+		ISQuery qUpsert(IsExist ? QU_SYSTEM_USER : QI_SYSTEM_USER);
+		qUpsert.BindValue(":UID", CONST_UID_USER_POSTGRES);
+		qUpsert.BindValue(":IsSystem", true);
+		qUpsert.BindValue(":OID", SYSTEM_USER_OID);
+		qUpsert.BindValue(":FIO", LANG("SystemUser.FIO"));
+		qUpsert.BindValue(":SexUID", CONST_UID_SEX_MALE);
+		qUpsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
+		qUpsert.BindValue(":AccessAllowed", true);
+		qUpsert.BindValue(":Photo", ByteArray);
+		Result = qUpsert.Execute();
+		if (Result)
+		{
+			IsExist ? ISLOGGER_L("System user updated") : ISLOGGER_L("System user created");
+		}
+		else
+		{
+			ErrorString = qUpsert.GetErrorString();
 		}
 	}
 	else
