@@ -110,7 +110,7 @@ void ISImageWidget::SetPixmap()
 	}
 	else
 	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadPixmapFromBuffer"));
+		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.LoadPixmapFromBuffer"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -244,9 +244,8 @@ QPixmap ISImageWidget::ByteArrayToPixmap()
 	QPixmap Pixmap;
 	if (!Pixmap.loadFromData(ByteArray, "PNG"))
 	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.LoadPixmapFromBuffer"));
+		ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.LoadPixmapFromBuffer"));
 	}
 	return Pixmap;
-
 }
 //-----------------------------------------------------------------------------
