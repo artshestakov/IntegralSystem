@@ -110,13 +110,15 @@ private:
 	int TaskID;
 	QString TaskName;
 	QString TaskDescription;
-	QString TaskExecutor;
+	QPixmap TaskExecutroPhoto;
+	QString TaskExecutorName;
 	QString TaskType;
 	ISUuid TaskStatusUID;
 	QString TaskStatusName;
 	QString TaskStatusStyleSheet;
 	ISUuid TaskPriorityUID;
 	QString TaskPriorityName;
+	QPixmap TaskOwnerPhoto;
 	QString TaskOwner;
 	bool TaskImportant;
 	QString TaskCreationDate;

@@ -66,13 +66,11 @@ public:
 	ISLabelPixmapText(QWidget *parent = 0);
 	virtual ~ISLabelPixmapText();
 
-	QLabel* GetLabelPixmap() const;
-	ISQLabel *GetLabelText() const;
-
 	void SetDirection(QBoxLayout::Direction Direction);
 	void SetPixmapText(const QPixmap &Pixmap, const QString &Text);
 	void SetPixmap(const QPixmap &Pixmap);
 	void SetText(const QString &Text);
+	void SetWordWrap(bool WordWrap);
 
 	QFont GetFont() const;
 	void SetFont(const QFont &Font);

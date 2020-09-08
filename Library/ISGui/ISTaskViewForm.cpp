@@ -19,14 +19,16 @@
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "
 									   "t.task_description, "
-									   "ue.usrs_fio AS task_executor, "
+									   "userphotobyid(ue.usrs_id) AS task_executor_photo, "
+									   "ue.usrs_fio AS task_executor_name, "
 									   "tt.tstp_name AS task_type, "
 									   "ts.tsst_uid AS task_status_uid, "
 									   "ts.tsst_name AS task_status_name, "
 									   "ts.tsst_stylesheet AS task_status_stylesheet, "
 									   "tp.tspr_uid AS task_priority_uid, "
 									   "tp.tspr_name AS task_priority_name, "
-									   "uo.usrs_fio AS task_owner, "
+									   "userphotobyid(uo.usrs_id) AS task_owner_photo, "
+									   "uo.usrs_fio AS task_owner_name, "
 									   "t.task_important, "
 									   "t.task_creationdate, "
 									   "t.task_updationdate, "
@@ -176,14 +178,16 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	TaskName = qSelect.ReadColumn("task_name").toString();
 	TaskDescription = qSelect.ReadColumn("task_description").toString();
-	TaskExecutor = qSelect.ReadColumn("task_executor").toString();
+	TaskExecutroPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_executor_photo").toByteArray()).scaled(ISDefines::Gui::SIZE_32_32);
+	TaskExecutorName = qSelect.ReadColumn("task_executor_name").toString();
 	TaskType = qSelect.ReadColumn("task_type").toString();
 	TaskStatusUID = qSelect.ReadColumn("task_status_uid");
 	TaskStatusName = qSelect.ReadColumn("task_status_name").toString();
 	TaskStatusStyleSheet = qSelect.ReadColumn("task_status_stylesheet").toString();
 	TaskPriorityUID = qSelect.ReadColumn("task_priority_uid");
 	TaskPriorityName = qSelect.ReadColumn("task_priority_name").toString();
-	TaskOwner = qSelect.ReadColumn("task_owner").toString();
+	TaskOwnerPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_owner_photo").toByteArray()).scaled(ISDefines::Gui::SIZE_32_32);
+	TaskOwner = qSelect.ReadColumn("task_owner_name").toString();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskCreationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 	TaskCreationDateToolTip = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
@@ -231,7 +235,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	{
 		ISLabelPixmapText *LabelImportant = new ISLabelPixmapText(BUFFER_ICONS("Task.Important.Checked").pixmap(ISDefines::Gui::SIZE_22_22), LANG("Task.ThisIsImportantTask"), this);
 		LabelImportant->setSizePolicy(QSizePolicy::Maximum, LabelImportant->sizePolicy().verticalPolicy());
-		ISGui::SetFontWidgetUnderline(LabelImportant->GetLabelText(), true);
 		LayoutTitle->addWidget(LabelImportant);
 	}
 
@@ -390,18 +393,27 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Executor") + ':', GroupBoxDetails));
 
-	QLabel *LabelExecutor = new QLabel(TaskExecutor.isEmpty() ? LANG("Task.Right.Executor.Empty") : TaskExecutor, GroupBoxDetails);
-	LabelExecutor->setWordWrap(true);
-	ISGui::SetFontWidgetBold(LabelExecutor, true);
-	LayoutRight->addWidget(LabelExecutor);
+	if (TaskExecutorName.isEmpty())
+	{
+		QLabel *LabelExecutor = new QLabel(LANG("Task.Right.Executor.Empty"));
+		ISGui::SetFontWidgetBold(LabelExecutor, true);
+		LayoutRight->addWidget(LabelExecutor);
+	}
+	else
+	{
+		ISLabelPixmapText *LabelExecutor = new ISLabelPixmapText(TaskExecutroPhoto, TaskExecutorName, GroupBoxDetails);
+		LabelExecutor->SetWordWrap(true);
+		LabelExecutor->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+		LayoutRight->addWidget(LabelExecutor);
+	}
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Owner") + ':', GroupBoxDetails));
 
-	QLabel *LabelOwner = new QLabel(TaskOwner.isEmpty() ? LANG("Task.Right.Owner.Empty") : TaskOwner, GroupBoxDetails);
-	LabelOwner->setWordWrap(true);
-	ISGui::SetFontWidgetBold(LabelOwner, true);
+	ISLabelPixmapText *LabelOwner = new ISLabelPixmapText(TaskOwnerPhoto, TaskOwner.isEmpty() ? LANG("Task.Right.Owner.Empty") : TaskOwner, GroupBoxDetails);
+	LabelOwner->SetWordWrap(true);
+	LabelOwner->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LayoutRight->addWidget(LabelOwner);
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
@@ -420,7 +432,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ISLabelPixmapText *LabelPriority = new ISLabelPixmapText(TaskPriorityName, GroupBoxDetails);
 	LabelPriority->SetDirection(QBoxLayout::RightToLeft);
 	LabelPriority->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-	ISGui::SetFontWidgetBold(LabelPriority->GetLabelText(), true);
+	LabelPriority->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LayoutRight->addWidget(LabelPriority);
 
 	//Устанавливаем иконку в зависимости от приоритета

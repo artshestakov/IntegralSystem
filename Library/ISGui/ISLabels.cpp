@@ -147,7 +147,6 @@ ISLabelPixmapText::ISLabelPixmapText(const QPixmap &Pixmap, const QString &Text,
 	Layout->addWidget(LabelPixmap);
 
 	LabelText = new ISQLabel(Text, this);
-	LabelText->adjustSize();
 	Layout->addWidget(LabelText);
 }
 //-----------------------------------------------------------------------------
@@ -171,16 +170,6 @@ ISLabelPixmapText::~ISLabelPixmapText()
 
 }
 //-----------------------------------------------------------------------------
-QLabel* ISLabelPixmapText::GetLabelPixmap() const
-{
-	return LabelPixmap;
-}
-//-----------------------------------------------------------------------------
-ISQLabel* ISLabelPixmapText::GetLabelText() const
-{
-	return LabelText;
-}
-//-----------------------------------------------------------------------------
 void ISLabelPixmapText::SetDirection(QBoxLayout::Direction Direction)
 {
 	Layout->setDirection(Direction);
@@ -200,6 +189,11 @@ void ISLabelPixmapText::SetPixmap(const QPixmap &Pixmap)
 void ISLabelPixmapText::SetText(const QString &Text)
 {
 	LabelText->setText(Text);
+}
+//-----------------------------------------------------------------------------
+void ISLabelPixmapText::SetWordWrap(bool WordWrap)
+{
+	LabelText->setWordWrap(WordWrap);
 }
 //-----------------------------------------------------------------------------
 QFont ISLabelPixmapText::GetFont() const
