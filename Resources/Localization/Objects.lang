@@ -17,11 +17,13 @@
   <Local Name="OilSphere.ShowCounterparty" Russian="Карточка контрагента"/>
   <Local Name="OilSphere.Debet.Total" Russian="Сумма итого: %1"/>
   <Local Name="OilSphere.Debet.Remainder" Russian="Сумма остатка: %1"/>
+  <Local Name="OilSphere.Message.Question.CreateCurrentConstant" Russian="Константа за текущий период не обнаружена, создать её сейчас?"/>
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место загрузки."/>
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место загрузки."/>
   <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место выгрузки."/>
   <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место выгрузки."/>
   <Local Name="OilSphere.Message.Warning.NotFoundCurrentConstant" Russian="Плотность на текущий период отсутствует."/>
   <Local Name="OilSphere.Message.Critical.InsertGasStatment" Russian="Не удалось зафиксировать приход на склад."/>
+  <Local Name="OilSphere.Message.Critical.SelectCurrentConstant" Russian="Не удалось проверить наличие константы за текущий период."/>
 	
 </LANG>

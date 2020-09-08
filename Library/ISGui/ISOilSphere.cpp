@@ -10,7 +10,13 @@
 #include "ISStyleSheet.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
-static QString QS_STATEMENT = PREPARE_QUERY2("SELECT COUNT(*) FROM gasstationstatement WHERE gsts_implementationunload = :ImplementationUnload");
+static QString QS_PERIOD = PREPARE_QUERY2("SELECT COUNT(*) "
+										  "FROM period "
+										  "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
+//-----------------------------------------------------------------------------
+static QString QS_STATEMENT = PREPARE_QUERY2("SELECT COUNT(*) "
+											 "FROM gasstationstatement "
+											 "WHERE gsts_implementationunload = :ImplementationUnload");
 //-----------------------------------------------------------------------------
 static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
 											 "VALUES(:ImplementationUnload, :StockID, CURRENT_DATE, :VolumeIncome)");
@@ -101,12 +107,30 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
 {
-
+	
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::InitializePlugin() const
 {
-
+	//Проверяем наличие константы за текущий период
+	ISQuery qSelectPeriod(QS_PERIOD);
+	if (qSelectPeriod.ExecuteFirst())
+	{
+		if (qSelectPeriod.ReadColumn("count") == 0) //Константа отсутствует - предлагаем создать её
+		{
+			if (ISMessageBox::ShowQuestion(nullptr, LANG("OilSphere.Message.Question.CreateCurrentConstant")))
+			{
+				ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "Period");
+				ObjectFormBase->SetFieldValue("DateStart", QDate::currentDate());
+				ObjectFormBase->SetFieldValue("DateEnd", QDate::currentDate());
+				ISGui::ShowObjectForm(ObjectFormBase);
+			}
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(nullptr, LANG("OilSphere.Message.Critical.SelectCurrentConstant"), qSelectPeriod.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
