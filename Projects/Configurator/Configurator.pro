@@ -33,13 +33,7 @@ SOURCES += \
     CGConfiguratorService.cpp \
     CGConfiguratorShow.cpp \
     CGConfiguratorUpdate.cpp \
-    CGForeign.cpp \
-    CGFunction.cpp \
-    CGHelper.cpp \
-    CGIndex.cpp \
-    CGResource.cpp \
-    CGSequence.cpp \
-    CGTable.cpp \
+    CGDatabase.cpp \
     main.cpp
 
 HEADERS += \
@@ -50,10 +44,4 @@ HEADERS += \
     CGConfiguratorService.h \
     CGConfiguratorShow.h \
     CGConfiguratorUpdate.h \
-    CGForeign.h \
-    CGFunction.h \
-    CGHelper.h \
-    CGIndex.h \
-    CGResource.h \
-    CGSequence.h \
-    CGTable.h
+    CGDatabase.h
