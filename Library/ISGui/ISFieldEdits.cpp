@@ -2472,6 +2472,6 @@ void ISExecutorEdit::SetReadOnly(bool read_only)
 //-----------------------------------------------------------------------------
 void ISExecutorEdit::DesignateMe()
 {
-	SetValue(CURRENT_USER_OID);
+	SetValue(CURRENT_USER_ID);
 }
 //-----------------------------------------------------------------------------
