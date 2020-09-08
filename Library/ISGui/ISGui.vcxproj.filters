@@ -384,9 +384,6 @@
     <ClCompile Include="ISLabels.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="ISListWidget.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISMenuBar.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -452,6 +449,12 @@
     </ClCompile>
     <ClCompile Include="ISUserPhotoCreator.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISListWidget.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTreeWidget.cpp">
+      <Filter>Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -701,9 +704,6 @@
     <QtMoc Include="ISLabels.h">
       <Filter>Controls</Filter>
     </QtMoc>
-    <QtMoc Include="ISListWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
     <QtMoc Include="ISMenuBar.h">
       <Filter>Controls</Filter>
     </QtMoc>
@@ -760,6 +760,12 @@
     </QtMoc>
     <QtMoc Include="ISSettingsDatabaseListForm.h">
       <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISListWidget.h">
+      <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTreeWidget.h">
+      <Filter>Widgets</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

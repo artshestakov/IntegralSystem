@@ -119,19 +119,19 @@ static QString QD_LINK = PREPARE_QUERY("DELETE FROM _tasklink "
 									   "WHERE tlnk_id = :LinkID");
 //-----------------------------------------------------------------------------
 static QString QS_COMMENT = PREPARE_QUERY("SELECT "
-										  "tcom_id, "
-										  "userphotobyoid(tcom_creationuseroid), "
+										  "c.tcom_id, "
+										  "c.tcom_parent, "
+										  "c.tcom_comment, "
+										  "c.tcom_creationdate, "
+										  "c.tcom_updationdate, "
 										  "usrs_fio, "
-										  "(SELECT task_creationuseroid = tcom_creationuseroid AS is_user_owner FROM _task WHERE task_id = tcom_task), "
-										  "tcom_comment, "
-										  "tcom_creationdate "
-										  "FROM _taskcomment "
-										  "LEFT JOIN _users ON usrs_oid = tcom_creationuseroid "
-										  "WHERE tcom_task = :TaskID "
-										  "ORDER BY tcom_id");
+										  "userphotobyoid(tcom_creationuseroid) "
+										  "FROM _taskcomment c "
+										  "LEFT JOIN _users ON usrs_oid = c.tcom_creationuseroid "
+										  "WHERE c.tcom_task = :TaskID");
 //-----------------------------------------------------------------------------
-static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, tcom_comment) "
-										  "VALUES(:TaskID, :Comment)");
+static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, tcom_parent, tcom_comment) "
+										  "VALUES(:TaskID, :Parent, :Comment)");
 //-----------------------------------------------------------------------------
 static QString QU_COMMENT = PREPARE_QUERY("UPDATE _taskcomment SET "
 										  "tcom_comment = :Comment "
@@ -178,7 +178,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	TaskName = qSelect.ReadColumn("task_name").toString();
 	TaskDescription = qSelect.ReadColumn("task_description").toString();
-	TaskExecutroPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_executor_photo").toByteArray()).scaled(ISDefines::Gui::SIZE_32_32);
+	TaskExecutroPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_executor_photo").toByteArray()).scaled(40, 40);
 	TaskExecutorName = qSelect.ReadColumn("task_executor_name").toString();
 	TaskType = qSelect.ReadColumn("task_type").toString();
 	TaskStatusUID = qSelect.ReadColumn("task_status_uid");
@@ -186,7 +186,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskStatusStyleSheet = qSelect.ReadColumn("task_status_stylesheet").toString();
 	TaskPriorityUID = qSelect.ReadColumn("task_priority_uid");
 	TaskPriorityName = qSelect.ReadColumn("task_priority_name").toString();
-	TaskOwnerPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_owner_photo").toByteArray()).scaled(ISDefines::Gui::SIZE_32_32);
+	TaskOwnerPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_owner_photo").toByteArray()).scaled(40, 40);
 	TaskOwner = qSelect.ReadColumn("task_owner_name").toString();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskCreationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
@@ -324,14 +324,12 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TabWidget->tabBar()->setStyleSheet(STYLE_SHEET("QTabBarTask"));
 	LayoutLeft->addWidget(TabWidget);
 
-	LayoutComments = new QVBoxLayout();
-	LayoutComments->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-	LayoutComments->setSpacing(0);
-	LayoutComments->addStretch();
-
-	ScrollComment = new ISScrollArea(TabWidget);
-	ScrollComment->widget()->setLayout(LayoutComments);
-	TabWidget->addTab(ScrollComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
+	TreeWidgetComment = new ISTreeWidget(TabWidget);
+	TreeWidgetComment->setHeaderHidden(true);
+	TreeWidgetComment->setAlternatingRowColors(true);
+	TreeWidgetComment->setAnimated(true);
+	TreeWidgetComment->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
 	CommentLoadList();
 
 	LayoutCheckList = new QVBoxLayout();
@@ -365,7 +363,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	QToolButton *ButtonAddComment = CreateAddButton(LANG("Task.AddComment"));
 	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
-	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ScrollComment), QTabBar::RightSide, ButtonAddComment);
+	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(TreeWidgetComment), QTabBar::RightSide, ButtonAddComment);
 
 	QToolButton *ButtonAddCheck = CreateAddButton(LANG("Task.AddCheck"));
 	connect(ButtonAddCheck, &QToolButton::clicked, this, &ISTaskViewForm::CheckAdd);
@@ -1177,31 +1175,37 @@ void ISTaskViewForm::LinkDelete()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CommentLoadList()
 {
-	while (!VectorComments.empty())
-	{
-		delete ISAlgorithm::VectorTakeBack(VectorComments);
-	}
+	TreeWidgetComment->Clear();
+	MapComment.clear();
 
 	ISQuery qSelectComments(QS_COMMENT);
 	qSelectComments.BindValue(":TaskID", TaskID);
 	if (qSelectComments.Execute())
 	{
-		int Index = 0;
 		while (qSelectComments.Next())
 		{
 			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
-			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyoid").toByteArray());
-			QString UserFullName = qSelectComments.ReadColumn("usrs_fio").toString();
-			bool IsUserOwner = qSelectComments.ReadColumn("is_user_owner").toBool();
+			int ParentID = qSelectComments.ReadColumn("tcom_parent").toInt();
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
+			QDateTime UpdationDate = qSelectComments.ReadColumn("tcom_updationdate").toDateTime();
+			QString UserFIO = qSelectComments.ReadColumn("usrs_fio").toString();
+			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyoid").toByteArray());
 
-			QWidget *WidgetComment = CommentCreateWidget(CommentID, UserPhoto, IsUserOwner ? LANG("Task.CommentUserOwner").arg(UserFullName) : UserFullName, Comment, CreationDate);
-			WidgetComment->setStyleSheet(STYLE_SHEET("QWidgetCommentTask"));
-			LayoutComments->insertWidget(Index++, WidgetComment);
-			VectorComments.emplace_back(WidgetComment);
+			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserPhoto, UserFIO, Comment, CreationDate);
+			if (ParentID)
+			{
+				QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(MapComment[ParentID]);
+				TreeWidgetComment->setItemWidget(TreeWidgetItem, 0, Widget);
+			}
+			else
+			{
+				QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(TreeWidgetComment);
+				TreeWidgetComment->setItemWidget(TreeWidgetItem, 0, Widget);
+				MapComment[CommentID] = TreeWidgetItem;
+			}
 		}
-		TabWidget->setTabText(TabWidget->indexOf(ScrollComment), LANG("Task.Comments").arg(qSelectComments.GetCountResultRows()));
+		TabWidget->setTabText(TabWidget->indexOf(TreeWidgetComment), LANG("Task.Comments").arg(qSelectComments.GetCountResultRows()));
 	}
 	else
 	{
@@ -1209,12 +1213,12 @@ void ISTaskViewForm::CommentLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime)
+QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &DateTime)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
 
-	QWidget *Widget = new QWidget(ScrollComment);
+	QWidget *Widget = new QWidget(TreeWidgetComment);
 	Widget->setLayout(LayoutWidget);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
@@ -1228,7 +1232,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	LabelAvatar->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_45_45) : UserPhoto.scaled(ISDefines::Gui::SIZE_45_45, Qt::KeepAspectRatio));
 	LayoutTitle->addWidget(LabelAvatar);
 
-	QLabel *LabelUser = new QLabel(UserFullName, WidgetTitle);
+	QLabel *LabelUser = new QLabel(UserFIO, WidgetTitle);
 	LabelUser->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 	ISGui::SetFontWidgetBold(LabelUser, true);
 	LayoutTitle->addWidget(LabelUser);
@@ -1245,6 +1249,15 @@ QWidget* ISTaskViewForm::CommentCreateWidget(int CommentID, const QPixmap &UserP
 	QWidget *WidgetBottom = new QWidget(Widget);
 	WidgetBottom->setLayout(LayoutBottom);
 	LayoutWidget->addWidget(WidgetBottom);
+
+	if (!IsParent)
+	{
+		ISQLabel *LabelAnswer = new ISQLabel(LANG("Task.Comment.Answer"), WidgetBottom);
+		LabelAnswer->SetIsLinked(true);
+		LabelAnswer->setProperty("ParentID", CommentID);
+		connect(LabelAnswer, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentAdd);
+		LayoutBottom->addWidget(LabelAnswer);
+	}
 
 	ISQLabel *LabelEdit = new ISQLabel(LANG("Edit"), WidgetBottom);
 	LabelEdit->setProperty("Comment", Comment);
@@ -1276,11 +1289,12 @@ void ISTaskViewForm::CommentAdd()
 	{
 		ISQuery qInsertComment(QI_COMMENT);
 		qInsertComment.BindValue(":TaskID", TaskID);
+		qInsertComment.BindValue(":Parent", sender()->property("ParentID"));
 		qInsertComment.BindValue(":Comment", Comment);
 		if (qInsertComment.Execute())
 		{
 			CommentLoadList();
-			QTimer::singleShot(50, this, [=]() { ScrollComment->verticalScrollBar()->triggerAction(QAbstractSlider::SliderToMaximum); });
+			TreeWidgetComment->scrollToBottom();
 		}
 		else
 		{

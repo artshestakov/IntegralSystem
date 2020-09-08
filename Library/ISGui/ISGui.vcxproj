@@ -290,6 +290,7 @@
     <ClCompile Include="ISTaskSearchByTextForm.cpp" />
     <ClCompile Include="ISTaskViewForm.cpp" />
     <ClCompile Include="ISToolBarAccessTable.cpp" />
+    <ClCompile Include="ISTreeWidget.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
     <ClCompile Include="ISUserGroupWidget.cpp" />
     <ClCompile Include="ISUserListForm.cpp" />
@@ -431,6 +432,7 @@
     <ClInclude Include="ISHistory.h" />
     <QtMoc Include="ISRangeEdits.h" />
     <QtMoc Include="ISSettingsDatabaseListForm.h" />
+    <QtMoc Include="ISTreeWidget.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISWaitWidget.h" />

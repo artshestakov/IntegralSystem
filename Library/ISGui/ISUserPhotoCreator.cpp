@@ -64,7 +64,7 @@ QPixmap ISUserPhotoCreator::Create(const QString &FIO)
 	if (!Fio.isEmpty())
 	{
 		QPainter Painter(&Pixmap);
-		Painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin));
+		Painter.setPen(QPen(Color, 1, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin));
 		Painter.setBrush(QBrush(Color));
 		Painter.drawEllipse(2, 2, 200, 200);
 		Painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin));

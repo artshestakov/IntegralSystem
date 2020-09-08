@@ -6,6 +6,7 @@
 #include "ISInterfaceForm.h"
 #include "ISLabels.h"
 #include "ISListWidget.h"
+#include "ISTreeWidget.h"
 #include "ISButtons.h"
 #include "ISFieldEdits.h"
 #include "ISScrollArea.h"
@@ -68,7 +69,7 @@ private:
 
 private:
 	void CommentLoadList();
-	QWidget* CommentCreateWidget(int CommentID, const QPixmap &UserPhoto, const QString &UserFullName, const QString &Comment, const QDateTime &DateTime);
+	QWidget* CommentCreateWidget(bool IsParent, int CommentID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &DateTime);
 	void CommentAdd();
 	void CommentEdit();
 	void CommentDelete();
@@ -95,9 +96,8 @@ private:
 	QGroupBox *GroupBoxSubTask;
 	ISListWidget *ListWidgetSubTask;
 	QTabWidget *TabWidget;
-	QVBoxLayout *LayoutComments;
-	ISScrollArea *ScrollComment;
-	std::vector<QWidget*> VectorComments;
+	ISTreeWidget *TreeWidgetComment;
+	std::map<int, QTreeWidgetItem*> MapComment;
 	QVBoxLayout *LayoutCheckList;
 	ISScrollArea *ScrollCheckList;
 	std::vector<QWidget*> VectorCheckList;

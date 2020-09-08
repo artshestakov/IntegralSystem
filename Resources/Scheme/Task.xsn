@@ -111,15 +111,18 @@
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
     <Fields>
       <Field UID="{47664BE4-308A-4B69-8E8E-76E8111F0110}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
+      <Field UID="{D19C9CB6-6901-464A-B6AE-76BB08B86E88}" Name="Parent" Type="BigInt" LabelName="Родительский комментарий" LocalListName="Родительский комментарий"/>
       <Field UID="{2B8CFE09-5BF7-4AAA-B206-CA646868E322}" Name="Comment" Type="Text" LabelName="Комментарий" LocalListName="Комментарий" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Task"/>
+      <Index Field="Parent"/>
       <Index Field="Comment"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="Parent" ForeignClass="_TaskComment" ForeignField="ID" ForeignViewNameField="Comment"/>
     </Foreigns>
   </Table>
 
