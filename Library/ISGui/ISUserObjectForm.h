@@ -3,6 +3,7 @@
 #define _ISUSEROBJECTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISObjectFormBase.h"
+#include "ISUserPhotoCreator.h"
 //-----------------------------------------------------------------------------
 class ISUserObjectForm : public ISObjectFormBase
 {
@@ -21,6 +22,7 @@ protected:
 private:
 	void PasswordChange();
 	void PasswordDelete();
+	void FIOChanged();
 	void AccountLifeTimeChanged();
 
 private:
@@ -30,6 +32,7 @@ private:
 	ISFieldEditBase *EditAccountLifeTimeEnd;
 
 	QString CurrentLogin;
+	ISUserPhotoCreator UserPhotoCreator;
 };
 //-----------------------------------------------------------------------------
 #endif

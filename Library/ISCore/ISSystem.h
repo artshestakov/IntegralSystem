@@ -17,7 +17,8 @@ public:
 	static QString GetSizeDir(const QString &DirPath); //Получить размер файлов в папке
 	static QString GetDayOfWeekName(Qt::DayOfWeek Day); //Получить название дня
 	static void ClearDirRecursive(const QString &DirPath); //Очистить папку рекурсивно (с подпапками)
-	static void RemoveLastSymbolLoop(QString &String, char Char); //Удалить символ в конце если существует
+	static void RemoveBeginSymbolLoop(QString &String, char Char); //Удалить символ в начале
+	static void RemoveLastSymbolLoop(QString &String, char Char); //Удалить символ в конце
 	static ISUuid GenerateUuid(); //Сгенерировать новый UID
 	static void BeginSymbolToUpper(QString &String); //Преобразование первого символа строки в верхний регистр
 	static bool CheckExistSlot(QObject *Object, const QString &SlotName); //Проверить наличие слота в объекте

@@ -5,6 +5,7 @@
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISQuery.h"
+#include "ISCore.h"
 #include "ISGui.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
@@ -20,6 +21,8 @@ static QString QU_OID = PREPARE_QUERY("UPDATE _users SET "
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
+	connect(GetFieldWidget("FIO"), &ISFieldEditBase::DataChanged, this, &ISUserObjectForm::FIOChanged);
+
 	QAction *ActionChangePassword = ISControls::CreateActionPasswordChange(this);
 	connect(ActionChangePassword, &QAction::triggered, this, &ISUserObjectForm::PasswordChange);
 	AddActionToolBar(ActionChangePassword, true);
@@ -183,6 +186,13 @@ void ISUserObjectForm::PasswordDelete()
 {
 	//≈сли запись была изменена - просим сохранить
 	GetModificationFlag() ? ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue")) : ISGui::ShowUserPasswordDelete(GetObjectID(), EditLogin->GetValue().toString());
+}
+//-----------------------------------------------------------------------------
+void ISUserObjectForm::FIOChanged()
+{
+	QString FIO = GetFieldValue("FIO").toString();
+	QPixmap Pixmap = UserPhotoCreator.Create(FIO);
+	FIO.isEmpty() ? GetFieldWidget("Photo")->Clear() : SetFieldValue("Photo", ISGui::PixmapToByteArray(Pixmap));
 }
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()

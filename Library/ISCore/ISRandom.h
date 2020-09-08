@@ -2,9 +2,11 @@
 #ifndef _ISRANDOM_H_INCLUDED
 #define _ISRANDOM_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "iscore_global.h"
+//-----------------------------------------------------------------------------
 typedef unsigned __int64 rand_t;
 //-----------------------------------------------------------------------------
-class ISRandom
+class ISCORE_EXPORT ISRandom
 {
 public:
 	ISRandom(rand_t InitDigit);
