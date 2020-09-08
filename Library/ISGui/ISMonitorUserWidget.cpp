@@ -5,7 +5,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, int user_oid, const QString &user_name, QWidget *parent) : QFrame(parent)
+ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, int user_oid, const QString &user_name, const QPixmap &UserPhoto, QWidget *parent) : QFrame(parent)
 {
 	setFrameShape(QFrame::Box);
 	setFrameShadow(QFrame::Plain);
@@ -25,7 +25,7 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, int user_o
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
-	LabelIcon->setPixmap((is_online ? BUFFER_ICONS("UserMonitor.Online") : BUFFER_ICONS("UserMonitor.Offline")).pixmap(ISDefines::Gui::SIZE_32_32));
+	LabelIcon->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_32_32) : UserPhoto);
 	Layout->addWidget(LabelIcon, 0, Qt::AlignHCenter);
 
 	QLabel *LabelUserName = new QLabel(this);

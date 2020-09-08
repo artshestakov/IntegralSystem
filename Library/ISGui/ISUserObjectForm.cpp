@@ -190,9 +190,12 @@ void ISUserObjectForm::PasswordDelete()
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::FIOChanged()
 {
-	QString FIO = GetFieldValue("FIO").toString();
-	QPixmap Pixmap = UserPhotoCreator.Create(FIO);
-	FIO.isEmpty() ? GetFieldWidget("Photo")->Clear() : SetFieldValue("Photo", ISGui::PixmapToByteArray(Pixmap));
+	if (!GetFieldValue("Photo").isValid())
+	{
+		QString FIO = GetFieldValue("FIO").toString();
+		QPixmap Pixmap = UserPhotoCreator.Create(FIO);
+		FIO.isEmpty() ? GetFieldWidget("Photo")->Clear() : SetFieldValue("Photo", ISGui::PixmapToByteArray(Pixmap));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()

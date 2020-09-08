@@ -17,7 +17,7 @@
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, usrs_oid, usrs_fio "
+static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, usrs_oid, usrs_fio, usrs_photo "
 										"FROM _users "
 										"WHERE usrs_uid != :PostgresUID "
 										"ORDER BY usrs_fio");
@@ -83,18 +83,18 @@ void ISMonitorActivityForm::LoadData()
 	{
 		while (qSelect.Next())
 		{
-			//???
-			bool IsOnline = false;//qSelect.ReadColumn("useronline").toBool();
+			bool IsOnline = false;
 			if (CheckEdit->GetValue().toBool() && !IsOnline)
 			{
 				continue;
 			}
 
-			int UserID = qSelect.ReadColumn("usrs_id").toInt();
-			int UserOID = qSelect.ReadColumn("usrs_oid").toInt();
-			QString UserFullName = qSelect.ReadColumn("usrs_fio").toString();
-
-			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline, UserID, UserOID, UserFullName, ScrollArea);
+			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline,
+				qSelect.ReadColumn("usrs_id").toInt(),
+				qSelect.ReadColumn("usrs_oid").toInt(),
+				qSelect.ReadColumn("usrs_fio").toString(),
+				ISGui::ByteArrayToPixmap(qSelect.ReadColumn("usrs_photo").toByteArray()).scaled(ISDefines::Gui::SIZE_32_32),
+				ScrollArea);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivityForm::ShowUserCard);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
 			ScrollArea->widget()->layout()->addWidget(MonitorUserWidget);
@@ -149,7 +149,9 @@ void ISMonitorActivityForm::ShowUserCard()
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->property("UserID").toInt()));
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->property("UserID").toInt());
+		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISMonitorActivityForm::LoadData);
+		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 }
 //-----------------------------------------------------------------------------

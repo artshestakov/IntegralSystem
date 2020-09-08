@@ -11,7 +11,7 @@ signals:
 	void ShowProtocol();
 
 public:
-	ISMonitorUserWidget(bool is_online, int user_id, int user_oid, const QString &user_name, QWidget *parent = 0);
+	ISMonitorUserWidget(bool is_online, int user_id, int user_oid, const QString &user_name, const QPixmap &UserPhoto, QWidget *parent = 0);
 	virtual ~ISMonitorUserWidget();
 
 protected:
