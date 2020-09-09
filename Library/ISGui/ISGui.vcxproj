@@ -262,8 +262,6 @@
     <ClCompile Include="ISProgressForm.cpp" />
     <ClCompile Include="ISProtocolListForm.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
-    <ClCompile Include="ISRangeEditBase.cpp" />
-    <ClCompile Include="ISRangeEdits.cpp" />
     <ClCompile Include="ISRecordInfoForm.cpp" />
     <ClCompile Include="ISRegisterMetaType.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
@@ -427,7 +425,6 @@
     <QtMoc Include="ISTaskListForm.h" />
     <QtMoc Include="ISTaskSearchByTextForm.h" />
     <ClInclude Include="ISHistory.h" />
-    <QtMoc Include="ISRangeEdits.h" />
     <QtMoc Include="ISSettingsDatabaseListForm.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
@@ -454,7 +451,6 @@
     <ClInclude Include="ISHtmlQuery.h" />
     <QtMoc Include="ISObjectInterface.h" />
     <ClInclude Include="ISMetaSystemsEntity.h" />
-    <QtMoc Include="ISRangeEditBase.h" />
     <QtMoc Include="ISSettingFieldWidgets.h" />
     <QtMoc Include="ISOilSphere.h" />
     <ClInclude Include="ISObjects.h" />

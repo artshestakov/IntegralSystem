@@ -282,9 +282,6 @@
     <ClInclude Include="ISTypedefs.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISTypes.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISUuid.h">
       <Filter>System</Filter>
     </ClInclude>

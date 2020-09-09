@@ -524,20 +524,18 @@ void ISListBaseForm::SetShowOnly(bool show_only)
 void ISListBaseForm::Period()
 {
 	ISPeriodForm PeriodForm;
-	PeriodForm.SetRange(QueryModel->GetPeriodType(), QueryModel->GetPeriod());
+	PeriodForm.SetRange(QueryModel->GetPeriodType(), QueryModel->GetPeriodBegin(), QueryModel->GetPeriodEnd());
 	if (PeriodForm.Exec())
 	{
-		QDate StartDate = PeriodForm.GetRange().BeginValue.toDate();
-		QDate EndDate = PeriodForm.GetRange().EndValue.toDate();
-
+		QDate StartDate = PeriodForm.GetBegin();
+		QDate EndDate = PeriodForm.GetEnd();
 		switch (PeriodForm.GetPeriodType())
 		{
 		case ISNamespace::PT_CreationDate: LabelPeriod->setText(LANG("PeriodLabelCreate").arg(StartDate.toString(FORMAT_DATE_V2)).arg(EndDate.toString(FORMAT_DATE_V2))); break;
 		case ISNamespace::PT_UpdationDate: LabelPeriod->setText(LANG("PeriodLabelUpdate").arg(StartDate.toString(FORMAT_DATE_V2)).arg(EndDate.toString(FORMAT_DATE_V2))); break;
 		}
-
 		LabelPeriod->setVisible(true);
-		QueryModel->SetPeriod(PeriodForm.GetPeriodType(), PeriodForm.GetRange());
+		QueryModel->SetPeriod(PeriodForm.GetPeriodType(), StartDate, EndDate);
 		ActionPeriodClear->setEnabled(true);
 		Update();
 	}

@@ -174,9 +174,6 @@
     <ClCompile Include="ISFieldEdits.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
-    <ClCompile Include="ISRangeEditBase.cpp">
-      <Filter>Fields</Filter>
-    </ClCompile>
     <ClCompile Include="ISMessageBox.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
@@ -432,9 +429,6 @@
     <ClCompile Include="ISEditsQT.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
-    <ClCompile Include="ISRangeEdits.cpp">
-      <Filter>Fields</Filter>
-    </ClCompile>
     <ClCompile Include="ISSettingFieldWidgets.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
@@ -546,9 +540,6 @@
       <Filter>Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISFieldEdits.h">
-      <Filter>Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISRangeEditBase.h">
       <Filter>Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISMessageBox.h">
@@ -738,9 +729,6 @@
       <Filter>Export</Filter>
     </QtMoc>
     <QtMoc Include="ISEditsQT.h">
-      <Filter>Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISRangeEdits.h">
       <Filter>Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISSettingFieldWidgets.h">

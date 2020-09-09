@@ -3,7 +3,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 #include "ISNamespace.h"
-#include "ISRangeEdits.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISPeriodForm : public ISInterfaceDialogForm
 {
@@ -14,18 +14,21 @@ public:
 	virtual ~ISPeriodForm();
 
 	ISNamespace::PeriodType GetPeriodType() const;
-	ISRangeStruct GetRange() const;
-	void SetRange(ISNamespace::PeriodType PeriodType, const ISRangeStruct &Range);
+	QDate GetBegin() const;
+	QDate GetEnd() const;
+	void SetRange(ISNamespace::PeriodType PeriodType, const QDate &DateBegin, const QDate &DateEnd);
 
 protected:
 	void RadioChanged();
+	void PeriodSelected();
 	void PeriodInstall();
 
 private:
 	QButtonGroup *ButtonGroup;
 	QRadioButton *RadioButtonCreate;
 	QRadioButton *RadioButtonEdit;
-	ISRangeDateEdit *RangeDateEdit;
+	ISDateEdit *EditBegin;
+	ISDateEdit *EditEnd;
 	ISButtonDialog *ButtonDialog;
 };
 //-----------------------------------------------------------------------------

@@ -285,7 +285,6 @@
     <QtMoc Include="ISTcpServerWorker.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
-    <ClInclude Include="ISTypes.h" />
     <ClInclude Include="ISUuid.h" />
     <ClInclude Include="ISVersion.h" />
     <ClInclude Include="StdAfx.h" />

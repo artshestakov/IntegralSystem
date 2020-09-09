@@ -650,14 +650,13 @@
   <Local Name="Date" Russian="Дата"/>
   <Local Name="Time" Russian="Время"/>
   <Local Name="Everyday" Russian="Каждый день"/>
-  <Local Name="Range.Date.Select" Russian="Выберите период"/>
+  <Local Name="Range.Date.Select" Russian="Выберите период..."/>
   <Local Name="Range.Date.Today" Russian="Сегодня"/>
   <Local Name="Range.Date.Yesterday" Russian="Вчера"/>
   <Local Name="Range.Date.CurrentMonth" Russian="Текущий месяц"/>
   <Local Name="Range.Date.PreviousMonth" Russian="Предыдущий месяц"/>
   <Local Name="Range.Date.CurrentYear" Russian="Текущий год"/>
   <Local Name="Range.Date.PreviousYear" Russian="Предыдущий год"/>
-  <Local Name="Range.Date.Other" Russian="Другой"/>
   <Local Name="Month.January" Russian="Январь"/>
   <Local Name="Month.February" Russian="Февраль"/>
   <Local Name="Month.March" Russian="Март"/>
@@ -793,7 +792,6 @@
   <Local Name="SearchFromINN" Russian="Поиск по ИНН"/>
   <Local Name="Select" Russian="Выбрать"/>
   <Local Name="SelectAll" Russian="Выбрать все"/>
-  <Local Name="Range" Russian="Диапазон"/>
   <Local Name="Update" Russian="Обновить"/>
   <Local Name="MainMenu" Russian="Главное меню"/>
   <Local Name="Menu" Russian="Меню"/>

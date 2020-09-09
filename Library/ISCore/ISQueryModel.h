@@ -2,7 +2,6 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 #include "PMetaClass.h"
-#include "ISTypes.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISQueryModel : public QObject
 {
@@ -25,8 +24,9 @@ public:
 	void SetParentFilter(int ParentObjectID, const QString &FieldName); //Изменить условие (идентификатор) фильтра для эскортной таблицы
 	
 	ISNamespace::PeriodType GetPeriodType() const;
-	ISRangeStruct GetPeriod() const;
-	void SetPeriod(ISNamespace::PeriodType period_type, const ISRangeStruct &period_range); //Установить период
+	QDate GetPeriodBegin() const;
+	QDate GetPeriodEnd() const;
+	void SetPeriod(ISNamespace::PeriodType period_type, const QDate &period_begin, const QDate &period_end); //Установить период
 	void ClearPeriod(); //Очистить период
 
 	void SetClassFilter(const QString &class_filter); //Изменить фильтр
@@ -66,7 +66,8 @@ private:
 	bool VisibleIsDeleted;
 
 	ISNamespace::PeriodType PeriodType;
-	ISRangeStruct PeriodRange;
+	QDate PeriodBegin;
+	QDate PeriodEnd;
 
 	QString ParentFilter;
 	QString ClassFilter;

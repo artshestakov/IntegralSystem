@@ -109,7 +109,7 @@ QString ISQueryModel::GetQueryText()
 	SqlText += (VisibleIsDeleted ? "true \n" : "false \n");
 
 	//Если задан период отображения
-	if (PeriodRange.IsValid())
+	if (PeriodBegin.isValid() && PeriodEnd.isValid())
 	{
 		QString PeriodString = QString("AND " + ClassAlias + SYMBOL_POINT + ClassAlias + "_%1 BETWEEN '%2' AND '%3' \n");
 		switch (PeriodType)
@@ -118,7 +118,7 @@ QString ISQueryModel::GetQueryText()
 		case ISNamespace::PT_UpdationDate: PeriodString = PeriodString.arg("updationdate"); break;
         default: break;
 		}
-		SqlText += PeriodString.arg(QDateTime(PeriodRange.BeginValue.toDate(), QTime(0, 0)).toString(FORMAT_DATE_TIME_V7)).arg(QDateTime(PeriodRange.EndValue.toDate(), QTime(23, 59, 59)).toString(FORMAT_DATE_TIME_V7));
+		SqlText += PeriodString.arg(QDateTime(PeriodBegin, QTime(0, 0)).toString(FORMAT_DATE_TIME_V7)).arg(QDateTime(PeriodEnd, QTime(23, 59, 59)).toString(FORMAT_DATE_TIME_V7));
 	}
 
 	//Если таблица является эскортной
@@ -174,21 +174,28 @@ ISNamespace::PeriodType ISQueryModel::GetPeriodType() const
 	return PeriodType;
 }
 //-----------------------------------------------------------------------------
-ISRangeStruct ISQueryModel::GetPeriod() const
+QDate ISQueryModel::GetPeriodBegin() const
 {
-	return PeriodRange;
+	return PeriodBegin;
 }
 //-----------------------------------------------------------------------------
-void ISQueryModel::SetPeriod(ISNamespace::PeriodType period_type, const ISRangeStruct &period_range)
+QDate ISQueryModel::GetPeriodEnd() const
+{
+	return PeriodEnd;
+}
+//-----------------------------------------------------------------------------
+void ISQueryModel::SetPeriod(ISNamespace::PeriodType period_type, const QDate &period_begin, const QDate &period_end)
 {
 	PeriodType = period_type;
-	PeriodRange = period_range;
+	PeriodBegin = period_begin;
+	PeriodEnd = period_end;
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::ClearPeriod()
 {
 	PeriodType = ISNamespace::PT_UnknownDate;
-	PeriodRange.Clear();
+	PeriodBegin = QDate();
+	PeriodEnd = QDate();
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::SetClassFilter(const QString &class_filter)

@@ -153,14 +153,12 @@ public:
 
     enum RangeDatePeriod //Тип периода дат
     {
-        RDP_Unknown, //Не выбран
         RDP_Today, //Сегодня
         RDP_Yesterday, //Вчера
         RDP_CurrentMonth, //Текущий месяц
-        RDP_LastMonth, //Прошлый месяц
+        RDP_PreviousMonth, //Прошлый месяц
         RDP_CurrentYear, //Текущий год
-        RDP_LastYear, //Прошлый год
-        RDP_Other, //Другой
+        RDP_PreviousYear, //Прошлый год
     };
 
 };
