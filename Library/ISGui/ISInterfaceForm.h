@@ -23,6 +23,7 @@ public:
 protected:
 	virtual void showEvent(QShowEvent *e);
 	virtual void resizeEvent(QResizeEvent *e);
+	virtual void keyPressEvent(QKeyEvent *KeyEvent);
 
 	QVBoxLayout* GetMainLayout(); //Получить указатель на главный компоновщик формы
 	bool IsShowed() const;

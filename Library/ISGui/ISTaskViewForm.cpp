@@ -1207,7 +1207,6 @@ void ISTaskViewForm::CommentLoadList()
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
 			QDateTime UpdationDate = qSelectComments.ReadColumn("tcom_updationdate").toDateTime();
-			qDebug() << UpdationDate;
 			QString UserFIO = qSelectComments.ReadColumn("usrs_fio").toString();
 			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyoid").toByteArray());
 

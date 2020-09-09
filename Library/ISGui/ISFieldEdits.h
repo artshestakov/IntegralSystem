@@ -740,6 +740,7 @@ public:
 
 private:
 	void ButtonClicked(QAbstractButton *AbstractButton);
+	void UpdateIcon();
 
 private:
 	QWidget *Widget;

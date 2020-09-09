@@ -21,31 +21,6 @@ ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	setLayout(MainLayout);
 
 	ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
-
-	QAction *ActionWindowState = new QAction(this);
-	ActionWindowState->setShortcut(Qt::Key_F11);
-	connect(ActionWindowState, &QAction::triggered, this, &ISInterfaceForm::SetWindowState);
-	addAction(ActionWindowState);
-
-	QAction *ActionEscape = new QAction(this);
-	ActionEscape->setShortcut(Qt::Key_Escape);
-	connect(ActionEscape, &QAction::triggered, this, &ISInterfaceForm::EscapeClicked);
-	addAction(ActionEscape);
-
-	QAction *ActionEnter = new QAction(this);
-	ActionEnter->setShortcuts(QList<QKeySequence>() << Qt::Key_Enter << Qt::Key_Return);
-	connect(ActionEnter, &QAction::triggered, this, &ISInterfaceForm::EnterClicked);
-	addAction(ActionEnter);
-
-	QAction *ActionControlEnter = new QAction(this);
-	ActionControlEnter->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Enter) << QKeySequence(Qt::CTRL + Qt::Key_Return));
-	connect(ActionControlEnter, &QAction::triggered, this, &ISInterfaceForm::ControlEnterClicked);
-	addAction(ActionControlEnter);
-	
-	QAction *ActionPaste = new QAction(this);
-	ActionPaste->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_V) << QKeySequence(Qt::SHIFT + Qt::Key_Insert));
-	connect(ActionPaste, &QAction::triggered, this, &ISInterfaceForm::PasteClicked);
-	addAction(ActionPaste);
 }
 //-----------------------------------------------------------------------------
 ISInterfaceForm::~ISInterfaceForm()
@@ -103,6 +78,34 @@ void ISInterfaceForm::resizeEvent(QResizeEvent *e)
 	if (LabelShadow)
 	{
 		LabelShadow->resize(width(), height());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISInterfaceForm::keyPressEvent(QKeyEvent *KeyEvent)
+{
+	if (KeyEvent->key() == Qt::Key_F11)
+	{
+		SetWindowState();
+	}
+	else if (KeyEvent->key() == Qt::Key_Escape)
+	{
+		EscapeClicked();
+	}
+	else if (KeyEvent->key() == Qt::Key_Enter || KeyEvent->key() == Qt::Key_Return)
+	{
+		EnterClicked();
+	}
+	else if (KeyEvent->key() == Qt::Key_Return && KeyEvent->modifiers() == Qt::ControlModifier)
+	{
+		ControlEnterClicked();
+	}
+	else if ((KeyEvent->modifiers() == Qt::ControlModifier && KeyEvent->key() == Qt::Key_V) || (KeyEvent->modifiers() == Qt::ShiftModifier &&KeyEvent->key() == Qt::Key_Insert))
+	{
+		PasteClicked();
+	}
+	else
+	{
+		QWidget::keyPressEvent(KeyEvent);
 	}
 }
 //-----------------------------------------------------------------------------

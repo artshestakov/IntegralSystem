@@ -1867,6 +1867,7 @@ void ISSexEdit::SetValue(const QVariant &value)
 	if (Ok)
 	{
 		ButtonGroup->button(CurrentID)->setChecked(true);
+		UpdateIcon();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -1885,6 +1886,7 @@ void ISSexEdit::Clear()
 		ButtonGroup->setExclusive(true);
 		CurrentID = 0;
 		emit ValueChanged();
+		UpdateIcon();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -1906,6 +1908,15 @@ void ISSexEdit::ButtonClicked(QAbstractButton *AbstractButton)
 {
 	CurrentID = ButtonGroup->id(AbstractButton);
 	emit ValueChanged();
+	UpdateIcon();
+}
+//-----------------------------------------------------------------------------
+void ISSexEdit::UpdateIcon()
+{
+	for (QAbstractButton *AbstractButton : ButtonGroup->buttons())
+	{
+		AbstractButton->setIcon(AbstractButton->isChecked() ? BUFFER_ICONS("Apply.Blue") : QIcon());
+	}
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
