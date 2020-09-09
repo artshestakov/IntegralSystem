@@ -4,7 +4,6 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISStructs.h"
 #include "ISFieldEditBase.h"
-#include "ISButtonDialog.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
 class ISSettingsForm : public ISInterfaceDialogForm

@@ -4,7 +4,6 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISNamespace.h"
 #include "ISRangeEdits.h"
-#include "ISButtonDialog.h"
 //-----------------------------------------------------------------------------
 class ISPeriodForm : public ISInterfaceDialogForm
 {

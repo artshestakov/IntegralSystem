@@ -2,7 +2,6 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISButtonDialog.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISUserPasswordForm : public ISInterfaceDialogForm

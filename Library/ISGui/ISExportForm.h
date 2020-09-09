@@ -4,7 +4,6 @@
 #include "ISInterfaceDialogForm.h"
 #include "PMetaClass.h"
 #include "ISNamespace.h"
-#include "ISButtonDialog.h"
 #include "ISListWidget.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------

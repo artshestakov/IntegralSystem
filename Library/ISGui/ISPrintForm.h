@@ -2,7 +2,6 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
-#include "ISButtonDialog.h"
 #include "ISStructs.h"
 #include "ISListWidget.h"
 #include "ISFieldEdits.h"

@@ -366,9 +366,6 @@
     <ClCompile Include="ISTabWidgetMain.cpp">
       <Filter>Controls\TabNavigation</Filter>
     </ClCompile>
-    <ClCompile Include="ISButtonDialog.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISButtons.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -682,9 +679,6 @@
     </QtMoc>
     <QtMoc Include="ISTabWidgetMain.h">
       <Filter>Controls\TabNavigation</Filter>
-    </QtMoc>
-    <QtMoc Include="ISButtonDialog.h">
-      <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISButtons.h">
       <Filter>Controls</Filter>

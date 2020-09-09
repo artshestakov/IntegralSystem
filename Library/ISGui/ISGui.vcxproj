@@ -178,7 +178,6 @@
     <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
-    <ClCompile Include="ISButtonDialog.cpp" />
     <ClCompile Include="ISButtons.cpp" />
     <ClCompile Include="ISCalendarEventForm.cpp" />
     <ClCompile Include="ISCalendarEventItem.cpp" />
@@ -406,7 +405,6 @@
     <QtMoc Include="ISComboSearchWidgets.h" />
     <QtMoc Include="ISTabBarMain.h" />
     <QtMoc Include="ISTabWidgetMain.h" />
-    <QtMoc Include="ISButtonDialog.h" />
     <QtMoc Include="ISButtons.h" />
     <QtMoc Include="ISContextMenu.h" />
     <QtMoc Include="ISDelegates.h" />
