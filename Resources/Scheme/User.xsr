@@ -10,8 +10,6 @@
   <_GroupAccessSpecialType IsSystem="true" UID="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Основные" Order="1"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{6948884F-5F69-4F74-A230-A2D892A44A52}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Рабочий стол" Hint="Доступ к рабочему столу программы" Order="1"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{AE04B08B-8BF8-43C2-973A-8343EBE2F7D6}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Смена пароля учётной записи" Hint="Возможность менять пароль к своей учётной записи" Order="2"/>
-
-  <_GroupAccessSpecialType IsSystem="true" UID="{39D835DA-EDF9-448E-9ECC-19E273829C90}" Name="IP-Телефония" Order="2"/>
   
   <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="4"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Редактирование печатных форм" Hint="Возможность редактировать печатные формы в режиме предпросмотра" Order="1"/>
