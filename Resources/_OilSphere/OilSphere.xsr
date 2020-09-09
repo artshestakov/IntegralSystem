@@ -26,7 +26,8 @@
   <_SubSystems UID="{8807444E-EBDE-4DB6-A261-D9430C48D448}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="3" LocalName="Расходы водителей" Icon="Lists" TableName="DriverExpenses"/>
   
   <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="6" LocalName="Прочее" Icon="Lists"/>
-  <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::DebetListForm"/>
+  <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::Debet1ListForm"/>
+  <_SubSystems UID="{9A3446F9-EC80-43B5-AFC9-51BA993FD436}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="2" LocalName="Дебет 2" Icon="Lists" ClassName="ISOilSphere::Debet2ListForm"/>
   
   <OperationType UID="{439C16CE-421A-4BAB-B2B2-4CEE3FCFEE21}" Name="Списание"/>
   <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>

@@ -128,13 +128,27 @@ namespace ISOilSphere
 	};
 
 	//Форма объекта дебета 1
-	class DebetObjectForm : public ISObjectFormBase
+	class Debet1ObjectForm : public ISObjectFormBase
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE DebetObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
-		virtual ~DebetObjectForm();
+		Q_INVOKABLE Debet1ObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~Debet1ObjectForm();
+
+	private:
+		void CalculateTotal(); //Расчёт "Итого"
+		void CalculateRemainder(); //Расчёт "Остаток долга"
+	};
+
+	//Форма объекта дебета 2
+	class Debet2ObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE Debet2ObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~Debet2ObjectForm();
 
 	private:
 		void CalculateTotal(); //Расчёт "Итого"
@@ -142,13 +156,30 @@ namespace ISOilSphere
 	};
 
 	//Форма списка дебета 1
-	class DebetListForm : public ISListBaseForm
+	class Debet1ListForm : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE DebetListForm(QWidget *parent = 0);
-		virtual ~DebetListForm();
+		Q_INVOKABLE Debet1ListForm(QWidget *parent = 0);
+		virtual ~Debet1ListForm();
+
+	protected:
+		void LoadDataAfterEvent() override;
+
+	private:
+		QLabel *LabelTotalSum; //Сумма итого
+		QLabel *LabelRemainderSum; //Сумма остатка
+	};
+
+	//Форма списка дебета 2
+	class Debet2ListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE Debet2ListForm(QWidget *parent = 0);
+		virtual ~Debet2ListForm();
 
 	protected:
 		void LoadDataAfterEvent() override;
