@@ -31,7 +31,7 @@ static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 static QString QU_SETTINGS_DATABASE = PREPARE_QUERY("UPDATE _settingsdatabase SET "
 													"sgdb_issystem = true, "
 													"sgdb_active = true, "
-													"sgdb_settingname = :SettingName, "
+													"sgdb_settingname = :SettingName "
 													"WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
 static QString QI_SETTINGS_DATABASE = PREPARE_QUERY("INSERT INTO _settingsdatabase(sgdb_uid, sgdb_issystem, sgdb_active, sgdb_settingname) "
