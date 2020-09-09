@@ -205,33 +205,32 @@ PMetaTable* ISListBaseForm::GetMetaTable()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
+	Q_UNUSED(ModelIndex);
 	if (ShowOnly)
 	{
-		emit DoubleClicked(ModelIndex);
+		return;
 	}
-	else
+	
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
-		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
-			return;
-		}
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
+		return;
+	}
 
-		QString EventName = SETTING_STRING(CONST_UID_SETTING_TABLES_DOUBLECLICKEVENT);
-		if (EventName == "Window")
-		{
-			ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID());
-			ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-			connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
-			connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
-			connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
-			connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
-			ObjectFormBase->show();
-		}
-		else if (EventName == "Tab")
-		{
-			Edit();
-		}
+	QString EventName = SETTING_STRING(CONST_UID_SETTING_TABLES_DOUBLECLICKEVENT);
+	if (EventName == "Window")
+	{
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID());
+		ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
+		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
+		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
+		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
+		connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
+		ISGui::ShowObjectForm(ObjectFormBase);
+	}
+	else if (EventName == "Tab")
+	{
+		Edit();
 	}
 }
 //-----------------------------------------------------------------------------

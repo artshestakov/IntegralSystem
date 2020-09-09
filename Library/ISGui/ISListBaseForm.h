@@ -21,7 +21,6 @@ class ISListBaseForm : public ISInterfaceMetaForm
 
 signals:
 	void Updated(); //Сигнал посылается после завершения загрузки данных в таблицу
-	void DoubleClicked(const QModelIndex &ModelIndex); //Сигнал о двойном нажатии на запись в таблице
 	void SelectedRowSignal(); //Сигнал о смене выбора строки
 
 public:
