@@ -8,6 +8,7 @@
 #include "ISCore.h"
 #include "ISGui.h"
 #include "ISSystem.h"
+#include "ISUserPhotoCreator.h"
 //-----------------------------------------------------------------------------
 static QString QC_USER = "CREATE ROLE \"%1\" SUPERUSER NOINHERIT NOREPLICATION LOGIN CONNECTION LIMIT 1";
 //-----------------------------------------------------------------------------
@@ -21,8 +22,6 @@ static QString QU_OID = PREPARE_QUERY("UPDATE _users SET "
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
-	connect(GetFieldWidget("FIO"), &ISFieldEditBase::DataChanged, this, &ISUserObjectForm::FIOChanged);
-
 	QAction *ActionChangePassword = ISControls::CreateActionPasswordChange(this);
 	connect(ActionChangePassword, &QAction::triggered, this, &ISUserObjectForm::PasswordChange);
 	AddActionToolBar(ActionChangePassword, true);
@@ -106,6 +105,11 @@ bool ISUserObjectForm::Save()
 		}
 	}
 
+	if (!GetFieldValue("Photo").isValid())
+	{
+		SetFieldValue("Photo", ISGui::PixmapToByteArray(ISUserPhotoCreator().Create(GetFieldValue("FIO").toString())));
+	}
+
 	if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
 	{
 		Result = ISObjectFormBase::Save();
@@ -186,16 +190,6 @@ void ISUserObjectForm::PasswordDelete()
 {
 	//≈сли запись была изменена - просим сохранить
 	GetModificationFlag() ? ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue")) : ISGui::ShowUserPasswordDelete(GetObjectID(), EditLogin->GetValue().toString());
-}
-//-----------------------------------------------------------------------------
-void ISUserObjectForm::FIOChanged()
-{
-	if (!GetFieldValue("Photo").isValid())
-	{
-		QString FIO = GetFieldValue("FIO").toString();
-		QPixmap Pixmap = UserPhotoCreator.Create(FIO);
-		FIO.isEmpty() ? GetFieldWidget("Photo")->Clear() : SetFieldValue("Photo", ISGui::PixmapToByteArray(Pixmap));
-	}
 }
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()
