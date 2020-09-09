@@ -64,7 +64,7 @@ protected:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISButtonDialog : public QDialogButtonBox
+class ISButtonDialog : public QWidget
 {
 	Q_OBJECT
 
@@ -85,6 +85,10 @@ public:
 	void SetCloseIcon(const QIcon &Icon);
 	void SetCloseEnabled(bool Enabled);
 	void SetCloseCursor(const QCursor &Cursor);
+
+private:
+	ISPushButton *ButtonApply;
+	ISPushButton *ButtonClose;
 };
 //-----------------------------------------------------------------------------
 #endif

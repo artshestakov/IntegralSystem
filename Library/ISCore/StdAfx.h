@@ -179,7 +179,6 @@
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QCommandLinkButton>
 #include <QtWidgets/QAbstractItemView>
 #include <QtWidgets/QWidgetAction>
