@@ -88,6 +88,7 @@
   <Local Name="Message.Error.CheckValidUser" Russian="Не удалось получить информацию о пользователе."/>
   <Local Name="Message.Error.CurrentUserIsDeleted" Russian="Ваша учётная запись помечена на удаление, обратитесь к системному администратору."/>
   <Local Name="Message.Error.CheckAllQuery" Russian="Ошибка в SQL-запросе!"/>
+  <Local Name="Message.Error.SelectSettingsDatabase" Russian="Не удалось загрузить настройки базы данных."/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
   <Local Name="Message.Error.InitializeObjects" Russian="Не удалось иницилизировать объект конфигурации."/>
   <Local Name="Message.Error.ObjectDateExpired" Russian="Программа не может быть запущена."/>
@@ -588,7 +589,6 @@
   <Local Name="Task.Check.InputName" Russian="Введите название:"/>
   <Local Name="Task.LinkToolTip" Russian="Статус:&#10;%1&#10;&#10;Описание задачи:&#10;%2&#10;&#10;Связал:&#10;%3&#10;&#10;Связь создана:&#10;%4"/>
   <Local Name="Task.Link.Delete" Russian="Удалить связь"/>
-  <Local Name="Task.CommentUserOwner" Russian="%1 (автор)"/>
   <Local Name="Task.Details" Russian="Подробности"/>
   <Local Name="Task.Right.Executor" Russian="Исполнитель"/>
   <Local Name="Task.Right.Executor.Empty" Russian="Не назначен"/>

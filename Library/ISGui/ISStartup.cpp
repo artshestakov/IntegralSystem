@@ -65,7 +65,11 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	}
 
 	//»нициализаци€ настроек базы данных
-	ISSettingsDatabase::GetInstance().Initialize();
+	if (!ISSettingsDatabase::Instance().Initialize())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SelectSettingsDatabase"), ISSettingsDatabase::Instance().GetErrorString());
+		return false;
+	}
 
 	if (!CheckAccessDatabase(SplashScreen)) //ѕроверка разрешени€ доступа к базе пользовател€м
 	{

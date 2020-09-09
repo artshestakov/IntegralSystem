@@ -5,14 +5,10 @@
 #include "ISMetaData.h"
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
-//-----------------------------------------------------------------------------
-static QString QS_COLUMN_SETTING = PREPARE_QUERY("SELECT column_name "
-												 "FROM information_schema.columns "
-												 "WHERE table_catalog = current_database() "
-												 "AND table_schema = current_schema() "
-												 "AND table_name = '_settingsdatabase'");
+#include "ISQueryModel.h"
 //-----------------------------------------------------------------------------
 ISSettingsDatabase::ISSettingsDatabase()
+	: ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -22,92 +18,41 @@ ISSettingsDatabase::~ISSettingsDatabase()
 
 }
 //-----------------------------------------------------------------------------
-ISSettingsDatabase& ISSettingsDatabase::GetInstance()
+ISSettingsDatabase& ISSettingsDatabase::Instance()
 {
 	static ISSettingsDatabase SettingsDatabase;
 	return SettingsDatabase;
 }
 //-----------------------------------------------------------------------------
-void ISSettingsDatabase::Initialize()
+QString ISSettingsDatabase::GetErrorString() const
 {
-	ISVectorString VectorString;
-	ISQuery qSelectColumn(QS_COLUMN_SETTING);
-	qSelectColumn.SetShowLongQuery(false);
-	if (qSelectColumn.Execute())
-	{
-		while (qSelectColumn.Next())
-		{
-			VectorString.emplace_back(qSelectColumn.ReadColumn("column_name").toString());
-		}
-	}
-
-	QString SqlText = "SELECT \n";
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable("_SettingsDatabase");
-	for (PMetaField *MetaField : MetaTable->AllFields)
-	{
-		QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();
-		if (ISAlgorithm::VectorContains(VectorString, FieldName))
-		{
-			SqlText += FieldName + " AS \"" + MetaField->Name + "\", \n";
-			VectorString[ISAlgorithm::VectorIndexOf(VectorString, FieldName)] = MetaField->Name;
-		}
-		else
-		{
-			ISLOGGER_W(QString("Not found column '%1' in table _SettingsDatabase").arg(FieldName));
-			ISAlgorithm::VectorRemoveAll(VectorString, FieldName);
-		}
-	}
-	SqlText.chop(3);
-	SqlText += " \nFROM _settingsdatabase \n";
-	SqlText += "WHERE sgdb_uid = :UID";
-
-	//Запрос значений
-	ISQuery qSelectValues(SqlText);
-	qSelectValues.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-	if (qSelectValues.ExecuteFirst())
-	{
-		for (const QString &String : VectorString)
-		{
-			QVariant SettingValue = qSelectValues.ReadColumn(String);
-			if (SettingValue.isNull())
-			{
-				QVariant DefaultValue = MetaTable->GetField(String)->DefaultValueWidget;
-				if (DefaultValue.isNull())
-				{
-					SettingValue.clear();
-				}
-				else
-				{
-					SettingValue = DefaultValue;
-				}
-			}
-			Settings.emplace(String, SettingValue);
-		}
-	}
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-QVariant ISSettingsDatabase::GetValueDB(const QString &SettingName)
+bool ISSettingsDatabase::Initialize()
 {
-	QVariant Value;
-	ISQuery qSelectValue(QString("SELECT sgdb_%1 FROM _settingsdatabase WHERE sgdb_uid = :UID").arg(SettingName));
-	qSelectValue.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-	qSelectValue.SetShowLongQuery(false);
-	if (qSelectValue.ExecuteFirst())
-	{
-		Value = qSelectValue.ReadColumn("sgdb_" + SettingName);
-	}
+	ISQueryModel QueryModel(ISMetaData::Instance().GetMetaTable("_SettingsDatabase"), ISNamespace::QMT_Object);
+	QueryModel.SetClassFilter("sgdb_active");
 
-	return Value;
+	ISQuery qSelect(QueryModel.GetQueryText());
+	bool Result = qSelect.ExecuteFirst();
+	if (Result)
+	{
+		QSqlRecord SqlRecord = qSelect.GetRecord();
+		for (int i = 0, c = SqlRecord.count(); i < c; ++i)
+		{
+			Settings[SqlRecord.field(i).name()] = SqlRecord.field(i).value();
+		}
+	}
+	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QVariant ISSettingsDatabase::GetValue(const QString &SettingName)
 {
 	return Settings[SettingName];
-}
-//-----------------------------------------------------------------------------
-QVariant ISSettingsDatabase::GetSystemParameter(const ISUuid &UID)
-{
-	IS_ASSERT(SystemParameters.count(UID), QString("Not found system parameter with uid: %1").arg(UID));
-	return SystemParameters[UID];
 }
 //-----------------------------------------------------------------------------

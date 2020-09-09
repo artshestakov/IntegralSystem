@@ -5,9 +5,9 @@
     <Fields>
       <Field UID="{D27D3F1E-2D94-4E07-8E36-64ACE60A9B0C}" Name="Active" Type="Bool" DefaultValue="false" ReadOnly="true" LabelName="Активный профиль" LocalListName="Активный профиль" NotNull="true"/>
       <Field UID="{4C9623ED-981E-44A5-B3E0-3083F90748EF}" Name="SettingName" Type="String" LabelName="Наименование настройки" LocalListName="Наименование настройки" NotNull="true"/>
-      <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" DefaultValueWidget="true" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" HideFromList="true" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
-      <Field UID="{2878FEEB-F439-422C-A7B8-DA4684A6460F}" Name="NumberSimbolsAfterComma" Type="Int" DefaultValueWidget="3" LabelName="Размер дробной части в дробных числах" LocalListName="Размер дробной части в дробных числах" HideFromList="true"/>
-      <Field UID="{6288E37D-413A-48E0-B9BF-D4CA288B5007}" Name="StorageFileMaxSize" Type="Int" DefaultValueWidget="10" LabelName="Максимальный размер файла в хранилище (мб)" LocalListName="Максимальный размер файла в хранилище (мб)" HideFromList="true" Hint="Ограничение размера файла добавляемого в файловое хранилище."/>
+      <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" DefaultValue="true" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" HideFromList="true" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
+      <Field UID="{2878FEEB-F439-422C-A7B8-DA4684A6460F}" Name="NumberSimbolsAfterComma" Type="Int" DefaultValue="3" LabelName="Размер дробной части в дробных числах" LocalListName="Размер дробной части в дробных числах" HideFromList="true"/>
+      <Field UID="{6288E37D-413A-48E0-B9BF-D4CA288B5007}" Name="StorageFileMaxSize" Type="Int" DefaultValue="10" LabelName="Максимальный размер файла в хранилище (мб)" LocalListName="Максимальный размер файла в хранилище (мб)" HideFromList="true" Hint="Ограничение размера файла добавляемого в файловое хранилище."/>
     </Fields>
     <Indexes>
       <Index Field="Active"/>
