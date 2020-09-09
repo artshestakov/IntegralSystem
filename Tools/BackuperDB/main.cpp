@@ -1,8 +1,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <sstream>
+#include <stdlib.h>
+#include <string.h>
 #ifdef WIN32
 #include <windows.h>
+#else
+#include <time.h>
 #endif
 //-----------------------------------------------------------------------------
 void Usage();
@@ -23,7 +27,11 @@ int main(int argc, char **argv)
 
 	//Устанавливаем переменную среды для пароля
 	StringStream << "PGPASSWORD=" << argv[3];
+#ifdef WIN32
 	_putenv(StringStream.str().c_str());
+#else
+    putenv((char *)StringStream.str().c_str());
+#endif
 	StringStream.str(std::string());
 
 	//Формируем имя файла бекапа и скрипта для ролей
@@ -51,6 +59,7 @@ int main(int argc, char **argv)
 	
 	//Вызываем команду создания бекапа
 	int Result = system(StringStream.str().c_str());
+    std::cout << std::endl;
 	if (Result) //Если команда выполнилась с ошибкой - выходим
 	{
 		return Result;
@@ -72,6 +81,7 @@ int main(int argc, char **argv)
 
 	//Вызываем команду бекапа ролей
 	Result = system(StringStream.str().c_str());
+    std::cout << std::endl;
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -103,7 +113,7 @@ std::string GetDate()
 #else
 	time_t Time = time(NULL);
 	struct tm TM = *localtime(&Time);
-	printf("%02d.%02d.%02d", TM.tm_mday, TM.tm_mon + 1, TM.tm_year + 1900);
+    sprintf(Buffer, "%02d.%02d.%02d", TM.tm_mday, TM.tm_mon + 1, TM.tm_year + 1900);
 #endif
 	return std::string(Buffer, strlen(Buffer));
 }
@@ -118,7 +128,7 @@ std::string GetTime()
 #else
 	time_t Time = time(NULL);
 	struct tm TM = *localtime(&Time);
-	printf("%02d:%02d", TM.tm_hour, TM.tm_min);
+    sprintf(Buffer, "%02d:%02d", TM.tm_hour, TM.tm_min);
 #endif
 	return std::string(Buffer, strlen(Buffer));
 }

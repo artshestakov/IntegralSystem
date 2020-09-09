@@ -35,6 +35,7 @@ cp -r $INTEGRAL_SYSTEM_DIR/Deploy/%{CONFIGURATION}-%{PLATFORM}/* $RPM_BUILD_ROOT
 cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/*.so* $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/Carat $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/Configurator $RPM_BUILD_ROOT/opt/IntegralSystem
+cp $INTEGRAL_SYSTEM_DIR/Components/BackuperDB/%{CONFIGURATION}-%{PLATFORM}/BackuperDB $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/InstallLinux/Carat.service $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/InstallLinux/Carat.sh $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/InstallLinux/Configurator.sh $RPM_BUILD_ROOT/opt/IntegralSystem
