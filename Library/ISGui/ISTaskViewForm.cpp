@@ -621,7 +621,10 @@ void ISTaskViewForm::Edit()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CloneTask()
 {
-	if (ISMessageBox::ShowQuestion(this, TaskParentID ? LANG("Message.Question.CloneSubTask") : LANG("Message.Question.CloneTask")))
+	SetVisibleShadow(true);
+	bool Answer = ISMessageBox::ShowQuestion(this, TaskParentID ? LANG("Message.Question.CloneSubTask") : LANG("Message.Question.CloneTask"));
+	SetVisibleShadow(false);
+	if (Answer)
 	{
 		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Copy, "_Task", TaskID);
 		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, [=](int ObjectID) { ISGui::ShowTaskViewForm(ObjectID); });
@@ -647,7 +650,9 @@ void ISTaskViewForm::ConvertListSubTaskToTask()
 //-----------------------------------------------------------------------------
 bool ISTaskViewForm::ConvertToTask(int task_id)
 {
+	SetVisibleShadow(true);
 	bool Result = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ConvertToTask"));
+	SetVisibleShadow(false);
 	if (Result)
 	{
 		ISQuery qConvertToTask(QU_CONVERT_TO_TASK);
@@ -683,7 +688,9 @@ void ISTaskViewForm::ConvertToSubTask()
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectSubTaskCount"), qSelectSubTask.GetErrorString());
 	}
 
+	SetVisibleShadow(true);
 	int SelectedParentID = ISGui::SelectObject("_Task");
+	SetVisibleShadow(false);
 	if (SelectedParentID)
 	{
 		//Проверка выбранной задачи на факт подзадачи
@@ -940,7 +947,9 @@ QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, bool IsImage, c
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::FileAdd()
 {
+	SetVisibleShadow(true);
 	QStringList FileList = ISFileDialog::GetOpenFileNames(this);
+	SetVisibleShadow(false);
 	if (!FileList.isEmpty())
 	{
 		int Inserted = 0;
@@ -1025,9 +1034,14 @@ void ISTaskViewForm::FileSave()
 	QString Name = sender()->property("Name").toString();
 	QString Extension = sender()->property("Extension").toString();
 
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskFileSave")))
+	SetVisibleShadow(true);
+	bool Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskFileSave"));
+	SetVisibleShadow(false);
+	if (Answer)
 	{
+		SetVisibleShadow(true);
 		QString FilePath = ISFileDialog::GetSaveFileName(this, Extension.isEmpty() ? QString() : LANG("File.Filter.File").arg(Extension), Name);
+		SetVisibleShadow(false);
 		if (!FilePath.isEmpty())
 		{
 			QFile File(FilePath);
@@ -1055,7 +1069,10 @@ void ISTaskViewForm::FileSave()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::FileDelete()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskFile")))
+	SetVisibleShadow(true);
+	bool Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskFile"));
+	SetVisibleShadow(false);
+	if (Answer)
 	{
 		ISQuery qDeleteFile(QD_FILE);
 		qDeleteFile.BindValue(":TaskFileID", sender()->property("ID"));
@@ -1089,12 +1106,10 @@ void ISTaskViewForm::LinkLoadList()
 			QString LinkCreationDate = ISGui::ConvertDateTimeToString(qSelectLink.ReadColumn("tlnk_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 			ISUuid TaskLinkStatusUID = qSelectLink.ReadColumn("task_status_uid");
 			QString TaskLinkStatusName = qSelectLink.ReadColumn("task_status_name").toString();
-			QString TaskLinkStatusIcon = qSelectLink.ReadColumn("task_status_icon").toString();
 			
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetLinks);
 			ListWidgetItem->setData(Qt::UserRole, LinkID);
 			ListWidgetItem->setData(Qt::UserRole * 2, LinkTaskID);
-			ListWidgetItem->setIcon(BUFFER_ICONS(TaskLinkStatusIcon));
 			ListWidgetItem->setText(QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName));
 			ListWidgetItem->setToolTip(LANG("Task.LinkToolTip").arg(TaskLinkStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 35));
@@ -1111,7 +1126,9 @@ void ISTaskViewForm::LinkLoadList()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LinkAdd()
 {
+	SetVisibleShadow(true);
 	int LinkTaskID = ISGui::SelectObject("_Task");
+	SetVisibleShadow(false);
 	if (LinkTaskID)
 	{
 		if (LinkTaskID == TaskID)
@@ -1158,7 +1175,10 @@ void ISTaskViewForm::LinkOpen(QListWidgetItem *ListWidgetItem)
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::LinkDelete()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskLink")))
+	SetVisibleShadow(true);
+	bool Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskLink"));
+	SetVisibleShadow(false);
+	if (Answer)
 	{
 		ISQuery qDeleteLink(QD_LINK);
 		qDeleteLink.BindValue(":LinkID", ListWidgetLinks->currentItem()->data(Qt::UserRole));
@@ -1284,7 +1304,9 @@ QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, const
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CommentAdd()
 {
+	SetVisibleShadow(true);
 	QString Comment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment") + ':');
+	SetVisibleShadow(false);
 	if (!Comment.isEmpty())
 	{
 		ISQuery qInsertComment(QI_COMMENT);
@@ -1306,7 +1328,9 @@ void ISTaskViewForm::CommentAdd()
 void ISTaskViewForm::CommentEdit()
 {
 	QString Comment = sender()->property("Comment").toString();
+	SetVisibleShadow(true);
 	QString NewComment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment") + ':', Comment);
+	SetVisibleShadow(false);
 	if (!NewComment.isEmpty() && NewComment != Comment)
 	{
 		ISQuery qUpdateComment(QU_COMMENT);
@@ -1325,7 +1349,10 @@ void ISTaskViewForm::CommentEdit()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CommentDelete()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskComment")))
+	SetVisibleShadow(true);
+	bool Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteTaskComment"));
+	SetVisibleShadow(false);
+	if (Answer)
 	{
 		ISQuery qDeleteComment(QD_COMMENT);
 		qDeleteComment.BindValue(":CommentID", sender()->property("CommentID"));
@@ -1404,7 +1431,9 @@ QWidget* ISTaskViewForm::CreateCheckListWidget(int CheckListID, int Order, const
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CheckAdd()
 {
+	SetVisibleShadow(true);
 	QString ItemName = ISInputDialog::GetString(LANG("Task.Check"), LANG("Task.Check.InputName"));
+	SetVisibleShadow(false);
 	if (!ItemName.isEmpty())
 	{
 		ISQuery qInsertCheck(QI_CHECK_LIST);
@@ -1424,7 +1453,9 @@ void ISTaskViewForm::CheckAdd()
 void ISTaskViewForm::CheckEdit()
 {
 	QString CurrentName = sender()->property("CheckListName").toString();
+	SetVisibleShadow(true);
 	QString NewName = ISInputDialog::GetString(LANG("Task.Check"), LANG("Task.Check.InputName"), CurrentName);
+	SetVisibleShadow(false);
 	if (!NewName.isEmpty() && NewName != CurrentName)
 	{
 		ISQuery qUpdateCheck(QU_CHECK_LIST);
@@ -1443,7 +1474,10 @@ void ISTaskViewForm::CheckEdit()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CheckDelete()
 {
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskCheckListDelete")))
+	SetVisibleShadow(true);
+	bool Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.TaskCheckListDelete"));
+	SetVisibleShadow(false);
+	if (Answer)
 	{
 		ISQuery qDeleteCheck(QD_CHECK_LIST);
 		qDeleteCheck.BindValue(":CheckListID", sender()->property("CheckListID"));
