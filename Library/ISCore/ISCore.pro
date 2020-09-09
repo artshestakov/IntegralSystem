@@ -67,7 +67,6 @@ HEADERS += \
     ISSystem.h \
     ISTrace.h \
     ISTypedefs.h \
-    ISTypes.h \
     ISUuid.h \
     ISVersion.h \
     PMetaClass.h \

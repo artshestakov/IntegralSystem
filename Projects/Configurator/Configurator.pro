@@ -22,7 +22,7 @@ OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 INCLUDEPATH += $$PWD/../../Library/ISCore
 INCLUDEPATH += .
 
-LIBS += -L$$DESTDIR -Wl,-rpath="$${DESTDIR}",-rpath-link="$${DESTDIR}" \
+LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore
 
 SOURCES += \
