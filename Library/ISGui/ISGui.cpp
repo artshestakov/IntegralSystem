@@ -559,12 +559,6 @@ ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 //-----------------------------------------------------------------------------
 void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID)
 {
-	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_RECORD_NOTE)) //≈сли прав на изменение примечани€ нет - выходим
-	{
-		ISMessageBox::ShowWarning(parent, LANG("Message.Warning.NotAccess.Special.RecordNote"));
-		return;
-	}
-	
 	bool IsExist = false; //‘лаг существовани€ примечани€
 
 	ISQuery qSelect(QS_NOTE_OBJECT);

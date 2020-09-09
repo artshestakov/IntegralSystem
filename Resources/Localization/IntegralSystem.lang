@@ -172,7 +172,6 @@
   <Local Name="Message.Warning.NotAccess.Edit" Russian="У Вас нет прав на изменение данных в таблице &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.IsDeleted" Russian="У Вас нет прав на просмотр удаленных записей в таблице &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Export" Russian="У Вас нет прав на экспорт данных из таблицы &quot;%1&quot;."/>
-  <Local Name="Message.Warning.NotAccess.Special.RecordNote" Russian="У Вас нет прав добавление примечаний к записям в таблицах."/>
   <Local Name="Message.Warning.NotAccess.Special.UserPasswordChange" Russian="У Вас нет прав на изменение своего пароля."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
