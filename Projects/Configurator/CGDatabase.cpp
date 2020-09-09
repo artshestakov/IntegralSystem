@@ -752,6 +752,11 @@ bool CGDatabase::Helper_CommentTable(PMetaTable *MetaTable, QString &ErrorString
 //-----------------------------------------------------------------------------
 bool CGDatabase::Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaField, QString &ErrorString)
 {
+	if (!MetaField->QueryText.isEmpty()) //Если поле является виртуальным - выходим
+	{
+		return true;
+	}
+
 	QString CommentText = ISSystem::VariantMapToJsonString(
 	{
 		{ "UID", MetaField->UID },

@@ -9,6 +9,7 @@
     <Function FunctionName="Database" Description="Полное обновление базы данных."/>
     <Function FunctionName="Functions" Description="Обновление всех функций базы данных."/>
     <Function FunctionName="Tables" Description="Обновление таблиц базы данных."/>
+    <Function FunctionName="Comment" Description="Комментирование таблиц и полей."/>
     <Function FunctionName="IndexesAll" Description="Обновление всех индексов базы данных."/>
     <Function FunctionName="SystemIndexes" Description="Обновление системных индексов базы данных."/>
     <Function FunctionName="Indexes" Description="Обновление индексов базы данных."/>

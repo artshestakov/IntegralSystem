@@ -57,6 +57,11 @@ bool CGConfiguratorUpdate::database()
 
 	if (Result)
 	{
+		Result = comment();
+	}
+
+	if (Result)
+	{
 		Result = indexesall();
 	}
 
@@ -111,28 +116,38 @@ bool CGConfiguratorUpdate::tables()
 		{
 			Result = Exist ? CGDatabase::Table_Update(MetaTable, ErrorString) : CGDatabase::Table_Create(MetaTable, ErrorString);
 		}
-
-		if (Result) //Создание/обновление таблицы прошло успешно - комментируем таблицу
+		
+		if (!Result)
 		{
-			Result = CGDatabase::Helper_CommentTable(MetaTable, ErrorString);
+			break;
 		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorUpdate::comment()
+{
+	bool Result = true;
+	for (size_t i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i) //Обход таблиц
+	{
+		PMetaTable *MetaTable = ISMetaData::Instance().GetTables()[i];
+		Progress("Comment Table", i, CountTables, "TableName: " + MetaTable->Name);
+		Result = CGDatabase::Helper_CommentTable(MetaTable, ErrorString);
 
-		if (Result) //Комментируем поля таблицы
+		if (Result) //Комментирование таблицы прошло успешно - комментируем поля
 		{
-			for (PMetaField *MetaField : MetaTable->AllFields)
+			for (size_t j = 0, CountFields = MetaTable->AllFields.size(); j < CountFields; ++j)
 			{
-				if (MetaField->QueryText.isEmpty()) //Если поле является обычным полем - комментируем его
-				{
-					Result = CGDatabase::Helper_CommentField(MetaTable, MetaField, ErrorString);
-				}
-
+				PMetaField *MetaField = MetaTable->AllFields[j];
+				Progress("Comment Field", j, CountFields, "FieldName: " + MetaField->Name);
+				Result = CGDatabase::Helper_CommentField(MetaTable, MetaField, ErrorString);
 				if (!Result)
 				{
 					break;
 				}
 			}
 		}
-		
+
 		if (!Result)
 		{
 			break;

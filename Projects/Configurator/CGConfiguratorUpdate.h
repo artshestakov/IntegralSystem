@@ -16,6 +16,7 @@ public slots:
 	bool database(); //Обновление базы данных
 	bool functions(); //Обновление функций
 	bool tables(); //Обновление таблиц
+	bool comment(); //Комментирование таблиц
 	bool indexesall(); //Обновление всех индексов
 	bool systemindexes(); //Обновление системных индексов
 	bool indexes(); //Обновление индексов
