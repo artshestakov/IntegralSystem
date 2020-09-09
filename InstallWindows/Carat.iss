@@ -54,6 +54,7 @@ Source: ${QTDIR}\plugins\platforms\qwindows${IS_DEBUG}.dll; DestDir: {app}\platf
 Source: ${QTDIR}\plugins\sqldrivers\qsqlpsql${IS_DEBUG}.dll; DestDir: {app}\sqldrivers; Flags: ignoreversion recursesubdirs;
 
 Source: ..\Components\PostgreSQL\9.4\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Components\BackuperDB\${CONFIGURATION}-${PLATFORM}\BackuperDB.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Carat.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\CaratWorker.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Configurator.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
