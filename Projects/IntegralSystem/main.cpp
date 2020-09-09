@@ -6,6 +6,8 @@
 #include "ISLogger.h"
 #include "ISMainWindow.h"
 #include "ISSettings.h"
+#include "ISProperty.h"
+#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -44,6 +46,10 @@ int main(int argc, char **argv)
 			SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
 			SplashScreen.show();
 			ISStartup::Shutdown(&SplashScreen);
+			if (PROPERTY_GET("is_change_user").toBool())
+			{
+				QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
+			}
 		}
 	}
 	else //Если не захотели входить в систему (или что-то ещё) - завершаем работу системы

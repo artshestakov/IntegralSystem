@@ -20,6 +20,7 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISObjects.h"
 #include "ISAlgorithm.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
 	: ISInterfaceForm(parent),
@@ -138,8 +139,8 @@ void ISMainWindow::ChangeUser()
 	if (Change)
 	{
 		ExitConfirm = false;
+		PROPERTY_SET("is_change_user", true);
 		close();
-		QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
 	}
 }
 //-----------------------------------------------------------------------------

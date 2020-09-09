@@ -23,4 +23,7 @@ private:
 	ISStringToVariantMap Map;
 };
 //-----------------------------------------------------------------------------
+#define PROPERTY_GET(PROPERTY_NAME) ISProperty::Instance().GetValue(PROPERTY_NAME)
+#define PROPERTY_SET(PROPERTY_NAME, PROPERTY_VALUE) ISProperty::Instance().SetValue(PROPERTY_NAME, PROPERTY_VALUE)
+//-----------------------------------------------------------------------------
 #endif
