@@ -493,6 +493,12 @@ void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxKKMTotal()
 //-----------------------------------------------------------------------------
 ISOilSphere::DebtSubSystemForm::DebtSubSystemForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+
+	ISPushButton *ButtonUpdate = new ISPushButton(BUFFER_ICONS("Update"), LANG("Update"), this);
+	connect(ButtonUpdate, &ISPushButton::clicked, this, &ISOilSphere::DebtSubSystemForm::LoadData);
+	GetMainLayout()->addWidget(ButtonUpdate, 0, Qt::AlignLeft);
+
 	TreeWidget = new QTreeWidget(this);
 	TreeWidget->setHeaderHidden(true);
 	TreeWidget->setAnimated(true);
