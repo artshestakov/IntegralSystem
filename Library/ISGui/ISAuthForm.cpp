@@ -375,9 +375,11 @@ bool ISAuthForm::CheckUpdate()
 		{
 			QString FileName = FileInfo.fileName();
 			QStringList StringList = FileName.split(SYMBOL_POINT);
-			if (StringList.size() == 4)
+			result = StringList.size() == 4;
+			if (result)
 			{
-				if (StringList[2].toInt() > ISVersion::Instance().Info.Revision)
+				result = StringList[2].toInt() > ISVersion::Instance().Info.Revision;
+				if (result)
 				{
 					ISMessageBox::ShowInformation(this, LANG("Message.Information.FoundNewAppVersion"));
 					QString FilePath = FileInfo.filePath();
