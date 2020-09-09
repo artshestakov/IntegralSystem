@@ -483,6 +483,7 @@ void ISListBaseForm::CreateDelegates()
 			case ISNamespace::FT_Image: AbstractItemDelegate = new ISDelegateImage(TableView); break;
 			case ISNamespace::FT_Color: AbstractItemDelegate = new ISDelegateColor(TableView); break;
 			case ISNamespace::FT_File: AbstractItemDelegate = new ISDelegateFile(TableView); break;
+			case ISNamespace::FT_TaskImportant: AbstractItemDelegate = new ISDelegateTaskImportant(TableView); break;
 			}
 			if (AbstractItemDelegate)
 			{

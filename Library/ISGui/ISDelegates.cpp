@@ -101,7 +101,6 @@ void ISDelegateFile::paint(QPainter *Painter, const QStyleOptionViewItem &Option
 	const QWidget *Widget = OptionViewItem.widget;
 	QStyle *Style = Widget ? Widget->style() : QApplication::style();
 	Style->drawControl(QStyle::CE_ItemViewItem, &OptionViewItem, Painter, Widget);
-
 	if (!Index.data().toBool())
 	{
 		Painter->drawImage(QRect(Option.rect.center().x() - ImageWidth / 2, Option.rect.center().y() - ImageHeight / 2, ImageWidth, ImageHeight), Image);
@@ -109,6 +108,45 @@ void ISDelegateFile::paint(QPainter *Painter, const QStyleOptionViewItem &Option
 }
 //-----------------------------------------------------------------------------
 void ISDelegateFile::initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const
+{
+	QVariant Value = Index.data(Qt::DisplayRole);
+	if (Value.isValid() && !Value.isNull())
+	{
+		Option->features |= QStyleOptionViewItem::HasDisplay;
+	}
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISDelegateTaskImportant::ISDelegateTaskImportant(QWidget *parent)
+	: QStyledItemDelegate(parent),
+	Image(BUFFER_ICONS("Task.Important.Checked").pixmap(ISDefines::Gui::SIZE_22_22).toImage()),
+	ImageWidth(Image.width()),
+	ImageHeight(Image.height())
+{
+
+}
+//-----------------------------------------------------------------------------
+ISDelegateTaskImportant::~ISDelegateTaskImportant()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISDelegateTaskImportant::paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const
+{
+	QStyleOptionViewItem OptionViewItem = Option;
+	initStyleOption(&OptionViewItem, Index);
+
+	const QWidget *Widget = OptionViewItem.widget;
+	QStyle *Style = Widget ? Widget->style() : QApplication::style();
+	Style->drawControl(QStyle::CE_ItemViewItem, &OptionViewItem, Painter, Widget);
+	if (Index.data().toBool())
+	{
+		Painter->drawImage(QRect(Option.rect.center().x() - ImageWidth / 2, Option.rect.center().y() - ImageHeight / 2, ImageWidth, ImageHeight), Image);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISDelegateTaskImportant::initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const
 {
 	QVariant Value = Index.data(Qt::DisplayRole);
 	if (Value.isValid() && !Value.isNull())

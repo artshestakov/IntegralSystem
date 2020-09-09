@@ -42,6 +42,7 @@ public:
         FT_Url, //Ссылка
         FT_File, //Файл
 		FT_Sex, //Пол
+		FT_TaskImportant, //Важность задачи
     };
 
     enum ObjectFormType //Типы формы объекта

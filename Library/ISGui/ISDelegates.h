@@ -58,6 +58,26 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+class ISDelegateTaskImportant : public QStyledItemDelegate
+{
+	Q_OBJECT
+
+public:
+	Q_INVOKABLE ISDelegateTaskImportant(QWidget *parent = 0);
+	virtual ~ISDelegateTaskImportant();
+
+protected:
+	void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+	void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
+
+private:
+	QImage Image;
+	int ImageWidth;
+	int ImageHeight;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 class ISDelegateImage : public QStyledItemDelegate
 {
 	Q_OBJECT
