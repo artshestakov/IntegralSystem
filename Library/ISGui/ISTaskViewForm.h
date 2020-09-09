@@ -68,7 +68,7 @@ private:
 
 private:
 	void CommentLoadList();
-	QWidget* CommentCreateWidget(bool IsParent, int CommentID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &DateTime);
+	QWidget* CommentCreateWidget(bool IsParent, int CommentID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate);
 	void CommentAdd();
 	void CommentEdit();
 	void CommentDelete();

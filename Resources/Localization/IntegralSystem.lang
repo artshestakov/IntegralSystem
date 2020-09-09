@@ -583,6 +583,8 @@
   <Local Name="Task.AddComment" Russian="Добавить комментарий"/>
   <Local Name="Task.InputComment" Russian="Введите комментарий"/>
   <Local Name="Task.Comment.Answer" Russian="Ответить"/>
+  <Local Name="Task.Comment.CreationDate" Russian="Добавлен: %1"/>
+  <Local Name="Task.Comment.UpdationDate" Russian="Изменен: %1"/>
   <Local Name="Task.AddCheck" Russian="Добавить пункт"/>
   <Local Name="Task.Check" Russian="Пункт"/>
   <Local Name="Task.Check.InputName" Russian="Введите название:"/>

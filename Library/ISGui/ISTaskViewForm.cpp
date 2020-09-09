@@ -134,6 +134,8 @@ static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, t
 										  "VALUES(:TaskID, :Parent, :Comment)");
 //-----------------------------------------------------------------------------
 static QString QU_COMMENT = PREPARE_QUERY("UPDATE _taskcomment SET "
+										  "tcom_updationdate = now(), "
+										  "tcom_updationuseroid = currentuseroid(), "
 										  "tcom_comment = :Comment "
 										  "WHERE tcom_id = :CommentID");
 //-----------------------------------------------------------------------------
@@ -1209,10 +1211,11 @@ void ISTaskViewForm::CommentLoadList()
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
 			QDateTime UpdationDate = qSelectComments.ReadColumn("tcom_updationdate").toDateTime();
+			qDebug() << UpdationDate;
 			QString UserFIO = qSelectComments.ReadColumn("usrs_fio").toString();
 			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyoid").toByteArray());
 
-			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserPhoto, UserFIO, Comment, CreationDate);
+			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserPhoto, UserFIO, Comment, CreationDate, UpdationDate);
 			if (ParentID)
 			{
 				QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(MapComment[ParentID]);
@@ -1233,7 +1236,7 @@ void ISTaskViewForm::CommentLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &DateTime)
+QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
@@ -1292,10 +1295,22 @@ QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, const
 	connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentDelete);
 	LayoutBottom->addWidget(LabelDelete);
 
-	QLabel *LabelDateTime = new QLabel(ISGui::ConvertDateTimeToString(DateTime, FORMAT_DATE_V1, FORMAT_TIME_V1), WidgetBottom);
-	LabelDateTime->setToolTip(DateTime.toString(FORMAT_DATE_TIME_V10));
-	LabelDateTime->setCursor(CURSOR_WHATS_THIS);
-	LayoutBottom->addWidget(LabelDateTime);
+	LayoutBottom->addWidget(ISControls::CreateVerticalLine(WidgetBottom));
+
+	QLabel *LabelCreateDateTime = new QLabel(LANG("Task.Comment.CreationDate").arg(ISGui::ConvertDateTimeToString(CreationDate, FORMAT_DATE_V1, FORMAT_TIME_V1)), WidgetBottom);
+	LabelCreateDateTime->setToolTip(CreationDate.toString(FORMAT_DATE_TIME_V10));
+	LabelCreateDateTime->setCursor(CURSOR_WHATS_THIS);
+	LayoutBottom->addWidget(LabelCreateDateTime);
+
+	if (!UpdationDate.isNull())
+	{
+		LayoutBottom->addWidget(ISControls::CreateVerticalLine(WidgetBottom));
+
+		QLabel *LabelUpdateDateTime = new QLabel(LANG("Task.Comment.UpdationDate").arg(ISGui::ConvertDateTimeToString(UpdationDate, FORMAT_DATE_V1, FORMAT_TIME_V1)), WidgetBottom);
+		LabelUpdateDateTime->setToolTip(UpdationDate.toString(FORMAT_DATE_TIME_V10));
+		LabelUpdateDateTime->setCursor(CURSOR_WHATS_THIS);
+		LayoutBottom->addWidget(LabelUpdateDateTime);
+	}
 
 	LayoutBottom->addStretch();
 
