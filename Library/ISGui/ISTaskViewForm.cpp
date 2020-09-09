@@ -277,7 +277,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	{
 		ButtonActions->menu()->addAction(LANG("Task.ConvertToSubTask"), this, &ISTaskViewForm::ConvertToSubTask);
 		ButtonActions->menu()->addSeparator();
-		ButtonActions->menu()->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateSubTask"), this, &ISTaskViewForm::SubTaskCreate);
 	}
 	LayoutButtonStatus->addWidget(ButtonActions);
 
@@ -300,26 +299,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TextEdit->SetValue(TaskDescription);
 	GroupBoxDescription->layout()->addWidget(TextEdit);
 
-	GroupBoxSubTask = new QGroupBox(LANG("Task.SubTask.List").arg(0).arg(0), this);
-	GroupBoxSubTask->setLayout(new QVBoxLayout());
-	GroupBoxSubTask->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_1_PX);
-	GroupBoxSubTask->setSizePolicy(GroupBoxSubTask->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
-	LayoutLeft->addWidget(GroupBoxSubTask);
-
-	ListWidgetSubTask = new ISListWidget(GroupBoxSubTask);
-	ListWidgetSubTask->setAlternatingRowColors(true);
-	ListWidgetSubTask->setFrameShape(QFrame::NoFrame);
-	ListWidgetSubTask->setContextMenuPolicy(Qt::ActionsContextMenu);
-	ListWidgetSubTask->SetMaxVisibleItems(6);
-	GroupBoxSubTask->layout()->addWidget(ListWidgetSubTask);
-	connect(ListWidgetSubTask, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::SubTaskOpen);
-	SubTaskLoadList();
-
-	QAction *ActionConvertToTask = new QAction(LANG("Task.ConvertToTask"), ListWidgetSubTask);
-	ActionConvertToTask->setEnabled(false);
-	connect(ActionConvertToTask, &QAction::triggered, this, &ISTaskViewForm::ConvertListSubTaskToTask);
-	ListWidgetSubTask->AddAction(ActionConvertToTask, true);
-
 	TabWidget = new QTabWidget(this);
 	TabWidget->setTabsClosable(true);
 	TabWidget->setStyleSheet(STYLE_SHEET("QTabWidgetTask"));
@@ -331,8 +310,22 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TreeWidgetComment->setAlternatingRowColors(true);
 	TreeWidgetComment->setAnimated(true);
 	TreeWidgetComment->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	TreeWidgetComment->setFrameShape(QFrame::NoFrame);
 	TabWidget->addTab(TreeWidgetComment, BUFFER_ICONS("Document"), LANG("Task.Comments").arg(0));
 	CommentLoadList();
+
+	ListWidgetSubTask = new ISListWidget(TabWidget);
+	ListWidgetSubTask->setAlternatingRowColors(true);
+	ListWidgetSubTask->setFrameShape(QFrame::NoFrame);
+	ListWidgetSubTask->setContextMenuPolicy(Qt::ActionsContextMenu);
+	TabWidget->addTab(ListWidgetSubTask, BUFFER_ICONS("Document"), LANG("Task.SubTask.List"));
+	connect(ListWidgetSubTask, &ISListWidget::itemDoubleClicked, this, &ISTaskViewForm::SubTaskOpen);
+	SubTaskLoadList();
+
+	QAction *ActionConvertToTask = new QAction(LANG("Task.ConvertToTask"), ListWidgetSubTask);
+	ActionConvertToTask->setEnabled(false);
+	connect(ActionConvertToTask, &QAction::triggered, this, &ISTaskViewForm::ConvertListSubTaskToTask);
+	ListWidgetSubTask->AddAction(ActionConvertToTask, true);
 
 	LayoutCheckList = new QVBoxLayout();
 	LayoutCheckList->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
@@ -366,6 +359,10 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	QToolButton *ButtonAddComment = CreateAddButton(LANG("Task.AddComment"));
 	connect(ButtonAddComment, &QToolButton::clicked, this, &ISTaskViewForm::CommentAdd);
 	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(TreeWidgetComment), QTabBar::RightSide, ButtonAddComment);
+
+	QToolButton *ButtonAddSubTask = CreateAddButton(LANG("Task.CreateSubTask"));
+	connect(ButtonAddSubTask, &QToolButton::clicked, this, &ISTaskViewForm::SubTaskCreate);
+	TabWidget->tabBar()->setTabButton(TabWidget->indexOf(ListWidgetSubTask), QTabBar::RightSide, ButtonAddSubTask);
 
 	QToolButton *ButtonAddCheck = CreateAddButton(LANG("Task.AddCheck"));
 	connect(ButtonAddCheck, &QToolButton::clicked, this, &ISTaskViewForm::CheckAdd);
@@ -813,12 +810,11 @@ void ISTaskViewForm::SubTaskLoadList()
 			ListWidgetItem->setText(QString("#%1: %2").arg(SubTaskID).arg(SubTaskName));
 			ListWidgetItem->setToolTip(SubTaskDescription);
 			ListWidgetItem->setData(Qt::UserRole, SubTaskID);
-			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
+			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, IsDone);
 			IsDone ? ++IsDoned : IsDoned;
 		}
-		GroupBoxSubTask->setTitle(LANG("Task.SubTask.List").arg(IsDoned).arg(Rows));
-		GroupBoxSubTask->setVisible(Rows);
+		TabWidget->setTabText(TabWidget->indexOf(ListWidgetSubTask), Rows ? LANG("Task.SubTask.List").arg(IsDoned).arg(Rows) : LANG("Task.SubTask.List.Empty"));
 	}
 }
 //-----------------------------------------------------------------------------

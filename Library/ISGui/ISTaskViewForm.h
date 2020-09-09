@@ -92,7 +92,6 @@ private:
 	ISPushButton *ButtonActions;
 	ISPushButton *ButtonVote;
 	ISTextEdit *TextEdit;
-	QGroupBox *GroupBoxSubTask;
 	ISListWidget *ListWidgetSubTask;
 	QTabWidget *TabWidget;
 	QTreeWidget *TreeWidgetComment;
