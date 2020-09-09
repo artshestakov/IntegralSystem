@@ -6,7 +6,6 @@
 #include "ISInterfaceForm.h"
 #include "ISLabels.h"
 #include "ISListWidget.h"
-#include "ISTreeWidget.h"
 #include "ISButtons.h"
 #include "ISFieldEdits.h"
 #include "ISScrollArea.h"
@@ -96,7 +95,7 @@ private:
 	QGroupBox *GroupBoxSubTask;
 	ISListWidget *ListWidgetSubTask;
 	QTabWidget *TabWidget;
-	ISTreeWidget *TreeWidgetComment;
+	QTreeWidget *TreeWidgetComment;
 	std::map<int, QTreeWidgetItem*> MapComment;
 	QVBoxLayout *LayoutCheckList;
 	ISScrollArea *ScrollCheckList;

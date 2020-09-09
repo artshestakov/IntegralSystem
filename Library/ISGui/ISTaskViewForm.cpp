@@ -324,7 +324,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TabWidget->tabBar()->setStyleSheet(STYLE_SHEET("QTabBarTask"));
 	LayoutLeft->addWidget(TabWidget);
 
-	TreeWidgetComment = new ISTreeWidget(TabWidget);
+	TreeWidgetComment = new QTreeWidget(TabWidget);
 	TreeWidgetComment->setHeaderHidden(true);
 	TreeWidgetComment->setAlternatingRowColors(true);
 	TreeWidgetComment->setAnimated(true);
@@ -1175,7 +1175,7 @@ void ISTaskViewForm::LinkDelete()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CommentLoadList()
 {
-	TreeWidgetComment->Clear();
+	TreeWidgetComment->clear();
 	MapComment.clear();
 
 	ISQuery qSelectComments(QS_COMMENT);

@@ -514,18 +514,7 @@ ISOilSphere::DebtSubSystemForm::~DebtSubSystemForm()
 void ISOilSphere::DebtSubSystemForm::LoadData()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	for (int i = 0; i < TreeWidget->topLevelItemCount(); ++i)
-	{
-		while (TreeWidget->topLevelItem(i)->childCount())
-		{
-			delete TreeWidget->topLevelItem(i)->takeChild(0);
-		}
-	}
-
-	while (TreeWidget->topLevelItemCount())
-	{
-		delete TreeWidget->takeTopLevelItem(0);
-	}
+	TreeWidget->clear();
 
 	ISQuery qSelectDebt(QS_DEBT);
 	if (qSelectDebt.Execute())
@@ -570,6 +559,12 @@ void ISOilSphere::DebtSubSystemForm::LoadData()
 		ISMessageBox::ShowCritical(this, qSelectDebt.GetErrorString());
 	}
 	ISGui::SetWaitGlobalCursor(false);
+
+	for (int x = 0; x < 300; ++x)
+	{
+		QTreeWidgetItem *i = new QTreeWidgetItem(TreeWidget);
+		TreeWidget->setItemWidget(i, 0, new ISBaseTableView(TreeWidget));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::DebtSubSystemForm::AddAccrued()
