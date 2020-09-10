@@ -538,6 +538,7 @@
   <Local Name="Settings.TabBar.SelectionBehavior.SelectPreviousTab" Russian="Выбрать предыдущую вкладку"/>
   
   <!--Task-->
+  <Local Name="Task.LabelCentral" Russian="Чтобы отобразить список задач, выберите фильтр сверху."/>
   <Local Name="Task.DesignateMe" Russian="Назначить меня"/>
   <Local Name="Task.Actions" Russian="Действия"/>
   <Local Name="Task.ReopenStatus" Russian="Переоткрыть"/>

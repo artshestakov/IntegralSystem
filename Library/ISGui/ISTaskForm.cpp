@@ -16,7 +16,8 @@
 //-----------------------------------------------------------------------------
 ISTaskForm::ISTaskForm(QWidget *parent)
 	: ISParagraphBaseForm(parent),
-	ActionGroup(new QActionGroup(this))
+	ActionGroup(new QActionGroup(this)),
+	TaskListForm(nullptr)
 {
 	MainLayout = new QVBoxLayout();
 	MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
@@ -52,9 +53,7 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 
 	MainLayout->addWidget(ISControls::CreateHorizontalLine(this));
 
-	TaskListForm = new ISTaskListForm(this);
-	connect(TaskListForm, &ISTaskListForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
-	MainLayout->addWidget(TaskListForm);
+	CreateTempWidget();
 }
 //-----------------------------------------------------------------------------
 ISTaskForm::~ISTaskForm()
@@ -65,6 +64,37 @@ ISTaskForm::~ISTaskForm()
 void ISTaskForm::Invoke()
 {
 	ISParagraphBaseForm::Invoke();
+}
+//-----------------------------------------------------------------------------
+void ISTaskForm::CreateTempWidget()
+{
+	QVBoxLayout *Layout = new QVBoxLayout();
+	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+
+	TempWidget = new QWidget(this);
+	TempWidget->setLayout(Layout);
+	MainLayout->addWidget(TempWidget);
+
+	Layout->addStretch();
+
+	QHBoxLayout *LayoutLabel = new QHBoxLayout();
+	Layout->addLayout(LayoutLabel);
+
+	LayoutLabel->addStretch();
+
+	QLabel *LabelIcon = new QLabel(this);
+	LabelIcon->setPixmap(BUFFER_ICONS("Arrow.Up").pixmap(ISDefines::Gui::SIZE_32_32));
+	LayoutLabel->addWidget(LabelIcon);
+
+	QLabel *LabelText = new QLabel(this);
+	LabelText->setText(LANG("Task.LabelCentral"));
+	LabelText->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+	LabelText->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelText->setAlignment(Qt::AlignCenter);
+	LayoutLabel->addWidget(LabelText);
+
+	LayoutLabel->addStretch();
+	Layout->addStretch();
 }
 //-----------------------------------------------------------------------------
 void ISTaskForm::CreateActionFilter(const QString &Text, const QIcon &Icon, const QString &SqlFilter)
@@ -78,6 +108,14 @@ void ISTaskForm::CreateActionFilter(const QString &Text, const QIcon &Icon, cons
 //-----------------------------------------------------------------------------
 void ISTaskForm::FilterClicked()
 {
+	if (!TaskListForm)
+	{
+		delete TempWidget;
+		TaskListForm = new ISTaskListForm(this);
+		connect(TaskListForm, &ISTaskListForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
+		MainLayout->addWidget(TaskListForm);
+	}
+
 	QString SqlFilter = sender()->property("SqlFilter").toString();
 	if (SqlFilter.isEmpty())
 	{

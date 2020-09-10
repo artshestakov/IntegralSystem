@@ -15,6 +15,7 @@ public:
 	void Invoke() override;
 
 private:
+	void CreateTempWidget();
 	void CreateActionFilter(const QString &Text, const QIcon &Icon, const QString &SqlFilter);
 	void FilterClicked();
 
@@ -27,6 +28,7 @@ private:
 	QToolBar *ToolBar;
 	QActionGroup *ActionGroup;
 
+	QWidget *TempWidget;
 	ISTaskListForm *TaskListForm;
 };
 //-----------------------------------------------------------------------------
