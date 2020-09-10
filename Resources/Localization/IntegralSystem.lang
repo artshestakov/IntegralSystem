@@ -399,7 +399,7 @@
   
   <!--Access rights-->
   <Local Name="AccessRights" Russian="Права доступа"/>
-  <Local Name="AccessRights.SettingAcceessFromGroup" Russian="Настрока прав для группы"/>
+  <Local Name="AccessRights.SettingAcceessFromGroup" Russian="Настрока прав для группы: %1"/>
   <Local Name="AccessRights.ClickedToGiveAccessFromSubSystem" Russian="Нажмите, чтобы дать право доступа к подсистеме"/>
   <Local Name="AccessRights.SubSystems" Russian="Интерфейс"/>
   <Local Name="AccessRights.Tables" Russian="Таблицы"/>
