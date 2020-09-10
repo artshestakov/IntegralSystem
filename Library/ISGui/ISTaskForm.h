@@ -15,8 +15,7 @@ public:
 	void Invoke() override;
 
 private:
-	void CreateTempWidget();
-	QAction* CreateActionFilter(const QString &Text, const QIcon &Icon, const QString &ListFormName);
+	void CreateActionFilter(const QString &Text, const QIcon &Icon, const QString &SqlFilter);
 	void FilterClicked();
 
 	void CreateTask();
@@ -27,9 +26,7 @@ private:
 	QVBoxLayout *MainLayout;
 	QToolBar *ToolBar;
 	QActionGroup *ActionGroup;
-	QWidget *TempWidget;
 
 	ISTaskListForm *TaskListForm;
-	QString CurrentListForm;
 };
 //-----------------------------------------------------------------------------

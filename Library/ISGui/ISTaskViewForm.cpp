@@ -206,7 +206,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	GetMainLayout()->addLayout(LayoutTitle);
 
 	LabelStatus = new QLabel(TaskStatusName, this);
-	LabelStatus->setFont(ISDefines::Gui::FONT_TAHOMA_10_BOLD);
+	LabelStatus->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelStatus->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	LabelStatus->setAlignment(Qt::AlignCenter);
 	LabelStatus->setStyleSheet(STYLE_SHEET(TaskStatusStyleSheet));

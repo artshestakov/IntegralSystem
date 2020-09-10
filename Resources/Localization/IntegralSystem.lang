@@ -538,11 +538,16 @@
   <Local Name="Settings.TabBar.SelectionBehavior.SelectPreviousTab" Russian="Выбрать предыдущую вкладку"/>
   
   <!--Task-->
-  <Local Name="Task.LabelCentral" Russian="Чтобы отобразить список задач, выберите фильтр сверху."/>
   <Local Name="Task.DesignateMe" Russian="Назначить меня"/>
   <Local Name="Task.Actions" Russian="Действия"/>
   <Local Name="Task.ReopenStatus" Russian="Переоткрыть"/>
   <Local Name="Task.Filter.All" Russian="Все задачи"/>
+  <Local Name="Task.Filter.My" Russian="Мои задачи"/>
+  <Local Name="Task.Filter.Open" Russian="Открытые"/>
+  <Local Name="Task.Filter.InWork" Russian="В работе"/>
+  <Local Name="Task.Filter.Done" Russian="Выполненные"/>
+  <Local Name="Task.Filter.NotDone" Russian="Не будут закрыты"/>
+  <Local Name="Task.Filter.Close" Russian="Закрытые"/>
   <Local Name="Task.CreateTask" Russian="Создать задачу"/>
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
   <Local Name="Task.SearchByNumber.ToolTip" Russian="Поиск по номеру задачи"/>

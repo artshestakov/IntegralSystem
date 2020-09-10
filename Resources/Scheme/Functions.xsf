@@ -16,6 +16,21 @@
     COST 100;
   </Function>
 
+  <Function Name="currentuserid">
+    CREATE OR REPLACE FUNCTION public.currentuserid()
+    RETURNS bigint AS
+    $body$
+    BEGIN
+    RETURN usrs_id FROM _users WHERE usrs_login = CURRENT_USER;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    RETURNS NULL ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+  
   <Function Name="currentuseroid">
     CREATE OR REPLACE FUNCTION public.currentuseroid()
     RETURNS integer AS
