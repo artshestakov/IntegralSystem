@@ -130,9 +130,6 @@
       <Index Field="ObjectID"/>
       <Index Field="Message"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время"/>
       <Field Name="CreationUserOID" LocalName="Оставил примечание"/>
@@ -149,9 +146,6 @@
       <Index Field="ObjectsID"/>
       <Index Field="CreationUserOID;TableName" Unique="true"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
   <Table Name="_History" UID="{BF61E8B0-56A5-4EF7-A178-C22072B3F318}" Alias="htry" LocalName="История" LocalListName="История" TitleName="ObjectID" IsSystem="true">
@@ -164,9 +158,6 @@
       <Index Field="ObjectID"/>
       <Index Field="ID;CreationUserOID"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
   <Table Name="_StorageFiles" UID="{48151E73-0ABB-4B50-9C6B-42B838F644B0}" Alias="sgfs" LocalName="Файл" LocalListName="Файлы" TitleName="Name">
@@ -187,9 +178,6 @@
       <Index Field="Note"/>
       <Index Field="Password"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
     <SystemFields>
       <Field Name="CreationUserOID" LocalName="Добавил"/>
     </SystemFields>
@@ -215,9 +203,6 @@
       <Index Field="ObjectID"/>
       <Index Field="Closed;Date;TimeAlert"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
   <Table Name="_QuestionAnswerGroup" UID="{72608326-C278-4B2B-90E9-7E1226E3471E}" Alias="qagr" LocalName="Группа вопросов и ответов" LocalListName="Группы вопросов и ответов" TitleName="Name">
@@ -230,7 +215,6 @@
       <Index Field="Name"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Parent" ForeignClass="_QuestionAnswerGroup" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
@@ -247,7 +231,6 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_QuestionAnswerGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
 
@@ -258,9 +241,6 @@
     <Indexes>
       <Index Field="Value"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
   <Table Name="_SortingTables" UID="{FDE07704-8804-4950-A4A8-8220F0C54B5F}" Alias="sgts" LocalName="Сортировка таблицы" LocalListName="Сортировки таблиц" TitleName="TableName" IsSystem="true">
@@ -277,9 +257,6 @@
       <Index Field="IsDeleted;CreationUserOID;TableName"/>
       <Index Field="CreationUserOID;TableName"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
   <Table Name="_ColumnSize" UID="{F2BB53FB-7B16-45F4-97FC-C32D4D05B685}" Alias="clsz" LocalName="Размер колонки" LocalListName="Размеры колонок" TitleName="TableName" IsSystem="true">
@@ -294,9 +271,6 @@
       <Index Field="Size"/>
       <Index Field="CreationUserOID;TableName;FieldName"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
   <Table Name="_Protocol" UID="{F7194787-0AB7-4D59-AEA4-9632FF560374}" Alias="prtc" ShowOnly="true" LocalName="Протокол работы" LocalListName="Протокол работы" TitleName="TableName" IsSystem="true">
@@ -314,7 +288,6 @@
       <Index Field="TableName;ObjectID"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Type" ForeignClass="_ProtocolType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <SystemFields>
@@ -339,9 +312,6 @@
     <Indexes>
       <Index Field="Value"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
   <Table Name="_DictionaryWord" UID="{25311F76-73EB-4951-94B0-2B9191DBD3AD}" Alias="dicw" LocalName="Слово" LocalListName="Слова" TitleName="Word" IsSystem="true">
@@ -352,9 +322,6 @@
       <Index Field="Word"/>
       <Index Field="CreationUserOID;Word" Unique="true"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
 </XSN>

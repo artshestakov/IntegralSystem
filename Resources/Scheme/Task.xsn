@@ -28,7 +28,6 @@
       <Index Field="Status"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Space" ForeignClass="_TaskSpace" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Executor" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Type" ForeignClass="_TaskType" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -113,9 +112,6 @@
       <Index Field="Task"/>
       <Index Field="CreationUserOID;Task" Unique="true"/>
     </Indexes>
-    <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
-    </Foreigns>
   </Table>
 
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
@@ -130,7 +126,6 @@
       <Index Field="Comment"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Parent" ForeignClass="_TaskComment" ForeignField="ID" ForeignViewNameField="Comment"/>
     </Foreigns>
@@ -163,7 +158,6 @@
       <Index Field="Task;Link" Unique="true"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Link" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -187,7 +181,6 @@
       <Index Field="Size"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>

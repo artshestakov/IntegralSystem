@@ -161,7 +161,6 @@
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Type" ForeignClass="_UserPasswordChangedType" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
     </Foreigns>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время изменения"/>

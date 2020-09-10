@@ -6,6 +6,8 @@
 #include "ISFieldEditBase.h"
 #include "ISQuery.h"
 #include "ISGui.h"
+#include "ISCore.h"
+#include "ISControls.h"
 //-----------------------------------------------------------------------------
 ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInterfaceDialogForm()
 {
@@ -17,6 +19,9 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInte
 	QFormLayout *FormLayout = new QFormLayout();
 	FormLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	GetMainLayout()->addLayout(FormLayout);
+
+	FormLayout->addRow(new QLabel(LANG("Named") + ':', this), new QLabel(ISCore::GetObjectName(MetaTable, ObjectID), this));
+	FormLayout->addWidget(ISControls::CreateHorizontalLine(this));
 
 	for (PMetaField *MetaField : MetaTable->SystemFields)
 	{
@@ -33,6 +38,10 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInte
 		if (qSelect.ExecuteFirst())
 		{
 			QVariant Value = qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name);
+			if (MetaField->Foreign)
+			{
+				dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
+			}
 			FieldEditBase->SetValue(Value);
 		}
 	}

@@ -718,44 +718,37 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 	InitializeXSNTableFields(MetaTable, DomNode);
 
 	PMetaField *FieldID = MetaTable->GetField("ID");
-	IS_ASSERT(FieldID, "Null field object");
 	FieldID->Index = new PMetaIndex(true, MetaTable->Alias, MetaTable->Name, FieldID->Name);
 
 	PMetaField *FieldUID = MetaTable->GetField("UID");
-	IS_ASSERT(FieldUID, "Null field object");
 	FieldUID->Index = new PMetaIndex(true, MetaTable->Alias, MetaTable->Name, FieldUID->Name);
 
 	PMetaField *FieldIsDeleted = MetaTable->GetField("IsDeleted");
-	IS_ASSERT(FieldIsDeleted, "Null field object");
 	FieldIsDeleted->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsDeleted->Name);
 
 	PMetaField *FieldIsSystem = MetaTable->GetField("IsSystem");
-	IS_ASSERT(FieldIsSystem, "Null field object");
 	FieldIsSystem->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsSystem->Name);
 
 	PMetaField *FieldCreationDate = MetaTable->GetField("CreationDate");
-	IS_ASSERT(FieldCreationDate, "Null field object");
 	FieldCreationDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationDate->Name);
 
 	PMetaField *FieldUpdationDate = MetaTable->GetField("UpdationDate");
-	IS_ASSERT(FieldUpdationDate, "Null field object");
 	FieldUpdationDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationDate->Name);
 
 	PMetaField *FieldDeletionDate = MetaTable->GetField("DeletionDate");
-	IS_ASSERT(FieldDeletionDate, "Null field object");
 	FieldDeletionDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionDate->Name);
 
 	PMetaField *FieldCreationUserOID = MetaTable->GetField("CreationUserOID");
-	IS_ASSERT(FieldCreationUserOID, "Null field object");
 	FieldCreationUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUserOID->Name);
+	FieldCreationUserOID->Foreign = new PMetaForeign(FieldCreationUserOID->Name, "_Users", "OID", "FIO", QString(), MetaTable->Name);
 
-	PMetaField *FieldUpdationUserOID = MetaTable->GetField("CreationUserOID");
-	IS_ASSERT(FieldUpdationUserOID, "Null field object");
+	PMetaField *FieldUpdationUserOID = MetaTable->GetField("UpdationUserOID");
 	FieldUpdationUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationUserOID->Name);
+	FieldUpdationUserOID->Foreign = new PMetaForeign(FieldUpdationUserOID->Name, "_Users", "OID", "FIO", QString(), MetaTable->Name);
 
-	PMetaField *FieldDeletionUserOID = MetaTable->GetField("CreationUserOID");
-	IS_ASSERT(FieldDeletionUserOID, "Null field object");
+	PMetaField *FieldDeletionUserOID = MetaTable->GetField("DeletionUserOID");
 	FieldDeletionUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionUserOID->Name);
+	FieldDeletionUserOID->Foreign = new PMetaForeign(FieldDeletionUserOID->Name, "_Users", "OID", "FIO", QString(), MetaTable->Name);
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, const QDomNode &DomNode)
@@ -1021,15 +1014,6 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNod
 				break;
 			}
 
-			QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
-			PMetaForeign *MetaForeign = new PMetaForeign();
-			MetaForeign->Field = FieldName;
-			MetaForeign->ForeignClass = DomNamedNodeMap.namedItem("ForeignClass").nodeValue();
-			MetaForeign->ForeignField = DomNamedNodeMap.namedItem("ForeignField").nodeValue();
-			MetaForeign->ForeignViewNameField = DomNamedNodeMap.namedItem("ForeignViewNameField").nodeValue();
-			MetaForeign->OrderField = DomNamedNodeMap.namedItem("OrderField").nodeValue();
-			MetaForeign->TableName = MetaTable->Name;
-
 			//Проверка наличия внешнего ключа на этом поле
 			Result = !MetaField->Foreign;
 			if (!Result)
@@ -1038,6 +1022,14 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNod
 				break;
 			}
 
+			QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
+			PMetaForeign *MetaForeign = new PMetaForeign(
+				FieldName,
+				DomNamedNodeMap.namedItem("ForeignClass").nodeValue(),
+				DomNamedNodeMap.namedItem("ForeignField").nodeValue(),
+				DomNamedNodeMap.namedItem("ForeignViewNameField").nodeValue(),
+				DomNamedNodeMap.namedItem("OrderField").nodeValue(),
+				MetaTable->Name);
 			MetaField->Foreign = MetaForeign;
 		}
 		Temp = Temp.nextSibling();

@@ -17,7 +17,8 @@ struct PMetaBase
 struct PMetaIndex : public PMetaBase
 {
 	PMetaIndex(bool unique, const QString &alias, const QString &table_name, const QString &field_name) 
-		: PMetaBase("Index"), Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
+		: PMetaBase("Index"),
+		Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
 
 	QString GetName() //Получить имя индекса
 	{
@@ -47,7 +48,9 @@ struct PMetaIndex : public PMetaBase
 //-----------------------------------------------------------------------------
 struct PMetaForeign : public PMetaBase
 {
-	PMetaForeign() : PMetaBase("Foreign") { }
+	PMetaForeign(const QString &field, const QString &foreign_class, const QString &foreign_field, const QString &foreign_view_name_field, const QString &order_field = QString(), const QString &table_name = QString())
+		: PMetaBase("Foreign"),
+		Field(field), ForeignClass(foreign_class), ForeignField(foreign_field), ForeignViewNameField(foreign_view_name_field), OrderField(order_field), TableName(table_name) { }
 
 	QString GetName() const //Получить имя внешнего ключа
 	{

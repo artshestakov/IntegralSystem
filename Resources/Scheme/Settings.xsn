@@ -12,7 +12,6 @@
       <Index Field="CreationUserOID;Setting"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="CreationUserOID" ForeignClass="_Users" ForeignField="OID" ForeignViewNameField="FIO"/>
       <Foreign Field="Setting" ForeignClass="_Settings" ForeignField="UID" ForeignViewNameField="LocalName"/>
     </Foreigns>
   </Table>
