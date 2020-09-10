@@ -95,8 +95,6 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISComboSearchString*>("ISComboSearchString");
 	qRegisterMetaType<ISComboSearchNumber*>("ISComboSearchNumber");
 
-	qRegisterMetaType<ISComboTableDateFormat*>("ISComboTableDateFormat");
-	qRegisterMetaType<ISComboTableTimeFormat*>("ISComboTableTimeFormat");
 	qRegisterMetaType<ISComboTableDoubleClickEvent*>("ISComboTableDoubleClickEvent");
 	qRegisterMetaType<ISComboCalendarNoteType*>("ISComboCalendarNoteType");
 	qRegisterMetaType<ISComboStartedParagraph*>("ISComboStartedParagraph");

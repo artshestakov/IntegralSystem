@@ -149,9 +149,9 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 		QVariant Value = qSelectName.ReadColumn(0);
 		switch (Value.type())
 		{
-		case QVariant::Date: ObjectName = Value.toDate().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT)); break;
-		case QVariant::Time: ObjectName = Value.toTime().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT)); break;
-		case QVariant::DateTime: ObjectName = Value.toDateTime().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT) + SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT)); break;
+		case QVariant::Date: ObjectName = Value.toDate().toString(FORMAT_DATE_V2); break;
+		case QVariant::Time: ObjectName = Value.toTime().toString(FORMAT_TIME_V1); break;
+		case QVariant::DateTime: ObjectName = Value.toDateTime().toString(FORMAT_DATE_TIME_V2); break;
 		default: ObjectName = qSelectName.ReadColumn(0).toString();
 		}
 	}

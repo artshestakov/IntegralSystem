@@ -13,7 +13,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	QVariant Result = Value;
 	if (Type == ISNamespace::FT_Date)
 	{
-		Result = Value.toDate().toString(SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT));
+		Result = Value.toDate().toString(FORMAT_DATE_V1);
 	}
 	else if (Type == ISNamespace::FT_Birthday)
 	{
@@ -25,7 +25,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_DateTime)
 	{
-		Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), SETTING_STRING(CONST_UID_SETTING_OTHER_DATE_FORMAT), SETTING_STRING(CONST_UID_SETTING_OTHER_TIME_FORMAT));
+		Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), FORMAT_DATE_V1, FORMAT_TIME_V1);
 	}
 	else if (Type == ISNamespace::FT_Password)
 	{

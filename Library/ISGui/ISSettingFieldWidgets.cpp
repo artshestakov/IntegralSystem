@@ -157,36 +157,6 @@ ISComboTabBarSelectionBehavior::~ISComboTabBarSelectionBehavior()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISComboTableDateFormat::ISComboTableDateFormat(QWidget *parent) : ISComboSettingEdit(parent)
-{
-	AddItem(LANG("Settings.Table.DateFormat.1"), FORMAT_DATE_V1);
-	AddItem(LANG("Settings.Table.DateFormat.2"), FORMAT_DATE_V2);
-	AddItem(LANG("Settings.Table.DateFormat.3"), FORMAT_DATE_V3);
-	AddItem(LANG("Settings.Table.DateFormat.4"), FORMAT_DATE_V4);
-}
-//-----------------------------------------------------------------------------
-ISComboTableDateFormat::~ISComboTableDateFormat()
-{
-
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISComboTableTimeFormat::ISComboTableTimeFormat(QWidget *parent) : ISComboSettingEdit(parent)
-{
-	AddItem(LANG("Settings.Table.TimeFormat.1"), FORMAT_TIME_V1);
-	AddItem(LANG("Settings.Table.TimeFormat.2"), FORMAT_TIME_V2);
-	AddItem(LANG("Settings.Table.TimeFormat.3"), FORMAT_TIME_V3);
-	AddItem(LANG("Settings.Table.TimeFormat.4"), FORMAT_TIME_V5);
-}
-//-----------------------------------------------------------------------------
-ISComboTableTimeFormat::~ISComboTableTimeFormat()
-{
-
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISComboTableDoubleClickEvent::ISComboTableDoubleClickEvent(QWidget *parent) : ISComboSettingEdit(parent)
 {
 	AddItem(LANG("Settings.Table.DoubleClickEvent.Window"), "Window");

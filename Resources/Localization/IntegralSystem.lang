@@ -522,14 +522,6 @@
   <Local Name="NotificationForm.Title.Deleteds" Russian="Установлена пометка удаления на выбранные записи"/>
   
   <!--Settings-->
-  <Local Name="Settings.Table.DateFormat.1" Russian="1 Январь 2000"/>
-  <Local Name="Settings.Table.DateFormat.2" Russian="01.01.2000"/>
-  <Local Name="Settings.Table.DateFormat.3" Russian="01/01/2000"/>
-  <Local Name="Settings.Table.DateFormat.4" Russian="1 Январь 2000 (Пн)"/>
-  <Local Name="Settings.Table.TimeFormat.1" Russian="00:00"/>
-  <Local Name="Settings.Table.TimeFormat.2" Russian="00.00"/>
-  <Local Name="Settings.Table.TimeFormat.3" Russian="00:00:00"/>
-  <Local Name="Settings.Table.TimeFormat.4" Russian="00.00.00"/>
   <Local Name="Settings.Table.DoubleClickEvent.Window" Russian="Открывать запись в отдельном окне"/>
   <Local Name="Settings.Table.DoubleClickEvent.Tab" Russian="Открывать запись в режиме вкладки"/>
   <Local Name="Settings.CalendarEvents.NoteView.ToolTip" Russian="Всплывающая панель"/>

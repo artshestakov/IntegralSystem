@@ -528,7 +528,7 @@
     <Foreigns>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
-      <Foreign Field="ChangeDriver" ForeignClass="ChangeDriver" ForeignField="ID" ForeignViewNameField="DateStart;DateEnd;Driver"/>
+      <Foreign Field="ChangeDriver" ForeignClass="ChangeDriver" ForeignField="ID" ForeignViewNameField="DateStart;DateEnd"/>
     </Foreigns>
     <Escorts>
       <Escort LocalName="Расходы" TableName="ChangeDriverExpenses" FilterField="ChangeDriver"/>

@@ -66,28 +66,6 @@ public:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISComboTableDateFormat : public ISComboSettingEdit
-{
-	Q_OBJECT
-
-public:
-	Q_INVOKABLE ISComboTableDateFormat(QWidget *parent = 0);
-	virtual ~ISComboTableDateFormat();
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISComboTableTimeFormat : public ISComboSettingEdit
-{
-	Q_OBJECT
-
-public:
-	Q_INVOKABLE ISComboTableTimeFormat(QWidget *parent = 0);
-	virtual ~ISComboTableTimeFormat();
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 class ISComboTableDoubleClickEvent : public ISComboSettingEdit
 {
 	Q_OBJECT
