@@ -1,14 +1,14 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "ISInterfaceDialogForm.h"
 //-----------------------------------------------------------------------------
-class ISUserGroupWidget : public QWidget
+class ISUserGroupForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISUserGroupWidget(int group_id, const QString &group_name, QWidget *parent = 0);
-	virtual ~ISUserGroupWidget();
+	ISUserGroupForm(int group_id, const QString &group_name);
+	virtual ~ISUserGroupForm();
 
 protected:
 	void CreateSubSystems();

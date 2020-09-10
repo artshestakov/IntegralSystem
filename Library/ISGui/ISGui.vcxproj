@@ -288,7 +288,7 @@
     <ClCompile Include="ISTaskViewForm.cpp" />
     <ClCompile Include="ISToolBarAccessTable.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
-    <ClCompile Include="ISUserGroupWidget.cpp" />
+    <ClCompile Include="ISUserGroupForm.cpp" />
     <ClCompile Include="ISUserListForm.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
     <ClCompile Include="ISUserPasswordForm.cpp" />
@@ -418,7 +418,7 @@
     <QtMoc Include="ISSplashWidget.h" />
     <QtMoc Include="ISSystemsPanel.h" />
     <QtMoc Include="ISToolBarAccessTable.h" />
-    <QtMoc Include="ISUserGroupWidget.h" />
+    <QtMoc Include="ISUserGroupForm.h" />
     <QtMoc Include="ISEmpty.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />

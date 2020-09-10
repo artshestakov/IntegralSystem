@@ -1,4 +1,4 @@
-#include "ISUserGroupWidget.h"
+#include "ISUserGroupForm.h"
 #include "ISDefinesGui.h"
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
@@ -25,15 +25,15 @@ static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT gast_uid, g
 													   "WHERE gast_parent = :ParentUID "
 													   "ORDER BY gast_order");
 //-----------------------------------------------------------------------------
-ISUserGroupWidget::ISUserGroupWidget(int group_id, const QString &group_name, QWidget *parent)
-	: QWidget(parent),
+ISUserGroupForm::ISUserGroupForm(int group_id, const QString &group_name)
+	: ISInterfaceDialogForm(),
 	GroupID(group_id)
 {
-	QVBoxLayout *Layout = new QVBoxLayout();
-	setLayout(Layout);
+	setMinimumSize(800, 750);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
-	Layout->addLayout(LayoutTitle);
+	GetMainLayout()->addLayout(LayoutTitle);
 
 	QLabel *LabelInfo = new QLabel(this);
 	LabelInfo->setText(LANG("AccessRights.SettingAcceessFromGroup") + ':');
@@ -47,19 +47,19 @@ ISUserGroupWidget::ISUserGroupWidget(int group_id, const QString &group_name, QW
 	LayoutTitle->addStretch();
 
 	TabWidget = new QTabWidget(this);
-	Layout->addWidget(TabWidget);
+	GetMainLayout()->addWidget(TabWidget);
 
 	CreateSubSystems();
 	CreateTables();
 	CreateSpecial();
 }
 //-----------------------------------------------------------------------------
-ISUserGroupWidget::~ISUserGroupWidget()
+ISUserGroupForm::~ISUserGroupForm()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupWidget::CreateSubSystems()
+void ISUserGroupForm::CreateSubSystems()
 {
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
@@ -82,13 +82,13 @@ void ISUserGroupWidget::CreateSubSystems()
 			CheckEdit->setProperty("SubSystemUID", SubSystem->UID);
 			CheckEdit->setProperty("SubSystemName", SubSystem->LocalName);
 			CheckEdit->SetToolTip(LANG("AccessRights.ClickedToGiveAccessFromSubSystem"));
-			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupWidget::SubSystemClicked);
+			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SubSystemClicked);
 			FormLayout->addRow(SubSystem->LocalName + ':', CheckEdit);
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupWidget::CreateTables()
+void ISUserGroupForm::CreateTables()
 {
 	QFormLayout *FormLayout = new QFormLayout();
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
@@ -107,12 +107,12 @@ void ISUserGroupWidget::CreateTables()
 	for (const auto &MapItem : Map.toStdMap())
 	{
 		ISToolBarAccessTable *ToolBarAccessRights = new ISToolBarAccessTable(GroupID, MapItem.second, MapItem.first, ScrollArea);
-		connect(ToolBarAccessRights, &ISToolBarAccessTable::actionTriggered, this, &ISUserGroupWidget::TableClicked);
+		connect(ToolBarAccessRights, &ISToolBarAccessTable::actionTriggered, this, &ISUserGroupForm::TableClicked);
 		FormLayout->addRow(MapItem.first + ':', ToolBarAccessRights);
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupWidget::CreateSpecial()
+void ISUserGroupForm::CreateSpecial()
 {
 	QFormLayout *FormLayout = new QFormLayout();
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
@@ -148,7 +148,7 @@ void ISUserGroupWidget::CreateSpecial()
 					CheckEdit->setProperty("SpecialAccessUID", SpecialAccessUID);
 					CheckEdit->setProperty("SpecialAccessName", Name);
 					CheckEdit->SetValue(ISUserRoleEntity::CheckExistSpecialAccess(GroupID, SpecialAccessUID));
-					connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupWidget::SpecialClicked);
+					connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SpecialClicked);
 					FormLayout->addRow("  " + Name + ':', CheckEdit);
 				}
 			}
@@ -156,7 +156,7 @@ void ISUserGroupWidget::CreateSpecial()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupWidget::SubSystemClicked(const QVariant &value)
+void ISUserGroupForm::SubSystemClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISUuid SubSystemUID = sender()->property("SubSystemUID"); //Идентификатор подсистемы
@@ -175,7 +175,7 @@ void ISUserGroupWidget::SubSystemClicked(const QVariant &value)
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupWidget::TableClicked(QAction *Action)
+void ISUserGroupForm::TableClicked(QAction *Action)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISUuid TableUID = Action->property("TableUID"); //Идентификатор таблицы
@@ -195,7 +195,7 @@ void ISUserGroupWidget::TableClicked(QAction *Action)
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupWidget::SpecialClicked(const QVariant &value)
+void ISUserGroupForm::SpecialClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISUuid SpecialAccessUID = sender()->property("SpecialAccessUID");

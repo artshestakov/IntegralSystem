@@ -402,9 +402,6 @@
     <ClCompile Include="ISToolBarAccessTable.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserGroupWidget.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISProgressForm.cpp">
       <Filter>AdditionalForms</Filter>
     </ClCompile>
@@ -443,6 +440,9 @@
     </ClCompile>
     <ClCompile Include="ISListWidget.cpp">
       <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserGroupForm.cpp">
+      <Filter>Controls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -710,9 +710,6 @@
     <QtMoc Include="ISToolBarAccessTable.h">
       <Filter>Controls</Filter>
     </QtMoc>
-    <QtMoc Include="ISUserGroupWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
     <QtMoc Include="ISProgressForm.h">
       <Filter>AdditionalForms</Filter>
     </QtMoc>
@@ -742,6 +739,9 @@
     </QtMoc>
     <QtMoc Include="ISListWidget.h">
       <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserGroupForm.h">
+      <Filter>Controls</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

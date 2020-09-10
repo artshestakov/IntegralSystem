@@ -2,7 +2,6 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISListBaseForm.h"
-#include "ISUserGroupWidget.h"
 //-----------------------------------------------------------------------------
 class ISUserGroupListForm : public ISListBaseForm
 {
@@ -12,11 +11,7 @@ public:
 	Q_INVOKABLE ISUserGroupListForm(QWidget *parent = 0);
 	virtual ~ISUserGroupListForm();
 
-protected:
-	void SelectedGroup();
-
 private:
-	QLabel *Label;
-	ISUserGroupWidget *UserGroupWidget;
+	void SelectedGroup();
 };
 //-----------------------------------------------------------------------------

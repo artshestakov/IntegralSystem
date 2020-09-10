@@ -397,6 +397,7 @@
   <Local Name="MonitorActivity.MonitorUser.Offline" Russian="(не в сети)"/>
   
   <!--Access rights-->
+  <Local Name="AccessRights" Russian="Права доступа"/>
   <Local Name="AccessRights.SettingAcceessFromGroup" Russian="Настрока прав для группы"/>
   <Local Name="AccessRights.ClickedToGiveAccessFromSubSystem" Russian="Нажмите, чтобы дать право доступа к подсистеме"/>
   <Local Name="AccessRights.SubSystems" Russian="Интерфейс"/>
@@ -450,7 +451,6 @@
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
   <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
-  <Local Name="SelectedUserGroupLeftFromAccessSetting" Russian="Выберите группу пользователей из списка слева, чтобы настроить ей права доступа."/>
   <Local Name="DownloadingImage" Russian="Пожалуйста подождите, изображение скачивается..."/>
   <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается..."/>
   <Local Name="InputThisSearchQuery" Russian="Введите поисковый запрос"/>
