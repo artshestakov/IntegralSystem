@@ -26,6 +26,11 @@ ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	ActionControlEnter->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Enter) << QKeySequence(Qt::CTRL + Qt::Key_Return));
 	connect(ActionControlEnter, &QAction::triggered, this, &ISInterfaceForm::ControlEnterClicked);
 	addAction(ActionControlEnter);
+
+	QAction *ActionPaste = new QAction(this);
+	ActionPaste->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_V) << QKeySequence(Qt::SHIFT + Qt::Key_Insert));
+	connect(ActionPaste, &QAction::triggered, this, &ISInterfaceForm::PasteClicked);
+	addAction(ActionPaste);
 }
 //-----------------------------------------------------------------------------
 ISInterfaceForm::~ISInterfaceForm()
