@@ -21,6 +21,11 @@ ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	setLayout(MainLayout);
 
 	ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
+
+	QAction *ActionControlEnter = new QAction(this);
+	ActionControlEnter->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Enter) << QKeySequence(Qt::CTRL + Qt::Key_Return));
+	connect(ActionControlEnter, &QAction::triggered, this, &ISInterfaceForm::ControlEnterClicked);
+	addAction(ActionControlEnter);
 }
 //-----------------------------------------------------------------------------
 ISInterfaceForm::~ISInterfaceForm()
