@@ -56,6 +56,7 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISCheckEdit*>("ISCheckEdit"); 
 	qRegisterMetaType<ISIntegerEdit*>("ISIntegerEdit");
 	qRegisterMetaType<ISDoubleEdit*>("ISDoubleEdit");
+	qRegisterMetaType<ISMoneyEdit*>("ISMoneyEdit");
 	qRegisterMetaType<ISTextEdit*>("ISTextEdit");
 	qRegisterMetaType<ISUuidEdit*>("ISUuidEdit");
 	qRegisterMetaType<ISDateTimeEdit*>("ISDateTimeEdit");

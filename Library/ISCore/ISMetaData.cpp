@@ -23,6 +23,7 @@ ISMetaData::ISMetaData()
 		{ "UID", ISNamespace::FT_UID, "UUID", "ISUuidEdit", "ISComboSearchString", true },
 		{ "Bool", ISNamespace::FT_Bool, "BOOLEAN", "ISCheckEdit", "ISComboSearchBase", true },
 		{ "Double", ISNamespace::FT_Double, "NUMERIC", "ISDoubleEdit", "ISComboSearchNumber", true },
+		{ "Money", ISNamespace::FT_Money, "NUMERIC", "ISMoneyEdit", "ISComboSearchNumber", true },
 		{ "OID", ISNamespace::FT_OID, "OID", "ISIntegerEdit", "ISComboSearchNumber", true },
 		{ "ByteArray", ISNamespace::FT_ByteArray, "BYTEA", "ISLineEdit", QString(), false },
 		{ "Date", ISNamespace::FT_Date, "DATE", "ISDateEdit", "ISComboSearchNumber", true },

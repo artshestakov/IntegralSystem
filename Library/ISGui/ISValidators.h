@@ -30,4 +30,15 @@ public:
 	QDoubleValidator::State validate(QString &String, int &Pos) const;
 };
 //-----------------------------------------------------------------------------
+class ISMoneyValidator : public ISDoubleValidator
+{
+	Q_OBJECT
+
+public:
+	ISMoneyValidator(QObject *parent = 0);
+	virtual ~ISMoneyValidator();
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 #endif

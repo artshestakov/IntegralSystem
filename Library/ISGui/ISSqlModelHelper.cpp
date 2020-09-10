@@ -53,6 +53,11 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 		ISDoubleValidator(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)).validate(String, Pos);
 		Result = String;
 	}
+	else if (Type == ISNamespace::FT_Money)
+	{
+		QString String = Value.toString();
+		return String.contains(SYMBOL_POINT) ? String.replace(SYMBOL_POINT, SYMBOL_COMMA) : (String + ",00");
+	}
 	else if (Type == ISNamespace::FT_UID)
 	{
 		Result = ISUuid(Result);
@@ -73,7 +78,7 @@ QVariant ISSqlModelHelper::ValueFromTextAlignment(ISNamespace::FieldType FieldTy
 	{
 		Result = Qt::AlignCenter;
 	}
-	else if (FieldType == ISNamespace::FT_Int || FieldType == ISNamespace::FT_Double)
+	else if (FieldType == ISNamespace::FT_Int || FieldType == ISNamespace::FT_Double || FieldType == ISNamespace::FT_Money)
 	{
 		if (!MetaForeign)
 		{

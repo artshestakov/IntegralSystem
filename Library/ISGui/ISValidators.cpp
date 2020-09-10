@@ -199,3 +199,15 @@ QDoubleValidator::State ISDoubleValidator::validate(QString &String, int &Pos) c
 	return ISDoubleValidator::Acceptable;
 }
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISMoneyValidator::ISMoneyValidator(QObject *parent) : ISDoubleValidator(2, parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISMoneyValidator::~ISMoneyValidator()
+{
+
+}
+//-----------------------------------------------------------------------------

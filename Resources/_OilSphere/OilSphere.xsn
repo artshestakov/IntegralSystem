@@ -41,7 +41,7 @@
     <Fields>
       <Field UID="{1EA7C67D-02A9-421A-B742-FC25DFE2808F}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{EBEF5EA5-0AEC-4A47-A3B4-C094D6CE4247}" Name="Date" Type="Date" LabelName="Дата операции" LocalListName="Дата операции" NotNull="true"/>
-      <Field UID="{E72F8D34-7317-484D-BD2F-01AF4889D8FB}" Name="Sum" Type="Double" LabelName="Сумма зачисления" LocalListName="Сумма зачисления" NotNull="true"/>
+      <Field UID="{E72F8D34-7317-484D-BD2F-01AF4889D8FB}" Name="Sum" Type="Money" LabelName="Сумма зачисления" LocalListName="Сумма зачисления" NotNull="true"/>
       <Field UID="{787F2C5F-1840-4108-A5C5-EAB4AAEBE89E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -59,7 +59,7 @@
     <Fields>
       <Field UID="{EAB963AB-0DE6-4671-B372-9BE5429E3E51}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{8582AE37-D4F2-4E0D-8E97-8C6A91E66255}" Name="Unload" Type="Int" LabelName="Выгрузка" LocalListName="Выгрузка" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{D024AF09-07F4-4C25-806E-680C968D3F35}" Name="Sum" Type="Double" LabelName="Сумма списания" LocalListName="Сумма списания" NotNull="true"/>
+      <Field UID="{D024AF09-07F4-4C25-806E-680C968D3F35}" Name="Sum" Type="Money" LabelName="Сумма списания" LocalListName="Сумма списания" NotNull="true"/>
       <Field UID="{FBBBAAA5-D961-44F1-8438-55BB09BD5D77}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -86,11 +86,11 @@
       <Field UID="{AB8F960B-45B3-4822-9F67-AEF74B65A5E3}" Name="LoadCount" Type="Int" ReadOnly="true" LabelName="Количество загрузок" LocalListName="Количество загрузок" SeparatorName="Общее" LayoutName="Load" QueryText="SELECT COUNT(*) FROM implementationload WHERE NOT ilod_isdeleted AND ilod_implementation = impl_id"/>
       <Field UID="{216A78EB-E5BA-4786-8766-577C27B842AF}" Name="LoadWeightGross" Type="Double" ReadOnly="true" LabelName="Вес загрузки (брутто)" LocalListName="Вес загрузки (брутто)" LayoutName="Load" QueryText="SELECT sum(ilod_weightgross) FROM implementationload WHERE NOT ilod_isdeleted AND ilod_implementation = impl_id"/>
       <Field UID="{7047216E-288F-4355-98EE-982603061C5D}" Name="LoadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес загрузки (нетто)" LocalListName="Вес загрузки (нетто)" LayoutName="Load" QueryText="SELECT sum(ilod_weightnet) FROM implementationload WHERE NOT ilod_isdeleted AND ilod_implementation = impl_id"/>
-      <Field UID="{A86A8680-D363-4CCC-90E6-E11FED2E50CF}" Name="LoadCost" Type="Double" ReadOnly="true" LabelName="Стоимость загрузки" LocalListName="Стоимость загрузки" LayoutName="Load" QueryText="SELECT sum(ilod_cost) FROM implementationload WHERE NOT ilod_isdeleted AND ilod_implementation = impl_id"/>
+      <Field UID="{A86A8680-D363-4CCC-90E6-E11FED2E50CF}" Name="LoadCost" Type="Money" ReadOnly="true" LabelName="Стоимость загрузки" LocalListName="Стоимость загрузки" LayoutName="Load" QueryText="SELECT sum(ilod_cost) FROM implementationload WHERE NOT ilod_isdeleted AND ilod_implementation = impl_id"/>
       <Field UID="{9A469E5C-DED8-4701-930A-37A647B7A2D2}" Name="UnloadCount" Type="Int" ReadOnly="true" LabelName="Количество выгрузок" LocalListName="Количество выгрузок" LayoutName="Unload" QueryText="SELECT COUNT(*) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
       <Field UID="{6449D540-D02B-4EC1-B367-B112500BB2D9}" Name="UnloadWeightGross" Type="Double" ReadOnly="true" LabelName="Вес выгрузки (брутто)" LocalListName="Вес выгрузки (брутто)" LayoutName="Unload" QueryText="SELECT sum(iunl_weightgross) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
       <Field UID="{D7A74FDD-106C-4FFC-A6AB-AC13D461CF99}" Name="UnloadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес выгрузки (нетто)" LocalListName="Вес выгрузки (нетто)" LayoutName="Unload" QueryText="SELECT sum(iunl_weightnet) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
-      <Field UID="{1EA933CA-06AE-4F0D-B2B3-B6CCAD7A9B46}" Name="UnloadCost" Type="Double" ReadOnly="true" LabelName="Стоимость выгрузки" LocalListName="Стоимость выгрузки" LayoutName="Unload" QueryText="SELECT sum(iunl_cost) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
+      <Field UID="{1EA933CA-06AE-4F0D-B2B3-B6CCAD7A9B46}" Name="UnloadCost" Type="Money" ReadOnly="true" LabelName="Стоимость выгрузки" LocalListName="Стоимость выгрузки" LayoutName="Unload" QueryText="SELECT sum(iunl_cost) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
       <Field UID="{4864E582-6A0F-4BCC-A3CB-024B3CD70310}" Name="WeightDifference" Type="Double" ReadOnly="true" LabelName="Разница весов" LocalListName="Разница весов" QueryText="WITH r AS (SELECT (SELECT sum(ilod_weightnet) AS load FROM implementationload WHERE ilod_implementation = impl_id), (SELECT sum(iunl_weightnet) AS unload FROM implementationunload WHERE iunl_implementation = impl_id)) SELECT CASE WHEN load > unload THEN load - unload ELSE unload - load END FROM r"/>
     </Fields>
     <Indexes>
@@ -118,8 +118,8 @@
       <Field UID="{70F3A0FF-3034-437D-A998-7863EE3310FB}" Name="Container" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="Container"/>
       <Field UID="{FD72FC59-F89E-43E8-A074-CFF6CF8DD587}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Container"/>
       <Field UID="{E0BB3135-E091-4D06-9854-19BCEF3D2629}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Container"/>
-      <Field UID="{12223763-4E01-4C53-AA20-63FA8BC05D64}" Name="PriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="Price"/>
-      <Field UID="{CCA79032-4463-4059-B973-41CA4792AC1D}" Name="Cost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="Price"/>
+      <Field UID="{12223763-4E01-4C53-AA20-63FA8BC05D64}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="Price"/>
+      <Field UID="{CCA79032-4463-4059-B973-41CA4792AC1D}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="Price"/>
       <Field UID="{C80569A0-764A-4746-B69F-01D403B97E42}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -147,8 +147,8 @@
       <Field UID="{B3D72F1A-14BA-4C24-84E5-B59974135CE4}" Name="Container" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" LayoutName="Unload"/>
       <Field UID="{92E7D55E-FE3B-4175-AF84-7D859085BDB1}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Unload"/>
       <Field UID="{BC20D00D-9D02-4848-85F7-40626A422118}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Unload"/>
-      <Field UID="{770982DA-76BB-4A3B-B107-A9404D0FE3F8}" Name="PriceUnit" Type="Double" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="UnloadPrice"/>
-      <Field UID="{B46EDE1E-5076-4AEA-ACA2-5ADA91F186B7}" Name="Cost" Type="Double" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="UnloadPrice"/>
+      <Field UID="{770982DA-76BB-4A3B-B107-A9404D0FE3F8}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="UnloadPrice"/>
+      <Field UID="{B46EDE1E-5076-4AEA-ACA2-5ADA91F186B7}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="UnloadPrice"/>
       <Field UID="{7F4BA1E7-DBD1-4766-A108-5A118FA3BB66}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true" SeparatorName="Дополнительно"/>
       <Field UID="{2AB41BFD-F2DE-450F-8002-B67D60052C49}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
@@ -176,7 +176,7 @@
     <Fields>
       <Field UID="{AE11D732-B596-4E45-A468-6E4C7E2337D3}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true"/>
       <Field UID="{C01CBB35-FA78-4DE7-96BF-6F2402732CAE}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
-      <Field UID="{28E4EA19-2C55-4EB1-9068-33C8A88510EC}" Name="Sum" Type="Double" LabelName="Сумма долга" LocalListName="Сумма долга" NotNull="true"/>
+      <Field UID="{28E4EA19-2C55-4EB1-9068-33C8A88510EC}" Name="Sum" Type="Money" LabelName="Сумма долга" LocalListName="Сумма долга" NotNull="true"/>
       <Field UID="{A7DB1268-74A1-40FE-996B-B8FF5F432F12}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -349,12 +349,12 @@
     <Fields>
       <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
       <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
-      <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+      <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
       <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
-      <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Double" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+      <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
       <Field UID="{FE1EFFD3-5F14-42AC-89CB-2968BFC52744}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
-      <Field UID="{6D8CF294-D4E5-4026-9056-68CC4DFCFDB0}" Name="Calculation" Type="Double" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
-      <Field UID="{4C09D8BD-F29A-4EB9-81E7-698F2B90576C}" Name="Remainder" Type="Double" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+      <Field UID="{6D8CF294-D4E5-4026-9056-68CC4DFCFDB0}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+      <Field UID="{4C09D8BD-F29A-4EB9-81E7-698F2B90576C}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{E58FB379-7635-4C7B-B8AF-7C00FD760640}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -377,12 +377,12 @@
     <Fields>
       <Field UID="{D3B45759-9DBB-41CD-8C21-24251D74DC54}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
       <Field UID="{54AA3182-F3E2-46F5-858D-7BFA8EE6D1D4}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
-      <Field UID="{7DFA22B9-92AC-4211-80CB-2A6321D25774}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+      <Field UID="{7DFA22B9-92AC-4211-80CB-2A6321D25774}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
       <Field UID="{470FE697-E3A9-4C48-94EE-3361C258498B}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
-      <Field UID="{8F500AA9-069F-415A-9DAB-7F7F31C9F05F}" Name="Total" Type="Double" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+      <Field UID="{8F500AA9-069F-415A-9DAB-7F7F31C9F05F}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
       <Field UID="{FAEA3ABA-00C5-4652-92F9-AC6C82C971DD}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
-      <Field UID="{395423A7-6C36-4B53-9855-029E685EA098}" Name="Calculation" Type="Double" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
-      <Field UID="{65ECF301-2D4E-41A6-ACC3-BC1CA6042840}" Name="Remainder" Type="Double" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+      <Field UID="{395423A7-6C36-4B53-9855-029E685EA098}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+      <Field UID="{65ECF301-2D4E-41A6-ACC3-BC1CA6042840}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{73D37EA8-3F61-41AA-A485-514CF99558DA}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -510,10 +510,10 @@
       <Field UID="{41FFB52E-DBF6-4E4A-99D4-9640E7AD9435}" Name="DateEnd" Type="Date" LabelName="Дата окончания смены" LocalListName="Дата окончания смены" LayoutName="Date"/>
       <Field UID="{8389F60E-67FF-42BA-A15A-7CCE9CE7D148}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
       <Field UID="{441F7785-D668-416C-A2AF-42C640AC1C86}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" NotNull="true"/>
-      <Field UID="{3A7ED027-84D2-4AA8-8AE1-143B29492290}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+      <Field UID="{3A7ED027-84D2-4AA8-8AE1-143B29492290}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
       <Field UID="{AD2672A3-857A-47E0-8877-33FA251934EB}" Name="ChangeDriver" Type="BigInt" LabelName="Остаток со смены" LocalListName="Остаток со смены" LayoutName="Coming"/>
-      <Field UID="{1F704D75-C3CE-414B-ACC1-334499E99423}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Consumption" QueryText="SELECT sum(chde_price) FROM changedriverexpenses WHERE NOT chde_isdeleted AND chde_changedriver = chdr.chdr_id"/>
-      <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Double" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="SELECT chdr.chdr_coming - sum(chde_price) FROM changedriverexpenses WHERE NOT chde_isdeleted AND chde_changedriver = chdr.chdr_id"/>
+      <Field UID="{1F704D75-C3CE-414B-ACC1-334499E99423}" Name="Consumption" Type="Money" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Consumption" QueryText="SELECT sum(chde_price) FROM changedriverexpenses WHERE NOT chde_isdeleted AND chde_changedriver = chdr.chdr_id"/>
+      <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Money" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="SELECT chdr.chdr_coming - sum(chde_price) FROM changedriverexpenses WHERE NOT chde_isdeleted AND chde_changedriver = chdr.chdr_id"/>
       <Field UID="{2CA5BCCF-A93B-42AD-82B9-BE5FEDAA8B44}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -539,7 +539,7 @@
     <Fields>
       <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="ChangeDriver" Type="BigInt" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{F61804DD-00C4-4024-8446-2DBF6C27E92D}" Name="Service" Type="BigInt" LabelName="Услуга" LocalListName="Услуга" NotNull="true"/>
-      <Field UID="{3E689891-AE2A-4589-B80E-79F47B46A324}" Name="Price" Type="Double" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true"/>
+      <Field UID="{3E689891-AE2A-4589-B80E-79F47B46A324}" Name="Price" Type="Money" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true"/>
       <Field UID="{B177D422-38F4-4D28-A3BC-33C0C9158B5E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
