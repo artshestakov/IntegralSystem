@@ -503,45 +503,53 @@
       <Foreign Field="MoveWagon" ForeignClass="MoveWagon" ForeignField="ID" ForeignViewNameField="DateShipping"/>
     </Foreigns>
   </Table>
-
-  <Table Name="DriverExpenses" UID="{933357F2-ED4D-49CA-AF28-DC3ED4873C60}" Alias="drex" LocalName="Расход водителя" LocalListName="Расходы водителей" TitleName="Driver">
+  
+  <Table Name="ChangeDriver" UID="{76EA6E6B-3351-4886-B01B-58035ED361B4}" Alias="chdr" LocalName="Смена водителя" LocalListName="Смены водителей" TitleName="DateStart;DateEnd;Driver">
     <Fields>
-      <Field UID="{18EC4EF2-23BC-4B68-A8ED-F1CA315552BF}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
-      <Field UID="{A4BD7ADE-0EC2-4D31-9CC4-898A034D8348}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
-      <Field UID="{0E4FFD31-632F-405E-8C3D-E5F40835A0B7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" NotNull="true" LayoutName="Date"/>
-      <Field UID="{BE580F77-B118-454F-8751-62469DF707CF}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Date" QueryText="SELECT sum(dexd_price) FROM driverexpensesdetail WHERE NOT dexd_isdeleted AND dexd_driverexpenses = drex_id"/>
-      <Field UID="{8E97D513-1976-44A8-8FD9-A985E1F48EAB}" Name="Remainder" Type="Double" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Date" QueryText="SELECT drex_coming - sum(dexd_price) FROM driverexpensesdetail WHERE NOT dexd_isdeleted AND dexd_driverexpenses = drex_id"/>
-      <Field UID="{1D0350CD-177A-4076-B964-95E8DB6DDBFD}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+      <Field UID="{E0372DB0-2FF6-4D96-B9C8-2167450BB54C}" Name="DateStart" Type="Date" LabelName="Дата начала смены" LocalListName="Дата начала смены" NotNull="true" LayoutName="Date"/>
+      <Field UID="{41FFB52E-DBF6-4E4A-99D4-9640E7AD9435}" Name="DateEnd" Type="Date" LabelName="Дата окончания смены" LocalListName="Дата окончания смены" LayoutName="Date"/>
+      <Field UID="{8389F60E-67FF-42BA-A15A-7CCE9CE7D148}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
+      <Field UID="{441F7785-D668-416C-A2AF-42C640AC1C86}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" NotNull="true"/>
+      <Field UID="{3A7ED027-84D2-4AA8-8AE1-143B29492290}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+      <Field UID="{AD2672A3-857A-47E0-8877-33FA251934EB}" Name="ChangeDriver" Type="BigInt" LabelName="Остаток со смены" LocalListName="Остаток со смены" LayoutName="Coming"/>
+      <Field UID="{1F704D75-C3CE-414B-ACC1-334499E99423}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Consumption" QueryText="SELECT sum(chde_price) FROM changedriverexpenses WHERE NOT chde_isdeleted AND chde_changedriver = chdr.chdr_id"/>
+      <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Double" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="SELECT chdr.chdr_coming - sum(chde_price) FROM changedriverexpenses WHERE NOT chde_isdeleted AND chde_changedriver = chdr.chdr_id"/>
+      <Field UID="{2CA5BCCF-A93B-42AD-82B9-BE5FEDAA8B44}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
+      <Index Field="DateStart"/>
+      <Index Field="DateEnd"/>
       <Index Field="Driver"/>
-      <Index Field="Date"/>
+      <Index Field="Car"/>
       <Index Field="Coming"/>
+      <Index Field="ChangeDriver"/>
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
+      <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
+      <Foreign Field="ChangeDriver" ForeignClass="ChangeDriver" ForeignField="ID" ForeignViewNameField="DateStart;DateEnd;Driver"/>
     </Foreigns>
     <Escorts>
-      <Escort LocalName="Подробности расходов" TableName="DriverExpensesDetail" FilterField="DriverExpenses"/>
+      <Escort LocalName="Расходы" TableName="ChangeDriverExpenses" FilterField="ChangeDriver"/>
     </Escorts>
   </Table>
 
-  <Table Name="DriverExpensesDetail" UID="{1BC1638C-687A-4423-94AD-3E591554C911}" Alias="dexd" LocalName="Подробности расходов" LocalListName="Подробности расходов" TitleName="Service">
+  <Table Name="ChangeDriverExpenses" UID="{1BC1638C-687A-4423-94AD-3E591554C911}" Alias="chde" LocalName="Расход" LocalListName="Расходы" TitleName="Service">
     <Fields>
-      <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="DriverExpenses" Type="BigInt" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="ChangeDriver" Type="BigInt" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{F61804DD-00C4-4024-8446-2DBF6C27E92D}" Name="Service" Type="BigInt" LabelName="Услуга" LocalListName="Услуга" NotNull="true"/>
       <Field UID="{3E689891-AE2A-4589-B80E-79F47B46A324}" Name="Price" Type="Double" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true"/>
       <Field UID="{B177D422-38F4-4D28-A3BC-33C0C9158B5E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
-      <Index Field="DriverExpenses"/>
+      <Index Field="ChangeDriver"/>
       <Index Field="Service"/>
       <Index Field="Price"/>
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="DriverExpenses" ForeignClass="DriverExpenses" ForeignField="ID"/>
+      <Foreign Field="ChangeDriver" ForeignClass="ChangeDriver" ForeignField="ID"/>
       <Foreign Field="Service" ForeignClass="DriverService" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
