@@ -30,21 +30,8 @@ ISUserGroupForm::ISUserGroupForm(int group_id, const QString &group_name)
 	GroupID(group_id)
 {
 	setMinimumSize(800, 750);
+	setWindowTitle(LANG("AccessRights.SettingAcceessFromGroup").arg(group_name));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
-
-	QHBoxLayout *LayoutTitle = new QHBoxLayout();
-	GetMainLayout()->addLayout(LayoutTitle);
-
-	QLabel *LabelInfo = new QLabel(this);
-	LabelInfo->setText(LANG("AccessRights.SettingAcceessFromGroup") + ':');
-	LayoutTitle->addWidget(LabelInfo);
-
-	QLabel *LabelGroup = new QLabel(this);
-	LabelGroup->setText(group_name);
-	ISGui::SetFontWidgetBold(LabelGroup, true);
-	LayoutTitle->addWidget(LabelGroup);
-
-	LayoutTitle->addStretch();
 
 	TabWidget = new QTabWidget(this);
 	GetMainLayout()->addWidget(TabWidget);
