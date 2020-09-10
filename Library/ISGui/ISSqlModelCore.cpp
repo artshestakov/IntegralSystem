@@ -2,8 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISTrace.h"
-#include "ISQueryModel.h"
-#include "ISQuery.h"
 #include "ISAssert.h"
 #include "ISSqlModelHelper.h"
 #include "ISConstants.h"
@@ -28,27 +26,17 @@ ISSqlModelCore::~ISSqlModelCore()
 	Clear();
 }
 //-----------------------------------------------------------------------------
-void ISSqlModelCore::FillColumns()
-{
-	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
-	QueryModel.SetClassFilter(MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + "_id = 0");
-
-	ISQuery qSelectColumns(QueryModel.GetQueryText());
-	if (qSelectColumns.Execute())
-	{
-		QSqlRecord RecordColumn = qSelectColumns.GetRecord();
-
-		for (int i = 0; i < RecordColumn.count(); ++i)
-		{
-			AppendField(MetaTable->GetField(RecordColumn.fieldName(i)));
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISSqlModelCore::SetRecords(const std::vector<QSqlRecord> &records)
+void ISSqlModelCore::SetRecords(const std::vector<QSqlRecord> &records, const std::vector<QString> &fields)
 {
 	beginResetModel();
 	Records = records;
+	if (Fields.empty()) //Если список полей ещё не заполнен (первое открытие модели) - заполняем
+	{
+		for (const QString &FieldName : fields)
+		{
+			Fields.emplace_back(MetaTable->GetField(FieldName));
+		}
+	}
 	endResetModel();
 }
 //-----------------------------------------------------------------------------
@@ -57,19 +45,9 @@ void ISSqlModelCore::Clear()
 	if (!Records.empty())
 	{
 		beginResetModel();
-		int Step = 0;
-		while (!Records.empty())
+		for (long long i = Records.size() - 1; i >= 0; --i)
 		{
-			Records.erase(--Records.end());
-			if (Step == 500) //Пауза при удалении участка записей
-			{
-				QThread::currentThread()->msleep(10);
-				Step = 0;
-			}
-			else
-			{
-				++Step;
-			}
+			Records.erase(Records.begin() + i);
 		}
 		endResetModel();
 	}
@@ -118,8 +96,7 @@ QString ISSqlModelCore::GetFieldLocalName(const QString &FieldName) const
 	QString LocalName;
 	for (int i = 0; i < columnCount(); ++i)
 	{
-		QString CurrentField = headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-		if (CurrentField == FieldName)
+		if (headerData(i, Qt::Horizontal, Qt::UserRole).toString() == FieldName)
 		{
 			LocalName = headerData(i, Qt::Horizontal).toString();
 			break;
@@ -156,22 +133,19 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 
 	if (Role == Qt::TextColorRole) //Роль цвета текста в ячейках
 	{
-		if (GetIsSystem(ModelIndex.row())) //Если запись системная
+		if (Records[ModelIndex.row()].value("IsSystem").toBool()) //Если запись системная
 		{
 			return qVariantFromValue(ISDefines::Gui::COLOR_BLUE); //Пометить её синим цветом
 		}
-		else if (GetIsDeleted(ModelIndex.row())) //Если запись удаленная
+		else if (Records[ModelIndex.row()].value("IsDeleted").toBool()) //Если запись удаленная
 		{
 			return qVariantFromValue(ISDefines::Gui::COLOR_RED); //Пометить её красным цветом
 		}
 	}
 	else if (Role == Qt::ToolTipRole && ShowToolTip) //Роль отображения подсказки для ячейки (ToolTip)
 	{
-		if (FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray)
-		{
-			return QString();
-		}
-		return ModelIndex.data().toString();
+		//Если тип поля булевый или набор байт - возвращаем пустую строку
+		return FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray ? QString() : ModelIndex.data().toString();
 	}
 	else if (Role == Qt::TextAlignmentRole) //Роль положения текста в ячейке
 	{
@@ -179,13 +153,9 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 	}
 	else if (Role == Qt::DisplayRole)
 	{
+		//Еслли значение пустое - возвращаем невалидный QVariant, иначе - преобразовываем значение в соответствии с его типом
 		QVariant Value = Records[ModelIndex.row()].value(ModelIndex.column());
-		if (Value.isNull())
-		{
-			return QVariant();
-		}
-
-		return ISSqlModelHelper::ValueForType(Value, FieldType);
+		return Value.isNull() ? QVariant() : ISSqlModelHelper::ValueForType(Value, FieldType);
 	}
 
 	return QVariant();
@@ -244,7 +214,7 @@ int ISSqlModelCore::rowCount(const QModelIndex &Parent) const
 int ISSqlModelCore::columnCount(const QModelIndex &Parent) const
 {
     Q_UNUSED(Parent);
-	return (int)Fields.size();
+	return (int)(Fields.size());
 }
 //-----------------------------------------------------------------------------
 QModelIndex ISSqlModelCore::index(int Row, int Column, const QModelIndex &Parent) const
@@ -257,16 +227,6 @@ QModelIndex ISSqlModelCore::parent(const QModelIndex &Index) const
 {
     Q_UNUSED(Index)
 	return QModelIndex();
-}
-//-----------------------------------------------------------------------------
-void ISSqlModelCore::SetIsDeletedIndex(int IndexColumn)
-{
-	IsDeletedIndex = IndexColumn;
-}
-//-----------------------------------------------------------------------------
-void ISSqlModelCore::SetIsSystemIndex(int IndexColumn)
-{
-	IsSystemIndex = IndexColumn;
 }
 //-----------------------------------------------------------------------------
 void ISSqlModelCore::SetSorting(const QString &FieldName, Qt::SortOrder Order)
@@ -288,20 +248,5 @@ void ISSqlModelCore::SetShowToolTip(bool show_tool_tip)
 PMetaTable* ISSqlModelCore::GetMetaTable()
 {
 	return MetaTable;
-}
-//-----------------------------------------------------------------------------
-void ISSqlModelCore::AppendField(PMetaField *MetaField)
-{
-	Fields.emplace_back(MetaField);
-}
-//-----------------------------------------------------------------------------
-bool ISSqlModelCore::GetIsSystem(int RowIndex) const
-{
-	return Records[RowIndex].value("IsSystem").toBool();
-}
-//-----------------------------------------------------------------------------
-bool ISSqlModelCore::GetIsDeleted(int RowIndex) const
-{
-	return Records[RowIndex].value("IsDeleted").toBool();
 }
 //-----------------------------------------------------------------------------

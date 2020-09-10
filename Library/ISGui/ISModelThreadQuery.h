@@ -11,7 +11,7 @@ signals:
 	void Started();
 	void Finished();
 	void ExecuteQuery(const QString &SqlQuery, const QVariantMap &Conditions);
-	void Results(const std::vector<QSqlRecord> &Records); //Вывод результатов из потока
+	void Results(const std::vector<QSqlRecord> &Records, const std::vector<QString> &Fields); //Вывод результатов из потока
 	void ExecutedQuery(); //Сигнал о выполнении запроса
 	void ErrorConnection(const QSqlError &SqlError); //Сигнал об ошибке соединения к БД
 	void ErrorQuery(const QSqlError &SqlError, const QString &QueryText); //Сигнал об ошибке в запросе

@@ -37,14 +37,24 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 				{
 					emit ExecutedQuery();
 
+					//Загрузка полей
+					QSqlRecord SqlRecord = SqlQuery.record();
+					size_t FieldCount = SqlRecord.count();
+					std::vector<QString> Fields(FieldCount);
+					for (size_t i = 0; i < FieldCount; ++i)
+					{
+						Fields[i] = SqlRecord.fieldName(i);
+					}
+
+					//Зарузка записей
 					std::vector<QSqlRecord> Records(SqlQuery.isSelect() ? SqlQuery.size() : 0);
 					size_t Step = 0, Index = 0;
-					while (SqlQuery.next()) //Зарузка записей
+					while (SqlQuery.next())
 					{
 						Records[Index] = SqlQuery.record();
-						if (Step == 500) //Пауза при добавлении участка записей
+						if (Step == 10000) //Пауза при добавлении участка записей
 						{
-							QThread::currentThread()->msleep(10);
+							QThread::currentThread()->msleep(1);
 							Step = 0;
 						}
 						else
@@ -53,7 +63,7 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 						}
 						++Index;
 					}
-					emit Results(Records);
+					emit Results(Records, Fields);
 					emit Finished();
 				}
 				else

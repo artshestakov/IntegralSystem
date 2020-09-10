@@ -26,6 +26,7 @@
 void ISRegisterMetaType::RegisterMetaType()
 {
 	qRegisterMetaType<std::vector<QSqlRecord>>("std::vector<QSqlRecord>");
+	qRegisterMetaType<std::vector<QString>>("std::vector<QString>");
 	qRegisterMetaType<QSqlError>("QSqlError");
 	qRegisterMetaType<ISUuid>("ISUuid");
 

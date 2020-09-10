@@ -300,7 +300,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 	{//Создание моделей
 		SqlModel = new ISSqlModelCore(MetaTable, TableView);
-		SqlModel->FillColumns();
+		//SqlModel->FillColumns();
 		SqlModel->SetShowToolTip(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWTOOLTIP));
 		TableView->setModel(SqlModel);
 
@@ -317,12 +317,12 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);
 
 		//Скрытие системных полей
-		if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
+		/*if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
 		{
 			HideField("ID");
 		}
 		HideField("IsDeleted");
-		HideField("IsSystem");
+		HideField("IsSystem");*/
 
 		//Создание потоковой модели
 		ModelThreadQuery = new ISModelThreadQuery(this);
@@ -534,7 +534,7 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
-		connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
+		connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
 		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 	else if (EventName == "Tab")
@@ -585,20 +585,12 @@ void ISListBaseForm::SortingDefault()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::VisibleIndicatorWidget()
 {
-	ListIndicatorWidget->setVisible(!SqlModel->rowCount());
-	if (SqlModel->rowCount())
-	{
-		ListIndicatorWidget->SetPixmap(QPixmap());
-		ListIndicatorWidget->setCursor(CURSOR_WAIT);
-		ListIndicatorWidget->setToolTip(QString());
-	}
-	else
-	{
-		ListIndicatorWidget->SetPixmap(BUFFER_ICONS("LabelNoDataTable").pixmap(ISDefines::Gui::SIZE_32_32));
-		ListIndicatorWidget->SetText(LANG("NoData"));
-		ListIndicatorWidget->setCursor(CURSOR_WHATS_THIS);
-		ListIndicatorWidget->setToolTip(LANG("ClickCreateFromCreateObject"));
-	}
+	bool is_visible = !SqlModel->rowCount();
+	ListIndicatorWidget->setVisible(is_visible);
+	ListIndicatorWidget->SetPixmap(is_visible ? BUFFER_ICONS("LabelNoDataTable").pixmap(ISDefines::Gui::SIZE_32_32) : QPixmap());
+	ListIndicatorWidget->SetText(is_visible ? LANG("NoData") : QString());
+	ListIndicatorWidget->setCursor(is_visible ? CURSOR_WHATS_THIS : CURSOR_WAIT);
+	ListIndicatorWidget->setToolTip(is_visible ? LANG("ClickCreateFromCreateObject") : QString());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowSettingsForm()
@@ -790,18 +782,14 @@ bool ISListBaseForm::CheckIsSystemObject()
 void ISListBaseForm::HideField(const QString &FieldName)
 {
 	FieldResized(false);
-	int Index = SqlModel->GetFieldIndex(FieldName);
-	IS_ASSERT(Index != -1, QString("Not found field \"%1\"").arg(FieldName));
-	TableView->hideColumn(Index);
+	TableView->hideColumn(SqlModel->GetFieldIndex(FieldName));
 	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowField(const QString &FieldName)
 {
 	FieldResized(false);
-	int Index = SqlModel->GetFieldIndex(FieldName);
-	IS_ASSERT(Index != -1, QString("Not found field \"%1\"").arg(FieldName));
-	TableView->showColumn(Index);
+	TableView->showColumn(SqlModel->GetFieldIndex(FieldName));
 	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
@@ -847,11 +835,6 @@ void ISListBaseForm::ResizeColumnsToContents()
 		}
 	}
 	FieldResized(true);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ClosingObjectForm()
-{
-	TableView->setFocus();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SelectRowObject(const ISVectorInt &Objects)
@@ -1002,6 +985,13 @@ void ISListBaseForm::ModelThreadFinished()
 	SetEnabledPageNavigation(true);
 	EditSearch->setEnabled(true);
 
+	if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
+	{
+		HideField("ID");
+	}
+	HideField("IsDeleted");
+	HideField("IsSystem");
+
 	CreateDelegates();
 	LoadDataAfterEvent();
 }
@@ -1041,7 +1031,7 @@ void ISListBaseForm::Create()
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
-	connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
+	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
 	emit AddFormFromTab(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
@@ -1049,7 +1039,7 @@ void ISListBaseForm::CreateCopy()
 {
 	if (CheckIsSystemObject())
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotEdit"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.Copy"));
 		return;
 	}
 
@@ -1064,7 +1054,7 @@ void ISListBaseForm::CreateCopy()
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
-	connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
+	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
 	emit AddFormFromTab(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
@@ -1087,7 +1077,7 @@ void ISListBaseForm::Edit()
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
-	connect(ObjectFormBase, &ISObjectFormBase::Close, this, &ISListBaseForm::ClosingObjectForm);
+	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
 	emit AddFormFromTab(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------

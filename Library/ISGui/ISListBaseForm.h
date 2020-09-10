@@ -93,7 +93,6 @@ protected:
 	
 	bool CheckIsSystemObject(); //Проверка объекта на статус "Системный"
 	void ResizeColumnsToContents(); //Подгон ширины полей в соответствии с содержимым
-	void ClosingObjectForm(); //Срабатывает при закрытии формы объекта (порожденной этой формой списка)
 	void SelectRowObject(const ISVectorInt &Objects); //Выделение строки по идентификатору объекта
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом

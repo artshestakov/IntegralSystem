@@ -146,6 +146,7 @@
   <Local Name="Message.Objects.Recovery" Russian="Вы действительно хотите восстановить выбранные (%1 шт.) записи?"/>
   <Local Name="Message.User.ChangePassword.Postgres" Russian="Менять пароль системному пользователю запрещено."/>
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
+  <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
   <Local Name="Message.Warning.SystemObject.NotDelete" Russian="Запрещено удалять системные записи."/>
   <Local Name="Message.Warning.NotCreateCopyThisUser" Russian="Запрещено создавать копию пользователя под которым Вы авторизованны."/>
   <Local Name="Message.Warning.NotEditThisUser" Russian="Запрещено редактировать пользователя под которым Вы авторизованны."/>

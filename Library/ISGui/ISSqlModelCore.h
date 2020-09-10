@@ -11,8 +11,7 @@ public:
 	ISSqlModelCore(PMetaTable *meta_table, QObject *parent = 0);
 	virtual ~ISSqlModelCore();
 
-	virtual void FillColumns(); //Заполнение полей
-	void SetRecords(const std::vector<QSqlRecord> &records); //Изменить данные модели
+	void SetRecords(const std::vector<QSqlRecord> &records, const std::vector<QString> &fields); //Изменить данные модели
 	void Clear(); //Очистить модель
 	QSqlRecord GetRecord(int RowIndex) const; //Получить запись по идентификатору строки
 	void RemoveRecord(int Index); //Удалить запись из модели
@@ -31,18 +30,12 @@ public:
 	virtual QModelIndex index(int Row, int Column, const QModelIndex &Parent = QModelIndex()) const override;
 	virtual QModelIndex parent(const QModelIndex &Index) const override;
 
-	void SetIsDeletedIndex(int IndexColumn);
-	void SetIsSystemIndex(int IndexColumn);
 	void SetSorting(const QString &FieldName, Qt::SortOrder Order);
 	void SetSorting(int IndexColumn, Qt::SortOrder Order);
 	void SetShowToolTip(bool show_tool_tip);
 
 protected:
 	PMetaTable* GetMetaTable(); //Получить мета-таблицу
-	void AppendField(PMetaField *MetaField); //Добавить мета-поле в список полей модели
-
-	bool GetIsSystem(int RowIndex) const; //Получить статус системной записи
-	bool GetIsDeleted(int RowIndex) const; //Получить статус удаленной записи
 
 private:
 	PMetaTable *MetaTable; //Мета-таблица
