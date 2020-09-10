@@ -37,8 +37,7 @@ static QString QS_INFO = PREPARE_QUERY("SELECT "
 									   "(SELECT COUNT(*) AS \"sequence_count\" FROM information_schema.sequences WHERE sequence_catalog = current_database() AND sequence_schema = current_schema()), "
 									   "(SELECT COUNT(*) AS \"index_count\" FROM pg_indexes WHERE schemaname = current_schema()), "
 									   "(SELECT COUNT(*) AS \"foreign_count\" FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema()), "
-									   "(SELECT COUNT(*) AS \"user_count\" FROM pg_user), "
-									   "(SELECT sum(reltuples) AS \"record_count\" FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN ('pg_catalog', 'information_schema') AND relkind='r')");
+									   "(SELECT COUNT(*) AS \"user_count\" FROM pg_user)");
 //-----------------------------------------------------------------------------
 CGConfiguratorShow::CGConfiguratorShow() : CGConfiguratorBase()
 {
@@ -271,7 +270,27 @@ bool CGConfiguratorShow::databaseinfo()
 		ISLOGGER_L("Count sequence:\t" + qSelectInfo.ReadColumn("sequence_count").toString());
 		ISLOGGER_L("Count foreigns:\t" + qSelectInfo.ReadColumn("foreign_count").toString());
 		ISLOGGER_L("Count users:\t" + qSelectInfo.ReadColumn("user_count").toString());
-		ISLOGGER_L("Count records:\t" + qSelectInfo.ReadColumn("record_count").toString());
+		
+		//Готовим запрос для расчёта количества строк
+		QString SqlQueryCount = "WITH r AS(\n";
+		for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
+		{
+			SqlQueryCount += QString("SELECT COUNT(*), '%1' FROM %1\nUNION\n").arg(MetaTable->Name);
+		}
+		SqlQueryCount.chop(6);
+		SqlQueryCount += ") SELECT sum(count) FROM r";
+
+		//Выполняем запрос
+		ISQuery qSelectCount(SqlQueryCount);
+		qSelectCount.SetShowLongQuery(false);
+		if (qSelectCount.ExecuteFirst())
+		{
+			ISLOGGER_L("Count records:\t" + qSelectCount.ReadColumn("sum").toString());
+		}
+		else
+		{
+			ISLOGGER_E("Getting count records: " + qSelectCount.GetErrorString());
+		}
 	}
 	else
 	{
