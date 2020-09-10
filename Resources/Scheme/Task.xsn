@@ -88,10 +88,18 @@
 
   <Table Name="_TaskPriority" UID="{BD3CB96B-C467-4818-85B5-3EF73389736A}" Alias="tspr" ShowOnly="true" LocalName="Приоритет задачи" LocalListName="Приоритеты задач" TitleName="Name" IsSystem="true">
     <Fields>
+      <Field UID="{C96CA9BE-3D2A-4AE8-BF16-6DE4C829DD78}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
       <Field UID="{FE34E605-10A3-47A3-8DC2-A3C99EFF707D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{ED27CFCC-ED9D-4DF5-9974-493BE9BD984E}" Name="ToolTip" Type="String" LabelName="Всплывающее сообщение" LocalListName="Всплывающее сообщение" NotNull="true"/>
+      <Field UID="{7D4D81EE-EED4-4D29-A48E-A70AAD2E7A95}" Name="StyleSheet" Type="String" LabelName="Стиль" LocalListName="Стиль" NotNull="true"/>
+      <Field UID="{A22ABCF2-2DAF-42DC-BEFD-B5FB9C06762F}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="Order"/>
       <Index Field="Name" Unique="true"/>
+      <Index Field="ToolTip"/>
+      <Index Field="StyleSheet"/>
+      <Index Field="Icon"/>
     </Indexes>
   </Table>
 

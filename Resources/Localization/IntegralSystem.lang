@@ -543,12 +543,6 @@
   <Local Name="Task.Actions" Russian="Действия"/>
   <Local Name="Task.ReopenStatus" Russian="Переоткрыть"/>
   <Local Name="Task.Filter.All" Russian="Все задачи"/>
-  <Local Name="Task.Priority.Low" Russian="Низкий"/>
-  <Local Name="Task.Priority.Low.ToolTip" Russian="Несрочная, низкоприоритетная задача (выполняется, когда нет других задач)"/>
-  <Local Name="Task.Priority.Average" Russian="Средний"/>
-  <Local Name="Task.Priority.Average.ToolTip" Russian="Срочная, высокоприоритетная задача (выполняется когда нет аварийных задач, при появлении &quot;зеленой&quot; задачи текущая задача не откладывается, а доделывается)"/>
-  <Local Name="Task.Priority.Tall" Russian="Высокий"/>
-  <Local Name="Task.Priority.Tall.ToolTip" Russian="Аварийная задача (выполняется как можно быстрее, при ее появлении текущая задача более низкого уровня откладывается и начинается выполнение аварийной задачи)"/>
   <Local Name="Task.CreateTask" Russian="Создать задачу"/>
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
   <Local Name="Task.SearchByNumber.ToolTip" Russian="Поиск по номеру задачи"/>

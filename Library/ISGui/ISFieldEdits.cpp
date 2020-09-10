@@ -34,6 +34,11 @@ static QString QS_SEX = PREPARE_QUERY("SELECT sexs_id, sexs_name "
 									  "WHERE NOT sexs_isdeleted "
 									  "ORDER BY sexs_name");
 //-----------------------------------------------------------------------------
+static QString QS_TASK_PRIORITY = PREPARE_QUERY("SELECT tspr_id, tspr_name, tspr_tooltip, tspr_stylesheet, tspr_icon "
+												"FROM _taskpriority "
+												"WHERE NOT tspr_isdeleted "
+												"ORDER BY tspr_order");
+//-----------------------------------------------------------------------------
 ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
@@ -1277,29 +1282,26 @@ bool ISDivisionCodeEdit::IsValid() const
 //-----------------------------------------------------------------------------
 ISTaskPriorityEdit::ISTaskPriorityEdit(QWidget *parent) : ISRadioEdit(parent)
 {
-	QRadioButton *ButtonLow = new QRadioButton(this);
-	ButtonLow->setText(LANG("Task.Priority.Low"));
-	ButtonLow->setToolTip(LANG("Task.Priority.Low.ToolTip"));
-	ButtonLow->setStyleSheet(STYLE_SHEET("Task.Priority.Low"));
-	ButtonLow->setIcon(BUFFER_ICONS("Task.Priority.Low"));
-	ButtonLow->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	AddButton(ButtonLow, 1);
+	QRadioButton *ButtonLow = nullptr;
 
-	QRadioButton *ButtonAverage = new QRadioButton(this);
-	ButtonAverage->setText(LANG("Task.Priority.Average"));
-	ButtonAverage->setToolTip(LANG("Task.Priority.Average.ToolTip"));
-	ButtonAverage->setStyleSheet(STYLE_SHEET("Task.Priority.Average"));
-	ButtonAverage->setIcon(BUFFER_ICONS("Task.Priority.Average"));
-	ButtonAverage->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	AddButton(ButtonAverage, 2);
+	ISQuery qSelect(QS_TASK_PRIORITY);
+	if (qSelect.Execute())
+	{
+		while (qSelect.Next())
+		{
+			QRadioButton *ButtonPriority = new QRadioButton(qSelect.ReadColumn("tspr_name").toString(), this);
+			ButtonPriority->setToolTip(qSelect.ReadColumn("tspr_tooltip").toString());
+			ButtonPriority->setIcon(BUFFER_ICONS(qSelect.ReadColumn("tspr_icon").toString()));
+			ButtonPriority->setStyleSheet(STYLE_SHEET(qSelect.ReadColumn("tspr_stylesheet").toString()));
+			ButtonPriority->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+			AddButton(ButtonPriority, qSelect.ReadColumn("tspr_id"));
 
-	QRadioButton *ButtonTall = new QRadioButton(this);
-	ButtonTall->setText(LANG("Task.Priority.Tall"));
-	ButtonTall->setToolTip(LANG("Task.Priority.Tall.ToolTip"));
-	ButtonTall->setStyleSheet(STYLE_SHEET("Task.Priority.Tall"));
-	ButtonTall->setIcon(BUFFER_ICONS("Task.Priority.Tall"));
-	ButtonTall->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	AddButton(ButtonTall, 3);
+			if (!ButtonLow)
+			{
+				ButtonLow = ButtonPriority;
+			}
+		}
+	}
 
 	//Установка низкого приоритета задачи по умолчанию
 	ButtonLow->setChecked(true);
