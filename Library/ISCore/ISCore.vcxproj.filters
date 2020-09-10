@@ -303,6 +303,9 @@
     <ClInclude Include="ISTcpAnswer.h">
       <Filter>Protocol</Filter>
     </ClInclude>
+    <ClInclude Include="ISSettings.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISQueryModel.h">
@@ -328,9 +331,6 @@
     </QtMoc>
     <QtMoc Include="ISTcpServerWorker.h">
       <Filter>Protocol</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSettings.h">
-      <Filter>Settings</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

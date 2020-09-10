@@ -25,8 +25,7 @@ static QString QU_USER_SETTING = PREPARE_QUERY("UPDATE _usersettings SET "
 											   "AND usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
-	: QObject(),
-	ErrorString(NO_ERROR_STRING)
+	: ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -114,7 +113,6 @@ void ISSettings::SetValue(const QString &SettingUID, const QVariant &Value)
 {
 	GetMetaSetting(SettingUID)->Value = Value;
 	SettingsChanged[SettingUID] = Value;
-	emit SettingChanged(SettingUID, Value);
 }
 //-----------------------------------------------------------------------------
 std::vector<ISMetaSettingsGroup*> ISSettings::GetSettingGroups()

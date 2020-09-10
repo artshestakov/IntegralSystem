@@ -5,13 +5,8 @@
 #include "iscore_global.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISSettings : public QObject
+class ISCORE_EXPORT ISSettings
 {
-	Q_OBJECT
-
-signals:
-	void SettingChanged(const ISUuid &SettingUID, const QVariant &Value); //Сигнал испускается после успешного сохранения настройки
-
 public:
 	static ISSettings& Instance();
 	
@@ -33,7 +28,7 @@ private:
 private:
 	ISSettings();
 	~ISSettings();
-    ISSettings(ISSettings const &) : QObject() { };
+    ISSettings(ISSettings const &) {};
 	ISSettings& operator=(ISSettings const&) { return *this; };
 
 private:

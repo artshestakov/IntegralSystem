@@ -561,12 +561,6 @@ void ISOilSphere::DebtSubSystemForm::LoadData()
 		ISMessageBox::ShowCritical(this, qSelectDebt.GetErrorString());
 	}
 	ISGui::SetWaitGlobalCursor(false);
-
-	for (int x = 0; x < 300; ++x)
-	{
-		QTreeWidgetItem *i = new QTreeWidgetItem(TreeWidget);
-		TreeWidget->setItemWidget(i, 0, new ISBaseTableView(TreeWidget));
-	}
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::DebtSubSystemForm::AddAccrued()
