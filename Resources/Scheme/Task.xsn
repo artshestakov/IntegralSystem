@@ -10,7 +10,8 @@
       <Field UID="{660CEB99-2D94-4013-A805-E43E47BDA030}" Name="Description" Type="Text" ControlWidget="ISTaskDescriptionEdit" LabelName="Описание задачи" LocalListName="Описание задачи" PlaceholderText="Введите описание задачи" HideFromList="true"/>
       <Field UID="{FBF65264-BCA0-4882-86FD-AFF5A991B645}" Name="Executor" Type="BigInt" ControlWidget="ISExecutorEdit" LabelName="Исполнитель" LocalListName="Исполнитель"/>
       <Field UID="{9708C094-D404-4FDD-A17F-C7278D10B0B2}" Name="Type" Type="BigInt" LabelName="Тип задачи" LocalListName="Тип задачи"/>
-      <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="BigInt" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет"/>
+      <Field UID="{9DE6B98E-FC28-48C3-9210-46FF9E285EEF}" Name="Priority" Type="BigInt" ControlWidget="ISTaskPriorityEdit" LabelName="Приоритет" LocalListName="Приоритет" LayoutName="Priority"/>
+      <Field UID="{845DA3AC-BCFA-45F0-BE39-3ED709901F02}" Name="Deadline" Type="Date" LabelName="Срок выполнения" LocalListName="Срок выполнения" LayoutName="Priority"/>
       <Field UID="{9D4228B1-3DBB-4918-AA5B-A5B36189A2D8}" Name="Important" Type="TaskImportant" DefaultValue="false" LabelName="Это важная задача" LocalListName="Это важная задача"/>
       <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="BigInt" DefaultValue="get_task_status_id_by_uid('2FD27958-6EC9-4E78-88F4-0A2BFDFE4716'::UUID)" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true" HideFromObject="true"/>
     </Fields>
@@ -22,6 +23,7 @@
       <Index Field="Executor"/>
       <Index Field="Type"/>
       <Index Field="Priority"/>
+      <Index Field="Deadline"/>
       <Index Field="Important"/>
       <Index Field="Status"/>
     </Indexes>

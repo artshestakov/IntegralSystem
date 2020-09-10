@@ -414,6 +414,8 @@ void ISComboEdit::CurrentIndexChanged(int Index)
 //-----------------------------------------------------------------------------
 ISRadioEdit::ISRadioEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
+	setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
+
 	LayoutPanel = new QHBoxLayout();
 	LayoutPanel->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	LayoutPanel->addStretch();
