@@ -73,7 +73,6 @@ public:
 
 	void HideField(const QString &FieldName); //Скрытие поля по его имени
 	void ShowField(const QString &FieldName); //Отображение поля по его имени
-	void SetShowOnly(bool show_only);
 
 	void Period(); //Задание периода
 	void PeriodClear(); //Очистка периода
@@ -84,12 +83,9 @@ protected:
 
 	ISBaseTableView* GetTableView(); //Получить указатель на виджет списка
 	QToolBar* GetToolBar(); //Получить указатель на виджет тулбара
-	QStatusBar* GetStatusBar(); //Получить указатель на виджет статус-бара
-	QHBoxLayout* GetLayoutTableView(); //Получить указатель на компоновщик таблицы
 	QAction* GetAction(ISNamespace::ActionType action_type);
 	QAction* GetSpecialAction(ISNamespace::ActionSpecialType action_special);
 	ISSqlModelCore* GetSqlModel(); //Получить указатель на модель
-	ISModelThreadQuery* GetModelThread(); //Получить поточную модель
 
 	virtual void SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected); //Событие выбора строки в таблице
 	virtual void LoadDataAfterEvent(); //Событие происходящее после загрузки данных
@@ -97,8 +93,6 @@ protected:
 	
 	bool CheckIsSystemObject(); //Проверка объекта на статус "Системный"
 	void ResizeColumnsToContents(); //Подгон ширины полей в соответствии с содержимым
-	void AddWidgetToBottom(QWidget *Widget); //Добавить виджет в нижний виджет формы списка (WidgetBottom)
-	void SetVisibleBottom(bool Visible); //Изменить видимость нижнего виджета (WidgetBottom)
 	void ClosingObjectForm(); //Срабатывает при закрытии формы объекта (порожденной этой формой списка)
 	void SelectRowObject(const ISVectorInt &Objects); //Выделение строки по идентификатору объекта
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
@@ -106,11 +100,6 @@ protected:
 	void SetEnabledPageNavigation(bool Enabled); //Изменить доступность постраничной навигации
 	void SearchFast(const QString &SearchValue); //Быстрый поиск
 	void SearchFastClear(); //Очистить результаты быстрого поиска
-	
-	void ActionSetVisible(ISNamespace::ActionType action_type, bool visible); //Изменить видимость кнопки-действия
-	void ActionSetEnabled(ISNamespace::ActionType action_type, bool enabled); //Изменить доступность кнопки-действия
-	void ActionSetText(ISNamespace::ActionType action_type, const QString &text); //Изменить текст кнопки-действия
-	void ActionSetToolTip(ISNamespace::ActionType action_type, const QString &tool_tip); //Изменить всплывающий текст кнопки-действия
 
 	void ModelThreadStarted(); //Событие запуска запроса на загрузку данных
 	void ModelThreadLoadingData(); //Событие загрузки данных в память
@@ -129,13 +118,6 @@ protected:
 	void ShowSettingsForm();
 
 private:
-	void CreateActions(); //Создание кнопок-действий
-	void CreateSpecialActions(); //Созадние специальных кнопок-действий
-	void CreateToolBar(); //Создание тулбара
-	void CreateTableView(); //Создание таблицы
-	void CreateContextMenu(); //Создание контекстного меню
-	void CreateModels(); //Создание моделей
-	void CreateStatusBar(); //Создани статус-бара
 	void CreateDelegates(); //Создание делегатов
 	
 	void ShowContextMenu(const QPoint &Point); //Отображение контекстного меню
@@ -170,7 +152,6 @@ private:
 
 	ISBaseTableView *TableView;
 	ISListIndicatorWidget *ListIndicatorWidget;
-	QHBoxLayout *LayoutTableView;
 };
 //-----------------------------------------------------------------------------
 #endif

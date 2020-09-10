@@ -39,8 +39,8 @@ ISStorageFilesListForm::ISStorageFilesListForm(QWidget *parent) : ISListBaseForm
 {
 	GetQueryModel()->SetClassFilter("NOT sgfs_private");
 
-	ActionSetText(ISNamespace::AT_Create, LANG("StorageFiles.Create"));
-	ActionSetToolTip(ISNamespace::AT_Create, LANG("StorageFiles.Create"));
+	GetAction(ISNamespace::AT_Create)->setText(LANG("StorageFiles.Create"));
+	GetAction(ISNamespace::AT_Create)->setToolTip(LANG("StorageFiles.Create"));
 	
 	QAction *ActionSave = ISControls::CreateActionSave(this);
 	connect(ActionSave, &QAction::triggered, this, &ISStorageFilesListForm::SaveFile);

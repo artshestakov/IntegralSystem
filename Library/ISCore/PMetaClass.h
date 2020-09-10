@@ -202,8 +202,6 @@ struct PMetaTable : public PMetaBase
 	bool ShowOnly; //Только просмотр таблицы
 	bool IsSystem;
 
-	QString SqlModel; //Наименование класса модели
-
 	QString Parent;
 	QString Where;
 	QString OrderField;

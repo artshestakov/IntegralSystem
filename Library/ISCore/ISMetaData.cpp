@@ -571,7 +571,6 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 				MetaTable->ObjectForm = DomNamedNodeMap.namedItem("ObjectForm").nodeValue();
 				MetaTable->ShowOnly = QVariant(DomNamedNodeMap.namedItem("ShowOnly").nodeValue()).toBool();
 				MetaTable->IsSystem = QVariant(DomNamedNodeMap.namedItem("IsSystem").nodeValue()).toBool();
-				MetaTable->SqlModel = DomNamedNodeMap.namedItem("SqlModel").nodeValue();
 				MetaTable->Parent = DomNamedNodeMap.namedItem("Parent").nodeValue();
 				MetaTable->Where = DomNamedNodeMap.namedItem("Where").nodeValue();
 				MetaTable->OrderField = DomNamedNodeMap.namedItem("OrderField").nodeValue();

@@ -56,13 +56,322 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	IsLoadingData(false),
 	SearchFlag(false)
 {
-	CreateActions(); //Создание действий
-	CreateSpecialActions(); //Создание специальных действий
-	CreateToolBar(); //Создание тулбара
-	CreateTableView(); //Создание таблицы
-	CreateContextMenu(); //Создание контекстного меню
-	CreateModels(); //Создание моделей
-	CreateStatusBar(); //Создание статус-бара
+	{//Создание действий
+		//Создать
+		QAction *ActionCreate = ISControls::CreateActionCreate(this);
+		ActionCreate->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+		connect(ActionCreate, &QAction::triggered, this, &ISListBaseForm::Create);
+		Actions[ISNamespace::AT_Create] = ActionCreate;
+
+		//Создать копию
+		QAction *ActionCreateCopy = ISControls::CreateActionCreateCopy(this);
+		connect(ActionCreateCopy, &QAction::triggered, this, &ISListBaseForm::CreateCopy);
+		Actions[ISNamespace::AT_CreateCopy] = ActionCreateCopy;
+
+		//Изменить
+		QAction *ActionEdit = ISControls::CreateActionEdit(this);
+		connect(ActionEdit, &QAction::triggered, this, &ISListBaseForm::Edit);
+		Actions[ISNamespace::AT_Edit] = ActionEdit;
+
+		//Удалить
+		QAction *ActionDelete = ISControls::CreateActionDelete(this);
+		connect(ActionDelete, &QAction::triggered, this, &ISListBaseForm::Delete);
+		Actions[ISNamespace::AT_Delete] = ActionDelete;
+
+		//Удалить каскадом
+		QAction *ActionDeleteCascade = ISControls::CreateActionDeleteCascade(this);
+		connect(ActionDeleteCascade, &QAction::triggered, this, &ISListBaseForm::DeleteCascade);
+		Actions[ISNamespace::AT_DeleteCascade] = ActionDeleteCascade;
+
+		//Обновить
+		QAction *ActionUpdate = ISControls::CreateActionUpdate(this);
+		connect(ActionUpdate, &QAction::triggered, this, &ISListBaseForm::Update);
+		Actions[ISNamespace::AT_Update] = ActionUpdate;
+
+		//Показывать актуальные записи
+		QAction *ActionShowActual = new QAction(BUFFER_ICONS("ShowActual"), LANG("ListForm.ShowActual"), this);
+		ActionShowActual->setCheckable(true);
+		ActionShowActual->setChecked(true);
+		ActionShowActual->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F1));
+		connect(ActionShowActual, &QAction::triggered, this, &ISListBaseForm::ShowActual);
+		Actions[ISNamespace::AT_ShowActual] = ActionShowActual;
+
+		//Показывать удаленные записи
+		QAction *ActionShowDeleted = new QAction(BUFFER_ICONS("ShowDeleted"), LANG("ListForm.ShowDeleted"), this);
+		ActionShowDeleted->setCheckable(true);
+		ActionShowDeleted->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F2));
+		connect(ActionShowDeleted, &QAction::triggered, this, &ISListBaseForm::ShowDeleted);
+		Actions[ISNamespace::AT_ShowDeleted] = ActionShowDeleted;
+
+		//Поиск
+		QAction *ActionSearch = ISControls::CreateActionSearch(this);
+		connect(ActionSearch, &QAction::triggered, this, &ISListBaseForm::Search);
+		Actions[ISNamespace::AT_Search] = ActionSearch;
+
+		//Очистка результатов поиска
+		QAction *ActionSearchClearResult = ISControls::CreateActionSearchClearResults(this);
+		ActionSearchClearResult->setEnabled(false);
+		connect(ActionSearchClearResult, &QAction::triggered, this, &ISListBaseForm::SearchClear);
+		Actions[ISNamespace::AT_SearchClear] = ActionSearchClearResult;
+
+		//Экспорт
+		QAction *ActionExport = new QAction(BUFFER_ICONS("ExportTable"), LANG("ListForm.ExportTable"), this);
+		ActionExport->setShortcut(QKeySequence(Qt::Key_F12));
+		connect(ActionExport, &QAction::triggered, this, &ISListBaseForm::Export);
+		Actions[ISNamespace::AT_Export] = ActionExport;
+
+		//Печать
+		QAction *ActionPrint = ISControls::CreateActionPrint(this);
+		ActionPrint->setVisible(ISPrintingEntity::Instance().GetCountReports(MetaTable->Name));
+		connect(ActionPrint, &QAction::triggered, this, &ISListBaseForm::Print);
+		Actions[ISNamespace::AT_Print] = ActionPrint;
+
+		//Избранное
+		QAction *ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("Favorites"), this);
+		connect(ActionFavorites, &QAction::triggered, this, &ISListBaseForm::ShowFavorites);
+		Actions[ISNamespace::AT_Favorites] = ActionFavorites;
+
+		//Системная информация
+		QAction *ActionSystemInformation = ISControls::CreateActionRecordInformartion(this);
+		connect(ActionSystemInformation, &QAction::triggered, this, &ISListBaseForm::ShowSystemInfo);
+		Actions[ISNamespace::AT_SystemInfo] = ActionSystemInformation;
+
+		//Первая запись
+		QAction *ActionNavigationBegin = new QAction(BUFFER_ICONS("TableNavigationBegin"), LANG("TableNavigationSelectBegin"), this);
+		ActionNavigationBegin->setShortcut(QKeySequence(Qt::Key_Home));
+		connect(ActionNavigationBegin, &QAction::triggered, this, &ISListBaseForm::NavigationSelectBeginRecord);
+		Actions[ISNamespace::AT_NavigationBegin] = ActionNavigationBegin;
+
+		//Предыдущая запись
+		QAction *ActionNavigationPrevious = new QAction(BUFFER_ICONS("TableNavigationPrevious"), LANG("TableNavigationSelectPrevious"), this);
+		connect(ActionNavigationPrevious, &QAction::triggered, this, &ISListBaseForm::NavigationSelectPreviousRecord);
+		Actions[ISNamespace::AT_NavigationPrevious] = ActionNavigationPrevious;
+
+		//Следующая запись
+		QAction *ActionNavigationNext = new QAction(BUFFER_ICONS("TableNavigationNext"), LANG("TableNavigationSelectNext"), this);
+		connect(ActionNavigationNext, &QAction::triggered, this, &ISListBaseForm::NavigationSelectNextRecord);
+		Actions[ISNamespace::AT_NavigationNext] = ActionNavigationNext;
+
+		//Последняя запись
+		QAction *ActionNavigationLast = new QAction(BUFFER_ICONS("TableNavigationLast"), LANG("TableNavigationSelectLast"), this);
+		ActionNavigationLast->setShortcut(QKeySequence(Qt::Key_End));
+		connect(ActionNavigationLast, &QAction::triggered, this, &ISListBaseForm::NavigationSelectLastRecord);
+		Actions[ISNamespace::AT_NavigationLast] = ActionNavigationLast;
+	}
+
+	{//Создание специальных действий
+		//Сортировка по умолчанию
+		QAction *ActionSortDefault = new QAction(BUFFER_ICONS("DefaultSorting"), LANG("DefaultSorting"), this);
+		connect(ActionSortDefault, &QAction::triggered, this, &ISListBaseForm::SortingDefault);
+		ActionsSpecial.emplace(ISNamespace::AST_SortDefault, ActionSortDefault);
+
+		//Примечание
+		QAction *ActionNoteObject = ISControls::CreateActionNoteObject(this);
+		connect(ActionNoteObject, &QAction::triggered, this, &ISListBaseForm::NoteObject);
+		ActionsSpecial.emplace(ISNamespace::AST_Note, ActionNoteObject);
+
+		//Автоподбор ширины
+		QAction *ActionResizeFromContent = new QAction(this);
+		ActionResizeFromContent->setText(LANG("AutoFitColumnWidth"));
+		ActionResizeFromContent->setToolTip(LANG("AutoFitColumnWidth"));
+		ActionResizeFromContent->setIcon(BUFFER_ICONS("AutoFitColumnWidth"));
+		connect(ActionResizeFromContent, &QAction::triggered, this, &ISListBaseForm::AutoFitColumnWidth);
+		ActionsSpecial.emplace(ISNamespace::AST_ResizeFromContent, ActionResizeFromContent);
+
+		//Сброс ширины колонок
+		QAction *ActionResetWidthColumn = new QAction(this);
+		ActionResetWidthColumn->setText(LANG("ResetWidthColumn"));
+		ActionResetWidthColumn->setToolTip(LANG("ResetWidthColumn"));
+		connect(ActionResetWidthColumn, &QAction::triggered, this, &ISListBaseForm::ResetWidthColumn);
+		ActionsSpecial.emplace(ISNamespace::AST_ResetWidthColumn, ActionResetWidthColumn);
+
+		ActionObjectGroup->addAction(ActionNoteObject);
+	}
+
+	{//Создание тулбара
+		ToolBar = new QToolBar(this);
+		ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		ToolBar->setEnabled(false);
+		GetMainLayout()->addWidget(ToolBar);
+
+		ToolBar->addAction(GetAction(ISNamespace::AT_Create));
+		ToolBar->addAction(GetAction(ISNamespace::AT_CreateCopy));
+		ToolBar->addAction(GetAction(ISNamespace::AT_Edit));
+		ToolBar->addAction(GetAction(ISNamespace::AT_Delete));
+		ToolBar->addAction(GetAction(ISNamespace::AT_DeleteCascade));
+		ToolBar->addAction(GetAction(ISNamespace::AT_Update));
+		ToolBar->addAction(GetAction(ISNamespace::AT_Search));
+		ToolBar->addAction(GetAction(ISNamespace::AT_SearchClear));
+		ToolBar->addAction(GetAction(ISNamespace::AT_Print));
+
+		QAction *ActionPeriod = new QAction(BUFFER_ICONS("Period"), LANG("Period"), ToolBar);
+		ActionPeriod->setMenu(new QMenu(ToolBar));
+		ToolBar->addAction(ActionPeriod);
+
+		QToolButton *ButtonPeriod = dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionPeriod));
+		ButtonPeriod->setPopupMode(QToolButton::InstantPopup);
+		ButtonPeriod->setCursor(CURSOR_POINTING_HAND);
+		ButtonPeriod->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
+
+		QAction *ActionPeriodSelect = new QAction(LANG("PeriodSelect"), ActionPeriod);
+		connect(ActionPeriodSelect, &QAction::triggered, this, &ISListBaseForm::Period);
+		ActionPeriod->menu()->addAction(ActionPeriodSelect);
+
+		ActionPeriod->menu()->addSeparator();
+
+		ActionPeriodClear = new QAction(LANG("PeriodClear"), ActionPeriod);
+		ActionPeriodClear->setEnabled(false);
+		connect(ActionPeriodClear, &QAction::triggered, this, &ISListBaseForm::PeriodClear);
+		ActionPeriod->menu()->addAction(ActionPeriodClear);
+
+		QAction *ActionAdditionally = new QAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"), ToolBar);
+		ActionAdditionally->setMenu(new QMenu(ToolBar));
+		ToolBar->addAction(ActionAdditionally);
+
+		QToolButton *ButtonAdditionally = dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally));
+		ButtonAdditionally->setPopupMode(QToolButton::InstantPopup);
+		ButtonAdditionally->setCursor(CURSOR_POINTING_HAND);
+		ButtonAdditionally->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
+
+		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowActual));
+		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowDeleted));
+		ActionAdditionally->menu()->addSeparator();
+		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
+		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Export));
+		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_SortDefault));
+		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResizeFromContent));
+		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResetWidthColumn));
+
+		ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
+
+		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWNAVIGATION))
+		{
+			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationBegin));
+			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationPrevious));
+			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationNext));
+			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationLast));
+		}
+
+		if (GetAction(ISNamespace::AT_CreateCopy)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_CreateCopy));
+		if (GetAction(ISNamespace::AT_Edit)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Edit));
+		if (GetAction(ISNamespace::AT_Delete)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Delete));
+		if (GetAction(ISNamespace::AT_DeleteCascade)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_DeleteCascade));
+		if (GetAction(ISNamespace::AT_SystemInfo)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_SystemInfo));
+		if (GetAction(ISNamespace::AT_Print)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Print));
+	}
+
+	{//Создание таблицы
+		TableView = new ISBaseTableView(this);
+		TableView->SetCornerText(LANG("Reduction.SerialNumber"));
+		TableView->SetCornerToolTip(LANG("OrdinalNumber"));
+		connect(TableView, &ISBaseTableView::doubleClicked, this, &ISListBaseForm::DoubleClickedTable);
+		connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
+		connect(TableView, &ISBaseTableView::CornerClicked, this, &ISListBaseForm::CornerButtonClicked);
+		connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
+		FieldResized(true);
+		GetMainLayout()->addWidget(TableView);
+
+		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_MINIMIZEHEIGHTROWS))
+		{
+			TableView->verticalHeader()->setDefaultSectionSize(19);
+		}
+		if (SETTING_BOOL(CONST_UID_SETTING_TABLE_SCROLL_SELECTION))
+		{
+			TableView->SetSelectionScroll(true);
+			connect(TableView, &ISBaseTableView::WheelUp, this, &ISListBaseForm::NavigationSelectPreviousRecord);
+			connect(TableView, &ISBaseTableView::WheelDown, this, &ISListBaseForm::NavigationSelectNextRecord);
+		}
+		TableView->setAlternatingRowColors(SETTING_BOOL(CONST_UID_SETTING_TABLES_HIGHLIGHTINGODDROWS));
+		TableView->horizontalHeader()->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWHORIZONTALHEADER));
+		TableView->SetVisibleVerticalHeader(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWVERTICALHEADER));
+	}
+
+	{//Создание контекстного меню
+		ContextMenu = new QMenu(this);
+		if (GetAction(ISNamespace::AT_Create)) ContextMenu->addAction(GetAction(ISNamespace::AT_Create));
+		if (GetAction(ISNamespace::AT_CreateCopy)) ContextMenu->addAction(GetAction(ISNamespace::AT_CreateCopy));
+		if (GetAction(ISNamespace::AT_Edit)) ContextMenu->addAction(GetAction(ISNamespace::AT_Edit));
+		if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
+		if (GetAction(ISNamespace::AT_DeleteCascade)) ContextMenu->addAction(GetAction(ISNamespace::AT_DeleteCascade));
+		if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
+		if (GetAction(ISNamespace::AT_SystemInfo)) ContextMenu->addAction(GetAction(ISNamespace::AT_SystemInfo));
+		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
+	}
+
+	{//Создание моделей
+		SqlModel = new ISSqlModelCore(MetaTable, TableView);
+		SqlModel->FillColumns();
+		SqlModel->SetShowToolTip(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWTOOLTIP));
+		TableView->setModel(SqlModel);
+
+		QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
+
+		ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
+		if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её
+		{
+			SqlModel->SetSorting(MetaSorting->FieldName, MetaSorting->Order);
+			QueryModel->SetOrderField(MetaTable->Alias + '_' + MetaSorting->FieldName.toLower(), MetaSorting->FieldName, MetaSorting->Order);
+		}
+
+		//Это соединение обязательно должно быть после присваивания модели к QTableView
+		connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);
+
+		//Скрытие системных полей
+		if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
+		{
+			HideField("ID");
+		}
+		HideField("IsDeleted");
+		HideField("IsSystem");
+
+		//Создание потоковой модели
+		ModelThreadQuery = new ISModelThreadQuery(this);
+		connect(ModelThreadQuery, &ISModelThreadQuery::Started, this, &ISListBaseForm::ModelThreadStarted);
+		connect(ModelThreadQuery, &ISModelThreadQuery::Finished, this, &ISListBaseForm::ModelThreadFinished);
+		connect(ModelThreadQuery, &ISModelThreadQuery::ExecutedQuery, this, &ISListBaseForm::ModelThreadLoadingData);
+		connect(ModelThreadQuery, &ISModelThreadQuery::Results, SqlModel, &ISSqlModelCore::SetRecords);
+		connect(ModelThreadQuery, &ISModelThreadQuery::ErrorConnection, this, &ISListBaseForm::ModelThreadErrorConnection);
+		connect(ModelThreadQuery, &ISModelThreadQuery::ErrorQuery, this, &ISListBaseForm::ModelThreadErrorQuery);
+		ModelThreadQuery->start(QThread::TimeCriticalPriority); //Запуск потока
+	}
+	
+	{//Создание статус-бара
+		StatusBar = new QStatusBar(this);
+		StatusBar->setSizeGripEnabled(false);
+		GetMainLayout()->addWidget(StatusBar);
+
+		LabelRowCount = new QLabel(LANG("RecordsCount") + ": -", StatusBar);
+		LabelRowCount->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWCOUNTRECORD));
+		StatusBar->addWidget(LabelRowCount);
+
+		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
+		{
+			QueryModel->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
+
+			PageNavigation = new ISPageNavigation(StatusBar);
+			PageNavigation->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
+			connect(PageNavigation, &ISPageNavigation::OffsetSignal, QueryModel, &ISQueryModel::SetOffset);
+			connect(PageNavigation, &ISPageNavigation::Update, this, &ISListBaseForm::Update);
+			StatusBar->addWidget(PageNavigation);
+		}
+
+		LabelPeriod = new QLabel(StatusBar);
+		LabelPeriod->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+		LabelPeriod->setVisible(false);
+		StatusBar->addWidget(LabelPeriod);
+
+		LabelSelectedRow = new QLabel(StatusBar);
+		LabelSelectedRow->setVisible(false);
+		StatusBar->addWidget(LabelSelectedRow);
+
+		EditSearch = new ISSearchEdit(StatusBar);
+		EditSearch->setSizePolicy(QSizePolicy::Maximum, EditSearch->sizePolicy().verticalPolicy());
+		connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
+		connect(EditSearch, &ISSearchEdit::ClearPressed, this, &ISListBaseForm::SearchFastClear);
+		connect(this, &ISListBaseForm::Updated, EditSearch, &ISSearchEdit::Updated);
+		connect(this, &ISListBaseForm::Updated, EditSearch, static_cast<void(ISSearchEdit::*)(void)>(&ISSearchEdit::setFocus));
+		StatusBar->addPermanentWidget(EditSearch);
+	}
 
 	//Создание этого виджета должно происходить после создания всех остальных
 	ListIndicatorWidget = new ISListIndicatorWidget(this);
@@ -323,8 +632,8 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 		LabelSelectedRow->clear();
 	}
 
-	ActionSetEnabled(ISNamespace::AT_Delete, SelectedRows);
-	ActionSetEnabled(ISNamespace::AT_DeleteCascade, SelectedRows);
+	GetAction(ISNamespace::AT_Delete)->setEnabled(SelectedRows);
+	GetAction(ISNamespace::AT_DeleteCascade)->setEnabled(SelectedRows);
 	emit SelectedRowSignal();
 }
 //-----------------------------------------------------------------------------
@@ -365,26 +674,21 @@ void ISListBaseForm::LoadDataAfterEvent()
 void ISListBaseForm::AfterShowEvent()
 {
 	ISInterfaceMetaForm::AfterShowEvent();
-	if (ShowOnly)
-	{
-		ActionSetVisible(ISNamespace::AT_Create, false);
-		ActionSetVisible(ISNamespace::AT_CreateCopy, false);
-		ActionSetVisible(ISNamespace::AT_Edit, false);
-		ActionSetVisible(ISNamespace::AT_Delete, false);
-		ActionSetVisible(ISNamespace::AT_DeleteCascade, false);
-	}
+	GetAction(ISNamespace::AT_Create)->setEnabled(!ShowOnly);
+	GetAction(ISNamespace::AT_CreateCopy)->setEnabled(!ShowOnly);
+	GetAction(ISNamespace::AT_Edit)->setEnabled(!ShowOnly);
+	GetAction(ISNamespace::AT_Delete)->setEnabled(!ShowOnly);
+	GetAction(ISNamespace::AT_DeleteCascade)->setEnabled(!ShowOnly);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AddAction(QAction *Action, bool AddingToActionGroup, bool AddingToContextMenu)
 {
 	ToolBar->addAction(Action);
 	TableView->addAction(Action);
-
 	if (AddingToActionGroup)
 	{
 		ActionObjectGroup->addAction(Action);
 	}
-
 	if (AddingToContextMenu)
 	{
 		ContextMenu->addAction(Action);
@@ -395,7 +699,6 @@ void ISListBaseForm::InsertAction(QAction *ActionBefore, QAction *ActionAfter, b
 {
 	ToolBar->insertAction(ActionAfter, ActionBefore);
 	TableView->insertAction(ActionAfter, ActionBefore);
-
 	if (AddingToActionGroup)
 	{
 		ActionObjectGroup->addAction(ActionBefore);
@@ -432,16 +735,6 @@ QToolBar* ISListBaseForm::GetToolBar()
 	return ToolBar;
 }
 //-----------------------------------------------------------------------------
-QStatusBar* ISListBaseForm::GetStatusBar()
-{
-	return StatusBar;
-}
-//-----------------------------------------------------------------------------
-QHBoxLayout* ISListBaseForm::GetLayoutTableView()
-{
-	return LayoutTableView;
-}
-//-----------------------------------------------------------------------------
 QAction* ISListBaseForm::GetAction(ISNamespace::ActionType action_type)
 {
 	return Actions[action_type];
@@ -455,11 +748,6 @@ QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_
 ISSqlModelCore* ISListBaseForm::GetSqlModel()
 {
 	return SqlModel;
-}
-//-----------------------------------------------------------------------------
-ISModelThreadQuery* ISListBaseForm::GetModelThread()
-{
-	return ModelThreadQuery;
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateDelegates()
@@ -517,11 +805,6 @@ void ISListBaseForm::ShowField(const QString &FieldName)
 	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SetShowOnly(bool show_only)
-{
-	ShowOnly = show_only;
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::Period()
 {
 	ISPeriodForm PeriodForm;
@@ -564,16 +847,6 @@ void ISListBaseForm::ResizeColumnsToContents()
 		}
 	}
 	FieldResized(true);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::AddWidgetToBottom(QWidget *Widget)
-{
-	StatusBar->addWidget(Widget);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::SetVisibleBottom(bool Visible)
-{
-	StatusBar->setVisible(Visible);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ClosingObjectForm()
@@ -697,42 +970,6 @@ void ISListBaseForm::SearchFastClear()
 	Update();
 	connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
 	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ActionSetVisible(ISNamespace::ActionType action_type, bool visible)
-{
-	QAction *Action = GetAction(action_type);
-	if (Action)
-	{
-		Action->setVisible(visible);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ActionSetEnabled(ISNamespace::ActionType action_type, bool enabled)
-{
-	QAction *Action = GetAction(action_type);
-	if (Action)
-	{
-		Action->setEnabled(enabled);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ActionSetText(ISNamespace::ActionType action_type, const QString &text)
-{
-	QAction *Action = GetAction(action_type);
-	if (Action)
-	{
-		Action->setText(text);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ActionSetToolTip(ISNamespace::ActionType action_type, const QString &tool_tip)
-{
-	QAction *Action = GetAction(action_type);
-	if (Action)
-	{
-		Action->setToolTip(tool_tip);
-	}
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadStarted()
@@ -1034,7 +1271,7 @@ void ISListBaseForm::Search()
 			SearchFlag = true;
 			Update();
 
-			ActionSetEnabled(ISNamespace::AT_SearchClear, true);
+			GetAction(ISNamespace::AT_SearchClear)->setEnabled(true);
 			ISProtocol::Insert(true, CONST_UID_PROTOCOL_SEARCH, MetaTable->Name, MetaTable->LocalListName, QVariant());
 		});
 	}
@@ -1046,7 +1283,7 @@ void ISListBaseForm::SearchClear()
 	GetQueryModel()->ClearConditions();
 	GetQueryModel()->ClearSearchFilter();
 	Update();
-	ActionSetEnabled(ISNamespace::AT_SearchClear, false);
+	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Export()
@@ -1252,348 +1489,6 @@ void ISListBaseForm::ResetWidthColumn()
 		TableView->setColumnWidth(i, 100);
 	}
 	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::CreateActions()
-{
-	//Создать
-	QAction *ActionCreate = ISControls::CreateActionCreate(this);
-	ActionCreate->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	connect(ActionCreate, &QAction::triggered, this, &ISListBaseForm::Create);
-	Actions[ISNamespace::AT_Create] = ActionCreate;
-
-	//Создать копию
-	QAction *ActionCreateCopy = ISControls::CreateActionCreateCopy(this);
-	connect(ActionCreateCopy, &QAction::triggered, this, &ISListBaseForm::CreateCopy);
-	Actions[ISNamespace::AT_CreateCopy] = ActionCreateCopy;
-
-	//Изменить
-	QAction *ActionEdit = ISControls::CreateActionEdit(this);
-	connect(ActionEdit, &QAction::triggered, this, &ISListBaseForm::Edit);
-	Actions[ISNamespace::AT_Edit] = ActionEdit;
-
-	//Удалить
-	QAction *ActionDelete = ISControls::CreateActionDelete(this);
-	connect(ActionDelete, &QAction::triggered, this, &ISListBaseForm::Delete);
-	Actions[ISNamespace::AT_Delete] = ActionDelete;
-
-	//Удалить каскадом
-	QAction *ActionDeleteCascade = ISControls::CreateActionDeleteCascade(this);
-	connect(ActionDeleteCascade, &QAction::triggered, this, &ISListBaseForm::DeleteCascade);
-	Actions[ISNamespace::AT_DeleteCascade] = ActionDeleteCascade;
-
-	//Обновить
-	QAction *ActionUpdate = ISControls::CreateActionUpdate(this);
-	connect(ActionUpdate, &QAction::triggered, this, &ISListBaseForm::Update);
-	Actions[ISNamespace::AT_Update] = ActionUpdate;
-
-	//Показывать актуальные записи
-	QAction *ActionShowActual = new QAction(BUFFER_ICONS("ShowActual"), LANG("ListForm.ShowActual"), this);
-	ActionShowActual->setCheckable(true);
-	ActionShowActual->setChecked(true);
-	ActionShowActual->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F1));
-	connect(ActionShowActual, &QAction::triggered, this, &ISListBaseForm::ShowActual);
-	Actions[ISNamespace::AT_ShowActual] = ActionShowActual;
-
-	//Показывать удаленные записи
-	QAction *ActionShowDeleted = new QAction(BUFFER_ICONS("ShowDeleted"), LANG("ListForm.ShowDeleted"), this);
-	ActionShowDeleted->setCheckable(true);
-	ActionShowDeleted->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F2));
-	connect(ActionShowDeleted, &QAction::triggered, this, &ISListBaseForm::ShowDeleted);
-	Actions[ISNamespace::AT_ShowDeleted] = ActionShowDeleted;
-
-	//Поиск
-	QAction *ActionSearch = ISControls::CreateActionSearch(this);
-	connect(ActionSearch, &QAction::triggered, this, &ISListBaseForm::Search);
-	Actions[ISNamespace::AT_Search] = ActionSearch;
-
-	//Очистка результатов поиска
-	QAction *ActionSearchClearResult = ISControls::CreateActionSearchClearResults(this);
-	ActionSearchClearResult->setEnabled(false);
-	connect(ActionSearchClearResult, &QAction::triggered, this, &ISListBaseForm::SearchClear);
-	Actions[ISNamespace::AT_SearchClear] = ActionSearchClearResult;
-
-	//Экспорт
-	QAction *ActionExport = new QAction(BUFFER_ICONS("ExportTable"), LANG("ListForm.ExportTable"), this);
-	ActionExport->setShortcut(QKeySequence(Qt::Key_F12));
-	connect(ActionExport, &QAction::triggered, this, &ISListBaseForm::Export);
-	Actions[ISNamespace::AT_Export] = ActionExport;
-
-	//Печать
-	QAction *ActionPrint = ISControls::CreateActionPrint(this);
-	ActionPrint->setVisible(ISPrintingEntity::Instance().GetCountReports(MetaTable->Name));
-	connect(ActionPrint, &QAction::triggered, this, &ISListBaseForm::Print);
-	Actions[ISNamespace::AT_Print] = ActionPrint;
-
-	//Избранное
-	QAction *ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("Favorites"), this);
-	connect(ActionFavorites, &QAction::triggered, this, &ISListBaseForm::ShowFavorites);
-	Actions[ISNamespace::AT_Favorites] = ActionFavorites;
-
-	//Системная информация
-	QAction *ActionSystemInformation = ISControls::CreateActionRecordInformartion(this);
-	connect(ActionSystemInformation, &QAction::triggered, this, &ISListBaseForm::ShowSystemInfo);
-	Actions[ISNamespace::AT_SystemInfo] = ActionSystemInformation;
-
-	//Первая запись
-	QAction *ActionNavigationBegin = new QAction(BUFFER_ICONS("TableNavigationBegin"), LANG("TableNavigationSelectBegin"), this);
-	ActionNavigationBegin->setShortcut(QKeySequence(Qt::Key_Home));
-	connect(ActionNavigationBegin, &QAction::triggered, this, &ISListBaseForm::NavigationSelectBeginRecord);
-	Actions[ISNamespace::AT_NavigationBegin] = ActionNavigationBegin;
-
-	//Предыдущая запись
-	QAction *ActionNavigationPrevious = new QAction(BUFFER_ICONS("TableNavigationPrevious"), LANG("TableNavigationSelectPrevious"), this);
-	connect(ActionNavigationPrevious, &QAction::triggered, this, &ISListBaseForm::NavigationSelectPreviousRecord);
-	Actions[ISNamespace::AT_NavigationPrevious] = ActionNavigationPrevious;
-
-	//Следующая запись
-	QAction *ActionNavigationNext = new QAction(BUFFER_ICONS("TableNavigationNext"), LANG("TableNavigationSelectNext"), this);
-	connect(ActionNavigationNext, &QAction::triggered, this, &ISListBaseForm::NavigationSelectNextRecord);
-	Actions[ISNamespace::AT_NavigationNext] = ActionNavigationNext;
-
-	//Последняя запись
-	QAction *ActionNavigationLast = new QAction(BUFFER_ICONS("TableNavigationLast"), LANG("TableNavigationSelectLast"), this);
-	ActionNavigationLast->setShortcut(QKeySequence(Qt::Key_End));
-	connect(ActionNavigationLast, &QAction::triggered, this, &ISListBaseForm::NavigationSelectLastRecord);
-	Actions[ISNamespace::AT_NavigationLast] = ActionNavigationLast;
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::CreateSpecialActions()
-{
-	//Сортировка по умолчанию
-	QAction *ActionSortDefault = new QAction(BUFFER_ICONS("DefaultSorting"), LANG("DefaultSorting"), this);
-	connect(ActionSortDefault, &QAction::triggered, this, &ISListBaseForm::SortingDefault);
-	ActionsSpecial.emplace(ISNamespace::AST_SortDefault, ActionSortDefault);
-
-	//Примечание
-	QAction *ActionNoteObject = ISControls::CreateActionNoteObject(this);
-	connect(ActionNoteObject, &QAction::triggered, this, &ISListBaseForm::NoteObject);
-	ActionsSpecial.emplace(ISNamespace::AST_Note, ActionNoteObject);
-
-	//Автоподбор ширины
-	QAction *ActionResizeFromContent = new QAction(this);
-	ActionResizeFromContent->setText(LANG("AutoFitColumnWidth"));
-	ActionResizeFromContent->setToolTip(LANG("AutoFitColumnWidth"));
-	ActionResizeFromContent->setIcon(BUFFER_ICONS("AutoFitColumnWidth"));
-	connect(ActionResizeFromContent, &QAction::triggered, this, &ISListBaseForm::AutoFitColumnWidth);
-	ActionsSpecial.emplace(ISNamespace::AST_ResizeFromContent, ActionResizeFromContent);
-
-	//Сброс ширины колонок
-	QAction *ActionResetWidthColumn = new QAction(this);
-	ActionResetWidthColumn->setText(LANG("ResetWidthColumn"));
-	ActionResetWidthColumn->setToolTip(LANG("ResetWidthColumn"));
-	connect(ActionResetWidthColumn, &QAction::triggered, this, &ISListBaseForm::ResetWidthColumn);
-	ActionsSpecial.emplace(ISNamespace::AST_ResetWidthColumn, ActionResetWidthColumn);
-
-	ActionObjectGroup->addAction(ActionNoteObject);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::CreateToolBar()
-{
-	ToolBar = new QToolBar(this);
-	ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	ToolBar->setEnabled(false);
-	GetMainLayout()->addWidget(ToolBar);
-
-	ToolBar->addAction(GetAction(ISNamespace::AT_Create));
-	ToolBar->addAction(GetAction(ISNamespace::AT_CreateCopy));
-	ToolBar->addAction(GetAction(ISNamespace::AT_Edit));
-	ToolBar->addAction(GetAction(ISNamespace::AT_Delete));
-	ToolBar->addAction(GetAction(ISNamespace::AT_DeleteCascade));
-	ToolBar->addAction(GetAction(ISNamespace::AT_Update));
-	ToolBar->addAction(GetAction(ISNamespace::AT_Search));
-	ToolBar->addAction(GetAction(ISNamespace::AT_SearchClear));
-	ToolBar->addAction(GetAction(ISNamespace::AT_Print));
-
-	QAction *ActionPeriod = new QAction(BUFFER_ICONS("Period"), LANG("Period"), ToolBar);
-	ActionPeriod->setMenu(new QMenu(ToolBar));
-	ToolBar->addAction(ActionPeriod);
-
-	QToolButton *ButtonPeriod = dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionPeriod));
-	ButtonPeriod->setPopupMode(QToolButton::InstantPopup);
-	ButtonPeriod->setCursor(CURSOR_POINTING_HAND);
-	ButtonPeriod->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-
-	QAction *ActionPeriodSelect = new QAction(LANG("PeriodSelect"), ActionPeriod);
-	connect(ActionPeriodSelect, &QAction::triggered, this, &ISListBaseForm::Period);
-	ActionPeriod->menu()->addAction(ActionPeriodSelect);
-
-	ActionPeriod->menu()->addSeparator();
-
-	ActionPeriodClear = new QAction(LANG("PeriodClear"), ActionPeriod);
-	ActionPeriodClear->setEnabled(false);
-	connect(ActionPeriodClear, &QAction::triggered, this, &ISListBaseForm::PeriodClear);
-	ActionPeriod->menu()->addAction(ActionPeriodClear);
-
-	QAction *ActionAdditionally = new QAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"), ToolBar);
-	ActionAdditionally->setMenu(new QMenu(ToolBar));
-	ToolBar->addAction(ActionAdditionally);
-
-	QToolButton *ButtonAdditionally = dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally));
-	ButtonAdditionally->setPopupMode(QToolButton::InstantPopup);
-	ButtonAdditionally->setCursor(CURSOR_POINTING_HAND);
-	ButtonAdditionally->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-
-	ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowActual));
-	ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowDeleted));
-	ActionAdditionally->menu()->addSeparator();
-	ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
-	ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Export));
-	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_SortDefault));
-	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResizeFromContent));
-	ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResetWidthColumn));
-
-	ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
-
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWNAVIGATION))
-	{
-		ToolBar->addAction(GetAction(ISNamespace::AT_NavigationBegin));
-		ToolBar->addAction(GetAction(ISNamespace::AT_NavigationPrevious));
-		ToolBar->addAction(GetAction(ISNamespace::AT_NavigationNext));
-		ToolBar->addAction(GetAction(ISNamespace::AT_NavigationLast));
-	}
-
-	if (GetAction(ISNamespace::AT_CreateCopy)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_CreateCopy));
-	if (GetAction(ISNamespace::AT_Edit)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Edit));
-	if (GetAction(ISNamespace::AT_Delete)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Delete));
-	if (GetAction(ISNamespace::AT_DeleteCascade)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_DeleteCascade));
-	if (GetAction(ISNamespace::AT_SystemInfo)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_SystemInfo));
-	if (GetAction(ISNamespace::AT_Print)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Print));
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::CreateTableView()
-{
-	LayoutTableView = new QHBoxLayout();
-	GetMainLayout()->addLayout(LayoutTableView);
-
-	TableView = new ISBaseTableView(this);
-	TableView->SetCornerText(LANG("Reduction.SerialNumber"));
-	TableView->SetCornerToolTip(LANG("OrdinalNumber"));
-	connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
-	connect(TableView, &ISBaseTableView::CornerClicked, this, &ISListBaseForm::CornerButtonClicked);
-	connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
-	FieldResized(true);
-	LayoutTableView->addWidget(TableView);
-
-	connect(TableView, &ISBaseTableView::doubleClicked, this, &ISListBaseForm::DoubleClickedTable);
-
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_MINIMIZEHEIGHTROWS))
-	{
-		TableView->verticalHeader()->setDefaultSectionSize(19);
-	}
-
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLE_SCROLL_SELECTION))
-	{
-		TableView->SetSelectionScroll(true);
-		connect(TableView, &ISBaseTableView::WheelUp, this, &ISListBaseForm::NavigationSelectPreviousRecord);
-		connect(TableView, &ISBaseTableView::WheelDown, this, &ISListBaseForm::NavigationSelectNextRecord);
-	}
-
-	TableView->setAlternatingRowColors(SETTING_BOOL(CONST_UID_SETTING_TABLES_HIGHLIGHTINGODDROWS));
-	TableView->horizontalHeader()->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWHORIZONTALHEADER));
-	TableView->SetVisibleVerticalHeader(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWVERTICALHEADER));
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::CreateContextMenu()
-{
-	ContextMenu = new QMenu(this);
-	if (GetAction(ISNamespace::AT_Create)) ContextMenu->addAction(GetAction(ISNamespace::AT_Create));
-	if (GetAction(ISNamespace::AT_CreateCopy)) ContextMenu->addAction(GetAction(ISNamespace::AT_CreateCopy));
-	if (GetAction(ISNamespace::AT_Edit)) ContextMenu->addAction(GetAction(ISNamespace::AT_Edit));
-	if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
-	if (GetAction(ISNamespace::AT_DeleteCascade)) ContextMenu->addAction(GetAction(ISNamespace::AT_DeleteCascade));
-	if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
-	if (GetAction(ISNamespace::AT_SystemInfo)) ContextMenu->addAction(GetAction(ISNamespace::AT_SystemInfo));
-	ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::CreateModels()
-{
-	if (!MetaTable->SqlModel.isEmpty()) //Если в мета-данных таблицы указана пользовательская модель, создавать её
-	{
-		SqlModel = ISAlgorithm::CreatePointer<ISSqlModelCore *>(MetaTable->SqlModel, Q_ARG(PMetaTable *, MetaTable), Q_ARG(QObject *, TableView));
-	}
-	else //Модель в мета-данных таблицы не указана, создавать стандартную (базовую)
-	{
-		SqlModel = new ISSqlModelCore(MetaTable, TableView);
-	}
-
-	SqlModel->FillColumns();
-	SqlModel->SetShowToolTip(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWTOOLTIP));
-
-	QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
-
-	ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
-	if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её
-	{
-		SqlModel->SetSorting(MetaSorting->FieldName, MetaSorting->Order);
-		QueryModel->SetOrderField(MetaTable->Alias + '_' + MetaSorting->FieldName.toLower(), MetaSorting->FieldName, MetaSorting->Order);
-	}
-
-	TableView->setModel(SqlModel);
-	connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);//Это соединение обязательно должно быть после присваивания модели к QTableView
-
-	//Скрытие системных полей
-	if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
-	{
-		HideField("ID");
-	}
-	HideField("IsDeleted");
-	HideField("IsSystem");
-
-	ModelThreadQuery = new ISModelThreadQuery(this);
-	connect(ModelThreadQuery, &ISModelThreadQuery::Started, this, &ISListBaseForm::ModelThreadStarted);
-	connect(ModelThreadQuery, &ISModelThreadQuery::Finished, this, &ISListBaseForm::ModelThreadFinished);
-	connect(ModelThreadQuery, &ISModelThreadQuery::ExecutedQuery, this, &ISListBaseForm::ModelThreadLoadingData);
-	connect(ModelThreadQuery, &ISModelThreadQuery::Results, SqlModel, &ISSqlModelCore::SetRecords);
-	connect(ModelThreadQuery, &ISModelThreadQuery::ErrorConnection, this, &ISListBaseForm::ModelThreadErrorConnection);
-	connect(ModelThreadQuery, &ISModelThreadQuery::ErrorQuery, this, &ISListBaseForm::ModelThreadErrorQuery);
-	ModelThreadQuery->start(QThread::TimeCriticalPriority); //Запуск потока
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::CreateStatusBar()
-{
-	StatusBar = new QStatusBar(this);
-	StatusBar->setSizeGripEnabled(false);
-	GetMainLayout()->addWidget(StatusBar);
-
-	LabelRowCount = new QLabel(StatusBar);
-	LabelRowCount->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWCOUNTRECORD));
-	LabelRowCount->setText(LANG("RecordsCount") + ": -");
-	StatusBar->addWidget(LabelRowCount);
-
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
-	{
-		QueryModel->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
-
-		PageNavigation = new ISPageNavigation(StatusBar);
-		PageNavigation->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
-		connect(PageNavigation, &ISPageNavigation::OffsetSignal, QueryModel, &ISQueryModel::SetOffset);
-		connect(PageNavigation, &ISPageNavigation::Update, this, &ISListBaseForm::Update);
-		StatusBar->addWidget(PageNavigation);
-	}
-
-	LabelPeriod = new QLabel(StatusBar);
-	LabelPeriod->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	LabelPeriod->setVisible(false);
-	StatusBar->addWidget(LabelPeriod);
-
-	LabelSelectedRow = new QLabel(StatusBar);
-	LabelSelectedRow->setVisible(false);
-	StatusBar->addWidget(LabelSelectedRow);
-
-	EditSearch = new ISSearchEdit(StatusBar);
-	EditSearch->setSizePolicy(QSizePolicy::Maximum, EditSearch->sizePolicy().verticalPolicy());
-	connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
-	connect(EditSearch, &ISSearchEdit::ClearPressed, this, &ISListBaseForm::SearchFastClear);
-	connect(this, &ISListBaseForm::Updated, EditSearch, &ISSearchEdit::Updated);
-	connect(this, &ISListBaseForm::Updated, EditSearch, static_cast<void(ISSearchEdit::*)(void)>(&ISSearchEdit::setFocus));
-	StatusBar->addPermanentWidget(EditSearch);
-
-	QAction *ActionSearchFocus = new QAction(this);
-	ActionSearchFocus->setShortcut(Qt::Key_F8);
-	connect(ActionSearchFocus, &QAction::triggered, EditSearch, &ISSearchEdit::SetFocus);
-	addAction(ActionSearchFocus);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowContextMenu(const QPoint &Point)
