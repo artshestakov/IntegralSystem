@@ -510,6 +510,7 @@
       <Field UID="{A4BD7ADE-0EC2-4D31-9CC4-898A034D8348}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
       <Field UID="{0E4FFD31-632F-405E-8C3D-E5F40835A0B7}" Name="Coming" Type="Double" LabelName="Приход" LocalListName="Приход" NotNull="true" LayoutName="Date"/>
       <Field UID="{BE580F77-B118-454F-8751-62469DF707CF}" Name="Consumption" Type="Double" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Date" QueryText="SELECT sum(dexd_price) FROM driverexpensesdetail WHERE NOT dexd_isdeleted AND dexd_driverexpenses = drex_id"/>
+      <Field UID="{8E97D513-1976-44A8-8FD9-A985E1F48EAB}" Name="Remainder" Type="Double" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Date" QueryText="SELECT drex_coming - sum(dexd_price) FROM driverexpensesdetail WHERE NOT dexd_isdeleted AND dexd_driverexpenses = drex_id"/>
       <Field UID="{1D0350CD-177A-4076-B964-95E8DB6DDBFD}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
