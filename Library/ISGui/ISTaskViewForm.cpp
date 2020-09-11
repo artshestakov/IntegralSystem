@@ -460,6 +460,10 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	{
 		LabelPriority->SetPixmap(BUFFER_ICONS("Task.Priority.Tall").pixmap(ISDefines::Gui::SIZE_25_25));
 	}
+	else if (TaskPriorityUID == CONST_UID_TASK_PRIORITY_CRITICAL)
+	{
+		LabelPriority->SetPixmap(BUFFER_ICONS("Task.Priority.Critical").pixmap(ISDefines::Gui::SIZE_25_25));
+	}
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
