@@ -20,7 +20,6 @@ bool ISInterfaceDialogForm::Exec()
 
 	if (!IsShowed())
 	{
-		adjustSize();
 		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 		show();
 	}

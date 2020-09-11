@@ -10,7 +10,7 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("ConnectionSettings"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
-	ForbidResize();
+	resize(650, 300);
 
 	QFormLayout *FormLayout = new QFormLayout();
 	GetMainLayout()->addLayout(FormLayout);

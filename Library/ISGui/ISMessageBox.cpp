@@ -55,8 +55,6 @@ int ISMessageBox::ShowQuestion(QWidget *parent, const QString &Message, const st
 //-----------------------------------------------------------------------------
 int ISMessageBox::Exec()
 {
-	adjustSize();
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	QApplication::beep();
 	ISSystem::ProcessEvents();
 	for (QAbstractButton *AbstractButton : buttons())
