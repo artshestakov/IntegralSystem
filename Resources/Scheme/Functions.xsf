@@ -106,25 +106,6 @@
     COST 100;
   </Function>
 
-  <Function Name="today_birthday">
-    CREATE OR REPLACE FUNCTION public.today_birthday(dateofbirth date)
-    RETURNS boolean AS
-    $body$
-    BEGIN
-    RETURN
-    (
-    date_part('day', CURRENT_DATE)::VARCHAR || date_part('month', CURRENT_DATE)::VARCHAR =
-    date_part('day', dateofbirth)::VARCHAR || date_part('month', dateofbirth)::VARCHAR
-    )::BOOLEAN;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-
   <Function Name="set_setting_database_active">
     CREATE OR REPLACE FUNCTION public.set_setting_database_active(id bigint)
     RETURNS void AS
