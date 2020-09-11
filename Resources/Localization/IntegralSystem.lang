@@ -550,8 +550,7 @@
   <Local Name="Task.Filter.Today" Russian="Срок сегодня"/>
   <Local Name="Task.Filter.Yesterday" Russian="Срок завтра"/>
   <Local Name="Task.CreateTask" Russian="Создать задачу"/>
-  <Local Name="Task.SearchByNumber" Russian="Поиск по номеру"/>
-  <Local Name="Task.SearchByNumber.ToolTip" Russian="Поиск по номеру задачи"/>
+  <Local Name="Task.SearchByNumber" Russian="Поиск по номеру задачи"/>
   <Local Name="Task.SearchByText" Russian="Поиск по тексту"/>
   <Local Name="Task.SearchByText.Title" Russian="Поиск задач по тексту"/>
   <Local Name="Task.SearchByText.PlaceholderText" Russian="Поиск по названию, описанию, комментариям и файлам"/>

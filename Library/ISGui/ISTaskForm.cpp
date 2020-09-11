@@ -27,19 +27,12 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	MainLayout->addWidget(ToolBar);
 
-	QAction *ActionCreate = new QAction(BUFFER_ICONS("Add"), LANG("Task.CreateTask"), ToolBar);
-	connect(ActionCreate, &QAction::triggered, this, &ISTaskForm::CreateTask);
-	ToolBar->addAction(ActionCreate);
+	QAction *ActionCreate = ToolBar->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateTask"), this, &ISTaskForm::CreateTask);
+	dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionCreate))->setPopupMode(QToolButton::MenuButtonPopup);
 	ISGui::SetFontWidgetUnderline(ToolBar->widgetForAction(ActionCreate), true);
-
-	QAction *ActionSearchByNumber = new QAction(BUFFER_ICONS("Search"), LANG("Task.SearchByNumber"), ToolBar);
-	ActionSearchByNumber->setToolTip(LANG("Task.SearchByNumber.ToolTip"));
-	connect(ActionSearchByNumber, &QAction::triggered, this, &ISTaskForm::SearchByNumber);
-	ToolBar->addAction(ActionSearchByNumber);
-
-	QAction *ActionSearchByText = new QAction(BUFFER_ICONS("Search"), LANG("Task.SearchByText"), ToolBar);
-	connect(ActionSearchByText, &QAction::triggered, this, &ISTaskForm::SearchByText);
-	ToolBar->addAction(ActionSearchByText);
+	ActionCreate->setMenu(new QMenu(ToolBar->widgetForAction(ActionCreate)));
+	ActionCreate->menu()->addAction(BUFFER_ICONS("Search"), LANG("Task.SearchByNumber"), this, &ISTaskForm::SearchByNumber);
+	ActionCreate->menu()->addAction(BUFFER_ICONS("Search"), LANG("Task.SearchByText"), this, &ISTaskForm::SearchByText);
 
 	ToolBar->addSeparator();
 
