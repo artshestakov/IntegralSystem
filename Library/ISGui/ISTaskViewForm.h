@@ -86,7 +86,7 @@ private:
 	ISLabelElided *LabelName;
 	QHBoxLayout *LayoutHorizontal;
 	QVBoxLayout *LayoutLeft;
-	QWidget *WidgetButtonStatus;
+	QHBoxLayout *LayoutButtonStatus;
 	QButtonGroup *ButtonGroupStatus;
 	ISPushButton *ButtonReopen;
 	ISPushButton *ButtonActions;

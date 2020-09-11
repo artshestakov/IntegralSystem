@@ -251,13 +251,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutLeft = new QVBoxLayout();
 	LayoutHorizontal->addLayout(LayoutLeft);
 
-	QHBoxLayout *LayoutButtonStatus = new QHBoxLayout();
-	LayoutButtonStatus->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-
-	WidgetButtonStatus = new QWidget(this);
-	WidgetButtonStatus->setLayout(LayoutButtonStatus);
-	WidgetButtonStatus->setSizePolicy(QSizePolicy::Maximum, WidgetButtonStatus->sizePolicy().verticalPolicy());
-	LayoutLeft->addWidget(WidgetButtonStatus);
+	LayoutButtonStatus = new QHBoxLayout();
+	LayoutLeft->addLayout(LayoutButtonStatus);
 	ReloadStatusButtons();
 
 	ButtonReopen = new ISPushButton(LANG("Task.ReopenStatus"), this);
@@ -267,6 +262,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	ButtonActions = new ISPushButton(BUFFER_ICONS("ArrowDown"), LANG("Task.Actions"), this);
 	ButtonActions->setCursor(CURSOR_POINTING_HAND);
+	ButtonActions->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	ButtonActions->setMenu(new QMenu(ButtonActions));
 	ButtonActions->menu()->addAction(BUFFER_ICONS("Update"), LANG("Task.ReopenTaskViewForm"), this, &ISTaskViewForm::Reopen, QKeySequence(Qt::Key_F5));
 	ButtonActions->menu()->addAction(BUFFER_ICONS("Edit"), LANG("Task.EditTask"), this, &ISTaskViewForm::Edit, QKeySequence(Qt::Key_F2));
@@ -285,11 +281,13 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	}
 	LayoutButtonStatus->addWidget(ButtonActions);
 
-	CheckVote = new ISCheckEdit(WidgetButtonStatus);
+	LayoutButtonStatus->addStretch();
+
+	CheckVote = new ISCheckEdit(this);
 	CheckVote->SetText(QString::number(VoteCount));
 	CheckVote->SetToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
 	CheckVote->SetIcon(BUFFER_ICONS("Task.Vote"));
-	CheckVote->SetIconSize(ISDefines::Gui::SIZE_32_32);
+	CheckVote->SetIconSize(ISDefines::Gui::SIZE_22_22);
 	CheckVote->SetValue(IsVoted);
 	connect(CheckVote, &ISFieldEditBase::DataChanged, this, &ISTaskViewForm::Vote);
 	LayoutButtonStatus->addWidget(CheckVote);
@@ -605,10 +603,10 @@ void ISTaskViewForm::ReloadStatusButtons()
 			}
 			else
 			{
-				ISPushButton *ButtonStatus = new ISPushButton(qSelectStatuses.ReadColumn("tsst_buttontext").toString(), WidgetButtonStatus);
+				ISPushButton *ButtonStatus = new ISPushButton(qSelectStatuses.ReadColumn("tsst_buttontext").toString(), this);
 				ButtonStatus->setProperty("StatusUID", StatusUID);
 				connect(ButtonStatus, &ISPushButton::clicked, this, &ISTaskViewForm::TaskStatusClicked);
-				dynamic_cast<QHBoxLayout*>(WidgetButtonStatus->layout())->insertWidget(ButtonIndex++, ButtonStatus);
+				LayoutButtonStatus->insertWidget(ButtonIndex++, ButtonStatus);
 				ButtonGroupStatus->addButton(ButtonStatus);
 			}
 		}
