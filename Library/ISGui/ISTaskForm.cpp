@@ -50,6 +50,8 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 	CreateActionFilter(LANG("Task.Filter.Done"), BUFFER_ICONS("Task.Status.Done"), "task_executor = currentuserid() AND task_status = get_status_id_by_uid('{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}')");
 	CreateActionFilter(LANG("Task.Filter.NotDone"), BUFFER_ICONS("Task.Status.NotDone"), "task_executor = currentuserid() AND task_status = get_status_id_by_uid('{D3F65984-117E-4AFE-81E0-1198533767F8}')");
 	CreateActionFilter(LANG("Task.Filter.Close"), BUFFER_ICONS("Task.Status.Close"), "task_executor = currentuserid() AND task_status = get_status_id_by_uid('{1617EC4F-50F6-4912-8143-4D702E1F5F8F}')");
+	CreateActionFilter(LANG("Task.Filter.Today"), BUFFER_ICONS("Task.Filter.Today"), "task_executor = currentuserid() AND task_status IN(get_status_id_by_uid('{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}'), get_status_id_by_uid('{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}')) AND task_deadline = CURRENT_DATE");
+	CreateActionFilter(LANG("Task.Filter.Yesterday"), BUFFER_ICONS("Task.Filter.Yesterday"), "task_executor = currentuserid() AND task_status IN(get_status_id_by_uid('{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}'), get_status_id_by_uid('{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}')) AND task_deadline = CURRENT_DATE + 1");
 
 	MainLayout->addWidget(ISControls::CreateHorizontalLine(this));
 
