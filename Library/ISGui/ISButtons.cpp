@@ -13,6 +13,7 @@ ISPushButton::ISPushButton(const QIcon &Icon, const QString &Text, const QString
 	setStyleSheet(STYLE_SHEET("ISPushButton"));
 	setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
 	setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
+	setIconSize(QSize(ISPUSHBUTTON_MINIMUM_HEIGHT - 7, ISPUSHBUTTON_MINIMUM_HEIGHT - 7));
 }
 //-----------------------------------------------------------------------------
 ISPushButton::ISPushButton(const QIcon &Icon, const QString &Text, QWidget *parent) : ISPushButton(Icon, Text, QString(), parent)
