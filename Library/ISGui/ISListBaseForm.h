@@ -137,7 +137,6 @@ private:
 
 	ISVectorInt SelectObjectAfterUpdate; //Вектор записей, которые нужно выделить после обновления таблицы
 	bool DelegatesCreated; //Индикатор указания созданы делегаты или нет
-	bool ShowOnly;
 	bool IsLoadingData; //Флаг загрузки данных
 	bool SearchFlag;
 	
