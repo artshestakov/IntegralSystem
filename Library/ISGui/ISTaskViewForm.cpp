@@ -121,17 +121,19 @@ static QString QD_LINK = PREPARE_QUERY("DELETE FROM _tasklink "
 									   "WHERE tlnk_id = :LinkID");
 //-----------------------------------------------------------------------------
 static QString QS_COMMENT = PREPARE_QUERY("SELECT "
-										  "c.tcom_id, "
-										  "c.tcom_parent, "
-										  "c.tcom_comment, "
-										  "c.tcom_creationdate, "
-										  "c.tcom_updationdate, "
-										  "c.tcom_creationuseroid, "
+										  "tcom_id, "
+										  "tcom_parent, "
+										  "tcom_comment, "
+										  "tcom_creationdate, "
+										  "tcom_updationdate, "
+										  "tcom_creationuseroid, "
 										  "usrs_fio, "
 										  "userphotobyoid(tcom_creationuseroid) "
-										  "FROM _taskcomment c "
-										  "LEFT JOIN _users ON usrs_oid = c.tcom_creationuseroid "
-										  "WHERE c.tcom_task = :TaskID");
+										  "FROM _taskcomment "
+										  "LEFT JOIN _users ON usrs_oid = tcom_creationuseroid "
+										  "WHERE NOT tcom_isdeleted "
+										  "AND tcom_task = :TaskID "
+										  "ORDER BY tcom_id");
 //-----------------------------------------------------------------------------
 static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, tcom_parent, tcom_comment) "
 										  "VALUES(:TaskID, :Parent, :Comment)");
