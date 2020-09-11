@@ -52,7 +52,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	SearchForm(nullptr),
 	SelectObjectAfterUpdate(0),
 	DelegatesCreated(false),
-	ShowOnly(MetaTable->ShowOnly),
 	IsLoadingData(false),
 	SearchFlag(false)
 {
@@ -515,7 +514,7 @@ PMetaTable* ISListBaseForm::GetMetaTable()
 void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
 	Q_UNUSED(ModelIndex);
-	if (ShowOnly)
+	if (MetaTable->ShowOnly)
 	{
 		return;
 	}
@@ -666,11 +665,11 @@ void ISListBaseForm::LoadDataAfterEvent()
 void ISListBaseForm::AfterShowEvent()
 {
 	ISInterfaceMetaForm::AfterShowEvent();
-	GetAction(ISNamespace::AT_Create)->setEnabled(!ShowOnly);
-	GetAction(ISNamespace::AT_CreateCopy)->setEnabled(!ShowOnly);
-	GetAction(ISNamespace::AT_Edit)->setEnabled(!ShowOnly);
-	GetAction(ISNamespace::AT_Delete)->setEnabled(!ShowOnly);
-	GetAction(ISNamespace::AT_DeleteCascade)->setEnabled(!ShowOnly);
+	GetAction(ISNamespace::AT_Create)->setVisible(!MetaTable->ShowOnly);
+	GetAction(ISNamespace::AT_CreateCopy)->setVisible(!MetaTable->ShowOnly);
+	GetAction(ISNamespace::AT_Edit)->setVisible(!MetaTable->ShowOnly);
+	GetAction(ISNamespace::AT_Delete)->setVisible(!MetaTable->ShowOnly);
+	GetAction(ISNamespace::AT_DeleteCascade)->setVisible(!MetaTable->ShowOnly);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AddAction(QAction *Action, bool AddingToActionGroup, bool AddingToContextMenu)

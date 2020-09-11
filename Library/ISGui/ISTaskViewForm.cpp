@@ -226,15 +226,13 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 		ISQLabel *LabelParent = new ISQLabel(QString("#%1").arg(TaskParentID), this);
 		LabelParent->setToolTip(LANG("Task.SubTask.ToolTip").arg(TaskParentName));
 		LabelParent->SetIsLinked(true);
-		LabelParent->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
 		LabelParent->setSizePolicy(QSizePolicy::Maximum, LabelParent->sizePolicy().verticalPolicy());
 		LabelParent->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 		connect(LabelParent, &ISQLabel::Clicked, this, &ISTaskViewForm::SubTaskOpenParent);
-		LayoutTitle->addWidget(LabelParent);
+		LayoutTitle->addWidget(LabelParent, 0, Qt::AlignTop);
 	}
 
 	LabelName = new ISLabelElided((TaskParentID ? " \\ " : QString()) + QString("#%1: %2").arg(TaskID).arg(TaskName), this);
-	LabelName->SetColorText(ISDefines::Gui::COLOR_DARK_GRAY);
 	LabelName->SetElidedToolTip(true);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setSizePolicy(LabelName->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
