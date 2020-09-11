@@ -85,10 +85,10 @@ const Qt::CursorShape CURSOR_POINTING_HAND = Qt::PointingHandCursor;
 const Qt::CursorShape CURSOR_WHATS_THIS = Qt::WhatsThisCursor;
 const Qt::CursorShape CURSOR_WAIT = Qt::WaitCursor;
 //INTERFACE--------------------------------------------------------------------
-const int SIZE_MINIMUM_HEIGHT_EDIT_FIELD = 24; //Минимальная высота поля ввода ввода информации
 const int EDIT_FIELD_SPACING = 4;
-const int ISPUSHBUTTON_MINIMUM_WIDTH = 75;
-const int ISPUSHBUTTON_MINIMUM_HEIGHT = 24;
+const int ISPUSHBUTTON_MINIMUM_WIDTH = 98; //Минимальная ширина базовых кнопок
+const int ISPUSHBUTTON_MINIMUM_HEIGHT = 31; //Минимальная высота базовых кнопок
+const int SIZE_MINIMUM_HEIGHT_EDIT_FIELD = ISPUSHBUTTON_MINIMUM_HEIGHT; //Минимальная высота поля ввода ввода информации
 //SYMBOLS----------------------------------------------------------------------
 const char SYMBOL_SPACE = ' '; //Символ пробела
 const char SYMBOL_MINUS = '-'; //Символ "Минус"
