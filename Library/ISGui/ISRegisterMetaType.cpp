@@ -17,6 +17,7 @@
 #include "ISFullTextSearchForm.h"
 #include "ISKnowledgeBaseSubSystem.h"
 #include "ISSettingsDatabaseListForm.h"
+#include "ISTaskObjectForm.h"
 #include "ISDelegates.h"
 //-----------------------------------------------------------------------------
 #include "ISFieldEdits.h"
@@ -47,6 +48,7 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISFullTextSearchForm*>("ISFullTextSearchForm");
 	qRegisterMetaType<ISKnowledgeBaseSubSystem*>("ISKnowledgeBaseSubSystem");
 	qRegisterMetaType<ISSettingsDatabaseListForm*>("ISSettingsDatabaseListForm");
+	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
 
 	qRegisterMetaType<ISDelegateBoolean*>("ISDelegateBoolean");
 	qRegisterMetaType<ISDelegateImage*>("ISDelegateImage");
@@ -87,7 +89,7 @@ void ISRegisterMetaType::RegisterMetaType()
 	qRegisterMetaType<ISTaskPriorityEdit*>("ISTaskPriorityEdit");
 	qRegisterMetaType<ISTaskImportantEdit*>("ISTaskImportantEdit");
 	qRegisterMetaType<ISTaskDescriptionEdit*>("ISTaskDescriptionEdit");
-	qRegisterMetaType<ISExecutorEdit*>("ISExecutorEdit");
+	qRegisterMetaType<ISTaskExecutorEdit*>("ISTaskExecutorEdit");
 	qRegisterMetaType<ISUrlEdit*>("ISUrlEdit");
 	qRegisterMetaType<ISFileEdit*>("ISFileEdit");
 	qRegisterMetaType<ISSexEdit*>("ISSexEdit");

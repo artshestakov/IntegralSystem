@@ -2476,29 +2476,23 @@ void ISListEdit::EditObject()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISExecutorEdit::ISExecutorEdit(QWidget *parent) : ISListEdit(parent)
+ISTaskExecutorEdit::ISTaskExecutorEdit(QWidget *parent) : ISListEdit(parent)
 {
 	ButtonDesignateMe = new ISPushButton(this);
 	ButtonDesignateMe->setText(LANG("Task.DesignateMe"));
 	ButtonDesignateMe->setIcon(BUFFER_ICONS("User"));
 	ButtonDesignateMe->setCursor(CURSOR_POINTING_HAND);
 	ButtonDesignateMe->setSizePolicy(QSizePolicy::Maximum, ButtonDesignateMe->sizePolicy().verticalPolicy());
-	connect(ButtonDesignateMe, &ISPushButton::clicked, this, &ISExecutorEdit::DesignateMe);
+	connect(ButtonDesignateMe, &ISPushButton::clicked, this, &ISTaskExecutorEdit::DesignateMe);
 	AddWidgetToRight(ButtonDesignateMe);
 }
 //-----------------------------------------------------------------------------
-ISExecutorEdit::~ISExecutorEdit()
+ISTaskExecutorEdit::~ISTaskExecutorEdit()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISExecutorEdit::SetReadOnly(bool read_only)
-{
-	ISListEdit::SetReadOnly(read_only);
-	ButtonDesignateMe->setVisible(!read_only);
-}
-//-----------------------------------------------------------------------------
-void ISExecutorEdit::DesignateMe()
+void ISTaskExecutorEdit::DesignateMe()
 {
 	SetValue(CURRENT_USER_ID);
 }

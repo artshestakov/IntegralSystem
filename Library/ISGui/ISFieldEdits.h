@@ -882,15 +882,13 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISExecutorEdit : public ISListEdit
+class ISTaskExecutorEdit : public ISListEdit
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISExecutorEdit(QWidget *parent = 0);
-	virtual ~ISExecutorEdit();
-
-	void SetReadOnly(bool read_only) override;
+	Q_INVOKABLE ISTaskExecutorEdit(QWidget *parent = 0);
+	virtual ~ISTaskExecutorEdit();
 
 private:
 	void DesignateMe();

@@ -53,7 +53,7 @@
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
-  <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК чтобы начать её установку. После успешной установки новой версии, программа автоматически запустится."/>
+  <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК, чтобы начать её установку. После успешной установки новой версии программа автоматически запустится."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
   <Local Name="Message.Error.ConnectionSetting.Input.DatabaseNameEmpty" Russian="В настройках подключения к базе данных не указано имя базы данных."/>
@@ -174,6 +174,11 @@
   <Local Name="Message.Warning.NotAccess.IsDeleted" Russian="У Вас нет прав на просмотр удаленных записей в таблице &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Export" Russian="У Вас нет прав на экспорт данных из таблицы &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Special.UserPasswordChange" Russian="У Вас нет прав на изменение своего пароля."/>
+  <Local Name="Message.Warning.NotAccess.Special.TaskClose" Russian="У Вас нет прав на закрытие задачи."/>
+  <Local Name="Message.Warning.NotAccess.Special.TaskReopen" Russian="У Вас нет прав на переоткрытие задачи."/>
+  <Local Name="Message.Warning.NotAccess.Special.TaskEdit" Russian="У Вас нет прав на редактирование задачи."/>
+  <Local Name="Message.Warning.NotAccess.Special.TaskTransformation" Russian="У Вас нет прав на преобразование задачи в подзадачу и наоборот."/>
+  <Local Name="Message.Warning.NotAccess.Special.Appoint" Russian="У Вас нет прав на назначение исполнителя. Вы можете назначить исполнителем только себя."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>

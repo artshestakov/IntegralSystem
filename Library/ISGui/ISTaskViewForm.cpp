@@ -15,6 +15,7 @@
 #include "ISListBaseForm.h"
 #include "ISDatabase.h"
 #include "ISMetaData.h"
+#include "ISUserRoleEntity.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "
@@ -602,7 +603,14 @@ void ISTaskViewForm::ReloadStatusButtons()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::ReopenStatus()
 {
-	SetStatus(CONST_UID_TASK_STATUS_OPEN);
+	if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_TASK_REOPEN))
+	{
+		SetStatus(CONST_UID_TASK_STATUS_OPEN);
+	}
+	else
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.TaskReopen"));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Reopen()
@@ -613,9 +621,16 @@ void ISTaskViewForm::Reopen()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::Edit()
 {
-	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Task", TaskID);
-	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISTaskViewForm::Reopen);
-	ISGui::ShowObjectForm(ObjectFormBase);
+	if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_TASK_EDIT))
+	{
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Task", TaskID);
+		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISTaskViewForm::Reopen);
+		ISGui::ShowObjectForm(ObjectFormBase);
+	}
+	else
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.TaskEdit"));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::CloneTask()
@@ -633,9 +648,16 @@ void ISTaskViewForm::CloneTask()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::ConvertThisToTask()
 {
-	if (ConvertToTask(TaskID))
+	if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_TASK_TRANSFORMATION))
 	{
-		Reopen();
+		if (ConvertToTask(TaskID))
+		{
+			Reopen();
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.TaskTransformation"));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -671,6 +693,12 @@ bool ISTaskViewForm::ConvertToTask(int task_id)
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::ConvertToSubTask()
 {
+	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_TASK_TRANSFORMATION))
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.TaskTransformation"));
+		return;
+	}
+
 	//Проверка количества подзадач
 	ISQuery qSelectSubTask(QS_SUBTASK_COUNT);
 	qSelectSubTask.BindValue(":TaskID", TaskID);
@@ -717,7 +745,13 @@ void ISTaskViewForm::ConvertToSubTask()
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::TaskStatusClicked()
 {
-	SetStatus(sender()->property("StatusUID"));
+	ISUuid StatusUID = sender()->property("StatusUID");
+	if (StatusUID == CONST_UID_TASK_STATUS_CLOSE && !ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_TASK_CLOSE))
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.TaskClose"));
+		return;
+	}
+	SetStatus(StatusUID);
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SetStatus(const ISUuid &StatusUID)
