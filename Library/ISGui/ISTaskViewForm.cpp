@@ -16,6 +16,7 @@
 #include "ISDatabase.h"
 #include "ISMetaData.h"
 #include "ISUserRoleEntity.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "
@@ -125,6 +126,7 @@ static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "c.tcom_comment, "
 										  "c.tcom_creationdate, "
 										  "c.tcom_updationdate, "
+										  "c.tcom_creationuseroid, "
 										  "usrs_fio, "
 										  "userphotobyoid(tcom_creationuseroid) "
 										  "FROM _taskcomment c "
@@ -1241,10 +1243,11 @@ void ISTaskViewForm::CommentLoadList()
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
 			QDateTime UpdationDate = qSelectComments.ReadColumn("tcom_updationdate").toDateTime();
+			int UserOID = qSelectComments.ReadColumn("tcom_creationuseroid").toInt();
 			QString UserFIO = qSelectComments.ReadColumn("usrs_fio").toString();
 			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyoid").toByteArray());
 
-			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserPhoto, UserFIO, Comment, CreationDate, UpdationDate);
+			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserOID, UserPhoto, UserFIO, Comment, CreationDate, UpdationDate);
 			if (ParentID)
 			{
 				QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(MapComment[ParentID]);
@@ -1265,7 +1268,7 @@ void ISTaskViewForm::CommentLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate)
+QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, int UserOID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
@@ -1311,20 +1314,21 @@ QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, const
 		LayoutBottom->addWidget(LabelAnswer);
 	}
 
-	ISQLabel *LabelEdit = new ISQLabel(LANG("Edit"), WidgetBottom);
-	LabelEdit->setProperty("Comment", Comment);
-	LabelEdit->setProperty("CommentID", CommentID);
-	LabelEdit->SetIsLinked(true);
-	connect(LabelEdit, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentEdit);
-	LayoutBottom->addWidget(LabelEdit);
+	if (UserOID == CURRENT_USER_OID) //≈сли текущий пользователь €вл€етс€ автором комментари€ - позвол€ем ему редактировать и удал€ть комментарии
+	{
+		ISQLabel *LabelEdit = new ISQLabel(LANG("Edit"), WidgetBottom);
+		LabelEdit->setProperty("Comment", Comment);
+		LabelEdit->setProperty("CommentID", CommentID);
+		LabelEdit->SetIsLinked(true);
+		connect(LabelEdit, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentEdit);
+		LayoutBottom->addWidget(LabelEdit);
 
-	ISQLabel *LabelDelete = new ISQLabel(LANG("Delete"), WidgetBottom);
-	LabelDelete->setProperty("CommentID", CommentID);
-	LabelDelete->SetIsLinked(true);
-	connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentDelete);
-	LayoutBottom->addWidget(LabelDelete);
-
-	LayoutBottom->addWidget(ISControls::CreateVerticalLine(WidgetBottom));
+		ISQLabel *LabelDelete = new ISQLabel(LANG("Delete"), WidgetBottom);
+		LabelDelete->setProperty("CommentID", CommentID);
+		LabelDelete->SetIsLinked(true);
+		connect(LabelDelete, &ISQLabel::Clicked, this, &ISTaskViewForm::CommentDelete);
+		LayoutBottom->addWidget(LabelDelete);
+	}
 
 	QLabel *LabelCreateDateTime = new QLabel(LANG("Task.Comment.CreationDate").arg(ISGui::ConvertDateTimeToString(CreationDate, FORMAT_DATE_V1, FORMAT_TIME_V1)), WidgetBottom);
 	LabelCreateDateTime->setToolTip(CreationDate.toString(FORMAT_DATE_TIME_V10));
