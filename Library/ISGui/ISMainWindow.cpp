@@ -142,6 +142,10 @@ void ISMainWindow::ChangeUser()
 		PROPERTY_SET("is_change_user", true);
 		close();
 	}
+	else
+	{
+		ExitConfirm = true;
+	}
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ActivateWorkspace()
