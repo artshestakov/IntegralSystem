@@ -549,6 +549,7 @@
   <Local Name="Task.Filter.Close" Russian="Закрытые"/>
   <Local Name="Task.Filter.Today" Russian="Срок сегодня"/>
   <Local Name="Task.Filter.Yesterday" Russian="Срок завтра"/>
+  <Local Name="Task.Filter.Expired" Russian="Просрочено"/>
   <Local Name="Task.CreateTask" Russian="Создать задачу"/>
   <Local Name="Task.SearchByNumber" Russian="Поиск по номеру задачи"/>
   <Local Name="Task.SearchByText" Russian="Поиск по тексту"/>
