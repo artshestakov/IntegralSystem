@@ -128,7 +128,7 @@ std::string GetTime()
 #else
 	time_t Time = time(NULL);
 	struct tm TM = *localtime(&Time);
-    sprintf(Buffer, "%02d:%02d", TM.tm_hour, TM.tm_min);
+    sprintf(Buffer, "%02d.%02d", TM.tm_hour, TM.tm_min);
 #endif
 	return std::string(Buffer, strlen(Buffer));
 }
