@@ -383,7 +383,7 @@ bool ISAuthForm::CheckUpdate()
 				{
 					ISMessageBox::ShowInformation(this, LANG("Message.Information.FoundNewAppVersion"));
 					QString FilePath = FileInfo.filePath();
-					result = QProcess::startDetached(FilePath, QStringList() << "/SILENT" << "/NOCANCEL");
+					result = QProcess::startDetached(FilePath, QStringList() << "/SILENT" << "/NOCANCEL" << "/NORESTART");
 					if (!result)
 					{
 						ISMessageBox::ShowWarning(this, LANG("Message.Warning.StartInstallUpdate").arg(FilePath));

@@ -90,10 +90,40 @@ Filename: {app}\Redistributable_2013_${PLATFORM}.exe; Description: "Устано
 Filename: {app}\Redistributable_2015_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2015 ${PLATFORM}"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015 ${PLATFORM}...";
 
 [Code]
+var
+  IsAutoStart: Boolean; // Флаг автоматиеского запуска программы
+  
 procedure InitializeWizard();
+var
+  i: Integer;
+  
 begin
   WizardForm.WelcomeLabel2.Caption := WizardForm.WelcomeLabel2.Caption + #13#10#13#10 + 
   'Конфигурация: ${CONFIGURATION}' + #13#10 +
   'Платформа: ${PLATFORM}' + #13#10 +
   'Версия устанавливаемой программы: ${VERSION}';
+  
+  //Проверяем наличие агумента "/silent", если есть - выставляем соотв. переменную в True
+  IsAutoStart := False;
+  for i := 1 to ParamCount do
+    if CompareText(ParamStr(i), '/silent') = 0 then
+    begin
+      IsAutoStart := True;
+      Break;
+    end;
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  ResultCode: Integer;
+  
+begin
+  if CurStep = ssPostInstall then //Если текущий шаг - послеустановочный
+  begin
+    if IsAutoStart then //Если необходим автоматический запуск
+      if not Exec(ExpandConstant('{app}\IntegralSystem.exe'), '', '', SW_SHOW, ewNoWait, ResultCode) then
+        begin
+            MsgBox('Ошибка автоматического запуска программы: ' + SysErrorMessage(ResultCode), mbError, MB_OK);
+        end;
+  end;
 end;
