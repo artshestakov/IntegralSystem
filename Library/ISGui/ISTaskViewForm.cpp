@@ -57,7 +57,7 @@ static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_descr
 										  "AND NOT task_isdeleted "
 										  "ORDER BY task_id");
 //-----------------------------------------------------------------------------
-static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_buttontext, tsst_stylesheet "
+static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_buttontext, tsst_stylesheet, tsst_icon "
 										   "FROM _taskstatus "
 										   "WHERE NOT tsst_isdeleted "
 										   "ORDER BY tsst_order");
@@ -255,7 +255,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutLeft->addLayout(LayoutButtonStatus);
 	ReloadStatusButtons();
 
-	ButtonReopen = new ISPushButton(LANG("Task.ReopenStatus"), this);
+	ButtonReopen = new ISPushButton(BUFFER_ICONS("Task.Reopen"), LANG("Task.ReopenStatus"), this);
 	connect(ButtonReopen, &ISPushButton::clicked, this, &ISTaskViewForm::ReopenStatus);
 	LayoutButtonStatus->addWidget(ButtonReopen);
 	UpdateVisibleButtonReOpen();
@@ -603,7 +603,7 @@ void ISTaskViewForm::ReloadStatusButtons()
 			}
 			else
 			{
-				ISPushButton *ButtonStatus = new ISPushButton(qSelectStatuses.ReadColumn("tsst_buttontext").toString(), this);
+				ISPushButton *ButtonStatus = new ISPushButton(BUFFER_ICONS(qSelectStatuses.ReadColumn("tsst_icon").toString()), qSelectStatuses.ReadColumn("tsst_buttontext").toString(), this);
 				ButtonStatus->setProperty("StatusUID", StatusUID);
 				connect(ButtonStatus, &ISPushButton::clicked, this, &ISTaskViewForm::TaskStatusClicked);
 				LayoutButtonStatus->insertWidget(ButtonIndex++, ButtonStatus);

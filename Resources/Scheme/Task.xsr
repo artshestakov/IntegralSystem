@@ -6,10 +6,10 @@
   <_TaskPriority IsSystem="true" UID="{5B4C2BDB-758B-49F3-B172-7351AAA51C58}" Order="3" Name="Высокий" ToolTip="Аварийная задача (выполняется как можно быстрее, при ее появлении текущая задача более низкого уровня откладывается и начинается выполнение аварийной задачи)" StyleSheet="Task.Priority.Tall" Icon="Task.Priority.Tall"/>
   <_TaskPriority IsSystem="true" UID="{CED1B019-C1CD-4044-A9B1-2A97273143F4}" Order="4" Name="Критический" ToolTip="Задачи с критическим приоритетом являются самыми, все остальные задач отходят на второй план." StyleSheet="Task.Priority.Critical" Icon="Task.Priority.Critical"/>
 
-  <_TaskStatus IsSystem="true" UID="{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}" Name="Открыта" ButtonText="Открыть" StyleSheet="QLabel.TaskStatus.Open" Order="1"/>
-  <_TaskStatus IsSystem="true" UID="{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}" Name="В работе" ButtonText="В работу" StyleSheet="QLabel.TaskStatus.InWork" Order="2"/>
-  <_TaskStatus IsSystem="true" UID="{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}" Name="Выполнена" ButtonText="Выполнить" StyleSheet="QLabel.TaskStatus.InWork" Order="3"/>
-  <_TaskStatus IsSystem="true" UID="{D3F65984-117E-4AFE-81E0-1198533767F8}" Name="Не будет выполнена" ButtonText="Не будет выполнено" StyleSheet="QLabel.TaskStatus.NotDone" Order="4"/>
-  <_TaskStatus IsSystem="true" UID="{1617EC4F-50F6-4912-8143-4D702E1F5F8F}" Name="Закрыта" ButtonText="Закрыть" StyleSheet="QLabel.TaskStatus.Close" Order="5"/>
+  <_TaskStatus IsSystem="true" UID="{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}" Order="1" Name="Открыта" ButtonText="Открыть" StyleSheet="QLabel.TaskStatus.Open" Icon="Task.Status.Open"/>
+  <_TaskStatus IsSystem="true" UID="{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}" Order="2" Name="В работе" ButtonText="В работу" StyleSheet="QLabel.TaskStatus.InWork" Icon="Task.Status.InWork"/>
+  <_TaskStatus IsSystem="true" UID="{20F3D6A5-1A90-4228-9C39-8F05DFDED9FE}" Order="3" Name="Выполнена" ButtonText="Выполнить" StyleSheet="QLabel.TaskStatus.InWork" Icon="Task.Status.Done"/>
+  <_TaskStatus IsSystem="true" UID="{D3F65984-117E-4AFE-81E0-1198533767F8}" Order="4" Name="Не будет выполнена" ButtonText="Не будет выполнено" StyleSheet="QLabel.TaskStatus.NotDone" Icon="Task.Status.NotDone"/>
+  <_TaskStatus IsSystem="true" UID="{1617EC4F-50F6-4912-8143-4D702E1F5F8F}" Order="5" Name="Закрыта" ButtonText="Закрыть" StyleSheet="QLabel.TaskStatus.Close" Icon="Task.Status.Close"/>
 
 </XSR>

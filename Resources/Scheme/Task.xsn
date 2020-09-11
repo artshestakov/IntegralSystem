@@ -56,16 +56,18 @@
 
   <Table Name="_TaskStatus" UID="{79619A77-8385-4AD9-BCB5-3E2B08479166}" Alias="tsst" ShowOnly="true" LocalName="Статус задачи" LocalListName="Статусы задач" TitleName="Name" IsSystem="true">
     <Fields>
-      <Field UID="{0E0D9E42-AFD9-4798-8B7B-F98237FE72F4}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{EB5DCE7E-AB26-4B53-B088-82E3F2EC6439}" Name="ButtonText" Type="String" LabelName="Текст кнопки" LocalListName="Текст кнопки" NotNull="true"/>
-      <Field UID="{27CA4711-86BE-4717-B95A-C92C79691AFD}" Name="StyleSheet" Type="String" LabelName="Стиль" LocalListName="Стиль" NotNull="true"/>
       <Field UID="{34AC5440-D7F0-4811-BC5F-C9BDCCCC1CA6}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
+      <Field UID="{0E0D9E42-AFD9-4798-8B7B-F98237FE72F4}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+      <Field UID="{EB5DCE7E-AB26-4B53-B088-82E3F2EC6439}" Name="ButtonText" Type="String" LabelName="Текст кнопки" LocalListName="Текст кнопки"/>
+      <Field UID="{27CA4711-86BE-4717-B95A-C92C79691AFD}" Name="StyleSheet" Type="String" LabelName="Стиль" LocalListName="Стиль"/>
+      <Field UID="{F3CFAD71-DD49-4D53-8202-5F65ED3C2632}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка"/>
     </Fields>
     <Indexes>
+      <Index Field="Order"/>
       <Index Field="Name"/>
       <Index Field="ButtonText"/>
       <Index Field="StyleSheet"/>
-      <Index Field="Order"/>
+      <Index Field="Icon"/>
     </Indexes>
   </Table>
 
