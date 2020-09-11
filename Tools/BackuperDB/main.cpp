@@ -25,14 +25,12 @@ int main(int argc, char **argv)
 	//Объявляем строковый поток
 	std::stringstream StringStream;
 
-	//Устанавливаем переменную среды для пароля
-	StringStream << "PGPASSWORD=" << argv[3];
+    //Устанавливаем переменную среды для пароля (только для Windows)
 #ifdef WIN32
+    StringStream << "PGPASSWORD=" << argv[3];
 	_putenv(StringStream.str().c_str());
-#else
-    putenv((char *)StringStream.str().c_str());
+    StringStream.str(std::string());
 #endif
-	StringStream.str(std::string());
 
 	//Формируем имя файла бекапа и скрипта для ролей
 	StringStream << argv[1] << argv[2] << '_' << GetDate() << '_' << GetTime() << ".";
@@ -40,11 +38,12 @@ int main(int argc, char **argv)
 	StringStream.str(std::string());
 
 	//Формируем команду для создания бекапа
-	StringStream << "pg_dump";
 #ifdef WIN32
-	StringStream << ".exe";
+    StringStream << "pg_dump.exe ";
+#else //В случае с Linux передаём в командную строку переменную PGPASSWORD
+    StringStream << "PGPASSWORD=" << argv[3] << " pg_dump ";
 #endif
-	StringStream << " -h 127.0.0.1 ";
+    StringStream << "-h 127.0.0.1 ";
 	StringStream << "-p 5432 ";
 	StringStream << "-U postgres ";
 	StringStream << "-F c ";
@@ -67,11 +66,12 @@ int main(int argc, char **argv)
 
 	//Очищаем буфер и формируем команду бекапа ролей
 	StringStream.str(std::string());
-	StringStream << "pg_dumpall";
 #ifdef WIN32
-	StringStream << ".exe";
+    StringStream << "pg_dumpall.exe ";
+#else //В случае с Linux передаём в командную строку переменную PGPASSWORD
+    StringStream << "PGPASSWORD=" << argv[3] << " pg_dumpall ";
 #endif
-	StringStream << " -h 127.0.0.1 ";
+    StringStream << "-h 127.0.0.1 ";
 	StringStream << "-p 5432 ";
 	StringStream << "-U postgres ";
 	StringStream << "-r ";
