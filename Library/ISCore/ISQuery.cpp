@@ -77,7 +77,7 @@ bool ISQuery::Execute()
     {
         if (Msec > MAX_QUERY_TIME)
         {
-            ISLOGGER_W(QString("Long query %1 msec: %2").arg(SqlQuery.lastQuery().simplified()).arg(Msec));
+            ISLOGGER_W(QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 
@@ -100,7 +100,7 @@ bool ISQuery::Execute(const QString &sql_text)
     {
         if (Msec > MAX_QUERY_TIME)
         {
-            ISLOGGER_W(QString("Long query %1 msec: %2").arg(SqlQuery.lastQuery().simplified()).arg(Msec));
+			ISLOGGER_W(QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 
@@ -123,7 +123,7 @@ bool ISQuery::Execute(QSqlDatabase &sql_database, const QString &sql_text)
     {
         if (Msec > MAX_QUERY_TIME)
         {
-            ISLOGGER_W(QString("Long query %1 msec: %2").arg(SqlQuery.lastQuery().simplified()).arg(Msec));
+			ISLOGGER_W(QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 	bool Result = SqlQuery.lastError().type() == QSqlError::NoError;
