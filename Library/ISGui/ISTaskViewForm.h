@@ -90,7 +90,7 @@ private:
 	QButtonGroup *ButtonGroupStatus;
 	ISPushButton *ButtonReopen;
 	ISPushButton *ButtonActions;
-	ISPushButton *ButtonVote;
+	ISCheckEdit *CheckVote;
 	ISTextEdit *TextEdit;
 	ISListWidget *ListWidgetSubTask;
 	QTabWidget *TabWidget;

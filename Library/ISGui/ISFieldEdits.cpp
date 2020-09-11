@@ -89,6 +89,16 @@ void ISCheckEdit::SetCheckableStrikeOut(bool StrikeOut)
 		disconnect(CheckBox, &QCheckBox::stateChanged, this, &ISCheckEdit::CheckableStrikeOut);
 }
 //-----------------------------------------------------------------------------
+void ISCheckEdit::SetIcon(const QIcon &Icon)
+{
+	CheckBox->setIcon(Icon);
+}
+//-----------------------------------------------------------------------------
+void ISCheckEdit::SetIconSize(const QSize &Size)
+{
+	CheckBox->setIconSize(Size);
+}
+//-----------------------------------------------------------------------------
 QCheckBox* ISCheckEdit::GetCheckBox()
 {
 	return CheckBox;

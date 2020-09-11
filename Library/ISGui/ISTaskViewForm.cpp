@@ -285,12 +285,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	}
 	LayoutButtonStatus->addWidget(ButtonActions);
 
-	ButtonVote = new ISPushButton(BUFFER_ICONS("Task.Vote"), QString::number(VoteCount), WidgetButtonStatus);
-	ButtonVote->setToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
-	ButtonVote->setCheckable(true);
-	ButtonVote->setChecked(IsVoted);
-	connect(ButtonVote, &ISPushButton::clicked, this, &ISTaskViewForm::Vote);
-	LayoutButtonStatus->addWidget(ButtonVote);
+	CheckVote = new ISCheckEdit(WidgetButtonStatus);
+	CheckVote->SetText(QString::number(VoteCount));
+	CheckVote->SetToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
+	CheckVote->SetIcon(BUFFER_ICONS("Task.Vote"));
+	CheckVote->SetIconSize(ISDefines::Gui::SIZE_32_32);
+	CheckVote->SetValue(IsVoted);
+	connect(CheckVote, &ISFieldEditBase::DataChanged, this, &ISTaskViewForm::Vote);
+	LayoutButtonStatus->addWidget(CheckVote);
 
 	QGroupBox *GroupBoxDescription = new QGroupBox(LANG("Task.Description"), this);
 	GroupBoxDescription->setLayout(new QVBoxLayout());
@@ -828,9 +830,9 @@ void ISTaskViewForm::Vote()
 	if (qVote.ExecuteFirst())
 	{
 		VoteCount = qVote.ReadColumn("task_vote").toInt();
-		IsVoted = !IsVoted;
-		ButtonVote->setText(QString::number(VoteCount));
-		ButtonVote->setToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
+		IsVoted = CheckVote->GetValue().toBool();
+		CheckVote->SetText(QString::number(VoteCount));
+		CheckVote->SetToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
 	}
 	else
 	{

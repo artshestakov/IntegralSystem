@@ -25,6 +25,8 @@ public:
 	void SetReadOnly(bool read_only) override;
 	void SetText(const QString &Text);
 	void SetCheckableStrikeOut(bool StrikeOut); //≈сли включить это свойство, то при активном состо€нии текст будет зачеркнутым
+	void SetIcon(const QIcon &Icon);
+	void SetIconSize(const QSize &Size);
 
 protected:
 	QCheckBox* GetCheckBox();
