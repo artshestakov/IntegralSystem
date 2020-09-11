@@ -5,13 +5,13 @@
 #include "iscore_global.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-#define CURRENT_USER_ID ISMetaUser::Instance().UserData->ID
-#define CURRENT_USER_OID ISMetaUser::Instance().UserData->OID
+#define CURRENT_USER_ID ISMetaUser::Instance().UserData.ID
+#define CURRENT_USER_OID ISMetaUser::Instance().UserData.OID
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISMetaUser
 {
 public:
-	ISMetaUserData *UserData;
+	ISMetaUserData UserData;
 
 public:
 	static ISMetaUser& Instance();

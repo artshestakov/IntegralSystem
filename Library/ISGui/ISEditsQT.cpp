@@ -57,7 +57,7 @@ ISQLineEdit::ISQLineEdit(QWidget *parent)
 	setStyleSheet(STYLE_SHEET("ISLineEdit"));
 	setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	setDragEnabled(true);
-	SetMenuSelected(ISProperty::Instance().GetValue(PROPERTY_LINE_EDIT_SELECTED_MENU).toBool());
+	SetMenuSelected(PROPERTY_GET(PROPERTY_LINE_EDIT_SELECTED_MENU).toBool());
 
 	ActionClear = new QAction(this);
 	ActionClear->setToolTip(LANG("Clear.Field"));

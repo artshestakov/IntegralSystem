@@ -10,7 +10,6 @@ public:
 	static void Shutdown(ISSplashScreen *SplashScreen);
 
 private:
-	static bool IsValidUser(ISSplashScreen *SplashScreen); //Проверка валидности пользователя
 	static bool CheckAccessDatabase(ISSplashScreen *SplashScreen); //Проверка доступа к базе
 };
 //-----------------------------------------------------------------------------

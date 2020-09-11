@@ -24,10 +24,6 @@
 #include "ISConfig.h"
 #include "ISHistory.h"
 //-----------------------------------------------------------------------------
-static QString QS_USER_CHECK = PREPARE_QUERY("SELECT "
-											 "(SELECT COUNT(*) FROM _users WHERE usrs_login = :Login), "
-											 "(SELECT usrs_isdeleted FROM _users WHERE usrs_login = :Login)");
-//-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
 	bool UseProtocol = CONFIG_BOOL("Protocol/Use");
@@ -77,9 +73,9 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	}
 
 	//Загрузка мета-данных о пользователе
-	ISMetaUser::Instance().Initialize();
-	if (!IsValidUser(SplashScreen))
+	if (!ISMetaUser::Instance().Initialize())
 	{
+		ISMessageBox::ShowCritical(SplashScreen, ISMetaUser::Instance().GetErrorString());
 		return false;
 	}
 
@@ -150,7 +146,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 
 	ISProtocol::EnterApplication();
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
-	ISProperty::Instance().SetValue(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
+	PROPERTY_SET(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -184,79 +180,9 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	ISGui::ExitApplication();
 }
 //-----------------------------------------------------------------------------
-bool ISStartup::IsValidUser(ISSplashScreen *SplashScreen)
-{
-	//Проверка введенных данных пользователем
-	ISQuery qSelectUser(QS_USER_CHECK);
-	qSelectUser.BindValue(":Login", ISMetaUser::Instance().UserData->Login);
-	if (!qSelectUser.ExecuteFirst())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.CheckValidUser"), qSelectUser.GetErrorString());
-		return false;
-	}
-
-	//Если такой логин в БД не существует
-	if (!qSelectUser.ReadColumn("count").toInt())
-	{
-		ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.NotFoundUserWithLogin").arg(ISMetaUser::Instance().UserData->Login));
-		return false;
-	}
-
-	//Если такой логин помечен на удаление
-	if (qSelectUser.ReadColumn("usrs_isdeleted").toBool())
-	{
-		ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Error.CurrentUserIsDeleted"));
-		return false;
-	}
-
-	//Если у пользователя нет права доступа
-	if (!ISMetaUser::Instance().UserData->AccessAllowed)
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.User.NotAccessAllowed"));
-		return false;
-	}
-
-	//Проверка наличия привязки пользователя к группе
-	if (!ISMetaUser::Instance().UserData->System)
-	{
-		if (!ISMetaUser::Instance().UserData->GroupID)
-		{
-			ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.User.NotLinkWithGroup"));
-			return false;
-		}
-	}
-
-	//Если для пользователя настроено ограничение срока действия учётной записи
-	if (ISMetaUser::Instance().UserData->AccountLifeTime)
-	{
-		QDate DateStart = ISMetaUser::Instance().UserData->AccountLifeTimeStart;
-		QDate DateEnd = ISMetaUser::Instance().UserData->AccountLifeTimeEnd;
-		if (QDate::currentDate() < DateStart)
-		{
-			ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.AccountLifetimeNotStarted"));
-			return false;
-		}
-		else if (QDate::currentDate() == DateEnd) //Если сегодня истекает срок действия
-		{
-			ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.AccountLifetimeLeftLastDay"));
-		}
-		else if (QDate::currentDate().addDays(1) == DateEnd) //Если завтра истекает срок действия
-		{
-			ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.AccountLifetimeLeftLastDayTwo"));
-		}
-		else if (QDate::currentDate() > DateEnd)
-		{
-			ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.AccountLifetimeEnded"));
-			return false;
-		}
-	}
-
-	return true;
-}
-//-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(ISSplashScreen *SplashScreen)
 {
-	if (ISMetaUser::Instance().UserData->System)
+	if (ISMetaUser::Instance().UserData.System)
 	{
 		return true;
 	}

@@ -85,7 +85,6 @@
   <Local Name="Message.Error.DeleteInsetedFiles" Russian="Не удалось удалить добавленные файлы."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
   <Local Name="Message.Error.SelectStorageFileData" Russian="Не удалось получить файл из базы данных."/>
-  <Local Name="Message.Error.CheckValidUser" Russian="Не удалось получить информацию о пользователе."/>
   <Local Name="Message.Error.CurrentUserIsDeleted" Russian="Ваша учётная запись помечена на удаление, обратитесь к системному администратору."/>
   <Local Name="Message.Error.CheckAllQuery" Russian="Ошибка в SQL-запросе!"/>
   <Local Name="Message.Error.SelectSettingsDatabase" Russian="Не удалось загрузить настройки базы данных."/>
@@ -139,6 +138,8 @@
   <Local Name="Message.Error.UpdateDoneTaskCheckList" Russian="Не удалось изменить состояние пункта!"/>
   <Local Name="Message.Error.DeleteTaskCheckList" Russian="Не удалось удалить пункт!"/>
   <Local Name="Message.Error.TaskVote" Russian="Не удалось произвести операцию с голосованием!"/>
+  <Local Name="Message.Error.MetaUserSelect" Russian="Не удалось загрузить данные пользователя: %1"/>
+  <Local Name="Message.Error.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден. Убедитесь, что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
@@ -154,11 +155,8 @@
   <Local Name="Message.Warning.NotifyNotInserted" Russian="Не удалось добавить напоминание!"/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
   <Local Name="Message.Warning.AccountLifetimeNotStarted" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи ещё не начался."/>
-  <Local Name="Message.Warning.AccountLifetimeLeftLastDay" Russian="ВНИМАНИЕ! Сегодня истекает срок действия Вашей учётной записи."/>
-  <Local Name="Message.Warning.AccountLifetimeLeftLastDayTwo" Russian="ВНИМАНИЕ! Завтра истекает срок действия Вашей учётной записи."/>
   <Local Name="Message.Warning.AccountLifetimeEnded" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи закончился. Обратитесь к администратору системы за подробностями для восстановления доступа."/>
   <Local Name="Message.Warning.NotDeleteCascadeRecord" Russian="Не удалось удалить запись с кодом &quot;%1&quot;."/>
-  <Local Name="Message.Warning.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден. Убедитесь, что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
   <Local Name="Message.Warning.NotValidInputPasswordForChange" Russian="Вы ввели неверный текущий пароль!"/>
   <Local Name="Message.Warning.PasswordLenghtSmall" Russian="Пароль должен быть не короче %1 символов."/>

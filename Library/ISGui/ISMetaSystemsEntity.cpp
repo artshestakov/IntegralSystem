@@ -45,9 +45,9 @@ bool ISMetaSystemsEntity::Initialize()
 		while (qSelect.Next())
 		{
 			ISUuid SystemUID = qSelect.ReadColumn("stms_uid"), SubSystemUID = qSelect.ReadColumn("sbsm_uid");
-			if (!ISMetaUser::Instance().UserData->System) //≈сли текущий пользователь не системный
+			if (!ISMetaUser::Instance().UserData.System) //≈сли текущий пользователь не системный
 			{
-				if (!ISMetaUser::Instance().UserData->GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
+				if (!ISMetaUser::Instance().UserData.GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
 				{
 					if (!ISUserRoleEntity::Instance().CheckAccessSubSystem(SubSystemUID)) //≈сли доступа к подсистеме нет - перезодить на следующую итерацию цикла
 					{

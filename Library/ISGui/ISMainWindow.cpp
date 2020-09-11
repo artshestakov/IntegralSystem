@@ -30,8 +30,8 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	ISObjects::Instance().Info.LocalName.isEmpty() ?
-		setWindowTitle("IntegralSystem: " + ISMetaUser::Instance().UserData->FIO) :
-		setWindowTitle("IntegralSystem - " + ISObjects::Instance().Info.LocalName + " : " + ISMetaUser::Instance().UserData->FIO);
+		setWindowTitle("IntegralSystem: " + ISMetaUser::Instance().UserData.FIO) :
+		setWindowTitle("IntegralSystem - " + ISObjects::Instance().Info.LocalName + " : " + ISMetaUser::Instance().UserData.FIO);
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_ICONS("Logo"));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
@@ -165,7 +165,7 @@ void ISMainWindow::ShowHistoryForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()
 {
-	if (ISMetaUser::Instance().UserData->System)
+	if (ISMetaUser::Instance().UserData.System)
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotChangeSystemUserPassword"));
 		return;

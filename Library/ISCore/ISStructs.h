@@ -30,22 +30,15 @@ struct StructModelItem
 //-----------------------------------------------------------------------------
 struct ISMetaUserData
 {
-    ISMetaUserData() : System(false), ID(0), AccessAllowed(false), AccountLifeTime(false), GroupID(0), GroupFullAccess(false) { }
+    ISMetaUserData() : System(false), ID(0), GroupID(0), GroupFullAccess(false) { }
 
     bool System; //Системный
     int ID; //Идентификатор пользователя
 	int OID; //Системный идентификатор пользователя
 	QString FIO; //ФИО
-    QDate Birthday; //Дата рождения
     QString Login; //Логин
-    QString Password; //Пароль
-    bool AccessAllowed; //Доступ разрешен
-    bool AccountLifeTime; //Использовать срок действия учётной записи
-    QDate AccountLifeTimeStart; //Начало действия учётной записи
-    QDate AccountLifeTimeEnd; //Окончание действия учётной записи
 
     int GroupID; //Идентификатор группы в которой состоит пользователь
-    QString GroupName; //Наименование группы пользователя
     bool GroupFullAccess; //Полный доступ
 };
 //-----------------------------------------------------------------------------

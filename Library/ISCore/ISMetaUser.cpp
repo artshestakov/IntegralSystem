@@ -2,8 +2,10 @@
 #include "ISQuery.h"
 #include "ISDatabase.h"
 #include "ISConstants.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER = PREPARE_QUERY("SELECT "
+									   "usrs_isdeleted, "
 									   "usrs_issystem, "
 									   "usrs_id, "
 									   "usrs_oid, "
@@ -18,19 +20,17 @@ static QString QS_USER = PREPARE_QUERY("SELECT "
 									   "usgp_fullaccess "
 									   "FROM _users "
 									   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
-									   "WHERE NOT usrs_isdeleted "
-									   "AND usrs_login = :Login");
+									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
 ISMetaUser::ISMetaUser()
-	: UserData(new ISMetaUserData()),
-	ErrorString(NO_ERROR_STRING)
+	: ErrorString(NO_ERROR_STRING)
 {
 	
 }
 //-----------------------------------------------------------------------------
 ISMetaUser::~ISMetaUser()
 {
-	delete UserData;
+
 }
 //-----------------------------------------------------------------------------
 ISMetaUser& ISMetaUser::Instance()
@@ -46,28 +46,65 @@ QString ISMetaUser::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISMetaUser::Initialize()
 {
+	//Запрашиваем информацию о пользователе
 	ISQuery qSelectUser(QS_USER);
-	qSelectUser.BindValue(":Login", UserData->Login);
-	bool Result = qSelectUser.ExecuteFirst();
-	if (Result)
+	qSelectUser.BindValue(":Login", UserData.Login);
+	if (!qSelectUser.Execute()) //Не удалось выполнить запрос
 	{
-		UserData->System = qSelectUser.ReadColumn("usrs_issystem").toBool();
-		UserData->ID = qSelectUser.ReadColumn("usrs_id").toInt();
-		UserData->OID = qSelectUser.ReadColumn("usrs_oid").toInt();
-		UserData->GroupID = qSelectUser.ReadColumn("usrs_group").toInt();
-		UserData->FIO = qSelectUser.ReadColumn("usrs_fio").toString();
-		UserData->Birthday = qSelectUser.ReadColumn("usrs_birthday").toDate();
-		UserData->AccessAllowed = qSelectUser.ReadColumn("usrs_accessallowed").toBool();
-		UserData->AccountLifeTime = qSelectUser.ReadColumn("usrs_accountlifetime").toBool();
-		UserData->AccountLifeTimeStart = qSelectUser.ReadColumn("usrs_accountlifetimestart").toDate();
-		UserData->AccountLifeTimeEnd = qSelectUser.ReadColumn("usrs_accountlifetimeend").toDate();
-		UserData->GroupName = qSelectUser.ReadColumn("usgp_name").toString();
-		UserData->GroupFullAccess = qSelectUser.ReadColumn("usgp_fullaccess").toBool();
+		ErrorString = LANG("Message.Error.MetaUserSelect").arg(qSelectUser.GetErrorString());
+		return false;
 	}
-	else
+	
+	//Не удалось перейти к первой записи: учётная запись существует в БД, но отсутствует в таблице _Users
+	if (!qSelectUser.First())
 	{
-		ErrorString = qSelectUser.GetErrorString();
-	}	
-	return Result;
+		ErrorString = LANG("Message.Error.NotFoundUserWithLogin").arg(ISMetaUser::Instance().UserData.Login);
+		return false;
+	}
+	
+	//Учётная запись помечена на удаление
+	if (qSelectUser.ReadColumn("usrs_isdeleted").toBool())
+	{
+		ErrorString = LANG("Message.Error.CurrentUserIsDeleted");
+		return false;
+	}
+
+	//Заполняем структуру данными
+	UserData.System = qSelectUser.ReadColumn("usrs_issystem").toBool();
+	UserData.ID = qSelectUser.ReadColumn("usrs_id").toInt();
+	UserData.OID = qSelectUser.ReadColumn("usrs_oid").toInt();
+	UserData.GroupID = qSelectUser.ReadColumn("usrs_group").toInt();
+	UserData.FIO = qSelectUser.ReadColumn("usrs_fio").toString();
+	UserData.GroupFullAccess = qSelectUser.ReadColumn("usgp_fullaccess").toBool();
+
+	//Если у пользователя нет права доступа
+	if (!qSelectUser.ReadColumn("usrs_accessallowed").toBool())
+	{
+		ErrorString = LANG("Message.Error.User.NotAccessAllowed");
+		return false;
+	}
+
+	//Проверка наличия привязки пользователя к группе
+	if (!UserData.System && !UserData.GroupID)
+	{
+		ErrorString = LANG("Message.Error.User.NotLinkWithGroup");
+		return false;
+	}
+
+	//Если для пользователя настроено ограничение срока действия учётной записи
+	if (qSelectUser.ReadColumn("usrs_accountlifetime").toBool())
+	{
+		if (QDate::currentDate() < qSelectUser.ReadColumn("usrs_accountlifetimestart").toDate())
+		{
+			ErrorString = LANG("Message.Warning.AccountLifetimeNotStarted");
+			return false;
+		}
+		else if (QDate::currentDate() > qSelectUser.ReadColumn("usrs_accountlifetimeend").toDate())
+		{
+			ErrorString = LANG("Message.Warning.AccountLifetimeEnded");
+			return false;
+		}
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------
