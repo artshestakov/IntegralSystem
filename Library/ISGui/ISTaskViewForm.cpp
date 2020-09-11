@@ -395,9 +395,38 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Deadline") + ':', GroupBoxDetails));
 	
-	QLabel *LabelDeadline = new QLabel(TaskDeadline.isNull() ? LANG("Task.Right.Deadline.Empty") : ISGui::ConvertDateToString(TaskDeadline, FORMAT_DATE_V4));
-	ISGui::SetFontWidgetBold(LabelDeadline, true);
-	LayoutRight->addWidget(LabelDeadline);
+	//Если срок задачи сегодня, завтра или она вообще просрочена - делаем виджет-надпись с иконкой
+	QDate CurrentDate = QDate::currentDate();
+	if (TaskDeadline == CurrentDate || TaskDeadline == CurrentDate.addDays(1) || TaskDeadline < CurrentDate)
+	{
+		ISLabelPixmapText *LabelDeadline = new ISLabelPixmapText(GroupBoxDetails);
+		LabelDeadline->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+		if (TaskDeadline == CurrentDate)
+		{
+			LabelDeadline->SetPixmapText(BUFFER_ICONS("Task.Filter.Today").pixmap(40, 40), LANG("Today"));
+		}
+		else if (TaskDeadline == CurrentDate.addDays(1))
+		{
+			LabelDeadline->SetPixmapText(BUFFER_ICONS("Task.Filter.Tomorrow").pixmap(40, 40), LANG("Tomorrow"));
+		}
+		else if(TaskDeadline < CurrentDate)
+		{
+			LabelDeadline->SetPixmapText(BUFFER_ICONS("Task.Filter.Expired").pixmap(40, 40), LANG("Task.Filter.Expired"));
+			LabelDeadline->setToolTip(ISGui::ConvertDateToString(TaskDeadline, FORMAT_DATE_V4));
+			LabelDeadline->setCursor(CURSOR_WHATS_THIS);
+		}
+		else
+		{
+			LabelDeadline->SetText(TaskDeadline.isNull() ? LANG("Task.Right.Deadline.Empty") : ISGui::ConvertDateToString(TaskDeadline, FORMAT_DATE_V4));
+		}
+		LayoutRight->addWidget(LabelDeadline);
+	}
+	else //Делаем обычный виджет-надпись
+	{
+		QLabel *LabelDeadline = new QLabel(TaskDeadline.isNull() ? LANG("Task.Right.Deadline.Empty") : ISGui::ConvertDateToString(TaskDeadline, FORMAT_DATE_V4), GroupBoxDetails);
+		ISGui::SetFontWidgetBold(LabelDeadline, true);
+		LayoutRight->addWidget(LabelDeadline);
+	}
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
