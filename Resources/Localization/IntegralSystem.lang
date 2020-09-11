@@ -592,6 +592,8 @@
   <Local Name="Task.Details" Russian="Подробности"/>
   <Local Name="Task.Right.Executor" Russian="Исполнитель"/>
   <Local Name="Task.Right.Executor.Empty" Russian="Не назначен"/>
+  <Local Name="Task.Right.Deadline" Russian="Срок выполнения"/>
+  <Local Name="Task.Right.Deadline.Empty" Russian="Дата не указана"/>
   <Local Name="Task.Right.Owner" Russian="Автор задачи"/>
   <Local Name="Task.Right.Owner.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Type" Russian="Тип задачи"/>

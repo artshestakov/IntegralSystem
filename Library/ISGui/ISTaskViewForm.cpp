@@ -21,8 +21,9 @@
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "
 									   "t.task_description, "
-									   "userphotobyid(ue.usrs_id) AS task_executor_photo, "
+									   "t.task_deadline, "
 									   "ue.usrs_fio AS task_executor_name, "
+									   "userphotobyid(ue.usrs_id) AS task_executor_photo, "
 									   "tt.tstp_name AS task_type, "
 									   "ts.tsst_uid AS task_status_uid, "
 									   "ts.tsst_name AS task_status_name, "
@@ -185,8 +186,9 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	TaskName = qSelect.ReadColumn("task_name").toString();
 	TaskDescription = qSelect.ReadColumn("task_description").toString();
-	TaskExecutroPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_executor_photo").toByteArray()).scaled(40, 40);
+	TaskDeadline = qSelect.ReadColumn("task_deadline").toDate();
 	TaskExecutorName = qSelect.ReadColumn("task_executor_name").toString();
+	TaskExecutroPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_executor_photo").toByteArray()).scaled(40, 40);
 	TaskType = qSelect.ReadColumn("task_type").toString();
 	TaskStatusUID = qSelect.ReadColumn("task_status_uid");
 	TaskStatusName = qSelect.ReadColumn("task_status_name").toString();
@@ -392,6 +394,14 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	ISScrollArea *ScrollRight = new ISScrollArea(GroupBoxDetails);
 	ScrollRight->widget()->setLayout(LayoutRight);
 	GroupBoxDetails->layout()->addWidget(ScrollRight);
+
+	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Deadline") + ':', GroupBoxDetails));
+	
+	QLabel *LabelDeadline = new QLabel(TaskDeadline.isNull() ? LANG("Task.Right.Deadline.Empty") : ISGui::ConvertDateToString(TaskDeadline, FORMAT_DATE_V4));
+	ISGui::SetFontWidgetBold(LabelDeadline, true);
+	LayoutRight->addWidget(LabelDeadline);
+
+	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Executor") + ':', GroupBoxDetails));
 

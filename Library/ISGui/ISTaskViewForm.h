@@ -108,8 +108,9 @@ private:
 	int TaskID;
 	QString TaskName;
 	QString TaskDescription;
-	QPixmap TaskExecutroPhoto;
+	QDate TaskDeadline;
 	QString TaskExecutorName;
+	QPixmap TaskExecutroPhoto;
 	QString TaskType;
 	ISUuid TaskStatusUID;
 	QString TaskStatusName;
