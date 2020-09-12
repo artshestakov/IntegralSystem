@@ -205,10 +205,6 @@ struct PMetaTable : public PMetaBase
 	bool ShowOnly; //Только просмотр таблицы
 	bool IsSystem;
 
-	QString Parent;
-	QString Where;
-	QString OrderField;
-
 	std::vector<PMetaEscort*> Escorts; //Эскортные таблицы
 	std::vector<PMetaField*> Fields; //Поля
 	std::vector<PMetaField*> SystemFields; //Системные поля

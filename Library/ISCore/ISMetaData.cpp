@@ -559,9 +559,6 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 				MetaTable->ObjectForm = DomNamedNodeMap.namedItem("ObjectForm").nodeValue();
 				MetaTable->ShowOnly = QVariant(DomNamedNodeMap.namedItem("ShowOnly").nodeValue()).toBool();
 				MetaTable->IsSystem = QVariant(DomNamedNodeMap.namedItem("IsSystem").nodeValue()).toBool();
-				MetaTable->Parent = DomNamedNodeMap.namedItem("Parent").nodeValue();
-				MetaTable->Where = DomNamedNodeMap.namedItem("Where").nodeValue();
-				MetaTable->OrderField = DomNamedNodeMap.namedItem("OrderField").nodeValue();
 
 				if (Parent.isEmpty()) //Если мета-таблица не является запросом, проинициализировать системные поля
 				{
@@ -848,7 +845,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 			MetaField->SeparatorName = DomNamedNodeMap.namedItem("SeparatorName").nodeValue();
 			MetaField->IsSystem ? MetaTable->SystemFields.emplace_back(MetaField) : MetaTable->Fields.emplace_back(MetaField);
 
-			if (MetaTable->Parent.isEmpty() && MetaField->QueryText.isEmpty())
+			if (MetaField->QueryText.isEmpty())
 			{
 				//Проверка на заполнение обязательных атрибутов
 				Result = !MetaField->UID.isEmpty();
