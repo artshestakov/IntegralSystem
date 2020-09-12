@@ -591,11 +591,6 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 
 				if (Result)
 				{
-					Result = InitializeXSNTableJoins(MetaTable, GetChildDomNode(DomNode, "Joins").firstChild()); //»нициализаци€ JOIN'ов
-				}
-
-				if (Result)
-				{
 					if (!Parent.isEmpty()) //≈сли у мета-таблицы есть родительска€ таблица - мета-таблица €вл€етс€ запросом
 					{
 						Result = !QueriesMap.count(TableName);
@@ -1046,32 +1041,6 @@ bool ISMetaData::InitializeXSNTableEscorts(PMetaTable *MetaTable, const QDomNode
 		MetaEscort->FilterField = DomNamedNodeMap.namedItem("FilterField").nodeValue();
 		MetaEscort->ClassName = DomNamedNodeMap.namedItem("ClassName").nodeValue();
 		MetaTable->Escorts.emplace_back(MetaEscort);
-		Temp = Temp.nextSibling();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISMetaData::InitializeXSNTableJoins(PMetaTable *MetaTable, const QDomNode &DomNode)
-{
-	bool Result = true;
-	QDomNode Temp = DomNode;
-	while (!Temp.isNull())
-	{
-		Result = !Temp.attributes().isEmpty();
-		if (!Result)
-		{
-			ErrorString = QString("Empty attributes field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
-			break;
-		}
-
-		QString JoinText = Temp.attributes().namedItem("Text").nodeValue();
-		Result = !JoinText.isEmpty();
-		if (!Result)
-		{
-			ErrorString = QString("Empty join text. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
-			break;
-		}
-		MetaTable->Joins.emplace_back(JoinText);
 		Temp = Temp.nextSibling();
 	}
 	return Result;

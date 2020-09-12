@@ -59,7 +59,6 @@ protected:
     bool InitializeXSNTableIndexes(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация индексов полей таблицы
     bool InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация внешних ключей полей таблицы
     bool InitializeXSNTableEscorts(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация эскортов таблицы
-    bool InitializeXSNTableJoins(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация JOIN'ов
 
     bool InitializeXSR(); //Инициализация XSR
     bool InitializeXSR(const QString &Content); //Инициализация файла XSR

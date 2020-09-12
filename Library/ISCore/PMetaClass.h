@@ -23,7 +23,7 @@ struct PMetaIndex : public PMetaBase
 	QString GetName() //Получить имя индекса
 	{
 		QString IndexName;
-		if (!Fields.empty())
+		if (!Fields.empty()) //Если индекс составной
 		{
 			IndexName += TableName + '_';
 			for (const QString &String : Fields)
@@ -215,7 +215,6 @@ struct PMetaTable : public PMetaBase
 	std::vector<PMetaField*> AllFields; //Все поля
 
 	std::vector<PMetaField*> SystemFieldsVisible; //Отображаемые системные поля
-	ISVectorString Joins;
 };
 //-----------------------------------------------------------------------------
 struct PMetaFunction : public PMetaBase
