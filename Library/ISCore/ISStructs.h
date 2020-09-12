@@ -151,7 +151,6 @@ struct ISPrintMetaReportField
 {
     QString ReplaceValue;
     QString FieldQuery;
-    QString QueryName;
     QString ParameterName;
 };
 //-----------------------------------------------------------------------------
@@ -169,10 +168,11 @@ struct ISPrintMetaReport
 
     void SetType(const QString &type)
     {
-        if (type == QString(REPORT_TYPE_HTML))
+        if (type == REPORT_TYPE_HTML)
         {
             Type = ISNamespace::RT_Html;
         }
+		else
         {
             IS_ASSERT(false, QString("Inknown report type: %1").arg(type));
         }

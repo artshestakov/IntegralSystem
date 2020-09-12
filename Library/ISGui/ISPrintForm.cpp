@@ -11,6 +11,7 @@ ISPrintForm::ISPrintForm(const QString &TableName)
 {
 	setWindowTitle(LANG("PrintForms"));
 	setWindowIcon(BUFFER_ICONS("Print"));
+	resize(500, 500);
 	
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 

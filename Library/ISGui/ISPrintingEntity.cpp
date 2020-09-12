@@ -6,7 +6,7 @@ static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_system, rprt_typ
 										 "WHERE NOT rprt_isdeleted "
 										 "ORDER BY rprt_id");
 //-----------------------------------------------------------------------------
-static QString QS_REPORT_FIELDS = PREPARE_QUERY("SELECT rpfl_replacevalue, rpfl_fieldquery, rpfl_queryname, rpfl_parametername "
+static QString QS_REPORT_FIELDS = PREPARE_QUERY("SELECT rpfl_replacevalue, rpfl_fieldquery, rpfl_parametername "
 												"FROM _reportfields "
 												"WHERE NOT rpfl_isdeleted "
 												"AND rpfl_report = :ReportUID");
@@ -45,7 +45,7 @@ bool ISPrintingEntity::Initialize()
 
 			ISPrintMetaReport *MetaReport = new ISPrintMetaReport();
 			MetaReport->System = qSelectReport.ReadColumn("rprt_system").toBool();
-			//MetaReport->SetType(qSelectReport.ReadColumn("rprt_type").toString());
+			MetaReport->SetType(qSelectReport.ReadColumn("rprt_type").toString());
 			MetaReport->Name = qSelectReport.ReadColumn("rprt_name").toString();
 			MetaReport->LocalName = qSelectReport.ReadColumn("rprt_localname").toString();
 			MetaReport->FileTemplate = qSelectReport.ReadColumn("rprt_filetemplate").toString();
@@ -60,7 +60,6 @@ bool ISPrintingEntity::Initialize()
 					ISPrintMetaReportField *MetaReportField = new ISPrintMetaReportField();
 					MetaReportField->ReplaceValue = qSelectReportFields.ReadColumn("rpfl_replacevalue").toString();
 					MetaReportField->FieldQuery = qSelectReportFields.ReadColumn("rpfl_fieldquery").toString();
-					MetaReportField->QueryName = qSelectReportFields.ReadColumn("rpfl_queryname").toString();
 					MetaReportField->ParameterName = qSelectReportFields.ReadColumn("rpfl_parametername").toString();
 					MetaReport->Fields.emplace_back(MetaReportField);
 				}

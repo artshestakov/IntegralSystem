@@ -27,7 +27,6 @@ public:
 
     std::vector<PMetaFunction*> GetFunctions(); //Получить список всех функций
     std::vector<PMetaTable*> GetTables(); //Получить список всех таблиц
-    ISVectorString GetMetaQueries(); //Получить вектор всех мета-запросов
     std::vector<PMetaIndex*> GetSystemIndexes(); //Получить список системных индексов
     std::vector<PMetaIndex*> GetIndexes(); //Получить список индексов для пользовательских полей
     std::vector<PMetaIndex*> GetCompoundIndexes(); //Получить список составных индексов
@@ -87,7 +86,7 @@ private:
     QString CurrentXSN; //Текущий обрабатываемый XSN
     QString CurrentXSR; //Текущий обрабатываемый XSR
     QString CurrentXSF; //Текущий обрабатываемый XSF
-    bool Initialized; //Флан инициализации
+    bool Initialized; //Флаг инициализации
     std::vector<ISMetaDataType> VectorTypes; //Перечисление типов системы
 };
 //-----------------------------------------------------------------------------

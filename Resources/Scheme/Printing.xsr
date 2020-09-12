@@ -3,19 +3,12 @@
   
   <_Report IsSystem="true" UID="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" System="true" Type="Html" TableName="_Users" Name="User" LocalName="Регистрационная карточка пользователя" FileTemplate=":PrintingTemplates/UserCard.html"/>
   <_ReportFields IsSystem="true" UID="{9D66AF6A-FD32-4B8E-B905-010E86167A30}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%ID%" FieldQuery="SELECT usrs_id FROM _users WHERE usrs_id = :SourceID"/>
+  <_ReportFields IsSystem="true" UID="{07AC51F9-9F4B-475F-A308-C21935A63832}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%OID%" FieldQuery="SELECT usrs_oid FROM _users WHERE usrs_id = :SourceID"/>
   <_ReportFields IsSystem="true" UID="{6FB1628F-059C-409F-A6CD-03345F2ED0C5}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%CreationDate%" FieldQuery="SELECT usrs_creationdate FROM _users WHERE usrs_id = :SourceID"/>
   <_ReportFields IsSystem="true" UID="{410298C4-AB2B-4F0E-B794-4588C4410AE4}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%Group%" FieldQuery="SELECT usgp_name FROM _users LEFT JOIN _usergroup ON usgp_id = usrs_group WHERE usrs_id = :SourceID"/>
-  <_ReportFields IsSystem="true" UID="{21093877-E7E7-4F11-B95A-89BF4C7B2A14}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%Surname%" FieldQuery="SELECT usrs_fio FROM _users WHERE usrs_id = :SourceID"/>
+  <_ReportFields IsSystem="true" UID="{21093877-E7E7-4F11-B95A-89BF4C7B2A14}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%FIO%" FieldQuery="SELECT usrs_fio FROM _users WHERE usrs_id = :SourceID"/>
   <_ReportFields IsSystem="true" UID="{9B06E6DA-7206-4149-98AB-094B1561CF2E}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%Birthday%" FieldQuery="SELECT usrs_birthday FROM _users WHERE usrs_id = :SourceID"/>
   <_ReportFields IsSystem="true" UID="{5320EC65-AB17-4FDA-926D-67C46D737A6A}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%Login%" FieldQuery="SELECT usrs_login FROM _users WHERE usrs_id = :SourceID"/>
   <_ReportFields IsSystem="true" UID="{2B84C903-9EB2-45AF-A045-54680C7F8A1B}" Report="{7E434AAA-E775-4B18-BBC9-A17245B3720D}" ReplaceValue="%AccessAllowed%" FieldQuery="SELECT usrs_accessallowed FROM _users WHERE usrs_id = :SourceID"/>
-
-  <_Report IsSystem="true" UID="{2BBB97B7-600E-4525-B6AB-1F62957BCC6B}" System="true" Type="Html" TableName="_Users" Name="UserProtocol" LocalName="Протокол работы пользователя" FileTemplate=":PrintingTemplates/UserProtocol.html"/>
-  <_ReportFields IsSystem="true" UID="{C7C6B638-4D24-4ADE-9E4F-B3161561FE75}" Report="{2BBB97B7-600E-4525-B6AB-1F62957BCC6B}" ReplaceValue="%UserFullName%" FieldQuery="SELECT usrs_fio FROM _users WHERE usrs_id = :SourceID"/>
-  <_ReportFields IsSystem="true" UID="{CDCECA60-8DAB-4148-9517-8E74DDF351ED}" Report="{2BBB97B7-600E-4525-B6AB-1F62957BCC6B}" ReplaceValue="%Table%" QueryName="UserProtocol" ParameterName=":UserID"/>
-
-	<_Report IsSystem="true" UID="{6D5B728A-BFEB-48CD-A4B8-AC56BAD42130}" System="true" Type="Html" TableName="_Users" Name="UserHistory" LocalName="История работы пользователя" FileTemplate=":PrintingTemplates/UserHistory.html"/>
-	<_ReportFields IsSystem="true" UID="{3B4800B5-7CB6-4615-8ABD-EF4F03DA7CEA}" Report="{6D5B728A-BFEB-48CD-A4B8-AC56BAD42130}" ReplaceValue="%UserFullName%" FieldQuery="SELECT usrs_fio FROM _users WHERE usrs_id = :SourceID"/>
-  <_ReportFields IsSystem="true" UID="{D2B5A175-CF01-4B7C-8F90-75775E6CE964}" Report="{6D5B728A-BFEB-48CD-A4B8-AC56BAD42130}" ReplaceValue="%Table%" QueryName="UserHistory" ParameterName=":UserID"/>
   
 </XSR>

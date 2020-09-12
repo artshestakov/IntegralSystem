@@ -1345,6 +1345,7 @@ void ISListBaseForm::Print()
 	ISPrintMetaReport *MetaReport = PrintListForm.GetMetaReport();
 	if (!MetaReport)
 	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotGettingMetaReport"));
 		return;
 	}
 

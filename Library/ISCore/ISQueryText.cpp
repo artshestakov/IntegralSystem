@@ -3,7 +3,6 @@
 #include "ISSystem.h"
 #include "ISCountingTime.h"
 #include "ISMetaData.h"
-#include "ISMetaViewQuery.h"
 #include "ISDatabase.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
@@ -59,25 +58,6 @@ bool ISQueryText::CheckAllQueries()
 				}
 			}
 			Vector.clear();
-
-			if (Result)
-			{
-				for (const QString &SqlText : ISMetaData::Instance().GetMetaQueries())
-				{
-					QSqlQuery SqlMetaQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
-					Result = SqlMetaQuery.prepare(SqlText);
-					if (Result)
-					{
-						Result = SqlMetaQuery.lastError().type() == QSqlError::NoError;
-					}
-
-					if (!Result)
-					{
-						ErrorQuery(ISSqlQuery{ "NULL", 0, SqlText }, "Error prepare meta query: " + SqlMetaQuery.lastError().text());
-						break;
-					}
-				}
-			}
 		}
 		else
 		{

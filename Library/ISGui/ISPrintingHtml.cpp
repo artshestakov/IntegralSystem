@@ -5,7 +5,6 @@
 #include "ISQuery.h"
 #include "ISHtmlQuery.h"
 #include "ISAssert.h"
-#include "ISMetaViewQuery.h"
 #include "ISDatabaseHelper.h"
 #include "ISGui.h"
 #include "ISFileDialog.h"
@@ -48,44 +47,19 @@ bool ISPrintingHtml::FillTemplate()
 {
 	for (ISPrintMetaReportField *MetaReportField : GetMetaReport()->Fields)
 	{
-		bool Contains = Html.contains(MetaReportField->ReplaceValue);
-		IS_ASSERT(Contains, QString("Not found replace value \"%1\" in file template \"%2\"").arg(MetaReportField->ReplaceValue).arg(MetaReportField->ParameterName));
-		if (!MetaReportField->QueryName.isEmpty())
+		ISQuery qSelectValue(MetaReportField->FieldQuery);
+		if (qSelectValue.ExistParameter(":SourceID"))
 		{
-			ISMetaViewQuery MetaViewQuery(MetaReportField->QueryName);
-			QString QueryText = MetaViewQuery.GetQueryText();
-			ISQuery qSelect(QueryText);
-			qSelect.BindValue(MetaReportField->ParameterName, GetObjectID());
-			if (qSelect.Execute())
-			{
-				if (qSelect.GetCountResultRows())
-				{
-					IS_ASSERT(qSelect.First(), "Not OnFirst in query: " + QueryText);
-					Html.replace(MetaReportField->ReplaceValue, ISHtmlQuery(qSelect, "Services").GetHtmlTableQuery());
-				}
-				else
-				{
-					Html.replace(MetaReportField->ReplaceValue, QString());
-				}
-			}
+			IS_ASSERT(qSelectValue.BindValue(":SourceID", GetObjectID()), "Not BindValue");
 		}
-		else
-		{
-			ISQuery qSelectValue(MetaReportField->FieldQuery);
-			if (qSelectValue.ExistParameter(":SourceID"))
-			{
-				IS_ASSERT(qSelectValue.BindValue(":SourceID", GetObjectID()), "Not BindValue");
-			}
 
-			if (qSelectValue.ExecuteFirst())
-			{
-				QVariant Value = qSelectValue.ReadColumn(0);
-				ISDatabaseHelper::CheckValue(Value);
-				Html.replace(MetaReportField->ReplaceValue, Value.toString());
-			}
+		if (qSelectValue.ExecuteFirst())
+		{
+			QVariant Value = qSelectValue.ReadColumn(0);
+			ISDatabaseHelper::CheckValue(Value);
+			Html.replace(MetaReportField->ReplaceValue, Value.toString());
 		}
 	}
-
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -117,17 +91,14 @@ bool ISPrintingHtml::Print()
 
 	if (PDF)
 	{
-		emit SetVisibleDialog(false);
+		emit SetVisibleDialog(false); //Скрываем диалог на время выбора директории сохранения
 		QString Path = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Pdf"), PathPDF);
-		emit SetVisibleDialog(true);
-
-		if (Path.length())
+		emit SetVisibleDialog(true); //Отображаем диалог обратно
+		if (!Path.isEmpty())
 		{
 			emit Message(LANG("PrintProcess.SavedToPDF"));
-
 			Printer.setOutputFormat(QPrinter::PdfFormat);
 			Printer.setOutputFileName(Path);
-
 			TextDocument.print(&Printer);
 		}
 	}
@@ -142,7 +113,6 @@ bool ISPrintingHtml::Print()
 			TextDocument.print(&Printer);
 		}
 	}
-
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -223,7 +223,6 @@
     <ClCompile Include="ISMetaDataHelper.cpp" />
     <ClCompile Include="ISMetaUser.cpp" />
     <ClCompile Include="ISMetaUuidCheckeder.cpp" />
-    <ClCompile Include="ISMetaViewQuery.cpp" />
     <ClCompile Include="ISNetwork.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocol.cpp" />
@@ -301,7 +300,6 @@
     <ClInclude Include="ISMetaDataHelper.h" />
     <ClInclude Include="ISMetaUser.h" />
     <ClInclude Include="ISMetaUuidCheckeder.h" />
-    <ClInclude Include="ISMetaViewQuery.h" />
     <ClInclude Include="ISQuery.h" />
     <ClInclude Include="ISQueryPool.h" />
     <ClInclude Include="ISQueryText.h" />

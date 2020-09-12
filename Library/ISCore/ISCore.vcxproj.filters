@@ -72,9 +72,6 @@
     <ClCompile Include="ISMetaUuidCheckeder.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISMetaViewQuery.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
     <ClCompile Include="ISMetaUser.cpp">
       <Filter>MetaUser</Filter>
     </ClCompile>
@@ -201,9 +198,6 @@
       <Filter>MetaData</Filter>
     </ClInclude>
     <ClInclude Include="ISMetaUuidCheckeder.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaViewQuery.h">
       <Filter>MetaData</Filter>
     </ClInclude>
     <ClInclude Include="PMetaClass.h">

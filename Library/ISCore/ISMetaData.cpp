@@ -7,7 +7,6 @@
 #include "ISMetaDataHelper.h"
 #include "ISUuid.h"
 #include "ISMetaUuidCheckeder.h"
-#include "ISMetaViewQuery.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
@@ -164,18 +163,6 @@ std::vector<PMetaFunction*> ISMetaData::GetFunctions()
 std::vector<PMetaTable*> ISMetaData::GetTables()
 {
 	return ISAlgorithm::ConvertMapToValues<QString, PMetaTable *>(TablesMap);
-}
-//-----------------------------------------------------------------------------
-ISVectorString ISMetaData::GetMetaQueries()
-{
-	ISVectorString Vector(QueriesMap.size());
-	size_t Index = 0;
-	for (const auto &MapItem : QueriesMap)
-	{
-		Vector[Index] = ISMetaViewQuery(MapItem.first).GetQueryText();
-		++Index;
-	}
-	return Vector;
 }
 //-----------------------------------------------------------------------------
 std::vector<PMetaIndex*> ISMetaData::GetSystemIndexes()

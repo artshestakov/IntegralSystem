@@ -196,6 +196,7 @@
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
   <Local Name="Message.Warning.StartInstallUpdate" Russian="ВНИМАНИЕ! Программа обнаружила обновление, но запустить его установку в автоматическом режиме не удалось. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
   <Local Name="Message.Warning.ActiveSettingDatabase" Russian="Не удалось установить активный профиль настроек базы данных."/>
+  <Local Name="Message.Warning.NotGettingMetaReport" Russian="Не удалось получить мета-отчёт."/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
