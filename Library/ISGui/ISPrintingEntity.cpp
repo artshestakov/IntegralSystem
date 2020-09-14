@@ -1,15 +1,11 @@
 #include "ISPrintingEntity.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
-static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_system, rprt_type, rprt_tablename, rprt_name, rprt_localname, rprt_filetemplate "
+static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate, "
+										 "rprt_parent, rprt_replacevalue, rprt_sqlquery "
 										 "FROM _report "
 										 "WHERE NOT rprt_isdeleted "
 										 "ORDER BY rprt_id");
-//-----------------------------------------------------------------------------
-static QString QS_REPORT_FIELDS = PREPARE_QUERY("SELECT rpfl_replacevalue, rpfl_fieldquery, rpfl_parametername "
-												"FROM _reportfields "
-												"WHERE NOT rpfl_isdeleted "
-												"AND rpfl_report = :ReportUID");
 //-----------------------------------------------------------------------------
 ISPrintingEntity::ISPrintingEntity()
 	: ErrrorString(NO_ERROR_STRING)
@@ -41,35 +37,25 @@ bool ISPrintingEntity::Initialize()
 	{
 		while (qSelectReport.Next())
 		{
-			QString TableName = qSelectReport.ReadColumn("rprt_tablename").toString();
-
-			ISPrintMetaReport *MetaReport = new ISPrintMetaReport();
-			MetaReport->System = qSelectReport.ReadColumn("rprt_system").toBool();
-			MetaReport->SetType(qSelectReport.ReadColumn("rprt_type").toString());
-			MetaReport->Name = qSelectReport.ReadColumn("rprt_name").toString();
-			MetaReport->LocalName = qSelectReport.ReadColumn("rprt_localname").toString();
-			MetaReport->FileTemplate = qSelectReport.ReadColumn("rprt_filetemplate").toString();
-
-			ISQuery qSelectReportFields(QS_REPORT_FIELDS);
-			qSelectReportFields.BindValue(":ReportUID", qSelectReport.ReadColumn("rprt_uid"));
-			Result = qSelectReportFields.Execute();
-			if (Result)
+			ISUuid UID = qSelectReport.ReadColumn("rprt_uid"),
+				Parent = qSelectReport.ReadColumn("rprt_parent");
+			if (Parent.isEmpty())
 			{
-				while (qSelectReportFields.Next())
-				{
-					ISPrintMetaReportField *MetaReportField = new ISPrintMetaReportField();
-					MetaReportField->ReplaceValue = qSelectReportFields.ReadColumn("rpfl_replacevalue").toString();
-					MetaReportField->FieldQuery = qSelectReportFields.ReadColumn("rpfl_fieldquery").toString();
-					MetaReportField->ParameterName = qSelectReportFields.ReadColumn("rpfl_parametername").toString();
-					MetaReport->Fields.emplace_back(MetaReportField);
-				}
+				ISPrintMetaReport *PrintMetaReport = new ISPrintMetaReport();
+				PrintMetaReport->SetType(qSelectReport.ReadColumn("rprt_type").toString());
+				PrintMetaReport->TableName = qSelectReport.ReadColumn("rprt_tablename").toString();
+				PrintMetaReport->LocalName = qSelectReport.ReadColumn("rprt_localname").toString();
+				PrintMetaReport->FileTemplate = qSelectReport.ReadColumn("rprt_filetemplate").toString();
+				Reports[UID] = PrintMetaReport;
 			}
 			else
 			{
-				ErrrorString = qSelectReportFields.GetErrorString();
-				break;
+				Reports[Parent]->Fields.emplace_back(new ISPrintMetaReportField
+				{
+					qSelectReport.ReadColumn("rprt_replacevalue").toString(),
+					qSelectReport.ReadColumn("rprt_sqlquery").toString()
+				});
 			}
-			Reports[TableName].emplace_back(MetaReport);
 		}
 	}
 	else
@@ -79,13 +65,22 @@ bool ISPrintingEntity::Initialize()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-std::vector<ISPrintMetaReport*>& ISPrintingEntity::GetReports(const QString &TableName)
+std::vector<ISPrintMetaReport*> ISPrintingEntity::GetReports(const QString &TableName)
 {
-	return Reports[TableName];
+	std::vector<ISPrintMetaReport*> Vector,
+		Temp = ISAlgorithm::ConvertMapToValues(Reports);
+	for (ISPrintMetaReport *PrintMetaReport : Temp)
+	{
+		if (PrintMetaReport->TableName == TableName)
+		{
+			Vector.emplace_back(PrintMetaReport);
+		}
+	}
+	return Vector;
 }
 //-----------------------------------------------------------------------------
 size_t ISPrintingEntity::GetCountReports(const QString &TableName)
 {
-	return Reports[TableName].size();
+	return GetReports(TableName).size();
 }
 //-----------------------------------------------------------------------------

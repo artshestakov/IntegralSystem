@@ -10,7 +10,7 @@ public:
 
 	QString GetErrorString() const;
 	bool Initialize();
-	std::vector<ISPrintMetaReport*>& GetReports(const QString &TableName);
+	std::vector<ISPrintMetaReport*> GetReports(const QString &TableName);
 	size_t GetCountReports(const QString &TableName);
 
 private:
@@ -21,6 +21,6 @@ private:
 	
 private:
 	QString ErrrorString;
-	std::map<QString, std::vector<ISPrintMetaReport*>> Reports;
+	std::map<ISUuid, ISPrintMetaReport*> Reports;
 };
 //-----------------------------------------------------------------------------

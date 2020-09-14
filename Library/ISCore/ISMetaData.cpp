@@ -1132,7 +1132,7 @@ bool ISMetaData::InitializeXSR(const QString &Content)
 							}
 							else
 							{
-								ErrorString = QString("Invalid field name \"%1\" in resource. File: %2. Line: %3").arg(FieldName).arg(CurrentXSR).arg(DomNode.lineNumber());
+								ErrorString = QString("Field \"%1\" in resource not exist. File: %2. Line: %3").arg(FieldName).arg(CurrentXSR).arg(DomNode.lineNumber());
 								break;
 							}
 						}

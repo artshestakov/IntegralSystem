@@ -47,7 +47,7 @@ bool ISPrintingHtml::FillTemplate()
 {
 	for (ISPrintMetaReportField *MetaReportField : GetMetaReport()->Fields)
 	{
-		ISQuery qSelectValue(MetaReportField->FieldQuery);
+		ISQuery qSelectValue(MetaReportField->SqlQuery);
 		if (qSelectValue.ExistParameter(":SourceID"))
 		{
 			IS_ASSERT(qSelectValue.BindValue(":SourceID", GetObjectID()), "Not BindValue");

@@ -150,8 +150,7 @@ struct ISMetaSystem
 struct ISPrintMetaReportField
 {
     QString ReplaceValue;
-    QString FieldQuery;
-    QString ParameterName;
+    QString SqlQuery;
 };
 //-----------------------------------------------------------------------------
 struct ISPrintMetaReport
@@ -178,13 +177,11 @@ struct ISPrintMetaReport
         }
     }
 
-    bool System;
+	ISUuid UID;
     ISNamespace::ReportType Type;
     QString TableName;
-    QString Name;
     QString LocalName;
     QString FileTemplate;
-
     std::vector<ISPrintMetaReportField*> Fields;
 };
 //-----------------------------------------------------------------------------
