@@ -218,17 +218,6 @@ struct PMetaFunction : public PMetaBase
 	QString Text; //Текст функции
 };
 //-----------------------------------------------------------------------------
-struct PMetaQuery : public PMetaTable
-{
-	PMetaQuery() : PMetaTable("Query") { }
-
-	QString From;
-	QString Where;
-	QString Order;
-	QString OrderType;
-	ISVectorString Joins;
-};
-//-----------------------------------------------------------------------------
 struct PMetaResource : public PMetaBase
 {
 	PMetaResource() : PMetaBase("Resource") { }

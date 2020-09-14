@@ -136,8 +136,6 @@ bool ISSearchForm::CheckExistField(const QString &FieldName) const
 //-----------------------------------------------------------------------------
 void ISSearchForm::LoadFields()
 {
-	AddFieldFromList(MetaTable->GetFieldID()->LabelName, MetaTable->GetFieldID()->Name);
-
 	for (PMetaField *MetaField : MetaTable->Fields)
 	{
 		if (MetaField->HideFromList || MetaField->NotSearch || !MetaField->QueryText.isEmpty())
@@ -154,11 +152,7 @@ void ISSearchForm::LoadFields()
 //-----------------------------------------------------------------------------
 void ISSearchForm::AddFieldFromList(const QString &FieldLocalName, const QString &FieldName)
 {
-	QAction *ActionFilter = new QAction(ButtonAddFilter->menu());
-	ActionFilter->setText(FieldLocalName);
-	ActionFilter->setData(FieldName);
-	connect(ActionFilter, &QAction::triggered, this, &ISSearchForm::AddFilter);
-	ButtonAddFilter->menu()->addAction(ActionFilter);
+	ButtonAddFilter->menu()->addAction(FieldLocalName, this, &ISSearchForm::AddFilter)->setData(FieldName);
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::AddFilter()

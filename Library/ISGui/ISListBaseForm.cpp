@@ -203,35 +203,17 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ToolBar->addAction(GetAction(ISNamespace::AT_SearchClear));
 		ToolBar->addAction(GetAction(ISNamespace::AT_Print));
 
-		QAction *ActionPeriod = new QAction(BUFFER_ICONS("Period"), LANG("Period"), ToolBar);
+		QAction *ActionPeriod = ToolBar->addAction(BUFFER_ICONS("Period"), LANG("PeriodSelect"), this, &ISListBaseForm::Period);
+		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionPeriod))->setPopupMode(QToolButton::MenuButtonPopup);
 		ActionPeriod->setMenu(new QMenu(ToolBar));
-		ToolBar->addAction(ActionPeriod);
 
-		QToolButton *ButtonPeriod = dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionPeriod));
-		ButtonPeriod->setPopupMode(QToolButton::InstantPopup);
-		ButtonPeriod->setCursor(CURSOR_POINTING_HAND);
-		ButtonPeriod->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-
-		QAction *ActionPeriodSelect = new QAction(LANG("PeriodSelect"), ActionPeriod);
-		connect(ActionPeriodSelect, &QAction::triggered, this, &ISListBaseForm::Period);
-		ActionPeriod->menu()->addAction(ActionPeriodSelect);
-
-		ActionPeriod->menu()->addSeparator();
-
-		ActionPeriodClear = new QAction(LANG("PeriodClear"), ActionPeriod);
+		ActionPeriodClear = ActionPeriod->menu()->addAction(LANG("PeriodClear"), this, &ISListBaseForm::PeriodClear);
 		ActionPeriodClear->setEnabled(false);
-		connect(ActionPeriodClear, &QAction::triggered, this, &ISListBaseForm::PeriodClear);
-		ActionPeriod->menu()->addAction(ActionPeriodClear);
 
-		QAction *ActionAdditionally = new QAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"), ToolBar);
+		QAction *ActionAdditionally = ToolBar->addAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"));
+		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setPopupMode(QToolButton::InstantPopup);
+		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
 		ActionAdditionally->setMenu(new QMenu(ToolBar));
-		ToolBar->addAction(ActionAdditionally);
-
-		QToolButton *ButtonAdditionally = dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally));
-		ButtonAdditionally->setPopupMode(QToolButton::InstantPopup);
-		ButtonAdditionally->setCursor(CURSOR_POINTING_HAND);
-		ButtonAdditionally->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
-
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowActual));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowDeleted));
 		ActionAdditionally->menu()->addSeparator();
@@ -240,7 +222,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_SortDefault));
 		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResizeFromContent));
 		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResetWidthColumn));
-
 		ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
 
 		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWNAVIGATION))

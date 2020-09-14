@@ -10,7 +10,7 @@ ISPeriodForm::ISPeriodForm()
 	setWindowTitle(LANG("Period"));
 	setWindowIcon(BUFFER_ICONS("Period"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
-	ForbidResize();
+	resize(400, 150);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -46,6 +46,10 @@ ISPeriodForm::ISPeriodForm()
 
 	EditEnd = new ISDateEdit(this);
 	LayoutEdits->addWidget(EditEnd);
+
+	LayoutEdits->addStretch();
+
+	GetMainLayout()->addStretch();
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutBottom);
