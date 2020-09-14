@@ -140,7 +140,7 @@ struct PMetaTable : public PMetaBase
 
 	PMetaField* GetField(const QString &FieldName) //Получить поле по имени
 	{
-		for (PMetaField *MetaField : AllFields)
+		for (PMetaField *MetaField : Fields)
 		{
 			if (MetaField->Name.toLower() == FieldName.toLower())
 			{
@@ -152,27 +152,27 @@ struct PMetaTable : public PMetaBase
 
 	PMetaField* GetField(int Index) //Получить поле по индексу
 	{
-		if (!AllFields.empty())
+		if (!Fields.empty())
 		{
-			return AllFields[Index];
+			return Fields[Index];
 		}
 		return nullptr;
 	}
 
 	PMetaField* GetFieldID() //Получить поле "Код"
 	{
-		if (!SystemFields.empty())
+		if (!Fields.empty())
 		{
-			return SystemFields.front();
+			return Fields.front();
 		}
 		return nullptr;
 	}
 
 	int GetFieldIndex(const QString &FieldName) const //Получить индекс поля по его имени
 	{
-		for (size_t i = 0, c = AllFields.size(); i < c; ++i)
+		for (size_t i = 0, c = Fields.size(); i < c; ++i)
 		{
-			PMetaField *MetaField = AllFields[i];
+			PMetaField *MetaField = Fields[i];
 			if (MetaField->Name.toLower() == FieldName.toLower())
 			{
 				return (int)i;
@@ -183,7 +183,7 @@ struct PMetaTable : public PMetaBase
 
 	bool ContainsField(const QString &FieldName)
 	{
-		for (PMetaField *MetaField : AllFields)
+		for (PMetaField *MetaField : Fields)
 		{
 			if (MetaField->Name.toLower() == FieldName.toLower())
 			{
@@ -207,9 +207,6 @@ struct PMetaTable : public PMetaBase
 
 	std::vector<PMetaEscort*> Escorts; //Эскортные таблицы
 	std::vector<PMetaField*> Fields; //Поля
-	std::vector<PMetaField*> SystemFields; //Системные поля
-	std::vector<PMetaField*> AllFields; //Все поля
-
 	std::vector<PMetaField*> SystemFieldsVisible; //Отображаемые системные поля
 };
 //-----------------------------------------------------------------------------

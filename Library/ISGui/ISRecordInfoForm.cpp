@@ -23,8 +23,13 @@ ISRecordInfoForm::ISRecordInfoForm(PMetaTable *MetaTable, int ObjectID) : ISInte
 	FormLayout->addRow(new QLabel(LANG("Named") + ':', this), new QLabel(ISCore::GetObjectName(MetaTable, ObjectID), this));
 	FormLayout->addWidget(ISControls::CreateHorizontalLine(this));
 
-	for (PMetaField *MetaField : MetaTable->SystemFields)
+	for (PMetaField *MetaField : MetaTable->Fields)
 	{
+		if (!MetaField->IsSystem)
+		{
+			continue;
+		}
+
 		QLabel *Label = new QLabel(this);
 		Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		Label->setText(MetaField->LabelName + ':');

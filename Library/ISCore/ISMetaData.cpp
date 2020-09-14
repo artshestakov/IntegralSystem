@@ -140,7 +140,7 @@ PMetaTable* ISMetaData::GetMetaQuery(const QString &QueryName)
 //-----------------------------------------------------------------------------
 PMetaField* ISMetaData::GetMetaField(PMetaTable *MetaTable, const QString &FieldName)
 {
-	for (PMetaField *MetaField : MetaTable->AllFields)
+	for (PMetaField *MetaField : MetaTable->Fields)
 	{
 		if (MetaField->Name.toLower() == FieldName.toLower())
 		{
@@ -170,9 +170,9 @@ std::vector<PMetaIndex*> ISMetaData::GetSystemIndexes()
 	std::vector<PMetaIndex*> SystemIndexes;
 	for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
 	{
-		for (PMetaField *MetaField : MetaTable->SystemFields) //Обход полей
+		for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 		{
-			if (MetaField->Index)
+			if (MetaField->IsSystem && MetaField->Index)
 			{
 				SystemIndexes.emplace_back(MetaField->Index);
 			}
@@ -207,7 +207,7 @@ std::vector<PMetaForeign*> ISMetaData::GetForeigns()
 	std::vector<PMetaForeign*> Foreigns;
 	for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
 	{
-		for (PMetaField *MetaField : MetaTable->AllFields) //Обход полей
+		for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 		{
 			if (MetaField->Foreign)
 			{
@@ -230,7 +230,7 @@ bool ISMetaData::CheckExistTable(const QString &TableName) const
 //-----------------------------------------------------------------------------
 bool ISMetaData::CheckExitField(PMetaTable *MetaTable, const QString &FieldName) const
 {
-	for (PMetaField *MetaField : MetaTable->AllFields)
+	for (PMetaField *MetaField : MetaTable->Fields)
 	{
 		if (MetaField->Name.toLower() == FieldName.toLower())
 		{
@@ -809,10 +809,10 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 				break;
 			}
 
-			Result = !FieldName.contains(SYMBOL_SPACE);
+			Result = !MetaTable->GetField(FieldName);
 			if (!Result)
 			{
-				ErrorString = QString("Forbidden symbol ' ' in field name: %1").arg(FieldName);
+				ErrorString = QString("Field \"%1\" already exist. TableName: %2").arg(FieldName).arg(MetaTable->Name);
 				break;
 			}
 
@@ -843,7 +843,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 			MetaField->PrimaryKey = QVariant(DomNamedNodeMap.namedItem("PrimaryKey").nodeValue()).toBool();
 			MetaField->LayoutName = DomNamedNodeMap.namedItem("LayoutName").nodeValue();
 			MetaField->SeparatorName = DomNamedNodeMap.namedItem("SeparatorName").nodeValue();
-			MetaField->IsSystem ? MetaTable->SystemFields.emplace_back(MetaField) : MetaTable->Fields.emplace_back(MetaField);
+			MetaTable->Fields.emplace_back(MetaField);
 
 			if (MetaField->QueryText.isEmpty())
 			{
@@ -876,14 +876,6 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 					break;
 				}
 			}
-
-			Result = !MetaTable->GetField(FieldName);
-			if (!Result)
-			{
-				ErrorString = QString("Field \"%1\" already exist. TableName: %2").arg(FieldName).arg(MetaTable->Name);
-				break;
-			}
-			MetaTable->AllFields.emplace_back(MetaField);
 		}
 		Temp = Temp.nextSibling();
 	}

@@ -379,6 +379,11 @@ void ISObjectFormBase::CreateWidgetObject()
 	//Создаём и размещаем на форме поля редактирования
 	for (PMetaField *MetaField : MetaTable->Fields)
 	{
+		if (MetaField->IsSystem) //Пропускаем поле "Код"
+		{
+			continue;
+		}
+
 		//Если тип поля ByteArray и для него не предусмотрен виджет редактирования - пропускать его
 		if (MetaField->Type == ISNamespace::FT_ByteArray && MetaField->ControlWidget.isEmpty())
 		{

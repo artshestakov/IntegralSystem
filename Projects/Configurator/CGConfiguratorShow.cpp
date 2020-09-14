@@ -313,7 +313,7 @@ PMetaTable* CGConfiguratorShow::FoundTable(const QString &TableName)
 //-----------------------------------------------------------------------------
 PMetaField* CGConfiguratorShow::FoundField(PMetaTable *MetaTable, const QString &ColumnName)
 {
-	for (PMetaField *MetaField : MetaTable->AllFields)
+	for (PMetaField *MetaField : MetaTable->Fields)
 	{
 		if (QString(MetaTable->Alias + '_' + MetaField->Name).toLower() == ColumnName)
 		{

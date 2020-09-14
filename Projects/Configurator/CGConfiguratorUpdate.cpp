@@ -136,9 +136,9 @@ bool CGConfiguratorUpdate::comment()
 
 		if (Result) //Комментирование таблицы прошло успешно - комментируем поля
 		{
-			for (size_t j = 0, CountFields = MetaTable->AllFields.size(); j < CountFields; ++j)
+			for (size_t j = 0, CountFields = MetaTable->Fields.size(); j < CountFields; ++j)
 			{
-				PMetaField *MetaField = MetaTable->AllFields[j];
+				PMetaField *MetaField = MetaTable->Fields[j];
 				Progress("Comment Field", j, CountFields, "FieldName: " + MetaField->Name);
 				Result = CGDatabase::Helper_CommentField(MetaTable, MetaField, ErrorString);
 				if (!Result)

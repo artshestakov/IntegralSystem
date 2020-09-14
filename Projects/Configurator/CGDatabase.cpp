@@ -306,7 +306,7 @@ bool CGDatabase::Resource_Update(PMetaResource *MetaResource, QString &ErrorStri
 	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
 	for (PMetaField *MetaField : MetaTable->Fields) //Обход пользовательских полей таблицы и их очистка
 	{
-		if (MetaField->NotNull || !MetaField->QueryText.isEmpty())
+		if (MetaField->NotNull || !MetaField->QueryText.isEmpty() || MetaField->IsSystem)
 		{
 			continue;
 		}
@@ -421,7 +421,7 @@ bool CGDatabase::Table_Create(PMetaTable *MetaTable, QString &ErrorString)
 	QString SqlText = "CREATE TABLE public." + MetaTable->Name.toLower() + " \n( \n";
 
 	//Формирование запроса на создание таблицы
-	for (PMetaField *MetaField : MetaTable->AllFields) //Обход полей таблицы
+	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей таблицы
 	{
 		if (!MetaField->QueryText.isEmpty())
 		{
@@ -612,7 +612,7 @@ bool CGDatabase::Table_AlterFields(PMetaTable *MetaTable, QString &ErrorString)
 bool CGDatabase::Table_CreateFields(PMetaTable *MetaTable, QString &ErrorString)
 {
 	bool Result = true, Exist = true;
-	for (PMetaField *MetaField : MetaTable->AllFields) //Обход полей
+	for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
 	{
 		if (!MetaField->QueryText.isEmpty())
 		{

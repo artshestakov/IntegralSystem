@@ -219,7 +219,7 @@ bool CGConfiguratorDelete::oldfields()
 		QString TableName = MetaTable->Name.toLower();
 		Map.insert(TableName, ISVectorString());
 
-		for (PMetaField* MetaField : MetaTable->AllFields)
+		for (PMetaField* MetaField : MetaTable->Fields)
 		{
 			Map[TableName].emplace_back(MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower());
 		}

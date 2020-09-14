@@ -21,9 +21,9 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
     PeriodType(ISNamespace::PT_CreationDate),
     ClassFilter(meta_table->ClassFilter)
 {
-	for (size_t i = 0, c = MetaTable->AllFields.size(); i < c; ++i)
+	for (size_t i = 0, c = MetaTable->Fields.size(); i < c; ++i)
 	{
-		PMetaField *MetaField = MetaTable->AllFields[i];
+		PMetaField *MetaField = MetaTable->Fields[i];
 		if (ModelType == ISNamespace::QMT_Object) //Если тип модели - объектный
 		{
 			if (MetaField->HideFromObject)
