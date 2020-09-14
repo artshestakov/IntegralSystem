@@ -87,7 +87,7 @@ const Qt::CursorShape CURSOR_WAIT = Qt::WaitCursor;
 //INTERFACE--------------------------------------------------------------------
 const int EDIT_FIELD_SPACING = 4;
 const int ISPUSHBUTTON_MINIMUM_WIDTH = 98; //Минимальная ширина базовых кнопок
-const int ISPUSHBUTTON_MINIMUM_HEIGHT = 31; //Минимальная высота базовых кнопок
+const int ISPUSHBUTTON_MINIMUM_HEIGHT = 28; //Минимальная высота базовых кнопок
 const int SIZE_MINIMUM_HEIGHT_EDIT_FIELD = ISPUSHBUTTON_MINIMUM_HEIGHT; //Минимальная высота поля ввода ввода информации
 //SYMBOLS----------------------------------------------------------------------
 const char SYMBOL_SPACE = ' '; //Символ пробела
