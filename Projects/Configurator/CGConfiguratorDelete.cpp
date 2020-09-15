@@ -62,6 +62,7 @@ CGConfiguratorDelete::~CGConfiguratorDelete()
 bool CGConfiguratorDelete::indexes()
 {
 	ISQuery qSelectIndexes(QS_INDEXES);
+	qSelectIndexes.SetShowLongQuery(false);
 	bool Result = qSelectIndexes.Execute();
 	if (Result)
 	{
@@ -69,6 +70,7 @@ bool CGConfiguratorDelete::indexes()
 		while (qSelectIndexes.Next())
 		{
 			ISQuery qDeleteIndex;
+			qDeleteIndex.SetShowLongQuery(false);
 			Result = qDeleteIndex.Execute(QD_INDEX.arg(qSelectIndexes.ReadColumn("indexname").toString()));
 			if (Result)
 			{
@@ -93,6 +95,7 @@ bool CGConfiguratorDelete::foreigns()
 	ISLOGGER_D("Deleting foreigns...");
 
 	ISQuery qSelectForeigns(QS_FOREIGNS);
+	qSelectForeigns.SetShowLongQuery(false);
 	bool Result = qSelectForeigns.Execute();
 	if (Result)
 	{
@@ -114,6 +117,7 @@ bool CGConfiguratorDelete::foreigns()
 
 
 			ISQuery qDeleteForeign;
+			qDeleteForeign.SetShowLongQuery(false);
 			Result = qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName));
 			if (Result)
 			{
@@ -142,9 +146,8 @@ bool CGConfiguratorDelete::oldtables()
 		VectorString.emplace_back(MetaTable->Name.toLower());
 	}
 
-	int Removed = 0, Skipped = 0;
-
 	ISQuery qSelectTables(QS_TABLES);
+	qSelectTables.SetShowLongQuery(false);
 	bool Result = qSelectTables.Execute();
 	if (Result)
 	{
@@ -157,25 +160,20 @@ bool CGConfiguratorDelete::oldtables()
 				{
 					ISLOGGER_L(QString("Removing table \"%1\"...").arg(TableName));
 					ISQuery qDeleteTable;
+					qDeleteTable.SetShowLongQuery(false);
 					Result = qDeleteTable.Execute("DROP TABLE public." + TableName);
-					if (Result)
-					{
-						++Removed;
-						ISLOGGER_L("Removed table");
-					}
-					else
+					if (!Result)
 					{
 						ErrorString = qDeleteTable.GetErrorString();
 					}
 				}
-				else
-				{
-					++Skipped;
-				}
 			}
 		}
 	}
-	ISLOGGER_L(Removed == Skipped ? "Not found obsolete tables" : QString("Removed tables: %1. Skipped tables: %2").arg(Removed).arg(Skipped));
+	else
+	{
+		ErrorString = qSelectTables.GetErrorString();
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -194,8 +192,6 @@ bool CGConfiguratorDelete::oldfields()
 		}
 	}
 
-	int Removed = 0, Skipped = 0;
-
 	ISQuery qSelectColumns(QS_COLUMNS);
 	qSelectColumns.SetShowLongQuery(false);
 	bool Result = qSelectColumns.Execute();
@@ -213,26 +209,21 @@ bool CGConfiguratorDelete::oldfields()
 					{
 						ISLOGGER_L(QString("Removing column \"%1\"...").arg(ColumnName));
 						ISQuery qDeleteField;
+						qDeleteField.SetShowLongQuery(false);
 						Result = qDeleteField.Execute("ALTER TABLE public." + TableName + " DROP COLUMN " + ColumnName);
-						if (Result)
-						{
-							++Removed;
-							ISLOGGER_L("Removed column");
-						}
-						else
+						if (!Result)
 						{
 							ErrorString = qDeleteField.GetErrorString();
 						}
-					}
-					else
-					{
-						++Skipped;
 					}
 				}
 			}
 		}
 	}
-	ISLOGGER_L(Removed == Skipped ? "Not found obsolete fields" : QString("Removed columns: %1. Skipped columns: %2").arg(Removed).arg(Skipped));
+	else
+	{
+		ErrorString = qSelectColumns.GetErrorString();
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -251,7 +242,6 @@ bool CGConfiguratorDelete::oldresources()
 		}
 	}
 
-	int Removed = 0, Skipped = 0;
 	for (const auto &MapItem : Map.toStdMap())
 	{
 		QString TableName = MapItem.first;
@@ -273,32 +263,19 @@ bool CGConfiguratorDelete::oldresources()
 						ISQuery qDeleteResources("DELETE FROM " + TableName + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 						qDeleteResources.SetShowLongQuery(false);
 						qDeleteResources.BindValue(":ResourceUID", ResourceUID);
-						if (qDeleteResources.Execute())
+						if (!qDeleteResources.Execute())
 						{
-							++Removed;
+							ErrorString = qDeleteResources.GetErrorString();
 						}
-						else
-						{
-							ISLOGGER_E("Error delete resource: " + qDeleteResources.GetErrorString());
-						}
-					}
-					else
-					{
-						++Skipped;
 					}
 				}
 			}
 		}
 		else
 		{
-			ISLOGGER_E(qSelect.GetErrorString());
+			ErrorString = qSelect.GetErrorString();
 		}
 	}
-
-	ISLOGGER_N();
-	Removed == Skipped ?
-		ISLOGGER_L("Not found obsolete resources") :
-		ISLOGGER_L(QString("Removed resources: %1. Skipped resources: %2").arg(Removed).arg(Skipped));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -312,38 +289,28 @@ bool CGConfiguratorDelete::oldsequence()
 	Where.chop(2);
 
 	ISQuery qSelect(QS_SEQUENCES.replace(":Where", Where));
+	qSelect.SetShowLongQuery(false);
 	bool Result = qSelect.Execute();
 	if (Result)
 	{
-		int Removed = 0, Skipped = 0;
 		while (qSelect.Next())
 		{
 			QString SequenceName = qSelect.ReadColumn("sequence_name").toString();
 			if (ISConsole::Question(QString("Delete sequence \"%1\"?").arg(SequenceName)))
 			{
 				ISQuery qDelete;
+				qDelete.SetShowLongQuery(false);
 				Result = qDelete.Execute(QD_SEQUENCE.arg(SequenceName));
-				if (Result)
+				if (!Result)
 				{
-					++Removed;
+					ErrorString = qDelete.GetErrorString();
 				}
-				else
-				{
-					ISLOGGER_E(qDelete.GetErrorString());
-				}
-			}
-			else
-			{
-				++Skipped;
 			}
 		}
-		ISLOGGER_L(Removed == Skipped ?
-			"\nNot found old sequence" :
-			QString("\nRemoved resources: %1. Skipped resources: %2").arg(Removed).arg(Skipped));
 	}
 	else
 	{
-		ISLOGGER_E(qSelect.GetErrorString());
+		ErrorString = qSelect.GetErrorString();
 	}
 	return Result;
 }
