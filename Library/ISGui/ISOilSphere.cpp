@@ -271,7 +271,7 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
 	}
 	
 	bool Result = ISObjectFormBase::Save();
-	if (Result && UnloadStock.isValid())
+	if (Result && UnloadStock.isValid()) //Если сохранение прошло успешно и поле "Склад" валидное - производим добавление в ведомомсть АЗС
 	{
 		ISQuery qSelect(QS_STATEMENT);
 		qSelect.BindValue(":ImplementationUnload", GetObjectID());
