@@ -905,7 +905,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 				}
 				else //Поле без внешнего ключа
 				{
-					WhereText += MetaTable->Alias + '_' + MetaField->Name;
+					WhereText += MetaTable->Alias + '.' + MetaTable->Alias + '_' + MetaField->Name;
 				}
 			}
 

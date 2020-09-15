@@ -11,7 +11,7 @@ ISSearchModel::~ISSearchModel()
 
 }
 //-----------------------------------------------------------------------------
-void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Conditions) const
+void ISSearchModel::CreateSearchString(const QString &TableAlias, QString &SearchString, QVariantMap &Conditions) const
 {
 	ISRandom Random;
 	for (const StructModelItem &ModelItem : Vector)
@@ -21,9 +21,9 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 			for (const QVariant &Value : ModelItem.Values)
 			{
 				QString Condition = ':' + ModelItem.FieldName + '_' + QString::number(Random.Get(1, SHRT_MAX));
-				SearchString += ModelItem.FieldType == ISNamespace::FT_String ?
+				SearchString += TableAlias + '.' + (ModelItem.FieldType == ISNamespace::FT_String ?
 					CreateSubString(ModelItem.Operator, "lower(" + ModelItem.FieldName + ')', Condition, false) :
-					CreateSubString(ModelItem.Operator, ModelItem.FieldName, Condition, false);
+					CreateSubString(ModelItem.Operator, ModelItem.FieldName, Condition, false));
 				Conditions.insert(Condition, Value);
 			}
 			SearchString.chop(4);
@@ -31,9 +31,9 @@ void ISSearchModel::CreateSearchString(QString &SearchString, QVariantMap &Condi
 		else //Поиск одного значения
 		{
 			QString Condition = ':' + ModelItem.FieldName + '_' + QString::number(Random.Get(1, SHRT_MAX));
-			SearchString += ModelItem.FieldType == ISNamespace::FT_String ?
+			SearchString += TableAlias + '.' + (ModelItem.FieldType == ISNamespace::FT_String ?
 				CreateSubString(ModelItem.Operator, "lower(" + ModelItem.FieldName + ')', Condition, true) :
-				CreateSubString(ModelItem.Operator, ModelItem.FieldName, Condition, true);
+				CreateSubString(ModelItem.Operator, ModelItem.FieldName, Condition, true));
 			Conditions.insert(Condition, ModelItem.Values.front());
 		}
 		SearchString += " \nAND ";

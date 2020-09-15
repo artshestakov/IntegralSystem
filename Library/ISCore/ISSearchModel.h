@@ -10,7 +10,7 @@ public:
 	ISSearchModel();
 	virtual ~ISSearchModel();
 
-	void CreateSearchString(QString &SearchString, QVariantMap &Conditions) const;
+	void CreateSearchString(const QString &TableAlias, QString &SearchString, QVariantMap &Conditions) const;
 	void AddField(const QString &FieldName, const QVariant &Value, ISNamespace::SearchOperatorType Operator, ISNamespace::FieldType FieldType);
 
 protected:

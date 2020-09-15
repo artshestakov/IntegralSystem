@@ -244,7 +244,7 @@ void ISSearchForm::Search()
 
 	QString SearchString;
 	QVariantMap VariantMap;
-	SearchModel.CreateSearchString(SearchString, VariantMap);
+	SearchModel.CreateSearchString(MetaTable->Alias, SearchString, VariantMap);
 	if (VariantMap.count())
 	{
 		emit StartSearch(SearchString, VariantMap);
