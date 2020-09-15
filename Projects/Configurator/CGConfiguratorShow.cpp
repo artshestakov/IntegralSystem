@@ -325,6 +325,7 @@ bool CGConfiguratorShow::oldindexes(int &Count)
 {
 	ISLOGGER_L("Search indexes...");
 	ISQuery qSelectIndexes(QS_INDEX);
+	qSelectIndexes.SetShowLongQuery(false);
 	bool Result = qSelectIndexes.Execute();
 	if (Result)
 	{

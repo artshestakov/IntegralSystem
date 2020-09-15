@@ -42,6 +42,13 @@ static QString QS_SEQUENCES = PREPARE_QUERY("SELECT sequence_name "
 //-----------------------------------------------------------------------------
 static QString QD_SEQUENCE = "DROP SEQUENCE public.%1";
 //-----------------------------------------------------------------------------
+static QString QS_INDEX = PREPARE_QUERY("SELECT indexname "
+										"FROM pg_indexes "
+										"JOIN pg_class c ON c.relname = indexname "
+										"JOIN pg_index ON indexrelid = c.oid "
+										"WHERE schemaname = current_schema() "
+										"AND right(indexname, 4) != 'pkey'");
+//-----------------------------------------------------------------------------
 CGConfiguratorDelete::CGConfiguratorDelete() : CGConfiguratorBase()
 {
 
@@ -337,6 +344,45 @@ bool CGConfiguratorDelete::oldsequence()
 	else
 	{
 		ISLOGGER_E(qSelect.GetErrorString());
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorDelete::oldindexes()
+{
+	ISQuery qSelectIndexes(QS_INDEX);
+	qSelectIndexes.SetShowLongQuery(false);
+	bool Result = qSelectIndexes.Execute();
+	if (Result)
+	{
+		std::vector<PMetaIndex*> Indexes = ISMetaData::Instance().GetIndexes();
+		std::vector<QString> IndexNames;
+		for (PMetaIndex *MetaIndex : Indexes)
+		{
+			IndexNames.emplace_back(MetaIndex->GetName());
+		}
+
+		while (qSelectIndexes.Next())
+		{
+			QString IndexName = qSelectIndexes.ReadColumn("indexname").toString();
+			if (!ISAlgorithm::VectorContains(IndexNames, IndexName))
+			{
+				if (ISConsole::Question(QString("Delete index %1?").arg(IndexName)))
+				{
+					ISQuery qDeleteIndex;
+					Result = qDeleteIndex.Execute(QD_INDEX.arg(IndexName));
+					if (!Result)
+					{
+						ErrorString = qDeleteIndex.GetErrorString();
+						break;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		ErrorString = qSelectIndexes.GetErrorString();
 	}
 	return Result;
 }

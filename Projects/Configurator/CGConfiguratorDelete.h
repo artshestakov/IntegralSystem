@@ -20,8 +20,9 @@ public slots:
 	bool oldfields();
 	bool oldresources();
 	bool oldsequence();
+	bool oldindexes();
 
-protected:
+private:
 	void ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID);
 };
 //-----------------------------------------------------------------------------
