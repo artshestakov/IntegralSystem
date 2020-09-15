@@ -49,7 +49,6 @@ HEADERS += \
     ISMetaDataHelper.h \
     ISMetaUser.h \
     ISMetaUuidCheckeder.h \
-    ISMetaViewQuery.h \
     ISNamespace.h \
     ISNetwork.h \
     ISProperty.h \
@@ -90,7 +89,6 @@ SOURCES += \
     ISMetaDataHelper.cpp \
     ISMetaUser.cpp \
     ISMetaUuidCheckeder.cpp \
-    ISMetaViewQuery.cpp \
     ISNetwork.cpp \
     ISProperty.cpp \
     ISProtocol.cpp \
