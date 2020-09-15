@@ -62,7 +62,7 @@ bool CGConfiguratorUpdate::database()
 
 	if (Result)
 	{
-		Result = indexesall();
+		Result = indexes();
 	}
 
 	if (Result)
@@ -156,59 +156,6 @@ bool CGConfiguratorUpdate::comment()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorUpdate::indexesall()
-{
-	bool Result = systemindexes();
-	if (Result)
-	{
-		Result = indexes();
-	}
-
-	if (Result)
-	{
-		Result = compoundindexes();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool CGConfiguratorUpdate::systemindexes()
-{
-	bool Result = true, Exist = true;
-	//for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
-	//{
-	//	PMetaIndex *MetaIndex = ISMetaData::Instance().GetSystemIndexes()[i];
-	//	Progress("System index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
-	//	if (CGDatabase::Index_Exist(MetaIndex, Exist, ErrorString))
-	//	{
-	//		if (Exist)
-	//		{
-	//			if (MetaIndex->FieldName.toLower() == "id") //Если поле primary_key - делать reindex
-	//			{
-	//				Result = CGDatabase::Index_ReIndex(MetaIndex, ErrorString);
-	//			}
-	//			else if (CGDatabase::Index_CheckForeign(MetaIndex)) //Если на поле, где установлен текущий индекс ссылается внешний ключ - делать reindex
-	//			{
-	//				Result = CGDatabase::Index_ReIndex(MetaIndex, ErrorString);
-	//			}
-	//			else
-	//			{
-	//				Result = CGDatabase::Index_Update(MetaIndex, ErrorString);
-	//			}
-	//		}
-	//		else
-	//		{
-	//			Result = CGDatabase::Index_Create(MetaIndex, ErrorString);
-	//		}
-	//	}
-
-	//	if (!Result)
-	//	{
-	//		break;
-	//	}
-	//}
-	return Result;
-}
-//-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::indexes()
 {
 	bool Result = true, Exist = true;
@@ -228,27 +175,6 @@ bool CGConfiguratorUpdate::indexes()
 			break;
 		}
 	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool CGConfiguratorUpdate::compoundindexes()
-{
-	bool Result = true, Exist = true;
-	/*for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetCompoundIndexes().size(); i < CountIndexes; ++i)
-	{
-		PMetaIndex *MetaIndex = ISMetaData::Instance().GetCompoundIndexes()[i];
-		Progress("Compound index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
-		Result = CGDatabase::Index_Exist(MetaIndex, Exist, ErrorString);
-		if (Result)
-		{
-			Result = Exist ? CGDatabase::Index_Update(MetaIndex, ErrorString) : CGDatabase::Index_Create(MetaIndex, ErrorString);
-		}
-		
-		if (!Result)
-		{
-			break;
-		}
-	}*/
 	return Result;
 }
 //-----------------------------------------------------------------------------

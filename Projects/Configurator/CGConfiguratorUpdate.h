@@ -17,10 +17,7 @@ public slots:
 	bool functions(); //Обновление функций
 	bool tables(); //Обновление таблиц
 	bool comment(); //Комментирование таблиц
-	bool indexesall(); //Обновление всех индексов
-	bool systemindexes(); //Обновление системных индексов
 	bool indexes(); //Обновление индексов
-	bool compoundindexes(); //Обновление составных индексов
 	bool foreigns(); //Обновление внешних ключей
 	bool resources(); //Обновление ресурсов
 	bool systemuser(); //Обновление системного пользователя
