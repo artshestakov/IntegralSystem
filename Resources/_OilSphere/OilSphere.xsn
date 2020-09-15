@@ -115,11 +115,11 @@
       <Field UID="{A65F0858-C7C4-4C7C-B715-1FB59A5E2EED}" Name="Implementation" Type="BigInt" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{7236B6F9-0890-414D-B3EE-C829602CF376}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент"/>
       <Field UID="{747E79CA-D9B9-4127-B66D-51B421673545}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад"/>
-      <Field UID="{70F3A0FF-3034-437D-A998-7863EE3310FB}" Name="Container" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" LayoutName="Container"/>
-      <Field UID="{FD72FC59-F89E-43E8-A074-CFF6CF8DD587}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Container"/>
-      <Field UID="{E0BB3135-E091-4D06-9854-19BCEF3D2629}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Container"/>
-      <Field UID="{12223763-4E01-4C53-AA20-63FA8BC05D64}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="Price"/>
-      <Field UID="{CCA79032-4463-4059-B973-41CA4792AC1D}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="Price"/>
+      <Field UID="{70F3A0FF-3034-437D-A998-7863EE3310FB}" Name="Container" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" NotNull="true" LayoutName="Container"/>
+      <Field UID="{FD72FC59-F89E-43E8-A074-CFF6CF8DD587}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" NotNull="true" LayoutName="Container"/>
+      <Field UID="{E0BB3135-E091-4D06-9854-19BCEF3D2629}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" NotNull="true" LayoutName="Container"/>
+      <Field UID="{12223763-4E01-4C53-AA20-63FA8BC05D64}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" NotNull="true" LayoutName="Price"/>
+      <Field UID="{CCA79032-4463-4059-B973-41CA4792AC1D}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="Price"/>
       <Field UID="{C80569A0-764A-4746-B69F-01D403B97E42}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -144,11 +144,11 @@
       <Field UID="{9256664C-F15B-42AC-8CD6-854D0B575FB5}" Name="Implementation" Type="BigInt" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{5B6F6960-F201-417C-9682-04855C0DF468}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент"/>
       <Field UID="{08F8D368-32A9-4F87-A5A9-01C115C24146}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад"/>
-      <Field UID="{B3D72F1A-14BA-4C24-84E5-B59974135CE4}" Name="Container" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" LayoutName="Unload"/>
-      <Field UID="{92E7D55E-FE3B-4175-AF84-7D859085BDB1}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" LayoutName="Unload"/>
-      <Field UID="{BC20D00D-9D02-4848-85F7-40626A422118}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" LayoutName="Unload"/>
-      <Field UID="{770982DA-76BB-4A3B-B107-A9404D0FE3F8}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" LayoutName="UnloadPrice"/>
-      <Field UID="{B46EDE1E-5076-4AEA-ACA2-5ADA91F186B7}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" LayoutName="UnloadPrice"/>
+      <Field UID="{B3D72F1A-14BA-4C24-84E5-B59974135CE4}" Name="Container" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" NotNull="true" LayoutName="Unload"/>
+      <Field UID="{92E7D55E-FE3B-4175-AF84-7D859085BDB1}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" NotNull="true" LayoutName="Unload"/>
+      <Field UID="{BC20D00D-9D02-4848-85F7-40626A422118}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" NotNull="true" LayoutName="Unload"/>
+      <Field UID="{770982DA-76BB-4A3B-B107-A9404D0FE3F8}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" NotNull="true" LayoutName="UnloadPrice"/>
+      <Field UID="{B46EDE1E-5076-4AEA-ACA2-5ADA91F186B7}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="UnloadPrice"/>
       <Field UID="{7F4BA1E7-DBD1-4766-A108-5A118FA3BB66}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true" SeparatorName="Дополнительно"/>
       <Field UID="{2AB41BFD-F2DE-450F-8002-B67D60052C49}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
