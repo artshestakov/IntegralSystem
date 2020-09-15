@@ -23,6 +23,7 @@ private:
 	bool oldfields(int &Count);
 	bool oldresources(int &Count);
 	bool oldsequence(int &Count);
+	bool oldindexes(int &Count);
 
 private:
 	PMetaTable* FoundTable(const QString &TableName);

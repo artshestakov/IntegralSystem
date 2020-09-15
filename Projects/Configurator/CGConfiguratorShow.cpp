@@ -24,6 +24,13 @@ static QString QS_SEQUENCES = PREPARE_QUERY("SELECT sequence_name "
 											"AND sequence_name NOT IN(:Where) "
 											"ORDER BY sequence_name");
 //-----------------------------------------------------------------------------
+static QString QS_INDEX = PREPARE_QUERY("SELECT indexname "
+										"FROM pg_indexes "
+										"JOIN pg_class c ON c.relname = indexname "
+										"JOIN pg_index ON indexrelid = c.oid "
+										"WHERE schemaname = current_schema() "
+										"AND right(indexname, 4) != 'pkey'");
+//-----------------------------------------------------------------------------
 static QString QS_INFO = PREPARE_QUERY("SELECT "
 									   "(SELECT pg_size_pretty(pg_database_size(current_database()))) AS \"database_size\", "
 									   "(SELECT pg_catalog.pg_get_userbyid(datdba) AS \"database_owner\" FROM pg_catalog.pg_database WHERE datname = current_database()), "
@@ -51,7 +58,7 @@ CGConfiguratorShow::~CGConfiguratorShow()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldobjects()
 {
-	int Tables = 0, Fields = 0, Resources = 0, Sequences = 0;
+	int Tables = 0, Fields = 0, Resources = 0, Sequences = 0, Indexes = 0;
 	bool Result = oldtables(Tables);
 	if (Result)
 	{
@@ -68,7 +75,12 @@ bool CGConfiguratorShow::oldobjects()
 		Result = oldsequence(Sequences);
 	}
 
-	ISLOGGER_L(QString("Tables: %1 Fields: %2 Resources: %3 Sequences: %4").arg(Tables).arg(Fields).arg(Resources).arg(Sequences));
+	if (Result)
+	{
+		Result = oldindexes(Indexes);
+	}
+
+	ISLOGGER_L(QString("Tables: %1 Fields: %2 Resources: %3 Sequences: %4 Indexes: %5").arg(Tables).arg(Fields).arg(Resources).arg(Sequences).arg(Indexes));
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -150,7 +162,7 @@ bool CGConfiguratorShow::databaseinfo()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldtables(int &Count)
 {
-	ISLOGGER_L("Searching tables...");
+	ISLOGGER_L("Search tables...");
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
 	bool Result = qSelectTables.Execute();
@@ -177,7 +189,7 @@ bool CGConfiguratorShow::oldtables(int &Count)
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldfields(int &Count)
 {
-	ISLOGGER_L("Searching fields...");
+	ISLOGGER_L("Search fields...");
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
 	bool Result = qSelectTables.Execute();
@@ -224,7 +236,7 @@ bool CGConfiguratorShow::oldfields(int &Count)
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldresources(int &Count)
 {
-	ISLOGGER_L("Searching resources...");
+	ISLOGGER_L("Search resources...");
 	std::map<QString, ISVectorString> Map, MapOutput;
 	for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
 	{
@@ -283,7 +295,7 @@ bool CGConfiguratorShow::oldresources(int &Count)
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldsequence(int &Count)
 {
-	ISLOGGER_L("Searching sequences...");
+	ISLOGGER_L("Search sequences...");
 	QString Where;
 	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
@@ -304,6 +316,38 @@ bool CGConfiguratorShow::oldsequence(int &Count)
 	else
 	{
 		ErrorString = qSelectSequences.GetErrorString();
+	}
+	ISLOGGER_N();
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorShow::oldindexes(int &Count)
+{
+	ISLOGGER_L("Search indexes...");
+	ISQuery qSelectIndexes(QS_INDEX);
+	bool Result = qSelectIndexes.Execute();
+	if (Result)
+	{
+		std::vector<PMetaIndex*> Indexes = ISMetaData::Instance().GetIndexes();
+		std::vector<QString> IndexNames;
+		for (PMetaIndex *MetaIndex : Indexes)
+		{
+			IndexNames.emplace_back(MetaIndex->GetName());
+		}
+
+		while (qSelectIndexes.Next())
+		{
+			QString IndexName = qSelectIndexes.ReadColumn("indexname").toString();
+			if (!ISAlgorithm::VectorContains(IndexNames, IndexName))
+			{
+				ISLOGGER_L(IndexName);
+				++Count;
+			}
+		}
+	}
+	else
+	{
+		ErrorString = qSelectIndexes.GetErrorString();
 	}
 	ISLOGGER_N();
 	return Result;
