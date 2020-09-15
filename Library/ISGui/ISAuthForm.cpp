@@ -387,6 +387,7 @@ bool ISAuthForm::CheckUpdate()
 					{
 						ISMessageBox::ShowWarning(this, LANG("Message.Warning.StartInstallUpdate").arg(FilePath));
 					}
+					break;
 				}
 			}
 		}
