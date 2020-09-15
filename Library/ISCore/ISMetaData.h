@@ -21,15 +21,12 @@ public:
     bool Initialize(const QString &configuration_name, bool InitXSR, bool InitXSF); //Инициализация
 
     PMetaTable* GetMetaTable(const QString &TableName); //Получить мета-таблицу по имени
-    PMetaTable* GetMetaQuery(const QString &QueryName); //Получить мета-запрос по имени
     PMetaField* GetMetaField(PMetaTable *MetaTable, const QString &FieldName); //Получить мета-поле из указанной таблицы
     PMetaField* GetMetaField(const QString &TableName, const QString &FieldName); //Получить мета-поле из указанной таблицы
 
     std::vector<PMetaFunction*> GetFunctions(); //Получить список всех функций
     std::vector<PMetaTable*> GetTables(); //Получить список всех таблиц
-    std::vector<PMetaIndex*> GetSystemIndexes(); //Получить список системных индексов
     std::vector<PMetaIndex*> GetIndexes(); //Получить список индексов для пользовательских полей
-    std::vector<PMetaIndex*> GetCompoundIndexes(); //Получить список составных индексов
     std::vector<PMetaForeign*> GetForeigns(); //Получить список внешних ключей
     std::vector<PMetaResource*> GetResources(); //Получить ресурсы
 
@@ -77,10 +74,7 @@ private:
 
     std::map<QString, PMetaFunction *> FunctionsMap; //Функции
     std::map<QString, PMetaTable *> TablesMap; //Таблицы
-    std::map<QString, PMetaTable *> QueriesMap; //Запросы
-
-    std::vector<PMetaResource *> Resources; //Реурсы
-    std::vector<PMetaIndex*> IndexesCompound; //Составные индексы
+    std::vector<PMetaResource *> Resources; //Ресурсы
 
     QString CurrentXSN; //Текущий обрабатываемый XSN
     QString CurrentXSR; //Текущий обрабатываемый XSR

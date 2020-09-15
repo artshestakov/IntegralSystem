@@ -174,50 +174,51 @@ bool CGConfiguratorUpdate::indexesall()
 bool CGConfiguratorUpdate::systemindexes()
 {
 	bool Result = true, Exist = true;
-	for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
-	{
-		PMetaIndex *MetaIndex = ISMetaData::Instance().GetSystemIndexes()[i];
-		Progress("System index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
-		if (CGDatabase::Index_Exist(MetaIndex, Exist, ErrorString))
-		{
-			if (Exist)
-			{
-				if (MetaIndex->FieldName.toLower() == "id") //Если поле primary_key - делать reindex
-				{
-					Result = CGDatabase::Index_ReIndex(MetaIndex, ErrorString);
-				}
-				else if (CGDatabase::Index_CheckForeign(MetaIndex)) //Если на поле, где установлен текущий индекс ссылается внешний ключ - делать reindex
-				{
-					Result = CGDatabase::Index_ReIndex(MetaIndex, ErrorString);
-				}
-				else
-				{
-					Result = CGDatabase::Index_Update(MetaIndex, ErrorString);
-				}
-			}
-			else
-			{
-				Result = CGDatabase::Index_Create(MetaIndex, ErrorString);
-			}
-		}
+	//for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetSystemIndexes().size(); i < CountIndexes; ++i) //Обход индексов
+	//{
+	//	PMetaIndex *MetaIndex = ISMetaData::Instance().GetSystemIndexes()[i];
+	//	Progress("System index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
+	//	if (CGDatabase::Index_Exist(MetaIndex, Exist, ErrorString))
+	//	{
+	//		if (Exist)
+	//		{
+	//			if (MetaIndex->FieldName.toLower() == "id") //Если поле primary_key - делать reindex
+	//			{
+	//				Result = CGDatabase::Index_ReIndex(MetaIndex, ErrorString);
+	//			}
+	//			else if (CGDatabase::Index_CheckForeign(MetaIndex)) //Если на поле, где установлен текущий индекс ссылается внешний ключ - делать reindex
+	//			{
+	//				Result = CGDatabase::Index_ReIndex(MetaIndex, ErrorString);
+	//			}
+	//			else
+	//			{
+	//				Result = CGDatabase::Index_Update(MetaIndex, ErrorString);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			Result = CGDatabase::Index_Create(MetaIndex, ErrorString);
+	//		}
+	//	}
 
-		if (!Result)
-		{
-			break;
-		}
-	}
+	//	if (!Result)
+	//	{
+	//		break;
+	//	}
+	//}
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::indexes()
 {
 	bool Result = true, Exist = true;
-	for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetIndexes().size(); i < CountIndexes; ++i) //Обход индексов
+	std::vector<PMetaIndex*> Indexes = ISMetaData::Instance().GetIndexes();
+	for (size_t i = 0, CountIndexes = Indexes.size(); i < CountIndexes; ++i) //Обход индексов
 	{
-		PMetaIndex *MetaIndex = ISMetaData::Instance().GetIndexes()[i];
+		PMetaIndex *MetaIndex = Indexes[i];
 		Progress("Index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
 		Result = CGDatabase::Index_Exist(MetaIndex, Exist, ErrorString);
-		if (Result)
+		if (Result) //Если проверка существования индекса прошла успешно и его в БД нет - создаём
 		{
 			Result = Exist ? CGDatabase::Index_Update(MetaIndex, ErrorString) : CGDatabase::Index_Create(MetaIndex, ErrorString);
 		}
@@ -233,7 +234,7 @@ bool CGConfiguratorUpdate::indexes()
 bool CGConfiguratorUpdate::compoundindexes()
 {
 	bool Result = true, Exist = true;
-	for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetCompoundIndexes().size(); i < CountIndexes; ++i)
+	/*for (size_t i = 0, CountIndexes = ISMetaData::Instance().GetCompoundIndexes().size(); i < CountIndexes; ++i)
 	{
 		PMetaIndex *MetaIndex = ISMetaData::Instance().GetCompoundIndexes()[i];
 		Progress("Compound index", i, CountIndexes, "Table: " + MetaIndex->TableName + ". IndexName: " + MetaIndex->GetName());
@@ -247,7 +248,7 @@ bool CGConfiguratorUpdate::compoundindexes()
 		{
 			break;
 		}
-	}
+	}*/
 	return Result;
 }
 //-----------------------------------------------------------------------------

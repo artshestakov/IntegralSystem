@@ -16,9 +16,9 @@ static QString QC_FOREIGN = "ALTER TABLE public.%1 "
 							"REFERENCES public.%4(%5_id) "
 							"ON DELETE NO ACTION "
 							"ON UPDATE NO ACTION "
-							"NOT DEFERRABLE;";
+							"NOT DEFERRABLE";
 //-----------------------------------------------------------------------------
-static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT;";
+static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 										 "FROM information_schema.columns "
@@ -27,11 +27,18 @@ static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
 										 "AND table_name = :TableName "
 										 "AND column_name = :ColumnName");
 //-----------------------------------------------------------------------------
-static QString QS_INDEXES = PREPARE_QUERY("SELECT COUNT(*) FROM pg_indexes WHERE schemaname = current_schema() AND tablename = :TableName AND indexname = :IndexName;");
+static QString QS_INDEXES = PREPARE_QUERY("SELECT COUNT(*) FROM pg_indexes WHERE schemaname = current_schema() AND tablename = :TableName AND indexname = :IndexName");
 //-----------------------------------------------------------------------------
-static QString QD_INDEX = "DROP INDEX public.%1 CASCADE";
+static QString QC_INDEX = "CREATE %1 INDEX %2 ON public.%3 USING btree(%4)";
 //-----------------------------------------------------------------------------
-static QString QC_INDEX = "CREATE %1 INDEX %2 ON public.%3 USING btree(%4);";
+static QString QS_INDEX = PREPARE_QUERY("SELECT indisunique "
+										"FROM pg_indexes "
+										"JOIN pg_class c ON c.relname = indexname "
+										"JOIN pg_index ON indexrelid = c.oid "
+										"WHERE schemaname = current_schema() "
+										"AND indexname = :IndexName");
+//-----------------------------------------------------------------------------
+static QString QD_INDEX = PREPARE_QUERY("DROP INDEX public.%1");
 //-----------------------------------------------------------------------------
 static QString Q_REINDEX = "REINDEX INDEX %1";
 //-----------------------------------------------------------------------------
@@ -168,14 +175,33 @@ bool CGDatabase::Index_Create(PMetaIndex *Index, QString &ErrorString)
 //-----------------------------------------------------------------------------
 bool CGDatabase::Index_Update(PMetaIndex *Index, QString &ErrorString)
 {
-	ISQuery qDelete;
-	qDelete.SetShowLongQuery(false);
-	bool Result = qDelete.Execute(QD_INDEX.arg(Index->GetName()));
+	ISQuery qSelect(QS_INDEX);
+	qSelect.BindValue(":IndexName", Index->GetName());
+	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
-		Result = Index_Create(Index, ErrorString);
+		//Если уникальность индекса в БД не совпадает с мета-данными - обновляем
+		if (qSelect.ReadColumn("indisunique").toBool() != Index->Unique)
+		{
+			Result = Index_Delete(Index, ErrorString);
+			if (Result)
+			{
+				Result = Index_Create(Index, ErrorString);
+			}
+		}
 	}
 	else
+	{
+		ErrorString = qSelect.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGDatabase::Index_Delete(PMetaIndex *Index, QString &ErrorString)
+{
+	ISQuery qDelete;
+	bool Result = qDelete.Execute(QD_INDEX.arg(Index->GetName()));
+	if (!Result)
 	{
 		ErrorString = qDelete.GetErrorString();
 	}

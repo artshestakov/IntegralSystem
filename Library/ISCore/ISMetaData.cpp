@@ -129,15 +129,6 @@ PMetaTable* ISMetaData::GetMetaTable(const QString &TableName)
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-PMetaTable* ISMetaData::GetMetaQuery(const QString &QueryName)
-{
-	if (QueriesMap.count(QueryName))
-	{
-		return QueriesMap[QueryName];
-	}
-	return nullptr;
-}
-//-----------------------------------------------------------------------------
 PMetaField* ISMetaData::GetMetaField(PMetaTable *MetaTable, const QString &FieldName)
 {
 	for (PMetaField *MetaField : MetaTable->Fields)
@@ -165,22 +156,6 @@ std::vector<PMetaTable*> ISMetaData::GetTables()
 	return ISAlgorithm::ConvertMapToValues<QString, PMetaTable *>(TablesMap);
 }
 //-----------------------------------------------------------------------------
-std::vector<PMetaIndex*> ISMetaData::GetSystemIndexes()
-{
-	std::vector<PMetaIndex*> SystemIndexes;
-	for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
-	{
-		for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
-		{
-			if (MetaField->IsSystem && MetaField->Index)
-			{
-				SystemIndexes.emplace_back(MetaField->Index);
-			}
-		}
-	}
-	return SystemIndexes;
-}
-//-----------------------------------------------------------------------------
 std::vector<PMetaIndex*> ISMetaData::GetIndexes()
 {
 	std::vector<PMetaIndex*> Indexes;
@@ -193,13 +168,11 @@ std::vector<PMetaIndex*> ISMetaData::GetIndexes()
 				Indexes.emplace_back(MetaField->Index);
 			}
 		}
+
+		//Добавляем составные индексы
+		Indexes.insert(Indexes.end(), MetaTable->IndexesCompound.begin(), MetaTable->IndexesCompound.end());
 	}
 	return Indexes;
-}
-//-----------------------------------------------------------------------------
-std::vector<PMetaIndex*> ISMetaData::GetCompoundIndexes()
-{
-	return IndexesCompound;
 }
 //-----------------------------------------------------------------------------
 std::vector<PMetaForeign*> ISMetaData::GetForeigns()
@@ -588,84 +561,69 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 
 				if (Result)
 				{
-					if (!Parent.isEmpty()) //Если у мета-таблицы есть родительская таблица - мета-таблица является запросом
+					//Проверка на заполнение обязательных атрибутов
+					Result = !MetaTable->Name.isEmpty();
+					if (Result)
 					{
-						Result = !QueriesMap.count(TableName);
+						Result = !MetaTable->UID.isEmpty();
 						if (Result)
 						{
-							QueriesMap.emplace(TableName, MetaTable);
-						}
-						else
-						{
-							ErrorString = QString("Query \"%1\" already exist in meta data").arg(TableName);
-						}
-					}
-					else //У мета-таблицы нет родительской таблицы
-					{
-						//Проверка на заполнение обязательных атрибутов
-						Result = !MetaTable->Name.isEmpty();
-						if (Result)
-						{
-							Result = !MetaTable->UID.isEmpty();
+							Result = !MetaTable->Alias.isEmpty();
 							if (Result)
 							{
-								Result = !MetaTable->Alias.isEmpty();
+								Result = !MetaTable->LocalName.isEmpty();
 								if (Result)
 								{
-									Result = !MetaTable->LocalName.isEmpty();
+									Result = !MetaTable->LocalListName.isEmpty();
 									if (Result)
 									{
-										Result = !MetaTable->LocalListName.isEmpty();
-										if (Result)
+										QStringList TitleFields = MetaTable->TitleName.split(';');
+										for (const QString &FieldName : TitleFields)
 										{
-											QStringList TitleFields = MetaTable->TitleName.split(';');
-											for (const QString &FieldName : TitleFields)
+											Result = MetaTable->ContainsField(FieldName);
+											if (!Result)
 											{
-												Result = MetaTable->ContainsField(FieldName);
-												if (!Result)
-												{
-													ErrorString = QString("Invalid field name \"%1\" in title name. Table name: %2").arg(MetaTable->TitleName).arg(TableName);
-													break;
-												}
-											}
-
-											if (Result)
-											{
-												Result = !TablesMap.count(TableName);
-												if (Result)
-												{
-													TablesMap.emplace(TableName, MetaTable);
-												}
-												else
-												{
-													ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
-												}
+												ErrorString = QString("Invalid field name \"%1\" in title name. Table name: %2").arg(MetaTable->TitleName).arg(TableName);
+												break;
 											}
 										}
-										else
+
+										if (Result)
 										{
-											ErrorString = QString("Empty table local list name \"%1\".").arg(MetaTable->Name);
+											Result = !TablesMap.count(TableName);
+											if (Result)
+											{
+												TablesMap.emplace(TableName, MetaTable);
+											}
+											else
+											{
+												ErrorString = QString("Table \"%1\" already exist in meta data").arg(TableName);
+											}
 										}
 									}
 									else
 									{
-										ErrorString = QString("Empty table local name \"%1\".").arg(MetaTable->Name);
+										ErrorString = QString("Empty table local list name \"%1\".").arg(MetaTable->Name);
 									}
 								}
 								else
 								{
-									ErrorString = QString("Empty table alias \"%1\".").arg(MetaTable->Name);
+									ErrorString = QString("Empty table local name \"%1\".").arg(MetaTable->Name);
 								}
 							}
 							else
 							{
-								ErrorString = QString("Empty uid table \"%1\".").arg(MetaTable->Name);
+								ErrorString = QString("Empty table alias \"%1\".").arg(MetaTable->Name);
 							}
 						}
 						else
 						{
-							ErrorString = "Empty table name.";
+							ErrorString = QString("Empty uid table \"%1\".").arg(MetaTable->Name);
 						}
+					}
+					else
+					{
+						ErrorString = "Empty table name.";
 					}
 				}
 			}
@@ -921,7 +879,7 @@ bool ISMetaData::InitializeXSNTableIndexes(PMetaTable *MetaTable, const QDomNode
 				{
 					Index->Fields.emplace_back(IndexName);
 				}
-				IndexesCompound.emplace_back(Index);
+				MetaTable->IndexesCompound.emplace_back(Index);
 			}
 			else //Индекс стандартный
 			{

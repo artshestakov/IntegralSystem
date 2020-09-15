@@ -10,10 +10,7 @@
     <Function FunctionName="Functions" Description="Обновление всех функций базы данных."/>
     <Function FunctionName="Tables" Description="Обновление таблиц базы данных."/>
     <Function FunctionName="Comment" Description="Комментирование таблиц и полей."/>
-    <Function FunctionName="IndexesAll" Description="Обновление всех индексов базы данных."/>
-    <Function FunctionName="SystemIndexes" Description="Обновление системных индексов базы данных."/>
     <Function FunctionName="Indexes" Description="Обновление индексов базы данных."/>
-    <Function FunctionName="CompoundIndexes" Description="Обновление составных индексов базы данных."/>
     <Function FunctionName="Foreigns" Description="Обновление внешних ключей базы данных."/>
     <Function FunctionName="Resources" Description="Обновление ресурсов и справочников базы данных."/>
     <Function FunctionName="SystemUser" Description="Обновление информации о системном пользователе."/>
