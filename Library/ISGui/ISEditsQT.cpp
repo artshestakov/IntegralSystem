@@ -73,7 +73,7 @@ ISQLineEdit::~ISQLineEdit()
 //-----------------------------------------------------------------------------
 void ISQLineEdit::SetIcon(const QIcon &icon)
 {
-	Pixmap = icon.pixmap(height(), width());
+	Pixmap = icon.pixmap(height() - 3, width() - 3);
 	setTextMargins(Pixmap.isNull() ? 0 : height() + 2, 0, 0, 0);
 }
 //-----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ void ISQLineEdit::paintEvent(QPaintEvent *e)
 		int x = height();
 
 		QPainter Painter(this);
-		Painter.drawPixmap(0, 0, Pixmap);
+		Painter.drawPixmap(1, 1, Pixmap);
 		Painter.setPen(Qt::lightGray);
 		Painter.drawLine(x + 2, 3, x + 2, height() - 4);
 	}
