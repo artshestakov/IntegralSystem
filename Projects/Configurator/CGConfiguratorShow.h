@@ -14,15 +14,18 @@ public:
 	virtual ~CGConfiguratorShow();
 
 public slots:
-	bool oldtables();
-	bool oldfields();
-	bool oldresources();
-	bool oldsequence();
+	bool oldobjects();
 	bool config();
 	bool databaseinfo();
 
 private:
-	PMetaTable * FoundTable(const QString &TableName);
+	bool oldtables(int &Count);
+	bool oldfields(int &Count);
+	bool oldresources(int &Count);
+	bool oldsequence(int &Count);
+
+private:
+	PMetaTable* FoundTable(const QString &TableName);
 	PMetaField* FoundField(PMetaTable *MetaTable, const QString &ColumnName);
 };
 //-----------------------------------------------------------------------------
