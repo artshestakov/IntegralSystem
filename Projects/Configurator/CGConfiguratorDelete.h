@@ -16,8 +16,6 @@ public:
 public slots:
 	bool indexes();
 	bool foreigns();
-	bool systems();
-	bool subsystems();
 	bool oldtables();
 	bool oldfields();
 	bool oldresources();

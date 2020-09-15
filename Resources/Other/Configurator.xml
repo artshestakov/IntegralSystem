@@ -20,8 +20,6 @@
   <Section Name="Delete" ClassName="CGConfiguratorDelete">
     <Function FunctionName="Indexes" Description="Удаление всех индексов из базы данных"/>
     <Function FunctionName="Foreigns" Description="Удаление всех внешних ключей из базы данных"/>
-    <Function FunctionName="Systems" Description="Удаление всех систем из базы данных"/>
-    <Function FunctionName="SubSystems" Description="Удаление всех подсистем из базы данных"/>
     <Function FunctionName="OldTables" Description="Удаление всех устаревших таблиц"/>
     <Function FunctionName="OldFields" Description="Удаление всех устаревших полей"/>
     <Function FunctionName="OldResources" Description="Удаление всех устаревших ресурсов"/>

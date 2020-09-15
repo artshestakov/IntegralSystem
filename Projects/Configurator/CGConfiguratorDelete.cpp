@@ -21,10 +21,6 @@ static QString QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name "
 //-----------------------------------------------------------------------------
 static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
 //-----------------------------------------------------------------------------
-static QString QD_SYSTEMS = PREPARE_QUERY("DELETE FROM _systems");
-//-----------------------------------------------------------------------------
-static QString QD_SUB_SYSTEMS = PREPARE_QUERY("DELETE FROM _subsystems");
-//-----------------------------------------------------------------------------
 static QString QS_TABLES = PREPARE_QUERY("SELECT table_name "
 										 "FROM information_schema.tables "
 										 "WHERE table_catalog = current_database() "
@@ -126,40 +122,6 @@ bool CGConfiguratorDelete::foreigns()
 	else
 	{
 		ErrorString = qSelectForeigns.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool CGConfiguratorDelete::systems()
-{
-	ISLOGGER_D("Deleting systems...");
-
-	ISQuery qDelete(QD_SYSTEMS);
-	bool Result = qDelete.Execute();
-	if (Result)
-	{
-		ISLOGGER_I("Deleting all systems done");
-	}
-	else
-	{
-		ErrorString = qDelete.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool CGConfiguratorDelete::subsystems()
-{
-	ISLOGGER_D("Deleting subsystems...");
-
-	ISQuery qDelete(QD_SUB_SYSTEMS);
-	bool Result = qDelete.Execute();
-	if (Result)
-	{
-		ISLOGGER_I("Deleting all subsystems done");
-	}
-	else
-	{
-		ErrorString = qDelete.GetErrorString();
 	}
 	return Result;
 }
