@@ -263,13 +263,21 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
 		return false;
 	}
 
-	ISQuery qSelectConstant(QS_CONSTANT);
-	if (!qSelectConstant.ExecuteFirst())
+	double ValumeIncome = 0;
+	if (UnloadStock.isValid()) //Если заполнено поле склад - проверяем наличие константы
 	{
-		ISMessageBox::ShowCritical(this, LANG("OilSphere.Message.Warning.NotFoundCurrentConstant"));
-		return false;
+		ISQuery qSelectConstant(QS_CONSTANT);
+		if (qSelectConstant.ExecuteFirst())
+		{
+			ValumeIncome = qSelectConstant.ReadColumn("prod_constant").toDouble() * GetFieldValue("WeightNet").toDouble();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, LANG("OilSphere.Message.Warning.NotFoundCurrentConstant"));
+			return false;
+		}
 	}
-	
+
 	bool Result = ISObjectFormBase::Save();
 	if (Result && UnloadStock.isValid()) //Если сохранение прошло успешно и поле "Склад" валидное - производим добавление в ведомомсть АЗС
 	{
@@ -282,7 +290,7 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
 				ISQuery qInsert(QI_STATEMENT);
 				qInsert.BindValue(":ImplementationUnload", GetObjectID());
 				qInsert.BindValue(":StockID", UnloadStock);
-				qInsert.BindValue(":VolumeIncome", qSelectConstant.ReadColumn("prod_constant").toDouble() * GetFieldValue("WeightNet").toDouble());
+				qInsert.BindValue(":VolumeIncome", ValumeIncome);
 				Result = qInsert.Execute();
 				if (!Result)
 				{
