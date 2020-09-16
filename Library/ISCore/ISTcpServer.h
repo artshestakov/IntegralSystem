@@ -3,6 +3,7 @@
 #define _ISTCPSERVERCARAT_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
+#include "ISTcpSocket.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISTcpServer : public QTcpServer
 {
@@ -29,7 +30,7 @@ private:
 	QString DBHost;
 	int DBPort;
 	QString DBName;
-	std::vector<QTcpSocket*> Clients;
+	std::vector<ISTcpSocket*> Clients;
 };
 //-----------------------------------------------------------------------------
 #endif

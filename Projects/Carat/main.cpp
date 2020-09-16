@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 					Result = ISQueryText::Instance().CheckAllQueries();
 					if (Result)
 					{
-						Result = (new ISCaratService(&CoreApplication))->StartService();
+						Result = (new ISCaratService(&CoreApplication))->Start();
 					}
 				}
 				else

@@ -13,7 +13,7 @@ ISCaratService::~ISCaratService()
 	
 }
 //-----------------------------------------------------------------------------
-bool ISCaratService::StartService()
+bool ISCaratService::Start()
 {
 	ISTcpServer *TcpServer = new ISTcpServer(this);
 	bool Result = TcpServer->Run(CARAT_DEFAULT_PORT);

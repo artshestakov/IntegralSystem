@@ -61,19 +61,15 @@ bool ISTcpServer::Run(quint16 Port)
 //-----------------------------------------------------------------------------
 void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 {
-	QTcpServer::incomingConnection(SocketDescriptor);
-	QTcpSocket *TcpSocket = nextPendingConnection();
-	if (TcpSocket)
-	{
-		Clients.emplace_back(TcpSocket);
-		ISLOGGER_I(QString("Incoming connection from ") + TcpSocket->peerAddress().toString());
-		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected);
-		connect(TcpSocket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &ISTcpServer::ClientError);
-	}
-	else
-	{
-		ISLOGGER_E("nextPendingConnection return null QTcpSocket");
-	}
+	//Создаём сокет и добавляем его во внутреннюю очередь
+	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
+	addPendingConnection(TcpSocket);
+	ISLOGGER_I(QString("Incoming connection from ") + TcpSocket->peerAddress().toString());
+
+	//Добавляем сокет в свою очередь и подключаем сигналы
+	Clients.emplace_back(TcpSocket);
+	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected);
+	connect(TcpSocket, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpServer::ClientError);
 	return;
 
 	QByteArray Buffer;
@@ -233,7 +229,7 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientDisconnected()
 {
-	QTcpSocket *TcpSocket = dynamic_cast<QTcpSocket*>(sender());
+	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
 	ISLOGGER_I("Disconnected " + TcpSocket->peerAddress().toString());
 	if (ISAlgorithm::VectorTake(Clients, TcpSocket))
 	{

@@ -1,18 +1,22 @@
 #pragma once
-#ifndef _ISCARATSERVICE_H_INCLUDED
-#define _ISCARATSERVICE_H_INCLUDED
+#ifndef _ISTCPSOCKET_H_INCLUDED
+#define _ISTCPSOCKET_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "iscore_global.h"
 //-----------------------------------------------------------------------------
-class ISCaratService : public QObject
+class ISTcpSocket : public QTcpSocket
 {
 	Q_OBJECT
 
 public:
-	ISCaratService(QObject *parent = 0);
-	virtual ~ISCaratService();
+	ISTcpSocket(qintptr SocketDescriptor, QObject *parent = 0);
+	virtual ~ISTcpSocket();
 
-	bool Start(); //Запуск сервера
+private:
+	void ReadyRead();
+
+private:
+	QByteArray Buffer;
 };
 //-----------------------------------------------------------------------------
 #endif
