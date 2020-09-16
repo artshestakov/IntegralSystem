@@ -51,9 +51,9 @@ namespace ISAlgorithm
     }
 
 	//Извлечь значение из вектора
-	template <typename T> bool VectorTake(std::vector<T> &Vector, T t)
+    template <typename T> bool VectorTake(std::vector<T> &Vector, T t)
 	{
-		std::vector<T>::const_iterator It = std::find(Vector.begin(), Vector.end(), t);
+        typename std::vector<T>::const_iterator It = std::find(Vector.begin(), Vector.end(), t);
 		bool Result = It != Vector.end();
 		if (Result)
 		{
