@@ -25,7 +25,8 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
 ISTcpServerCarat::ISTcpServerCarat(QObject *parent)
-	: ISTcpServerBase(parent),
+	: QTcpServer(parent),
+	ErrorString(NO_ERROR_STRING),
 	IsDisconnected(false)
 {
 	
@@ -36,19 +37,34 @@ ISTcpServerCarat::~ISTcpServerCarat()
 	
 }
 //-----------------------------------------------------------------------------
+QString ISTcpServerCarat::GetErrorString() const
+{
+	return ErrorString;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpServerCarat::Run(quint16 Port)
 {
 	DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
 	DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
 	DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
-	return ISTcpServerBase::Run(Port);
+	
+	bool Result = listen(QHostAddress::AnyIPv4, Port);
+	if (Result)
+	{
+		connect(this, &QTcpServer::acceptError, this, &ISTcpServerCarat::AcceptError);
+	}
+	else
+	{
+		ErrorString = errorString();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 {
 	ISTRACE();
 	IsDisconnected = false;
-	ISTcpServerBase::incomingConnection(SocketDescriptor);
+	QTcpServer::incomingConnection(SocketDescriptor);
 	QTcpSocket *TcpSocket = nextPendingConnection();
 	if (TcpSocket)
 	{
@@ -220,5 +236,37 @@ void ISTcpServerCarat::Disconnected()
 {
 	sender()->deleteLater();
 	IsDisconnected = true;
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerCarat::AcceptError(QTcpSocket::SocketError socket_error)
+{
+	Q_UNUSED(socket_error);
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerCarat::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
+{
+	//Если сокет все ещё подключен - отправляем
+	if (TcpSocket->state() == QTcpSocket::ConnectedState)
+	{
+		//Формируем ответ
+		QByteArray ByteArray = ISSystem::VariantMapToJsonString(Data, QJsonDocument::Compact).toUtf8();
+		ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
+
+		//Отправляем запрос и ждём окончания его отправки
+		TcpSocket->write(ByteArray);
+		ISTcp::WaitForBytesWritten(TcpSocket);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpServerCarat::SendError(QTcpSocket *TcpSocket, const QString &error_string)
+{
+	//Формируем ответ с ошибкой
+	ISTcpAnswer TcpAnswer;
+	TcpAnswer.SetError(error_string);
+
+	//Отправляем и обрываем соединение
+	Send(TcpSocket, TcpAnswer);
+	TcpSocket->abort();
+	ISLOGGER_E(error_string);
 }
 //-----------------------------------------------------------------------------
