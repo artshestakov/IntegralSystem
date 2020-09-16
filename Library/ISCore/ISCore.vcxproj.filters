@@ -159,11 +159,11 @@
     <ClCompile Include="ISTcpAnswer.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="ISTcpServerCarat.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="ISAlgorithm.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpServer.cpp">
+      <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -305,7 +305,7 @@
     <QtMoc Include="ISTcpConnector.h">
       <Filter>Protocol</Filter>
     </QtMoc>
-    <QtMoc Include="ISTcpServerCarat.h">
+    <QtMoc Include="ISTcpServer.h">
       <Filter>Protocol</Filter>
     </QtMoc>
   </ItemGroup>

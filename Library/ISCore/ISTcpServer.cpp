@@ -1,4 +1,4 @@
-#include "ISTcpServerCarat.h"
+#include "ISTcpServer.h"
 #include "ISTcp.h"
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
@@ -24,25 +24,24 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "FROM _users "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
-ISTcpServerCarat::ISTcpServerCarat(QObject *parent)
+ISTcpServer::ISTcpServer(QObject *parent)
 	: QTcpServer(parent),
-	ErrorString(NO_ERROR_STRING),
-	IsDisconnected(false)
+	ErrorString(NO_ERROR_STRING)
 {
 	
 }
 //-----------------------------------------------------------------------------
-ISTcpServerCarat::~ISTcpServerCarat()
+ISTcpServer::~ISTcpServer()
 {
 	
 }
 //-----------------------------------------------------------------------------
-QString ISTcpServerCarat::GetErrorString() const
+QString ISTcpServer::GetErrorString() const
 {
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpServerCarat::Run(quint16 Port)
+bool ISTcpServer::Run(quint16 Port)
 {
 	DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
 	DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
@@ -51,7 +50,7 @@ bool ISTcpServerCarat::Run(quint16 Port)
 	bool Result = listen(QHostAddress::AnyIPv4, Port);
 	if (Result)
 	{
-		connect(this, &QTcpServer::acceptError, this, &ISTcpServerCarat::AcceptError);
+		connect(this, &QTcpServer::acceptError, this, &ISTcpServer::AcceptError);
 	}
 	else
 	{
@@ -60,22 +59,22 @@ bool ISTcpServerCarat::Run(quint16 Port)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
+void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 {
-	ISTRACE();
-	IsDisconnected = false;
 	QTcpServer::incomingConnection(SocketDescriptor);
 	QTcpSocket *TcpSocket = nextPendingConnection();
 	if (TcpSocket)
 	{
-		ISLOGGER_I(QString("Incoming auth from ") + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
-		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServerCarat::Disconnected);
+		Clients.emplace_back(TcpSocket);
+		ISLOGGER_I(QString("Incoming connection from ") + TcpSocket->peerAddress().toString());
+		connect(TcpSocket, &QTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected);
+		connect(TcpSocket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &ISTcpServer::ClientError);
 	}
 	else
 	{
 		ISLOGGER_E("nextPendingConnection return null QTcpSocket");
-		return;
 	}
+	return;
 
 	QByteArray Buffer;
 	long Size = 0;
@@ -84,9 +83,9 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	{
 		ISSleep(50);
 		ISSystem::ProcessEvents();
-		if (IsDisconnected) //Если сокет отключился - выходим из функции
+		//if (IsDisconnected) //Если сокет отключился - выходим из функции
 		{
-			return;
+			//return;
 		}
 
 		if (TcpSocket->bytesAvailable() > 0) //Если есть данные, которые можно прочитать
@@ -232,18 +231,31 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	ISLOGGER_I("Auth is done");
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerCarat::Disconnected()
+void ISTcpServer::ClientDisconnected()
 {
-	sender()->deleteLater();
-	IsDisconnected = true;
+	QTcpSocket *TcpSocket = dynamic_cast<QTcpSocket*>(sender());
+	ISLOGGER_I("Disconnected " + TcpSocket->peerAddress().toString());
+	if (ISAlgorithm::VectorTake(Clients, TcpSocket))
+	{
+		TcpSocket->deleteLater(); //Вызываем отложенное удаление указателя на QTcpSocket
+	}
+	else
+	{
+		ISLOGGER_W("Not found client");
+	}
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerCarat::AcceptError(QTcpSocket::SocketError socket_error)
+void ISTcpServer::ClientError(QAbstractSocket::SocketError socket_error)
 {
 	Q_UNUSED(socket_error);
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerCarat::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
+void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)
+{
+	Q_UNUSED(socket_error);
+}
+//-----------------------------------------------------------------------------
+void ISTcpServer::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 {
 	//Если сокет все ещё подключен - отправляем
 	if (TcpSocket->state() == QTcpSocket::ConnectedState)
@@ -258,7 +270,7 @@ void ISTcpServerCarat::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTcpServerCarat::SendError(QTcpSocket *TcpSocket, const QString &error_string)
+void ISTcpServer::SendError(QTcpSocket *TcpSocket, const QString &error_string)
 {
 	//Формируем ответ с ошибкой
 	ISTcpAnswer TcpAnswer;

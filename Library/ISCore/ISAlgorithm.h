@@ -50,6 +50,18 @@ namespace ISAlgorithm
         return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
     }
 
+	//Извлечь значение из вектора
+	template <typename T> bool VectorTake(std::vector<T> &Vector, T t)
+	{
+		std::vector<T>::const_iterator It = std::find(Vector.begin(), Vector.end(), t);
+		bool Result = It != Vector.end();
+		if (Result)
+		{
+			Vector.erase(It);
+		}
+		return Result;
+	}
+
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
     {

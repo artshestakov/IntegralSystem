@@ -3,7 +3,6 @@
 #define _ISCARATSERVICE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISTcpServerCarat.h"
 //-----------------------------------------------------------------------------
 class ISCaratService : public QObject
 {
@@ -14,9 +13,6 @@ public:
 	virtual ~ISCaratService();
 
 	bool StartService(); //Запуск сервера
-
-private:
-	ISTcpServerCarat *TcpServer;
 };
 //-----------------------------------------------------------------------------
 #endif

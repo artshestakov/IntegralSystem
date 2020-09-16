@@ -1,9 +1,7 @@
 #include "ISCaratService.h"
-#include "ISDefinesCore.h"
+#include "ISTcpServer.h"
 #include "ISConstants.h"
 #include "ISLogger.h"
-#include "ISQuery.h"
-#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISCaratService::ISCaratService(QObject *parent) : QObject(parent)
 {
@@ -17,7 +15,7 @@ ISCaratService::~ISCaratService()
 //-----------------------------------------------------------------------------
 bool ISCaratService::StartService()
 {
-	TcpServer = new ISTcpServerCarat(this);
+	ISTcpServer *TcpServer = new ISTcpServer(this);
 	bool Result = TcpServer->Run(CARAT_DEFAULT_PORT);
 	if (!Result)
 	{
