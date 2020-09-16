@@ -235,13 +235,13 @@ void ISTcpServer::ClientDisconnected()
 {
 	QTcpSocket *TcpSocket = dynamic_cast<QTcpSocket*>(sender());
 	ISLOGGER_I("Disconnected " + TcpSocket->peerAddress().toString());
-	if (ISAlgorithm::VectorTake(Clients, TcpSocket))
+    //if (ISAlgorithm::VectorTake(Clients, TcpSocket))
 	{
-		TcpSocket->deleteLater(); //Вызываем отложенное удаление указателя на QTcpSocket
+        //TcpSocket->deleteLater(); //Вызываем отложенное удаление указателя на QTcpSocket
 	}
-	else
+    //else
 	{
-		ISLOGGER_W("Not found client");
+        //ISLOGGER_W("Not found client");
 	}
 }
 //-----------------------------------------------------------------------------

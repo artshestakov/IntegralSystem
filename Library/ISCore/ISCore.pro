@@ -35,9 +35,7 @@ HEADERS += \
     ISTcpAnswer.h \
     ISTcpConnector.h \
     ISTcpQuery.h \
-    ISTcpServerBase.h \
-    ISTcpServerCarat.h \
-    ISTcpServerWorker.h \
+    ISTcpServer.h \
     iscore_global.h \
     ISCountingTime.h \
     ISCrashDumper.h \
@@ -104,9 +102,7 @@ SOURCES += \
     ISTcpAnswer.cpp \
     ISTcpConnector.cpp \
     ISTcpQuery.cpp \
-    ISTcpServerBase.cpp \
-    ISTcpServerCarat.cpp \
-    ISTcpServerWorker.cpp \
+    ISTcpServer.cpp \
     ISTrace.cpp \
     ISUuid.cpp \
     ISVersion.cpp \
