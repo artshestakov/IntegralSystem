@@ -118,6 +118,7 @@
       <Field UID="{E0BB3135-E091-4D06-9854-19BCEF3D2629}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" NotNull="true" LayoutName="Container"/>
       <Field UID="{12223763-4E01-4C53-AA20-63FA8BC05D64}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" NotNull="true" LayoutName="Price"/>
       <Field UID="{CCA79032-4463-4059-B973-41CA4792AC1D}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="Price"/>
+      <Field UID="{1CA3F687-00FA-43D4-AF86-BA20602EA4EE}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" SeparatorName="Дополнительно"/>
       <Field UID="{C80569A0-764A-4746-B69F-01D403B97E42}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
@@ -129,11 +130,14 @@
       <Index Field="WeightNet"/>
       <Index Field="PriceUnit"/>
       <Index Field="Cost"/>
+      <Index Field="PaymentType"/>
+      <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="Date"/>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
   
@@ -147,7 +151,7 @@
       <Field UID="{BC20D00D-9D02-4848-85F7-40626A422118}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" NotNull="true" LayoutName="Unload"/>
       <Field UID="{770982DA-76BB-4A3B-B107-A9404D0FE3F8}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" NotNull="true" LayoutName="UnloadPrice"/>
       <Field UID="{B46EDE1E-5076-4AEA-ACA2-5ADA91F186B7}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="UnloadPrice"/>
-      <Field UID="{7F4BA1E7-DBD1-4766-A108-5A118FA3BB66}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" NotNull="true" SeparatorName="Дополнительно"/>
+      <Field UID="{7F4BA1E7-DBD1-4766-A108-5A118FA3BB66}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" SeparatorName="Дополнительно"/>
       <Field UID="{2AB41BFD-F2DE-450F-8002-B67D60052C49}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
