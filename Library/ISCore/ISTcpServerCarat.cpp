@@ -26,7 +26,6 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 //-----------------------------------------------------------------------------
 ISTcpServerCarat::ISTcpServerCarat(QObject *parent)
 	: ISTcpServerBase(parent),
-	ServerController(nullptr),
 	IsDisconnected(false)
 {
 	
@@ -42,21 +41,7 @@ bool ISTcpServerCarat::Run(quint16 Port)
 	DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
 	DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
 	DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
-
-	//Запуск локального сервера для контроля воркеров
-	ServerController = new QLocalServer(this);
-	ServerController->setMaxPendingConnections(1);
-	if (!ServerController->listen(CARAT_CONTROLLER_PORT)) //Ошибка при запуске локального сервера
-	{
-		SetErrorString(ServerController->errorString());
-		return false;
-	}
-	
-	if (!ISTcpServerBase::Run(Port)) //Ошибка запуска основного сервера
-	{
-		return false;
-	}
-	return true;
+	return ISTcpServerBase::Run(Port);
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
@@ -229,49 +214,11 @@ void ISTcpServerCarat::incomingConnection(qintptr SocketDescriptor)
 	}
 
 	ISLOGGER_I("Auth is done");
-
-	//Ищем свободный порт
-	QTcpServer TcpServer;
-	quint16 Port = serverPort() + 1;
-	for (; Port < USHRT_MAX; ++Port)
-	{
-		if (TcpServer.listen(QHostAddress::AnyIPv4, Port)) //Если удалось захватить порт - закрываем его и выходим из цикла
-		{
-			TcpServer.close();
-			break;
-		}
-	}
-
-	//Запуск воркера
-	QString StringPort = QString::number(Port);
-    if (!StartWorker(StringPort, Login, Password)) //Не удалось запустить воркер
-	{
-		SendError(TcpSocket, "Message.Error.StartedWorker");
-		return;
-	}
-
-	//Формируем ответ с портом, отправляем его и отключаем клиента
-	ISTcpAnswer TcpAnswer;
-	TcpAnswer["Port"] = StringPort;
-	Send(TcpSocket, TcpAnswer);
-	TcpSocket->close();
 }
 //-----------------------------------------------------------------------------
 void ISTcpServerCarat::Disconnected()
 {
 	sender()->deleteLater();
 	IsDisconnected = true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpServerCarat::StartWorker(const QString &Port, const QString &Login, const QString &Password)
-{
-	bool Result = QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_DIR + "/CaratWorker" + EXTENSION_BINARY,
-		QStringList() << Port << Login << Password,
-		ISDefines::Core::PATH_APPLICATION_DIR);
-	if (Result)
-	{
-		Result = ServerController->waitForNewConnection(CARAT_TIMEOUT_STARTED_WORKER); //Ожидаем подтверждение запуска от воркера
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------

@@ -447,6 +447,9 @@
     <ClCompile Include="ISTaskObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISSearchModel.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -823,6 +826,9 @@
     </ClInclude>
     <ClInclude Include="ISUserPhotoCreator.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSearchModel.h">
+      <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

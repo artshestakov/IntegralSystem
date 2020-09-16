@@ -16,15 +16,9 @@
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISCaratDebugger.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCaratService.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCaratDebugger.h">
       <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>

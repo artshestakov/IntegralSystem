@@ -17,10 +17,8 @@ public:
 protected:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
 	void Disconnected(); //Событие отключения клиента
-    virtual bool StartWorker(const QString &Port, const QString &Login, const QString &Password);
 
 private:
-	QLocalServer *ServerController;
 	QString DBHost;
 	int DBPort;
 	QString DBName;

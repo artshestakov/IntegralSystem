@@ -266,6 +266,7 @@
     <ClCompile Include="ISRegisterMetaType.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
+    <ClCompile Include="ISSearchModel.cpp" />
     <ClCompile Include="ISSelectDialogForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
@@ -428,6 +429,7 @@
     <ClInclude Include="ISHistory.h" />
     <QtMoc Include="ISSettingsDatabaseListForm.h" />
     <QtMoc Include="ISTaskObjectForm.h" />
+    <ClInclude Include="ISSearchModel.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISWaitWidget.h" />

@@ -55,7 +55,7 @@ bool ISTcpConnector::Reconnect(const QString &Host, quint16 Port)
 //-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 {
-	Timer->start(CARAT_TIMEOUT_CONNECT);
+	Timer->start();
 	TcpSocket->connectToHost(Host, Port);
 	EventLoop.exec();
 	return IsConnected();

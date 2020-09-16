@@ -28,7 +28,6 @@ REVISION=$(git rev-list --all --count)
 
 #Компиляция проектов
 ./BuildItem.sh Projects Carat $CONFIGURATION $PLATFORM
-./BuildItem.sh Projects CaratWorker $CONFIGURATION $PLATFORM
 ./BuildItem.sh Projects Configurator $CONFIGURATION $PLATFORM
 
 #Формируем шаблон скрипта сборки (удаляем предыдущий, генерируем новый и производим замены)

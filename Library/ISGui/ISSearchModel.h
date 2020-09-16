@@ -1,10 +1,10 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "isgui_global.h"
 #include "ISNamespace.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISSearchModel
+class ISSearchModel
 {
 public:
 	ISSearchModel();

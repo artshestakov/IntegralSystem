@@ -36,7 +36,6 @@ CALL BuildItem.cmd Library ISGui %CONFIGURATION% %PLATFORM%
 
 REM Компиляция проектов
 CALL BuildItem.cmd Projects Carat %CONFIGURATION% %PLATFORM%
-CALL BuildItem.cmd Projects CaratWorker %CONFIGURATION% %PLATFORM%
 CALL BuildItem.cmd Projects Configurator %CONFIGURATION% %PLATFORM%
 CALL BuildItem.cmd Projects IntegralSystem %CONFIGURATION% %PLATFORM%
 

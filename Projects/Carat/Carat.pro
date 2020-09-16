@@ -27,11 +27,9 @@ LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore
 
 HEADERS += \
-    ISCaratDebugger.h \
     ISCaratService.h
 
 SOURCES += \
-    ISCaratDebugger.cpp \
     ISCaratService.cpp \
     main.cpp
 

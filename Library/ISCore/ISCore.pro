@@ -59,7 +59,6 @@ HEADERS += \
     ISQueryText.h \
     ISRandom.h \
     ISRestWorker.h \
-    ISSearchModel.h \
     ISSettings.h \
     ISSettingsDatabase.h \
     ISStructs.h \
@@ -98,7 +97,6 @@ SOURCES += \
     ISQueryText.cpp \
     ISRandom.cpp \
     ISRestWorker.cpp \
-    ISSearchModel.cpp \
     ISSettings.cpp \
     ISSettingsDatabase.cpp \
     ISSystem.cpp \

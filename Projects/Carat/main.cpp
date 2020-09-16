@@ -4,7 +4,6 @@
 #include "ISCore.h"
 #include "ISDatabase.h"
 #include "ISCaratService.h"
-#include "ISCaratDebugger.h"
 #include "ISQueryText.h"
 #include "ISVersion.h"
 #include "ISSystem.h"
@@ -28,11 +27,7 @@ int main(int argc, char **argv)
 	if (Result) //”казаны какие-то аргументы
 	{
 		QString Argument = CoreApplication.arguments()[1];
-		if (Argument == "-d" || Argument == "--debug")
-		{
-			new ISCaratDebugger(&CoreApplication);
-		}
-        else if (Argument == "-v" || Argument == "--version")
+		if (Argument == "-v" || Argument == "--version")
         {
 			std::cout << "Carat (" << ISVersion::Instance().ToStdString() << ") " << ISVersion::Instance().Info.Configuration.toStdString() << " " << ISVersion::Instance().Info.Platform.toStdString() << std::endl;
         }
@@ -95,15 +90,12 @@ void Usage()
 #endif
 	std::cout << std::endl;
 	std::cout << "Arguments:" << std::endl;
-	std::cout << "  -d, --debug\t\tdebug mode" << std::endl;
     std::cout << "  -v, --version\t\tshow version and exit" << std::endl;
     std::cout << "  -h, --help\t\tshow this help and exit" << std::endl;
 	std::cout << std::endl;
 #ifdef WIN32
-	std::cout << "Example: Carat.exe -d (debug mode)" << std::endl;
 	std::cout << "Example: Carat.exe (service mode)" << std::endl;
 #else
-	std::cout << "Example: ./Carat -d (debug mode)" << std::endl;
 	std::cout << "Example: ./Carat (service mode)" << std::endl;
 #endif
 	std::cout << "* No arguments needed to start in service mode" << std::endl;

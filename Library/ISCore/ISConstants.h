@@ -131,15 +131,7 @@ const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
 //CARAT------------------------------------------------------------------------
 const char		CARAT_UID[] = "{88DD90C4-2DFF-4515-8C32-7371C39C598A}"; //Уникальный идентификатор для контроля единого запущенного экземпляра
-const char		CARAT_CORE_START_FLAG[] = "exec"; //Посылаемое сообщение от ядра означающее успешный запуск ядра
-const int		CARAT_CORE_START_TIMEOUT = 5000; //Таймаут ожидания первого собщения от ядра
-const char		CARAT_DEBUGGER_PORT[] = "{381A6F7D-1E01-438E-B7B4-3B0F9881EB8F}"; //Условный порт для отладчика
-const int		CARAT_DEBUGGER_MAX_CLIENTS = 1; //Максимальное количество клиентов для режима отладчика
-const int		CARAT_DEBUGGER_CONNECT_TIMEOUT = 2000; //Таймаут попытки подключения к карату в режиме отладчика
-const int		CARAT_TIMEOUT_CONNECT = 2000; //Таймаут ожидания принятия подключения
-const int		CARAT_TIMEOUT_STARTED_WORKER = 3000; //Таймаут ожидания запуска воркера
 const quint16	CARAT_DEFAULT_PORT = 50000; //Стандартный порт
-const char		CARAT_CONTROLLER_PORT[] = "{9C3430ED-17E2-49C6-AD58-83140981C3C5}"; //Порт для контроллера воркеров
 //CARAT_API--------------------------------------------------------------------
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_TEST_QUERY[] = "TestQuery"; //Тестовый запрос

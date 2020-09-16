@@ -16,13 +16,6 @@ public:
 	bool StartService(); //Запуск сервера
 
 private:
-	void NewConnection(); //Событие подключения нового клиента в режиме отладки
-	void Disconnected(); //Событие отключения клиента в режиме отладки
-
-private:
-	QLocalServer *LocalServer;
-	QLocalSocket *LocalSocket;
-	bool IsConnectedDebugger;
 	ISTcpServerCarat *TcpServer;
 };
 //-----------------------------------------------------------------------------
