@@ -752,15 +752,9 @@ ISOilSphere::Debet2ListForm::Debet2ListForm(QWidget *parent) : ISListBaseForm("D
 {
 	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
 
-	LabelTotalSum = new QLabel(GetToolBar());
-	ISGui::SetFontWidgetBold(LabelTotalSum, true);
-	GetToolBar()->addWidget(LabelTotalSum);
-
-	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
-
-	LabelRemainderSum = new QLabel(GetToolBar());
-	ISGui::SetFontWidgetBold(LabelRemainderSum, true);
-	GetToolBar()->addWidget(LabelRemainderSum);
+	Label = new QLabel(GetToolBar());
+	ISGui::SetFontWidgetBold(Label, true);
+	GetToolBar()->addWidget(Label);
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::Debet2ListForm::~Debet2ListForm()
@@ -771,15 +765,15 @@ ISOilSphere::Debet2ListForm::~Debet2ListForm()
 void ISOilSphere::Debet2ListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
-
-	double Total = 0, Remainder = 0;
+	double Total = 0, Calculation = 0;
 	for (int Row = 0; Row < GetSqlModel()->rowCount(); ++Row)
 	{
-		Total += GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toDouble();
-		Remainder += GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Remainder"))).toDouble();
+		QString Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toString();
+		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
+		Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Calculation"))).toString();
+		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
-	LabelTotalSum->setText(LANG("OilSphere.Debet.Total").arg(Total));
-	LabelRemainderSum->setText(LANG("OilSphere.Debet.Remainder").arg(Remainder));
+	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
