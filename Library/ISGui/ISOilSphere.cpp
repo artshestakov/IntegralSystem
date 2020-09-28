@@ -159,6 +159,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 {
 	setWindowTitle(LANG("OilSphere.Debts.Title").arg(counterparty_name));
 	setWindowIcon(ISObjects::Instance().GetInterface()->GetIcon("Debt"));
+	resize(800, 600);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 
 	ISPushButton *ButtonUpdate = new ISPushButton(BUFFER_ICONS("Update"), LANG("Update"), this);
@@ -212,7 +213,7 @@ void ISOilSphere::CounterpartyDebtForm::LoadData()
 					QTreeWidgetItem *TreeItemAccrued = new QTreeWidgetItem(TreeWidgetItem);
 					TreeItemAccrued->setSizeHint(0, QSize(TreeItemAccrued->sizeHint(0).width(), 30));
 					TreeItemAccrued->setText(0, Note.isEmpty() ?
-						LANG("OilSphere.AccruedWithDate").arg(Sum).arg(Date) :
+						LANG("OilSphere.AccruedWithDate").arg(DOUBLE_PREPARE(Sum)).arg(Date) :
 						LANG("OilSphere.AccruedWithDateAndNote").arg(Sum).arg(Date).arg(Note));
 				}
 			}
@@ -257,12 +258,12 @@ QWidget* ISOilSphere::CounterpartyDebtForm::CreateItemWidget(int ImplementationI
 	ISGui::SetFontWidgetBold(LabelDateLoad, true);
 	LayoutLabels->addWidget(LabelDateLoad);
 
-	QLabel *LabelUnloadCost = new QLabel(LANG("OilSphere.UnloadCost").arg(Cost), Widget);
+	QLabel *LabelUnloadCost = new QLabel(LANG("OilSphere.UnloadCost").arg(DOUBLE_PREPARE(Cost)), Widget);
 	ISGui::SetFontWidgetBold(LabelUnloadCost, true);
 	LayoutLabels->addWidget(LabelUnloadCost);
 
 	double Debt = Cost - Accrued;
-	QLabel *LabelDebt = new QLabel(LANG("OilSphere.Debt").arg(Debt), Widget);
+	QLabel *LabelDebt = new QLabel(LANG("OilSphere.Debt").arg(DOUBLE_PREPARE(Debt)), Widget);
 	ISGui::SetFontWidgetBold(LabelDebt, true);
 	LayoutLabels->addWidget(LabelDebt);
 
@@ -742,10 +743,7 @@ void ISOilSphere::Debet1ListForm::LoadDataAfterEvent()
 		Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
-	Label->setText(LANG("OilSphere.Debet.Label").
-		arg(QString::number(Total, 'f', 2)).
-		arg(QString::number(Calculation, 'f', 2)).
-		arg(QString::number(Total - Calculation, 'f', 2)));
+	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

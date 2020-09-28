@@ -35,6 +35,7 @@
 #include <functional>
 #include <cctype>
 #include <vector>
+#include <queue>
 //C-includes-------------------------------------------------------------------
 #include <stdlib.h>
 #include <stdio.h>

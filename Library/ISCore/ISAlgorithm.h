@@ -3,6 +3,7 @@
 #define _ISALGORITHM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 #define POINTER_DELETE(POINTER) \
 if (POINTER) \
@@ -10,6 +11,7 @@ if (POINTER) \
 	delete(POINTER); \
 	POINTER = nullptr; \
 }
+#define DOUBLE_PREPARE(d) QString::number(d, 'f', SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))
 #ifdef WIN32
 #define ISSleep(MSec) ::Sleep(MSec)
 #define INIT_CRITICAL_SECTION(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)

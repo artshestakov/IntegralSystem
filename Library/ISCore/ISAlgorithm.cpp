@@ -1,6 +1,5 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
-#include <float.h>
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 {

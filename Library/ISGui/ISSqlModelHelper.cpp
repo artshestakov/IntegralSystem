@@ -48,7 +48,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_Double)
 	{
-		Result = QString::number(Value.toDouble(), 'f', SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
+		Result = DOUBLE_PREPARE(Value.toDouble());
 	}
 	else if (Type == ISNamespace::FT_Money)
 	{
