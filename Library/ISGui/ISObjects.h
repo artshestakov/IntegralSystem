@@ -4,7 +4,7 @@
 #include "ISObjectInterface.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT	ISObjects
+class ISGUI_EXPORT ISObjects
 {
 public:
 	static ISObjects& Instance();

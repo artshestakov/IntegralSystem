@@ -2,10 +2,7 @@
 <LANG Name="Objects">
 	
   <!--OilSphere-->
-  <Local Name="OilSphere.Counterpatry" Russian="Контрагент: %1"/>
-  <Local Name="OilSphere.CurrentBalance" Russian="Баланс: %1"/>
   <Local Name="OilSphere.DateLoad" Russian="Дата загрузки: %1"/>
-  <Local Name="OilSphere.ProductType" Russian="Тип продукта: %1"/>
   <Local Name="OilSphere.UnloadCost" Russian="Стоимость выгрузки: %1"/>
   <Local Name="OilSphere.Accrued" Russian="Начисллено: %1"/>
   <Local Name="OilSphere.Debt" Russian="Долг: %1"/>
@@ -14,8 +11,9 @@
   <Local Name="OilSphere.AccruedWithDateAndNote" Russian="Начисление %1 от %2. Примечание: %3"/>
   <Local Name="OilSphere.ShowImplementation" Russian="Просмотр реализации"/>
   <Local Name="OilSphere.ShowImplementationUnload" Russian="Просмотр выгрузки"/>
-  <Local Name="OilSphere.ShowCounterparty" Russian="Карточка контрагента"/>
   <Local Name="OilSphere.Debet.Label" Russian="Итого: %1 Расчёт: %2 Остаток: %3"/>
+  <Local Name="OilSphere.Debts" Russian="Долги"/>
+  <Local Name="OilSphere.Debts.Title" Russian="Долги по контрагенту: %1"/>
   <Local Name="OilSphere.Message.Question.CreateCurrentConstant" Russian="Константа за текущий период не обнаружена, создать её сейчас?"/>
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место загрузки."/>
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место загрузки."/>

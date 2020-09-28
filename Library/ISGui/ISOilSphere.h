@@ -24,6 +24,42 @@ namespace ISOilSphere
 		void InitializePlugin() const override;
 	};
 
+	//Форма списка контрагентов
+	class CounterpartyListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE CounterpartyListForm(QWidget *parent = 0);
+		virtual ~CounterpartyListForm();
+
+	private:
+		void ShowDebt();
+	};
+
+	//Форма долгов контрагента
+	class CounterpartyDebtForm : public ISInterfaceForm
+	{
+		Q_OBJECT
+
+	public:
+		CounterpartyDebtForm(int counterparty_id, const QString &counterparty_name, QWidget *parent = 0);
+		virtual ~CounterpartyDebtForm();
+
+	private:
+		void LoadData();
+		void AddAccrued();
+		void ShowImplementation();
+		void ShowImplementationUnload();
+
+	private:
+		QWidget* CreateItemWidget(int ImplementationID, int ImplementationUnloadID, const QDate &DateLoad, double Cost, int Accrued);
+
+	private:
+		int CounterpartyID;
+		QTreeWidget *TreeWidget;
+	};
+
 	//Форма объекта контрагентов
 	class CounterpartyObjectForm : public ISObjectFormBase
 	{
@@ -101,30 +137,6 @@ namespace ISOilSphere
 		double BeforeCashboxTotalPayment;
 		double BeforeCashboxTotalActually;
 		double BeforeCashboxKKMTotal;
-	};
-
-	//Форма для подсистемы долгов
-	class DebtSubSystemForm : public ISInterfaceMetaForm
-	{
-		Q_OBJECT
-
-	public:
-		Q_INVOKABLE DebtSubSystemForm(QWidget *parent = 0);
-		virtual ~DebtSubSystemForm();
-
-		void LoadData() override;
-
-	private:
-		void AddAccrued();
-		void ShowImplementation();
-		void ShowImplementationUnload();
-		void ShowCounterparty();
-
-	private:
-		QWidget* CreateItemWidget(int ImplementationID, int ImplementationUnloadID, int CounterpartyID, const QString &CounterpartyName, double Balance, const QDate &DateLoad, const QString &ProductTypeName, double Cost, int Accrued);
-
-	private:
-		QTreeWidget *TreeWidget;
 	};
 
 	//Форма объекта дебета 1
