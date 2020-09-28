@@ -168,8 +168,7 @@ namespace ISOilSphere
 		void LoadDataAfterEvent() override;
 
 	private:
-		QLabel *LabelTotalSum; //Сумма итого
-		QLabel *LabelRemainderSum; //Сумма остатка
+		QLabel *Label;
 	};
 
 	//Форма списка дебета 2
