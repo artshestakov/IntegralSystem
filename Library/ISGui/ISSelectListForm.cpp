@@ -9,11 +9,6 @@ ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, cons
 	GetToolBar()->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	GetTableView()->setContextMenuPolicy(Qt::NoContextMenu);
 
-	for (QAction *Action : GetToolBar()->actions())
-	{
-		Action->setVisible(false);
-	}
-
 	ActionSelect = new QAction(this);
 	ActionSelect->setText(LANG("Select"));
 	ActionSelect->setEnabled(false);
@@ -40,6 +35,16 @@ ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, cons
 ISSelectListForm::~ISSelectListForm()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISSelectListForm::AfterShowEvent()
+{
+	ISListBaseForm::AfterShowEvent();
+	for (QAction *Action : GetToolBar()->actions())
+	{
+		Action->setVisible(false);
+	}
+	ActionSelect->setVisible(true);
 }
 //-----------------------------------------------------------------------------
 void ISSelectListForm::SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected)

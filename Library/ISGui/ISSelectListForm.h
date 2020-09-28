@@ -15,6 +15,7 @@ public:
 	virtual ~ISSelectListForm();
 
 protected:
+	void AfterShowEvent() override;
 	void SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected) override;
 	void DoubleClickedTable(const QModelIndex &ModelIndex) override;
 	void SelectAll();
