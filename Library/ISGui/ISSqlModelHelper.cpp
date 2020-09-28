@@ -48,15 +48,12 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_Double)
 	{
-		QString String = Value.toString();
-		int Pos = 0;
-		ISDoubleValidator(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA)).validate(String, Pos);
-		Result = String;
+		Result = QString::number(Value.toDouble(), 'f', SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
 	}
 	else if (Type == ISNamespace::FT_Money)
 	{
 		QString String = QString::number(Value.toDouble(), 'f', 2);
-		return String.contains(SYMBOL_POINT) ? String.replace(SYMBOL_POINT, SYMBOL_COMMA) : (String + ",00");
+		Result = String.contains(SYMBOL_POINT) ? String.replace(SYMBOL_POINT, SYMBOL_COMMA) : (String + ",00");
 	}
 	else if (Type == ISNamespace::FT_UID)
 	{
