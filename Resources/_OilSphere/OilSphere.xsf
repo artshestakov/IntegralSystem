@@ -36,7 +36,7 @@
     BEGIN
     RETURN
     (
-    SELECT sum(mwdt_kilogram)
+    SELECT COALESCE(sum(mwdt_kilogram), 0)
     FROM movewagon
     LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id AND NOT mwdt_isdeleted
     WHERE NOT mwag_isdeleted
@@ -45,9 +45,9 @@
     )
     -
     (
-    SELECT sum(iunl_weightnet)
+    SELECT COALESCE(sum(iunl_weightnet), 0)
     FROM implementation
-    LEFT JOIN implementationunload ON iunl_implementation = impl_id AND NOT iunl_isdeleted AND iunl_stock = stock_id
+    LEFT JOIN implementationunload ON iunl_implementation = impl_id AND iunl_stock = stock_id
     WHERE NOT impl_isdeleted
     );
     END;
