@@ -90,6 +90,7 @@
       <Field UID="{D7A74FDD-106C-4FFC-A6AB-AC13D461CF99}" Name="UnloadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес выгрузки (нетто)" LocalListName="Вес выгрузки (нетто)" LayoutName="Unload" QueryText="SELECT sum(iunl_weightnet) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
       <Field UID="{1EA933CA-06AE-4F0D-B2B3-B6CCAD7A9B46}" Name="UnloadCost" Type="Money" ReadOnly="true" LabelName="Стоимость выгрузки" LocalListName="Стоимость выгрузки" LayoutName="Unload" QueryText="SELECT sum(iunl_cost) FROM implementationunload WHERE NOT iunl_isdeleted AND iunl_implementation = impl_id"/>
       <Field UID="{4864E582-6A0F-4BCC-A3CB-024B3CD70310}" Name="WeightDifference" Type="Double" ReadOnly="true" LabelName="Разница весов" LocalListName="Разница весов" QueryText="WITH r AS (SELECT (SELECT sum(ilod_weightnet) AS load FROM implementationload WHERE ilod_implementation = impl_id), (SELECT sum(iunl_weightnet) AS unload FROM implementationunload WHERE iunl_implementation = impl_id)) SELECT unload - load FROM r"/>
+      <Field UID="{F52909AE-FB25-4BE2-B830-9F30C8341E80}" Name="NoteLoad" Type="Text" ReadOnly="true" LabelName="Примечание загрузки" LocalListName="Примечание загрузки" QueryText="SELECT ilod_note FROM implementationload WHERE NOT ilod_isdeleted AND ilod_implementation = impl_id ORDER BY ilod_id LIMIT 1"/>
     </Fields>
     <Indexes>
       <Index Field="Date"/>
