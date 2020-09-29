@@ -267,6 +267,7 @@ bool CGConfiguratorUpdate::systemuser()
 {
 	ISQuery qSelect(QS_SYSTEM_USER);
 	qSelect.BindValue(":UID", CONST_UID_USER_POSTGRES);
+	qSelect.SetShowLongQuery(false);
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
@@ -292,6 +293,7 @@ bool CGConfiguratorUpdate::systemuser()
 		qUpsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
 		qUpsert.BindValue(":AccessAllowed", true);
 		qUpsert.BindValue(":Photo", ByteArray);
+		qUpsert.SetShowLongQuery(false);
 		Result = qUpsert.Execute();
 		if (Result)
 		{
@@ -312,6 +314,7 @@ bool CGConfiguratorUpdate::systemuser()
 bool CGConfiguratorUpdate::databasesettings()
 {
 	ISQuery qSelect(QS_SETTINGS_DATABASE);
+	qSelect.SetShowLongQuery(false);
 	qSelect.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
@@ -320,6 +323,7 @@ bool CGConfiguratorUpdate::databasesettings()
 		ISQuery qUpsert(IsExist ? QU_SETTINGS_DATABASE : QI_SETTINGS_DATABASE);
 		qUpsert.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
 		qUpsert.BindValue(":SettingName", LANG("SystemProfile"));
+		qUpsert.SetShowLongQuery(false);
 		Result = qUpsert.Execute();
 		if (Result)
 		{

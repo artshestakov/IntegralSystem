@@ -177,6 +177,7 @@ bool CGDatabase::Index_Update(PMetaIndex *Index, QString &ErrorString)
 {
 	ISQuery qSelect(QS_INDEX);
 	qSelect.BindValue(":IndexName", Index->GetName());
+	qSelect.SetShowLongQuery(false);
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
