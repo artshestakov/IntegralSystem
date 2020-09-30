@@ -36,6 +36,7 @@ HEADERS += \
     ISTcpConnector.h \
     ISTcpQuery.h \
     ISTcpServer.h \
+    ISTcpSocket.h \
     iscore_global.h \
     ISCountingTime.h \
     ISCrashDumper.h \
@@ -103,6 +104,7 @@ SOURCES += \
     ISTcpConnector.cpp \
     ISTcpQuery.cpp \
     ISTcpServer.cpp \
+    ISTcpSocket.cpp \
     ISTrace.cpp \
     ISUuid.cpp \
     ISVersion.cpp \

@@ -12,15 +12,15 @@ if (POINTER) \
 	POINTER = nullptr; \
 }
 #define DOUBLE_PREPARE(d) QString::number(d, 'f', SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))
+#define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
+//-----------------------------------------------------------------------------
 #ifdef WIN32
-#define ISSleep(MSec) ::Sleep(MSec)
 #define INIT_CRITICAL_SECTION(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
 #define LOCK_CRITICAL_SECTION(CRITICAL_SECTION) EnterCriticalSection(CRITICAL_SECTION)
 #define UNLOCK_CRITICAL_SECTION(CRITICAL_SECTION) LeaveCriticalSection(CRITICAL_SECTION)
 #define DESTROY_CRITICAL_SECTION(CRITICAL_SECTION) DeleteCriticalSection(CRITICAL_SECTION)
 #define GET_CURRENT_THREAD_ID GetCurrentThreadId
 #else
-#define ISSleep(MSec) usleep(MSec)
 #define INIT_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_init(CRITICAL_SECTION, NULL)
 #define LOCK_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_lock(CRITICAL_SECTION)
 #define UNLOCK_CRITICAL_SECTION(CRITICAL_SECTION) pthread_mutex_unlock(CRITICAL_SECTION)
@@ -161,7 +161,7 @@ namespace ISAlgorithm
 		QGenericArgument val9 = QGenericArgument())
 	{
 		Class Pointer = nullptr;
-		int ObjectType = QMetaType::type((ClassName + SYMBOL_STAR).toLocal8Bit().constData());
+        int ObjectType = QMetaType::type((ClassName + '*').toLocal8Bit().constData());
 		const QMetaObject *MetaObject = QMetaType::metaObjectForType(ObjectType);
 		if (ObjectType && MetaObject)
 		{
