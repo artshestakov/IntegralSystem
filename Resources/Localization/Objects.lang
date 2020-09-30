@@ -4,7 +4,7 @@
   <!--OilSphere-->
   <Local Name="OilSphere.DateLoad" Russian="Дата загрузки: %1"/>
   <Local Name="OilSphere.UnloadCost" Russian="Стоимость выгрузки: %1"/>
-  <Local Name="OilSphere.Accrued" Russian="Начисллено: %1"/>
+  <Local Name="OilSphere.Accrued" Russian="Начислено: %1"/>
   <Local Name="OilSphere.Debt" Russian="Долг: %1"/>
   <Local Name="OilSphere.AddAccrued" Russian="Добавить начисление"/>
   <Local Name="OilSphere.AccruedWithDate" Russian="Начисление %1 от %2"/>
