@@ -23,6 +23,7 @@
 #include "CGConfiguratorDelete.h"
 #include "CGConfiguratorService.h"
 #include "CGConfiguratorShow.h"
+#include <chrono>
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------
@@ -36,7 +37,6 @@ std::vector<CGSection*> Arguments;
 QString DBHost, DBName, DBLogin, DBPassword;
 int DBPort = 0;
 //-----------------------------------------------------------------------------
-void RegisterMetatype(); //Регистрация мета-типов
 bool InitConfiguratorScheme(QString &ErrorString); //Инициализация схемы конфигуратора
 bool CreateDatabase(); //Проверка существования БД
 void InterpreterMode(bool &IsRunning); //Режим интерпретатора
@@ -50,7 +50,13 @@ bool ExistConfiguration(const QString &ConfigurationName, bool &Exist, QString &
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	RegisterMetatype();
+    //Регистрация мета-типов
+    qRegisterMetaType<CGConfiguratorCreate*>("CGConfiguratorCreate");
+    qRegisterMetaType<CGConfiguratorUpdate*>("CGConfiguratorUpdate");
+    qRegisterMetaType<CGConfiguratorDelete*>("CGConfiguratorDelete");
+    qRegisterMetaType<CGConfiguratorService*>("CGConfiguratorService");
+    qRegisterMetaType<CGConfiguratorShow*>("CGConfiguratorShow");
+
 	QCoreApplication CoreArralication(argc, argv);
 
 	QString ErrorString;
@@ -134,15 +140,6 @@ int main(int argc, char **argv)
 	}
 	ISCore::ExitApplication();
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-//-----------------------------------------------------------------------------
-void RegisterMetatype()
-{
-	qRegisterMetaType<CGConfiguratorCreate*>("CGConfiguratorCreate");
-	qRegisterMetaType<CGConfiguratorUpdate*>("CGConfiguratorUpdate");
-	qRegisterMetaType<CGConfiguratorDelete*>("CGConfiguratorDelete");
-	qRegisterMetaType<CGConfiguratorService*>("CGConfiguratorService");
-	qRegisterMetaType<CGConfiguratorShow*>("CGConfiguratorShow");
 }
 //-----------------------------------------------------------------------------
 bool InitConfiguratorScheme(QString &ErrorString)
