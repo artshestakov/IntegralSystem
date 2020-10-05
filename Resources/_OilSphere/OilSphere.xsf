@@ -45,9 +45,9 @@
     )
     -
     (
-    SELECT COALESCE(sum(iunl_weightnet), 0)
+    SELECT COALESCE(sum(ilod_weightnet), 0)
     FROM implementation
-    LEFT JOIN implementationunload ON iunl_implementation = impl_id AND iunl_stock = stock_id
+    LEFT JOIN implementationload ON ilod_implementation = impl_id AND NOT ilod_isdeleted AND ilod_stock = stock_id
     WHERE NOT impl_isdeleted
     );
     END;

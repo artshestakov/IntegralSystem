@@ -61,22 +61,26 @@ static QString QS_ACCRUED = PREPARE_QUERY2("SELECT cpwo_creationdate, cpwo_sum, 
 										   "AND cpwo_unload = :ImplementationUnloadID "
 										   "ORDER BY cpwo_id");
 //-----------------------------------------------------------------------------
-static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT mwag_dateshipping, cnpr_name, mwag_datearrival, sum(mwdt_kilogram), COUNT(*) "
+static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT "
+												 "mwag_dateshipping, "
+												 "cnpr_name, "
+												 "mwag_datearrival, "
+												 "(SELECT COALESCE(sum(mwdt_kilogram), 0) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id), "
+												 "(SELECT COUNT(*) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id) "
 												 "FROM movewagon "
 												 "LEFT JOIN counterparty ON cnpr_id = mwag_provider "
 												 "LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id AND NOT mwdt_isdeleted "
 												 "WHERE NOT mwag_isdeleted "
 												 "AND mwag_datearrival IS NOT NULL "
-												 "AND mwag_stock = :StockID "
-												 "GROUP BY mwag_dateshipping, cnpr_name, mwag_datearrival");
+												 "AND mwag_stock = :StockID");
 //-----------------------------------------------------------------------------
-static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT impl_date, pdtp_name, iunl_weightnet "
-												   "FROM implementationunload "
-												   "LEFT JOIN implementation ON impl_id = iunl_implementation "
+static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT impl_date, pdtp_name, ilod_weightnet "
+												   "FROM implementationload "
+												   "LEFT JOIN implementation ON impl_id = ilod_implementation "
 												   "LEFT JOIN producttype ON pdtp_id = impl_producttype "
-												   "WHERE NOT iunl_isdeleted "
+												   "WHERE NOT ilod_isdeleted "
 												   "AND NOT impl_isdeleted "
-												   "AND iunl_stock = :StockID");
+												   "AND ilod_stock = :StockID");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -882,6 +886,10 @@ void ISOilSphere::ArrivalStock::LoadData()
 		SqlQueryModel->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("Масса"), Qt::DisplayRole);
 		SqlQueryModel->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("Количество вагонов"), Qt::DisplayRole);
 		TableView->setModel(SqlQueryModel);
+	}
+	else
+	{
+		qDebug() << qSelect.lastError().text();
 	}
 }
 //-----------------------------------------------------------------------------
