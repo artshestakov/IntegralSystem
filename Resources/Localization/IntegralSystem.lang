@@ -612,6 +612,7 @@
   <Local Name="Task.ConvertToSubTask" Russian="Преобразовать в подзадачу"/>
   <Local Name="Task.Process.History" Russian="История статусов"/>
   <Local Name="Task.Process.History.Title" Russian="История изменения статуса задачи: %1"/>
+  <Local Name="Task.Setting.ShowTaskViewFormAfterCreate" Russian="Открыть задачу после создания"/>
 
   <!--File Dialog-->
   <Local Name="FileDialog.Image.Select.Title" Russian="Выбор изображения"/>

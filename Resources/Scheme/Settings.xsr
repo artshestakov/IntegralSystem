@@ -40,7 +40,8 @@
   <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="7" System="true"/>
   <_Settings IsSystem="true" UID="{B03FBAC5-F793-4565-92A3-821C87AE3B56}" Group="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Order="1" Name="NoteViewType" Type="String" WidgetEditName="ISComboCalendarNoteType" LocalName="Отображение примечаний" DefaultValue="ToolTip"/>
   
-  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="Device" LocalName="Устройства" IconName="Settings.Device" Order="9" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="TaskTracker" LocalName="Трекер задач" IconName="Settings.TaskTracker" Order="8" System="true"/>
+  <_Settings IsSystem="true" UID="{094CB33E-13B9-4E5C-87DC-79AE69CBE533}" Group="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Order="1" Name="ShowTaskAfterCreate" Type="Bool" LocalName="Открыть задачу после создания" DefaultValue="false"/>
   
   <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="10" System="true"/>
   <_Settings IsSystem="true" UID="{97D72002-CEF4-4D2A-B00F-7A3E9F1B8DA2}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="1" Name="EnableHistoryTracking" Type="Bool" LocalName="Включить ведение истории открытых записей"/>

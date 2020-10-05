@@ -11,6 +11,14 @@ class ISTaskObjectForm : public ISObjectFormBase
 public:
 	Q_INVOKABLE ISTaskObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
 	virtual ~ISTaskObjectForm();
+
+	bool Save() override;
+
+private:
+	void CheckEditClicked();
+
+private:
+	ISCheckEdit *CheckEdit;
 };
 //-----------------------------------------------------------------------------
 #endif
