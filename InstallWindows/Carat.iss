@@ -42,7 +42,6 @@ Filename: "{app}\Configurator.exe"; Description: "Запустить конфи�
 [Files]
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\Carat.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\CaratWorker.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\Configurator.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
 Source: ${QTDIR}\bin\Qt5Core${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
@@ -56,7 +55,6 @@ Source: ${QTDIR}\plugins\sqldrivers\qsqlpsql${IS_DEBUG}.dll; DestDir: {app}\sqld
 Source: ..\Components\PostgreSQL\9.4\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Components\BackuperDB\${CONFIGURATION}-${PLATFORM}\BackuperDB.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Carat.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Resources\Icons\CaratWorker.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Configurator.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Components\Redistributable\Redistributable_2013_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Components\Redistributable\Redistributable_2015_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
