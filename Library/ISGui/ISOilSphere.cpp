@@ -97,8 +97,10 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet1ObjectForm*>("ISOilSphere::Debet1ObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet2ObjectForm*>("ISOilSphere::Debet2ObjectForm");
+	qRegisterMetaType<ISOilSphere::Debet3ObjectForm*>("ISOilSphere::Debet3ObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet1ListForm*>("ISOilSphere::Debet1ListForm");
 	qRegisterMetaType<ISOilSphere::Debet2ListForm*>("ISOilSphere::Debet2ListForm");
+	qRegisterMetaType<ISOilSphere::Debet3ListForm*>("ISOilSphere::Debet3ListForm");
 	qRegisterMetaType<ISOilSphere::ConsumptionSUGObjectForm*>("ISOilSphere::ConsumptionSUGObjectForm");
 	qRegisterMetaType<ISOilSphere::ArrivalStock*>("ISOilSphere::ArrivalStock");
 	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
@@ -718,6 +720,32 @@ void ISOilSphere::Debet2ObjectForm::CalculateRemainder()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+ISOilSphere::Debet3ObjectForm::Debet3ObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+	connect(GetFieldWidget("Coming"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::Debet3ObjectForm::CalculateTotal);
+	connect(GetFieldWidget("Percent"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::Debet3ObjectForm::CalculateTotal);
+	connect(GetFieldWidget("Calculation"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::Debet3ObjectForm::CalculateRemainder);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::Debet3ObjectForm::~Debet3ObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::Debet3ObjectForm::CalculateTotal()
+{
+	double Coming = GetFieldValue("Coming").toDouble(), Percent = GetFieldValue("Percent").toDouble();
+	Coming > 0 && Percent > 0 ? SetFieldValue("Total", Coming - ((Coming * Percent) / 100)) : GetFieldWidget("Total")->Clear();
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::Debet3ObjectForm::CalculateRemainder()
+{
+	double Total = GetFieldValue("Total").toDouble(), Calculation = GetFieldValue("Calculation").toDouble();
+	Total > 0 && Calculation > 0 ? SetFieldValue("Remainder", Total - Calculation) : GetFieldWidget("Remainder")->Clear();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ISOilSphere::Debet1ListForm::Debet1ListForm(QWidget *parent) : ISListBaseForm("Debet1", parent)
 {
 	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
@@ -763,6 +791,36 @@ ISOilSphere::Debet2ListForm::~Debet2ListForm()
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Debet2ListForm::LoadDataAfterEvent()
+{
+	ISListBaseForm::LoadDataAfterEvent();
+	double Total = 0, Calculation = 0;
+	for (int Row = 0; Row < GetSqlModel()->rowCount(); ++Row)
+	{
+		QString Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toString();
+		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
+		Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Calculation"))).toString();
+		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
+	}
+	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::Debet3ListForm::Debet3ListForm(QWidget *parent) : ISListBaseForm("Debet3", parent)
+{
+	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
+
+	Label = new QLabel(GetToolBar());
+	ISGui::SetFontWidgetBold(Label, true);
+	GetToolBar()->addWidget(Label);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::Debet3ListForm::~Debet3ListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::Debet3ListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;

@@ -352,7 +352,7 @@
   <Table Name="Debet1" UID="{6FD4EE55-A3F7-4E96-883E-925A948B935A}" Alias="deb1" LocalName="Дебет 1" LocalListName="Дебет 1" TitleName="DateComing" ObjectForm="ISOilSphere::Debet1ObjectForm">
     <Fields>
       <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
-      <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+      <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" LayoutName="Date"/>
       <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
       <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
       <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
@@ -380,7 +380,7 @@
   <Table Name="Debet2" UID="{0900FB4B-DA80-41D4-A2EB-CA3291AD0A0C}" Alias="deb2" LocalName="Дебет 2" LocalListName="Дебет 2" TitleName="DateComing" ObjectForm="ISOilSphere::Debet2ObjectForm">
     <Fields>
       <Field UID="{D3B45759-9DBB-41CD-8C21-24251D74DC54}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
-      <Field UID="{54AA3182-F3E2-46F5-858D-7BFA8EE6D1D4}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+      <Field UID="{54AA3182-F3E2-46F5-858D-7BFA8EE6D1D4}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" LayoutName="Date"/>
       <Field UID="{7DFA22B9-92AC-4211-80CB-2A6321D25774}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
       <Field UID="{470FE697-E3A9-4C48-94EE-3361C258498B}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
       <Field UID="{8F500AA9-069F-415A-9DAB-7F7F31C9F05F}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
@@ -388,6 +388,34 @@
       <Field UID="{395423A7-6C36-4B53-9855-029E685EA098}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
       <Field UID="{65ECF301-2D4E-41A6-ACC3-BC1CA6042840}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{73D37EA8-3F61-41AA-A485-514CF99558DA}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="DateComing"/>
+      <Index Field="Counterparty"/>
+      <Index Field="Coming"/>
+      <Index Field="Percent"/>
+      <Index Field="Total"/>
+      <Index Field="DateReturn"/>
+      <Index Field="Calculation"/>
+      <Index Field="Remainder"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="Debet3" UID="{264100C1-AE92-4664-9BD3-462757561AD1}" Alias="deb3" LocalName="Дебет 3" LocalListName="Дебет 3" TitleName="DateComing" ObjectForm="ISOilSphere::Debet3ObjectForm">
+    <Fields>
+      <Field UID="{5D03FCD1-C332-4F06-B23A-90C91A5C2805}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
+      <Field UID="{DFCAB892-FFB3-4AE5-A2FF-C7D18FAE3A6B}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" LayoutName="Date"/>
+      <Field UID="{8D3552B4-7828-4F01-989D-E51FE08A4BB0}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+      <Field UID="{B6819797-5F77-4546-B137-80F522EE0E9C}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
+      <Field UID="{65670AFF-EB23-428F-91E1-717157EED24B}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+      <Field UID="{232FDD41-7206-4031-BFEF-225635B36892}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
+      <Field UID="{76AA77C6-237A-461D-A1AD-405093574DA4}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+      <Field UID="{CE500E60-F9C8-4858-89EF-BCCB67FEFFD9}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+      <Field UID="{FE4F1688-4261-4081-A3E8-3933117CCF0B}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
       <Index Field="DateComing"/>
