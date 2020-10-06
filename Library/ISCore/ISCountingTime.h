@@ -8,9 +8,9 @@ public:
 	ISCountingTime();
 	~ISCountingTime();
 
-	clock_t Elapsed(); //Получить результат замера в милисекундах
+    unsigned long long Elapsed(); //Получить результат замера в милисекундах
 
 private:
-	clock_t StartClock;
+    std::chrono::steady_clock::time_point StartClock;
 };
 //-----------------------------------------------------------------------------

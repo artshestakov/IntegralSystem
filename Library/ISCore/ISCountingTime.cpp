@@ -1,7 +1,7 @@
 #include "ISCountingTime.h"
 //-----------------------------------------------------------------------------
 ISCountingTime::ISCountingTime()
-	: StartClock(clock())
+    : StartClock(std::chrono::steady_clock::now())
 {
 
 }
@@ -11,8 +11,8 @@ ISCountingTime::~ISCountingTime()
 
 }
 //-----------------------------------------------------------------------------
-clock_t ISCountingTime::Elapsed()
+unsigned long long ISCountingTime::Elapsed()
 {
-	return clock() - StartClock;
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - StartClock).count();
 }
 //-----------------------------------------------------------------------------
