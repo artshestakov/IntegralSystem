@@ -1,25 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSF Name="Functions.xsf">
 
-  <Function Name="get_counterparty_balance">
-    CREATE OR REPLACE FUNCTION public.get_counterparty_balance(counterparty_id bigint)
+  <Function Name="get_counterparty_entrollment">
+    CREATE OR REPLACE FUNCTION public.get_counterparty_entrollment(counterparty_id bigint)
     RETURNS numeric AS
     $body$
     BEGIN
-    RETURN
-    (
-    SELECT COALESCE(SUM(cpen_sum), 0)
-    FROM counterpartyenrollment
-    WHERE NOT cpen_isdeleted
-    AND cpen_counterparty = counterparty_id
-    )
-    -
-    (
-    SELECT COALESCE(SUM(cpwo_sum), 0)
-    FROM counterpartywriteoff
-    WHERE NOT cpwo_isdeleted
-    AND cpwo_counterparty = counterparty_id
-    );
+    RETURN sum(cpen_sum)
+    FROM counterpartyenrollment e
+    WHERE NOT e.cpen_isdeleted
+    AND e.cpen_counterparty = counterparty_id;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+  
+  <Function Name="get_counterparty_unload">
+    CREATE OR REPLACE FUNCTION public.get_counterparty_unload(counterparty_id bigint)
+    RETURNS numeric AS
+    $body$
+    BEGIN
+    RETURN sum(iunl_cost)
+    FROM implementationunload
+    WHERE NOT iunl_isdeleted
+    AND iunl_counterparty = counterparty_id
+    AND NOT (SELECT impl_isdeleted FROM implementation WHERE iunl_implementation = impl_id);
     END;
     $body$
     LANGUAGE 'plpgsql'

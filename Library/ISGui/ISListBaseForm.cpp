@@ -492,6 +492,11 @@ PMetaTable* ISListBaseForm::GetMetaTable()
 	return MetaTable;
 }
 //-----------------------------------------------------------------------------
+ISSqlModelCore* ISListBaseForm::GetSqlModel()
+{
+	return SqlModel;
+}
+//-----------------------------------------------------------------------------
 void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
 	Q_UNUSED(ModelIndex);
@@ -715,11 +720,6 @@ QAction* ISListBaseForm::GetAction(ISNamespace::ActionType action_type)
 QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_special)
 {
 	return ActionsSpecial[action_special];
-}
-//-----------------------------------------------------------------------------
-ISSqlModelCore* ISListBaseForm::GetSqlModel()
-{
-	return SqlModel;
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateDelegates()

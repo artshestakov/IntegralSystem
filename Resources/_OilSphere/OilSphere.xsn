@@ -4,7 +4,7 @@
   <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphere::CounterpartyObjectForm">
     <Fields>
       <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{8DD37BEA-8600-4300-8C34-38659E010F3D}" Name="Balance" Type="Double" ReadOnly="true" LabelName="Баланс" LocalListName="Баланс" QueryText="SELECT get_counterparty_balance(cnpr_id)"/>
+      <Field UID="{8DD37BEA-8600-4300-8C34-38659E010F3D}" Name="Debt" Type="Double" ReadOnly="true" LabelName="Долг" LocalListName="Долг" QueryText="SELECT get_counterparty_unload(cnpr_id) - get_counterparty_entrollment(cnpr_id)"/>
       <Field UID="{3B7EB4F8-CFEB-40C8-99E9-22150ED555B9}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
       <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="BigInt" LabelName="Тип" LocalListName="Тип"/>
       <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>
@@ -33,48 +33,28 @@
     </Foreigns>
     <Escorts>
       <Escort LocalName="Зачисления" TableName="CounterpartyEnrollment" FilterField="Counterparty"/>
-      <Escort LocalName="Списания" TableName="CounterpartyWriteOff" FilterField="Counterparty"/>
     </Escorts>
   </Table>
 
-  <Table Name="CounterpartyEnrollment" UID="{BB867613-17D5-4FC0-B29F-6C5167257630}" Alias="cpen" LocalName="Зачисление" LocalListName="Зачилсения" TitleName="Counterparty">
+  <Table Name="CounterpartyEnrollment" UID="{BB867613-17D5-4FC0-B29F-6C5167257630}" Alias="cpen" LocalName="Зачисление" LocalListName="Зачисления" TitleName="Counterparty">
     <Fields>
       <Field UID="{1EA7C67D-02A9-421A-B742-FC25DFE2808F}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{EBEF5EA5-0AEC-4A47-A3B4-C094D6CE4247}" Name="Date" Type="Date" LabelName="Дата операции" LocalListName="Дата операции" NotNull="true"/>
       <Field UID="{E72F8D34-7317-484D-BD2F-01AF4889D8FB}" Name="Sum" Type="Money" LabelName="Сумма зачисления" LocalListName="Сумма зачисления" NotNull="true"/>
+      <Field UID="{D78A509E-9B94-4C7A-8881-6B0EB99560F2}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты"/>
       <Field UID="{787F2C5F-1840-4108-A5C5-EAB4AAEBE89E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
       <Index Field="Counterparty"/>
       <Index Field="Date"/>
       <Index Field="Sum"/>
+      <Index Field="PaymentType"/>
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+      <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="CounterpartyWriteOff" UID="{901F3DE4-1302-4A79-80E3-E2CDF966E9B5}" Alias="cpwo" LocalName="Списание" LocalListName="Списания" ShowOnly="true" TitleName="Counterparty">
-    <Fields>
-      <Field UID="{EAB963AB-0DE6-4671-B372-9BE5429E3E51}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{8582AE37-D4F2-4E0D-8E97-8C6A91E66255}" Name="Unload" Type="Int" LabelName="Выгрузка" LocalListName="Выгрузка" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{D024AF09-07F4-4C25-806E-680C968D3F35}" Name="Sum" Type="Money" LabelName="Сумма списания" LocalListName="Сумма списания" NotNull="true"/>
-      <Field UID="{FBBBAAA5-D961-44F1-8438-55BB09BD5D77}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Counterparty"/>
-      <Index Field="Unload"/>
-      <Index Field="Sum"/>
-      <Index Field="Note"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Unload" ForeignClass="ImplementationUnload" ForeignField="ID"/>
-    </Foreigns>
-    <SystemFields>
-      <Field Name="CreationDate" LocalName="Дата операции"/>
-    </SystemFields>
   </Table>
 
   <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="Date">

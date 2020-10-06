@@ -52,8 +52,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	}
 	else if (Type == ISNamespace::FT_Money)
 	{
-		QString String = QString::number(Value.toDouble(), 'f', 2);
-		Result = String.contains(SYMBOL_POINT) ? String.replace(SYMBOL_POINT, SYMBOL_COMMA) : (String + ",00");
+		Result = QString::number(Value.toDouble(), 'f', 2);
 	}
 	else if (Type == ISNamespace::FT_UID)
 	{

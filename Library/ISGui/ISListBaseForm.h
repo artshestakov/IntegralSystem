@@ -43,6 +43,7 @@ public:
 	void SetSelectObjectAfterUpdate(int ObjectID); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	void SetSelectObjectAfterUpdate(const ISVectorInt &Objects); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	PMetaTable* GetMetaTable(); //Получить указатель на мета-таблицу
+	ISSqlModelCore* GetSqlModel(); //Получить указатель на модель
 
 	virtual void Create(); //Создание объекта
 	virtual void CreateCopy(); //Создание копии объекта
@@ -85,7 +86,6 @@ protected:
 	QToolBar* GetToolBar(); //Получить указатель на виджет тулбара
 	QAction* GetAction(ISNamespace::ActionType action_type);
 	QAction* GetSpecialAction(ISNamespace::ActionSpecialType action_special);
-	ISSqlModelCore* GetSqlModel(); //Получить указатель на модель
 
 	virtual void SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected); //Событие выбора строки в таблице
 	virtual void LoadDataAfterEvent(); //Событие происходящее после загрузки данных

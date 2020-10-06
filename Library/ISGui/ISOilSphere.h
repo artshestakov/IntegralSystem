@@ -46,18 +46,20 @@ namespace ISOilSphere
 		CounterpartyDebtForm(int counterparty_id, const QString &counterparty_name, QWidget *parent = 0);
 		virtual ~CounterpartyDebtForm();
 
+	protected:
+		void EscapeClicked() override;
+
 	private:
-		void LoadData();
-		void AddAccrued();
+		void EntrollemntUpdated();
 		void ShowImplementation();
 		void ShowImplementationUnload();
 
 	private:
-		QWidget* CreateItemWidget(int ImplementationID, int ImplementationUnloadID, const QDate &DateLoad, double Cost, int Accrued);
+		double TotalUnload;
 
 	private:
-		int CounterpartyID;
-		QTreeWidget *TreeWidget;
+		QLabel *LabelTotal;
+		ISListBaseForm *EntrollmentListForm;
 	};
 
 	//Форма объекта контрагентов
