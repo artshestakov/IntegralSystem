@@ -397,7 +397,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	
 	//Если срок задачи сегодня, завтра или она вообще просрочена - делаем виджет-надпись с иконкой
 	QDate CurrentDate = QDate::currentDate();
-	if (TaskDeadline == CurrentDate || TaskDeadline == CurrentDate.addDays(1) || TaskDeadline < CurrentDate)
+	if (TaskDeadline == CurrentDate || TaskDeadline == CurrentDate.addDays(1) || TaskDeadline < CurrentDate && !TaskDeadline.isNull())
 	{
 		ISLabelPixmapText *LabelDeadline = new ISLabelPixmapText(GroupBoxDetails);
 		LabelDeadline->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
