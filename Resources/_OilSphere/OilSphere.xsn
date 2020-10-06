@@ -178,24 +178,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="DebtOld" UID="{38BF717C-938B-486F-80DA-8F3F3FA96914}" Alias="dold" LocalName="Долг (старый)" LocalListName="Долг (старый)" TitleName="Counterparty">
-    <Fields>
-      <Field UID="{AE11D732-B596-4E45-A468-6E4C7E2337D3}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true"/>
-      <Field UID="{C01CBB35-FA78-4DE7-96BF-6F2402732CAE}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
-      <Field UID="{28E4EA19-2C55-4EB1-9068-33C8A88510EC}" Name="Sum" Type="Money" LabelName="Сумма долга" LocalListName="Сумма долга" NotNull="true"/>
-      <Field UID="{A7DB1268-74A1-40FE-996B-B8FF5F432F12}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Counterparty"/>
-      <Index Field="Date"/>
-      <Index Field="Sum"/>
-      <Index Field="Note"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="CounterpartyType" UID="{838409C1-063F-4595-AD0C-0D9499CA4E5C}" Alias="cntp" LocalName="Тип контрагента" LocalListName="Типы контрагентов" TitleName="Name">
     <Fields>
       <Field UID="{3C15FF5D-3C52-4F62-9E34-CFD4FCC2D80E}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>

@@ -16,8 +16,7 @@
   <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
   <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Контрагенты" Icon="Lists" ClassName="ISOilSphere::CounterpartyListForm"/>
   <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
-  <_SubSystems UID="{8B580716-152A-4313-BB0E-2006E666451B}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Долги (старые)" Icon="Lists" TableName="DebtOld"/>
-  <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Ведомость АЗС" Icon="Lists" TableName="GasStationStatement"/>
+  <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Ведомость АЗС" Icon="Lists" TableName="GasStationStatement"/>
 
   <_Systems IsSystem="false" UID="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="5" LocalName="Логистика" Icon="Lists"/>
   <_SubSystems UID="{EDF8F5FF-F776-4D65-A72D-3149644D74C8}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="1" LocalName="Расходы СУГ" Icon="Lists" TableName="ConsumptionSUG"/>
