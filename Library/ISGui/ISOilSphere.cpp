@@ -7,7 +7,6 @@
 #include "ISInputDialog.h"
 #include "ISDefinesGui.h"
 #include "ISControls.h"
-#include "ISStyleSheet.h"
 #include "ISDatabase.h"
 #include "ISObjects.h"
 //-----------------------------------------------------------------------------
@@ -237,9 +236,9 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 	Layout->addWidget(GroupBoxList);
 
 	EntrollmentListForm = new ISListBaseForm("CounterpartyEnrollment", GroupBoxList);
-	EntrollmentListForm->LoadData();
 	EntrollmentListForm->SetParentFilterField("Counterparty");
 	EntrollmentListForm->SetParentObjectID(counterparty_id);
+	EntrollmentListForm->LoadData();
 	connect(EntrollmentListForm, &ISListBaseForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
 	connect(EntrollmentListForm, &ISListBaseForm::Updated, this, &ISOilSphere::CounterpartyDebtForm::EntrollemntUpdated);
 	GroupBoxList->layout()->addWidget(EntrollmentListForm);
