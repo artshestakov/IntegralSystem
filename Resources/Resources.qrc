@@ -16,6 +16,7 @@
     <file>Other/</file>
     <file>PrintingTemplates/</file>
     <file>Scheme/</file>
+    <file>SQL/</file>
 
   </qresource>
 </RCC>

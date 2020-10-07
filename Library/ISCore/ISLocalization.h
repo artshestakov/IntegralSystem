@@ -26,7 +26,7 @@ private:
 
 private:
 	QString ErrorString;
-	std::map<QString, QString> Dictionary;
+	ISStringMap Dictionary;
 	ISVectorString LoadedFiles;
 };
 //-----------------------------------------------------------------------------

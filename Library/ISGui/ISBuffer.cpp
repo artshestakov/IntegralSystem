@@ -11,7 +11,7 @@ ISBuffer::~ISBuffer()
 
 }
 //-----------------------------------------------------------------------------
-ISBuffer& ISBuffer::GetInstance()
+ISBuffer& ISBuffer::Instance()
 {
 	static ISBuffer Buffer;
 	return Buffer;
@@ -24,11 +24,12 @@ void ISBuffer::Initialize()
 	InitializePixmaps();
 	InitializeAudios();
 	InitializeStyleSheets();
+	InitializeSqlQueryes();
 }
 //-----------------------------------------------------------------------------
-QMovie* ISBuffer::GetAnimation(const QString &AnimationName, QObject *parent, const QString &SourceFile, int FileLine)
+QMovie* ISBuffer::GetAnimation(const QString &AnimationName, QObject *parent, const char *SourceFile, int FileLine)
 {
-	std::map<QString, QString>::const_iterator Iterator = Animations.find(AnimationName);
+	ISStringMap::const_iterator Iterator = Animations.find(AnimationName);
 	if (Iterator == Animations.end())
 	{
 		IS_ASSERT(false, QString("Animation \"%1\" not found in buffer animations. File: %2. Line: %3.").arg(AnimationName).arg(SourceFile).arg(FileLine));
@@ -36,7 +37,7 @@ QMovie* ISBuffer::GetAnimation(const QString &AnimationName, QObject *parent, co
 	return new QMovie(Iterator->second, nullptr, parent);
 }
 //-----------------------------------------------------------------------------
-QIcon ISBuffer::GetIcon(const QString &IconName, const QString &SourceFile, int FileLine)
+QIcon ISBuffer::GetIcon(const QString &IconName, const char *SourceFile, int FileLine)
 {
 	std::map<QString, QIcon>::const_iterator Iterator = Icons.find(IconName);
 	if (Iterator == Icons.end())
@@ -46,7 +47,7 @@ QIcon ISBuffer::GetIcon(const QString &IconName, const QString &SourceFile, int 
 	return Iterator->second;
 }
 //-----------------------------------------------------------------------------
-QPixmap ISBuffer::GetPixmap(const QString &PixmapName, const QString &SourceFile, int FileLine)
+QPixmap ISBuffer::GetPixmap(const QString &PixmapName, const char *SourceFile, int FileLine)
 {
 	std::map<QString, QPixmap>::const_iterator Iterator = Pixmaps.find(PixmapName);
 	if (Iterator == Pixmaps.end())
@@ -61,12 +62,22 @@ QString ISBuffer::GetAudio(const QString &AudioName)
 	return Audios.find(AudioName)->second;
 }
 //-----------------------------------------------------------------------------
-QString ISBuffer::GetStyle(const QString &StyleName, const QString &SourceFile, int FileLine) const
+QString ISBuffer::GetStyle(const QString &StyleName, const char *SourceFile, int FileLine) const
 {
-	std::map<QString, QString>::const_iterator Iterator = StyleSheets.find(StyleName);
+	ISStringMap::const_iterator Iterator = StyleSheets.find(StyleName);
 	if (Iterator == StyleSheets.end())
 	{
 		IS_ASSERT(false, QString("StyleSheet \"%1\" not found. File: %2; Line: %3").arg(StyleName).arg(SourceFile).arg(FileLine));
+	}
+	return Iterator->second;
+}
+//-----------------------------------------------------------------------------
+QString ISBuffer::GetSQL(const QString &QueryName, const char *SourceFile, int FileLine) const
+{
+	ISStringMap::const_iterator Iterator = SqlQueryes.find(QueryName);
+	if (Iterator == SqlQueryes.end())
+	{
+		IS_ASSERT(false, QString("SQL query \"%1\" not found. File: %2; Line: %3").arg(QueryName).arg(SourceFile).arg(FileLine));
 	}
 	return Iterator->second;
 }
@@ -113,6 +124,15 @@ void ISBuffer::InitializeStyleSheets()
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
 		AddStyle(FileInfo.completeBaseName(), FileInfo.filePath());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISBuffer::InitializeSqlQueryes()
+{
+	QFileInfoList FileInfoList = QDir(":SQL").entryInfoList(QDir::NoFilter);
+	for (const QFileInfo &FileInfo : FileInfoList)
+	{
+		AddSQL(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -182,6 +202,32 @@ void ISBuffer::AddStyle(const QString &FileName, const QString &FilePath)
 		else
 		{
 			IS_ASSERT(false, QString("File %1 style sheet not open. Error: %2").arg(FileName).arg(FileStyle.errorString()));
+		}
+	}
+	else
+	{
+		IS_ASSERT(false, "File " + FileName + " not exist");
+	}
+}
+//-----------------------------------------------------------------------------
+void ISBuffer::AddSQL(const QString &FileName, const QString &FilePath)
+{
+	if (SqlQueryes.count(FileName))
+	{
+		IS_ASSERT(false, "SQL query '" + FileName + "' already exist in buffer");
+	}
+
+	QFile FileSQL(FilePath);
+	if (FileSQL.exists())
+	{
+		if (FileSQL.open(QIODevice::ReadOnly))
+		{
+			SqlQueryes.emplace(FileName, FileSQL.readAll());
+			FileSQL.close();
+		}
+		else
+		{
+			IS_ASSERT(false, QString("File %1 sql query not open. Error: %2").arg(FileName).arg(FileSQL.errorString()));
 		}
 	}
 	else

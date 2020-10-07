@@ -81,7 +81,7 @@ bool ISGui::Startup(QString &ErrorString)
 
 	//Загрузка буфера
 	SplashWidget.SetText(LANG("SplashWidget.Buffer"));
-	ISBuffer::GetInstance().Initialize();
+	ISBuffer::Instance().Initialize();
 
 	//Проверка наличия прав администратора
 	SplashWidget.SetText(LANG("SplashWidget.AdminRoles"));
