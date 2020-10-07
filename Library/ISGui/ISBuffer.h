@@ -56,6 +56,6 @@ private:
 #define BUFFER_PIXMAPS(PIXMAP_NAME) ISBuffer::Instance().GetPixmap(PIXMAP_NAME, __FILE__, __LINE__)
 #define BUFFER_AUDIO(AUDIO_NAME) ISBuffer::Instance().GetAudio(AUDIO_NAME)
 #define BUFFER_STYLE_SHEET(STYLE_NAME) ISBuffer::Instance().GetStyle(STYLE_NAME, __FILE__, __LINE__)
-#define BUFFER_SQL(QUERY_NAME) ISBuffer::Instance().GetQuery(QUERY_NAME, __FILE__, __LINE__)
+#define BUFFER_SQL(QUERY_NAME) ISBuffer::Instance().GetSQL(QUERY_NAME, __FILE__, __LINE__)
 //-----------------------------------------------------------------------------
 #endif

@@ -8,6 +8,7 @@
 #include "ISFieldEdits.h"
 #include "ISDaDataService.h"
 #include "ISListBaseForm.h"
+#include "ISListViewForm.h"
 //-----------------------------------------------------------------------------
 namespace ISOilSphere
 {
@@ -257,7 +258,7 @@ namespace ISOilSphere
 		void LoadData() override;
 
 	private:
-		ISBaseTableView *TableView;
+		ISListViewForm *ListViewForm;
 	};
 
 	//Форма списаний со склада
@@ -272,7 +273,7 @@ namespace ISOilSphere
 		void LoadData() override;
 
 	private:
-		ISBaseTableView *TableView;
+		ISListViewForm *ListViewForm;
 	};
 }
 //-----------------------------------------------------------------------------

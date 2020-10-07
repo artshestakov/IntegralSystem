@@ -231,6 +231,7 @@
     <ClCompile Include="ISLabels.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
     <ClCompile Include="ISListIndicatorWidget.cpp" />
+    <ClCompile Include="ISListViewForm.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
@@ -428,6 +429,7 @@
     <ClInclude Include="ISHistory.h" />
     <QtMoc Include="ISSettingsDatabaseListForm.h" />
     <QtMoc Include="ISTaskObjectForm.h" />
+    <QtMoc Include="ISListViewForm.h" />
     <ClInclude Include="ISSearchModel.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />
     <ClInclude Include="ISUserRoleEntity.h" />

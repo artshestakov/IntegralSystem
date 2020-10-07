@@ -50,27 +50,6 @@ static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY2("SELECT "
 														 "AND iunl_counterparty = :CounterpartyID "
 														 "AND NOT (SELECT impl_isdeleted FROM implementation WHERE iunl_implementation = impl_id)");
 //-----------------------------------------------------------------------------
-static QString QS_ARRIVAL_STOCK = PREPARE_QUERY2("SELECT "
-												 "mwag_dateshipping, "
-												 "cnpr_name, "
-												 "mwag_datearrival, "
-												 "(SELECT COALESCE(sum(mwdt_kilogram), 0) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id), "
-												 "(SELECT COUNT(*) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id) "
-												 "FROM movewagon "
-												 "LEFT JOIN counterparty ON cnpr_id = mwag_provider "
-												 "LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id AND NOT mwdt_isdeleted "
-												 "WHERE NOT mwag_isdeleted "
-												 "AND mwag_datearrival IS NOT NULL "
-												 "AND mwag_stock = :StockID");
-//-----------------------------------------------------------------------------
-static QString QS_STOCK_WRITE_OFF = PREPARE_QUERY2("SELECT impl_date, pdtp_name, ilod_weightnet "
-												   "FROM implementationload "
-												   "LEFT JOIN implementation ON impl_id = ilod_implementation "
-												   "LEFT JOIN producttype ON pdtp_id = impl_producttype "
-												   "WHERE NOT ilod_isdeleted "
-												   "AND NOT impl_isdeleted "
-												   "AND ilod_stock = :StockID");
-//-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
 
@@ -862,8 +841,8 @@ void ISOilSphere::DriverCostListForm::CreateOnBased()
 //-----------------------------------------------------------------------------
 ISOilSphere::ArrivalStock::ArrivalStock(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	TableView = new ISBaseTableView(this);
-	GetMainLayout()->addWidget(TableView);
+	ListViewForm = new ISListViewForm("SelectStockArrival", this);
+	GetMainLayout()->addWidget(ListViewForm);
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::ArrivalStock::~ArrivalStock()
@@ -873,32 +852,16 @@ ISOilSphere::ArrivalStock::~ArrivalStock()
 //-----------------------------------------------------------------------------
 void ISOilSphere::ArrivalStock::LoadData()
 {
-	QSqlQuery qSelect(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
-	qSelect.prepare(QS_ARRIVAL_STOCK);
-	qSelect.bindValue(":StockID", GetParentObjectID());
-	if (qSelect.exec())
-	{
-		QSqlQueryModel *SqlQueryModel = new QSqlQueryModel();
-		SqlQueryModel->setQuery(qSelect);
-		SqlQueryModel->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Дата отгрузки"), Qt::DisplayRole);
-		SqlQueryModel->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("Поставщик"), Qt::DisplayRole);
-		SqlQueryModel->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("Прибыло"), Qt::DisplayRole);
-		SqlQueryModel->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("Масса"), Qt::DisplayRole);
-		SqlQueryModel->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("Количество вагонов"), Qt::DisplayRole);
-		TableView->setModel(SqlQueryModel);
-	}
-	else
-	{
-		qDebug() << qSelect.lastError().text();
-	}
+	ListViewForm->BindValue(":StockID", GetParentObjectID());
+	ListViewForm->LoadData();
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISOilSphere::StockWriteOff::StockWriteOff(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	TableView = new ISBaseTableView(this);
-	GetMainLayout()->addWidget(TableView);
+	ListViewForm = new ISListViewForm("SelectStockWriteOff", this);
+	GetMainLayout()->addWidget(ListViewForm);
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::StockWriteOff::~StockWriteOff()
@@ -908,17 +871,7 @@ ISOilSphere::StockWriteOff::~StockWriteOff()
 //-----------------------------------------------------------------------------
 void ISOilSphere::StockWriteOff::LoadData()
 {
-	QSqlQuery qSelect(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
-	qSelect.prepare(QS_STOCK_WRITE_OFF);
-	qSelect.bindValue(":StockID", GetParentObjectID());
-	if (qSelect.exec())
-	{
-		QSqlQueryModel *SqlQueryModel = new QSqlQueryModel(TableView);
-		SqlQueryModel->setQuery(qSelect);
-		SqlQueryModel->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Дата загрузки"), Qt::DisplayRole);
-		SqlQueryModel->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("Тип продукта"), Qt::DisplayRole);
-		SqlQueryModel->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("Списано"), Qt::DisplayRole);
-		TableView->setModel(SqlQueryModel);
-	}
+	ListViewForm->BindValue(":StockID", GetParentObjectID());
+	ListViewForm->LoadData();
 }
 //-----------------------------------------------------------------------------
