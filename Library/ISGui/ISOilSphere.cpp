@@ -94,6 +94,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::Debet1ListForm*>("ISOilSphere::Debet1ListForm");
 	qRegisterMetaType<ISOilSphere::Debet2ListForm*>("ISOilSphere::Debet2ListForm");
 	qRegisterMetaType<ISOilSphere::Debet3ListForm*>("ISOilSphere::Debet3ListForm");
+	qRegisterMetaType<ISOilSphere::DriverCostListForm*>("ISOilSphere::DriverCostListForm");
 	qRegisterMetaType<ISOilSphere::ArrivalStock*>("ISOilSphere::ArrivalStock");
 	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
 }
@@ -821,6 +822,40 @@ void ISOilSphere::Debet3ListForm::LoadDataAfterEvent()
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::DriverCostListForm::DriverCostListForm(QWidget *parent) : ISListBaseForm("DriverCost", parent)
+{
+	QAction *ActionCreateInBased = new QAction(BUFFER_ICONS("Add.Green"), LANG("OilSphere.CreateInBased"), GetToolBar());
+	connect(ActionCreateInBased, &QAction::triggered, this, &ISOilSphere::DriverCostListForm::CreateOnBased);
+	InsertAction(ActionCreateInBased, GetAction(ISNamespace::AT_Create), true, true);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::DriverCostListForm::~DriverCostListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::DriverCostListForm::CreateOnBased()
+{
+	ISQuery qSelectRemainder("SELECT get_driver_cost_remainder(:DriverCostID, :DriverCostComing, :PreviousRemainder)");
+	qSelectRemainder.BindValue(":DriverCostID", GetSelectedIDs()[0]);
+	qSelectRemainder.BindValue(":DriverCostComing", GetCurrentRecordValue("Coming"));
+	qSelectRemainder.BindValue(":PreviousRemainder", GetCurrentRecordValue("PreviousRemainder"));
+	if (qSelectRemainder.ExecuteFirst())
+	{
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "DriverCost");
+		ObjectFormBase->SetFieldValue("PreviousRemainder", qSelectRemainder.ReadColumn("get_driver_cost_remainder"));
+		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
+		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
+		ISGui::ShowObjectForm(ObjectFormBase);
+	}
+	else
+	{
+		ISMessageBox::ShowWarning(this, qSelectRemainder.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

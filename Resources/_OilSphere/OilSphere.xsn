@@ -468,70 +468,50 @@
       <Foreign Field="MoveWagon" ForeignClass="MoveWagon" ForeignField="ID" ForeignViewNameField="DateShipping"/>
     </Foreigns>
   </Table>
-
-  <Table Name="Change" UID="{E249BEF0-937A-4738-8A64-3B287712576F}" Alias="chng" LocalName="Смена" LocalListName="Смены" TitleName="Start;End">
-    <Fields>
-      <Field UID="{B11EA5D3-9F7B-4EB8-9ED0-66BC8B032697}" Name="Start" Type="Date" LabelName="Дата начала смены" LocalListName="Дата начала смены" NotNull="true"/>
-      <Field UID="{3A37F99D-F8FD-45E8-A76D-60B2A5D98490}" Name="End" Type="Date" LabelName="Дата окончания смены" LocalListName="Дата окончания смены" NotNull="true"/>
-      <Field UID="{255B747D-DAD7-4E81-996C-2624726152E1}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Start"/>
-      <Index Field="End"/>
-      <Index Field="Note"/>
-      <Index Field="Start;End"/>
-    </Indexes>
-  </Table>
   
-  <Table Name="ChangeDriver" UID="{76EA6E6B-3351-4886-B01B-58035ED361B4}" Alias="chdr" LocalName="Смена водителя" LocalListName="Смены водителей" TitleName="DateStart;DateEnd;Driver">
+  <Table Name="DriverCost" UID="{76EA6E6B-3351-4886-B01B-58035ED361B4}" Alias="drcs" LocalName="Расход водителя" LocalListName="Расходы водителей" TitleName="Date;Driver">
     <Fields>
-      <Field UID="{48EC1A4E-5ED5-495F-AEF5-1CEA12B06507}" Name="Change" Type="BigInt" LabelName="Смена" LocalListName="Смена"/>
-      <Field UID="{E0372DB0-2FF6-4D96-B9C8-2167450BB54C}" Name="DateStart" Type="Date" LabelName="Дата начала смены" LocalListName="Дата начала смены" NotNull="true" LayoutName="Date"/>
-      <Field UID="{41FFB52E-DBF6-4E4A-99D4-9640E7AD9435}" Name="DateEnd" Type="Date" LabelName="Дата окончания смены" LocalListName="Дата окончания смены" LayoutName="Date"/>
+      <Field UID="{E0372DB0-2FF6-4D96-B9C8-2167450BB54C}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
       <Field UID="{8389F60E-67FF-42BA-A15A-7CCE9CE7D148}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
       <Field UID="{441F7785-D668-416C-A2AF-42C640AC1C86}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" NotNull="true"/>
       <Field UID="{3A7ED027-84D2-4AA8-8AE1-143B29492290}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
-      <Field UID="{AD2672A3-857A-47E0-8877-33FA251934EB}" Name="ChangeDriver" Type="BigInt" LabelName="Остаток со смены" LocalListName="Остаток со смены" LayoutName="Coming"/>
-      <Field UID="{1F704D75-C3CE-414B-ACC1-334499E99423}" Name="Consumption" Type="Money" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Consumption" QueryText="SELECT sum(chde_price) FROM changedriverexpenses WHERE NOT chde_isdeleted AND chde_changedriver = chdr.chdr_id"/>
-      <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Money" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="SELECT chdr.chdr_coming - sum(chde_price) FROM changedriverexpenses WHERE NOT chde_isdeleted AND chde_changedriver = chdr.chdr_id"/>
+      <Field UID="{27CC10AC-B714-4A1D-83AA-D1BAB73DA04D}" Name="PreviousRemainder" Type="Money" ReadOnly="true" LabelName="Остаток с предыдущей смены" LocalListName="Остаток с предыдущей смены" LayoutName="Coming"/>
+      <Field UID="{1F704D75-C3CE-414B-ACC1-334499E99423}" Name="Consumption" Type="Money" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Consumption" QueryText="SELECT COALESCE(sum(dcdt_price), 0) FROM drivercostdetail WHERE NOT dcdt_isdeleted AND dcdt_drivercost = drcs_id"/>
+      <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Money" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="SELECT get_driver_cost_remainder(drcs_id, drcs_coming, drcs_previousremainder)"/>
       <Field UID="{2CA5BCCF-A93B-42AD-82B9-BE5FEDAA8B44}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
-      <Index Field="Change"/>
-      <Index Field="DateStart"/>
-      <Index Field="DateEnd"/>
+      <Index Field="Date"/>
       <Index Field="Driver"/>
       <Index Field="Car"/>
       <Index Field="Coming"/>
-      <Index Field="ChangeDriver"/>
+      <Index Field="PreviousRemainder"/>
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Change" ForeignClass="Change" ForeignField="ID" ForeignViewNameField="Start;End"/>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
-      <Foreign Field="ChangeDriver" ForeignClass="ChangeDriver" ForeignField="ID" ForeignViewNameField="DateStart;DateEnd"/>
     </Foreigns>
     <Escorts>
-      <Escort LocalName="Расходы" TableName="ChangeDriverExpenses" FilterField="ChangeDriver"/>
+      <Escort LocalName="Расходы" TableName="DriverCostDetail" FilterField="DriverCost"/>
     </Escorts>
   </Table>
 
-  <Table Name="ChangeDriverExpenses" UID="{1BC1638C-687A-4423-94AD-3E591554C911}" Alias="chde" LocalName="Расход" LocalListName="Расходы" TitleName="Service">
+  <Table Name="DriverCostDetail" UID="{1BC1638C-687A-4423-94AD-3E591554C911}" Alias="dcdt" LocalName="Расход" LocalListName="Расходы" TitleName="Service">
     <Fields>
-      <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="ChangeDriver" Type="BigInt" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="DriverCost" Type="BigInt" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
       <Field UID="{F61804DD-00C4-4024-8446-2DBF6C27E92D}" Name="Service" Type="BigInt" LabelName="Услуга" LocalListName="Услуга" NotNull="true"/>
       <Field UID="{3E689891-AE2A-4589-B80E-79F47B46A324}" Name="Price" Type="Money" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true"/>
       <Field UID="{B177D422-38F4-4D28-A3BC-33C0C9158B5E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
-      <Index Field="ChangeDriver"/>
+      <Index Field="DriverCost"/>
       <Index Field="Service"/>
       <Index Field="Price"/>
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="ChangeDriver" ForeignClass="ChangeDriver" ForeignField="ID"/>
+      <Foreign Field="DriverCost" ForeignClass="DriverCost" ForeignField="ID"/>
       <Foreign Field="Service" ForeignClass="DriverService" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>

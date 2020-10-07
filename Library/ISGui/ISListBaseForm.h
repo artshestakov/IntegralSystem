@@ -70,7 +70,7 @@ public:
 	virtual void CornerButtonClicked(); //Событие нажатия на cornerButton
 	
 	void AddAction(QAction *Action, bool AddingToActionGroup = true, bool AddingToContextMenu = false); //Добавить кнопку-действие
-	void InsertAction(QAction *ActionBefore, QAction *ActionAfter, bool AddingToActionGroup = true); //Вставить кнопку-действие
+	void InsertAction(QAction *Action, QAction *ActionBefore, bool AddingToActionGroup = true, bool AddingToContextMenu = false); //Вставить кнопку-действие
 
 	void HideField(const QString &FieldName); //Скрытие поля по его имени
 	void ShowField(const QString &FieldName); //Отображение поля по его имени

@@ -232,6 +232,19 @@ namespace ISOilSphere
 		QLabel *Label;
 	};
 
+	//Форма списка расходов водителей
+	class DriverCostListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE DriverCostListForm(QWidget *parent = 0);
+		virtual ~DriverCostListForm();
+
+	private:
+		void CreateOnBased(); //Создать на основании
+	};
+
 	//Форма пополнения склада
 	class ArrivalStock : public ISInterfaceMetaForm
 	{

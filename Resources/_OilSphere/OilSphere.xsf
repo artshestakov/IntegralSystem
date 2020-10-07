@@ -68,4 +68,22 @@
     COST 100;
   </Function>
 
+  <Function Name="get_driver_cost_remainder">
+    CREATE OR REPLACE FUNCTION public.get_driver_cost_remainder(driver_cost_id bigint, driver_cost_coming numeric, driver_cost_previous_remainder numeric)
+    RETURNS numeric AS
+    $body$
+    BEGIN
+    RETURN COALESCE(driver_cost_coming, 0) + COALESCE(driver_cost_previous_remainder, 0) - COALESCE(sum(dcdt_price), 0)
+    FROM drivercostdetail
+    WHERE NOT dcdt_isdeleted
+    AND dcdt_drivercost = driver_cost_id;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
 </XSF>

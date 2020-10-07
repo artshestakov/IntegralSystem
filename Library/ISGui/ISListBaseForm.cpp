@@ -671,13 +671,17 @@ void ISListBaseForm::AddAction(QAction *Action, bool AddingToActionGroup, bool A
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::InsertAction(QAction *ActionBefore, QAction *ActionAfter, bool AddingToActionGroup)
+void ISListBaseForm::InsertAction(QAction *Action, QAction *ActionBefore, bool AddingToActionGroup, bool AddingToContextMenu)
 {
-	ToolBar->insertAction(ActionAfter, ActionBefore);
-	TableView->insertAction(ActionAfter, ActionBefore);
+	ToolBar->insertAction(ActionBefore, Action);
+	TableView->insertAction(ActionBefore, Action);
 	if (AddingToActionGroup)
 	{
-		ActionObjectGroup->addAction(ActionBefore);
+		ActionObjectGroup->addAction(Action);
+	}
+	if (AddingToContextMenu)
+	{
+		ContextMenu->insertAction(ActionBefore, Action);
 	}
 }
 //-----------------------------------------------------------------------------
