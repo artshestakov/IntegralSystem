@@ -94,7 +94,6 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::Debet1ListForm*>("ISOilSphere::Debet1ListForm");
 	qRegisterMetaType<ISOilSphere::Debet2ListForm*>("ISOilSphere::Debet2ListForm");
 	qRegisterMetaType<ISOilSphere::Debet3ListForm*>("ISOilSphere::Debet3ListForm");
-	qRegisterMetaType<ISOilSphere::ConsumptionSUGObjectForm*>("ISOilSphere::ConsumptionSUGObjectForm");
 	qRegisterMetaType<ISOilSphere::ArrivalStock*>("ISOilSphere::ArrivalStock");
 	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
 }
@@ -822,26 +821,6 @@ void ISOilSphere::Debet3ListForm::LoadDataAfterEvent()
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISOilSphere::ConsumptionSUGObjectForm::ConsumptionSUGObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
-	: ISObjectFormBase(form_type, meta_table, parent, object_id)
-{
-	connect(GetFieldWidget("Coming"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ConsumptionSUGObjectForm::CalculateRemainder);
-	connect(GetFieldWidget("Consumption"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::ConsumptionSUGObjectForm::CalculateRemainder);
-}
-//-----------------------------------------------------------------------------
-ISOilSphere::ConsumptionSUGObjectForm::~ConsumptionSUGObjectForm()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISOilSphere::ConsumptionSUGObjectForm::CalculateRemainder()
-{
-	int Coming = GetFieldValue("Coming").toInt(), Consumption = GetFieldValue("Consumption").toInt();
-	Coming > 0 && Consumption > 0 ? SetFieldValue("Remainder", Coming - Consumption) : GetFieldWidget("Remainder")->Clear();
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

@@ -420,34 +420,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="ConsumptionSUG" UID="{6A343038-3BF0-4ED9-A2DA-F5EF218D3D38}" Alias="csug" LocalName="Расход СУГ" LocalListName="Расходы СУГ" TitleName="DateTime" ObjectForm="ISOilSphere::ConsumptionSUGObjectForm">
-    <Fields>
-      <Field UID="{569D169D-A604-439A-B02B-8A08BF6D0C88}" Name="DateTime" Type="DateTime" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
-      <Field UID="{6259D563-FE8D-44B1-A849-3B23B9C26B2D}" Name="Station" Type="BigInt" LabelName="Станция" LocalListName="Станция" NotNull="true" LayoutName="Station"/>
-      <Field UID="{74926D23-CDD0-4D30-8132-E83623503FC9}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" LayoutName="Station"/>
-      <Field UID="{982CFF4A-684A-4307-8321-96ED64B25307}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" NotNull="true" LayoutName="Car"/>
-      <Field UID="{F334FCBE-6114-4082-BF67-A4879BA2F3D3}" Name="Coming" Type="Int" LabelName="Приход" LocalListName="Приход" NotNull="true" LayoutName="Coming"/>
-      <Field UID="{2BB8266D-BAA2-4304-96CD-A222B85479FF}" Name="Consumption" Type="Int" LabelName="Расход" LocalListName="Расход" NotNull="true" LayoutName="Coming"/>
-      <Field UID="{FC67B691-1DCC-47D0-A17E-4E284716670D}" Name="Remainder" Type="Int" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" NotNull="true" LayoutName="Coming"/>
-      <Field UID="{BA0E8481-7C12-4E03-822C-C59680C0B564}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="DateTime"/>
-      <Index Field="Station"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Car"/>
-      <Index Field="Coming"/>
-      <Index Field="Consumption"/>
-      <Index Field="Remainder"/>
-      <Index Field="Note"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Station" ForeignClass="Station" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Number"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
     <Fields>
       <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" NotNull="true" LayoutName="DateShipping" SeparatorName="Отгрузка"/>

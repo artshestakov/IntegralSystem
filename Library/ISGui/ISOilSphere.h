@@ -232,19 +232,6 @@ namespace ISOilSphere
 		QLabel *Label;
 	};
 
-	//Форма объекта расходов СУГ
-	class ConsumptionSUGObjectForm : public ISObjectFormBase
-	{
-		Q_OBJECT
-
-	public:
-		Q_INVOKABLE ConsumptionSUGObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
-		virtual ~ConsumptionSUGObjectForm();
-
-	private:
-		void CalculateRemainder(); //Расчёт поля "Остаток"
-	};
-
 	//Форма пополнения склада
 	class ArrivalStock : public ISInterfaceMetaForm
 	{

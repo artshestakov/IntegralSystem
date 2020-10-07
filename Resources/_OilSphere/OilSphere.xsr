@@ -19,10 +19,9 @@
   <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Ведомость АЗС" Icon="Lists" TableName="GasStationStatement"/>
 
   <_Systems IsSystem="false" UID="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="5" LocalName="Логистика" Icon="Lists"/>
-  <_SubSystems UID="{EDF8F5FF-F776-4D65-A72D-3149644D74C8}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="1" LocalName="Расходы СУГ" Icon="Lists" TableName="ConsumptionSUG"/>
-  <_SubSystems UID="{6858929B-F34A-4AFF-A95B-A5436E8FECA5}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="2" LocalName="Движения вагонов" Icon="Lists" TableName="MoveWagon"/>
-  <_SubSystems UID="{8807444E-EBDE-4DB6-A261-D9430C48D448}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="3" LocalName="Смены водителей" Icon="Lists" TableName="ChangeDriver"/>
-  <_SubSystems UID="{B3AA8A3C-9558-403A-A4E2-19CB54DD510A}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="4" LocalName="Смены" Icon="Lists" TableName="Change"/>
+  <_SubSystems UID="{6858929B-F34A-4AFF-A95B-A5436E8FECA5}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="1" LocalName="Движения вагонов" Icon="Lists" TableName="MoveWagon"/>
+  <_SubSystems UID="{8807444E-EBDE-4DB6-A261-D9430C48D448}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="2" LocalName="Смены водителей" Icon="Lists" TableName="ChangeDriver"/>
+  <_SubSystems UID="{B3AA8A3C-9558-403A-A4E2-19CB54DD510A}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="3" LocalName="Смены" Icon="Lists" TableName="Change"/>
   
   <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="6" LocalName="Прочее" Icon="Lists"/>
   <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::Debet1ListForm"/>
