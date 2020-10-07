@@ -1,7 +1,7 @@
 #include "ISBaseTableView.h"
 #include "ISDefinesGui.h"
-#include "ISStyleSheet.h"
 #include "ISConstants.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISBaseTableView::ISBaseTableView(QWidget *parent)
 	: QTableView(parent),
@@ -13,7 +13,7 @@ ISBaseTableView::ISBaseTableView(QWidget *parent)
 	setSelectionMode(QAbstractItemView::ExtendedSelection);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
 	setCornerButtonEnabled(false);
-	setStyleSheet(STYLE_SHEET("ISBaseTableView"));
+	setStyleSheet(BUFFER_STYLE_SHEET("ISBaseTableView"));
 	setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
 	setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 

@@ -1,8 +1,8 @@
 #include "ISPopupMessage.h"
-#include "ISStyleSheet.h"
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISPopupMessage::ISPopupMessage(const QString &Title, const QString &Message, QWidget *parent) : QWidget(parent)
 {
@@ -18,12 +18,12 @@ ISPopupMessage::ISPopupMessage(const QString &Title, const QString &Message, QWi
 	LabelTitle = new QLabel(this);
 	LabelTitle->setVisible(false);
 	LabelTitle->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-	LabelTitle->setStyleSheet(STYLE_SHEET("ISPopup"));
+	LabelTitle->setStyleSheet(BUFFER_STYLE_SHEET("ISPopup"));
 	SetTitle(Title);
 	
 	LabelMessage = new QLabel(Message, this);
 	LabelMessage->setVisible(false);
-	LabelMessage->setStyleSheet(STYLE_SHEET("ISPopup"));
+	LabelMessage->setStyleSheet(BUFFER_STYLE_SHEET("ISPopup"));
 	SetMessage(Message);
 
 	GridLayout = new QGridLayout(this);

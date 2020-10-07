@@ -1,5 +1,4 @@
 #include "ISLabels.h"
-#include "ISStyleSheet.h"
 #include "ISConstants.h"
 #include "ISGui.h"
 #include "ISBuffer.h"
@@ -30,7 +29,7 @@ void ISQLabel::SetIsLinked(bool is_linked)
 {
 	IsLinked = is_linked;
 	setFocusPolicy(IsLinked ? Qt::StrongFocus : FocusPolicyDefault);
-	setStyleSheet(IsLinked ? STYLE_SHEET("ISLabelLink") : QString());
+	setStyleSheet(IsLinked ? BUFFER_STYLE_SHEET("ISLabelLink") : QString());
 	setCursor(IsLinked ? CURSOR_POINTING_HAND : CURSOR_ARROW);
 }
 //-----------------------------------------------------------------------------

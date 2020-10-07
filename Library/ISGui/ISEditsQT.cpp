@@ -1,5 +1,4 @@
 #include "ISEditsQT.h"
-#include "ISStyleSheet.h"
 #include "ISGui.h"
 #include "ISConstants.h"
 #include "ISContextMenu.h"
@@ -54,7 +53,7 @@ ISQLineEdit::ISQLineEdit(QWidget *parent)
 	: QLineEdit(parent),
 	MenuCopy(nullptr)
 {
-	setStyleSheet(STYLE_SHEET("ISLineEdit"));
+	setStyleSheet(BUFFER_STYLE_SHEET("ISLineEdit"));
 	setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	setDragEnabled(true);
 	SetMenuSelected(PROPERTY_GET(PROPERTY_LINE_EDIT_SELECTED_MENU).toBool());
@@ -391,7 +390,7 @@ ISQTextEdit::ISQTextEdit(QWidget *parent)
 	Wheel(false),
 	ExecEnter(true)
 {
-	setStyleSheet(STYLE_SHEET("ISTextEdit"));
+	setStyleSheet(BUFFER_STYLE_SHEET("ISTextEdit"));
 }
 //-----------------------------------------------------------------------------
 ISQTextEdit::~ISQTextEdit()

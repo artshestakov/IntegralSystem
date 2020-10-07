@@ -5,7 +5,6 @@
 #include "ISAssert.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISControls.h"
 #include "ISCore.h"
 #include "ISGui.h"
@@ -85,7 +84,7 @@ void ISTaskForm::CreateTempWidget()
 	QLabel *LabelText = new QLabel(this);
 	LabelText->setText(LANG("Task.LabelCentral"));
 	LabelText->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-	LabelText->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelText->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	LabelText->setAlignment(Qt::AlignCenter);
 	LayoutLabel->addWidget(LabelText);
 

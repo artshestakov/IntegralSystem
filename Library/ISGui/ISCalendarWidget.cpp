@@ -2,7 +2,6 @@
 #include "ISButtons.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISConstants.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
@@ -35,7 +34,7 @@ ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 	ButtonPrevMouth->setCursor(CURSOR_POINTING_HAND);
 
 	ButtonMonth = findChild<QToolButton*>("qt_calendar_monthbutton");
-	ButtonMonth->setStyleSheet(STYLE_SHEET("ISCalendarWidget.ButtonMonth"));
+	ButtonMonth->setStyleSheet(BUFFER_STYLE_SHEET("ISCalendarWidget.ButtonMonth"));
 	ButtonMonth->setCursor(CURSOR_POINTING_HAND);
 
 	int MonthID = 1;
@@ -56,7 +55,7 @@ ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 
 	ButtonYear = findChild<QToolButton*>("qt_calendar_yearbutton");
 	ButtonYear->setCursor(CURSOR_POINTING_HAND);
-	ButtonYear->setStyleSheet(STYLE_SHEET("ISCalendarWidget.ButtonYear"));
+	ButtonYear->setStyleSheet(BUFFER_STYLE_SHEET("ISCalendarWidget.ButtonYear"));
 
 	QIcon IconNextMouth = BUFFER_ICONS("CalendarWidget.Button.Right");
 	IconNextMouth.addPixmap(BUFFER_ICONS("CalendarWidget.Button.Right.Active").pixmap(ISDefines::Gui::SIZE_64_64), QIcon::Active);

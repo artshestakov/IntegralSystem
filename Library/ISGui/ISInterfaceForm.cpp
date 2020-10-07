@@ -2,9 +2,9 @@
 #include "ISDefinesGui.h"
 #include "ISControls.h"
 #include "ISSystem.h"
-#include "ISStyleSheet.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	: QWidget(parent, Flags),
@@ -56,7 +56,7 @@ void ISInterfaceForm::SetVisibleShadow(bool Visible)
 	if (Visible)
 	{
 		LabelShadow = new QLabel(this);
-		LabelShadow->setStyleSheet(STYLE_SHEET("QLabel.Shadow"));
+		LabelShadow->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Shadow"));
 		LabelShadow->move(0, 0);
 		LabelShadow->resize(width(), height());
 		LabelShadow->show();

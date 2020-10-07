@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSystem.h"
-#include "ISStyleSheet.h"
 #include "ISConstants.h"
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
@@ -12,7 +11,7 @@
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {
 	TabBar = new ISTabBarMain(this);
-	TabBar->setStyleSheet(STYLE_SHEET("ISMainWindow.TabBar"));
+	TabBar->setStyleSheet(BUFFER_STYLE_SHEET("ISMainWindow.TabBar"));
 	connect(TabBar, &ISTabBarMain::MidButtonClicked, this, &ISTabWidgetMain::CloseTabFromIndex);
 	connect(TabBar, &ISTabBarMain::SeparateWindowSignal, this, &ISTabWidgetMain::SeparateWindow);
 	setTabBar(TabBar);
@@ -22,7 +21,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	setMovable(true);
 	setTabBarAutoHide(true);
 	setDocumentMode(false);
-	setStyleSheet(STYLE_SHEET("ISMainWindow.TabWidget"));
+	setStyleSheet(BUFFER_STYLE_SHEET("ISMainWindow.TabWidget"));
 	setUsesScrollButtons(false);
 
 	ButtonMenu = new QToolButton(this);
@@ -32,7 +31,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 	ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
 	ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_32_32);
 	ButtonMenu->setPopupMode(QToolButton::InstantPopup);
-	ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
+	ButtonMenu->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
 	connect(ButtonMenu, &QToolButton::clicked, this, &ISTabWidgetMain::MenuClicked);
 }
 //-----------------------------------------------------------------------------

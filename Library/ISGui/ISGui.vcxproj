@@ -279,7 +279,6 @@
     <ClCompile Include="ISSqlModelHelper.cpp" />
     <ClCompile Include="ISStartup.cpp" />
     <ClCompile Include="ISStorageFilesListForm.cpp" />
-    <ClCompile Include="ISStyleSheet.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
     <ClCompile Include="ISTabWidgetMain.cpp" />
@@ -467,7 +466,6 @@
     <ClInclude Include="ISRegisterMetaType.h" />
     <ClInclude Include="ISSortingBuffer.h" />
     <ClInclude Include="ISStartup.h" />
-    <ClInclude Include="ISStyleSheet.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISModelThreadQuery.h" />
     <ClInclude Include="ISSqlModelHelper.h" />

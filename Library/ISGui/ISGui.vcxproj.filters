@@ -249,9 +249,6 @@
     <ClCompile Include="ISStartup.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISStyleSheet.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISUserRoleEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -812,9 +809,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISStartup.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISStyleSheet.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISUserRoleEntity.h">

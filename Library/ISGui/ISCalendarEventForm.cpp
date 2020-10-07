@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISButtons.h"
 #include "ISButtons.h"
@@ -59,7 +58,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	LabelName->setText(EventName);
 	LabelName->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelName->setWordWrap(true);
-	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	Layout->addWidget(LabelName);
 
 	QHBoxLayout *LayoutDate = new QHBoxLayout();
@@ -83,7 +82,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 		LabelOverdueIcon->setVisible(true);
 
 		LabelDate->setText(LabelDate->text() + " (" + LANG("OverdueEvent") + ')');
-		LabelDate->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
+		LabelDate->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Red"));
 		LabelDate->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	}
 

@@ -1,6 +1,5 @@
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
-#include "ISStyleSheet.h"
 #include "ISBuffer.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
@@ -59,7 +58,7 @@ int ISMessageBox::Exec()
 	ISSystem::ProcessEvents();
 	for (QAbstractButton *AbstractButton : buttons())
 	{
-		AbstractButton->setStyleSheet(STYLE_SHEET("ISPushButton"));
+		AbstractButton->setStyleSheet(BUFFER_STYLE_SHEET("ISPushButton"));
 		AbstractButton->setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
 	}
 	exec();

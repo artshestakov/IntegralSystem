@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
-#include "ISStyleSheet.h"
 #include "ISBuffer.h"
 #include "ISConstants.h"
 #include "ISLogger.h"

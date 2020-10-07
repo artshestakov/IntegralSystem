@@ -8,7 +8,6 @@
 
   <Local Name="AboutFrameworkDeveloped" Russian="О фреймворке разработки"/>
 
-  <Local Name="SplashWidget.Styles" Russian="Загрузка стилей..."/>
   <Local Name="SplashWidget.Buffer" Russian="Загрузка буфера..."/>
   <Local Name="SplashWidget.AdminRoles" Russian="Проверка прав..."/>
   
@@ -799,7 +798,6 @@
   <Local Name="SelectAll" Russian="Выбрать все"/>
   <Local Name="Update" Russian="Обновить"/>
   <Local Name="MainMenu" Russian="Главное меню"/>
-  <Local Name="Menu" Russian="Меню"/>
   <Local Name="Copy" Russian="Копировать"/>
   <Local Name="ZoomIn" Russian="Приблизить"/>
   <Local Name="ZoomOut" Russian="Отдалить"/>

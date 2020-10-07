@@ -23,6 +23,7 @@ void ISBuffer::Initialize()
 	InitializeIcons();
 	InitializePixmaps();
 	InitializeAudios();
+	InitializeStyleSheets();
 }
 //-----------------------------------------------------------------------------
 QMovie* ISBuffer::GetAnimation(const QString &AnimationName, QObject *parent, const QString &SourceFile, int FileLine)
@@ -60,6 +61,16 @@ QString ISBuffer::GetAudio(const QString &AudioName)
 	return Audios.find(AudioName)->second;
 }
 //-----------------------------------------------------------------------------
+QString ISBuffer::GetStyle(const QString &StyleName, const QString &SourceFile, int FileLine) const
+{
+	std::map<QString, QString>::const_iterator Iterator = StyleSheets.find(StyleName);
+	if (Iterator == StyleSheets.end())
+	{
+		IS_ASSERT(false, QString("StyleSheet \"%1\" not found. File: %2; Line: %3").arg(StyleName).arg(SourceFile).arg(FileLine));
+	}
+	return Iterator->second;
+}
+//-----------------------------------------------------------------------------
 void ISBuffer::InitializeAnimations()
 {
 	QFileInfoList FileInfoList = QDir(":Animation").entryInfoList(QDir::NoFilter);
@@ -93,6 +104,15 @@ void ISBuffer::InitializeAudios()
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
 		AddAudio(FileInfo.completeBaseName(), FileInfo.filePath());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISBuffer::InitializeStyleSheets()
+{
+	QFileInfoList FileInfoList = QDir(":CSS").entryInfoList(QDir::NoFilter);
+	for (const QFileInfo &FileInfo : FileInfoList)
+	{
+		AddStyle(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -141,6 +161,32 @@ void ISBuffer::AddAudio(const QString &AudioName, const QString &AudioPath)
 	else
 	{
 		Audios.emplace(AudioName, AudioPath);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISBuffer::AddStyle(const QString &FileName, const QString &FilePath)
+{
+	if (StyleSheets.count(FileName))
+	{
+		IS_ASSERT(false, "StyleSheet '" + FileName + "' already exist in buffer StyleSheets");
+	}
+
+	QFile FileStyle(FilePath);
+	if (FileStyle.exists())
+	{
+		if (FileStyle.open(QIODevice::ReadOnly))
+		{
+			StyleSheets.emplace(FileName, FileStyle.readAll());
+			FileStyle.close();
+		}
+		else
+		{
+			IS_ASSERT(false, QString("File %1 style sheet not open. Error: %2").arg(FileName).arg(FileStyle.errorString()));
+		}
+	}
+	else
+	{
+		IS_ASSERT(false, "File " + FileName + " not exist");
 	}
 }
 //-----------------------------------------------------------------------------

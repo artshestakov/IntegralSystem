@@ -2,7 +2,6 @@
 #include "ISConstants.h"
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISControls.h"
@@ -10,7 +9,7 @@
 ISPushButton::ISPushButton(const QIcon &Icon, const QString &Text, const QString &ToolTip, QWidget *parent) : QPushButton(Icon, Text, parent)
 {
 	setToolTip(ToolTip);
-	setStyleSheet(STYLE_SHEET("ISPushButton"));
+	setStyleSheet(BUFFER_STYLE_SHEET("ISPushButton"));
 	setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
 	setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
 	setIconSize(QSize(ISPUSHBUTTON_MINIMUM_HEIGHT - 7, ISPUSHBUTTON_MINIMUM_HEIGHT - 7));
@@ -73,7 +72,7 @@ ISServiceButton::~ISServiceButton()
 //-----------------------------------------------------------------------------
 ISToolButton::ISToolButton(QWidget *parent) : QToolButton(parent)
 {
-	setStyleSheet(STYLE_SHEET("ISPushButton"));
+	setStyleSheet(BUFFER_STYLE_SHEET("ISPushButton"));
 	setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
 	setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
 }

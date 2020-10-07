@@ -1,7 +1,7 @@
 #include "ISListWidget.h"
-#include "ISStyleSheet.h"
 #include "ISLocalization.h"
 #include "ISDefinesGui.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISListWidget::ISListWidget(QWidget *parent)
 	: QListWidget(parent),
@@ -89,7 +89,7 @@ void ISListWidget::SetVisibleNoData(bool Visible)
 	if (!LabelCenter)
 	{
 		LabelCenter = new QLabel(LANG("NoData"), this);
-		LabelCenter->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+		LabelCenter->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 		LabelCenter->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 		LabelCenter->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 	}

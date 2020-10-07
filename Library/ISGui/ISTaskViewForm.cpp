@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
@@ -216,7 +215,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LabelStatus->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelStatus->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
 	LabelStatus->setAlignment(Qt::AlignCenter);
-	LabelStatus->setStyleSheet(STYLE_SHEET(TaskStatusStyleSheet));
+	LabelStatus->setStyleSheet(BUFFER_STYLE_SHEET(TaskStatusStyleSheet));
 	LayoutTitle->addWidget(LabelStatus);
 
 	LayoutTitle->addWidget(ISControls::CreateVerticalLine(this));
@@ -306,8 +305,8 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	TabWidget = new QTabWidget(this);
 	TabWidget->setTabsClosable(true);
-	TabWidget->setStyleSheet(STYLE_SHEET("QTabWidgetTask"));
-	TabWidget->tabBar()->setStyleSheet(STYLE_SHEET("QTabBarTask"));
+	TabWidget->setStyleSheet(BUFFER_STYLE_SHEET("QTabWidgetTask"));
+	TabWidget->tabBar()->setStyleSheet(BUFFER_STYLE_SHEET("QTabBarTask"));
 	LayoutLeft->addWidget(TabWidget);
 
 	TreeWidgetComment = new QTreeWidget(TabWidget);
@@ -628,7 +627,7 @@ void ISTaskViewForm::ReloadStatusButtons()
 			ISUuid StatusUID = qSelectStatuses.ReadColumn("tsst_uid");
 			if (StatusUID == TaskStatusUID)
 			{
-				LabelStatus->setStyleSheet(STYLE_SHEET(qSelectStatuses.ReadColumn("tsst_stylesheet").toString()));
+				LabelStatus->setStyleSheet(BUFFER_STYLE_SHEET(qSelectStatuses.ReadColumn("tsst_stylesheet").toString()));
 			}
 			else
 			{
@@ -818,7 +817,7 @@ void ISTaskViewForm::SetStatus(const ISUuid &StatusUID)
 
 			//Меняем надпись, её стиль и видимость кнопки переоткрытия задачи
 			LabelStatus->setText(TaskStatusName);
-			LabelStatus->setStyleSheet(STYLE_SHEET(qUpdateStatus.ReadColumn("tsst_stylesheet").toString()));
+			LabelStatus->setStyleSheet(BUFFER_STYLE_SHEET(qUpdateStatus.ReadColumn("tsst_stylesheet").toString()));
 			UpdateVisibleButtonReOpen();
 
 			//Перезагружаем кнопки со статусами и высылаем сигнал изменения статуса
@@ -976,7 +975,7 @@ QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, bool IsImage, c
 	LayoutWidget->addLayout(Layout);
 
 	QLabel *LabelFileName = new QLabel((IsImage ? LANG("Task.File.Name.Image") : LANG("Task.File.Name.File")).arg(Name), Widget);
-	LabelFileName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelFileName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	ISGui::SetFontWidgetBold(LabelFileName, true);
 	Layout->addWidget(LabelFileName);
 	
@@ -1331,7 +1330,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, int U
 	LayoutTitle->addWidget(LabelAvatar);
 
 	QLabel *LabelUser = new QLabel(UserFIO, WidgetTitle);
-	LabelUser->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelUser->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	ISGui::SetFontWidgetBold(LabelUser, true);
 	LayoutTitle->addWidget(LabelUser);
 

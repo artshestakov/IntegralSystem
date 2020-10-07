@@ -16,7 +16,6 @@
 #include "ISTaskViewForm.h"
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
-#include "ISStyleSheet.h"
 #include "ISBuffer.h"
 #include "ISRegisterMetaType.h"
 #include "ISVersion.h"
@@ -80,10 +79,6 @@ bool ISGui::Startup(QString &ErrorString)
 		return Result;
 	}
 
-	//Загрузка стилей интерфейса
-	SplashWidget.SetText(LANG("SplashWidget.Styles"));
-	ISStyleSheet::GetInstance().Initialize();
-
 	//Загрузка буфера
 	SplashWidget.SetText(LANG("SplashWidget.Buffer"));
 	ISBuffer::GetInstance().Initialize();
@@ -99,7 +94,7 @@ bool ISGui::Startup(QString &ErrorString)
 
 	ISRegisterMetaType::RegisterMetaType();
 	
-	qApp->setStyleSheet(STYLE_SHEET("QToolTip"));
+	qApp->setStyleSheet(BUFFER_STYLE_SHEET("QToolTip"));
 	qApp->setWindowIcon(BUFFER_ICONS("Logo"));
 	qApp->setApplicationName("IntegralSystem");
 	qApp->setApplicationVersion(ISVersion::Instance().ToString());

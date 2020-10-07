@@ -1,6 +1,6 @@
 #include "ISScrollArea.h"
-#include "ISStyleSheet.h"
 #include "ISConstants.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISScrollArea::ISScrollArea(QWidget *parent)
 	: QScrollArea(parent),
@@ -8,7 +8,7 @@ ISScrollArea::ISScrollArea(QWidget *parent)
 {
 	Widget = new QWidget(this);
 	Widget->setObjectName("WidgetScrollArea");
-	Widget->setStyleSheet(STYLE_SHEET("ISScrollArea"));
+	Widget->setStyleSheet(BUFFER_STYLE_SHEET("ISScrollArea"));
 	setWidget(Widget);
 
 	setFrameShape(QFrame::NoFrame);

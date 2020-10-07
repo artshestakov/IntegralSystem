@@ -3,7 +3,6 @@
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-#include "ISStyleSheet.h"
 #include "ISSettings.h"
 #include "ISParagraphEntity.h"
 //-----------------------------------------------------------------------------
@@ -31,7 +30,7 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	ButtonMenu->setIconSize(ISDefines::Gui::SIZE_25_25);
 	ButtonMenu->setCursor(CURSOR_POINTING_HAND);
 	ButtonMenu->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	ButtonMenu->setStyleSheet(STYLE_SHEET("QToolButtonMainMenu"));
+	ButtonMenu->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMainMenu"));
 	ButtonMenu->setPopupMode(QToolButton::InstantPopup);
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	MainLayout->addWidget(ButtonMenu);
@@ -130,7 +129,7 @@ QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &Icon
 	ToolButton->setAutoRaise(true);
 	ToolButton->setIconSize(ISDefines::Gui::SIZE_25_25);
 	ToolButton->setCursor(CURSOR_POINTING_HAND);
-	ToolButton->setStyleSheet(STYLE_SHEET("ISMenuBar.Button"));
+	ToolButton->setStyleSheet(BUFFER_STYLE_SHEET("ISMenuBar.Button"));
 	LayoutButtons->addWidget(ToolButton);
 	return ToolButton;
 }
@@ -141,7 +140,7 @@ void ISMenuBar::ParagraphClicked()
 	{
 		if (MapItem.second == sender())
 		{
-			MapItem.second->parentWidget()->setStyleSheet(STYLE_SHEET("QWidgetParagraph.Checked"));
+			MapItem.second->parentWidget()->setStyleSheet(BUFFER_STYLE_SHEET("QWidgetParagraph.Checked"));
 			MapItem.second->setChecked(true);
 			emit ParagraphClicked(MapItem.first);
 		}
@@ -180,7 +179,7 @@ QToolButton* ISMenuBar::CreateParagraphButton(ISMetaParagraph *MetaParagraph)
 	ToolButton->setAutoRaise(true);
 	ToolButton->setIconSize(ISDefines::Gui::SIZE_45_45);
 	ToolButton->setCursor(CURSOR_POINTING_HAND);
-	ToolButton->setStyleSheet(STYLE_SHEET("ISParagraphButton"));
+	ToolButton->setStyleSheet(BUFFER_STYLE_SHEET("ISParagraphButton"));
 	LayoutWidget->addWidget(ToolButton, 0, Qt::AlignHCenter);
 	return ToolButton;
 }

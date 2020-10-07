@@ -1,7 +1,7 @@
 #include "ISListIndicatorWidget.h"
 #include "ISDefinesGui.h"
-#include "ISStyleSheet.h"
 #include "ISConstants.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISListIndicatorWidget::ISListIndicatorWidget(QWidget *parent) : QWidget(parent)
 {
@@ -26,7 +26,7 @@ ISListIndicatorWidget::ISListIndicatorWidget(QWidget *parent) : QWidget(parent)
 	Layout->addWidget(LabelImage);
 
 	LabelText = new QLabel(this);
-	LabelText->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelText->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	LabelText->setFont(ISDefines::Gui::FONT_TAHOMA_14_BOLD);
 	Layout->addWidget(LabelText);
 }

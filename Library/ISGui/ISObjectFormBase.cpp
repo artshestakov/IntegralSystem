@@ -17,7 +17,6 @@
 #include "ISProtocol.h"
 #include "ISListBaseForm.h"
 #include "ISDatabaseHelper.h"
-#include "ISStyleSheet.h"
 #include "ISFavorites.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
@@ -286,7 +285,7 @@ void ISObjectFormBase::CreateToolBar()
 	QToolButton *ButtonAdditionally = dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally));
 	ButtonAdditionally->setPopupMode(QToolButton::InstantPopup);
 	ButtonAdditionally->setCursor(CURSOR_POINTING_HAND);
-	ButtonAdditionally->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
+	ButtonAdditionally->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
 
 	//Системная информация
 	ActionSystemInfo = ISControls::CreateActionRecordInformartion(this);
@@ -346,7 +345,7 @@ void ISObjectFormBase::CreateWidgetObject()
 	//Надпись указывающая на то, что объект помечен на удаление
 	QLabel *LabelIsDeleted = new QLabel(CentralWidget);
 	LabelIsDeleted->setVisible(false);
-	LabelIsDeleted->setStyleSheet(STYLE_SHEET("QLabel.Color.Red"));
+	LabelIsDeleted->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Red"));
 	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
 	LabelIsDeleted->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	LabelIsDeleted->setMargin(10);

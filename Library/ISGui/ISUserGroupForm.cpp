@@ -4,7 +4,6 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISScrollArea.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISQuery.h"
@@ -59,7 +58,7 @@ void ISUserGroupForm::CreateSubSystems()
 		QGroupBox *GroupBox = new QGroupBox(ScrollArea);
 		GroupBox->setTitle(MetaSystem->LocalName);
 		GroupBox->setLayout(FormLayout);
-		GroupBox->setStyleSheet(STYLE_SHEET("QGroupBoxAccessSubSystem"));
+		GroupBox->setStyleSheet(BUFFER_STYLE_SHEET("QGroupBoxAccessSubSystem"));
 		ScrollArea->widget()->layout()->addWidget(GroupBox);
 
 		for (ISMetaSubSystem *SubSystem : MetaSystem->SubSystems) //Обход всех подсистем текущей системы

@@ -12,7 +12,6 @@
 #include "ISLogger.h"
 #include "ISProcessForm.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISControls.h"
 #include "ISMessageBox.h"
 #include "ISPrintingBase.h"
@@ -212,7 +211,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		QAction *ActionAdditionally = ToolBar->addAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"));
 		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setPopupMode(QToolButton::InstantPopup);
-		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setStyleSheet(STYLE_SHEET("QToolButtonMenu"));
+		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
 		ActionAdditionally->setMenu(new QMenu(ToolBar));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowActual));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowDeleted));

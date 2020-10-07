@@ -9,7 +9,6 @@
 #include "ISGui.h"
 #include "ISPassword.h"
 #include "ISPopupMessage.h"
-#include "ISStyleSheet.h"
 #include "ISDefinesCore.h"
 #include "ISDefinesGui.h"
 #include "ISQuery.h"
@@ -565,7 +564,7 @@ void ISTextEdit::SetPlaceholderText(const QString &placeholder_text)
 void ISTextEdit::SetFrameShape(QFrame::Shape FrameShape)
 {
 	//Если высталено отсутствие рамки - убираем стиль, иначе рамка все равно отображается
-	TextEdit->setStyleSheet(FrameShape == QFrame::NoFrame ? QString() : STYLE_SHEET("ISTextEdit"));
+	TextEdit->setStyleSheet(FrameShape == QFrame::NoFrame ? QString() : BUFFER_STYLE_SHEET("ISTextEdit"));
 	TextEdit->setFrameShape(FrameShape);
 }
 //-----------------------------------------------------------------------------
@@ -1304,7 +1303,7 @@ ISTaskPriorityEdit::ISTaskPriorityEdit(QWidget *parent) : ISRadioEdit(parent)
 			QRadioButton *ButtonPriority = new QRadioButton(qSelect.ReadColumn("tspr_name").toString(), this);
 			ButtonPriority->setToolTip(qSelect.ReadColumn("tspr_tooltip").toString());
 			ButtonPriority->setIcon(BUFFER_ICONS(qSelect.ReadColumn("tspr_icon").toString()));
-			ButtonPriority->setStyleSheet(STYLE_SHEET(qSelect.ReadColumn("tspr_stylesheet").toString()));
+			ButtonPriority->setStyleSheet(BUFFER_STYLE_SHEET(qSelect.ReadColumn("tspr_stylesheet").toString()));
 			ButtonPriority->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 			AddButton(ButtonPriority, qSelect.ReadColumn("tspr_id"));
 
@@ -2059,7 +2058,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
 
 	LabelName = new QLabel(MetaTableForeign->LocalListName + ':', this);
 	LabelName->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	LabelName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	LayoutFrame->addWidget(LabelName);
 
 	ListWidget = new ISListWidget(this);
@@ -2092,7 +2091,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
 
 	LabelEmpty = new QLabel(LANG("ListIsEmpty"), this);
 	LabelEmpty->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-	LabelEmpty->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelEmpty->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	LabelEmpty->setVisible(false);
 }
 //-----------------------------------------------------------------------------
@@ -2269,7 +2268,7 @@ ISListEdit::ISListEdit(QWidget *parent) : ISFieldEditBase(parent)
 	ButtonMain->setIcon(BUFFER_ICONS("ArrowDown"));
 	ButtonMain->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	ButtonMain->setCursor(CURSOR_POINTING_HAND);
-	ButtonMain->setStyleSheet(ButtonMain->styleSheet() + STYLE_SHEET("QPushButtonListEdit"));
+	ButtonMain->setStyleSheet(ButtonMain->styleSheet() + BUFFER_STYLE_SHEET("QPushButtonListEdit"));
 	ButtonMain->setCheckable(true);
 	connect(ButtonMain, &ISPushButton::clicked, this, &ISListEdit::ShowPopup);
 	AddWidgetEdit(ButtonMain, this);

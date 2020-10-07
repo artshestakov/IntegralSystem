@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
 #include "ISButtons.h"
@@ -22,7 +21,7 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent) : ISInterfac
 
 	QLabel *LabelTitle = new QLabel(this);
 	LabelTitle->setText(LANG("Search.Advanced"));
-	LabelTitle->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelTitle->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	LabelTitle->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	GetMainLayout()->addWidget(LabelTitle);
 

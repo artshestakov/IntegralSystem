@@ -3,10 +3,10 @@
 #include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
-#include "ISStyleSheet.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISGui.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 static QString QS_INTERNAL_DIRECTORIES = PREPARE_QUERY("SELECT intd_tablename "
 													   "FROM _internaldirectories "
@@ -45,7 +45,7 @@ ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent)
 	Label = new QLabel(this);
 	Label->setWordWrap(true);
 	Label->setText(LANG("ClickFromViewList"));
-	Label->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	Label->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	Label->setFont(ISDefines::Gui::FONT_TAHOMA_14_BOLD);
 	Layout->addWidget(Label, 0, Qt::AlignCenter);
 }

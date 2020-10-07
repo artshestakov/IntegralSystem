@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISFieldEditBase.h"
 #include "ISQuery.h"
 #include "ISGui.h"

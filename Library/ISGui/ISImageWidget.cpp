@@ -1,7 +1,6 @@
 #include "ISImageWidget.h"
 #include "ISDefinesGui.h"
 #include "ISContextMenu.h"
-#include "ISStyleSheet.h"
 #include "ISFileDialog.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -13,7 +12,7 @@
 //-----------------------------------------------------------------------------
 ISImageWidget::ISImageWidget(QWidget *parent) : QLabel(parent)
 {
-	setStyleSheet(STYLE_SHEET("ISLabelImage"));
+	setStyleSheet(BUFFER_STYLE_SHEET("ISLabelImage"));
 	setAlignment(Qt::AlignCenter);
 	setMouseTracking(true);
 	setAutoFillBackground(true);

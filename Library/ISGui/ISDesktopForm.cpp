@@ -4,7 +4,6 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
 #include "ISObjects.h"
@@ -31,7 +30,7 @@ ISDesktopForm::ISDesktopForm(QWidget *parent)
 			QLabel *LabelLocalName = new QLabel(this);
 			LabelLocalName->setText(ISObjects::Instance().Info.LocalName);
 			LabelLocalName->setFont(ISDefines::Gui::FONT_TAHOMA_15_BOLD);
-			LabelLocalName->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+			LabelLocalName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 			MainLayout->addWidget(LabelLocalName, 0, Qt::AlignCenter);
 		}
 

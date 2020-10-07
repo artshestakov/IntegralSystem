@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISBuffer.h"
-#include "ISStyleSheet.h"
 #include "ISGui.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"
@@ -31,13 +30,13 @@ ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, c
 
 	LabelDate = new QLabel(this);
 	LabelDate->setVisible(false);
-	LabelDate->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelDate->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	Layout->addWidget(LabelDate);
 
 	QLabel *LabelTime = new QLabel(this);
 	LabelTime->setText(Time.toString(FORMAT_TIME_V1));
 	LabelTime->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	LabelTime->setStyleSheet(STYLE_SHEET("QLabel.Color.Gray"));
+	LabelTime->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 	Layout->addWidget(LabelTime);
 
 	MainLayout->addStretch();
