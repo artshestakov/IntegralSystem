@@ -247,17 +247,17 @@
   <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
     <Fields>
       <Field UID="{7C6A6D31-3F92-41A6-836D-A1B96E345A92}" Name="ImplementationUnload" Type="BigInt" LabelName="Выгрузка" LocalListName="Выгрузка" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="BigInt" ReadOnly="true" LabelName="Склад" LocalListName="Склад" NotNull="true" HideFromList="true" LayoutName="Title"/>
+      <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" HideFromList="true" LayoutName="Title"/>
       <Field UID="{64DC2A84-C906-4F46-AE3E-3D32E273E236}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Title"/>
       <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="BigInt" LabelName="Оператор" LocalListName="Оператор" LayoutName="Title"/>
-      <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="Int" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>
+      <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="BigInt" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>
       
       <Field UID="{79298632-AE9B-4DFF-B0EF-EE23CD9A6914}" Name="BalanceBeginChange" Type="Double" LabelName="Остаток на начало смены" LocalListName="Остаток на начало смены" LayoutName="Layout1"/>
-      <Field UID="{6E0C3D58-C0B2-4BA7-B62E-AB0EA597317A}" Name="VolumeIncome" Type="Double" ReadOnly="true" LabelName="Объём прихода" LocalListName="Объём прихода" NotNull="true" LayoutName="Layout1"/>
+      <Field UID="{6E0C3D58-C0B2-4BA7-B62E-AB0EA597317A}" Name="VolumeIncome" Type="Double" LabelName="Объём прихода" LocalListName="Объём прихода" LayoutName="Layout1"/>
       <Field UID="{1BD71122-D089-4A06-A903-1643F15B12BF}" Name="VolumeHolidaysCounters" Type="Double" LabelName="Объём отпуска по счётчикам" LocalListName="Объём отпуска по счётчикам" LayoutName="Layout1"/>
       <Field UID="{39277383-AE19-43D9-8219-166C8B51A3A6}" Name="TechnicalStraitDeviation" Type="Double" LabelName="Технический пролив, отклонения" LocalListName="Технический пролив, отклонения" LayoutName="Layout1"/>
       <Field UID="{4DEFF451-A68A-4AD4-8CEB-0D2EFEFF4F24}" Name="StraitNote" Type="String" LabelName="Пояснение пролива" LocalListName="Пояснение пролива" LayoutName="Layout1"/>
-      <Field UID="{FF4D3766-3CBB-469B-8135-45E978185266}" Name="BalanceEndChange" Type="Double" LabelName="Остаток на конец смены" LocalListName="Остаток на конец смены"/>
+      <Field UID="{FF4D3766-3CBB-469B-8135-45E978185266}" Name="BalanceEndChange" Type="Double" ReadOnly="true" LabelName="Остаток на конец смены" LocalListName="Остаток на конец смены"/>
       
       <Field UID="{321C8D0A-D118-4C48-A0A4-D911C34B0C40}" Name="SalesAmount" Type="Double" LabelName="Сумма реализации" LocalListName="Сумма реализации" SeparatorName="Продажи и поступления" LayoutName="Layout2"/>
       <Field UID="{912692BE-3D25-48C4-A794-5E0DA25277D8}" Name="KKMCash" Type="Double" LabelName="ККМ наличные" LocalListName="ККМ наличные" LayoutName="Layout2"/>

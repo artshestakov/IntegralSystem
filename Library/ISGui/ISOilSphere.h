@@ -123,6 +123,7 @@ namespace ISOilSphere
 		void AfterShowEvent() override;
 
 	private:
+		void FillInBased(); //Заполнить на основании
 		void CalculateBalanceEndChange(); //Расчёт поля "Остаток на конец смены"
 		void CalculateCashboxBalancePayment(); //Расчёт поля "Остаток в кассе, расчёт"
 		void CalculateCashboxBalanceActually(); //Расчёт поля "Остаток в кассе, фактический"

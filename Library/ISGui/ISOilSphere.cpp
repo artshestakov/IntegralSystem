@@ -26,14 +26,13 @@ static QString QS_CONSTANT = PREPARE_QUERY2("SELECT prod_constant "
 											"WHERE NOT prod_isdeleted "
 											"AND CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
 //-----------------------------------------------------------------------------
-static QString QS_BEFORE_VALUES = PREPARE_QUERY2("SELECT "
+static QString QS_FILL_IN_BASED = PREPARE_QUERY2("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
 												 "COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
 												 "COALESCE(gsts_cashboxtotalactually, 0) AS gsts_cashboxtotalactually, "
 												 "COALESCE(gsts_cashboxkkmtotal, 0) AS gsts_cashboxkkmtotal "
 												 "FROM gasstationstatement "
-												 "WHERE gsts_gasstation = :GasStation "
-												 "AND gsts_date = :Date");
+												 "WHERE gsts_id = :StatementID");
 //-----------------------------------------------------------------------------
 static QString QS_CASHBOX_TOTAL_PAYMENT = PREPARE_QUERY2("SELECT gsts_cashboxtotalpayment "
 														 "FROM gasstationstatement "
@@ -420,8 +419,9 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
 	}
 
 	bool Result = ISObjectFormBase::Save();
-	if (Result && UnloadStock.isValid()) //Если сохранение прошло успешно и поле "Склад" валидное - производим добавление в ведомомсть АЗС
+	if (Result && UnloadStock.isValid()) //Если сохранение прошло успешно и поле "Склад" заполнено - производим добавление в ведомомсть АЗС
 	{
+		//Проверяем наличие такой записи
 		ISQuery qSelect(QS_STATEMENT);
 		qSelect.BindValue(":ImplementationUnload", GetObjectID());
 		if (qSelect.ExecuteFirst())
@@ -492,61 +492,49 @@ ISOilSphere::GasStationStatementObjectForm::GasStationStatementObjectForm(ISName
 	BeforeCashboxTotalActually(0),
 	BeforeCashboxKKMTotal(0)
 {
-	/*ISQuery qSelectBeforeValues(QS_BEFORE_VALUES); //Запрашиваем значения с предыдущей смены
-	qSelectBeforeValues.BindValue(":GasStation", GetFieldValue("GasStation"));
-	qSelectBeforeValues.BindValue(":Date", GetFieldValue("Date").toDate().addDays(-1));
-	if (qSelectBeforeValues.ExecuteFirst())
-	{
-		BeforeBalanceBeginChange = qSelectBeforeValues.ReadColumn("gsts_balanceendchange").toDouble();
-		BeforeCashboxTotalPayment = qSelectBeforeValues.ReadColumn("gsts_cashboxtotalpayment").toDouble();
-		BeforeCashboxTotalActually = qSelectBeforeValues.ReadColumn("gsts_cashboxtotalactually").toDouble();
-		BeforeCashboxKKMTotal = qSelectBeforeValues.ReadColumn("gsts_cashboxkkmtotal").toDouble();
-
-		SetFieldValue("BalanceBeginChange", BeforeBalanceBeginChange);
-		SetFieldValue("CashboxTotalPayment", BeforeCashboxTotalPayment);
-		SetFieldValue("CashboxTotalActually", BeforeCashboxTotalActually);
-		SetFieldValue("CashboxKKMTotal", BeforeCashboxKKMTotal);
-	}*/
+	QAction *ActionFillInBasedOn = new QAction(BUFFER_ICONS("Arrow.Down"), LANG("OilSphere.FillInBased"), GetToolBar());
+	connect(ActionFillInBasedOn, &QAction::triggered, this, &ISOilSphere::GasStationStatementObjectForm::FillInBased);
+	AddActionToolBar(ActionFillInBasedOn);
 
 	//Остаток на конец смены
-	//connect(GetFieldWidget("BalanceBeginChange"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);
-	//connect(GetFieldWidget("VolumeIncome"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);
-	//connect(GetFieldWidget("VolumeHolidaysCounters"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);
-	//connect(GetFieldWidget("TechnicalStraitDeviation"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);
+	connect(GetFieldWidget("BalanceBeginChange"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);
+	connect(GetFieldWidget("VolumeIncome"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);
+	connect(GetFieldWidget("VolumeHolidaysCounters"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);
+	connect(GetFieldWidget("TechnicalStraitDeviation"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);
 
 	//Отаток в кассе, расчёт
-	//connect(GetFieldWidget("SalesAmount"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalancePayment);
-	//connect(GetFieldWidget("KKMCash"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalancePayment);
-	//connect(GetFieldWidget("PaySoldVolume"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalancePayment);
+	connect(GetFieldWidget("SalesAmount"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalancePayment);
+	connect(GetFieldWidget("KKMCash"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalancePayment);
+	connect(GetFieldWidget("PaySoldVolume"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalancePayment);
 
 	//Остаток в кассе, фактический
-	//connect(GetFieldWidget("CashboxBalancePayment"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalanceActually);
-	//connect(GetFieldWidget("PresenceDebt"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalanceActually);
+	connect(GetFieldWidget("CashboxBalancePayment"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalanceActually);
+	connect(GetFieldWidget("PresenceDebt"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxBalanceActually);
 
 	//Расхождения по кассе
-	//connect(GetFieldWidget("CashboxBalancePayment"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxDiscrepancies);
-	//connect(GetFieldWidget("CashboxBalanceActually"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxDiscrepancies);
+	connect(GetFieldWidget("CashboxBalancePayment"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxDiscrepancies);
+	connect(GetFieldWidget("CashboxBalanceActually"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxDiscrepancies);
 
 	//Наличные по ККМ (касса)
-	//connect(GetFieldWidget("KKMCash"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxKKMCash);
+	connect(GetFieldWidget("KKMCash"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxKKMCash);
 
 	//Накопительный итог, расчёт
-	//connect(GetFieldWidget("CashboxBalancePayment"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalPayment);
-	//connect(GetFieldWidget("CashboxCollectionAmount"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalPayment);
-	//connect(GetFieldWidget("CashboxAdministrativeExpenses"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalPayment);
+	connect(GetFieldWidget("CashboxBalancePayment"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalPayment);
+	connect(GetFieldWidget("CashboxCollectionAmount"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalPayment);
+	connect(GetFieldWidget("CashboxAdministrativeExpenses"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalPayment);
 
 	//Накопительный итог, фактический
-	//connect(GetFieldWidget("CashboxBalanceActually"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalActually);
-	//connect(GetFieldWidget("CashboxCollectionAmount"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalActually);
-	//connect(GetFieldWidget("CashboxAdministrativeExpenses"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalActually);
+	connect(GetFieldWidget("CashboxBalanceActually"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalActually);
+	connect(GetFieldWidget("CashboxCollectionAmount"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalActually);
+	connect(GetFieldWidget("CashboxAdministrativeExpenses"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxTotalActually);
 
 	//Расхождения итогов
-	//connect(GetFieldWidget("CashboxTotalPayment"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CaclulateCashboxDiscrepanciesTotals);
-	//connect(GetFieldWidget("CashboxTotalActually"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CaclulateCashboxDiscrepanciesTotals);
+	connect(GetFieldWidget("CashboxTotalPayment"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CaclulateCashboxDiscrepanciesTotals);
+	connect(GetFieldWidget("CashboxTotalActually"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CaclulateCashboxDiscrepanciesTotals);
 
 	//Накопительный итог по ККМ
-	//connect(GetFieldWidget("KKMCash"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxKKMTotal);
-	//connect(GetFieldWidget("CashboxCollectionAmountKKM"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxKKMTotal);
+	connect(GetFieldWidget("KKMCash"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxKKMTotal);
+	connect(GetFieldWidget("CashboxCollectionAmountKKM"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateCashboxKKMTotal);
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::GasStationStatementObjectForm::~GasStationStatementObjectForm()
@@ -559,6 +547,34 @@ void ISOilSphere::GasStationStatementObjectForm::AfterShowEvent()
 	ISObjectFormBase::AfterShowEvent();
 	CalculateCashboxDiscrepancies();
 	CaclulateCashboxDiscrepanciesTotals();
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::GasStationStatementObjectForm::FillInBased()
+{
+	int SelectedID = ISGui::SelectObject("GasStationStatement");
+	if (SelectedID) //Если запись была выбрана - заполняем
+	{
+		if (SelectedID == GetObjectID())
+		{
+			ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.FillInBased"));
+		}
+		else
+		{
+			ISQuery qSelect(QS_FILL_IN_BASED);
+			qSelect.BindValue(":StatementID", SelectedID);
+			if (qSelect.ExecuteFirst())
+			{
+				SetFieldValue("BalanceBeginChange", qSelect.ReadColumn("gsts_balanceendchange").toDouble());
+				SetFieldValue("CashboxTotalPayment", qSelect.ReadColumn("gsts_cashboxtotalpayment").toDouble());
+				SetFieldValue("CashboxTotalActually", qSelect.ReadColumn("gsts_cashboxtotalactually").toDouble());
+				SetFieldValue("CashboxKKMTotal", qSelect.ReadColumn("gsts_cashboxkkmtotal").toDouble());
+			}
+			else
+			{
+				ISMessageBox::ShowWarning(this, qSelect.GetErrorString());
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange()

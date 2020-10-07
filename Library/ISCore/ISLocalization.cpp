@@ -31,7 +31,12 @@ QString ISLocalization::GetErrorString() const
 QString ISLocalization::GetString(const QString &ParameterName) const
 {
 	std::map<QString, QString>::const_iterator It = Dictionary.find(ParameterName);
-	return It == Dictionary.end() ? ParameterName : It->second;
+	if (It == Dictionary.end())
+	{
+		ISLOGGER_W("Not found key \"" + ParameterName + "\" in localization");
+		return ParameterName;
+	}
+	return It->second;
 }
 //-----------------------------------------------------------------------------
 bool ISLocalization::LoadTraslatorQT()
