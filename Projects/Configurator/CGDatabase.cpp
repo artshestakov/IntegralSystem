@@ -18,6 +18,12 @@ static QString QC_FOREIGN = "ALTER TABLE public.%1 "
 							"ON UPDATE NO ACTION "
 							"NOT DEFERRABLE";
 //-----------------------------------------------------------------------------
+static QString QS_FUNCTION = PREPARE_QUERY("SELECT proname AS function_name, proname || '(' || pg_get_function_arguments(p.oid) || ')' AS function_full_name "
+										   "FROM pg_proc p "
+										   "LEFT JOIN pg_namespace n ON p.pronamespace = n.oid "
+										   "WHERE nspname = current_schema() "
+										   "ORDER BY function_name");
+//-----------------------------------------------------------------------------
 static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
@@ -134,7 +140,7 @@ bool CGDatabase::Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGDatabase::Function_CreateOrReplace(PMetaFunction *MetaFunction, QString &ErrorString)
+bool CGDatabase::Function_Create(PMetaFunction *MetaFunction, QString &ErrorString)
 {
 	ISQuery qCreateFunction;
 	qCreateFunction.SetShowLongQuery(false);
@@ -142,6 +148,52 @@ bool CGDatabase::Function_CreateOrReplace(PMetaFunction *MetaFunction, QString &
 	if (!Result)
 	{
 		ErrorString = qCreateFunction.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGDatabase::Function_Delete(QString &ErrorString)
+{
+	ISQuery qSelectFunction(QS_FUNCTION);
+	qSelectFunction.SetShowLongQuery(false);
+	bool Result = qSelectFunction.Execute(), Founded = false;
+	if (Result)
+	{
+		while (qSelectFunction.Next()) //Обходим функции из БД
+		{
+			QString FunctionName = qSelectFunction.ReadColumn("function_name").toString();
+			QString FunctionFullName = qSelectFunction.ReadColumn("function_full_name").toString();
+
+			//Ищем такую функцию в мета-данных
+			for (PMetaFunction *MetaFunction : ISMetaData::Instance().GetFunctions())
+			{
+				if (MetaFunction->Name.toLower() == FunctionName) //Функций найдена - выходим из цикла
+				{
+					Founded = true;
+					break;
+				}
+			}
+
+			if (!Founded) //Если функция не найдена - предлагаем удалить
+			{
+				if (ISConsole::Question(QString("Delete old function \"%1\"?").arg(FunctionName))) //Согласились на удаление
+				{
+					ISQuery qDelete;
+					qDelete.SetShowLongQuery(false);
+					Result = qDelete.Execute("DROP FUNCTION " + FunctionFullName);
+					if (!Result)
+					{
+						ErrorString = qDelete.GetErrorString();
+						break;
+					}
+				}
+			}
+			Founded = false; //Возвращаем значение флага в исходное положение
+		}
+	}
+	else
+	{
+		ErrorString = qSelectFunction.GetErrorString();
 	}
 	return Result;
 }

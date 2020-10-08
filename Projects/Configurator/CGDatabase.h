@@ -12,7 +12,8 @@ public: //Внешние ключи
 	static bool Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString); //Проверка существования внешнего ключа
 
 public: //Функции
-	static bool Function_CreateOrReplace(PMetaFunction *MetaFunction, QString &ErrorString); //Создание функции
+	static bool Function_Create(PMetaFunction *MetaFunction, QString &ErrorString); //Создание функции
+	static bool Function_Delete(QString &ErrorString); //Удаление устаревших функций
 
 public: //Индексы
 	static bool Index_Create(PMetaIndex *Index, QString &ErrorString); //Создание индекса

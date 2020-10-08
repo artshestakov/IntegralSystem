@@ -91,16 +91,24 @@ bool CGConfiguratorUpdate::database()
 bool CGConfiguratorUpdate::functions()
 {
 	bool Result = true;
+
+	//Обходим функции из мета-данных
 	for (size_t i = 0, CountFunctions = ISMetaData::Instance().GetFunctions().size(); i < CountFunctions; ++i)
 	{
 		Progress("Function", i, CountFunctions);
 		PMetaFunction *MetaFunction = ISMetaData::Instance().GetFunctions()[i];
-		Result = CGDatabase::Function_CreateOrReplace(MetaFunction, ErrorString);
+		Result = CGDatabase::Function_Create(MetaFunction, ErrorString);
 		if (!Result)
 		{
 			break;
 		}
 	}
+
+	if (Result) //Если обновление функций прошло успешно - удаляем устаревшие
+	{
+		Result = CGDatabase::Function_Delete(ErrorString);
+	}
+	
 	return Result;
 }
 //-----------------------------------------------------------------------------
