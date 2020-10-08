@@ -9,12 +9,16 @@ class ISListViewForm : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 
+signals:
+	void Updated();
+
 public:
 	ISListViewForm(const QString &query_name, QWidget *parent = 0);
 	virtual ~ISListViewForm();
 
 	void BindValue(const QString &ParameterName, const QVariant &Value);
 	void LoadData() override;
+	QSqlQueryModel* GetSqlModel();
 
 private:
 	ISBaseTableView *TableView;

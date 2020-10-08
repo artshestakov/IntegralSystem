@@ -45,6 +45,7 @@ void ISListViewForm::LoadData()
 		{
 			SqlModel->setQuery(SqlQuery);
 			TableView->resizeColumnsToContents();
+			emit Updated();
 		}
 		else
 		{
@@ -55,5 +56,10 @@ void ISListViewForm::LoadData()
 	{
 		ISMessageBox::ShowWarning(this, SqlQuery.lastError().text(), SqlText);
 	}
+}
+//-----------------------------------------------------------------------------
+QSqlQueryModel* ISListViewForm::GetSqlModel()
+{
+	return SqlModel;
 }
 //-----------------------------------------------------------------------------

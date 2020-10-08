@@ -3,15 +3,19 @@
 	
   <!--OilSphere-->
   <Local Name="OilSphere.DateLoad" Russian="Дата загрузки: %1"/>
-  <Local Name="OilSphere.UnloadCost" Russian="Стоимость выгрузки: %1"/>
+  <Local Name="OilSphere.Cost.Load" Russian="Стоимость загрузки: %1"/>
+  <Local Name="OilSphere.Cost.Unload" Russian="Стоимость выгрузки: %1"/>
   <Local Name="OilSphere.ShowImplementation" Russian="Просмотр реализации"/>
-  <Local Name="OilSphere.ShowImplementationUnload" Russian="Просмотр выгрузки"/>
+  <Local Name="OilSphere.Show.ImplementationLoad" Russian="Просмотр загрузки"/>
+  <Local Name="OilSphere.Show.ImplementationUnload" Russian="Просмотр выгрузки"/>
   <Local Name="OilSphere.Debet.Label" Russian="Итого: %1 Расчёт: %2 Остаток: %3"/>
   <Local Name="OilSphere.Debts" Russian="Долги"/>
   <Local Name="OilSphere.Debts.Title" Russian="Долги по контрагенту: %1"/>
-  <Local Name="OilSphere.Debts.Label" Russian="Стоимость выгрузки: %1 Начислено: %2 Долг: %3"/>
-  <Local Name="OilSphere.Implementations" Russian="Реализации"/>
-  <Local Name="OilSphere.Enrollments" Russian="Начисления"/>
+  <Local Name="OilSphere.Debts.Label" Russian="Стоимость загрузки: %1 Стоимость выгрузки: %2 Начислено: %3 Покупка ЖД/Ц: %4 Долг: %5"/>
+  <Local Name="OilSphere.Implementation.Loads" Russian="Загрузки"/>
+  <Local Name="OilSphere.Implementation.Unloads" Russian="Выгрузки"/>
+  <Local Name="OilSphere.Counterparty.Enrollments" Russian="Начисления"/>
+  <Local Name="OilSphere.Counterparty.MoveWagon" Russian="Движения вагонов"/>
   <Local Name="OilSphere.FillInBased" Russian="Заполнить на основании"/>
   <Local Name="OilSphere.CreateInBased" Russian="Создать на основании"/>
   <Local Name="OilSphere.Message.Question.CreateCurrentConstant" Russian="Константа за текущий период не обнаружена, создать её сейчас?"/>

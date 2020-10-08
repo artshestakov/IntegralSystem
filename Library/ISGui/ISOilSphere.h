@@ -51,16 +51,20 @@ namespace ISOilSphere
 		void EscapeClicked() override;
 
 	private:
-		void EntrollemntUpdated();
+		void UpdatedLists(); //Событие обновления списков
+		void MoveWagonUpdated();
 		void ShowImplementation();
-		void ShowImplementationUnload();
+		void ShowLoadUnload();
 
 	private:
+		double TotalLoad;
 		double TotalUnload;
+		double MoveWagonSum;
 
 	private:
 		QLabel *LabelTotal;
 		ISListBaseForm *EntrollmentListForm;
+		ISListViewForm *MoveWagonViewForm;
 	};
 
 	//Форма объекта контрагентов
