@@ -44,6 +44,7 @@ public:
 	void SetSelectObjectAfterUpdate(const ISVectorInt &Objects); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	PMetaTable* GetMetaTable(); //Получить указатель на мета-таблицу
 	ISSqlModelCore* GetSqlModel(); //Получить указатель на модель
+	QStatusBar* GetStatusBar(); //Получить указатель на статус-бар
 
 	virtual void Create(); //Создание объекта
 	virtual void CreateCopy(); //Создание копии объекта

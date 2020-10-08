@@ -496,6 +496,11 @@ ISSqlModelCore* ISListBaseForm::GetSqlModel()
 	return SqlModel;
 }
 //-----------------------------------------------------------------------------
+QStatusBar* ISListBaseForm::GetStatusBar()
+{
+	return StatusBar;
+}
+//-----------------------------------------------------------------------------
 void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
 	Q_UNUSED(ModelIndex);

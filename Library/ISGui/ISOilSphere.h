@@ -85,7 +85,23 @@ namespace ISOilSphere
 		ISDaDataService *DaDataService;
 	};
 
-	//Форма объекта загрузок реализации
+	//Форма списка реализаций
+	class ImplementationListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ImplementationListForm(QWidget *parent = 0);
+		~ImplementationListForm();
+
+	protected:
+		void LoadDataAfterEvent() override;
+
+	private:
+		QLabel *LabelTotal;
+	};
+
+	//Форма объекта загрузки реализации
 	class ImplementationLoadObjectForm : public ISObjectFormBase
 	{
 		Q_OBJECT

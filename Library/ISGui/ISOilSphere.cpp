@@ -70,6 +70,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 {
 	qRegisterMetaType<ISOilSphere::CounterpartyListForm*>("ISOilSphere::CounterpartyListForm");
 	qRegisterMetaType<ISOilSphere::CounterpartyObjectForm*>("ISOilSphere::CounterpartyObjectForm");
+	qRegisterMetaType<ISOilSphere::ImplementationListForm*>("ISOilSphere::ImplementationListForm");
 	qRegisterMetaType<ISOilSphere::ImplementationLoadObjectForm*>("ISOilSphere::ImplementationLoadObjectForm");
 	qRegisterMetaType<ISOilSphere::ImplementationUnloadObjectForm*>("ISOilSphere::ImplementationUnloadObjectForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
@@ -290,7 +291,6 @@ void ISOilSphere::CounterpartyDebtForm::UpdatedLists()
 	{
 		MoveWagonSum += SqlQueryModel->data(SqlQueryModel->index(i, 3)).toDouble();
 	}
-
 	LabelTotal->setText(LANG("OilSphere.Debts.Label").arg(DOUBLE_PREPARE(TotalLoad)).arg(DOUBLE_PREPARE(TotalUnload)).arg(DOUBLE_PREPARE(TotalEntrollment)).arg(DOUBLE_PREPARE(MoveWagonSum)).arg(DOUBLE_PREPARE(TotalLoad - TotalUnload - TotalEntrollment - MoveWagonSum)));
 }
 //-----------------------------------------------------------------------------
@@ -334,6 +334,32 @@ void ISOilSphere::CounterpartyObjectForm::SearchFinished(const ISDaDataOrganizat
 	GetFieldWidget("Director")->SetValue(OrganizationStruct.Management.FIO);
 	GetFieldWidget("Kpp")->SetValue(OrganizationStruct.Kpp);
 	GetFieldWidget("Ogrn")->SetValue(OrganizationStruct.Ogrn);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ImplementationListForm::ImplementationListForm(QWidget *parent) : ISListBaseForm("Implementation", parent)
+{
+	LabelTotal = new QLabel(GetStatusBar());
+	GetStatusBar()->addWidget(LabelTotal);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ImplementationListForm::~ImplementationListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::ImplementationListForm::LoadDataAfterEvent()
+{
+	ISListBaseForm::LoadDataAfterEvent();
+	LabelTotal->setText(LANG("OilSphere.Implementation.Total")
+		.arg(GetSqlModel()->GetFieldSum<int>("LoadCount", 0))
+		.arg(GetSqlModel()->GetFieldSum<int>("UnloadCount", 0))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("LoadWeightNet", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("UnloadWeightNet", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("LoadCost", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("UnloadCost", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("WeightDifference", 0.0))));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

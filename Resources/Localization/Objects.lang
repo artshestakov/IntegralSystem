@@ -14,6 +14,7 @@
   <Local Name="OilSphere.Debts.Label" Russian="Стоимость загрузки: %1 Стоимость выгрузки: %2 Начислено: %3 Покупка ЖД/Ц: %4 Долг: %5"/>
   <Local Name="OilSphere.Implementation.Loads" Russian="Загрузки"/>
   <Local Name="OilSphere.Implementation.Unloads" Russian="Выгрузки"/>
+  <Local Name="OilSphere.Implementation.Total" Russian="Количество загрузок: %1 Количество выгрузок: %2 Вес загрузок (нетто): %3 Вес выгрузок (нетто): %4 Стоимость загрузок: %5 Стоимость выгрузок: %6 Разница весов: %7"/>
   <Local Name="OilSphere.Counterparty.Enrollments" Russian="Начисления"/>
   <Local Name="OilSphere.Counterparty.MoveWagon" Russian="Движения вагонов"/>
   <Local Name="OilSphere.FillInBased" Russian="Заполнить на основании"/>
