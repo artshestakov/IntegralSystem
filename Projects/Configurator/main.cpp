@@ -29,9 +29,10 @@ static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF
 //-----------------------------------------------------------------------------
 static QString QS_DATABASE = "SELECT datname FROM pg_database ORDER BY datname";
 //-----------------------------------------------------------------------------
-static QString QS_FUNCTION = "SELECT COUNT(*) "
-							 "FROM information_schema.routines "
-							 "WHERE routines.routine_name = 'get_configuration_name'";
+static QString QS_DATABASE_DESCRIPTION = PREPARE_QUERY("SELECT description "
+													   "FROM pg_shdescription "
+													   "JOIN pg_database ON objoid = pg_database.oid "
+													   "WHERE datname = current_database()");
 //-----------------------------------------------------------------------------
 std::vector<CGSection*> Arguments;
 QString DBHost, DBName, DBLogin, DBPassword;
@@ -232,19 +233,19 @@ bool CreateDatabase()
 		return Result;
 	}
 
-	//Проверяем наличие функции для получения конфигурации базы
-	ISQuery qFunction(QS_FUNCTION);
-	qFunction.SetShowLongQuery(false);
-	Result = qFunction.ExecuteFirst();
+	//Запрашиваем описание базы данных
+	ISQuery qSelectDescriptionDB(QS_DATABASE_DESCRIPTION);
+	qSelectDescriptionDB.SetShowLongQuery(false);
+	Result = qSelectDescriptionDB.Execute();
 	if (!Result)
 	{
-		ISLOGGER_E("Not checked configuration function: " + qFunction.GetErrorString());
+		ISLOGGER_E("Not getting database description: " + qSelectDescriptionDB.GetErrorString());
 		return Result;
 	}
 
-	if (!qFunction.ReadColumn("count").toBool()) //Если функция не существует - запрашиваем имя конфигурации и создаём функцию
+	QString ConfigurationName; //Имя конфигурации
+	if (!qSelectDescriptionDB.First()) //Не удалось перейти на первую строку выборки - запрашиваем имя конфигурации
 	{
-		QString ConfigurationName; //Имя конфигурации
 		while (true)
 		{
 			//Запрашиваем название конфигурации
@@ -255,7 +256,7 @@ bool CreateDatabase()
 				ISLOGGER_W("Configuration name is empty.");
 				return Result;
 			}
-			
+
 			//Проверяем наличие такой конфигурации
 			QString ErrorString;
 			Result = ExistConfiguration(ConfigurationName, Exist, ErrorString);
@@ -275,11 +276,15 @@ bool CreateDatabase()
 			}
 		}
 
-		//Создаём функцию
-		Result = qFunction.Execute("CREATE OR REPLACE FUNCTION get_configuration_name() RETURNS VARCHAR AS $$ BEGIN RETURN '" + ConfigurationName + "'; END; $$ LANGUAGE plpgsql IMMUTABLE");
+		//Комментируем БД
+		ISQuery qCommentDB;
+		Result = qCommentDB.Execute(QString("COMMENT ON DATABASE %1 IS '%2'").arg(DBName).arg(ISSystem::VariantMapToJsonString(
+		{
+			{ "ConfigurationName", ConfigurationName }
+		})));
 		if (!Result)
 		{
-			ISLOGGER_E(qFunction.GetErrorString());
+			ISLOGGER_E("Not updating database description: " + qCommentDB.GetErrorString());
 		}
 	}
 	return Result;

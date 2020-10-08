@@ -1,8 +1,12 @@
 #include "ISMetaDataHelper.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
-static QString QS_CONFIGURATION = PREPARE_QUERY("SELECT get_configuration_name()");
+static QString QS_DATABASE_DESCRIPTION = PREPARE_QUERY("SELECT description "
+													   "FROM pg_shdescription "
+													   "JOIN pg_database ON objoid = pg_database.oid "
+													   "WHERE datname = current_database()");
 //-----------------------------------------------------------------------------
 QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign, const QString &SqlFilter, const QVariant &ObjectID)
 {
@@ -54,10 +58,11 @@ QString ISMetaDataHelper::GenerateSqlQueryFromTitleName(PMetaForeign *MetaForeig
 //-----------------------------------------------------------------------------
 QString ISMetaDataHelper::GetConfigurationName(QString &ErrorString)
 {
-	ISQuery qSelect(QS_CONFIGURATION);
+	ISQuery qSelect(QS_DATABASE_DESCRIPTION);
 	if (qSelect.ExecuteFirst())
 	{
-		return qSelect.ReadColumn("get_configuration_name").toString();
+		QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(qSelect.ReadColumn("description").toString());
+		return VariantMap["ConfigurationName"].toString();
 	}
 	else
 	{
