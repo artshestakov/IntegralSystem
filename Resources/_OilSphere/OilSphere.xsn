@@ -406,7 +406,8 @@
       <Index Field="Name" Unique="true"/>
     </Indexes>
     <Escorts>
-      <Escort LocalName="Прибытия" ClassName="ISOilSphere::ArrivalStock"/>
+      <Escort LocalName="Поступления ЖД" ClassName="ISOilSphere::StockAdmissionTrain"/>
+      <Escort LocalName="Поступления с реализаций" ClassName="ISOilSphere::StockAdmissionImplemetation"/>
       <Escort LocalName="Списания" ClassName="ISOilSphere::StockWriteOff"/>
     </Escorts>
   </Table>

@@ -11,7 +11,7 @@ ISListViewForm::ISListViewForm(const QString &query_name, QWidget *parent)
 {
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	ToolBar->addAction(BUFFER_ICONS("Update"), LANG("Update"), this, &ISListViewForm::LoadData);
+	ToolBar->addAction(BUFFER_ICONS("Update"), LANG("ListForm.Update"), this, &ISListViewForm::LoadData);
 	GetMainLayout()->addWidget(ToolBar);
 
 	TableView = new ISBaseTableView(this);

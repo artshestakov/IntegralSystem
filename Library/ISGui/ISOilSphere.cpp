@@ -74,7 +74,8 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::Debet2ListForm*>("ISOilSphere::Debet2ListForm");
 	qRegisterMetaType<ISOilSphere::Debet3ListForm*>("ISOilSphere::Debet3ListForm");
 	qRegisterMetaType<ISOilSphere::DriverCostListForm*>("ISOilSphere::DriverCostListForm");
-	qRegisterMetaType<ISOilSphere::ArrivalStock*>("ISOilSphere::ArrivalStock");
+	qRegisterMetaType<ISOilSphere::StockAdmissionTrain*>("ISOilSphere::StockAdmissionTrain");
+	qRegisterMetaType<ISOilSphere::StockAdmissionImplemetation*>("ISOilSphere::StockAdmissionImplemetation");
 	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
 }
 //-----------------------------------------------------------------------------
@@ -839,18 +840,37 @@ void ISOilSphere::DriverCostListForm::CreateOnBased()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::ArrivalStock::ArrivalStock(QWidget *parent) : ISInterfaceMetaForm(parent)
+ISOilSphere::StockAdmissionTrain::StockAdmissionTrain(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-	ListViewForm = new ISListViewForm("SelectStockArrival", this);
+	ListViewForm = new ISListViewForm("SelectStockAdmissionTrain", this);
 	GetMainLayout()->addWidget(ListViewForm);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::ArrivalStock::~ArrivalStock()
+ISOilSphere::StockAdmissionTrain::~StockAdmissionTrain()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::ArrivalStock::LoadData()
+void ISOilSphere::StockAdmissionTrain::LoadData()
+{
+	ListViewForm->BindValue(":StockID", GetParentObjectID());
+	ListViewForm->LoadData();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::StockAdmissionImplemetation::StockAdmissionImplemetation(QWidget *parent) : ISInterfaceMetaForm(parent)
+{
+	ListViewForm = new ISListViewForm("SelectStockAdmissionImplementation", this);
+	GetMainLayout()->addWidget(ListViewForm);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::StockAdmissionImplemetation::~StockAdmissionImplemetation()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::StockAdmissionImplemetation::LoadData()
 {
 	ListViewForm->BindValue(":StockID", GetParentObjectID());
 	ListViewForm->LoadData();

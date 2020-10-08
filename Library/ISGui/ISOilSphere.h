@@ -246,14 +246,29 @@ namespace ISOilSphere
 		void CreateOnBased(); //Создать на основании
 	};
 
-	//Форма пополнения склада
-	class ArrivalStock : public ISInterfaceMetaForm
+	//Форма постуления на склад ЖД
+	class StockAdmissionTrain : public ISInterfaceMetaForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE ArrivalStock(QWidget *parent = 0);
-		virtual ~ArrivalStock();
+		Q_INVOKABLE StockAdmissionTrain(QWidget *parent = 0);
+		virtual ~StockAdmissionTrain();
+
+		void LoadData() override;
+
+	private:
+		ISListViewForm *ListViewForm;
+	};
+
+	//Форма поступления на склад с реализации
+	class StockAdmissionImplemetation : public ISInterfaceMetaForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE StockAdmissionImplemetation(QWidget *parent = 0);
+		virtual ~StockAdmissionImplemetation();
 
 		void LoadData() override;
 

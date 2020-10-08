@@ -52,6 +52,14 @@
     AND mwag_datearrival IS NOT NULL
     AND mwag_stock = stock_id
     )
+    +
+    (
+    SELECT COALESCE(sum(iunl_weightnet), 0)
+    FROM implementationunload
+    WHERE NOT iunl_isdeleted
+    AND NOT (SELECT impl_isdeleted FROM implementation WHERE impl_id = iunl_implementation)
+    AND iunl_stock = stock_id
+    )
     -
     (
     SELECT COALESCE(sum(ilod_weightnet), 0)
