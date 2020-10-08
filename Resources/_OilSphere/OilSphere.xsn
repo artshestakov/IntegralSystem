@@ -426,7 +426,7 @@
       <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="BigInt" LabelName="Поставщик" LocalListName="Поставщик" NotNull="true" LayoutName="DateShipping"/>
       <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="DateArrival" SeparatorName="Прибытие"/>
       <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" NotNull="true" LayoutName="DateArrival"/>
-      <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Int" LabelName="Цена" LocalListName="Цена" LayoutName="Price" NotNull="true" SeparatorName="Дополнительная информация"/>
+      <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Money" LabelName="Цена" LocalListName="Цена" LayoutName="Price" NotNull="true" SeparatorName="Дополнительная информация"/>
       <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Double" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" LayoutName="Price" QueryText="SELECT COALESCE(sum(mwdt_kilogram), 0) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id"/>
       <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" NotNull="true" LayoutName="Price"/>
       <Field UID="{C6DFF9F3-C4D4-456C-8EFF-77AB756A360F}" Name="PassportQuality" Type="Bool" DefaultValue="false" LabelName="Паспорт качества" LocalListName="Паспорт качества"/>
