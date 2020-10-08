@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSF Name="Functions.xsf">
 
-  <Function Name="uuid_generate_v4">
+  <Function Name="uuid_generate_v4()">
     CREATE OR REPLACE FUNCTION public.uuid_generate_v4()
     RETURNS uuid AS
     $$
@@ -16,7 +16,7 @@
     COST 100;
   </Function>
 
-  <Function Name="currentuserid">
+  <Function Name="currentuserid()">
     CREATE OR REPLACE FUNCTION public.currentuserid()
     RETURNS bigint AS
     $body$
@@ -31,7 +31,7 @@
     COST 100;
   </Function>
   
-  <Function Name="currentuseroid">
+  <Function Name="currentuseroid()">
     CREATE OR REPLACE FUNCTION public.currentuseroid()
     RETURNS integer AS
     $body$
@@ -46,7 +46,7 @@
     COST 100;
   </Function>
 
-  <Function Name="userphotobyoid">
+  <Function Name="userphotobyoid(oid oid)">
     CREATE OR REPLACE FUNCTION public.userphotobyoid(oid oid)
     RETURNS bytea AS
     $body$
@@ -61,7 +61,7 @@
     COST 100;
   </Function>
 
-  <Function Name="userphotobyid">
+  <Function Name="userphotobyid(id bigint)">
     CREATE OR REPLACE FUNCTION public.userphotobyid(id bigint)
     RETURNS bytea AS
     $body$
@@ -76,9 +76,9 @@
     COST 100;
   </Function>
 
-  <Function Name="tablesize">
-    CREATE OR REPLACE FUNCTION public.tablesize(table_name varchar)
-    RETURNS varchar AS
+  <Function Name="tablesize(table_name character varying)">
+    CREATE OR REPLACE FUNCTION public.tablesize(table_name character varying)
+    RETURNS character varying AS
     $body$
     BEGIN
     RETURN pg_size_pretty(pg_relation_size(table_name));
@@ -91,9 +91,9 @@
     COST 100;
   </Function>
 
-  <Function Name="tablesizefull">
-    CREATE OR REPLACE FUNCTION public.tablesizefull(table_name varchar)
-    RETURNS varchar AS
+  <Function Name="tablesizefull(table_name character varying)">
+    CREATE OR REPLACE FUNCTION public.tablesizefull(table_name character varying)
+    RETURNS character varying AS
     $body$
     BEGIN
     RETURN pg_size_pretty(pg_total_relation_size(table_name));
@@ -106,7 +106,7 @@
     COST 100;
   </Function>
 
-  <Function Name="set_setting_database_active">
+  <Function Name="set_setting_database_active(id bigint)">
     CREATE OR REPLACE FUNCTION public.set_setting_database_active(id bigint)
     RETURNS void AS
     $body$
@@ -125,7 +125,7 @@
     COST 100;
   </Function>
 
-  <Function Name="get_task_status_id_by_uid">
+  <Function Name="get_task_status_id_by_uid(status_uid uuid)">
     CREATE OR REPLACE FUNCTION public.get_task_status_id_by_uid(status_uid uuid)
     RETURNS bigint AS
     $body$
@@ -140,7 +140,7 @@
     COST 100;
   </Function>
 
-  <Function Name="task_vote">
+  <Function Name="task_vote(task_id bigint)">
     CREATE OR REPLACE FUNCTION public.task_vote(task_id bigint)
     RETURNS bigint AS
     $body$

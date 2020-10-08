@@ -18,7 +18,7 @@ static QString QC_FOREIGN = "ALTER TABLE public.%1 "
 							"ON UPDATE NO ACTION "
 							"NOT DEFERRABLE";
 //-----------------------------------------------------------------------------
-static QString QS_FUNCTION = PREPARE_QUERY("SELECT proname AS function_name, proname || '(' || pg_get_function_arguments(p.oid) || ')' AS function_full_name "
+static QString QS_FUNCTION = PREPARE_QUERY("SELECT proname || '(' || pg_get_function_arguments(p.oid) || ')' AS function_name "
 										   "FROM pg_proc p "
 										   "LEFT JOIN pg_namespace n ON p.pronamespace = n.oid "
 										   "WHERE nspname = current_schema() "
@@ -162,7 +162,6 @@ bool CGDatabase::Function_Delete(QString &ErrorString)
 		while (qSelectFunction.Next()) //Обходим функции из БД
 		{
 			QString FunctionName = qSelectFunction.ReadColumn("function_name").toString();
-			QString FunctionFullName = qSelectFunction.ReadColumn("function_full_name").toString();
 
 			//Ищем такую функцию в мета-данных
 			for (PMetaFunction *MetaFunction : ISMetaData::Instance().GetFunctions())
@@ -180,7 +179,7 @@ bool CGDatabase::Function_Delete(QString &ErrorString)
 				{
 					ISQuery qDelete;
 					qDelete.SetShowLongQuery(false);
-					Result = qDelete.Execute("DROP FUNCTION " + FunctionFullName);
+					Result = qDelete.Execute("DROP FUNCTION " + FunctionName);
 					if (!Result)
 					{
 						ErrorString = qDelete.GetErrorString();
@@ -831,7 +830,7 @@ bool CGDatabase::Helper_CommentTable(PMetaTable *MetaTable, QString &ErrorString
 //-----------------------------------------------------------------------------
 bool CGDatabase::Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaField, QString &ErrorString)
 {
-	if (!MetaField->QueryText.isEmpty()) //Если поле является виртуальным - выходим
+	if (!MetaField->QueryText.isEmpty()) //Если поле является виртуальным - выходим с положительным результатом
 	{
 		return true;
 	}
