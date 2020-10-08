@@ -21,6 +21,21 @@ public:
 	PMetaField* GetField(int Index); //ѕолучить мета-поле по его индексу
 	int GetSortColumn() const; //ѕолучить индекс сортировки текущего пол€
 	Qt::SortOrder GetSortOrder() const; //ѕолучить текущий пор€док сортировки
+	
+	template<typename T> T GetFieldSum(const QString &FieldName, T InitValue) //ѕолучить массив значений из пол€ по его имени
+	{
+		return GetFieldSum<T>(GetFieldIndex(FieldName), InitValue);
+	}
+
+	template<typename T> T GetFieldSum(int FieldIndex, T InitValue) //ѕолучить массив значений из пол€ по его индексу
+	{
+		T Result = InitValue;
+		for (int i = 0, c = rowCount(); i < c; ++i)
+		{
+			Result += data(index(i, FieldIndex)).value<T>();
+		}
+		return Result;
+	}
 
 	virtual QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;
 	virtual bool setData(const QModelIndex &ModelIndex, const QVariant &Value, int Role = Qt::EditRole) override;
