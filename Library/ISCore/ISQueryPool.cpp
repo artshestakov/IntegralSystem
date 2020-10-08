@@ -41,10 +41,9 @@ void ISQueryPool::Shutdown()
 		Mutex.lock();
 		IsRunning = false;
 		Mutex.unlock();
-
 		while (!IsFinished)
 		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			ISSleep(100);
 		}
 	}
 }
@@ -90,10 +89,9 @@ void ISQueryPool::StartWorker()
 		}
 		bool is_running = IsRunning;
 		Mutex.unlock();
-
 		if (is_running)
 		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(QUERY_POOL_TIMEOUT));
+			ISSleep(1000);
 		}
 		else
 		{

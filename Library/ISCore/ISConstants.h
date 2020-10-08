@@ -117,7 +117,6 @@ const int		MAX_FILE_SIZE_FIELD = ((1000 * 1024) * 10); //Максимальный размер фай
 const char		COLOR_STANDART[] = "#000000";
 const char		NO_ERROR_STRING[] = "No error.";
 const size_t	WORD_SIZE = 40; //Максимальный размер слова в словаре
-const int		QUERY_POOL_TIMEOUT = 1000; //Таймаут выполнения запросов из очереди
 const size_t	EDIT_BLINK_COUNT = (3) * 2; //Количество миганий поля редактирования. Где 3 - количество миганий.
 const char		UUID_PLACEHOLDER_TEXT[] = "{00000000-0000-0000-0000-000000000000}";
 const size_t	NPOS = std::string::npos;

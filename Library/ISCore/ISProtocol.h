@@ -22,7 +22,7 @@ public:
 	static void RecoveryObject(const QString &TableName, const QString &LocalListName, const QVariant &ObjectID); //Восстановление записи
 	static void DeleteCascadeObject(const QString &TableName, const QString &LocalListName, const QVariant &ObjectID); //Каскадное удаление записи
 
-	static int Insert(bool Thread, const QString &TypeUID, const QString &TableName, const QString &LocalListName, const QVariant &ObjectID, const QString &Information = QString());
+	static void Insert(bool Thread, const QString &TypeUID, const QString &TableName, const QString &LocalListName, const QVariant &ObjectID, const QString &Information = QString());
 };
 //-----------------------------------------------------------------------------
 #endif
