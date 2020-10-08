@@ -1207,6 +1207,7 @@ bool ISMetaData::InitializeXSF(const QString &Content)
 					{
 						PMetaFunction *MetaFunction = new PMetaFunction();
 						MetaFunction->Name = DomNode.attributes().namedItem("Name").nodeValue();
+						MetaFunction->Comment = DomNode.attributes().namedItem("Comment").nodeValue();
 						MetaFunction->Text = DomNode.toElement().text();
 						FunctionsMap.emplace(MetaFunction->Name, MetaFunction);
 					}

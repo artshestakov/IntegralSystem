@@ -145,7 +145,11 @@ bool CGDatabase::Function_Create(PMetaFunction *MetaFunction, QString &ErrorStri
 	ISQuery qCreateFunction;
 	qCreateFunction.SetShowLongQuery(false);
 	bool Result = qCreateFunction.Execute(MetaFunction->Text);
-	if (!Result)
+	if (Result)
+	{
+		Result = Helper_CommentFunction(MetaFunction, ErrorString);
+	}
+	else
 	{
 		ErrorString = qCreateFunction.GetErrorString();
 	}
@@ -854,6 +858,18 @@ bool CGDatabase::Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaFiel
 	ISQuery qComment;
 	qComment.SetShowLongQuery(false);
 	bool Result = qComment.Execute(QString("COMMENT ON COLUMN public.%1.%2 IS '%3'").arg(MetaTable->Name.toLower()).arg(MetaTable->Alias + '_' + MetaField->Name.toLower()).arg(CommentText));
+	if (!Result)
+	{
+		ErrorString = qComment.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGDatabase::Helper_CommentFunction(PMetaFunction *MetaFunction, QString &ErrorString)
+{
+	ISQuery qComment;
+	qComment.SetShowLongQuery(false);
+	bool Result = qComment.Execute(QString("COMMENT ON FUNCTION " + MetaFunction->Name + " IS '" + MetaFunction->Comment + "'"));
 	if (!Result)
 	{
 		ErrorString = qComment.GetErrorString();

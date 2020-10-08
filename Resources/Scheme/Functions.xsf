@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSF Name="Functions.xsf">
 
-  <Function Name="uuid_generate_v4()">
+  <Function Name="uuid_generate_v4()" Comment="Генерация уникального идентификатора">
     CREATE OR REPLACE FUNCTION public.uuid_generate_v4()
     RETURNS uuid AS
     $$
@@ -16,7 +16,7 @@
     COST 100;
   </Function>
 
-  <Function Name="currentuserid()">
+  <Function Name="currentuserid()" Comment="Получить идентификатор текущего пользователя">
     CREATE OR REPLACE FUNCTION public.currentuserid()
     RETURNS bigint AS
     $body$
@@ -31,7 +31,7 @@
     COST 100;
   </Function>
   
-  <Function Name="currentuseroid()">
+  <Function Name="currentuseroid()" Comment="Получить системный идентификатор текущего пользователя">
     CREATE OR REPLACE FUNCTION public.currentuseroid()
     RETURNS integer AS
     $body$
@@ -46,7 +46,7 @@
     COST 100;
   </Function>
 
-  <Function Name="userphotobyoid(oid oid)">
+  <Function Name="userphotobyoid(oid oid)" Comment="Получить аватар пользователя по его системному идентификатору">
     CREATE OR REPLACE FUNCTION public.userphotobyoid(oid oid)
     RETURNS bytea AS
     $body$
@@ -61,7 +61,7 @@
     COST 100;
   </Function>
 
-  <Function Name="userphotobyid(id bigint)">
+  <Function Name="userphotobyid(id bigint)" Comment="Получить аватар пользователя по его идентификатору">
     CREATE OR REPLACE FUNCTION public.userphotobyid(id bigint)
     RETURNS bytea AS
     $body$
@@ -76,7 +76,7 @@
     COST 100;
   </Function>
 
-  <Function Name="tablesize(table_name character varying)">
+  <Function Name="tablesize(table_name character varying)" Comment="Получить раззмер таблицы по её имени">
     CREATE OR REPLACE FUNCTION public.tablesize(table_name character varying)
     RETURNS character varying AS
     $body$
@@ -91,7 +91,7 @@
     COST 100;
   </Function>
 
-  <Function Name="tablesizefull(table_name character varying)">
+  <Function Name="tablesizefull(table_name character varying)" Comment="Получить полный размер таблицы по её имени">
     CREATE OR REPLACE FUNCTION public.tablesizefull(table_name character varying)
     RETURNS character varying AS
     $body$
@@ -106,7 +106,7 @@
     COST 100;
   </Function>
 
-  <Function Name="set_setting_database_active(id bigint)">
+  <Function Name="set_setting_database_active(id bigint)" Comment="Установить активный профиль настроек БД">
     CREATE OR REPLACE FUNCTION public.set_setting_database_active(id bigint)
     RETURNS void AS
     $body$
@@ -125,7 +125,7 @@
     COST 100;
   </Function>
 
-  <Function Name="get_task_status_id_by_uid(status_uid uuid)">
+  <Function Name="get_task_status_id_by_uid(status_uid uuid)" Comment="Получить идентификатор статуса задачи по его уникальному идентификатору">
     CREATE OR REPLACE FUNCTION public.get_task_status_id_by_uid(status_uid uuid)
     RETURNS bigint AS
     $body$
@@ -140,7 +140,7 @@
     COST 100;
   </Function>
 
-  <Function Name="task_vote(task_id bigint)">
+  <Function Name="task_vote(task_id bigint)" Comment="Проголосовать за задачу">
     CREATE OR REPLACE FUNCTION public.task_vote(task_id bigint)
     RETURNS bigint AS
     $body$

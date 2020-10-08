@@ -216,6 +216,7 @@ struct PMetaFunction : public PMetaBase
 	PMetaFunction() : PMetaBase("Function") { }
 
 	QString Name; //Имя функции
+	QString Comment; //Комментарий функции
 	QString Text; //Текст функции
 };
 //-----------------------------------------------------------------------------
