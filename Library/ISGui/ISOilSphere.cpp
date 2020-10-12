@@ -303,7 +303,7 @@ void ISOilSphere::CounterpartyDebtForm::UpdatedLists()
 	{
 		MoveWagonSum += SqlQueryModel->data(SqlQueryModel->index(i, 3)).toDouble();
 	}
-	LabelTotal->setText(LANG("OilSphere.Debts.Label").arg(DOUBLE_PREPARE(TotalLoad)).arg(DOUBLE_PREPARE(TotalUnload)).arg(DOUBLE_PREPARE(TotalEntrollment)).arg(DOUBLE_PREPARE(MoveWagonSum)).arg(DOUBLE_PREPARE(TotalLoad - TotalUnload - TotalEntrollment - MoveWagonSum)));
+	LabelTotal->setText(LANG("OilSphere.Debts.Label").arg(DOUBLE_PREPARE(TotalLoad)).arg(DOUBLE_PREPARE(TotalUnload)).arg(DOUBLE_PREPARE(TotalEntrollment)).arg(DOUBLE_PREPARE(MoveWagonSum)).arg(DOUBLE_PREPARE(TotalUnload - (TotalLoad + TotalEntrollment + MoveWagonSum))));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyDebtForm::ShowImplementation()

@@ -125,6 +125,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{3B
 		Resources\Licenses\IntegralSystem.txt = Resources\Licenses\IntegralSystem.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{07985F92-BD9B-4E1B-8F51-23562DF5C543}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\SQL\SelectCounterpartyMoveWagon.sql = Resources\SQL\SelectCounterpartyMoveWagon.sql
+		Resources\SQL\SelectStockAdmissionImplementation.sql = Resources\SQL\SelectStockAdmissionImplementation.sql
+		Resources\SQL\SelectStockAdmissionTrain.sql = Resources\SQL\SelectStockAdmissionTrain.sql
+		Resources\SQL\SelectStockWriteOff.sql = Resources\SQL\SelectStockWriteOff.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -189,9 +197,10 @@ Global
 		{DF96E239-1BB5-402B-B4F4-BF01D4A168BF} = {04D21698-EEDE-414A-9D4F-62C37E85A4A5}
 		{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36} = {04D21698-EEDE-414A-9D4F-62C37E85A4A5}
 		{3BE791E4-23C3-4D11-A390-9964ED39A461} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
+		{07985F92-BD9B-4E1B-8F51-23562DF5C543} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal
