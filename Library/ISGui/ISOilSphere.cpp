@@ -898,11 +898,24 @@ ISOilSphere::DriverCostListForm::DriverCostListForm(QWidget *parent) : ISListBas
 	QAction *ActionCreateInBased = new QAction(BUFFER_ICONS("Add.Green"), LANG("OilSphere.CreateInBased"), GetToolBar());
 	connect(ActionCreateInBased, &QAction::triggered, this, &ISOilSphere::DriverCostListForm::CreateOnBased);
 	InsertAction(ActionCreateInBased, GetAction(ISNamespace::AT_Create), true, true);
+
+	LabelTotal = new QLabel(GetStatusBar());
+	ISGui::SetFontWidgetBold(LabelTotal, true);
+	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::DriverCostListForm::~DriverCostListForm()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::DriverCostListForm::LoadDataAfterEvent()
+{
+	ISListBaseForm::LoadDataAfterEvent();
+	LabelTotal->setText(LANG("OilSphere.DriverCost.Total")
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Coming", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Consumption", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Remainder", 0.0))));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::DriverCostListForm::CreateOnBased()

@@ -267,8 +267,14 @@ namespace ISOilSphere
 		Q_INVOKABLE DriverCostListForm(QWidget *parent = 0);
 		virtual ~DriverCostListForm();
 
+	protected:
+		void LoadDataAfterEvent() override;
+
 	private:
 		void CreateOnBased(); //Создать на основании
+
+	private:
+		QLabel *LabelTotal;
 	};
 
 	//Форма постуления на склад ЖД
