@@ -12,6 +12,7 @@
 #include "ISGui.h"
 #include "ISMetaUser.h"
 #include "ISVersion.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
@@ -271,7 +272,6 @@ void ISAuthForm::ConnectedDone()
 		CheckRememberUser->GetValue().toBool() ?
 			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, EditLogin->GetValue()) :
 			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, QString());
-
 		hide();
 		SetResult(true);
 		ISMetaUser::Instance().UserData.Login = EditLogin->GetValue().toString();
@@ -367,19 +367,20 @@ bool ISAuthForm::CheckUpdate()
 {
 	QString UpdateDir = CONFIG_STRING(CONST_CONFIG_CONNECTION_UPDATE_DIR);
 	bool result = !UpdateDir.isEmpty();
-	if (result)
+	if (result) //Если путь к папке не пустой - прроверяем обновления
 	{
+		//Получаем список файлов в папке и обходим каждый из них
 		QFileInfoList FileInfoList = QDir(UpdateDir).entryInfoList(QStringList() << "*.exe", QDir::Files, QDir::Name);
 		for (const QFileInfo &FileInfo : FileInfoList)
 		{
-			QString FileName = FileInfo.fileName();
-			QStringList StringList = FileName.split(SYMBOL_POINT);
+			QStringList StringList = FileInfo.fileName().split(SYMBOL_POINT);
 			result = StringList.size() == 4;
 			if (result)
 			{
 				result = StringList[2].toInt() > ISVersion::Instance().Info.Revision;
 				if (result)
 				{
+					ISLOGGER_I(QString("Founded update. This version: %1. Update file: %2").arg(ISVersion::Instance().ToString()).arg(FileInfo.fileName()));
 					ISMessageBox::ShowInformation(this, LANG("Message.Information.FoundNewAppVersion"));
 					QString FilePath = FileInfo.filePath();
 					result = QProcess::startDetached(FilePath, QStringList() << "/SILENT" << "/NOCANCEL" << "/NORESTART");

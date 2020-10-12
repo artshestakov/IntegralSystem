@@ -17,7 +17,6 @@
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
 #include "ISBuffer.h"
-#include "ISRegisterMetaType.h"
 #include "ISVersion.h"
 #include "ISQuery.h"
 #include "ISQueryPool.h"
@@ -29,6 +28,27 @@
 #include "ISInputDialog.h"
 #include "ISFavoritesForm.h"
 #include "ISHistoryForm.h"
+#include "ISUserListForm.h"
+#include "ISProtocolObjectListForm.h"
+#include "ISDiscussionListForm.h"
+#include "ISStorageFilesListForm.h"
+#include "ISCalendarObjectForm.h"
+#include "ISDesktopForm.h"
+#include "ISWorkspaceForm.h"
+#include "ISCalendarForm.h"
+#include "ISTaskForm.h"
+#include "ISProtocolListForm.h"
+#include "ISInternalDirectoriesForm.h"
+#include "ISUserGroupListForm.h"
+#include "ISMonitorActivityForm.h"
+#include "ISFullTextSearchForm.h"
+#include "ISKnowledgeBaseSubSystem.h"
+#include "ISSettingsDatabaseListForm.h"
+#include "ISTaskObjectForm.h"
+#include "ISDelegates.h"
+#include "ISFieldEdits.h"
+#include "ISComboSearchWidgets.h"
+#include "ISSettingFieldWidgets.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
@@ -92,15 +112,13 @@ bool ISGui::Startup(QString &ErrorString)
 		return Result;
 	}
 
-	ISRegisterMetaType::RegisterMetaType();
-	
+	RegisterMetaType();
 	qApp->setStyleSheet(BUFFER_STYLE_SHEET("QToolTip"));
 	qApp->setWindowIcon(BUFFER_ICONS("Logo"));
 	qApp->setApplicationName("IntegralSystem");
 	qApp->setApplicationVersion(ISVersion::Instance().ToString());
 	qApp->setFont(ISDefines::Gui::FONT_APPLICATION);
 	QToolTip::setFont(ISDefines::Gui::FONT_APPLICATION);
-
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -651,5 +669,86 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
 		FieldEditBase = CreateFieldEditBase(ParentWidget, MetaField, DataType, Temp);
 	}
 	return FieldEditBase;
+}
+//-----------------------------------------------------------------------------
+void ISGui::RegisterMetaType()
+{
+	qRegisterMetaType<std::vector<QSqlRecord>>("std::vector<QSqlRecord>");
+	qRegisterMetaType<std::vector<QString>>("std::vector<QString>");
+	qRegisterMetaType<QSqlError>("QSqlError");
+	qRegisterMetaType<ISUuid>("ISUuid");
+
+	qRegisterMetaType<ISUserListForm*>("ISUserListForm");
+	qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");
+	qRegisterMetaType<ISProtocolObjectListForm*>("ISProtocolObjectListForm");
+	qRegisterMetaType<ISDiscussionListForm*>("ISDiscussionListForm");
+	qRegisterMetaType<ISStorageFilesListForm*>("ISStorageFilesListForm");
+	qRegisterMetaType<ISCalendarObjectForm*>("ISCalendarObjectForm");
+	qRegisterMetaType<ISDesktopForm*>("ISDesktopForm");
+	qRegisterMetaType<ISWorkspaceForm*>("ISWorkspaceForm");
+	qRegisterMetaType<ISCalendarForm*>("ISCalendarForm");
+	qRegisterMetaType<ISTaskForm*>("ISTaskForm");
+	qRegisterMetaType<ISProtocolListForm*>("ISProtocolListForm");
+	qRegisterMetaType<ISInternalDirectoriesForm*>("ISInternalDirectoriesForm");
+	qRegisterMetaType<ISUserGroupListForm*>("ISUserGroupListForm");
+	qRegisterMetaType<ISMonitorActivityForm*>("ISMonitorActivityForm");
+	qRegisterMetaType<ISFullTextSearchForm*>("ISFullTextSearchForm");
+	qRegisterMetaType<ISKnowledgeBaseSubSystem*>("ISKnowledgeBaseSubSystem");
+	qRegisterMetaType<ISSettingsDatabaseListForm*>("ISSettingsDatabaseListForm");
+	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
+
+	qRegisterMetaType<ISDelegateBoolean*>("ISDelegateBoolean");
+	qRegisterMetaType<ISDelegateImage*>("ISDelegateImage");
+	qRegisterMetaType<ISDelegateColor*>("ISDelegateColor");
+
+	qRegisterMetaType<ISLineEdit*>("ISLineEdit");
+	qRegisterMetaType<ISCheckEdit*>("ISCheckEdit");
+	qRegisterMetaType<ISIntegerEdit*>("ISIntegerEdit");
+	qRegisterMetaType<ISDoubleEdit*>("ISDoubleEdit");
+	qRegisterMetaType<ISMoneyEdit*>("ISMoneyEdit");
+	qRegisterMetaType<ISTextEdit*>("ISTextEdit");
+	qRegisterMetaType<ISUuidEdit*>("ISUuidEdit");
+	qRegisterMetaType<ISDateTimeEdit*>("ISDateTimeEdit");
+	qRegisterMetaType<ISDateEdit*>("ISDateEdit");
+	qRegisterMetaType<ISTimeEdit*>("ISTimeEdit");
+	qRegisterMetaType<ISImageEdit*>("ISImageEdit");
+	qRegisterMetaType<ISListEdit*>("ISListEdit");
+	qRegisterMetaType<ISPathEditFile*>("ISPathEditFile");
+	qRegisterMetaType<ISPathEditDir*>("ISPathEditDir");
+	qRegisterMetaType<ISPasswordEdit*>("ISPasswordEdit");
+	qRegisterMetaType<ISColorEdit*>("ISColorEdit");
+	qRegisterMetaType<ISPathEditDir*>("ISPathEditDir");
+	qRegisterMetaType<ISWeekDayEdit*>("ISWeekDayEdit");
+	qRegisterMetaType<ISINNEdit*>("ISINNEdit");
+	qRegisterMetaType<ISOKPOEdit*>("ISOKPOEdit");
+	qRegisterMetaType<ISKPPEdit*>("ISKPPEdit");
+	qRegisterMetaType<ISVINEdit*>("ISVINEdit");
+	qRegisterMetaType<ISOGRNEdit*>("ISOGRNEdit");
+	qRegisterMetaType<ISYearEdit*>("ISYearEdit");
+	qRegisterMetaType<ISComboTimeEdit*>("ISComboTimeEdit");
+	qRegisterMetaType<ISPhoneEdit*>("ISPhoneEdit");
+	qRegisterMetaType<ISBIKEdit*>("ISBIKEdit");
+	qRegisterMetaType<ISEMailEdit*>("ISEMailEdit");
+	qRegisterMetaType<ISDivisionCodeEdit*>("ISDivisionCodeEdit");
+	qRegisterMetaType<ISVolumeEdit*>("ISVolumeEdit");
+	qRegisterMetaType<ISBirthdayEdit*>("ISBirthdayEdit");
+	qRegisterMetaType<ISMonthEdit*>("ISMonthEdit");
+	qRegisterMetaType<ISTaskPriorityEdit*>("ISTaskPriorityEdit");
+	qRegisterMetaType<ISTaskImportantEdit*>("ISTaskImportantEdit");
+	qRegisterMetaType<ISTaskDescriptionEdit*>("ISTaskDescriptionEdit");
+	qRegisterMetaType<ISTaskExecutorEdit*>("ISTaskExecutorEdit");
+	qRegisterMetaType<ISUrlEdit*>("ISUrlEdit");
+	qRegisterMetaType<ISFileEdit*>("ISFileEdit");
+	qRegisterMetaType<ISSexEdit*>("ISSexEdit");
+
+	qRegisterMetaType<ISComboSearchBase*>("ISComboSearchBase");
+	qRegisterMetaType<ISComboSearchString*>("ISComboSearchString");
+	qRegisterMetaType<ISComboSearchNumber*>("ISComboSearchNumber");
+
+	qRegisterMetaType<ISComboTableDoubleClickEvent*>("ISComboTableDoubleClickEvent");
+	qRegisterMetaType<ISComboCalendarNoteType*>("ISComboCalendarNoteType");
+	qRegisterMetaType<ISComboStartedParagraph*>("ISComboStartedParagraph");
+	qRegisterMetaType<ISComboTabBarSelectionBehavior*>("ISComboTabBarSelectionBehavior");
+	qRegisterMetaType<ISCheckViewParagraph*>("ISCheckViewParagraph");
 }
 //-----------------------------------------------------------------------------

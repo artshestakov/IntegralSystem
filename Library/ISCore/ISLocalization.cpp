@@ -5,6 +5,7 @@
 #include "ISAssert.h"
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 	: ErrorString(NO_ERROR_STRING)
@@ -70,6 +71,7 @@ bool ISLocalization::LoadTraslatorQT()
 //-----------------------------------------------------------------------------
 bool ISLocalization::LoadResourceFile(const QString &FileName)
 {
+	ISLOGGER_I("Initialize file: " + FileName);
 	QFile File(":Localization/" + FileName + SYMBOL_POINT + EXTENSION_LANG);
 	bool Result = File.open(QIODevice::ReadOnly);
 	if (Result) //Если файл локализации успешно открыт
@@ -80,6 +82,7 @@ bool ISLocalization::LoadResourceFile(const QString &FileName)
 	else //Не удалось открыть файл локализации
 	{
 		ErrorString = QString("not open localization file \"%1\". Error: %2.").arg(File.fileName()).arg(File.errorString());
+		ISLOGGER_E(ErrorString);
 	}
 	return Result;
 }

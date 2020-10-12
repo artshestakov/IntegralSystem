@@ -264,7 +264,6 @@
     <ClCompile Include="ISProtocolListForm.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
     <ClCompile Include="ISRecordInfoForm.cpp" />
-    <ClCompile Include="ISRegisterMetaType.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSearchModel.cpp" />
@@ -465,7 +464,6 @@
     <ClInclude Include="ISPassword.h" />
     <ClInclude Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
-    <ClInclude Include="ISRegisterMetaType.h" />
     <ClInclude Include="ISSortingBuffer.h" />
     <ClInclude Include="ISStartup.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
