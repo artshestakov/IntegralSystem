@@ -136,6 +136,22 @@ namespace ISOilSphere
 		void Calculate();
 	};
 
+	//Форма списка ведомости АЗС
+	class GasStationStatementListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE GasStationStatementListForm(QWidget *parent = 0);
+		virtual ~GasStationStatementListForm();
+
+	protected:
+		void LoadDataAfterEvent() override;
+
+	private:
+		QLabel *LabelTotal;
+	};
+
 	//Форма объекта ведомости АЗС
 	class GasStationStatementObjectForm : public ISObjectFormBase
 	{

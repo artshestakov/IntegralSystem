@@ -73,6 +73,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::ImplementationListForm*>("ISOilSphere::ImplementationListForm");
 	qRegisterMetaType<ISOilSphere::ImplementationLoadObjectForm*>("ISOilSphere::ImplementationLoadObjectForm");
 	qRegisterMetaType<ISOilSphere::ImplementationUnloadObjectForm*>("ISOilSphere::ImplementationUnloadObjectForm");
+	qRegisterMetaType<ISOilSphere::GasStationStatementListForm*>("ISOilSphere::GasStationStatementListForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet1ObjectForm*>("ISOilSphere::Debet1ObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet2ObjectForm*>("ISOilSphere::Debet2ObjectForm");
@@ -548,6 +549,48 @@ void ISOilSphere::ImplementationUnloadObjectForm::Calculate()
 
 	//Стоимость загрузки
 	SetFieldValue("Cost", WeightNet * PriceUnit);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::GasStationStatementListForm::GasStationStatementListForm(QWidget *parent) : ISListBaseForm("GasStationStatement", parent)
+{
+	LabelTotal = new QLabel(GetStatusBar());
+	ISGui::SetFontWidgetBold(LabelTotal, true);
+	GetStatusBar()->addWidget(LabelTotal);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::GasStationStatementListForm::~GasStationStatementListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::GasStationStatementListForm::LoadDataAfterEvent()
+{
+	ISListBaseForm::LoadDataAfterEvent();
+	LabelTotal->setText(LANG("OilSphere.GasStationStatement.Total")
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("BalanceBeginChange", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("VolumeIncome", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("VolumeHolidaysCounters", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("TechnicalStraitDeviation", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("BalanceEndChange", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("SalesAmount", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("KKMCash", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("KKMCashless", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("Statements", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("PaySoldVolume", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("PresenceDebt", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxBalancePayment", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxBalanceActually", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxDiscrepancies", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxKKMCash", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxTotalPayment", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxTotalActually", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxDiscrepanciesTotals", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxKKMTotal", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxCollectionAmount", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxCollectionAmountKKM", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxAdministrativeExpenses", 0.0))));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
