@@ -34,8 +34,14 @@ namespace ISOilSphere
 		Q_INVOKABLE CounterpartyListForm(QWidget *parent = 0);
 		virtual ~CounterpartyListForm();
 
+	protected:
+		void LoadDataAfterEvent() override;
+
 	private:
 		void ShowDebt();
+
+	private:
+		QLabel *LabelTotal;
 	};
 
 	//Форма долгов контрагента
@@ -52,7 +58,6 @@ namespace ISOilSphere
 
 	private:
 		void UpdatedLists(); //Событие обновления списков
-		void MoveWagonUpdated();
 		void ShowImplementation();
 		void ShowLoadUnload();
 

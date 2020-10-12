@@ -121,11 +121,20 @@ ISOilSphere::CounterpartyListForm::CounterpartyListForm(QWidget *parent) : ISLis
 	QAction *ActionDebt = new QAction(ISObjects::Instance().GetInterface()->GetIcon("Debt"), LANG("OilSphere.Debts"), this);
 	connect(ActionDebt, &QAction::triggered, this, &ISOilSphere::CounterpartyListForm::ShowDebt);
 	AddAction(ActionDebt, true, true);
+
+	LabelTotal = new QLabel(GetStatusBar());
+	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::CounterpartyListForm::~CounterpartyListForm()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::CounterpartyListForm::LoadDataAfterEvent()
+{
+	ISListBaseForm::LoadDataAfterEvent();
+	LabelTotal->setText(LANG("OilSphere.Counterparty.Total").arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("Debt", 0.0))));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyListForm::ShowDebt()
