@@ -94,4 +94,22 @@
     COST 100;
   </Function>
 
+  <Function Name="get_sum_weight_move_wagon_detail(movewagon_id bigint)" Comment="Получить массу всех вагонов">
+    CREATE OR REPLACE FUNCTION public.get_sum_weight_move_wagon_detail(movewagon_id bigint)
+    RETURNS numeric AS
+    $body$
+    BEGIN
+    RETURN COALESCE(sum(mwdt_kilogram), 0)
+    FROM movewagondetail
+    WHERE NOT mwdt_isdeleted
+    AND mwdt_movewagon = movewagon_id;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
 </XSF>

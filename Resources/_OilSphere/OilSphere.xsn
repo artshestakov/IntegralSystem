@@ -4,7 +4,7 @@
   <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphere::CounterpartyObjectForm">
     <Fields>
       <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{8DD37BEA-8600-4300-8C34-38659E010F3D}" Name="Debt" Type="Double" ReadOnly="true" LabelName="Долг" LocalListName="Долг" QueryText="SELECT get_counterparty_unload(cnpr_id) - get_counterparty_entrollment(cnpr_id)"/>
+      <Field UID="{8DD37BEA-8600-4300-8C34-38659E010F3D}" Name="Debt" Type="Double" ReadOnly="true" LabelName="Долг" LocalListName="Долг" QueryText="get_counterparty_unload(cnpr_id) - get_counterparty_entrollment(cnpr_id)"/>
       <Field UID="{3B7EB4F8-CFEB-40C8-99E9-22150ED555B9}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
       <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="BigInt" LabelName="Тип" LocalListName="Тип"/>
       <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>
@@ -400,7 +400,7 @@
   <Table Name="Stock" UID="{49AA23FB-4679-4349-95FA-DB1933ED65BE}" Alias="stck" LocalName="Склад" LocalListName="Склады" TitleName="Name">
     <Fields>
       <Field UID="{E256950B-F90C-4643-9493-ADFEB2349918}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{C2F49C31-8DAA-4A30-80F3-BE0CC9DF4730}" Name="Balance" Type="Double" ReadOnly="true" LabelName="Баланс" LocalListName="Баланс" QueryText="SELECT get_stock_balance(stck_id)"/>
+      <Field UID="{C2F49C31-8DAA-4A30-80F3-BE0CC9DF4730}" Name="Balance" Type="Double" ReadOnly="true" LabelName="Баланс" LocalListName="Баланс" QueryText="get_stock_balance(stck_id)"/>
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
@@ -423,24 +423,33 @@
 
   <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
     <Fields>
-      <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" NotNull="true" LayoutName="DateShipping" SeparatorName="Отгрузка"/>
-      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="BigInt" LabelName="Поставщик" LocalListName="Поставщик" NotNull="true" LayoutName="DateShipping"/>
-      <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия" LayoutName="DateArrival" SeparatorName="Прибытие"/>
-      <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" NotNull="true" LayoutName="DateArrival"/>
-      <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Money" LabelName="Цена" LocalListName="Цена" LayoutName="Price" NotNull="true" SeparatorName="Дополнительная информация"/>
-      <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Double" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" LayoutName="Price" QueryText="SELECT COALESCE(sum(mwdt_kilogram), 0) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id"/>
-      <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" NotNull="true" LayoutName="Price"/>
+      <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" NotNull="true"/>
+      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="BigInt" LabelName="Поставщик" LocalListName="Поставщик" NotNull="true"/>
+      <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" NotNull="true"/>
       <Field UID="{C6DFF9F3-C4D4-456C-8EFF-77AB756A360F}" Name="PassportQuality" Type="Bool" DefaultValue="false" LabelName="Паспорт качества" LocalListName="Паспорт качества"/>
+      <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Double" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" QueryText="get_sum_weight_move_wagon_detail(mwag_id)"/>
+      <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Money" LabelName="Цена" LocalListName="Цена" NotNull="true"/>
+      <Field UID="{85E2A21B-337C-42DC-B82D-94A45349C65C}" Name="Sum" Type="Money" ReadOnly="true" LabelName="Сумма, руб." LocalListName="Сумма, руб." QueryText="mwag_price * (get_sum_weight_move_wagon_detail(mwag_id) / 1000)"/>
+      <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" NotNull="true"/>
+      <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия"/>
+      <Field UID="{923EBDB0-819F-4D98-94C7-DEA903697850}" Name="TechnicalLosses" Type="Double" LabelName="Технические потери, %" LocalListName="Технические потери, %"/>
+      <Field UID="{C29C2DB1-840B-4D04-9A5D-0B7D57873B2E}" Name="StorageServices" Type="Money" LabelName="Услуги хранения, руб." LocalListName="Услуги хранения, руб."/>
+      <Field UID="{E25CC337-B559-401D-9827-6C578A0D642F}" Name="Transshipment" Type="Money" LabelName="Перевалка" LocalListName="Перевалка"/>
+      <Field UID="{1091D114-97FE-477C-9DD9-B8F099B4ED50}" Name="TechnicalLossesWeight" Type="Double" LabelName="Масса с учётом технических потерь" LocalListName="Масса с учётом технических потерь" QueryText="-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))"/>
+      <Field UID="{C938C8AE-946F-4577-A742-4464FF505287}" Name="PriceFull" Type="Money" LabelName="Цена с учётом хранения, подачи и уборки" LocalListName="Цена с учётом хранения, подачи и уборки" QueryText="mwag_price + mwag_storageservices + mwag_transshipment"/>
+      <Field UID="{5EE18C72-5ACB-4026-84B9-BE20252A9B00}" Name="TotalCost" Type="Money" LabelName="Итоговая стоимость" LocalListName="Итоговая стоимость" QueryText="(-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))) / 1000 * (mwag_price + mwag_storageservices + mwag_transshipment)"/>
       <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
       <Index Field="DateShipping"/>
       <Index Field="Provider"/>
-      <Index Field="DateArrival"/>
-      <Index Field="Stock"/>
-      <Index Field="Price"/>
       <Index Field="Waybill"/>
       <Index Field="PassportQuality"/>
+      <Index Field="Price"/>
+      <Index Field="Stock"/>
+      <Index Field="DateArrival"/>
+      <Index Field="TechnicalLosses"/>
+      <Index Field="StorageServices"/>
       <Index Field="Note"/>
     </Indexes>
     <Foreigns>
@@ -478,7 +487,7 @@
       <Field UID="{3A7ED027-84D2-4AA8-8AE1-143B29492290}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
       <Field UID="{27CC10AC-B714-4A1D-83AA-D1BAB73DA04D}" Name="PreviousRemainder" Type="Money" ReadOnly="true" LabelName="Остаток с предыдущей смены" LocalListName="Остаток с предыдущей смены" LayoutName="Coming"/>
       <Field UID="{1F704D75-C3CE-414B-ACC1-334499E99423}" Name="Consumption" Type="Money" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Consumption" QueryText="SELECT COALESCE(sum(dcdt_price), 0) FROM drivercostdetail WHERE NOT dcdt_isdeleted AND dcdt_drivercost = drcs_id"/>
-      <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Money" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="SELECT get_driver_cost_remainder(drcs_id, drcs_coming, drcs_previousremainder)"/>
+      <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Money" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="get_driver_cost_remainder(drcs_id, drcs_coming, drcs_previousremainder)"/>
       <Field UID="{2CA5BCCF-A93B-42AD-82B9-BE5FEDAA8B44}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
