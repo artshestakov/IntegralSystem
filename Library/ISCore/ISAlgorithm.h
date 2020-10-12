@@ -11,7 +11,14 @@ if (POINTER) \
 	delete(POINTER); \
 	POINTER = nullptr; \
 }
+
+//ќбработка дробного значени€
 #define DOUBLE_PREPARE(d) QString::number(d, 'f', SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))
+
+//ќбработка денежного значени€ (кол-во знаков после зап€той должно быть 2)
+#define DOUBLE_PREPAREM(d) QString::number(d, 'f', 2)
+
+//«аснуть на Msec миллисекунд
 #define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
 //-----------------------------------------------------------------------------
 #ifdef WIN32

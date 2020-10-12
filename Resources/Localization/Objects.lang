@@ -18,6 +18,7 @@
   <Local Name="OilSphere.Counterparty.Total" Russian="Долг: %1"/>
   <Local Name="OilSphere.Counterparty.Enrollments" Russian="Начисления"/>
   <Local Name="OilSphere.Counterparty.MoveWagon" Russian="Движения вагонов"/>
+  <Local Name="OilSphere.MoveWagon.Total" Russian="Общая масса: %1 Цена: %2 Сумма: %3 Технические потери: %4 Услуги хранения: %5 Перевалка: %6&#10;Масса с учётом технических потерь: %7 Цена с учётом хранения, подачи и уборки: %8 Итоговая стоимость: %9"/>
   <Local Name="OilSphere.FillInBased" Russian="Заполнить на основании"/>
   <Local Name="OilSphere.CreateInBased" Russian="Создать на основании"/>
   <Local Name="OilSphere.Message.Question.CreateCurrentConstant" Russian="Константа за текущий период не обнаружена, создать её сейчас?"/>

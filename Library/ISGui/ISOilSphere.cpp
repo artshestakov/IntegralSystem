@@ -84,6 +84,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::StockAdmissionTrain*>("ISOilSphere::StockAdmissionTrain");
 	qRegisterMetaType<ISOilSphere::StockAdmissionImplemetation*>("ISOilSphere::StockAdmissionImplemetation");
 	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
+	qRegisterMetaType<ISOilSphere::MoveWagonListForm*>("ISOilSphere::MoveWagonListForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -123,6 +124,7 @@ ISOilSphere::CounterpartyListForm::CounterpartyListForm(QWidget *parent) : ISLis
 	AddAction(ActionDebt, true, true);
 
 	LabelTotal = new QLabel(GetStatusBar());
+	ISGui::SetFontWidgetBold(LabelTotal, true);
 	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
@@ -134,7 +136,7 @@ ISOilSphere::CounterpartyListForm::~CounterpartyListForm()
 void ISOilSphere::CounterpartyListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
-	LabelTotal->setText(LANG("OilSphere.Counterparty.Total").arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("Debt", 0.0))));
+	LabelTotal->setText(LANG("OilSphere.Counterparty.Total").arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Debt", 0.0))));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyListForm::ShowDebt()
@@ -350,6 +352,7 @@ void ISOilSphere::CounterpartyObjectForm::SearchFinished(const ISDaDataOrganizat
 ISOilSphere::ImplementationListForm::ImplementationListForm(QWidget *parent) : ISListBaseForm("Implementation", parent)
 {
 	LabelTotal = new QLabel(GetStatusBar());
+	ISGui::SetFontWidgetBold(LabelTotal, true);
 	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
@@ -366,8 +369,8 @@ void ISOilSphere::ImplementationListForm::LoadDataAfterEvent()
 		.arg(GetSqlModel()->GetFieldSum<int>("UnloadCount", 0))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("LoadWeightNet", 0.0)))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("UnloadWeightNet", 0.0)))
-		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("LoadCost", 0.0)))
-		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("UnloadCost", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("LoadCost", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("UnloadCost", 0.0)))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("WeightDifference", 0.0))));
 }
 //-----------------------------------------------------------------------------
@@ -977,5 +980,34 @@ void ISOilSphere::StockWriteOff::LoadData()
 {
 	ListViewForm->BindValue(":StockID", GetParentObjectID());
 	ListViewForm->LoadData();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::MoveWagonListForm::MoveWagonListForm(QWidget *parent) : ISListBaseForm("MoveWagon", parent)
+{
+	LabelTotal = new QLabel(GetStatusBar());
+	ISGui::SetFontWidgetBold(LabelTotal, true);
+	GetStatusBar()->addWidget(LabelTotal);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::MoveWagonListForm::~MoveWagonListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::MoveWagonListForm::LoadDataAfterEvent()
+{
+	ISListBaseForm::LoadDataAfterEvent();
+	LabelTotal->setText(LANG("OilSphere.MoveWagon.Total")
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("Kilogram", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Price", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Sum", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("TechnicalLosses", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("StorageServices", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Transshipment", 0.0)))
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("TechnicalLossesWeight", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("PriceFull", 0.0)))
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("TotalCost", 0.0))));
 }
 //-----------------------------------------------------------------------------

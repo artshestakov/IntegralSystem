@@ -315,6 +315,22 @@ namespace ISOilSphere
 	private:
 		ISListViewForm *ListViewForm;
 	};
+
+	//Форма списка движения вагонов
+	class MoveWagonListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE MoveWagonListForm(QWidget *parent = 0);
+		virtual ~MoveWagonListForm();
+
+	protected:
+		void LoadDataAfterEvent() override;
+
+	private:
+		QLabel *LabelTotal;
+	};
 }
 //-----------------------------------------------------------------------------
 #endif
