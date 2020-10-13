@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LANG Name="Carat">
+  
+  <!--System user-->
+  <Local Name="Carat.Error.ParseQuery" Russian="Ошибка парсинга запроса: %1"/>
+  <Local Name="Carat.Error.AlreadyAuth" Russian="Вы уже авторизованы в системе!"/>
+  <Local Name="Carat.Error.NotAuth" Russian="Вы не авторизованы в системе!"/>
+  
+</LANG>

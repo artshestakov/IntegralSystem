@@ -73,115 +73,64 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	return;
 
 	QByteArray Buffer;
-	long Size = 0;
+	
 
-	while (true) //Ждём пока не придёт запрос
-	{
-		ISSleep(50);
-		ISSystem::ProcessEvents();
-		//if (IsDisconnected) //Если сокет отключился - выходим из функции
-		{
-			//return;
-		}
-
-		if (TcpSocket->bytesAvailable() > 0) //Если есть данные, которые можно прочитать
-		{
-			Buffer.append(TcpSocket->readAll()); //Читаем данные
-			if (!Size) //Размеры ещё не известны - вытаскиваем их
-			{
-				Size = ISTcp::GetQuerySizeFromBuffer(Buffer);
-				if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отключаем клиента
-				{
-					ISLOGGER_E("Not getting query size. Disconnecting client " + ISNetwork().ParseIPAddress(TcpSocket->peerAddress().toString()));
-					TcpSocket->abort();
-					return;
-				}
-			}
-			if (Buffer.size() == Size) //Запрос пришёл полностью - выходим из цикла
-			{
-				break;
-			}
-		}
-	}
-
-	//Проверка валидности запроса
-	QVariantMap VariantMap;
-	QString error_string;
-	if (!ISTcp::IsValidQuery(Buffer, VariantMap, error_string)) //Ошибка парсинга
-	{
-		SendError(TcpSocket, LANG("CaratError.ParseQuery").arg(error_string));
-		return;
-	}
-
-	//Если поле с типом запроса отсутствует
-	if (!VariantMap.contains("Type"))
-	{
-		SendError(TcpSocket, LANG("CaratError.NotFoundField").arg("Type"));
-		return;
-	}
-
-	//Если поле с типом запроса пустое
-	QString QueryType = VariantMap["Type"].toString();
-	if (QueryType.isEmpty())
-	{
-		SendError(TcpSocket, LANG("CaratError.FieldIsEmpty").arg("Type"));
-		return;
-	}
+	
 
 	//Проверка типа запроса, если не авторизация - ошибка
-	if (QueryType != API_AUTH)
+	//if (QueryType != API_AUTH)
 	{
-		SendError(TcpSocket, LANG("CaratError.InvalidQueryType").arg(QueryType));
+		//SendError(TcpSocket, LANG("CaratError.InvalidQueryType").arg(QueryType));
 		return;
 	}
 
-	VariantMap = VariantMap["Parameters"].toMap();
-	if (!VariantMap.contains("Login")) //Если поле с логином отсутствует
+	//VariantMap = VariantMap["Parameters"].toMap();
+	//if (!VariantMap.contains("Login")) //Если поле с логином отсутствует
 	{
-		SendError(TcpSocket, LANG("CaratError.NotFoundField").arg("Login"));
+		//SendError(TcpSocket, LANG("CaratError.NotFoundField").arg("Login"));
 		return;
 	}
 
-	QString Login = VariantMap["Login"].toString();
-	if (Login.isEmpty()) //Если поле с логином пустое
+	//QString Login = VariantMap["Login"].toString();
+	//if (Login.isEmpty()) //Если поле с логином пустое
 	{
-		SendError(TcpSocket, LANG("CaratError.FieldIsEmpty").arg("Login"));
+		//SendError(TcpSocket, LANG("CaratError.FieldIsEmpty").arg("Login"));
 		return;
 	}
 
-	if (!VariantMap.contains("Password")) //Если поле с паролем отсутствует
+	//if (!VariantMap.contains("Password")) //Если поле с паролем отсутствует
 	{
-		SendError(TcpSocket, LANG("CaratError.NotFoundField").arg("Password"));
+		//SendError(TcpSocket, LANG("CaratError.NotFoundField").arg("Password"));
 		return;
 	}
 
-	QString Password = VariantMap["Password"].toString();
-	if (Password.isEmpty()) //Если поле с паролем пустое
+	//QString Password = VariantMap["Password"].toString();
+	//if (Password.isEmpty()) //Если поле с паролем пустое
 	{
-		SendError(TcpSocket, LANG("CaratError.FieldIsEmpty").arg("Password"));
+		//SendError(TcpSocket, LANG("CaratError.FieldIsEmpty").arg("Password"));
 		return;
 	}
 
 	//Проверка пользователя
 	ISQuery qSelectAuth(QS_AUTH);
-	qSelectAuth.BindValue(":Login", Login);
+	qSelectAuth.BindValue(":Login", /*Login*/"");
 	if (!qSelectAuth.ExecuteFirst())
 	{
-		SendError(TcpSocket, LANG("CaratError.CheckingLogin"));
+		//SendError(TcpSocket, LANG("CaratError.CheckingLogin"));
 		return;
 	}
 
 	//Если такой логин помечен на удаление
 	if (qSelectAuth.ReadColumn("usrs_isdeleted").toBool())
 	{
-		SendError(TcpSocket, "Message.Error.CurrentUserIsDeleted");
+		//SendError(TcpSocket, "Message.Error.CurrentUserIsDeleted");
 		return;
 	}
 
 	//Если у пользователя нет права доступа
 	if (!qSelectAuth.ReadColumn("usrs_accessallowed").toBool())
 	{
-		SendError(TcpSocket, "Message.Error.User.NotAccessAllowed");
+		//SendError(TcpSocket, "Message.Error.User.NotAccessAllowed");
 		return;
 	}
 
@@ -190,7 +139,7 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	{
 		if (qSelectAuth.ReadColumn("usrs_group").toInt() == 0) //Привязка отсутствует
 		{
-			SendError(TcpSocket, "Message.Error.User.NotLinkWithGroup");
+			//SendError(TcpSocket, "Message.Error.User.NotLinkWithGroup");
 			return;
 		}
 	}
@@ -203,24 +152,24 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 		QDate DateEnd = qSelectAuth.ReadColumn("usrs_accountlifetimeend").toDate();
 		if (CurrentDate < DateStart)
 		{
-			SendError(TcpSocket, "Message.Warning.AccountLifetimeNotStarted");
+			//SendError(TcpSocket, "Message.Warning.AccountLifetimeNotStarted");
 			return;
 		}
 		else if (CurrentDate > DateEnd)
 		{
-			SendError(TcpSocket, "Message.Warning.AccountLifetimeEnded");
+			//SendError(TcpSocket, "Message.Warning.AccountLifetimeEnded");
 			return;
 		}
 	}
 
 	//Проверка соединения с БД по логину и паролю
-	if (ISDatabase::Instance().Connect(CONNECTION_USER, DBHost, DBPort, DBName, Login, Password))
+	if (ISDatabase::Instance().Connect(CONNECTION_USER, DBHost, DBPort, DBName, /*Login*/"", /*Password*/""))
 	{
 		ISDatabase::Instance().Disconnect(CONNECTION_USER);
 	}
 	else //Если соединение к БД произошло с ошибкой
 	{
-		SendError(TcpSocket, ISDatabase::Instance().GetErrorString());
+		//SendError(TcpSocket, ISDatabase::Instance().GetErrorString());
 		return;
 	}
 
@@ -231,13 +180,13 @@ void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
 	ISLOGGER_I("Disconnected " + TcpSocket->peerAddress().toString());
-    //if (ISAlgorithm::VectorTake(Clients, TcpSocket))
+    if (ISAlgorithm::VectorTake(Clients, TcpSocket))
 	{
-        //TcpSocket->deleteLater(); //Вызываем отложенное удаление указателя на QTcpSocket
+        TcpSocket->deleteLater(); //Вызываем отложенное удаление указателя на QTcpSocket
 	}
-    //else
+    else
 	{
-        //ISLOGGER_W("Not found client");
+        ISLOGGER_W("Not found client");
 	}
 }
 //-----------------------------------------------------------------------------
@@ -249,32 +198,5 @@ void ISTcpServer::ClientError(QAbstractSocket::SocketError socket_error)
 void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)
 {
 	Q_UNUSED(socket_error);
-}
-//-----------------------------------------------------------------------------
-void ISTcpServer::Send(QTcpSocket *TcpSocket, const QVariantMap &Data)
-{
-	//Если сокет все ещё подключен - отправляем
-	if (TcpSocket->state() == QTcpSocket::ConnectedState)
-	{
-		//Формируем ответ
-		QByteArray ByteArray = ISSystem::VariantMapToJsonString(Data, QJsonDocument::Compact).toUtf8();
-		ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
-
-		//Отправляем запрос и ждём окончания его отправки
-		TcpSocket->write(ByteArray);
-		ISTcp::WaitForBytesWritten(TcpSocket);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISTcpServer::SendError(QTcpSocket *TcpSocket, const QString &error_string)
-{
-	//Формируем ответ с ошибкой
-	ISTcpAnswer TcpAnswer;
-	TcpAnswer.SetError(error_string);
-
-	//Отправляем и обрываем соединение
-	Send(TcpSocket, TcpAnswer);
-	TcpSocket->abort();
-	ISLOGGER_E(error_string);
 }
 //-----------------------------------------------------------------------------

@@ -1,9 +1,14 @@
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISTcpAnswer::ISTcpAnswer() : QVariantMap()
+ISTcpAnswer::ISTcpAnswer() : ISTcpAnswer(QString())
 {
-	insert("IsError", false);
+	(*this)["IsError"] = false;
+}
+//-----------------------------------------------------------------------------
+ISTcpAnswer::ISTcpAnswer(const QString &ErrorString) : QVariantMap()
+{
+	SetError(ErrorString);
 }
 //-----------------------------------------------------------------------------
 ISTcpAnswer::~ISTcpAnswer()
@@ -23,7 +28,10 @@ QString ISTcpAnswer::GetErrorString()
 //-----------------------------------------------------------------------------
 void ISTcpAnswer::SetError(const QString &ErrorString)
 {
-	(*this)["IsError"] = true;
-	insert("ErrorDescription", ErrorString);
+	if (!ErrorString.isEmpty())
+	{
+		(*this)["IsError"] = true;
+		(*this)["ErrorDescription"] = ErrorString;
+	}
 }
 //-----------------------------------------------------------------------------

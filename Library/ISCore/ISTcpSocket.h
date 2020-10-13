@@ -13,10 +13,21 @@ public:
 	virtual ~ISTcpSocket();
 
 private:
-	void ReadyRead();
+	void ReadyRead(); //Событие входящих данных
+	void ClearBuffer(); //Очистка буфера
+	void Send(const QVariantMap &Data); //Отправка данных
+	void SendError(const QString &error_string); //Отправка ошибки
+
+private:
+	void Auth(const QVariantMap &VariantMap);
 
 private:
 	QByteArray Buffer;
+	bool IsAuthorized;
+
+private:
+	typedef void(ISTcpSocket::*ApiFunction)(const QVariantMap &);
+	std::map<QString, ApiFunction> Functions;
 };
 //-----------------------------------------------------------------------------
 #endif

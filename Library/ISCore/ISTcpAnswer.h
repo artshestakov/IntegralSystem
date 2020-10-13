@@ -8,6 +8,7 @@ class ISTcpAnswer : public QVariantMap
 {
 public:
 	ISTcpAnswer();
+	ISTcpAnswer(const QString &ErrorString);
 	~ISTcpAnswer();
 
 	bool IsError();

@@ -22,8 +22,7 @@ private:
 	void ClientError(QAbstractSocket::SocketError socket_error); //Ошибка клиента
 	void AcceptError(QTcpSocket::SocketError socket_error); //Ошибка принятия подключения
 
-	void Send(QTcpSocket *TcpSocket, const QVariantMap &Data); //Отправка данных
-	void SendError(QTcpSocket *TcpSocket, const QString &error_string); //Отправка ошибки
+	
 
 private:
 	QString ErrorString;

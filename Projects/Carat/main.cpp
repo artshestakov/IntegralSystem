@@ -7,6 +7,7 @@
 #include "ISQueryText.h"
 #include "ISVersion.h"
 #include "ISSystem.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 void Usage(); //Вывод инструкции по запуску
 bool CheckConfigValues(); //Проверка значений в конфигурационном файле
@@ -20,6 +21,20 @@ int main(int argc, char **argv)
 	if (!Result)
 	{
 		ISLOGGER_E(ErrorString);
+		return EXIT_FAILURE;
+	}
+
+	//Загрузка трансляций QT
+	if (!ISLocalization::Instance().LoadTraslatorQT())
+	{
+		ISLOGGER_W(ISLocalization::Instance().GetErrorString());
+	}
+
+	//Загрузка локализации ядра
+	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CARAT);
+	if (!Result)
+	{
+		ISLOGGER_E(QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CARAT).arg(ISLocalization::Instance().GetErrorString()));
 		return EXIT_FAILURE;
 	}
 
