@@ -56,6 +56,8 @@ static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY2("SELECT true AS is_load
 														 "AND iunl_counterparty = :CounterpartyID "
 														 "ORDER BY is_load DESC");
 //-----------------------------------------------------------------------------
+static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY2("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
+//-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
 
@@ -151,9 +153,7 @@ void ISOilSphere::CounterpartyListForm::ShowDebt()
 //-----------------------------------------------------------------------------
 ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, const QString &counterparty_name, QWidget *parent)
 	: ISInterfaceForm(parent),
-	TotalLoad(0),
-	TotalUnload(0),
-	MoveWagonSum(0)
+	CounterpartyID(counterparty_id)
 {
 	setWindowTitle(LANG("OilSphere.Debts.Title").arg(counterparty_name));
 	setWindowIcon(ISObjects::Instance().GetInterface()->GetIcon("Debt"));
@@ -207,7 +207,6 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 			int LoadUnloadID = qSelectUnload.ReadColumn("id").toInt();
 			QDate DateLoad = qSelectUnload.ReadColumn("date").toDate();
 			double Cost = qSelectUnload.ReadColumn("cost").toDouble();
-			(IsLoad ? TotalLoad : TotalUnload) += Cost;
 
 			QHBoxLayout *LayoutWidget = new QHBoxLayout();
 			LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
@@ -289,21 +288,24 @@ void ISOilSphere::CounterpartyDebtForm::EscapeClicked()
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyDebtForm::UpdatedLists()
 {
-	double TotalEntrollment = 0;
-	MoveWagonSum = 0;
-
-	ISSqlModelCore *SqlModelCore = EntrollmentListForm->GetSqlModel();
-	for (int i = 0, c = SqlModelCore->rowCount(); i < c; ++i)
+	ISQuery qSelectTitle(QS_COUNTERPARTY_DEBT);
+	qSelectTitle.BindValue(":CounterpartyID", CounterpartyID);
+	if (qSelectTitle.ExecuteFirst())
 	{
-		TotalEntrollment += SqlModelCore->data(SqlModelCore->index(i, SqlModelCore->GetFieldIndex("Sum"))).toDouble();
+		double TotalUnload = qSelectTitle.ReadColumn("get_counterparty_unload").toDouble();
+		double TotalLoad = qSelectTitle.ReadColumn("get_counterparty_load").toDouble();
+		double TotalEntrollment = qSelectTitle.ReadColumn("get_counterparty_entrollment").toDouble();
+		double MoveWagonSum = qSelectTitle.ReadColumn("get_counterparty_move_wagon").toDouble();
+		LabelTotal->setText(LANG("OilSphere.Debts.Label")
+			.arg(DOUBLE_PREPARE(TotalLoad))
+			.arg(DOUBLE_PREPARE(TotalUnload))
+			.arg(DOUBLE_PREPARE(TotalEntrollment))
+			.arg(DOUBLE_PREPARE(MoveWagonSum)).arg(DOUBLE_PREPARE(TotalUnload - (TotalLoad + TotalEntrollment + MoveWagonSum))));
 	}
-
-	QSqlQueryModel *SqlQueryModel = MoveWagonViewForm->GetSqlModel();
-	for (int i = 0, c = SqlQueryModel->rowCount(); i < c; ++i)
+	else
 	{
-		MoveWagonSum += SqlQueryModel->data(SqlQueryModel->index(i, 3)).toDouble();
+		LabelTotal->setText(qSelectTitle.GetErrorString());
 	}
-	LabelTotal->setText(LANG("OilSphere.Debts.Label").arg(DOUBLE_PREPARE(TotalLoad)).arg(DOUBLE_PREPARE(TotalUnload)).arg(DOUBLE_PREPARE(TotalEntrollment)).arg(DOUBLE_PREPARE(MoveWagonSum)).arg(DOUBLE_PREPARE(TotalUnload - (TotalLoad + TotalEntrollment + MoveWagonSum))));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyDebtForm::ShowImplementation()

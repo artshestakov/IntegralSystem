@@ -4,7 +4,7 @@
   <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphere::CounterpartyObjectForm">
     <Fields>
       <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{8DD37BEA-8600-4300-8C34-38659E010F3D}" Name="Debt" Type="Double" ReadOnly="true" LabelName="Долг" LocalListName="Долг" QueryText="get_counterparty_unload(cnpr_id) - get_counterparty_entrollment(cnpr_id)"/>
+      <Field UID="{8DD37BEA-8600-4300-8C34-38659E010F3D}" Name="Debt" Type="Double" ReadOnly="true" LabelName="Долг" LocalListName="Долг" QueryText="get_counterparty_unload(cnpr_id) - (get_counterparty_load(cnpr_id) + get_counterparty_entrollment(cnpr_id) + get_counterparty_move_wagon(cnpr_id))"/>
       <Field UID="{3B7EB4F8-CFEB-40C8-99E9-22150ED555B9}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
       <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="BigInt" LabelName="Тип" LocalListName="Тип"/>
       <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>

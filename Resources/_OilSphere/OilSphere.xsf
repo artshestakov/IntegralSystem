@@ -38,6 +38,43 @@
     COST 100;
   </Function>
 
+  <Function Name="get_counterparty_load(counterparty_id bigint)" Comment="Получить сумму загрузок контрагента">
+    CREATE OR REPLACE FUNCTION public.get_counterparty_load(counterparty_id bigint)
+    RETURNS numeric AS
+    $body$
+    BEGIN
+    RETURN COALESCE(sum(ilod_weightnet), 0)
+    FROM implementationload
+    WHERE NOT ilod_isdeleted
+    AND ilod_counterparty = counterparty_id
+    AND NOT (SELECT impl_isdeleted FROM implementation WHERE ilod_implementation = impl_id);
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
+  <Function Name="get_counterparty_move_wagon(counterparty_id bigint)" Comment="Получить сумму закупок вагонов у контрагента">
+    CREATE OR REPLACE FUNCTION public.get_counterparty_move_wagon(counterparty_id bigint)
+    RETURNS numeric AS
+    $body$
+    BEGIN
+    RETURN COALESCE(sum(mwag_price * (get_sum_weight_move_wagon_detail(mwag_id) / 1000)), 0)
+    FROM movewagon
+    WHERE NOT mwag_isdeleted
+    AND mwag_provider = counterparty_id;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
   <Function Name="get_stock_balance(stock_id bigint)" Comment="Получить баланс склада в килограммах">
     CREATE OR REPLACE FUNCTION public.get_stock_balance(stock_id bigint)
     RETURNS numeric AS

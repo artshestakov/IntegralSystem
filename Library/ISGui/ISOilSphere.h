@@ -62,9 +62,7 @@ namespace ISOilSphere
 		void ShowLoadUnload();
 
 	private:
-		double TotalLoad;
-		double TotalUnload;
-		double MoveWagonSum;
+		int CounterpartyID;
 
 	private:
 		QLabel *LabelTotal;
