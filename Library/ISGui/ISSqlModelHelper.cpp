@@ -13,7 +13,7 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	QVariant Result = Value;
 	if (Type == ISNamespace::FT_Date)
 	{
-		Result = Value.toDate().toString(FORMAT_DATE_V1);
+		Result = ISGui::ConvertDateToString(Value.toDate(), FORMAT_DATE_V1);
 	}
 	else if (Type == ISNamespace::FT_Birthday)
 	{
