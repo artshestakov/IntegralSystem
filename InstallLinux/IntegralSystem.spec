@@ -37,6 +37,7 @@ cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/Carat $RPM_BUILD_ROOT/o
 cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/Configurator $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Components/BackuperDB/%{CONFIGURATION}-%{PLATFORM}/BackuperDB $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/InstallLinux/Carat.service $RPM_BUILD_ROOT/opt/IntegralSystem
+cp $INTEGRAL_SYSTEM_DIR/Scripts/RemoveOldBackups.sh $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/Licenses
 
 %files
