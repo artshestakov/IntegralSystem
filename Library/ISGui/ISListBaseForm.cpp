@@ -279,7 +279,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 	{//—оздание моделей
 		SqlModel = new ISSqlModelCore(MetaTable, TableView);
-		//SqlModel->FillColumns();
 		SqlModel->SetShowToolTip(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWTOOLTIP));
 		TableView->setModel(SqlModel);
 
@@ -294,14 +293,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		//Ёто соединение об€зательно должно быть после присваивани€ модели к QTableView
 		connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);
-
-		//—крытие системных полей
-		/*if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
-		{
-			HideField("ID");
-		}
-		HideField("IsDeleted");
-		HideField("IsSystem");*/
 
 		//—оздание потоковой модели
 		ModelThreadQuery = new ISModelThreadQuery(this);

@@ -36,6 +36,7 @@ void ISSqlModelCore::SetRecords(const std::vector<QSqlRecord> &records, const st
 		{
 			Fields.emplace_back(MetaTable->GetField(FieldName));
 		}
+		SortingColumn = GetFieldIndex(SortingColumnName);
 	}
 	endResetModel();
 }
@@ -231,7 +232,8 @@ QModelIndex ISSqlModelCore::parent(const QModelIndex &Index) const
 //-----------------------------------------------------------------------------
 void ISSqlModelCore::SetSorting(const QString &FieldName, Qt::SortOrder Order)
 {
-	SetSorting(GetFieldIndex(FieldName), Order);
+	SortingColumnName = FieldName;
+	SortingOrder = Order;
 }
 //-----------------------------------------------------------------------------
 void ISSqlModelCore::SetSorting(int IndexColumn, Qt::SortOrder Order)

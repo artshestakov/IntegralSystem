@@ -28,7 +28,7 @@ static QString QD_SORTING = PREPARE_QUERY("DELETE FROM _sortingtables "
 ISSortingBuffer::ISSortingBuffer()
 	: ErrorString(NO_ERROR_STRING)
 {
-	Initialize();
+	
 }
 //-----------------------------------------------------------------------------
 ISSortingBuffer::~ISSortingBuffer()

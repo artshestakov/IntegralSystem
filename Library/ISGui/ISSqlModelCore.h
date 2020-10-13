@@ -57,8 +57,10 @@ private:
 	std::vector<QSqlRecord> Records; //Данные модели
 	std::vector<PMetaField*> Fields; //Список полей таблицы
 
+	QString SortingColumnName;
 	int SortingColumn;
 	Qt::SortOrder SortingOrder;
+
 	int IsDeletedIndex;
 	int IsSystemIndex;
 
