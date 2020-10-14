@@ -19,15 +19,8 @@ private:
 	void SendError(const QString &error_string); //Отправка ошибки
 
 private:
-	void Auth(const QVariantMap &VariantMap);
-
-private:
 	QByteArray Buffer;
 	bool IsAuthorized;
-
-private:
-	typedef void(ISTcpSocket::*ApiFunction)(const QVariantMap &);
-	std::map<QString, ApiFunction> Functions;
 };
 //-----------------------------------------------------------------------------
 #endif

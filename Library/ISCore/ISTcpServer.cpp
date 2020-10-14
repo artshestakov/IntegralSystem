@@ -12,6 +12,7 @@
 #include "ISTrace.h"
 #include "ISAlgorithm.h"
 #include "ISLocalization.h"
+#include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "usrs_issystem, "
@@ -24,9 +25,12 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "FROM _users "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
-ISTcpServer::ISTcpServer(QObject *parent)
-	: QTcpServer(parent),
-	ErrorString(NO_ERROR_STRING)
+ISTcpServer::ISTcpServer(quint16 tcp_port, unsigned int worker_count)
+	: QTcpServer(),
+	ErrorString(NO_ERROR_STRING),
+	TcpPort(tcp_port),
+	WorkerCount(worker_count),
+	Workers(std::vector<ISTcpWorker *>(WorkerCount))
 {
 	
 }
@@ -41,13 +45,29 @@ QString ISTcpServer::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpServer::Run(quint16 Port)
+bool ISTcpServer::Run()
 {
 	DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
 	DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
 	DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
 	
-	bool Result = listen(QHostAddress::AnyIPv4, Port);
+	//Получение максимального количества потоков и их запуск
+	for (unsigned int i = 0; i < WorkerCount; ++i)
+	{
+		QThread *Thread = new QThread();
+		ISTcpWorker *TcpWorker = new ISTcpWorker();
+		Workers[i] = TcpWorker;
+
+		connect(Thread, &QThread::started, TcpWorker, &ISTcpWorker::Run); //Запуск воркера
+		TcpWorker->moveToThread(Thread);
+		Thread->start();
+	}
+
+	//Запускаем балансировщик очереди
+	QtConcurrent::run(this, &ISTcpServer::QueueBalancer);
+
+	//Запуск TCP-сервера
+	bool Result = listen(QHostAddress::AnyIPv4, TcpPort);
 	if (Result)
 	{
 		connect(this, &QTcpServer::acceptError, this, &ISTcpServer::AcceptError);
@@ -198,5 +218,36 @@ void ISTcpServer::ClientError(QAbstractSocket::SocketError socket_error)
 void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)
 {
 	Q_UNUSED(socket_error);
+}
+//-----------------------------------------------------------------------------
+void ISTcpServer::QueueBalancer()
+{
+	ISTcpMessage *TcpMessage = nullptr;
+	while (true)
+	{
+		//Спим и даём возможность поработать другим потокам
+		ISSleep(1);
+
+		TcpMessage = ISTcpQueue::Instance().GetMessage();
+		if (TcpMessage) //Если есть сообщение на очереди - ищем свободный воркер
+		{
+			unsigned int Index = 0;
+			while (Index < WorkerCount)
+			{
+				ISTcpWorker *TcpWorker = Workers[Index]; //Получаем текущий воркер
+				if (!TcpWorker->GetRunning()) //Если он не занят - пердаём ему очередное сообщение и выходим из цикла
+				{
+					TcpWorker->SetMessage(TcpMessage);
+					TcpMessage = nullptr;
+					break;
+				}
+				++Index; //Инкрементируем индекс
+				if (Index == WorkerCount) //Если текущий индекс сравняелся с количеством воркером - обнуляем его
+				{
+					Index = 0;
+				}
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------

@@ -11,8 +11,6 @@ ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
 	: QTcpSocket(parent),
 	IsAuthorized(false)
 {
-	Functions[API_AUTH] = &ISTcpSocket::Auth;
-
 	setSocketDescriptor(SocketDescriptor);
 	connect(this, &ISTcpSocket::readyRead, this, &ISTcpSocket::ReadyRead);
 }
@@ -126,10 +124,5 @@ void ISTcpSocket::SendError(const QString &error_string)
 	//Формируем ответ с ошибкой и отправляем его
 	Send(ISTcpAnswer(error_string));
 	ISLOGGER_E(error_string);
-}
-//-----------------------------------------------------------------------------
-void ISTcpSocket::Auth(const QVariantMap &VariantMap)
-{
-
 }
 //-----------------------------------------------------------------------------

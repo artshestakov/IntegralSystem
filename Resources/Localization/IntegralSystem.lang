@@ -236,12 +236,6 @@
   <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
   <Local Name="Message.Question.DeleteUserPassword" Russian="Удалить пароль пользователя?"/>
   <Local Name="Message.Question.TaskCheckListDelete" Russian="Удалить пункт?"/>
-  
-  <!--Carat error-->
-  <Local Name="CaratError.ParseQuery" Russian="Ошибка разбора запроса: %1"/>
-  <Local Name="CaratError.FieldIsEmpty" Russian="Поле &quot;%1&quot; не заполнено (пустое)"/>
-  <Local Name="CaratError.InvalidQueryType" Russian="Неверный тип запроса: %1"/>
-  <Local Name="CaratError.CheckingLogin" Russian="Ошибка при проверке логина пользователя: %!"/>
 
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>

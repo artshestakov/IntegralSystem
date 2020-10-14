@@ -3,7 +3,7 @@
 #include "ISApplicationRunning.h"
 #include "ISCore.h"
 #include "ISDatabase.h"
-#include "ISCaratService.h"
+#include "ISTcpServer.h"
 #include "ISQueryText.h"
 #include "ISVersion.h"
 #include "ISSystem.h"
@@ -74,7 +74,17 @@ int main(int argc, char **argv)
 					Result = ISQueryText::Instance().CheckAllQueries();
 					if (Result)
 					{
-						Result = (new ISCaratService(&CoreApplication))->Start();
+						unsigned int WorkerCount = std::thread::hardware_concurrency();
+						ISTcpServer *TcpServer = new ISTcpServer(CARAT_DEFAULT_PORT, WorkerCount);
+						Result = TcpServer->Run();
+						if (Result)
+						{
+							ISLOGGER_I(QString("Started server. TCP-port: %1 Workers: %2").arg(CARAT_DEFAULT_PORT).arg(WorkerCount));
+						}
+						else
+						{
+							ISLOGGER_W(QString("Not started server with port %1 and workers %2: %3").arg(CARAT_DEFAULT_PORT).arg(WorkerCount).arg(TcpServer->GetErrorString()));
+						}
 					}
 				}
 				else
