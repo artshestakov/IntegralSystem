@@ -19,10 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISTcpAnswer.cpp" />
+    <ClCompile Include="ISTcpQueue.cpp" />
+    <ClCompile Include="ISTcpServer.cpp" />
+    <ClCompile Include="ISTcpSocket.cpp" />
+    <ClCompile Include="ISTcpWorker.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISTcpAnswer.h" />
+    <ClInclude Include="ISTcpQueue.h" />
+    <QtMoc Include="ISTcpWorker.h" />
+    <QtMoc Include="ISTcpSocket.h" />
+    <QtMoc Include="ISTcpServer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0E5C4046-F164-4AEA-91E1-E0B899A28F3D}</ProjectGuid>

@@ -2,12 +2,11 @@
 #ifndef _ISTCPSERVERCARAT_H_INCLUDED
 #define _ISTCPSERVERCARAT_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "StdAfx.h"
 #include "ISTcpSocket.h"
 #include "ISTcpWorker.h"
-#include <array>
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISTcpServer : public QTcpServer
+class ISTcpServer : public QTcpServer
 {
 	Q_OBJECT
 

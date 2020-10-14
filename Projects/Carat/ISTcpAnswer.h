@@ -2,7 +2,7 @@
 #ifndef _ISTCPANSWER_H_INCLUDED
 #define _ISTCPANSWER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
 class ISTcpAnswer : public QVariantMap
 {

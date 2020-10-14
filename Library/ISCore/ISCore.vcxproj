@@ -237,13 +237,8 @@
     <ClCompile Include="ISStackWalker.cpp" />
     <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISTcp.cpp" />
-    <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
-    <ClCompile Include="ISTcpQueue.cpp" />
-    <ClCompile Include="ISTcpServer.cpp" />
-    <ClCompile Include="ISTcpSocket.cpp" />
-    <ClCompile Include="ISTcpWorker.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="ISUuid.cpp" />
     <ClCompile Include="ISVersion.cpp" />
@@ -277,12 +272,7 @@
     <ClInclude Include="ISSystem.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <ClInclude Include="ISTcp.h" />
-    <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpQuery.h" />
-    <QtMoc Include="ISTcpServer.h" />
-    <QtMoc Include="ISTcpSocket.h" />
-    <ClInclude Include="ISTcpQueue.h" />
-    <QtMoc Include="ISTcpWorker.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="ISUuid.h" />

@@ -6,6 +6,7 @@
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
+#include "ISTrace.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "usrs_issystem, "
@@ -121,6 +122,7 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage)
 {
+	ISTRACE();
 	QVariant Login = CheckNullField("Login", TcpMessage->Parameters),
 		Password = CheckNullField("Password", TcpMessage->Parameters);
 	if (!Login.isValid() || !Password.isValid())

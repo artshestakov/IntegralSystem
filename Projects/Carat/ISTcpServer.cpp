@@ -1,17 +1,7 @@
 #include "ISTcpServer.h"
-#include "ISTcp.h"
-#include "ISTcpAnswer.h"
-#include "ISConstants.h"
-#include "ISQuery.h"
-#include "ISSystem.h"
-#include "ISDefinesCore.h"
 #include "ISLogger.h"
-#include "ISDatabase.h"
 #include "ISConfig.h"
-#include "ISNetwork.h"
-#include "ISTrace.h"
 #include "ISAlgorithm.h"
-#include "ISLocalization.h"
 #include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer(quint16 tcp_port, unsigned int worker_count)

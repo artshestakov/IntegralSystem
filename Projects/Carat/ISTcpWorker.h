@@ -2,10 +2,10 @@
 #ifndef _ISTCPWORKER_H_INCLUDED
 #define _ISTCPWORKER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "StdAfx.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISTcpWorker : public QObject
+class ISTcpWorker : public QObject
 {
 	Q_OBJECT
 

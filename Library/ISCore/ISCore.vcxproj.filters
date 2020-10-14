@@ -156,23 +156,8 @@
     <ClCompile Include="ISTcp.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="ISTcpAnswer.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="ISAlgorithm.cpp">
       <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTcpServer.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTcpSocket.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTcpQueue.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTcpWorker.cpp">
-      <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -291,14 +276,8 @@
     <ClInclude Include="ISTcp.h">
       <Filter>Protocol</Filter>
     </ClInclude>
-    <ClInclude Include="ISTcpAnswer.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
     <ClInclude Include="ISSettings.h">
       <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="ISTcpQueue.h">
-      <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -315,15 +294,6 @@
       <Filter>Network</Filter>
     </QtMoc>
     <QtMoc Include="ISTcpConnector.h">
-      <Filter>Protocol</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTcpServer.h">
-      <Filter>Protocol</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTcpSocket.h">
-      <Filter>Protocol</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTcpWorker.h">
       <Filter>Protocol</Filter>
     </QtMoc>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #ifndef _ISTCPSOCKET_H_INCLUDED
 #define _ISTCPSOCKET_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
 class ISTcpSocket : public QTcpSocket

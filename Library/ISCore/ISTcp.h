@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 //-----------------------------------------------------------------------------
-class ISTcp
+class ISCORE_EXPORT ISTcp
 {
 public:
 	static bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString); //ѕроверить валидность ответа на запрос

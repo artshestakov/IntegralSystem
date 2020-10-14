@@ -2,10 +2,10 @@
 #ifndef _ISTCPQUEUE_H_INCLUDED
 #define _ISTCPQUEUE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "StdAfx.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISTcpQueue
+class ISTcpQueue
 {
 public:
 	static ISTcpQueue& Instance();
