@@ -3,34 +3,6 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-bool ISTcp::IsValidQuery(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString, QString &QueryType)
-{
-	//Конвертируем набор байт в QVariantMap
-    VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, &ErrorString);
-	if (VariantMap.isEmpty() && !ErrorString.isEmpty()) //При конвертации произошла ошибка
-	{
-		return false;
-	}
-
-	//Если поля "Type" нет - ошибка
-	if (!VariantMap.contains("Type"))
-	{
-		ErrorString = "Not found field \"Type\"";
-		return false;
-	}
-	
-	//Получаем значение поля "Type"
-	QueryType = VariantMap["Type"].toString();
-
-	//Если поле "Type" пустое - ошибка
-	if (QueryType.isEmpty())
-	{
-		ErrorString = "Field \"Type\" is empty";
-		return false;
-	}
-	return true;
-}
-//-----------------------------------------------------------------------------
 bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString)
 {
     VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, &ErrorString);

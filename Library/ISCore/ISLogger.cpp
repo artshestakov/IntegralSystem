@@ -9,12 +9,12 @@ ISLogger::ISLogger()
 	IsRunning(false),
 	IsFinished(false)
 {
-
+	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISLogger::~ISLogger()
 {
-	DESTROY_CRITICAL_SECTION(&CriticalSection);
+	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISLogger& ISLogger::Instance()
@@ -30,8 +30,6 @@ QString ISLogger::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISLogger::Initialize()
 {
-    INIT_CRITICAL_SECTION(&CriticalSection);
-
 	//Получаем текущую дату и время и запоминаем текущий день
 	QDate CurrentDate = QDate::currentDate();
 	CurrentDay = CurrentDate.day();
@@ -57,9 +55,9 @@ bool ISLogger::Initialize()
 void ISLogger::Shutdown()
 {
 	//Останавливаем логгер
-    LOCK_CRITICAL_SECTION(&CriticalSection);
+    CRITICAL_SECTION_LOCK(&CriticalSection);
 	IsRunning = false;
-    UNLOCK_CRITICAL_SECTION(&CriticalSection);
+    CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
 	//Ждём когда он остановится и закрываем файл
 	while (!IsFinished)
@@ -105,10 +103,10 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 	}
 #endif
 
-    LOCK_CRITICAL_SECTION(&CriticalSection);
+    CRITICAL_SECTION_LOCK(&CriticalSection);
     Array[LastIndex] = string_complete;
     ++LastIndex;
-    UNLOCK_CRITICAL_SECTION(&CriticalSection);
+    CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 bool ISLogger::CreateLogDirectory(const QDate &Date)
@@ -147,7 +145,7 @@ void ISLogger::Worker()
 	while (IsRunning)
 	{
 		ISSleep(LOGGER_TIMEOUT);
-        LOCK_CRITICAL_SECTION(&CriticalSection);
+        CRITICAL_SECTION_LOCK(&CriticalSection);
 		if (LastIndex) //Если в очереди есть сообщения
 		{
 			for (size_t i = 0; i < LastIndex; ++i)
@@ -157,7 +155,7 @@ void ISLogger::Worker()
 			}
 			LastIndex = 0;
 		}
-        UNLOCK_CRITICAL_SECTION(&CriticalSection);
+        CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
 		QDate CurrentDate = QDate::currentDate();
 

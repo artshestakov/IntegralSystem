@@ -5,6 +5,7 @@
 #include "ISTcp.h"
 #include "ISTcpAnswer.h"
 #include "ISLocalization.h"
+#include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
 ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
 	: QTcpSocket(parent),
@@ -47,31 +48,54 @@ void ISTcpSocket::ReadyRead()
 		}
 	}
 
-	//Проверка валидности запроса
-	QVariantMap VariantMap;
-	QString ErrorString, QueryType;
-	if (!ISTcp::IsValidQuery(Buffer, VariantMap, ErrorString, QueryType)) //Ошибка парсинга
+	QString ErrorString;
+	QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(Buffer, &ErrorString);
+	if (VariantMap.isEmpty() && !ErrorString.isEmpty()) //При конвертации произошла ошибка
 	{
-		SendError(LANG("Carat.Error.ParseQuery").arg(ErrorString));
+		SendError(LANG("Carat.Error.ParseMessage").arg(ErrorString));
 		return;
 	}
 
-	//Если пришёл запрос на авторизацию и клиент уже авторизован - ошибка
-	if (QueryType == API_AUTH && IsAuthorized)
+	//Если поля "Type" нет - ошибка
+	if (!VariantMap.contains("Type"))
 	{
-		SendError(LANG("Carat.Error.AlreadyAuth"));
+		SendError(LANG("Carat.Error.InvalidMessage").arg("not found field \"Type\""));
 		return;
+	}
+
+	//Получаем значение поля "Type"
+	QString MessageType = VariantMap["Type"].toString();
+
+	//Если поле "Type" пустое - ошибка
+	if (MessageType.isEmpty())
+	{
+		SendError(LANG("Carat.Error.InvalidMessage").arg("field \"Type\" is empty"));
+		return;
+	}
+
+	//Создаём и добавляем сообщение в очередь
+	ISTcpQueue::Instance().AddMessage(new ISTcpMessage
+	{
+		MessageType,
+		VariantMap["Parameters"].toMap()
+	});
+
+	//Если пришёл запрос на авторизацию и клиент уже авторизован - ошибка
+	//if (QueryType == API_AUTH && IsAuthorized)
+	{
+		//SendError(LANG("Carat.Error.AlreadyAuth"));
+		//return;
 	}
 
 	//Если пришёл не авторищационный запрос и клиент ещё не авторизован - ошибка
-	if (QueryType != API_AUTH && !IsAuthorized)
+	//if (QueryType != API_AUTH && !IsAuthorized)
 	{
-		SendError(LANG("Carat.Error.NotAuth"));
-		return;
+		//SendError(LANG("Carat.Error.NotAuth"));
+		//return;
 	}
 
 	//Если пришёл запрос на авторизацию и этот клиент ещё не авторизован - авторизуем
-	if (QueryType == API_AUTH && !IsAuthorized)
+	//if (QueryType == API_AUTH && !IsAuthorized)
 	{
 
 	}

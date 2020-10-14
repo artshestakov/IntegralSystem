@@ -240,6 +240,7 @@
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
+    <ClCompile Include="ISTcpQueue.cpp" />
     <ClCompile Include="ISTcpServer.cpp" />
     <ClCompile Include="ISTcpSocket.cpp" />
     <ClCompile Include="ISTrace.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="ISTcpQuery.h" />
     <QtMoc Include="ISTcpServer.h" />
     <QtMoc Include="ISTcpSocket.h" />
+    <ClInclude Include="ISTcpQueue.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="ISUuid.h" />

@@ -66,7 +66,7 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	addPendingConnection(TcpSocket);
 	ISLOGGER_I(QString("Incoming connection from ") + TcpSocket->peerAddress().toString());
 
-	//Добавляем сокет в свою очередь и подключаем сигналы
+	//Добавляем сокет в список и подключаем сигналы
 	Clients.emplace_back(TcpSocket);
 	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected);
 	connect(TcpSocket, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpServer::ClientError);

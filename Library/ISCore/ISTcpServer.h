@@ -29,7 +29,7 @@ private:
 	QString DBHost;
 	int DBPort;
 	QString DBName;
-	std::vector<ISTcpSocket*> Clients;
+	std::vector<ISTcpSocket *> Clients;
 };
 //-----------------------------------------------------------------------------
 #endif

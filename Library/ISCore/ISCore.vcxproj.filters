@@ -168,6 +168,9 @@
     <ClCompile Include="ISTcpSocket.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpQueue.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -290,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="ISSettings.h">
       <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpQueue.h">
+      <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

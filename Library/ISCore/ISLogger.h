@@ -69,10 +69,11 @@ private:
     int CurrentMonth; //Текущий месяц
     int CurrentYear; //Текущий год
 
+	//Критическая секция для синхронизации
 #ifdef WIN32
-    CRITICAL_SECTION CriticalSection; //Ктирическая секция для синхронизации
+    CRITICAL_SECTION CriticalSection;
 #else
-    pthread_mutex_t CriticalSection; //Ктирическая секция для синхронизации
+    pthread_mutex_t CriticalSection;
 #endif
 };
 //-----------------------------------------------------------------------------
