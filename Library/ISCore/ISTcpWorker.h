@@ -19,6 +19,7 @@ public:
 
 private:
 	void Finish(); //Уведомление о завершении работы воркера
+	bool CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage);

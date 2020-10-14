@@ -92,18 +92,6 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	connect(TcpSocket, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpServer::ClientError);
 	return;
 
-	QByteArray Buffer;
-	
-
-	
-
-	//Проверка типа запроса, если не авторизация - ошибка
-	//if (QueryType != API_AUTH)
-	{
-		//SendError(TcpSocket, LANG("CaratError.InvalidQueryType").arg(QueryType));
-		return;
-	}
-
 	//VariantMap = VariantMap["Parameters"].toMap();
 	//if (!VariantMap.contains("Login")) //Если поле с логином отсутствует
 	{

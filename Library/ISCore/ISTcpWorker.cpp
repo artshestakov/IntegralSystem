@@ -66,6 +66,16 @@ void ISTcpWorker::Finish()
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap &VariantMap)
+{
+	bool Result = VariantMap.contains(FieldName);
+	if (!Result)
+	{
+		ErrorString = "field \"" + FieldName + "\" not exist";
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage)
 {
 	return true;
