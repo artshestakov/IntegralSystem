@@ -2,9 +2,7 @@
 #include "ISConfig.h"
 #include "ISApplicationRunning.h"
 #include "ISCore.h"
-#include "ISDatabase.h"
 #include "ISTcpServer.h"
-#include "ISQueryText.h"
 #include "ISVersion.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
@@ -66,30 +64,16 @@ int main(int argc, char **argv)
 			Result = CheckConfigValues();
 			if (Result) //Если все необходимые параметры заполнены - продолжаем запуск
 			{
-				Result = ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
-					CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-					CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD));
+				unsigned int WorkerCount = std::thread::hardware_concurrency();
+				ISTcpServer *TcpServer = new ISTcpServer(CARAT_DEFAULT_PORT, WorkerCount);
+				Result = TcpServer->Run();
 				if (Result)
 				{
-					Result = ISQueryText::Instance().CheckAllQueries();
-					if (Result)
-					{
-						unsigned int WorkerCount = std::thread::hardware_concurrency();
-						ISTcpServer *TcpServer = new ISTcpServer(CARAT_DEFAULT_PORT, WorkerCount);
-						Result = TcpServer->Run();
-						if (Result)
-						{
-							ISLOGGER_I(QString("Started server. TCP-port: %1 Workers: %2").arg(CARAT_DEFAULT_PORT).arg(WorkerCount));
-						}
-						else
-						{
-							ISLOGGER_W(QString("Not started server with port %1 and workers %2: %3").arg(CARAT_DEFAULT_PORT).arg(WorkerCount).arg(TcpServer->GetErrorString()));
-						}
-					}
+					ISLOGGER_I(QString("Started server. TCP-port: %1 Workers: %2").arg(CARAT_DEFAULT_PORT).arg(WorkerCount));
 				}
 				else
 				{
-					ISLOGGER_E("Not connected to database: " + ISDatabase::Instance().GetErrorString());
+					ISLOGGER_W(QString("Not started server with port %1 and workers %2: %3").arg(CARAT_DEFAULT_PORT).arg(WorkerCount).arg(TcpServer->GetErrorString()));
 				}
 			}
 		}

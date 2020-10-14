@@ -7,9 +7,7 @@
 #include "ISLocalization.h"
 #include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
-ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
-	: QTcpSocket(parent),
-	IsAuthorized(false)
+ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent) : QTcpSocket(parent)
 {
 	setSocketDescriptor(SocketDescriptor);
 	connect(this, &ISTcpSocket::readyRead, this, &ISTcpSocket::ReadyRead);
@@ -85,26 +83,6 @@ void ISTcpSocket::ReadyRead()
 		MessageType,
 		VariantMap["Parameters"].toMap()
 	});
-
-	//Если пришёл запрос на авторизацию и клиент уже авторизован - ошибка
-	//if (QueryType == API_AUTH && IsAuthorized)
-	{
-		//SendError(LANG("Carat.Error.AlreadyAuth"));
-		//return;
-	}
-
-	//Если пришёл не авторищационный запрос и клиент ещё не авторизован - ошибка
-	//if (QueryType != API_AUTH && !IsAuthorized)
-	{
-		//SendError(LANG("Carat.Error.NotAuth"));
-		//return;
-	}
-
-	//Если пришёл запрос на авторизацию и этот клиент ещё не авторизован - авторизуем
-	//if (QueryType == API_AUTH && !IsAuthorized)
-	{
-
-	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::ClearBuffer()

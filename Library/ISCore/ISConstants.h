@@ -98,7 +98,6 @@ const char SYMBOL_POINT = '.'; //Символ "Точка"
 const char SYMBOL_STAR = '*'; //Символ звездочка
 //DATABASE_CONNECTIONS---------------------------------------------------------
 const char CONNECTION_DEFAULT[] = "DefaultDB";
-const char CONNECTION_USER[] = "UserDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearchDB";
 const char CONNECTION_QUERY_POOL[] = "QueryPoolDB";

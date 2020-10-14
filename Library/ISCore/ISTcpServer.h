@@ -27,9 +27,6 @@ private:
 
 private:
 	QString ErrorString;
-	QString DBHost;
-	int DBPort;
-	QString DBName;
 	unsigned short TcpPort;
 	unsigned int WorkerCount;
 	std::vector<ISTcpSocket *> Clients;

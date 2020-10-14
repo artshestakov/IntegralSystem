@@ -10,7 +10,7 @@ class ISCORE_EXPORT ISTcpWorker : public QObject
 	Q_OBJECT
 
 public:
-	ISTcpWorker();
+	ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password);
 	virtual ~ISTcpWorker();
 
 	bool GetRunning(); //Получить флаг занятости
@@ -19,12 +19,18 @@ public:
 
 private:
 	void Finish(); //Уведомление о завершении работы воркера
-	bool CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
+	QVariant CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage);
 
 private:
+	QString DBConnectionName;
+	QString DBHost;
+	int DBPort;
+	QString DBName;
+	QString DBUser;
+	QString DBPassword;
 	QString ErrorString; //Текстовое описание ошибки запроса
 	bool IsRunning; //Флаг занятости воркера
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение

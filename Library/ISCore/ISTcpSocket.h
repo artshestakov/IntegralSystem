@@ -22,7 +22,6 @@ private:
 
 private:
 	QByteArray Buffer;
-	bool IsAuthorized;
 };
 //-----------------------------------------------------------------------------
 #endif
