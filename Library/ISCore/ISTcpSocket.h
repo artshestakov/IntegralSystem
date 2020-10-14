@@ -3,6 +3,7 @@
 #define _ISTCPSOCKET_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
+#include "ISNamespace.h"
 //-----------------------------------------------------------------------------
 class ISTcpSocket : public QTcpSocket
 {
@@ -17,6 +18,7 @@ private:
 	void ClearBuffer(); //Очистка буфера
 	void Send(const QVariantMap &Data); //Отправка данных
 	void SendError(const QString &error_string); //Отправка ошибки
+	ISNamespace::ApiMessageType GetMessageType(const QString &TypeName) const; //Получить тип сообщения по его имени
 
 private:
 	QByteArray Buffer;

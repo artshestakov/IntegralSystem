@@ -163,6 +163,11 @@ public:
         RDP_PreviousYear, //Прошлый год
     };
 
+	enum ApiMessageType //Тип API-сообщения
+	{
+		AMT_Unknown, //Неизвестное
+		AMT_Auth, //Авторизация
+	};
 };
 //-----------------------------------------------------------------------------
 Q_DECLARE_METATYPE(ISNamespace::FieldType);
@@ -177,5 +182,6 @@ Q_DECLARE_METATYPE(ISNamespace::PeriodType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
 Q_DECLARE_METATYPE(ISNamespace::RangeDatePeriod);
+Q_DECLARE_METATYPE(ISNamespace::ApiMessageType);
 //-----------------------------------------------------------------------------
 #endif

@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
 	: QObject(),
+	ErrorString(NO_ERROR_STRING),
 	IsRunning(false),
 	CurrentMessage(nullptr)
 {
@@ -46,9 +47,12 @@ void ISTcpWorker::Run()
 		//Если появилось сообщение на обработку - выполняем его
 		if (tcp_message)
 		{
-			if (tcp_message->Type == API_AUTH)
+			bool Result = false;
+			switch (tcp_message->Type)
 			{
-				Auth(tcp_message);
+			case ISNamespace::AMT_Auth:
+				Result = Auth(tcp_message);
+				break;
 			}
 			Finish();
 		}
@@ -62,8 +66,8 @@ void ISTcpWorker::Finish()
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-void ISTcpWorker::Auth(ISTcpMessage *TcpMessage)
+bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage)
 {
-
+	return true;
 }
 //-----------------------------------------------------------------------------

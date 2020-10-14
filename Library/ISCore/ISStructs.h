@@ -481,7 +481,7 @@ struct ISMessageBoxButton
 //-----------------------------------------------------------------------------
 struct ISTcpMessage
 {
-	QString Type; //Тип
+	ISNamespace::ApiMessageType Type; //Тип сообщения
 	QVariantMap Parameters; //Параметры
 };
 //-----------------------------------------------------------------------------

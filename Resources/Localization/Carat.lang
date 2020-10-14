@@ -4,6 +4,7 @@
   <!--System user-->
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>
   <Local Name="Carat.Error.InvalidMessage" Russian="Сообщение невалидное: %1"/>
+  <Local Name="Carat.Error.InvalidMessageType" Russian="Тип сообщения невалидный: %1"/>
   <Local Name="Carat.Error.AlreadyAuth" Russian="Вы уже авторизованы в системе!"/>
   <Local Name="Carat.Error.NotAuth" Russian="Вы не авторизованы в системе!"/>
   

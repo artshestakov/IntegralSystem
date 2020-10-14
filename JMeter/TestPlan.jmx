@@ -30,7 +30,7 @@
           <stringProp name="cacheKey">true</stringProp>
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
-          <stringProp name="script">import groovy.json.JsonBuilder
+          <stringProp name="script">import groovy.json.JsonBuilder;
 
 def JsonMap =
 [
@@ -42,7 +42,7 @@ def JsonMap =
 		]
 ];
 
-def Builder = new JsonBuilder(JsonMap);
+JsonBuilder Builder = new JsonBuilder(JsonMap);
 String JsonString = Builder.toString();
 JsonString = Integer.toString(JsonString.length()) + &apos;.&apos; + JsonString;
 vars.put(&quot;JsonString&quot;, JsonString);</stringProp>

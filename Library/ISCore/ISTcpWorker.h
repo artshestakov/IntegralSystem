@@ -13,19 +13,20 @@ public:
 	ISTcpWorker();
 	virtual ~ISTcpWorker();
 
-	bool GetRunning();
-	void SetMessage(ISTcpMessage *TcpMessage);
-	void Run();
+	bool GetRunning(); //Получить флаг занятости
+	void SetMessage(ISTcpMessage *TcpMessage); //Установить сообщение на обработку
+	void Run(); //Запуск воркера
 
 private:
-	void Finish();
+	void Finish(); //Уведомление о завершении работы воркера
 
 private:
-	void Auth(ISTcpMessage *TcpMessage);
+	bool Auth(ISTcpMessage *TcpMessage);
 
 private:
-	bool IsRunning;
-	ISTcpMessage *CurrentMessage;
+	QString ErrorString; //Текстовое описание ошибки запроса
+	bool IsRunning; //Флаг занятости воркера
+	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
 
 	//Критическая секция для синхронизации
 #ifdef WIN32

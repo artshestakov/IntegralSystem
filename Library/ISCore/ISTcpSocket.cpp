@@ -62,12 +62,20 @@ void ISTcpSocket::ReadyRead()
 	}
 
 	//Получаем значение поля "Type"
-	QString MessageType = VariantMap["Type"].toString();
+	QString TypeName = VariantMap["Type"].toString();
 
 	//Если поле "Type" пустое - ошибка
-	if (MessageType.isEmpty())
+	if (TypeName.isEmpty())
 	{
 		SendError(LANG("Carat.Error.InvalidMessage").arg("field \"Type\" is empty"));
+		return;
+	}
+
+	//Получаем тип сообщения по его имени и если оно неизвестное - ошибка
+	ISNamespace::ApiMessageType MessageType = GetMessageType(TypeName);
+	if (MessageType == ISNamespace::AMT_Unknown)
+	{
+		SendError(LANG("Carat.Error.InvalidMessageType").arg(TypeName));
 		return;
 	}
 
@@ -124,5 +132,14 @@ void ISTcpSocket::SendError(const QString &error_string)
 	//Формируем ответ с ошибкой и отправляем его
 	Send(ISTcpAnswer(error_string));
 	ISLOGGER_E(error_string);
+}
+//-----------------------------------------------------------------------------
+ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName) const
+{
+	if (TypeName == API_AUTH)
+	{
+		return ISNamespace::AMT_Auth;
+	}
+	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------
