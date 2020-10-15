@@ -144,10 +144,14 @@ void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 		TcpSocket->write(TcpAnswer->ToByteArray());
 		while (TcpSocket->state() == ISTcpSocket::ConnectedState)
 		{
-			if (TcpSocket->bytesToWrite() > 0)
+			if (TcpSocket->bytesToWrite() > 0) //Если есть баты доступные для записи - пишем
 			{
 				ISSystem::ProcessEvents();
 				ISSleep(1);
+			}
+			else //Записали все - выходим из цикла
+			{
+				break;
 			}
 		}
 	}

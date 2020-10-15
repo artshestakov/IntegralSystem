@@ -16,7 +16,7 @@ ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent) : QTcpSocket
 //-----------------------------------------------------------------------------
 ISTcpSocket::~ISTcpSocket()
 {
-
+	
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::ReadyRead()
@@ -35,7 +35,7 @@ void ISTcpSocket::ReadyRead()
 			if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отправляем ошибку
 			{
 				SendError("Not getting query size");
-				ClearBuffer();
+				Buffer.clear();
 				return;
 			}
 		}
@@ -52,6 +52,9 @@ void ISTcpSocket::ReadyRead()
 		SendError(LANG("Carat.Error.ParseMessage").arg(ErrorString));
 		return;
 	}
+
+	//Очищаем буфер
+	Buffer.clear();
 
 	//Если поля "Type" нет - ошибка
 	if (!VariantMap.contains("Type"))
@@ -85,11 +88,6 @@ void ISTcpSocket::ReadyRead()
 		VariantMap["Parameters"].toMap(),
 		this
 	});
-}
-//-----------------------------------------------------------------------------
-void ISTcpSocket::ClearBuffer()
-{
-	Buffer.clear();
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::Send(const QVariantMap &Data)
