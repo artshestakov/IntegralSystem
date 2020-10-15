@@ -54,7 +54,7 @@ static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY2("SELECT true AS is_load
 														 "WHERE NOT iunl_isdeleted "
 														 "AND NOT (SELECT impl_isdeleted FROM implementation WHERE iunl_implementation = impl_id) "
 														 "AND iunl_counterparty = :CounterpartyID "
-														 "ORDER BY is_load DESC");
+														 "ORDER BY is_load, date DESC");
 //-----------------------------------------------------------------------------
 static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY2("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
 //-----------------------------------------------------------------------------
@@ -181,8 +181,6 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 	ISScrollArea *ScrollAreaLoad = new ISScrollArea(GroupBoxLoad);
 	ScrollAreaLoad->widget()->setLayout(LayoutScrollLoad);
 	GroupBoxLoad->layout()->addWidget(ScrollAreaLoad);
-
-	LayoutLeft->addWidget(ISControls::CreateHorizontalLinePlain(this));
 
 	QGroupBox *GroupBoxUnload = new QGroupBox(LANG("OilSphere.Implementation.Unloads"), this);
 	GroupBoxUnload->setLayout(new QVBoxLayout());
