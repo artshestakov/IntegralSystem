@@ -7,6 +7,7 @@
 #include "ISLocalization.h"
 #include "ISSystem.h"
 #include "ISTrace.h"
+#include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "usrs_issystem, "
@@ -84,12 +85,21 @@ void ISTcpWorker::Run()
 		if (tcp_message)
 		{
 			bool Result = false;
+			ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpSocket);
 			switch (tcp_message->Type)
 			{
 			case ISNamespace::AMT_Auth:
-				Result = Auth(tcp_message);
+				Result = Auth(tcp_message, TcpAnswer);
 				break;
 			}
+
+			if (!Result) //Если запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе
+			{
+				TcpAnswer->SetError(ErrorString);
+			}
+
+			//Добавляем ответ в очередь ответов и завершаем работу
+			emit Answer(TcpAnswer);
 			Finish();
 		}
 	}
@@ -123,7 +133,7 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage)
+bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	ISTRACE();
 	QVariant Login = CheckNullField("Login", TcpMessage->Parameters),

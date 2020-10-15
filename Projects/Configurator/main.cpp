@@ -278,10 +278,10 @@ bool CreateDatabase()
 
 		//Комментируем БД
 		ISQuery qCommentDB;
-		Result = qCommentDB.Execute(QString("COMMENT ON DATABASE %1 IS '%2'").arg(DBName).arg(ISSystem::VariantMapToJsonString(
+		Result = qCommentDB.Execute(QString("COMMENT ON DATABASE %1 IS '%2'").arg(DBName).arg(QString(ISSystem::VariantMapToJsonString(
 		{
 			{ "ConfigurationName", ConfigurationName }
-		})));
+		}))));
 		if (!Result)
 		{
 			ISLOGGER_E("Not updating database description: " + qCommentDB.GetErrorString());

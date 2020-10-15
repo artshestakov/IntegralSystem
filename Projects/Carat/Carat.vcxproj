@@ -31,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISTcpAnswer.h" />
+    <ClInclude Include="ISTcpMessage.h" />
     <ClInclude Include="ISTcpQueue.h" />
     <QtMoc Include="ISTcpWorker.h" />
     <QtMoc Include="ISTcpSocket.h" />

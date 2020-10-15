@@ -22,7 +22,9 @@ private:
 	void ClientDisconnected(); //Событие отключения клиента
 	void ClientError(QAbstractSocket::SocketError socket_error); //Ошибка клиента
 	void AcceptError(QTcpSocket::SocketError socket_error); //Ошибка принятия подключения
-	void QueueBalancer(); //Балансер очереди
+	
+	void QueueBalancerMessage(); //Балансер очереди сообщений
+	void SendAnswer(ISTcpAnswer *TcpAnswer);
 
 private:
 	QString ErrorString;

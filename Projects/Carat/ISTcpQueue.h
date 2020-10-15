@@ -3,7 +3,8 @@
 #define _ISTCPQUEUE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISStructs.h"
+#include "ISTcpMessage.h"
+#include "ISTcpAnswer.h"
 //-----------------------------------------------------------------------------
 class ISTcpQueue
 {
@@ -22,9 +23,9 @@ private:
 private:
 	std::queue<ISTcpMessage *> Queue;
 
-	//Критическая секция для синхронизации
+	//Критические секции для синхронизации
 #ifdef WIN32
-	CRITICAL_SECTION CriticalSection; 
+	CRITICAL_SECTION CriticalSection;
 #else
 	pthread_mutex_t CriticalSection;
 #endif

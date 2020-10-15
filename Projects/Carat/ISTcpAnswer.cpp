@@ -1,14 +1,12 @@
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISTcpAnswer::ISTcpAnswer() : ISTcpAnswer(QString())
+ISTcpAnswer::ISTcpAnswer(ISTcpSocket *tcp_socket)
+	: Error(false),
+	TcpSocket(tcp_socket)
 {
-	(*this)["IsError"] = false;
-}
-//-----------------------------------------------------------------------------
-ISTcpAnswer::ISTcpAnswer(const QString &ErrorString) : QVariantMap()
-{
-	SetError(ErrorString);
+	
 }
 //-----------------------------------------------------------------------------
 ISTcpAnswer::~ISTcpAnswer()
@@ -16,22 +14,40 @@ ISTcpAnswer::~ISTcpAnswer()
 
 }
 //-----------------------------------------------------------------------------
-bool ISTcpAnswer::IsError()
+bool ISTcpAnswer::IsError() const
 {
-	return (*this)["IsError"].toBool();
+	return Error;
 }
 //-----------------------------------------------------------------------------
-QString ISTcpAnswer::GetErrorString()
+QString ISTcpAnswer::GetErrorString() const
 {
-	return (*this)["ErrorDescription"].toString();
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-void ISTcpAnswer::SetError(const QString &ErrorString)
+void ISTcpAnswer::SetError(const QString &error_string)
 {
-	if (!ErrorString.isEmpty())
+	if (!error_string.isEmpty())
 	{
-		(*this)["IsError"] = true;
-		(*this)["ErrorDescription"] = ErrorString;
+		Error = true;
+		ErrorString = error_string;
 	}
+}
+//-----------------------------------------------------------------------------
+ISTcpSocket* ISTcpAnswer::GetSocket()
+{
+	return TcpSocket;
+}
+//-----------------------------------------------------------------------------
+QByteArray ISTcpAnswer::ToByteArray() const
+{
+	//Формируем ответ
+	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
+	{
+		{ "IsError", Error },
+		{ "ErrorString", ErrorString },
+		{ "Parameters", Parameters }
+	}, QJsonDocument::Compact);
+	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
+	return ByteArray;
 }
 //-----------------------------------------------------------------------------

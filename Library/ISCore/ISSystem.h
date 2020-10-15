@@ -37,7 +37,7 @@ public:
 	static QString Base64ToString(const QString &Base64); //Конвертация Base64 в строку
     static QVariantMap JsonStringToVariantMap(const QString &JsonString, QString *ErrorString = nullptr); //Конвертация JSON-строки в список ключ-значение
     static ISStringMap JsonStringToStringMap(const QString &JsonString, QString *ErrorString = nullptr); //Конвертация JSON-строки в список ключ-значение
-	static QString VariantMapToJsonString(const QVariantMap &VariantMap, QJsonDocument::JsonFormat Format = QJsonDocument::Indented); //Конвертация списка ключ-значение в JSON-строку
+	static QByteArray VariantMapToJsonString(const QVariantMap &VariantMap, QJsonDocument::JsonFormat Format = QJsonDocument::Indented); //Конвертация списка ключ-значение в JSON-строку
 	static QString StringToMD5(const QString &String); //Получить MD5 строки
 
 //ФАЙЛЫ

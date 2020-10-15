@@ -41,6 +41,9 @@
     <ClInclude Include="ISTcpAnswer.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISTcpMessage.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISTcpServer.h">

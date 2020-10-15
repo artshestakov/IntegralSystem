@@ -3,6 +3,8 @@
 #include "ISConfig.h"
 #include "ISAlgorithm.h"
 #include "ISTcpQueue.h"
+#include "ISTcp.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer(quint16 tcp_port, unsigned int worker_count)
 	: QTcpServer(),
@@ -38,30 +40,33 @@ bool ISTcpServer::Run()
 	{
 		QThread *Thread = new QThread();
 		ISTcpWorker *TcpWorker = new ISTcpWorker(DBHost, DBPort, DBName, DBUser, DBPassword);
+		connect(TcpWorker, &ISTcpWorker::Answer, this, &ISTcpServer::SendAnswer, Qt::QueuedConnection);
+		connect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit);
 		Workers[i] = TcpWorker;
 
 		connect(Thread, &QThread::started, TcpWorker, &ISTcpWorker::Run); //Запуск воркера
-		connect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit);
+
 		TcpWorker->moveToThread(Thread); //Перемещаем воркер в отдельный поток
 		Thread->start(); //Запускаем поток
 		EventLoop.exec(); //Ожидаем запуска воркера
 		disconnect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit); //Отключаем сигнал от текущего воркера (на всякий случай)
 	}
 
-	//Запускаем балансировщик очереди
-	QtConcurrent::run(this, &ISTcpServer::QueueBalancer);
+	//Запускаем балансировщики
+	if (!QtConcurrent::run(this, &ISTcpServer::QueueBalancerMessage).isStarted())
+	{
+		ErrorString = "Error starting QueueBalancerMessage";
+		return false;
+	}
 
 	//Запуск TCP-сервера
-	bool Result = listen(QHostAddress::AnyIPv4, TcpPort);
-	if (Result)
-	{
-		connect(this, &QTcpServer::acceptError, this, &ISTcpServer::AcceptError);
-	}
-	else
+	if (!listen(QHostAddress::AnyIPv4, TcpPort))
 	{
 		ErrorString = errorString();
+		return false;
 	}
-	return Result;
+	connect(this, &QTcpServer::acceptError, this, &ISTcpServer::AcceptError);
+	return true;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
@@ -81,13 +86,13 @@ void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
 	ISLOGGER_I("Disconnected " + TcpSocket->peerAddress().toString());
-    if (ISAlgorithm::VectorTake(Clients, TcpSocket))
+    if (ISAlgorithm::VectorTake(Clients, TcpSocket)) //Если нашли сокет в списке и успешно исключили его от туда - вызываем автоматическое удаление указателя на него
 	{
-        TcpSocket->deleteLater(); //Вызываем отложенное удаление указателя на QTcpSocket
+		QTimer::singleShot(5000, TcpSocket, &ISTcpSocket::deleteLater);
 	}
-    else
+	else
 	{
-        ISLOGGER_W("Not found client");
+		ISLOGGER_W("Not found client");
 	}
 }
 //-----------------------------------------------------------------------------
@@ -101,14 +106,12 @@ void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)
 	Q_UNUSED(socket_error);
 }
 //-----------------------------------------------------------------------------
-void ISTcpServer::QueueBalancer()
+void ISTcpServer::QueueBalancerMessage()
 {
 	ISTcpMessage *TcpMessage = nullptr;
 	while (true)
 	{
-		//Спим и даём возможность поработать другим потокам
 		ISSleep(1);
-
 		TcpMessage = ISTcpQueue::Instance().GetMessage();
 		if (TcpMessage) //Если есть сообщение на очереди - ищем свободный воркер
 		{
@@ -130,5 +133,24 @@ void ISTcpServer::QueueBalancer()
 			}
 		}
 	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
+{
+	ISTcpSocket *TcpSocket = TcpAnswer->GetSocket();
+	if (TcpSocket->state() == ISTcpSocket::ConnectedState) //Если сокет не отключался
+	{
+		//Записываем в него ответ и ждём отправки
+		TcpSocket->write(TcpAnswer->ToByteArray());
+		while (TcpSocket->state() == ISTcpSocket::ConnectedState)
+		{
+			if (TcpSocket->bytesToWrite() > 0)
+			{
+				ISSystem::ProcessEvents();
+				ISSleep(1);
+			}
+		}
+	}
+	delete TcpAnswer; //Удаляем указатель на объект ответа
 }
 //-----------------------------------------------------------------------------

@@ -6,6 +6,7 @@
 #include "ISTcpAnswer.h"
 #include "ISLocalization.h"
 #include "ISTcpQueue.h"
+#include "ISTcpMessage.h"
 //-----------------------------------------------------------------------------
 ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent) : QTcpSocket(parent)
 {
@@ -81,7 +82,8 @@ void ISTcpSocket::ReadyRead()
 	ISTcpQueue::Instance().AddMessage(new ISTcpMessage
 	{
 		MessageType,
-		VariantMap["Parameters"].toMap()
+		VariantMap["Parameters"].toMap(),
+		this
 	});
 }
 //-----------------------------------------------------------------------------
@@ -96,7 +98,7 @@ void ISTcpSocket::Send(const QVariantMap &Data)
 	if (state() == QTcpSocket::ConnectedState)
 	{
 		//Формируем ответ
-		QByteArray ByteArray = ISSystem::VariantMapToJsonString(Data, QJsonDocument::Compact).toUtf8();
+		QByteArray ByteArray = ISSystem::VariantMapToJsonString(Data, QJsonDocument::Compact);
 		ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
 
 		//Отправляем запрос и ждём окончания его отправки
@@ -108,7 +110,7 @@ void ISTcpSocket::Send(const QVariantMap &Data)
 void ISTcpSocket::SendError(const QString &error_string)
 {
 	//Формируем ответ с ошибкой и отправляем его
-	Send(ISTcpAnswer(error_string));
+	//Send(ISTcpAnswer(error_string)); //???
 	ISLOGGER_E(error_string);
 }
 //-----------------------------------------------------------------------------

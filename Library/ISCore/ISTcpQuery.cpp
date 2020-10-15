@@ -30,7 +30,7 @@ void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &Paramete
 //-----------------------------------------------------------------------------
 bool ISTcpQuery::Execute()
 {
-	//Формирууем запрос (тип запроса, его параметры и системные поля
+	//Формируем запрос (тип запроса, его параметры и системные поля)
 	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
 	{
 		{ "Type", QueryType },
@@ -41,7 +41,7 @@ bool ISTcpQuery::Execute()
 				{ "Version", ISVersion::Instance().ToString() }
 			}
 		}
-	}, QJsonDocument::Compact).toUtf8();
+	}, QJsonDocument::Compact);
 	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
 
 	//Получаем сокет и отправляем на него запрос

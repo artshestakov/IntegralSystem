@@ -3,7 +3,8 @@
 #define _ISTCPWORKER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISStructs.h"
+#include "ISTcpMessage.h"
+#include "ISTcpAnswer.h"
 //-----------------------------------------------------------------------------
 class ISTcpWorker : public QObject
 {
@@ -11,6 +12,7 @@ class ISTcpWorker : public QObject
 
 signals:
 	void Started();
+	void Answer(ISTcpAnswer *);
 
 public:
 	ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password);
@@ -25,7 +27,7 @@ private:
 	QVariant CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
 
 private:
-	bool Auth(ISTcpMessage *TcpMessage);
+	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
 	QString DBConnectionName;

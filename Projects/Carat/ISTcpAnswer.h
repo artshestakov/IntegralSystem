@@ -3,17 +3,27 @@
 #define _ISTCPANSWER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISTcpSocket.h"
 //-----------------------------------------------------------------------------
-class ISTcpAnswer : public QVariantMap
+class ISTcpAnswer
 {
 public:
-	ISTcpAnswer();
-	ISTcpAnswer(const QString &ErrorString);
+	ISTcpAnswer(ISTcpSocket *tcp_socket);
 	~ISTcpAnswer();
 
-	bool IsError();
-	QString GetErrorString();
-	void SetError(const QString &ErrorString);
+	bool IsError() const;
+	QString GetErrorString() const;
+	void SetError(const QString &error_string);
+	ISTcpSocket* GetSocket();
+	QByteArray ToByteArray() const;
+
+public:
+	QVariantMap Parameters;
+	
+private:
+	QString ErrorString;
+	bool Error;
+	ISTcpSocket *TcpSocket;
 };
 //-----------------------------------------------------------------------------
 #endif
