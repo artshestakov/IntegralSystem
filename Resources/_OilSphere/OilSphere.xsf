@@ -43,7 +43,7 @@
     RETURNS numeric AS
     $body$
     BEGIN
-    RETURN COALESCE(sum(ilod_weightnet), 0)
+    RETURN COALESCE(sum(ilod_cost), 0)
     FROM implementationload
     WHERE NOT ilod_isdeleted
     AND ilod_counterparty = counterparty_id
