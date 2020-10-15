@@ -32,7 +32,8 @@ bool ISTcpServer::Run()
 	QString DBUser = CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN);
 	QString DBPassword = CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD);
 	
-	//Получение максимального количества потоков и их запуск
+	//Запуск потоков
+	QEventLoop EventLoop;
 	for (unsigned int i = 0; i < WorkerCount; ++i)
 	{
 		QThread *Thread = new QThread();
@@ -40,8 +41,11 @@ bool ISTcpServer::Run()
 		Workers[i] = TcpWorker;
 
 		connect(Thread, &QThread::started, TcpWorker, &ISTcpWorker::Run); //Запуск воркера
-		TcpWorker->moveToThread(Thread);
-		Thread->start();
+		connect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit);
+		TcpWorker->moveToThread(Thread); //Перемещаем воркер в отдельный поток
+		Thread->start(); //Запускаем поток
+		EventLoop.exec(); //Ожидаем запуска воркера
+		disconnect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit); //Отключаем сигнал от текущего воркера (на всякий случай)
 	}
 
 	//Запускаем балансировщик очереди

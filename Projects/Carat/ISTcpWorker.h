@@ -9,6 +9,9 @@ class ISTcpWorker : public QObject
 {
 	Q_OBJECT
 
+signals:
+	void Started();
+
 public:
 	ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password);
 	virtual ~ISTcpWorker();

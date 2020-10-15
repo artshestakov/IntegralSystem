@@ -21,12 +21,12 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
+	ErrorString(NO_ERROR_STRING),
 	DBHost(db_host),
 	DBPort(db_port),
 	DBName(db_name),
 	DBUser(db_user),
 	DBPassword(db_password),
-	ErrorString(NO_ERROR_STRING),
 	IsRunning(false),
 	CurrentMessage(nullptr)
 {
@@ -63,9 +63,12 @@ void ISTcpWorker::Run()
 	if (!ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword))
 	{
 		ISLOGGER_E("Not connected to database: " + ISDatabase::Instance().GetErrorString());
+		emit Started();
 		return;
 	}
 
+	ISLOGGER_I("Started worker with thread id: " + DBConnectionName);
+	emit Started();
 	while (true)
 	{
 		//Засыпаем на одну милисекунду и даём поработать потоку
