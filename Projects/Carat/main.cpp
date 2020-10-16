@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 			if (Result) //Если все необходимые параметры заполнены - продолжаем запуск
 			{
 				unsigned int WorkerCount = std::thread::hardware_concurrency();
-				ISTcpServer *TcpServer = new ISTcpServer(CARAT_DEFAULT_PORT, WorkerCount);
+				ISTcpServer *TcpServer = new ISTcpServer(WorkerCount);
 				Result = TcpServer->Run();
 				if (Result)
 				{

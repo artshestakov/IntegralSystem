@@ -6,10 +6,9 @@
 #include "ISTcp.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISTcpServer::ISTcpServer(quint16 tcp_port, unsigned int worker_count)
+ISTcpServer::ISTcpServer(unsigned int worker_count)
 	: QTcpServer(),
 	ErrorString(NO_ERROR_STRING),
-	TcpPort(tcp_port),
 	WorkerCount(worker_count),
 	Workers(std::vector<ISTcpWorker *>(WorkerCount))
 {
@@ -28,6 +27,13 @@ QString ISTcpServer::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISTcpServer::Run()
 {
+	//Получаем и проверяем параметр порта сервера
+	unsigned short tcp_port = CONFIG_INT(CONST_CONFIG_TCPSERVER_PORT);
+	if (tcp_port < 1 || tcp_port >= USHRT_MAX) //Если значение не входит в диапазон портов - использует порт по умолчанию
+	{
+		ISLOGGER_W(QString("Invalid config value %1: %2. The default port will be used: %3.").arg(CONST_CONFIG_TCPSERVER_PORT).arg(tcp_port).arg(CARAT_DEFAULT_PORT));
+	}
+
 	QString DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
 	int DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
 	QString DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
@@ -62,7 +68,7 @@ bool ISTcpServer::Run()
 	}
 
 	//Запуск TCP-сервера
-	if (!listen(QHostAddress::AnyIPv4, TcpPort))
+	if (!listen(QHostAddress::AnyIPv4, tcp_port))
 	{
 		ErrorString = errorString();
 		return false;

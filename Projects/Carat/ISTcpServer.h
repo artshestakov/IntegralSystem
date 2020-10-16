@@ -11,7 +11,7 @@ class ISTcpServer : public QTcpServer
 	Q_OBJECT
 
 public:
-	ISTcpServer(quint16 tcp_port, unsigned int worker_count);
+	ISTcpServer(unsigned int worker_count);
 	virtual ~ISTcpServer();
 
 	QString GetErrorString() const;
@@ -28,7 +28,6 @@ private:
 
 private:
 	QString ErrorString;
-	unsigned short TcpPort;
 	unsigned int WorkerCount;
 	std::vector<ISTcpWorker *> Workers;
 };
