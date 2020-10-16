@@ -2,10 +2,11 @@
 <LANG Name="Carat">
   
   <!--System user-->
+  <Local Name="Carat.Error.MessageSize" Russian="Не удалось получить размер сообщения."/>
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>
   <Local Name="Carat.Error.InvalidMessage" Russian="Сообщение невалидное: %1"/>
   <Local Name="Carat.Error.InvalidMessageType" Russian="Тип сообщения невалидный: %1"/>
-  <Local Name="Carat.Error.SelectLogin" Russian="не удалось получить информацию о пользователе: %1"/>
+  <Local Name="Carat.Error.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
   <Local Name="Carat.Error.NotFoundLogin" Russian="Пользователь &quot;%1&quot; не найден в системе."/>
   <Local Name="Carat.Error.LoginIsDeleted" Russian="Пользователь &quot;%1&quot; помечен на удаление."/>
   <Local Name="Carat.Error.LoginNoAccess" Russian="У Вас нет доступа к базе данных."/>

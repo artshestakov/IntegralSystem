@@ -27,14 +27,14 @@ void ISTcpSocket::ReadyRead()
 	long Size = 0;
 	while (true) //Ждём пока не придёт запрос
 	{
-		ISSleep(10);
+		ISSleep(1);
 		ISSystem::ProcessEvents();
 		if (!Size) //Размеры ещё не известны - вытаскиваем их
 		{
 			Size = ISTcp::GetQuerySizeFromBuffer(Buffer);
 			if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отправляем ошибку
 			{
-				SendErrorQuery("Not getting query size");
+				SendErrorQuery(LANG("Carat.Error.MessageSize"));
 				return;
 			}
 		}
