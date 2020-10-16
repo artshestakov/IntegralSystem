@@ -6,11 +6,10 @@
 #include "ISTcp.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISTcpServer::ISTcpServer(unsigned int worker_count)
+ISTcpServer::ISTcpServer()
 	: QTcpServer(),
 	ErrorString(NO_ERROR_STRING),
-	WorkerCount(worker_count),
-	Workers(std::vector<ISTcpWorker *>(WorkerCount))
+	WorkerCount(0)
 {
 
 }
@@ -25,6 +24,11 @@ QString ISTcpServer::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+unsigned int ISTcpServer::GetWorkerCount() const
+{
+	return WorkerCount;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpServer::Run()
 {
 	//ѕолучаем и провер€ем параметр порта сервера
@@ -32,7 +36,18 @@ bool ISTcpServer::Run()
 	if (tcp_port < 1 || tcp_port >= USHRT_MAX) //≈сли значение не входит в диапазон портов - использует порт по умолчанию
 	{
 		ISLOGGER_W(QString("Invalid config value %1: %2. The default port will be used: %3.").arg(CONST_CONFIG_TCPSERVER_PORT).arg(tcp_port).arg(CARAT_DEFAULT_PORT));
+		tcp_port = CARAT_DEFAULT_PORT;
 	}
+
+	//ѕолучаем и провер€ем значение параметра количества воркеров
+	WorkerCount = CONFIG_INT(CONST_CONFIG_TCPSERVER_WORKERS);
+	if (WorkerCount < 1 || WorkerCount >= ULONG_MAX)
+	{
+		unsigned int worker_count = std::thread::hardware_concurrency();
+		ISLOGGER_W(QString("Invalid config value %1: %2. Will use %3 workers by default.").arg(CONST_CONFIG_TCPSERVER_WORKERS).arg(WorkerCount).arg(worker_count));
+		WorkerCount = worker_count;
+	}
+	Workers.resize(WorkerCount); //”станавливаем размер векторуу воркеров
 
 	QString DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
 	int DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);

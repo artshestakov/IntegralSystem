@@ -257,5 +257,6 @@ const char CONST_CONFIG_CONNECTION_PASSWORD[] = "Connection/Password";
 const char CONST_CONFIG_REMEMBER_USER_INCLUDE[] = "RememberUser/Include";
 const char CONST_CONFIG_REMEMBER_USER_LOGIN[] = "RememberUser/Login";
 const char CONST_CONFIG_TCPSERVER_PORT[] = "TCPServer/Port";
+const char CONST_CONFIG_TCPSERVER_WORKERS[] = "TCPServer/WorkerCount";
 //-----------------------------------------------------------------------------
 #endif

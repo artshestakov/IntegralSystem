@@ -64,16 +64,15 @@ int main(int argc, char **argv)
 			Result = CheckConfigValues();
 			if (Result) //Если все необходимые параметры заполнены - продолжаем запуск
 			{
-				unsigned int WorkerCount = std::thread::hardware_concurrency();
-				ISTcpServer *TcpServer = new ISTcpServer(WorkerCount);
+				ISTcpServer *TcpServer = new ISTcpServer();
 				Result = TcpServer->Run();
 				if (Result)
 				{
-					ISLOGGER_I(QString("Started server. TCP-port: %1 Workers: %2").arg(CARAT_DEFAULT_PORT).arg(WorkerCount));
+					ISLOGGER_I(QString("Started server. TCP-port: %1 Workers: %2").arg(CARAT_DEFAULT_PORT).arg(TcpServer->GetWorkerCount()));
 				}
 				else
 				{
-					ISLOGGER_W(QString("Not started server with port %1 and workers %2: %3").arg(CARAT_DEFAULT_PORT).arg(WorkerCount).arg(TcpServer->GetErrorString()));
+					ISLOGGER_W(QString("Not started server with port %1 and workers %2: %3").arg(CARAT_DEFAULT_PORT).arg(TcpServer->GetWorkerCount()).arg(TcpServer->GetErrorString()));
 				}
 			}
 		}

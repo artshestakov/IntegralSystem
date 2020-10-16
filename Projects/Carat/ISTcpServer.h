@@ -11,10 +11,11 @@ class ISTcpServer : public QTcpServer
 	Q_OBJECT
 
 public:
-	ISTcpServer(unsigned int worker_count);
+	ISTcpServer();
 	virtual ~ISTcpServer();
 
 	QString GetErrorString() const;
+	unsigned int GetWorkerCount() const;
 	bool Run();
 
 private:
