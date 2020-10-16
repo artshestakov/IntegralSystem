@@ -55,9 +55,9 @@ bool ISTcpConnector::Reconnect(const QString &Host, quint16 Port)
 //-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 {
-	Timer->start();
+	//Timer->start();
 	TcpSocket->connectToHost(Host, Port);
-	EventLoop.exec();
+	//EventLoop.exec();
 	return IsConnected();
 }
 //-----------------------------------------------------------------------------

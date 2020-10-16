@@ -30,7 +30,6 @@ private:
 	QString ErrorString;
 	unsigned short TcpPort;
 	unsigned int WorkerCount;
-	std::vector<ISTcpSocket *> Clients;
 	std::vector<ISTcpWorker *> Workers;
 };
 //-----------------------------------------------------------------------------

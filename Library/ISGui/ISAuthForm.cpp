@@ -109,7 +109,10 @@ ISAuthForm::ISAuthForm()
 	ButtonExit = new ISPushButton(BUFFER_ICONS("Auth.Exit"), LANG("Exit"), this);
 	ButtonExit->setCursor(CURSOR_POINTING_HAND);
 	ButtonExit->setToolTip(LANG("Exit.ToolTip"));
-	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
+	connect(ButtonExit, &ISPushButton::clicked, /*this, &ISAuthForm::close*/[=]
+	{
+		ISTcpConnector::Instance().Disconnect();
+	});
 	LayoutBottom->addWidget(ButtonExit);
 
 	QAction *ActionClearFields = new QAction(this);
@@ -210,6 +213,12 @@ void ISAuthForm::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISAuthForm::Input()
 {
+	if (!ISTcpConnector::Instance().Connect("127.0.0.1", 50000))
+	{
+		ISMessageBox::ShowWarning(this, ISTcpConnector::Instance().GetErrorString());
+	}
+	return;
+
 	if (CheckUpdate())
 	{
 		close();

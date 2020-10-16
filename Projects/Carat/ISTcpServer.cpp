@@ -13,7 +13,7 @@ ISTcpServer::ISTcpServer(quint16 tcp_port, unsigned int worker_count)
 	WorkerCount(worker_count),
 	Workers(std::vector<ISTcpWorker *>(WorkerCount))
 {
-	
+
 }
 //-----------------------------------------------------------------------------
 ISTcpServer::~ISTcpServer()
@@ -49,7 +49,9 @@ bool ISTcpServer::Run()
 		TcpWorker->moveToThread(Thread); //Перемещаем воркер в отдельный поток
 		Thread->start(); //Запускаем поток
 		EventLoop.exec(); //Ожидаем запуска воркера
-		disconnect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit); //Отключаем сигнал от текущего воркера (на всякий случай)
+
+		//Отключаем сигнал от текущего воркера (на всякий случай)
+		disconnect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit);
 	}
 
 	//Запускаем балансировщики
@@ -71,29 +73,18 @@ bool ISTcpServer::Run()
 //-----------------------------------------------------------------------------
 void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 {
-	//Создаём сокет и добавляем его во внутреннюю очередь
+	//Создаём сокет и подключаем все нобходимые сигналы
 	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
-	addPendingConnection(TcpSocket);
-	ISLOGGER_I(QString("Incoming connection from ") + TcpSocket->peerAddress().toString());
-
-	//Добавляем сокет в список и подключаем сигналы
-	Clients.emplace_back(TcpSocket);
 	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected);
 	connect(TcpSocket, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpServer::ClientError);
+	ISLOGGER_I(QString("Incoming connection from ") + TcpSocket->peerAddress().toString());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
 	ISLOGGER_I("Disconnected " + TcpSocket->peerAddress().toString());
-    if (ISAlgorithm::VectorTake(Clients, TcpSocket)) //Если нашли сокет в списке и успешно исключили его от туда - вызываем автоматическое удаление указателя на него
-	{
-		QTimer::singleShot(5000, TcpSocket, &ISTcpSocket::deleteLater);
-	}
-	else
-	{
-		ISLOGGER_W("Not found client");
-	}
+	QTimer::singleShot(5000, TcpSocket, &ISTcpSocket::deleteLater);
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientError(QAbstractSocket::SocketError socket_error)
