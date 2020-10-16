@@ -15,8 +15,7 @@ public:
 
 private:
 	void ReadyRead(); //Событие входящих данных
-	void Send(const QVariantMap &Data); //Отправка данных
-	void SendError(const QString &error_string); //Отправка ошибки
+	void SendErrorQuery(const QString &ErrorString); //Отправка ошибки клиенту
 	ISNamespace::ApiMessageType GetMessageType(const QString &TypeName) const; //Получить тип сообщения по его имени
 
 private:

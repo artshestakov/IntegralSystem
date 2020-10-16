@@ -28,6 +28,9 @@
     <ClCompile Include="ISTcpAnswer.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpMessage.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">

@@ -34,8 +34,7 @@ void ISTcpSocket::ReadyRead()
 			Size = ISTcp::GetQuerySizeFromBuffer(Buffer);
 			if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отправляем ошибку
 			{
-				SendError("Not getting query size");
-				Buffer.clear();
+				SendErrorQuery("Not getting query size");
 				return;
 			}
 		}
@@ -49,17 +48,14 @@ void ISTcpSocket::ReadyRead()
 	QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(Buffer, &ErrorString);
 	if (VariantMap.isEmpty() && !ErrorString.isEmpty()) //При конвертации произошла ошибка
 	{
-		SendError(LANG("Carat.Error.ParseMessage").arg(ErrorString));
+		SendErrorQuery(LANG("Carat.Error.ParseMessage").arg(ErrorString));
 		return;
 	}
-
-	//Очищаем буфер
-	Buffer.clear();
 
 	//Если поля "Type" нет - ошибка
 	if (!VariantMap.contains("Type"))
 	{
-		SendError(LANG("Carat.Error.InvalidMessage").arg("not found field \"Type\""));
+		SendErrorQuery(LANG("Carat.Error.InvalidMessage").arg("not found field \"Type\""));
 		return;
 	}
 
@@ -69,7 +65,7 @@ void ISTcpSocket::ReadyRead()
 	//Если поле "Type" пустое - ошибка
 	if (TypeName.isEmpty())
 	{
-		SendError(LANG("Carat.Error.InvalidMessage").arg("field \"Type\" is empty"));
+		SendErrorQuery(LANG("Carat.Error.InvalidMessage").arg("field \"Type\" is empty"));
 		return;
 	}
 
@@ -77,9 +73,11 @@ void ISTcpSocket::ReadyRead()
 	ISNamespace::ApiMessageType MessageType = GetMessageType(TypeName);
 	if (MessageType == ISNamespace::AMT_Unknown)
 	{
-		SendError(LANG("Carat.Error.InvalidMessageType").arg(TypeName));
+		SendErrorQuery(LANG("Carat.Error.InvalidMessageType").arg(TypeName));
 		return;
 	}
+
+	Buffer.clear(); //Очищаем буфер
 
 	//Создаём и добавляем сообщение в очередь
 	ISTcpQueue::Instance().AddMessage(new ISTcpMessage
@@ -90,26 +88,16 @@ void ISTcpSocket::ReadyRead()
 	});
 }
 //-----------------------------------------------------------------------------
-void ISTcpSocket::Send(const QVariantMap &Data)
+void ISTcpSocket::SendErrorQuery(const QString &ErrorString)
 {
-	//Если сокет все ещё подключен - отправляем
-	if (state() == QTcpSocket::ConnectedState)
-	{
-		//Формируем ответ
-		QByteArray ByteArray = ISSystem::VariantMapToJsonString(Data, QJsonDocument::Compact);
-		ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
+	Buffer.clear(); //Очищаем буфер
 
-		//Отправляем запрос и ждём окончания его отправки
-		write(ByteArray);
-		ISTcp::WaitForBytesWritten(this);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISTcpSocket::SendError(const QString &error_string)
-{
-	//Формируем ответ с ошибкой и отправляем его
-	//Send(ISTcpAnswer(error_string)); //???
-	ISLOGGER_E(error_string);
+	//Создаём ошибочное сообщение и передаём его в очередь через стандартный механизм
+	ISTcpQueue::Instance().AddMessage(new ISTcpMessage
+	{
+		this,
+		ErrorString
+	});
 }
 //-----------------------------------------------------------------------------
 ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName) const

@@ -86,11 +86,19 @@ void ISTcpWorker::Run()
 		{
 			bool Result = false;
 			ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpSocket);
-			switch (tcp_message->Type)
+
+			if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
 			{
-			case ISNamespace::AMT_Auth:
-				Result = Auth(tcp_message, TcpAnswer);
-				break;
+				switch (tcp_message->Type)
+				{
+				case ISNamespace::AMT_Auth:
+					Result = Auth(tcp_message, TcpAnswer);
+					break;
+				}
+			}
+			else
+			{
+				ErrorString = tcp_message->GetErrorString();
 			}
 
 			if (!Result) //Если запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе
