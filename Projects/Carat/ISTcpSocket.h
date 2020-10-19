@@ -22,6 +22,7 @@ private:
 private:
 	QByteArray Buffer;
 	int MessageSize;
+	int ChunkCount;
 	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------

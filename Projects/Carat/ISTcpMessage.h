@@ -15,8 +15,13 @@ public:
 	bool IsValid() const; //Получить валидность сообщения
 
 	ISNamespace::ApiMessageType Type; //Тип сообщения
+	QString TypeName; //Имя типа сообщения
 	QVariantMap Parameters; //Параметры
 	ISTcpSocket *TcpSocket; //Указатель на клиента
+
+	unsigned __int64 ParseMSec; //Время парсинга
+	int Size; //Размер сообщения
+	int ChunkCount; //Количество чанков
 
 private:
 	QString ErrorString;

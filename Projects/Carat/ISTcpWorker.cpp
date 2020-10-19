@@ -85,28 +85,42 @@ void ISTcpWorker::Run()
 		if (tcp_message)
 		{
 			bool Result = false;
+			unsigned __int64 PerfomanceMsec = 0;
 			ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpSocket);
 
 			if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
 			{
+				PerfomanceMsec = ISAlgorithm::GetTick(); //Запоминаем текущее время
 				switch (tcp_message->Type)
 				{
 				case ISNamespace::AMT_Auth:
 					Result = Auth(tcp_message, TcpAnswer);
 					break;
 				}
+				PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), PerfomanceMsec);
 			}
-			else
+			else //Сообщение не валидное
 			{
 				ErrorString = tcp_message->GetErrorString();
 			}
 
-			if (!Result) //Если запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе
+			//Формируем лог-сообщение
+			QString LogText = QString("%1 message \"%2\". Size: %3 Chunk: %4 Parse msec: %5 MSec: %6").
+				arg(Result ? "Done" : "Failed").
+				arg(tcp_message->TypeName).
+				arg(tcp_message->Size).
+				arg(tcp_message->ChunkCount).
+				arg(tcp_message->ParseMSec).
+				arg(PerfomanceMsec);
+
+			if (!Result) //Запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе
 			{
 				TcpAnswer->SetError(ErrorString);
+				LogText.append("\nError string: " + ErrorString);
 			}
 
-			//Добавляем ответ в очередь ответов и завершаем работу
+			//Логируемся, добавляем ответ в очередь ответов и завершаем работу
+			Result ? ISLOGGER_I(LogText) : ISLOGGER_E(LogText);
 			emit Answer(TcpAnswer);
 			Finish();
 		}

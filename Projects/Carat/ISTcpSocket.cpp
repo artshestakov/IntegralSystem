@@ -6,12 +6,12 @@
 #include "ISTcpAnswer.h"
 #include "ISLocalization.h"
 #include "ISTcpQueue.h"
-#include "ISCountingTime.h"
 #include "ISTcpMessage.h"
 //-----------------------------------------------------------------------------
 ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
 	: QTcpSocket(parent),
-	MessageSize(0)
+	MessageSize(0),
+	ChunkCount(0)
 {
 	setSocketDescriptor(SocketDescriptor);
 
@@ -51,6 +51,9 @@ void ISTcpSocket::ReadyRead()
 		}
 	}
 
+	//Инкрементируем количество чанков
+	++ChunkCount;
+
 	//Проверяем, не пришло ли сообщение полностью - выходим если пришло не полностью
 	if (Buffer.size() != MessageSize)
 	{
@@ -62,10 +65,15 @@ void ISTcpSocket::ReadyRead()
 
 	//Создаём указатель на сообщение
 	ISTcpMessage *TcpMessage = new ISTcpMessage(this);
+	TcpMessage->Size = Buffer.size();
+	TcpMessage->ChunkCount = ChunkCount;
 
-	QString TypeName;
+	//Засекаем время и парсим сообщение
+	unsigned __int64 TickCount = ISAlgorithm::GetTick();
 	QJsonParseError JsonParseError;
 	QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
+	TcpMessage->ParseMSec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TickCount);
+
 	bool Result = !VariantMap.isEmpty() && JsonParseError.error == QJsonParseError::NoError;
 	if (Result) //Конвертация прошла успешно
 	{
@@ -73,12 +81,12 @@ void ISTcpSocket::ReadyRead()
 		if (Result) //Если поле "Type" есть
 		{
 			//Получаем значение поля "Type"
-			TypeName = VariantMap["Type"].toString();
-			Result = !TypeName.isEmpty();
+			TcpMessage->TypeName = VariantMap["Type"].toString();
+			Result = !TcpMessage->TypeName.isEmpty();
 			if (Result) //Если поле "Type" не пустое
 			{
 				//Получаем тип сообщения по его имени и если оно неизвестное - ошибка
-				ISNamespace::ApiMessageType MessageType = GetMessageType(TypeName);
+				ISNamespace::ApiMessageType MessageType = GetMessageType(TcpMessage->TypeName);
 				Result = MessageType != ISNamespace::AMT_Unknown;
 				if (Result) //Сообщение валидное
 				{
@@ -87,7 +95,7 @@ void ISTcpSocket::ReadyRead()
 				}
 				else //Тип сообщения не известный
 				{
-					TcpMessage->SetErrorString(LANG("Carat.Error.InvalidMessageType").arg(TypeName));
+					TcpMessage->SetErrorString(LANG("Carat.Error.InvalidMessageType").arg(TcpMessage->TypeName));
 				}
 			}
 			else //Поле "Type" пустое
@@ -129,5 +137,6 @@ void ISTcpSocket::ClearBuffer()
 {
 	Buffer.clear();
 	MessageSize = 0;
+	ChunkCount = 0;
 }
 //-----------------------------------------------------------------------------

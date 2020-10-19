@@ -5,7 +5,10 @@ ISTcpMessage::ISTcpMessage(ISTcpSocket *tcp_socket)
 	: Type(ISNamespace::AMT_Unknown),
 	TcpSocket(tcp_socket),
 	ErrorString(NO_ERROR_STRING),
-	Valid(true)
+	Valid(true),
+	ParseMSec(0),
+	Size(0),
+	ChunkCount(0)
 {
 
 }

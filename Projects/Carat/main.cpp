@@ -22,12 +22,6 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	//Загрузка трансляций QT
-	if (!ISLocalization::Instance().LoadTraslatorQT())
-	{
-		ISLOGGER_W(ISLocalization::Instance().GetErrorString());
-	}
-
 	//Загрузка локализации ядра
 	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CARAT);
 	if (!Result)
