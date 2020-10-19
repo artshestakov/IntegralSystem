@@ -34,3 +34,17 @@ qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorS
 	return -1;
 }
 //-----------------------------------------------------------------------------
+unsigned __int64 ISAlgorithm::GetTick()
+{
+#ifdef WIN32
+	return GetTickCount64();
+#else
+	// ...
+#endif
+}
+//-----------------------------------------------------------------------------
+unsigned long ISAlgorithm::GetTickDiff(unsigned __int64 TickA, unsigned __int64 TickB)
+{
+	return std::abs((int)TickA - (int)TickB);
+}
+//-----------------------------------------------------------------------------

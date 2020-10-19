@@ -6,98 +6,114 @@
 #include "ISTcpAnswer.h"
 #include "ISLocalization.h"
 #include "ISTcpQueue.h"
+#include "ISCountingTime.h"
 #include "ISTcpMessage.h"
 //-----------------------------------------------------------------------------
-ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent) : QTcpSocket(parent)
+ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
+	: QTcpSocket(parent),
+	MessageSize(0)
 {
 	setSocketDescriptor(SocketDescriptor);
+
+	Timer = new QTimer(this);
+	Timer->setInterval(5000);
+	Timer->setSingleShot(true);
+	connect(Timer, &QTimer::timeout, this, &ISTcpSocket::abort);
+
+	//Эти сигналы обязательно должны подключаться в конце конструктора
+	connect(this, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpSocket::Error);
 	connect(this, &ISTcpSocket::readyRead, this, &ISTcpSocket::ReadyRead);
 }
 //-----------------------------------------------------------------------------
 ISTcpSocket::~ISTcpSocket()
 {
-	
+	if (Timer->isActive()) //Если таймер был запущен - останавливаем его
+	{
+		Timer->stop();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::ReadyRead()
 {
-	//Добавляем очередную порцию данных в буфер
+	//Добавляем очередную порцию данных в буфер, перезапускаем таймер и проверяем размер
 	Buffer.push_back(readAll());
-
-	long Size = 0;
-	while (true) //Ждём пока не придёт запрос
+	Timer->start(); 
+	if (!MessageSize) //Если размер сообщения ещё не известен
 	{
-		ISSleep(1);
-		ISSystem::ProcessEvents();
-		if (!Size) //Размеры ещё не известны - вытаскиваем их
+		bool Ok = true;
+		MessageSize = ISTcp::GetQuerySizeFromBuffer(Buffer, Ok);
+		if (!Ok) //Если не удалось вытащить размер сообщения - принудительно отключаем клиента, сообщаем об ошибке и очищаем буфер
 		{
-			Size = ISTcp::GetQuerySizeFromBuffer(Buffer);
-			if (!Size) //Если размер не удалось вытащить - вероятно пришли невалидные данные - отправляем ошибку
+			abort();
+			ISLOGGER_E("Not get message size. Client will be disconnected. Invalid message:\n" + Buffer);
+			ClearBuffer();
+			return;
+		}
+	}
+
+	//Проверяем, не пришло ли сообщение полностью - выходим если пришло не полностью
+	if (Buffer.size() != MessageSize)
+	{
+		return;
+	}
+
+	//Останавливаем таймер
+	Timer->stop();
+
+	//Создаём указатель на сообщение
+	ISTcpMessage *TcpMessage = new ISTcpMessage(this);
+
+	QString TypeName;
+	QJsonParseError JsonParseError;
+	QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
+	bool Result = !VariantMap.isEmpty() && JsonParseError.error == QJsonParseError::NoError;
+	if (Result) //Конвертация прошла успешно
+	{
+		Result = VariantMap.contains("Type");
+		if (Result) //Если поле "Type" есть
+		{
+			//Получаем значение поля "Type"
+			TypeName = VariantMap["Type"].toString();
+			Result = !TypeName.isEmpty();
+			if (Result) //Если поле "Type" не пустое
 			{
-				SendErrorQuery(LANG("Carat.Error.MessageSize"));
-				return;
+				//Получаем тип сообщения по его имени и если оно неизвестное - ошибка
+				ISNamespace::ApiMessageType MessageType = GetMessageType(TypeName);
+				Result = MessageType != ISNamespace::AMT_Unknown;
+				if (Result) //Сообщение валидное
+				{
+					TcpMessage->Type = MessageType;
+					TcpMessage->Parameters = VariantMap["Parameters"].toMap();
+				}
+				else //Тип сообщения не известный
+				{
+					TcpMessage->SetErrorString(LANG("Carat.Error.InvalidMessageType").arg(TypeName));
+				}
+			}
+			else //Поле "Type" пустое
+			{
+				TcpMessage->SetErrorString(LANG("Carat.Error.InvalidMessage").arg("field \"Type\" is empty"));
 			}
 		}
-		if (Buffer.size() == Size) //Запрос пришёл полностью - выходим из цикла
+		else //Поле "Type" отсутствует
 		{
-			break;
+			TcpMessage->SetErrorString(LANG("Carat.Error.InvalidMessage").arg("not found field \"Type\""));
 		}
 	}
-
-	QString ErrorString;
-	QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(Buffer, &ErrorString);
-	if (VariantMap.isEmpty() && !ErrorString.isEmpty()) //При конвертации произошла ошибка
+	else //Ошибка при конвертации сообщения
 	{
-		SendErrorQuery(LANG("Carat.Error.ParseMessage").arg(ErrorString));
-		return;
+		TcpMessage->SetErrorString(LANG("Carat.Error.ParseMessage").arg(JsonParseError.errorString()));
 	}
-
-	//Если поля "Type" нет - ошибка
-	if (!VariantMap.contains("Type"))
-	{
-		SendErrorQuery(LANG("Carat.Error.InvalidMessage").arg("not found field \"Type\""));
-		return;
-	}
-
-	//Получаем значение поля "Type"
-	QString TypeName = VariantMap["Type"].toString();
-
-	//Если поле "Type" пустое - ошибка
-	if (TypeName.isEmpty())
-	{
-		SendErrorQuery(LANG("Carat.Error.InvalidMessage").arg("field \"Type\" is empty"));
-		return;
-	}
-
-	//Получаем тип сообщения по его имени и если оно неизвестное - ошибка
-	ISNamespace::ApiMessageType MessageType = GetMessageType(TypeName);
-	if (MessageType == ISNamespace::AMT_Unknown)
-	{
-		SendErrorQuery(LANG("Carat.Error.InvalidMessageType").arg(TypeName));
-		return;
-	}
-
-	Buffer.clear(); //Очищаем буфер
-
-	//Создаём и добавляем сообщение в очередь
-	ISTcpQueue::Instance().AddMessage(new ISTcpMessage
-	{
-		MessageType,
-		VariantMap["Parameters"].toMap(),
-		this
-	});
+	
+	//Очищаем буфер и добавляем сообщение в очередь
+	ClearBuffer();
+	ISTcpQueue::Instance().AddMessage(TcpMessage);
 }
 //-----------------------------------------------------------------------------
-void ISTcpSocket::SendErrorQuery(const QString &ErrorString)
+void ISTcpSocket::Error(QAbstractSocket::SocketError socket_error)
 {
-	Buffer.clear(); //Очищаем буфер
-
-	//Создаём ошибочное сообщение и передаём его в очередь через стандартный механизм
-	ISTcpQueue::Instance().AddMessage(new ISTcpMessage
-	{
-		this,
-		ErrorString
-	});
+	Q_UNUSED(socket_error);
+	ISLOGGER_E(errorString());
 }
 //-----------------------------------------------------------------------------
 ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName) const
@@ -107,5 +123,11 @@ ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName)
 		return ISNamespace::AMT_Auth;
 	}
 	return ISNamespace::AMT_Unknown;
+}
+//-----------------------------------------------------------------------------
+void ISTcpSocket::ClearBuffer()
+{
+	Buffer.clear();
+	MessageSize = 0;
 }
 //-----------------------------------------------------------------------------

@@ -21,7 +21,6 @@ public:
 private:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
 	void ClientDisconnected(); //Событие отключения клиента
-	void ClientError(QAbstractSocket::SocketError socket_error); //Ошибка клиента
 	void AcceptError(QTcpSocket::SocketError socket_error); //Ошибка принятия подключения
 	
 	void QueueBalancerMessage(); //Балансер очереди сообщений

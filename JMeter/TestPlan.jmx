@@ -34,13 +34,18 @@
 
 def JsonMap =
 [
-	Type: &quot;Auth1&quot;,
+	Type: &quot;Auth&quot;,
 	Parameters:
 		[
 			Login: &quot;postgres&quot;,
 			Password: &quot;adm777&quot;
 		]
 ];
+
+//for (int i = 0; i &lt; 50000; ++i)
+//{
+//	JsonMap.put(&quot;Test&quot; + String.valueOf(i + 1), &apos;{&apos; + UUID.randomUUID().toString().toUpperCase() + &apos;}&apos;);
+//}
 
 JsonBuilder Builder = new JsonBuilder(JsonMap);
 String JsonString = Builder.toString();
@@ -61,12 +66,25 @@ vars.put(&quot;JsonString&quot;, JsonString);</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
-        <hashTree>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
-            <stringProp name="ConstantTimer.delay">100</stringProp>
-          </ConstantTimer>
-          <hashTree/>
-        </hashTree>
+        <hashTree/>
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="false">
+          <stringProp name="ConstantTimer.delay">10000</stringProp>
+        </ConstantTimer>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Auth" enabled="false">
+          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port">50000</stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">gin&quot;:&quot;postgres&quot;,&quot;Password&quot;:&quot;adm777&quot;}}
+</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
           <boolProp name="displayJMeterProperties">false</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>

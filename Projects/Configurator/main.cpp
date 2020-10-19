@@ -23,7 +23,6 @@
 #include "CGConfiguratorDelete.h"
 #include "CGConfiguratorService.h"
 #include "CGConfiguratorShow.h"
-#include <chrono>
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------

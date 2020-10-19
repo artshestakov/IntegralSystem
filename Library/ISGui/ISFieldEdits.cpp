@@ -1705,16 +1705,24 @@ ISFileEdit::~ISFileEdit()
 //-----------------------------------------------------------------------------
 void ISFileEdit::SetValue(const QVariant &value)
 {
-	VariantMap = ISSystem::JsonStringToVariantMap(value.toString());
-	ButtonFile->setMenu(Menu);
-	ButtonFile->setText(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
-	ActionSave->setEnabled(true);
-	ActionRename->setEnabled(true);
-
-	QPixmap Pixmap;
-	if (Pixmap.loadFromData(QByteArray::fromBase64(VariantMap[FILE_EDIT_PROPERTY_LOGO].toString().toUtf8())))
+	QJsonParseError JsonParseError;
+	VariantMap = ISSystem::JsonStringToVariantMap(value.toString(), JsonParseError);
+	if (JsonParseError.error == QJsonParseError::NoError)
 	{
-		ButtonFile->setIcon(QIcon(Pixmap));
+		ButtonFile->setMenu(Menu);
+		ButtonFile->setText(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
+		ActionSave->setEnabled(true);
+		ActionRename->setEnabled(true);
+
+		QPixmap Pixmap;
+		if (Pixmap.loadFromData(QByteArray::fromBase64(VariantMap[FILE_EDIT_PROPERTY_LOGO].toString().toUtf8())))
+		{
+			ButtonFile->setIcon(QIcon(Pixmap));
+		}
+	}
+	else
+	{
+		ButtonFile->setText(JsonParseError.errorString());
 	}
 }
 //-----------------------------------------------------------------------------

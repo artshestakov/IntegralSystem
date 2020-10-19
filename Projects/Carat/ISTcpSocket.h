@@ -15,11 +15,14 @@ public:
 
 private:
 	void ReadyRead(); //Событие входящих данных
-	void SendErrorQuery(const QString &ErrorString); //Отправка ошибки клиенту
+	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки сокета
 	ISNamespace::ApiMessageType GetMessageType(const QString &TypeName) const; //Получить тип сообщения по его имени
+	void ClearBuffer(); //Очистка буфера
 
 private:
 	QByteArray Buffer;
+	int MessageSize;
+	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------
 #endif

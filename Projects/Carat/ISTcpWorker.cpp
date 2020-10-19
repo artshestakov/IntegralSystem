@@ -144,7 +144,6 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
-	ISTRACE();
 	QVariant Login = CheckNullField("Login", TcpMessage->Parameters),
 		Password = CheckNullField("Password", TcpMessage->Parameters);
 	if (!Login.isValid() || !Password.isValid())

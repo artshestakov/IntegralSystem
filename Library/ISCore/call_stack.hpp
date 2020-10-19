@@ -2,9 +2,10 @@
    License: BSD licence (http://www.opensource.org/licenses/bsd-license.php) */
 
 #pragma once
-#include <string>
-#include <vector>
-#include <sstream>
+#include "StdAfx.h"
+//#include <string>
+//#include <vector>
+//#include <sstream>
 
 namespace stacktrace {
 

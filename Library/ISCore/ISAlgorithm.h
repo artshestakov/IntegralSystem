@@ -37,7 +37,7 @@ if (POINTER) \
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
 {
-	//! Вытаскивание имени файла из пути к нему.
+	//! Вытаскивание имени файла из пути к нему
 	//! \param FilePath путь к файлу
 	//! \return возвращаем имя файла
 	ISCORE_EXPORT std::string GetFileNameFromPath(const std::string &FilePath);
@@ -52,6 +52,16 @@ namespace ISAlgorithm
 	//! \param ErrorString текстовое описание ошибки
 	//! \return возвращает размер файла в байтах. В случае ошибки возвращается -1, а ErrorString заполняется описанием ошибки
     ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath, std::string &ErrorString);
+
+	//! \Получить временную метку
+	//! \return возвращает временную метку
+	ISCORE_EXPORT unsigned __int64 GetTick();
+
+	//! \Получить разницу временных меток
+	//! \param TickA временная метка
+	//! \param TickB временная метка
+	//! \return возвращает разницу между двумя временными метками
+	ISCORE_EXPORT unsigned long GetTickDiff(unsigned __int64 TickA, unsigned __int64 TickB);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

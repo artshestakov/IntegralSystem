@@ -54,7 +54,7 @@ bool ISTcpQuery::Execute()
 	ISTcp::WaitForBytesWritten(TcpSocket); //Ждём пока данные уйдут
 
 	ByteArray.clear();
-	long Size = 0;
+	int Size = 0;
 	
 	while (true) //Ждём пока не придёт ответ
 	{
@@ -65,7 +65,7 @@ bool ISTcpQuery::Execute()
 			ByteArray.append(TcpSocket->readAll());
 			if (!Size) //Размер ещё не известен - вытаскиваем его
 			{
-				Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
+				//Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
 			}
 
 			if (ByteArray.size() == Size) //Запрос пришёл полностью - выходим из цикла

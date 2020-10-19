@@ -7,11 +7,11 @@
 class ISTcpMessage
 {
 public:
-	ISTcpMessage(ISNamespace::ApiMessageType type, const QVariantMap &parameters, ISTcpSocket *tcp_socket);
-	ISTcpMessage(ISTcpSocket *tcp_socket, const QString &error_string);
+	ISTcpMessage(ISTcpSocket *tcp_socket);
 	~ISTcpMessage();
 
 	QString GetErrorString() const; //Получить текстовое описание ошибки
+	void SetErrorString(const QString &error_string); //Изменить текстовое описание ошибки
 	bool IsValid() const; //Получить валидность сообщения
 
 	ISNamespace::ApiMessageType Type; //Тип сообщения

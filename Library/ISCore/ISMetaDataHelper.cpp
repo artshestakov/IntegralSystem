@@ -61,8 +61,12 @@ QString ISMetaDataHelper::GetConfigurationName(QString &ErrorString)
 	ISQuery qSelect(QS_DATABASE_DESCRIPTION);
 	if (qSelect.ExecuteFirst())
 	{
-		QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(qSelect.ReadColumn("description").toString());
-		return VariantMap["ConfigurationName"].toString();
+		QJsonParseError JsonParseError;
+		QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(qSelect.ReadColumn("description").toString(), JsonParseError);
+		if (JsonParseError.error == QJsonParseError::NoError)
+		{
+			return VariantMap["ConfigurationName"].toString();
+		}
 	}
 	else
 	{

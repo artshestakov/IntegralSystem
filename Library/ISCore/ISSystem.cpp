@@ -187,39 +187,18 @@ QString ISSystem::Base64ToString(const QString &Base64)
 	return String;
 }
 //-----------------------------------------------------------------------------
-QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QString *ErrorString)
+QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QJsonParseError &JsonParseError)
 {
 	QVariantMap VariantMap;
 	if (!JsonString.isEmpty())
 	{
-		QJsonParseError JsonParseError;
 		QJsonDocument JsonDocument = QJsonDocument::fromJson(JsonString.toUtf8(), &JsonParseError);
 		if (JsonParseError.error == QJsonParseError::NoError)
 		{
-			QJsonObject JsonObject = JsonDocument.object();
-			VariantMap = JsonObject.toVariantMap();
+			VariantMap = JsonDocument.object().toVariantMap();
 		}
-		else
-		{
-            *ErrorString = JsonParseError.errorString();
-		}
-	}
-	else
-	{
-        *ErrorString = "Empty string";
 	}
 	return VariantMap;
-}
-//-----------------------------------------------------------------------------
-ISStringMap ISSystem::JsonStringToStringMap(const QString &JsonString, QString *ErrorString)
-{
-	QVariantMap VariantMap = JsonStringToVariantMap(JsonString, ErrorString);
-	ISStringMap StringMap;
-	for (const auto &MapItem : VariantMap.toStdMap())
-	{
-		StringMap.emplace(MapItem.first, MapItem.second.toString());
-	}
-	return StringMap;
 }
 //-----------------------------------------------------------------------------
 QByteArray ISSystem::VariantMapToJsonString(const QVariantMap &VariantMap, QJsonDocument::JsonFormat Format)

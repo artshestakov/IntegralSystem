@@ -47,7 +47,7 @@ bool ISTcpServer::Run()
 		ISLOGGER_W(QString("Invalid config value %1: %2. Will use %3 workers by default.").arg(CONST_CONFIG_TCPSERVER_WORKERS).arg(WorkerCount).arg(worker_count));
 		WorkerCount = worker_count;
 	}
-	Workers.resize(WorkerCount); //Устанавливаем размер векторуу воркеров
+	Workers.resize(WorkerCount); //Устанавливаем размер вектору воркеров
 
 	QString DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
 	int DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
@@ -97,7 +97,6 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	//Создаём сокет и подключаем все нобходимые сигналы
 	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
 	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected);
-	connect(TcpSocket, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpServer::ClientError);
 	ISLOGGER_I(QString("Incoming connection from ") + TcpSocket->peerAddress().toString());
 }
 //-----------------------------------------------------------------------------
@@ -108,14 +107,10 @@ void ISTcpServer::ClientDisconnected()
 	QTimer::singleShot(5000, TcpSocket, &ISTcpSocket::deleteLater);
 }
 //-----------------------------------------------------------------------------
-void ISTcpServer::ClientError(QAbstractSocket::SocketError socket_error)
-{
-	Q_UNUSED(socket_error);
-}
-//-----------------------------------------------------------------------------
 void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)
 {
 	Q_UNUSED(socket_error);
+	ISLOGGER_E(errorString());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::QueueBalancerMessage()

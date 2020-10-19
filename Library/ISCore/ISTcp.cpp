@@ -5,8 +5,9 @@
 //-----------------------------------------------------------------------------
 bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString)
 {
-    VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, &ErrorString);
-	if (VariantMap.isEmpty() && !ErrorString.isEmpty())
+	QJsonParseError JsonParseError;
+    VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, JsonParseError);
+	if (VariantMap.isEmpty() && JsonParseError.error != QJsonParseError::NoError)
 	{
 		return false;
 	}
@@ -40,26 +41,17 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 	return true;
 }
 //-----------------------------------------------------------------------------
-long ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray)
+int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray, bool &Ok)
 {
-	QString Digits;
-	for (int i = 0;i < ByteArray.size(); ++i) //Обходим весь массив
+	int Pos = ByteArray.indexOf(SYMBOL_POINT);
+	Ok = Pos != -1;
+	if (Ok)
 	{
-		if (ByteArray[i] == SYMBOL_POINT && i) //Нашли точку и её индекс не нулевой - вытаскиваем левую часть и удаляем её из массива
-		{
-			Digits = ByteArray.left(i);
-			ByteArray.remove(0, i + 1);
-			break;
-		}
-	}
-
-	//Цифры нашлись и массив не пустой - конвертируем строку с цифрами в целое число
-	if (!Digits.isEmpty() && !ByteArray.isEmpty())
-	{
-		bool Ok = true;
-		long Result = Digits.toInt(&Ok);
+		QByteArray ByteArraySize = ByteArray.mid(0, Pos);
+		unsigned int Result = ByteArraySize.toUInt(&Ok);
 		if (Ok)
 		{
+			ByteArray.remove(0, Pos + 1);
 			return Result;
 		}
 	}
