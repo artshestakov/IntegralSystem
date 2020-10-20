@@ -335,6 +335,7 @@
   <Local Name="Card" Russian="Карточка"/>
   <Local Name="CloseCard" Russian="Закрыть карточку"/>
   <Local Name="AllTabs" Russian="Все вкладки"/>
+  <Local Name="All" Russian="Все"/>
   <Local Name="InSeparateWindow" Russian="В отдельное окно"/>
   <Local Name="Founded" Russian="Найдено"/>
   <Local Name="Reminder" Russian="Напоминание"/>

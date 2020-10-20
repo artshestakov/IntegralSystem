@@ -21,6 +21,11 @@ static QString QS_STATEMENT = PREPARE_QUERY2("SELECT COUNT(*) "
 static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
 											 "VALUES(:ImplementationUnload, :StockID, CURRENT_DATE, :VolumeIncome)");
 //-----------------------------------------------------------------------------
+static QString QS_STOCK = PREPARE_QUERY2("SELECT stck_id, stck_name "
+										 "FROM stock "
+										 "WHERE NOT stck_isdeleted "
+										 "ORDER BY stck_name");
+//-----------------------------------------------------------------------------
 static QString QS_CONSTANT = PREPARE_QUERY2("SELECT prod_constant "
 											"FROM period "
 											"WHERE NOT prod_isdeleted "
@@ -555,6 +560,23 @@ void ISOilSphere::ImplementationUnloadObjectForm::Calculate()
 //-----------------------------------------------------------------------------
 ISOilSphere::GasStationStatementListForm::GasStationStatementListForm(QWidget *parent) : ISListBaseForm("GasStationStatement", parent)
 {
+	GetToolBar()->addWidget(new QLabel(LANG("OilSphere.GasStationLabel"), GetToolBar()));
+
+	EditStock = new ISComboEdit(this);
+	EditStock->SetEditable(false);
+	EditStock->AddItem(LANG("All"));
+	connect(EditStock, &ISFieldEditBase::ValueChange, this, &ISOilSphere::GasStationStatementListForm::StockChanged);
+	GetToolBar()->addWidget(EditStock);
+
+	ISQuery qSelectStock(QS_STOCK);
+	if (qSelectStock.Execute())
+	{
+		while (qSelectStock.Next())
+		{
+			EditStock->AddItem(qSelectStock.ReadColumn("stck_name").toString(), qSelectStock.ReadColumn("stck_id"));
+		}
+	}
+
 	LabelTotal = new QLabel(GetStatusBar());
 	ISGui::SetFontWidgetBold(LabelTotal, true);
 	GetStatusBar()->addWidget(LabelTotal);
@@ -593,6 +615,14 @@ void ISOilSphere::GasStationStatementListForm::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxAdministrativeExpenses", 0.0))));
 }
 //-----------------------------------------------------------------------------
+void ISOilSphere::GasStationStatementListForm::StockChanged(const QVariant &Value)
+{
+	Value.isValid()
+		? GetQueryModel()->SetClassFilter("gsts_stock = " + Value.toString()) : 
+		GetQueryModel()->ClearClassFilter();
+	Update();
+}
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISOilSphere::GasStationStatementObjectForm::GasStationStatementObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
@@ -604,7 +634,7 @@ ISOilSphere::GasStationStatementObjectForm::GasStationStatementObjectForm(ISName
 {
 	QAction *ActionFillInBasedOn = new QAction(BUFFER_ICONS("Arrow.Down"), LANG("OilSphere.FillInBased"), GetToolBar());
 	connect(ActionFillInBasedOn, &QAction::triggered, this, &ISOilSphere::GasStationStatementObjectForm::FillInBased);
-	AddActionToolBar(ActionFillInBasedOn);
+	AddActionToolBar(ActionFillInBasedOn);	
 
 	//Остаток на конец смены
 	connect(GetFieldWidget("BalanceBeginChange"), &ISFieldEditBase::DataChanged, this, &ISOilSphere::GasStationStatementObjectForm::CalculateBalanceEndChange);

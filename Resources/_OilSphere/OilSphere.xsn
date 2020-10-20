@@ -247,7 +247,7 @@
   <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
     <Fields>
       <Field UID="{7C6A6D31-3F92-41A6-836D-A1B96E345A92}" Name="ImplementationUnload" Type="BigInt" LabelName="Выгрузка" LocalListName="Выгрузка" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" HideFromList="true" LayoutName="Title"/>
+      <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" LayoutName="Title"/>
       <Field UID="{64DC2A84-C906-4F46-AE3E-3D32E273E236}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Title"/>
       <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="BigInt" LabelName="Оператор" LocalListName="Оператор" LayoutName="Title"/>
       <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="BigInt" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>

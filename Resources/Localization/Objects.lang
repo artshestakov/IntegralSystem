@@ -2,6 +2,7 @@
 <LANG Name="Objects">
 	
   <!--OilSphere-->
+  <Local Name="OilSphere.GasStationLabel" Russian="АЗС:"/>
   <Local Name="OilSphere.DateLoad" Russian="Дата загрузки: %1"/>
   <Local Name="OilSphere.Cost.Load" Russian="Стоимость загрузки: %1"/>
   <Local Name="OilSphere.Cost.Unload" Russian="Стоимость выгрузки: %1"/>

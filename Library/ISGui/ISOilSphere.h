@@ -147,6 +147,10 @@ namespace ISOilSphere
 		void LoadDataAfterEvent() override;
 
 	private:
+		void StockChanged(const QVariant &Value);
+
+	private:
+		ISComboEdit *EditStock;
 		QLabel *LabelTotal;
 	};
 
