@@ -367,13 +367,15 @@ bool ISAuthForm::CheckUpdate()
 {
 	QString UpdateDir = CONFIG_STRING(CONST_CONFIG_CONNECTION_UPDATE_DIR);
 	bool result = !UpdateDir.isEmpty();
-	if (result) //Если путь к папке не пустой - прроверяем обновления
+	if (result) //Если путь к папке не пустой - проверяем обновления
 	{
 		//Получаем список файлов в папке и обходим каждый из них
-		QFileInfoList FileInfoList = QDir(UpdateDir).entryInfoList(QStringList() << "*.exe", QDir::Files, QDir::Name);
-		for (const QFileInfo &FileInfo : FileInfoList)
+		QStringList StringList = QDir(UpdateDir).entryList(QDir::Files, QDir::Time);
+		result = !StringList.isEmpty();
+		if (result)
 		{
-			QStringList StringList = FileInfo.fileName().split(SYMBOL_POINT);
+			QFileInfo FileInfo(StringList.front());
+			StringList = FileInfo.fileName().split(SYMBOL_POINT);
 			result = StringList.size() == 4;
 			if (result)
 			{
@@ -382,13 +384,12 @@ bool ISAuthForm::CheckUpdate()
 				{
 					ISLOGGER_I(QString("Founded update. This version: %1. Update file: %2").arg(ISVersion::Instance().ToString()).arg(FileInfo.fileName()));
 					ISMessageBox::ShowInformation(this, LANG("Message.Information.FoundNewAppVersion"));
-					QString FilePath = FileInfo.filePath();
+					QString FilePath = UpdateDir + '/' + FileInfo.fileName();
 					result = QProcess::startDetached(FilePath, QStringList() << "/SILENT" << "/NOCANCEL" << "/NORESTART");
 					if (!result)
 					{
 						ISMessageBox::ShowWarning(this, LANG("Message.Warning.StartInstallUpdate").arg(FilePath));
 					}
-					break;
 				}
 			}
 		}
