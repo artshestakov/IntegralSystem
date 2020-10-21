@@ -26,13 +26,22 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223: Auth" enabled="true">
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223: Create query" enabled="true">
           <stringProp name="cacheKey">true</stringProp>
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="script">import groovy.json.JsonBuilder;
 
-def JsonMap =
+//Конвертируем контейнер в готовый запрос
+String MapToString(def Map)
+{
+	JsonBuilder Builder = new JsonBuilder(Map);
+	String JsonString = Builder.toString();
+	return Integer.toString(JsonString.length()) + &apos;.&apos; + JsonString;
+};
+
+//Авторизация
+def MapAuth =
 [
 	Type: &quot;Auth&quot;,
 	Parameters:
@@ -41,16 +50,18 @@ def JsonMap =
 			Password: &quot;adm777&quot;
 		]
 ];
+vars.put(&quot;QueryAuth&quot;, MapToString(MapAuth));
 
-//for (int i = 0; i &lt; 50000; ++i)
-//{
-//	JsonMap.put(&quot;Test&quot; + String.valueOf(i + 1), &apos;{&apos; + UUID.randomUUID().toString().toUpperCase() + &apos;}&apos;);
-//}
-
-JsonBuilder Builder = new JsonBuilder(JsonMap);
-String JsonString = Builder.toString();
-JsonString = Integer.toString(JsonString.length()) + &apos;.&apos; + JsonString;
-vars.put(&quot;JsonString&quot;, JsonString);</stringProp>
+//Ожидание
+def MapSleep =
+[
+	Type: &quot;Sleep&quot;,
+	Parameters:
+		[
+			Timeout: 1000
+		]
+];
+vars.put(&quot;QuerySleep&quot;, MapToString(MapSleep));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -60,25 +71,20 @@ vars.put(&quot;JsonString&quot;, JsonString);</stringProp>
           <stringProp name="TCPSampler.port">50000</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${JsonString}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="TCPSampler.request">${QueryAuth}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="false">
-          <stringProp name="ConstantTimer.delay">10000</stringProp>
-        </ConstantTimer>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Auth" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="true">
           <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port">50000</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">gin&quot;:&quot;postgres&quot;,&quot;Password&quot;:&quot;adm777&quot;}}
-</stringProp>
+          <stringProp name="TCPSampler.request">${QuerySleep}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
