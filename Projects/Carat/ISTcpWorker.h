@@ -28,6 +28,7 @@ private:
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
 	QString DBConnectionName;

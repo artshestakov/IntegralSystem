@@ -96,6 +96,10 @@ void ISTcpWorker::Run()
 				case ISNamespace::AMT_Auth:
 					Result = Auth(tcp_message, TcpAnswer);
 					break;
+
+				case ISNamespace::AMT_Sleep:
+					Result = Sleep(tcp_message, TcpAnswer);
+					break;
 				}
 				PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), PerfomanceMsec);
 			}
@@ -244,6 +248,39 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	ISDatabase::Instance().Disconnect(TestConnectionName);
 	TcpMessage->TcpSocket->SetAuthorized(true);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+	QVariant Timeout = CheckNullField("Timeout", TcpMessage->Parameters);
+	if (!Timeout.isValid())
+	{
+		return false;
+	}
+	
+	bool Ok = true;
+	int TimeoutInt = Timeout.toInt(&Ok);
+	if (!Ok) //Не удалось привести значение к числу
+	{
+		ErrorString = LANG("Carat.Error.Query.Sleep.TimeoutValueInvalid");
+		return false;
+	}
+
+	if (!TimeoutInt) //Если значение равно нулю - ошибка
+	{
+		ErrorString = LANG("Carat.Error.Query.Sleep.TimeoutValueIsNull");
+		return false;
+	}
+
+	if (TimeoutInt < 0) //Если значение меньше нуля - ошибка
+	{
+		ErrorString = LANG("Carat.Error.Query.Sleep.TimeoutValueIsNegative");
+		return false;
+	}
+
+	ISSleep(TimeoutInt);
 	return true;
 }
 //-----------------------------------------------------------------------------

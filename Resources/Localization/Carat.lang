@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="Carat">
-  
-  <!--System user-->
+
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>
   <Local Name="Carat.Error.InvalidMessage" Russian="Сообщение невалидное: %1"/>
   <Local Name="Carat.Error.InvalidMessageType" Russian="Тип сообщения &quot;%1&quot; не поддерживается."/>
@@ -14,5 +13,9 @@
   <Local Name="Carat.Error.LoginLifetimeNotStarted" Russian="Срок действия вашей учётной записи начнется %1."/>
   <Local Name="Carat.Error.LoginLifetimeEnded" Russian="Срок действия вашей учётной записи закончился."/>
   <Local Name="Carat.Error.DatabaseConnection" Russian="Не удалось подключиться к базе данных: %1"/>
+
+  <Local Name="Carat.Error.Query.Sleep.TimeoutValueInvalid" Russian="Неправильное значение"/>
+  <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNull" Russian="Значение не должно быть нулевым"/>
+  <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNegative" Russian="Значение не должно быть отрицательным"/>
 
 </LANG>

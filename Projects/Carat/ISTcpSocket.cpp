@@ -80,8 +80,8 @@ void ISTcpSocket::ReadyRead()
 	TcpMessage->ChunkCount = ChunkCount;
 
 	//Засекаем время и парсим сообщение
-	unsigned __int64 TickCount = ISAlgorithm::GetTick();
 	QJsonParseError JsonParseError;
+	unsigned __int64 TickCount = ISAlgorithm::GetTick();
 	TcpMessage->Parameters = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
 	TcpMessage->ParseMSec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TickCount);
 
@@ -142,6 +142,10 @@ ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName)
 	if (TypeName == API_AUTH)
 	{
 		return ISNamespace::AMT_Auth;
+	}
+	else if (TypeName == API_SLEEP)
+	{
+		return ISNamespace::AMT_Sleep;
 	}
 	return ISNamespace::AMT_Unknown;
 }
