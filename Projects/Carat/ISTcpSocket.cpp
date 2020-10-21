@@ -11,7 +11,8 @@
 ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
 	: QTcpSocket(parent),
 	MessageSize(0),
-	ChunkCount(0)
+	ChunkCount(0),
+	IsAuthorized(false)
 {
 	setSocketDescriptor(SocketDescriptor);
 
@@ -31,6 +32,16 @@ ISTcpSocket::~ISTcpSocket()
 	{
 		Timer->stop();
 	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpSocket::SetAuthorized(bool authorized)
+{
+	IsAuthorized = authorized;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpSocket::GetAuthorized() const
+{
+	return IsAuthorized;
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::ReadyRead()
@@ -71,17 +82,17 @@ void ISTcpSocket::ReadyRead()
 	//Засекаем время и парсим сообщение
 	unsigned __int64 TickCount = ISAlgorithm::GetTick();
 	QJsonParseError JsonParseError;
-	QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
+	TcpMessage->Parameters = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
 	TcpMessage->ParseMSec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TickCount);
 
-	bool Result = !VariantMap.isEmpty() && JsonParseError.error == QJsonParseError::NoError;
+	bool Result = !TcpMessage->Parameters.isEmpty() && JsonParseError.error == QJsonParseError::NoError;
 	if (Result) //Конвертация прошла успешно
 	{
-		Result = VariantMap.contains("Type");
+		Result = TcpMessage->Parameters.contains("Type");
 		if (Result) //Если поле "Type" есть
 		{
 			//Получаем значение поля "Type"
-			TcpMessage->TypeName = VariantMap["Type"].toString();
+			TcpMessage->TypeName = TcpMessage->Parameters["Type"].toString();
 			Result = !TcpMessage->TypeName.isEmpty();
 			if (Result) //Если поле "Type" не пустое
 			{
@@ -91,7 +102,7 @@ void ISTcpSocket::ReadyRead()
 				if (Result) //Сообщение валидное
 				{
 					TcpMessage->Type = MessageType;
-					TcpMessage->Parameters = VariantMap["Parameters"].toMap();
+					TcpMessage->Parameters = TcpMessage->Parameters["Parameters"].toMap();
 				}
 				else //Тип сообщения не известный
 				{
@@ -120,8 +131,10 @@ void ISTcpSocket::ReadyRead()
 //-----------------------------------------------------------------------------
 void ISTcpSocket::Error(QAbstractSocket::SocketError socket_error)
 {
-	Q_UNUSED(socket_error);
-	ISLOGGER_E(errorString());
+	if (socket_error != QAbstractSocket::RemoteHostClosedError)
+	{
+		ISLOGGER_E(errorString());
+	}
 }
 //-----------------------------------------------------------------------------
 ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName) const

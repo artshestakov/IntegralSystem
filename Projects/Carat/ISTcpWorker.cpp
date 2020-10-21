@@ -158,16 +158,26 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
+
+	//Проверяем, не авторизаван ли уже клиент. Если авторизован - выходим с ошибкой
+	if (TcpMessage->TcpSocket->GetAuthorized())
+	{
+		ErrorString = LANG("Carat.Error.AlreadyAuthorized");
+		return false;
+	}
+
 	QVariant Login = CheckNullField("Login", TcpMessage->Parameters),
 		Password = CheckNullField("Password", TcpMessage->Parameters);
 	if (!Login.isValid() || !Password.isValid())
 	{
 		return false;
 	}
+	QString LoginString = Login.toString(),
+		PasswordString = Password.toString();
 
 	//Проверка пользователя
 	ISQuery qSelectAuth(ISDatabase::Instance().GetDB(DBConnectionName), QS_AUTH);
-	qSelectAuth.BindValue(":Login", Login.toString());
+	qSelectAuth.BindValue(":Login", LoginString);
 	if (!qSelectAuth.Execute())
 	{
 		ErrorString = LANG("Carat.Error.SelectLogin").arg(qSelectAuth.GetErrorString());
@@ -176,14 +186,14 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	if (!qSelectAuth.ExecuteFirst())
 	{
-		ErrorString = LANG("Carat.Error.NotFoundLogin").arg(Login.toString());
+		ErrorString = LANG("Carat.Error.NotFoundLogin").arg(LoginString);
 		return false;
 	}
 
 	//Если такой логин помечен на удаление
 	if (qSelectAuth.ReadColumn("usrs_isdeleted").toBool())
 	{
-		ErrorString = LANG("Carat.Error.LoginIsDeleted").arg(Login.toString());
+		ErrorString = LANG("Carat.Error.LoginIsDeleted").arg(LoginString);
 		return false;
 	}
 
@@ -227,12 +237,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Проверяем подключение к БД
 	QString TestConnectionName = ISSystem::GenerateUuid();
-	if (!ISDatabase::Instance().Connect(TestConnectionName, DBHost, DBPort, DBName, Login.toString(), Password.toString()))
+	if (!ISDatabase::Instance().Connect(TestConnectionName, DBHost, DBPort, DBName, LoginString, PasswordString))
 	{
 		ErrorString = LANG("Carat.Error.DatabaseConnection").arg(ISDatabase::Instance().GetErrorString());
 		return false;
 	}
 	ISDatabase::Instance().Disconnect(TestConnectionName);
+	TcpMessage->TcpSocket->SetAuthorized(true);
 	return true;
 }
 //-----------------------------------------------------------------------------

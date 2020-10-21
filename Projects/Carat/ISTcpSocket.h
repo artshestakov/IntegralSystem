@@ -13,6 +13,9 @@ public:
 	ISTcpSocket(qintptr SocketDescriptor, QObject *parent = 0);
 	virtual ~ISTcpSocket();
 
+	void SetAuthorized(bool authorized);
+	bool GetAuthorized() const;
+
 private:
 	void ReadyRead(); //Событие входящих данных
 	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки сокета
@@ -20,9 +23,10 @@ private:
 	void ClearBuffer(); //Очистка буфера
 
 private:
-	QByteArray Buffer;
-	int MessageSize;
-	int ChunkCount;
+	QByteArray Buffer; //Буфер
+	int MessageSize; //Размер сообщения
+	int ChunkCount; //Количество частей сообщения
+	bool IsAuthorized; //Флаг авторизации клиента
 	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------
