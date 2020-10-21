@@ -19,7 +19,7 @@ public:
 	QVariantMap Parameters; //Параметры
 	ISTcpSocket *TcpSocket; //Указатель на клиента
 
-	unsigned __int64 ParseMSec; //Время парсинга
+	qint64 ParseMSec; //Время парсинга
 	int Size; //Размер сообщения
 	int ChunkCount; //Количество чанков
 

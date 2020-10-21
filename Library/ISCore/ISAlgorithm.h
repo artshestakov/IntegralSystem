@@ -55,13 +55,13 @@ namespace ISAlgorithm
 
 	//! \Получить временную метку
 	//! \return возвращает временную метку
-	ISCORE_EXPORT unsigned __int64 GetTick();
+	ISCORE_EXPORT qint64 GetTick();
 
 	//! \Получить разницу временных меток
 	//! \param TickA временная метка
 	//! \param TickB временная метка
 	//! \return возвращает разницу между двумя временными метками
-	ISCORE_EXPORT unsigned long GetTickDiff(unsigned __int64 TickA, unsigned __int64 TickB);
+	ISCORE_EXPORT qint64 GetTickDiff(qint64 TickA, qint64 TickB);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

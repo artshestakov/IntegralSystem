@@ -90,7 +90,7 @@ void ISTcpWorker::Run()
 		if (tcp_message)
 		{
 			bool Result = false;
-			unsigned __int64 PerfomanceMsec = 0;
+			qint64 PerfomanceMsec = 0;
 			ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpSocket);
 
 			if (tcp_message->IsValid()) //≈сли сообщение валидное - переходим к выполнению

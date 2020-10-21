@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ISRandom.h"
 //-----------------------------------------------------------------------------
-ISRandom::ISRandom(rand_t InitDigit)
+ISRandom::ISRandom(qint64 InitDigit)
 	: Digit(InitDigit)
 {
 
@@ -17,12 +17,12 @@ ISRandom::~ISRandom()
 
 }
 //-----------------------------------------------------------------------------
-rand_t ISRandom::Get(rand_t Minimum, rand_t Maximum)
+qint64 ISRandom::Get(qint64 Minimum, qint64 Maximum)
 {
 	return Minimum + Get() & Maximum;
 }
 //-----------------------------------------------------------------------------
-rand_t ISRandom::Get()
+qint64 ISRandom::Get()
 {
 	Digit ^= (Digit << 21);
 #pragma warning (disable: 4293)

@@ -92,7 +92,7 @@ void ISTcpSocket::ReadyRead()
 
 	//Засекаем время и парсим сообщение
 	QJsonParseError JsonParseError;
-	unsigned __int64 TickCount = ISAlgorithm::GetTick();
+	qint64 TickCount = ISAlgorithm::GetTick();
 	TcpMessage->Parameters = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
 	TcpMessage->ParseMSec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TickCount);
 

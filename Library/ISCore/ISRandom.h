@@ -4,24 +4,18 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 //-----------------------------------------------------------------------------
-#ifdef WIN32
-typedef __int64 rand_t;
-#else
-typedef int64_t rand_t;
-#endif
-//-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISRandom
 {
 public:
-	ISRandom(rand_t InitDigit);
+	ISRandom(qint64 InitDigit);
 	ISRandom();
 	~ISRandom();
 
-	rand_t Get(rand_t Minimum, rand_t Maximum);
-	rand_t Get();
+	qint64 Get(qint64 Minimum, qint64 Maximum);
+	qint64 Get();
 
 private:
-	rand_t Digit;
+	qint64 Digit;
 };
 //-----------------------------------------------------------------------------
 #endif
