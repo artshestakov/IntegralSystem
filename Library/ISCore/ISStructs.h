@@ -34,7 +34,6 @@ struct ISMetaUserData
 
     bool System; //Системный
     int ID; //Идентификатор пользователя
-	int OID; //Системный идентификатор пользователя
 	QString FIO; //ФИО
     QString Login; //Логин
 

@@ -5,17 +5,17 @@
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
-											  "WHERE clsz_creationuseroid = currentuseroid()");
+											  "WHERE clsz_creationuser = currentuserid()");
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE_COUNT = PREPARE_QUERY("SELECT COUNT(*) "
 													"FROM _columnsize "
-													"WHERE clsz_creationuseroid = currentuseroid() "
+													"WHERE clsz_creationuser = currentuserid() "
 													"AND clsz_tablename = :TableName "
 													"AND clsz_fieldname = :FieldName");
 //-----------------------------------------------------------------------------
 static QString QU_COLUMN_SIZE = PREPARE_QUERY("UPDATE _columnsize SET "
 											  "clsz_size = :Size "
-											  "WHERE clsz_creationuseroid = currentuseroid() "
+											  "WHERE clsz_creationuser = currentuserid() "
 											  "AND clsz_tablename = :TableName "
 											  "AND clsz_fieldname = :FieldName");
 //-----------------------------------------------------------------------------
@@ -23,7 +23,7 @@ static QString QI_COLUMN_SIZE = PREPARE_QUERY("INSERT INTO _columnsize(clsz_tabl
 											  "VALUES (:TableName, :FieldName, :Size)");
 //-----------------------------------------------------------------------------
 static QString QD_COLUMN_SIZE = PREPARE_QUERY("DELETE FROM _columnsize "
-											  "WHERE clsz_creationuseroid = currentuseroid()");
+											  "WHERE clsz_creationuser = currentuserid()");
 //-----------------------------------------------------------------------------
 ISColumnSizer::ISColumnSizer()
 	: ErrorString(NO_ERROR_STRING)

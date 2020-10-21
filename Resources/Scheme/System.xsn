@@ -132,7 +132,7 @@
     </Indexes>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время"/>
-      <Field Name="CreationUserOID" LocalName="Оставил примечание"/>
+      <Field Name="CreationUser" LocalName="Оставил примечание"/>
     </SystemFields>
   </Table>
 
@@ -144,7 +144,7 @@
     <Indexes>
       <Index Field="TableName"/>
       <Index Field="ObjectsID"/>
-      <Index Field="CreationUserOID;TableName" Unique="true"/>
+      <Index Field="CreationUser;TableName" Unique="true"/>
     </Indexes>
   </Table>
 
@@ -156,7 +156,7 @@
     <Indexes>
       <Index Field="TableName"/>
       <Index Field="ObjectID"/>
-      <Index Field="ID;CreationUserOID"/>
+      <Index Field="ID;CreationUser"/>
     </Indexes>
   </Table>
 
@@ -179,7 +179,7 @@
       <Index Field="Password"/>
     </Indexes>
     <SystemFields>
-      <Field Name="CreationUserOID" LocalName="Добавил"/>
+      <Field Name="CreationUser" LocalName="Добавил"/>
     </SystemFields>
   </Table>
 
@@ -253,9 +253,9 @@
       <Index Field="TableName"/>
       <Index Field="FieldName"/>
       <Index Field="Sorting"/>
-      <Index Field="IsDeleted;CreationUserOID"/>
-      <Index Field="IsDeleted;CreationUserOID;TableName"/>
-      <Index Field="CreationUserOID;TableName"/>
+      <Index Field="IsDeleted;CreationUser"/>
+      <Index Field="IsDeleted;CreationUser;TableName"/>
+      <Index Field="CreationUser;TableName"/>
     </Indexes>
   </Table>
 
@@ -269,7 +269,7 @@
       <Index Field="TableName"/>
       <Index Field="FieldName"/>
       <Index Field="Size"/>
-      <Index Field="CreationUserOID;TableName;FieldName"/>
+      <Index Field="CreationUser;TableName;FieldName"/>
     </Indexes>
   </Table>
 
@@ -292,7 +292,7 @@
     </Foreigns>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время события"/>
-      <Field Name="CreationUserOID" LocalName="Пользователь"/>
+      <Field Name="CreationUser" LocalName="Пользователь"/>
     </SystemFields>
   </Table>
 
@@ -320,7 +320,7 @@
     </Fields>
     <Indexes>
       <Index Field="Word"/>
-      <Index Field="CreationUserOID;Word" Unique="true"/>
+      <Index Field="CreationUser;Word" Unique="true"/>
     </Indexes>
   </Table>
 

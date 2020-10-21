@@ -23,7 +23,7 @@ static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
-											  "WHERE clsz_creationuseroid = (SELECT usrs_oid FROM _users WHERE usrs_id = :UserID)");
+											  "WHERE clsz_creationuser = :UserID");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),

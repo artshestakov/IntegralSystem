@@ -18,7 +18,7 @@
 static QString QS_SEARCH_HISTORY = PREPARE_QUERY("SELECT fsth_value "
 												 "FROM _fullsearchtexthistory "
 												 "WHERE NOT fsth_isdeleted "
-												 "AND fsth_creationuseroid = currentuseroid()");
+												 "AND fsth_creationuser = currentuserid()");
 //-----------------------------------------------------------------------------
 static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _fullsearchtexthistory(fsth_value) "
 										  "VALUES (:Value)");

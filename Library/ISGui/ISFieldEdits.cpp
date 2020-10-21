@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
 											  "FROM _searchfast "
-											  "WHERE srfs_creationuseroid = currentuseroid() "
+											  "WHERE srfs_creationuser = currentuserid() "
 											  "ORDER BY srfs_id "
 											  "LIMIT :Limit");
 //-----------------------------------------------------------------------------

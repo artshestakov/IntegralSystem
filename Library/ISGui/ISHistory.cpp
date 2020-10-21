@@ -5,10 +5,10 @@
 //-----------------------------------------------------------------------------
 static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_objectid "
 										  "FROM _history "
-										  "WHERE htry_creationuseroid = currentuseroid() "
+										  "WHERE htry_creationuser = currentuserid() "
 										  "ORDER BY htry_id");
 //-----------------------------------------------------------------------------
-static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_creationuseroid = currentuseroid()");
+static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_creationuser = currentuserid()");
 //-----------------------------------------------------------------------------
 static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_creationdate, htry_tablename, htry_objectid) "
 										  "VALUES(:CreationDate, :TableName, :ObjectID)");

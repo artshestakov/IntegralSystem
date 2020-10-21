@@ -164,7 +164,7 @@
     </Foreigns>
     <SystemFields>
       <Field Name="CreationDate" LocalName="Дата и время изменения"/>
-      <Field Name="CreationUserOID" LocalName="Автор события"/>
+      <Field Name="CreationUser" LocalName="Автор события"/>
     </SystemFields>
   </Table>
 

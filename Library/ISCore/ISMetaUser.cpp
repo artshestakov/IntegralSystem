@@ -8,7 +8,6 @@ static QString QS_USER = PREPARE_QUERY("SELECT "
 									   "usrs_isdeleted, "
 									   "usrs_issystem, "
 									   "usrs_id, "
-									   "usrs_oid, "
 									   "usrs_group, "
 									   "usrs_fio, "
 									   "usrs_birthday, "
@@ -72,7 +71,6 @@ bool ISMetaUser::Initialize()
 	//Заполняем структуру данными
 	UserData.System = qSelectUser.ReadColumn("usrs_issystem").toBool();
 	UserData.ID = qSelectUser.ReadColumn("usrs_id").toInt();
-	UserData.OID = qSelectUser.ReadColumn("usrs_oid").toInt();
 	UserData.GroupID = qSelectUser.ReadColumn("usrs_group").toInt();
 	UserData.FIO = qSelectUser.ReadColumn("usrs_fio").toString();
 	UserData.GroupFullAccess = qSelectUser.ReadColumn("usgp_fullaccess").toBool();

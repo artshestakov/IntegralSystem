@@ -127,7 +127,6 @@
   <Local Name="Message.Error.PasteImageToTask" Russian="Не удалось прикрепить изображение к задаче!"/>
   <Local Name="Message.Error.CreateUserRole" Russian="Не удалось создать пользователя!"/>
   <Local Name="Message.Error.AlterUserRole" Russian="Не удалось переименовать логин пользователя пользователя!"/>
-  <Local Name="Message.Error.AlterOID" Russian="Не удалось присвоить пользователю OID!"/>
   <Local Name="Message.Error.SelectCurrentPasswordUser" Russian="Не удалось проверить текущий пароль!"/>
   <Local Name="Message.Error.ChangePasswordUser" Russian="Не удалось изменить пароль!"/>
   <Local Name="Message.Error.ChangePasswordUserHistory" Russian="Не удалось зафиксировать изменение пароля в истории!"/>

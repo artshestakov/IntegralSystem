@@ -9,7 +9,7 @@
     <Indexes>
       <Index Field="Setting"/>
       <Index Field="Value"/>
-      <Index Field="CreationUserOID;Setting"/>
+      <Index Field="CreationUser;Setting"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Setting" ForeignClass="_Settings" ForeignField="UID" ForeignViewNameField="LocalName"/>

@@ -16,10 +16,6 @@ static QString QA_LOGIN = "ALTER ROLE %1 RENAME TO %2";
 //-----------------------------------------------------------------------------
 static QString QS_LOGIN = PREPARE_QUERY("SELECT COUNT(*) FROM _users WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
-static QString QU_OID = PREPARE_QUERY("UPDATE _users SET "
-									  "usrs_oid = (SELECT usesysid FROM pg_user WHERE usename = :Login) "
-									  "WHERE usrs_login = :Login");
-//-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
 	QAction *ActionChangePassword = ISControls::CreateActionPasswordChange(this);
@@ -164,17 +160,6 @@ void ISUserObjectForm::SavedEvent()
 				ISMessageBox::ShowCritical(this, LANG("Message.Error.AlterUserRole"), qAlterLogin.GetErrorString());
 			}
 		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISUserObjectForm::SaveAfter()
-{
-	ISObjectFormBase::SaveAfter();
-	ISQuery qUpdateOID(QU_OID);
-	qUpdateOID.BindValue(":Login", CurrentLogin);
-	if (!qUpdateOID.Execute())
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.AlterOID"), qUpdateOID.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

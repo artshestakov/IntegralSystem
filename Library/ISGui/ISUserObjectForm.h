@@ -16,7 +16,6 @@ protected:
 	void AfterShowEvent() override;
 	bool Save() override;
 	void SavedEvent() override;
-	void SaveAfter() override;
 
 private:
 	void PasswordChange();

@@ -283,18 +283,18 @@ void ISStorageFilesListForm::FilterChanged(QAbstractButton *AbstractButton)
 	}
 	else if (AbstractButton == RadioMyFiles)
 	{
-		GetQueryModel()->SetClassFilter("sgfs_owner = currentuseroid()");
+		GetQueryModel()->SetClassFilter("sgfs_owner = currentuserid()");
 	}
 	else if (AbstractButton == RadioMyPrivateFiles)
 	{
-		GetQueryModel()->SetClassFilter("sgfs_owner = currentuseroid() AND sgfs_private");
+		GetQueryModel()->SetClassFilter("sgfs_owner = currentuserid() AND sgfs_private");
 	}
 	Update();
 }
 //-----------------------------------------------------------------------------
 bool ISStorageFilesListForm::IsMyFile()
 {
-	return GetCurrentRecordValueDB("CreationUserOID").toInt() == CURRENT_USER_OID;
+	return GetCurrentRecordValueDB("CreationUser").toInt() == CURRENT_USER_ID;
 }
 //-----------------------------------------------------------------------------
 bool ISStorageFilesListForm::CheckPassword()

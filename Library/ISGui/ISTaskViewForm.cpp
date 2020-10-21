@@ -37,10 +37,10 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_parent AS task_parent_id, "
 									   "p.task_name AS task_parent_name, "
 									   "(SELECT COUNT(*) AS vote_count FROM _taskvote WHERE tvot_task = :TaskID), "
-									   "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_voted FROM _taskvote WHERE tvot_creationuseroid = currentuseroid()) "
+									   "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_voted FROM _taskvote WHERE tvot_creationuser = currentuserid()) "
 									   "FROM _task t "
 									   "LEFT JOIN _users ue ON ue.usrs_id = t.task_executor "
-									   "LEFT JOIN _users uo ON uo.usrs_oid = t.task_creationuseroid "
+									   "LEFT JOIN _users uo ON uo.usrs_id = t.task_creationuser "
 									   "LEFT JOIN _tasktype tt ON tt.tstp_id = t.task_type "
 									   "LEFT JOIN _taskstatus ts ON ts.tsst_id = t.task_status "
 									   "LEFT JOIN _taskpriority tp ON tp.tspr_id = t.task_priority "
@@ -84,7 +84,7 @@ static QString QI_STATUS_HISTORY = PREPARE_QUERY("INSERT INTO _taskstatushistory
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, usrs_fio "
 									   "FROM _taskfile "
-									   "LEFT JOIN _users u ON u.usrs_oid = tfls_creationuseroid "
+									   "LEFT JOIN _users u ON u.usrs_id = tfls_creationuser "
 									   "WHERE NOT tfls_isdeleted "
 									   "AND tfls_task = :TaskID "
 									   "ORDER BY tfls_id");
@@ -108,7 +108,7 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "tsst_name AS task_status_name "
 									   "FROM _tasklink "
 									   "LEFT JOIN _task ON tlnk_link = task_id "
-									   "LEFT JOIN _users ON usrs_oid = tlnk_creationuseroid "
+									   "LEFT JOIN _users ON usrs_id = tlnk_creationuser "
 									   "LEFT JOIN _taskstatus ON task_status = tsst_id "
 									   "WHERE NOT tlnk_isdeleted "
 									   "AND tlnk_task = :TaskID "
@@ -126,11 +126,11 @@ static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "tcom_comment, "
 										  "tcom_creationdate, "
 										  "tcom_updationdate, "
-										  "tcom_creationuseroid, "
+										  "tcom_creationuser, "
 										  "usrs_fio, "
-										  "userphotobyoid(tcom_creationuseroid) "
+										  "userphotobyid(tcom_creationuser) "
 										  "FROM _taskcomment "
-										  "LEFT JOIN _users ON usrs_oid = tcom_creationuseroid "
+										  "LEFT JOIN _users ON usrs_id = tcom_creationuser "
 										  "WHERE NOT tcom_isdeleted "
 										  "AND tcom_task = :TaskID "
 										  "ORDER BY tcom_id");
@@ -140,7 +140,7 @@ static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, t
 //-----------------------------------------------------------------------------
 static QString QU_COMMENT = PREPARE_QUERY("UPDATE _taskcomment SET "
 										  "tcom_updationdate = now(), "
-										  "tcom_updationuseroid = currentuseroid(), "
+										  "tcom_updationuser = currentuserid(), "
 										  "tcom_comment = :Comment "
 										  "WHERE tcom_id = :CommentID");
 //-----------------------------------------------------------------------------
@@ -1285,11 +1285,11 @@ void ISTaskViewForm::CommentLoadList()
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
 			QDateTime UpdationDate = qSelectComments.ReadColumn("tcom_updationdate").toDateTime();
-			int UserOID = qSelectComments.ReadColumn("tcom_creationuseroid").toInt();
+			int UserID = qSelectComments.ReadColumn("tcom_creationuser").toInt();
 			QString UserFIO = qSelectComments.ReadColumn("usrs_fio").toString();
-			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyoid").toByteArray());
+			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyid").toByteArray());
 
-			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserOID, UserPhoto, UserFIO, Comment, CreationDate, UpdationDate);
+			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserID, UserPhoto, UserFIO, Comment, CreationDate, UpdationDate);
 			if (ParentID)
 			{
 				QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(MapComment[ParentID]);
@@ -1310,7 +1310,7 @@ void ISTaskViewForm::CommentLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, int UserOID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate)
+QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
@@ -1356,7 +1356,7 @@ QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, int U
 		LayoutBottom->addWidget(LabelAnswer);
 	}
 
-	if (UserOID == CURRENT_USER_OID) //≈сли текущий пользователь €вл€етс€ автором комментари€ - позвол€ем ему редактировать и удал€ть комментарии
+	if (UserID == CURRENT_USER_ID) //≈сли текущий пользователь €вл€етс€ автором комментари€ - позвол€ем ему редактировать и удал€ть комментарии
 	{
 		ISQLabel *LabelEdit = new ISQLabel(LANG("Edit"), WidgetBottom);
 		LabelEdit->setProperty("Comment", Comment);

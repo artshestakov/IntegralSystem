@@ -17,7 +17,7 @@
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, usrs_oid, usrs_fio, usrs_photo "
+static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, usrs_fio, usrs_photo "
 										"FROM _users "
 										"WHERE usrs_uid != :PostgresUID "
 										"ORDER BY usrs_fio");
@@ -91,7 +91,6 @@ void ISMonitorActivityForm::LoadData()
 
 			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline,
 				qSelect.ReadColumn("usrs_id").toInt(),
-				qSelect.ReadColumn("usrs_oid").toInt(),
 				qSelect.ReadColumn("usrs_fio").toString(),
 				ISGui::ByteArrayToPixmap(qSelect.ReadColumn("usrs_photo").toByteArray()).scaled(ISDefines::Gui::SIZE_32_32),
 				ScrollArea);
@@ -163,8 +162,8 @@ void ISMonitorActivityForm::ShowProtocol()
 		ISProtocolListForm *ProtocolBaseListForm = new ISProtocolListForm();
 		ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + MonitorUserWidget->property("UserName").toString());
 		ProtocolBaseListForm->setWindowIcon(BUFFER_ICONS("Protocol"));
-		ProtocolBaseListForm->GetQueryModel()->SetClassFilter("prtc_creationuseroid = :UserOID");
-		ProtocolBaseListForm->GetQueryModel()->AddCondition(":UserOID", MonitorUserWidget->property("UserOID"));
+		ProtocolBaseListForm->GetQueryModel()->SetClassFilter("prtc_creationuser = :UserID");
+		ProtocolBaseListForm->GetQueryModel()->AddCondition(":UserID", MonitorUserWidget->property("UserID"));
 		ProtocolBaseListForm->LoadData();
 		ProtocolBaseListForm->showMaximized();
 	}

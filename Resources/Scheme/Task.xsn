@@ -112,7 +112,7 @@
     </Fields>
     <Indexes>
       <Index Field="Task"/>
-      <Index Field="CreationUserOID;Task" Unique="true"/>
+      <Index Field="CreationUser;Task" Unique="true"/>
     </Indexes>
   </Table>
 
