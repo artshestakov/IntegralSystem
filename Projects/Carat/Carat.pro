@@ -27,9 +27,19 @@ LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore
 
 HEADERS += \
-    ISCaratService.h
+    ISTcpAnswer.h \
+    ISTcpMessage.h \
+    ISTcpQueue.h \
+    ISTcpServer.h \
+    ISTcpSocket.h \
+    ISTcpWorker.h
 
 SOURCES += \
-    ISCaratService.cpp \
+    ISTcpAnswer.cpp \
+    ISTcpMessage.cpp \
+    ISTcpQueue.cpp \
+    ISTcpServer.cpp \
+    ISTcpSocket.cpp \
+    ISTcpWorker.cpp \
     main.cpp
 

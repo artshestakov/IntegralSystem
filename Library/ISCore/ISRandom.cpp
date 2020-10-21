@@ -19,7 +19,7 @@ ISRandom::~ISRandom()
 //-----------------------------------------------------------------------------
 qint64 ISRandom::Get(qint64 Minimum, qint64 Maximum)
 {
-	return Minimum + Get() & Maximum;
+    return (Minimum + Get()) & Maximum;
 }
 //-----------------------------------------------------------------------------
 qint64 ISRandom::Get()

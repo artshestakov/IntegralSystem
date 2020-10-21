@@ -32,13 +32,13 @@ private:
 	bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
+    QString ErrorString; //Текстовое описание ошибки запроса
 	QString DBConnectionName;
 	QString DBHost;
 	int DBPort;
 	QString DBName;
 	QString DBUser;
 	QString DBPassword;
-	QString ErrorString; //Текстовое описание ошибки запроса
 	bool IsRunning; //Флаг занятости воркера
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
 

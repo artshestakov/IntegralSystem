@@ -39,7 +39,7 @@ qint64 ISAlgorithm::GetTick()
 #ifdef WIN32
 	return GetTickCount64();
 #else
-	// ...
+    return 0;
 #endif
 }
 //-----------------------------------------------------------------------------

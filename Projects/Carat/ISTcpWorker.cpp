@@ -98,6 +98,7 @@ void ISTcpWorker::Run()
 				PerfomanceMsec = ISAlgorithm::GetTick(); //Запоминаем текущее время
 				switch (tcp_message->Type)
 				{
+                case ISNamespace::AMT_Unknown: break;
 				case ISNamespace::AMT_Auth: Result = Auth(tcp_message, TcpAnswer); break;
 				case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
 				case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
