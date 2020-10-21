@@ -9,14 +9,7 @@
 #include "ISTrace.h"
 #include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
-static QString QS_AUTH = PREPARE_QUERY("SELECT "
-									   "usrs_issystem, "
-									   "usrs_isdeleted, "
-									   "usrs_group, "
-									   "usrs_accessallowed, "
-									   "usrs_accountlifetime, "
-									   "usrs_accountlifetimestart, "
-									   "usrs_accountlifetimeend "
+static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend "
 									   "FROM _users "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
@@ -27,6 +20,10 @@ static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 										  "LEFT JOIN _systems ON stms_uid = sbsm_system "
 										  "WHERE NOT sbsm_isdeleted "
 										  "ORDER BY stms_orderid, sbsm_orderid");
+//-----------------------------------------------------------------------------
+static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
+											  "FROM _columnsize "
+											  "WHERE clsz_creationuseroid = (SELECT usrs_oid FROM _users WHERE usrs_id = :UserID)");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
@@ -252,6 +249,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	ISDatabase::Instance().Disconnect(TestConnectionName);
 	TcpMessage->TcpSocket->SetAuthorized(true);
+	TcpMessage->TcpSocket->SetUserID(qSelectAuth.ReadColumn("usrs_id").toInt());
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -297,9 +295,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	QString LoginString = Login.toString();
 
-	QVariantList SystemsSubSystems;
-
 	//Получаем системы и подсистемы
+	QVariantList SystemsSubSystems;
 	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEMS);
 	if (qSelectSystems.Execute())
 	{
@@ -328,7 +325,30 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.InitializeMetaSystems").arg(qSelectSystems.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.GetMetaSystems").arg(qSelectSystems.GetErrorString());
+		return false;
+	}
+
+	//Получаем размеры колонок
+	QVariantList ColumnSize;
+	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
+	qSelectColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectColumnSize.Execute())
+	{
+		while (qSelectColumnSize.Next())
+		{
+			ColumnSize.append(QVariantMap
+			{
+				{ "TableName", qSelectColumnSize.ReadColumn("clsz_tablename") },
+				{ "FieldName", qSelectColumnSize.ReadColumn("clsz_fieldname") },
+				{ "Size", qSelectColumnSize.ReadColumn("clsz_size") }
+			});
+		}
+		TcpAnswer->Parameters["ColumnSize"] = ColumnSize;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.GetColumnSize").arg(qSelectColumnSize.GetErrorString());
 		return false;
 	}
 

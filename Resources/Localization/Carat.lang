@@ -19,6 +19,7 @@
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNull" Russian="Значение не должно быть нулевым"/>
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNegative" Russian="Значение не должно быть отрицательным"/>
 
-  <Local Name="Carat.Error.Query.GetMetaData.InitializeMetaSystems" Russian="Не удалось загрузить информацию о системах и подсистемах: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.GetMetaSystems" Russian="Не удалось получить информацию о системах и подсистемах: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.GetColumnSize" Russian="Не удалось получить размеры полей: %1"/>
 
 </LANG>

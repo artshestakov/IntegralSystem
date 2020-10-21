@@ -11,7 +11,7 @@ public:
 	static ISColumnSizer& Instance();
 
 	QString GetErrorString() const; //Получить описание ошибки
-	bool Initialize(bool UseProtocol);
+	bool Initialize();
 	bool Save(); //Сохранить размеры в базу данных
 	bool Clear(); //Очистить размеры
 

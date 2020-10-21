@@ -12,7 +12,8 @@ ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
 	: QTcpSocket(parent),
 	MessageSize(0),
 	ChunkCount(0),
-	IsAuthorized(false)
+	IsAuthorized(false),
+	UserID(0)
 {
 	setSocketDescriptor(SocketDescriptor);
 
@@ -42,6 +43,16 @@ void ISTcpSocket::SetAuthorized(bool authorized)
 bool ISTcpSocket::GetAuthorized() const
 {
 	return IsAuthorized;
+}
+//-----------------------------------------------------------------------------
+void ISTcpSocket::SetUserID(int user_id)
+{
+	UserID = user_id;
+}
+//-----------------------------------------------------------------------------
+int ISTcpSocket::GetUserID() const
+{
+	return UserID;
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::ReadyRead()

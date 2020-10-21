@@ -124,7 +124,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	}
 
 	//Инициализация размеров колонок
-	if (!ISColumnSizer::Instance().Initialize(UseProtocol))
+	if (!ISColumnSizer::Instance().Initialize())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
 		return false;

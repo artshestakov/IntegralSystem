@@ -16,6 +16,9 @@ public:
 	void SetAuthorized(bool authorized);
 	bool GetAuthorized() const;
 
+	void SetUserID(int user_id);
+	int GetUserID() const;
+
 private:
 	void ReadyRead(); //Событие входящих данных
 	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки сокета
@@ -27,6 +30,7 @@ private:
 	int MessageSize; //Размер сообщения
 	int ChunkCount; //Количество частей сообщения
 	bool IsAuthorized; //Флаг авторизации клиента
+	int UserID; //Идентификатор пользователя
 	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------
