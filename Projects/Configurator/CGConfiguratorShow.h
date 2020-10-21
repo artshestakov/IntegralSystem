@@ -24,6 +24,7 @@ private:
 	bool oldresources(int &Count);
 	bool oldsequence(int &Count);
 	bool oldindexes(int &Count);
+	bool oldforeigns(int &Count);
 
 private:
 	PMetaTable* FoundTable(const QString &TableName);

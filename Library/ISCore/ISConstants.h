@@ -103,7 +103,6 @@ const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearchDB";
 const char CONNECTION_QUERY_POOL[] = "QueryPoolDB";
 //-----------------------------------------------------------------------------
 const char		SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
-const int       SYSTEM_USER_OID = 10; //Идентификатор системного пользователя по умолчанию
 const char		FIGURES_STRING[] = "0123456789";
 const char		SQL_DRIVER_QPSQL[] = "QPSQL";
 const int		MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)

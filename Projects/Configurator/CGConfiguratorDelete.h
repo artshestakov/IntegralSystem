@@ -21,6 +21,7 @@ public slots:
 	bool oldresources();
 	bool oldsequence();
 	bool oldindexes();
+	bool oldforeigns();
 
 private:
 	void ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID);

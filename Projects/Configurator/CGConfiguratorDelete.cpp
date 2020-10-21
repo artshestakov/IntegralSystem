@@ -49,6 +49,12 @@ static QString QS_INDEX = PREPARE_QUERY("SELECT indexname "
 										"WHERE schemaname = current_schema() "
 										"AND right(indexname, 4) != 'pkey'");
 //-----------------------------------------------------------------------------
+static QString QS_FOREIGN = PREPARE_QUERY("SELECT table_name, constraint_name "
+										  "FROM information_schema.table_constraints "
+										  "WHERE constraint_type = 'FOREIGN KEY' "
+										  "AND table_schema = current_schema() "
+										  "ORDER BY constraint_name");
+//-----------------------------------------------------------------------------
 CGConfiguratorDelete::CGConfiguratorDelete() : CGConfiguratorBase()
 {
 
@@ -322,9 +328,8 @@ bool CGConfiguratorDelete::oldindexes()
 	bool Result = qSelectIndexes.Execute();
 	if (Result)
 	{
-		std::vector<PMetaIndex*> Indexes = ISMetaData::Instance().GetIndexes();
 		std::vector<QString> IndexNames;
-		for (PMetaIndex *MetaIndex : Indexes)
+		for (PMetaIndex *MetaIndex : ISMetaData::Instance().GetIndexes())
 		{
 			IndexNames.emplace_back(MetaIndex->GetName());
 		}
@@ -350,6 +355,46 @@ bool CGConfiguratorDelete::oldindexes()
 	else
 	{
 		ErrorString = qSelectIndexes.GetErrorString();
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorDelete::oldforeigns()
+{
+	ISQuery qSelectForeigns(QS_FOREIGN);
+	qSelectForeigns.SetShowLongQuery(false);
+	bool Result = qSelectForeigns.Execute();
+	if (Result)
+	{
+		ISVectorString ForeignNames;
+		for (PMetaForeign *MetaForeign : ISMetaData::Instance().GetForeigns())
+		{
+			ForeignNames.emplace_back(MetaForeign->GetName());
+		}
+
+		while (qSelectForeigns.Next())
+		{
+			QString TableName = qSelectForeigns.ReadColumn("table_name").toString();
+			QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
+			if (!ISAlgorithm::VectorContains(ForeignNames, ForeignName))
+			{
+				if (ISConsole::Question(QString("Delete foreign %1?").arg(ForeignName)))
+				{
+					ISQuery qDeleteForeign;
+					qDeleteForeign.SetShowLongQuery(false);
+					Result = qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName));
+					if (!Result)
+					{
+						ErrorString = qDeleteForeign.GetErrorString();
+						break;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		ErrorString = qSelectForeigns.GetErrorString();
 	}
 	return Result;
 }

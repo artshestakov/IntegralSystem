@@ -13,7 +13,6 @@ static QString QS_SYSTEM_USER = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 static QString QU_SYSTEM_USER = PREPARE_QUERY("UPDATE _users SET "
 											  "usrs_issystem = :IsSystem, "
-											  "usrs_oid = :OID, "
 											  "usrs_fio = :FIO, "
 											  "usrs_sex = (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID),"
 											  "usrs_login = :Login, "
@@ -21,8 +20,8 @@ static QString QU_SYSTEM_USER = PREPARE_QUERY("UPDATE _users SET "
 											  "usrs_photo = :Photo "
 											  "WHERE usrs_uid = :UID");
 //-----------------------------------------------------------------------------
-static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_oid, usrs_fio, usrs_sex, usrs_login, usrs_accessallowed, usrs_photo) "
-											  "VALUES(:UID, :IsSystem, :OID, :FIO, (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID), :Login, :AccessAllowed, :Photo)");
+static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_sex, usrs_login, usrs_accessallowed, usrs_photo) "
+											  "VALUES(:UID, :IsSystem, :FIO, (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID), :Login, :AccessAllowed, :Photo)");
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 													"FROM _settingsdatabase "
@@ -295,7 +294,6 @@ bool CGConfiguratorUpdate::systemuser()
 		ISQuery qUpsert(IsExist ? QU_SYSTEM_USER : QI_SYSTEM_USER);
 		qUpsert.BindValue(":UID", CONST_UID_USER_POSTGRES);
 		qUpsert.BindValue(":IsSystem", true);
-		qUpsert.BindValue(":OID", SYSTEM_USER_OID);
 		qUpsert.BindValue(":FIO", LANG("SystemUser.FIO"));
 		qUpsert.BindValue(":SexUID", CONST_UID_SEX_MALE);
 		qUpsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));

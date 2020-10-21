@@ -24,6 +24,8 @@
     <Function FunctionName="OldFields" Description="Удаление всех устаревших полей"/>
     <Function FunctionName="OldResources" Description="Удаление всех устаревших ресурсов"/>
     <Function FunctionName="OldSequence" Description="Удаление всех устаревших последовательностей"/>
+    <Function FunctionName="OldIndexes" Description="Удаление всех устаревших индексов"/>
+    <Function FunctionName="OldForeigns" Description="Удаление всех устаревших внешних ключей"/>
   </Section>
 
   <Section Name="Service" ClassName="CGConfiguratorService">

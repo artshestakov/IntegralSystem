@@ -31,6 +31,12 @@ static QString QS_INDEX = PREPARE_QUERY("SELECT indexname "
 										"WHERE schemaname = current_schema() "
 										"AND right(indexname, 4) != 'pkey'");
 //-----------------------------------------------------------------------------
+static QString QS_FOREIGN = PREPARE_QUERY("SELECT constraint_name "
+										  "FROM information_schema.table_constraints "
+										  "WHERE constraint_type = 'FOREIGN KEY' "
+										  "AND table_schema = current_schema() "
+										  "ORDER BY constraint_name");
+//-----------------------------------------------------------------------------
 static QString QS_INFO = PREPARE_QUERY("SELECT "
 									   "(SELECT pg_size_pretty(pg_database_size(current_database()))) AS \"database_size\", "
 									   "(SELECT pg_catalog.pg_get_userbyid(datdba) AS \"database_owner\" FROM pg_catalog.pg_database WHERE datname = current_database()), "
@@ -58,7 +64,7 @@ CGConfiguratorShow::~CGConfiguratorShow()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldobjects()
 {
-	int Tables = 0, Fields = 0, Resources = 0, Sequences = 0, Indexes = 0;
+	int Tables = 0, Fields = 0, Resources = 0, Sequences = 0, Indexes = 0, Foreigns = 0;
 	bool Result = oldtables(Tables);
 	if (Result)
 	{
@@ -80,7 +86,13 @@ bool CGConfiguratorShow::oldobjects()
 		Result = oldindexes(Indexes);
 	}
 
-	ISLOGGER_L(QString("Tables: %1 Fields: %2 Resources: %3 Sequences: %4 Indexes: %5").arg(Tables).arg(Fields).arg(Resources).arg(Sequences).arg(Indexes));
+	if (Result)
+	{
+		Result = oldforeigns(Foreigns);
+	}
+
+	ISLOGGER_L(QString("Tables: %1 Fields: %2 Resources: %3 Sequences: %4 Indexes: %5 Foreigns: %6")
+		.arg(Tables).arg(Fields).arg(Resources).arg(Sequences).arg(Indexes).arg(Foreigns));
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -329,9 +341,8 @@ bool CGConfiguratorShow::oldindexes(int &Count)
 	bool Result = qSelectIndexes.Execute();
 	if (Result)
 	{
-		std::vector<PMetaIndex*> Indexes = ISMetaData::Instance().GetIndexes();
 		std::vector<QString> IndexNames;
-		for (PMetaIndex *MetaIndex : Indexes)
+		for (PMetaIndex *MetaIndex : ISMetaData::Instance().GetIndexes())
 		{
 			IndexNames.emplace_back(MetaIndex->GetName());
 		}
@@ -349,6 +360,38 @@ bool CGConfiguratorShow::oldindexes(int &Count)
 	else
 	{
 		ErrorString = qSelectIndexes.GetErrorString();
+	}
+	ISLOGGER_N();
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorShow::oldforeigns(int &Count)
+{
+	ISLOGGER_L("Search foreigns...");
+	ISQuery qSelectForeigns(QS_FOREIGN);
+	qSelectForeigns.SetShowLongQuery(false);
+	bool Result = qSelectForeigns.Execute();
+	if (Result)
+	{
+		ISVectorString Foreigns;
+		for (PMetaForeign *MetaForeign : ISMetaData::Instance().GetForeigns())
+		{
+			Foreigns.emplace_back(MetaForeign->GetName());
+		}
+
+		while (qSelectForeigns.Next())
+		{
+			QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
+			if (!ISAlgorithm::VectorContains(Foreigns, ForeignName))
+			{
+				ISLOGGER_L(ForeignName);
+				++Count;
+			}
+		}
+	}
+	else
+	{
+		ErrorString = qSelectForeigns.GetErrorString();
 	}
 	ISLOGGER_N();
 	return Result;
