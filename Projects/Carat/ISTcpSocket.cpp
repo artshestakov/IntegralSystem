@@ -147,6 +147,10 @@ ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName)
 	{
 		return ISNamespace::AMT_Sleep;
 	}
+	else if (TypeName == API_GET_META_DATA)
+	{
+		return ISNamespace::AMT_GetMetaData;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

@@ -20,6 +20,14 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT "
 									   "FROM _users "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
+static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
+										  "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "
+										  "sbsm_id, sbsm_uid, sbsm_localname, sbsm_orderid, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
+										  "FROM _subsystems "
+										  "LEFT JOIN _systems ON stms_uid = sbsm_system "
+										  "WHERE NOT sbsm_isdeleted "
+										  "ORDER BY stms_orderid, sbsm_orderid");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -93,13 +101,9 @@ void ISTcpWorker::Run()
 				PerfomanceMsec = ISAlgorithm::GetTick(); //Запоминаем текущее время
 				switch (tcp_message->Type)
 				{
-				case ISNamespace::AMT_Auth:
-					Result = Auth(tcp_message, TcpAnswer);
-					break;
-
-				case ISNamespace::AMT_Sleep:
-					Result = Sleep(tcp_message, TcpAnswer);
-					break;
+				case ISNamespace::AMT_Auth: Result = Auth(tcp_message, TcpAnswer); break;
+				case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
+				case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
 				}
 				PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), PerfomanceMsec);
 			}
@@ -166,7 +170,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Проверяем, не авторизаван ли уже клиент. Если авторизован - выходим с ошибкой
 	if (TcpMessage->TcpSocket->GetAuthorized())
 	{
-		ErrorString = LANG("Carat.Error.AlreadyAuthorized");
+		ErrorString = LANG("Carat.Error.Query.AlreadyAuthorized");
 		return false;
 	}
 
@@ -184,27 +188,27 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	qSelectAuth.BindValue(":Login", LoginString);
 	if (!qSelectAuth.Execute())
 	{
-		ErrorString = LANG("Carat.Error.SelectLogin").arg(qSelectAuth.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.SelectLogin").arg(qSelectAuth.GetErrorString());
 		return false;
 	}
 
 	if (!qSelectAuth.ExecuteFirst())
 	{
-		ErrorString = LANG("Carat.Error.NotFoundLogin").arg(LoginString);
+		ErrorString = LANG("Carat.Error.Query.NotFoundLogin").arg(LoginString);
 		return false;
 	}
 
 	//Если такой логин помечен на удаление
 	if (qSelectAuth.ReadColumn("usrs_isdeleted").toBool())
 	{
-		ErrorString = LANG("Carat.Error.LoginIsDeleted").arg(LoginString);
+		ErrorString = LANG("Carat.Error.Query.LoginIsDeleted").arg(LoginString);
 		return false;
 	}
 
 	//Если у пользователя нет права доступа
 	if (!qSelectAuth.ReadColumn("usrs_accessallowed").toBool())
 	{
-		ErrorString = LANG("Carat.Error.LoginNoAccess");
+		ErrorString = LANG("Carat.Error.Query.LoginNoAccess");
 		return false;
 	}
 
@@ -213,7 +217,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		if (qSelectAuth.ReadColumn("usrs_group").toInt() == 0) //Привязка отсутствует
 		{
-			ErrorString = LANG("Carat.Error.LoginLinkGroup");
+			ErrorString = LANG("Carat.Error.Query.LoginLinkGroup");
 			return false;
 		}
 	}
@@ -228,12 +232,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			QDate CurrentDate = QDate::currentDate();
 			if (CurrentDate < DateStart)
 			{
-				ErrorString = LANG("Carat.Error.LoginLifetimeNotStarted").arg(DateStart.toString(FORMAT_DATE_V1));
+				ErrorString = LANG("Carat.Error.Query.LoginLifetimeNotStarted").arg(DateStart.toString(FORMAT_DATE_V1));
 				return false;
 			}
 			else if (CurrentDate > DateEnd)
 			{
-				ErrorString = LANG("Carat.Error.LoginLifetimeEnded");
+				ErrorString = LANG("Carat.Error.Query.LoginLifetimeEnded");
 				return false;
 			}
 		}
@@ -243,7 +247,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QString TestConnectionName = ISSystem::GenerateUuid();
 	if (!ISDatabase::Instance().Connect(TestConnectionName, DBHost, DBPort, DBName, LoginString, PasswordString))
 	{
-		ErrorString = LANG("Carat.Error.DatabaseConnection").arg(ISDatabase::Instance().GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.DatabaseConnection").arg(ISDatabase::Instance().GetErrorString());
 		return false;
 	}
 	ISDatabase::Instance().Disconnect(TestConnectionName);
@@ -281,6 +285,53 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	ISSleep(TimeoutInt);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant Login = CheckNullField("Login", TcpMessage->Parameters);
+	if (!Login.isValid())
+	{
+		return false;
+	}
+	QString LoginString = Login.toString();
+
+	QVariantList SystemsSubSystems;
+
+	//Получаем системы и подсистемы
+	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEMS);
+	if (qSelectSystems.Execute())
+	{
+		while (qSelectSystems.Next())
+		{
+			SystemsSubSystems.append(QVariantMap
+			{
+				{ "stms_issystem", qSelectSystems.ReadColumn("stms_issystem") },
+				{ "stms_id", qSelectSystems.ReadColumn("stms_id") },
+				{ "stms_uid", qSelectSystems.ReadColumn("stms_uid") },
+				{ "stms_localname", qSelectSystems.ReadColumn("stms_localname") },
+				{ "stms_orderid", qSelectSystems.ReadColumn("stms_orderid") },
+				{ "stms_icon", qSelectSystems.ReadColumn("stms_icon") },
+				{ "stms_hint", qSelectSystems.ReadColumn("stms_hint").toByteArray() },
+				{ "sbsm_id", qSelectSystems.ReadColumn("sbsm_id") },
+				{ "sbsm_uid", qSelectSystems.ReadColumn("sbsm_uid") },
+				{ "sbsm_localname", qSelectSystems.ReadColumn("sbsm_localname").toByteArray() },
+				{ "sbsm_orderid", qSelectSystems.ReadColumn("sbsm_orderid") },
+				{ "sbsm_icon", qSelectSystems.ReadColumn("sbsm_icon") },
+				{ "sbsm_classname", qSelectSystems.ReadColumn("sbsm_classname") },
+				{ "sbsm_tablename", qSelectSystems.ReadColumn("sbsm_tablename") },
+				{ "sbsm_hint", qSelectSystems.ReadColumn("sbsm_hint").toByteArray() }
+			});
+		}
+		TcpAnswer->Parameters.insert("SystemsSubSystems", SystemsSubSystems);
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.InitializeMetaSystems").arg(qSelectSystems.GetErrorString());
+		return false;
+	}
+
 	return true;
 }
 //-----------------------------------------------------------------------------
