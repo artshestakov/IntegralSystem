@@ -45,7 +45,6 @@ public:
 	virtual QModelIndex index(int Row, int Column, const QModelIndex &Parent = QModelIndex()) const override;
 	virtual QModelIndex parent(const QModelIndex &Index) const override;
 
-	void SetSorting(const QString &FieldName, Qt::SortOrder Order);
 	void SetSorting(int IndexColumn, Qt::SortOrder Order);
 	void SetShowToolTip(bool show_tool_tip);
 
@@ -57,7 +56,6 @@ private:
 	std::vector<QSqlRecord> Records; //Данные модели
 	std::vector<PMetaField*> Fields; //Список полей таблицы
 
-	QString SortingColumnName;
 	int SortingColumn;
 	Qt::SortOrder SortingOrder;
 

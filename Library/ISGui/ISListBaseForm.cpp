@@ -243,6 +243,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		TableView = new ISBaseTableView(this);
 		TableView->SetCornerText(LANG("Reduction.SerialNumber"));
 		TableView->SetCornerToolTip(LANG("OrdinalNumber"));
+		TableView->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
 		connect(TableView, &ISBaseTableView::doubleClicked, this, &ISListBaseForm::DoubleClickedTable);
 		connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
 		connect(TableView, &ISBaseTableView::CornerClicked, this, &ISListBaseForm::CornerButtonClicked);
@@ -287,7 +288,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
 		if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её
 		{
-			SqlModel->SetSorting(MetaSorting->FieldName, MetaSorting->Order);
 			QueryModel->SetOrderField(MetaTable->Alias + '_' + MetaSorting->FieldName.toLower(), MetaSorting->FieldName, MetaSorting->Order);
 		}
 
@@ -970,6 +970,12 @@ void ISListBaseForm::ModelThreadFinished()
 	}
 	HideField("IsDeleted");
 	HideField("IsSystem");
+
+	ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
+	if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её
+	{
+		SqlModel->SetSorting(SqlModel->GetFieldIndex(MetaSorting->FieldName), MetaSorting->Order);
+	}
 
 	CreateDelegates();
 	LoadDataAfterEvent();
