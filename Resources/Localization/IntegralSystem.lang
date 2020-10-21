@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="IntegralSystem">
-  
+
   <Local Name="DescriptionApplication" Russian="Система учёта данных IntegralSystem — это современный инструмент для ведения учёта базы данных любого предприятия. IntegralSystem позволяет в комплексе автоматизировать задачи оперативного и управленческого учёта, анализа и отчетных операций."/>
-  
+
   <Local Name="Form.Authorization.ConnectionSettings" Russian="Настройки подключения (F9)"/>
   <Local Name="Form.Authorization.About" Russian="О программе (F1)"/>
 
@@ -10,7 +10,7 @@
 
   <Local Name="SplashWidget.Buffer" Russian="Загрузка буфера..."/>
   <Local Name="SplashWidget.AdminRoles" Russian="Проверка прав..."/>
-  
+
   <!--About Form-->
   <Local Name="AboutForm.AboutApplication" Russian="О программе"/>
   <Local Name="AboutForm.Tab.Common" Russian="Общие"/>
@@ -258,7 +258,7 @@
   <Local Name="DaData.Bank.State.Active" Russian="Действующая"/>
   <Local Name="DaData.Bank.State.Liquidating" Russian="Ликвидируется"/>
   <Local Name="DaData.Bank.State.Liquidated" Russian="Ликвидирована"/>
-  
+
   <!--System Fields-->
   <Local Name="SystemField.ID" Russian="Код"/>
   <Local Name="SystemField.ID.NotAssigned" Russian="Не присвоен"/>
@@ -281,7 +281,7 @@
   <Local Name="ListForm.Search" Russian="Расширенный поиск"/>
   <Local Name="ListForm.Search.ToolTip" Russian="Расширенный поиск по таблице (F7)"/>
   <Local Name="ListForm.ExportTable" Russian="Экспорт таблицы"/>
-  
+
   <!--Other-->
   <Local Name="NoData" Russian="Данных нет"/>
   <Local Name="Delete" Russian="Удалить"/>
@@ -394,7 +394,7 @@
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
   <Local Name="MonitorActivity.MonitorUser.Online" Russian="(в сети)"/>
   <Local Name="MonitorActivity.MonitorUser.Offline" Russian="(не в сети)"/>
-  
+
   <!--Access rights-->
   <Local Name="AccessRights" Russian="Права доступа"/>
   <Local Name="AccessRights.SettingAcceessFromGroup" Russian="Настрока прав для группы: %1"/>
@@ -402,13 +402,13 @@
   <Local Name="AccessRights.SubSystems" Russian="Интерфейс"/>
   <Local Name="AccessRights.Tables" Russian="Таблицы"/>
   <Local Name="AccessRights.SpecialRoles" Russian="Специальные права"/>
-  
+
   <!--StorageFiles-->
   <Local Name="StorageFiles.Create" Russian="Добавить файл(ы)"/>
   <Local Name="StorageFiles.AllFiles" Russian="Все файлы"/>
   <Local Name="StorageFiles.MyFiles" Russian="Мои файлы"/>
   <Local Name="StorageFiles.MyPrivateFiles" Russian="Мои приватные файлы"/>
-  
+
   <!--Export-->
   <Local Name="Export.Table" Russian="Экспорт таблицы"/>
   <Local Name="Export.Type.CSV" Russian="CSV"/>
@@ -426,7 +426,7 @@
   <Local Name="Export.Setting.Header" Russian="Заголовки колонок"/>
   <Local Name="Export.Process.Prepare" Russian="Подготовка..."/>
   <Local Name="Export.Process.Process" Russian="Экспортировано %1 из %2..."/>
-  
+
   <Local Name="ThisActionCanNotUndone" Russian="Это действие нельзя отменить."/>
   <Local Name="ClickToViewHelp" Russian="Нажмите, чтобы просмотреть дополнительную информацию."/>
   <Local Name="DeletingCascadeObjects" Russian="Каскадное удаление записей"/>
@@ -508,7 +508,7 @@
   <Local Name="PrintProcess.FillTemplateData" Russian="Заполнение шаблона данными"/>
   <Local Name="PrintProcess.Printing" Russian="Печать"/>
   <Local Name="PrintProcess.SavedToPDF" Russian="Сохранение в PDF"/>
-  
+
   <!--NotificationForm-->
   <Local Name="NotificationForm.Title.Created" Russian="Создана запись"/>
   <Local Name="NotificationForm.Title.CreatedCopy" Russian="Создана копия записи"/>
@@ -518,7 +518,7 @@
   <Local Name="NotificationForm.Title.Recovery" Russian="Пометка удаления снята"/>
   <Local Name="NotificationForm.Title.Recoverys" Russian="Пометка удаления снята с выбранных записей"/>
   <Local Name="NotificationForm.Title.Deleteds" Russian="Установлена пометка удаления на выбранные записи"/>
-  
+
   <!--Settings-->
   <Local Name="Settings.Table.DoubleClickEvent.Window" Russian="Открывать запись в отдельном окне"/>
   <Local Name="Settings.Table.DoubleClickEvent.Tab" Russian="Открывать запись в режиме вкладки"/>
@@ -527,7 +527,7 @@
   <Local Name="Settings.TabBar.SelectionBehavior.SelectLeftTab" Russian="Выбрать первую вкладку слева"/>
   <Local Name="Settings.TabBar.SelectionBehavior.SelectRightTab" Russian="Выбрать первую вкладку справа"/>
   <Local Name="Settings.TabBar.SelectionBehavior.SelectPreviousTab" Russian="Выбрать предыдущую вкладку"/>
-  
+
   <!--Task-->
   <Local Name="Task.LabelCentral" Russian="Чтобы отобразить список задач, выберите фильтр сверху."/>
   <Local Name="Task.DesignateMe" Russian="Назначить меня"/>
