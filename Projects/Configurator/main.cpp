@@ -358,7 +358,20 @@ bool Execute(const QString &Argument)
 //-----------------------------------------------------------------------------
 bool Execute(const QString &Argument, const QString &SubArgument)
 {
-	CGConfiguratorBase *CommandBase = ISAlgorithm::CreatePointer<CGConfiguratorBase *>(GetClassName(Argument));
+	QString ClassName = GetClassName(Argument);
+	if (ClassName.isEmpty())
+	{
+		ISLOGGER_E("Not found class name with argument: " + Argument);
+		return false;
+	}
+
+	CGConfiguratorBase *CommandBase = ISAlgorithm::CreatePointer<CGConfiguratorBase *>(ClassName);
+	if (!CommandBase)
+	{
+		ISLOGGER_E("Not create pointer with class name: " + ClassName);
+		return false;
+	}
+
 	bool Result = ISSystem::CheckExistSlot(CommandBase, SubArgument);
 	if (Result)
 	{
@@ -373,7 +386,7 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 			}
 			else
 			{
-				ISLOGGER_L(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
+				ISLOGGER_E(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
 			}
 		}
 		else
@@ -384,7 +397,7 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 	}
 	else
 	{
-		ISLOGGER_L("Command \"" + SubArgument + "\" not found");
+		ISLOGGER_E("Command \"" + SubArgument + "\" not found");
 	}
 	delete CommandBase;
 	return Result;
