@@ -25,6 +25,10 @@ static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_field
 											  "FROM _columnsize "
 											  "WHERE clsz_creationuser = :UserID");
 //-----------------------------------------------------------------------------
+static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
+											"FROM _favorites "
+											"WHERE fvts_creationuser = :UserID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -330,11 +334,11 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "sbsm_hint", qSelectSystems.ReadColumn("sbsm_hint").toByteArray() }
 			});
 		}
-		TcpAnswer->Parameters.insert("SystemsSubSystems", SystemsSubSystems);
+		TcpAnswer->Parameters["SystemsSubSystems"] = SystemsSubSystems;
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.GetMetaSystems").arg(qSelectSystems.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.MetaSystems").arg(qSelectSystems.GetErrorString());
 		return false;
 	}
 
@@ -357,7 +361,29 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.GetColumnSize").arg(qSelectColumnSize.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.ColumnSize").arg(qSelectColumnSize.GetErrorString());
+		return false;
+	}
+
+	//Получаем избранные объекты
+	QVariantMap Favorite;
+	ISQuery qSelectFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QS_FAVORITES);
+	qSelectFavorite.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectFavorite.Execute())
+	{
+		while (qSelectFavorite.Next())
+		{
+			QString TableName = qSelectFavorite.ReadColumn("fvts_tablename").toString();
+			QString ObjectsID = qSelectFavorite.ReadColumn("fvts_objectsid").toString();
+			ObjectsID.remove(0, 1);
+			ObjectsID.chop(1);
+			Favorite[TableName] = ObjectsID.split(SYMBOL_COMMA);
+		}
+		TcpAnswer->Parameters["Favorite"] = Favorite;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.Favorite").arg(qSelectFavorite.GetErrorString());
 		return false;
 	}
 
