@@ -13,6 +13,11 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isde
 									   "FROM _users "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
+static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
+													"FROM _settingsdatabase "
+													"WHERE NOT sgdb_isdeleted "
+													"AND sgdb_active");
+//-----------------------------------------------------------------------------
 static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
 												   "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "
 												   "sbsm_id, sbsm_uid, sbsm_localname, sbsm_orderid, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
@@ -317,6 +322,31 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 	QString LoginString = Login.toString();
+
+	//Получаем настройки БД
+	QVariantMap SettingsDBMap;
+	ISQuery qSelectSettingsDB(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTINGS_DATABASE);
+	if (qSelectSettingsDB.Execute())
+	{
+		if (qSelectSettingsDB.First())
+		{
+			SettingsDBMap["Name"] = qSelectSettingsDB.ReadColumn("sgdb_settingname");
+			SettingsDBMap["UserAccessDatabase"] = qSelectSettingsDB.ReadColumn("sgdb_useraccessdatabase");
+			SettingsDBMap["NumberSymbolsAfterComma"] = qSelectSettingsDB.ReadColumn("sgdb_numbersimbolsaftercomma");
+			SettingsDBMap["StirageFileMaxSize"] = qSelectSettingsDB.ReadColumn("sgdb_storagefilemaxsize");
+			TcpAnswer->Parameters["SettingsDB"] = SettingsDBMap;
+		}
+		else
+		{
+			ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsDBNotActive");
+			return false;
+		}
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsDB").arg(qSelectSettingsDB.GetErrorString());
+		return false;
+	}
 
 	//Получаем системы и подсистемы
 	QVariantList SystemSubSystemList;
