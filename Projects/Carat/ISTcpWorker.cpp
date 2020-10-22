@@ -95,15 +95,23 @@ void ISTcpWorker::Run()
 
 			if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
 			{
-				PerfomanceMsec = ISAlgorithm::GetTick(); //Запоминаем текущее время
-				switch (tcp_message->Type)
+				//Если запрос не авторизационный и клиент ещё не авторизовался - ошибка
+				if (tcp_message->Type != ISNamespace::AMT_Auth && !tcp_message->TcpSocket->GetAuthorized())
 				{
-                case ISNamespace::AMT_Unknown: break;
-				case ISNamespace::AMT_Auth: Result = Auth(tcp_message, TcpAnswer); break;
-				case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
-				case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
+					ErrorString = LANG("Carat.Error.NotAuthorized");
 				}
-				PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), PerfomanceMsec);
+				else //Клиент авторизовался - продолжаем
+				{
+					PerfomanceMsec = ISAlgorithm::GetTick(); //Запоминаем текущее время
+					switch (tcp_message->Type)
+					{
+					case ISNamespace::AMT_Unknown: break;
+					case ISNamespace::AMT_Auth: Result = Auth(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
+					}
+					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), PerfomanceMsec);
+				}
 			}
 			else //Сообщение не валидное
 			{
@@ -119,7 +127,7 @@ void ISTcpWorker::Run()
 				arg(tcp_message->ParseMSec).
 				arg(PerfomanceMsec);
 
-			if (!Result) //Запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе
+			if (!Result) //Запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе и лог-сообщении
 			{
 				TcpAnswer->SetError(ErrorString);
 				LogText.append("\nError string: " + ErrorString);

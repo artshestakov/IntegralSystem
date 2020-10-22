@@ -4,6 +4,7 @@
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>
   <Local Name="Carat.Error.InvalidMessage" Russian="Сообщение невалидное: %1"/>
   <Local Name="Carat.Error.InvalidMessageType" Russian="Тип сообщения &quot;%1&quot; не поддерживается."/>
+  <Local Name="Carat.Error.NotAuthorized" Russian="Вы не авторизованы!"/>
   
   <Local Name="Carat.Error.Query.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>
   <Local Name="Carat.Error.Query.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
