@@ -9,8 +9,9 @@
 #include "ISTrace.h"
 #include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
-static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend "
+static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess "
 									   "FROM _users "
+									   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
@@ -223,8 +224,15 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	int UserID = qSelectAuth.ReadColumn("usrs_id").toInt();
+	bool IsSystem = qSelectAuth.ReadColumn("usrs_issystem").toBool();
+	bool IsDeleted = qSelectAuth.ReadColumn("usrs_isdeleted").toBool();
+	QString UserFIO = qSelectAuth.ReadColumn("usrs_fio").toString();
+	int GroupID = qSelectAuth.ReadColumn("usrs_group").toInt();
+	bool GroupFullAccess = qSelectAuth.ReadColumn("usgp_fullaccess").toBool();
+
 	//Если такой логин помечен на удаление
-	if (qSelectAuth.ReadColumn("usrs_isdeleted").toBool())
+	if (IsDeleted)
 	{
 		ErrorString = LANG("Carat.Error.Query.LoginIsDeleted").arg(LoginString);
 		return false;
@@ -238,9 +246,9 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Проверка наличия привязки пользователя к группе
-	if (!qSelectAuth.ReadColumn("usrs_issystem").toBool()) //Если пользователь не системный - проверяем привязку
+	if (!IsSystem) //Если пользователь не системный - проверяем привязку
 	{
-		if (qSelectAuth.ReadColumn("usrs_group").toInt() == 0) //Привязка отсутствует
+		if (GroupID == 0) //Привязка отсутствует
 		{
 			ErrorString = LANG("Carat.Error.Query.LoginLinkGroup");
 			return false;
@@ -268,16 +276,25 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	//Проверяем подключение к БД
+	//Проверяем подключение к БД. Если не удалось подключиться - ошибка
 	QString TestConnectionName = ISSystem::GenerateUuid();
 	if (!ISDatabase::Instance().Connect(TestConnectionName, DBHost, DBPort, DBName, LoginString, PasswordString))
 	{
 		ErrorString = LANG("Carat.Error.Query.DatabaseConnection").arg(ISDatabase::Instance().GetErrorString());
 		return false;
 	}
+
+	//Подключились к БД - отключаемся от неё и устанавливаем флаги авторизации
 	ISDatabase::Instance().Disconnect(TestConnectionName);
 	TcpMessage->TcpSocket->SetAuthorized(true);
-	TcpMessage->TcpSocket->SetUserID(qSelectAuth.ReadColumn("usrs_id").toInt());
+	TcpMessage->TcpSocket->SetUserID(UserID);
+
+	//Отдаём информацию о пользователе и выходим из функции
+	TcpAnswer->Parameters["UserID"] = UserID;
+	TcpAnswer->Parameters["IsSystem"] = IsSystem;
+	TcpAnswer->Parameters["FIO"] = UserFIO;
+	TcpAnswer->Parameters["GroupID"] = GroupID;
+	TcpAnswer->Parameters["GroupFullAccess"] = GroupFullAccess;
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -382,29 +399,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Получаем размеры колонок
-	QVariantList ColumnSizeList;
-	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
-	qSelectColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-	if (qSelectColumnSize.Execute())
-	{
-		while (qSelectColumnSize.Next())
-		{
-			ColumnSizeList.append(QVariantMap
-			{
-				{ "TableName", qSelectColumnSize.ReadColumn("clsz_tablename") },
-				{ "FieldName", qSelectColumnSize.ReadColumn("clsz_fieldname") },
-				{ "Size", qSelectColumnSize.ReadColumn("clsz_size") }
-			});
-		}
-		TcpAnswer->Parameters["ColumnSize"] = ColumnSizeList;
-	}
-	else
-	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.ColumnSize").arg(qSelectColumnSize.GetErrorString());
-		return false;
-	}
-
 	//Получаем избранные объекты
 	QVariantMap FavoriteMap;
 	ISQuery qSelectFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QS_FAVORITE);
@@ -470,6 +464,29 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	else
 	{
 		ErrorString = LANG("Carat.Error.Query.GetMetaData.Sorting").arg(qSelectSorting.GetErrorString());
+		return false;
+	}
+
+	//Получаем размеры колонок
+	QVariantList ColumnSizeList;
+	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
+	qSelectColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectColumnSize.Execute())
+	{
+		while (qSelectColumnSize.Next())
+		{
+			ColumnSizeList.append(QVariantMap
+			{
+				{ "TableName", qSelectColumnSize.ReadColumn("clsz_tablename") },
+				{ "FieldName", qSelectColumnSize.ReadColumn("clsz_fieldname") },
+				{ "Size", qSelectColumnSize.ReadColumn("clsz_size") }
+			});
+		}
+		TcpAnswer->Parameters["ColumnSize"] = ColumnSizeList;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.ColumnSize").arg(qSelectColumnSize.GetErrorString());
 		return false;
 	}
 
