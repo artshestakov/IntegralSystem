@@ -529,8 +529,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			QVariantMap GroupMap = UserSettingsList[GroupUID].toMap(); //Забираем группу по идентификатору
 			QVariantList SettingsList = GroupMap["Settings"].toList(); //Забираем список настроек группы
 
-
-
 			//Формируем объект с данными по настройке
 			QVariantMap Setting =
 			{

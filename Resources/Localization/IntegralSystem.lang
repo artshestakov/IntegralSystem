@@ -147,8 +147,8 @@
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
   <Local Name="Message.Warning.SystemObject.NotDelete" Russian="Запрещено удалять системные записи."/>
-  <Local Name="Message.Warning.NotCreateCopyThisUser" Russian="Запрещено создавать копию пользователя под которым Вы авторизованны."/>
-  <Local Name="Message.Warning.NotEditThisUser" Russian="Запрещено редактировать пользователя под которым Вы авторизованны."/>
+  <Local Name="Message.Warning.NotCreateCopyThisUser" Russian="Запрещено создавать копию пользователя под которым Вы авторизованы."/>
+  <Local Name="Message.Warning.NotEditThisUser" Russian="Запрещено редактировать пользователя под которым Вы авторизованы."/>
   <Local Name="Message.Warning.FileNameIsNull" Russian="Вы не ввели имя файла."/>
   <Local Name="Message.Warning.NotifyNotInserted" Russian="Не удалось добавить напоминание!"/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
