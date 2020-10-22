@@ -11,7 +11,7 @@ public:
 	ISSqlModelCore(PMetaTable *meta_table, QObject *parent = 0);
 	virtual ~ISSqlModelCore();
 
-	void SetRecords(const std::vector<QSqlRecord> &records, const std::vector<QString> &fields); //Изменить данные модели
+	void SetRecords(const std::vector<QSqlRecord> &records, const ISVectorString &fields); //Изменить данные модели
 	void Clear(); //Очистить модель
 	QSqlRecord GetRecord(int RowIndex) const; //Получить запись по идентификатору строки
 	void RemoveRecord(int Index); //Удалить запись из модели

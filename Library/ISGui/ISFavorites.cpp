@@ -87,7 +87,7 @@ void ISFavorites::DeleteFavorite(const QString &TableName, int ObjectID)
 //-----------------------------------------------------------------------------
 void ISFavorites::DeleteAllFavorites()
 {
-	std::vector<QString> Keys = ISAlgorithm::ConvertMapToKeys(Favorites);
+	ISVectorString Keys = ISAlgorithm::ConvertMapToKeys(Favorites);
 	for (const QString &Key : Keys)
 	{
 		Favorites[Key].clear();

@@ -227,7 +227,7 @@ bool CGConfiguratorUpdate::resources()
 
 	if (Result) //Если обновление ресурсов прошло успешно - удаляем устаревшие
 	{
-		std::vector<QString> Tables; //Таблицы, ресурсы которых присутствуют в мета-данных
+		ISVectorString Tables; //Таблицы, ресурсы которых присутствуют в мета-данных
 		for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
 		{
 			if (!ISAlgorithm::VectorContains(Tables, MetaResource->TableName))

@@ -40,7 +40,7 @@ void ISModelThreadWorker::Execute(const QString &SqlQueryText, const QVariantMap
 					//Загрузка полей
 					QSqlRecord SqlRecord = SqlQuery.record();
 					int FieldCount = SqlRecord.count();
-					std::vector<QString> Fields(FieldCount);
+					ISVectorString Fields(FieldCount);
 					for (int i = 0; i < FieldCount; ++i)
 					{
 						Fields[(size_t)i] = SqlRecord.fieldName(i);

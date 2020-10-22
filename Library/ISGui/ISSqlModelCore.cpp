@@ -26,7 +26,7 @@ ISSqlModelCore::~ISSqlModelCore()
 	Clear();
 }
 //-----------------------------------------------------------------------------
-void ISSqlModelCore::SetRecords(const std::vector<QSqlRecord> &records, const std::vector<QString> &fields)
+void ISSqlModelCore::SetRecords(const std::vector<QSqlRecord> &records, const ISVectorString &fields)
 {
 	beginResetModel();
 	Records = records;

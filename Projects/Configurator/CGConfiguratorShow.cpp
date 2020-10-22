@@ -341,7 +341,7 @@ bool CGConfiguratorShow::oldindexes(int &Count)
 	bool Result = qSelectIndexes.Execute();
 	if (Result)
 	{
-		std::vector<QString> IndexNames;
+		ISVectorString IndexNames;
 		for (PMetaIndex *MetaIndex : ISMetaData::Instance().GetIndexes())
 		{
 			IndexNames.emplace_back(MetaIndex->GetName());
