@@ -57,6 +57,9 @@ static QString QS_USER_SETTINGS = PREPARE_QUERY("SELECT "
 												"AND NOT stgp_isdeleted "
 												"ORDER BY stgp_order, stgs_order");
 //-----------------------------------------------------------------------------
+static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
+											   "VALUES(:SettingUID, :Value)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -510,7 +513,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		while (qSelectUserSetting.Next())
 		{
-			ISUuid GroupUID = qSelectUserSetting.ReadColumn("stgp_uid");
+			ISUuid GroupUID = qSelectUserSetting.ReadColumn("stgp_uid"),
+				SettingUID = qSelectUserSetting.ReadColumn("stgs_uid");
 			if (!UserSettingsList.contains(GroupUID)) //Если такой группы нет - вставляем
 			{
 				UserSettingsList[GroupUID] = QVariantMap
@@ -522,11 +526,15 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 					{ "Settings", QVariantList() }
 				};
 			}
-			QVariantMap GroupMap = UserSettingsList[GroupUID].toMap();
-			QVariantList SettingsList = GroupMap["Settings"].toList();
+			QVariantMap GroupMap = UserSettingsList[GroupUID].toMap(); //Забираем группу по идентификатору
+			QVariantList SettingsList = GroupMap["Settings"].toList(); //Забираем список настроек группы
+
+
+
+			//Формируем объект с данными по настройке
 			QVariantMap Setting =
 			{
-				{ "UID", ISUuid(qSelectUserSetting.ReadColumn("stgs_uid")) },
+				{ "UID", SettingUID },
 				{ "Name", qSelectUserSetting.ReadColumn("stgs_name") },
 				{ "Type", qSelectUserSetting.ReadColumn("stgs_type") },
 				{ "WidgetEditName", qSelectUserSetting.ReadColumn("stgs_widgeteditname") },
@@ -534,6 +542,25 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "Hint", qSelectUserSetting.ReadColumn("stgs_hint") },
 				{ "DefaultValue", qSelectUserSetting.ReadColumn("stgs_defaultvalue") }
 			};
+
+			if (qSelectUserSetting.ReadColumn("count").toInt()) //Если такая настройка у пользователя уже есть - получаем её значение
+			{
+				Setting["Value"] = qSelectUserSetting.ReadColumn("usst_value");
+			}
+			else //Такой настройки у пользователя нет - добавляем
+			{
+				QVariant SettingDefaultValue = qSelectUserSetting.ReadColumn("stgs_defaultvalue");
+				ISQuery qInsertSetting(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_SETTING);
+				qInsertSetting.BindValue(":SettingUID", SettingUID);
+				qInsertSetting.BindValue(":Value", SettingDefaultValue);
+				if (!qInsertSetting.Execute())
+				{
+					ErrorString = "Error inserting new user setting: " + qInsertSetting.GetErrorString();
+					return false;
+				}
+				Setting["Value"] = SettingDefaultValue;
+			}
+
 			SettingsList.append(Setting);
 			GroupMap["Settings"] = SettingsList;
 			UserSettingsList[GroupUID] = GroupMap;
