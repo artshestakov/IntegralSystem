@@ -783,27 +783,27 @@ int QtServiceBase::exec()
                 if (d_ptr->args.size() > 3)
                     password = d_ptr->args.at(3);
                 if (!d_ptr->install(account, password)) {
-                    fprintf(stderr, "The service %s could not be installed\n", serviceName().toLatin1().constData());
+                    fprintf(stderr, "The service \"%s\" could not be installed\n", serviceName().toLatin1().constData());
                     return -1;
                 } else {
-                    printf("The service %s has been installed under: %s\n",
+                    printf("The service \"%s\" has been installed under: %s\n",
                         serviceName().toLatin1().constData(), d_ptr->filePath().toLatin1().constData());
                 }
             } else {
-                fprintf(stderr, "The service %s is already installed\n", serviceName().toLatin1().constData());
+                fprintf(stderr, "The service \"%s\" is already installed\n", serviceName().toLatin1().constData());
             }
             return 0;
         } else if (a == QLatin1String("-u") || a == QLatin1String("-uninstall")) {
             if (d_ptr->controller.isInstalled()) {
                 if (!d_ptr->controller.uninstall()) {
-                    fprintf(stderr, "The service %s could not be uninstalled\n", serviceName().toLatin1().constData());
+                    fprintf(stderr, "The service \"%s\" could not be uninstalled\n", serviceName().toLatin1().constData());
                     return -1;
                 } else {
-                    printf("The service %s has been uninstalled.\n",
+                    printf("The service \"%s\" has been uninstalled.\n",
                         serviceName().toLatin1().constData());
                 }
             } else {
-                fprintf(stderr, "The service %s is not installed\n", serviceName().toLatin1().constData());
+                fprintf(stderr, "The service \"%s\" is not installed\n", serviceName().toLatin1().constData());
             }
             return 0;
         } else if (a == QLatin1String("-v") || a == QLatin1String("-version")) {
@@ -860,7 +860,7 @@ int QtServiceBase::exec()
     }
 #endif
     if (!d_ptr->start()) {
-        fprintf(stderr, "The service %s could not start\n", serviceName().toLatin1().constData());
+        fprintf(stderr, "The service \"%s\" could not start\n", serviceName().toLatin1().constData());
         return -4;
     }
     return 0;

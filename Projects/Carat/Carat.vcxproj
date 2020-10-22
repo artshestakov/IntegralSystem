@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISCaratService.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpMessage.cpp" />
     <ClCompile Include="ISTcpQueue.cpp" />
@@ -51,6 +52,7 @@
     <ResourceCompile Include="Carat.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ISCaratService.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpMessage.h" />
     <ClInclude Include="ISTcpQueue.h" />
