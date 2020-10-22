@@ -31,21 +31,6 @@
     COST 100;
   </Function>
   
-  <Function Name="currentuseroid()" Comment="Получить системный идентификатор текущего пользователя">
-    CREATE OR REPLACE FUNCTION public.currentuseroid()
-    RETURNS integer AS
-    $body$
-    BEGIN
-    RETURN usesysid FROM pg_user WHERE usename = CURRENT_USER;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    RETURNS NULL ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-
   <Function Name="userphotobyid(id bigint)" Comment="Получить аватар пользователя по его идентификатору">
     CREATE OR REPLACE FUNCTION public.userphotobyid(id bigint)
     RETURNS bytea AS
