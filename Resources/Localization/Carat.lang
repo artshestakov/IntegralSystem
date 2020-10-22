@@ -23,9 +23,10 @@
   <Local Name="Carat.Error.Query.GetMetaData.SettingsDB" Russian="Не удалось получить настройки базы данных: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.SettingsDBNotActive" Russian="Нет автивного профиля настроек базы данных."/>
   <Local Name="Carat.Error.Query.GetMetaData.MetaSystems" Russian="Не удалось получить информацию о системах и подсистемах: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.ColumnSize" Russian="Не удалось получить размеры полей: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.Favorite" Russian="Не удалось получить избранные записи: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.History" Russian="Не удалось получить историю: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.Sorting" Russian="Не удалось получить сортировки: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.ColumnSize" Russian="Не удалось получить размеры полей: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.UserSettings" Russian="Не удалось получить настройки пользователя: %1"/>
 
 </LANG>

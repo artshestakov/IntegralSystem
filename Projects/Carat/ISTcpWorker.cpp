@@ -27,10 +27,6 @@ static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
 												   "WHERE NOT sbsm_isdeleted "
 												   "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
-											  "FROM _columnsize "
-											  "WHERE clsz_creationuser = :UserID");
-//-----------------------------------------------------------------------------
 static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 										   "FROM _favorites "
 										   "WHERE fvts_creationuser = :UserID");
@@ -44,6 +40,22 @@ static QString QS_SORTING = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname
 										  "FROM _sortingtables "
 										  "WHERE NOT sgts_isdeleted "
 										  "AND sgts_creationuser = :UserID");
+//-----------------------------------------------------------------------------
+static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
+											  "FROM _columnsize "
+											  "WHERE clsz_creationuser = :UserID");
+//-----------------------------------------------------------------------------
+static QString QS_USER_SETTINGS = PREPARE_QUERY("SELECT "
+												"stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
+												"stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
+												"usst_value, "
+												"(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = :UserID AND usst_setting = stgs_uid) "
+												"FROM _settings "
+												"LEFT JOIN _settingsgroup ON stgp_uid = stgs_group "
+												"LEFT JOIN _usersettings ON usst_setting = stgs_uid AND usst_creationuser = :UserID "
+												"WHERE NOT stgs_isdeleted "
+												"AND NOT stgp_isdeleted "
+												"ORDER BY stgp_order, stgs_order");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
@@ -487,6 +499,50 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	else
 	{
 		ErrorString = LANG("Carat.Error.Query.GetMetaData.ColumnSize").arg(qSelectColumnSize.GetErrorString());
+		return false;
+	}
+
+	//Получаем пользовательские настройки
+	QVariantMap UserSettingsList;
+	ISQuery qSelectUserSetting(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_SETTINGS);
+	qSelectUserSetting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectUserSetting.Execute())
+	{
+		while (qSelectUserSetting.Next())
+		{
+			ISUuid GroupUID = qSelectUserSetting.ReadColumn("stgp_uid");
+			if (!UserSettingsList.contains(GroupUID)) //Если такой группы нет - вставляем
+			{
+				UserSettingsList[GroupUID] = QVariantMap
+				{
+					{ "Name", qSelectUserSetting.ReadColumn("stgp_name") },
+					{ "LocalName", qSelectUserSetting.ReadColumn("stgp_localname") },
+					{ "IconName", qSelectUserSetting.ReadColumn("stgp_iconname") },
+					{ "Hint", qSelectUserSetting.ReadColumn("stgp_hint") },
+					{ "Settings", QVariantList() }
+				};
+			}
+			QVariantMap GroupMap = UserSettingsList[GroupUID].toMap();
+			QVariantList SettingsList = GroupMap["Settings"].toList();
+			QVariantMap Setting =
+			{
+				{ "UID", ISUuid(qSelectUserSetting.ReadColumn("stgs_uid")) },
+				{ "Name", qSelectUserSetting.ReadColumn("stgs_name") },
+				{ "Type", qSelectUserSetting.ReadColumn("stgs_type") },
+				{ "WidgetEditName", qSelectUserSetting.ReadColumn("stgs_widgeteditname") },
+				{ "LocalName", qSelectUserSetting.ReadColumn("stgs_localname") },
+				{ "Hint", qSelectUserSetting.ReadColumn("stgs_hint") },
+				{ "DefaultValue", qSelectUserSetting.ReadColumn("stgs_defaultvalue") }
+			};
+			SettingsList.append(Setting);
+			GroupMap["Settings"] = SettingsList;
+			UserSettingsList[GroupUID] = GroupMap;
+		}
+		TcpAnswer->Parameters["UserSettings"] = UserSettingsList;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.UserSettings").arg(qSelectUserSetting.GetErrorString());
 		return false;
 	}
 
