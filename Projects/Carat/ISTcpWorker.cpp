@@ -29,6 +29,11 @@ static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objects
 											"FROM _favorites "
 											"WHERE fvts_creationuser = :UserID");
 //-----------------------------------------------------------------------------
+static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_objectid "
+										  "FROM _history "
+										  "WHERE htry_creationuser = :UserID "
+										  "ORDER BY htry_id");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -309,13 +314,13 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QString LoginString = Login.toString();
 
 	//Получаем системы и подсистемы
-	QVariantList SystemsSubSystems;
+	QVariantList SystemSubSystemList;
 	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEMS);
 	if (qSelectSystems.Execute())
 	{
 		while (qSelectSystems.Next())
 		{
-			SystemsSubSystems.append(QVariantMap
+			SystemSubSystemList.append(QVariantMap
 			{
 				{ "stms_issystem", qSelectSystems.ReadColumn("stms_issystem") },
 				{ "stms_id", qSelectSystems.ReadColumn("stms_id") },
@@ -334,7 +339,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "sbsm_hint", qSelectSystems.ReadColumn("sbsm_hint").toByteArray() }
 			});
 		}
-		TcpAnswer->Parameters["SystemsSubSystems"] = SystemsSubSystems;
+		TcpAnswer->Parameters["SystemsSubSystems"] = SystemSubSystemList;
 	}
 	else
 	{
@@ -343,21 +348,21 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Получаем размеры колонок
-	QVariantList ColumnSize;
+	QVariantList ColumnSizeList;
 	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
 	qSelectColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (qSelectColumnSize.Execute())
 	{
 		while (qSelectColumnSize.Next())
 		{
-			ColumnSize.append(QVariantMap
+			ColumnSizeList.append(QVariantMap
 			{
 				{ "TableName", qSelectColumnSize.ReadColumn("clsz_tablename") },
 				{ "FieldName", qSelectColumnSize.ReadColumn("clsz_fieldname") },
 				{ "Size", qSelectColumnSize.ReadColumn("clsz_size") }
 			});
 		}
-		TcpAnswer->Parameters["ColumnSize"] = ColumnSize;
+		TcpAnswer->Parameters["ColumnSize"] = ColumnSizeList;
 	}
 	else
 	{
@@ -366,7 +371,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Получаем избранные объекты
-	QVariantMap Favorite;
+	QVariantMap FavoriteMap;
 	ISQuery qSelectFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QS_FAVORITES);
 	qSelectFavorite.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (qSelectFavorite.Execute())
@@ -377,13 +382,36 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			QString ObjectsID = qSelectFavorite.ReadColumn("fvts_objectsid").toString();
 			ObjectsID.remove(0, 1);
 			ObjectsID.chop(1);
-			Favorite[TableName] = ObjectsID.split(SYMBOL_COMMA);
+			FavoriteMap[TableName] = ObjectsID.split(SYMBOL_COMMA);
 		}
-		TcpAnswer->Parameters["Favorite"] = Favorite;
+		TcpAnswer->Parameters["Favorite"] = FavoriteMap;
 	}
 	else
 	{
 		ErrorString = LANG("Carat.Error.Query.GetMetaData.Favorite").arg(qSelectFavorite.GetErrorString());
+		return false;
+	}
+
+	//Получаем историю
+	QVariantList HistoryList;
+	ISQuery qSelectHistory(ISDatabase::Instance().GetDB(DBConnectionName), QS_HISTORY);
+	qSelectHistory.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectHistory.Execute())
+	{
+		while (qSelectHistory.Next())
+		{
+			HistoryList.append(QVariantMap
+			{
+				{ "CreationDate", qSelectHistory.ReadColumn("htry_creationdate") },
+				{ "TableName", qSelectHistory.ReadColumn("htry_tablename") },
+				{ "ObjectID", qSelectHistory.ReadColumn("htry_objectid") }
+			});
+		}
+		TcpAnswer->Parameters["History"] = HistoryList;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.History").arg(qSelectHistory.GetErrorString());
 		return false;
 	}
 
