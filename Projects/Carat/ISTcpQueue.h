@@ -22,6 +22,7 @@ private:
 
 private:
 	std::queue<ISTcpMessage *> Queue;
+	qint64 MessageID;
 
 	//Критические секции для синхронизации
 #ifdef WIN32

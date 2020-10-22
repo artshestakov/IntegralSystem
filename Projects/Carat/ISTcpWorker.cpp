@@ -154,9 +154,10 @@ void ISTcpWorker::Run()
 			}
 
 			//Формируем лог-сообщение
-			QString LogText = QString("%1 message \"%2\". Size: %3 Chunk: %4 Parse msec: %5 MSec: %6").
+			QString LogText = QString("%1 message \"%2\". ID: %3 Size: %4 Chunk: %5 Parse msec: %6 MSec: %7").
 				arg(Result ? "Done" : "Failed").
 				arg(tcp_message->TypeName).
+				arg(tcp_message->MessageID).
 				arg(tcp_message->Size).
 				arg(tcp_message->ChunkCount).
 				arg(tcp_message->ParseMSec).

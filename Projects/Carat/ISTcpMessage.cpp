@@ -7,6 +7,7 @@ ISTcpMessage::ISTcpMessage(ISTcpSocket *tcp_socket)
     ParseMSec(0),
     Size(0),
     ChunkCount(0),
+	MessageID(0),
 	ErrorString(NO_ERROR_STRING),
     Valid(true)
 {
