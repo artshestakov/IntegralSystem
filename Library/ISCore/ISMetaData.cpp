@@ -675,15 +675,6 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 	PMetaField *FieldDeletionDate = MetaTable->GetField("DeletionDate");
 	FieldDeletionDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionDate->Name);
 
-	PMetaField *FieldCreationUserOID = MetaTable->GetField("CreationUserOID");
-	FieldCreationUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUserOID->Name);
-
-	PMetaField *FieldUpdationUserOID = MetaTable->GetField("UpdationUserOID");
-	FieldUpdationUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationUserOID->Name);
-
-	PMetaField *FieldDeletionUserOID = MetaTable->GetField("DeletionUserOID");
-	FieldDeletionUserOID->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionUserOID->Name);
-
 	PMetaField *FieldCreationUser = MetaTable->GetField("CreationUser");
 	FieldCreationUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUser->Name);
 
