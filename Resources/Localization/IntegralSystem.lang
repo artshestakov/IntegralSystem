@@ -388,6 +388,7 @@
   <Local Name="Banner.ShutdownSystem" Russian="Завершение работы системы..."/>
   <Local Name="FileNotSelected" Russian="Файл не выбран"/>
   <Local Name="SaveToDisk" Russian="Сохранить на диск"/>
+  <Local Name="You" Russian="Вы"/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
@@ -589,7 +590,6 @@
   <Local Name="Task.Right.Deadline" Russian="Срок выполнения"/>
   <Local Name="Task.Right.Deadline.Empty" Russian="Дата не указана"/>
   <Local Name="Task.Right.Owner" Russian="Автор задачи"/>
-  <Local Name="Task.Right.Owner.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Type" Russian="Тип задачи"/>
   <Local Name="Task.Right.Type.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Priority" Russian="Приоритет"/>

@@ -23,6 +23,7 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_deadline, "
 									   "ue.usrs_fio AS task_executor_name, "
 									   "userphotobyid(ue.usrs_id) AS task_executor_photo, "
+									   "t.task_executor AS task_executor_id, "
 									   "tt.tstp_name AS task_type, "
 									   "ts.tsst_uid AS task_status_uid, "
 									   "ts.tsst_name AS task_status_name, "
@@ -31,6 +32,7 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "tp.tspr_name AS task_priority_name, "
 									   "userphotobyid(uo.usrs_id) AS task_owner_photo, "
 									   "uo.usrs_fio AS task_owner_name, "
+									   "t.task_creationuser AS task_owner_id, "
 									   "t.task_important, "
 									   "t.task_creationdate, "
 									   "t.task_updationdate, "
@@ -188,6 +190,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskDeadline = qSelect.ReadColumn("task_deadline").toDate();
 	TaskExecutorName = qSelect.ReadColumn("task_executor_name").toString();
 	TaskExecutroPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_executor_photo").toByteArray()).scaled(40, 40);
+	TaskExecutorID = qSelect.ReadColumn("task_executor_id").toInt();
 	TaskType = qSelect.ReadColumn("task_type").toString();
 	TaskStatusUID = qSelect.ReadColumn("task_status_uid");
 	TaskStatusName = qSelect.ReadColumn("task_status_name").toString();
@@ -196,6 +199,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskPriorityName = qSelect.ReadColumn("task_priority_name").toString();
 	TaskOwnerPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_owner_photo").toByteArray()).scaled(40, 40);
 	TaskOwner = qSelect.ReadColumn("task_owner_name").toString();
+	TaskOwnerID = qSelect.ReadColumn("task_owner_id").toInt();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskCreationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 	TaskCreationDateToolTip = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
@@ -439,7 +443,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	}
 	else
 	{
-		ISLabelPixmapText *LabelExecutor = new ISLabelPixmapText(TaskExecutroPhoto, TaskExecutorName, GroupBoxDetails);
+		ISLabelPixmapText *LabelExecutor = new ISLabelPixmapText(TaskExecutroPhoto, TaskExecutorID == CURRENT_USER_ID ? LANG("You") : TaskExecutorName, GroupBoxDetails);
 		LabelExecutor->SetWordWrap(true);
 		LabelExecutor->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		LayoutRight->addWidget(LabelExecutor);
@@ -449,7 +453,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Owner") + ':', GroupBoxDetails));
 
-	ISLabelPixmapText *LabelOwner = new ISLabelPixmapText(TaskOwnerPhoto, TaskOwner.isEmpty() ? LANG("Task.Right.Owner.Empty") : TaskOwner, GroupBoxDetails);
+	ISLabelPixmapText *LabelOwner = new ISLabelPixmapText(TaskOwnerPhoto, TaskOwnerID == CURRENT_USER_ID ? LANG("You") : TaskOwner, GroupBoxDetails);
 	LabelOwner->SetWordWrap(true);
 	LabelOwner->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LayoutRight->addWidget(LabelOwner);
