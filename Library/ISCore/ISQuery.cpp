@@ -3,7 +3,6 @@
 #include "ISAssert.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
-#include "ISCountingTime.h"
 #include "ISAssert.h"
 #include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
@@ -70,9 +69,9 @@ bool ISQuery::Prepare(QSqlDatabase &sql_database, const QString &sql_text)
 bool ISQuery::Execute()
 {
     ColumnIndices.clear();
-    ISCountingTime Time;
+	ISTimePoint TimePoint = ISAlgorithm::GetTick();
     bool Result = SqlQuery.exec();
-    unsigned int Msec = Time.Elapsed();
+	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
     if (ShowLongQuery)
     {
         if (Msec > MAX_QUERY_TIME)
@@ -93,9 +92,9 @@ bool ISQuery::Execute(const QString &sql_text)
 {
     SqlText = sql_text;
     ColumnIndices.clear();
-    ISCountingTime Time;
+	ISTimePoint TimePoint = ISAlgorithm::GetTick();
     bool Result = SqlQuery.exec(sql_text);
-    unsigned int Msec = Time.Elapsed();
+	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
     if (ShowLongQuery)
     {
         if (Msec > MAX_QUERY_TIME)
@@ -116,9 +115,9 @@ bool ISQuery::Execute(QSqlDatabase &sql_database, const QString &sql_text)
 {
     SqlText = sql_text;
     ColumnIndices.clear();
-    ISCountingTime Time;
+	ISTimePoint TimePoint = ISAlgorithm::GetTick();
     SqlQuery = sql_database.exec(sql_text);
-    unsigned int Msec = Time.Elapsed();
+	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
     if (ShowLongQuery)
     {
         if (Msec > MAX_QUERY_TIME)

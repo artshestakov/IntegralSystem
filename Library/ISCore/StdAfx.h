@@ -37,7 +37,6 @@
 #include <vector>
 #include <queue>
 #include <chrono>
-#include <cmath>
 //C-includes-------------------------------------------------------------------
 #include <stdlib.h>
 #include <stdio.h>

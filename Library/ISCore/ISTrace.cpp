@@ -1,5 +1,6 @@
 #include "ISTrace.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISTrace::ISTrace(const QString &function_name, const QString &message_text)
 	: FunctionName(function_name)
@@ -10,12 +11,11 @@ ISTrace::ISTrace(const QString &function_name, const QString &message_text)
 		MessageText += " | " + message_text;
 	}
 	ISLOGGER_T(MessageText);
-	Time = new ISCountingTime();
+	TimePoint = ISAlgorithm::GetTick();
 }
 //-----------------------------------------------------------------------------
 ISTrace::~ISTrace()
 {
-	ISLOGGER_T("End " + FunctionName + " " + QString::number(Time->Elapsed()) + " msec");
-	delete Time;
+	ISLOGGER_T(QString("End %1 %2 msec").arg(FunctionName).arg(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)));
 }
 //-----------------------------------------------------------------------------

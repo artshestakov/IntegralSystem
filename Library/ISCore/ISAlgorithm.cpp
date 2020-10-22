@@ -34,17 +34,13 @@ qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorS
 	return -1;
 }
 //-----------------------------------------------------------------------------
-qint64 ISAlgorithm::GetTick()
+ISTimePoint ISAlgorithm::GetTick()
 {
-#ifdef WIN32
-	return GetTickCount64();
-#else
-    return 0;
-#endif
+	return std::chrono::steady_clock::now();
 }
 //-----------------------------------------------------------------------------
-qint64 ISAlgorithm::GetTickDiff(qint64 TickA, qint64 TickB)
+long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 {
-	return std::abs((int)TickA - (int)TickB);
+	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------

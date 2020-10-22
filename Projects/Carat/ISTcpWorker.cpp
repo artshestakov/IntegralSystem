@@ -125,7 +125,7 @@ void ISTcpWorker::Run()
 		if (tcp_message)
 		{
 			bool Result = false;
-			qint64 PerfomanceMsec = 0;
+			long long PerfomanceMsec = 0;
 			ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpSocket);
 
 			if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
@@ -137,7 +137,7 @@ void ISTcpWorker::Run()
 				}
 				else //Клиент авторизовался - продолжаем
 				{
-					PerfomanceMsec = ISAlgorithm::GetTick(); //Запоминаем текущее время
+					ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
 					switch (tcp_message->Type)
 					{
 					case ISNamespace::AMT_Unknown: break;
@@ -145,7 +145,7 @@ void ISTcpWorker::Run()
 					case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
 					}
-					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), PerfomanceMsec);
+					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
 			}
 			else //Сообщение не валидное

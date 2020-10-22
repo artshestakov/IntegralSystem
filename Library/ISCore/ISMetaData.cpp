@@ -2,7 +2,6 @@
 #include "ISAssert.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
-#include "ISCountingTime.h"
 #include "ISLogger.h"
 #include "ISMetaDataHelper.h"
 #include "ISUuid.h"

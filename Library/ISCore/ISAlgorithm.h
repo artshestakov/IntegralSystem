@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 #include "ISSettingsDatabase.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 #define POINTER_DELETE(POINTER) \
 if (POINTER) \
@@ -55,13 +56,13 @@ namespace ISAlgorithm
 
 	//! \Получить временную метку
 	//! \return возвращает временную метку
-	ISCORE_EXPORT qint64 GetTick();
+	ISCORE_EXPORT ISTimePoint GetTick();
 
 	//! \Получить разницу временных меток
 	//! \param TickA временная метка
 	//! \param TickB временная метка
 	//! \return возвращает разницу между двумя временными метками
-	ISCORE_EXPORT qint64 GetTickDiff(qint64 TickA, qint64 TickB);
+	ISCORE_EXPORT long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

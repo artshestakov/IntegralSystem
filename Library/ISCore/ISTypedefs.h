@@ -13,5 +13,6 @@ typedef std::vector<QString> ISVectorString;
 typedef std::vector<ISUuid> ISVectorUID;
 typedef std::vector<QVariant> ISVectorVariant;
 typedef std::vector<QByteArray> ISVectorByteArray;
+typedef std::chrono::time_point<std::chrono::steady_clock> ISTimePoint;
 //-----------------------------------------------------------------------------
 #endif

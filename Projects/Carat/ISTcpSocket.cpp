@@ -92,9 +92,9 @@ void ISTcpSocket::ReadyRead()
 
 	//Засекаем время и парсим сообщение
 	QJsonParseError JsonParseError;
-	qint64 TickCount = ISAlgorithm::GetTick();
+	ISTimePoint TimePoint = ISAlgorithm::GetTick();
 	TcpMessage->Parameters = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
-	TcpMessage->ParseMSec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TickCount);
+	TcpMessage->ParseMSec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 
 	bool Result = !TcpMessage->Parameters.isEmpty() && JsonParseError.error == QJsonParseError::NoError;
 	if (Result) //Конвертация прошла успешно

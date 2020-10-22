@@ -108,9 +108,6 @@
     <ClCompile Include="ISCore.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISCountingTime.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISCrashDumper.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -220,9 +217,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISCore.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISCountingTime.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISCrashDumper.h">

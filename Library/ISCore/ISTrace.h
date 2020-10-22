@@ -3,7 +3,7 @@
 #define _ISTRACE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
-#include "ISCountingTime.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 #define ISTRACE_MSG(MESSAGE) ISTrace __trace_helper(__FUNCTION__, MESSAGE);
 #define ISTRACE() ISTrace __trace_helper(__FUNCTION__, QString());
@@ -15,7 +15,7 @@ public:
 	~ISTrace();
 
 private:
-	ISCountingTime *Time;
+	ISTimePoint TimePoint;
 	QString FunctionName;
 };
 //-----------------------------------------------------------------------------

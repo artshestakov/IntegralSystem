@@ -6,7 +6,6 @@
 #include "ISDatabase.h"
 #include "ISCore.h"
 #include "ISSystem.h"
-#include "ISCountingTime.h"
 #include "ISConstants.h"
 #include "ISDefinesCore.h"
 #include "ISLogger.h"
@@ -329,14 +328,14 @@ bool Execute(const QString &Argument)
 	bool Result = ISSystem::CheckExistSlot(&Configurator, Argument);
 	if (Result)
 	{
-		ISCountingTime CountingTime;
 		bool ReturnValue = true;
+		ISTimePoint TimePoint = ISAlgorithm::GetTick();
 		Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data(), Q_RETURN_ARG(bool, ReturnValue));
 		if (Result)
 		{
 			if (ReturnValue)
 			{
-				ISLOGGER_L("Command \"" + Argument + "\" executed with " + QString::number(CountingTime.Elapsed()) + " msec");
+				ISLOGGER_L("Command \"" + Argument + "\" executed with " + QString::number(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)) + " msec");
 			}
 			else
 			{
@@ -369,14 +368,14 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 	bool Result = ISSystem::CheckExistSlot(CommandBase, SubArgument);
 	if (Result)
 	{
-		ISCountingTime CountingTime;
 		bool ReturnValue = true;
+		ISTimePoint TimePoint = ISAlgorithm::GetTick();
 		Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData(), Q_RETURN_ARG(bool, ReturnValue));
 		if (Result)
-		{
+		{			
 			if (ReturnValue)
 			{
-				ISLOGGER_L(QString("Command \"%1 %2\" executed with %3 msec").arg(Argument).arg(SubArgument).arg(CountingTime.Elapsed()));
+				ISLOGGER_L(QString("Command \"%1 %2\" executed with %3 msec").arg(Argument).arg(SubArgument).arg(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)));
 			}
 			else
 			{
