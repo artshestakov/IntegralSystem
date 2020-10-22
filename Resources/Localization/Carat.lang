@@ -24,5 +24,6 @@
   <Local Name="Carat.Error.Query.GetMetaData.ColumnSize" Russian="Не удалось получить размеры полей: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.Favorite" Russian="Не удалось получить избранные записи: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.History" Russian="Не удалось получить историю: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.Sorting" Russian="Не удалось получить сортировки: %1"/>
 
 </LANG>

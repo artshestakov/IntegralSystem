@@ -13,26 +13,31 @@ static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isde
 									   "FROM _users "
 									   "WHERE usrs_login = :Login");
 //-----------------------------------------------------------------------------
-static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
-										  "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "
-										  "sbsm_id, sbsm_uid, sbsm_localname, sbsm_orderid, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
-										  "FROM _subsystems "
-										  "LEFT JOIN _systems ON stms_uid = sbsm_system "
-										  "WHERE NOT sbsm_isdeleted "
-										  "ORDER BY stms_orderid, sbsm_orderid");
+static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
+												   "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "
+												   "sbsm_id, sbsm_uid, sbsm_localname, sbsm_orderid, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
+												   "FROM _subsystems "
+												   "LEFT JOIN _systems ON stms_uid = sbsm_system "
+												   "WHERE NOT sbsm_isdeleted "
+												   "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
 											  "WHERE clsz_creationuser = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
-											"FROM _favorites "
-											"WHERE fvts_creationuser = :UserID");
+static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
+										   "FROM _favorites "
+										   "WHERE fvts_creationuser = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_objectid "
 										  "FROM _history "
 										  "WHERE htry_creationuser = :UserID "
 										  "ORDER BY htry_id");
+//-----------------------------------------------------------------------------
+static QString QS_SORTING = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
+										  "FROM _sortingtables "
+										  "WHERE NOT sgts_isdeleted "
+										  "AND sgts_creationuser = :UserID");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
@@ -315,7 +320,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Получаем системы и подсистемы
 	QVariantList SystemSubSystemList;
-	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEMS);
+	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEM_SUBSYSTEM);
 	if (qSelectSystems.Execute())
 	{
 		while (qSelectSystems.Next())
@@ -339,7 +344,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "sbsm_hint", qSelectSystems.ReadColumn("sbsm_hint").toByteArray() }
 			});
 		}
-		TcpAnswer->Parameters["SystemsSubSystems"] = SystemSubSystemList;
+		TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemList;
 	}
 	else
 	{
@@ -372,7 +377,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Получаем избранные объекты
 	QVariantMap FavoriteMap;
-	ISQuery qSelectFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QS_FAVORITES);
+	ISQuery qSelectFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QS_FAVORITE);
 	qSelectFavorite.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (qSelectFavorite.Execute())
 	{
@@ -412,6 +417,29 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	else
 	{
 		ErrorString = LANG("Carat.Error.Query.GetMetaData.History").arg(qSelectHistory.GetErrorString());
+		return false;
+	}
+
+	//Получаем сортировки
+	QVariantList SortingList;
+	ISQuery qSelectSorting(ISDatabase::Instance().GetDB(DBConnectionName), QS_SORTING);
+	qSelectSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectSorting.Execute())
+	{
+		while (qSelectSorting.Next())
+		{
+			SortingList.append(QVariantMap
+			{
+				{ "TableName", qSelectSorting.ReadColumn("sgts_tablename") },
+				{ "FieldName", qSelectSorting.ReadColumn("sgts_fieldname") },
+				{ "Sorting", qSelectSorting.ReadColumn("sgts_sorting") }
+			});
+		}
+		TcpAnswer->Parameters["Sorting"] = SortingList;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.Sorting").arg(qSelectSorting.GetErrorString());
 		return false;
 	}
 
