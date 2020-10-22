@@ -366,12 +366,6 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 	}
 
 	CGConfiguratorBase *CommandBase = ISAlgorithm::CreatePointer<CGConfiguratorBase *>(ClassName);
-	if (!CommandBase)
-	{
-		ISLOGGER_E("Not create pointer with class name: " + ClassName);
-		return false;
-	}
-
 	bool Result = ISSystem::CheckExistSlot(CommandBase, SubArgument);
 	if (Result)
 	{
