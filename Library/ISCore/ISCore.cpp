@@ -11,7 +11,6 @@
 #include "ISSettings.h"
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
-#include "ISCrashDumper.h"
 #include "ISDefinesCore.h"
 #include "ISDatabase.h"
 #include "ISTcpConnector.h"
@@ -60,8 +59,6 @@ bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &Err
 	{
 		return Result;
 	}
-
-    //ISCrashDumper::Init();
 
 	Result = ISLogger::Instance().Initialize();
 	if (!Result)

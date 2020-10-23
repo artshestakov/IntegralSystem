@@ -34,9 +34,6 @@
     <Filter Include="Settings">
       <UniqueIdentifier>{c2230eda-9c5a-49e6-bb10-cf55dc2c5a61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StackTrace">
-      <UniqueIdentifier>{d9564784-63b1-411f-9788-6cbdfc61e7fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{058f6e61-3fee-4c74-8f53-c52804ffc704}</UniqueIdentifier>
     </Filter>
@@ -87,12 +84,6 @@
     <ClCompile Include="ISSettingsDatabase.cpp">
       <Filter>Settings</Filter>
     </ClCompile>
-    <ClCompile Include="ISStackWalker.cpp">
-      <Filter>StackTrace</Filter>
-    </ClCompile>
-    <ClCompile Include="StackWalker.cpp">
-      <Filter>StackTrace</Filter>
-    </ClCompile>
     <ClCompile Include="ISApplicationRunning.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -106,9 +97,6 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISCore.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISCrashDumper.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISDefinesCore.cpp">
@@ -188,15 +176,6 @@
     <ClInclude Include="ISSettingsDatabase.h">
       <Filter>Settings</Filter>
     </ClInclude>
-    <ClInclude Include="call_stack.hpp">
-      <Filter>StackTrace</Filter>
-    </ClInclude>
-    <ClInclude Include="ISStackWalker.h">
-      <Filter>StackTrace</Filter>
-    </ClInclude>
-    <ClInclude Include="StackWalker.h">
-      <Filter>StackTrace</Filter>
-    </ClInclude>
     <ClInclude Include="iscore_global.h" />
     <ClInclude Include="ISAlgorithm.h">
       <Filter>System</Filter>
@@ -217,9 +196,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISCore.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISCrashDumper.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDefinesCore.h">
