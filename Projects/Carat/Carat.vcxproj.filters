@@ -4,9 +4,6 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{55bbb2cc-d3ad-46b1-9192-305925c0e72f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Service">
-      <UniqueIdentifier>{8757fed3-60d5-4cac-9982-9e62c5ece06d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="TcpServer">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -37,9 +34,6 @@
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISCaratService.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -56,15 +50,6 @@
     <ClInclude Include="ISTcpMessage.h">
       <Filter>TcpServer</Filter>
     </ClInclude>
-    <ClInclude Include="qtservice.h">
-      <Filter>Service</Filter>
-    </ClInclude>
-    <ClInclude Include="qtservice_p.h">
-      <Filter>Service</Filter>
-    </ClInclude>
-    <ClInclude Include="ISCaratService.h">
-      <Filter>System</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISTcpServer.h">
@@ -75,12 +60,6 @@
     </QtMoc>
     <QtMoc Include="ISTcpWorker.h">
       <Filter>TcpServer</Filter>
-    </QtMoc>
-    <QtMoc Include="qtservice.cpp">
-      <Filter>Service</Filter>
-    </QtMoc>
-    <QtMoc Include="qtservice_win.cpp">
-      <Filter>Service</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

@@ -95,7 +95,7 @@ vars.put(&quot;QuerySleep&quot;, MapToString(MapSleep));</stringProp>
           <stringProp name="TCPSampler.port">50000</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryGetMetaData}</stringProp>
+          <stringProp name="TCPSampler.request">10.{&quot;test&quot;:1}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
