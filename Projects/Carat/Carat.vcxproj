@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpMessage.cpp" />
     <ClCompile Include="ISTcpQueue.cpp" />
@@ -31,6 +32,7 @@
     <ResourceCompile Include="Carat.rc" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="ISCaratApplication.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpMessage.h" />
     <ClInclude Include="ISTcpQueue.h" />

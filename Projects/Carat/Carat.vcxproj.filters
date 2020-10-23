@@ -34,6 +34,9 @@
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISCaratApplication.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -60,6 +63,9 @@
     </QtMoc>
     <QtMoc Include="ISTcpWorker.h">
       <Filter>TcpServer</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCaratApplication.h">
+      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

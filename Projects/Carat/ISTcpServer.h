@@ -11,7 +11,7 @@ class ISTcpServer : public QTcpServer
 	Q_OBJECT
 
 public:
-	ISTcpServer();
+	ISTcpServer(QObject *parent);
 	virtual ~ISTcpServer();
 
 	QString GetErrorString() const;

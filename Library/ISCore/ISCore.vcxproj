@@ -207,7 +207,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISAlgorithm.cpp" />
-    <ClCompile Include="ISApplicationRunning.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISAuthConnector.cpp" />
     <ClCompile Include="ISConfig.cpp" />
@@ -248,7 +247,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISAlgorithm.h" />
-    <ClInclude Include="ISApplicationRunning.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConsole.h" />

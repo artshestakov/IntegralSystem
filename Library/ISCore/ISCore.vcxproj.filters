@@ -84,9 +84,6 @@
     <ClCompile Include="ISSettingsDatabase.cpp">
       <Filter>Settings</Filter>
     </ClCompile>
-    <ClCompile Include="ISApplicationRunning.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISAssert.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -178,9 +175,6 @@
     </ClInclude>
     <ClInclude Include="iscore_global.h" />
     <ClInclude Include="ISAlgorithm.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISApplicationRunning.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISAssert.h">

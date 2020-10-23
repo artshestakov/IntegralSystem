@@ -6,8 +6,8 @@
 #include "ISTcp.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISTcpServer::ISTcpServer()
-	: QTcpServer(),
+ISTcpServer::ISTcpServer(QObject *parent)
+	: QTcpServer(parent),
 	ErrorString(NO_ERROR_STRING),
 	WorkerCount(0)
 {
