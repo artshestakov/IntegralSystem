@@ -26,15 +26,6 @@ QVariant ISSqlModelHelper::ValueForType(const QVariant &Value, ISNamespace::Fiel
 	{
 		Result = ISGui::ConvertDateTimeToString(Value.toDateTime(), FORMAT_DATE_V1, FORMAT_TIME_V1);
 	}
-	else if (Type == ISNamespace::FT_Password)
-	{
-		QString ValueString = Result.toString();
-		for (int i = 0; i < ValueString.count(); ++i)
-		{
-			ValueString.replace(i, 1, SYMBOL_STAR);
-		}
-		Result = ValueString;
-	}
 	else if (Type == ISNamespace::FT_Phone)
 	{
 		QString PhoneNumber = Value.toString();

@@ -35,7 +35,6 @@ ISMetaData::ISMetaData()
 		{ "Vin", ISNamespace::FT_Vin, "CHARACTER VARYING", "ISVINEdit", "ISComboSearchString", true },
 		{ "Year", ISNamespace::FT_Year, "INTEGER", "ISYearEdit", "ISComboSearchNumber", true },
 		{ "Phone", ISNamespace::FT_Phone, "CHARACTER VARYING", "ISPhoneEdit", "ISComboSearchString", true },
-		{ "Password", ISNamespace::FT_Password, "CHARACTER VARYING", "ISPasswordEdit", "ISComboSearchString", false },
 		{ "Image", ISNamespace::FT_Image, "BYTEA", "ISImageEdit", QString(), false },
 		{ "Color", ISNamespace::FT_Color, "CHARACTER VARYING", "ISColorEdit", QString(), false },
 		{ "EMail", ISNamespace::FT_EMail, "CHARACTER VARYING", "ISEMailEdit", "ISComboSearchString", true },
