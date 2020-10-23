@@ -7,6 +7,7 @@ CONFIG += c++11
 
 CONFIG(debug, debug|release){
     CONFIGURATION = Debug
+    DEFINES += DEBUG
 }else{
     CONFIGURATION = Release
 }

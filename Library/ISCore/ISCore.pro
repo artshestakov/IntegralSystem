@@ -8,6 +8,7 @@ DEFINES += ISCORE_LIBRARY
 
 CONFIG(debug, debug|release){
     CONFIGURATION = Debug
+    DEFINES += DEBUG
 }else{
     CONFIGURATION = Release
 }
