@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISNamespace
+namespace ISNamespace
 {
-public:
     enum FieldType //Типы данных поля
     {
         FT_Unknown, //Неизвестный
