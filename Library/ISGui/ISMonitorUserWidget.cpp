@@ -1,6 +1,5 @@
 #include "ISMonitorUserWidget.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

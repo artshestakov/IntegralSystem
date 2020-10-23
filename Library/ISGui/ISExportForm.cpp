@@ -1,6 +1,5 @@
 #include "ISExportForm.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"

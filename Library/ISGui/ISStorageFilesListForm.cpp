@@ -1,4 +1,3 @@
-
 #include "ISStorageFilesListForm.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
@@ -11,7 +10,6 @@
 #include "ISInputDialog.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 #include "ISProgressForm.h"
 #include "ISSettingsDatabase.h"
 #include "ISMetaUser.h"

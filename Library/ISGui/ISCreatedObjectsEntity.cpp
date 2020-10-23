@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISInterfaceForm.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 #include "ISAlgorithm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
 		if (ObjectFormBase->GetModificationFlag())
 		{
 			++CountNotSaved;
-			DetailedText += QString::number(i + 1) + ") " + ObjectFormBase->windowTitle().remove(ISDefines::Core::SYMBOL_OBJECT_CHANGED) + ";\n";
+			DetailedText += QString::number(i + 1) + ") " + ObjectFormBase->windowTitle().remove(SYMBOL_OBJECT_CHANGED) + ";\n";
 			if (!ObjectFormBase->parentWidget()) //Если форма не является вкладкой, а отдельным окном
 			{
 				//Если форма свернута - активируем её, иначе - переводим на передний план

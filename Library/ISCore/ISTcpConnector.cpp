@@ -1,6 +1,5 @@
 #include "ISTcpConnector.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 #include "ISTcp.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------

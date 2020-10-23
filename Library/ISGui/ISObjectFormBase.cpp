@@ -1,6 +1,5 @@
 #include "ISObjectFormBase.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -881,16 +880,16 @@ void ISObjectFormBase::SetModificationFlag(bool modification)
 	QString WindowTitle = windowTitle();
 	if (ModificationFlag)
 	{
-		if (!WindowTitle.contains(ISDefines::Core::SYMBOL_OBJECT_CHANGED))
+		if (!WindowTitle.contains(SYMBOL_OBJECT_CHANGED))
 		{
-			WindowTitle += ISDefines::Core::SYMBOL_OBJECT_CHANGED;
+			WindowTitle += SYMBOL_OBJECT_CHANGED;
 		}
 	}
 	else
 	{
-		if (WindowTitle.contains(ISDefines::Core::SYMBOL_OBJECT_CHANGED))
+		if (WindowTitle.contains(SYMBOL_OBJECT_CHANGED))
 		{
-			WindowTitle.remove(ISDefines::Core::SYMBOL_OBJECT_CHANGED);
+			WindowTitle.remove(SYMBOL_OBJECT_CHANGED);
 		}
 	}
 	setWindowTitle(WindowTitle);

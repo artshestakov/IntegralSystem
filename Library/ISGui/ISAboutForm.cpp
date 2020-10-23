@@ -8,7 +8,6 @@
 #include "ISButtons.h"
 #include "ISQuery.h"
 #include "ISVersion.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISObjects.h"
 #include "ISConfig.h"
@@ -62,7 +61,7 @@ void ISAboutForm::CreateCommonTab()
 	TabCommon->setLayout(LayoutCommon);
 	TabWidget->addTab(TabCommon, LANG("AboutForm.Tab.Common"));
 
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), ISDefines::Core::APPLICATION_NAME);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), QCoreApplication::applicationName());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISVersion::Instance().Info.Configuration);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersion::Instance().Info.Platform);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersion::Instance().ToString());
@@ -160,9 +159,9 @@ void ISAboutForm::CreateOtherTab()
 	TabOther->setLayout(LayoutOther);
 	TabWidget->addTab(TabOther, LANG("AboutForm.Tab.Other"));
 
-	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeTemp"), ISSystem::GetSizeDir(ISDefines::Core::PATH_TEMP_DIR));
-	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeLogger"), ISSystem::GetSizeDir(ISDefines::Core::PATH_LOGS_DIR));
-	AddLabel(TabOther, LANG("AboutForm.Tab.Other.ApplicationDir"), ISDefines::Core::PATH_APPLICATION_DIR);
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeTemp"), ISSystem::GetSizeDir(QCoreApplication::applicationDirPath() + "/Temp"));
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeLogger"), ISSystem::GetSizeDir(QCoreApplication::applicationDirPath() + "/Logs"));
+	AddLabel(TabOther, LANG("AboutForm.Tab.Other.ApplicationDir"), QCoreApplication::applicationDirPath());
 
 	LayoutOther->addStretch();
 }

@@ -213,7 +213,6 @@
     <ClCompile Include="ISConsole.cpp" />
     <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
-    <ClCompile Include="ISDefinesCore.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
@@ -253,7 +252,6 @@
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="ISCore.h" />
     <ClInclude Include="iscore_global.h" />
-    <ClInclude Include="ISDefinesCore.h" />
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />

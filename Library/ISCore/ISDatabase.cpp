@@ -3,7 +3,6 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 #include "ISMetaData.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
                                            "FROM pg_database "
@@ -112,7 +111,7 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
     ConnectOptions.emplace(ConnectionName, ISConnectOptionDB{ Host, Port, Database, Login, Password });
 
     //Изменяем имя приложения для коннекта
-    QSqlError SqlError = SqlDatabase.exec("SET application_name = '" + ISDefines::Core::APPLICATION_NAME + "'").lastError();
+    QSqlError SqlError = SqlDatabase.exec("SET application_name = '" + QCoreApplication::applicationName() + "'").lastError();
     if (SqlError.type() != QSqlError::NoError) //Не удалось изменить имя приложенения
     {
         ErrorString = "Not change application_name: " + SqlError.databaseText();

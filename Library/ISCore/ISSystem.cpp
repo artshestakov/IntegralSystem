@@ -1,5 +1,4 @@
 #include "ISSystem.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
@@ -148,7 +147,7 @@ void ISSystem::ProcessEvents()
 //-----------------------------------------------------------------------------
 bool ISSystem::IsConfigurator()
 {
-	return ISDefines::Core::APPLICATION_NAME == "Configurator";
+	return QCoreApplication::applicationName() == "Configurator";
 }
 //-----------------------------------------------------------------------------
 int ISSystem::TimeFromMinutes(const QTime &Time)

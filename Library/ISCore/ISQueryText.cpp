@@ -3,7 +3,7 @@
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISDatabase.h"
-#include "ISDefinesCore.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISQueryText::ISQueryText()
 	: ErrorString(NO_ERROR_STRING)
@@ -69,15 +69,12 @@ bool ISQueryText::CheckAllQueries()
 void ISQueryText::ErrorQuery(const ISSqlQuery &SqlQuery, const QString &error_string)
 {
 	ErrorString = QString("File: %1\nLine: %2\nSqlQuery: %3\n\n%4").arg(SqlQuery.FileName).arg(SqlQuery.Line).arg(SqlQuery.SqlText).arg(error_string);
-	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/" + ISSystem::GenerateUuid());
+	QFile File(QCoreApplication::applicationDirPath() + "/Temp/" + ISSystem::GenerateUuid());
 	if (File.open(QIODevice::WriteOnly))
 	{
 		File.write(ErrorString.toUtf8());
 		File.close();
-		if (!ISDefines::Core::IS_GUI)
-		{
-			printf("%s\n", ErrorString.toStdString().c_str());
-		}
+		ISLOGGER_E(ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------

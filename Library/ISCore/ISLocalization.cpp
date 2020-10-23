@@ -1,5 +1,4 @@
 #include "ISLocalization.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISAssert.h"
@@ -42,7 +41,7 @@ QString ISLocalization::GetString(const QString &ParameterName) const
 //-----------------------------------------------------------------------------
 bool ISLocalization::LoadTraslatorQT()
 {
-	QString FilePath = ISDefines::Core::PATH_TRANSLATIONS_DIR + '/' + "qt_ru.qm";
+	QString FilePath = QCoreApplication::applicationDirPath() + "/translations/qt_ru.qm";
 	bool Result = QFile::exists(FilePath);
 	if (Result) //‘айл трансл€ций существует
 	{

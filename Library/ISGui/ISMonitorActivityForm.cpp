@@ -1,6 +1,5 @@
 #include "ISMonitorActivityForm.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"

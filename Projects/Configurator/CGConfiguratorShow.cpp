@@ -4,7 +4,6 @@
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISDatabase.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 static QString QS_TABLES = PREPARE_QUERY("SELECT tablename "
 										 "FROM pg_tables "

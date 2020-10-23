@@ -7,7 +7,6 @@
 #include "ISCore.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
-#include "ISDefinesCore.h"
 #include "ISLogger.h"
 #include "ISMetaDataHelper.h"
 #include "ISConsole.h"
@@ -305,7 +304,7 @@ void InterpreterMode(bool &IsRunning)
 			}
 			else if (StringList.front() == "restart") //Перезапуск
 			{
-				QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
+				QProcess::startDetached(QCoreApplication::applicationFilePath());
 				IsRunning = false;
 				return;
 			}

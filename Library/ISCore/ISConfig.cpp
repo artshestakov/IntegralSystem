@@ -1,5 +1,4 @@
 #include "ISConfig.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ bool ISConfig::Initialize(const QString &TemplateName)
 	bool Result = QFile::exists(PathConfigTemplate);
 	if (Result)
 	{
-		PathConfigFile = ISDefines::Core::PATH_APPLICATION_DIR + '/' + TemplateName + SYMBOL_POINT + EXTENSION_INI;
+		PathConfigFile = QCoreApplication::applicationDirPath() + '/' + TemplateName + SYMBOL_POINT + EXTENSION_INI;
 		Settings = new QSettings(PathConfigFile, QSettings::IniFormat);
 		QSettings::Status SettingsStatus = Settings->status();
 		Result = SettingsStatus == QSettings::NoError;

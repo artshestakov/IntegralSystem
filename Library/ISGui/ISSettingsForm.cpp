@@ -11,7 +11,6 @@
 #include "ISControls.h"
 #include "ISFileDialog.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue FROM _settings WHERE NOT stgs_isdeleted ORDER BY stgs_id");
@@ -199,7 +198,7 @@ void ISSettingsForm::ItemSelectionChanged()
 	LabelCurrentGroup->setText(ClickedItem->text());
 
 	QString GroupHint = Groups[ClickedItem]->Hint;
-	LabelCurrentGroupHint->setText(GroupHint.isEmpty() ? QString() : ISDefines::Core::SYMBOL_CIRCLE + SYMBOL_SPACE + GroupHint);
+	LabelCurrentGroupHint->setText(GroupHint.isEmpty() ? QString() : SYMBOL_STAR + SYMBOL_SPACE + GroupHint);
 	LabelCurrentGroupHint->setVisible(!GroupHint.isEmpty());
 }
 //-----------------------------------------------------------------------------

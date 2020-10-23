@@ -4,7 +4,6 @@
 #include "ISDatabase.h"
 #include "ISLogger.h"
 #include "ISAssert.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(const QString &sql_text, bool prepare)
     : ErrorString(NO_ERROR_STRING),

@@ -9,7 +9,6 @@
 #include "ISGui.h"
 #include "ISPassword.h"
 #include "ISPopupMessage.h"
-#include "ISDefinesCore.h"
 #include "ISDefinesGui.h"
 #include "ISQuery.h"
 #include "ISMetaUser.h"

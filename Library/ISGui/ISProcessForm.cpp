@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------

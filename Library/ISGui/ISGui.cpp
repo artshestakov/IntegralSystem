@@ -1,5 +1,4 @@
 #include "ISGui.h"
-#include "ISDefinesCore.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
@@ -122,7 +121,7 @@ bool ISGui::Startup(QString &ErrorString)
 //-----------------------------------------------------------------------------
 bool ISGui::CheckAdminRole()
 {
-	QFile File(ISDefines::Core::PATH_TEMP_DIR + "/CheckAdmin");
+	QFile File(QCoreApplication::applicationDirPath() + "/Temp/CheckAdmin");
 	bool Result = File.open(QIODevice::WriteOnly);
 	if (Result)
 	{

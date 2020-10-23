@@ -124,6 +124,7 @@ const char		FILE_EDIT_PROPERTY_LOGO[] = "Logo";
 const char		FILE_EDIT_PROPERTY_DATA[] = "Data";
 const size_t    MAX_DECIMAL_LEN = 17; //Максимальное количество чесел после запятой в десятичной дроби (аналог DBL_DECIMAL_DIG)
 const size_t	MAX_INTEGER_LEN = 19; //Максимальная "длина" целого числа
+const char		SYMBOL_OBJECT_CHANGED[] = " {*}";
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера

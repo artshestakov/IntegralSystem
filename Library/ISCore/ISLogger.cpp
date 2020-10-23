@@ -1,5 +1,4 @@
 #include "ISLogger.h"
-#include "ISDefinesCore.h"
 #include "ISAlgorithm.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
@@ -116,7 +115,7 @@ bool ISLogger::CreateLogDirectory(const QDate &Date)
 	CurrentYear = Date.year();
 
 	//Формируем путь к текущей папке
-    PathLogsDir = ISDefines::Core::PATH_APPLICATION_DIR + "/Logs/" + QString::number(CurrentYear) + '/' + QString("%1").arg(CurrentMonth, 2, 'g', -1, '0') + '/';
+    PathLogsDir = QCoreApplication::applicationDirPath() + "/Logs/" + QString::number(CurrentYear) + '/' + QString("%1").arg(CurrentMonth, 2, 'g', -1, '0') + '/';
 	
 	QDir Dir;
 	if (!Dir.exists(PathLogsDir)) //Если папка с текущим месяцем не существует - создаём её
@@ -132,7 +131,7 @@ bool ISLogger::CreateLogDirectory(const QDate &Date)
 //-----------------------------------------------------------------------------
 QString ISLogger::GetPathFile(const QDate &Date) const
 {
-	return PathLogsDir + ISDefines::Core::APPLICATION_NAME + '_' + Date.toString(FORMAT_DATE_V2) + SYMBOL_POINT + EXTENSION_LOG;
+	return PathLogsDir + QCoreApplication::applicationName() + '_' + Date.toString(FORMAT_DATE_V2) + SYMBOL_POINT + EXTENSION_LOG;
 }
 //-----------------------------------------------------------------------------
 void ISLogger::OutputToConsole(const QString &String)

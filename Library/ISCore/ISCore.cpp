@@ -11,7 +11,6 @@
 #include "ISSettings.h"
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
-#include "ISDefinesCore.h"
 #include "ISDatabase.h"
 #include "ISTcpConnector.h"
 #include "ISMetaDataHelper.h"
@@ -46,15 +45,7 @@ static QString QU_RECOVERY_OBJECTS = PREPARE_QUERY2("UPDATE %1 SET "
 //-----------------------------------------------------------------------------
 bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &ErrorString)
 {
-	ISDefines::Core::Init(IsGui);
-
-	bool Result = ISSystem::CreateDir(ISDefines::Core::PATH_TEMP_DIR, ErrorString); //Создание папки для временных файлов
-	if (!Result)
-	{
-		return Result;
-	}
-
-	Result = ISSystem::CreateDir(ISDefines::Core::PATH_CRASH_DIR, ErrorString); //Создание папки для crash-файлов
+	bool Result = ISSystem::CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString); //Создание папки для временных файлов
 	if (!Result)
 	{
 		return Result;

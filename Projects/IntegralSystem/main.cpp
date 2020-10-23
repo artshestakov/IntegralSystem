@@ -7,7 +7,6 @@
 #include "ISMainWindow.h"
 #include "ISSettings.h"
 #include "ISProperty.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -19,6 +18,8 @@ int main(int argc, char **argv)
 	Applicaton.setEffectEnabled(Qt::UI_AnimateTooltip);
 	Applicaton.setEffectEnabled(Qt::UI_FadeTooltip);
 	Applicaton.setEffectEnabled(Qt::UI_AnimateToolBox);
+
+	PROPERTY_SET("PathLastDirectory", QDir::homePath());
 
 	QString ErrorString;
 	bool Result = ISGui::Startup(ErrorString);
@@ -48,7 +49,7 @@ int main(int argc, char **argv)
 			ISStartup::Shutdown(&SplashScreen);
 			if (PROPERTY_GET("is_change_user").toBool())
 			{
-				QProcess::startDetached(ISDefines::Core::PATH_APPLICATION_FILE);
+				QProcess::startDetached(QCoreApplication::applicationFilePath());
 			}
 		}
 	}

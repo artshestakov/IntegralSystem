@@ -1,6 +1,5 @@
 #include "ISInputDialog.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"

@@ -1,6 +1,5 @@
 #include "ISKnowledgeBaseSubSystem.h"
 #include "ISDefinesGui.h"
-#include "ISDefinesCore.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISQuery.h"

@@ -3,7 +3,6 @@
 #define _ISDEFINESGUI_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "isgui_global.h"
-#include "ISDefinesCore.h"
 //-----------------------------------------------------------------------------
 namespace ISDefines
 {
