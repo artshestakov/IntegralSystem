@@ -61,7 +61,7 @@ bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &Err
 		return Result;
 	}
 
-	ISCrashDumper::Init();
+    //ISCrashDumper::Init();
 
 	Result = ISLogger::Instance().Initialize();
 	if (!Result)

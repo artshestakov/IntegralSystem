@@ -35,7 +35,6 @@ HEADERS += \
     ISTcpConnector.h \
     ISTcpQuery.h \
     iscore_global.h \
-    ISCountingTime.h \
     ISCrashDumper.h \
     ISDatabase.h \
     ISDefinesCore.h \
@@ -74,7 +73,6 @@ SOURCES += \
     ISConfig.cpp \
     ISConsole.cpp \
     ISCore.cpp \
-    ISCountingTime.cpp \
     ISCrashDumper.cpp \
     ISDatabase.cpp \
     ISDefinesCore.cpp \

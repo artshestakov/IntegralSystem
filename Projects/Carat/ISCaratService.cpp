@@ -4,6 +4,7 @@
 #include "ISAlgorithm.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
+#ifdef WIN32
 BOOL WINAPI ConsoleHandler(DWORD CtrlType)
 {
 	if (CtrlType == CTRL_C_EVENT)
@@ -13,6 +14,7 @@ BOOL WINAPI ConsoleHandler(DWORD CtrlType)
 	}
 	return FALSE;
 }
+#endif
 //-----------------------------------------------------------------------------
 ISCaratService::ISCaratService(int argc, char **argv) : QtService<QCoreApplication>(argc, argv, "Carat")
 {
@@ -58,10 +60,12 @@ int ISCaratService::executeApplication()
 		return EXIT_FAILURE;
 	}
 
+#ifdef WIN32
 	if (!SetConsoleCtrlHandler(&ConsoleHandler, TRUE))
 	{
 		ISLOGGER_W("Error install console handler: " + QString::number(GetLastError()));
 	}
+#endif
 	return QtService<QCoreApplication>::executeApplication();
 }
 //-----------------------------------------------------------------------------
