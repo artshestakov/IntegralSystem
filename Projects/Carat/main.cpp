@@ -1,3 +1,4 @@
+#include "ISCaratService.h"
 #include "ISLogger.h"
 #include "ISConfig.h"
 #include "ISApplicationRunning.h"
@@ -12,6 +13,9 @@ bool CheckConfigValues(); //Проверка значений в конфигурационном файле
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
+	ISCaratService CaratService(argc, argv);
+	return CaratService.exec();
+
 	QCoreApplication CoreApplication(argc, argv);
 
 	QString ErrorString;

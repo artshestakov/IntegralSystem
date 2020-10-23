@@ -75,13 +75,12 @@ bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &Err
 	if (!IsGui)
 	{
 		Result = SetConsoleOutputCP(65001) == TRUE ? true : false;
+		if (!Result)
+		{
+			ISLOGGER_W("Error changed console encoding");
+		}
 	}
 #endif
-
-	if (!Result)
-	{
-		ISLOGGER_W("Error changed console encoding");
-	}
 
 	Result = ISConfig::Instance().Initialize(ConfigTemplateName);
 	if (!Result)
