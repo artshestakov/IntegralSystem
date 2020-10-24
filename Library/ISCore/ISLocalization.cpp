@@ -2,7 +2,6 @@
 #include "ISConstants.h"
 #include "ISSystem.h"
 #include "ISAssert.h"
-#include "ISLogger.h"
 #include "ISAlgorithm.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
@@ -33,7 +32,7 @@ QString ISLocalization::GetString(const QString &ParameterName) const
 	ISStringMap::const_iterator It = Dictionary.find(ParameterName);
 	if (It == Dictionary.end())
 	{
-		ISLOGGER_W("Not found key \"" + ParameterName + "\" in localization");
+		ISLOGGER_W(__CLASS__, "Not found key \"" + ParameterName + "\" in localization");
 		return ParameterName;
 	}
 	return It->second;
@@ -65,12 +64,16 @@ bool ISLocalization::LoadTraslatorQT()
 	{
 		ErrorString = "Not found translator file: " + FilePath;
 	}
+
+	if (!Result)
+	{
+		ISLOGGER_W(__CLASS__, ErrorString);
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISLocalization::LoadResourceFile(const QString &FileName)
 {
-	ISLOGGER_I("Initialize file: " + FileName);
 	QFile File(":Localization/" + FileName + SYMBOL_POINT + EXTENSION_LANG);
 	bool Result = File.open(QIODevice::ReadOnly);
 	if (Result) //Если файл локализации успешно открыт
@@ -81,7 +84,6 @@ bool ISLocalization::LoadResourceFile(const QString &FileName)
 	else //Не удалось открыть файл локализации
 	{
 		ErrorString = QString("not open localization file \"%1\". Error: %2.").arg(File.fileName()).arg(File.errorString());
-		ISLOGGER_E(ErrorString);
 	}
 	return Result;
 }

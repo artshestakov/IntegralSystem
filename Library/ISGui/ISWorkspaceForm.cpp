@@ -85,7 +85,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 		return;
 	}
 	CurrentSubSystemUID = SubSystemUID;
-	ISLOGGER_I("Open subsystem " + CurrentSubSystemUID);
+	ISLOGGER_I(__CLASS__, "Open subsystem " + CurrentSubSystemUID);
 
 	ISGui::SetWaitGlobalCursor(true);
 	ISMetaSubSystem *MetaSubSystem = ISMetaSystemsEntity::Instance().GetSubSystem(SubSystemUID);

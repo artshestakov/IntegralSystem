@@ -80,7 +80,7 @@ bool CGConfiguratorDelete::indexes()
 			Result = qDeleteIndex.Execute(QD_INDEX.arg(qSelectIndexes.ReadColumn("indexname").toString()));
 			if (Result)
 			{
-				ISLOGGER_I(QString("Deleted %1 of %2 indexes").arg(++Deleted).arg(CountIndexes));
+				ISLOGGER_I(__CLASS__, QString("Deleted %1 of %2 indexes").arg(++Deleted).arg(CountIndexes));
 			}
 			else
 			{
@@ -98,7 +98,7 @@ bool CGConfiguratorDelete::indexes()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorDelete::foreigns()
 {
-	ISLOGGER_D("Deleting foreigns...");
+	ISLOGGER_D(__CLASS__, "Deleting foreigns...");
 
 	ISQuery qSelectForeigns(QS_FOREIGNS);
 	qSelectForeigns.SetShowLongQuery(false);
@@ -127,7 +127,7 @@ bool CGConfiguratorDelete::foreigns()
 			Result = qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName));
 			if (Result)
 			{
-				ISLOGGER_I(QString("Deleted %1 of %2 foreigns").arg(++Deleted).arg(CountForeigns));
+				ISLOGGER_I(__CLASS__, QString("Deleted %1 of %2 foreigns").arg(++Deleted).arg(CountForeigns));
 			}
 			else
 			{

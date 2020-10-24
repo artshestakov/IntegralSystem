@@ -87,7 +87,7 @@ void ISProtocol::Insert(bool Thread, const QString &TypeUID, const QString &Tabl
 		qInsertProtocol.BindValue(":Information", Information);
 		if (!qInsertProtocol.ExecuteFirst())
 		{
-			ISLOGGER_E("Error insert protocol: " + qInsertProtocol.GetErrorString());
+			ISLOGGER_E(__CLASS__, "Not insert: " + qInsertProtocol.GetErrorString());
 		}
 	}
 }

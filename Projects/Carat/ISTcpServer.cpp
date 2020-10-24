@@ -31,12 +31,14 @@ unsigned int ISTcpServer::GetWorkerCount() const
 //-----------------------------------------------------------------------------
 bool ISTcpServer::Run()
 {
+	ISLOGGER_I(__CLASS__, "Starting...");
+
 	//Получаем и проверяем параметр порта сервера
 	unsigned short tcp_port = CONFIG_INT(CONST_CONFIG_TCPSERVER_PORT);
 	if (tcp_port < 1 || tcp_port >= USHRT_MAX) //Если значение не входит в диапазон портов - использует порт по умолчанию
 	{
-		ISLOGGER_W(QString("Invalid config value %1: %2. The default port will be used: %3.").arg(CONST_CONFIG_TCPSERVER_PORT).arg(tcp_port).arg(CARAT_DEFAULT_PORT));
-		tcp_port = CARAT_DEFAULT_PORT;
+		ISLOGGER_W(__CLASS__, QString("Invalid config value %1: %2. The default port will be used: %3.").arg(CONST_CONFIG_TCPSERVER_PORT).arg(tcp_port).arg(CARAT_TCP_PORT));
+		tcp_port = CARAT_TCP_PORT;
 	}
 
 	//Получаем и проверяем значение параметра количества воркеров
@@ -44,7 +46,7 @@ bool ISTcpServer::Run()
 	if (WorkerCount < 1 || WorkerCount >= ULONG_MAX)
 	{
 		unsigned int worker_count = std::thread::hardware_concurrency();
-		ISLOGGER_W(QString("Invalid config value %1: %2. Will use %3 workers by default.").arg(CONST_CONFIG_TCPSERVER_WORKERS).arg(WorkerCount).arg(worker_count));
+		ISLOGGER_W(__CLASS__, QString("Invalid config value %1: %2. Will use %3 workers by default.").arg(CONST_CONFIG_TCPSERVER_WORKERS).arg(WorkerCount).arg(worker_count));
 		WorkerCount = worker_count;
 	}
 	Workers.resize(WorkerCount); //Устанавливаем размер вектору воркеров
@@ -75,7 +77,7 @@ bool ISTcpServer::Run()
 		disconnect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit);
 	}
 
-	//Запускаем балансировщики
+	//Запускаем балансировщик
 	if (!QtConcurrent::run(this, &ISTcpServer::QueueBalancerMessage).isStarted())
 	{
 		ErrorString = "Error starting QueueBalancerMessage";
@@ -89,6 +91,7 @@ bool ISTcpServer::Run()
 		return false;
 	}
 	connect(this, &QTcpServer::acceptError, this, &ISTcpServer::AcceptError);
+	ISLOGGER_I(__CLASS__, QString("Started. Port: %1. Workers: %2").arg(CARAT_TCP_PORT).arg(WorkerCount));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -97,20 +100,20 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	//Создаём сокет и подключаем все нобходимые сигналы
 	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
 	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected);
-	ISLOGGER_I(QString("Incoming connection from ") + TcpSocket->peerAddress().toString());
+	ISLOGGER_I(__CLASS__, QString("New connect from ") + TcpSocket->peerAddress().toString());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
-	ISLOGGER_I("Disconnected " + TcpSocket->peerAddress().toString());
+	ISLOGGER_I(__CLASS__, "Disconnected " + TcpSocket->peerAddress().toString());
 	QTimer::singleShot(5000, TcpSocket, &ISTcpSocket::deleteLater);
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)
 {
 	Q_UNUSED(socket_error);
-	ISLOGGER_E(errorString());
+	ISLOGGER_E(__CLASS__, errorString());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::QueueBalancerMessage()

@@ -13,10 +13,10 @@ public:
 		MT_Null, //Пустое сообщение
 		MT_Lite, //Упрощенное сообщение (без даты, потока и источника в коде)
 		MT_Debug, //Отладка
-		MT_Trace, //Трассировка
 		MT_Info, //Информация
 		MT_Warning, //Предупреждение
         MT_Error, //Ошибка
+		MT_Trace, //Трассировка
         MT_Assert //Ассерт
 	};
 
@@ -35,7 +35,7 @@ public:
 	void Shutdown();
 
 	//Добавить сообщение в лог-файл
-	void Log(MessageType type_message, const QString &string_message, const char *source_name, int source_line);
+	void Log(MessageType message_type, const QString &component, const QString &string);
 
 private:
 
@@ -77,13 +77,13 @@ private:
 #endif
 };
 //-----------------------------------------------------------------------------
-#define ISLOGGER_N() ISLogger::Instance().Log(ISLogger::MT_Null, QString(), __FILE__, __LINE__) //Логирование пустой строки
-#define ISLOGGER_L(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Lite, MESSAGE, __FILE__, __LINE__) //Логирование упрощенного сообщения
-#define ISLOGGER_D(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Debug, MESSAGE, __FILE__, __LINE__) //Логирование отладочного сообщения
-#define ISLOGGER_T(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Trace, MESSAGE, __FILE__, __LINE__) //Трассировка
-#define ISLOGGER_I(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Info, MESSAGE, __FILE__, __LINE__) //Логирование информационного сообщения
-#define ISLOGGER_W(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Warning, MESSAGE, __FILE__, __LINE__) //Логировние предупреждающего сообщения
-#define ISLOGGER_E(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Error, MESSAGE, __FILE__, __LINE__) //Логирование сообщения об ошибке
-#define ISLOGGER_A(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Assert, MESSAGE, __FILE__, __LINE__) //Логирование сообщения об ассерте
+#define ISLOGGER_N() ISLogger::Instance().Log(ISLogger::MT_Null, QString(), QString()) //Логирование пустой строки
+#define ISLOGGER_L(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Lite, QString(), MESSAGE) //Логирование упрощенного сообщения
+#define ISLOGGER_D(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Debug, COMPONENT, MESSAGE) //Логирование отладочного сообщения
+#define ISLOGGER_I(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Info, COMPONENT, MESSAGE) //Логирование информационного сообщения
+#define ISLOGGER_W(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Warning, COMPONENT, MESSAGE) //Логировние предупреждающего сообщения
+#define ISLOGGER_E(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Error, COMPONENT, MESSAGE) //Логирование сообщения об ошибке
+#define ISLOGGER_T(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Trace, QString(), MESSAGE) //Трассировка
+#define ISLOGGER_A(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Assert, QString(), MESSAGE) //Логирование сообщения об ассерте
 //-----------------------------------------------------------------------------
 #endif

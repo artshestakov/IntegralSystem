@@ -67,7 +67,7 @@ void ISTcpSocket::ReadyRead()
 		if (!Ok) //Если не удалось вытащить размер сообщения - принудительно отключаем клиента, сообщаем об ошибке и очищаем буфер
 		{
 			abort();
-			ISLOGGER_E("Not get message size. Client will be disconnected. Invalid message:\n" + Buffer);
+			ISLOGGER_E(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n" + Buffer);
 			ClearBuffer();
 			return;
 		}
@@ -144,7 +144,7 @@ void ISTcpSocket::Error(QAbstractSocket::SocketError socket_error)
 {
 	if (socket_error != QAbstractSocket::RemoteHostClosedError)
 	{
-		ISLOGGER_E(errorString());
+		ISLOGGER_E(__CLASS__, errorString());
 	}
 }
 //-----------------------------------------------------------------------------

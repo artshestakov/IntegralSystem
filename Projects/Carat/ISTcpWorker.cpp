@@ -103,12 +103,12 @@ void ISTcpWorker::Run()
 	//Пытаемся подключиться к БД
 	if (!ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword))
 	{
-		ISLOGGER_E("Not connected to database: " + ISDatabase::Instance().GetErrorString());
+		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
 		emit Started();
 		return;
 	}
 
-	ISLOGGER_I("Started worker with thread id: " + DBConnectionName);
+	ISLOGGER_I(__CLASS__, "Started with thread id: " + DBConnectionName);
 	emit Started();
 	while (true)
 	{
@@ -170,7 +170,7 @@ void ISTcpWorker::Run()
 			}
 
 			//Логируемся, добавляем ответ в очередь ответов и завершаем работу
-			Result ? ISLOGGER_I(LogText) : ISLOGGER_E(LogText);
+			Result ? ISLOGGER_I(__CLASS__, LogText) : ISLOGGER_E(__CLASS__, LogText);
 			emit Answer(TcpAnswer);
 			Finish();
 		}

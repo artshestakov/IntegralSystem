@@ -67,7 +67,7 @@ void ISQueryPool::StartWorker()
 	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
 	if (!ISDatabase::Instance().Connect(CONNECTION_QUERY_POOL, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password))
 	{
-		ISLOGGER_E(QString("Error create connection \"%1\": %2").arg(CONNECTION_QUERY_POOL).arg(ISDatabase::Instance().GetErrorString()));
+		ISLOGGER_E(__CLASS__, QString("Error create connection \"%1\": %2").arg(CONNECTION_QUERY_POOL).arg(ISDatabase::Instance().GetErrorString()));
 		return;
 	}
 

@@ -3,6 +3,7 @@
 #define _ISCARATAPPLICATION_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 class ISCaratApplication : public QCoreApplication
 {
@@ -14,7 +15,8 @@ public:
 
 	QString GetErrorString() const; //Получить текстовое описание ошибки
 	bool Init(); //Инициализация
-	bool Run(); //Запуск
+	bool Run(const QStringList &Arguments); //Запуск с параметрами
+	bool Run(); //Стандартный запуск
 
 private:
 	void Version();

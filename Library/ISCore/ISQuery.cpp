@@ -52,7 +52,7 @@ bool ISQuery::Prepare(const QString &sql_text)
     if (!Prepared)
     {
         ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Prepared;
 }
@@ -75,14 +75,14 @@ bool ISQuery::Execute()
     {
         if (Msec > MAX_QUERY_TIME)
         {
-            ISLOGGER_W(QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+            ISLOGGER_W(__CLASS__, QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 
     if (!Result)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Result;
 }
@@ -98,14 +98,14 @@ bool ISQuery::Execute(const QString &sql_text)
     {
         if (Msec > MAX_QUERY_TIME)
         {
-			ISLOGGER_W(QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+			ISLOGGER_W(__CLASS__, QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 
     if (!Result)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Result;
 }
@@ -121,14 +121,14 @@ bool ISQuery::Execute(QSqlDatabase &sql_database, const QString &sql_text)
     {
         if (Msec > MAX_QUERY_TIME)
         {
-			ISLOGGER_W(QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+			ISLOGGER_W(__CLASS__, QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 	bool Result = SqlQuery.lastError().type() == QSqlError::NoError;
 	if (!Result)
 	{
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
 	}
     return Result;
 }
@@ -183,7 +183,7 @@ bool ISQuery::Next()
     if (!Result && SqlQuery.lastError().type() != QSqlError::NoError)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Result;
 }
@@ -194,7 +194,7 @@ bool ISQuery::First()
     if (!Result && SqlQuery.lastError().type() != QSqlError::NoError)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Result;
 }
@@ -208,7 +208,7 @@ QSqlRecord ISQuery::GetRecord()
 	else
 	{
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
 	}
     return QSqlRecord();
 }

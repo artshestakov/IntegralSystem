@@ -74,7 +74,7 @@ void ISQueryText::ErrorQuery(const ISSqlQuery &SqlQuery, const QString &error_st
 	{
 		File.write(ErrorString.toUtf8());
 		File.close();
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
 	}
 }
 //-----------------------------------------------------------------------------

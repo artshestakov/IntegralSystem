@@ -65,7 +65,7 @@ bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &Err
 		Result = SetConsoleOutputCP(65001) == TRUE ? true : false;
 		if (!Result)
 		{
-			ISLOGGER_W("Error changed console encoding");
+			ISLOGGER_W("", "Error changed console encoding");
 		}
 	}
 #endif

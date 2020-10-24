@@ -161,12 +161,12 @@ bool CGConfiguratorShow::databaseinfo()
 		}
 		else
 		{
-			ISLOGGER_E("Getting count records: " + qSelectCount.GetErrorString());
+			ISLOGGER_E(__CLASS__, "Getting count records: " + qSelectCount.GetErrorString());
 		}
 	}
 	else
 	{
-		ISLOGGER_E(qSelectInfo.GetErrorString());
+		ISLOGGER_E(__CLASS__, qSelectInfo.GetErrorString());
 	}
 	return Result;
 }

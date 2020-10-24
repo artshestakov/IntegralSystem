@@ -61,29 +61,26 @@ int main(int argc, char **argv)
 	bool Result = ISCore::Startup(false, "Server", ErrorString);
 	if (!Result)
 	{
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E("", ErrorString);
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
 
 	//Загрузка трансляций QT
-	if (!ISLocalization::Instance().LoadTraslatorQT())
-	{
-		ISLOGGER_W(ISLocalization::Instance().GetErrorString());
-	}
-
+	ISLocalization::Instance().LoadTraslatorQT();
+	
 	//Загрузка локализации ядра
 	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR);
 	if (!Result)
 	{
-		ISLOGGER_E(QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_INTEGRAL_SYSTEM).arg(ISLocalization::Instance().GetErrorString()));
+		ISLOGGER_E("ISLocalization", QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_INTEGRAL_SYSTEM).arg(ISLocalization::Instance().GetErrorString()));
 		return EXIT_FAILURE;
 	}
 
 	Result = InitConfiguratorScheme(ErrorString);
 	if (!Result)
 	{
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E("", ErrorString);
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
@@ -99,14 +96,14 @@ int main(int argc, char **argv)
 	QString ConfigurationName = ISMetaDataHelper::GetConfigurationName(ErrorString);
 	if (ConfigurationName.isEmpty())
 	{
-		ISLOGGER_E("Error getting configuration name: " + ErrorString);
+		ISLOGGER_E("", "Error getting configuration name: " + ErrorString);
 		return EXIT_FAILURE;
 	}
 
 	Result = ISMetaData::Instance().Initialize(ConfigurationName, true, true);
 	if (!Result)
 	{
-		ISLOGGER_E("Initialize meta data: " + ISMetaData::Instance().GetErrorString());
+		ISLOGGER_E("", "Initialize meta data: " + ISMetaData::Instance().GetErrorString());
 		ISConsole::Pause();
 		return EXIT_FAILURE;
 	}
@@ -186,14 +183,14 @@ bool CreateDatabase()
 	bool Result = ISDatabase::Instance().Connect(CONNECTION_SYSTEM, DBHost, DBPort, SYSTEM_DATABASE_NAME, DBLogin, DBPassword), Exist = true;
 	if (!Result) //Не удалось подключиться к системной БД
 	{
-		ISLOGGER_E(QString("Not connected to system database \"%1\": %2").arg(SYSTEM_DATABASE_NAME).arg(ISDatabase::Instance().GetErrorString()));
+		ISLOGGER_E("", QString("Not connected to system database \"%1\": %2").arg(SYSTEM_DATABASE_NAME).arg(ISDatabase::Instance().GetErrorString()));
 		return Result;
 	}
 
 	Result = ISDatabase::Instance().CheckExistDatabase(CONNECTION_SYSTEM, DBName, Exist);
 	if (!Result) //Удалось проверить наличие БД
 	{
-		ISLOGGER_E(QString("Checking exist database \"%1\": %2").arg(DBName).arg(ISDatabase::Instance().GetErrorString()));
+		ISLOGGER_E("", QString("Checking exist database \"%1\": %2").arg(DBName).arg(ISDatabase::Instance().GetErrorString()));
 		return Result;
 	}
 
@@ -218,7 +215,7 @@ bool CreateDatabase()
 		}
 		else //Пользователь отказался
 		{
-			ISLOGGER_W("You have refused to create a database");
+			ISLOGGER_W("", "You have refused to create a database");
 		}
 	}
 
@@ -236,7 +233,7 @@ bool CreateDatabase()
 	Result = qSelectDescriptionDB.Execute();
 	if (!Result)
 	{
-		ISLOGGER_E("Not getting database description: " + qSelectDescriptionDB.GetErrorString());
+		ISLOGGER_E("", "Not getting database description: " + qSelectDescriptionDB.GetErrorString());
 		return Result;
 	}
 
@@ -250,7 +247,7 @@ bool CreateDatabase()
 			Result = !ConfigurationName.isEmpty();
 			if (!Result) //Если название не ввели - выходим с ошибкой
 			{
-				ISLOGGER_W("Configuration name is empty.");
+				ISLOGGER_W("", "Configuration name is empty.");
 				return Result;
 			}
 
@@ -259,7 +256,7 @@ bool CreateDatabase()
 			Result = ExistConfiguration(ConfigurationName, Exist, ErrorString);
 			if (!Result) //Не удалось проверить наличие такой конфигурации
 			{
-				ISLOGGER_W("Not checking configuration name: " + ErrorString);
+				ISLOGGER_W("", "Not checking configuration name: " + ErrorString);
 				return Result;
 			}
 
@@ -269,7 +266,7 @@ bool CreateDatabase()
 			}
 			else //Конфигурация не найдена - переходим к очередной итерации цикла
 			{
-				ISLOGGER_W("Not found configuration: " + ConfigurationName);
+				ISLOGGER_W("", "Not found configuration: " + ConfigurationName);
 			}
 		}
 
@@ -281,7 +278,7 @@ bool CreateDatabase()
 		}))));
 		if (!Result)
 		{
-			ISLOGGER_E("Not updating database description: " + qCommentDB.GetErrorString());
+			ISLOGGER_E("", "Not updating database description: " + qCommentDB.GetErrorString());
 		}
 	}
 	return Result;
@@ -343,7 +340,7 @@ bool Execute(const QString &Argument)
 		}
 		else
 		{
-			ISLOGGER_E("Command \"" + Argument + "\" not executed.");
+			ISLOGGER_E("", "Command \"" + Argument + "\" not executed.");
 		}
 		Result = ReturnValue;
 	}
@@ -359,7 +356,7 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 	QString ClassName = GetClassName(Argument);
 	if (ClassName.isEmpty())
 	{
-		ISLOGGER_E("Not found class name with argument: " + Argument);
+		ISLOGGER_E("", "Not found class name with argument: " + Argument);
 		return false;
 	}
 
@@ -378,18 +375,18 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 			}
 			else
 			{
-				ISLOGGER_E(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
+				ISLOGGER_E("", QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
 			}
 		}
 		else
 		{
-			ISLOGGER_E(QString("Command \"%1 %2\" not executed.").arg(Argument).arg(SubArgument));
+			ISLOGGER_E("", QString("Command \"%1 %2\" not executed.").arg(Argument).arg(SubArgument));
 		}
 		Result = ReturnValue;
 	}
 	else
 	{
-		ISLOGGER_E("Command \"" + SubArgument + "\" not found");
+		ISLOGGER_E("", "Command \"" + SubArgument + "\" not found");
 	}
 	delete CommandBase;
 	return Result;
@@ -517,14 +514,14 @@ bool GetDatabaseList(QStringList &StringList)
 			}
 			else
 			{
-				ISLOGGER_E("Error getting database list: " + qSelect.GetErrorString());
+				ISLOGGER_E("", "Error getting database list: " + qSelect.GetErrorString());
 			}
 		}
 		ISDatabase::Instance().Disconnect(CONNECTION_SYSTEM);
 	}
 	else
 	{
-		ISLOGGER_E("Not connected to system database: " + ISDatabase::Instance().GetErrorString());
+		ISLOGGER_E("", "Not connected to system database: " + ISDatabase::Instance().GetErrorString());
 	}
 	return Result;
 }

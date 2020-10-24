@@ -6,12 +6,13 @@
 #include "ISConfig.h"
 #include "ISVersion.h"
 #include "ISTcpServer.h"
+#include "ISCaratController.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
 	: QCoreApplication(argc, argv),
 	ErrorString(NO_ERROR_STRING)
 {
-
+	
 }
 //-----------------------------------------------------------------------------
 ISCaratApplication::~ISCaratApplication()
@@ -28,90 +29,86 @@ bool ISCaratApplication::Init()
 {
 	if (!ISCore::Startup(false, "Server", ErrorString))
 	{
-		ISLOGGER_E(ErrorString);
+		ISLOGGER_E("", ErrorString);
 		return false;
 	}
 
 	//Загрузка локализации ядра
 	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CARAT))
 	{
-		ISLOGGER_E(QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CARAT).arg(ISLocalization::Instance().GetErrorString()));
+		ISLOGGER_E("ISLocalization", QString("Not init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CARAT).arg(ISLocalization::Instance().GetErrorString()));
 		return false;
 	}
 
 	//Проверяем наличие сервера в конфигурационном файле
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
 	{
-		ISLOGGER_E("Config file: server not specified");
+		ISLOGGER_E("ISConfig", "server not specified");
 		return false;
 	}
 
 	//Проверяем наличие порта в конфигурационном файле
 	if (CONFIG_INT(CONST_CONFIG_CONNECTION_PORT) == 0)
 	{
-		ISLOGGER_E("Config file: port not specified");
+		ISLOGGER_E("ISConfig", "port not specified");
 		return false;
 	}
 
 	//Проверяем наличие имени базы данных в конфигурационном файле
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
 	{
-		ISLOGGER_E("Config file: database name not specified");
+		ISLOGGER_E("ISConfig", "database name not specified");
 		return false;
 	}
 
 	//Проверяем наличие логина в конфигурационном файле
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).isEmpty())
 	{
-		ISLOGGER_E("Config file: login not specified");
+		ISLOGGER_E("ISConfig", "login not specified");
 		return false;
 	}
 
 	//Проверяем наличие пароля в конфигурационном файле
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).isEmpty())
 	{
-		ISLOGGER_E("Config file: password not specified");
+		ISLOGGER_E("ISConfig", "password not specified");
 		return false;
 	}
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISCaratApplication::Run()
+bool ISCaratApplication::Run(const QStringList &Arguments)
 {
-	//Получаем список аргументов и удаляем первый (путь к исполняемому файлу)
-	QStringList Arguments = arguments();
-	Arguments.removeFirst();
-
-	//Если указаны какие-то аргументы
-	if (arguments().size() > 1)
+	QString Argument = Arguments.front();
+	if (Argument == "--version" || Argument == "-v")
 	{
-		QString Argument = Arguments.front();
-		if (Argument == "--version" || Argument == "-v")
-		{
-			Version();
-		}
-		else if (Argument == "--help" || Argument == "-h")
-		{
-			Help();
-		}
-		else
-		{
-			std::cout << "Invalid argument \"" << Argument.toStdString() << "\"" << std::endl;
-			Help();
-		}
-		ISCore::ExitApplication();
-		return false;
+		Version();
 	}
-	
-	ISLOGGER_I("TCP-Server starting...");
-	ISTcpServer *TcpServer = new ISTcpServer(this);
-	if (TcpServer->Run())
+	else if (Argument == "--help" || Argument == "-h")
 	{
-		ISLOGGER_I(QString("TCP-Server started. Port: %1. Workers: %2").arg(CARAT_DEFAULT_PORT).arg(TcpServer->GetWorkerCount()));
+		Help();
 	}
 	else
 	{
-		ISLOGGER_W(QString("TCP-Server starting failed: %1").arg(TcpServer->GetErrorString()));
+		std::cout << "Invalid argument \"" << Argument.toStdString() << "\"" << std::endl;
+		Help();
+	}
+	ISCore::ExitApplication();
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISCaratApplication::Run()
+{
+	ISCaratController *CaratController = new ISCaratController(this);
+	if (!CaratController->Start())
+	{
+		return false;
+	}
+	
+	ISTcpServer *TcpServer = new ISTcpServer(this);
+	if (!TcpServer->Run())
+	{
+		ISLOGGER_W("ISTcpServer", "starting failed: " + TcpServer->GetErrorString());
 		return false;
 	}
 	return true;

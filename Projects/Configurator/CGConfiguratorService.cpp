@@ -58,18 +58,18 @@ bool CGConfiguratorService::reindex()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuum()
 {
-	ISLOGGER_D("Vacuum...");
+	ISLOGGER_D(__CLASS__, "Vacuum...");
 
 	ISQuery qVacuum;
 	qVacuum.SetShowLongQuery(false);
 	bool Result = qVacuum.Execute(Q_VACUUM);
 	if (Result)
 	{
-		ISLOGGER_I("Vacuum done");
+		ISLOGGER_I(__CLASS__, "Vacuum done");
 	}
 	else
 	{
-		ISLOGGER_W("Vacuum error: " + qVacuum.GetErrorString());
+		ISLOGGER_W(__CLASS__, "Vacuum error: " + qVacuum.GetErrorString());
 		ErrorString = qVacuum.GetErrorString();
 	}
 	return Result;
@@ -77,18 +77,18 @@ bool CGConfiguratorService::vacuum()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuumanalyze()
 {
-	ISLOGGER_D("Vacuum analyze...");
+	ISLOGGER_D(__CLASS__, "Vacuum analyze...");
 
 	ISQuery qVacuumAnalyze;
 	qVacuumAnalyze.SetShowLongQuery(false);
 	bool Result = qVacuumAnalyze.Execute(Q_VACUUM_ANALYZE);
 	if (Result)
 	{
-		ISLOGGER_I("Vacuum analyze done");
+		ISLOGGER_I(__CLASS__, "Vacuum analyze done");
 	}
 	else
 	{
-		ISLOGGER_W("Vacuum analyze error: " + qVacuumAnalyze.GetErrorString());
+		ISLOGGER_W(__CLASS__, "Vacuum analyze error: " + qVacuumAnalyze.GetErrorString());
 		ErrorString = qVacuumAnalyze.GetErrorString();
 	}
 	return Result;
@@ -96,18 +96,18 @@ bool CGConfiguratorService::vacuumanalyze()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuumfull()
 {
-	ISLOGGER_D("Vacuum full...");
+	ISLOGGER_D(__CLASS__, "Vacuum full...");
 
 	ISQuery qVacuumFull;
 	qVacuumFull.SetShowLongQuery(false);
 	bool Result = qVacuumFull.Execute(Q_VACUUM_FULL);
 	if (Result)
 	{
-		ISLOGGER_I("Vacuum full done");
+		ISLOGGER_I(__CLASS__, "Vacuum full done");
 	}
 	else
 	{
-		ISLOGGER_W("Vacuum full error: " + qVacuumFull.GetErrorString());
+		ISLOGGER_W(__CLASS__, "Vacuum full error: " + qVacuumFull.GetErrorString());
 		ErrorString = qVacuumFull.GetErrorString();
 	}
 	return Result;

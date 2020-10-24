@@ -66,32 +66,25 @@ void ISLogger::Shutdown()
 	File.close();
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(MessageType type_message, const QString &string_message, const char *source_name, int source_line)
+void ISLogger::Log(MessageType message_type, const QString &component, const QString &string)
 {
-	QString string_complete;
-	if (type_message == MessageType::MT_Lite || type_message == MessageType::MT_Null) //≈сли добавл€етс€ упрощенное сообщение (без типа, метки времени и т.д.)
+	QString string_complete = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9) + SYMBOL_SPACE + QString::number(GET_CURRENT_THREAD_ID());
+	switch (message_type)
 	{
-		string_complete = string_message;
+	case MessageType::MT_Null: string_complete.clear(); break;
+	case MessageType::MT_Lite: string_complete.clear(); break;
+	case MessageType::MT_Debug: string_complete += " [Debug]"; break;
+	case MessageType::MT_Info: string_complete += " [Info]"; break;
+	case MessageType::MT_Warning: string_complete += " [Warning]"; break;
+	case MessageType::MT_Error: string_complete += " [Error]"; break;
+	case MessageType::MT_Trace: string_complete += " [Trace]"; break;
+	case MessageType::MT_Assert: string_complete += " [Assert]"; break;
 	}
-	else //—тандартное сообщение
+	if (!component.isEmpty())
 	{
-		std::stringstream string_stream;
-        string_stream << QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9).toStdString() << SYMBOL_SPACE << GET_CURRENT_THREAD_ID() << " [";
-
-		switch (type_message)
-		{
-		case MessageType::MT_Null: break;
-		case MessageType::MT_Lite: break;
-		case MessageType::MT_Debug: string_stream << "Debug"; break;
-		case MessageType::MT_Trace: string_stream << "Trace"; break;
-		case MessageType::MT_Info: string_stream << "Info"; break;
-		case MessageType::MT_Warning: string_stream << "Warning"; break;
-		case MessageType::MT_Error: string_stream << "Error"; break;
-        case MessageType::MT_Assert: string_stream << "Assert"; break;
-		}
-        string_stream << "][" << ISAlgorithm::GetFileNameFromPath(source_name) << ':' << source_line << "] " << string_message.toStdString();
-		string_complete = QString::fromStdString(string_stream.str());
+		string_complete += '[' + component + ']';
 	}
+	string_complete += ' ' + string;
 
 #ifdef DEBUG //¬ отладочной версии выводим строку в консоль
 	OutputToConsole(string_complete);
@@ -101,11 +94,10 @@ void ISLogger::Log(MessageType type_message, const QString &string_message, cons
 		OutputToConsole(string_complete);
 	}
 #endif
-
-    CRITICAL_SECTION_LOCK(&CriticalSection);
-    Array[LastIndex] = string_complete;
-    ++LastIndex;
-    CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	Array[LastIndex] = string_complete;
+	++LastIndex;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 bool ISLogger::CreateLogDirectory(const QDate &Date)

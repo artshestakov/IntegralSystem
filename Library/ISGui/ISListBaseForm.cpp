@@ -988,7 +988,7 @@ void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
 	ListIndicatorWidget->hide();
 	ToolBar->setEnabled(true);
 
-	ISLOGGER_W(SqlError.text());
+	ISLOGGER_W(__CLASS__, SqlError.text());
 	ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text());
 }
 //-----------------------------------------------------------------------------
@@ -999,7 +999,7 @@ void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QStr
 	ListIndicatorWidget->hide();
 	ToolBar->setEnabled(true);
 
-	ISLOGGER_W(SqlError.text());
+	ISLOGGER_W(__CLASS__, SqlError.text());
 	ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text(), QueryText);
 }
 //-----------------------------------------------------------------------------

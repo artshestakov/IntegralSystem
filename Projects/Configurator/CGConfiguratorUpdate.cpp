@@ -287,7 +287,7 @@ bool CGConfiguratorUpdate::systemuser()
 		}
 		else
 		{
-			ISLOGGER_W("Error open avatar \"" + FileAvatar.fileName() + "\": " + FileAvatar.errorString());
+			ISLOGGER_W(__CLASS__, "Error open avatar \"" + FileAvatar.fileName() + "\": " + FileAvatar.errorString());
 		}
 
 		bool IsExist = qSelect.ReadColumn("count").toInt() > 0;

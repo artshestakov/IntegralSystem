@@ -61,6 +61,7 @@ static QString QD_USER_PASSWORD = PREPARE_QUERY2("ALTER ROLE %1 PASSWORD NULL");
 //-----------------------------------------------------------------------------
 static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
 														"VALUES(:User, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :ChangeTypeUID))");
+//-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
 	bool Result = ISCore::Startup(true, "Client", ErrorString);
@@ -75,10 +76,7 @@ bool ISGui::Startup(QString &ErrorString)
 	SplashWidget.show();
 
 	//Загрузка трансляций QT
-	if (!ISLocalization::Instance().LoadTraslatorQT())
-	{
-		ISLOGGER_W(ISLocalization::Instance().GetErrorString());
-	}
+	ISLocalization::Instance().LoadTraslatorQT();
 
 	//Загрузка локализации клиента
 	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
