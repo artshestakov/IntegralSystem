@@ -99,17 +99,25 @@ bool ISCaratApplication::Run(const QStringList &Arguments)
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run()
 {
-	ISCaratController *CaratController = new ISCaratController(this);
-	if (!CaratController->Start())
+	//Если контроллер включен - запускаем его
+	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
 	{
-		return false;
+		ISCaratController *CaratController = new ISCaratController(this);
+		if (!CaratController->Start())
+		{
+			return false;
+		}
 	}
 	
-	ISTcpServer *TcpServer = new ISTcpServer(this);
-	if (!TcpServer->Run())
+	//Если TCP-сервер включен - запускаем его
+	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
 	{
-		ISLOGGER_W("ISTcpServer", "starting failed: " + TcpServer->GetErrorString());
-		return false;
+		ISTcpServer *TcpServer = new ISTcpServer(this);
+		if (!TcpServer->Run())
+		{
+			ISLOGGER_W("ISTcpServer", "starting failed: " + TcpServer->GetErrorString());
+			return false;
+		}
 	}
 	return true;
 }

@@ -129,7 +129,8 @@ const char		SYMBOL_OBJECT_CHANGED[] = " {*}";
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
 //CARAT------------------------------------------------------------------------
-const quint16	CARAT_DEFAULT_PORT = 50000; //Стандартный порт
+const unsigned short	CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
+const unsigned short	CARAT_CONTROLLER_PORT = 50001; //Стандартный порт контроллера
 //CARAT_API--------------------------------------------------------------------
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_SLEEP[] = "Sleep"; //Ожидание
@@ -253,7 +254,10 @@ const char CONST_CONFIG_CONNECTION_LOGIN[] = "Connection/Login";
 const char CONST_CONFIG_CONNECTION_PASSWORD[] = "Connection/Password";
 const char CONST_CONFIG_REMEMBER_USER_INCLUDE[] = "RememberUser/Include";
 const char CONST_CONFIG_REMEMBER_USER_LOGIN[] = "RememberUser/Login";
+const char CONST_CONFIG_TCPSERVER_INCLUDE[] = "TCPServer/Include";
 const char CONST_CONFIG_TCPSERVER_PORT[] = "TCPServer/Port";
 const char CONST_CONFIG_TCPSERVER_WORKERS[] = "TCPServer/WorkerCount";
+const char CONST_CONFIG_CONTROLLER_INCLUDE[] = "Controller/Include";
+const char CONST_CONFIG_CONTROLLER_PORT[] = "Controller/Port";
 //-----------------------------------------------------------------------------
 #endif
