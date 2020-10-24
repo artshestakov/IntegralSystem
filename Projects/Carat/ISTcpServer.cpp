@@ -24,11 +24,6 @@ QString ISTcpServer::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-unsigned int ISTcpServer::GetWorkerCount() const
-{
-	return WorkerCount;
-}
-//-----------------------------------------------------------------------------
 bool ISTcpServer::Run()
 {
 	ISLOGGER_I(__CLASS__, "Starting...");

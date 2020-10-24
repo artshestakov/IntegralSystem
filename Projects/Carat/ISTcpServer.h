@@ -15,7 +15,6 @@ public:
 	virtual ~ISTcpServer();
 
 	QString GetErrorString() const;
-	unsigned int GetWorkerCount() const;
 	bool Run();
 
 private:
