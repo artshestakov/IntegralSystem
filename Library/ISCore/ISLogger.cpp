@@ -68,17 +68,17 @@ void ISLogger::Shutdown()
 //-----------------------------------------------------------------------------
 void ISLogger::Log(MessageType message_type, const QString &component, const QString &string)
 {
-	QString string_complete = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9) + SYMBOL_SPACE + QString::number(GET_CURRENT_THREAD_ID());
+	QString string_complete = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9) + '\t' + QString::number(GET_CURRENT_THREAD_ID()) + '\t';
 	switch (message_type)
 	{
 	case MessageType::MT_Null: string_complete.clear(); break;
 	case MessageType::MT_Lite: string_complete.clear(); break;
-	case MessageType::MT_Debug: string_complete += " [Debug]"; break;
-	case MessageType::MT_Info: string_complete += " [Info]"; break;
-	case MessageType::MT_Warning: string_complete += " [Warning]"; break;
-	case MessageType::MT_Error: string_complete += " [Error]"; break;
-	case MessageType::MT_Trace: string_complete += " [Trace]"; break;
-	case MessageType::MT_Assert: string_complete += " [Assert]"; break;
+	case MessageType::MT_Debug: string_complete += "[Debug]"; break;
+	case MessageType::MT_Info: string_complete += "[Info]"; break;
+	case MessageType::MT_Warning: string_complete += "[Warning]"; break;
+	case MessageType::MT_Error: string_complete += "[Error]"; break;
+	case MessageType::MT_Trace: string_complete += "[Trace]"; break;
+	case MessageType::MT_Assert: string_complete += "[Assert]"; break;
 	}
 	if (!component.isEmpty())
 	{
