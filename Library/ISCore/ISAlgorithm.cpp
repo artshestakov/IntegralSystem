@@ -44,3 +44,20 @@ long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
+QString ISAlgorithm::GetClassName(char *FunctionName)
+{
+	QString Result;
+
+	//Получаем размер строки и обходим её
+	size_t StringSize = strlen(FunctionName);
+	for (size_t i = 0; i < StringSize; ++i)
+	{
+		if (FunctionName[i] == ':') //Если попался символ двоеточия - вытаскиваем подстроку
+		{
+			Result = QString::fromLatin1(FunctionName, i);
+			break;
+		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------

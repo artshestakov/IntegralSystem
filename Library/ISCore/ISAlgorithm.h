@@ -21,6 +21,8 @@ if (POINTER) \
 
 //Заснуть на Msec миллисекунд
 #define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
+
+#define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define CRITICAL_SECTION_INIT(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
@@ -63,6 +65,11 @@ namespace ISAlgorithm
 	//! \param TickB временная метка
 	//! \return возвращает разницу между двумя временными метками
 	ISCORE_EXPORT long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
+
+	//! \Получить имя класса
+	//! \param FunctionName в качестве этого параметра необходимо передавать макрос __FUNCTION__
+	//! \return возвращает имя класса в случае успеха, иначе пустую строку
+	ISCORE_EXPORT QString GetClassName(char *FunctionName);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
