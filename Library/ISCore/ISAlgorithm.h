@@ -69,7 +69,7 @@ namespace ISAlgorithm
 	//! \Получить имя класса
 	//! \param FunctionName в качестве этого параметра необходимо передавать макрос __FUNCTION__
 	//! \return возвращает имя класса в случае успеха, иначе пустую строку
-	ISCORE_EXPORT QString GetClassName(char *FunctionName);
+    ISCORE_EXPORT QString GetClassName(const char *FunctionName);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

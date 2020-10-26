@@ -25,7 +25,6 @@ INCLUDEPATH += .
 
 HEADERS += \
     ISAlgorithm.h \
-    ISApplicationRunning.h \
     ISAssert.h \
     ISAuthConnector.h \
     ISConfig.h \
@@ -37,7 +36,6 @@ HEADERS += \
     ISTcpQuery.h \
     iscore_global.h \
     ISDatabase.h \
-    ISDefinesCore.h \
     ISLocalization.h \
     ISLogger.h \
     ISMetaData.h \
@@ -67,14 +65,12 @@ HEADERS += \
 
 SOURCES += \
     ISAlgorithm.cpp \
-    ISApplicationRunning.cpp \
     ISAssert.cpp \
     ISAuthConnector.cpp \
     ISConfig.cpp \
     ISConsole.cpp \
     ISCore.cpp \
     ISDatabase.cpp \
-    ISDefinesCore.cpp \
     ISLocalization.cpp \
     ISLogger.cpp \
     ISMetaData.cpp \
@@ -99,7 +95,6 @@ SOURCES += \
     ISTrace.cpp \
     ISUuid.cpp \
     ISVersion.cpp \
-    StdAfx.cpp \
-    call_stack_gcc.cpp
+    StdAfx.cpp
 
 RESOURCES += $$PWD/../../Resources/Resources.qrc

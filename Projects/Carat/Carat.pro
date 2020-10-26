@@ -28,29 +28,22 @@ LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore
 
 HEADERS += \
-    ISCaratService.h \
+    ISCaratApplication.h \
+    ISCaratController.h \
     ISTcpAnswer.h \
     ISTcpMessage.h \
     ISTcpQueue.h \
     ISTcpServer.h \
     ISTcpSocket.h \
-    ISTcpWorker.h \
-    qtservice.h \
-    qtservice_p.h \
-    qtunixserversocket.h \
-    qtunixsocket.h
+    ISTcpWorker.h
 
 SOURCES += \
-    ISCaratService.cpp \
+    ISCaratApplication.cpp \
+    ISCaratController.cpp \
     ISTcpAnswer.cpp \
     ISTcpMessage.cpp \
     ISTcpQueue.cpp \
     ISTcpServer.cpp \
     ISTcpSocket.cpp \
     ISTcpWorker.cpp \
-    main.cpp \
-    qtservice.cpp \
-    qtservice_unix.cpp \
-    qtunixserversocket.cpp \
-    qtunixsocket.cpp
-
+    main.cpp

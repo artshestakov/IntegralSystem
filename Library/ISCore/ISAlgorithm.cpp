@@ -44,7 +44,7 @@ long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::GetClassName(char *FunctionName)
+QString ISAlgorithm::GetClassName(const char *FunctionName)
 {
 	QString Result;
 
