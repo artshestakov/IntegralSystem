@@ -76,6 +76,9 @@ bool ISTcpServer::Run()
 		}
 	}
 
+	//Инициализируем очередь
+	ISTcpQueue::Instance().ReadMessageID();
+
 	//Запускаем балансировщик
 	if (!QtConcurrent::run(this, &ISTcpServer::QueueBalancerMessage).isStarted())
 	{
@@ -118,6 +121,10 @@ void ISTcpServer::Stop()
 	{
 		ISSleep(10);
 	}
+
+	//Записываем текущий идентификатор в файл
+	ISTcpQueue::Instance().WriteMessageID();
+
 	ISLOGGER_I(__CLASS__, "Stopped");
 }
 //-----------------------------------------------------------------------------

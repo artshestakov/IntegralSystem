@@ -12,6 +12,9 @@ class ISTcpQueue
 public:
 	static ISTcpQueue& Instance();
 
+	void ReadMessageID(); //Чтение идентификатора
+	void WriteMessageID(); //Сохранение идентификатора в файл
+
 	void AddMessage(ISTcpMessage *TcpMessage); //Добавить сообщение в очередь
 	ISTcpMessage* GetMessage(); //Получить очередное сообщение
 
@@ -22,6 +25,8 @@ private:
 	ISTcpQueue& operator=(ISTcpQueue const&) { return *this; };
 
 private:
+	QString FilePath; //Путь к файлу с последним MessageID
+	QFile File;
 	std::queue<ISTcpMessage *> Queue;
 	qint64 MessageID;
 
