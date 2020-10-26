@@ -1,4 +1,6 @@
 #include "ISCaratApplication.h"
+#include "ISLogger.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -23,6 +25,16 @@ int main(int argc, char **argv)
 	{
 		return EXIT_FAILURE;
 	}
-	return CaratApplication.exec();
+	ISLOGGER_I("", "Started application");
+	
+	//Запускаем основной поток событий
+	int ResultCode = CaratApplication.exec();
+
+	//Останавливаем служебные сервисы
+	ISDatabase::Instance().DisconnectAll();
+	ISLOGGER_I("", "Stopped application");
+	ISLogger::Instance().Shutdown();
+
+	return ResultCode;
 }
 //-----------------------------------------------------------------------------

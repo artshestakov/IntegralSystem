@@ -42,14 +42,16 @@ bool ISCaratController::Start()
 	start();
 	EventLoop.exec();
 
-	IsRunning ? ISLOGGER_I(__CLASS__, "Started") : ISLOGGER_E(__CLASS__, "Not started: " + ErrorString);
+	IsRunning ?
+		ISLOGGER_I(__CLASS__, QString("Started with port %1").arg(ControllerPort)) :
+		ISLOGGER_E(__CLASS__, QString("Not started with port %1: %2").arg(ControllerPort).arg(ErrorString));
 	return IsRunning;
 }
 //-----------------------------------------------------------------------------
 void ISCaratController::Stop()
 {
 	//Останавливаем контроллер
-	ISLOGGER_I(__CLASS__, "Stopped");
+	ISLOGGER_I(__CLASS__, "Stoppind");
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	IsRunning = false;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
@@ -59,6 +61,7 @@ void ISCaratController::Stop()
 	{
 		ISSleep(10);
 	}
+	ISLOGGER_I(__CLASS__, "Stopped");
 }
 //-----------------------------------------------------------------------------
 void ISCaratController::run()

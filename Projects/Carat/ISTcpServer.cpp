@@ -96,7 +96,7 @@ bool ISTcpServer::Run()
 void ISTcpServer::Stop()
 {
 	//Сначала останавливаем TCP-сервер, тем самым прерывая новые входящие подключения
-	ISLOGGER_I(__CLASS__, "Stopped");
+	ISLOGGER_I(__CLASS__, "Stopping");
 	close();
 
 	//Обходим кааждый воркер и останавливаем его
@@ -116,6 +116,7 @@ void ISTcpServer::Stop()
 	{
 		ISSleep(10);
 	}
+	ISLOGGER_I(__CLASS__, "Stopped");
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::incomingConnection(qintptr SocketDescriptor)

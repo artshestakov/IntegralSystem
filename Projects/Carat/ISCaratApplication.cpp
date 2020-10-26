@@ -6,6 +6,7 @@
 #include "ISConfig.h"
 #include "ISVersion.h"
 #include "ISLogger.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -26,9 +27,28 @@ QString ISCaratApplication::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Init()
 {
-	if (!ISCore::Startup(false, "Server", ErrorString))
+	if (!ISLogger::Instance().Initialize()) //Не удалось запустить логгер
 	{
-		ISLOGGER_E("", ErrorString);
+		std::cout << ISLogger::Instance().GetErrorString().toStdString() << std::endl;
+		return false;
+	}
+
+#ifdef WIN32 //Установим кодировку для консольного приложения под Windows
+	if (SetConsoleOutputCP(65001) == FALSE)
+	{
+		ISLOGGER_W("Startup", "Error changed console encoding");
+	}
+#endif
+
+	if (!ISSystem::CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString)) //Не удалось создать папку для временных файлов
+	{
+		ISLOGGER_E("Startup", "Not create temp dir: " + ErrorString);
+		return false;
+	}
+
+	if (!ISConfig::Instance().Initialize("Server"))
+	{
+		ISLOGGER_E("ISConfig", "Not initialize: " + ISConfig::Instance().GetErrorString());
 		return false;
 	}
 
