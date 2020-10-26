@@ -122,7 +122,7 @@ bool ISCaratApplication::Run(const QStringList &Arguments)
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run()
 {
-	ISLOGGER_I(__CLASS__, "Starting");
+    ISLOGGER_I(__CLASS__, QString("Starting. [Version %1] %2 %3").arg(ISVersion::Instance().ToString()).arg(ISVersion::Instance().Info.Configuration).arg(ISVersion::Instance().Info.Platform));
 
 	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
@@ -213,10 +213,20 @@ void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
 
 	//Посылаем данные
 	std::cout << "Send: " << ByteArray.toStdString() << std::endl;
-	TcpSocket.write("shutdown");
-	TcpSocket.flush();
+    if (TcpSocket.write(ByteArray) == -1) //Не удалось послать данные
+    {
+        std::cout << "Error sending: " << TcpSocket.errorString().toStdString() << std::endl;
+        return;
+    }
+
+    if (!TcpSocket.flush())
+    {
+        std::cout << "Error flushing: " << TcpSocket.errorString().toStdString() << std::endl;
+        return;
+    }
 
 	//Ждём ответа
+    std::cout << "Wait answer..." << std::endl;
 	while (true)
 	{
 		ISSleep(1);

@@ -22,7 +22,11 @@ if (POINTER) \
 //Заснуть на Msec миллисекунд
 #define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
 
+#ifdef WIN32
 #define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
+#else
+#define __CLASS__ ISAlgorithm::GetClassName(__PRETTY_FUNCTION__)
+#endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define CRITICAL_SECTION_INIT(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)

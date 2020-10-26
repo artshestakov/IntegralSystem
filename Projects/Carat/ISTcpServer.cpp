@@ -79,7 +79,7 @@ bool ISTcpServer::Run()
 	//Запускаем балансировщик
 	if (!QtConcurrent::run(this, &ISTcpServer::QueueBalancerMessage).isStarted())
 	{
-		ErrorString = "Error starting QueueBalancerMessage";
+        ISLOGGER_E(__CLASS__, "Error starting QueueBalancerMessage");
 		return false;
 	}
 	BalancerRunning = true;
@@ -87,7 +87,7 @@ bool ISTcpServer::Run()
 	//Запуск TCP-сервера
 	if (!listen(QHostAddress::AnyIPv4, tcp_port))
 	{
-		ErrorString = errorString();
+        ISLOGGER_E(__CLASS__, QString("Not listen port %1: %2").arg(tcp_port).arg(errorString()));
 		return false;
 	}
 	connect(this, &QTcpServer::acceptError, this, &ISTcpServer::AcceptError);

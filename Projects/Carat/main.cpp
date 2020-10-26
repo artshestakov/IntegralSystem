@@ -13,21 +13,21 @@ int main(int argc, char **argv)
 
 	//ѕолучаем аргументы запуска и удал€ем первый (путь к исполн€емому файлу)
 	QStringList Arguments = CaratApplication.arguments();
-	Arguments.removeFirst();
+    Arguments.removeFirst();
 
-	if (!Arguments.isEmpty()) //≈сли аргументы запуска есть
+    int ResultCode = -1;
+    if (Arguments.isEmpty()) //јргуменов запуска не было, запускаемс€ в режиме сервера
 	{
-		return CaratApplication.Run(Arguments);
+        if (CaratApplication.Run())
+        {
+            ISLOGGER_I("", "Started application");
+            ResultCode = CaratApplication.exec();
+        }
 	}
-
-	int ResultCode = -1;
-
-	//јргуменов запуска не было, запускаемс€ в режиме сервера
-	if (CaratApplication.Run())
-	{
-		ISLOGGER_I("", "Started application");
-		ResultCode = CaratApplication.exec();
-	}
+    else //≈сли аргументы запуска есть
+    {
+        ResultCode = CaratApplication.Run(Arguments) ? EXIT_SUCCESS : EXIT_FAILURE;
+    }
 
 	//ќстанавливаем служебные сервисы и завершаем программу
 	ISDatabase::Instance().DisconnectAll();

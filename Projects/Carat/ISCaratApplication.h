@@ -14,7 +14,7 @@ signals:
 	void Quit();
 
 public:
-	ISCaratApplication(int argc, char **argv);
+    ISCaratApplication(int &argc, char **argv);
 	virtual ~ISCaratApplication();
 
 	QString GetErrorString() const; //Получить текстовое описание ошибки

@@ -46,18 +46,22 @@ long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 //-----------------------------------------------------------------------------
 QString ISAlgorithm::GetClassName(const char *FunctionName)
 {
-	QString Result;
+    QString Result(FunctionName);
+    int Index = 0;
 
-	//Получаем размер строки и обходим её
-	size_t StringSize = strlen(FunctionName);
-	for (size_t i = 0; i < StringSize; ++i)
-	{
-		if (FunctionName[i] == ':') //Если попался символ двоеточия - вытаскиваем подстроку
-		{
-			Result = QString::fromLatin1(FunctionName, (int)i);
-			break;
-		}
-	}
+#ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
+    Index = Result.indexOf(SYMBOL_SPACE);
+    if (Index != -1)
+    {
+        Result.remove(0, ++Index);
+    }
+#endif
+
+    Index = Result.indexOf(':');
+    if (Index != -1)
+    {
+        Result.chop(Result.size() - Index);
+    }
 	return Result;
 }
 //-----------------------------------------------------------------------------
