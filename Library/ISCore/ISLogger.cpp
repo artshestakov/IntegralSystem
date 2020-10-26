@@ -128,7 +128,9 @@ QString ISLogger::GetPathFile(const QDate &Date) const
 //-----------------------------------------------------------------------------
 void ISLogger::OutputToConsole(const QString &String)
 {
+	CRITICAL_SECTION_LOCK(&CriticalSection);
 	std::cout << String.toStdString() << std::endl;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Worker()
