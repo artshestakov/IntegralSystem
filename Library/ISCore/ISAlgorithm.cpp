@@ -54,7 +54,7 @@ QString ISAlgorithm::GetClassName(char *FunctionName)
 	{
 		if (FunctionName[i] == ':') //Если попался символ двоеточия - вытаскиваем подстроку
 		{
-			Result = QString::fromLatin1(FunctionName, i);
+			Result = QString::fromLatin1(FunctionName, (int)i);
 			break;
 		}
 	}
