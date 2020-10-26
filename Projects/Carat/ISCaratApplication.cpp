@@ -32,8 +32,6 @@ bool ISCaratApplication::Init()
 		std::cout << ISLogger::Instance().GetErrorString().toStdString() << std::endl;
 		return false;
 	}
-	ISLOGGER_I(__CLASS__, "Starting");
-
 
 #ifdef WIN32 //Установим кодировку для консольного приложения под Windows
 	if (SetConsoleOutputCP(65001) == FALSE)
@@ -101,13 +99,17 @@ bool ISCaratApplication::Init()
 bool ISCaratApplication::Run(const QStringList &Arguments)
 {
 	QString Argument = Arguments.front();
-	if (Argument == "--version" || Argument == "-v")
+	if (Argument == "--help" || Argument == "-h")
+	{
+		Help();
+	}
+	else if (Argument == "--version" || Argument == "-v")
 	{
 		Version();
 	}
-	else if (Argument == "--help" || Argument == "-h")
+	else if (Argument == "--shutdown" || Argument == "-s")
 	{
-		Help();
+		SendShutdown();
 	}
 	else
 	{
@@ -120,6 +122,8 @@ bool ISCaratApplication::Run(const QStringList &Arguments)
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run()
 {
+	ISLOGGER_I(__CLASS__, "Starting");
+
 	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
 	{
@@ -163,11 +167,6 @@ void ISCaratApplication::Shutdown()
 	emit Quit();
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::Version()
-{
-	std::cout << "Carat (" << ISVersion::Instance().ToStdString() << ") " << ISVersion::Instance().Info.Configuration.toStdString() << " " << ISVersion::Instance().Info.Platform.toStdString() << std::endl;
-}
-//-----------------------------------------------------------------------------
 void ISCaratApplication::Help()
 {
 #ifdef WIN32
@@ -177,8 +176,9 @@ void ISCaratApplication::Help()
 #endif
 	std::cout << std::endl;
 	std::cout << "Arguments:" << std::endl;
-	std::cout << "  -v, --version\t\tshow version and exit" << std::endl;
 	std::cout << "  -h, --help\t\tshow this help and exit" << std::endl;
+	std::cout << "  -v, --version\t\tshow version and exit" << std::endl;
+	std::cout << "  -s, --shutdown\tshutdown service" << std::endl;
 	std::cout << std::endl;
 #ifdef WIN32
 	std::cout << "Example: Carat.exe (service mode)" << std::endl;
@@ -186,5 +186,47 @@ void ISCaratApplication::Help()
 	std::cout << "Example: ./Carat (service mode)" << std::endl;
 #endif
 	std::cout << "* No arguments needed to start in service mode" << std::endl;
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::Version()
+{
+	std::cout << "Carat (" << ISVersion::Instance().ToStdString() << ") " << ISVersion::Instance().Info.Configuration.toStdString() << " " << ISVersion::Instance().Info.Platform.toStdString() << std::endl;
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::SendShutdown()
+{
+	SendCommand(CARAT_LOCAL_API_SHUTDOWN);
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
+{
+	QTcpSocket TcpSocket;
+
+	//Подключаемся к Карату
+	std::cout << "Connecting..." << std::endl;
+	TcpSocket.connectToHost(QHostAddress::LocalHost, CONFIG_INT(CONST_CONFIG_CONTROLLER_PORT));
+	if (!TcpSocket.waitForConnected(1000))
+	{
+		std::cout << "Error: " << TcpSocket.errorString().toStdString() << std::endl;
+		return;
+	}
+
+	//Посылаем данные
+	std::cout << "Send: " << ByteArray.toStdString() << std::endl;
+	TcpSocket.write("shutdown");
+	TcpSocket.flush();
+
+	//Ждём ответа
+	while (true)
+	{
+		ISSleep(1);
+		ISSystem::ProcessEvents();
+
+		if (TcpSocket.bytesAvailable() > 0) //Дождались ответа - выводим в консоль и выходим из функции
+		{
+			std::cout << "Answer: " << TcpSocket.readAll().toStdString() << std::endl;
+			break;
+		}
+	}
 }
 //-----------------------------------------------------------------------------
