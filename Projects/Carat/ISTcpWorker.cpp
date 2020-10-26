@@ -68,6 +68,7 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	DBName(db_name),
 	DBUser(db_user),
 	DBPassword(db_password),
+	IsStarted(false),
 	IsRunning(false),
 	CurrentMessage(nullptr),
 	IsStopped(false)
@@ -78,6 +79,11 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 ISTcpWorker::~ISTcpWorker()
 {
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetStarted() const
+{
+	return IsStarted;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetRunning()
@@ -104,15 +110,31 @@ void ISTcpWorker::Run()
 	DBConnectionName = QString::number((unsigned long)QThread::currentThreadId());
 
 	//Пытаемся подключиться к БД
-	if (!ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword))
+	IsStarted = ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword);
+	if (!IsStarted)
 	{
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
-		emit Started();
-		return;
 	}
 
-	ISLOGGER_I(__CLASS__, "Started with thread id: " + DBConnectionName);
-	emit Started();
+	//Сигналим об успехе или ошибке
+	emit IsStarted ? StartedDone() : StartedFailed();
+
+	if (IsStarted)
+	{
+		ISLOGGER_I(__CLASS__, "Started");
+		Process();
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::Stop()
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	IsStopped = true;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::Process()
+{
 	while (true)
 	{
 		ISSleep(1); //Засыпаем на одну милисекунду и даём поработать потоку
@@ -191,13 +213,6 @@ void ISTcpWorker::Run()
 			Finish();
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-void ISTcpWorker::Stop()
-{
-	CRITICAL_SECTION_LOCK(&CriticalSection);
-	IsStopped = true;
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Finish()

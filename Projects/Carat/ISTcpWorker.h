@@ -11,19 +11,22 @@ class ISTcpWorker : public QObject
 	Q_OBJECT
 
 signals:
-	void Started();
+	void StartedDone();
+	void StartedFailed();
 	void Answer(ISTcpAnswer *);
 
 public:
 	ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password);
 	virtual ~ISTcpWorker();
 
+	bool GetStarted() const; //Получить флаг успешного запуска воркера
 	bool GetRunning(); //Получить флаг занятости
 	void SetMessage(ISTcpMessage *TcpMessage); //Установить сообщение на обработку
 	void Run(); //Запуск воркера
 	void Stop(); //Остановка воркера
 
 private:
+	void Process();
 	void Finish(); //Уведомление о завершении работы воркера
 	QVariant CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
 
@@ -40,6 +43,7 @@ private:
 	QString DBName;
 	QString DBUser;
 	QString DBPassword;
+	bool IsStarted; //Флаг успешного запуска воркера
 	bool IsRunning; //Флаг занятости воркера
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
 	bool IsStopped; //Флаг остановки работы воркера

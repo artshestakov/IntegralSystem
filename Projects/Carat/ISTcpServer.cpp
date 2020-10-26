@@ -21,11 +21,6 @@ ISTcpServer::~ISTcpServer()
 	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-QString ISTcpServer::GetErrorString() const
-{
-	return ErrorString;
-}
-//-----------------------------------------------------------------------------
 bool ISTcpServer::Run()
 {
 	ISLOGGER_I(__CLASS__, "Starting...");
@@ -61,7 +56,8 @@ bool ISTcpServer::Run()
 		QThread *Thread = new QThread();
 		ISTcpWorker *TcpWorker = new ISTcpWorker(DBHost, DBPort, DBName, DBUser, DBPassword);
 		connect(TcpWorker, &ISTcpWorker::Answer, this, &ISTcpServer::SendAnswer, Qt::QueuedConnection);
-		connect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit);
+		connect(TcpWorker, &ISTcpWorker::StartedDone, &EventLoop, &QEventLoop::quit);
+		connect(TcpWorker, &ISTcpWorker::StartedFailed, &EventLoop, &QEventLoop::quit);
 		Workers[i] = TcpWorker;
 
 		connect(Thread, &QThread::started, TcpWorker, &ISTcpWorker::Run); //Запуск воркера
@@ -70,8 +66,14 @@ bool ISTcpServer::Run()
 		Thread->start(); //Запускаем поток
 		EventLoop.exec(); //Ожидаем запуска воркера
 
-		//Отключаем сигнал от текущего воркера (на всякий случай)
-		disconnect(TcpWorker, &ISTcpWorker::Started, &EventLoop, &QEventLoop::quit);
+		//Отключаем сигналы от текущего воркера (на всякий случай)
+		disconnect(TcpWorker, &ISTcpWorker::StartedDone, &EventLoop, &QEventLoop::quit);
+		disconnect(TcpWorker, &ISTcpWorker::StartedFailed, &EventLoop, &QEventLoop::quit);
+
+		if (!TcpWorker->GetStarted())
+		{
+			return false;
+		}
 	}
 
 	//Запускаем балансировщик

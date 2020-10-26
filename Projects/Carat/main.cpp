@@ -20,21 +20,19 @@ int main(int argc, char **argv)
 		return CaratApplication.Run(Arguments);
 	}
 
-	//јргуменов запуска не было, запускаемс€ в режиме сервера
-	if (!CaratApplication.Run())
-	{
-		return EXIT_FAILURE;
-	}
-	ISLOGGER_I("", "Started application");
-	
-	//«апускаем основной поток событий
-	int ResultCode = CaratApplication.exec();
+	int ResultCode = -1;
 
-	//ќстанавливаем служебные сервисы
+	//јргуменов запуска не было, запускаемс€ в режиме сервера
+	if (CaratApplication.Run())
+	{
+		ISLOGGER_I("", "Started application");
+		ResultCode = CaratApplication.exec();
+	}
+
+	//ќстанавливаем служебные сервисы и завершаем программу
 	ISDatabase::Instance().DisconnectAll();
 	ISLOGGER_I("", "Stopped application");
 	ISLogger::Instance().Shutdown();
-
 	return ResultCode;
 }
 //-----------------------------------------------------------------------------

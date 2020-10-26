@@ -51,7 +51,7 @@ bool ISCaratController::Start()
 void ISCaratController::Stop()
 {
 	//Останавливаем контроллер
-	ISLOGGER_I(__CLASS__, "Stoppind");
+	ISLOGGER_I(__CLASS__, "Stopping");
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	IsRunning = false;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);

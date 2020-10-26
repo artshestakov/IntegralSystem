@@ -14,7 +14,6 @@ public:
 	ISTcpServer(QObject *parent);
 	virtual ~ISTcpServer();
 
-	QString GetErrorString() const;
 	bool Run(); //Запуск сервера
 	void Stop(); //Остановка сервера
 

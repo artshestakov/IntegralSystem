@@ -138,7 +138,7 @@ bool ISCaratApplication::Run()
 		TcpServer = new ISTcpServer(this);
 		if (!TcpServer->Run())
 		{
-			ISLOGGER_W("ISTcpServer", "starting failed: " + TcpServer->GetErrorString());
+			ISLOGGER_W("ISTcpServer", "starting failed");
 			return false;
 		}
 	}
