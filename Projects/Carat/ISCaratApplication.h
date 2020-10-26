@@ -3,11 +3,15 @@
 #define _ISCARATAPPLICATION_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISAlgorithm.h"
+#include "ISCaratController.h"
+#include "ISTcpServer.h"
 //-----------------------------------------------------------------------------
 class ISCaratApplication : public QCoreApplication
 {
 	Q_OBJECT
+
+signals:
+	void Quit();
 
 public:
 	ISCaratApplication(int argc, char **argv);
@@ -19,11 +23,14 @@ public:
 	bool Run(); //Стандартный запуск
 
 private:
+	void Shutdown();
 	void Version();
 	void Help();
 
 private:
 	QString ErrorString;
+	ISCaratController *Controller;
+	ISTcpServer *TcpServer;
 };
 //-----------------------------------------------------------------------------
 #endif

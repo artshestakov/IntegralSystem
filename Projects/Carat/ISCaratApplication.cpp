@@ -5,8 +5,7 @@
 #include "ISLocalization.h"
 #include "ISConfig.h"
 #include "ISVersion.h"
-#include "ISTcpServer.h"
-#include "ISCaratController.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -102,8 +101,12 @@ bool ISCaratApplication::Run()
 	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
 	{
-		ISCaratController *CaratController = new ISCaratController(this);
-		if (!CaratController->Start())
+		Controller = new ISCaratController(this);
+		if (Controller->Start())
+		{
+			connect(Controller, &ISCaratController::Shutdown, this, &ISCaratApplication::Shutdown);
+		}
+		else
 		{
 			return false;
 		}
@@ -112,7 +115,7 @@ bool ISCaratApplication::Run()
 	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
 	{
-		ISTcpServer *TcpServer = new ISTcpServer(this);
+		TcpServer = new ISTcpServer(this);
 		if (!TcpServer->Run())
 		{
 			ISLOGGER_W("ISTcpServer", "starting failed: " + TcpServer->GetErrorString());
@@ -120,6 +123,22 @@ bool ISCaratApplication::Run()
 		}
 	}
 	return true;
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::Shutdown()
+{
+	ISLOGGER_I(__CLASS__, "Shutdown...");
+
+	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
+	{
+		Controller->Stop();
+	}
+
+	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
+	{
+		TcpServer->Stop();
+	}
+	emit Quit();
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::Version()

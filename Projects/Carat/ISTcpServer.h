@@ -15,7 +15,8 @@ public:
 	virtual ~ISTcpServer();
 
 	QString GetErrorString() const;
-	bool Run();
+	bool Run(); //Запуск сервера
+	void Stop(); //Остановка сервера
 
 private:
 	void incomingConnection(qintptr SocketDescriptor) override; //Событие входящего соединения
@@ -29,6 +30,15 @@ private:
 	QString ErrorString;
 	unsigned int WorkerCount;
 	std::vector<ISTcpWorker *> Workers;
+	bool BalancerRunning;
+	bool BalancerFinished;
+
+	//Критическая секция для синхронизации
+#ifdef WIN32
+	CRITICAL_SECTION CriticalSection;
+#else
+	pthread_mutex_t CriticalSection;
+#endif
 };
 //-----------------------------------------------------------------------------
 #endif

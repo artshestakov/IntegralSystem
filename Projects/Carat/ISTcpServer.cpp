@@ -9,14 +9,16 @@
 ISTcpServer::ISTcpServer(QObject *parent)
 	: QTcpServer(parent),
 	ErrorString(NO_ERROR_STRING),
-	WorkerCount(0)
+	WorkerCount(0),
+	BalancerRunning(false),
+	BalancerFinished(false)
 {
-
+	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISTcpServer::~ISTcpServer()
 {
-	
+	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 QString ISTcpServer::GetErrorString() const
@@ -78,6 +80,7 @@ bool ISTcpServer::Run()
 		ErrorString = "Error starting QueueBalancerMessage";
 		return false;
 	}
+	BalancerRunning = true;
 
 	//Запуск TCP-сервера
 	if (!listen(QHostAddress::AnyIPv4, tcp_port))
@@ -88,6 +91,31 @@ bool ISTcpServer::Run()
 	connect(this, &QTcpServer::acceptError, this, &ISTcpServer::AcceptError);
 	ISLOGGER_I(__CLASS__, QString("Started. Port: %1. Workers: %2").arg(CARAT_TCP_PORT).arg(WorkerCount));
 	return true;
+}
+//-----------------------------------------------------------------------------
+void ISTcpServer::Stop()
+{
+	//Сначала останавливаем TCP-сервер, тем самым прерывая новые входящие подключения
+	ISLOGGER_I(__CLASS__, "Stopped");
+	close();
+
+	//Обходим кааждый воркер и останавливаем его
+	for (unsigned int i = 0; i < WorkerCount; ++i)
+	{
+		ISTcpWorker *TcpWorker = Workers[i]; //Получаем текущий воркер
+		TcpWorker->Stop(); //Останавливаем его
+		TcpWorker->deleteLater();
+		TcpWorker->thread()->quit(); //Получаем поток воркера и тоже его останавливаем
+	}
+
+	//Останавливаем балансер и ждём пока он не остановится
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	BalancerRunning = false;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	while (!BalancerFinished)
+	{
+		ISSleep(10);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
@@ -116,6 +144,15 @@ void ISTcpServer::QueueBalancerMessage()
 	ISTcpMessage *TcpMessage = nullptr;
 	while (true)
 	{
+		//Проверяем, запущен ли балансер
+		CRITICAL_SECTION_LOCK(&CriticalSection);
+		bool running_balancer = BalancerRunning;
+		CRITICAL_SECTION_UNLOCK(&CriticalSection);
+		if (!running_balancer)
+		{
+			break;
+		}
+
 		ISSleep(1);
 		TcpMessage = ISTcpQueue::Instance().GetMessage();
 		if (TcpMessage) //Если есть сообщение на очереди - ищем свободный воркер
@@ -138,6 +175,7 @@ void ISTcpServer::QueueBalancerMessage()
 			}
 		}
 	}
+	BalancerFinished = true;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)

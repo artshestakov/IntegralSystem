@@ -69,7 +69,8 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	DBUser(db_user),
 	DBPassword(db_password),
 	IsRunning(false),
-	CurrentMessage(nullptr)
+	CurrentMessage(nullptr),
+	IsStopped(false)
 {
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -90,13 +91,15 @@ bool ISTcpWorker::GetRunning()
 void ISTcpWorker::SetMessage(ISTcpMessage *TcpMessage)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	IsRunning = true;
 	CurrentMessage = TcpMessage;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Run()
 {
+	//Поток, связанный с этим воркером будет удалятсья из памяти после завершения
+	connect(thread(), &QThread::finished, thread(), &QThread::deleteLater);
+
 	//Формируем имя подключения к БД
 	DBConnectionName = QString::number((unsigned long)QThread::currentThreadId());
 
@@ -112,13 +115,27 @@ void ISTcpWorker::Run()
 	emit Started();
 	while (true)
 	{
-		//Засыпаем на одну милисекунду и даём поработать потоку
-		ISSleep(1);
+		ISSleep(1); //Засыпаем на одну милисекунду и даём поработать потоку
+
+		//Проверяем, не остановлен ли воркер
+		CRITICAL_SECTION_LOCK(&CriticalSection);
+		bool is_stopped = IsStopped;
+		CRITICAL_SECTION_UNLOCK(&CriticalSection);
+		if (is_stopped) //Если флаг остановки установлен - выходим из цикла
+		{
+			ISLOGGER_I(__CLASS__, QString("Stopping worker %1...").arg(DBConnectionName));
+			ISDatabase::Instance().Disconnect(DBConnectionName);
+			break;
+		}
 
 		//Получаем текущее сообщение
 		CRITICAL_SECTION_LOCK(&CriticalSection);
 		ISTcpMessage *tcp_message = CurrentMessage;
-		CurrentMessage = nullptr;
+		if (tcp_message) //Если сообщение есть - устанавливаем флаг работы воркера
+		{
+			IsRunning = true;
+			CurrentMessage = nullptr;
+		}
 		CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
 		//Если появилось сообщение на обработку - выполняем его
@@ -126,7 +143,7 @@ void ISTcpWorker::Run()
 		{
 			bool Result = false;
 			long long PerfomanceMsec = 0;
-			ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpSocket);
+			ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpSocket); //Заранее формируем ответ
 
 			if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
 			{
@@ -162,7 +179,6 @@ void ISTcpWorker::Run()
 				arg(tcp_message->ChunkCount).
 				arg(tcp_message->ParseMSec).
 				arg(PerfomanceMsec);
-
 			if (!Result) //Запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе и лог-сообщении
 			{
 				TcpAnswer->SetError(ErrorString);
@@ -175,6 +191,13 @@ void ISTcpWorker::Run()
 			Finish();
 		}
 	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::Stop()
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	IsStopped = true;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Finish()

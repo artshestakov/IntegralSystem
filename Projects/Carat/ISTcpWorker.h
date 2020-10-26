@@ -21,6 +21,7 @@ public:
 	bool GetRunning(); //Получить флаг занятости
 	void SetMessage(ISTcpMessage *TcpMessage); //Установить сообщение на обработку
 	void Run(); //Запуск воркера
+	void Stop(); //Остановка воркера
 
 private:
 	void Finish(); //Уведомление о завершении работы воркера
@@ -41,6 +42,7 @@ private:
 	QString DBPassword;
 	bool IsRunning; //Флаг занятости воркера
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
+	bool IsStopped; //Флаг остановки работы воркера
 
 	//Критическая секция для синхронизации
 #ifdef WIN32
