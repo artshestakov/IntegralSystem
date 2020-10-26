@@ -8,7 +8,7 @@
 #include "ISLogger.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISCaratApplication::ISCaratApplication(int argc, char **argv)
+ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
 	ErrorString(NO_ERROR_STRING)
 {
