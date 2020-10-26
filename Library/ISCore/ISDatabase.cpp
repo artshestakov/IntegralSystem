@@ -138,7 +138,6 @@ void ISDatabase::Disconnect(const QString &ConnectionName)
                 SqlDatabase.setDatabaseName(QString());
                 SqlDatabase.setUserName(QString());
                 SqlDatabase.setPassword(QString());
-				ISLOGGER_I(__CLASS__, QString("Closed connection \"%1\"").arg(ConnectionName));
             }
         }
 		else

@@ -5,6 +5,7 @@
 #include "StdAfx.h"
 #include "ISTcpMessage.h"
 #include "ISTcpAnswer.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISTcpQueue
 {
@@ -24,12 +25,7 @@ private:
 	std::queue<ISTcpMessage *> Queue;
 	qint64 MessageID;
 
-	//Критические секции для синхронизации
-#ifdef WIN32
-	CRITICAL_SECTION CriticalSection;
-#else
-	pthread_mutex_t CriticalSection;
-#endif
+	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -3,6 +3,7 @@
 #define _ISCARATCONTROLLER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCaratController : public QThread
 {
@@ -33,12 +34,7 @@ private:
 	bool IsRunning;
 	bool IsFinished;
 
-	//Критическая секция для синхронизации
-#ifdef WIN32
-	CRITICAL_SECTION CriticalSection;
-#else
-	pthread_mutex_t CriticalSection;
-#endif
+	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -5,6 +5,11 @@
 #include "StdAfx.h"
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
+#ifdef WIN32
+typedef CRITICAL_SECTION ISCriticalSection;
+#else
+typedef pthread_mutex_t ISCriticalSection;
+#endif
 typedef std::map<QString, QString> ISStringMap;
 typedef std::map<QString, int> ISStringToIntMap;
 typedef std::map<QString, QVariant> ISStringToVariantMap;

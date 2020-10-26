@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 #include "ISConstants.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISLogger
 {
@@ -69,12 +70,7 @@ private:
     int CurrentMonth; //Текущий месяц
     int CurrentYear; //Текущий год
 
-	//Критическая секция для синхронизации
-#ifdef WIN32
-    CRITICAL_SECTION CriticalSection;
-#else
-    pthread_mutex_t CriticalSection;
-#endif
+	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
 #define ISLOGGER_N() ISLogger::Instance().Log(ISLogger::MT_Null, QString(), QString()) //Логирование пустой строки

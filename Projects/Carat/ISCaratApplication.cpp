@@ -32,6 +32,8 @@ bool ISCaratApplication::Init()
 		std::cout << ISLogger::Instance().GetErrorString().toStdString() << std::endl;
 		return false;
 	}
+	ISLOGGER_I(__CLASS__, "Starting");
+
 
 #ifdef WIN32 //Установим кодировку для консольного приложения под Windows
 	if (SetConsoleOutputCP(65001) == FALSE)

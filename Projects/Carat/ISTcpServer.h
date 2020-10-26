@@ -5,6 +5,7 @@
 #include "StdAfx.h"
 #include "ISTcpSocket.h"
 #include "ISTcpWorker.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISTcpServer : public QTcpServer
 {
@@ -32,12 +33,7 @@ private:
 	bool BalancerRunning;
 	bool BalancerFinished;
 
-	//Критическая секция для синхронизации
-#ifdef WIN32
-	CRITICAL_SECTION CriticalSection;
-#else
-	pthread_mutex_t CriticalSection;
-#endif
+	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
 #endif

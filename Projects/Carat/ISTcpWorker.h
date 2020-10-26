@@ -5,6 +5,7 @@
 #include "StdAfx.h"
 #include "ISTcpMessage.h"
 #include "ISTcpAnswer.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISTcpWorker : public QObject
 {
@@ -48,12 +49,7 @@ private:
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
 	bool IsStopped; //Флаг остановки работы воркера
 
-	//Критическая секция для синхронизации
-#ifdef WIN32
-	CRITICAL_SECTION CriticalSection;
-#else
-	pthread_mutex_t CriticalSection;
-#endif
+	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
 #endif
