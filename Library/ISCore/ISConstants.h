@@ -135,6 +135,8 @@ const unsigned short	CARAT_CONTROLLER_PORT = 50001; //Стандартный порт контролле
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_SLEEP[] = "Sleep"; //Ожидание
 const char		API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
+//CARAT_LOCAL_API--------------------------------------------------------------
+const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
 const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных

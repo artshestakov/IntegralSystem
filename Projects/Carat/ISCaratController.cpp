@@ -105,7 +105,7 @@ void ISCaratController::run()
 				}
 
 				QByteArray Command = TcpSocket->readAll().toLower();
-				if (Command == "shutdown") //ѕришла команда на завершение работы
+				if (Command == CARAT_LOCAL_API_SHUTDOWN) //ѕришла команда на завершение работы
 				{
 					ISLOGGER_I(__CLASS__, "Incoming command: " + Command);
 					Send(TcpSocket, "OK\n");

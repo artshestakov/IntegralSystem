@@ -24,8 +24,10 @@ public:
 
 private:
 	void Shutdown();
-	void Version();
 	void Help();
+	void Version();
+	void SendShutdown();
+	void SendCommand(const QByteArray &ByteArray);
 
 private:
 	QString ErrorString;
