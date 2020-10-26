@@ -11,12 +11,12 @@ static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 ISDatabase::ISDatabase()
     : ErrorString(NO_ERROR_STRING)
 {
-
+	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISDatabase::~ISDatabase()
 {
-
+	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISDatabase& ISDatabase::Instance()
@@ -42,14 +42,12 @@ QSqlDatabase ISDatabase::GetDB(const QString &ConnectionName)
 ISConnectOptionDB ISDatabase::GetOption(const QString &ConnectionName)
 {
     ISConnectOptionDB ConnectOption;
-    if (ConnectOptions.count(ConnectionName))
-    {
-        ConnectOption.Host = ConnectOptions[ConnectionName].Host;
-        ConnectOption.Port = ConnectOptions[ConnectionName].Port;
-        ConnectOption.Name = ConnectOptions[ConnectionName].Name;
-        ConnectOption.Login = ConnectOptions[ConnectionName].Login;
-        ConnectOption.Password = ConnectOptions[ConnectionName].Password;
-    }
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	if (ConnectOptions.count(ConnectionName)) //Если соединение с таким именем есть - заполняем результирующее
+	{
+		ConnectOption = ConnectOptions[ConnectionName];
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
     return ConnectOption;
 }
 //-----------------------------------------------------------------------------
@@ -108,7 +106,9 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
         return Result;
     }
 
+	CRITICAL_SECTION_LOCK(&CriticalSection);
     ConnectOptions.emplace(ConnectionName, ISConnectOptionDB{ Host, Port, Database, Login, Password });
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
     //Изменяем имя приложения для коннекта
     QSqlError SqlError = SqlDatabase.exec("SET application_name = '" + QCoreApplication::applicationName() + "'").lastError();
@@ -123,6 +123,7 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
 //-----------------------------------------------------------------------------
 void ISDatabase::Disconnect(const QString &ConnectionName)
 {
+	CRITICAL_SECTION_LOCK(&CriticalSection);
     bool Contains = true; //Флаг удаления экземпляра БД из памяти
     {
         Contains = QSqlDatabase::contains(ConnectionName);
@@ -146,6 +147,7 @@ void ISDatabase::Disconnect(const QString &ConnectionName)
         QSqlDatabase::removeDatabase(ConnectionName);
         ConnectOptions.erase(ConnectionName);
     }
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 void ISDatabase::DisconnectAll()
