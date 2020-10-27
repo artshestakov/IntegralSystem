@@ -3,7 +3,6 @@
   
   <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="FIO" ObjectForm="ISUserObjectForm">
     <Fields>
-      <Field UID="{6B61D73F-A200-499B-BD31-4168908FA35C}" Name="OID" Type="OID" ReadOnly="true" LabelName="Системный идентификатор" LocalListName="Системный идентификатор" Hint="Внутренний идентификатор пользователя в базе данных."/>
       <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" LayoutName="Group"/>
       <Field UID="{79E27A03-6412-4236-B9A2-761DA41E80E6}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true" LayoutName="Group"/>
       <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Size="16" Lower="true" RegExp="^([a-z]+)$" LabelName="Логин" LocalListName="Логин" LayoutName="Group" Hint="Логин должен быть в нижнем регистре и на английском языке." NotNull="true"/>
@@ -16,7 +15,6 @@
       <Field UID="{C19191C0-9398-4FEB-9BED-BA1C3F8C0979}" Name="Photo" Type="Image" LabelName="Фотография" LocalListName="Фотография" HideFromList="true"/>
     </Fields>
     <Indexes>
-      <Index Field="OID" Unique="true"/>
       <Index Field="Group"/>
       <Index Field="FIO"/>
       <Index Field="Login" Unique="true"/>

@@ -18,7 +18,6 @@ namespace ISNamespace
         FT_Bool, //Логический
         FT_Double, //Число с плавающей запятой
 		FT_Money, //Деньги
-		FT_OID, //Идентификатор объекта
         FT_ByteArray, //Массив данных
         FT_Date, //Дата
         FT_Time, //Время
