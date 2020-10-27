@@ -37,32 +37,21 @@ QString ISParagraphEntity::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISParagraphEntity::Initialize()
 {
-	QString ParagraphView = SETTING_STRING(CONST_UID_SETTING_VIEW_PARAGRAPHVIEW);
-	if (ParagraphView.isEmpty()) //Если отображаемые параграфы отсутствуют - выходим
-	{
-		return true;
-	}
-
-	QStringList EnabledParagraphs = ParagraphView.split(SYMBOL_COMMA);
-
 	ISQuery qSelect(QS_PARAGRAPHS);
 	bool Result = qSelect.Execute();
 	if (Result)
 	{
 		while (qSelect.Next())
 		{
-			ISUuid UID = qSelect.ReadColumn("prhs_uid");
-			if (ParagraphView == "All" || EnabledParagraphs.contains(UID))
+			Paragraphs.emplace_back(new ISMetaParagraph
 			{
-				ISMetaParagraph *MetaParagraph = new ISMetaParagraph();
-				MetaParagraph->UID = UID;
-				MetaParagraph->Name = qSelect.ReadColumn("prhs_name").toString();
-				MetaParagraph->LocalName = qSelect.ReadColumn("prhs_localname").toString();
-				MetaParagraph->ToolTip = qSelect.ReadColumn("prhs_tooltip").toString();
-				MetaParagraph->Icon = qSelect.ReadColumn("prhs_icon").toString();
-				MetaParagraph->ClassName = qSelect.ReadColumn("prhs_classname").toString();
-				Paragraphs.emplace_back(MetaParagraph);
-			}
+				qSelect.ReadColumn("prhs_uid"),
+				qSelect.ReadColumn("prhs_name").toString(),
+				qSelect.ReadColumn("prhs_localname").toString(),
+				qSelect.ReadColumn("prhs_tooltip").toString(),
+				qSelect.ReadColumn("prhs_icon").toString(),
+				qSelect.ReadColumn("prhs_classname").toString()
+			});
 		}
 	}
 	else

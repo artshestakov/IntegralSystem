@@ -4,24 +4,6 @@
 //-----------------------------------------------------------------------------
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-class ISCheckViewParagraph : public ISFieldEditBase
-{
-	Q_OBJECT
-
-public:
-	Q_INVOKABLE ISCheckViewParagraph(QWidget *parent = 0);
-	virtual ~ISCheckViewParagraph();
-
-	void SetValue(const QVariant &value) override;
-	QVariant GetValue() const override;
-	void Clear() override;
-
-private:
-	QButtonGroup *ButtonGroup;
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 class ISComboSettingEdit : public ISComboEdit
 {
 	Q_OBJECT
