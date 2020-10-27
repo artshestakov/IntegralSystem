@@ -133,4 +133,25 @@
     COST 100;
   </Function>
 
+  <Function Name="get_user_setting_value(user_id bigint, setting_uid uuid)" Comment="Получить настройку пользователя">
+    CREATE OR REPLACE FUNCTION public.get_user_setting_value(user_id bigint, setting_uid uuid)
+    RETURNS varchar AS
+    $body$
+    BEGIN
+    RETURN usst_value
+    FROM _usersettings
+    WHERE usst_creationuser = user_id
+    AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = setting_uid);
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+
+    ALTER FUNCTION public.get_user_setting_value (user_id bigint, setting_uid uuid)
+    OWNER TO postgres;
+  </Function>
+
 </XSF>
