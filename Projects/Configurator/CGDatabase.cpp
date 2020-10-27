@@ -18,10 +18,10 @@ static QString QC_FOREIGN = "ALTER TABLE public.%1 "
 							"ON UPDATE NO ACTION "
 							"NOT DEFERRABLE";
 //-----------------------------------------------------------------------------
-static QString QS_FUNCTION = PREPARE_QUERY("SELECT proname || '(' || pg_get_function_arguments(p.oid) || ')' AS function_name "
-										   "FROM pg_proc p "
-										   "LEFT JOIN pg_namespace n ON p.pronamespace = n.oid "
-										   "WHERE nspname = current_schema() "
+static QString QS_FUNCTION = PREPARE_QUERY("SELECT proname || '(' || pg_get_function_arguments(oid) || ')' AS function_name "
+										   "FROM pg_proc "
+										   "WHERE pronamespace = (SELECT oid FROM pg_namespace WHERE nspname = current_schema()) "
+										   "AND probin IS NULL "
 										   "ORDER BY function_name");
 //-----------------------------------------------------------------------------
 static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
