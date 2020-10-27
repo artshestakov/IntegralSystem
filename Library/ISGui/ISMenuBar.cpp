@@ -87,6 +87,7 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 		LayoutParagraphs->addWidget(ButtonParagraph->parentWidget());
 		ParagraphButtons[MetaParagraph->UID] = ButtonParagraph;
 	}
+	ParagraphButtons[CONST_UID_PARAGRAPH_DESKTOP]->clicked();
 	MainLayout->addStretch();
 
 	LayoutButtons = new QHBoxLayout();
@@ -107,14 +108,6 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 ISMenuBar::~ISMenuBar()
 {
 	
-}
-//-----------------------------------------------------------------------------
-void ISMenuBar::ParagraphClick(const ISUuid &ParagraphUID)
-{
-	if (ParagraphButtons.count(ParagraphUID))
-	{
-		ParagraphButtons[ParagraphUID]->clicked();
-	}
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &IconName)

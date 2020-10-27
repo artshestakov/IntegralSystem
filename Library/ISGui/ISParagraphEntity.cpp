@@ -44,11 +44,6 @@ bool ISParagraphEntity::Initialize()
 	}
 
 	QStringList EnabledParagraphs = ParagraphView.split(SYMBOL_COMMA);
-	StartedParagraph = SETTING_STRING(CONST_UID_SETTING_VIEW_STARTEDPARAGRAPH);
-	if (!EnabledParagraphs.contains(StartedParagraph) && EnabledParagraphs.front() != "All") //Если стартовый парраграф не найдет среди отображаемых - назначаем первый попавшийся
-	{
-		StartedParagraph = EnabledParagraphs.front();
-	}
 
 	ISQuery qSelect(QS_PARAGRAPHS);
 	bool Result = qSelect.Execute();
@@ -93,10 +88,5 @@ ISMetaParagraph* ISParagraphEntity::GetParagraph(const QString &ParagraphUID)
 std::vector<ISMetaParagraph*> ISParagraphEntity::GetParagraphs()
 {
 	return Paragraphs;
-}
-//-----------------------------------------------------------------------------
-ISUuid ISParagraphEntity::GetStartedParagraph() const
-{
-	return StartedParagraph;
 }
 //-----------------------------------------------------------------------------

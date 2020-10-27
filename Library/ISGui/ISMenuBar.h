@@ -24,8 +24,6 @@ public:
 	ISMenuBar(QWidget *parent = 0);
 	virtual ~ISMenuBar();
 
-	void ParagraphClick(const ISUuid &ParagraphUID);
-
 private:
 	QToolButton* CreateButton(const QString &ToolTip, const QString &IconName);
 	void ParagraphClicked();

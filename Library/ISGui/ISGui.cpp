@@ -743,7 +743,6 @@ void ISGui::RegisterMetaType()
 
 	qRegisterMetaType<ISComboTableDoubleClickEvent*>("ISComboTableDoubleClickEvent");
 	qRegisterMetaType<ISComboCalendarNoteType*>("ISComboCalendarNoteType");
-	qRegisterMetaType<ISComboStartedParagraph*>("ISComboStartedParagraph");
 	qRegisterMetaType<ISComboTabBarSelectionBehavior*>("ISComboTabBarSelectionBehavior");
 	qRegisterMetaType<ISCheckViewParagraph*>("ISCheckViewParagraph");
 }

@@ -56,7 +56,6 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	{
 		Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
 	}
-	MenuBar->ParagraphClick(ISParagraphEntity::Instance().GetStartedParagraph());
 }
 //-----------------------------------------------------------------------------
 ISMainWindow::~ISMainWindow()

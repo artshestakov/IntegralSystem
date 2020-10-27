@@ -12,7 +12,6 @@ public:
 	bool Initialize();
 	ISMetaParagraph* GetParagraph(const QString &ParagraphUID); //Получить параграф
 	std::vector<ISMetaParagraph*> GetParagraphs(); //Получить список параграфов
-	ISUuid GetStartedParagraph() const; //Получить стартовый параграф
 
 private:
 	ISParagraphEntity();
@@ -23,6 +22,5 @@ private:
 private:
 	QString ErrorString;
 	std::vector<ISMetaParagraph*> Paragraphs;
-	ISUuid StartedParagraph;
 };
 //-----------------------------------------------------------------------------

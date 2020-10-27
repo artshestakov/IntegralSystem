@@ -4,9 +4,9 @@
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 static QString QS_PARAGPAPH = PREPARE_QUERY("SELECT prhs_localname, prhs_uid "
-											 "FROM _paragraphs "
-											 "WHERE NOT prhs_isdeleted "
-											 "ORDER BY prhs_orderid");
+											"FROM _paragraphs "
+											"WHERE NOT prhs_isdeleted "
+											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
 ISCheckViewParagraph::ISCheckViewParagraph(QWidget *parent) : ISFieldEditBase(parent)
 {
@@ -118,25 +118,6 @@ ISComboCalendarNoteType::ISComboCalendarNoteType(QWidget *parent) : ISComboSetti
 }
 //-----------------------------------------------------------------------------
 ISComboCalendarNoteType::~ISComboCalendarNoteType()
-{
-
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-ISComboStartedParagraph::ISComboStartedParagraph(QWidget *parent) : ISComboSettingEdit(parent)
-{
-	ISQuery qSelect(QS_PARAGPAPH);
-	if (qSelect.Execute())
-	{
-		while (qSelect.Next())
-		{
-			AddItem(qSelect.ReadColumn("prhs_localname").toString(), ISUuid(qSelect.ReadColumn("prhs_uid")));
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-ISComboStartedParagraph::~ISComboStartedParagraph()
 {
 
 }
