@@ -11,7 +11,7 @@ public:
 	static ISProperty& Instance(); //Получить свойства
 	
 	void SetValue(const QString &PropertyName, const QVariant &Value); //Изменить свойство
-	QVariant GetValue(const QString &PropertyName) const; //Получить значение свойства по имени
+	QVariant GetValue(const QString &PropertyName); //Получить значение свойства по имени
 
 private:
 	ISProperty();
@@ -21,6 +21,7 @@ private:
 
 private:
 	ISStringToVariantMap Map;
+	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
 #define PROPERTY_GET(PROPERTY_NAME) ISProperty::Instance().GetValue(PROPERTY_NAME)
