@@ -47,7 +47,8 @@ def MapAuth =
 	Parameters:
 		[
 			Login: &quot;postgres&quot;,
-			Password: &quot;adm777&quot;
+			Password: &quot;adm777&quot;,
+			Version: &quot;1.0.0&quot;
 		]
 ];
 vars.put(&quot;QueryAuth&quot;, MapToString(MapAuth));
@@ -72,7 +73,14 @@ def MapSleep =
 			Timeout: 10000
 		]
 ];
-vars.put(&quot;QuerySleep&quot;, MapToString(MapSleep));</stringProp>
+vars.put(&quot;QuerySleep&quot;, MapToString(MapSleep));
+
+//Тест
+def MapTest =
+[
+	Type: &quot;Test&quot;
+];
+vars.put(&quot;QueryTest&quot;, MapToString(MapTest));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -96,6 +104,19 @@ vars.put(&quot;QuerySleep&quot;, MapToString(MapSleep));</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetMetaData}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Test" enabled="false">
+          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port">50000</stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryTest}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
@@ -159,7 +180,7 @@ vars.put(&quot;QuerySleep&quot;, MapToString(MapSleep));</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group: Shutdown" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>

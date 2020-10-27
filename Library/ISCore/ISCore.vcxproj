@@ -237,6 +237,7 @@
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="ISUuid.cpp" />
     <ClCompile Include="ISVersion.cpp" />
+    <ClCompile Include="ISVersionInfo.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -266,6 +267,7 @@
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="ISUuid.h" />
     <ClInclude Include="ISVersion.h" />
+    <ClInclude Include="ISVersionInfo.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="ISProtocol.h" />
     <ClInclude Include="ISSettings.h" />

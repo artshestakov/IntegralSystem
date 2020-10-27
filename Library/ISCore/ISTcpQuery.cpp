@@ -4,7 +4,7 @@
 #include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
-#include "ISVersion.h"
+#include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
 	: ErrorString(NO_ERROR_STRING),
@@ -38,7 +38,7 @@ bool ISTcpQuery::Execute()
 		{
 			"System", QVariantMap
 			{
-				{ "Version", ISVersion::Instance().ToString() }
+				{ "Version", ISVersionInfo::Instance().ToString() }
 			}
 		}
 	}, QJsonDocument::Compact);

@@ -9,6 +9,7 @@
 #include "ISAssert.h"
 #include "ISTypedefs.h"
 #include "ISAlgorithm.h"
+#include "ISVersion.h"
 //-----------------------------------------------------------------------------
 struct ISMetaDataType
 {
@@ -228,11 +229,7 @@ struct ISCORE_EXPORT ISSqlQuery
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISVersionStruct
 {
-    ISVersionStruct() : Major(0), Minor(0), Revision(0) { }
-
-    int Major;
-    int Minor;
-    int Revision;
+    ISVersion Version;
 
 	QString Date;
 	QString Time;

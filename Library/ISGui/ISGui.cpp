@@ -16,7 +16,7 @@
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
 #include "ISBuffer.h"
-#include "ISVersion.h"
+#include "ISVersionInfo.h"
 #include "ISQuery.h"
 #include "ISQueryPool.h"
 #include "ISSettings.h"
@@ -111,7 +111,7 @@ bool ISGui::Startup(QString &ErrorString)
 	qApp->setStyleSheet(BUFFER_STYLE_SHEET("QToolTip"));
 	qApp->setWindowIcon(BUFFER_ICONS("Logo"));
 	qApp->setApplicationName("IntegralSystem");
-	qApp->setApplicationVersion(ISVersion::Instance().ToString());
+	qApp->setApplicationVersion(ISVersionInfo::Instance().ToString());
 	qApp->setFont(ISDefines::Gui::FONT_APPLICATION);
 	QToolTip::setFont(ISDefines::Gui::FONT_APPLICATION);
 	return Result;

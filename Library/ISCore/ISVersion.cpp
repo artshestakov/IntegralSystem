@@ -2,17 +2,40 @@
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISVersion::ISVersion()
+	: Major(0),
+	Minor(0),
+	Revision(0),
+	Valid(false)
 {
-	QSettings Settings(QFile::exists(PATH_BUILD_INFO) ? PATH_BUILD_INFO : ":Build/Build.ini", QSettings::IniFormat);
-	Info.Major = Settings.value("Version/Major").toInt();
-	Info.Minor = Settings.value("Version/Minor").toInt();
-	Info.Revision = Settings.value("Version/Revision").toInt();
-	Info.Date = Settings.value("Build/Date").toString();
-	Info.Time = Settings.value("Build/Time").toString();
-	Info.Hash = Settings.value("Build/Hash").toString();
-	Info.Branch = Settings.value("Build/Branch").toString();
-	Info.Configuration = Settings.value("Build/Configuration").toString();
-	Info.Platform = Settings.value("Build/Platform").toString();
+
+}
+//-----------------------------------------------------------------------------
+ISVersion::ISVersion(unsigned int major, unsigned int minor, unsigned int revision)
+	: Major(major),
+	Minor(minor),
+	Revision(revision),
+	Valid(true)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISVersion::ISVersion(const QString &string) : ISVersion()
+{
+	QStringList StringList = string.split(SYMBOL_POINT);
+	if (StringList.size() != 3) // оличество октетов не равно трем - выходим
+	{
+		return;
+	}
+
+	bool MajorOK = true, MinorOK = true, RevisionOK = true;
+	Major = StringList[0].toUInt(&MajorOK);
+	Minor = StringList[1].toUInt(&MinorOK);
+	Revision = StringList[2].toUInt(&RevisionOK);
+	Valid = MajorOK && MinorOK && RevisionOK;
+	if (!Valid)
+	{
+		Clear();
+	}
 }
 //-----------------------------------------------------------------------------
 ISVersion::~ISVersion()
@@ -20,19 +43,75 @@ ISVersion::~ISVersion()
 
 }
 //-----------------------------------------------------------------------------
-ISVersion& ISVersion::Instance()
-{
-	static ISVersion Version;
-	return Version;
-}
-//-----------------------------------------------------------------------------
 QString ISVersion::ToString() const
 {
-	return QString("%1.%2.%3").arg(Info.Major).arg(Info.Minor).arg(Info.Revision);
+	return QString("%1.%2.%3").arg(Major).arg(Minor).arg(Revision);
 }
 //-----------------------------------------------------------------------------
-std::string ISVersion::ToStdString() const
+bool ISVersion::IsValid() const
 {
-	return ToString().toStdString();
+	return Valid;
+}
+//-----------------------------------------------------------------------------
+unsigned int ISVersion::GetMajor() const
+{
+	return Major;
+}
+//-----------------------------------------------------------------------------
+unsigned int ISVersion::GetMinor() const
+{
+	return Minor;
+}
+//-----------------------------------------------------------------------------
+unsigned int ISVersion::GetRevision() const
+{
+	return Revision;
+}
+//-----------------------------------------------------------------------------
+void ISVersion::Clear()
+{
+	Major = 0;
+	Minor = 0;
+	Revision = 0;
+}
+//-----------------------------------------------------------------------------
+bool operator==(const ISVersion &v1, const ISVersion &v2)
+{
+	return v1.Major == v2.Major &&
+		v1.Minor == v2.Minor &&
+		v1.Revision == v2.Revision;
+}
+//-----------------------------------------------------------------------------
+bool operator!=(const ISVersion &v1, const ISVersion &v2)
+{
+	return !(v1 == v2);
+}
+//-----------------------------------------------------------------------------
+bool operator>=(const ISVersion &v1, const ISVersion &v2)
+{
+	return v1.Major >= v2.Major &&
+		v1.Minor >= v2.Minor &&
+		v1.Revision >= v2.Revision;
+}
+//-----------------------------------------------------------------------------
+bool operator<=(const ISVersion &v1, const ISVersion &v2)
+{
+	return v1.Major <= v2.Major &&
+		v1.Minor <= v2.Minor &&
+		v1.Revision <= v2.Revision;
+}
+//-----------------------------------------------------------------------------
+bool operator>(const ISVersion &v1, const ISVersion &v2)
+{
+	return v1.Major > v2.Major &&
+		v1.Minor > v2.Minor &&
+		v1.Revision > v2.Revision;
+}
+//-----------------------------------------------------------------------------
+bool operator<(const ISVersion &v1, const ISVersion &v2)
+{
+	return v1.Major < v2.Major &&
+		v1.Minor < v2.Minor &&
+		v1.Revision < v2.Revision;
 }
 //-----------------------------------------------------------------------------

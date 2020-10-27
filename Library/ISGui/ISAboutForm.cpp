@@ -7,7 +7,7 @@
 #include "ISFileDialog.h"
 #include "ISButtons.h"
 #include "ISQuery.h"
-#include "ISVersion.h"
+#include "ISVersionInfo.h"
 #include "ISConstants.h"
 #include "ISObjects.h"
 #include "ISConfig.h"
@@ -62,14 +62,14 @@ void ISAboutForm::CreateCommonTab()
 	TabWidget->addTab(TabCommon, LANG("AboutForm.Tab.Common"));
 
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), QCoreApplication::applicationName());
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISVersion::Instance().Info.Configuration);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersion::Instance().Info.Platform);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersion::Instance().ToString());
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersion::Instance().Info.Revision));
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersion::Instance().Info.Date);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersion::Instance().Info.Time);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionHash"), ISVersion::Instance().Info.Hash);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), ISVersion::Instance().Info.Branch);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISVersionInfo::Instance().Info.Configuration);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersionInfo::Instance().Info.Platform);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersionInfo::Instance().ToString());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersionInfo::Instance().Info.Version.GetRevision()));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersionInfo::Instance().Info.Date);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersionInfo::Instance().Info.Time);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionHash"), ISVersionInfo::Instance().Info.Hash);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), ISVersionInfo::Instance().Info.Branch);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT));

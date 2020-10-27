@@ -8,6 +8,7 @@
 #include "ISSystem.h"
 #include "ISTrace.h"
 #include "ISTcpQueue.h"
+#include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess "
 									   "FROM _users "
@@ -268,7 +269,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	QVariant Login = CheckNullField("Login", TcpMessage->Parameters),
-		Password = CheckNullField("Password", TcpMessage->Parameters);
+		Password = CheckNullField("Password", TcpMessage->Parameters),
+		Version = CheckNullField("Version", TcpMessage->Parameters);
 	if (!Login.isValid() || !Password.isValid())
 	{
 		return false;
@@ -356,12 +358,30 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpMessage->TcpSocket->SetAuthorized(true);
 	TcpMessage->TcpSocket->SetUserID(UserID);
 
+	//Проверяем версию клиента.
+	bool IsNeedUpdate = false; //По умолчанию флаг обновления должен быть false (вдруг клиент отправил невалидную версию)
+	if (Version.isValid()) //Если клиент отправил версию
+	{
+		//Проверяем его версию на валидность
+		QString VersionClientString = Version.toString();
+		ISVersion VersionClient(VersionClientString);
+		if (VersionClient.IsValid()) //Версия валидна
+		{
+			IsNeedUpdate = VersionClient < ISVersionInfo::Instance().Info.Version;
+		}
+		else //Версия невалидна
+		{
+			ISLOGGER_W(__CLASS__, "Client version invalid: " + VersionClientString);
+		}
+	}
+
 	//Отдаём информацию о пользователе и выходим из функции
 	TcpAnswer->Parameters["UserID"] = UserID;
 	TcpAnswer->Parameters["IsSystem"] = IsSystem;
 	TcpAnswer->Parameters["FIO"] = UserFIO;
 	TcpAnswer->Parameters["GroupID"] = GroupID;
 	TcpAnswer->Parameters["GroupFullAccess"] = GroupFullAccess;
+	TcpAnswer->Parameters["IsNeedUpdate"] = IsNeedUpdate;
 	return true;
 }
 //-----------------------------------------------------------------------------

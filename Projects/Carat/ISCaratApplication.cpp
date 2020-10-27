@@ -4,7 +4,7 @@
 #include "ISLogger.h"
 #include "ISLocalization.h"
 #include "ISConfig.h"
-#include "ISVersion.h"
+#include "ISVersionInfo.h"
 #include "ISLogger.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ bool ISCaratApplication::Run(const QStringList &Arguments)
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run()
 {
-    ISLOGGER_I(__CLASS__, QString("Starting. [Version %1] %2 %3").arg(ISVersion::Instance().ToString()).arg(ISVersion::Instance().Info.Configuration).arg(ISVersion::Instance().Info.Platform));
+    ISLOGGER_I(__CLASS__, QString("Starting. [Version %1] %2 %3").arg(ISVersionInfo::Instance().ToString()).arg(ISVersionInfo::Instance().Info.Configuration).arg(ISVersionInfo::Instance().Info.Platform));
 
 	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
@@ -190,7 +190,7 @@ void ISCaratApplication::Help()
 //-----------------------------------------------------------------------------
 void ISCaratApplication::Version()
 {
-	std::cout << "Carat (" << ISVersion::Instance().ToStdString() << ") " << ISVersion::Instance().Info.Configuration.toStdString() << " " << ISVersion::Instance().Info.Platform.toStdString() << std::endl;
+	std::cout << "Carat (" << ISVersionInfo::Instance().ToStdString() << ") " << ISVersionInfo::Instance().Info.Configuration.toStdString() << " " << ISVersionInfo::Instance().Info.Platform.toStdString() << std::endl;
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::SendShutdown()

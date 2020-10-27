@@ -10,7 +10,7 @@
 #include "ISLogger.h"
 #include "ISMetaDataHelper.h"
 #include "ISConsole.h"
-#include "ISVersion.h"
+#include "ISVersionInfo.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
 #include "ISLocalization.h"
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 	ArgumentsCMD.erase(ArgumentsCMD.begin());
 	if (ArgumentsCMD.size() == 0)
 	{
-		ISLOGGER_L(QString("Configurator [Version %1] %2 %3").arg(ISVersion::Instance().ToString()).arg(ISVersion::Instance().Info.Configuration).arg(ISVersion::Instance().Info.Platform));
+		ISLOGGER_L(QString("Configurator [Version %1] %2 %3").arg(ISVersionInfo::Instance().ToString()).arg(ISVersionInfo::Instance().Info.Configuration).arg(ISVersionInfo::Instance().Info.Platform));
 		ISLOGGER_L("Welcome to the Configurator.");
 		ISLOGGER_L("DBHost: " + DBHost);
 		ISLOGGER_L("DBName: " + DBName);

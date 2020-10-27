@@ -11,7 +11,7 @@
 #include "ISMessageBox.h"
 #include "ISGui.h"
 #include "ISMetaUser.h"
-#include "ISVersion.h"
+#include "ISVersionInfo.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 #include "ISTcpConnector.h"
@@ -379,10 +379,10 @@ bool ISAuthForm::CheckUpdate()
 			result = StringList.size() == 4;
 			if (result)
 			{
-				result = StringList[2].toInt() > ISVersion::Instance().Info.Revision;
+				result = StringList[2].toUInt() > ISVersionInfo::Instance().Info.Version.GetRevision();
 				if (result)
 				{
-					ISLOGGER_I(__CLASS__, QString("Founded update. This version: %1. Update file: %2").arg(ISVersion::Instance().ToString()).arg(FileInfo.fileName()));
+					ISLOGGER_I(__CLASS__, QString("Founded update. This version: %1. Update file: %2").arg(ISVersionInfo::Instance().ToString()).arg(FileInfo.fileName()));
 					ISMessageBox::ShowInformation(this, LANG("Message.Information.FoundNewAppVersion"));
 					QString FilePath = UpdateDir + '/' + FileInfo.fileName();
 					result = QProcess::startDetached(FilePath, QStringList() << "/SILENT" << "/NOCANCEL" << "/NORESTART");
