@@ -49,16 +49,21 @@ static QString QS_USER_SETTINGS = PREPARE_QUERY("SELECT "
 												"stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
 												"stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
 												"usst_value, "
-												"(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = :UserID AND usst_setting = stgs_uid) "
+												"(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = :UserID AND usst_setting = stgs_id) "
 												"FROM _settings "
 												"LEFT JOIN _settingsgroup ON stgp_uid = stgs_group "
-												"LEFT JOIN _usersettings ON usst_setting = stgs_uid AND usst_creationuser = :UserID "
+												"LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_creationuser = :UserID "
 												"WHERE NOT stgs_isdeleted "
 												"AND NOT stgp_isdeleted "
 												"ORDER BY stgp_order, stgs_order");
 //-----------------------------------------------------------------------------
 static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
-											   "VALUES(:SettingUID, :Value)");
+											   "VALUES((SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID), :Value)");
+//-----------------------------------------------------------------------------
+static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
+											"FROM _paragraphs "
+											"WHERE NOT prhs_isdeleted "
+											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
@@ -430,13 +435,13 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{
 				{ "stms_issystem", qSelectSystems.ReadColumn("stms_issystem") },
 				{ "stms_id", qSelectSystems.ReadColumn("stms_id") },
-				{ "stms_uid", qSelectSystems.ReadColumn("stms_uid") },
+				{ "stms_uid", ISUuid(qSelectSystems.ReadColumn("stms_uid")) },
 				{ "stms_localname", qSelectSystems.ReadColumn("stms_localname") },
 				{ "stms_orderid", qSelectSystems.ReadColumn("stms_orderid") },
 				{ "stms_icon", qSelectSystems.ReadColumn("stms_icon") },
 				{ "stms_hint", qSelectSystems.ReadColumn("stms_hint").toByteArray() },
 				{ "sbsm_id", qSelectSystems.ReadColumn("sbsm_id") },
-				{ "sbsm_uid", qSelectSystems.ReadColumn("sbsm_uid") },
+				{ "sbsm_uid", ISUuid(qSelectSystems.ReadColumn("sbsm_uid")) },
 				{ "sbsm_localname", qSelectSystems.ReadColumn("sbsm_localname").toByteArray() },
 				{ "sbsm_orderid", qSelectSystems.ReadColumn("sbsm_orderid") },
 				{ "sbsm_icon", qSelectSystems.ReadColumn("sbsm_icon") },
@@ -607,6 +612,31 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	else
 	{
 		ErrorString = LANG("Carat.Error.Query.GetMetaData.UserSettings").arg(qSelectUserSetting.GetErrorString());
+		return false;
+	}
+
+	//Получаем параграфы
+	QVariantList ParagraphList;
+	ISQuery qSelectParagraph(ISDatabase::Instance().GetDB(DBConnectionName), QS_PARAGRAPH);
+	if (qSelectParagraph.Execute())
+	{
+		while (qSelectParagraph.Next())
+		{
+			ParagraphList.append(QVariantMap
+			{
+				{ "UID", ISUuid(qSelectParagraph.ReadColumn("prhs_uid")) },
+				{ "Name", qSelectParagraph.ReadColumn("prhs_name") },
+				{ "LocalName", qSelectParagraph.ReadColumn("prhs_localname") },
+				{ "ToolTip", qSelectParagraph.ReadColumn("prhs_tooltip") },
+				{ "Icon", qSelectParagraph.ReadColumn("prhs_icon") },
+				{ "ClassName", qSelectParagraph.ReadColumn("prhs_classname") }
+			});
+		}
+		TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.Paragraph").arg(qSelectParagraph.GetErrorString());
 		return false;
 	}
 

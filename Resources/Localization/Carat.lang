@@ -28,5 +28,6 @@
   <Local Name="Carat.Error.Query.GetMetaData.Sorting" Russian="Не удалось получить сортировки: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.ColumnSize" Russian="Не удалось получить размеры полей: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.UserSettings" Russian="Не удалось получить настройки пользователя: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.Paragraph" Russian="Не удалось получить параграфы: %1"/>
 
 </LANG>
