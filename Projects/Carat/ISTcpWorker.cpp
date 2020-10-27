@@ -25,6 +25,7 @@ static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
 												   "FROM _subsystems "
 												   "LEFT JOIN _systems ON stms_uid = sbsm_system "
 												   "WHERE NOT sbsm_isdeleted "
+												   "AND check_access_user_subsystem(:UserID, sbsm_uid) "
 												   "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_PRINTING = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate, "
@@ -433,6 +434,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Получаем системы и подсистемы
 	QVariantMap SystemSubSystemMap;
 	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEM_SUBSYSTEM);
+	qSelectSystems.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (qSelectSystems.Execute())
 	{
 		while (qSelectSystems.Next())
