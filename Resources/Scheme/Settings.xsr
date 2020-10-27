@@ -6,7 +6,6 @@
 
   <_SettingsGroup IsSystem="true" UID="{3AECBF8A-531F-4484-B507-1269A10B5F2F}" Name="View" LocalName="Вид" IconName="Settings.View" Order="2" System="true"/>
   <_Settings IsSystem="true" UID="{6AB8CD71-06BA-4059-A795-F9BCA5255634}" Group="{3AECBF8A-531F-4484-B507-1269A10B5F2F}" Order="1" Name="FullScreen" Type="Bool" LocalName="Полноэкранный режим" Hint="Главное окно будет разворачиваться на весь экран." DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{916102BF-3121-4696-8A51-D0D053581B56}" Group="{3AECBF8A-531F-4484-B507-1269A10B5F2F}" Order="2" Name="ParagraphView" Type="String" WidgetEditName="ISCheckViewParagraph" LocalName="Отображаемые параграфы" DefaultValue="All"/>
   
   <_SettingsGroup IsSystem="true" UID="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Name="Tables" LocalName="Таблицы" IconName="Settings.Tables" Order="3" System="true"/>
   <_Settings IsSystem="true" UID="{9CBB5512-9559-4740-A7E5-A44D94BEC434}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="1" Name="HighlightingOddRows" Type="Bool" LocalName="Затемнить четные строчки" Hint="Все четные строчки будут немного затемнены для более удобного просмотра больших таблиц." DefaultValue="true"/>
