@@ -3,7 +3,7 @@
   
   <Table Name="_UserSettings" UID="{40628A04-2B01-49F2-87EC-2935221C5B3E}" Alias="usst" LocalName="Настройка пользователя" LocalListName="Настройки пользователя" TitleName="Setting" IsSystem="true">
     <Fields>
-      <Field UID="{37DCAF64-6AD3-45F9-8081-FB49410CF30A}" Name="Setting" Type="UID" LabelName="Настройка" LocalListName="Настройка" NotNull="true"/>
+      <Field UID="{37DCAF64-6AD3-45F9-8081-FB49410CF30A}" Name="Setting" Type="BigInt" LabelName="Настройка" LocalListName="Настройка" NotNull="true"/>
       <Field UID="{BB690831-A151-4BA0-9E4F-66699DB132F9}" Name="Value" Type="String" LabelName="Значение" LocalListName="Значение"/>
     </Fields>
     <Indexes>
@@ -12,7 +12,7 @@
       <Index Field="CreationUser;Setting"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Setting" ForeignClass="_Settings" ForeignField="UID" ForeignViewNameField="LocalName"/>
+      <Foreign Field="Setting" ForeignClass="_Settings" ForeignField="ID"/>
     </Foreigns>
   </Table>
     

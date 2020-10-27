@@ -23,7 +23,7 @@ public:
 
 private:
 	ISMetaSettingsGroup* CheckExistGroup(const ISUuid &GroupUID);
-	bool InsertSetting(const QString &SettingUID, const QVariant &Value);
+	bool InsertSetting(const ISUuid &SettingUID, const QVariant &Value);
 
 private:
 	ISSettings();

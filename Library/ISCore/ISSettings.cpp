@@ -8,21 +8,21 @@ static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
 										   "stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
 										   "stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
 										   "usst_value, "
-										   "(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = currentuserid() AND usst_setting = stgs_uid) "
+										   "(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = currentuserid() AND usst_setting = stgs_id) "
 										   "FROM _settings "
 										   "LEFT JOIN _settingsgroup ON stgp_uid = stgs_group "
-										   "LEFT JOIN _usersettings ON usst_setting = stgs_uid AND usst_creationuser = currentuserid() "
+										   "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_creationuser = currentuserid() "
 										   "WHERE NOT stgs_isdeleted "
 										   "AND NOT stgp_isdeleted "
 										   "ORDER BY stgp_order, stgs_order");
 //-----------------------------------------------------------------------------
 static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
-											   "VALUES(:SettingUID, :Value)");
+											   "VALUES((SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID), :Value)");
 //-----------------------------------------------------------------------------
 static QString QU_USER_SETTING = PREPARE_QUERY("UPDATE _usersettings SET "
 											   "usst_value = :Value "
 											   "WHERE usst_creationuser = currentuserid() "
-											   "AND usst_setting = :SettingUID");
+											   "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID)");
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
 	: ErrorString(NO_ERROR_STRING)
@@ -167,7 +167,7 @@ ISMetaSettingsGroup* ISSettings::CheckExistGroup(const ISUuid &GroupUID)
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-bool ISSettings::InsertSetting(const QString &SettingUID, const QVariant &Value)
+bool ISSettings::InsertSetting(const ISUuid &SettingUID, const QVariant &Value)
 {
 	ISQuery qInsertSetting(QI_USER_SETTING);
 	qInsertSetting.BindValue(":SettingUID", SettingUID);
