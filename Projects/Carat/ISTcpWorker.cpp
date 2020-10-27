@@ -27,6 +27,12 @@ static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
 												   "WHERE NOT sbsm_isdeleted "
 												   "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
+static QString QS_PRINTING = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate, "
+										   "rprt_parent, rprt_replacevalue, rprt_sqlquery "
+										   "FROM _report "
+										   "WHERE NOT rprt_isdeleted "
+										   "ORDER BY rprt_id");
+//-----------------------------------------------------------------------------
 static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 										   "FROM _favorites "
 										   "WHERE fvts_creationuser = :UserID");
@@ -455,6 +461,44 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	else
 	{
 		ErrorString = LANG("Carat.Error.Query.GetMetaData.MetaSystems").arg(qSelectSystems.GetErrorString());
+		return false;
+	}
+
+	//Получаем печать
+	QVariantMap PrintingMap;
+	ISQuery qSelectPrinting(ISDatabase::Instance().GetDB(DBConnectionName), QS_PRINTING);
+	if (qSelectPrinting.Execute())
+	{
+		while (qSelectPrinting.Next())
+		{
+			ISUuid UID = qSelectPrinting.ReadColumn("rprt_uid"),
+				Parent = qSelectPrinting.ReadColumn("rprt_parent");
+			if (Parent.isEmpty())
+			{
+				PrintingMap[UID] = QVariantMap
+				{
+					{ "Type", qSelectPrinting.ReadColumn("rprt_type") },
+					{ "TableName", qSelectPrinting.ReadColumn("rprt_tablename") },
+					{ "LocalName", qSelectPrinting.ReadColumn("rprt_localname") },
+					{ "FileTemplate", qSelectPrinting.ReadColumn("rprt_filetemplate") },
+					{ "Fields", QVariantMap() }
+				};
+			}
+			else
+			{
+				QVariantMap ReportMap = PrintingMap[Parent].toMap();
+				QVariantMap FieldsMap = ReportMap["Fields"].toMap();
+				FieldsMap["ReplaceValue"] = qSelectPrinting.ReadColumn("rprt_replacevalue");
+				FieldsMap["SqlQuery"] = qSelectPrinting.ReadColumn("rprt_sqlquery");
+				ReportMap["Fields"] = FieldsMap;
+				PrintingMap[Parent] = ReportMap;
+			}
+		}
+		TcpAnswer->Parameters["Printing"] = SystemSubSystemList;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.Printing").arg(qSelectPrinting.GetErrorString());
 		return false;
 	}
 
