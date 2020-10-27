@@ -80,14 +80,20 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	MainLayout->addLayout(LayoutParagraphs);
 
 	//Создание парграфов
+	bool clicked_begin = false;
 	for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
 	{
 		QToolButton *ButtonParagraph = CreateParagraphButton(MetaParagraph);
 		connect(ButtonParagraph, &QToolButton::clicked, this, static_cast<void(ISMenuBar::*)()>(&ISMenuBar::ParagraphClicked));
 		LayoutParagraphs->addWidget(ButtonParagraph->parentWidget());
 		ParagraphButtons[MetaParagraph->UID] = ButtonParagraph;
+
+		if (!clicked_begin) //Если первый параграф ещё не выделен - выделяем
+		{
+			ButtonParagraph->clicked();
+			clicked_begin = true;
+		}
 	}
-	ParagraphButtons[CONST_UID_PARAGRAPH_DESKTOP]->clicked();
 	MainLayout->addStretch();
 
 	LayoutButtons = new QHBoxLayout();
