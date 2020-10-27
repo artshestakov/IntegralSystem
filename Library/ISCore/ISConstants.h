@@ -135,6 +135,7 @@ const unsigned short	CARAT_CONTROLLER_PORT = 50001; //Стандартный порт контролле
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_SLEEP[] = "Sleep"; //Ожидание
 const char		API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
+const char		API_TEST[] = "Test"; //Тестовый метод
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

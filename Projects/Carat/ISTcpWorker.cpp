@@ -195,6 +195,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_Auth: Result = Auth(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_Test: Result = Test(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -696,6 +697,13 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::Test(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+	Q_UNUSED(TcpAnswer);
 	return true;
 }
 //-----------------------------------------------------------------------------
