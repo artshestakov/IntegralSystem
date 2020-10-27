@@ -11,7 +11,7 @@ public:
 	static ISLocalization& Instance();
 
 	QString GetErrorString() const;
-	QString GetString(const QString &ParameterName) const; //Получить локализованную строку
+	QString GetString(const QString &ParameterName); //Получить локализованную строку
 	bool LoadTraslatorQT(); //Загрузка трансляций QT
 	bool LoadResourceFile(const QString &FileName); //Инициализация файла из ресурсов
 
@@ -28,6 +28,7 @@ private:
 	QString ErrorString;
 	ISStringMap Dictionary;
 	ISVectorString LoadedFiles;
+	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
 #define LANG(PARAMETER) ISLocalization::Instance().GetString(PARAMETER)

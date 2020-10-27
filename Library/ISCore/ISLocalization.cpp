@@ -8,12 +8,13 @@
 ISLocalization::ISLocalization()
 	: ErrorString(NO_ERROR_STRING)
 {
-	
+	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISLocalization::~ISLocalization()
 {
 	Dictionary.clear(); //Очищаем словарь
+	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISLocalization& ISLocalization::Instance()
@@ -27,9 +28,12 @@ QString ISLocalization::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-QString ISLocalization::GetString(const QString &ParameterName) const
+QString ISLocalization::GetString(const QString &ParameterName)
 {
+	CRITICAL_SECTION_LOCK(&CriticalSection);
 	ISStringMap::const_iterator It = Dictionary.find(ParameterName);
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+
 	if (It == Dictionary.end())
 	{
 		ISLOGGER_W(__CLASS__, "Not found key \"" + ParameterName + "\" in localization");
