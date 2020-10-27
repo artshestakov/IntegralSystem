@@ -323,11 +323,4 @@
     </Indexes>
   </Table>
 
-  <Table Name="_LogClient" UID="{4D8C807D-BD76-4848-946B-678714FE1511}" Alias="lcli" LocalName="Лог клиента" LocalListName="Логи клиентов" TitleName="Session" IsSystem="true">
-    <Fields>
-      <Field UID="{94DA897F-D6AC-454B-B4FC-34D8C648E1DE}" Name="Session" Type="UID" Label="Идентификатор сессии" LocalListName="Идентификатор сессии"/>
-      <Field UID="{DA9331FC-2502-4954-88C3-57E28FC77CAF}" Name="Message" Type="Text" LabelName="Сообщение" LocalListName="Сообщение"/>
-    </Fields>
-  </Table>
-
 </XSN>
