@@ -222,9 +222,6 @@
     <ClCompile Include="ISDefinesGui.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISDictionaryWord.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISFavorites.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -785,9 +782,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDefinesGui.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISDictionaryWord.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISFavorites.h">

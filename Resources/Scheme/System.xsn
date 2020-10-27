@@ -313,14 +313,4 @@
     </Indexes>
   </Table>
 
-  <Table Name="_DictionaryWord" UID="{25311F76-73EB-4951-94B0-2B9191DBD3AD}" Alias="dicw" LocalName="Слово" LocalListName="Слова" TitleName="Word" IsSystem="true">
-    <Fields>
-      <Field UID="{8B26674E-A0AB-45A4-B2C9-A1B06AC2F7CB}" Name="Word" Type="String" LabelName="Слово" LocalListName="Слово" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Word"/>
-      <Index Field="CreationUser;Word" Unique="true"/>
-    </Indexes>
-  </Table>
-
 </XSN>
