@@ -200,7 +200,7 @@
     SECURITY INVOKER
     COST 100;
 
-    ALTER FUNCTION public.function (user_id bigint, subsystem_uid uuid)
+    ALTER FUNCTION public.check_access_user_subsystem (user_id bigint, subsystem_uid uuid)
     OWNER TO postgres;
   </Function>
 
