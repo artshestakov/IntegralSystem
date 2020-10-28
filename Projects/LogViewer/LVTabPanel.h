@@ -2,7 +2,7 @@
 #ifndef _LVTABWIDGET_H_INCLUDED
 #define _LVTABWIDGET_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include <QtWidgets/QWidget>
+#include "LVLogModel.h"
 //-----------------------------------------------------------------------------
 class LVTabPanel : public QWidget
 {
@@ -11,6 +11,9 @@ class LVTabPanel : public QWidget
 public:
 	LVTabPanel(const QString &FilePath, QWidget *parent);
 	virtual ~LVTabPanel();
+
+private:
+	LVLogModel *Model;
 };
 //-----------------------------------------------------------------------------
 #endif
