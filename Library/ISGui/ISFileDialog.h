@@ -2,9 +2,9 @@
 #ifndef _ISFILEDIALOG_H_INCLUDED
 #define _ISFILEDIALOG_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
+#include "isgui_global.h"
 //-----------------------------------------------------------------------------
-class ISFileDialog : public QFileDialog
+class ISGUI_EXPORT ISFileDialog : public QFileDialog
 {
 	Q_OBJECT
 

@@ -1,4 +1,3 @@
-#include <QtWidgets/QApplication>
 #include "LVMainWindow.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char *argv[])

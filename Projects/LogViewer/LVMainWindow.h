@@ -2,12 +2,9 @@
 #ifndef _LVMAINWINDOW_H_INCLUDED
 #define _LVMAINWINDOW_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QToolBar>
-#include <QtWidgets/QTabWidget>
+#include "ISInterfaceForm.h"
 //-----------------------------------------------------------------------------
-class LVMainWindow : public QWidget
+class LVMainWindow : public ISInterfaceForm
 {
     Q_OBJECT
 
@@ -17,6 +14,9 @@ public:
 
 private:
 	void OpenFile();
+
+private:
+	QTabWidget *TabWidget;
 };
 //-----------------------------------------------------------------------------
 #endif
