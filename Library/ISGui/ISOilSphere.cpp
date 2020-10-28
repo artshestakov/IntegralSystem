@@ -19,7 +19,7 @@ static QString QS_STATEMENT = PREPARE_QUERY2("SELECT COUNT(*) "
 											 "WHERE gsts_implementationunload = :ImplementationUnload");
 //-----------------------------------------------------------------------------
 static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
-											 "VALUES(:ImplementationUnload, :StockID, CURRENT_DATE, :VolumeIncome)");
+											 "VALUES(:ImplementationUnload, :StockID, (SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = :ImplementationUnload)), :VolumeIncome)");
 //-----------------------------------------------------------------------------
 static QString QS_STOCK = PREPARE_QUERY2("SELECT stck_id, stck_name "
 										 "FROM stock "
