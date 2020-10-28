@@ -46,8 +46,8 @@ def MapAuth =
 	Type: &quot;Auth&quot;,
 	Parameters:
 		[
-			Login: &quot;postgres&quot;,
-			Password: &quot;adm777&quot;,
+			Login: &quot;shestakov&quot;,
+			Password: &quot;78357835&quot;,
 			Version: &quot;1.0.0&quot;
 		]
 ];

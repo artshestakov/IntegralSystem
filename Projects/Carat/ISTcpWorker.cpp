@@ -131,7 +131,7 @@ void ISTcpWorker::Run()
 
 	//Формируем имя подключения к БД
 	DBConnectionName = QString::number((unsigned long)QThread::currentThreadId());
-
+	
 	//Пытаемся подключиться к БД
 	IsStarted = ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword);
 	if (!IsStarted)
@@ -168,7 +168,7 @@ void ISTcpWorker::Process()
 		CRITICAL_SECTION_UNLOCK(&CriticalSection);
 		if (is_stopped) //Если флаг остановки установлен - выходим из цикла
 		{
-			ISLOGGER_I(__CLASS__, QString("Stopping worker %1...").arg(DBConnectionName));
+			ISLOGGER_I(__CLASS__, QString("Stopping %1...").arg(DBConnectionName));
 			ISDatabase::Instance().Disconnect(DBConnectionName);
 			break;
 		}
@@ -324,14 +324,11 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Проверка наличия привязки пользователя к группе
-	if (!IsSystem) //Если пользователь не системный - проверяем привязку
+	//Проверка наличия привязки не системного пользователя к группе
+	if (!IsSystem && GroupID == 0)
 	{
-		if (GroupID == 0) //Привязка отсутствует
-		{
-			ErrorString = LANG("Carat.Error.Query.LoginLinkGroup");
-			return false;
-		}
+		ErrorString = LANG("Carat.Error.Query.LoginLinkGroup");
+		return false;
 	}
 
 	//Если для пользователя настроено ограничение срока действия учётной записи

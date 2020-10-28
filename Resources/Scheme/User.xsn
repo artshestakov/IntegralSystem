@@ -136,17 +136,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="_UserGroupAccessSpecialType" UID="{33A83969-DB2A-49B2-B3EF-0F5091CEFA49}" Alias="uast" LocalName="Тип специального права" LocalListName="Типы специального права" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{40C79417-D911-437C-A56C-577C13A8C46A}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{6B5DC111-D908-44DB-B9AB-32B404D562A2}" Name="Description" Type="String" LabelName="Описание" LocalListName="Описание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Description"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_UserPasswordChanged" UID="{621BC43F-01FF-43D3-9046-ADB0B229CDD2}" Alias="upcg" ShowOnly="true" LocalName="Изменение пароля" LocalListName="Изменения паролей" TitleName="User">
     <Fields>
       <Field UID="{B33AA18E-3C37-4D9F-8F98-C8DF6999F0E0}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
