@@ -134,6 +134,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{07985F92-BD9
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogViewer", "Projects\LogViewer\LogViewer.vcxproj", "{F4FDE33B-0BC9-4013-B58E-7A600293D608}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DF96E239-1BB5-402B-B4F4-BF01D4A168BF} = {DF96E239-1BB5-402B-B4F4-BF01D4A168BF}
+		{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36} = {9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

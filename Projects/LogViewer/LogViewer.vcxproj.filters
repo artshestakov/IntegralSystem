@@ -25,16 +25,22 @@
     <ClCompile Include="LVMainWindow.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="LVTabWidget.cpp">
+    <ClCompile Include="LVTabPanel.cpp">
       <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="LVLogModel.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="LVMainWindow.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="LVTabWidget.h">
+    <QtMoc Include="LVTabPanel.h">
       <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="LVLogModel.h">
+      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
