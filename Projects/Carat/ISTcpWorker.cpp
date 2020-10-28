@@ -20,13 +20,23 @@ static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sg
 													"WHERE NOT sgdb_isdeleted "
 													"AND sgdb_active");
 //-----------------------------------------------------------------------------
+static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
+													 "FROM _groupaccesstable "
+													 "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
+													 "WHERE gatb_group = (SELECT usrs_group FROM _users WHERE usrs_id = :UserID)");
+//-----------------------------------------------------------------------------
+static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
+													   "FROM _groupaccessspecial "
+													   "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
+													   "WHERE gasp_group = (SELECT usrs_group FROM _users WHERE usrs_id = :UserID)");
+//-----------------------------------------------------------------------------
 static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
 												   "stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint, "
 												   "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
 												   "FROM _subsystems "
 												   "LEFT JOIN _systems ON stms_uid = sbsm_system "
 												   "WHERE NOT sbsm_isdeleted "
-												   "AND check_access_user_subsystem(:UserID, sbsm_uid) "
+												   "AND check_access_user_subsystem(:UserID, sbsm_uid) " //ѕроверка доступности этой подсистемы пользователю
 												   "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_PRINTING = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate, "
@@ -449,6 +459,53 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	else
 	{
 		ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsDB").arg(qSelectSettingsDB.GetErrorString());
+		return false;
+	}
+
+	//ѕолучаем права на таблицы
+	QVariantMap AccessTablesMap;
+	ISQuery qSelectAccessTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_ACCESS_TABLE);
+	qSelectAccessTables.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectAccessTables.Execute())
+	{
+		while (qSelectAccessTables.Next())
+		{
+			QString TableName = qSelectAccessTables.ReadColumn("gatb_table").toString();
+			ISUuid AccessUID = qSelectAccessTables.ReadColumn("gatt_uid");
+			if (AccessTablesMap.contains(TableName))
+			{
+				QVariantList AccessList = AccessTablesMap[TableName].toList();
+				AccessList.append(AccessUID);
+				AccessTablesMap[TableName] = AccessList;
+			}
+			else
+			{
+				AccessTablesMap[TableName] = QVariantList{ AccessUID };
+			}
+		}
+		TcpAnswer->Parameters["AccessTables"] = AccessTablesMap;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.UserGroupAccessTable").arg(qSelectAccessTables.GetErrorString());
+		return false;
+	}
+
+	//ѕолучаем специальные права
+	QVariantList AccessSpecialList;
+	ISQuery qSelectAccessSpecial(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_ACCESS_SPECIAL);
+	qSelectAccessSpecial.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectAccessSpecial.Execute())
+	{
+		while (qSelectAccessSpecial.Next())
+		{
+			AccessSpecialList.append(ISUuid(qSelectAccessSpecial.ReadColumn("gast_uid")));
+		}
+		TcpAnswer->Parameters["AccessSpecial"] = AccessSpecialList;
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.UserGroupAccessSpecial").arg(qSelectAccessSpecial.GetErrorString());
 		return false;
 	}
 

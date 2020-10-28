@@ -21,6 +21,8 @@
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNegative" Russian="Значение не должно быть отрицательным"/>
 
   <Local Name="Carat.Error.Query.GetMetaData.SettingsDB" Russian="Не удалось получить настройки базы данных: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.UserGroupAccessTable" Russian="Не удалось получить права доступа на таблицы: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.UserGroupAccessSpecial" Russian="Не удалось получить специальные права доступа: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.SettingsDBNotActive" Russian="Нет автивного профиля настроек базы данных."/>
   <Local Name="Carat.Error.Query.GetMetaData.MetaSystems" Russian="Не удалось получить информацию о системах и подсистемах: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.Printing" Russian="Не удалось получить данные печати: %1"/>
