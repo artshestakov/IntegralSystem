@@ -50,8 +50,7 @@ QString ISAlgorithm::GetClassName(const char *FunctionName)
     int Index = 0;
 
 #ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
-    Index = Result.indexOf(SYMBOL_SPACE);
-    if (Index != -1)
+    while ((Index = Result.indexOf(SYMBOL_SPACE)) != -1)
     {
         Result.remove(0, ++Index);
     }
