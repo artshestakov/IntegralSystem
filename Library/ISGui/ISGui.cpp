@@ -57,6 +57,10 @@ static QString QU_NOTE_OBJECT = PREPARE_QUERY("UPDATE _noteobject SET nobj_note 
 //-----------------------------------------------------------------------------
 static QString QI_NOTE_OBJECT = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tablename, nobj_objectid, nobj_note) VALUES(:TableName, :ObjectID, :Note)");
 //-----------------------------------------------------------------------------
+static QString QS_PASSWORD_IS_NULL = PREPARE_QUERY("SELECT passwd IS NULL AS is_null "
+												   "FROM pg_shadow "
+												   "WHERE usename = :Login");
+//-----------------------------------------------------------------------------
 static QString QD_USER_PASSWORD = PREPARE_QUERY2("ALTER ROLE %1 PASSWORD NULL");
 //-----------------------------------------------------------------------------
 static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
@@ -506,20 +510,44 @@ void ISGui::ShowUserPasswordDelete(int UserID, const QString &UserLogin)
 {
 	if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.DeleteUserPassword")))
 	{
-		ISQuery qDeletePassword;
-		if (qDeletePassword.Execute(QD_USER_PASSWORD.arg(UserLogin)))
+		//Проверка наличия пароля
+		ISQuery qSelectPasswordIsNull(QS_PASSWORD_IS_NULL);
+		qSelectPasswordIsNull.BindValue(":Login", UserLogin);
+		if (qSelectPasswordIsNull.Execute()) //Проверка прошла успешно
 		{
-			ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
-			qInsertPasswordChange.BindValue(":User", UserID);
-			qInsertPasswordChange.BindValue(":ChangeTypeUID", CONST_UID_USER_PASSWORD_CHANGE_TYPE_DELETE);
-			if (!qInsertPasswordChange.Execute())
+			if (qSelectPasswordIsNull.First()) //Такой пользователь есть
 			{
-				ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.ChangePasswordUserHistory"), qInsertPasswordChange.GetErrorString());
+				if (!qSelectPasswordIsNull.ReadColumn("is_null").toBool()) //Если пароль есть - удаляем
+				{
+					ISQuery qDeletePassword;
+					if (qDeletePassword.Execute(QD_USER_PASSWORD.arg(UserLogin)))
+					{
+						ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
+						qInsertPasswordChange.BindValue(":User", UserID);
+						qInsertPasswordChange.BindValue(":ChangeTypeUID", CONST_UID_USER_PASSWORD_CHANGE_TYPE_DELETE);
+						if (!qInsertPasswordChange.Execute())
+						{
+							ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.ChangePasswordUserHistory"), qInsertPasswordChange.GetErrorString());
+						}
+					}
+					else
+					{
+						ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.DeleteUserPassword"), qDeletePassword.GetErrorString());
+					}
+				}
+				else //Пароля нет - сообщаем об этом
+				{
+					ISMessageBox::ShowWarning(nullptr, LANG("Message.Error.UserPasswordIsNull"));
+				}
+			}
+			else //Пользователя нет
+			{
+				ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.ThisUserNotFound"));
 			}
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.DeleteUserPassword"), qDeletePassword.GetErrorString());
+			ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.SelectUserPasswordIsNull"), qSelectPasswordIsNull.GetErrorString());
 		}
 	}
 }

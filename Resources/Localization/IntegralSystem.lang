@@ -129,6 +129,7 @@
   <Local Name="Message.Error.AlterUserRole" Russian="Не удалось переименовать логин пользователя пользователя!"/>
   <Local Name="Message.Error.SelectCurrentPasswordUser" Russian="Не удалось проверить текущий пароль!"/>
   <Local Name="Message.Error.ChangePasswordUser" Russian="Не удалось изменить пароль!"/>
+  <Local Name="Message.Error.SelectUserPasswordIsNull" Russian="Не удалось проверить наличие пароля пользователя!"/>
   <Local Name="Message.Error.ChangePasswordUserHistory" Russian="Не удалось зафиксировать изменение пароля в истории!"/>
   <Local Name="Message.Error.DeleteUserPassword" Russian="Не удалось удалить пароль пользователя!"/>
   <Local Name="Message.Error.InsertTaskCheckList" Russian="Не удалось добавить элемент чек-листа!"/>
@@ -137,6 +138,8 @@
   <Local Name="Message.Error.DeleteTaskCheckList" Russian="Не удалось удалить пункт!"/>
   <Local Name="Message.Error.TaskVote" Russian="Не удалось произвести операцию с голосованием!"/>
   <Local Name="Message.Error.MetaUserSelect" Russian="Не удалось загрузить данные пользователя: %1"/>
+  <Local Name="Message.Error.ThisUserNotFound" Russian="Такого пользователя в базе данных нет!"/>
+  <Local Name="Message.Error.UserPasswordIsNull" Russian="Пароль у пользователя отсутствует."/>
   <Local Name="Message.Error.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден. Убедитесь, что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
