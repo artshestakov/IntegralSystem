@@ -133,6 +133,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{07985F92-BD9
 		Resources\SQL\SelectStockWriteOff.sql = Resources\SQL\SelectStockWriteOff.sql
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogViewer", "Projects\LogViewer\LogViewer.vcxproj", "{F4FDE33B-0BC9-4013-B58E-7A600293D608}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -181,6 +183,14 @@ Global
 		{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36}.Release|Win32.Build.0 = Release|Win32
 		{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36}.Release|x64.ActiveCfg = Release|x64
 		{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36}.Release|x64.Build.0 = Release|x64
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608}.Debug|Win32.Build.0 = Debug|Win32
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608}.Debug|x64.ActiveCfg = Debug|x64
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608}.Debug|x64.Build.0 = Debug|x64
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608}.Release|Win32.ActiveCfg = Release|Win32
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608}.Release|Win32.Build.0 = Release|Win32
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608}.Release|x64.ActiveCfg = Release|x64
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,9 +208,10 @@ Global
 		{9CBC8DDD-F3EB-4D2F-9F63-8F4EFF2D1E36} = {04D21698-EEDE-414A-9D4F-62C37E85A4A5}
 		{3BE791E4-23C3-4D11-A390-9964ED39A461} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 		{07985F92-BD9B-4E1B-8F51-23562DF5C543} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
+		{F4FDE33B-0BC9-4013-B58E-7A600293D608} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 		Qt5Version = 58_msvc2015
+		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
 	EndGlobalSection
 EndGlobal
