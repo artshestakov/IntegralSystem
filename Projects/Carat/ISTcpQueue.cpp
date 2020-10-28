@@ -53,7 +53,7 @@ void ISTcpQueue::WriteMessageID()
 		std::stringstream StringStream;
 		StringStream << MessageID;
 		std::string String = StringStream.str();
-		if (File.write(StringStream.str().c_str()) == String.size())
+		if (File.write(StringStream.str().c_str()) == (qint64)String.size())
 		{
 			File.close();
 		}
