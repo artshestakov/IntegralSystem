@@ -25,15 +25,15 @@ QString ISTcpQuery::GetErrorString() const
 //-----------------------------------------------------------------------------
 void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &ParameterValue)
 {
-	Parameters.insert(ParamterName, ParameterValue);
+	Parameters[ParamterName] = ParameterValue;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpQuery::Execute()
+bool ISTcpQuery::Execute(const QString &query_type)
 {
 	//Формируем запрос (тип запроса, его параметры и системные поля)
 	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
 	{
-		{ "Type", QueryType },
+		{ "Type", query_type.isEmpty() ? QueryType : query_type },
 		{ "Parameters", Parameters },
 		{
 			"System", QVariantMap
@@ -54,27 +54,33 @@ bool ISTcpQuery::Execute()
 	ISTcp::WaitForBytesWritten(TcpSocket); //Ждём пока данные уйдут
 
 	ByteArray.clear();
-	int Size = 0;
+	int AnswerSize = 0;
 	
 	while (true) //Ждём пока не придёт ответ
 	{
-		ISSleep(50);
+		ISSleep(1);
 		ISSystem::ProcessEvents();
 		if (TcpSocket->bytesAvailable() > 0)
 		{
 			ByteArray.append(TcpSocket->readAll());
-			if (!Size) //Размер ещё не известен - вытаскиваем его
+			if (!AnswerSize) //Размер ещё не известен - вытаскиваем его
 			{
-				//Size = ISTcp::GetQuerySizeFromBuffer(ByteArray);
+				bool Ok = true;
+				AnswerSize = ISTcp::GetQuerySizeFromBuffer(ByteArray, Ok);
+				if (!Ok) //Не удалось вытащить размер ответа
+				{
+					ErrorString = "Error getting answer size";
+					return false;
+				}
 			}
 
-			if (ByteArray.size() == Size) //Запрос пришёл полностью - выходим из цикла
+			if (ByteArray.size() == AnswerSize) //Запрос пришёл полностью - выходим из цикла
 			{
 				break;
 			}
 		}
 	}
-
+	
 	//Проверяем валидность ответа
 	if (!ISTcp::IsValidAnswer(ByteArray, TcpAnswer, ErrorString))
 	{
@@ -88,7 +94,8 @@ bool ISTcpQuery::Execute()
 		return false;
 	}
 
-	TcpAnswer.remove("IsError");
+	TcpAnswer = TcpAnswer["Parameters"].toMap();
+	Parameters.clear(); //Очищаем список параметров запроса
 	return true;
 }
 //-----------------------------------------------------------------------------

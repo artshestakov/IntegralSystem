@@ -26,8 +26,6 @@
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
-	bool UseProtocol = CONFIG_BOOL("Protocol/Use");
-
 	//Инициализация объекта конфигурации
 	if (!ISObjects::Instance().Initialize())
 	{
@@ -51,13 +49,10 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	}
 
 	//Проверка всех запросов
-	if (!UseProtocol)
+	if (!ISQueryText::Instance().CheckAllQueries())
 	{
-		if (!ISQueryText::Instance().CheckAllQueries())
-		{
-			ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.CheckAllQuery"), ISQueryText::Instance().GetErrorString());
-			return false;
-		}
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.CheckAllQuery"), ISQueryText::Instance().GetErrorString());
+		return false;
 	}
 
 	//Инициализация настроек базы данных

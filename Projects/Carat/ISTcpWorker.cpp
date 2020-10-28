@@ -429,13 +429,6 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant Login = CheckNullField("Login", TcpMessage->Parameters);
-	if (!Login.isValid())
-	{
-		return false;
-	}
-	QString LoginString = Login.toString();
-
 	//Получаем настройки БД
 	QVariantMap SettingsDBMap;
 	ISQuery qSelectSettingsDB(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTINGS_DATABASE);

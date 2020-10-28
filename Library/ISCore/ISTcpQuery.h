@@ -11,9 +11,8 @@ public:
 	~ISTcpQuery();
 
 	QString GetErrorString() const;
-	void SetDecryptAnswer(bool decrypt_answer);
 	void BindValue(const QString &ParamterName, const QVariant &ParameterValue);
-	bool Execute();
+	bool Execute(const QString &query_type = QString());
 	QVariantMap& GetAnswer();
 
 private:

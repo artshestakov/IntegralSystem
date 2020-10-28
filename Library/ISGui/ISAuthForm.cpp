@@ -221,34 +221,32 @@ void ISAuthForm::Input()
 		SetConnecting(true);
 		if (CONFIG_BOOL("Protocol/Use")) //Используем протокол
 		{
-			QString Host = CONFIG_STRING("Protocol/Host");
-			quint16 Port = CONFIG_INT("Protocol/Port");
-			if (!ISTcpConnector::Instance().Connect(Host, Port)) //Ошибка подключения к карату
+			if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port"))) //Ошибка подключения к карату
 			{
 				SetConnecting(false);
 				ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectToServer"), ISTcpConnector::Instance().GetErrorString());
 				return;
 			}
 
-			if (CONFIG_BOOL("Protocol/Auth")) //Используем авторизацию
+			ISTcpQuery qAuth(API_AUTH);
+			qAuth.BindValue("Login", EditLogin->GetValue());
+			qAuth.BindValue("Password", EditPassword->GetValue());
+			if (qAuth.Execute()) //Запрос на авторизацию прошёл успешно
 			{
-				ISTcpQuery qAuth(API_AUTH);
-				qAuth.BindValue("Login", EditLogin->GetValue().toString());
-				qAuth.BindValue("Password", EditPassword->GetValue().toString());
-				if (qAuth.Execute()) //Запрос на авторизацию прошёл успешно
+				if (qAuth.Execute(API_GET_META_DATA))
 				{
-					Port = qAuth.GetAnswer()["Port"].toInt();
-					if (!ISTcpConnector::Instance().Reconnect(Host, Port)) //Подключение в воркеру прошло успешно
-					{
-						SetConnecting(false);
-						ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectToWorker"), ISTcpConnector::Instance().GetErrorString());
-					}
+
 				}
-				else //Ошибка авторизации
+				else
 				{
 					SetConnecting(false);
 					ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth").arg(LANG(qAuth.GetErrorString())));
 				}
+			}
+			else //Ошибка авторизации
+			{
+				SetConnecting(false);
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth").arg(LANG(qAuth.GetErrorString())));
 			}
 			ConnectedDone();
 		}
