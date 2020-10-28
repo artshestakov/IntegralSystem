@@ -96,7 +96,7 @@
   <Table Name="_GroupAccessSpecial" UID="{BE0E381C-7265-494E-81F6-02257399ECDD}" Alias="gasp" LocalName="Специальное право" LocalListName="Специальные права" TitleName="Group" IsSystem="true">
     <Fields>
       <Field UID="{8C86FCA2-DA0B-49E0-B855-648C2687650E}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
-      <Field UID="{5504048E-C6D9-4F16-ABF4-9D8341BECAC9}" Name="SpecialAccess" Type="UID" LabelName="Право" LocalListName="Право" NotNull="true"/>
+      <Field UID="{5504048E-C6D9-4F16-ABF4-9D8341BECAC9}" Name="SpecialAccess" Type="BigInt" LabelName="Право" LocalListName="Право" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Group"/>
@@ -105,7 +105,7 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="SpecialAccess" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
+      <Foreign Field="SpecialAccess" ForeignClass="_GroupAccessSpecialType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
   

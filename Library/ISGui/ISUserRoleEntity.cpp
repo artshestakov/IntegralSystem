@@ -34,23 +34,28 @@ static QString QD_GROUP_ACCESS_TABLE = PREPARE_QUERY("DELETE FROM _groupaccessta
 static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 															 "FROM _groupaccessspecial "
 															 "WHERE gasp_group = :GroupID "
-															 "AND gasp_specialaccess = :SpecialAccessUID");
+															 "AND gasp_specialaccess = :SpecialAccessID");
 //-----------------------------------------------------------------------------
 static QString QI_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("INSERT INTO _groupaccessspecial(gasp_group, gasp_specialaccess) "
-													   "VALUES(:GroupID, :SpecialAccessUID)");
+													   "VALUES(:GroupID, :SpecialAccessID)");
 //-----------------------------------------------------------------------------
 static QString QD_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("DELETE FROM _groupaccessspecial "
 													   "WHERE gasp_group = :GroupID "
-													   "AND gasp_specialaccess = :SpecialAccessUID");
+													   "AND gasp_specialaccess = :SpecialAccessID");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_SUBSYSTEM = PREPARE_QUERY("SELECT gass_subsystem FROM _groupaccesssubsystem WHERE gass_group = :GroupID");
+static QString QS_GROUP_ACCESS_SUBSYSTEM = PREPARE_QUERY("SELECT gass_subsystem "
+														 "FROM _groupaccesssubsystem "
+														 "WHERE gass_group = :GroupID");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
 													 "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
 													 "WHERE gatb_group = :GroupID");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gasp_specialaccess FROM _groupaccessspecial WHERE gasp_group = :GroupID");
+static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
+													   "FROM _groupaccessspecial "
+													   "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
+													   "WHERE gasp_group = :GroupID");
 //-----------------------------------------------------------------------------
 ISUserRoleEntity::ISUserRoleEntity()
 	: ErrorString(NO_ERROR_STRING)
@@ -134,11 +139,11 @@ void ISUserRoleEntity::DeleteTableAccess(int GroupID, const QString &TableName, 
 	qDelete.Execute();
 }
 //-----------------------------------------------------------------------------
-bool ISUserRoleEntity::CheckExistSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID)
+bool ISUserRoleEntity::CheckExistSpecialAccess(int GroupID, int SpecialAccessID)
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_SPECIAL_CHECK);
 	qSelect.BindValue(":GroupID", GroupID);
-	qSelect.BindValue(":SpecialAccessUID", SpecialAccessUID);
+	qSelect.BindValue(":SpecialAccessID", SpecialAccessID);
 	if (qSelect.ExecuteFirst())
 	{
 		if (qSelect.ReadColumn("count").toInt())
@@ -149,19 +154,19 @@ bool ISUserRoleEntity::CheckExistSpecialAccess(int GroupID, const ISUuid &Specia
 	return false;
 }
 //-----------------------------------------------------------------------------
-void ISUserRoleEntity::InsertSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID)
+void ISUserRoleEntity::InsertSpecialAccess(int GroupID, int SpecialAccessID)
 {
 	ISQuery qInsert(QI_GROUP_ACCESS_SPECIAL);
 	qInsert.BindValue(":GroupID", GroupID);
-	qInsert.BindValue(":SpecialAccessUID", SpecialAccessUID);
+	qInsert.BindValue(":SpecialAccessID", SpecialAccessID);
 	qInsert.Execute();
 }
 //-----------------------------------------------------------------------------
-void ISUserRoleEntity::DeleteSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID)
+void ISUserRoleEntity::DeleteSpecialAccess(int GroupID, int SpecialAccessID)
 {
 	ISQuery qDelete(QD_GROUP_ACCESS_SPECIAL);
 	qDelete.BindValue(":GroupID", GroupID);
-	qDelete.BindValue(":SpecialAccessUID", SpecialAccessUID);
+	qDelete.BindValue(":SpecialAccessID", SpecialAccessID);
 	qDelete.Execute();
 }
 //-----------------------------------------------------------------------------
@@ -263,7 +268,7 @@ bool ISUserRoleEntity::InitializeSpecial()
 	{
 		while (qSelect.Next())
 		{
-			Specials.emplace_back(ISUuid(qSelect.ReadColumn("gasp_specialaccess")));
+			Specials.emplace_back(ISUuid(qSelect.ReadColumn("gast_uid")));
 		}
 	}
 	else

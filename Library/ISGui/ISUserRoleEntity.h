@@ -16,9 +16,9 @@ public:
 	static void InsertTableAccess(int GroupID, const QString &TableName, int AccessTypeID);
 	static void DeleteTableAccess(int GroupID, const QString &TableName, int AccessTypeID);
 	
-	static bool CheckExistSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID);
-	static void InsertSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID);
-	static void DeleteSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID);
+	static bool CheckExistSpecialAccess(int GroupID, int SpecialAccessID);
+	static void InsertSpecialAccess(int GroupID, int SpecialAccessID);
+	static void DeleteSpecialAccess(int GroupID, int SpecialAccessID);
 
 	QString GetErrorString() const;
 	bool Initialize();

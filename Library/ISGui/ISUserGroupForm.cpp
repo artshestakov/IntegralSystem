@@ -22,7 +22,7 @@ static QString QS_GROUP_ACCESS_SPECIAL_GROUP = PREPARE_QUERY("SELECT gast_uid, g
 															 "WHERE gast_parent IS NULL "
 															 "ORDER BY gast_order");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT gast_uid, gast_name, gast_hint "
+static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT gast_id, gast_name, gast_hint "
 													   "FROM _groupaccessspecialtype "
 													   "WHERE gast_parent = :ParentUID "
 													   "ORDER BY gast_order");
@@ -158,15 +158,15 @@ void ISUserGroupForm::CreateSpecial()
 			{
 				while (qSelectSpecial.Next())
 				{
-					ISUuid SpecialAccessUID = qSelectSpecial.ReadColumn("gast_uid");
+					int SpecialAccessID = qSelectSpecial.ReadColumn("gast_id").toInt();
 					QString Name = qSelectSpecial.ReadColumn("gast_name").toString();
 					QString Hint = qSelectSpecial.ReadColumn("gast_hint").toString();
 
 					ISCheckEdit *CheckEdit = new ISCheckEdit(ScrollArea);
 					CheckEdit->CreateHint(Hint);
-					CheckEdit->setProperty("SpecialAccessUID", SpecialAccessUID);
+					CheckEdit->setProperty("SpecialAccessID", SpecialAccessID);
 					CheckEdit->setProperty("SpecialAccessName", Name);
-					CheckEdit->SetValue(ISUserRoleEntity::CheckExistSpecialAccess(GroupID, SpecialAccessUID));
+					CheckEdit->SetValue(ISUserRoleEntity::CheckExistSpecialAccess(GroupID, SpecialAccessID));
 					connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SpecialClicked);
 					FormLayout->addRow("  " + Name + ':', CheckEdit);
 				}
@@ -217,17 +217,17 @@ void ISUserGroupForm::TableClicked(QAction *Action)
 void ISUserGroupForm::SpecialClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISUuid SpecialAccessUID = sender()->property("SpecialAccessUID");
+	int SpecialAccessID = sender()->property("SpecialAccessID").toInt();
 	QString SpecialAccessName = sender()->property("SpecialAccessName").toString();
 
 	if (value.toBool())
 	{
-		ISUserRoleEntity::InsertSpecialAccess(GroupID, SpecialAccessUID);
+		ISUserRoleEntity::InsertSpecialAccess(GroupID, SpecialAccessID);
 		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SpecialAccessName);
 	}
 	else
 	{
-		ISUserRoleEntity::DeleteSpecialAccess(GroupID, SpecialAccessUID);
+		ISUserRoleEntity::DeleteSpecialAccess(GroupID, SpecialAccessID);
 		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SpecialAccessName);
 	}
 	ISGui::SetWaitGlobalCursor(false);
