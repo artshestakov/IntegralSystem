@@ -154,28 +154,27 @@
     OWNER TO postgres;
   </Function>
 
-  <Function Name="check_access_user_subsystem(user_id bigint, subsystem_uid uuid)" Comment="Проверить доступ пользователя к подсистеме">
-    CREATE OR REPLACE FUNCTION public.check_access_user_subsystem(user_id bigint, subsystem_uid uuid)
+  <Function Name="check_access_user_subsystem(user_id bigint, user_is_system boolean, subsystem_uid uuid)" Comment="Проверить доступ пользователя к подсистеме">
+    CREATE OR REPLACE FUNCTION public.check_access_user_subsystem(user_id bigint, user_is_system boolean, subsystem_uid uuid)
     RETURNS boolean AS
     $body$
     DECLARE
-    is_system_user BOOLEAN;
     group_id BIGINT;
     full_access BOOLEAN;
     result BOOLEAN;
     BEGIN
 
+    --Если это системный пользователь - сразу возвращаем true
+    IF user_is_system THEN
+    RETURN true;
+    END IF;
+
     --Получаем код группы пользователя
-    SELECT usrs_issystem, COALESCE(usrs_group, 0), COALESCE(usgp_fullaccess, NULL)
-    INTO is_system_user, group_id, full_access
+    SELECT COALESCE(usrs_group, 0), COALESCE(usgp_fullaccess, NULL)
+    INTO group_id, full_access
     FROM _users
     LEFT JOIN _usergroup ON usgp_id = usrs_group
     WHERE usrs_id = user_id;
-
-    --Если это системный пользователь - сразу возвращаем true
-    IF is_system_user THEN
-    RETURN true;
-    END IF;
 
     --Если у группы этого пользователя полный доступ - сразу возвращаем true
     IF full_access THEN
@@ -200,7 +199,7 @@
     SECURITY INVOKER
     COST 100;
 
-    ALTER FUNCTION public.check_access_user_subsystem (user_id bigint, subsystem_uid uuid)
+    ALTER FUNCTION public.check_access_user_subsystem (user_id bigint, user_is_system boolean, subsystem_uid uuid)
     OWNER TO postgres;
   </Function>
 

@@ -19,6 +19,12 @@ public:
 	void SetUserID(int user_id);
 	int GetUserID() const;
 
+	void SetUserGroupID(int user_group_id);
+	int GetUserGroupID() const;
+
+	void SetUserIsSystem(bool user_is_system);
+	bool GetUserIsSystem() const;
+
 private:
 	void ReadyRead(); //Событие входящих данных
 	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки сокета
@@ -29,9 +35,12 @@ private:
 	QByteArray Buffer; //Буфер
 	int MessageSize; //Размер сообщения
 	int ChunkCount; //Количество частей сообщения
+	QTimer *Timer;
+
 	bool IsAuthorized; //Флаг авторизации клиента
 	int UserID; //Идентификатор пользователя
-	QTimer *Timer;
+	int UserGroupID; //Идентификатор группы пользователя
+	bool UserIsSystem; //Флаг системного пользователя
 };
 //-----------------------------------------------------------------------------
 #endif

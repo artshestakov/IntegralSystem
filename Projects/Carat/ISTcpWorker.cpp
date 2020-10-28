@@ -23,12 +23,12 @@ static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sg
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
 													 "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
-													 "WHERE gatb_group = (SELECT usrs_group FROM _users WHERE usrs_id = :UserID)");
+													 "WHERE gatb_group = :GroupID");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
 													   "FROM _groupaccessspecial "
 													   "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
-													   "WHERE gasp_group = (SELECT usrs_group FROM _users WHERE usrs_id = :UserID)");
+													   "WHERE gasp_group = :GroupID");
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
 												   "stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint, "
@@ -36,7 +36,7 @@ static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
 												   "FROM _subsystems "
 												   "LEFT JOIN _systems ON stms_uid = sbsm_system "
 												   "WHERE NOT sbsm_isdeleted "
-												   "AND check_access_user_subsystem(:UserID, sbsm_uid) " //Проверка доступности этой подсистемы пользователю
+												   "AND check_access_user_subsystem(:UserID, :UserIsSystem, sbsm_uid) " //Проверка доступности этой подсистемы пользователю
 												   "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_PRINTING = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate, "
@@ -367,6 +367,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	ISDatabase::Instance().Disconnect(TestConnectionName);
 	TcpMessage->TcpSocket->SetAuthorized(true);
 	TcpMessage->TcpSocket->SetUserID(UserID);
+	TcpMessage->TcpSocket->SetUserGroupID(GroupID);
+	TcpMessage->TcpSocket->SetUserIsSystem(IsSystem);
 
 	//Проверяем версию клиента.
 	bool IsNeedUpdate = false; //По умолчанию флаг обновления должен быть false (вдруг клиент отправил невалидную версию)
@@ -465,7 +467,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Получаем права на таблицы
 	QVariantMap AccessTablesMap;
 	ISQuery qSelectAccessTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_ACCESS_TABLE);
-	qSelectAccessTables.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qSelectAccessTables.BindValue(":GroupID", TcpMessage->TcpSocket->GetUserGroupID());
 	if (qSelectAccessTables.Execute())
 	{
 		while (qSelectAccessTables.Next())
@@ -494,7 +496,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Получаем специальные права
 	QVariantList AccessSpecialList;
 	ISQuery qSelectAccessSpecial(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_ACCESS_SPECIAL);
-	qSelectAccessSpecial.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qSelectAccessSpecial.BindValue(":GroupID", TcpMessage->TcpSocket->GetUserGroupID());
 	if (qSelectAccessSpecial.Execute())
 	{
 		while (qSelectAccessSpecial.Next())
@@ -513,6 +515,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QVariantMap SystemSubSystemMap;
 	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEM_SUBSYSTEM);
 	qSelectSystems.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qSelectSystems.BindValue(":UserIsSystem", TcpMessage->TcpSocket->GetUserIsSystem());
 	if (qSelectSystems.Execute())
 	{
 		while (qSelectSystems.Next())
