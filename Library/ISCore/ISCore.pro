@@ -60,6 +60,7 @@ HEADERS += \
     ISTypedefs.h \
     ISUuid.h \
     ISVersion.h \
+    ISVersionInfo.h \
     PMetaClass.h \
     StdAfx.h
 
@@ -95,6 +96,7 @@ SOURCES += \
     ISTrace.cpp \
     ISUuid.cpp \
     ISVersion.cpp \
+    ISVersionInfo.cpp \
     StdAfx.cpp
 
 RESOURCES += $$PWD/../../Resources/Resources.qrc
