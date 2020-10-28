@@ -14,12 +14,11 @@ public:
 	QString GetErrorString() const; //Получить текствоое описание ошибки
 	QTcpSocket* GetSocket(); //Получить указатель на сокет
 	bool IsConnected() const; //Проверить наличие соединения
-	bool Reconnect(const QString &Host, quint16 Port); //Переподключение
 	bool Connect(const QString &Host, quint16 Port); //Подключение
 	void Disconnect(); //Отключение
 
 private:
-	void Timeout();
+	void StateChanged(QAbstractSocket::SocketState socket_state);
 	void Error(QTcpSocket::SocketError socket_error);
 
 private:
@@ -32,7 +31,6 @@ private:
 	QString ErrorString;
 	QTcpSocket *TcpSocket;
 	QEventLoop EventLoop;
-	QTimer *Timer;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -1,19 +1,13 @@
 #include "ISTcpConnector.h"
 #include "ISConstants.h"
-#include "ISTcp.h"
-#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISTcpConnector::ISTcpConnector()
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
-	TcpSocket(new QTcpSocket(this)),
-	Timer(new QTimer(this))
+	TcpSocket(new QTcpSocket(this))
 {
 	connect(TcpSocket, &QTcpSocket::connected, &EventLoop, &QEventLoop::quit);
-	connect(TcpSocket, &QTcpSocket::connected, Timer, &QTimer::stop);
-
-	Timer->setSingleShot(true);
-	connect(Timer, &QTimer::timeout, this, &ISTcpConnector::Timeout);
+	connect(TcpSocket, &QTcpSocket::stateChanged, this, &ISTcpConnector::StateChanged);
 }
 //-----------------------------------------------------------------------------
 ISTcpConnector::~ISTcpConnector()
@@ -42,20 +36,10 @@ bool ISTcpConnector::IsConnected() const
 	return TcpSocket->state() == QTcpSocket::ConnectedState;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpConnector::Reconnect(const QString &Host, quint16 Port)
-{
-	if (IsConnected())
-	{
-		Disconnect();
-	}
-	return Connect(Host, Port);
-}
-//-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 {
-	//Timer->start();
-	TcpSocket->connectToHost(Host, Port);
-	//EventLoop.exec();
+	TcpSocket->connectToHost(Host, Port, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
+	EventLoop.exec();
 	return IsConnected();
 }
 //-----------------------------------------------------------------------------
@@ -67,12 +51,11 @@ void ISTcpConnector::Disconnect()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTcpConnector::Timeout()
+void ISTcpConnector::StateChanged(QAbstractSocket::SocketState socket_state)
 {
-	//Подключение не произошло - ошибка
-	if (TcpSocket->state() != QTcpSocket::ConnectedState)
+	if (socket_state == QAbstractSocket::UnconnectedState) //Не удалось подключиться
 	{
-		ErrorString = "Connecting timeout";
+		ErrorString = TcpSocket->errorString();
 		EventLoop.quit();
 	}
 }
