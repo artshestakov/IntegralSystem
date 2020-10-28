@@ -20,16 +20,16 @@ static QString QD_GROUP_ACCESS_SUBSYSTEM = PREPARE_QUERY("DELETE FROM _groupacce
 static QString QS_GROUP_ACCESS_TABLE_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 														   "FROM _groupaccesstable "
 														   "WHERE gatb_group = :GroupID "
-														   "AND gatb_table = :TableUID "
-														   "AND gatb_accesstype = :AccessTypeUID");
+														   "AND gatb_table = :TableName "
+														   "AND gatb_accesstype = :AccessTypeID");
 //-----------------------------------------------------------------------------
 static QString QI_GROUP_ACCESS_TABLE = PREPARE_QUERY("INSERT INTO _groupaccesstable(gatb_group, gatb_table, gatb_accesstype) "
-													 "VALUES(:GroupID, :TableUID, :AccessTypeUID)");
+													 "VALUES(:GroupID, :TableName, :AccessTypeID)");
 //-----------------------------------------------------------------------------
 static QString QD_GROUP_ACCESS_TABLE = PREPARE_QUERY("DELETE FROM _groupaccesstable "
 													 "WHERE gatb_group = :GroupID "
-													 "AND gatb_table = :TableUID "
-													 "AND gatb_accesstype = :AccessTypeUID");
+													 "AND gatb_table = :TableName "
+													 "AND gatb_accesstype = :AccessTypeID");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 															 "FROM _groupaccessspecial "
@@ -45,7 +45,10 @@ static QString QD_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("DELETE FROM _groupaccess
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SUBSYSTEM = PREPARE_QUERY("SELECT gass_subsystem FROM _groupaccesssubsystem WHERE gass_group = :GroupID");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatb_accesstype FROM _groupaccesstable WHERE gatb_group = :GroupID");
+static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
+													 "FROM _groupaccesstable "
+													 "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
+													 "WHERE gatb_group = :GroupID");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gasp_specialaccess FROM _groupaccessspecial WHERE gasp_group = :GroupID");
 //-----------------------------------------------------------------------------
@@ -97,12 +100,12 @@ void ISUserRoleEntity::DeleteSubSystemAccess(int GroupID, const ISUuid &SubSyste
 	qDelete.Execute();
 }
 //-----------------------------------------------------------------------------
-bool ISUserRoleEntity::CheckExistTableAccess(int GroupID, const ISUuid &TableUID, const ISUuid &AccessTypeUID)
+bool ISUserRoleEntity::CheckExistTableAccess(int GroupID, const QString &TableName, int AccessTypeID)
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_TABLE_CHECK);
 	qSelect.BindValue(":GroupID", GroupID);
-	qSelect.BindValue(":TableUID", TableUID);
-	qSelect.BindValue(":AccessTypeUID", AccessTypeUID);
+	qSelect.BindValue(":TableName", TableName);
+	qSelect.BindValue(":AccessTypeID", AccessTypeID);
 	if (qSelect.ExecuteFirst())
 	{
 		if (qSelect.ReadColumn("count").toInt())
@@ -113,21 +116,21 @@ bool ISUserRoleEntity::CheckExistTableAccess(int GroupID, const ISUuid &TableUID
 	return false;
 }
 //-----------------------------------------------------------------------------
-void ISUserRoleEntity::InsertTableAccess(int GroupID, const ISUuid &TableUID, const ISUuid &AccessTypeUID)
+void ISUserRoleEntity::InsertTableAccess(int GroupID, const QString &TableName, int AccessTypeID)
 {
 	ISQuery qInsert(QI_GROUP_ACCESS_TABLE);
 	qInsert.BindValue(":GroupID", GroupID);
-	qInsert.BindValue(":TableUID", TableUID);
-	qInsert.BindValue(":AccessTypeUID", AccessTypeUID);
+	qInsert.BindValue(":TableName", TableName);
+	qInsert.BindValue(":AccessTypeID", AccessTypeID);
 	qInsert.Execute();
 }
 //-----------------------------------------------------------------------------
-void ISUserRoleEntity::DeleteTableAccess(int GroupID, const ISUuid &TableUID, const ISUuid &AccessTypeUID)
+void ISUserRoleEntity::DeleteTableAccess(int GroupID, const QString &TableName, int AccessTypeID)
 {
 	ISQuery qDelete(QD_GROUP_ACCESS_TABLE);
 	qDelete.BindValue(":GroupID", GroupID);
-	qDelete.BindValue(":TableUID", TableUID);
-	qDelete.BindValue(":AccessTypeUID", AccessTypeUID);
+	qDelete.BindValue(":TableName", TableName);
+	qDelete.BindValue(":AccessTypeID", AccessTypeID);
 	qDelete.Execute();
 }
 //-----------------------------------------------------------------------------
@@ -193,10 +196,10 @@ bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 		true : ISAlgorithm::VectorContains(SubSystems, SubSystemUID);
 }
 //-----------------------------------------------------------------------------
-bool ISUserRoleEntity::CheckAccessTable(const ISUuid &TableUID, const ISUuid &AccessUID)
+bool ISUserRoleEntity::CheckAccessTable(const QString &TableName, const ISUuid &AccessUID)
 {
 	return ISMetaUser::Instance().UserData.System || ISMetaUser::Instance().UserData.GroupFullAccess ?
-		true : ISAlgorithm::VectorContains(Tables[TableUID], AccessUID);
+		true : ISAlgorithm::VectorContains(Tables[TableName], AccessUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
@@ -239,9 +242,9 @@ bool ISUserRoleEntity::InitializeTables()
 	{
 		while (qSelect.Next())
 		{
-			ISUuid TableUID = qSelect.ReadColumn("gatb_table");
-			ISUuid AccessUID = qSelect.ReadColumn("gatb_accesstype");
-			Tables.count(TableUID) ? Tables[TableUID].emplace_back(AccessUID) : Tables[TableUID] = { AccessUID };
+			QString TableName = qSelect.ReadColumn("gatb_table").toString();
+			ISUuid AccessUID = qSelect.ReadColumn("gatt_uid");
+			Tables.count(TableName) ? Tables[TableName].emplace_back(AccessUID) : Tables[TableName] = { AccessUID };
 		}
 	}
 	else

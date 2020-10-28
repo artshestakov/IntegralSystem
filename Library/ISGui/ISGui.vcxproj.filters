@@ -390,9 +390,6 @@
     <ClCompile Include="ISSystemsPanel.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="ISToolBarAccessTable.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISProgressForm.cpp">
       <Filter>AdditionalForms</Filter>
     </ClCompile>
@@ -705,9 +702,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISSystemsPanel.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISToolBarAccessTable.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISProgressForm.h">

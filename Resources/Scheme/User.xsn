@@ -65,8 +65,8 @@
   <Table Name="_GroupAccessTable" UID="{00F8E495-F7CB-4FF3-B2F9-C9AE120E0A5B}" Alias="gatb" LocalName="Право доступа на таблицу" LocalListName="Права доступа на таблицы" TitleName="Group" IsSystem="true">
     <Fields>
       <Field UID="{58C99020-7327-4A27-95D8-E64AEE79EABB}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
-      <Field UID="{03C407DD-8E68-46FB-81A4-45D9DA2EC642}" Name="Table" Type="UID" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
-      <Field UID="{9C8B015B-6A70-4CF8-9F66-70FBCA2DC1E7}" Name="AccessType" Type="UID" LabelName="Право" LocalListName="Право" NotNull="true"/>
+      <Field UID="{03C407DD-8E68-46FB-81A4-45D9DA2EC642}" Name="Table" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
+      <Field UID="{9C8B015B-6A70-4CF8-9F66-70FBCA2DC1E7}" Name="AccessType" Type="BigInt" LabelName="Право" LocalListName="Право" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Group"/>
@@ -76,7 +76,7 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="AccessType" ForeignClass="_GroupAccessTableType" ForeignField="UID" ForeignViewNameField="Name"/>
+      <Foreign Field="AccessType" ForeignClass="_GroupAccessTableType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
 

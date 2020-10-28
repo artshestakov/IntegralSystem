@@ -6,12 +6,16 @@
 #include "ISScrollArea.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISQuery.h"
-#include "ISToolBarAccessTable.h"
 #include "ISMetaData.h"
 #include "ISUserRoleEntity.h"
 #include "ISControls.h"
 #include "ISProtocol.h"
 #include "ISGui.h"
+//-----------------------------------------------------------------------------
+static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_id, gatt_name, gatt_icon "
+														  "FROM _groupaccesstabletype "
+														  "WHERE NOT gatt_isdeleted "
+														  "ORDER BY gatt_order");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL_GROUP = PREPARE_QUERY("SELECT gast_uid, gast_name "
 															 "FROM _groupaccessspecialtype "
@@ -80,20 +84,50 @@ void ISUserGroupForm::CreateTables()
 	ScrollArea->widget()->setLayout(FormLayout);
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.Tables"));
 
-	QMap<QString, ISUuid> Map;
+	//Вытаскиваем типы прав на таблицы
+	ISVectorMap AccessTypeVector;
+	ISQuery qSelectAccess(QS_GROUP_ACCESS_TABLE_TYPE);
+	if (qSelectAccess.Execute())
+	{
+		while (qSelectAccess.Next())
+		{
+			AccessTypeVector.emplace_back(QVariantMap
+			{
+				{ "AccessID", qSelectAccess.ReadColumn("gatt_id") },
+				{ "Name", qSelectAccess.ReadColumn("gatt_name") },
+				{ "Icon", qSelectAccess.ReadColumn("gatt_icon") }
+			});
+		}
+	}
+
+	//Вытаскиваем из мета-данных все НЕ системные таблицы
+	ISStringMap Map;
 	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
 		if (!MetaTable->IsSystem) //Если таблица является системной - пропускать
 		{
-			Map.insert(MetaTable->LocalListName, MetaTable->UID);
+			Map[MetaTable->LocalListName] = MetaTable->Name;
 		}
 	}
 
-	for (const auto &MapItem : Map.toStdMap())
+	for (const auto &MapItem : Map) //Обходим таблицы
 	{
-		ISToolBarAccessTable *ToolBarAccessRights = new ISToolBarAccessTable(GroupID, MapItem.second, MapItem.first, ScrollArea);
-		connect(ToolBarAccessRights, &ISToolBarAccessTable::actionTriggered, this, &ISUserGroupForm::TableClicked);
-		FormLayout->addRow(MapItem.first + ':', ToolBarAccessRights);
+		QToolBar *ToolBar = new QToolBar(ScrollArea);
+		ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		ToolBar->setIconSize(ISDefines::Gui::SIZE_20_20);
+		connect(ToolBar, &QToolBar::actionTriggered, this, &ISUserGroupForm::TableClicked);
+		FormLayout->addRow(MapItem.first + ':', ToolBar);
+
+		for (const QVariantMap &VariantMap : AccessTypeVector) //Обходим типы прав
+		{
+			QAction *Action = ToolBar->addAction(BUFFER_ICONS(VariantMap["Icon"].toString()), VariantMap["Name"].toString());
+			Action->setCheckable(true);
+			Action->setProperty("TableName", MapItem.second);
+			Action->setProperty("LocalName", MapItem.first);
+			Action->setProperty("AccessID", VariantMap["AccessID"]);
+			Action->setChecked(ISUserRoleEntity::CheckExistTableAccess(GroupID, MapItem.second, VariantMap["AccessID"].toInt()));
+			ToolBar->widgetForAction(Action)->setCursor(CURSOR_POINTING_HAND);
+		}
 	}
 }
 //-----------------------------------------------------------------------------
@@ -163,19 +197,19 @@ void ISUserGroupForm::SubSystemClicked(const QVariant &value)
 void ISUserGroupForm::TableClicked(QAction *Action)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISUuid TableUID = Action->property("TableUID"); //Идентификатор таблицы
-	ISUuid AccessUID = Action->property("AccessUID"); //Идентификатор права
-	QString TableName = Action->property("TableName").toString(); //Локальное наименование таблицы
+	QString TableName = Action->property("TableName").toString(); //Имя таблицы
+	QString LocalName = Action->property("LocalName").toString(); //Локальное имя таблицы
+	int AccessID = Action->property("AccessID").toInt(); //Идентификатор права
 
 	if (Action->isChecked()) //Если право было включено
 	{
-		ISUserRoleEntity::InsertTableAccess(GroupID, TableUID, AccessUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, TableName + " (" + Action->toolTip() + ')');
+		ISUserRoleEntity::InsertTableAccess(GroupID, TableName, AccessID);
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, LocalName);
 	}
 	else
 	{
-		ISUserRoleEntity::DeleteTableAccess(GroupID, TableUID, AccessUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, TableName + " (" + Action->toolTip() + ')');
+		ISUserRoleEntity::DeleteTableAccess(GroupID, TableName, AccessID);
+		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, LocalName);
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }

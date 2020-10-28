@@ -2464,7 +2464,7 @@ void ISListEdit::ShowListForm()
 //-----------------------------------------------------------------------------
 void ISListEdit::CreateObject()
 {
-	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
 		ISObjectFormBase*ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
 		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEdit::SetValue);
@@ -2478,7 +2478,7 @@ void ISListEdit::CreateObject()
 //-----------------------------------------------------------------------------
 void ISListEdit::EditObject()
 {
-	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt());
 		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEdit::SetValue);

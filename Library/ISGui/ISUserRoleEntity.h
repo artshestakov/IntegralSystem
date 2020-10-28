@@ -12,9 +12,9 @@ public:
 	static void InsertSubSystemAccess(int GroupID, const ISUuid &SubSystemUID); //ƒобавить право на подсистему в базу
 	static void DeleteSubSystemAccess(int GroupID, const ISUuid &SubSystemUID); //”далить право на подсистему из базы
 	
-	static bool CheckExistTableAccess(int GroupID, const ISUuid &TableUID, const ISUuid &AccessTypeUID); //ѕроверить наличие права на таблицу в базе
-	static void InsertTableAccess(int GroupID, const ISUuid &TableUID, const ISUuid &AccessTypeUID);
-	static void DeleteTableAccess(int GroupID, const ISUuid &TableUID, const ISUuid &AccessTypeUID);
+	static bool CheckExistTableAccess(int GroupID, const QString &TableName, int AccessTypeID); //ѕроверить наличие права на таблицу в базе
+	static void InsertTableAccess(int GroupID, const QString &TableName, int AccessTypeID);
+	static void DeleteTableAccess(int GroupID, const QString &TableName, int AccessTypeID);
 	
 	static bool CheckExistSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID);
 	static void InsertSpecialAccess(int GroupID, const ISUuid &SpecialAccessUID);
@@ -24,7 +24,7 @@ public:
 	bool Initialize();
 
 	bool CheckAccessSubSystem(const ISUuid &SubSystemUID);
-	bool CheckAccessTable(const ISUuid &TableUID, const ISUuid &AccessUID);
+	bool CheckAccessTable(const QString &TableName, const ISUuid &AccessUID);
 	bool CheckAccessSpecial(const ISUuid &SpecialAccessUID);
 	bool CheckExistAccesses() const; //ѕроверить наличие прав доступа
 
@@ -42,7 +42,7 @@ private:
 private:
 	QString ErrorString;
 	ISVectorUID SubSystems;
-	std::map<ISUuid, ISVectorUID> Tables;
+	std::map<QString, ISVectorUID> Tables;
 	ISVectorUID Specials;
 };
 //-----------------------------------------------------------------------------

@@ -500,7 +500,7 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 		return;
 	}
 	
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
@@ -1005,7 +1005,7 @@ void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QStr
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Create()
 {
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->LocalListName));
 		return;
@@ -1028,7 +1028,7 @@ void ISListBaseForm::CreateCopy()
 		return;
 	}
 
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy").arg(MetaTable->LocalListName));
 		return;
@@ -1051,7 +1051,7 @@ void ISListBaseForm::Edit()
 		return;
 	}
 
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
@@ -1086,7 +1086,7 @@ void ISListBaseForm::Update()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Delete()
 {
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
@@ -1142,7 +1142,7 @@ void ISListBaseForm::Delete()
 //-----------------------------------------------------------------------------
 bool ISListBaseForm::DeleteCascade()
 {
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return false;
@@ -1220,7 +1220,7 @@ void ISListBaseForm::ShowActual()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowDeleted()
 {
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
 	{
 		GetAction(ISNamespace::AT_ShowActual)->setChecked(true);
 		GetAction(ISNamespace::AT_ShowDeleted)->setChecked(false);
@@ -1263,7 +1263,7 @@ void ISListBaseForm::SearchClear()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Export()
 {
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->UID, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(MetaTable->LocalListName));
 		return;
