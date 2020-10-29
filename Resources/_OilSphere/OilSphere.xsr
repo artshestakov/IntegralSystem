@@ -26,6 +26,7 @@
   <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::Debet1ListForm"/>
   <_SubSystems UID="{9A3446F9-EC80-43B5-AFC9-51BA993FD436}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="2" LocalName="Дебет 2" Icon="Lists" ClassName="ISOilSphere::Debet2ListForm"/>
   <_SubSystems UID="{F5E54371-7753-4FDD-8CC1-A7772F378C7B}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="3" LocalName="Дебет 3" Icon="Lists" ClassName="ISOilSphere::Debet3ListForm"/>
+  <_SubSystems UID="{D15B2A1E-1592-493F-A0B6-871ECC62FA08}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="4" LocalName="Дебет 4" Icon="Lists" ClassName="ISOilSphere::Debet4ListForm"/>
   
   <OperationType UID="{439C16CE-421A-4BAB-B2B2-4CEE3FCFEE21}" Name="Списание"/>
   <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>
